@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>SFS - React</title>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <!--REACT-->
+  <script src="build/react.js"></script>
+  <script src="build/react-dom.js"></script>
+
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <!--POLYMER COMPONENTS-->
+  <link rel="import" href="bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+  <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+  <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="bower_components/paper-styles/color.html">
+  <link rel="import" href="bower_components/paper-menu-button/paper-menu-button.html">
+  <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
+
+  <!--ALFRESCO CUSTOM WEBCOMPONENTS-->
+  <link rel="import" href="bower_components/file-upload/file-upload.html">
+
+  <!--STYLES-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="import" href="css/style.html">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<paper-scroll-header-panel fixed>
+
+  <paper-toolbar>
+    <img src="img/logo_small.png" class="logo-header">
+    <div class="spacer">
+      <div class="search-box bottom">
+        <input placeholder="Search files and folders">
+        <paper-icon-button class="search-header-search-icon" icon="search"></paper-icon-button>
+      </div>
+    </div>
+
+    <paper-menu-button>
+      <paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button>
+      <paper-menu class="dropdown-content">
+        <paper-item>Share</paper-item>
+        <paper-item>Settings</paper-item>
+        <paper-item>Help</paper-item>
+      </paper-menu>
+    </paper-menu-button>
+
+  </paper-toolbar>
+
+  <div class="content">
+    <div id="content">
+
+      <div id="example"></div>
+
+    </div>
+  </div>
+
+</paper-scroll-header-panel>
+
+
+
+
+</body>
+<script src="build/helloworld.js"></script>
+</html>

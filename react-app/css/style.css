@@ -1,0 +1,40 @@
+.logo-header{
+    margin: 17px 25px 0 10px;
+    width: 155px;
+    height: 48px;
+    background-position: 5px 0;
+}
+
+.search-box {
+    margin: 20px 0 0 30px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    height: 40px;
+    width: 500px;
+}
+.search-box iron-icon {
+    color: #999999;
+    margin: 0 8px;
+}
+
+.search-box input {
+    outline: 0;
+    border: none;
+    font-size: 15px;
+    margin: -1px 0px 0 5px;
+    position: relative;
+    padding: 8px 3px;
+    font-family: sans-serif;
+    font-weight: 500;
+    color: #263238;
+}
+.content {
+    padding: 8px;
+}
+
+.right{
+    float: right;
+}
+
+
