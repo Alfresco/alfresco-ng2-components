@@ -1,0 +1,7 @@
+typings/
+node_modules/
+*.js
+*.js.map
+.idea
+!app/widgets/*.js
+!app/js/*.js

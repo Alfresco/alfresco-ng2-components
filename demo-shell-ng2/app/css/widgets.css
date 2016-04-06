@@ -1,0 +1,148 @@
+/* Layout */
+
+.drag-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.drop-zone {
+    border-radius: 4px;
+    /*height: 20px;*/
+    visibility: visible /*!Important*/;
+}
+
+.drop-zone.over {
+    /*height: 100px;*/
+    outline: 1px dashed #ddd;
+}
+
+ul.toolbar {
+    list-style: none;
+    margin: 0 0 1em;
+    padding: 0;
+}
+
+ul.toolbar li {
+    background: #F7F7F7;
+    border: 1px solid #D9D9D9;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 0 1em 1em 0;
+    padding: 0.5em 1em;
+}
+
+/* Widgets */
+
+/*.widget {}*/
+
+.widget.widget-button {
+    cursor: default;
+}
+
+.widget.widget-button[contentEditable="true"] {
+    cursor: text;
+}
+
+/*.widget.widget-input {}*/
+
+.widget.widget-input:read-only {
+    background-color: #fff;
+    cursor: default;
+}
+
+/*.widget.widget-input.drag:before {
+  content: "Input";
+}*/
+
+.widget.widget-input:before {
+    content: "Input";
+}
+
+.widget.widget-row {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    margin: 5px 0;
+    padding: 25px 14px 0;
+    position: relative;
+}
+
+.widget.widget-row:before {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #9DA0A4;
+    content: "Row";
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    line-height: 2;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+
+.widget.widget-col {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    margin: 15px 0;
+    padding: 39px 19px 24px;
+    position: relative;
+}
+
+.widget.widget-col:before {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #9DA0A4;
+    content: "Column";
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+
+.widget.widget-container {
+    margin-left: 0;
+    margin-top: 10px;
+    padding: 30px 15px 15px;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    position: relative;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.widget.widget-container:before {
+    background-color: #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 4px 0;
+    color: #9DA0A4;
+    content: "Container";
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 3px 7px;
+    position: absolute;
+    top: -1px;
+}
+
+.widget.widget-row.selected,
+.widget.widget-container.selected,
+.widget.widget-col.selected {
+    border-color: green;
+    transition: border-color .5s;
+}
+
+.widget.widget-row.selected:before,
+.widget.widget-container.selected:before,
+.widget.widget-col.selected:before {
+    border-color: green;
+    background-color: green;
+    color: white;
+}

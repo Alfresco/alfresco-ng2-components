@@ -1,0 +1,201 @@
+/* General styles for all menus */
+
+.cbp-spmenu {
+    background-color: #fff;
+    position: fixed;
+    border-color: #e7e7e7;
+}
+
+.cbp-spmenu > h3 {
+    color: #555;
+    font-size: 1.9em;
+    padding: 11px;
+    margin: 0;
+    font-weight: 300;
+    background: #e7e7e7;
+    cursor: default;
+}
+
+.cbp-spmenu > a {
+    display: block;
+    color: #777;
+    font-size: 1.1em;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+.cbp-spmenu > a:hover {
+    color: #555;
+    background: #f8f8f8;
+}
+
+.cbp-spmenu > a:active,
+.cbp-spmenu > a.active {
+    color: #fff;
+    border-color: #428bca;
+    background-color: #428bca;
+}
+
+/* Orientation-dependent styles for the content of the menu */
+
+.cbp-spmenu-vertical {
+    width: 240px;
+    height: 100%;
+    top: 0;
+    /*z-index: 1000;*/
+    z-index: 1040; /* default TBS navbar index is 1030 */
+    overflow-y: auto; /* vertical scrollbar */
+    overflow-x: hidden;
+}
+
+.cbp-spmenu-vertical > a {
+    border-bottom: 1px solid #e7e7e7;
+    padding: 1em;
+}
+
+.cbp-spmenu-horizontal {
+    width: 100%;
+    height: 150px;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.cbp-spmenu-horizontal > h3 {
+    height: 100%;
+    width: 20%;
+    float: left;
+}
+
+.cbp-spmenu-horizontal > a {
+    float: left;
+    width: 20%;
+    padding: 0.8em;
+    border-left: 1px solid #258ecd;
+}
+
+/* Vertical menu that slides from the left or right */
+
+.cbp-spmenu-left {
+    left: -240px;
+    border-right: 1px solid #e7e7e7;
+}
+
+.cbp-spmenu-right {
+    right: -240px;
+    border-left: 1px solid #e7e7e7;
+}
+
+.cbp-spmenu-left.cbp-spmenu-open {
+    left: 0;
+}
+
+.cbp-spmenu-right.cbp-spmenu-open {
+    right: 0;
+}
+
+/* Horizontal menu that slides from the top or bottom */
+
+.cbp-spmenu-top {
+    top: -150px;
+}
+
+.cbp-spmenu-bottom {
+    bottom: -150px;
+}
+
+.cbp-spmenu-top.cbp-spmenu-open {
+    top: 0;
+}
+
+.cbp-spmenu-bottom.cbp-spmenu-open {
+    bottom: 0;
+}
+
+/* Push classes applied to the body */
+
+.cbp-spmenu-push {
+    overflow-x: hidden;
+    position: relative;
+    left: 0;
+}
+
+.cbp-spmenu-push-toright {
+    left: 240px;
+}
+
+.cbp-spmenu-push-toleft {
+    left: -240px;
+}
+
+/* Transitions */
+
+.cbp-spmenu,
+.cbp-spmenu-push {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+/* Example media queries */
+
+@media screen and (max-width: 55.1875em){
+
+    .cbp-spmenu-horizontal {
+        font-size: 75%;
+        height: 110px;
+    }
+
+    .cbp-spmenu-top {
+        top: -110px;
+    }
+
+    .cbp-spmenu-bottom {
+        bottom: -110px;
+    }
+}
+
+@media screen and (max-height: 26.375em){
+
+    .cbp-spmenu-vertical {
+        font-size: 90%;
+        width: 190px;
+    }
+
+    .cbp-spmenu-left,
+    .cbp-spmenu-push-toleft {
+        left: -190px;
+    }
+
+    .cbp-spmenu-right {
+        right: -190px;
+    }
+
+    .cbp-spmenu-push-toright {
+        left: 190px;
+    }
+}
+
+/* Extra stuff */
+
+/* move scrollbar for right menu to the right */
+
+.cbp-spmenu-right { direction: rtl; }
+.cbp-spmenu-right > * { direction: ltr; }
+
+/* misc */
+
+a.menu-close {
+    color: #555;
+}
+
+/* Show menu inside main content rather than page */
+.inline-menu {
+    padding-bottom: 50px;
+    margin-top: 50px;
+}
+
+.inline-menu > h3 {
+    font-size: 14px;
+    font-weight: bold;
+}

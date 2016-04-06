@@ -1,0 +1,109 @@
+<side-menu #elementsMenu title="Elements">
+    <form-design-toolbar></form-design-toolbar>
+</side-menu>
+
+<side-menu #actionMenu title="Actions">
+    <div class="p-10">
+        <button type="button" class="btn btn-success btn-block">
+            Upload <i class="fa fa-plus"></i>
+        </button>
+        <button type="button" class="btn btn-default btn-block">
+            Folder <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</side-menu>
+
+<side-menu #propertiesMenu title="Properties" direction="right">
+    <a href="#">Property 1</a>
+    <a href="#">Property 2</a>
+    <a href="#">Property 3</a>
+    <a href="#">Property 4</a>
+    <a href="#">Property 5</a>
+    <a href="#">Property 6</a>
+</side-menu>
+
+<app-navbar>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand navbar-alfresco-logo" [routerLink]="['Home']">
+            <img src="app/img/blank.gif">
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li [class.active]="actionMenu.isOpen">
+                <a href="#" (click)="toggleMenu(actionMenu, $event)" class="image-button">
+                    <i class="fa fa-tasks fa-2x"></i>
+                </a>
+            </li>
+            <li [class.active]="isActive(['Home'])">
+                <a [routerLink]="['Home']">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <!--
+            <li [class.active]="isActive(['Child1', {id: 1}])">
+                <a [routerLink]="['Child1', {id: 1}]">Child 1</a>
+            </li>
+            <li [class.active]="isActive(['Child2'])">
+                <a [routerLink]="['Child2']">Child 2</a>
+            </li>
+            -->
+            <li [class.active]="isActive(['Page1'])">
+                <a [routerLink]="['Page1']">Page 1</a>
+            </li>
+            <li [class.active]="isActive(['Page2'])">
+                <a [routerLink]="['Page2']">Page 2</a>
+            </li>
+            <li [class.active]="isActive(['Forms'])">
+                <a [routerLink]="['Forms']">Forms</a>
+            </li>
+        </ul>
+
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search files and folders">
+            </div>
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a  *ngIf="!isLoggedIn()" [routerLink]="['Login']">Login</a></li>
+                    <li><a *ngIf="isLoggedIn()" href="#" (click)="onLogout($event)">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul *ngIf="isActive(['Forms'])" class="nav navbar-nav navbar-right">
+            <li [class.active]="elementsMenu.isOpen">
+                <a href="#" (click)="toggleMenu(elementsMenu, $event)" class="image-button">
+                    <i class="fa fa-cubes fa-2x"></i>
+                </a>
+            </li>
+            <li [class.active]="propertiesMenu.isOpen">
+                <a href="#" (click)="toggleMenu(propertiesMenu, $event)" class="image-button">
+                    <i class="fa fa-edit fa-2x"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</app-navbar>
+<!--<router-outlet></router-outlet>-->
+<auth-router-outlet></auth-router-outlet>
+
+<!-- Caches -->
+<div id="drag-images-cache"></div>
