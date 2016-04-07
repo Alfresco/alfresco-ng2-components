@@ -1,0 +1,171 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../../bower_components/paper-badge/paper-badge.html">
+
+<style>
+    app-toolbar {
+        background: var(--paper-pink-500);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+        color: white;
+        z-index: 1;
+        color: white;
+        --paper-toolbar-title: {
+            font-size: 16px;
+            line-height: 16px;
+            font-weight: bold;
+            margin-left: 0;
+        };
+    }
+    app-toolbar paper-icon-button {
+        --paper-icon-button-ink-color: white;
+    }
+    #itemsList,
+    #selectedItemsList {
+        @apply(--layout-flex);
+    }
+    .item {
+        @apply(--layout-horizontal);
+        cursor: pointer;
+        padding: 16px 22px;
+        border-bottom: 1px solid #DDD;
+    }
+    .item:focus,
+    .item.selected:focus {
+        outline: 0;
+        background-color: #ddd;
+    }
+    .item.selected .star {
+        color: var(--paper-blue-600);
+    }
+    .item.selected {
+        background-color: var(--google-grey-300);
+        border-bottom: 1px solid #ccc;
+    }
+
+    .pad {
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+        padding: 0 16px;
+    }
+
+    .dim {
+        color: gray;
+    }
+    .star {
+        width: 24px;
+        height: 24px;
+    }
+    paper-badge {
+        -webkit-transition: all 0.1s;
+        transition: all 0.1s;
+        opacity: 1;
+        margin-top: 5px;
+    }
+    paper-badge[label="0"] {
+        opacity: 0;
+    }
+    #starredView {
+        width: 200px;
+        border-left: 1px solid #ddd;
+    }
+    paper-item {
+        white-space: nowrap;
+        cursor: pointer;
+        position: relative;
+    }
+    paper-item:hover::after {
+        content: "－";
+        width: 16px;
+        height: 16px;
+        display: block;
+        border-radius: 50% 50%;
+        background-color: var(--google-red-300);
+        margin-left: 10px;
+        line-height: 16px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        position: absolute;
+        right: 15px;
+        top: calc(50% - 8px);
+    }
+    .noSelection {
+        color: #999;
+        margin-left: 10px;
+        line-height: 50px;
+    }
+
+    #starredView {
+        @apply(--layout-vertical);
+    }
+
+    ul { list-style-type: none; overflow: hidden; width:800px; margin:10px}
+    ul li div.text{ float:left; width: 400px;text-align: left;height: 55px }
+    ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
+    ul li:hover { background: #eeeeee; height: 55px}
+
+    .folder {
+        height: 52px;
+        box-sizing: border-box;
+    }
+
+    .primary {
+        font-size: 16px;
+        line-height: 20px;
+        font-family: sans-serif;
+    }
+    .secondary {
+        font-size: 12px;
+        line-height: 20px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
+
+<dom-module id="alfresco-file-list">
+    <template>
+        <iron-ajax url="files.json" last-response="{{data}}" auto></iron-ajax>
+
+        <!-- Main List for the items -->
+        <iron-list id="itemsList" items="[[data.items]]" selected-items="{{selectedItems}}" selection-enabled multi-selection>
+            <template>
+                <div>
+                    <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
+                        <li>
+                            <div class="folder-container"><img class="folder" src="img/folder.svg"></div>
+                            <div class="text">
+                                <div class="pad">
+                                    <div class="primary">
+                                        [[item.displayName]]
+                                    </div>
+                                    <div class="secondary dim">
+                                        [[item.node.properties.cm:description]]
+                                    </div>
+                                    <div class="secondary dim">
+                                        Modified [[item.node.properties.cm:modified.iso8601]] by [[item.node.properties.cm:modifier.displayName]]
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="border"></div>
+                </div>
+            </template>
+        </iron-list>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "alfresco-file-list"
+        });
+    </script>
+</dom-module>

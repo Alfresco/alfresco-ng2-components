@@ -18,28 +18,15 @@ var CommentBox = React.createClass({
     render: function() {
         return (
             <div className="commentBox">
-                <div className="container">
-                <img className="nav-logo" src="http://facebook.github.io/react/img/logo.svg" width="60" height="60" />
-                <h1>React</h1>
-                <form>
-                    <div className="form-group" >
-                    <label htmlFor="exampleAction">File action</label>
-                    <input className="form-control"  id="exampleAction" type="text"  onChange={this.onChangeAction} value={this.state.action} placeholder="action name"/>
+                <div>
+                    <div>
+                        <form>
+                            <file-upload raised='true' accept={this.state.accept} droppable='false' target={this.state.action}  multi='false'  ><iron-icon icon="icons:add"></iron-icon> Add File</file-upload>
+                        </form>
                     </div>
-                    <div className="form-group" >
-                    <label htmlFor="exampleAction">File action</label>
-                    <input className="form-control" onChange={this.onChangeAccept} value={this.state.accept} />
+                    <div >
+                        <alfresco-file-list></alfresco-file-list>
                     </div>
-                    <div className="checkbox">
-                        <label>
-                        <input type="checkbox" onChange={this.onChangeDroppable}  defaultChecked={this.state.droppable} /> Enable drop area
-                    </label>
-                    </div>
-                    <div className="panel panel-default">
-                        <div className="panel-body">web component inside React</div>
-                    <file-upload raised="true" accept={this.state.accept} droppable={this.state.droppable} target={this.state.action} multi="false"  >Choose File</file-upload>
-                    </div>
-                </form>
                 </div>
             </div>
         );

@@ -99,7 +99,7 @@ Example:
 
     paper-button#button {
       margin-bottom: 20px;
-      background-color: aquamarine;
+      background-color: rgba(255, 152, 0, 0.75);
     }
   </style>
 
@@ -201,7 +201,7 @@ Example:
       */
       droptext: {
         type: String,
-        value: "Drop Files Here"
+        value: ""
       },
 
       /**
@@ -327,7 +327,9 @@ Example:
       if (this.droppable === 'true') {
         this._showDropText();
         this.setupDrop();
-      } else { this._hideDropText(); }
+      } else {
+        this._hideDropText();
+      }
     },
 
     /**
