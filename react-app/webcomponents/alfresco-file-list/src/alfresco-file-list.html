@@ -54,8 +54,8 @@
         top: calc(50% - 8px);
     }
 
-    ul { list-style-type: none; overflow: hidden; width:800px; margin:10px}
-    ul li div.text{ float:left; width: 400px;text-align: left;height: 55px }
+    ul { list-style-type: none; overflow: hidden;  margin:10px}
+    ul li div.text{ float:left; text-align: left;height: 55px }
     ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
     ul li:hover { background: #eeeeee; height: 55px}
     .file{
@@ -77,6 +77,14 @@
         line-height: 20px;
         color: gray;
         font-family: sans-serif;
+    }
+
+    .pull-right{
+        float: right;
+    }
+
+    .iron-list ul{
+        padding: 0px;
     }
 
     paper-dropdown-menu.custom {
@@ -131,7 +139,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div lass="dropdowm menu">
+                            <div class="dropdowm menu pull-right">
                                 <paper-dropdown-menu class="custom" label="Actions" no-label-float>
                                     <paper-listbox class="dropdown-content">
                                         <paper-item>Download as Zip</paper-item>
