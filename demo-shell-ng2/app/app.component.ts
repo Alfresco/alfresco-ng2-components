@@ -7,6 +7,7 @@ import {AuthRouterOutlet} from "./components/AuthRouterOutlet";
 import {SideMenu} from "./components/core/SideMenu";
 import {AppNavBar} from "./components/core/navbar.component";
 import {FormDesignToolbar} from "./components/form-design-toolbar.component";
+import {SingleComponent} from "./single.component";
 import {HomeView} from "./components/home.view";
 import {FormsView} from "./components/forms.view";
 import {Page1View} from "./components/page1.view";
@@ -19,7 +20,7 @@ import {Page2View} from "./components/page2.view";
     providers: [FormService]
 })
 @RouteConfig([
-    {path: '/', name: 'Home', component: HomeView, useAsDefault: true},
+    {path: '/', name: 'Home', component: SingleComponent, useAsDefault: true},
     {path: '/login', name: 'Login', component: Login},
     {path: '/forms', name: 'Forms', component: FormsView},
     {path: '/page1', name: 'Page1', component: Page1View},

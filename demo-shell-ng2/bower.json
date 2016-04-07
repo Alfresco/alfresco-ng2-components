@@ -23,6 +23,11 @@
     "webcomponentsjs": "~0.7.21",
     "paper-button": "~1.0.11",
     "paper-progress": "~1.0.9",
-    "iron-icons": "~1.1.3"
+    "iron-icons": "~1.1.3",
+    "iron-list": "~1.2.8",
+    "paper-badge": "~1.1.1",
+    "iron-ajax": "~1.2.0",
+    "paper-icon-button": "~1.0.7",
+    "paper-toolbar": "~1.1.4"
   }
 }

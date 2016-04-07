@@ -1,0 +1,165 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../../bower_components/paper-badge/paper-badge.html">
+
+<style>
+    .pad {
+        @apply(--layout-flex);
+        @apply(--layout-vertical);
+        padding: 0 16px;
+    }
+
+    .dim {
+        color: gray;
+    }
+
+    paper-badge {
+        -webkit-transition: all 0.1s;
+        transition: all 0.1s;
+        opacity: 1;
+        margin-top: 5px;
+    }
+    paper-badge[label="0"] {
+        opacity: 0;
+    }
+
+    paper-item {
+        white-space: nowrap;
+        cursor: pointer;
+        position: relative;
+    }
+    paper-item:hover::after {
+        content: "－";
+        width: 16px;
+        height: 16px;
+        display: block;
+        border-radius: 50% 50%;
+        background-color: var(--google-red-300);
+        margin-left: 10px;
+        line-height: 16px;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        position: absolute;
+        right: 15px;
+        top: calc(50% - 8px);
+    }
+
+    ul { list-style-type: none; overflow: hidden; width:800px; margin:10px}
+    ul li div.text{ float:left; width: 400px;text-align: left;height: 55px }
+    ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
+    ul li:hover { background: #eeeeee; height: 55px}
+
+    .folder {
+        height: 52px;
+        box-sizing: border-box;
+    }
+
+    .primary {
+        font-size: 16px;
+        line-height: 20px;
+        font-family: sans-serif;
+    }
+    .secondary {
+        font-size: 12px;
+        line-height: 20px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    paper-dropdown-menu.custom {
+        overflow: visible;
+        --paper-input-container-label: {
+            color: white;
+            background-color: var(--paper-pink-500);
+            font-style: italic;
+            text-align: center;
+            font-weight: bold;
+        };
+        --paper-input-container-input: {
+            color: var(--paper-indigo-500);
+            font-style: normal;
+            font-family: serif;
+            text-transform: uppercase;
+        }
+        /* no underline */
+        --paper-input-container-underline: {
+            display: none;
+        };
+    }
+</style>
+
+
+<dom-module id="alfresco-file-list">
+    <template>
+        <!-- Main List for the items -->
+        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled multi-selection>
+            <template>
+                <div>
+                    <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
+                        <li>
+                            <div class="folder-container"><img class="folder" src="img/folder.svg"></div>
+                            <div class="text">
+                                <div class="pad">
+                                    <div class="primary">
+                                        [[item.displayName]]
+                                    </div>
+                                    <div class="secondary dim">
+                                        [[item.node.description]]
+                                    </div>
+                                    <div class="secondary dim">
+                                        Modified [[item.modifiedOn]] by [[item.modifiedBy]]
+                                    </div>
+                                </div>
+                            </div>
+                            <div lass="dropdowm menu">
+                                <paper-dropdown-menu class="custom" label="Actions" no-label-float>
+                                    <paper-listbox class="dropdown-content">
+                                        <paper-item>Download as Zip</paper-item>
+                                        <paper-item>View Details</paper-item>
+                                        <paper-item>Edit Properties</paper-item>
+                                        <paper-item>Copy To...</paper-item>
+                                        <paper-item>Move To...</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="border"></div>
+                </div>
+            </template>
+        </iron-list>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: "alfresco-file-list",
+            ready: function() {
+                this.url ="http://192.168.99.100:8080/alfresco/service/slingshot/doclib/doclist/all/site/swsdp/documentLibrary";
+                function error () {
+                    console.log("error");
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
+                    this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
+                });
+
+                xhr.addEventListener("error", error);
+
+                xhr.open("GET", this.url);
+                xhr.withCredentials = true;
+                xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
+                xhr.send();
+            }
+
+        });
+    </script>
+</dom-module>

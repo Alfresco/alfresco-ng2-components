@@ -1,0 +1,283 @@
+{
+    "totalRecords": 4,
+    "startIndex": 0,
+    "metadata": {
+        "repositoryId": "302393f7-5fad-4c61-ab75-05e990bd86d6",
+        "container": "workspace://SpacesStore/8f2105b4-daaf-4874-9e8a-2152569d109b",
+        "parent": {
+            "nodeRef": "workspace://SpacesStore/8f2105b4-daaf-4874-9e8a-2152569d109b",
+            "permissions": {
+                "userAccess": {
+                    "create": true,
+                    "edit": true,
+                    "delete": true,
+                    "cancel-checkout": false,
+                    "permissions": true
+                }
+            }
+        },
+        "onlineEditing": false,
+        "itemCounts": {
+            "folders": 4,
+            "documents": 0
+        }
+    },
+    "items": [
+        {
+            "nodeRef": "workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28",
+            "nodeType": "cm:folder",
+            "type": "folder",
+            "mimetype": "",
+            "isFolder": true,
+            "isLink": false,
+            "fileName": "Agency Files",
+            "displayName": "Agency Files",
+            "status": "",
+            "title": "Agency related files",
+            "description": "This folder holds the agency related files for the project",
+            "author": "",
+            "createdOn": "2011-02-15T20:47:03.951Z",
+            "createdBy": "Mike Jackson",
+            "createdByUser": "mjackson",
+            "modifiedOn": "2011-02-15T21:00:43.616Z",
+            "modifiedBy": "Mike Jackson",
+            "modifiedByUser": "mjackson",
+            "lockedBy": "",
+            "lockedByUser": "",
+            "size": "0",
+            "version": "1.0",
+            "contentUrl": "api/node/content/workspace/SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28/Agency%20Files",
+            "webdavUrl": "/webdav/Sites/swsdp/documentLibrary/Agency%20Files",
+            "actionSet": "folder",
+            "tags": [],
+            "activeWorkflows": "",
+            "likes": {
+                "isLiked": false,
+                "totalLikes": 0
+            },
+            "location": {
+                "repositoryId": "302393f7-5fad-4c61-ab75-05e990bd86d6",
+                "site": "swsdp",
+                "siteTitle": "Sample: Web Site Design Project",
+                "container": "documentLibrary",
+                "path": "/",
+                "file": "Agency Files",
+                "parent": {
+                    "nodeRef": "workspace://SpacesStore/8f2105b4-daaf-4874-9e8a-2152569d109b"
+                }
+            },
+            "permissions": {
+                "inherited": true,
+                "roles": [
+                    "ALLOWED;GROUP_site_swsdp_SiteCollaborator;SiteCollaborator;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;ReadPermissions;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteContributor;SiteContributor;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteConsumer;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteManager;SiteManager;INHERITED"
+                ],
+                "userAccess": {
+                    "create": true,
+                    "edit": true,
+                    "delete": true,
+                    "cancel-checkout": false,
+                    "permissions": true
+                }
+            },
+            "custom": {},
+            "actionLabels": {}
+        },
+        {
+            "nodeRef": "workspace://SpacesStore/8ab12916-4897-47fb-94eb-1ab699822ecb",
+            "nodeType": "cm:folder",
+            "type": "folder",
+            "mimetype": "",
+            "isFolder": true,
+            "isLink": false,
+            "fileName": "Budget Files",
+            "displayName": "Budget Files",
+            "status": "",
+            "title": "Project finance files",
+            "description": "This folder holds the project budget and invoices",
+            "author": "",
+            "createdOn": "2011-02-15T20:50:25.839Z",
+            "createdBy": "Mike Jackson",
+            "createdByUser": "mjackson",
+            "modifiedOn": "2011-02-15T21:08:20.590Z",
+            "modifiedBy": "Mike Jackson",
+            "modifiedByUser": "mjackson",
+            "lockedBy": "",
+            "lockedByUser": "",
+            "size": "0",
+            "version": "1.0",
+            "contentUrl": "api/node/content/workspace/SpacesStore/8ab12916-4897-47fb-94eb-1ab699822ecb/Budget%20Files",
+            "webdavUrl": "/webdav/Sites/swsdp/documentLibrary/Budget%20Files",
+            "actionSet": "folder",
+            "tags": [],
+            "activeWorkflows": "",
+            "likes": {
+                "isLiked": false,
+                "totalLikes": 0
+            },
+            "location": {
+                "repositoryId": "302393f7-5fad-4c61-ab75-05e990bd86d6",
+                "site": "swsdp",
+                "siteTitle": "Sample: Web Site Design Project",
+                "container": "documentLibrary",
+                "path": "/",
+                "file": "Budget Files",
+                "parent": {
+                    "nodeRef": "workspace://SpacesStore/8f2105b4-daaf-4874-9e8a-2152569d109b"
+                }
+            },
+            "permissions": {
+                "inherited": true,
+                "roles": [
+                    "ALLOWED;GROUP_site_swsdp_SiteCollaborator;SiteCollaborator;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;ReadPermissions;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteContributor;SiteContributor;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteConsumer;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteManager;SiteManager;INHERITED"
+                ],
+                "userAccess": {
+                    "create": true,
+                    "edit": true,
+                    "delete": true,
+                    "cancel-checkout": false,
+                    "permissions": true
+                }
+            },
+            "custom": {},
+            "actionLabels": {}
+        },
+        {
+            "nodeRef": "workspace://SpacesStore/a211774d-ba6d-4a35-b97f-dacfaac7bde3",
+            "nodeType": "cm:folder",
+            "type": "folder",
+            "mimetype": "",
+            "isFolder": true,
+            "isLink": false,
+            "fileName": "Meeting Notes",
+            "displayName": "Meeting Notes",
+            "status": "",
+            "title": "Project meeting notes",
+            "description": "This folder holds notes from the project review meetings",
+            "author": "",
+            "createdOn": "2011-02-15T21:16:26.500Z",
+            "createdBy": "Mike Jackson",
+            "createdByUser": "mjackson",
+            "modifiedOn": "2011-02-15T21:16:26.500Z",
+            "modifiedBy": "Mike Jackson",
+            "modifiedByUser": "mjackson",
+            "lockedBy": "",
+            "lockedByUser": "",
+            "size": "0",
+            "version": "1.0",
+            "contentUrl": "api/node/content/workspace/SpacesStore/a211774d-ba6d-4a35-b97f-dacfaac7bde3/Meeting%20Notes",
+            "webdavUrl": "/webdav/Sites/swsdp/documentLibrary/Meeting%20Notes",
+            "actionSet": "folder",
+            "tags": [],
+            "activeWorkflows": "",
+            "likes": {
+                "isLiked": false,
+                "totalLikes": 0
+            },
+            "location": {
+                "repositoryId": "302393f7-5fad-4c61-ab75-05e990bd86d6",
+                "site": "swsdp",
+                "siteTitle": "Sample: Web Site Design Project",
+                "container": "documentLibrary",
+                "path": "/",
+                "file": "Meeting Notes",
+                "parent": {
+                    "nodeRef": "workspace://SpacesStore/8f2105b4-daaf-4874-9e8a-2152569d109b"
+                }
+            },
+            "permissions": {
+                "inherited": true,
+                "roles": [
+                    "ALLOWED;GROUP_site_swsdp_SiteCollaborator;SiteCollaborator;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;ReadPermissions;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteContributor;SiteContributor;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteConsumer;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteManager;SiteManager;INHERITED"
+                ],
+                "userAccess": {
+                    "create": true,
+                    "edit": true,
+                    "delete": true,
+                    "cancel-checkout": false,
+                    "permissions": true
+                }
+            },
+            "custom": {},
+            "actionLabels": {}
+        },
+        {
+            "nodeRef": "workspace://SpacesStore/38745585-816a-403f-8005-0a55c0aec813",
+            "nodeType": "cm:folder",
+            "type": "folder",
+            "mimetype": "",
+            "isFolder": true,
+            "isLink": false,
+            "fileName": "Presentations",
+            "displayName": "Presentations",
+            "status": "",
+            "title": "Project presentations",
+            "description": "This folder holds presentations from the project",
+            "author": "",
+            "createdOn": "2011-02-15T21:18:38.144Z",
+            "createdBy": "Mike Jackson",
+            "createdByUser": "mjackson",
+            "modifiedOn": "2011-02-15T21:18:38.144Z",
+            "modifiedBy": "Mike Jackson",
+            "modifiedByUser": "mjackson",
+            "lockedBy": "",
+            "lockedByUser": "",
+            "size": "0",
+            "version": "1.0",
+            "contentUrl": "api/node/content/workspace/SpacesStore/38745585-816a-403f-8005-0a55c0aec813/Presentations",
+            "webdavUrl": "/webdav/Sites/swsdp/documentLibrary/Presentations",
+            "actionSet": "folder",
+            "tags": [],
+            "activeWorkflows": "",
+            "likes": {
+                "isLiked": false,
+                "totalLikes": 0
+            },
+            "location": {
+                "repositoryId": "302393f7-5fad-4c61-ab75-05e990bd86d6",
+                "site": "swsdp",
+                "siteTitle": "Sample: Web Site Design Project",
+                "container": "documentLibrary",
+                "path": "/",
+                "file": "Presentations",
+                "parent": {
+                    "nodeRef": "workspace://SpacesStore/8f2105b4-daaf-4874-9e8a-2152569d109b"
+                }
+            },
+            "permissions": {
+                "inherited": true,
+                "roles": [
+                    "ALLOWED;GROUP_site_swsdp_SiteCollaborator;SiteCollaborator;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_EVERYONE;ReadPermissions;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteContributor;SiteContributor;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteConsumer;SiteConsumer;INHERITED",
+                    "ALLOWED;GROUP_site_swsdp_SiteManager;SiteManager;INHERITED"
+                ],
+                "userAccess": {
+                    "create": true,
+                    "edit": true,
+                    "delete": true,
+                    "cancel-checkout": false,
+                    "permissions": true
+                }
+            },
+            "custom": {},
+            "actionLabels": {}
+        }
+    ]
+}
