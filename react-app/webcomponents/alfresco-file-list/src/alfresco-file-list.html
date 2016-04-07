@@ -9,6 +9,7 @@
 <link rel="import" href="../../../bower_components/paper-badge/paper-badge.html">
 <link rel="import" href="../../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/iron-signals/iron-signals.html">
 
 <style>
     .pad {
@@ -113,12 +114,12 @@
 <dom-module id="alfresco-file-list">
     <template>
         <!-- Main List for the items -->
-        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled multi-selection>
+        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled>
             <template>
                 <div>
                     <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
                         <li>
-                            <div class="folder-container">
+                            <div class="folder-container" on-click="goToFolder">
                                 <template is="dom-if" if="{{item.isFolder}}">
                                     <img class="folder" src="img/folder.svg">
                                 </template>
@@ -139,8 +140,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dropdowm menu pull-right">
-                                <paper-dropdown-menu class="custom" label="Actions" no-label-float>
+                            <div lass="dropdowm menu">
+                                <paper-dropdown-menu class="custom pull-right" label="Actions" no-label-float>
                                     <paper-listbox class="dropdown-content">
                                         <paper-item>Download as Zip</paper-item>
                                         <paper-item>View Details</paper-item>
@@ -160,35 +161,62 @@
     </template>
 
     <script>
-        Polymer({
-            is: "alfresco-file-list",
+        HTMLImports.whenReady(function() {
+            Polymer({
+                is: "alfresco-file-list",
 
-            url:  "http://192.168.99.100:8080/alfresco/",
+                host: 'http://192.168.99.100:8080',
 
-            fileService: "service/slingshot/doclib/doclist/all/site/swsdp/documentLibrary",
+                baseUrl: function(){
+                    return this.host + '/alfresco/service/slingshot/doclib/doclist/all/site/';
+                },
 
-            ready: function() {
-                function error () {
-                    console.log("error");
+                properties: {
+                    showSelection: {
+                        type: Boolean,
+                        value: true,
+                        observer: '_showSelectionChanged'
+                    }
+                },
+
+                goToFolder: function(event) {
+                    var slug= event.model.item.location.site + '/' + event.model.item.location.container + '/' + event.model.item.fileName
+                    console.log('click folder'+ this.baseUrl());
+                    this.fetchFolderFolder(slug);
+                },
+
+                ready: function() {
+                    var initialFolder = 'swsdp/documentLibrary';
+                    this.fetchFolderFolder(initialFolder);
+                    var self = this;
+                    if(document.querySelector("#alfresco-app")) {
+                        document.querySelector("#alfresco-app").uploadedSignal = function (e, detail, sender) {
+                            self.fetchFolderFolder(initialFolder);
+                        };
+                    }
+                },
+
+                fetchFolderFolder: function(slug) {
+                    function error () {
+                        console.log("error");
+                    }
+                    var xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
+                        this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
+                    });
+
+                    xhr.addEventListener("error", error);
+
+                    xhr.open("GET", (this.baseUrl() + slug));
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
+                    xhr.send();
+                },
+
+                thumbBaseUrl: function () {
+                    return this.host + '/share/proxy/alfresco/';
                 }
-
-                var xhr = new XMLHttpRequest();
-                xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
-                    this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
-                });
-
-                xhr.addEventListener("error", error);
-
-                xhr.open("GET", this.url + this.fileService);
-                xhr.withCredentials = true;
-                xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
-                xhr.send();
-            },
-
-            thumbBaseUrl: function () {
-                return 'http://192.168.99.100:8080/share/proxy/alfresco/';
-            }
-
+            });
         });
     </script>
 </dom-module>

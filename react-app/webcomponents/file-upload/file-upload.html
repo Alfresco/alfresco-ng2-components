@@ -17,7 +17,8 @@ Example:
 
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
-  <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
 
 <dom-module id="file-upload">
 
@@ -29,6 +30,13 @@ Example:
 
     .file-upload-0 paper-button#button.file-upload{
       float:left;
+    }
+
+    .file{
+      width: 100%;
+    }
+    .name{
+      width: 100%;
     }
 
     .enabled {
@@ -503,6 +511,9 @@ Example:
         if (xhr.status === 200) {
           self.fire("success", {xhr: xhr});
           self.set(prefix + ".complete", true);
+          if(document.querySelector("#alfresco-app")) {
+            document.querySelector('#alfresco-app').fire('iron-signal', {name: "uploaded", data: "uploaded!"});
+          }
         } else {
           self.set(prefix + ".error", true);
           self.set(prefix + ".complete", false);
@@ -514,5 +525,4 @@ Example:
       xhr.send(formData);
     }
   });
-
 </script>
