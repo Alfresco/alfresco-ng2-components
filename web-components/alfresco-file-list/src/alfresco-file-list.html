@@ -113,12 +113,12 @@
 <dom-module id="alfresco-file-list">
     <template>
         <!-- Main List for the items -->
-        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled multi-selection>
+        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled>
             <template>
                 <div>
                     <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
                         <li>
-                            <div class="folder-container">
+                            <div class="folder-container" on-click="goToFolder">
                                 <template is="dom-if" if="{{item.isFolder}}">
                                     <img class="folder" src="img/folder.svg">
                                 </template>
@@ -160,31 +160,56 @@
     </template>
 
     <script>
-        Polymer({
-            is: "alfresco-file-list",
-            ready: function() {
-                this.url ="http://192.168.99.100:8080/alfresco/service/slingshot/doclib/doclist/all/site/swsdp/documentLibrary";
-                function error () {
-                    console.log("error");
-                }
+        HTMLImports.whenReady(function() {
+            Polymer({
+                is: "alfresco-file-list",
 
-                var xhr = new XMLHttpRequest();
-                xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
-                    this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
-                });
+                host: 'http://192.168.99.100:8080',
 
-                xhr.addEventListener("error", error);
+                baseUrl: function(){
+                    return this.host + '/alfresco/service/slingshot/doclib/doclist/all/site/';
+                },
 
-                xhr.open("GET", this.url + this.fileService);
-                xhr.withCredentials = true;
-                xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
-                xhr.send();
+                properties: {
+                    showSelection: {
+                        type: Boolean,
+                        value: true,
+                        observer: '_showSelectionChanged'
+                    }
+                },
+
+                goToFolder: function(event) {
+                    var slug= event.model.item.location.site + '/' + event.model.item.location.container + '/' + event.model.item.fileName
+                    console.log('click folder'+ this.baseUrl());
+                    this.fetchFolderFolder(slug);
+                },
+
+                ready: function() {
+                    var initialFolder = 'swsdp/documentLibrary';
+                    this.fetchFolderFolder(initialFolder);
+                },
+
+                fetchFolderFolder: function(slug) {
+                    function error () {
+                        console.log("error");
+                    }
+                    var xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
+                        this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
+                    });
+
+                    xhr.addEventListener("error", error);
+
+                    xhr.open("GET", (this.baseUrl() + slug));
+                    xhr.withCredentials = true;
+                    xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
+                    xhr.send();
             },
 
             thumbBaseUrl: function () {
-                return 'http://192.168.99.100:8080/share/proxy/alfresco/';
-            }
-
+                return this.host + '/share/proxy/alfresco/';
+                }
+            });
         });
     </script>
 </dom-module>
