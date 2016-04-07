@@ -36,8 +36,3 @@ To receive a signal, listen for `iron-signal-<name>` event on a
 You can fire a signal event from anywhere, and all
 `iron-signals` elements will receive the event, regardless
 of where they are in DOM.
-<<<<<<< HEAD
-
-
-=======
->>>>>>> comunication between components

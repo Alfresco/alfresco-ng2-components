@@ -36,6 +36,14 @@ Or [download as ZIP](https://github.com/eromano/alfresco-file-list/archive/maste
     <alfresco-file-list></alfresco-file-list>
     ```
 
+# publish-subscribe functionality
+Add the code below to the main index.html in order to refresh the file list when a file is uploaded.
+
+<template is="dom-bind" id="alfresco-app">
+     <iron-signals on-iron-signal-uploaded="uploadedSignal"></iron-signals>
+</template>
+```
+
 ## Options
 
 Attribute     | Options     | Default      | Description

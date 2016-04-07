@@ -9,6 +9,7 @@
 <link rel="import" href="../../../bower_components/paper-badge/paper-badge.html">
 <link rel="import" href="../../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/iron-signals/iron-signals.html">
 
 <style>
     .pad {
@@ -140,7 +141,7 @@
                                 </div>
                             </div>
                             <div lass="dropdowm menu">
-                                <paper-dropdown-menu class="custom" label="Actions" no-label-float>
+                                <paper-dropdown-menu class="custom pull-right" label="Actions" no-label-float>
                                     <paper-listbox class="dropdown-content">
                                         <paper-item>Download as Zip</paper-item>
                                         <paper-item>View Details</paper-item>
@@ -187,6 +188,12 @@
                 ready: function() {
                     var initialFolder = 'swsdp/documentLibrary';
                     this.fetchFolderFolder(initialFolder);
+                    var self = this;
+                    if(document.querySelector("#alfresco-app")) {
+                        document.querySelector("#alfresco-app").uploadedSignal = function (e, detail, sender) {
+                            self.fetchFolderFolder(initialFolder);
+                        };
+                    }
                 },
 
                 fetchFolderFolder: function(slug) {

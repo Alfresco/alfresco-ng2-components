@@ -8,3 +8,11 @@ To install simply run:
 ```
 bower install --save file-upload
 ```
+
+# publish-subscribe functionality
+Add the code below to the main index.html in order to publish an event when a file is uploaded. This event is used by the others components to refresh or make action.
+
+<template is="dom-bind" id="alfresco-app">
+     <iron-signals on-iron-signal-uploaded="uploadedSignal"></iron-signals>
+</template>
+```
