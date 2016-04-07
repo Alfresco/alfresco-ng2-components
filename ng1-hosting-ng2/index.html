@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app/app.css">
+  <link rel="stylesheet" href="app/css/theme/navbar.css">
+
   <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 
   <!-- Angular2 integration -->
@@ -40,7 +42,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" [routerLink]="['Home']">Demo</a>
+      <a class="navbar-brand navbar-alfresco-logo" [routerLink]="['Home']">
+        <img src="app/img/blank.gif">
+      </a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">

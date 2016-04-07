@@ -24,7 +24,10 @@ System.register(["angular2/core"], function(exports_1, context_1) {
                 AppNavBar = __decorate([
                     core_1.Component({
                         selector: 'app-navbar',
-                        template: "\n        <nav class=\"navbar navbar-default navbar-fixed-top\">\n            <div class=\"container-fluid\">\n                <ng-content></ng-content>\n            </div>\n        </nav>\n    "
+                        template: "\n        <nav class=\"navbar navbar-default navbar-fixed-top\">\n            <div class=\"container-fluid\">\n                <ng-content></ng-content>\n            </div>\n        </nav>\n    ",
+                        styles: [
+                            "\n        :host .image-button {\n            padding-bottom: 10px;\n            padding-top: 12px;\n            max-height: 50px;\n        }\n        "
+                        ]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppNavBar);
