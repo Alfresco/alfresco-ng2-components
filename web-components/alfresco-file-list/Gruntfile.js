@@ -16,7 +16,7 @@ module.exports = function(grunt) {
             src: [
                 'bower_components/**/*',
                 '!bower_components/alfresco-file-list/**/*',
-                'demo/*', 'src/*', 'index-demo.html'
+                'demo/*', 'src/*', 'index.html'
             ]
         },
         'replace': {
