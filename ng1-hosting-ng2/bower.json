@@ -10,6 +10,11 @@
     "angular-route": "~1.4.0",
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
-    "html5-boilerplate": "~5.2.0"
+    "html5-boilerplate": "~5.2.0",
+    "webcomponentsjs": "~0.7.21",
+    "polymer": "~1.4.0",
+    "paper-button": "~1.0.11",
+    "paper-progress": "~1.0.9",
+    "iron-icons": "~1.1.3"
   }
 }

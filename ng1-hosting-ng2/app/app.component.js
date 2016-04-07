@@ -23,11 +23,15 @@ System.register(['angular2/core', "./components/ng2/tabs"], function(exports_1, 
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
+                    this.target = 'http://192.168.99.100:8080/alfresco/service/api/upload';
+                    this.multi = 'true';
+                    this.accept = 'image/*';
+                    this.droppable = false;
                 }
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n        <h2>Angular 2 components</h2>\n        <tabs>\n            <tab tabTitle=\"Foo\">\n                Content of tab Foo\n            </tab>\n            <tab tabTitle=\"Bar\">\n                Content of tab Bar\n            </tab>\n        </tabs>\n    ",
+                        template: "\n        <h2>Angular 2 components</h2>\n        <tabs>\n            <tab tabTitle=\"Foo\">\n                <file-upload accept=\"{{accept}}\"  droppable=\"{{droppable}}\" target=\"{{target}}\" multi=\"false\"  >Choose File</file-upload>\n            </tab>\n            <tab tabTitle=\"Bar\">\n                Content of tab Bar\n            </tab>\n        </tabs>\n    ",
                         directives: [tabs_1.Tabs, tabs_1.Tab]
                     }), 
                     __metadata('design:paramtypes', [])

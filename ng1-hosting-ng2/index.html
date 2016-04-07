@@ -14,6 +14,17 @@
   <link rel="stylesheet" href="app/css/theme/navbar.css">
 
   <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <script src="app/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <script>
+    /* this script must run before Polymer is imported */
+    window.Polymer = {
+      dom: 'shadow',
+      lazyRegister: true
+    };
+  </script>
+
+  <!--ALFRESCO CUSTOM WEBCOMPONENTS-->
+  <link rel="import" href="webcomponents/file-upload/file-upload.html">
 
   <!-- Angular2 integration -->
   <!-- 1. Load libraries -->
