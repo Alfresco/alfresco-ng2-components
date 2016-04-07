@@ -23,7 +23,12 @@ Example:
 
   <style type="text/css">
     :host {
-        display: inline-block;
+      width: 100%;
+      display: inline-block;
+    }
+
+    .file-upload-0 paper-button#button.file-upload{
+      float:left;
     }
 
     .enabled {
@@ -38,6 +43,7 @@ Example:
     }
 
     #UploadBorder{
+      width: 80%;
       vertical-align: middle;
       color: #555;
       padding: 20px;
@@ -53,6 +59,7 @@ Example:
     }
 
     paper-button#button {
+      font: 13px/1.231 Open Sans,arial,helvetica,clean,sans-serif;
       margin-bottom: 20px;
       @apply(--file-upload-button);
     }

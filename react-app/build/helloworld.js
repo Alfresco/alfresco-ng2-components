@@ -25,24 +25,16 @@ var CommentBox = React.createClass({
                 'div',
                 null,
                 React.createElement(
-                    'div',
+                    'form',
                     null,
                     React.createElement(
-                        'form',
-                        null,
-                        React.createElement(
-                            'file-upload',
-                            { raised: 'true', accept: this.state.accept, droppable: 'false', target: this.state.action, multi: 'false' },
-                            React.createElement('iron-icon', { icon: 'icons:add' }),
-                            ' Add File'
-                        )
+                        'file-upload',
+                        { raised: 'true', accept: this.state.accept, droppable: 'false', target: this.state.action, multi: 'false' },
+                        React.createElement('iron-icon', { icon: 'icons:add' }),
+                        ' Add File'
                     )
                 ),
-                React.createElement(
-                    'div',
-                    null,
-                    React.createElement('alfresco-file-list', null)
-                )
+                React.createElement('alfresco-file-list', null)
             )
         );
     }

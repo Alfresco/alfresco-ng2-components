@@ -19,14 +19,10 @@ var CommentBox = React.createClass({
         return (
             <div className="commentBox">
                 <div>
-                    <div>
                         <form>
                             <file-upload raised='true' accept={this.state.accept} droppable='false' target={this.state.action}  multi='false'  ><iron-icon icon="icons:add"></iron-icon> Add File</file-upload>
                         </form>
-                    </div>
-                    <div >
                         <alfresco-file-list></alfresco-file-list>
-                    </div>
                 </div>
             </div>
         );
