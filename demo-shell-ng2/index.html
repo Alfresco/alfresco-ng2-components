@@ -12,6 +12,17 @@
     <!-- Custom theme -->
     <link rel="stylesheet" href="app/css/theme/navbar.css">
 
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script>
+        /* this script must run before Polymer is imported */
+        window.Polymer = {
+            dom: 'shadow',
+            lazyRegister: true
+        };
+    </script>
+
+    <!--ALFRESCO CUSTOM WEBCOMPONENTS-->
+    <link rel="import" href="webcomponents/file-upload/file-upload.html">
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->

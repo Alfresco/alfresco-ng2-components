@@ -1,0 +1,28 @@
+{
+  "name": "angular2-quickstart",
+  "description": "",
+  "main": "",
+  "authors": [
+    "mauriziovitale84 <maurizio.vitale@alfresco.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Alfresco/dev-platform-webcomponents",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~1.4.0",
+    "webcomponentsjs": "~0.7.21",
+    "paper-button": "~1.0.11",
+    "paper-progress": "~1.0.9",
+    "iron-icons": "~1.1.3"
+  }
+}

@@ -27,6 +27,11 @@ import {Page2View} from "./components/page2.view";
 ])
 export class AppComponent {
 
+    target: string = 'http://192.168.99.100:8080/alfresco/service/api/upload';
+    multi: string = 'true';
+    accept: string ='image/*';
+    droppable: boolean = false;
+
     constructor(
         public auth: Authentication,
         public router: Router
