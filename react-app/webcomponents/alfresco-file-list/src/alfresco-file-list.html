@@ -7,47 +7,10 @@
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../../bower_components/paper-badge/paper-badge.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
 <style>
-    app-toolbar {
-        background: var(--paper-pink-500);
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-        color: white;
-        z-index: 1;
-        color: white;
-        --paper-toolbar-title: {
-            font-size: 16px;
-            line-height: 16px;
-            font-weight: bold;
-            margin-left: 0;
-        };
-    }
-    app-toolbar paper-icon-button {
-        --paper-icon-button-ink-color: white;
-    }
-    #itemsList,
-    #selectedItemsList {
-        @apply(--layout-flex);
-    }
-    .item {
-        @apply(--layout-horizontal);
-        cursor: pointer;
-        padding: 16px 22px;
-        border-bottom: 1px solid #DDD;
-    }
-    .item:focus,
-    .item.selected:focus {
-        outline: 0;
-        background-color: #ddd;
-    }
-    .item.selected .star {
-        color: var(--paper-blue-600);
-    }
-    .item.selected {
-        background-color: var(--google-grey-300);
-        border-bottom: 1px solid #ccc;
-    }
-
     .pad {
         @apply(--layout-flex);
         @apply(--layout-vertical);
@@ -57,10 +20,7 @@
     .dim {
         color: gray;
     }
-    .star {
-        width: 24px;
-        height: 24px;
-    }
+
     paper-badge {
         -webkit-transition: all 0.1s;
         transition: all 0.1s;
@@ -70,10 +30,7 @@
     paper-badge[label="0"] {
         opacity: 0;
     }
-    #starredView {
-        width: 200px;
-        border-left: 1px solid #ddd;
-    }
+
     paper-item {
         white-space: nowrap;
         cursor: pointer;
@@ -96,21 +53,15 @@
         right: 15px;
         top: calc(50% - 8px);
     }
-    .noSelection {
-        color: #999;
-        margin-left: 10px;
-        line-height: 50px;
-    }
-
-    #starredView {
-        @apply(--layout-vertical);
-    }
 
     ul { list-style-type: none; overflow: hidden; width:800px; margin:10px}
     ul li div.text{ float:left; width: 400px;text-align: left;height: 55px }
     ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
     ul li:hover { background: #eeeeee; height: 55px}
-
+    .file{
+        width: 52px;
+        height: 52px;
+    }
     .folder {
         height: 52px;
         box-sizing: border-box;
@@ -127,32 +78,69 @@
         color: gray;
         font-family: sans-serif;
     }
+
+    paper-dropdown-menu.custom {
+        overflow: visible;
+        --paper-input-container-label: {
+            color: white;
+            background-color: var(--paper-pink-500);
+            font-style: italic;
+            text-align: center;
+            font-weight: bold;
+        };
+        --paper-input-container-input: {
+            color: var(--paper-indigo-500);
+            font-style: normal;
+            font-family: serif;
+            text-transform: uppercase;
+        }
+        /* no underline */
+        --paper-input-container-underline: {
+            display: none;
+        };
+    }
 </style>
 
 
 <dom-module id="alfresco-file-list">
     <template>
-        <iron-ajax url="files.json" last-response="{{data}}" auto></iron-ajax>
-
         <!-- Main List for the items -->
-        <iron-list id="itemsList" items="[[data.items]]" selected-items="{{selectedItems}}" selection-enabled multi-selection>
+        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled multi-selection>
             <template>
                 <div>
                     <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
                         <li>
-                            <div class="folder-container"><img class="folder" src="img/folder.svg"></div>
+                            <div class="folder-container">
+                                <template is="dom-if" if="{{item.isFolder}}">
+                                    <img class="folder" src="img/folder.svg">
+                                </template>
+                                <template is="dom-if" if="{{!item.isFolder}}">
+                                    <img class="file" src="{{thumbBaseUrl()}}{{item.contentUrl}}">
+                                </template>
+                            </div>
                             <div class="text">
                                 <div class="pad">
                                     <div class="primary">
                                         [[item.displayName]]
                                     </div>
                                     <div class="secondary dim">
-                                        [[item.node.properties.cm:description]]
+                                        [[item.node.description]]
                                     </div>
                                     <div class="secondary dim">
-                                        Modified [[item.node.properties.cm:modified.iso8601]] by [[item.node.properties.cm:modifier.displayName]]
+                                        Modified [[item.modifiedOn]] by [[item.modifiedBy]]
                                     </div>
                                 </div>
+                            </div>
+                            <div lass="dropdowm menu">
+                                <paper-dropdown-menu class="custom" label="Actions" no-label-float>
+                                    <paper-listbox class="dropdown-content">
+                                        <paper-item>Download as Zip</paper-item>
+                                        <paper-item>View Details</paper-item>
+                                        <paper-item>Edit Properties</paper-item>
+                                        <paper-item>Copy To...</paper-item>
+                                        <paper-item>Move To...</paper-item>
+                                    </paper-listbox>
+                                </paper-dropdown-menu>
                             </div>
                         </li>
                     </ul>
@@ -165,7 +153,34 @@
 
     <script>
         Polymer({
-            is: "alfresco-file-list"
+            is: "alfresco-file-list",
+
+            url:  "http://192.168.99.100:8080/alfresco/",
+
+            fileService: "service/slingshot/doclib/doclist/all/site/swsdp/documentLibrary",
+
+            ready: function() {
+                function error () {
+                    console.log("error");
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
+                    this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
+                });
+
+                xhr.addEventListener("error", error);
+
+                xhr.open("GET", this.url + this.fileService);
+                xhr.withCredentials = true;
+                xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
+                xhr.send();
+            },
+
+            thumbBaseUrl: function () {
+                return 'http://192.168.99.100:8080/share/proxy/alfresco/';
+            }
+
         });
     </script>
 </dom-module>

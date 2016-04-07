@@ -1,14 +1,14 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-list/iron-list.html">
-<link rel="import" href="../bower_components/paper-styles/color.html">
-<link rel="import" href="../bower_components/paper-styles/typography.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../bower_components/paper-badge/paper-badge.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../../bower_components/paper-badge/paper-badge.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
 <style>
     .pad {
@@ -58,7 +58,10 @@
     ul li div.text{ float:left; width: 400px;text-align: left;height: 55px }
     ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
     ul li:hover { background: #eeeeee; height: 55px}
-
+    .file{
+        width: 52px;
+        height: 52px;
+    }
     .folder {
         height: 52px;
         box-sizing: border-box;
@@ -107,7 +110,14 @@
                 <div>
                     <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
                         <li>
-                            <div class="folder-container"><img class="folder" src="img/folder.svg"></div>
+                            <div class="folder-container">
+                                <template is="dom-if" if="{{item.isFolder}}">
+                                    <img class="folder" src="img/folder.svg">
+                                </template>
+                                <template is="dom-if" if="{{!item.isFolder}}">
+                                    <img class="file" src="{{thumbBaseUrl()}}{{item.contentUrl}}">
+                                </template>
+                            </div>
                             <div class="text">
                                 <div class="pad">
                                     <div class="primary">
@@ -149,6 +159,7 @@
                 function error () {
                     console.log("error");
                 }
+
                 var xhr = new XMLHttpRequest();
                 xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
                     this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
@@ -156,10 +167,14 @@
 
                 xhr.addEventListener("error", error);
 
-                xhr.open("GET", this.url);
+                xhr.open("GET", this.url + this.fileService);
                 xhr.withCredentials = true;
                 xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
                 xhr.send();
+            },
+
+            thumbBaseUrl: function () {
+                return 'http://192.168.99.100:8080/share/proxy/alfresco/';
             }
 
         });
