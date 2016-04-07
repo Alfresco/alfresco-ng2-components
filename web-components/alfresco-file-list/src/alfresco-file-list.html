@@ -101,10 +101,8 @@
 
 <dom-module id="alfresco-file-list">
     <template>
-        <iron-ajax url="files.json" last-response="{{data}}" auto></iron-ajax>
-
         <!-- Main List for the items -->
-        <iron-list id="itemsList" items="[[data.items]]" selected-items="{{selectedItems}}" selection-enabled multi-selection>
+        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled multi-selection>
             <template>
                 <div>
                     <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
@@ -145,7 +143,25 @@
 
     <script>
         Polymer({
-            is: "alfresco-file-list"
+            is: "alfresco-file-list",
+            ready: function() {
+                this.url ="http://192.168.99.100:8080/alfresco/service/slingshot/doclib/doclist/all/site/swsdp/documentLibrary";
+                function error () {
+                    console.log("error");
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
+                    this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
+                });
+
+                xhr.addEventListener("error", error);
+
+                xhr.open("GET", this.url);
+                xhr.withCredentials = true;
+                xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
+                xhr.send();
+            }
+
         });
     </script>
 </dom-module>
