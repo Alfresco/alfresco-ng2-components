@@ -1,6 +1,6 @@
 var CommentBox = React.createClass({
     getInitialState: function() {
-    return { accept: 'image/*', action: 'target.php', droppable: ''};
+    return { accept: 'image/*', action: 'http://192.168.99.100:8080/alfresco/service/api/upload', droppable: ''};
     },
 
     onChangeAccept: function(e) {
