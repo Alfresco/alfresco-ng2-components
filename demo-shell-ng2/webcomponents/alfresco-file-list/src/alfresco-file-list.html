@@ -55,10 +55,10 @@
         top: calc(50% - 8px);
     }
 
-    ul { list-style-type: none; overflow: hidden;  margin:10px}
-    ul li div.text{ float:left; text-align: left;height: 55px }
-    ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
-    ul li:hover { background: #eeeeee; height: 55px}
+    .iron-list ul { list-style-type: none; overflow: hidden;  margin:10px}
+    .iron-list ul li div.text{ float:left; text-align: left;height: 55px }
+    .iron-list ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
+    .iron-list ul li:hover { background: #eeeeee; height: 55px}
     .file{
         width: 52px;
         height: 52px;
@@ -142,7 +142,7 @@
     <template>
         <div class="breadcrumb">
             <template is="dom-repeat" items="{{breadcrumbs}}">
-                <div class="folder-breadcrumb-container">
+                <div on-click="goToFolderBreadcrumbs" data-name="[[item]]" class="folder-breadcrumb-container">
                     <img class="folder-breadcrumb-img" src="img/folder.svg">
 
                     <div class="folder-breadcrumb-text">[[item]]</div>
@@ -222,12 +222,14 @@
                     var relativePath = this.container + path + event.model.item.fileName;
                     var slug = event.model.item.location.site + '/' + relativePath;
                     this.breadcrumbs = relativePath.split('/');
-                    console.log('event.model.item.location.path' +  event.model.item.location.path);
-                    console.log('event.model.item.fileName' +  event.model.item.fileName);
-                    console.log('event.model.item.location.site' +  event.model.item.location.site);
+                    this.fetchFolderFolder(slug);
+                },
 
-                    console.log('relativePath' + relativePath);
-                    console.log('this.breadcrumbs' + this.breadcrumbs);
+                goToFolderBreadcrumbs: function (event) {
+                    var currentRelative = event.model.__data__.item;
+                    var currentRelativeIndexInSlug = this.lastSlug.indexOf(currentRelative);
+                    var slug = this.lastSlug.substr(0, currentRelativeIndexInSlug + currentRelative.length);
+                    this.breadcrumbs = slug.substr(6,slug.length).split('/');
                     this.fetchFolderFolder(slug);
                 },
 
@@ -237,7 +239,7 @@
                     this.fetchFolderFolder(initialFolder);
                     var self = this;
                     if(document.querySelector("#alfresco-app")) {
-                        document.querySelector("#alfresco-app").uploadedSignal = function (e, detail, sender) {
+                        document.querySelector("#alfresco-app").uploadedSignal = function () {
                             self.fetchFolderFolder(initialFolder);
                         };
                     }
@@ -254,6 +256,7 @@
 
                     xhr.addEventListener("error", error);
 
+                    this.lastSlug = slug;
                     xhr.open("GET", (this.baseUrl() + slug));
                     xhr.withCredentials = true;
                     xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
