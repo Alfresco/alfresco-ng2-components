@@ -88,6 +88,32 @@
         padding: 0px;
     }
 
+    .breadcrumb {
+        font-family: sans-serif;
+        font-size: 12px;
+        padding-left: 11px;
+        height: 28px;
+        width: auto;
+    }
+
+    .folder-breadcrumb-img{
+        float: left;
+        text-align: left;
+        height: 15px;
+        padding: 0px 10px 0px 0px;
+    }
+
+    .folder-breadcrumb-text{
+        float: left;
+        text-align: left;
+        height: 25px;
+        padding: 0px 10px 0px 0px;
+    }
+
+    .folder-breadcrumb-container{
+        float: left;
+    }
+
     paper-dropdown-menu.custom {
         overflow: visible;
         --paper-input-container-label: {
@@ -108,11 +134,22 @@
             display: none;
         };
     }
+
 </style>
 
 
 <dom-module id="alfresco-file-list">
     <template>
+        <div class="breadcrumb">
+            <template is="dom-repeat" items="{{breadcrumbs}}">
+                <div class="folder-breadcrumb-container">
+                    <img class="folder-breadcrumb-img" src="img/folder.svg">
+
+                    <div class="folder-breadcrumb-text">[[item]]</div>
+                </div>
+            </template>
+        </div>
+
         <!-- Main List for the items -->
         <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled>
             <template>
@@ -179,13 +216,23 @@
                     }
                 },
 
-                goToFolder: function(event) {
-                    var slug= event.model.item.location.site + '/' + event.model.item.location.container + '/' + event.model.item.fileName
-                    console.log('click folder'+ this.baseUrl());
+                goToFolder: function (event) {
+                    this.container = event.model.item.location.container;
+                    var path = event.model.item.location.path !== '/' ? (event.model.item.location.path + '/' ) : '/';
+                    var relativePath = this.container + path + event.model.item.fileName;
+                    var slug = event.model.item.location.site + '/' + relativePath;
+                    this.breadcrumbs = relativePath.split('/');
+                    console.log('event.model.item.location.path' +  event.model.item.location.path);
+                    console.log('event.model.item.fileName' +  event.model.item.fileName);
+                    console.log('event.model.item.location.site' +  event.model.item.location.site);
+
+                    console.log('relativePath' + relativePath);
+                    console.log('this.breadcrumbs' + this.breadcrumbs);
                     this.fetchFolderFolder(slug);
                 },
 
                 ready: function() {
+                    this.breadcrumbs = ['documentLibrary'];
                     var initialFolder = 'swsdp/documentLibrary';
                     this.fetchFolderFolder(initialFolder);
                     var self = this;
