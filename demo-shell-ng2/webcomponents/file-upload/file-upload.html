@@ -121,7 +121,8 @@ Example:
   <template>
     <div>
       <paper-button id="button" icon="file-upload" class="blue" on-click="_fileClick">
-        <content></content>
+        <iron-icon icon="icons:add" class="x-scope iron-icon-1"></iron-icon>
+          <span data-reactid=".0.0.0.0.1"> Add File</span>
       </paper-button>
       <div id='UploadBorder'>
         <div id="dropArea" hidden$="{{!_shownDropText}}">{{droptext}}</div>
