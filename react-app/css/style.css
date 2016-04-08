@@ -2,6 +2,10 @@
     font: 13px/1.231 Open Sans,arial,helvetica,clean,sans-serif;
 }
 
+.paper-toolbar-0 .iron-icon{
+        color: #ffffff;
+}
+
 .logo-header{
     margin: 17px 25px 0 10px;
     width: 155px;

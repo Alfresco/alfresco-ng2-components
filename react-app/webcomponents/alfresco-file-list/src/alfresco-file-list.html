@@ -314,6 +314,8 @@
                 },
 
                 fetchFolderFolder: function(slug) {
+                    this.lastSlug = slug;
+
                     function error (resp) {
                         console.log("error", resp);
                         deleteTicket();
