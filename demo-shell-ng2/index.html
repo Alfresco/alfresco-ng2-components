@@ -59,7 +59,9 @@
 </head>
 <!-- 3. Display the application -->
 <body class="cbp-spmenu-push">
-
+<template is="dom-bind" id="alfresco-app">
+    <iron-signals on-iron-signal-uploaded="uploadedSignal"></iron-signals>
+</template>
 <my-app>Loading...</my-app>
 
 </body>
