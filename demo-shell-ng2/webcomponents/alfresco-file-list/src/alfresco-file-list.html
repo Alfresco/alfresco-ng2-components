@@ -167,7 +167,7 @@
                                     <img class="folder" src="img/folder.svg">
                                 </template>
                                 <template is="dom-if" if="{{!item.isFolder}}">
-                                    <img class="file" src="{{thumbBaseUrl()}}{{item.contentUrl}}">
+                                    <img class="file" src="{{getThumbnailUrl(item)}}">
                                 </template>
                             </div>
                             <div class="text">
@@ -258,7 +258,7 @@
                     var xhr = new XMLHttpRequest();
                     xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
                         this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
-                });
+                    });
 
                     xhr.addEventListener("error", error);
 
@@ -271,6 +271,10 @@
 
                 thumbBaseUrl: function () {
                     return this.host + '/alfresco/service/';
+                },
+
+                getThumbnailUrl: function(item) {
+                    return this.host + '/alfresco/service/api/node/' + item.nodeRef.replace('://', '/') + '/content/thumbnails/doclib?c=queue&amp;ph=true&amp;lastModified=1';
                 }
             });
         });

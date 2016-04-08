@@ -167,7 +167,7 @@
                                     <img class="folder" src="img/folder.svg">
                                 </template>
                                 <template is="dom-if" if="{{!item.isFolder}}">
-                                    <img class="file" src="{{thumbBaseUrl()}}{{item.contentUrl}}">
+                                    <img class="file" src="{{getThumbnailUrl(item)}}">
                                 </template>
                             </div>
                             <div class="text">
@@ -268,6 +268,10 @@
                     xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
                     xhr.send();
             },
+
+            getThumbnailUrl: function(item) {
+                    return this.host + '/alfresco/service/api/node/' + item.nodeRef.replace('://', '/') + '/content/thumbnails/doclib?c=queue&amp;ph=true&amp;lastModified=1';
+                },
 
             thumbBaseUrl: function () {
                 return this.host + '/alfresco/service/';
