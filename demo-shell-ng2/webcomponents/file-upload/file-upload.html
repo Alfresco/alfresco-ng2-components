@@ -17,13 +17,26 @@ Example:
 
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
-  <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
 
 <dom-module id="file-upload">
 
   <style type="text/css">
     :host {
-        display: inline-block;
+      width: 100%;
+      display: inline-block;
+    }
+
+    .file-upload-0 paper-button#button.file-upload{
+      float:left;
+    }
+
+    .file{
+      width: 100%;
+    }
+    .name{
+      width: 100%;
     }
 
     .enabled {
@@ -38,6 +51,7 @@ Example:
     }
 
     #UploadBorder{
+      width: 80%;
       vertical-align: middle;
       color: #555;
       padding: 20px;
@@ -53,6 +67,7 @@ Example:
     }
 
     paper-button#button {
+      font: 13px/1.231 Open Sans,arial,helvetica,clean,sans-serif;
       margin-bottom: 20px;
       @apply(--file-upload-button);
     }
@@ -99,7 +114,7 @@ Example:
 
     paper-button#button {
       margin-bottom: 20px;
-      background-color: aquamarine;
+      background-color: rgba(255, 152, 0, 0.75);
     }
   </style>
 
@@ -201,7 +216,7 @@ Example:
       */
       droptext: {
         type: String,
-        value: "Drop Files Here"
+        value: ""
       },
 
       /**
@@ -327,7 +342,9 @@ Example:
       if (this.droppable === 'true') {
         this._showDropText();
         this.setupDrop();
-      } else { this._hideDropText(); }
+      } else {
+        this._hideDropText();
+      }
     },
 
     /**
@@ -494,6 +511,9 @@ Example:
         if (xhr.status === 200) {
           self.fire("success", {xhr: xhr});
           self.set(prefix + ".complete", true);
+          if(document.querySelector("#alfresco-app")) {
+            document.querySelector('#alfresco-app').fire('iron-signal', {name: "uploaded", data: "uploaded!"});
+          }
         } else {
           self.set(prefix + ".error", true);
           self.set(prefix + ".complete", false);
@@ -505,5 +525,4 @@ Example:
       xhr.send(formData);
     }
   });
-
 </script>

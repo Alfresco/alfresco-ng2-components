@@ -7,6 +7,9 @@
 <link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../../bower_components/paper-badge/paper-badge.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/iron-signals/iron-signals.html">
 
 <style>
     .pad {
@@ -52,11 +55,14 @@
         top: calc(50% - 8px);
     }
 
-    ul { list-style-type: none; overflow: hidden; width:800px; margin:10px}
-    ul li div.text{ float:left; width: 400px;text-align: left;height: 55px }
+    ul { list-style-type: none; overflow: hidden;  margin:10px}
+    ul li div.text{ float:left; text-align: left;height: 55px }
     ul li div.folder-container{ float:left; width: 70px;text-align: left ;height: 55px}
     ul li:hover { background: #eeeeee; height: 55px}
-
+    .file{
+        width: 52px;
+        height: 52px;
+    }
     .folder {
         height: 52px;
         box-sizing: border-box;
@@ -72,6 +78,14 @@
         line-height: 20px;
         color: gray;
         font-family: sans-serif;
+    }
+
+    .pull-right{
+        float: right;
+    }
+
+    .iron-list ul{
+        padding: 0px;
     }
 
     paper-dropdown-menu.custom {
@@ -100,12 +114,19 @@
 <dom-module id="alfresco-file-list">
     <template>
         <!-- Main List for the items -->
-        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled multi-selection>
+        <iron-list id="itemsList" items="{{data}}" selected-items="{{selectedItems}}" selection-enabled>
             <template>
                 <div>
                     <ul tabindex$="[[tabIndex]]" aria-label$="Select/Deselect [[item.name]]" class$="[[_computedClass(selected)]]">
                         <li>
-                            <div class="folder-container"><img class="folder" src="img/folder.svg"></div>
+                            <div class="folder-container" on-click="goToFolder">
+                                <template is="dom-if" if="{{item.isFolder}}">
+                                    <img class="folder" src="img/folder.svg">
+                                </template>
+                                <template is="dom-if" if="{{!item.isFolder}}">
+                                    <img class="file" src="{{thumbBaseUrl()}}{{item.contentUrl}}">
+                                </template>
+                            </div>
                             <div class="text">
                                 <div class="pad">
                                     <div class="primary">
@@ -120,7 +141,7 @@
                                 </div>
                             </div>
                             <div lass="dropdowm menu">
-                                <paper-dropdown-menu class="custom" label="Actions" no-label-float>
+                                <paper-dropdown-menu class="custom pull-right" label="Actions" no-label-float>
                                     <paper-listbox class="dropdown-content">
                                         <paper-item>Download as Zip</paper-item>
                                         <paper-item>View Details</paper-item>
@@ -140,26 +161,61 @@
     </template>
 
     <script>
-        Polymer({
-            is: "alfresco-file-list",
-            ready: function() {
-                this.url ="http://192.168.99.100:8080/alfresco/service/slingshot/doclib/doclist/all/site/swsdp/documentLibrary";
-                function error () {
-                    console.log("error");
+        HTMLImports.whenReady(function() {
+            Polymer({
+                is: "alfresco-file-list",
+
+                host: 'http://192.168.99.100:8080',
+
+                baseUrl: function(){
+                    return this.host + '/alfresco/service/slingshot/doclib/doclist/all/site/';
+                },
+
+                properties: {
+                    showSelection: {
+                        type: Boolean,
+                        value: true,
+                        observer: '_showSelectionChanged'
+                    }
+                },
+
+                goToFolder: function(event) {
+                    var slug= event.model.item.location.site + '/' + event.model.item.location.container + '/' + event.model.item.fileName
+                    console.log('click folder'+ this.baseUrl());
+                    this.fetchFolderFolder(slug);
+                },
+
+                ready: function() {
+                    var initialFolder = 'swsdp/documentLibrary';
+                    this.fetchFolderFolder(initialFolder);
+                    var self = this;
+                    if(document.querySelector("#alfresco-app")) {
+                        document.querySelector("#alfresco-app").uploadedSignal = function (e, detail, sender) {
+                            self.fetchFolderFolder(initialFolder);
+                        };
+                    }
+                },
+
+                fetchFolderFolder: function(slug) {
+                    function error () {
+                        console.log("error");
+                    }
+                    var xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
+                        this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
+                    });
+
+                    xhr.addEventListener("error", error);
+
+                    xhr.open("GET", (this.baseUrl() + slug));
+                    xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
+                    xhr.send();
+                },
+
+                thumbBaseUrl: function () {
+                    return this.host + '/share/proxy/alfresco/';
                 }
-                var xhr = new XMLHttpRequest();
-                xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
-                    this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
-                });
-
-                xhr.addEventListener("error", error);
-
-                xhr.open("GET", this.url);
-                xhr.withCredentials = true;
-                xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
-                xhr.send();
-            }
-
+            });
         });
     </script>
 </dom-module>
