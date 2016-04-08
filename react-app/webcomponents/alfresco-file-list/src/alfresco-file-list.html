@@ -135,6 +135,15 @@
         };
     }
 
+    .paper-toolbar-0 {
+        color: black;
+    }
+
+    paper-item a {
+        color: black;
+        text-decoration: none;
+    }
+
 </style>
 
 
@@ -198,6 +207,65 @@
     </template>
 
     <script>
+
+        var alfUrl = 'http://192.168.99.100:8080/alfresco', loginUrl = '/service/api/login',
+            logoutUrl = '/service/api/login/ticket';
+
+        function sendXhr(options) {
+            if (!options.url) {
+                throw 'URL must be specified';
+            }
+            return new Promise(function(resolve, reject) {
+                var xhr = new XMLHttpRequest(), url = alfUrl + options.url, ticket = getTicket(), defaultMethod, requestBody = null;
+                if (ticket && url != loginUrl) {
+                    console.log('Adding ticket ' + ticket);
+                    url += (url.indexOf('?') == -1 ? '?' : '&') + 'alf_ticket=' + ticket;
+                }
+                if (options.data) {
+                    requestBody = options.data;
+                } else if (options.jsonData) {
+                    requestBody = JSON.stringify(options.jsonData);
+                }
+                defaultMethod = requestBody === null ? 'GET' : 'POST';
+                xhr.addEventListener('load', function reqListener () {
+                    var status = this.status,
+                        json = this.responseText !== null && this.responseText.indexOf('{') == 0 ?
+                            JSON.parse(this.responseText) : null;
+                    this.json = json;
+                    if (status >= 200 && status < 300) {
+                        resolve(this);
+                    } else {
+                        reject(this);
+                    }
+                });
+                xhr.addEventListener('error', function reqListener () {
+                    reject(this);
+                });
+                xhr.open(options.method || defaultMethod, url);
+                if (options.acceptType) {
+                    xhr.setRequestHeader('Accept', options.acceptType);
+                }
+                if (requestBody) {
+                    xhr.setRequestHeader('Content-Type', options.contentType || 'application/json');
+                    xhr.send(requestBody);
+                } else {
+                    xhr.send();
+                }
+            });
+        }
+
+        function getTicket() {
+            return sessionStorage.getItem('loginTicket');
+        }
+
+        function setTicket(ticket) {
+            sessionStorage.setItem('loginTicket', ticket);
+        }
+
+        function deleteTicket() {
+            sessionStorage.removeItem('loginTicket');
+        }
+
         HTMLImports.whenReady(function() {
             Polymer({
                 is: "alfresco-file-list",
@@ -205,7 +273,7 @@
                 host: 'http://192.168.99.100:8080',
 
                 baseUrl: function(){
-                    return this.host + '/alfresco/service/slingshot/doclib/doclist/all/site/';
+                    return '/service/slingshot/doclib/doclist/all/site/';
                 },
 
                 properties: {
@@ -246,21 +314,19 @@
                 },
 
                 fetchFolderFolder: function(slug) {
-                    function error () {
-                        console.log("error");
+                    function error (resp) {
+                        console.log("error", resp);
+                        deleteTicket();
+                        if (resp.status == 401) {
+                            window.location = location.protocol + '//' + location.host + '/login.html';
+                        }
                     }
-                    var xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", (XMLHttpRequestProgressEvent)=>{
-                        this.data =JSON.parse(XMLHttpRequestProgressEvent.currentTarget.response).items;
-                });
-
-                    xhr.addEventListener("error", error);
-
-                    this.lastSlug = slug;
-                    xhr.open("GET", (this.baseUrl() + slug));
-                    xhr.withCredentials = true;
-                    xhr.setRequestHeader("Authorization", 'Basic ' + btoa('admin:admin'));
-                    xhr.send();
+                    function success (resp) {
+                        this.data = resp.json.items;
+                    }
+                    sendXhr({
+                        url: this.baseUrl() + slug
+                    }).then(success.bind(this), error);
                 },
 
                 thumbBaseUrl: function () {

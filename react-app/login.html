@@ -1,0 +1,152 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>SFS - React</title>
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!--REACT-->
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!--POLYMER COMPONENTS-->
+    <link rel="import" href="bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+    <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="bower_components/paper-styles/color.html">
+    <link rel="import" href="bower_components/paper-menu-button/paper-menu-button.html">
+    <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
+
+    <!--ALFRESCO CUSTOM WEBCOMPONENTS-->
+    <link rel="import" href="webcomponents/file-upload/file-upload.html">
+    <link rel="import" href="webcomponents/alfresco-file-list/src/alfresco-file-list.html">
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="import" href="css/style.html">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="src/auth.js"></script>
+</head>
+<body>
+
+<paper-scroll-header-panel fixed>
+
+    <!-- Do not show toolbar on login page -->
+    <!--
+    <paper-toolbar>
+        <img src="img/logo_small.png" class="logo-header">
+        <div class="spacer">
+            <div class="search-box bottom">
+                <input placeholder="Search files and folders">
+                <paper-icon-button class="search-header-search-icon" icon="search"></paper-icon-button>
+            </div>
+        </div>
+        <img className="nav-logo" src="http://facebook.github.io/react/img/logo.svg" width="60" height="60" />
+
+        <paper-menu-button>
+            <paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button>
+            <paper-menu class="dropdown-content">
+                <paper-item>Share</paper-item>
+                <paper-item>Help</paper-item>
+            </paper-menu>
+        </paper-menu-button>
+
+    </paper-toolbar>
+    -->
+
+    <div class="content">
+        <div id="content">
+
+            <div id="login">
+                <div class="logo"></div>
+                <div class="messages"></div>
+                <form name="loginForm">
+                    <div class="form-group">
+                        <label for="userName">Username</label>
+                        <input id="userName" name="username" type="text" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="userName">Password</label>
+                        <input id="password" name="password" type="password" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <button id="loginButton" class="btn btn-primary">Log In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        var alfUrl = 'http://192.168.99.100:8080/alfresco', loginUrl = '/service/api/login',
+                logoutUrl = '/service/api/login/ticket';
+
+        function onLogin(e) {
+            e.preventDefault();
+            var username = document.getElementById('userName').value, password = document.getElementById('password').value;
+            console.log('Login attempt', username, password);
+            if (username !== '' && password !== '') {
+                doLoginXhr(username, password);
+            }
+        }
+
+        function doLoginXhr(username, password) {
+            sendXhr({
+                url: loginUrl,
+                jsonData: {
+                    username: username,
+                    password: password
+                }
+            }).then(onLoginSuccess, onLoginFailure);
+        }
+
+        function onLoginSuccess(resp) {
+            console.log('Login success', resp.json.data.ticket);
+            setTicket(resp.json.data.ticket);
+            window.location = location.protocol + "//" + location.host + "/index.html";
+        }
+
+        function onLoginFailure(json) {
+            document.querySelector('#login .messages').innerHTML = '<span class="error">Could not log in with the specified username and password, please try again</span>';
+            document.querySelector('#password').value = "";
+            console.log('Login failed', json);
+        }
+
+        function doLogoutXhr() {
+            if (getTicket()) {
+                sendXhr({
+                    url: logoutUrl + '/' + getTicket(),
+                    method: "DELETE"
+                }).then(onLogoutSuccess);
+            }
+        }
+
+        function onLogoutSuccess(resp, json) {
+            console.log('Logout success', json);
+            deleteTicket();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var loginForm = document.querySelector('form[name="loginForm"]');
+            loginForm.addEventListener('submit', onLogin);
+
+            if (location.hash == '#logout') {
+                doLogoutXhr();
+            }
+        });
+    </script>
+
+</paper-scroll-header-panel>
+
+
+</body>
+<script src="build/helloworld.js"></script>
+</html>
