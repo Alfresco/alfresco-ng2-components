@@ -170,7 +170,7 @@
                                     <img class="folder" src="img/folder.svg">
                                 </template>
                                 <template is="dom-if" if="{{!item.isFolder}}">
-                                    <img class="file" src="{{thumbBaseUrl()}}{{item.contentUrl}}">
+                                    <img class="file" src="{{thumbUrl(item)}}">
                                 </template>
                             </div>
                             <div class="text">
@@ -331,8 +331,19 @@
                     }).then(success.bind(this), error);
                 },
 
+                thumbUrl: function (item) {
+                    return this.thumbBaseUrl() + '/api/node/' + item.nodeRef.replace(':/', '') +
+                        '/content/thumbnails/doclib' + this.thumbSuffix();
+                },
+
                 thumbBaseUrl: function () {
-                    return this.host + '/share/proxy/alfresco/';
+                    console.log('base url returned');
+                    return this.host + '/alfresco/service';
+                },
+
+                thumbSuffix: function () {
+                    console.log('suffix returned');
+                    return '?c=force&alf_ticket=' + getTicket();
                 }
             });
         });
