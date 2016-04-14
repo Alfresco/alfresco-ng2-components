@@ -1,0 +1,126 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!--
+An element providing a solution to the login.
+
+Example:
+
+    <alfresco-login method="GET"  onsubmit="methodSuccess"  onerror="methodError"></alfresco-login>
+
+@demo
+-->
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="alfresco-login">
+
+  <style type="text/css">
+    :host([invalid]) input {
+      border-color: red;
+    }
+  </style>
+
+  <template>
+    <form id="login">
+      <paper-input name="username" id="username" label="Username"></paper-input>
+        <paper-input label="password input" name="password" id="password" type="password"></paper-input>
+        <button type="submit" class="btn btn-default" on-click="_submit">Login</button>
+    </form>
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'alfresco-login',
+
+    behaviors: [
+      Polymer.IronValidatableBehavior
+    ],
+
+    /**
+     * The submit event is fired if a user
+     * signs in Alfresco successfully.
+     *
+     * @event submit
+     */
+
+    /**
+     * The error event is fired if a
+     * user is not signed into Alfresco.
+     *
+     * @event error
+     */
+
+
+    properties: {
+
+      method: {
+        type: String,
+        value: 'GET'
+      },
+
+      headers: {
+        type: Object,
+        value: {}
+      }
+
+    },
+
+    ready: function(){
+    },
+
+    /**
+     * Login Alfesco
+     *
+     * @param {object}
+    */
+    _submit: function() {
+      event.preventDefault();
+
+      var self = this;
+
+      var xhr = new XMLHttpRequest();
+
+      var url = 'http://192.168.99.100:8080/alfresco/service/api/login';
+
+      var parameterJson = '';
+
+      if (this.method === 'POST') {
+        parameterJson =  JSON.stringify({username: username.value, password: password.value});
+      } else {
+        url += '?u='+username.value+'&pw='+password.value;
+      }
+
+      xhr.open(this.method, url, true);
+
+      for (key in this.headers) {
+        if (this.headers.hasOwnProperty(key)) {
+          xhr.setRequestHeader(key, this.headers[key]);
+        }
+      }
+
+      xhr.onload = function(e) {
+        if (xhr.status === 200) {
+          var token = '';
+          if (xhr.responseXML) {
+            token = xhr.responseXML.children[0].childNodes[0].nodeValue;
+          } else {
+            token = JSON.parse(xhr.responseText).data.ticket;
+          }
+          if (token) {
+            self.fire("submit", {ticket: token});
+          } else {
+            self.fire("error", {error:'Token error'});
+          }
+        } else {
+          self.fire("error", {error:'Login error'});
+        }
+      };
+      xhr.send(parameterJson);
+    }
+  });
+
+</script>
