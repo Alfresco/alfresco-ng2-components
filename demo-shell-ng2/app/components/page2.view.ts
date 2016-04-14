@@ -7,7 +7,8 @@ import {Component} from "angular2/core";
                 <h1>Page 2</h1>
                 <input [(ngModel)]="username">
                 <span>Username: {{username}}</span>
-                <hello-world [attr.who]="username"></hello-world>
+                <hello-world [text]="username"></hello-world>
+                <hello-world text="test user"></hello-world>
             </div>
         </div>
     `

@@ -15,7 +15,16 @@
         var template = thisDoc.querySelector('template').content;
 
         // Creates an object based in the HTML Element prototype
-        var MyElementProto = Object.create(HTMLElement.prototype);
+        var _text = '_text';
+        var MyElementProto = Object.create(HTMLElement.prototype, {
+            text: {
+                get: function() { return _text; },
+                set: function(newValue) {
+                    _text = newValue;
+                    this.setText(newValue);
+                }
+            }
+        });
 
         // Creates the "who" attribute and sets a default value
         MyElementProto.who = 'World';
@@ -29,31 +38,31 @@
             shadowRoot.appendChild(clone);
             // Caches <strong> DOM query
             this.strong = shadowRoot.querySelector('strong');
-            // Checks if the "who" attribute has been overwritten
-            if (this.hasAttribute('who')) {
-                var who = this.getAttribute('who');
-                this.setWho(who);
+
+            // Checks if the "text" attribute has been overwritten
+            /*
+            if (this.hasAttribute('text')) {
+                var text = this.getAttribute('text');
+                this.setText(text);
             }
             else {
-                this.setWho(this.who);
+                this.setText(this.text);
             }
+            */
         };
+
         // Fires when an attribute was added, removed, or updated
         MyElementProto.attributeChangedCallback = function(attr, oldVal, newVal) {
-            if (attr === 'who') {
-                this.setWho(newVal);
-            }
-
             if (attr === 'text') {
-                this.setWho(newVal);
+                this.setText(newVal);
             }
         };
-        // Sets new value to "who" attribute
-        MyElementProto.setWho = function(val) {
-            this.who = val;
-            // Sets "who" value into <strong>
-            this.strong.textContent = this.who;
+
+        MyElementProto.setText = function(val) {
+            _text = val;
+            this.strong.textContent = val;
         };
+
         // Registers <hello-world> in the main document
         window.MyElement = thatDoc.registerElement('hello-world', {
             prototype: MyElementProto
