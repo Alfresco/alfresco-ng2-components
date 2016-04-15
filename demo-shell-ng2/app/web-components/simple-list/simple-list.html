@@ -1,3 +1,6 @@
+<script src="/bower_components/underscore/underscore-min.js"></script>
+<script src="/bower_components/underscore-observable-arrays/underscore-observe.js"></script>
+
 <!-- Defines element markup -->
 <template>
     <ul id="list"></ul>
@@ -31,11 +34,12 @@
                     };
                     */
 
-                    /*
+                    var self = this;
+                    // TODO: unobserve for old _items value if needed
                     _.observe(_items, function(new_array, old_array) {
-
+                        _items = new_array || [];
+                        self._render();
                     });
-                    */
 
                     this._render();
                 }
