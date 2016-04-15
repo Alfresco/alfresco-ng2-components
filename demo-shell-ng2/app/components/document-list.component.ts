@@ -5,14 +5,32 @@ import {DocumentEntity} from "./core/entities/document.entity";
 
 @Component({
     selector: 'alfresco-document-list',
+    styles: [
+        `
+            :host .folder-icon {
+                float: left;
+                margin-right: 10px;
+            }
+            :host .file-icon {
+                width: 52px;
+                height: 52px;
+                float: left;
+                margin-right: 10px;
+            }
+        `
+    ],
     template: `
         <div *ngIf="folder" class="list-group">
             <a href="#" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)" class="list-group-item">
                 <i class="fa fa-level-up"></i> ...
             </a>
-            <a href="#" *ngFor="#document of folder.items" (click)="onItemClick(document, $event)" class="list-group-item">
-                <i *ngIf="document.isFolder" class="fa fa-folder-o"></i>
-                {{document.displayName}}
+            <a href="#" *ngFor="#document of folder.items" (click)="onItemClick(document, $event)" class="list-group-item clearfix">
+                <i *ngIf="document.isFolder" class="folder-icon fa fa-folder-o fa-4x"></i>
+                <img *ngIf="!document.isFolder" class="file-icon" src="{{getDocumentThumbnailUrl(document)}}">
+                <h4 class="list-group-item-heading">
+                    {{document.displayName}}
+                </h4>
+                <p class="list-group-item-text">{{document.description}}</p>
             </a>
         </div>
     `,
@@ -86,5 +104,9 @@ export class DocumentList implements OnInit {
         var path = item.location.path !== '/' ? (item.location.path + '/' ) : '/';
         var relativePath = container + path + item.fileName;
         return item.location.site + '/' + relativePath;
+    }
+    
+    getDocumentThumbnailUrl(document:  DocumentEntity) {
+        return this._alfrescoService.getDocumentThumbnailUrl(document);
     }
 }

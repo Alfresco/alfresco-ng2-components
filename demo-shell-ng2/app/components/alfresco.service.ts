@@ -2,6 +2,7 @@ import {Injectable} from 'angular2/core';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {FolderEntity} from "./core/entities/folder.entity";
+import {DocumentEntity} from "./core/entities/document.entity";
 
 @Injectable()
 export class AlfrescoService {
@@ -21,6 +22,10 @@ export class AlfrescoService {
             .map(res => <FolderEntity> res.json())
             .do(data => console.log(data)) // eyeball results in the console
             .catch(this.handleError);
+    }
+
+    getDocumentThumbnailUrl(document: DocumentEntity) {
+        return this._host + '/alfresco/service/api/node/' + document.nodeRef.replace('://', '/') + '/content/thumbnails/doclib?c=queue&amp;ph=true&amp;lastModified=1';
     }
 
     private handleError (error: Response) {
