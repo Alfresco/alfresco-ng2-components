@@ -5,12 +5,14 @@ import {DocumentList} from "./document-list.component";
     template: `
         <div class="container">
             <div class="row">
-                <label>
-                    <input type="checkbox" [(ngModel)]="thumbnails"> Toggle Thumbnails
-                </label>
+                <div><label><input type="checkbox" [(ngModel)]="thumbnails"> Toggle Thumbnails</label></div>
+                <div><label><input type="checkbox" [(ngModel)]="breadcrumb"> Toggle Breadcrumb</label></div>
             </div>
             <div class="row">
-                <alfresco-document-list #list [thumbnails]="thumbnails"></alfresco-document-list>
+                <alfresco-document-list #list 
+                    [thumbnails]="thumbnails"
+                    [breadcrumb]="breadcrumb">
+                </alfresco-document-list>
             </div>
         </div>
     `,
@@ -18,4 +20,5 @@ import {DocumentList} from "./document-list.component";
 })
 export class Page1View {
     thumbnails: boolean = true;
+    breadcrumb: boolean = false;
 }
