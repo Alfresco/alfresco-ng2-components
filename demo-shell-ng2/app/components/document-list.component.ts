@@ -25,8 +25,8 @@ import {DocumentEntity} from "./core/entities/document.entity";
                 <i class="fa fa-level-up"></i> ...
             </a>
             <a href="#" *ngFor="#document of folder.items" (click)="onItemClick(document, $event)" class="list-group-item clearfix">
-                <i *ngIf="document.isFolder" class="folder-icon fa fa-folder-o fa-4x"></i>
-                <img *ngIf="!document.isFolder" class="file-icon" src="{{getDocumentThumbnailUrl(document)}}">
+                <i *ngIf="thumbnails && document.isFolder" class="folder-icon {{folderIconClass}}"></i>
+                <img *ngIf="thumbnails && !document.isFolder" class="file-icon" src="{{getDocumentThumbnailUrl(document)}}">
                 <h4 class="list-group-item-heading">
                     {{document.displayName}}
                 </h4>
@@ -40,6 +40,10 @@ export class DocumentList implements OnInit {
 
     // example: <alfresco-document-list [navigate]="false"></alfresco-document-list>
     @Input() navigate: boolean = true;
+    // example: <alfresco-document-list folder-icon-class="fa fa-folder fa-4x"></alfresco-document-list>
+    @Input('folder-icon-class') folderIconClass: string = 'fa fa-folder-o fa-4x';
+    // example: <alfresco-document-list #list [thumbnails]="false"></alfresco-document-list>
+    @Input() thumbnails: boolean = true;
     
     rootFolderPath: string = 'swsdp/documentLibrary';
     currentFolderPath: string = 'swsdp/documentLibrary';

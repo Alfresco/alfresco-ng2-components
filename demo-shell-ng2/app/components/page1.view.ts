@@ -5,12 +5,17 @@ import {DocumentList} from "./document-list.component";
     template: `
         <div class="container">
             <div class="row">
-                <alfresco-document-list></alfresco-document-list>
+                <label>
+                    <input type="checkbox" [(ngModel)]="thumbnails"> Toggle Thumbnails
+                </label>
+            </div>
+            <div class="row">
+                <alfresco-document-list #list [thumbnails]="thumbnails"></alfresco-document-list>
             </div>
         </div>
     `,
     directives: [DocumentList]
 })
 export class Page1View {
-    
+    thumbnails: boolean = true;
 }
