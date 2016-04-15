@@ -1,0 +1,83 @@
+<!-- Defines element markup -->
+<template>
+    <ul id="list"></ul>
+</template>
+
+<script>
+    (function (window, document, undefined) {
+        // Refers to the "importer", which is index.html
+        var thatDoc = document;
+
+        // Refers to the "importee", which is src/hello-world.html
+        var thisDoc =  (thatDoc._currentScript || thatDoc.currentScript).ownerDocument;
+
+        // Gets content from <template>
+        var template = thisDoc.querySelector('template').content;
+
+        var _items;
+
+        // Creates an object based in the HTML Element prototype
+        var element = Object.create(HTMLElement.prototype, {
+            items: {
+                get: function() { return _items; },
+                set: function(newValue) {
+                    _items = newValue || [];
+
+                    /*
+                    var self = this;
+                    _items.push = function () {
+                        Array.prototype.push.apply(this, arguments);
+                        self._render();
+                    };
+                    */
+
+                    /*
+                    _.observe(_items, function(new_array, old_array) {
+
+                    });
+                    */
+
+                    this._render();
+                }
+            }
+        });
+
+        // Fires when an instance of the element is created
+        element.createdCallback = function() {
+            // Creates the shadow root
+            var shadowRoot = this.createShadowRoot();
+            // Adds a template clone into shadow root
+            var clone = thatDoc.importNode(template, true);
+            shadowRoot.appendChild(clone);
+
+            this.list = shadowRoot.getElementById('list');
+            // Caches <strong> DOM query
+            //this.strong = shadowRoot.querySelector('strong');
+
+            this._render()
+        };
+
+        // Fires when an attribute was added, removed, or updated
+        element.attributeChangedCallback = function(attr, oldVal, newVal) {
+//            if (attr === 'text') {
+//                this.setText(newVal);
+//            }
+        };
+
+        element._render = function() {
+            this.list.innerHTML = '';
+            if (_items && _items.length > 0) {
+                for (var i = 0; i < _items.length; i++) {
+                    var item = document.createElement('div');
+                    item.textContent = 'item ' + i;
+                    this.list.appendChild(item);
+                }
+            }
+        };
+
+        // Registers <hello-world> in the main document
+        window.SimpleList = thatDoc.registerElement('simple-list', {
+            prototype: element
+        });
+    })(window, document);
+</script>

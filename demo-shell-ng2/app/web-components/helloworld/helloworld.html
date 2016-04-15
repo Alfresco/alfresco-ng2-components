@@ -1,6 +1,7 @@
 <!-- Defines element markup -->
 <template>
     <p>Hello <strong></strong> :)</p>
+    <content></content>
 </template>
 
 <script>
@@ -25,9 +26,6 @@
                 }
             }
         });
-
-        // Creates the "who" attribute and sets a default value
-        MyElementProto.who = 'World';
 
         // Fires when an instance of the element is created
         MyElementProto.createdCallback = function() {
