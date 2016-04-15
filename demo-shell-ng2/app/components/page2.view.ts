@@ -16,7 +16,7 @@ import {Component} from "angular2/core";
                     List below is a web component bound to array of items coming from angular.<br>
                     Add/remove buttons control angular array and web component reacts on changes.
                 </p>
-                <simple-list [items]="items"></simple-list>
+                <simple-list [items]="items" class="list-unstyled"></simple-list>
                 <button (click)="addItem()">add item</button>
                 <button (click)="removeItem()">remove item</button>
             </div>
@@ -28,7 +28,7 @@ export class Page2View {
     items = ['one', 'two', 'three'];
 
     addItem() {
-        this.items.push('test');
+        this.items.push(new Date());
     }
 
     removeItem() {

@@ -72,8 +72,8 @@
             this.list.innerHTML = '';
             if (_items && _items.length > 0) {
                 for (var i = 0; i < _items.length; i++) {
-                    var item = document.createElement('div');
-                    item.textContent = 'item ' + i;
+                    var item = document.createElement('li');
+                    item.textContent = _items[i];
                     this.list.appendChild(item);
                 }
             }
