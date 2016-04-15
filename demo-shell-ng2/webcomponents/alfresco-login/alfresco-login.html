@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../polymer/polymer.html">
 
 <!--
 An element providing a solution to the login.
@@ -10,8 +10,8 @@ Example:
 @demo
 -->
 
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
 
 <dom-module id="alfresco-login">
 
@@ -72,13 +72,20 @@ Example:
     ready: function(){
     },
 
+    fireSubmit: function(token) {
+      this.fire("submit", {ticket: token});
+    },
+
     /**
      * Login Alfesco
      *
      * @param {object}
     */
-    _submit: function() {
-      event.preventDefault();
+    _submit: function(event) {
+      if(event) {
+        event.preventDefault();
+      }
+
 
       var self = this;
 
@@ -103,6 +110,7 @@ Example:
       }
 
       xhr.onload = function(e) {
+        e.preventDefault();
         if (xhr.status === 200) {
           var token = '';
           if (xhr.responseXML) {
@@ -111,7 +119,7 @@ Example:
             token = JSON.parse(xhr.responseText).data.ticket;
           }
           if (token) {
-            self.fire("submit", {ticket: token});
+            self.fireSubmit(token);
           } else {
             self.fire("error", {error:'Token error'});
           }
@@ -120,6 +128,7 @@ Example:
         }
       };
       xhr.send(parameterJson);
+      return xhr;
     }
   });
 

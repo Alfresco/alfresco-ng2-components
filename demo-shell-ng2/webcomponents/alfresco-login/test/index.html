@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <!-- import the element to test -->
+    <link rel="import" href="../alfresco-login.html">
+</head>
+<body>
+<!-- use the document as a place to set up your fixtures -->
+<test-fixture id="alfresco-login-fixture">
+    <template>
+        <alfresco-login>
+        </alfresco-login>
+    </template>
+</test-fixture>
+<script>
+    suite('<alfresco-login>', function() {
+        var myEl;
+        setup(function() {
+            myEl = fixture('alfresco-login-fixture');
+        });
+
+        test('defines the "method" property', function() {
+            assert.equal(myEl.method, 'GET');
+        });
+
+        test('fires submit', function(done) {
+            myEl.addEventListener('submit', function(event) {
+                assert.equal(event.detail.ticket, 'TICKET_mock');
+                done();
+            });
+            myEl.fireSubmit('TICKET_mock');
+        });
+
+    });
+
+    suite('<alfresco-login-submit>', function() {
+        var ajax;
+        var request;
+        var server;
+        var responseHeaders = {
+            json: { 'Content-Type': 'application/json' }
+        };
+        setup(function() {
+            server = sinon.fakeServer.create();
+            server.respondWith(
+                    'GET',
+                    /\/alfresco.*/, [
+                        200,
+                        responseHeaders.json,
+                        '{ "data": { "ticket":"TICKET_mock" } }'
+                    ]
+            );
+        });
+        teardown(function() {
+            server.restore();
+        });
+        suite('when making simple GET requests for JSON', function() {
+            setup(function() {
+                // get fresh instance of iron-ajax before every test
+                ajax = fixture('alfresco-login-fixture');
+            });
+            test('has sane defaults that love you', function() {
+                request = ajax._submit();
+                server.respond();
+                expect(request.response).to.be.ok;
+                expect(request.response).to.be.equal('{ "data": { "ticket":"TICKET_mock" } }');
+            });
+            test('has the correct xhr method', function() {
+                request = ajax._submit();
+                expect(request.method).to.be.equal('GET');
+            });
+        });
+    });
+</script>
+</body>
+</html>
