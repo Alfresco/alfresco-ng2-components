@@ -21,14 +21,23 @@
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
 
+    <!--<script src="node_modules/ng2-uploader/bundles/ng2-uploader.js"></script>-->
+
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- 2. Configure SystemJS -->
     <script>
         System.config({
+            map: {
+                'ng2-uploader': 'node_modules/ng2-uploader'
+            },
             packages: {
                 app: {
+                    format: 'register',
+                    defaultExtension: 'js'
+                },
+                'ng2-uploader': {
                     format: 'register',
                     defaultExtension: 'js'
                 }
