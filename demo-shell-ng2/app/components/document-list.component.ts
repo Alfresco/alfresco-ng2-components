@@ -26,6 +26,15 @@ import {DocumentEntity} from "./core/entities/document.entity";
             :host .document-header:hover {
                 text-decoration: underline;
             }
+            
+            :host .download-button {
+                color: #777;
+                text-decoration: none;
+            }
+            
+            :host .download-button:hover {
+                color: #555;
+            }
         `
     ],
     template: `
@@ -36,10 +45,13 @@ import {DocumentEntity} from "./core/entities/document.entity";
             </li>
         </ol>
         <div *ngIf="folder" class="list-group">
-            <a href="#" *ngIf="!breadcrumb && canNavigateParent()" (click)="onNavigateParentClick($event)" class="list-group-item">
+            <a href="#" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)" class="list-group-item">
                 <i class="fa fa-level-up"></i> ...
             </a>
             <a href="#" *ngFor="#document of folder.items" (click)="onItemClick(document, $event)" class="list-group-item clearfix">
+                <a *ngIf="downloads && !document.isFolder" href="{{getContentUrl(document)}}" (click)="onDownloadClick($event)" class="download-button pull-right" download target="_blank">
+                    <i class="fa fa-download fa-2x"></i>
+                </a>
                 <i *ngIf="thumbnails && document.isFolder" class="folder-icon {{folderIconClass}}"></i>
                 <img *ngIf="thumbnails && !document.isFolder" class="file-icon" src="{{getDocumentThumbnailUrl(document)}}">
                 <h4 class="list-group-item-heading document-header">
@@ -64,6 +76,8 @@ export class DocumentList implements OnInit {
     @Input('folder-icon-class') folderIconClass: string = 'fa fa-folder-o fa-4x';
     // example: <alfresco-document-list #list [thumbnails]="false"></alfresco-document-list>
     @Input() thumbnails: boolean = true;
+    // example: <alfresco-document-list #list [downloads]="false"></alfresco-document-list>
+    @Input() downloads: boolean = true;
 
     rootFolder = {
         name: 'Document Library',
@@ -76,7 +90,9 @@ export class DocumentList implements OnInit {
     route: any[] = [];
 
     canNavigateParent(): boolean {
-        return this.currentFolderPath !== this.rootFolder.path;
+        return this.navigate &&
+            !this.breadcrumb &&
+            this.currentFolderPath !== this.rootFolder.path;
     }
 
     constructor (
@@ -112,6 +128,10 @@ export class DocumentList implements OnInit {
         }
     }
 
+    onDownloadClick(event) {
+        event.stopPropagation();
+    }
+
     onItemClick(item: DocumentEntity, $event) {
         if ($event) {
             $event.preventDefault();
@@ -134,10 +154,12 @@ export class DocumentList implements OnInit {
             $event.preventDefault();
         }
 
-        var idx = this.route.indexOf(r);
-        if (idx > -1) {
-            this.route.splice(idx + 1);
-            this.displayFolderContent(r.path);
+        if (this.navigate) {
+            var idx = this.route.indexOf(r);
+            if (idx > -1) {
+                this.route.splice(idx + 1);
+                this.displayFolderContent(r.path);
+            }
         }
     }
 
@@ -146,6 +168,10 @@ export class DocumentList implements OnInit {
         var path = item.location.path !== '/' ? (item.location.path + '/' ) : '/';
         var relativePath = container + path + item.fileName;
         return item.location.site + '/' + relativePath;
+    }
+    
+    getContentUrl(document: DocumentEntity) {
+        return this._alfrescoService.getContentUrl(document);
     }
     
     getDocumentThumbnailUrl(document:  DocumentEntity) {
