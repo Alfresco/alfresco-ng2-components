@@ -13,13 +13,20 @@ import {DocumentList} from "./document-list.component";
                         <li><label><input type="checkbox" [(ngModel)]="navigation"> Navigation</label></li>
                         <li><label><input type="checkbox" [(ngModel)]="downloads"> Downloads</label></li>
                     </ul>
+                    <hr>
+                    <ul class="list-unstyled" style="font-size: 10px">
+                        <li *ngFor="#event of events">
+                            <strong>{{event.name}}</strong>: {{event.value.displayName}}
+                        </li>
+                    </ul>
                 </div>
                 <div class="col-md-10">
                     <alfresco-document-list #list 
                         [thumbnails]="thumbnails"
                         [breadcrumb]="breadcrumb"
                         [navigate]="navigation"
-                        [downloads]="downloads">
+                        [downloads]="downloads"
+                        (itemClick)="onItemClick($event)">
                     </alfresco-document-list>
                 </div>
             </div>
@@ -32,4 +39,14 @@ export class HomeView {
     breadcrumb: boolean = false;
     navigation: boolean = true;
     downloads: boolean = true;
+
+    events: any[] = [];
+
+    onItemClick($event) {
+        console.log($event.value);
+        this.events.push({
+            name: 'Item Clicked',
+            value: $event.value
+        });
+    }
 }

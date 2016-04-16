@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from "angular2/core";
+import {Component, OnInit, Input, Output, EventEmitter} from "angular2/core";
 import {AlfrescoService} from "./alfresco.service";
 import {FolderEntity} from "./core/entities/folder.entity";
 import {DocumentEntity} from "./core/entities/document.entity";
@@ -79,6 +79,8 @@ export class DocumentList implements OnInit {
     // example: <alfresco-document-list #list [downloads]="false"></alfresco-document-list>
     @Input() downloads: boolean = true;
 
+    @Output() itemClick: EventEmitter<any> = new EventEmitter();
+
     rootFolder = {
         name: 'Document Library',
         path: 'swsdp/documentLibrary'
@@ -136,6 +138,10 @@ export class DocumentList implements OnInit {
         if ($event) {
             $event.preventDefault();
         }
+
+        this.itemClick.emit({
+            value: item
+        });
 
         if (this.navigate && item) {
             if (item.isFolder) {
