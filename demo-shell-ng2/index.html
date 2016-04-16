@@ -5,20 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href="app/css/menu.css" rel="stylesheet">
-    <link href="app/css/widgets.css" rel="stylesheet">
     <link href="app/css/app.css" rel="stylesheet">
-    <link href="app/css/designer.css" rel="stylesheet">
     <!-- Custom theme -->
     <link rel="stylesheet" href="app/css/theme/navbar.css">
-
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-
-    <!--ALFRESCO CUSTOM WEBCOMPONENTS-->
-    <link rel="import" href="webcomponents/file-upload/file-upload.html">
-    <link rel="import" href="webcomponents/alfresco-file-list/src/alfresco-file-list.html">
-    <link rel="import" href="app/web-components/helloworld/helloworld.html">
-    <link rel="import" href="app/web-components/simple-list/simple-list.html">
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
@@ -34,17 +23,6 @@
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="app/js/dropZone.js"></script>
-    <script src="app/widgets/widgetUtils.js"></script>
-    <script src="app/widgets/widgets-container.js"></script>
-    <script src="app/widgets/widgets-button.js"></script>
-    <script src="app/widgets/widgets-input.js"></script>
-    <script src="app/widgets/widgets-row.js"></script>
-    <script src="app/widgets/widgets-col-12.js"></script>
-    <script src="app/widgets/widgets-col-6x6.js"></script>
-    <script src="app/widgets/widgets-col-8x4.js"></script>
-    <script src="app/widgets/widgets-col-4x4x4.js"></script>
-    <script src="app/widgets/widgets-col-2x6x4.js"></script>
 
     <!-- 2. Configure SystemJS -->
     <script>
@@ -61,10 +39,8 @@
     </script>
 </head>
 <!-- 3. Display the application -->
-<body class="cbp-spmenu-push">
-<template is="dom-bind" id="alfresco-app">
-    <iron-signals on-iron-signal-uploaded="uploadedSignal"></iron-signals>
-</template>
+<body>
+
 <my-app>Loading...</my-app>
 
 </body>

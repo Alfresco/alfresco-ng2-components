@@ -9,6 +9,11 @@ import {Authentication} from "../services/authentication";
     template: `
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
+                <small>Use test:test credentials to log in</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
                 <form [ngFormModel]="form" (submit)="onSubmit(form.value, $event)">
                     <div *ngIf="error">Check your password</div>
                     <div class="form-group">

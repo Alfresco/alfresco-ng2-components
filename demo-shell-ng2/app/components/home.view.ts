@@ -1,17 +1,35 @@
 import {Component} from 'angular2/core';
+import {DocumentList} from "./document-list.component";
 
 @Component({
     selector: 'home-view',
     template: `
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
-                    <h1>Home View</h1>
+                <div class="col-md-2">
+                    <ul class="list-unstyled">
+                        <li><label><input type="checkbox" [(ngModel)]="thumbnails"> Thumbnails</label></li>
+                        <li><label><input type="checkbox" [(ngModel)]="breadcrumb"> Breadcrumb</label></li>
+                        <li><label><input type="checkbox" [(ngModel)]="navigation"> Navigation</label></li>
+                        <li><label><input type="checkbox" [(ngModel)]="downloads"> Downloads</label></li>
+                    </ul>
+                </div>
+                <div class="col-md-10">
+                    <alfresco-document-list #list 
+                        [thumbnails]="thumbnails"
+                        [breadcrumb]="breadcrumb"
+                        [navigate]="navigation"
+                        [downloads]="downloads">
+                    </alfresco-document-list>
                 </div>
             </div>
         </div>
     `,
-    directives: []
+    directives: [DocumentList]
 })
 export class HomeView {
+    thumbnails: boolean = true;
+    breadcrumb: boolean = false;
+    navigation: boolean = true;
+    downloads: boolean = true;
 }
