@@ -42,8 +42,8 @@ export class Login {
     }
 
     onSubmit(value: any, event) {
-        //event.preventDefault();
-        this.auth.login(value.username, value.password)
+        event.preventDefault();
+        this.auth.login('POST', value.username, value.password)
             .subscribe(
                 //(token: any) => this.router.navigate(['../Home']),
                 (token: any) => this.router.navigate(['Home']),

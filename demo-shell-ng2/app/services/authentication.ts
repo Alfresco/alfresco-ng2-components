@@ -1,11 +1,15 @@
 import {Injectable} from "angular2/core";
 import {Observable} from 'rxjs/Rx';
+import {Http, Headers, URLSearchParams} from 'angular2/http';
 
 @Injectable()
 export class Authentication {
     token: string;
 
-    constructor() {
+    private _host: string = 'http://192.168.99.100:8080';
+    private _baseUrl: string = this._host + '/alfresco/service/api/';
+
+    constructor(public http: Http) {
         this.token = localStorage.getItem('token');
     }
 
@@ -13,14 +17,49 @@ export class Authentication {
         return !!localStorage.getItem('token');
     }
 
-    login(username: String, password: String) {
-        if (username === 'test' && password === 'test') {
-            this.token = 'token';
-            localStorage.setItem('token', this.token);
-            return Observable.of('token');
+    login(method:String, username:String, password:String) {
+        if (method === 'GET') {
+            return this.loginGet(username, password);
+        } else {
+            return this.loginPost(username, password);
         }
+    }
 
-        return Observable.throw('authentication failure');
+    loginGet(username:String, password:String) {
+        const searchParams = new URLSearchParams()
+        searchParams.set('u', username);
+        searchParams.set('pw', password);
+
+        return this.http.get(this._baseUrl + 'login', {search: searchParams})
+            .map((res:any) => {
+                let data = JSON.parse(xml2json(res.text(),'  '));
+                this.token = data.ticket;
+                this.saveJwt(this.token);
+            })
+            .catch(this.handleError);
+    }
+
+    loginPost(username:String, password:String) {
+        var credentials = "{ username: " + username+ ", password: "+ password +" }";
+
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.post(this._baseUrl+ 'login', credentials, {
+            headers: headers
+        })
+            .map((res:any) => {
+                let response =  res.json();
+                this.token = response.data.ticket;
+                this.saveJwt(this.token);
+            })
+            .catch(this.handleError);
+    }
+
+    saveJwt(jwt) {
+        if(jwt) {
+            localStorage.setItem('token', jwt)
+        }
     }
 
     logout() {
@@ -28,5 +67,12 @@ export class Authentication {
         localStorage.removeItem('token');
 
         return Observable.of(true);
+    }
+
+    private handleError (error: Response) {
+        // in a real world app, we may send the error to some remote logging infrastructure
+        // instead of just logging it to the console
+        console.error(error);
+        return Observable.throw(error.json().error || 'Server error');
     }
 }
