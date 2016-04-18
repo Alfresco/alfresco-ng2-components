@@ -8,8 +8,20 @@ import {DocumentEntity} from "./core/entities/document.entity";
 export class AlfrescoService {
     constructor(private http: Http) {}
 
-    private _host: string = 'http://192.168.99.100:8080';
-    private _baseUrl: string = this._host + '/alfresco/service/slingshot/doclib/doclist/all/site/';
+    private _host: string = 'http://127.0.0.1:8080';
+    private _baseUrlPath: string = '/alfresco/service/slingshot/doclib/doclist/all/site/';
+
+    public get host():string {
+        return this._host;
+    }
+
+    public set host(value:string) {
+        this._host = value;
+    }
+    
+    private getBaseUrl():string {
+        return this.host + this._baseUrlPath;
+    }
 
     getFolder(folder: string) {
         let headers = new Headers({
@@ -18,7 +30,7 @@ export class AlfrescoService {
         });
         let options = new RequestOptions({ headers: headers });
         return this.http
-            .get(this._baseUrl + folder, options)
+            .get(this.getBaseUrl() + folder, options)
             .map(res => <FolderEntity> res.json())
             .do(data => console.log(data)) // eyeball results in the console
             .catch(this.handleError);

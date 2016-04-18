@@ -6,6 +6,7 @@ import {AuthRouterOutlet} from "./components/AuthRouterOutlet";
 import {HomeView} from "./components/home.view";
 import {Page1View} from "./components/page1.view";
 import {Page2View} from "./components/page2.view";
+import {AlfrescoService} from 'ng2-alfresco/components';
 
 @Component({
     selector: 'my-app',
@@ -22,8 +23,11 @@ export class AppComponent {
 
     constructor(
         public auth: Authentication,
-        public router: Router
-    ){}
+        public router: Router,
+        alfrescoService: AlfrescoService
+    ){
+        alfrescoService.host = 'http://192.168.99.100:8080';
+    }
 
     isActive(instruction: any[]): boolean {
         return this.router.isRouteActive(this.router.generate(instruction));

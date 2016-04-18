@@ -4,6 +4,7 @@ import { AlfrescoService } from "./src/alfresco.service";
 
 export * from './src/HelloWorld';
 export * from './src/document-list.component';
+export * from './src/alfresco.service';
 
 export default {
     directives: [HelloWorld, DocumentList],

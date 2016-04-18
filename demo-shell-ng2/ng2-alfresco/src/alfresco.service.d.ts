@@ -6,7 +6,9 @@ export declare class AlfrescoService {
     private http;
     constructor(http: Http);
     private _host;
-    private _baseUrl;
+    private _baseUrlPath;
+    host: string;
+    private getBaseUrl();
     getFolder(folder: string): Observable<FolderEntity>;
     getDocumentThumbnailUrl(document: DocumentEntity): string;
     getContentUrl(document: DocumentEntity): string;
