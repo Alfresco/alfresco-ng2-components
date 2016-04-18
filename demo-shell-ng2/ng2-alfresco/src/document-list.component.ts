@@ -63,8 +63,8 @@ import {DocumentEntity} from "./core/entities/document.entity";
                 </small>
             </a>
         </div>
-    `,
-    providers: [AlfrescoService]
+    `/*,
+    providers: [AlfrescoService]*/
 })
 export class DocumentList implements OnInit {
 
