@@ -23,7 +23,7 @@ export class Login {
 
     constructor(fb: FormBuilder, public auth: Authentication, public router: Router) {
         this.form = fb.group({
-            username:  ['', Validators.compose([Validators.required, Validators.minLength(4)]);
+            username:  ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password:  ['', Validators.required]
         });
     }
