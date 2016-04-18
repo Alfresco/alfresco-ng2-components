@@ -4,5 +4,5 @@ jspm_packages
 .idea
 lib
 build
-src/**/**.js
-src/**/*.js.map
+*.js
+*.js.map
