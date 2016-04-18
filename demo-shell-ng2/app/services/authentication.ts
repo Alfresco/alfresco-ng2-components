@@ -1,6 +1,8 @@
 import {Injectable} from "angular2/core";
 import {Observable} from 'rxjs/Rx';
-import {Http, Headers, URLSearchParams} from 'angular2/http';
+import {Http, Headers, URLSearchParams, Response} from 'angular2/http';
+
+declare var xml2json:any;
 
 @Injectable()
 export class Authentication {
@@ -17,7 +19,7 @@ export class Authentication {
         return !!localStorage.getItem('token');
     }
 
-    login(method:String, username:String, password:String) {
+    login(method:string, username:string, password:string) {
         if (method === 'GET') {
             return this.loginGet(username, password);
         } else {
@@ -25,8 +27,8 @@ export class Authentication {
         }
     }
 
-    loginGet(username:String, password:String) {
-        const searchParams = new URLSearchParams()
+    loginGet(username:string, password:string) {
+        const searchParams = new URLSearchParams();
         searchParams.set('u', username);
         searchParams.set('pw', password);
 
@@ -39,7 +41,7 @@ export class Authentication {
             .catch(this.handleError);
     }
 
-    loginPost(username:String, password:String) {
+    loginPost(username:string, password:string) {
         var credentials = "{ username: " + username+ ", password: "+ password +" }";
 
         var headers = new Headers();
