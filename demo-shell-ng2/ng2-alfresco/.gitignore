@@ -6,3 +6,4 @@ lib
 build
 *.js
 *.js.map
+!make.js
