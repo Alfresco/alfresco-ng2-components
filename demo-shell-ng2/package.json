@@ -8,7 +8,7 @@
     "tsc:w": "tsc -w",
     "lite": "lite-server",
     "typings": "typings",
-    "postinstall": "bower install && typings install"
+    "postinstall": "typings install"
   },
   "license": "ISC",
   "dependencies": {
