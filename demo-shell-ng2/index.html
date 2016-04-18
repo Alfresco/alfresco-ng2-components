@@ -32,7 +32,8 @@
     <script>
         System.config({
             map: {
-                'ng2-uploader': 'node_modules/ng2-uploader'
+                'ng2-uploader': 'node_modules/ng2-uploader',
+                'ng2-alfresco': 'node_modules/ng2-alfresco'
             },
             packages: {
                 app: {
@@ -40,6 +41,10 @@
                     defaultExtension: 'js'
                 },
                 'ng2-uploader': {
+                    format: 'register',
+                    defaultExtension: 'js'
+                },
+                'ng2-alfresco': {
                     format: 'register',
                     defaultExtension: 'js'
                 }

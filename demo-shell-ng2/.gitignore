@@ -1,8 +1,6 @@
 typings/
 node_modules/
 bower_components/
-*.js
-*.js.map
+app/**/*.js
+app/**/*.js.map
 .idea
-!app/widgets/*.js
-!app/js/*.js
