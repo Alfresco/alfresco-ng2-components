@@ -6,37 +6,24 @@ import {Authentication} from "../services/authentication";
 @Component({
     selector: 'login',
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
-    template: `
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <small>Use test:test credentials to log in</small>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <form [ngFormModel]="form" (submit)="onSubmit(form.value, $event)">
-                    <div *ngIf="error">Check your password</div>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input class="form-control" type="text" ngControl="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input class="form-control" type="password" ngControl="password">
-                    </div>
-                    <button type="submit" class="btn btn-default" [disabled]="!form.valid">Login</button>
-                </form>
-            </div>
-        </div>
-    `
+    templateUrl: 'app/template/login.component.html',
+    styleUrls: ['app/style/login.component.css'],
 })
 export class Login {
     form: ControlGroup;
     error: boolean = false;
 
+    isErrorStyle(field:ControlGroup ) {
+        if(field.valid){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     constructor(fb: FormBuilder, public auth: Authentication, public router: Router) {
         this.form = fb.group({
-            username:  ['', Validators.required],
+            username:  ['', Validators.compose([Validators.required, Validators.minLength(4)]);
             password:  ['', Validators.required]
         });
     }
