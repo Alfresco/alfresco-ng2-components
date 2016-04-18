@@ -2,12 +2,13 @@
   "name": "angular2-quickstart",
   "version": "1.0.0",
   "scripts": {
+    "prestart": "npm install",
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "lite": "lite-server",
     "typings": "typings",
-    "postinstall": "typings install"
+    "postinstall": "bower install && typings install"
   },
   "license": "ISC",
   "dependencies": {
