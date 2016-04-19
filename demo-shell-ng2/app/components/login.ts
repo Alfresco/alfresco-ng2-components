@@ -5,9 +5,10 @@ import {Authentication} from '../services/authentication';
 
 @Component({
     selector: 'login',
+    moduleId: 'app/components/login',
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
-    templateUrl: 'app/template/login.component.html',
-    styleUrls: ['app/style/login.component.css'],
+    templateUrl: 'login.component.html',
+    styleUrls: ['login.component.css'],
 })
 export class Login {
     form:ControlGroup;
@@ -29,7 +30,9 @@ export class Login {
     }
 
     onSubmit(value:any, event) {
-        event.preventDefault();
+        if (event) {
+            event.preventDefault();
+        }
         this.auth.login('POST', value.username, value.password)
             .subscribe(
                 (token:any) => this.router.navigate(['Home']),

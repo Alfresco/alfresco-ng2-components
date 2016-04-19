@@ -2,7 +2,7 @@ import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Rx';
 import {Http, Headers, URLSearchParams, Response} from 'angular2/http';
 
-declare var xml2json:any;
+declare let xml2json:any;
 
 @Injectable()
 export class Authentication {
