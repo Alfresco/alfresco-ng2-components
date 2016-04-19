@@ -44,7 +44,7 @@ gulp.task('compile', ['clean'], function () {
         .pipe(sourcemaps.init())
         .pipe(typescript(tscConfig.compilerOptions))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist/app'));
+        .pipe(gulp.dest('dist'));
 });
 
 // update the tsconfig files based on the glob pattern
