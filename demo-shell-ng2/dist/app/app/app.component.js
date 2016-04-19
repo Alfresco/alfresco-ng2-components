@@ -42,41 +42,38 @@ System.register(['angular2/core', 'angular2/router', './components/login', './se
                 components_1 = components_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent(auth, router, alfrescoService) {
+            let AppComponent = class AppComponent {
+                constructor(auth, router, alfrescoService) {
                     this.auth = auth;
                     this.router = router;
                     alfrescoService.host = 'http://192.168.99.100:8080';
                 }
-                AppComponent.prototype.isActive = function (instruction) {
+                isActive(instruction) {
                     return this.router.isRouteActive(this.router.generate(instruction));
-                };
-                AppComponent.prototype.isLoggedIn = function () {
+                }
+                isLoggedIn() {
                     return this.auth.isLoggedIn();
-                };
-                AppComponent.prototype.onLogout = function (event) {
-                    var _this = this;
+                }
+                onLogout(event) {
                     event.preventDefault();
                     this.auth.logout()
-                        .subscribe(function () { return _this.router.navigate(['Login']); });
-                };
-                AppComponent = __decorate([
-                    core_1.Component({
-                        selector: 'my-app',
-                        templateUrl: 'app/app.component.html',
-                        directives: [router_1.ROUTER_DIRECTIVES, AuthRouterOutlet_1.AuthRouterOutlet]
-                    }),
-                    router_1.RouteConfig([
-                        { path: '/', name: 'Home', component: home_view_1.HomeView, useAsDefault: true },
-                        { path: '/login', name: 'Login', component: login_1.Login },
-                        { path: '/page1', name: 'Page1', component: page1_view_1.Page1View },
-                        { path: '/page2', name: 'Page2', component: page2_view_1.Page2View }
-                    ]), 
-                    __metadata('design:paramtypes', [authentication_1.Authentication, router_1.Router, (typeof (_a = typeof components_1.AlfrescoService !== 'undefined' && components_1.AlfrescoService) === 'function' && _a) || Object])
-                ], AppComponent);
-                return AppComponent;
-                var _a;
-            }());
+                        .subscribe(() => this.router.navigate(['Login']));
+                }
+            };
+            AppComponent = __decorate([
+                core_1.Component({
+                    selector: 'my-app',
+                    templateUrl: 'app/app.component.html',
+                    directives: [router_1.ROUTER_DIRECTIVES, AuthRouterOutlet_1.AuthRouterOutlet]
+                }),
+                router_1.RouteConfig([
+                    { path: '/', name: 'Home', component: home_view_1.HomeView, useAsDefault: true },
+                    { path: '/login', name: 'Login', component: login_1.Login },
+                    { path: '/page1', name: 'Page1', component: page1_view_1.Page1View },
+                    { path: '/page2', name: 'Page2', component: page2_view_1.Page2View }
+                ]),
+                __metadata('design:paramtypes', [authentication_1.Authentication, router_1.Router, components_1.AlfrescoService])
+            ], AppComponent);
             exports_1("AppComponent", AppComponent);
         }
     }

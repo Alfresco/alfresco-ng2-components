@@ -21,8 +21,8 @@ System.register(['angular2/core', 'ng2-uploader/ng2-uploader'], function(exports
                 ng2_uploader_1 = ng2_uploader_1_1;
             }],
         execute: function() {
-            Page1View = (function () {
-                function Page1View() {
+            let Page1View = class Page1View {
+                constructor() {
                     this.options = {
                         url: 'http://192.168.99.100:8080/alfresco/service/api/upload',
                         withCredentials: true,
@@ -38,43 +38,75 @@ System.register(['angular2/core', 'ng2-uploader/ng2-uploader'], function(exports
                     this.dropResp = [];
                     this.zone = new core_1.NgZone({ enableLongStackTrace: false });
                 }
-                Page1View.prototype.handleUpload = function (data) {
+                handleUpload(data) {
                     if (data && data.response) {
                         data = JSON.parse(data.response);
                         this.uploadFile = data;
                     }
-                };
-                Page1View.prototype.handleDropUpload = function (data) {
-                    var _this = this;
-                    var index = this.dropResp.findIndex(function (x) { return x.id === data.id; });
+                }
+                handleDropUpload(data) {
+                    let index = this.dropResp.findIndex(x => x.id === data.id);
                     if (index === -1) {
                         this.dropResp.push(data);
                     }
                     else {
-                        this.zone.run(function () {
-                            _this.dropResp[index] = data;
+                        this.zone.run(() => {
+                            this.dropResp[index] = data;
                         });
                     }
-                    var total = 0, uploaded = 0;
-                    this.dropResp.forEach(function (resp) {
+                    let total = 0, uploaded = 0;
+                    this.dropResp.forEach(resp => {
                         total += resp.progress.total;
                         uploaded += resp.progress.loaded;
                     });
                     this.dropProgress = Math.floor(uploaded / (total / 100));
-                };
-                Page1View = __decorate([
-                    core_1.Component({
-                        selector: 'page1-view',
-                        styles: [
-                            "\n        :host .dropzone {\n            width: 100%;\n            height: 100px;\n            background-color: #f5f5f5;\n            margin-top: 2px;\n            margin-bottom: 2px;\n            box-shadow: inset 0 1px 2px rgba(0,0,0,.1);\n            text-align: center;\n        }\n        "
-                        ],
-                        template: "\n        <div class=\"container\">\n            <div class=\"row\">\n                <h2>Upload File</h2>\n                <input type=\"file\" \n                       [ng-file-select]=\"options\"\n                       (onUpload)=\"handleUpload($event)\">\n                <div>\n                    Response: {{ uploadFile | json }}\n                </div>\n            </div>\n            <div class=\"row\">\n                <h2>Drag and Drop file demo</h2>\n                <div class=\"col-md-4 col-md-offset-3\">\n                    <div [ng-file-drop]=\"options\" (onUpload)=\"handleDropUpload($event)\" class=\"dropzone\">\n                        Drop file here...\n                    </div>\n                    <div class=\"progress\">\n                        <div class=\"progress-bar\" [style.width]=\"dropProgress + '%'\"></div>\n                        <span class=\"percent\">{{ dropProgress }}%</span>\n                    </div>\n                </div>\n            </div>\n        </div>\n    ",
-                        directives: [ng2_uploader_1.UPLOAD_DIRECTIVES]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], Page1View);
-                return Page1View;
-            }());
+                }
+            };
+            Page1View = __decorate([
+                core_1.Component({
+                    selector: 'page1-view',
+                    styles: [
+                        `
+        :host .dropzone {
+            width: 100%;
+            height: 100px;
+            background-color: #f5f5f5;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+            text-align: center;
+        }
+        `
+                    ],
+                    template: `
+        <div class="container">
+            <div class="row">
+                <h2>Upload File</h2>
+                <input type="file"
+                       [ng-file-select]="options"
+                       (onUpload)="handleUpload($event)">
+                <div>
+                    Response: {{ uploadFile | json }}
+                </div>
+            </div>
+            <div class="row">
+                <h2>Drag and Drop file demo</h2>
+                <div class="col-md-4 col-md-offset-3">
+                    <div [ng-file-drop]="options" (onUpload)="handleDropUpload($event)" class="dropzone">
+                        Drop file here...
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" [style.width]="dropProgress + '%'"></div>
+                        <span class="percent">{{ dropProgress }}%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `,
+                    directives: [ng2_uploader_1.UPLOAD_DIRECTIVES]
+                }),
+                __metadata('design:paramtypes', [])
+            ], Page1View);
             exports_1("Page1View", Page1View);
         }
     }

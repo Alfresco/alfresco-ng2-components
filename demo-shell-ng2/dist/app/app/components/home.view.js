@@ -21,31 +21,58 @@ System.register(['angular2/core', 'ng2-alfresco/components'], function(exports_1
                 components_1 = components_1_1;
             }],
         execute: function() {
-            HomeView = (function () {
-                function HomeView() {
+            let HomeView = class HomeView {
+                constructor() {
                     this.thumbnails = true;
                     this.breadcrumb = false;
                     this.navigation = true;
                     this.downloads = true;
                     this.events = [];
                 }
-                HomeView.prototype.onItemClick = function ($event) {
+                onItemClick($event) {
                     console.log($event.value);
                     this.events.push({
                         name: 'Item Clicked',
                         value: $event.value
                     });
-                };
-                HomeView = __decorate([
-                    core_1.Component({
-                        selector: 'home-view',
-                        template: "\n        <div class=\"container-fluid\">\n            <div class=\"row\">\n                <div class=\"col-md-2\">\n                    <ul class=\"list-unstyled\">\n                        <li><label><input type=\"checkbox\" [(ngModel)]=\"thumbnails\"> Thumbnails</label></li>\n                        <li><label><input type=\"checkbox\" [(ngModel)]=\"breadcrumb\"> Breadcrumb</label></li>\n                        <li><label><input type=\"checkbox\" [(ngModel)]=\"navigation\"> Navigation</label></li>\n                        <li><label><input type=\"checkbox\" [(ngModel)]=\"downloads\"> Downloads</label></li>\n                    </ul>\n                    <hr>\n                    <ul class=\"list-unstyled\" style=\"font-size: 10px\">\n                        <li *ngFor=\"#event of events\">\n                            <strong>{{event.name}}</strong>: {{event.value.displayName}}\n                        </li>\n                    </ul>\n                </div>\n                <div class=\"col-md-10\">\n                    <alfresco-document-list #list \n                        [thumbnails]=\"thumbnails\"\n                        [breadcrumb]=\"breadcrumb\"\n                        [navigate]=\"navigation\"\n                        [downloads]=\"downloads\"\n                        (itemClick)=\"onItemClick($event)\">\n                    </alfresco-document-list>\n                </div>\n            </div>\n        </div>\n    ",
-                        directives: [components_1.DocumentList]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], HomeView);
-                return HomeView;
-            }());
+                }
+            };
+            HomeView = __decorate([
+                core_1.Component({
+                    selector: 'home-view',
+                    template: `
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <ul class="list-unstyled">
+                        <li><label><input type="checkbox" [(ngModel)]="thumbnails"> Thumbnails</label></li>
+                        <li><label><input type="checkbox" [(ngModel)]="breadcrumb"> Breadcrumb</label></li>
+                        <li><label><input type="checkbox" [(ngModel)]="navigation"> Navigation</label></li>
+                        <li><label><input type="checkbox" [(ngModel)]="downloads"> Downloads</label></li>
+                    </ul>
+                    <hr>
+                    <ul class="list-unstyled" style="font-size: 10px">
+                        <li *ngFor="#event of events">
+                            <strong>{{event.name}}</strong>: {{event.value.displayName}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-10">
+                    <alfresco-document-list #list
+                        [thumbnails]="thumbnails"
+                        [breadcrumb]="breadcrumb"
+                        [navigate]="navigation"
+                        [downloads]="downloads"
+                        (itemClick)="onItemClick($event)">
+                    </alfresco-document-list>
+                </div>
+            </div>
+        </div>
+    `,
+                    directives: [components_1.DocumentList]
+                }),
+                __metadata('design:paramtypes', [])
+            ], HomeView);
             exports_1("HomeView", HomeView);
         }
     }

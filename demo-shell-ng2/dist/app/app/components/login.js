@@ -27,8 +27,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                 authentication_1 = authentication_1_1;
             }],
         execute: function() {
-            Login = (function () {
-                function Login(fb, auth, router) {
+            let Login = class Login {
+                constructor(fb, auth, router) {
                     this.auth = auth;
                     this.router = router;
                     this.error = false;
@@ -37,33 +37,31 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                         password: ['', common_1.Validators.required]
                     });
                 }
-                Login.prototype.isErrorStyle = function (field) {
+                isErrorStyle(field) {
                     if (field.valid) {
                         return false;
                     }
                     else {
                         return true;
                     }
-                };
-                Login.prototype.onSubmit = function (value, event) {
-                    var _this = this;
+                }
+                onSubmit(value, event) {
                     event.preventDefault();
                     this.auth.login('POST', value.username, value.password)
-                        .subscribe(function (token) { return _this.router.navigate(['Home']); }, function () {
-                        _this.error = true;
+                        .subscribe((token) => this.router.navigate(['Home']), () => {
+                        this.error = true;
                     });
-                };
-                Login = __decorate([
-                    core_1.Component({
-                        selector: 'login',
-                        directives: [router_1.ROUTER_DIRECTIVES, common_1.FORM_DIRECTIVES],
-                        templateUrl: 'app/template/login.component.html',
-                        styleUrls: ['app/style/login.component.css'],
-                    }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, authentication_1.Authentication, router_1.Router])
-                ], Login);
-                return Login;
-            }());
+                }
+            };
+            Login = __decorate([
+                core_1.Component({
+                    selector: 'login',
+                    directives: [router_1.ROUTER_DIRECTIVES, common_1.FORM_DIRECTIVES],
+                    templateUrl: 'app/template/login.component.html',
+                    styleUrls: ['app/style/login.component.css'],
+                }),
+                __metadata('design:paramtypes', [common_1.FormBuilder, authentication_1.Authentication, router_1.Router])
+            ], Login);
             exports_1("Login", Login);
         }
     }

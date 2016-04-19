@@ -24,74 +24,71 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                 http_1 = http_1_1;
             }],
         execute: function() {
-            Authentication = (function () {
-                function Authentication(http) {
+            let Authentication = class Authentication {
+                constructor(http) {
                     this.http = http;
                     this._host = 'http://192.168.99.100:8080';
                     this._baseUrl = this._host + '/alfresco/service/api/';
                     this.token = localStorage.getItem('token');
                 }
-                Authentication.prototype.isLoggedIn = function () {
+                isLoggedIn() {
                     return !!localStorage.getItem('token');
-                };
-                Authentication.prototype.login = function (method, username, password) {
+                }
+                login(method, username, password) {
                     if (method === 'GET') {
                         return this.loginGet(username, password);
                     }
                     else {
                         return this.loginPost(username, password);
                     }
-                };
-                Authentication.prototype.loginGet = function (username, password) {
-                    var _this = this;
-                    var searchParams = new http_1.URLSearchParams();
+                }
+                loginGet(username, password) {
+                    const searchParams = new http_1.URLSearchParams();
                     searchParams.set('u', username);
                     searchParams.set('pw', password);
                     return this.http.get(this._baseUrl + 'login', { search: searchParams })
-                        .map(function (res) {
-                        var data = JSON.parse(xml2json(res.text(), '  '));
-                        _this.token = data.ticket;
-                        _this.saveJwt(_this.token);
+                        .map((res) => {
+                        let data = JSON.parse(xml2json(res.text(), '  '));
+                        this.token = data.ticket;
+                        this.saveJwt(this.token);
                     })
                         .catch(this.handleError);
-                };
-                Authentication.prototype.loginPost = function (username, password) {
-                    var _this = this;
-                    var credentials = '{ username: ' + username + ', password: ' + password + ' }';
-                    var headers = new http_1.Headers();
+                }
+                loginPost(username, password) {
+                    let credentials = '{ username: ' + username + ', password: ' + password + ' }';
+                    let headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     return this.http.post(this._baseUrl + 'login', credentials, {
                         headers: headers
                     })
-                        .map(function (res) {
-                        var response = res.json();
-                        _this.token = response.data.ticket;
-                        _this.saveJwt(_this.token);
+                        .map((res) => {
+                        let response = res.json();
+                        this.token = response.data.ticket;
+                        this.saveJwt(this.token);
                     })
                         .catch(this.handleError);
-                };
-                Authentication.prototype.saveJwt = function (jwt) {
+                }
+                saveJwt(jwt) {
                     if (jwt) {
                         localStorage.setItem('token', jwt);
                     }
-                };
-                Authentication.prototype.logout = function () {
+                }
+                logout() {
                     this.token = undefined;
                     localStorage.removeItem('token');
                     return Rx_1.Observable.of(true);
-                };
-                Authentication.prototype.handleError = function (error) {
+                }
+                handleError(error) {
                     // in a real world app, we may send the error to some remote logging infrastructure
                     // instead of just logging it to the console
                     console.error(error);
                     return Rx_1.Observable.throw(error.json().error || 'Server error');
-                };
-                Authentication = __decorate([
-                    core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http])
-                ], Authentication);
-                return Authentication;
-            }());
+                }
+            };
+            Authentication = __decorate([
+                core_1.Injectable(),
+                __metadata('design:paramtypes', [http_1.Http])
+            ], Authentication);
             exports_1("Authentication", Authentication);
         }
     }

@@ -21,19 +21,23 @@ System.register(['angular2/core', 'ng2-alfresco/components'], function(exports_1
                 components_1 = components_1_1;
             }],
         execute: function() {
-            Page2View = (function () {
-                function Page2View() {
-                }
-                Page2View = __decorate([
-                    core_1.Component({
-                        selector: 'page2-view',
-                        template: "\n        <div class=\"container\">\n            <div class=\"row\">\n                <h2>Page 2</h2>\n                <hello-world></hello-world>\n            </div>\n        </div>\n    ",
-                        directives: [components_1.HelloWorld]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], Page2View);
-                return Page2View;
-            }());
+            let Page2View = class Page2View {
+            };
+            Page2View = __decorate([
+                core_1.Component({
+                    selector: 'page2-view',
+                    template: `
+        <div class="container">
+            <div class="row">
+                <h2>Page 2</h2>
+                <hello-world></hello-world>
+            </div>
+        </div>
+    `,
+                    directives: [components_1.HelloWorld]
+                }),
+                __metadata('design:paramtypes', [])
+            ], Page2View);
             exports_1("Page2View", Page2View);
         }
     }

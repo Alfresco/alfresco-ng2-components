@@ -1,11 +1,6 @@
 System.register(['angular2/core', 'angular2/router', '../services/authentication'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var __extends = (this && this.__extends) || function (d, b) {
-        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -32,33 +27,31 @@ System.register(['angular2/core', 'angular2/router', '../services/authentication
                 authentication_1 = authentication_1_1;
             }],
         execute: function() {
-            AuthRouterOutlet = (function (_super) {
-                __extends(AuthRouterOutlet, _super);
-                function AuthRouterOutlet(_elementRef, _loader, _parentRouter, nameAttr, authentication) {
-                    _super.call(this, _elementRef, _loader, _parentRouter, nameAttr);
+            let AuthRouterOutlet = class AuthRouterOutlet extends router_1.RouterOutlet {
+                constructor(_elementRef, _loader, _parentRouter, nameAttr, authentication) {
+                    super(_elementRef, _loader, _parentRouter, nameAttr);
                     this.authentication = authentication;
                     this.router = _parentRouter;
                     this.publicRoutes = [
                         '', 'login', 'signup'
                     ];
                 }
-                AuthRouterOutlet.prototype.activate = function (instruction) {
+                activate(instruction) {
                     if (this._canActivate(instruction.urlPath)) {
-                        return _super.prototype.activate.call(this, instruction);
+                        return super.activate(instruction);
                     }
                     this.router.navigate(['Login']);
-                };
-                AuthRouterOutlet.prototype._canActivate = function (url) {
+                }
+                _canActivate(url) {
                     return this.publicRoutes.indexOf(url) !== -1
                         || this.authentication.isLoggedIn();
-                };
-                AuthRouterOutlet = __decorate([
-                    core_1.Directive({ selector: 'auth-router-outlet' }),
-                    __param(3, core_1.Attribute('name')), 
-                    __metadata('design:paramtypes', [core_1.ElementRef, core_1.DynamicComponentLoader, router_1.Router, String, authentication_1.Authentication])
-                ], AuthRouterOutlet);
-                return AuthRouterOutlet;
-            }(router_1.RouterOutlet));
+                }
+            };
+            AuthRouterOutlet = __decorate([
+                core_1.Directive({ selector: 'auth-router-outlet' }),
+                __param(3, core_1.Attribute('name')),
+                __metadata('design:paramtypes', [core_1.ElementRef, core_1.DynamicComponentLoader, router_1.Router, String, authentication_1.Authentication])
+            ], AuthRouterOutlet);
             exports_1("AuthRouterOutlet", AuthRouterOutlet);
         }
     }

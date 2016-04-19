@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "outDir": "dist/app",
     "module": "system",
     "moduleResolution": "node",
@@ -11,8 +11,7 @@
     "noImplicitAny": false
   },
   "files": [
-    "app/**/*.ts",
-    "!node_modules/**"
+    "app/**/*.ts"
   ],
   "exclude": [
     "node_modules",

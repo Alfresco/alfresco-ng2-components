@@ -24,26 +24,14 @@ gulp.task('copy:assets', ['clean'], function() {
 // copy dependencies
 gulp.task('copy:libs', ['clean'], function() {
     return gulp.src([
-            'node_modules/es6-shim/es6-shim.min.js',
-            'node_modules/systemjs/dist/system-polyfills.js',
-            'node_modules/angular2/es6/dev/src/testing/shims_for_IE.js',
-            'node_modules/angular2/bundles/angular2-polyfills.js',
-            'node_modules/systemjs/dist/system.src.js',
-            'node_modules/rxjs/bundles/Rx.js',
-            'node_modules/angular2/bundles/angular2.dev.js',
-            'node_modules/angular2/bundles/router.dev.js',
-            'node_modules/angular2/bundles/http.dev.js',
-            'node_modules/jquery/dist/jquery.min.js',
-            'node_modules/bootstrap/dist/js/bootstrap.min.js',
-            'node_modules/font-awesome/css/font-awesome.min.css',
-            'node_modules/bootstrap/dist/css/bootstrap.min.css'
+            'node_modules/**/*'
         ])
-        .pipe(gulp.dest('dist/lib'))
+        .pipe(gulp.dest('dist/node_modules'))
 });
 
 // linting
 gulp.task('tslint', function() {
-    return gulp.src(['app/**/*.ts', '!node_modules/**'])
+    return gulp.src('app/**/*.ts')
         .pipe(tslint())
         .pipe(tslint.report('verbose'));
 });
@@ -78,6 +66,6 @@ gulp.task('serve', ['build'], function() {
     gulp.watch(['app/**/*', 'index.html'], ['buildAndReload']);
 });
 
-gulp.task('build', ['tslint', 'compile', 'copy:libs', 'copy:assets']);
+gulp.task('build', ['tslint', 'compile', 'copy:assets', 'copy:libs', ]);
 gulp.task('dev', ['build', 'serve'], reload);
 gulp.task('default', ['build']);
