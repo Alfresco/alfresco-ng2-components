@@ -2,3 +2,4 @@
 node_modules
 workspace.xml
 .idea/
+dist/

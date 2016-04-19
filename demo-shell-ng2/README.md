@@ -8,7 +8,7 @@ Install the npm packages described in the `package.json` and verify that it work
 
 ```bash
 $ npm install
-$ npm start
+$ npm run build.dev
 ```
 You're ready to write your application.
 
