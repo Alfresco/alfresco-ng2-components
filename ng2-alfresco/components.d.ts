@@ -1,3 +1,4 @@
+/// <reference path="node_modules/angular2/typings/browser.d.ts" />
 import { HelloWorld } from './src/HelloWorld';
 import { DocumentList } from "./src/document-list.component";
 import { AlfrescoService } from "./src/alfresco.service";

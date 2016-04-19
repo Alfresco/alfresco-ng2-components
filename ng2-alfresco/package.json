@@ -11,7 +11,7 @@
     }
   ],
   "scripts": {
-    "prepublish": "tsc && node make.js; exit 0"
+    "prepublish": "tsc && node make.js"
   },
   "dependencies": {
     "angular2": "2.0.0-beta.15",
