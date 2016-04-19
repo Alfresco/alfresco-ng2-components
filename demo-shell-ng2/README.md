@@ -1,10 +1,13 @@
+### Prerequisites
+
+- [Alfresco Docker image with CORS support](https://github.com/wabson/alfresco-docker-cors)
+
 ### Start development
 
 Install the npm packages described in the `package.json` and verify that it works:
 
 ```bash
 $ npm install
-$ bower install
 $ npm start
 ```
 You're ready to write your application.
