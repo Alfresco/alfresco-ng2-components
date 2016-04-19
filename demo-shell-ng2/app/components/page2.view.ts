@@ -1,4 +1,4 @@
-import {Component} from "angular2/core";
+import {Component} from 'angular2/core';
 import {HelloWorld} from 'ng2-alfresco/components';
 
 @Component({

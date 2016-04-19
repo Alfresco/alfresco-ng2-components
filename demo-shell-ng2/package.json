@@ -1,7 +1,9 @@
 {
-  "name": "angular2-quickstart",
+  "name": "Alfresco-Angular2-SFS",
   "version": "1.0.0",
   "scripts": {
+    "build.dev": "gulp dev",
+    "build.prod": "gulp build",
     "prestart": "npm install",
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "tsc": "tsc",
@@ -27,6 +29,13 @@
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
+    "browser-sync": "^2.10.0",
+    "del": "^2.1.0",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tslint": "^3.6.0",
+    "gulp-typescript": "^2.8.0",
+    "tsconfig-glob": "^0.3.3",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",
     "typings": "^0.7.12"

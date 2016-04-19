@@ -1,4 +1,4 @@
-import {Component, NgZone} from "angular2/core";
+import {Component, NgZone} from 'angular2/core';
 import {UPLOAD_DIRECTIVES} from 'ng2-uploader/ng2-uploader';
 
 @Component({
@@ -44,8 +44,8 @@ import {UPLOAD_DIRECTIVES} from 'ng2-uploader/ng2-uploader';
     directives: [UPLOAD_DIRECTIVES]
 })
 export class Page1View {
-    uploadFile: any;
-    options: Object = {
+    uploadFile:any;
+    options:Object = {
         url: 'http://192.168.99.100:8080/alfresco/service/api/upload',
         withCredentials: true,
         authToken: btoa('admin:admin'),
@@ -57,27 +57,26 @@ export class Page1View {
         }
     };
 
-    zone: NgZone;
-    dropProgress: number = 0;
-    dropResp: any[] = [];
+    zone:NgZone;
+    dropProgress:number = 0;
+    dropResp:any[] = [];
 
     constructor() {
-        this.zone = new NgZone({ enableLongStackTrace: false });
+        this.zone = new NgZone({enableLongStackTrace: false});
     }
 
-    handleUpload(data): void {
+    handleUpload(data):void {
         if (data && data.response) {
             data = JSON.parse(data.response);
             this.uploadFile = data;
         }
     }
 
-    handleDropUpload(data): void {
+    handleDropUpload(data):void {
         let index = this.dropResp.findIndex(x => x.id === data.id);
         if (index === -1) {
             this.dropResp.push(data);
-        }
-        else {
+        } else {
             this.zone.run(() => {
                 this.dropResp[index] = data;
             });
