@@ -11,7 +11,9 @@
     }
   ],
   "scripts": {
-    "prepublish": "tsc && node make.js"
+    "__prepublish": "tsc && node make.js",
+    "preinstall": "npm install --ignore-scripts",
+    "postinstall": "tsc && node make.js"
   },
   "dependencies": {
     "angular2": "2.0.0-beta.15",
