@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {Login} from './components/login';
+import {Login} from './components/login/login';
 import {Authentication} from './services/authentication';
 import {AuthRouterOutlet} from './components/AuthRouterOutlet';
 import {HomeView} from './components/home.view';

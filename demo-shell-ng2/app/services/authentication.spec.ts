@@ -1,17 +1,8 @@
-import {
-    it,
-    inject,
-    injectAsync,
-    describe,
-    beforeEachProviders,
-    TestComponentBuilder
-} from 'angular2/testing';
-
+import {it, inject, injectAsync, describe, beforeEachProviders, TestComponentBuilder} from 'angular2/testing';
 import {provide, Injector} from 'angular2/core';
 import {Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions} from 'angular2/http';
 import {MockBackend} from 'angular2/http/testing';
-
-import {Authentication} from "app/services/authentication";
+import {Authentication} from 'app/services/authentication';
 
 describe('Authentication', () => {
     let injector,
@@ -23,16 +14,12 @@ describe('Authentication', () => {
     beforeEach(() => {
         injector = Injector.resolveAndCreate([
             HTTP_PROVIDERS,
-            // this next value should NOT be provided, but when it is,
-            // we lose the ability to correlate the backend calls
-            // to the test Is there a way to detect this has been
-            // done and reject it out-of-hand?
-            MockBackend,  // this is clearly wrong...
+            MockBackend,
             provide(XHRBackend, {useClass: MockBackend}),
             Authentication
         ]);
 
-        var store = {};
+        let store = {};
 
         spyOn(localStorage, 'getItem').and.callFake(function (key) {
             return store[key];
@@ -47,7 +34,7 @@ describe('Authentication', () => {
             delete store[key];
         });
         spyOn(localStorage, 'key').and.callFake(function (i) {
-            var keys = Object.keys(store);
+            let keys = Object.keys(store);
             return keys[i] || null;
         });
 

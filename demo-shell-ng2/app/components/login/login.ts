@@ -1,11 +1,11 @@
 import {Component} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
-import {Authentication} from '../services/authentication';
+import {Authentication} from '../../services/authentication';
 
 @Component({
     selector: 'login',
-    moduleId: 'app/components/login',
+    moduleId: 'app/components/login/login',
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
     templateUrl: 'login.component.html',
     styleUrls: ['login.component.css'],
