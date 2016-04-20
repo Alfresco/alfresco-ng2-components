@@ -1,8 +1,8 @@
-import {it, inject, injectAsync, describe, beforeEachProviders, TestComponentBuilder} from 'angular2/testing';
+import {it, describe} from 'angular2/testing';
 import {provide, Injector} from 'angular2/core';
 import {Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions} from 'angular2/http';
 import {MockBackend} from 'angular2/http/testing';
-import {Authentication} from 'app/services/authentication';
+import {Authentication} from './authentication';
 
 describe('Authentication', () => {
     let injector,
@@ -74,7 +74,7 @@ describe('Authentication', () => {
 
     it('should return false and token undefined on log out', () => {
         service.token = 'fake-token';
-        localStorage.setItem('token','fake-token');
+        localStorage.setItem('token', 'fake-token');
         service.logout()
             .subscribe( () => {
                 expect(service.isLoggedIn()).toBe(false);
