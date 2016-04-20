@@ -17,6 +17,7 @@ gulp.task('clean', function () {
 gulp.task('copy:assets', ['clean'], function() {
     return gulp.src(['app/**/*',
                      'index.html',
+                     'typings.json',
                      '!app/**/*.ts'], { base : './' })
         .pipe(gulp.dest('dist'))
 });
@@ -27,6 +28,14 @@ gulp.task('copy:libs', ['clean'], function() {
             'node_modules/**/*'
         ])
         .pipe(gulp.dest('dist/node_modules'))
+});
+
+// copy typings
+gulp.task('copy:typings', ['clean'], function() {
+    return gulp.src([
+            'typings/**/*'
+        ])
+        .pipe(gulp.dest('dist/typings'))
 });
 
 // linting
@@ -66,6 +75,6 @@ gulp.task('serve', ['build'], function() {
     gulp.watch(['app/**/*', 'index.html'], ['buildAndReload']);
 });
 
-gulp.task('build', ['tslint', 'compile', 'copy:assets', 'copy:libs', ]);
+gulp.task('build', ['tslint', 'copy:assets', 'copy:libs', 'copy:typings', 'compile']);
 gulp.task('dev', ['build', 'serve'], reload);
 gulp.task('default', ['build']);
