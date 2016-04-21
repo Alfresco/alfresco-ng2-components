@@ -2,13 +2,10 @@
     "name": "ng2-alfresco-documentlist",
     "version": "0.1.0",
     "scripts": {
-        "build": "tsc",
-        "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+        "build": "typings install && tsc",
         "tsc": "tsc",
         "tsc:w": "tsc -w",
-        "lite": "lite-server",
-        "typings": "typings",
-        "postinstall": "typings install"
+        "typings": "typings"
     },
     "license": "ISC",
     "dependencies": {
@@ -20,8 +17,6 @@
         "zone.js": "0.6.10"
     },
     "devDependencies": {
-        "concurrently": "^2.0.0",
-        "lite-server": "^2.2.0",
         "typescript": "^1.8.10",
         "typings":"^0.7.12"
     }
