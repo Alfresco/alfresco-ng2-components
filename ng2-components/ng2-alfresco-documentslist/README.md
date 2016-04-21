@@ -37,3 +37,8 @@ export class MyView {
     (itemClick)="onItemClick($event)">
 </alfresco-document-list>
 ```
+
+### Build
+
+npm install
+gulp build
