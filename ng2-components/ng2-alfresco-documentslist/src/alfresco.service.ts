@@ -18,7 +18,7 @@ export class AlfrescoService {
     public set host(value:string) {
         this._host = value;
     }
-    
+
     private getBaseUrl():string {
         return this.host + this._baseUrlPath;
     }

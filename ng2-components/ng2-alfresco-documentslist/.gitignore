@@ -4,6 +4,5 @@ jspm_packages
 .idea
 lib
 build
-*.js
-*.js.map
 !make.js
+node_modules/

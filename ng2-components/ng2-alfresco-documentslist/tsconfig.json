@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "mapRoot": "",
+    "module": "system",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "rootDir": ".",
+    "sourceMap": true,
+    "target": "es5",
+    "outDir": "dist/app"
+  },
+  "filesGlob": [
+    "node_modules/angular2/typings/browser.d.ts"
+  ],
+  "files": [
+    "node_modules/angular2/typings/browser.d.ts",
+    "*.ts",
+    "src/**/*.ts"
+  ]
+}

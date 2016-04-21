@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {HelloWorld} from 'ng2-alfresco/components';
+import {HelloWorld} from '../../../ng2-alfresco-documentslist/src/components';
 
 @Component({
     selector: 'page2-view',

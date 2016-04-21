@@ -5,8 +5,8 @@ import {Authentication} from './services/authentication';
 import {AuthRouterOutlet} from './components/AuthRouterOutlet';
 import {HomeView} from './components/home.view';
 import {Page1View} from './components/page1.view';
+import {AlfrescoService} from 'ng2-alfresco-documentslist/dist/alfresco.service';
 import {Page2View} from './components/page2.view';
-import {AlfrescoService} from 'ng2-alfresco/components';
 
 @Component({
     selector: 'my-app',

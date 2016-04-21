@@ -10,28 +10,28 @@ import {DocumentEntity} from "./core/entities/document.entity";
             :host .breadcrumb {
                 margin-bottom: 4px;
             }
-            
+
             :host .folder-icon {
                 float: left;
                 margin-right: 10px;
             }
-            
+
             :host .file-icon {
                 width: 52px;
                 height: 52px;
                 float: left;
                 margin-right: 10px;
             }
-            
+
             :host .document-header:hover {
                 text-decoration: underline;
             }
-            
+
             :host .download-button {
                 color: #777;
                 text-decoration: none;
             }
-            
+
             :host .download-button:hover {
                 color: #555;
             }
@@ -175,11 +175,11 @@ export class DocumentList implements OnInit {
         var relativePath = container + path + item.fileName;
         return item.location.site + '/' + relativePath;
     }
-    
+
     getContentUrl(document: DocumentEntity) {
         return this._alfrescoService.getContentUrl(document);
     }
-    
+
     getDocumentThumbnailUrl(document:  DocumentEntity) {
         return this._alfrescoService.getDocumentThumbnailUrl(document);
     }
