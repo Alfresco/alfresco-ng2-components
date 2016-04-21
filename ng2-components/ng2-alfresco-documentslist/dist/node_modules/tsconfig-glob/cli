@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+'use strict';
+
+process.title = 'tsconfig-glob';
+
+var resolve = require('resolve');
+var exit = require('exit');
+
+resolve('tsconfig-glob', {
+    basedir: process.cwd()
+}, function (error, localCli) {
+    var cli;
+
+    if (error) {
+        cli = require('./index');
+    } else {
+        cli = require(localCli);
+    }
+
+    var args = process.argv.slice(2),
+        indentOptionIndex = args.indexOf('-i'),
+        indent = 4,
+        empty = false;
+
+    if (indentOptionIndex === -1) {
+        indentOptionIndex = args.indexOf('--indent');
+    }
+
+    if (indentOptionIndex > -1) {
+        indent = Number(args.splice(indentOptionIndex, 2)[1])
+    }
+
+    var emptyOptionIndex = args.indexOf('--empty');
+
+    if (emptyOptionIndex > -1) {
+        args.splice(emptyOptionIndex);
+        empty = true;
+    }
+
+    var cwd = process.cwd();
+
+    try {
+        cli({
+            args: args,
+            indent: indent,
+            configPath: args[0] || '.',
+            cwd: cwd,
+            empty: empty
+        }, function(err) {
+            if(!!err) {
+                console.error(err);
+                exit(1);
+                return;
+            }
+
+            exit(0);
+        });
+    } catch (e) {
+        console.error(e);
+        exit(1);
+    }
+});
