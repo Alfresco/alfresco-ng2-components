@@ -5,7 +5,7 @@ import {MDL} from './MaterialDesignLiteUpgradeElement';
 @Component({
     selector: 'home-view',
     template: `
-        <div class="container-fluid">
+        <div class="container-fluid p-10">
             <div class="row">
                 <div class="col-md-2">
                     <ul class="list-unstyled">
