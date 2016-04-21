@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {DocumentList} from 'ng2-alfresco-documentlist/component';
+import {DocumentList} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 
 @Component({
     selector: 'home-view',
