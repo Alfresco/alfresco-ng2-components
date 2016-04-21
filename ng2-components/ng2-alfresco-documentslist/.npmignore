@@ -1,2 +1,4 @@
 /typings
 /src
+/node_modules
+gulpfile.js

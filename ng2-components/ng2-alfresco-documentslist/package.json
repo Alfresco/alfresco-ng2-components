@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Alfresco Document list - Angular 2 Component",
   "license": "GNU",
-  "main": "dist/components.ts",
+  "main": "ng2-alfresco-documentslist.ts",
   "contributors": [
     {
       "name": "Denys Vuika",

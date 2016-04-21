@@ -1,10 +1,7 @@
-import { HelloWorld } from './HelloWorld';
-import { DocumentList } from "./document-list.component.ts";
-import { AlfrescoService } from "./alfresco.service.ts";
+import {HelloWorld} from './src/HelloWorld';
+import {DocumentList} from './src/document-list.component';
+import {AlfrescoService} from './src/alfresco.service';
 
-export * from './HelloWorld';
-export * from './document-list.component.ts';
-export * from './alfresco.service.ts';
 
 export default {
     directives: [HelloWorld, DocumentList],

@@ -1,9 +1,11 @@
-import { HelloWorld } from './HelloWorld';
-import { DocumentList } from "./document-list.component.ts";
-import { AlfrescoService } from "./alfresco.service.ts";
-export * from 'src/HelloWorld';
-export * from 'src/document-list.component.ts';
-export * from 'src/alfresco.service.ts';
+import { HelloWorld } from './src/HelloWorld';
+import { DocumentList } from "./src/document-list.component.ts";
+import { AlfrescoService } from "./src/alfresco.service.ts";
+
+export * from './src/HelloWorld';
+export * from './src/document-list.component.ts';
+export * from './src/alfresco.service.ts';
+
 declare var _default: {
     directives: (typeof HelloWorld | typeof DocumentList)[];
     providers: typeof AlfrescoService[];

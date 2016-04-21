@@ -11,7 +11,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "target": "es5",
-    "outDir": "dist/app"
+    "outDir": "dist"
   },
   "filesGlob": [
     "node_modules/angular2/typings/browser.d.ts"
