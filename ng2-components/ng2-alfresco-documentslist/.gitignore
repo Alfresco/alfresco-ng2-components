@@ -1,8 +1,0 @@
-npm-debug.log
-node_modules
-jspm_packages
-.idea
-lib
-build
-!make.js
-node_modules/
