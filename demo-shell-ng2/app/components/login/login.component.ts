@@ -37,7 +37,7 @@ export class LoginComponent {
         }
         this.auth.login('POST', value.username, value.password)
             .subscribe(
-                (token:any) => this.router.navigate(['Home']),
+                (token:any) => this.router.navigate(['Files']),
                 () => {
                     this.error = true;
                 }
