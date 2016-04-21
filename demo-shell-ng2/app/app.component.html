@@ -1,3 +1,4 @@
+<!--
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -42,5 +43,52 @@
         </div>
     </div>
 </nav>
-<!--<router-outlet></router-outlet>-->
 <auth-router-outlet></auth-router-outlet>
+-->
+
+<!-- Always shows a header, even in smaller screens. -->
+<div mdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">Alfresco</span>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
+            <!-- Navigation. We hide it in small screens. -->
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <a class="mdl-navigation__link" href="" [routerLink]="['Home']">Home</a>
+                <a class="mdl-navigation__link" href="" [routerLink]="['Page1']">Uploader</a>
+                <a class="mdl-navigation__link" href="" [routerLink]="['Page2']">Page 2</a>
+            </nav>
+            <!-- Right aligned menu below button -->
+            <button id="demo-menu-lower-right"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">more_vert</i>
+            </button>
+
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                for="demo-menu-lower-right">
+                <li class="mdl-menu__item">Some Action</li>
+                <li class="mdl-menu__item">Another Action</li>
+                <li disabled class="mdl-menu__item">Disabled Action</li>
+                <li class="mdl-menu__item">Yet Another Action</li>
+                <li *ngIf="!isLoggedIn()" class="mdl-menu__item" [routerLink]="['Login']">Login</li>
+                <li *ngIf="isLoggedIn()" class="mdl-menu__item" (click)="onLogout($event)">Logout</li>
+            </ul>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Alfresco</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="" [routerLink]="['Home']" (click)="hideDrawer()">Home</a>
+            <a class="mdl-navigation__link" href="" [routerLink]="['Page1']" (click)="hideDrawer()">Uploader</a>
+            <a class="mdl-navigation__link" href="" [routerLink]="['Page2']" (click)="hideDrawer()">Page 2</a>
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            <!--<router-outlet></router-outlet>-->
+            <auth-router-outlet></auth-router-outlet>
+        </div>
+    </main>
+</div>

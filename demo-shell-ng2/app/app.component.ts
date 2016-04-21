@@ -7,11 +7,14 @@ import {HomeView} from './components/home.view';
 import {Page1View} from './components/page1.view';
 import {Page2View} from './components/page2.view';
 import {AlfrescoService} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+import {MDL} from './components/MaterialDesignLiteUpgradeElement';
+
+declare var document: any;
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
-    directives: [ROUTER_DIRECTIVES, AuthRouterOutlet]
+    directives: [ROUTER_DIRECTIVES, AuthRouterOutlet, MDL]
 })
 @RouteConfig([
     {path: '/', name: 'Home', component: HomeView, useAsDefault: true},
@@ -41,5 +44,10 @@ export class AppComponent {
             .subscribe(
                 () => this.router.navigate(['Login'])
             );
+    }
+
+    hideDrawer() {
+        // todo: workaround for drawer closing
+        document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
     }
 }
