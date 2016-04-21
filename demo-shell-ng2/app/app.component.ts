@@ -1,13 +1,11 @@
 import {Component} from 'angular2/core';
 import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {Login} from './components/login/login';
 import {Authentication} from './services/authentication';
-import {AuthRouterOutlet} from './components/AuthRouterOutlet';
-import {HomeView} from './components/home.view';
-import {Page1View} from './components/page1.view';
-import {Page2View} from './components/page2.view';
 import {AlfrescoService} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
-import {MDL} from './components/MaterialDesignLiteUpgradeElement';
+import {MDL} from './components/common/MaterialDesignLiteUpgradeElement';
+import {FilesComponent} from './components/files/files.component';
+import {LoginComponent} from './components/login/login.component';
+import {AuthRouterOutlet} from './components/router/AuthRouterOutlet';
 
 declare var document: any;
 
@@ -17,10 +15,8 @@ declare var document: any;
     directives: [ROUTER_DIRECTIVES, AuthRouterOutlet, MDL]
 })
 @RouteConfig([
-    {path: '/', name: 'Home', component: HomeView, useAsDefault: true},
-    {path: '/login', name: 'Login', component: Login},
-    {path: '/page1', name: 'Page1', component: Page1View},
-    {path: '/page2', name: 'Page2', component: Page2View}
+    {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
+    {path: '/login', name: 'Login', component: LoginComponent}
 ])
 export class AppComponent {
 

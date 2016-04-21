@@ -1,9 +1,9 @@
 import {Component} from 'angular2/core';
 import {DocumentList} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
-import {MDL} from './MaterialDesignLiteUpgradeElement';
+import {MDL} from '../common/MaterialDesignLiteUpgradeElement';
 
 @Component({
-    selector: 'home-view',
+    selector: 'files-component',
     template: `
         <div class="container-fluid p-10">
             <div class="row">
@@ -42,7 +42,7 @@ import {MDL} from './MaterialDesignLiteUpgradeElement';
                     </ul>
                 </div>
                 <div class="col-md-10">
-                    <alfresco-document-list #list 
+                    <alfresco-document-list #list
                         [thumbnails]="thumbnails"
                         [breadcrumb]="breadcrumb"
                         [navigate]="navigation"
@@ -55,7 +55,7 @@ import {MDL} from './MaterialDesignLiteUpgradeElement';
     `,
     directives: [DocumentList, MDL]
 })
-export class HomeView {
+export class FilesComponent {
     thumbnails: boolean = true;
     breadcrumb: boolean = false;
     navigation: boolean = true;

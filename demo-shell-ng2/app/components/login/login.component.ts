@@ -5,13 +5,13 @@ import {Authentication} from '../../services/authentication';
 declare let componentHandler;
 
 @Component({
-    selector: 'login',
+    selector: 'login-component',
     moduleId: 'app/components/login/login',
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
     templateUrl: 'login.component.html',
     styleUrls: ['login.component.css'],
 })
-export class Login {
+export class LoginComponent {
     form:ControlGroup;
     error:boolean = false;
 
