@@ -78,3 +78,4 @@ gulp.task('serve', ['build'], function() {
 gulp.task('build', ['tslint', 'copy:assets', 'copy:libs', 'copy:typings', 'compile']);
 gulp.task('dev', ['build', 'serve'], reload);
 gulp.task('default', ['build']);
+gulp.task('buildAndReload', ['build'], reload);
