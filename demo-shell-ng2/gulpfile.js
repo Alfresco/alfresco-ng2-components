@@ -10,7 +10,7 @@ const tsconfig = require('tsconfig-glob');
 
 // clean the contents of the distribution directory
 gulp.task('clean', function () {
-    return del('dist');
+    return del('dist/*');
 });
 
 // copy static assets - i.e. non TypeScript compiled source
