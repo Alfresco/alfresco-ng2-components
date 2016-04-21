@@ -2,11 +2,13 @@ import {Component} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {Authentication} from '../../services/authentication';
+import {MDL} from '../MaterialDesignLiteUpgradeElement';
+declare let componentHandler;
 
 @Component({
     selector: 'login',
     moduleId: 'app/components/login/login',
-    directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
+    directives: [MDL, ROUTER_DIRECTIVES, FORM_DIRECTIVES],
     templateUrl: 'login.component.html',
     styleUrls: ['login.component.css'],
 })
@@ -15,6 +17,7 @@ export class Login {
     error:boolean = false;
 
     isErrorStyle(field:ControlGroup) {
+        componentHandler.upgradeAllRegistered();
         if (field.valid) {
             return false;
         } else {
