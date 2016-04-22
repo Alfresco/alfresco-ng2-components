@@ -37,6 +37,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
                 function Login(fb, auth, router) {
                     this.auth = auth;
                     this.router = router;
+                    this.method = 'GET';
                     this.error = false;
                     this.form = fb.group({
                         username: ['', common_1.Validators.compose([common_1.Validators.required, common_1.Validators.minLength(4)])],
@@ -53,7 +54,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
                     if (event) {
                         event.preventDefault();
                     }
-                    this.auth.login('POST', value.username, value.password)
+                    this.auth.login(this.method, value.username, value.password)
                         .subscribe(function (token) { return _this.router.navigate(['Home']); }, function () {
                         _this.error = true;
                     });
@@ -72,6 +73,10 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
                         return true;
                     }
                 };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], Login.prototype, "method", void 0);
                 Login = __decorate([
                     core_1.Component({
                         selector: 'alfresco-login',

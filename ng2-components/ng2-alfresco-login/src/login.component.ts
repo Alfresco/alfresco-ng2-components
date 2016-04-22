@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component, Input} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {Authentication} from './authentication.service';
@@ -13,6 +13,8 @@ declare let componentHandler;
 
 })
 export class Login {
+    @Input() method: string = 'GET';
+
     form:ControlGroup;
     error:boolean = false;
 
@@ -38,7 +40,7 @@ export class Login {
         if (event) {
             event.preventDefault();
         }
-        this.auth.login('POST', value.username, value.password)
+        this.auth.login(this.method, value.username, value.password)
             .subscribe(
                 (token:any) => this.router.navigate(['Home']),
                 () => {

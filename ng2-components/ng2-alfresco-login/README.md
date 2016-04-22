@@ -13,10 +13,11 @@ import {Login} from 'ng2-alfresco-login/ng2-alfresco-login';
 
 @Component({
     selector: 'my-login',
-    template: ' <alfresco-login></alfresco-login>',
+    template: ' <alfresco-login method="{{methodName}}"></alfresco-login>',
     directives: [Login]
 })
 export class MyLoginComponent {
+    methodName: string = 'POST';
 }
 ```
 
