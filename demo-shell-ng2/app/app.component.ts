@@ -15,6 +15,7 @@ declare var document: any;
     directives: [ROUTER_DIRECTIVES, AuthRouterOutlet, MDL]
 })
 @RouteConfig([
+    {path: '/home', name: 'Home', component: FilesComponent},
     {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
     {path: '/login', name: 'Login', component: Login}
 ])
