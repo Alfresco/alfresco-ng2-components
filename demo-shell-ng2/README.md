@@ -15,44 +15,55 @@
 
 - [Alfresco Docker image with CORS support](https://github.com/wabson/alfresco-docker-cors)
 
-## Start development
+### Configuring development environment
 
-Install the npm packages described in the `package.json` and verify that it works:
+*All scripts assume you are at the project root folder*
 
-```bash
-$ npm install
-$ npm run build.dev
+**Install symlinks for Alfresco components**
+
+*ng2-alfresco-documentlist component:*
+
+```sh
+cd ng2-components/ng2-alfresco-documentlist
+npm link
+cd ../../demo-shell-ng
+npm link ng2-alfresco-documentlist
 ```
-You're ready to write your application.
 
-Remember the npm scripts in `package.json`:
+*ng2-alfresco-login component:*
 
-## Development
+```sh
+cd ng2-components/ng2-alfresco-login
+npm link
+cd ../../demo-shell-ng
+npm link ng2-alfresco-login
+```
 
-* To runs the compiler and a server at the same time, both in "watch mode"
+Please refer to [this article](https://docs.npmjs.com/cli/link) for more details on npm link.
 
-    ```$ npm start```
-    
-* To runs the test
+### Building and running
 
-    ```$ npm test```
+**Install dependencies:**
 
-* To runs the TypeScript compiler once
+```sh
+cd dev-platform-webcomponents/demo-shell-ng2/
+npm install
+```
 
-    ```$ npm run tsc```
+**(Option 1) Fast build and watch for dev purposes:**
 
-* To runs the TypeScript compiler in watch mode; the process keeps running, awaiting changes to TypeScript files and re-compiling when it sees them
+```sh
+npm start
+```
 
-    ```$ npm run tsc:w```
+**(Option 2) Build and watch with Gulp:**
 
-* To runs the [lite-server](https://www.npmjs.com/package/lite-server), a light-weight, static file server, written and maintained by [John Papa](https://github.com/johnpapa) and [Christopher Martin](https://github.com/cgmartin) with excellent support for Angular apps that use routing.
-   
-    ```$ npm run lite```
+```sh
+npm run build.dev
+```
 
-* To runs the typings tool
-    
-    ```$ npm run typings```
+*or*
 
-* called by *npm* automatically *after* it successfully completes package installation. This script installs the TypeScript definition files this app requires
-    
-    ```$ npm run postinstall```
+```sh
+gulp dev
+```
