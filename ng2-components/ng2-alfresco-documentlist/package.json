@@ -1,13 +1,34 @@
 {
     "name": "ng2-alfresco-documentlist",
+    "description": "Alfresco Angular2 Document List Component",
     "version": "0.1.0",
+    "author": "Alfresco Software, Ltd.",
     "scripts": {
         "build": "typings install && tsc",
         "tsc": "tsc",
         "tsc:w": "tsc -w",
         "typings": "typings"
     },
-    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Alfresco/dev-platform-webcomponents.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Alfresco/dev-platform-webcomponents/issues"
+    },
+    "license": "Apache-2.0",
+    "contributors": [
+        {
+            "name": "Denys Vuika",
+            "email": "denis.vuyka@gmail.com"
+        }
+    ],
+    "keywords": [
+        "ng2",
+        "angular",
+        "angular2",
+        "alfresco"
+    ],
     "dependencies": {
         "angular2": "2.0.0-beta.15",
         "systemjs": "0.19.26",
@@ -18,6 +39,6 @@
     },
     "devDependencies": {
         "typescript": "^1.8.10",
-        "typings":"^0.7.12"
+        "typings": "^0.7.12"
     }
 }
