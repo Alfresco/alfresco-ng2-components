@@ -1,0 +1,34 @@
+<div class="login-card-wide mdl-card mdl-shadow--4dp">
+    <form [ngFormModel]="form" (submit)="onSubmit(form.value, $event)">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text ">Login</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                <label for="username" class="mdl-textfield__label">Username</label>
+                <input type="text" class="mdl-textfield__input" id="username" ngControl="username" />
+                <span class="mdl-tooltip mdl-tooltip--validation" for="username" *ngIf="form.controls.username.hasError('required')">
+                        <span>Required.</span>
+                </span>
+                <span class="mdl-tooltip mdl-tooltip--validation" for="username" *ngIf="form.controls.username.hasError('minlength')">
+                        <span>Your username needs to be at least 4 characters.</span>
+                </span>
+            </div>
+
+            <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.password)}" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <label for="password" class="mdl-textfield__label">Password</label>
+                <input type="password" class="mdl-textfield__input" id="password" ngControl="password" />
+                <span class="mdl-tooltip mdl-tooltip--validation" for="password" *ngIf="form.controls.password.hasError('required')">
+                        <span>Required.</span>
+                </span>
+            </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" [disabled]="!form.valid">Login</button>
+            <div *ngIf="error">You have entered an invalid username or password</div>
+        </div>
+        <div class="mdl-card__menu">
+            <div class="mdl-spinner mdl-js-spinner"></div>
+        </div>
+    </form>
+</div>

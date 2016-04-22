@@ -1,0 +1,23 @@
+{
+    "name": "ng2-alfresco-login",
+    "version": "0.1.0",
+    "scripts": {
+        "build": "typings install && tsc",
+        "tsc": "tsc",
+        "tsc:w": "tsc -w",
+        "typings": "typings"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "angular2": "2.0.0-beta.15",
+        "systemjs": "0.19.26",
+        "es6-shim": "^0.35.0",
+        "reflect-metadata": "0.1.2",
+        "rxjs": "5.0.0-beta.2",
+        "zone.js": "0.6.10"
+    },
+    "devDependencies": {
+        "typescript": "^1.8.10",
+        "typings":"^0.7.12"
+    }
+}
