@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "outDir": "dist/app",
     "module": "system",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -10,12 +9,8 @@
     "removeComments": false,
     "noImplicitAny": false
   },
-  "files": [
-    "node_modules/angular2/typings/browser.d.ts",
-    "typings/browser/ambient/jasmine/index.d.ts",
-    "app/**/*.ts"
-  ],
   "exclude": [
+    "dist",
     "node_modules",
     "typings/main",
     "typings/main.d.ts"

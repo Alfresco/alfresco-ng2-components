@@ -8,7 +8,7 @@
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "test": "live-server --open=tests-runner.html",
     "tsc": "tsc",
-    "tsc:w": "tsc -w",
+    "tsc:w": "tsc -w -p tsconfig.dev.json",
     "lite": "lite-server",
     "typings": "typings",
     "postinstall": "typings install"
