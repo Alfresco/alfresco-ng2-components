@@ -11,8 +11,7 @@
     "tsc:w": "tsc -w",
     "lite": "lite-server",
     "typings": "typings",
-    "postinstall": "typings install",
-    "build": "tsc -p .; exit 0"
+    "postinstall": "typings install"
   },
   "license": "ISC",
   "dependencies": {
@@ -22,8 +21,6 @@
     "font-awesome": "^4.5.0",
     "jquery": "^2.2.2",
     "material-design-lite": "^1.1.3",
-    "ng2-alfresco-documentlist": "file:../ng2-components/ng2-alfresco-documentlist",
-    "ng2-alfresco-login": "file:../ng2-components/ng2-alfresco-login",
     "ng2-uploader": "denisvuyka/ng2-uploader",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
