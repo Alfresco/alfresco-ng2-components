@@ -25,7 +25,16 @@ gulp.task('copy:assets', ['clean'], function() {
 // copy dependencies
 gulp.task('copy:libs', ['clean'], function() {
     return gulp.src([
-            'node_modules/**/*'
+            'node_modules/**/*',
+            '!node_modules/ng2-alfresco-*{,/**/*}'
+        ])
+        .pipe(gulp.dest('dist/node_modules'))
+});
+
+gulp.task('copy:components', ['clean'], function() {
+    return gulp.src([
+            '../ng2-components/**/*',
+            '!../ng2-components/README.md'
         ])
         .pipe(gulp.dest('dist/node_modules'))
 });
@@ -75,7 +84,7 @@ gulp.task('serve', ['build'], function() {
     gulp.watch(['app/**/*', 'index.html'], ['buildAndReload']);
 });
 
-gulp.task('build', ['tslint', 'copy:assets', 'copy:libs', 'copy:typings', 'compile']);
+gulp.task('build', ['tslint', 'copy:assets', 'copy:libs', 'copy:components', 'copy:typings', 'compile']);
 gulp.task('dev', ['build', 'serve'], reload);
 gulp.task('default', ['build']);
 gulp.task('buildAndReload', ['build'], reload);
