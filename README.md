@@ -10,6 +10,7 @@ For development configuration please refer to* **Configuring development environ
 
 ```sh
 git clone https://github.com/Alfresco/dev-platform-webcomponents.git
+cd dev-platform-webcomponents
 ./start.sh
 ```
 
