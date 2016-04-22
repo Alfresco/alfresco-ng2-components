@@ -1,10 +1,10 @@
 import {Component} from 'angular2/core';
 import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {Authentication} from './services/authentication';
+import {Authentication} from 'ng2-alfresco-login/ng2-alfresco-login';
 import {AlfrescoService} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import {MDL} from './components/common/MaterialDesignLiteUpgradeElement';
 import {FilesComponent} from './components/files/files.component';
-import {LoginComponent} from './components/login/login.component';
+import {Login} from 'ng2-alfresco-login/ng2-alfresco-login';
 import {AuthRouterOutlet} from './components/router/AuthRouterOutlet';
 
 declare var document: any;
@@ -16,7 +16,7 @@ declare var document: any;
 })
 @RouteConfig([
     {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
-    {path: '/login', name: 'Login', component: LoginComponent}
+    {path: '/login', name: 'Login', component: Login}
 ])
 export class AppComponent {
 

@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
-import {Authentication} from '../../services/authentication';
+import {Authentication} from 'ng2-alfresco-login/ng2-alfresco-login';
 declare let componentHandler;
 
 @Component({

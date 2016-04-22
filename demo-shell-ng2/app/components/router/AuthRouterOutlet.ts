@@ -1,6 +1,6 @@
 import { ElementRef, DynamicComponentLoader, Directive, Attribute } from 'angular2/core';
 import { Router, RouterOutlet, ComponentInstruction } from 'angular2/router';
-import {Authentication} from '../../services/authentication';
+import {Authentication} from 'ng2-alfresco-login/ng2-alfresco-login';
 
 @Directive({selector: 'auth-router-outlet'})
 export class AuthRouterOutlet extends RouterOutlet {
