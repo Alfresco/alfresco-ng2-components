@@ -25,15 +25,30 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
             }],
         execute: function() {
             Authentication = (function () {
+                /**
+                 * Constructor
+                 * @param http
+                 */
                 function Authentication(http) {
                     this.http = http;
                     this._host = 'http://192.168.99.100:8080';
                     this._baseUrl = this._host + '/alfresco/service/api/';
                     this.token = localStorage.getItem('token');
                 }
+                /**
+                 * The method return tru if the user is logged in
+                 * @returns {boolean}
+                 */
                 Authentication.prototype.isLoggedIn = function () {
                     return !!localStorage.getItem('token');
                 };
+                /**
+                 * Method to delegate GET or POST login
+                 * @param method
+                 * @param username
+                 * @param password
+                 * @returns {Observable<R>|Observable<T>}
+                 */
                 Authentication.prototype.login = function (method, username, password) {
                     if (method === 'GET') {
                         return this.loginGet(username, password);
@@ -42,6 +57,12 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                         return this.loginPost(username, password);
                     }
                 };
+                /**
+                 * The method provide the login with GET Request
+                 * @param username
+                 * @param password
+                 * @returns {Observable<R>|Observable<T>}
+                 */
                 Authentication.prototype.loginGet = function (username, password) {
                     var _this = this;
                     var searchParams = new http_1.URLSearchParams();
@@ -55,6 +76,12 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                     })
                         .catch(this.handleError);
                 };
+                /**
+                 * The method provide the login with POST Request
+                 * @param username
+                 * @param password
+                 * @returns {Observable<R>|Observable<T>}
+                 */
                 Authentication.prototype.loginPost = function (username, password) {
                     var _this = this;
                     var credentials = '{ username: ' + username + ', password: ' + password + ' }';
@@ -70,19 +97,30 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                     })
                         .catch(this.handleError);
                 };
+                /**
+                 * The method save the toke in the localStorage
+                 * @param jwt
+                 */
                 Authentication.prototype.saveJwt = function (jwt) {
                     if (jwt) {
                         localStorage.setItem('token', jwt);
                     }
                 };
+                /**
+                 * The method remove the token from the local storage
+                 * @returns {Observable<T>}
+                 */
                 Authentication.prototype.logout = function () {
                     this.token = undefined;
                     localStorage.removeItem('token');
                     return Rx_1.Observable.of(true);
                 };
+                /**
+                 * The method write the error in the console browser
+                 * @param error
+                 * @returns {ErrorObservable}
+                 */
                 Authentication.prototype.handleError = function (error) {
-                    // in a real world app, we may send the error to some remote logging infrastructure
-                    // instead of just logging it to the console
                     console.error(error);
                     return Rx_1.Observable.throw(error.json().error || 'Server error');
                 };

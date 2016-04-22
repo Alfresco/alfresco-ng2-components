@@ -28,6 +28,12 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
             }],
         execute: function() {
             Login = (function () {
+                /**
+                 * Constructor
+                 * @param fb
+                 * @param auth
+                 * @param router
+                 */
                 function Login(fb, auth, router) {
                     this.auth = auth;
                     this.router = router;
@@ -37,15 +43,11 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
                         password: ['', common_1.Validators.required]
                     });
                 }
-                Login.prototype.isErrorStyle = function (field) {
-                    componentHandler.upgradeAllRegistered();
-                    if (field.valid) {
-                        return false;
-                    }
-                    else {
-                        return true;
-                    }
-                };
+                /**
+                 * Method called on submit form
+                 * @param value
+                 * @param event
+                 */
                 Login.prototype.onSubmit = function (value, event) {
                     var _this = this;
                     if (event) {
@@ -56,9 +58,23 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
                         _this.error = true;
                     });
                 };
+                /**
+                 * The method return if a field is valid or not
+                 * @param field
+                 * @returns {boolean}
+                 */
+                Login.prototype.isErrorStyle = function (field) {
+                    componentHandler.upgradeAllRegistered();
+                    if (field.valid) {
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                };
                 Login = __decorate([
                     core_1.Component({
-                        selector: 'login',
+                        selector: 'alfresco-login',
                         moduleId: 'node_modules/ng2-alfresco-login/src/',
                         directives: [router_1.ROUTER_DIRECTIVES, common_1.FORM_DIRECTIVES],
                         templateUrl: 'login.component.html',
