@@ -2,13 +2,13 @@
 
 ### Configuring development environment
 
-Get a copy
+**Get a copy**
 
 ```sh
 git clone https://github.com/Alfresco/dev-platform-webcomponents.git
 ```
 
-Install symlinks for Alfresco components
+**Install symlinks for Alfresco components**
 
 *ng2-alfresco-documentlist component:*
 
@@ -27,6 +27,8 @@ npm link
 cd ../../demo-shell-ng
 npm link ng2-alfresco-login
 ```
+
+Please refer to [this article](https://docs.npmjs.com/cli/link) for more details on npm link.
 
 ### Building and running
 
