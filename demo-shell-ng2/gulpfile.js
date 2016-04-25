@@ -15,7 +15,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('license', function () {
-    gulp.src('./app/**/*.ts')
+    return gulp.src('./app/**/*.ts')
         .pipe(license({
             path: 'app/license_header.txt',
             blocking: false,
