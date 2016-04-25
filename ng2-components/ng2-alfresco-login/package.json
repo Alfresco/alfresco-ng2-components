@@ -38,6 +38,7 @@
         "typescript": "^1.8.10",
         "typings": "^0.7.12",
         "jasmine-core": "2.4.1",
-        "live-server": "^0.9.2"
+        "live-server": "^0.9.2",
+        "systemjs": "0.19.26"
     }
 }
