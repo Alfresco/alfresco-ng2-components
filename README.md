@@ -30,6 +30,7 @@ git clone https://github.com/Alfresco/dev-platform-webcomponents.git
 cd dev-platform-webcomponents/demo-shell-ng2
 
 npm install
+npm install ../ng2-components/ng2-alfresco-core
 npm install ../ng2-components/ng2-alfresco-documentlist
 npm install ../ng2-components/ng2-alfresco-login
 
