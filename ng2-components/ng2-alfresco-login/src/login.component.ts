@@ -3,13 +3,14 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {Authentication} from './authentication.service';
 declare let componentHandler;
+declare let __moduleName: string;
 
 @Component({
     selector: 'alfresco-login',
-    moduleId: 'node_modules/ng2-alfresco-login/src/',
+    moduleId: __moduleName,
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
-    templateUrl: 'login.component.html',
-    styleUrls: ['login.component.css'],
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
 
 })
 export class Login {

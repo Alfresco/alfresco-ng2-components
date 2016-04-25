@@ -80,10 +80,10 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
                 Login = __decorate([
                     core_1.Component({
                         selector: 'alfresco-login',
-                        moduleId: 'node_modules/ng2-alfresco-login/src/',
+                        moduleId: __moduleName,
                         directives: [router_1.ROUTER_DIRECTIVES, common_1.FORM_DIRECTIVES],
-                        templateUrl: 'login.component.html',
-                        styleUrls: ['login.component.css'],
+                        templateUrl: './login.component.html',
+                        styleUrls: ['./login.component.css'],
                     }), 
                     __metadata('design:paramtypes', [common_1.FormBuilder, authentication_service_1.Authentication, router_1.Router])
                 ], Login);
