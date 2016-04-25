@@ -14,3 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {Directive, AfterViewInit} from 'angular2/core';
+declare var componentHandler;
+
+@Directive({
+    selector: '[mdl]'
+})
+export class MDL implements AfterViewInit {
+    ngAfterViewInit() {
+        componentHandler.upgradeAllRegistered();
+    }
+}

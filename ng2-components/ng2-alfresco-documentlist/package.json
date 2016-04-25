@@ -30,7 +30,8 @@
         "alfresco"
     ],
     "peerDependencies": {
-        "angular2": "2.0.0-beta.15"
+        "angular2": "2.0.0-beta.15",
+        "ng2-alfresco-core": "0.1.0"
     },
     "devDependencies": {
         "typescript": "^1.8.10",
