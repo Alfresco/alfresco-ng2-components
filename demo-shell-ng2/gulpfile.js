@@ -7,23 +7,33 @@ const tslint = require('gulp-tslint');
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 const tsconfig = require('tsconfig-glob');
+const license = require('gulp-license-check');
 
 // clean the contents of the distribution directory
 gulp.task('clean', function () {
     return del('dist/*');
 });
 
+gulp.task('license', function () {
+    gulp.src('./app/**/*.ts')
+        .pipe(license({
+            path: 'app/license_header.txt',
+            blocking: false,
+            log: true
+        }));
+});
+
 // copy static assets - i.e. non TypeScript compiled source
-gulp.task('copy:assets', ['clean'], function() {
+gulp.task('copy:assets', ['clean'], function () {
     return gulp.src(['app/**/*',
-                     'index.html',
-                     'typings.json',
-                     '!app/**/*.ts'], { base : './' })
+            'index.html',
+            'typings.json',
+            '!app/**/*.ts'], {base: './'})
         .pipe(gulp.dest('dist'))
 });
 
 // copy dependencies
-gulp.task('copy:libs', ['clean'], function() {
+gulp.task('copy:libs', ['clean'], function () {
     return gulp.src([
             'node_modules/**/*',
             '!node_modules/ng2-alfresco-*{,/**/*}'
@@ -40,7 +50,7 @@ gulp.task('copy:components', ['clean'], function() {
 });
 
 // copy typings
-gulp.task('copy:typings', ['clean'], function() {
+gulp.task('copy:typings', ['clean'], function () {
     return gulp.src([
             'typings/**/*'
         ])
@@ -48,7 +58,7 @@ gulp.task('copy:typings', ['clean'], function() {
 });
 
 // linting
-gulp.task('tslint', function() {
+gulp.task('tslint', function () {
     return gulp.src('app/**/*.ts')
         .pipe(tslint())
         .pipe(tslint.report('verbose'));
@@ -74,7 +84,7 @@ gulp.task('tsconfig-glob', function () {
 });
 
 // Run browsersync for development
-gulp.task('serve', ['build'], function() {
+gulp.task('serve', ['build'], function () {
     browserSync({
         server: {
             baseDir: 'dist'
@@ -84,7 +94,7 @@ gulp.task('serve', ['build'], function() {
     gulp.watch(['app/**/*', 'index.html'], ['buildAndReload']);
 });
 
-gulp.task('build', ['tslint', 'copy:assets', 'copy:libs', 'copy:components', 'copy:typings', 'compile']);
+gulp.task('build', ['license', 'tslint', 'copy:assets', 'copy:libs', 'copy:components', 'copy:typings', 'compile']);
 gulp.task('dev', ['build', 'serve'], reload);
 gulp.task('default', ['build']);
 gulp.task('buildAndReload', ['build'], reload);
