@@ -57,6 +57,7 @@
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
                 <a class="mdl-navigation__link" href="" [routerLink]="['Files']">Files</a>
+                <a class="mdl-navigation__link" href="" [routerLink]="['Uploader']">Uploader</a>
                 <a class="mdl-navigation__link" href="" [routerLink]="['Login']">Login</a>
             </nav>
             <!-- Right aligned menu below button -->
@@ -80,6 +81,7 @@
         <span class="mdl-layout-title">Alfresco</span>
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link" href="" [routerLink]="['Files']" (click)="hideDrawer()">Files</a>
+            <a class="mdl-navigation__link" href="" [routerLink]="['Uploader']" (click)="hideDrawer()">Uploader</a>
             <a class="mdl-navigation__link" href="" [routerLink]="['Login']" (click)="hideDrawer()">Login</a>
         </nav>
     </div>
