@@ -18,6 +18,7 @@ import { OnInit, EventEmitter } from 'angular2/core';
 import { AlfrescoService } from './alfresco.service';
 import { FolderEntity } from './core/entities/folder.entity';
 import { DocumentEntity } from './core/entities/document.entity';
+import { DocumentActionModel } from './models/document-action.model';
 export declare class DocumentList implements OnInit {
     private _alfrescoService;
     navigate: boolean;
@@ -34,6 +35,7 @@ export declare class DocumentList implements OnInit {
     folder: FolderEntity;
     errorMessage: any;
     route: any[];
+    documentActions: DocumentActionModel[];
     canNavigateParent(): boolean;
     constructor(_alfrescoService: AlfrescoService);
     ngOnInit(): void;
@@ -42,6 +44,8 @@ export declare class DocumentList implements OnInit {
     goToRoute(r: any, $event: any): void;
     getContentUrl(document: DocumentEntity): string;
     getDocumentThumbnailUrl(document: DocumentEntity): string;
+    registerDocumentAction(action: DocumentActionModel): void;
+    executeDocumentAction(document: DocumentEntity, action: DocumentActionModel): void;
     private getItemPath(item);
     private displayFolderContent(path);
 }

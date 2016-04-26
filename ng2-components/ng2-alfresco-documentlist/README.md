@@ -1,11 +1,15 @@
 # Alfresco Components for Angular 2
 
-Components included:
+TODO: basic overview
 
-* Document List Component
-* Alfresco Service (TBD)
+## Build
 
-### Document List Component
+```sh
+npm install
+npm run build
+```
+
+## Basic usage
 
 ```ts
 export class MyView {
@@ -37,7 +41,13 @@ export class MyView {
 </alfresco-document-list>
 ```
 
-### Build
+### Document actions
 
-npm install
-npm run build
+```html
+<alfresco-document-list ...>
+    <document-action title="System action" handler="system2"></document-action>
+    <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
+</alfresco-document-list>
+```
+
+TODO: more details on declaring and using actions

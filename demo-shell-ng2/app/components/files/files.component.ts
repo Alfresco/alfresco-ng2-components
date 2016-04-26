@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import {Component} from 'angular2/core';
-import {DocumentList} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+import {DocumentList, DocumentListAction} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import {MDL} from 'ng2-alfresco-core/material';
 
 @Component({
@@ -64,12 +64,14 @@ import {MDL} from 'ng2-alfresco-core/material';
                         [navigate]="navigation"
                         [downloads]="downloads"
                         (itemClick)="onItemClick($event)">
+                        <document-action title="System action" handler="system2"></document-action>
+                        <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
                     </alfresco-document-list>
                 </div>
             </div>
         </div>
     `,
-    directives: [DocumentList, MDL]
+    directives: [DocumentList, DocumentListAction, MDL]
 })
 export class FilesComponent {
     thumbnails: boolean = true;
@@ -85,5 +87,9 @@ export class FilesComponent {
             name: 'Item Clicked',
             value: $event.value
         });
+    }
+
+    myCustomAction1(event) {
+        alert('Custom action for ' + event.value.displayName);
     }
 }

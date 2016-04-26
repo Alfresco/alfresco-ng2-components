@@ -18,6 +18,7 @@ import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
 import {AlfrescoService} from './alfresco.service';
 import {FolderEntity} from './core/entities/folder.entity';
 import {DocumentEntity} from './core/entities/document.entity';
+import {DocumentActionModel} from './models/document-action.model';
 
 @Component({
     selector: 'alfresco-document-list',
@@ -75,12 +76,10 @@ import {DocumentEntity} from './core/entities/document.entity';
                                 Download
                             </a>
                         </li>
-                        <!--
-                        <li><a href="#">(todo:) Another action</a></li>
-                        <li><a href="#">(todo:) Something else here</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">(todo:) Separated link</a></li>
-                        -->
+                        <li *ngFor="#documentAction of documentActions">
+                            <a href="#" (click)="executeDocumentAction(document, documentAction)">{{documentAction.title}}</a>
+                        </li>
                     </ul>
                 </div>
                 
@@ -122,6 +121,7 @@ export class DocumentList implements OnInit {
     errorMessage;
 
     route: any[] = [];
+    documentActions: DocumentActionModel[] = [];
 
     canNavigateParent(): boolean {
         return this.navigate &&
@@ -193,6 +193,15 @@ export class DocumentList implements OnInit {
 
     getDocumentThumbnailUrl(document:  DocumentEntity) {
         return this._alfrescoService.getDocumentThumbnailUrl(document);
+    }
+
+    registerDocumentAction(action: DocumentActionModel) {
+        this.documentActions.push(action);
+    }
+
+    executeDocumentAction(document:DocumentEntity, action: DocumentActionModel) {
+        // todo: safety checks
+        action.handler(document);
     }
 
     private getItemPath(item: DocumentEntity):string {
