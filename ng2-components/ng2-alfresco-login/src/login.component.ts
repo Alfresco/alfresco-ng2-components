@@ -56,7 +56,9 @@ export class Login {
      * @returns {boolean}
      */
     isErrorStyle(field:ControlGroup) {
-        componentHandler.upgradeAllRegistered();
+        if(this.componentHandler){
+            componentHandler.upgradeAllRegistered();
+        }
         if (field.valid) {
             return false;
         } else {

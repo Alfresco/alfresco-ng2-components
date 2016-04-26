@@ -32,7 +32,8 @@
 
         // #3. Import the spec file explicitly
         Promise.all([
-            System.import('src/authentication.service.spec')
+            System.import('src/authentication.service.spec'),
+            System.import('src/login.component.spec')
         ])
                 // #4. wait for all imports to load ...
                 //     then re-execute `window.onload` which
