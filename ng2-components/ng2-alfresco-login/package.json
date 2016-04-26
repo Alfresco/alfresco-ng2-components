@@ -30,6 +30,14 @@
         "angular2",
         "alfresco"
     ],
+    "dependencies": {
+        "angular2": "2.0.0-beta.15",
+        "systemjs": "0.19.26",
+        "es6-shim": "^0.35.0",
+        "reflect-metadata": "0.1.2",
+        "rxjs": "5.0.0-beta.2",
+        "zone.js": "0.6.10"
+    },
     "peerDependencies": {
         "angular2": "2.0.0-beta.15",
         "ng2-alfresco-core": "0.1.0"
@@ -38,7 +46,6 @@
         "typescript": "^1.8.10",
         "typings": "^0.7.12",
         "jasmine-core": "2.4.1",
-        "live-server": "^0.9.2",
-        "systemjs": "0.19.26"
+        "live-server": "^0.9.2"
     }
 }
