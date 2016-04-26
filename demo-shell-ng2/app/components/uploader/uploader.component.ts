@@ -16,6 +16,7 @@
  */
 import {Component, NgZone} from 'angular2/core';
 import {UPLOAD_DIRECTIVES} from 'ng2-uploader/ng2-uploader';
+import {AlfrescoSettingsService} from 'ng2-alfresco-core/services';
 
 @Component({
     selector: 'alfresco-uploader',
@@ -61,23 +62,24 @@ import {UPLOAD_DIRECTIVES} from 'ng2-uploader/ng2-uploader';
 })
 export class UploaderComponent {
     uploadFile:any;
-    options:Object = {
-        url: 'http://192.168.99.100:8080/alfresco/service/api/upload',
-        withCredentials: true,
-        authToken: btoa('admin:admin'),
-        authTokenPrefix: 'Basic',
-        fieldName: 'filedata',
-        formFields: {
-            siteid: 'swsdp',
-            containerid: 'documentLibrary'
-        }
-    };
+    options:Object;
 
     zone:NgZone;
     dropProgress:number = 0;
     dropResp:any[] = [];
 
-    constructor() {
+    constructor(settings:AlfrescoSettingsService) {
+        this.options = {
+            url: settings.host + '/alfresco/service/api/upload',
+            withCredentials: true,
+            authToken: btoa('admin:admin'),
+            authTokenPrefix: 'Basic',
+            fieldName: 'filedata',
+            formFields: {
+                siteid: 'swsdp',
+                containerid: 'documentLibrary'
+            }
+        };
         this.zone = new NgZone({enableLongStackTrace: false});
     }
 
