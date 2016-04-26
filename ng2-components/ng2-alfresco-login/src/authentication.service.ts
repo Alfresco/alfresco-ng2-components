@@ -75,8 +75,8 @@ export class Authentication {
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(this._baseUrl + 'login', credentials, {
-                headers: headers
-            })
+            headers: headers
+        })
             .map((res:any) => {
                 let response = res.json();
                 this.token = response.data.ticket;

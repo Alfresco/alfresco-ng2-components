@@ -10,17 +10,17 @@ import { SpyLocation } from 'angular2/src/mock/location_mock';
 import {dispatchEvent} from 'angular2/src/testing/utils';
 
 class AuthenticationMock {
-    public mockName: string = 'Mocked Service';
+    public mockName:string = 'Mocked Service';
 
     login(method:string, username:string, password:string) {
-        if (username === 'fake-username' && password === 'fake-password'){
+        if (username === 'fake-username' && password === 'fake-password') {
             return Observable.of(true);
         } else {
             return Observable.throw('Fake server error');
         }
     }
 
-    getProviders(): Array<any> {
+    getProviders():Array<any> {
         return [provide(Authentication, {useValue: this})];
     }
 }
@@ -47,7 +47,7 @@ describe('Login', () => {
         location = l;
     }));
 
-    it('should render `Login` header', injectAsync([TestComponentBuilder, Authentication, Router], (tcb: TestComponentBuilder, authService: Authentication, router: Router) => {
+    it('should render `Login` header', injectAsync([TestComponentBuilder, Authentication, Router], (tcb:TestComponentBuilder, authService:Authentication, router:Router) => {
         return tcb
             .createAsync(Login)
             .then((fixture) => {
@@ -57,7 +57,7 @@ describe('Login', () => {
             });
     }));
 
-    it('should render `Login` form with input fields user and password with default value', injectAsync([TestComponentBuilder, Authentication, Router], (tcb: TestComponentBuilder, authService: Authentication, router: Router) => {
+    it('should render `Login` form with input fields user and password with default value', injectAsync([TestComponentBuilder, Authentication, Router], (tcb:TestComponentBuilder, authService:Authentication, router:Router) => {
         return tcb
             .createAsync(Login)
             .then((fixture) => {
@@ -71,7 +71,7 @@ describe('Login', () => {
     }));
 
 
-    it('should render the new values after change the user and password values', injectAsync([TestComponentBuilder, Authentication, Router], (tcb: TestComponentBuilder, authService: Authentication, router: Router) => {
+    it('should render the new values after change the user and password values', injectAsync([TestComponentBuilder, Authentication, Router], (tcb:TestComponentBuilder, authService:Authentication, router:Router) => {
         return tcb
             .createAsync(Login)
             .then((fixture) => {
@@ -88,7 +88,7 @@ describe('Login', () => {
             });
     }));
 
-    it('should navigate to Home route after the login OK ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb: TestComponentBuilder, authService: Authentication, router: Router) => {
+    it('should navigate to Home route after the login OK ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb:TestComponentBuilder, authService:Authentication, router:Router) => {
         return tcb
             .createAsync(Login)
             .then((fixture) => {
@@ -109,7 +109,7 @@ describe('Login', () => {
             });
     }));
 
-    it('should return error with a wrong username ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb: TestComponentBuilder, authService: Authentication, router: Router) => {
+    it('should return error with a wrong username ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb:TestComponentBuilder, authService:Authentication, router:Router) => {
         return tcb
             .createAsync(Login)
             .then((fixture) => {
@@ -128,7 +128,7 @@ describe('Login', () => {
             });
     }));
 
-    it('should return error with a wrong password ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb: TestComponentBuilder, authService: Authentication, router: Router) => {
+    it('should return error with a wrong password ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb:TestComponentBuilder, authService:Authentication, router:Router) => {
         return tcb
             .createAsync(Login)
             .then((fixture) => {
@@ -147,7 +147,7 @@ describe('Login', () => {
             });
     }));
 
-    it('should return error with a wrong username and password ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb: TestComponentBuilder, authService: Authentication, router: Router) => {
+    it('should return error with a wrong username and password ', injectAsync([TestComponentBuilder, Authentication, Router], (tcb:TestComponentBuilder, authService:Authentication, router:Router) => {
         return tcb
             .createAsync(Login)
             .then((fixture) => {

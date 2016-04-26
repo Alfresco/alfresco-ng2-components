@@ -3,7 +3,7 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {Authentication} from './authentication.service';
 declare let componentHandler;
-declare let __moduleName: string;
+declare let __moduleName:string;
 
 @Component({
     selector: 'alfresco-login',
@@ -14,7 +14,7 @@ declare let __moduleName: string;
 
 })
 export class Login {
-    @Input() method: string = 'GET';
+    @Input() method:string = 'GET';
 
     form:ControlGroup;
     error:boolean = false;
@@ -43,11 +43,11 @@ export class Login {
         }
         this.auth.login(this.method, value.username, value.password)
             .subscribe(
-                (token:any) => this.router.navigate(['Home']),
-                () => {
-                    this.error = true;
-                }
-            );
+            (token:any) => this.router.navigate(['Home']),
+            () => {
+                this.error = true;
+            }
+        );
     }
 
     /**
@@ -56,7 +56,7 @@ export class Login {
      * @returns {boolean}
      */
     isErrorStyle(field:ControlGroup) {
-        if(this.componentHandler){
+        if (this.componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
         if (field.valid) {

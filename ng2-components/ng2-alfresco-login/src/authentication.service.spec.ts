@@ -59,11 +59,11 @@ describe('Authentication', () => {
 
     it('should return true and token on sign in', () => {
         backend.connections.subscribe(connection => {
-            connection.mockRespond(new Response(new ResponseOptions({body: { data: { ticket: 'fake-post-token'}}})));
+            connection.mockRespond(new Response(new ResponseOptions({body: {data: {ticket: 'fake-post-token'}}})));
         });
         service.token = '';
         service.login('POST', 'fakeUser', 'fakePassword')
-            .subscribe( () => {
+            .subscribe(() => {
                 expect(service.isLoggedIn()).toBe(true);
                 expect(service.token).toEqual('fake-post-token');
                 expect(localStorage.getItem('token')).toBeDefined();
@@ -76,7 +76,7 @@ describe('Authentication', () => {
         service.token = 'fake-token';
         localStorage.setItem('token', 'fake-token');
         service.logout()
-            .subscribe( () => {
+            .subscribe(() => {
                 expect(service.isLoggedIn()).toBe(false);
                 expect(service.token).not.toBeDefined();
                 expect(localStorage.getItem('token')).not.toBeDefined();

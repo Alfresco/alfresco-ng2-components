@@ -22,6 +22,10 @@
         {
             "name": "Denys Vuika",
             "email": "denis.vuyka@gmail.com"
+        },
+        {
+          "name": "Maurizio Vitale",
+          "email": "maurizio.vitale84@gmail.com"
         }
     ],
     "keywords": [
@@ -43,9 +47,10 @@
         "ng2-alfresco-core": "0.1.0"
     },
     "devDependencies": {
+        "jasmine-core": "2.4.1",
+        "live-server": "^0.9.2",
         "typescript": "^1.8.10",
         "typings": "^0.7.12",
-        "jasmine-core": "2.4.1",
-        "live-server": "^0.9.2"
+        "xo": "^0.14.0"
     }
 }
