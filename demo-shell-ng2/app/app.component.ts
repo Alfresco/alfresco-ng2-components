@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright (C) 2016 Alfresco Software Limited.
+ * Copyright 2016 Alfresco Software, Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 import {Component} from 'angular2/core';
 import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {Authentication} from 'ng2-alfresco-login/ng2-alfresco-login';
-import {AlfrescoService} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import {MDL} from 'ng2-alfresco-core/material';
 import {FilesComponent} from './components/files/files.component';
 import {Login} from 'ng2-alfresco-login/ng2-alfresco-login';
 import {AuthRouterOutlet} from './components/router/AuthRouterOutlet';
 import {UploaderComponent} from './components/uploader/uploader.component';
+import {AlfrescoSettingsService} from 'ng2-alfresco-core/services';
 
 declare var document: any;
 
@@ -41,8 +41,8 @@ export class AppComponent {
 
     constructor(public auth:Authentication,
                 public router:Router,
-                alfrescoService:AlfrescoService) {
-        alfrescoService.host = 'http://192.168.99.100:8080';
+                alfrescoSettingsService:AlfrescoSettingsService) {
+        alfrescoSettingsService.host = 'http://192.168.99.100:8080';
     }
 
     isActive(instruction:any[]):boolean {

@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {Injectable} from 'angular2/core';
 
-import {bootstrap}    from 'angular2/platform/browser';
-import {AppComponent} from './app.component';
-import {ROUTER_PROVIDERS} from 'angular2/router';
-import {HTTP_PROVIDERS}    from 'angular2/http';
-import {ALFRESCO_AUTHENTICATION} from 'ng2-alfresco-login/ng2-alfresco-login';
-import {ALFRESCO_CORE_PROVIDERS} from 'ng2-alfresco-core/services';
+@Injectable()
+export class AlfrescoSettingsService {
+    private _host: string = 'http://127.0.0.1:8080';
 
-bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
-    HTTP_PROVIDERS,
-    ALFRESCO_AUTHENTICATION,
-    ALFRESCO_CORE_PROVIDERS
-]);
+    public get host():string {
+        return this._host;
+    }
+
+    public set host(value:string) {
+        this._host = value;
+    }
+}

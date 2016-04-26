@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../../ng2-alfresco-core/services'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1;
+    var core_1, http_1, Observable_1, services_1;
     var AlfrescoService;
     return {
         setters:[
@@ -22,13 +22,18 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
             },
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
+            },
+            function (services_1_1) {
+                services_1 = services_1_1;
             }],
         execute: function() {
             AlfrescoService = (function () {
-                function AlfrescoService(http) {
+                function AlfrescoService(http, settings) {
                     this.http = http;
+                    this.settings = settings;
                     this._host = 'http://127.0.0.1:8080';
                     this._baseUrlPath = '/alfresco/service/slingshot/doclib/doclist/all/site/';
+                    this._host = settings.host;
                 }
                 Object.defineProperty(AlfrescoService.prototype, "host", {
                     get: function () {
@@ -69,7 +74,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
                 };
                 AlfrescoService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http])
+                    __metadata('design:paramtypes', [http_1.Http, services_1.AlfrescoSettingsService])
                 ], AlfrescoService);
                 return AlfrescoService;
             }());

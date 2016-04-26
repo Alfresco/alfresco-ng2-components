@@ -1,1 +1,1 @@
-{"version":3,"file":"ng2-alfresco-documentlist.js","sourceRoot":"","sources":["ng2-alfresco-documentlist.ts"],"names":[],"mappings":";;;;QAWa,mBAAmB,EACnB,kBAAkB;;;;;;;;;;;;;;;;;;;;;;;YAN/B,oBAAe;gBACX,UAAU,EAAE,CAAC,sCAAY,CAAC;gBAC1B,SAAS,EAAE,CAAC,kCAAe,CAAC;aAC/B,EAAA;YAEY,iCAAA,mBAAmB,GAAU,CAAC,sCAAY,CAAC,CAAA,CAAC;YAC5C,gCAAA,kBAAkB,GAAU,CAAC,kCAAe,CAAC,CAAA,CAAC"}
+{"version":3,"file":"ng2-alfresco-documentlist.js","sourceRoot":"","sources":["ng2-alfresco-documentlist.ts"],"names":[],"mappings":""}

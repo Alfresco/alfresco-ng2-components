@@ -14,17 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {AlfrescoSettingsService} from './services/AlfrescoSettingsService';
+export * from './services/AlfrescoSettingsService';
 
-import {bootstrap}    from 'angular2/platform/browser';
-import {AppComponent} from './app.component';
-import {ROUTER_PROVIDERS} from 'angular2/router';
-import {HTTP_PROVIDERS}    from 'angular2/http';
-import {ALFRESCO_AUTHENTICATION} from 'ng2-alfresco-login/ng2-alfresco-login';
-import {ALFRESCO_CORE_PROVIDERS} from 'ng2-alfresco-core/services';
+export default {
+    directives: [],
+    providers: [AlfrescoSettingsService]
+}
 
-bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
-    HTTP_PROVIDERS,
-    ALFRESCO_AUTHENTICATION,
-    ALFRESCO_CORE_PROVIDERS
-]);
+export const ALFRESCO_CORE_PROVIDERS: [any] = [
+    AlfrescoSettingsService
+];

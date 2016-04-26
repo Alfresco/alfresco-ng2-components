@@ -1,12 +1,34 @@
+/**
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 import {Injectable} from 'angular2/core';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {FolderEntity} from "./core/entities/folder.entity";
 import {DocumentEntity} from "./core/entities/document.entity";
+import {AlfrescoSettingsService} from '../../ng2-alfresco-core/services';
 
 @Injectable()
 export class AlfrescoService {
-    constructor(private http: Http) {}
+    constructor(
+        private http: Http,
+        private settings: AlfrescoSettingsService
+    ) {
+        this._host = settings.host;
+    }
 
     private _host: string = 'http://127.0.0.1:8080';
     private _baseUrlPath: string = '/alfresco/service/slingshot/doclib/doclist/all/site/';
