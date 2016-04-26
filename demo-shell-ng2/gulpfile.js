@@ -19,7 +19,8 @@ gulp.task('license', function () {
         .pipe(license({
             path: 'app/license_header.txt',
             blocking: false,
-            log: true
+            logInfo: false,
+            logError: true
         }));
 });
 
