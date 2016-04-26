@@ -1,4 +1,4 @@
-System.register(["angular2/core", "./alfresco.service"], function(exports_1, context_1) {
+System.register(['angular2/core', './alfresco.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -24,15 +24,10 @@ System.register(["angular2/core", "./alfresco.service"], function(exports_1, con
             DocumentList = (function () {
                 function DocumentList(_alfrescoService) {
                     this._alfrescoService = _alfrescoService;
-                    // example: <alfresco-document-list [navigate]="false"></alfresco-document-list>
                     this.navigate = true;
-                    // example: <alfresco-document-list [breadcrumb]="true"></alfresco-document-list>
                     this.breadcrumb = false;
-                    // example: <alfresco-document-list folder-icon-class="fa fa-folder fa-4x"></alfresco-document-list>
                     this.folderIconClass = 'fa fa-folder-o fa-4x';
-                    // example: <alfresco-document-list #list [thumbnails]="false"></alfresco-document-list>
                     this.thumbnails = true;
-                    // example: <alfresco-document-list #list [downloads]="false"></alfresco-document-list>
                     this.downloads = true;
                     this.itemClick = new core_1.EventEmitter();
                     this.rootFolder = {
@@ -51,27 +46,17 @@ System.register(["angular2/core", "./alfresco.service"], function(exports_1, con
                     this.route.push(this.rootFolder);
                     this.displayFolderContent(this.rootFolder.path);
                 };
-                DocumentList.prototype.displayFolderContent = function (path) {
-                    var _this = this;
-                    this.currentFolderPath = path;
-                    this._alfrescoService
-                        .getFolder(path)
-                        .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
-                };
                 DocumentList.prototype.onNavigateParentClick = function ($event) {
                     if ($event) {
                         $event.preventDefault();
                     }
                     if (this.navigate) {
                         this.route.pop();
-                        var parent = this.route.length > 0 ? this.route[this.route.length - 1] : this.rootFolder;
-                        if (parent) {
-                            this.displayFolderContent(parent.path);
+                        var parent_1 = this.route.length > 0 ? this.route[this.route.length - 1] : this.rootFolder;
+                        if (parent_1) {
+                            this.displayFolderContent(parent_1.path);
                         }
                     }
-                };
-                DocumentList.prototype.onDownloadClick = function (event) {
-                    event.stopPropagation();
                 };
                 DocumentList.prototype.onItemClick = function (item, $event) {
                     if ($event) {
@@ -103,17 +88,24 @@ System.register(["angular2/core", "./alfresco.service"], function(exports_1, con
                         }
                     }
                 };
+                DocumentList.prototype.getContentUrl = function (document) {
+                    return this._alfrescoService.getContentUrl(document);
+                };
+                DocumentList.prototype.getDocumentThumbnailUrl = function (document) {
+                    return this._alfrescoService.getDocumentThumbnailUrl(document);
+                };
                 DocumentList.prototype.getItemPath = function (item) {
                     var container = item.location.container;
                     var path = item.location.path !== '/' ? (item.location.path + '/') : '/';
                     var relativePath = container + path + item.fileName;
                     return item.location.site + '/' + relativePath;
                 };
-                DocumentList.prototype.getContentUrl = function (document) {
-                    return this._alfrescoService.getContentUrl(document);
-                };
-                DocumentList.prototype.getDocumentThumbnailUrl = function (document) {
-                    return this._alfrescoService.getDocumentThumbnailUrl(document);
+                DocumentList.prototype.displayFolderContent = function (path) {
+                    var _this = this;
+                    this.currentFolderPath = path;
+                    this._alfrescoService
+                        .getFolder(path)
+                        .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
                 };
                 __decorate([
                     core_1.Input(), 
@@ -143,9 +135,9 @@ System.register(["angular2/core", "./alfresco.service"], function(exports_1, con
                     core_1.Component({
                         selector: 'alfresco-document-list',
                         styles: [
-                            "\n            :host .breadcrumb {\n                margin-bottom: 4px;\n            }\n\n            :host .folder-icon {\n                float: left;\n                margin-right: 10px;\n            }\n\n            :host .file-icon {\n                width: 52px;\n                height: 52px;\n                float: left;\n                margin-right: 10px;\n            }\n\n            :host .document-header:hover {\n                text-decoration: underline;\n            }\n\n            :host .download-button {\n                color: #777;\n                text-decoration: none;\n            }\n\n            :host .download-button:hover {\n                color: #555;\n            }\n        "
+                            "\n            :host .breadcrumb {\n                margin-bottom: 4px;\n            }\n\n            :host .folder-icon {\n                float: left;\n                margin-right: 10px;\n            }\n\n            :host .file-icon {\n                width: 52px;\n                height: 52px;\n                float: left;\n                margin-right: 10px;\n            }\n            \n            :host .document-header {\n                font-size: 24px;\n                line-height: 32px;\n            }\n            \n            :host .document-header:hover {\n                text-decoration: underline;\n            }\n        "
                         ],
-                        template: "\n        <ol *ngIf=\"breadcrumb\" class=\"breadcrumb\">\n            <li *ngFor=\"#r of route; #last = last\" [class.active]=\"last\" [ngSwitch]=\"last\">\n                <span *ngSwitchWhen=\"true\">{{r.name}}</span>\n                <a *ngSwitchDefault href=\"#\" (click)=\"goToRoute(r, $event)\">{{r.name}}</a>\n            </li>\n        </ol>\n        <div *ngIf=\"folder\" class=\"list-group\">\n            <a href=\"#\" *ngIf=\"canNavigateParent()\" (click)=\"onNavigateParentClick($event)\" class=\"list-group-item\">\n                <i class=\"fa fa-level-up\"></i> ...\n            </a>\n            <a href=\"#\" *ngFor=\"#document of folder.items\" (click)=\"onItemClick(document, $event)\" class=\"list-group-item clearfix\">\n                <a *ngIf=\"downloads && !document.isFolder\" href=\"{{getContentUrl(document)}}\" (click)=\"onDownloadClick($event)\" class=\"download-button pull-right\" download target=\"_blank\">\n                    <i class=\"fa fa-download fa-2x\"></i>\n                </a>\n                <i *ngIf=\"thumbnails && document.isFolder\" class=\"folder-icon {{folderIconClass}}\"></i>\n                <img *ngIf=\"thumbnails && !document.isFolder\" class=\"file-icon\" src=\"{{getDocumentThumbnailUrl(document)}}\">\n                <h4 class=\"list-group-item-heading document-header\">\n                    {{document.displayName}}\n                </h4>\n                <p class=\"list-group-item-text\">{{document.description}}</p>\n                <small>\n                    Modified {{document.modifiedOn}} by {{document.modifiedBy}}\n                </small>\n            </a>\n        </div>\n    ",
+                        template: "\n        <ol *ngIf=\"breadcrumb\" class=\"breadcrumb\">\n            <li *ngFor=\"#r of route; #last = last\" [class.active]=\"last\" [ngSwitch]=\"last\">\n                <span *ngSwitchWhen=\"true\">{{r.name}}</span>\n                <a *ngSwitchDefault href=\"#\" (click)=\"goToRoute(r, $event)\">{{r.name}}</a>\n            </li>\n        </ol>\n        <div *ngIf=\"folder\" class=\"list-group\">\n            <a href=\"#\" *ngIf=\"canNavigateParent()\" (click)=\"onNavigateParentClick($event)\" class=\"list-group-item\">\n                <i class=\"fa fa-level-up\"></i> ...\n            </a>\n            <a href=\"#\" *ngFor=\"#document of folder.items\" class=\"list-group-item clearfix\">\n                \n                <div *ngIf=\"!document.isFolder\" class=\"btn-group pull-right\">\n                    <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" \n                          aria-haspopup=\"true\" aria-expanded=\"false\">\n                        Actions <span class=\"caret\"></span>\n                    </button>\n                    <ul class=\"dropdown-menu\">\n                        <li>\n                            <a *ngIf=\"downloads && !document.isFolder\" \n                                href=\"{{getContentUrl(document)}}\" \n                                download target=\"_blank\">\n                                Download\n                            </a>\n                        </li>\n                        <!--\n                        <li><a href=\"#\">(todo:) Another action</a></li>\n                        <li><a href=\"#\">(todo:) Something else here</a></li>\n                        <li role=\"separator\" class=\"divider\"></li>\n                        <li><a href=\"#\">(todo:) Separated link</a></li>\n                        -->\n                    </ul>\n                </div>\n                \n                <i *ngIf=\"thumbnails && document.isFolder\" class=\"folder-icon {{folderIconClass}}\"\n                    (click)=\"onItemClick(document, $event)\">\n                </i>\n                <img *ngIf=\"thumbnails && !document.isFolder\" class=\"file-icon\"\n                    alt=\"\"\n                    src=\"{{getDocumentThumbnailUrl(document)}}\"\n                    (click)=\"onItemClick(document, $event)\">\n                <h1 class=\"list-group-item-heading document-header\" (click)=\"onItemClick(document, $event)\" >\n                    {{document.displayName}}\n                </h1>\n                <p class=\"list-group-item-text\">{{document.description}}</p>\n                <small>\n                    Modified {{document.modifiedOn}} by {{document.modifiedBy}}\n                </small>\n            </a>\n        </div>\n    ",
                         providers: [alfresco_service_1.AlfrescoService]
                     }), 
                     __metadata('design:paramtypes', [alfresco_service_1.AlfrescoService])
