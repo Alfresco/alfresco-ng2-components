@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { Http } from 'angular2/http';
 export declare class Authentication {
     http: Http;
@@ -21,21 +22,21 @@ export declare class Authentication {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(method: string, username: string, password: string): any;
+    login(method: string, username: string, password: string): Observable<void>;
     /**
      * The method provide the login with GET Request
      * @param username
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    loginGet(username: string, password: string): any;
+    loginGet(username: string, password: string): Observable<void>;
     /**
      * The method provide the login with POST Request
      * @param username
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    loginPost(username: string, password: string): any;
+    loginPost(username: string, password: string): Observable<void>;
     /**
      * The method save the toke in the localStorage
      * @param jwt
@@ -45,7 +46,7 @@ export declare class Authentication {
      * The method remove the token from the local storage
      * @returns {Observable<T>}
      */
-    logout(): any;
+    logout(): Observable<boolean>;
     /**
      * The method write the error in the console browser
      * @param error

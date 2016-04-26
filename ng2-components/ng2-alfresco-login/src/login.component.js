@@ -65,7 +65,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './authe
                  * @returns {boolean}
                  */
                 Login.prototype.isErrorStyle = function (field) {
-                    if (this.componentHandler) {
+                    if (componentHandler) {
                         componentHandler.upgradeAllRegistered();
                     }
                     if (field.valid) {
