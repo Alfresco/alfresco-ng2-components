@@ -19,6 +19,7 @@ import { AlfrescoService } from './alfresco.service';
 import { FolderEntity } from './core/entities/folder.entity';
 import { DocumentEntity } from './core/entities/document.entity';
 import { DocumentActionModel } from './models/document-action.model';
+import { FolderActionModel } from './models/folder-action.model';
 export declare class DocumentList implements OnInit {
     private _alfrescoService;
     navigate: boolean;
@@ -36,6 +37,7 @@ export declare class DocumentList implements OnInit {
     errorMessage: any;
     route: any[];
     documentActions: DocumentActionModel[];
+    folderActions: FolderActionModel[];
     canNavigateParent(): boolean;
     constructor(_alfrescoService: AlfrescoService);
     ngOnInit(): void;
@@ -45,7 +47,9 @@ export declare class DocumentList implements OnInit {
     getContentUrl(document: DocumentEntity): string;
     getDocumentThumbnailUrl(document: DocumentEntity): string;
     registerDocumentAction(action: DocumentActionModel): void;
+    registerFolderAction(action: FolderActionModel): void;
     executeDocumentAction(document: DocumentEntity, action: DocumentActionModel): void;
+    executeFolderAction(document: DocumentEntity, action: FolderActionModel): void;
     private getItemPath(item);
     private displayFolderContent(path);
 }

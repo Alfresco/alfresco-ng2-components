@@ -27,7 +27,7 @@ System.register(['angular2/core', './document-list.component'], function(exports
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, document_list_component_1;
-    var DocumentListActions;
+    var FolderActionList;
     return {
         setters:[
             function (core_1_1) {
@@ -37,26 +37,26 @@ System.register(['angular2/core', './document-list.component'], function(exports
                 document_list_component_1 = document_list_component_1_1;
             }],
         execute: function() {
-            DocumentListActions = (function () {
-                function DocumentListActions(list) {
+            FolderActionList = (function () {
+                function FolderActionList(list) {
                     this.list = list;
                     // saves reference to parent container
                     // so that content children can access it
                 }
-                DocumentListActions.prototype.registerAction = function (action) {
-                    this.list.registerDocumentAction(action);
+                FolderActionList.prototype.registerAction = function (action) {
+                    this.list.registerFolderAction(action);
                 };
-                DocumentListActions = __decorate([
+                FolderActionList = __decorate([
                     core_1.Component({
-                        selector: 'document-actions',
+                        selector: 'folder-actions',
                         template: ''
                     }), 
                     __metadata('design:paramtypes', [document_list_component_1.DocumentList])
-                ], DocumentListActions);
-                return DocumentListActions;
+                ], FolderActionList);
+                return FolderActionList;
             }());
-            exports_1("DocumentListActions", DocumentListActions);
+            exports_1("FolderActionList", FolderActionList);
         }
     }
 });
-//# sourceMappingURL=document-list-actions.component.js.map
+//# sourceMappingURL=folder-action-list.component.js.map

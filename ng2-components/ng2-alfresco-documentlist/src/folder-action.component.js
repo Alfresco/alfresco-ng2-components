@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', './models/document-action.model', './document-action-list.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './models/folder-action.model', './folder-action-list.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,22 +26,22 @@ System.register(['angular2/core', './models/document-action.model', './document-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, document_action_model_1, document_action_list_component_1;
-    var DocumentAction;
+    var core_1, folder_action_model_1, folder_action_list_component_1;
+    var FolderAction;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (document_action_model_1_1) {
-                document_action_model_1 = document_action_model_1_1;
+            function (folder_action_model_1_1) {
+                folder_action_model_1 = folder_action_model_1_1;
             },
-            function (document_action_list_component_1_1) {
-                document_action_list_component_1 = document_action_list_component_1_1;
+            function (folder_action_list_component_1_1) {
+                folder_action_list_component_1 = folder_action_list_component_1_1;
             }],
         execute: function() {
-            DocumentAction = (function () {
-                function DocumentAction(list) {
+            FolderAction = (function () {
+                function FolderAction(list) {
                     this.list = list;
                     this.title = 'Action';
                     this.execute = new core_1.EventEmitter();
@@ -50,9 +50,9 @@ System.register(['angular2/core', './models/document-action.model', './document-
                     this.defaultHandlers['system1'] = this.handleStandardAction1;
                     this.defaultHandlers['system2'] = this.handleStandardAction2;
                 }
-                DocumentAction.prototype.ngOnInit = function () {
+                FolderAction.prototype.ngOnInit = function () {
                     var _this = this;
-                    var model = new document_action_model_1.DocumentActionModel();
+                    var model = new folder_action_model_1.FolderActionModel();
                     model.title = this.title;
                     if (this.handler) {
                         var defaultHandler = this.defaultHandlers[this.handler];
@@ -69,35 +69,35 @@ System.register(['angular2/core', './models/document-action.model', './document-
                     }
                     this.list.registerAction(model);
                 };
-                DocumentAction.prototype.handleStandardAction1 = function (document) {
-                    window.alert('standard action 1');
+                FolderAction.prototype.handleStandardAction1 = function (document) {
+                    window.alert('dummy folder action 1');
                 };
-                DocumentAction.prototype.handleStandardAction2 = function (document) {
-                    window.alert('standard action 2');
+                FolderAction.prototype.handleStandardAction2 = function (document) {
+                    window.alert('dummy folder action 2');
                 };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)
-                ], DocumentAction.prototype, "title", void 0);
+                ], FolderAction.prototype, "title", void 0);
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)
-                ], DocumentAction.prototype, "handler", void 0);
+                ], FolderAction.prototype, "handler", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
-                ], DocumentAction.prototype, "execute", void 0);
-                DocumentAction = __decorate([
+                ], FolderAction.prototype, "execute", void 0);
+                FolderAction = __decorate([
                     core_1.Component({
-                        selector: 'document-action',
+                        selector: 'folder-action',
                         template: ''
                     }), 
-                    __metadata('design:paramtypes', [document_action_list_component_1.DocumentActionList])
-                ], DocumentAction);
-                return DocumentAction;
+                    __metadata('design:paramtypes', [folder_action_list_component_1.FolderActionList])
+                ], FolderAction);
+                return FolderAction;
             }());
-            exports_1("DocumentAction", DocumentAction);
+            exports_1("FolderAction", FolderAction);
         }
     }
 });
-//# sourceMappingURL=document-action.component.js.map
+//# sourceMappingURL=folder-action.component.js.map

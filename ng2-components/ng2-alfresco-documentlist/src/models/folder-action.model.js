@@ -14,16 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { OnInit, EventEmitter } from 'angular2/core';
-import { DocumentActionList } from './document-action-list.component';
-export declare class DocumentAction implements OnInit {
-    private list;
-    title: string;
-    handler: string;
-    execute: EventEmitter<{}>;
-    private defaultHandlers;
-    constructor(list: DocumentActionList);
-    ngOnInit(): void;
-    handleStandardAction1(document: any): void;
-    handleStandardAction2(document: any): void;
-}
+System.register([], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var FolderActionModel;
+    return {
+        setters:[],
+        execute: function() {
+            FolderActionModel = (function () {
+                function FolderActionModel() {
+                }
+                return FolderActionModel;
+            }());
+            exports_1("FolderActionModel", FolderActionModel);
+        }
+    }
+});
+//# sourceMappingURL=folder-action.model.js.map

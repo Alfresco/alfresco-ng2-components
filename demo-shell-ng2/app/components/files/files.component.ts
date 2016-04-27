@@ -64,6 +64,10 @@ import {MDL} from 'ng2-alfresco-core/material';
                         [navigate]="navigation"
                         [downloads]="downloads"
                         (itemClick)="onItemClick($event)">
+                        <folder-actions>
+                            <folder-action title="Default folder action 1" handler="system1"></folder-action>
+                            <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
+                        </folder-actions>
                         <document-actions>
                             <document-action title="System action" handler="system2"></document-action>
                             <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
@@ -92,6 +96,10 @@ export class FilesComponent {
     }
 
     myCustomAction1(event) {
-        alert('Custom action for ' + event.value.displayName);
+        alert('Custom document action for ' + event.value.displayName);
+    }
+
+    myFolderAction1(event) {
+        alert('Custom folder action for ' + event.value.displayName);
     }
 }

@@ -19,6 +19,7 @@ import {AlfrescoService} from './alfresco.service';
 import {FolderEntity} from './core/entities/folder.entity';
 import {DocumentEntity} from './core/entities/document.entity';
 import {DocumentActionModel} from './models/document-action.model';
+import {FolderActionModel} from './models/folder-action.model';
 
 @Component({
     selector: 'alfresco-document-list',
@@ -63,6 +64,20 @@ import {DocumentActionModel} from './models/document-action.model';
             </a>
             <a href="#" *ngFor="#document of folder.items" class="list-group-item clearfix">
                 
+                <!-- folder actions -->
+                <div *ngIf="document.isFolder" class="btn-group pull-right">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
+                          aria-haspopup="true" aria-expanded="false">
+                        Actions <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="#folderAction of folderActions">
+                            <a href="#" (click)="executeFolderAction(document, folderAction)">{{folderAction.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- document actions -->
                 <div *ngIf="!document.isFolder" class="btn-group pull-right">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
                           aria-haspopup="true" aria-expanded="false">
@@ -122,6 +137,7 @@ export class DocumentList implements OnInit {
 
     route: any[] = [];
     documentActions: DocumentActionModel[] = [];
+    folderActions: FolderActionModel[] = [];
 
     canNavigateParent(): boolean {
         return this.navigate &&
@@ -196,10 +212,21 @@ export class DocumentList implements OnInit {
     }
 
     registerDocumentAction(action: DocumentActionModel) {
+        // do additional registration actions here
         this.documentActions.push(action);
     }
 
+    registerFolderAction(action: FolderActionModel) {
+        // do additional registration actions here
+        this.folderActions.push(action);
+    }
+
     executeDocumentAction(document:DocumentEntity, action: DocumentActionModel) {
+        // todo: safety checks
+        action.handler(document);
+    }
+
+    executeFolderAction(document:DocumentEntity, action: FolderActionModel) {
         // todo: safety checks
         action.handler(document);
     }

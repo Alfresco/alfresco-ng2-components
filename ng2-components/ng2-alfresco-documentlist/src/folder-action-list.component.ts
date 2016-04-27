@@ -14,16 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { OnInit, EventEmitter } from 'angular2/core';
-import { DocumentActionList } from './document-action-list.component';
-export declare class DocumentAction implements OnInit {
-    private list;
-    title: string;
-    handler: string;
-    execute: EventEmitter<{}>;
-    private defaultHandlers;
-    constructor(list: DocumentActionList);
-    ngOnInit(): void;
-    handleStandardAction1(document: any): void;
-    handleStandardAction2(document: any): void;
+
+import {Component} from 'angular2/core';
+import {DocumentList} from './document-list.component';
+import {FolderActionModel} from './models/folder-action.model';
+
+@Component({
+    selector: 'folder-actions',
+    template: ''
+})
+export class FolderActionList {
+    constructor(private list: DocumentList) {
+        // saves reference to parent container
+        // so that content children can access it
+    }
+
+    registerAction(action: FolderActionModel) {
+        this.list.registerFolderAction(action);
+    }
 }

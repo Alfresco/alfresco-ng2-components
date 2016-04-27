@@ -14,22 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import {Component} from 'angular2/core';
-import {DocumentList} from './document-list.component';
-import {DocumentActionModel} from './models/document-action.model';
-
-@Component({
-    selector: 'document-actions',
-    template: ''
-})
-export class DocumentListActions {
-    constructor(private list: DocumentList) {
-        // saves reference to parent container
-        // so that content children can access it
-    }
-
-    registerAction(action: DocumentActionModel) {
-        this.list.registerDocumentAction(action);
-    }
+export declare class FolderActionModel {
+    title: string;
+    handler: FolderActionHandler;
+}
+export interface FolderActionHandler {
+    (document: any): any;
 }

@@ -1,6 +1,4 @@
-# Alfresco Components for Angular 2
-
-TODO: basic overview
+# Document List Component for Angular 2
 
 ## Build
 
@@ -10,6 +8,17 @@ npm run build
 ```
 
 ## Basic usage
+
+```html
+<alfresco-document-list
+    #list
+    [thumbnails]="thumbnails"
+    [breadcrumb]="breadcrumb"
+    [navigate]="navigation"
+    [downloads]="downloads"
+    (itemClick)="onItemClick($event)">
+</alfresco-document-list>
+```
 
 ```ts
 export class MyView {
@@ -30,18 +39,13 @@ export class MyView {
 }
 ```
 
-```html
-<alfresco-document-list
-    #list
-    [thumbnails]="thumbnails"
-    [breadcrumb]="breadcrumb"
-    [navigate]="navigation"
-    [downloads]="downloads"
-    (itemClick)="onItemClick($event)">
-</alfresco-document-list>
-```
+### Actions
 
-### Document actions
+Document List supports declarative actions for Documents and Folders.
+Each action can be bound to either default out-of-box handler or a custom behavior.
+You can define both folder and document actions at the same time.
+
+#### Document actions
 
 ```html
 <alfresco-document-list ...>
@@ -52,4 +56,33 @@ export class MyView {
 </alfresco-document-list>
 ```
 
-TODO: more details on declaring and using actions
+```ts
+export class MyView {
+    // ...
+
+    myCustomAction1(event) {
+        alert('Custom document action for ' + event.value.displayName);
+    }
+}
+```
+
+#### Folder actions
+
+```html
+<alfresco-document-list ...>
+    <folder-actions>
+        <folder-action title="Default folder action 1" handler="system1"></folder-action>
+        <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
+    </folder-actions>
+</alfresco-document-list>
+```
+
+```ts
+export class MyView {
+    // ...
+
+    myFolderAction1(event) {
+        alert('Custom folder action for ' + event.value.displayName);
+    }
+}
+```

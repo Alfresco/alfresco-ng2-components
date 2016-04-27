@@ -16,28 +16,28 @@
  */
 
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
-import {DocumentActionModel, DocumentActionHandler} from './models/document-action.model';
-import {DocumentActionList} from './document-action-list.component';
+import {FolderActionModel, FolderActionHandler} from './models/folder-action.model';
+import {FolderActionList} from './folder-action-list.component';
 
 @Component({
-    selector: 'document-action',
+    selector: 'folder-action',
     template: ''
 })
-export class DocumentAction implements OnInit {
+export class FolderAction implements OnInit {
     @Input() title: string = 'Action';
     @Input() handler: string;
     @Output() execute = new EventEmitter();
 
-    private defaultHandlers: { [id: string]: DocumentActionHandler; } = {};
+    private defaultHandlers: { [id: string]: FolderActionHandler; } = {};
 
-    constructor(private list: DocumentActionList) {
+    constructor(private list: FolderActionList) {
         // todo: just for dev/demo purposes, to be replaced with real actions
         this.defaultHandlers['system1'] = this.handleStandardAction1;
         this.defaultHandlers['system2'] = this.handleStandardAction2;
     }
 
     ngOnInit() {
-        let model = new DocumentActionModel();
+        let model = new FolderActionModel();
         model.title = this.title;
 
         if (this.handler) {
@@ -57,10 +57,10 @@ export class DocumentAction implements OnInit {
     }
 
     handleStandardAction1(document: any) {
-        window.alert('standard action 1');
+        window.alert('dummy folder action 1');
     }
 
     handleStandardAction2(document: any) {
-        window.alert('standard action 2');
+        window.alert('dummy folder action 2');
     }
 }

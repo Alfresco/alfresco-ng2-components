@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 import { OnInit, EventEmitter } from 'angular2/core';
-import { DocumentActionList } from './document-action-list.component';
-export declare class DocumentAction implements OnInit {
+import { FolderActionList } from './folder-action-list.component';
+export declare class FolderAction implements OnInit {
     private list;
     title: string;
     handler: string;
     execute: EventEmitter<{}>;
     private defaultHandlers;
-    constructor(list: DocumentActionList);
+    constructor(list: FolderActionList);
     ngOnInit(): void;
     handleStandardAction1(document: any): void;
     handleStandardAction2(document: any): void;
