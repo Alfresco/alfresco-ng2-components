@@ -1,7 +1,7 @@
 import { DocumentList } from './document-list.component';
-import { DocumentActionModel } from './models/document-action.model';
+import { ContentActionModel } from './models/content-action.model';
 export declare class DocumentActionList {
     private list;
     constructor(list: DocumentList);
-    registerAction(action: DocumentActionModel): void;
+    registerAction(action: ContentActionModel): void;
 }

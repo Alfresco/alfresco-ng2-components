@@ -18,8 +18,7 @@ import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
 import {AlfrescoService} from './alfresco.service';
 import {FolderEntity} from './core/entities/folder.entity';
 import {DocumentEntity} from './core/entities/document.entity';
-import {DocumentActionModel} from './models/document-action.model';
-import {FolderActionModel} from './models/folder-action.model';
+import {ContentActionModel} from './models/content-action.model';
 
 @Component({
     selector: 'alfresco-document-list',
@@ -72,7 +71,7 @@ import {FolderActionModel} from './models/folder-action.model';
                     </button>
                     <ul class="dropdown-menu">
                         <li *ngFor="#folderAction of folderActions">
-                            <a href="#" (click)="executeFolderAction(document, folderAction)">{{folderAction.title}}</a>
+                            <a href="#" (click)="executeContentAction(document, folderAction)">{{folderAction.title}}</a>
                         </li>
                     </ul>
                 </div>
@@ -93,7 +92,7 @@ import {FolderActionModel} from './models/folder-action.model';
                         </li>
                         <li role="separator" class="divider"></li>
                         <li *ngFor="#documentAction of documentActions">
-                            <a href="#" (click)="executeDocumentAction(document, documentAction)">{{documentAction.title}}</a>
+                            <a href="#" (click)="executeContentAction(document, documentAction)">{{documentAction.title}}</a>
                         </li>
                     </ul>
                 </div>
@@ -136,8 +135,8 @@ export class DocumentList implements OnInit {
     errorMessage;
 
     route: any[] = [];
-    documentActions: DocumentActionModel[] = [];
-    folderActions: FolderActionModel[] = [];
+    documentActions: ContentActionModel[] = [];
+    folderActions: ContentActionModel[] = [];
 
     canNavigateParent(): boolean {
         return this.navigate &&
@@ -211,22 +210,17 @@ export class DocumentList implements OnInit {
         return this._alfrescoService.getDocumentThumbnailUrl(document);
     }
 
-    registerDocumentAction(action: DocumentActionModel) {
+    registerDocumentAction(action: ContentActionModel) {
         // do additional registration actions here
         this.documentActions.push(action);
     }
 
-    registerFolderAction(action: FolderActionModel) {
+    registerFolderAction(action: ContentActionModel) {
         // do additional registration actions here
         this.folderActions.push(action);
     }
 
-    executeDocumentAction(document:DocumentEntity, action: DocumentActionModel) {
-        // todo: safety checks
-        action.handler(document);
-    }
-
-    executeFolderAction(document:DocumentEntity, action: FolderActionModel) {
+    executeContentAction(document:DocumentEntity, action: ContentActionModel) {
         // todo: safety checks
         action.handler(document);
     }

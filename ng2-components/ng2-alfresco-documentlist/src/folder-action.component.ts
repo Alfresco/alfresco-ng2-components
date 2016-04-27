@@ -16,7 +16,7 @@
  */
 
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
-import {FolderActionModel, FolderActionHandler} from './models/folder-action.model';
+import {ContentActionModel, ContentActionHandler} from './models/content-action.model';
 import {FolderActionList} from './folder-action-list.component';
 
 @Component({
@@ -28,7 +28,7 @@ export class FolderAction implements OnInit {
     @Input() handler: string;
     @Output() execute = new EventEmitter();
 
-    private defaultHandlers: { [id: string]: FolderActionHandler; } = {};
+    private defaultHandlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private list: FolderActionList) {
         // todo: just for dev/demo purposes, to be replaced with real actions
@@ -37,7 +37,7 @@ export class FolderAction implements OnInit {
     }
 
     ngOnInit() {
-        let model = new FolderActionModel();
+        let model = new ContentActionModel();
         model.title = this.title;
 
         if (this.handler) {

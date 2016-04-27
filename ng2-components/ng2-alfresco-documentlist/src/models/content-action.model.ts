@@ -14,10 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export declare class FolderActionModel {
+
+export class ContentActionModel {
     title: string;
-    handler: FolderActionHandler;
+    handler: ContentActionHandler;
 }
-export interface FolderActionHandler {
-    (document: any): any;
+
+export interface ContentActionHandler {
+    (obj: any): any;
 }

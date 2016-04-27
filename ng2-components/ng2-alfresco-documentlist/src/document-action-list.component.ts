@@ -17,7 +17,7 @@
 
 import {Component} from 'angular2/core';
 import {DocumentList} from './document-list.component';
-import {DocumentActionModel} from './models/document-action.model';
+import {ContentActionModel} from './models/content-action.model';
 
 @Component({
     selector: 'document-actions',
@@ -29,7 +29,7 @@ export class DocumentActionList {
         // so that content children can access it
     }
 
-    registerAction(action: DocumentActionModel) {
+    registerAction(action: ContentActionModel) {
         this.list.registerDocumentAction(action);
     }
 }

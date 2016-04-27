@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', './models/document-action.model', './document-action-list.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './models/content-action.model', './document-action-list.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,15 +26,15 @@ System.register(['angular2/core', './models/document-action.model', './document-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, document_action_model_1, document_action_list_component_1;
+    var core_1, content_action_model_1, document_action_list_component_1;
     var DocumentAction;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (document_action_model_1_1) {
-                document_action_model_1 = document_action_model_1_1;
+            function (content_action_model_1_1) {
+                content_action_model_1 = content_action_model_1_1;
             },
             function (document_action_list_component_1_1) {
                 document_action_list_component_1 = document_action_list_component_1_1;
@@ -52,7 +52,7 @@ System.register(['angular2/core', './models/document-action.model', './document-
                 }
                 DocumentAction.prototype.ngOnInit = function () {
                     var _this = this;
-                    var model = new document_action_model_1.DocumentActionModel();
+                    var model = new content_action_model_1.ContentActionModel();
                     model.title = this.title;
                     if (this.handler) {
                         var defaultHandler = this.defaultHandlers[this.handler];

@@ -16,7 +16,7 @@
  */
 
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
-import {DocumentActionModel, DocumentActionHandler} from './models/document-action.model';
+import {ContentActionModel, ContentActionHandler} from './models/content-action.model';
 import {DocumentActionList} from './document-action-list.component';
 
 @Component({
@@ -28,7 +28,7 @@ export class DocumentAction implements OnInit {
     @Input() handler: string;
     @Output() execute = new EventEmitter();
 
-    private defaultHandlers: { [id: string]: DocumentActionHandler; } = {};
+    private defaultHandlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(private list: DocumentActionList) {
         // todo: just for dev/demo purposes, to be replaced with real actions
@@ -37,7 +37,7 @@ export class DocumentAction implements OnInit {
     }
 
     ngOnInit() {
-        let model = new DocumentActionModel();
+        let model = new ContentActionModel();
         model.title = this.title;
 
         if (this.handler) {

@@ -17,7 +17,7 @@
 
 import {Component} from 'angular2/core';
 import {DocumentList} from './document-list.component';
-import {FolderActionModel} from './models/folder-action.model';
+import {ContentActionModel} from './models/content-action.model';
 
 @Component({
     selector: 'folder-actions',
@@ -29,7 +29,7 @@ export class FolderActionList {
         // so that content children can access it
     }
 
-    registerAction(action: FolderActionModel) {
+    registerAction(action: ContentActionModel) {
         this.list.registerFolderAction(action);
     }
 }

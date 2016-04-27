@@ -14,20 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register([], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var DocumentActionModel;
-    return {
-        setters:[],
-        execute: function() {
-            DocumentActionModel = (function () {
-                function DocumentActionModel() {
-                }
-                return DocumentActionModel;
-            }());
-            exports_1("DocumentActionModel", DocumentActionModel);
-        }
-    }
-});
-//# sourceMappingURL=document-action.model.js.map
+export declare class ContentActionModel {
+    title: string;
+    handler: ContentActionHandler;
+}
+export interface ContentActionHandler {
+    (obj: any): any;
+}
