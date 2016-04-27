@@ -61,6 +61,17 @@
                 <a class="mdl-navigation__link" href="" [routerLink]="['Login']">Login</a>
             </nav>
             <!-- Right aligned menu below button -->
+            <button id="demo-menu-language-right"
+                    class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">Language</i>
+            </button>
+
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                for="demo-menu-language-right">
+                <li class="mdl-menu__item" (click)="changeLanguage('en')">En</li>
+                <li class="mdl-menu__item" (click)="changeLanguage('it')">Ita</li>
+            </ul>
+            <!-- Right aligned menu below button -->
             <button id="demo-menu-lower-right"
                     class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">more_vert</i>

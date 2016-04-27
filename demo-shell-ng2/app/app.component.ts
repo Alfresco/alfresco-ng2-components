@@ -23,13 +23,15 @@ import {Login} from 'ng2-alfresco-login/ng2-alfresco-login';
 import {AuthRouterOutlet} from './components/router/AuthRouterOutlet';
 import {UploaderComponent} from './components/uploader/uploader.component';
 import {AlfrescoSettingsService} from 'ng2-alfresco-core/services';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 declare var document: any;
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
-    directives: [ROUTER_DIRECTIVES, AuthRouterOutlet, MDL]
+    directives: [ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
+    pipes: [TranslatePipe]
 })
 @RouteConfig([
     {path: '/home', name: 'Home', component: FilesComponent},
@@ -38,11 +40,15 @@ declare var document: any;
     {path: '/login', name: 'Login', component: Login}
 ])
 export class AppComponent {
+    translate: TranslateService;
 
     constructor(public auth:Authentication,
                 public router:Router,
+                translate: TranslateService,
                 alfrescoSettingsService:AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+
+        this.translationInit(translate);
     }
 
     isActive(instruction:any[]):boolean {
@@ -59,6 +65,22 @@ export class AppComponent {
             .subscribe(
                 () => this.router.navigate(['Login'])
             );
+    }
+
+    changeLanguage(lang:string) {
+        this.translate.use(lang);
+    }
+
+    translationInit(translate: TranslateService) {
+        this.translate = translate;
+        let userLang = navigator.language.split('-')[0]; // use navigator lang if available
+        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
+
+        // this language will be used as a fallback when a translation isn't found in the current language
+        this.translate.setDefaultLang('en');
+
+        // the lang to use, if the lang isn't available, it will use the current loader to get them
+        this.translate.use(userLang);
     }
 
     hideDrawer() {
