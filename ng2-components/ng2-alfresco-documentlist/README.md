@@ -78,6 +78,8 @@ export class MyView {
 }
 ```
 
+![Document Actions](docs/assets/document-actions.png)
+
 #### Folder actions
 
 ```html
@@ -98,6 +100,8 @@ export class MyView {
     }
 }
 ```
+
+![Folder Actions](docs/assets/folder-actions.png)
 
 ## Build from sources
 
