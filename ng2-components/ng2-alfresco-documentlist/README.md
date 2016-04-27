@@ -1,10 +1,9 @@
 # Document List Component for Angular 2
 
-## Build
+## Install
 
 ```sh
-npm install
-npm run build
+npm install --save <TBD>
 ```
 
 ## Basic usage
@@ -20,7 +19,17 @@ npm run build
 </alfresco-document-list>
 ```
 
+Example of the component that declares document list and provides values for bindings:
+
 ```ts
+import {Component} from 'angular2/core';
+import {DOCUMENT_LIST_DIRECTIVES} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+
+@Component({
+    selector: 'my-view',
+    template: '<YOUR TEMPLATE>',
+    directives: [DOCUMENT_LIST_DIRECTIVES]
+})
 export class MyView {
     thumbnails: boolean = true;
     breadcrumb: boolean = false;
@@ -38,6 +47,9 @@ export class MyView {
     }
 }
 ```
+
+Note the use of ```DOCUMENT_LIST_DIRECTIVES``` barrel that consolidates all the document list related directives together.
+It gives you access to ```<document-actions>```, ```<folder-actions>``` and many other directives.
 
 ### Actions
 
@@ -85,4 +97,11 @@ export class MyView {
         alert('Custom folder action for ' + event.value.displayName);
     }
 }
+```
+
+## Build from sources
+
+```sh
+npm install
+npm run build
 ```
