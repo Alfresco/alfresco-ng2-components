@@ -45,8 +45,10 @@ export class MyView {
 
 ```html
 <alfresco-document-list ...>
-    <document-action title="System action" handler="system2"></document-action>
-    <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
+    <document-actions>
+        <document-action title="System action" handler="system2"></document-action>
+        <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
+    </document-actions>
 </alfresco-document-list>
 ```
 

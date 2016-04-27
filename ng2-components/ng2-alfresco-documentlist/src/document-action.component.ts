@@ -14,22 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
-import {DocumentList} from './document-list.component';
 import {DocumentActionModel, DocumentActionHandler} from './models/document-action.model';
+import {DocumentListActions} from './document-list-actions.component';
 
 @Component({
     selector: 'document-action',
     template: ''
 })
-export class DocumentListAction implements OnInit {
+export class DocumentAction implements OnInit {
     @Input() title: string = 'Action';
     @Input() handler: string;
     @Output() execute = new EventEmitter();
 
     private defaultHandlers: { [id: string]: DocumentActionHandler; } = {};
 
-    constructor(private list: DocumentList) {
+    constructor(private list: DocumentListActions) {
         // todo: just for dev/demo purposes, to be replaced with real actions
         this.defaultHandlers['system1'] = this.handleStandardAction1;
         this.defaultHandlers['system2'] = this.handleStandardAction2;
@@ -52,7 +53,7 @@ export class DocumentListAction implements OnInit {
             };
         }
 
-        this.list.registerDocumentAction(model);
+        this.list.registerAction(model);
     }
 
     handleStandardAction1(document: any) {
