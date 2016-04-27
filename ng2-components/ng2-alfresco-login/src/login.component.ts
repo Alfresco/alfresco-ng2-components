@@ -2,6 +2,7 @@ import {Component, Input} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {Authentication} from './authentication.service';
+import {TRANSLATE_PROVIDERS, TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 declare let componentHandler;
 declare let __moduleName:string;
 
@@ -11,6 +12,7 @@ declare let __moduleName:string;
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
+    pipes: [TranslatePipe]
 
 })
 export class Login {
