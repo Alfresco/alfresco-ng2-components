@@ -76,3 +76,26 @@ npm run build.dev
 ```sh
 gulp dev
 ```
+
+
+###Multi-language
+To support a new language you need to create your language file (.json) and add it to `i18n/` folder.
+
+```json
+{
+        "username" : "Username",
+        "input-required-message": "Required",
+        "input-min-message": "Your username needs to be at least 4 characters.",
+        "login-button": "Login",
+}
+```
+
+Directory structure:
+```
+├── i18n/
+│   ├── en.json
+│   ├── it.json
+│   ├── fr.json
+```
+
+
