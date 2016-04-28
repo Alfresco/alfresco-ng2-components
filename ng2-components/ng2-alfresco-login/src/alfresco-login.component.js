@@ -37,7 +37,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                  * @param auth
                  * @param router
                  */
-                function AlfrescoLoginComponent(fb, auth, router) {
+                function AlfrescoLoginComponent(fb, auth, router, translate) {
                     this.auth = auth;
                     this.router = router;
                     this.method = 'GET';
@@ -46,6 +46,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                         username: ['', common_1.Validators.compose([common_1.Validators.required, common_1.Validators.minLength(4)])],
                         password: ['', common_1.Validators.required]
                     });
+                    this.translationInit(translate);
                 }
                 /**
                  * Method called on submit form
@@ -78,6 +79,17 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                         return true;
                     }
                 };
+                /**
+                 * Initial configuration for Multi language
+                 * @param translate
+                 */
+                AlfrescoLoginComponent.prototype.translationInit = function (translate) {
+                    this.translate = translate;
+                    var userLang = navigator.language.split('-')[0]; // use navigator lang if available
+                    userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
+                    this.translate.setDefaultLang('en');
+                    this.translate.use(userLang);
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)
@@ -91,7 +103,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                         styleUrls: ['./alfresco-login.component.css'],
                         pipes: [ng2_translate_1.TranslatePipe]
                     }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_1.Router])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_1.Router, ng2_translate_1.TranslateService])
                 ], AlfrescoLoginComponent);
                 return AlfrescoLoginComponent;
             }());
