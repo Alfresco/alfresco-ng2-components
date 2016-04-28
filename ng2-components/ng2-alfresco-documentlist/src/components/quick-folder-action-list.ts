@@ -14,21 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register([], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var FolderEntity;
-    return {
-        setters:[],
-        execute: function() {
-            // contains only limited subset of available fields
-            FolderEntity = (function () {
-                function FolderEntity() {
-                }
-                return FolderEntity;
-            }());
-            exports_1("FolderEntity", FolderEntity);
+
+import {Component} from 'angular2/core';
+import {DocumentList} from './document-list';
+import {ContentActionModel} from '../models/content-action.model';
+
+@Component({
+    selector: 'quick-folder-actions',
+    template: ''
+})
+export class QuickFolderActionList {
+    constructor(private list: DocumentList) {
+        // saves reference to parent container
+        // so that content children can access it
+    }
+
+    registerAction(action: ContentActionModel) {
+        if (action) {
+            this.list.quickFolderActions.push(action);
         }
     }
-});
-//# sourceMappingURL=folder.entity.js.map
+}

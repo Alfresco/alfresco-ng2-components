@@ -1,17 +1,35 @@
-import {DocumentList} from './src/document-list.component';
-import {DocumentAction} from './src/document-action.component';
-import {DocumentActionList} from './src/document-action-list.component';
-import {FolderAction} from './src/folder-action.component';
-import {FolderActionList} from './src/folder-action-list.component';
+import {DocumentList} from './src/components/document-list';
+import {DocumentAction} from './src/components/document-action';
+import {DocumentActionList} from './src/components/document-action-list';
+import {QuickDocumentAction} from './src/components/quick-document-action';
+import {QuickDocumentActionList} from './src/components/quick-document-action-list';
+import {FolderAction} from './src/components/folder-action';
+import {FolderActionList} from './src/components/folder-action-list';
+import {QuickFolderAction} from './src/components/quick-folder-action';
+import {QuickFolderActionList} from './src/components/quick-folder-action-list';
 
-export * from './src/document-list.component';
-export * from './src/document-action.component';
-export * from './src/document-action-list.component';
-export * from './src/folder-action-list.component';
-export * from './src/folder-action-list.component';
+export * from './src/components/document-list';
+export * from './src/components/document-action';
+export * from './src/components/document-action-list';
+export * from './src/components/quick-document-action';
+export * from './src/components/quick-document-action-list';
+export * from './src/components/folder-action';
+export * from './src/components/folder-action-list';
+export * from './src/components/quick-folder-action'
+export * from './src/components/quick-folder-action-list';
 
 export default {
-    directives: [DocumentList, DocumentAction, DocumentActionList, FolderAction, FolderActionList],
+    directives: [
+        DocumentList,
+        DocumentAction,
+        DocumentActionList,
+        QuickDocumentAction,
+        QuickDocumentActionList,
+        FolderAction,
+        FolderActionList,
+        QuickFolderAction,
+        QuickFolderActionList
+    ],
     providers: []
 }
 
@@ -19,6 +37,10 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     DocumentList,
     DocumentAction,
     DocumentActionList,
+    QuickDocumentAction,
+    QuickDocumentActionList,
     FolderAction,
-    FolderActionList
+    FolderActionList,
+    QuickFolderAction,
+    QuickFolderActionList
 ];

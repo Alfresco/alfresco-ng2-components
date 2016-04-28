@@ -14,7 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {DocumentEntity} from "./document.entity";
+
+import {DocumentEntity} from './document.entity';
 
 // contains only limited subset of available fields
 export class FolderEntity {

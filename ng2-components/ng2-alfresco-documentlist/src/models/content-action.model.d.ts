@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 export declare class ContentActionModel {
+    icon: string;
     title: string;
     handler: ContentActionHandler;
 }

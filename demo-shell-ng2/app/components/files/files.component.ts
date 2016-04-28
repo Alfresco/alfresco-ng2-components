@@ -64,10 +64,16 @@ import {MDL} from 'ng2-alfresco-core/material';
                         [navigate]="navigation"
                         [downloads]="downloads"
                         (itemClick)="onItemClick($event)">
+                        <quick-folder-actions>
+                            <quick-folder-action title="Delete" handler="system1"></quick-folder-action>
+                        </quick-folder-actions>
                         <folder-actions>
                             <folder-action title="Default folder action 1" handler="system1"></folder-action>
                             <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
                         </folder-actions>
+                        <quick-document-actions>
+                            <quick-document-action icon="glyphicon glyphicon-pushpin" handler="system1"></quick-document-action>
+                        </quick-document-actions>
                         <document-actions>
                             <document-action title="System action" handler="system2"></document-action>
                             <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>

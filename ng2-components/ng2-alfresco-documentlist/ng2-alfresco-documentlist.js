@@ -1,7 +1,7 @@
-System.register(['./src/document-list.component', './src/document-action.component', './src/document-action-list.component', './src/folder-action.component', './src/folder-action-list.component'], function(exports_1, context_1) {
+System.register(['./src/components/document-list', './src/components/document-action', './src/components/document-action-list', './src/components/quick-document-action', './src/components/quick-document-action-list', './src/components/folder-action', './src/components/folder-action-list', './src/components/quick-folder-action', './src/components/quick-folder-action-list'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var document_list_component_1, document_action_component_1, document_action_list_component_1, folder_action_component_1, folder_action_list_component_1;
+    var document_list_1, document_action_1, document_action_list_1, quick_document_action_1, quick_document_action_list_1, folder_action_1, folder_action_list_1, quick_folder_action_1, quick_folder_action_list_1;
     var DOCUMENT_LIST_DIRECTIVES;
     var exportedNames_1 = {
         'DOCUMENT_LIST_DIRECTIVES': true
@@ -15,37 +15,67 @@ System.register(['./src/document-list.component', './src/document-action.compone
     }
     return {
         setters:[
-            function (document_list_component_1_1) {
-                document_list_component_1 = document_list_component_1_1;
-                exportStar_1(document_list_component_1_1);
+            function (document_list_1_1) {
+                document_list_1 = document_list_1_1;
+                exportStar_1(document_list_1_1);
             },
-            function (document_action_component_1_1) {
-                document_action_component_1 = document_action_component_1_1;
-                exportStar_1(document_action_component_1_1);
+            function (document_action_1_1) {
+                document_action_1 = document_action_1_1;
+                exportStar_1(document_action_1_1);
             },
-            function (document_action_list_component_1_1) {
-                document_action_list_component_1 = document_action_list_component_1_1;
-                exportStar_1(document_action_list_component_1_1);
+            function (document_action_list_1_1) {
+                document_action_list_1 = document_action_list_1_1;
+                exportStar_1(document_action_list_1_1);
             },
-            function (folder_action_component_1_1) {
-                folder_action_component_1 = folder_action_component_1_1;
+            function (quick_document_action_1_1) {
+                quick_document_action_1 = quick_document_action_1_1;
+                exportStar_1(quick_document_action_1_1);
             },
-            function (folder_action_list_component_1_1) {
-                folder_action_list_component_1 = folder_action_list_component_1_1;
-                exportStar_1(folder_action_list_component_1_1);
-                exportStar_1(folder_action_list_component_1_1);
+            function (quick_document_action_list_1_1) {
+                quick_document_action_list_1 = quick_document_action_list_1_1;
+                exportStar_1(quick_document_action_list_1_1);
+            },
+            function (folder_action_1_1) {
+                folder_action_1 = folder_action_1_1;
+                exportStar_1(folder_action_1_1);
+            },
+            function (folder_action_list_1_1) {
+                folder_action_list_1 = folder_action_list_1_1;
+                exportStar_1(folder_action_list_1_1);
+            },
+            function (quick_folder_action_1_1) {
+                quick_folder_action_1 = quick_folder_action_1_1;
+                exportStar_1(quick_folder_action_1_1);
+            },
+            function (quick_folder_action_list_1_1) {
+                quick_folder_action_list_1 = quick_folder_action_list_1_1;
+                exportStar_1(quick_folder_action_list_1_1);
             }],
         execute: function() {
             exports_1("default",{
-                directives: [document_list_component_1.DocumentList, document_action_component_1.DocumentAction, document_action_list_component_1.DocumentActionList, folder_action_component_1.FolderAction, folder_action_list_component_1.FolderActionList],
+                directives: [
+                    document_list_1.DocumentList,
+                    document_action_1.DocumentAction,
+                    document_action_list_1.DocumentActionList,
+                    quick_document_action_1.QuickDocumentAction,
+                    quick_document_action_list_1.QuickDocumentActionList,
+                    folder_action_1.FolderAction,
+                    folder_action_list_1.FolderActionList,
+                    quick_folder_action_1.QuickFolderAction,
+                    quick_folder_action_list_1.QuickFolderActionList
+                ],
                 providers: []
             });
             exports_1("DOCUMENT_LIST_DIRECTIVES", DOCUMENT_LIST_DIRECTIVES = [
-                document_list_component_1.DocumentList,
-                document_action_component_1.DocumentAction,
-                document_action_list_component_1.DocumentActionList,
-                folder_action_component_1.FolderAction,
-                folder_action_list_component_1.FolderActionList
+                document_list_1.DocumentList,
+                document_action_1.DocumentAction,
+                document_action_list_1.DocumentActionList,
+                quick_document_action_1.QuickDocumentAction,
+                quick_document_action_list_1.QuickDocumentActionList,
+                folder_action_1.FolderAction,
+                folder_action_list_1.FolderActionList,
+                quick_folder_action_1.QuickFolderAction,
+                quick_folder_action_list_1.QuickFolderActionList
             ]);
         }
     }

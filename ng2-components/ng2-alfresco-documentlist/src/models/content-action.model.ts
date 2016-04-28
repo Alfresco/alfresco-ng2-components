@@ -16,6 +16,7 @@
  */
 
 export class ContentActionModel {
+    icon: string;
     title: string;
     handler: ContentActionHandler;
 }

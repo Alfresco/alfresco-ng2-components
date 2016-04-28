@@ -14,21 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register([], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var FolderEntity;
-    return {
-        setters:[],
-        execute: function() {
-            // contains only limited subset of available fields
-            FolderEntity = (function () {
-                function FolderEntity() {
-                }
-                return FolderEntity;
-            }());
-            exports_1("FolderEntity", FolderEntity);
-        }
-    }
-});
-//# sourceMappingURL=folder.entity.js.map
+import { OnInit, EventEmitter } from 'angular2/core';
+import { QuickDocumentActionList } from './quick-document-action-list';
+export declare class QuickDocumentAction implements OnInit {
+    private list;
+    icon: string;
+    title: string;
+    handler: string;
+    execute: EventEmitter<{}>;
+    private defaultHandlers;
+    constructor(list: QuickDocumentActionList);
+    ngOnInit(): void;
+    handleStandardAction1(document: any): void;
+    handleStandardAction2(document: any): void;
+}

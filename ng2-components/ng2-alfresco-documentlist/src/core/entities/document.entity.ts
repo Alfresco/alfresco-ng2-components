@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 // contains only limited subset of available fields
-import {LocationEntity} from "./location.entity";
+import {LocationEntity} from './location.entity';
 
 export class DocumentEntity {
     nodeRef: string;
