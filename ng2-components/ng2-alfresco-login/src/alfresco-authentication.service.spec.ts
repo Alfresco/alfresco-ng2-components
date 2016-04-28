@@ -18,9 +18,9 @@ import {it, describe} from 'angular2/testing';
 import {provide, Injector} from 'angular2/core';
 import {Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions} from 'angular2/http';
 import {MockBackend} from 'angular2/http/testing';
-import {Authentication} from './authentication.service';
+import {AlfrescoAuthenticationService} from './alfresco-authentication.service';
 
-describe('Authentication', () => {
+describe('AlfrescoAuthentication', () => {
     let injector,
         backend,
         mockBackend,
@@ -32,7 +32,7 @@ describe('Authentication', () => {
             HTTP_PROVIDERS,
             MockBackend,
             provide(XHRBackend, {useClass: MockBackend}),
-            Authentication
+            AlfrescoAuthenticationService
         ]);
 
         let store = {};
@@ -57,7 +57,7 @@ describe('Authentication', () => {
         mockBackend = injector.get(MockBackend);
         backend = injector.get(XHRBackend);
         httpService = injector.get(Http);
-        service = injector.get(Authentication);
+        service = injector.get(AlfrescoAuthenticationService);
     });
 
     it('should return true and token if the user is logged in', () => {

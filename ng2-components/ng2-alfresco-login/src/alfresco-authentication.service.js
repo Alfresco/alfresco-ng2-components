@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_1, context_1) {
+System.register(['angular2/core', 'rxjs/Rx', 'angular2/http', '../../ng2-alfresco-core/services'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,8 +10,8 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, Rx_1, http_1;
-    var Authentication;
+    var core_1, Rx_1, http_1, services_1;
+    var AlfrescoAuthenticationService;
     return {
         setters:[
             function (core_1_1) {
@@ -22,24 +22,32 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (services_1_1) {
+                services_1 = services_1_1;
             }],
         execute: function() {
-            Authentication = (function () {
+            /**
+             * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
+             */
+            AlfrescoAuthenticationService = (function () {
                 /**
                  * Constructor
                  * @param http
                  */
-                function Authentication(http) {
+                function AlfrescoAuthenticationService(http, settings) {
                     this.http = http;
+                    this.settings = settings;
                     this._host = 'http://192.168.99.100:8080';
                     this._baseUrl = this._host + '/alfresco/service/api/';
                     this.token = localStorage.getItem('token');
+                    this._host = settings.host;
                 }
                 /**
                  * The method return tru if the user is logged in
                  * @returns {boolean}
                  */
-                Authentication.prototype.isLoggedIn = function () {
+                AlfrescoAuthenticationService.prototype.isLoggedIn = function () {
                     return !!localStorage.getItem('token');
                 };
                 /**
@@ -49,7 +57,7 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                  * @param password
                  * @returns {Observable<R>|Observable<T>}
                  */
-                Authentication.prototype.login = function (method, username, password) {
+                AlfrescoAuthenticationService.prototype.login = function (method, username, password) {
                     if (method === 'GET') {
                         return this.loginGet(username, password);
                     }
@@ -63,7 +71,7 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                  * @param password
                  * @returns {Observable<R>|Observable<T>}
                  */
-                Authentication.prototype.loginGet = function (username, password) {
+                AlfrescoAuthenticationService.prototype.loginGet = function (username, password) {
                     var _this = this;
                     var searchParams = new http_1.URLSearchParams();
                     searchParams.set('u', username);
@@ -82,7 +90,7 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                  * @param password
                  * @returns {Observable<R>|Observable<T>}
                  */
-                Authentication.prototype.loginPost = function (username, password) {
+                AlfrescoAuthenticationService.prototype.loginPost = function (username, password) {
                     var _this = this;
                     var credentials = '{ username: ' + username + ', password: ' + password + ' }';
                     var headers = new http_1.Headers();
@@ -101,7 +109,7 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                  * The method save the toke in the localStorage
                  * @param jwt
                  */
-                Authentication.prototype.saveJwt = function (jwt) {
+                AlfrescoAuthenticationService.prototype.saveJwt = function (jwt) {
                     if (jwt) {
                         localStorage.setItem('token', jwt);
                     }
@@ -110,7 +118,7 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                  * The method remove the token from the local storage
                  * @returns {Observable<T>}
                  */
-                Authentication.prototype.logout = function () {
+                AlfrescoAuthenticationService.prototype.logout = function () {
                     this.token = undefined;
                     localStorage.removeItem('token');
                     return Rx_1.Observable.of(true);
@@ -120,18 +128,18 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                  * @param error
                  * @returns {ErrorObservable}
                  */
-                Authentication.prototype.handleError = function (error) {
+                AlfrescoAuthenticationService.prototype.handleError = function (error) {
                     console.error(error);
                     return Rx_1.Observable.throw(error.json().error || 'Server error');
                 };
-                Authentication = __decorate([
+                AlfrescoAuthenticationService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http])
-                ], Authentication);
-                return Authentication;
+                    __metadata('design:paramtypes', [http_1.Http, services_1.AlfrescoSettingsService])
+                ], AlfrescoAuthenticationService);
+                return AlfrescoAuthenticationService;
             }());
-            exports_1("Authentication", Authentication);
+            exports_1("AlfrescoAuthenticationService", AlfrescoAuthenticationService);
         }
     }
 });
-//# sourceMappingURL=authentication.service.js.map
+//# sourceMappingURL=alfresco-authentication.service.js.map

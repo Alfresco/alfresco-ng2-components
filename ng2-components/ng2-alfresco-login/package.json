@@ -8,6 +8,7 @@
         "tsc": "tsc",
         "tsc:w": "tsc -w",
         "typings": "typings",
+        "format": "xo",
         "test": "live-server --open=tests-runner.html"
     },
     "repository": {
@@ -53,5 +54,27 @@
         "typescript": "^1.8.10",
         "typings": "^0.7.12",
         "xo": "^0.14.0"
+    },
+    "xo": {
+        "overrides": [
+            {
+                "files": "test/*.js",
+                "rules": {
+                    "max-nested-callbacks": 0,
+                    "handle-callback-err": 0
+                }
+            }
+        ],
+        "rules": {
+            "no-lonely-if" : 0,
+            "one-var": 0,
+            "padded-blocks": 0,
+            "no-mixed-requires": 0,
+            "quotes": [
+                2,
+                "single",
+                "avoid-escape"
+            ]
+        }
     }
 }

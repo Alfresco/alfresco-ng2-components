@@ -26,14 +26,24 @@
         //     for imports from the app folder
         System.config({
             packages: {
-                'src': {defaultExtension: 'js'}
+                'src': {defaultExtension: 'js'},
+                'ng2-translate': {
+                    defaultExtension: 'js'
+                },
+                'rxjs': {
+                    defaultExtension: 'js'
+                }
+            },
+            map: {
+                'ng2-translate': 'node_modules/ng2-translate',
+                'rxjs': 'node_modules/rxjs'
             }
         });
 
         // #3. Import the spec file explicitly
         Promise.all([
-            System.import('src/authentication.service.spec'),
-            System.import('src/login.component.spec')
+            System.import('src/alfresco-authentication.service.spec'),
+            System.import('src/alfresco-login.component.spec')
         ])
                 // #4. wait for all imports to load ...
                 //     then re-execute `window.onload` which

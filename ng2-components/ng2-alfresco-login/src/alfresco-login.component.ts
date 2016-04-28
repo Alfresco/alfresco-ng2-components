@@ -17,8 +17,8 @@
 import {Component, Input} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
-import {Authentication} from './authentication.service';
-import {TRANSLATE_PROVIDERS, TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import {AlfrescoAuthenticationService} from './alfresco-authentication.service';
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
 declare let componentHandler;
 declare let __moduleName:string;
 
@@ -26,12 +26,12 @@ declare let __moduleName:string;
     selector: 'alfresco-login',
     moduleId: __moduleName,
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
+    templateUrl: './alfresco-login.component.html',
+    styleUrls: ['./alfresco-login.component.css'],
     pipes: [TranslatePipe]
 
 })
-export class Login {
+export class AlfrescoLoginComponent {
     @Input() method:string = 'GET';
 
     form:ControlGroup;
@@ -43,7 +43,7 @@ export class Login {
      * @param auth
      * @param router
      */
-    constructor(fb:FormBuilder, public auth:Authentication, public router:Router) {
+    constructor(fb:FormBuilder, public auth:AlfrescoAuthenticationService, public router:Router) {
         this.form = fb.group({
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]

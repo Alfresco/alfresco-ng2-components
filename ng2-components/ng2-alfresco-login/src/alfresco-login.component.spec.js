@@ -1,7 +1,7 @@
-System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angular2/core', './login.component', 'rxjs/Rx', './authentication.service', 'angular2/src/router/router', 'angular2/router', 'angular2/src/mock/location_mock'], function(exports_1, context_1) {
+System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angular2/core', './alfresco-login.component', 'rxjs/Rx', './alfresco-authentication.service', 'angular2/src/router/router', 'angular2/router', 'angular2/src/mock/location_mock'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var browser_1, testing_1, core_1, login_component_1, Rx_1, authentication_service_1, router_1, router_2, location_mock_1;
+    var browser_1, testing_1, core_1, alfresco_login_component_1, Rx_1, alfresco_authentication_service_1, router_1, router_2, location_mock_1;
     var AuthenticationMock;
     return {
         setters:[
@@ -14,14 +14,14 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (login_component_1_1) {
-                login_component_1 = login_component_1_1;
+            function (alfresco_login_component_1_1) {
+                alfresco_login_component_1 = alfresco_login_component_1_1;
             },
             function (Rx_1_1) {
                 Rx_1 = Rx_1_1;
             },
-            function (authentication_service_1_1) {
-                authentication_service_1 = authentication_service_1_1;
+            function (alfresco_authentication_service_1_1) {
+                alfresco_authentication_service_1 = alfresco_authentication_service_1_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -46,11 +46,11 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                     }
                 };
                 AuthenticationMock.prototype.getProviders = function () {
-                    return [core_1.provide(authentication_service_1.Authentication, { useValue: this })];
+                    return [core_1.provide(alfresco_authentication_service_1.AlfrescoAuthenticationService, { useValue: this })];
                 };
                 return AuthenticationMock;
             }());
-            testing_1.describe('Login', function () {
+            testing_1.describe('AlfrescoLogin', function () {
                 var authService, location, router;
                 testing_1.setBaseTestProviders(browser_1.TEST_BROWSER_PLATFORM_PROVIDERS, browser_1.TEST_BROWSER_APPLICATION_PROVIDERS);
                 testing_1.beforeEachProviders(function () {
@@ -59,7 +59,7 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         authService.getProviders(),
                         router_2.RouteRegistry,
                         core_1.provide(router_2.Location, { useClass: location_mock_1.SpyLocation }),
-                        core_1.provide(router_2.ROUTER_PRIMARY_COMPONENT, { useValue: login_component_1.Login }),
+                        core_1.provide(router_2.ROUTER_PRIMARY_COMPONENT, { useValue: alfresco_login_component_1.AlfrescoLoginComponent }),
                         core_1.provide(router_2.Router, { useClass: router_1.RootRouter })
                     ];
                 });
@@ -67,18 +67,9 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                     router = r;
                     location = l;
                 }));
-                testing_1.it('should render `Login` header', testing_1.injectAsync([testing_1.TestComponentBuilder, authentication_service_1.Authentication, router_2.Router], function (tcb, authService, router) {
+                testing_1.it('should render `Login` form with input fields user and password with default value', testing_1.injectAsync([testing_1.TestComponentBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_2.Router], function (tcb, authService, router) {
                     return tcb
-                        .createAsync(login_component_1.Login)
-                        .then(function (fixture) {
-                        var element = fixture.nativeElement;
-                        testing_1.expect(element.querySelector('h2').innerText).toBe('Login');
-                        testing_1.expect(element.querySelector('form')).toBeDefined();
-                    });
-                }));
-                testing_1.it('should render `Login` form with input fields user and password with default value', testing_1.injectAsync([testing_1.TestComponentBuilder, authentication_service_1.Authentication, router_2.Router], function (tcb, authService, router) {
-                    return tcb
-                        .createAsync(login_component_1.Login)
+                        .createAsync(alfresco_login_component_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         var element = fixture.nativeElement;
                         testing_1.expect(element.querySelector('form')).toBeDefined();
@@ -88,9 +79,9 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(element.querySelector('input[type="text"]').value).toEqual('');
                     });
                 }));
-                testing_1.it('should render the new values after change the user and password values', testing_1.injectAsync([testing_1.TestComponentBuilder, authentication_service_1.Authentication, router_2.Router], function (tcb, authService, router) {
+                testing_1.it('should render the new values after change the user and password values', testing_1.injectAsync([testing_1.TestComponentBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_2.Router], function (tcb, authService, router) {
                     return tcb
-                        .createAsync(login_component_1.Login)
+                        .createAsync(alfresco_login_component_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         var compiled = fixture.debugElement.nativeElement;
                         var password = compiled.querySelector('input[type="password"]');
@@ -101,11 +92,11 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(compiled.querySelector('input[type="text"]').value).toEqual('my username');
                     });
                 }));
-                testing_1.it('should navigate to Home route after the login OK ', testing_1.injectAsync([testing_1.TestComponentBuilder, authentication_service_1.Authentication, router_2.Router], function (tcb, authService, router) {
+                testing_1.it('should navigate to Home route after the login OK ', testing_1.injectAsync([testing_1.TestComponentBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_2.Router], function (tcb, authService, router) {
                     return tcb
-                        .createAsync(login_component_1.Login)
+                        .createAsync(alfresco_login_component_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
-                        router.config([new router_2.Route({ path: '/home', name: 'Home', component: login_component_1.Login })]);
+                        router.config([new router_2.Route({ path: '/home', name: 'Home', component: alfresco_login_component_1.AlfrescoLoginComponent })]);
                         spyOn(router, 'navigate').and.callThrough();
                         var compiled = fixture.debugElement.nativeElement;
                         var password = compiled.querySelector('input[type="password"]');
@@ -117,9 +108,9 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(router.navigate).toHaveBeenCalledWith(['Home']);
                     });
                 }));
-                testing_1.it('should return error with a wrong username ', testing_1.injectAsync([testing_1.TestComponentBuilder, authentication_service_1.Authentication, router_2.Router], function (tcb, authService, router) {
+                testing_1.it('should return error with a wrong username ', testing_1.injectAsync([testing_1.TestComponentBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_2.Router], function (tcb, authService, router) {
                     return tcb
-                        .createAsync(login_component_1.Login)
+                        .createAsync(alfresco_login_component_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         spyOn(router, 'navigate').and.callThrough();
                         var compiled = fixture.debugElement.nativeElement;
@@ -131,9 +122,9 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
                     });
                 }));
-                testing_1.it('should return error with a wrong password ', testing_1.injectAsync([testing_1.TestComponentBuilder, authentication_service_1.Authentication, router_2.Router], function (tcb, authService, router) {
+                testing_1.it('should return error with a wrong password ', testing_1.injectAsync([testing_1.TestComponentBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_2.Router], function (tcb, authService, router) {
                     return tcb
-                        .createAsync(login_component_1.Login)
+                        .createAsync(alfresco_login_component_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         spyOn(router, 'navigate').and.callThrough();
                         var compiled = fixture.debugElement.nativeElement;
@@ -145,9 +136,9 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
                     });
                 }));
-                testing_1.it('should return error with a wrong username and password ', testing_1.injectAsync([testing_1.TestComponentBuilder, authentication_service_1.Authentication, router_2.Router], function (tcb, authService, router) {
+                testing_1.it('should return error with a wrong username and password ', testing_1.injectAsync([testing_1.TestComponentBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_2.Router], function (tcb, authService, router) {
                     return tcb
-                        .createAsync(login_component_1.Login)
+                        .createAsync(alfresco_login_component_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         spyOn(router, 'navigate').and.callThrough();
                         var compiled = fixture.debugElement.nativeElement;
@@ -163,4 +154,4 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
         }
     }
 });
-//# sourceMappingURL=login.component.spec.js.map
+//# sourceMappingURL=alfresco-login.component.spec.js.map

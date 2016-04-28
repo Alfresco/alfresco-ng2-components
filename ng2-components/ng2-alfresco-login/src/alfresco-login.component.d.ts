@@ -1,8 +1,8 @@
 import { Router } from 'angular2/router';
 import { ControlGroup, FormBuilder } from 'angular2/common';
-import { Authentication } from './authentication.service';
-export declare class Login {
-    auth: Authentication;
+import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+export declare class AlfrescoLoginComponent {
+    auth: AlfrescoAuthenticationService;
     router: Router;
     method: string;
     form: ControlGroup;
@@ -13,7 +13,7 @@ export declare class Login {
      * @param auth
      * @param router
      */
-    constructor(fb: FormBuilder, auth: Authentication, router: Router);
+    constructor(fb: FormBuilder, auth: AlfrescoAuthenticationService, router: Router);
     /**
      * Method called on submit form
      * @param value

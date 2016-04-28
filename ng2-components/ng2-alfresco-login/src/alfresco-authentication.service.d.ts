@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 import { Http } from 'angular2/http';
-export declare class Authentication {
+export declare class AlfrescoAuthenticationService {
     http: Http;
     token: string;
     private _host;

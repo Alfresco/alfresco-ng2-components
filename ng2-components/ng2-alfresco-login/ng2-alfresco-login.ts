@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Login} from './src/login.component';
-import {Authentication} from './src/authentication.service';
+import {AlfrescoLoginComponent} from './src/alfresco-login.component';
+import {AlfrescoAuthenticationService} from './src/alfresco-authentication.service';
 
-export * from './src/login.component';
-export * from './src/authentication.service';
+export * from './src/alfresco-login.component';
+export * from './src/alfresco-authentication.service';
 
 export default {
-    directives: [Login],
-    providers: [Authentication]
+    directives: [AlfrescoLoginComponent],
+    providers: [AlfrescoAuthenticationService]
 }
 
-export const ALFRESCO_LOGIN_DIRECTIVES: [any] = [Login];
-export const ALFRESCO_AUTHENTICATION: [any] = [Authentication];
+export const ALFRESCO_LOGIN_DIRECTIVES: [any] = [AlfrescoLoginComponent];
+export const ALFRESCO_AUTHENTICATION: [any] = [AlfrescoAuthenticationService];
