@@ -64,7 +64,7 @@ import {ContentActionModel} from './models/content-action.model';
             <a href="#" *ngFor="#document of folder.items" class="list-group-item clearfix">
                 
                 <!-- folder actions -->
-                <div *ngIf="document.isFolder" class="btn-group pull-right">
+                <div *ngIf="document.isFolder && folderActions.length > 0" class="btn-group pull-right">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
                           aria-haspopup="true" aria-expanded="false">
                         Actions <span class="caret"></span>
@@ -90,7 +90,7 @@ import {ContentActionModel} from './models/content-action.model';
                                 Download
                             </a>
                         </li>
-                        <li role="separator" class="divider"></li>
+                        <li *ngIf="documentActions.length > 0" role="separator" class="divider"></li>
                         <li *ngFor="#documentAction of documentActions">
                             <a href="#" (click)="executeContentAction(document, documentAction)">{{documentAction.title}}</a>
                         </li>
