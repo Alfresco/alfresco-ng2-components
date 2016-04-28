@@ -8,6 +8,7 @@ import { FolderActionList } from './src/components/folder-action-list';
 import { QuickFolderAction } from './src/components/quick-folder-action';
 import { QuickFolderActionList } from './src/components/quick-folder-action-list';
 import { FolderActionsService } from './src/services/folder-actions.service';
+import { DocumentActionsService } from './src/services/document-actions.service';
 export * from './src/components/document-list';
 export * from './src/components/document-action';
 export * from './src/components/document-action-list';
@@ -21,7 +22,7 @@ export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
 declare var _default: {
     directives: (typeof DocumentList | typeof DocumentAction | typeof DocumentActionList | typeof QuickDocumentAction | typeof QuickDocumentActionList | typeof FolderAction | typeof FolderActionList | typeof QuickFolderAction | typeof QuickFolderActionList)[];
-    providers: typeof FolderActionsService[];
+    providers: (typeof FolderActionsService | typeof DocumentActionsService)[];
 };
 export default _default;
 export declare const DOCUMENT_LIST_DIRECTIVES: [any];

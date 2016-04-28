@@ -65,6 +65,23 @@ Note the use of ```DOCUMENT_LIST_DIRECTIVES``` barrel that consolidates all the 
 It gives you access to ```<document-actions>```, ```<folder-actions>``` and many other directives.
 In addition ```DOCUMENT_LIST_PROVIDERS``` exports all primary services and providers needed for component to function.
 
+### Custom folder icon
+
+Document list element exposes ```folder-icon``` property that accepts a CSS class list value with
+```glyphicon glyphicon-folder-close``` by default.
+
+![Default folder icon](docs/assets/folder-icon-default.png)
+
+You can provide any list of classes in order to customize look and feel of the icon.
+Example below shows the use of [Font Awesome](http://fontawesome.io/) icon instead of the default one:
+
+```html
+<alfresco-document-list folder-icon="fa fa-folder-o" ...>
+</alfresco-document-list>
+```
+
+![Custom folder icon](docs/assets/folder-icon-custom.png)
+
 ### Actions
 
 Document List supports declarative actions for Documents and Folders.
@@ -179,7 +196,7 @@ Every folder action is rendered as a separate button.
 </alfresco-document-list>
 ```
 
-## Advanced usage
+## Advanced usage and customization
 
 ### Customizing default actions
 

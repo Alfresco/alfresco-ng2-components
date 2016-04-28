@@ -63,6 +63,7 @@ import {MDL} from 'ng2-alfresco-core/material';
                         [breadcrumb]="breadcrumb"
                         [navigate]="navigation"
                         [downloads]="downloads"
+                        folder-icon="fa fa-folder-o"
                         (itemClick)="onItemClick($event)">
                         <quick-folder-actions>
                             <quick-folder-action title="Delete" handler="system1"></quick-folder-action>

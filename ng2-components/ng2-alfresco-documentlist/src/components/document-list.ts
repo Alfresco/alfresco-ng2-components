@@ -31,6 +31,7 @@ import {ContentActionModel} from './../models/content-action.model';
             :host .folder-icon {
                 float: left;
                 margin-right: 10px;
+                font-size: 4em;
             }
 
             :host .file-icon {
@@ -107,7 +108,7 @@ import {ContentActionModel} from './../models/content-action.model';
                     </ul>
                 </div>
                 
-                <i *ngIf="thumbnails && document.isFolder" class="folder-icon {{folderIconClass}}"
+                <i *ngIf="thumbnails && document.isFolder" class="folder-icon {{folderIconClass || 'glyphicon glyphicon-folder-close'}}"
                     (click)="onItemClick(document, $event)">
                 </i>
                 <img *ngIf="thumbnails && !document.isFolder" class="file-icon"
@@ -130,7 +131,7 @@ export class DocumentList implements OnInit {
 
     @Input() navigate: boolean = true;
     @Input() breadcrumb: boolean = false;
-    @Input('folder-icon-class') folderIconClass: string = 'fa fa-folder-o fa-4x';
+    @Input('folder-icon') folderIconClass: string;
     @Input() thumbnails: boolean = true;
     @Input() downloads: boolean = true;
 
