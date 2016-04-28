@@ -1,0 +1,60 @@
+<html>
+<head>
+    <title>Alfresco Login Component Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+
+    <!-- 1. Load libraries -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
+
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- 2. Configure SystemJS -->
+    <script>
+        System.config({
+            map: {
+                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
+                'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
+                'ng2-translate': 'node_modules/ng2-translate',
+                'rxjs': 'node_modules/rxjs'
+            },
+            packages: {
+                app: {
+                    defaultExtension: 'js'
+                },
+                'ng2-alfresco-core': {
+                    defaultExtension: 'js'
+                },
+                'ng2-alfresco-login': {
+                    defaultExtension: 'js'
+                },
+                'ng2-translate': {
+                    defaultExtension: 'js'
+                },
+                'rxjs': {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('app/main')
+                .then(null, console.error.bind(console));
+    </script>
+</head>
+
+<!-- 3. Display the application -->
+<body>
+<my-app>Loading...</my-app>
+</body>
+</html>
