@@ -16,14 +16,13 @@
  */
 import { OnInit, EventEmitter } from 'angular2/core';
 import { DocumentActionList } from './document-action-list';
+import { DocumentActionsService } from '../services/document-actions.service';
 export declare class DocumentAction implements OnInit {
     private list;
+    private documentActions;
     title: string;
     handler: string;
     execute: EventEmitter<{}>;
-    private defaultHandlers;
-    constructor(list: DocumentActionList);
+    constructor(list: DocumentActionList, documentActions: DocumentActionsService);
     ngOnInit(): void;
-    handleStandardAction1(document: any): void;
-    handleStandardAction2(document: any): void;
 }

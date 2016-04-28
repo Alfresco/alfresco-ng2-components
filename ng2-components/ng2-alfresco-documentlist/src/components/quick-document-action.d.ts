@@ -16,15 +16,14 @@
  */
 import { OnInit, EventEmitter } from 'angular2/core';
 import { QuickDocumentActionList } from './quick-document-action-list';
+import { DocumentActionsService } from '../services/document-actions.service';
 export declare class QuickDocumentAction implements OnInit {
     private list;
+    private documentActions;
     icon: string;
     title: string;
     handler: string;
     execute: EventEmitter<{}>;
-    private defaultHandlers;
-    constructor(list: QuickDocumentActionList);
+    constructor(list: QuickDocumentActionList, documentActions: DocumentActionsService);
     ngOnInit(): void;
-    handleStandardAction1(document: any): void;
-    handleStandardAction2(document: any): void;
 }

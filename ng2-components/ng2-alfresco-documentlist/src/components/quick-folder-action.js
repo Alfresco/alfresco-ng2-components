@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', '../models/content-action.model', './quick-folder-action-list'], function(exports_1, context_1) {
+System.register(['angular2/core', '../models/content-action.model', './quick-folder-action-list', '../services/folder-actions.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['angular2/core', '../models/content-action.model', './quick-fol
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, content_action_model_1, quick_folder_action_list_1;
+    var core_1, content_action_model_1, quick_folder_action_list_1, folder_actions_service_1;
     var QuickFolderAction;
     return {
         setters:[
@@ -38,16 +38,16 @@ System.register(['angular2/core', '../models/content-action.model', './quick-fol
             },
             function (quick_folder_action_list_1_1) {
                 quick_folder_action_list_1 = quick_folder_action_list_1_1;
+            },
+            function (folder_actions_service_1_1) {
+                folder_actions_service_1 = folder_actions_service_1_1;
             }],
         execute: function() {
             QuickFolderAction = (function () {
-                function QuickFolderAction(list) {
+                function QuickFolderAction(list, folderActions) {
                     this.list = list;
+                    this.folderActions = folderActions;
                     this.execute = new core_1.EventEmitter();
-                    this.defaultHandlers = {};
-                    // todo: just for dev/demo purposes, to be replaced with real actions
-                    this.defaultHandlers['system1'] = this.handleStandardAction1;
-                    this.defaultHandlers['system2'] = this.handleStandardAction2;
                 }
                 QuickFolderAction.prototype.ngOnInit = function () {
                     var _this = this;
@@ -55,10 +55,7 @@ System.register(['angular2/core', '../models/content-action.model', './quick-fol
                     model.icon = this.icon;
                     model.title = this.title;
                     if (this.handler) {
-                        var defaultHandler = this.defaultHandlers[this.handler];
-                        if (defaultHandler) {
-                            model.handler = defaultHandler;
-                        }
+                        model.handler = this.folderActions.getHandler(this.handler);
                     }
                     else if (this.execute) {
                         model.handler = function (document) {
@@ -68,12 +65,6 @@ System.register(['angular2/core', '../models/content-action.model', './quick-fol
                         };
                     }
                     this.list.registerAction(model);
-                };
-                QuickFolderAction.prototype.handleStandardAction1 = function (document) {
-                    window.alert('quick folder action 1');
-                };
-                QuickFolderAction.prototype.handleStandardAction2 = function (document) {
-                    window.alert('quick folder action 2');
                 };
                 __decorate([
                     core_1.Input(), 
@@ -96,7 +87,7 @@ System.register(['angular2/core', '../models/content-action.model', './quick-fol
                         selector: 'quick-folder-action',
                         template: ''
                     }), 
-                    __metadata('design:paramtypes', [quick_folder_action_list_1.QuickFolderActionList])
+                    __metadata('design:paramtypes', [quick_folder_action_list_1.QuickFolderActionList, folder_actions_service_1.FolderActionsService])
                 ], QuickFolderAction);
                 return QuickFolderAction;
             }());

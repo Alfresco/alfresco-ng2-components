@@ -7,7 +7,10 @@ import {FolderAction} from './src/components/folder-action';
 import {FolderActionList} from './src/components/folder-action-list';
 import {QuickFolderAction} from './src/components/quick-folder-action';
 import {QuickFolderActionList} from './src/components/quick-folder-action-list';
+import {FolderActionsService} from './src/services/folder-actions.service';
+import {DocumentActionsService} from './src/services/document-actions.service';
 
+// components
 export * from './src/components/document-list';
 export * from './src/components/document-action';
 export * from './src/components/document-action-list';
@@ -17,6 +20,9 @@ export * from './src/components/folder-action';
 export * from './src/components/folder-action-list';
 export * from './src/components/quick-folder-action'
 export * from './src/components/quick-folder-action-list';
+// services
+export * from './src/services/folder-actions.service';
+export * from './src/services/document-actions.service';
 
 export default {
     directives: [
@@ -30,7 +36,10 @@ export default {
         QuickFolderAction,
         QuickFolderActionList
     ],
-    providers: []
+    providers: [
+        FolderActionsService,
+        DocumentActionsService
+    ]
 }
 
 export const DOCUMENT_LIST_DIRECTIVES: [any] = [
@@ -43,4 +52,9 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     FolderActionList,
     QuickFolderAction,
     QuickFolderActionList
+];
+
+export const DOCUMENT_LIST_PROVIDERS: [any] = [
+    FolderActionsService,
+    DocumentActionsService
 ];

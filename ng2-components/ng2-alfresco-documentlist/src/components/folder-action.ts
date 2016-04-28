@@ -16,8 +16,9 @@
  */
 
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
-import {ContentActionModel, ContentActionHandler} from './../models/content-action.model';
+import {ContentActionModel} from './../models/content-action.model';
 import {FolderActionList} from './folder-action-list';
+import {FolderActionsService} from '../services/folder-actions.service';
 
 @Component({
     selector: 'folder-action',
@@ -28,12 +29,9 @@ export class FolderAction implements OnInit {
     @Input() handler: string;
     @Output() execute = new EventEmitter();
 
-    private defaultHandlers: { [id: string]: ContentActionHandler; } = {};
-
-    constructor(private list: FolderActionList) {
-        // todo: just for dev/demo purposes, to be replaced with real actions
-        this.defaultHandlers['system1'] = this.handleStandardAction1;
-        this.defaultHandlers['system2'] = this.handleStandardAction2;
+    constructor(
+        private list: FolderActionList,
+        private folderActions: FolderActionsService) {
     }
 
     ngOnInit() {
@@ -41,10 +39,7 @@ export class FolderAction implements OnInit {
         model.title = this.title;
 
         if (this.handler) {
-            let defaultHandler = this.defaultHandlers[this.handler];
-            if (defaultHandler) {
-                model.handler = defaultHandler;
-            }
+            model.handler = this.folderActions.getHandler(this.handler);
         } else if (this.execute) {
             model.handler = (document: any): void => {
                 this.execute.emit({
@@ -54,13 +49,5 @@ export class FolderAction implements OnInit {
         }
 
         this.list.registerAction(model);
-    }
-
-    handleStandardAction1(document: any) {
-        window.alert('dummy folder action 1');
-    }
-
-    handleStandardAction2(document: any) {
-        window.alert('dummy folder action 2');
     }
 }

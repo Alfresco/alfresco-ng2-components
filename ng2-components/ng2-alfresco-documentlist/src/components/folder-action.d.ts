@@ -16,14 +16,13 @@
  */
 import { OnInit, EventEmitter } from 'angular2/core';
 import { FolderActionList } from './folder-action-list';
+import { FolderActionsService } from '../services/folder-actions.service';
 export declare class FolderAction implements OnInit {
     private list;
+    private folderActions;
     title: string;
     handler: string;
     execute: EventEmitter<{}>;
-    private defaultHandlers;
-    constructor(list: FolderActionList);
+    constructor(list: FolderActionList, folderActions: FolderActionsService);
     ngOnInit(): void;
-    handleStandardAction1(document: any): void;
-    handleStandardAction2(document: any): void;
 }

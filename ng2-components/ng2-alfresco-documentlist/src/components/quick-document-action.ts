@@ -16,8 +16,9 @@
  */
 
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
-import {ContentActionModel, ContentActionHandler} from '../models/content-action.model';
+import {ContentActionModel} from '../models/content-action.model';
 import {QuickDocumentActionList} from './quick-document-action-list';
+import {DocumentActionsService} from '../services/document-actions.service';
 
 @Component({
     selector: 'quick-document-action',
@@ -29,12 +30,9 @@ export class QuickDocumentAction implements OnInit {
     @Input() handler: string;
     @Output() execute = new EventEmitter();
 
-    private defaultHandlers: { [id: string]: ContentActionHandler; } = {};
-
-    constructor(private list: QuickDocumentActionList) {
-        // todo: just for dev/demo purposes, to be replaced with real actions
-        this.defaultHandlers['system1'] = this.handleStandardAction1;
-        this.defaultHandlers['system2'] = this.handleStandardAction2;
+    constructor(
+        private list: QuickDocumentActionList,
+        private documentActions: DocumentActionsService) {
     }
 
     ngOnInit() {
@@ -43,10 +41,7 @@ export class QuickDocumentAction implements OnInit {
         model.title = this.title;
 
         if (this.handler) {
-            let defaultHandler = this.defaultHandlers[this.handler];
-            if (defaultHandler) {
-                model.handler = defaultHandler;
-            }
+            model.handler = this.documentActions.getHandler(this.handler);
         } else if (this.execute) {
             model.handler = (document: any): void => {
                 this.execute.emit({
@@ -56,13 +51,5 @@ export class QuickDocumentAction implements OnInit {
         }
 
         this.list.registerAction(model);
-    }
-
-    handleStandardAction1(document: any) {
-        window.alert('quick doc action 1');
-    }
-
-    handleStandardAction2(document: any) {
-        window.alert('quick doc action 2');
     }
 }

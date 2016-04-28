@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', './../models/content-action.model', './document-action-list'], function(exports_1, context_1) {
+System.register(['angular2/core', './../models/content-action.model', './document-action-list', '../services/document-actions.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['angular2/core', './../models/content-action.model', './documen
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, content_action_model_1, document_action_list_1;
+    var core_1, content_action_model_1, document_action_list_1, document_actions_service_1;
     var DocumentAction;
     return {
         setters:[
@@ -38,27 +38,24 @@ System.register(['angular2/core', './../models/content-action.model', './documen
             },
             function (document_action_list_1_1) {
                 document_action_list_1 = document_action_list_1_1;
+            },
+            function (document_actions_service_1_1) {
+                document_actions_service_1 = document_actions_service_1_1;
             }],
         execute: function() {
             DocumentAction = (function () {
-                function DocumentAction(list) {
+                function DocumentAction(list, documentActions) {
                     this.list = list;
+                    this.documentActions = documentActions;
                     this.title = 'Action';
                     this.execute = new core_1.EventEmitter();
-                    this.defaultHandlers = {};
-                    // todo: just for dev/demo purposes, to be replaced with real actions
-                    this.defaultHandlers['system1'] = this.handleStandardAction1;
-                    this.defaultHandlers['system2'] = this.handleStandardAction2;
                 }
                 DocumentAction.prototype.ngOnInit = function () {
                     var _this = this;
                     var model = new content_action_model_1.ContentActionModel();
                     model.title = this.title;
                     if (this.handler) {
-                        var defaultHandler = this.defaultHandlers[this.handler];
-                        if (defaultHandler) {
-                            model.handler = defaultHandler;
-                        }
+                        model.handler = this.documentActions.getHandler(this.handler);
                     }
                     else if (this.execute) {
                         model.handler = function (document) {
@@ -68,12 +65,6 @@ System.register(['angular2/core', './../models/content-action.model', './documen
                         };
                     }
                     this.list.registerAction(model);
-                };
-                DocumentAction.prototype.handleStandardAction1 = function (document) {
-                    window.alert('standard action 1');
-                };
-                DocumentAction.prototype.handleStandardAction2 = function (document) {
-                    window.alert('standard action 2');
                 };
                 __decorate([
                     core_1.Input(), 
@@ -92,7 +83,7 @@ System.register(['angular2/core', './../models/content-action.model', './documen
                         selector: 'document-action',
                         template: ''
                     }), 
-                    __metadata('design:paramtypes', [document_action_list_1.DocumentActionList])
+                    __metadata('design:paramtypes', [document_action_list_1.DocumentActionList, document_actions_service_1.DocumentActionsService])
                 ], DocumentAction);
                 return DocumentAction;
             }());

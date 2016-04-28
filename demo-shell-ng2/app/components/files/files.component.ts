@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 import {Component} from 'angular2/core';
-import {DOCUMENT_LIST_DIRECTIVES} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+import {DOCUMENT_LIST_DIRECTIVES, DOCUMENT_LIST_PROVIDERS} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import {MDL} from 'ng2-alfresco-core/material';
 
 @Component({
@@ -83,7 +83,8 @@ import {MDL} from 'ng2-alfresco-core/material';
             </div>
         </div>
     `,
-    directives: [DOCUMENT_LIST_DIRECTIVES, MDL]
+    directives: [DOCUMENT_LIST_DIRECTIVES, MDL],
+    providers: [DOCUMENT_LIST_PROVIDERS]
 })
 export class FilesComponent {
     thumbnails: boolean = true;

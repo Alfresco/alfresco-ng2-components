@@ -16,15 +16,14 @@
  */
 import { OnInit, EventEmitter } from 'angular2/core';
 import { QuickFolderActionList } from './quick-folder-action-list';
+import { FolderActionsService } from '../services/folder-actions.service';
 export declare class QuickFolderAction implements OnInit {
     private list;
+    private folderActions;
     icon: string;
     title: string;
     handler: string;
     execute: EventEmitter<{}>;
-    private defaultHandlers;
-    constructor(list: QuickFolderActionList);
+    constructor(list: QuickFolderActionList, folderActions: FolderActionsService);
     ngOnInit(): void;
-    handleStandardAction1(document: any): void;
-    handleStandardAction2(document: any): void;
 }
