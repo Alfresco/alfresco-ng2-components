@@ -6,6 +6,15 @@
 npm install --save <TBD>
 ```
 
+## Build from sources
+
+Alternatively you can build component from sources with the following commands:
+
+```sh
+npm install
+npm run build
+```
+
 ## Basic usage
 
 ```html
@@ -23,12 +32,16 @@ Example of the component that declares document list and provides values for bin
 
 ```ts
 import {Component} from 'angular2/core';
-import {DOCUMENT_LIST_DIRECTIVES} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+import {
+    DOCUMENT_LIST_DIRECTIVES,
+    DOCUMENT_LIST_PROVIDERS
+} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 
 @Component({
     selector: 'my-view',
     template: '<YOUR TEMPLATE>',
-    directives: [DOCUMENT_LIST_DIRECTIVES]
+    directives: [DOCUMENT_LIST_DIRECTIVES],
+    providers: [DOCUMENT_LIST_PROVIDERS]
 })
 export class MyView {
     thumbnails: boolean = true;
@@ -50,6 +63,7 @@ export class MyView {
 
 Note the use of ```DOCUMENT_LIST_DIRECTIVES``` barrel that consolidates all the document list related directives together.
 It gives you access to ```<document-actions>```, ```<folder-actions>``` and many other directives.
+In addition ```DOCUMENT_LIST_PROVIDERS``` exports all primary services and providers needed for component to function.
 
 ### Actions
 
@@ -78,7 +92,27 @@ export class MyView {
 }
 ```
 
+All document actions are rendered as a dropdown menu as on the picture below:
+
 ![Document Actions](docs/assets/document-actions.png)
+
+#### Quick document actions
+
+It is also possible to display most frequent actions within a separate ```<quick-documents>```
+buttons panel:
+
+```html
+<alfresco-document-list ...>
+    <quick-document-actions>
+        <quick-document-action icon="glyphicon glyphicon-pushpin" handler="system1"></quick-document-action>
+    </quick-document-actions>
+</alfresco-document-list>
+```
+
+Quick actions provide same support for system and custom handlers.
+In addition it is possible setting button icon (css class list), text of the label or both.
+
+![Quick document Actions](docs/assets/quick-document-actions.png)
 
 #### Folder actions
 
@@ -103,9 +137,50 @@ export class MyView {
 
 ![Folder Actions](docs/assets/folder-actions.png)
 
-## Build from sources
+#### Quick folder actions
 
-```sh
-npm install
-npm run build
+Quick folder actions have the same behavior as quick document actions.
+You can use custom or system handler and provide icon, text or both.
+Every folder action is rendered as a separate button.
+
+```html
+<alfresco-document-list ...>
+    <quick-folder-actions>
+        <quick-folder-action title="Delete" handler="system1"></quick-folder-action>
+    </quick-folder-actions>
+</alfresco-document-list>
 ```
+
+![Quick folder Actions](docs/assets/quick-folder-actions.png)
+
+#### Using all actions at the same time
+
+```html
+<alfresco-document-list #list
+    [thumbnails]="thumbnails"
+    [breadcrumb]="breadcrumb"
+    [navigate]="navigation"
+    [downloads]="downloads"
+    (itemClick)="onItemClick($event)">
+    <quick-folder-actions>
+        <quick-folder-action title="Delete" handler="system1"></quick-folder-action>
+    </quick-folder-actions>
+    <folder-actions>
+        <folder-action title="Default folder action 1" handler="system1"></folder-action>
+        <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
+    </folder-actions>
+    <quick-document-actions>
+        <quick-document-action icon="glyphicon glyphicon-pushpin" handler="system1"></quick-document-action>
+    </quick-document-actions>
+    <document-actions>
+        <document-action title="System action" handler="system2"></document-action>
+        <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
+    </document-actions>
+</alfresco-document-list>
+```
+
+## Advanced usage
+
+### Customizing default actions
+
+TBD
