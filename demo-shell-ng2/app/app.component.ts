@@ -16,10 +16,10 @@
  */
 import {Component} from 'angular2/core';
 import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {Authentication} from 'ng2-alfresco-login/ng2-alfresco-login';
+import {AlfrescoAuthenticationService} from 'ng2-alfresco-login/ng2-alfresco-login';
 import {MDL} from 'ng2-alfresco-core/material';
 import {FilesComponent} from './components/files/files.component';
-import {Login} from 'ng2-alfresco-login/ng2-alfresco-login';
+import {AlfrescoLoginComponent} from 'ng2-alfresco-login/ng2-alfresco-login';
 import {AuthRouterOutlet} from './components/router/AuthRouterOutlet';
 import {UploaderComponent} from './components/uploader/uploader.component';
 import {AlfrescoSettingsService} from 'ng2-alfresco-core/services';
@@ -37,12 +37,12 @@ declare var document: any;
     {path: '/home', name: 'Home', component: FilesComponent},
     {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
     {path: '/uploader', name: 'Uploader', component: UploaderComponent},
-    {path: '/login', name: 'Login', component: Login}
+    {path: '/login', name: 'Login', component: AlfrescoLoginComponent}
 ])
 export class AppComponent {
     translate: TranslateService;
 
-    constructor(public auth:Authentication,
+    constructor(public auth:AlfrescoAuthenticationService,
                 public router:Router,
                 translate: TranslateService,
                 alfrescoSettingsService:AlfrescoSettingsService) {
