@@ -2,14 +2,14 @@
 
 Components included:
 
-* Login Component
-* Alfresco Authentication Service (TBD)
+* Alfresco Login Component
+* Alfresco Authentication Service
 
 ### Custom Login Component
 
 ```ts
 import {Component} from 'angular2/core';
-import {Login} from 'ng2-alfresco-login/ng2-alfresco-login';
+import {AlfrescoLoginComponent} from 'ng2-alfresco-login/ng2-alfresco-login';
 
 @Component({
     selector: 'my-login',
