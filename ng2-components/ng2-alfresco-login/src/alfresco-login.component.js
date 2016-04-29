@@ -55,6 +55,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                  */
                 AlfrescoLoginComponent.prototype.onSubmit = function (value, event) {
                     var _this = this;
+                    this.error = false;
                     if (event) {
                         event.preventDefault();
                     }

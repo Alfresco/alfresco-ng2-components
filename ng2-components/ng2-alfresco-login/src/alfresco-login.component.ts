@@ -63,6 +63,7 @@ export class AlfrescoLoginComponent {
      * @param event
      */
     onSubmit(value:any, event) {
+        this.error = false;
         if (event) {
             event.preventDefault();
         }
