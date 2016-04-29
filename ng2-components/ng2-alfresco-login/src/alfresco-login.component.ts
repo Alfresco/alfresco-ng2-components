@@ -72,9 +72,10 @@ export class AlfrescoLoginComponent {
             .subscribe(
             (token:any) => {
                 try {
-                    this.router.navigate(['Home']);
-                } catch (Error) {
                     this.success = true;
+                    this.router.navigate(['Home']);
+                } catch (error) {
+                    console.error(error.message);
                 }
 
             },

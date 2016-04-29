@@ -63,10 +63,11 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                     this.auth.login(this.method, value.username, value.password)
                         .subscribe(function (token) {
                         try {
+                            _this.success = true;
                             _this.router.navigate(['Home']);
                         }
-                        catch (Error) {
-                            _this.success = true;
+                        catch (error) {
+                            console.error(error.message);
                         }
                     }, function () {
                         _this.error = true;
