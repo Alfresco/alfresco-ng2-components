@@ -14,18 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { OnInit, EventEmitter } from 'angular2/core';
+import { OnInit, EventEmitter, AfterViewChecked } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
 import { FolderEntity } from './../core/entities/folder.entity';
 import { DocumentEntity } from './../core/entities/document.entity';
 import { ContentActionModel } from './../models/content-action.model';
-export declare class DocumentList implements OnInit {
+export declare class DocumentList implements OnInit, AfterViewChecked {
     private _alfrescoService;
     navigate: boolean;
     breadcrumb: boolean;
-    folderIconClass: string;
+    folderIcon: string;
     thumbnails: boolean;
-    downloads: boolean;
     itemClick: EventEmitter<any>;
     rootFolder: {
         name: string;
@@ -42,6 +41,7 @@ export declare class DocumentList implements OnInit {
     canNavigateParent(): boolean;
     constructor(_alfrescoService: AlfrescoService);
     ngOnInit(): void;
+    ngAfterViewChecked(): void;
     onNavigateParentClick($event: any): void;
     onItemClick(item: DocumentEntity, $event: any): void;
     goToRoute(r: any, $event: any): void;

@@ -14,19 +14,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
+
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    AfterViewChecked
+} from 'angular2/core';
 import {AlfrescoService} from './../services/alfresco.service';
 import {FolderEntity} from './../core/entities/folder.entity';
 import {DocumentEntity} from './../core/entities/document.entity';
 import {ContentActionModel} from './../models/content-action.model';
 
+declare var componentHandler;
+
 @Component({
     selector: 'alfresco-document-list',
     styles: [
         `
-            :host .breadcrumb {
-                margin-bottom: 4px;
+            :host .full-width { width: 100%; }
+            
+            :host .folder-thumbnail {
+                font-size: 48px;
+                cursor: pointer;
             }
+            
+            :host .document-thumbnail {
+                width: 48px;
+                height: 48px;
+                cursor: pointer;
+            }
+            
+            :host .content-header {
+                font-size: 15px;
+            }
+           
+            :host .content-header:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+            
+            :host .parent-folder-link { cursor: pointer; }
+            :host .parent-folder-link > td { text-align: left; }
+            :host .folder-header-cell { cursor: pointer; }
+            
+            :host .breadcrumb { margin-bottom: 4px; }
 
             :host .folder-icon {
                 float: left;
@@ -58,82 +92,114 @@ import {ContentActionModel} from './../models/content-action.model';
                 <a *ngSwitchDefault href="#" (click)="goToRoute(r, $event)">{{r.name}}</a>
             </li>
         </ol>
-        <div *ngIf="folder" class="list-group">
-            <a href="#" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)" class="list-group-item">
-                <span class="glyphicon glyphicon-level-up"></span> ...
-            </a>
-            <a href="#" *ngFor="#document of folder.items" class="list-group-item clearfix">
+        <table *ngIf="folder" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+            <thead>
+                <tr>
+                    <!-- Thumbnails -->
+                    <th *ngIf="thumbnails"></th>
+                    <!-- Name -->
+                    <th class="mdl-data-table__cell--non-numeric full-width">Name</th>
+                    <!-- Actions -->
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="parent-folder-link" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)">
+                    <td colspan="3">
+                        <button class="mdl-button mdl-js-button mdl-button--icon"
+                                (click)="onNavigateParentClick($event)">
+                            <i class="material-icons">arrow_upward</i>
+                        </button>
+                    </td>
+                </tr>
                 
-                <!-- folder actions -->
-                <div *ngIf="document.isFolder && folderActions.length > 0" class="btn-group pull-right">
-                    <button type="button" class="btn btn-default"
-                            *ngFor="#qfa of quickFolderActions" (click)="executeContentAction(document, qfa)">
-                        <span *ngIf="qfa.icon" class="{{qfa.icon}}"></span>
-                        <span *ngIf="qfa.title">{{qfa.title}}</span>
-                    </button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
-                          aria-haspopup="true" aria-expanded="false">
-                        Actions <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li *ngFor="#folderAction of folderActions">
-                            <a href="#" (click)="executeContentAction(document, folderAction)">{{folderAction.title}}</a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- document actions -->
-                <div *ngIf="!document.isFolder" class="btn-group pull-right">
-                    <button type="button" class="btn btn-default"
-                            *ngFor="#qda of quickDocumentActions" (click)="executeContentAction(document, qda)">
-                        <span *ngIf="qda.icon" class="{{qda.icon}}"></span>
-                        <span *ngIf="qda.title">{{qda.title}}</span>
-                    </button>
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
-                          aria-haspopup="true" aria-expanded="false">
-                        Actions <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a *ngIf="downloads && !document.isFolder" 
-                                href="{{getContentUrl(document)}}" 
-                                download target="_blank">
-                                Download
-                            </a>
-                        </li>
-                        <li *ngIf="documentActions.length > 0" role="separator" class="divider"></li>
-                        <li *ngFor="#documentAction of documentActions">
-                            <a href="#" (click)="executeContentAction(document, documentAction)">{{documentAction.title}}</a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <i *ngIf="thumbnails && document.isFolder" class="folder-icon {{folderIconClass || 'glyphicon glyphicon-folder-close'}}"
-                    (click)="onItemClick(document, $event)">
-                </i>
-                <img *ngIf="thumbnails && !document.isFolder" class="file-icon"
-                    alt=""
-                    src="{{getDocumentThumbnailUrl(document)}}"
-                    (click)="onItemClick(document, $event)">
-                <h1 class="list-group-item-heading document-header" (click)="onItemClick(document, $event)" >
-                    {{document.displayName}}
-                </h1>
-                <p class="list-group-item-text">{{document.description}}</p>
-                <small>
-                    Modified {{document.modifiedOn}} by {{document.modifiedBy}}
-                </small>
-            </a>
-        </div>
+                <tr *ngFor="#content of folder.items; #idx = index">
+                    <!-- Thumbnails: folder -->
+                    <td *ngIf="thumbnails && content.isFolder">
+                        <i class="material-icons folder-thumbnail" 
+                            (click)="onItemClick(content, $event)">{{folderIcon || 'folder_open'}}</i>
+                    </td>
+                    
+                     <!-- Thumbnails: document -->
+                    <td *ngIf="thumbnails && !content.isFolder">
+                        <img *ngIf="thumbnails" class="document-thumbnail"
+                             alt=""
+                             src="{{getDocumentThumbnailUrl(content)}}"
+                             (click)="onItemClick(content, $event)">
+                    </td>
+                    
+                    <!-- Name: folder -->
+                    <td *ngIf="content.isFolder" class="mdl-data-table__cell--non-numeric folder-header-cell" 
+                        (click)="onItemClick(content, $event)">
+                        <span class="content-header">
+                            {{content.displayName}}
+                        </span>
+                    </td>
+                    
+                    <!-- Name: document -->
+                    <td *ngIf="!content.isFolder" class="mdl-data-table__cell--non-numeric" >
+                        <span class="content-header" (click)="onItemClick(content, $event)">
+                            {{content.displayName}}
+                        </span>
+                    </td>
+                    
+                    
+                    <!-- Actions: Folder cell template -->
+                    <td *ngIf="content.isFolder">
+                        <!-- quick action buttons -->
+                        <button class="mdl-button mdl-js-button mdl-button--icon"
+                                *ngFor="#action of quickFolderActions"
+                                (click)="executeContentAction(content, action)">
+                            <i class="material-icons">{{action.icon}}</i>
+                        </button>
+                        
+                        <!-- action menu -->
+                        <button [id]="'folder_action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">more_vert</i>
+                        </button>
+                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                            [attr.for]="'folder_action_menu_' + idx">
+                            <li class="mdl-menu__item"
+                                *ngFor="#action of folderActions"
+                                (click)="executeContentAction(content, action)">
+                                {{action.title}}
+                            </li>
+                        </ul>
+                    </td>
+                    <!-- Actions: Document cell template -->
+                    <td *ngIf="!content.isFolder">
+                        <!-- quick action buttons -->
+                        <button class="mdl-button mdl-js-button mdl-button--icon"
+                                *ngFor="#action of quickDocumentActions"
+                                (click)="executeContentAction(content, action)">
+                            <i class="material-icons">{{action.icon}}</i>
+                        </button>
+                        
+                        <!-- action menu -->
+                        <button [id]="'document_action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
+                            <i class="material-icons">more_vert</i>
+                        </button>
+                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                            [attr.for]="'document_action_menu_' + idx">
+                            <li class="mdl-menu__item"
+                                *ngFor="#action of documentActions"
+                                (click)="executeContentAction(content, action)">
+                                {{action.title}}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     `,
     providers: [AlfrescoService]
 })
-export class DocumentList implements OnInit {
+export class DocumentList implements OnInit, AfterViewChecked {
 
     @Input() navigate: boolean = true;
     @Input() breadcrumb: boolean = false;
-    @Input('folder-icon') folderIconClass: string;
+    @Input('folder-icon') folderIcon: string;
     @Input() thumbnails: boolean = true;
-    @Input() downloads: boolean = true;
 
     @Output() itemClick: EventEmitter<any> = new EventEmitter();
 
@@ -165,6 +231,13 @@ export class DocumentList implements OnInit {
     ngOnInit() {
         this.route.push(this.rootFolder);
         this.displayFolderContent(this.rootFolder.path);
+    }
+
+    ngAfterViewChecked() {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
     }
 
     onNavigateParentClick($event) {

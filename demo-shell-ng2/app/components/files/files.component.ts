@@ -43,12 +43,6 @@ import {MDL} from 'ng2-alfresco-core/material';
                                 <span class="mdl-checkbox__label">Navigation</span>
                             </label>
                         </li>
-                        <li>
-                            <label mdl class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-4">
-                                <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input" [(ngModel)]="downloads">
-                                <span class="mdl-checkbox__label">Downloads</span>
-                            </label>
-                        </li>
                     </ul>
                     <hr>
                     <ul class="list-unstyled" style="font-size: 10px">
@@ -62,18 +56,18 @@ import {MDL} from 'ng2-alfresco-core/material';
                         [thumbnails]="thumbnails"
                         [breadcrumb]="breadcrumb"
                         [navigate]="navigation"
-                        [downloads]="downloads"
-                        folder-icon="fa fa-folder-o"
+                        folder-icon=""
                         (itemClick)="onItemClick($event)">
                         <quick-folder-actions>
-                            <quick-folder-action title="Delete" handler="system1"></quick-folder-action>
+                            <quick-folder-action icon="delete" title="Delete" handler="system1"></quick-folder-action>
                         </quick-folder-actions>
                         <folder-actions>
                             <folder-action title="Default folder action 1" handler="system1"></folder-action>
                             <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
                         </folder-actions>
                         <quick-document-actions>
-                            <quick-document-action icon="glyphicon glyphicon-pushpin" handler="system1"></quick-document-action>
+                            <quick-document-action icon="extension" handler="system1"></quick-document-action>
+                            <quick-document-action icon="thumb_up" handler="system2"></quick-document-action>
                         </quick-document-actions>
                         <document-actions>
                             <document-action title="System action" handler="system2"></document-action>
@@ -91,7 +85,6 @@ export class FilesComponent {
     thumbnails: boolean = true;
     breadcrumb: boolean = false;
     navigation: boolean = true;
-    downloads: boolean = true;
 
     events: any[] = [];
 
