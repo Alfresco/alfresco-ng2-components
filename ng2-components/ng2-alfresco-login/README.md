@@ -22,6 +22,19 @@ export class MyLoginComponent {
 ```
 
 ### Build
-
+```sh
 npm install
-npm run build
+npm npm run build
+```
+
+### Test
+```sh
+npm test
+```
+
+### Demo
+```sh
+cd demo
+npm install
+npm start
+```
