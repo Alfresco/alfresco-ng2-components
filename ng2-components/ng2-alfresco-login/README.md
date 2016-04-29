@@ -45,8 +45,18 @@ npm test
 ```sh
 cd ng2-components/ng2-alfresco-core
 npm link
-cd ../../demo-shell-ng
+cd ../ng2-alfresco-login/demo
 npm link ng2-alfresco-core
+```
+
+
+*ng2-alfresco-login component:*
+
+```sh
+cd ng2-components/ng2-alfresco-login
+npm link
+cd ../ng2-alfresco-login/demo
+npm link ng2-alfresco-login
 ```
 
 **Start the demo**
