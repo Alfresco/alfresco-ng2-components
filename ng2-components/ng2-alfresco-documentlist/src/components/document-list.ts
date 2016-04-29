@@ -60,7 +60,7 @@ import {ContentActionModel} from './../models/content-action.model';
         </ol>
         <div *ngIf="folder" class="list-group">
             <a href="#" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)" class="list-group-item">
-                <i class="fa fa-level-up"></i> ...
+                <span class="glyphicon glyphicon-level-up"></span> ...
             </a>
             <a href="#" *ngFor="#document of folder.items" class="list-group-item clearfix">
                 
