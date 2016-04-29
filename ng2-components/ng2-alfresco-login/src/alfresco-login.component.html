@@ -26,6 +26,7 @@
         <div class="mdl-card__actions mdl-card--border">
             <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" [disabled]="!form.valid">{{'login-button' | translate }}</button>
             <div *ngIf="error" class="mdl-card__supporting-text" style="color: red;">{{'login-error-message' | translate }}</div>
+            <div *ngIf="success" class="mdl-card__supporting-text" style="color: blue;">{{'login-success-message' | translate }}</div>
         </div>
         <div class="mdl-card__menu">
             <div class="mdl-spinner mdl-js-spinner"></div>

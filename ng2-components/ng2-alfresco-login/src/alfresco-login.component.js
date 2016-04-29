@@ -42,6 +42,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                     this.router = router;
                     this.method = 'GET';
                     this.error = false;
+                    this.success = false;
                     this.form = fb.group({
                         username: ['', common_1.Validators.compose([common_1.Validators.required, common_1.Validators.minLength(4)])],
                         password: ['', common_1.Validators.required]
@@ -60,8 +61,16 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                         event.preventDefault();
                     }
                     this.auth.login(this.method, value.username, value.password)
-                        .subscribe(function (token) { return _this.router.navigate(['Home']); }, function () {
+                        .subscribe(function (token) {
+                        try {
+                            _this.router.navigate(['Home']);
+                        }
+                        catch (Error) {
+                            _this.success = true;
+                        }
+                    }, function () {
                         _this.error = true;
+                        _this.success = false;
                     });
                 };
                 /**

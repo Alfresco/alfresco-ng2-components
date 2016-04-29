@@ -9,6 +9,7 @@ export declare class AlfrescoLoginComponent {
     translate: TranslateService;
     form: ControlGroup;
     error: boolean;
+    success: boolean;
     /**
      * Constructor
      * @param fb

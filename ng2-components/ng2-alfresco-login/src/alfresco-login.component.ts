@@ -37,6 +37,7 @@ export class AlfrescoLoginComponent {
 
     form:ControlGroup;
     error:boolean = false;
+    success:boolean = false;
 
     /**
      * Constructor
@@ -69,9 +70,17 @@ export class AlfrescoLoginComponent {
         }
         this.auth.login(this.method, value.username, value.password)
             .subscribe(
-            (token:any) => this.router.navigate(['Home']),
+            (token:any) => {
+                try {
+                    this.router.navigate(['Home']);
+                } catch (Error) {
+                    this.success = true;
+                }
+
+            },
             () => {
                 this.error = true;
+                this.success = false;
             }
         );
     }
