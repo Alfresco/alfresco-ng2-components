@@ -1,12 +1,10 @@
 import { Observable } from 'rxjs/Rx';
 import { Http } from 'angular2/http';
-import { AlfrescoSettingsService } from '../../ng2-alfresco-core/services';
 /**
  * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
  */
 export declare class AlfrescoAuthenticationService {
     http: Http;
-    private settings;
     token: string;
     private _host;
     private _baseUrl;
@@ -14,7 +12,7 @@ export declare class AlfrescoAuthenticationService {
      * Constructor
      * @param http
      */
-    constructor(http: Http, settings: AlfrescoSettingsService);
+    constructor(http: Http);
     /**
      * The method return tru if the user is logged in
      * @returns {boolean}

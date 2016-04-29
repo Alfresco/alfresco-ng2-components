@@ -10,9 +10,15 @@
         "noImplicitAny": false,
         "declaration": true
     },
+    "files":[
+        "src/alfresco-login.component.ts",
+        "src/alfresco-login.component.spec.ts",
+        "src/alfresco-authentication.service.ts",
+        "src/alfresco-authentication.service.spec.ts"
+    ],
     "exclude": [
-        "node_modules",
-        "typings/main",
-        "typings/main.d.ts"
+        "**/node_modules",
+        "**/typings/main",
+        "**/typings/main.d.ts"
     ]
 }

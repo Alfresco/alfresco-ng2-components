@@ -24,6 +24,7 @@ import { RootRouter } from 'angular2/src/router/router';
 import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from 'angular2/router';
 import { SpyLocation } from 'angular2/src/mock/location_mock';
 import {dispatchEvent} from 'angular2/src/testing/utils';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 
 class AuthenticationMock {
     public mockName:string = 'Mocked Service';
@@ -41,6 +42,16 @@ class AuthenticationMock {
     }
 }
 
+class TranslationMock {
+    setDefaultLang() {
+
+    }
+
+    use() {
+
+    }
+}
+
 describe('AlfrescoLogin', () => {
     let authService, location, router;
 
@@ -54,7 +65,8 @@ describe('AlfrescoLogin', () => {
             RouteRegistry,
             provide(Location, {useClass: SpyLocation}),
             provide(ROUTER_PRIMARY_COMPONENT, {useValue: AlfrescoLoginComponent}),
-            provide(Router, {useClass: RootRouter})
+            provide(Router, {useClass: RootRouter}),
+            provide(TranslateService, {useClass: TranslationMock})
         ];
     });
 
@@ -63,7 +75,7 @@ describe('AlfrescoLogin', () => {
         location = l;
     }));
 
-    it('should render `Login` form with input fields user and password with default value', injectAsync([TestComponentBuilder, AlfrescoAuthenticationService, Router], (tcb:TestComponentBuilder, authService:AlfrescoAuthenticationService, router:Router) => {
+    it('should render `Login` form with input fields user and password with default value', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {
@@ -77,7 +89,7 @@ describe('AlfrescoLogin', () => {
     }));
 
 
-    it('should render the new values after change the user and password values', injectAsync([TestComponentBuilder, AlfrescoAuthenticationService, Router], (tcb:TestComponentBuilder, authService:AlfrescoAuthenticationService, router:Router) => {
+    it('should render the new values after change the user and password values', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {
@@ -94,7 +106,7 @@ describe('AlfrescoLogin', () => {
             });
     }));
 
-    it('should navigate to Home route after the login OK ', injectAsync([TestComponentBuilder, AlfrescoAuthenticationService, Router], (tcb:TestComponentBuilder, authService:AlfrescoAuthenticationService, router:Router) => {
+    it('should navigate to Home route after the login OK ', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {
@@ -115,7 +127,7 @@ describe('AlfrescoLogin', () => {
             });
     }));
 
-    it('should return error with a wrong username ', injectAsync([TestComponentBuilder, AlfrescoAuthenticationService, Router], (tcb:TestComponentBuilder, authService:AlfrescoAuthenticationService, router:Router) => {
+    it('should return error with a wrong username ', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {
@@ -134,7 +146,7 @@ describe('AlfrescoLogin', () => {
             });
     }));
 
-    it('should return error with a wrong password ', injectAsync([TestComponentBuilder, AlfrescoAuthenticationService, Router], (tcb:TestComponentBuilder, authService:AlfrescoAuthenticationService, router:Router) => {
+    it('should return error with a wrong password ', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {
@@ -153,7 +165,7 @@ describe('AlfrescoLogin', () => {
             });
     }));
 
-    it('should return error with a wrong username and password ', injectAsync([TestComponentBuilder, AlfrescoAuthenticationService, Router], (tcb:TestComponentBuilder, authService:AlfrescoAuthenticationService, router:Router) => {
+    it('should return error with a wrong username and password ', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {

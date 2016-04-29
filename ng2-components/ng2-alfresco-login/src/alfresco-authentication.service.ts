@@ -17,8 +17,6 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Rx';
 import {Http, Headers, URLSearchParams, Response} from 'angular2/http';
-import {AlfrescoSettingsService} from '../../ng2-alfresco-core/services';
-
 
 declare let xml2json:any;
 
@@ -36,10 +34,8 @@ export class AlfrescoAuthenticationService {
      * Constructor
      * @param http
      */
-    constructor(public http:Http,
-                private settings: AlfrescoSettingsService) {
+    constructor(public http:Http) {
         this.token = localStorage.getItem('token');
-        this._host = settings.host;
     }
     /**
      * The method return tru if the user is logged in
