@@ -33,6 +33,24 @@ npm test
 ```
 
 ### Demo
+
+## Configuring development environment
+
+*All scripts assume you are at the project root folder*
+
+**Install symlinks for Alfresco components**
+
+*ng2-alfresco-core:*
+
+```sh
+cd ng2-components/ng2-alfresco-core
+npm link
+cd ../../demo-shell-ng
+npm link ng2-alfresco-core
+```
+
+**Start the demo**
+
 ```sh
 cd demo
 npm install
