@@ -67,8 +67,8 @@ In addition ```DOCUMENT_LIST_PROVIDERS``` exports all primary services and provi
 
 ### Custom folder icon
 
-Document list element exposes ```folder-icon``` property that accepts a CSS class list value with
-```glyphicon glyphicon-folder-close``` by default.
+Document list element exposes `folder-icon` property that accepts a CSS class list value with
+[folder_open](https://design.google.com/icons/#ic_folder_open) by default.
 
 ![Default folder icon](docs/assets/folder-icon-default.png)
 
@@ -76,7 +76,7 @@ You can provide any list of classes in order to customize look and feel of the i
 Example below shows the use of [Font Awesome](http://fontawesome.io/) icon instead of the default one:
 
 ```html
-<alfresco-document-list folder-icon="fa fa-folder-o" ...>
+<alfresco-document-list folder-icon="folder_special" ...>
 </alfresco-document-list>
 ```
 
@@ -115,13 +115,14 @@ All document actions are rendered as a dropdown menu as on the picture below:
 
 #### Quick document actions
 
-It is also possible to display most frequent actions within a separate ```<quick-documents>```
+It is also possible to display most frequent actions within a separate `<quick-documents>`
 buttons panel:
 
 ```html
 <alfresco-document-list ...>
     <quick-document-actions>
-        <quick-document-action icon="glyphicon glyphicon-pushpin" handler="system1"></quick-document-action>
+        <quick-document-action icon="extension" handler="system1"></quick-document-action>
+        <quick-document-action icon="thumb_up" handler="system2"></quick-document-action>
     </quick-document-actions>
 </alfresco-document-list>
 ```
@@ -157,13 +158,13 @@ export class MyView {
 #### Quick folder actions
 
 Quick folder actions have the same behavior as quick document actions.
-You can use custom or system handler and provide icon, text or both.
+You can use custom or system handler, provide icon and title.
 Every folder action is rendered as a separate button.
 
 ```html
 <alfresco-document-list ...>
     <quick-folder-actions>
-        <quick-folder-action title="Delete" handler="system1"></quick-folder-action>
+        <quick-folder-action icon="delete" title="Delete" handler="system1"></quick-folder-action>
     </quick-folder-actions>
 </alfresco-document-list>
 ```
