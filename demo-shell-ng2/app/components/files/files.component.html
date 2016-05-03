@@ -1,0 +1,56 @@
+<div class="container-fluid p-10">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="list-unstyled">
+                <li>
+                    <label mdl class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                        <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" [(ngModel)]="thumbnails">
+                        <span class="mdl-checkbox__label">Thumbnails</span>
+                    </label>
+                </li>
+                <li>
+                    <label mdl class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2">
+                        <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input" [(ngModel)]="breadcrumb">
+                        <span class="mdl-checkbox__label">Breadcrumb</span>
+                    </label>
+                </li>
+                <li>
+                    <label mdl class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-3">
+                        <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input" [(ngModel)]="navigation">
+                        <span class="mdl-checkbox__label">Navigation</span>
+                    </label>
+                </li>
+            </ul>
+            <hr>
+            <ul class="list-unstyled" style="font-size: 10px">
+                <li *ngFor="#event of events">
+                    <strong>{{event.name}}</strong>: {{event.value.displayName}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <alfresco-document-list #list
+                                    [thumbnails]="thumbnails"
+                                    [breadcrumb]="breadcrumb"
+                                    [navigate]="navigation"
+                                    folder-icon=""
+                                    (itemClick)="onItemClick($event)">
+                <quick-folder-actions>
+                    <quick-folder-action icon="delete" title="Delete" handler="system1"></quick-folder-action>
+                </quick-folder-actions>
+                <folder-actions>
+                    <folder-action title="Default folder action 1" handler="system1"></folder-action>
+                    <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
+                </folder-actions>
+                <quick-document-actions>
+                    <quick-document-action icon="extension" handler="system1"></quick-document-action>
+                    <quick-document-action icon="thumb_up" handler="system2"></quick-document-action>
+                </quick-document-actions>
+                <document-actions>
+                    <document-action title="System action" handler="system2"></document-action>
+                    <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
+                </document-actions>
+            </alfresco-document-list>
+        </div>
+    </div>
+</div>
