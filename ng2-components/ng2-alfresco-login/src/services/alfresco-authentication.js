@@ -137,4 +137,4 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
         }
     }
 });
-//# sourceMappingURL=alfresco-authentication.service.js.map
+//# sourceMappingURL=alfresco-authentication.js.map

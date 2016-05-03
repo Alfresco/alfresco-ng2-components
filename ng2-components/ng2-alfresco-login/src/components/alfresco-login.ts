@@ -17,7 +17,7 @@
 import {Component, Input} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
-import {AlfrescoAuthenticationService} from './alfresco-authentication.service';
+import {AlfrescoAuthenticationService} from '../services/alfresco-authentication';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 declare let componentHandler;
 declare let __moduleName:string;
@@ -26,8 +26,8 @@ declare let __moduleName:string;
     selector: 'alfresco-login',
     moduleId: __moduleName,
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
-    templateUrl: './alfresco-login.component.html',
-    styleUrls: ['./alfresco-login.component.css'],
+    templateUrl: './alfresco-login.html',
+    styleUrls: ['./alfresco-login.css'],
     pipes: [TranslatePipe]
 
 })

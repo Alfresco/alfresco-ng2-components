@@ -17,9 +17,9 @@
 import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
 import {it, describe, expect, inject, injectAsync, beforeEach, beforeEachProviders, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
 import {Component, provide, Injector} from 'angular2/core';
-import {AlfrescoLoginComponent} from './alfresco-login.component';
+import {AlfrescoLoginComponent} from './alfresco-login';
 import {Observable} from 'rxjs/Rx';
-import {AlfrescoAuthenticationService} from './alfresco-authentication.service';
+import {AlfrescoAuthenticationService} from '../services/alfresco-authentication';
 import { RootRouter } from 'angular2/src/router/router';
 import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from 'angular2/router';
 import { SpyLocation } from 'angular2/src/mock/location_mock';

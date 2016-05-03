@@ -1,6 +1,6 @@
 import { Router } from 'angular2/router';
 import { ControlGroup, FormBuilder } from 'angular2/common';
-import { AlfrescoAuthenticationService } from './alfresco-authentication.service';
+import { AlfrescoAuthenticationService } from '../services/alfresco-authentication';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 export declare class AlfrescoLoginComponent {
     auth: AlfrescoAuthenticationService;

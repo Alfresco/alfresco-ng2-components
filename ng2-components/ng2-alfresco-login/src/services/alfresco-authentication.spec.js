@@ -1,7 +1,7 @@
-System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2/http/testing', './alfresco-authentication.service'], function(exports_1, context_1) {
+System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2/http/testing', './alfresco-authentication'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var testing_1, core_1, http_1, testing_2, alfresco_authentication_service_1;
+    var testing_1, core_1, http_1, testing_2, alfresco_authentication_1;
     return {
         setters:[
             function (testing_1_1) {
@@ -16,8 +16,8 @@ System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2
             function (testing_2_1) {
                 testing_2 = testing_2_1;
             },
-            function (alfresco_authentication_service_1_1) {
-                alfresco_authentication_service_1 = alfresco_authentication_service_1_1;
+            function (alfresco_authentication_1_1) {
+                alfresco_authentication_1 = alfresco_authentication_1_1;
             }],
         execute: function() {
             testing_1.describe('AlfrescoAuthentication', function () {
@@ -27,7 +27,7 @@ System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2
                         http_1.HTTP_PROVIDERS,
                         testing_2.MockBackend,
                         core_1.provide(http_1.XHRBackend, { useClass: testing_2.MockBackend }),
-                        alfresco_authentication_service_1.AlfrescoAuthenticationService
+                        alfresco_authentication_1.AlfrescoAuthenticationService
                     ]);
                     var store = {};
                     spyOn(localStorage, 'getItem').and.callFake(function (key) {
@@ -49,7 +49,7 @@ System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2
                     mockBackend = injector.get(testing_2.MockBackend);
                     backend = injector.get(http_1.XHRBackend);
                     httpService = injector.get(http_1.Http);
-                    service = injector.get(alfresco_authentication_service_1.AlfrescoAuthenticationService);
+                    service = injector.get(alfresco_authentication_1.AlfrescoAuthenticationService);
                 });
                 testing_1.it('should return true and token if the user is logged in', function () {
                     service.saveJwt('fake-local-token');
@@ -88,4 +88,4 @@ System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2
         }
     }
 });
-//# sourceMappingURL=alfresco-authentication.service.spec.js.map
+//# sourceMappingURL=alfresco-authentication.spec.js.map

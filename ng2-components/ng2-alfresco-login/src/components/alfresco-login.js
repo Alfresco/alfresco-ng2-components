@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfresco-authentication.service', 'ng2-translate/ng2-translate'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/common', '../services/alfresco-authentication', 'ng2-translate/ng2-translate'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, common_1, alfresco_authentication_service_1, ng2_translate_1;
+    var core_1, router_1, common_1, alfresco_authentication_1, ng2_translate_1;
     var AlfrescoLoginComponent;
     return {
         setters:[
@@ -23,8 +23,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
             function (common_1_1) {
                 common_1 = common_1_1;
             },
-            function (alfresco_authentication_service_1_1) {
-                alfresco_authentication_service_1 = alfresco_authentication_service_1_1;
+            function (alfresco_authentication_1_1) {
+                alfresco_authentication_1 = alfresco_authentication_1_1;
             },
             function (ng2_translate_1_1) {
                 ng2_translate_1 = ng2_translate_1_1;
@@ -110,11 +110,11 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
                         selector: 'alfresco-login',
                         moduleId: __moduleName,
                         directives: [router_1.ROUTER_DIRECTIVES, common_1.FORM_DIRECTIVES],
-                        templateUrl: './alfresco-login.component.html',
-                        styleUrls: ['./alfresco-login.component.css'],
+                        templateUrl: './alfresco-login.html',
+                        styleUrls: ['./alfresco-login.css'],
                         pipes: [ng2_translate_1.TranslatePipe]
                     }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, alfresco_authentication_service_1.AlfrescoAuthenticationService, router_1.Router, ng2_translate_1.TranslateService])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, alfresco_authentication_1.AlfrescoAuthenticationService, router_1.Router, ng2_translate_1.TranslateService])
                 ], AlfrescoLoginComponent);
                 return AlfrescoLoginComponent;
             }());
@@ -122,4 +122,4 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', './alfre
         }
     }
 });
-//# sourceMappingURL=alfresco-login.component.js.map
+//# sourceMappingURL=alfresco-login.js.map
