@@ -113,6 +113,31 @@ All document actions are rendered as a dropdown menu as on the picture below:
 
 ![Document Actions](docs/assets/document-actions.png)
 
+
+#### Default action handlers
+
+The following action handlers are provided out-of-box:
+
+- Download
+
+All system handler names are case-insensitive, `handler="download"` and `handler="DOWNLOAD"`
+will trigger the same `download` action.
+
+##### Download
+
+Initiates download of the corresponding document file.
+
+```html
+<alfresco-document-list ...>
+    <document-actions>
+        <document-action title="Download" handler="download"></document-action>
+    </document-actions>
+</alfresco-document-list>
+```
+
+![Download document action](docs/assets/document-action-download.png)
+
+
 #### Quick document actions
 
 It is also possible to display most frequent actions within a separate `<quick-documents>`

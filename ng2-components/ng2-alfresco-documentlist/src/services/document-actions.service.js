@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', './alfresco.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,33 +26,55 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, alfresco_service_1;
     var DocumentActionsService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (alfresco_service_1_1) {
+                alfresco_service_1 = alfresco_service_1_1;
             }],
         execute: function() {
             DocumentActionsService = (function () {
-                function DocumentActionsService() {
+                function DocumentActionsService(_alfrescoService) {
+                    this._alfrescoService = _alfrescoService;
                     this.handlers = {};
-                    // todo: just for dev/demo purposes, to be replaced with real actions
-                    this.handlers['system1'] = this.handleStandardAction1;
-                    this.handlers['system2'] = this.handleStandardAction2;
+                    this.setupActionHandlers();
                 }
                 DocumentActionsService.prototype.getHandler = function (key) {
-                    return this.handlers[key];
+                    if (key) {
+                        var lkey = key.toLowerCase();
+                        return this.handlers[lkey];
+                    }
+                    return null;
                 };
-                DocumentActionsService.prototype.handleStandardAction1 = function (document) {
+                DocumentActionsService.prototype.setupActionHandlers = function () {
+                    this.handlers['download'] = this.download.bind(this);
+                    // todo: just for dev/demo purposes, to be replaced with real actions
+                    this.handlers['system1'] = this.handleStandardAction1.bind(this);
+                    this.handlers['system2'] = this.handleStandardAction2.bind(this);
+                };
+                DocumentActionsService.prototype.handleStandardAction1 = function (obj) {
                     window.alert('standard document action 1');
                 };
-                DocumentActionsService.prototype.handleStandardAction2 = function (document) {
+                DocumentActionsService.prototype.handleStandardAction2 = function (obj) {
                     window.alert('standard document action 2');
+                };
+                DocumentActionsService.prototype.download = function (obj) {
+                    if (obj && !obj.isFolder) {
+                        var link = document.createElement('a');
+                        document.body.appendChild(link);
+                        link.setAttribute('download', 'download');
+                        link.href = this._alfrescoService.getContentUrl(obj);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
                 };
                 DocumentActionsService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [alfresco_service_1.AlfrescoService])
                 ], DocumentActionsService);
                 return DocumentActionsService;
             }());

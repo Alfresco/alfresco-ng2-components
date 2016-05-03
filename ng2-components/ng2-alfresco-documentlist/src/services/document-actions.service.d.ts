@@ -1,8 +1,12 @@
 import { ContentActionHandler } from '../models/content-action.model';
+import { AlfrescoService } from './alfresco.service';
 export declare class DocumentActionsService {
+    private _alfrescoService;
     private handlers;
-    constructor();
+    constructor(_alfrescoService: AlfrescoService);
     getHandler(key: string): ContentActionHandler;
-    private handleStandardAction1(document);
-    private handleStandardAction2(document);
+    private setupActionHandlers();
+    private handleStandardAction1(obj);
+    private handleStandardAction2(obj);
+    private download(obj);
 }

@@ -17,26 +17,48 @@
 
 import {Injectable} from 'angular2/core';
 import {ContentActionHandler} from '../models/content-action.model';
+import {AlfrescoService} from './alfresco.service';
 
 @Injectable()
 export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor() {
-        // todo: just for dev/demo purposes, to be replaced with real actions
-        this.handlers['system1'] = this.handleStandardAction1;
-        this.handlers['system2'] = this.handleStandardAction2;
+    constructor(private _alfrescoService: AlfrescoService) {
+        this.setupActionHandlers();
     }
 
     getHandler(key: string): ContentActionHandler {
-        return this.handlers[key];
+        if (key) {
+            let lkey = key.toLowerCase();
+            return this.handlers[lkey];
+        }
+        return null;
     }
 
-    private handleStandardAction1(document: any) {
+    private setupActionHandlers() {
+        this.handlers['download'] = this.download.bind(this);
+
+        // todo: just for dev/demo purposes, to be replaced with real actions
+        this.handlers['system1'] = this.handleStandardAction1.bind(this);
+        this.handlers['system2'] = this.handleStandardAction2.bind(this);
+    }
+
+    private handleStandardAction1(obj: any) {
         window.alert('standard document action 1');
     }
 
-    private handleStandardAction2(document: any) {
+    private handleStandardAction2(obj: any) {
         window.alert('standard document action 2');
+    }
+
+    private download(obj: any) {
+        if (obj && !obj.isFolder) {
+            let link = document.createElement('a');
+            document.body.appendChild(link);
+            link.setAttribute('download', 'download');
+            link.href = this._alfrescoService.getContentUrl(obj);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }

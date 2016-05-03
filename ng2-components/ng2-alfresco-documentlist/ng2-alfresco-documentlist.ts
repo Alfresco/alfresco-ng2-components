@@ -7,8 +7,10 @@ import {FolderAction} from './src/components/folder-action';
 import {FolderActionList} from './src/components/folder-action-list';
 import {QuickFolderAction} from './src/components/quick-folder-action';
 import {QuickFolderActionList} from './src/components/quick-folder-action-list';
+
 import {FolderActionsService} from './src/services/folder-actions.service';
 import {DocumentActionsService} from './src/services/document-actions.service';
+import {AlfrescoService} from './src/services/alfresco.service';
 
 // components
 export * from './src/components/document-list';
@@ -23,6 +25,7 @@ export * from './src/components/quick-folder-action-list';
 // services
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
+export * from './src/services/alfresco.service';
 
 export default {
     directives: [
@@ -37,6 +40,7 @@ export default {
         QuickFolderActionList
     ],
     providers: [
+        AlfrescoService,
         FolderActionsService,
         DocumentActionsService
     ]
@@ -55,6 +59,7 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: [any] = [
+    AlfrescoService,
     FolderActionsService,
     DocumentActionsService
 ];
