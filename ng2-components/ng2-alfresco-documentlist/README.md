@@ -73,7 +73,7 @@ Document list element exposes `folder-icon` property that accepts a CSS class li
 ![Default folder icon](docs/assets/folder-icon-default.png)
 
 You can provide any list of classes in order to customize look and feel of the icon.
-Example below shows the use of [Font Awesome](http://fontawesome.io/) icon instead of the default one:
+Example below shows the use of [folder_special](https://design.google.com/icons/#ic_folder_special) icon instead of the default one:
 
 ```html
 <alfresco-document-list folder-icon="folder_special" ...>
