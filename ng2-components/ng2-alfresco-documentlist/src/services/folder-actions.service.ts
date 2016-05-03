@@ -24,12 +24,23 @@ export class FolderActionsService {
 
     constructor() {
         // todo: just for dev/demo purposes, to be replaced with real actions
-        this.handlers['system1'] = this.handleStandardAction1;
-        this.handlers['system2'] = this.handleStandardAction2;
+        this.handlers['system1'] = this.handleStandardAction1.bind(this);
+        this.handlers['system2'] = this.handleStandardAction2.bind(this);
     }
 
     getHandler(key: string): ContentActionHandler {
-        return this.handlers[key];
+        if (key) {
+            let lkey = key.toLowerCase();
+            return this.handlers[lkey];
+        }
+        return null;
+    }
+
+    setHandler(key: string, handler: ContentActionHandler): void {
+        if (key) {
+            let lkey = key.toLowerCase();
+            this.handlers[lkey] = handler;
+        }
     }
 
     private handleStandardAction1(document: any) {

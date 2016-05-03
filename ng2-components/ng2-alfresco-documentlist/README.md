@@ -226,4 +226,70 @@ Every folder action is rendered as a separate button.
 
 ### Customizing default actions
 
-TBD
+It is possible extending or replacing the list of available system actions for documents and folders.
+Actions for the documents and folders can be accessed via the following services:
+
+- `DocumentActionsService`, document action menu and quick document actions
+- `FolderActionsService`, folder action menu and quick folder actions
+
+Example below demonstrates how a new action handler can be registered with the
+`DocumentActionsService`.
+
+```html
+<alfresco-document-list ...>
+    <quick-document-actions>
+        <quick-document-action icon="account_circle" handler="my-handler"></quick-document-action>
+    </quick-document-actions>
+</alfresco-document-list>
+```
+
+You register custom handler called `my-handler` that will be executing `myDocumentActionHandler`
+function each time upon being invoked.
+
+```ts
+import {
+    DocumentActionsService
+} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+
+export class MyView {
+
+    constructor(documentActions: DocumentActionsService) {
+        documentActions.setHandler(
+            'my-handler',
+            this.myDocumentActionHandler.bind(this)
+        );
+    }
+
+    myDocumentActionHandler(obj: any) {
+        window.alert('my custom action handler');
+    }
+}
+```
+
+![Custom handler 1](docs/assets/custom-doc-handler-1.png)
+
+Upon execution users will see the following dialog:
+
+![Custom handler 2](docs/assets/custom-doc-handler-2.png)
+
+The same approach allows changing the way out-of-box action handlers behave.
+Registering custom action with the name `download` replaces default one:
+
+```ts
+export class MyView {
+
+    constructor(documentActions: DocumentActionsService) {
+        documentActions.setHandler(
+            'download',
+            this.customDownloadBehavior.bind(this)
+        );
+    }
+
+    customDownloadBehavior(obj: any) {
+        window.alert('my custom download behavior');
+    }
+}
+```
+
+Typically you may want populating all your custom actions at the application root level or
+by means of custom application service.

@@ -17,7 +17,8 @@
 import {Component} from 'angular2/core';
 import {
     DOCUMENT_LIST_DIRECTIVES,
-    DOCUMENT_LIST_PROVIDERS
+    DOCUMENT_LIST_PROVIDERS,
+    DocumentActionsService
 } from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import {MDL} from 'ng2-alfresco-core/material';
 
@@ -36,6 +37,14 @@ export class FilesComponent {
     navigation: boolean = true;
 
     events: any[] = [];
+    
+    constructor(documentActions: DocumentActionsService) {
+        documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
+    }
+
+    myDocumentActionHandler(obj: any) {
+        window.alert('my custom action handler');
+    }
 
     onItemClick($event) {
         console.log($event.value);

@@ -50,6 +50,12 @@ System.register(['angular2/core', './alfresco.service'], function(exports_1, con
                     }
                     return null;
                 };
+                DocumentActionsService.prototype.setHandler = function (key, handler) {
+                    if (key) {
+                        var lkey = key.toLowerCase();
+                        this.handlers[lkey] = handler;
+                    }
+                };
                 DocumentActionsService.prototype.setupActionHandlers = function () {
                     this.handlers['download'] = this.download.bind(this);
                     // todo: just for dev/demo purposes, to be replaced with real actions

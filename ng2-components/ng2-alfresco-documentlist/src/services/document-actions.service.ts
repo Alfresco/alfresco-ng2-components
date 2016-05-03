@@ -35,6 +35,13 @@ export class DocumentActionsService {
         return null;
     }
 
+    setHandler(key: string, handler: ContentActionHandler): void {
+        if (key) {
+            let lkey = key.toLowerCase();
+            this.handlers[lkey] = handler;
+        }
+    }
+
     private setupActionHandlers() {
         this.handlers['download'] = this.download.bind(this);
 
