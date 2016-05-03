@@ -54,6 +54,7 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                     this.quickDocumentActions = [];
                     this.folderActions = [];
                     this.quickFolderActions = [];
+                    this.columns = [];
                 }
                 DocumentList.prototype.canNavigateParent = function () {
                     return this.navigate &&

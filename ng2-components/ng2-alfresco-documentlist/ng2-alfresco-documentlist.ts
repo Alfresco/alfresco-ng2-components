@@ -7,6 +7,8 @@ import {FolderAction} from './src/components/folder-action';
 import {FolderActionList} from './src/components/folder-action-list';
 import {QuickFolderAction} from './src/components/quick-folder-action';
 import {QuickFolderActionList} from './src/components/quick-folder-action-list';
+import {ContentColumn} from './src/components/content-column';
+import {ContentColumnList} from './src/components/content-column-list';
 
 import {FolderActionsService} from './src/services/folder-actions.service';
 import {DocumentActionsService} from './src/services/document-actions.service';
@@ -22,6 +24,8 @@ export * from './src/components/folder-action';
 export * from './src/components/folder-action-list';
 export * from './src/components/quick-folder-action'
 export * from './src/components/quick-folder-action-list';
+export * from './src/components/content-column';
+export * from './src/components/content-column-list';
 // services
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
@@ -37,7 +41,9 @@ export default {
         FolderAction,
         FolderActionList,
         QuickFolderAction,
-        QuickFolderActionList
+        QuickFolderActionList,
+        ContentColumn,
+        ContentColumnList
     ],
     providers: [
         AlfrescoService,
@@ -55,7 +61,9 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     FolderAction,
     FolderActionList,
     QuickFolderAction,
-    QuickFolderActionList
+    QuickFolderActionList,
+    ContentColumn,
+    ContentColumnList
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: [any] = [

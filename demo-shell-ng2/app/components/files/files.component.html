@@ -35,6 +35,10 @@
                                     [navigate]="navigation"
                                     folder-icon=""
                                     (itemClick)="onItemClick($event)">
+                <content-columns>
+                    <content-column title="Created By" source="createdBy"></content-column>
+                    <content-column title="Created On" source="createdOn"></content-column>
+                </content-columns>
                 <quick-folder-actions>
                     <quick-folder-action icon="delete" title="Delete" handler="system1"></quick-folder-action>
                 </quick-folder-actions>

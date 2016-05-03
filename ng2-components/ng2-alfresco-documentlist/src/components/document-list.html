@@ -11,13 +11,15 @@
         <th *ngIf="thumbnails"></th>
         <!-- Name -->
         <th class="mdl-data-table__cell--non-numeric full-width">Name</th>
+        <!-- Custom columns -->
+        <th class="mdl-data-table__cell--non-numeric" *ngFor="#col of columns">{{col.title}}</th>
         <!-- Actions -->
         <th></th>
     </tr>
     </thead>
     <tbody>
     <tr class="parent-folder-link" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)">
-        <td colspan="3">
+        <td [attr.colspan]="3 + columns?.length">
             <button class="mdl-button mdl-js-button mdl-button--icon"
                     (click)="onNavigateParentClick($event)">
                 <i class="material-icons">arrow_upward</i>
@@ -55,6 +57,10 @@
             </span>
         </td>
 
+        <!-- Custom columns -->
+        <td *ngFor="#col of columns" class="mdl-data-table__cell--non-numeric">
+            {{content[col.source]}}
+        </td>
 
         <!-- Actions: Folder cell template -->
         <td *ngIf="content.isFolder">

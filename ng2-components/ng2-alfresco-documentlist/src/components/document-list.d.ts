@@ -19,6 +19,7 @@ import { AlfrescoService } from './../services/alfresco.service';
 import { FolderEntity } from './../core/entities/folder.entity';
 import { DocumentEntity } from './../core/entities/document.entity';
 import { ContentActionModel } from './../models/content-action.model';
+import { ContentColumnModel } from './../models/content-column.model';
 export declare class DocumentList implements OnInit, AfterViewChecked {
     private _alfrescoService;
     navigate: boolean;
@@ -38,6 +39,7 @@ export declare class DocumentList implements OnInit, AfterViewChecked {
     quickDocumentActions: ContentActionModel[];
     folderActions: ContentActionModel[];
     quickFolderActions: ContentActionModel[];
+    columns: ContentColumnModel[];
     canNavigateParent(): boolean;
     constructor(_alfrescoService: AlfrescoService);
     ngOnInit(): void;
