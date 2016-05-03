@@ -1,0 +1,49 @@
+:host .full-width { width: 100%; }
+
+:host .folder-thumbnail {
+    font-size: 48px;
+    cursor: pointer;
+}
+
+:host .document-thumbnail {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+}
+
+:host .content-header {
+    font-size: 15px;
+}
+
+:host .content-header:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+:host .parent-folder-link { cursor: pointer; }
+:host .parent-folder-link > td { text-align: left; }
+:host .folder-header-cell { cursor: pointer; }
+
+:host .breadcrumb { margin-bottom: 4px; }
+
+:host .folder-icon {
+    float: left;
+    margin-right: 10px;
+    font-size: 4em;
+}
+
+:host .file-icon {
+    width: 52px;
+    height: 52px;
+    float: left;
+    margin-right: 10px;
+}
+
+:host .document-header {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+:host .document-header:hover {
+    text-decoration: underline;
+}
