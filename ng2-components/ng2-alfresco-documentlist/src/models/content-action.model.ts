@@ -19,6 +19,8 @@ export class ContentActionModel {
     icon: string;
     title: string;
     handler: ContentActionHandler;
+    type: string;
+    target: string;
 }
 
 export interface ContentActionHandler {

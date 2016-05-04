@@ -20,10 +20,10 @@ import {DocumentList} from './document-list';
 import {ContentActionModel} from './../models/content-action.model';
 
 @Component({
-    selector: 'folder-actions',
+    selector: 'content-actions',
     template: ''
 })
-export class FolderActionList {
+export class ContentActionList {
     constructor(private documentList: DocumentList) {
         // saves reference to parent container
         // so that content children can access it
@@ -31,7 +31,7 @@ export class FolderActionList {
 
     registerAction(action: ContentActionModel) {
         if (action) {
-            this.documentList.folderActions.push(action);
+            this.documentList.actions.push(action);
         }
     }
 }

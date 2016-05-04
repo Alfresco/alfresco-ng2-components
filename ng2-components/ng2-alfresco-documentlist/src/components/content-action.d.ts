@@ -15,15 +15,20 @@
  * limitations under the License.
  */
 import { OnInit, EventEmitter } from 'angular2/core';
-import { QuickDocumentActionList } from './quick-document-action-list';
+import { ContentActionList } from './content-action-list';
 import { DocumentActionsService } from '../services/document-actions.service';
-export declare class QuickDocumentAction implements OnInit {
+import { FolderActionsService } from '../services/folder-actions.service';
+export declare class ContentAction implements OnInit {
     private list;
     private documentActions;
-    icon: string;
+    private folderActions;
     title: string;
+    icon: string;
     handler: string;
+    type: string;
+    target: string;
     execute: EventEmitter<{}>;
-    constructor(list: QuickDocumentActionList, documentActions: DocumentActionsService);
+    constructor(list: ContentActionList, documentActions: DocumentActionsService, folderActions: FolderActionsService);
     ngOnInit(): void;
+    private getSystemHandler(target, name);
 }

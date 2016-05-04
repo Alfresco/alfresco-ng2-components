@@ -62,11 +62,11 @@
             {{content[col.source]}}
         </td>
 
-        <!-- Actions: Folder cell template -->
+        <!-- Actions: folder -->
         <td *ngIf="content.isFolder">
-            <!-- quick action buttons -->
+            <!-- action buttons -->
             <button class="mdl-button mdl-js-button mdl-button--icon"
-                    *ngFor="#action of quickFolderActions"
+                    *ngFor="#action of getContentActions('folder', 'button')"
                     (click)="executeContentAction(content, action)">
                 <i class="material-icons">{{action.icon}}</i>
             </button>
@@ -78,17 +78,17 @@
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                 [attr.for]="'folder_action_menu_' + idx">
                 <li class="mdl-menu__item"
-                    *ngFor="#action of folderActions"
+                    *ngFor="#action of getContentActions('folder', 'menu')"
                     (click)="executeContentAction(content, action)">
                     {{action.title}}
                 </li>
             </ul>
         </td>
-        <!-- Actions: Document cell template -->
+        <!-- Actions: document -->
         <td *ngIf="!content.isFolder">
-            <!-- quick action buttons -->
+            <!-- action buttons -->
             <button class="mdl-button mdl-js-button mdl-button--icon"
-                    *ngFor="#action of quickDocumentActions"
+                    *ngFor="#action of getContentActions('document', 'button')"
                     (click)="executeContentAction(content, action)">
                 <i class="material-icons">{{action.icon}}</i>
             </button>
@@ -100,7 +100,7 @@
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                 [attr.for]="'document_action_menu_' + idx">
                 <li class="mdl-menu__item"
-                    *ngFor="#action of documentActions"
+                    *ngFor="#action of getContentActions('document', 'menu')"
                     (click)="executeContentAction(content, action)">
                     {{action.title}}
                 </li>

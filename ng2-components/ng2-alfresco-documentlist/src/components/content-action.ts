@@ -17,29 +17,37 @@
 
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
 import {ContentActionModel} from './../models/content-action.model';
-import {FolderActionList} from './folder-action-list';
+import {ContentActionList} from './content-action-list';
+import {DocumentActionsService} from '../services/document-actions.service';
 import {FolderActionsService} from '../services/folder-actions.service';
 
 @Component({
-    selector: 'folder-action',
+    selector: 'content-action',
     template: ''
 })
-export class FolderAction implements OnInit {
+export class ContentAction implements OnInit {
     @Input() title: string = 'Action';
+    @Input() icon: string;
     @Input() handler: string;
+    @Input() type: string;
+    @Input() target: string;
     @Output() execute = new EventEmitter();
 
     constructor(
-        private list: FolderActionList,
+        private list: ContentActionList,
+        private documentActions: DocumentActionsService,
         private folderActions: FolderActionsService) {
     }
 
     ngOnInit() {
         let model = new ContentActionModel();
+        model.type = this.type;
         model.title = this.title;
+        model.icon = this.icon;
+        model.target = this.target;
 
         if (this.handler) {
-            model.handler = this.folderActions.getHandler(this.handler);
+            model.handler = this.getSystemHandler(this.target, this.handler);
         } else if (this.execute) {
             model.handler = (document: any): void => {
                 this.execute.emit({
@@ -49,5 +57,20 @@ export class FolderAction implements OnInit {
         }
 
         this.list.registerAction(model);
+    }
+
+    private getSystemHandler(target: string, name: string) {
+        if (target) {
+            let ltarget = target.toLowerCase();
+
+            if (ltarget === 'document') {
+                return this.documentActions.getHandler(name);
+            }
+
+            if (ltarget === 'folder') {
+                return this.folderActions.getHandler(name);
+            }
+        }
+        return null;
     }
 }

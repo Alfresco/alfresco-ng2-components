@@ -50,10 +50,7 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                     };
                     this.currentFolderPath = 'swsdp/documentLibrary';
                     this.route = [];
-                    this.documentActions = [];
-                    this.quickDocumentActions = [];
-                    this.folderActions = [];
-                    this.quickFolderActions = [];
+                    this.actions = [];
                     this.columns = [];
                 }
                 DocumentList.prototype.canNavigateParent = function () {
@@ -70,6 +67,17 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                     if (componentHandler) {
                         componentHandler.upgradeAllRegistered();
                     }
+                };
+                DocumentList.prototype.getContentActions = function (target, type) {
+                    if (target && type) {
+                        var ltarget_1 = target.toLowerCase();
+                        var ltype_1 = type.toLowerCase();
+                        return this.actions.filter(function (entry) {
+                            return entry.target.toLowerCase() === ltarget_1 &&
+                                entry.type.toLowerCase() === ltype_1;
+                        });
+                    }
+                    return [];
                 };
                 DocumentList.prototype.onNavigateParentClick = function ($event) {
                     if ($event) {
@@ -118,11 +126,6 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                 };
                 DocumentList.prototype.getDocumentThumbnailUrl = function (document) {
                     return this._alfrescoService.getDocumentThumbnailUrl(document);
-                };
-                DocumentList.prototype.registerDocumentAction = function (action) {
-                    if (action) {
-                        this.documentActions.push(action);
-                    }
                 };
                 DocumentList.prototype.executeContentAction = function (document, action) {
                     // todo: safety checks

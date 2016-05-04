@@ -39,22 +39,20 @@
                     <content-column title="Created By" source="createdBy"></content-column>
                     <content-column title="Created On" source="createdOn"></content-column>
                 </content-columns>
-                <quick-folder-actions>
-                    <quick-folder-action icon="delete" title="Delete" handler="system1"></quick-folder-action>
-                </quick-folder-actions>
-                <folder-actions>
-                    <folder-action title="Default folder action 1" handler="system1"></folder-action>
-                    <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
-                </folder-actions>
-                <quick-document-actions>
-                    <quick-document-action icon="account_circle" handler="my-handler"></quick-document-action>
-                    <quick-document-action icon="cloud_download" handler="download"></quick-document-action>
-                </quick-document-actions>
-                <document-actions>
-                    <document-action title="Download" handler="DOWNLOAD"></document-action>
-                    <document-action title="System action" handler="system2"></document-action>
-                    <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
-                </document-actions>
+
+                <content-actions>
+                    <!-- folder actions -->
+                    <content-action target="folder" type="button" icon="delete" title="Delete" handler="system1"></content-action>
+                    <content-action target="folder" type="menu" title="Default folder action 1" handler="system1"></content-action>
+                    <content-action target="folder" type="menu" title="Custom folder action" (execute)="myFolderAction1($event)"></content-action>
+
+                    <!-- document actions -->
+                    <content-action target="document" type="button" icon="account_circle" handler="my-handler"></content-action>
+                    <content-action target="document" type="button" icon="cloud_download" handler="download"></content-action>
+                    <content-action target="document" type="menu" title="Download" handler="download"></content-action>
+                    <content-action target="document" type="menu" title="System action" handler="system2"></content-action>
+                    <content-action target="document" type="menu" title="Custom action" (execute)="myCustomAction1($event)"></content-action>
+                </content-actions>
             </alfresco-document-list>
         </div>
     </div>

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', './../models/content-action.model', './folder-action-list', '../services/folder-actions.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './../models/content-action.model', './content-action-list', '../services/document-actions.service', '../services/folder-actions.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,8 +26,8 @@ System.register(['angular2/core', './../models/content-action.model', './folder-
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, content_action_model_1, folder_action_list_1, folder_actions_service_1;
-    var FolderAction;
+    var core_1, content_action_model_1, content_action_list_1, document_actions_service_1, folder_actions_service_1;
+    var ContentAction;
     return {
         setters:[
             function (core_1_1) {
@@ -36,26 +36,33 @@ System.register(['angular2/core', './../models/content-action.model', './folder-
             function (content_action_model_1_1) {
                 content_action_model_1 = content_action_model_1_1;
             },
-            function (folder_action_list_1_1) {
-                folder_action_list_1 = folder_action_list_1_1;
+            function (content_action_list_1_1) {
+                content_action_list_1 = content_action_list_1_1;
+            },
+            function (document_actions_service_1_1) {
+                document_actions_service_1 = document_actions_service_1_1;
             },
             function (folder_actions_service_1_1) {
                 folder_actions_service_1 = folder_actions_service_1_1;
             }],
         execute: function() {
-            FolderAction = (function () {
-                function FolderAction(list, folderActions) {
+            ContentAction = (function () {
+                function ContentAction(list, documentActions, folderActions) {
                     this.list = list;
+                    this.documentActions = documentActions;
                     this.folderActions = folderActions;
                     this.title = 'Action';
                     this.execute = new core_1.EventEmitter();
                 }
-                FolderAction.prototype.ngOnInit = function () {
+                ContentAction.prototype.ngOnInit = function () {
                     var _this = this;
                     var model = new content_action_model_1.ContentActionModel();
+                    model.type = this.type;
                     model.title = this.title;
+                    model.icon = this.icon;
+                    model.target = this.target;
                     if (this.handler) {
-                        model.handler = this.folderActions.getHandler(this.handler);
+                        model.handler = this.getSystemHandler(this.target, this.handler);
                     }
                     else if (this.execute) {
                         model.handler = function (document) {
@@ -66,29 +73,53 @@ System.register(['angular2/core', './../models/content-action.model', './folder-
                     }
                     this.list.registerAction(model);
                 };
+                ContentAction.prototype.getSystemHandler = function (target, name) {
+                    if (target) {
+                        var ltarget = target.toLowerCase();
+                        if (ltarget === 'document') {
+                            return this.documentActions.getHandler(name);
+                        }
+                        if (ltarget === 'folder') {
+                            return this.folderActions.getHandler(name);
+                        }
+                    }
+                    return null;
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)
-                ], FolderAction.prototype, "title", void 0);
+                ], ContentAction.prototype, "title", void 0);
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)
-                ], FolderAction.prototype, "handler", void 0);
+                ], ContentAction.prototype, "icon", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], ContentAction.prototype, "handler", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], ContentAction.prototype, "type", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], ContentAction.prototype, "target", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
-                ], FolderAction.prototype, "execute", void 0);
-                FolderAction = __decorate([
+                ], ContentAction.prototype, "execute", void 0);
+                ContentAction = __decorate([
                     core_1.Component({
-                        selector: 'folder-action',
+                        selector: 'content-action',
                         template: ''
                     }), 
-                    __metadata('design:paramtypes', [folder_action_list_1.FolderActionList, folder_actions_service_1.FolderActionsService])
-                ], FolderAction);
-                return FolderAction;
+                    __metadata('design:paramtypes', [content_action_list_1.ContentActionList, document_actions_service_1.DocumentActionsService, folder_actions_service_1.FolderActionsService])
+                ], ContentAction);
+                return ContentAction;
             }());
-            exports_1("FolderAction", FolderAction);
+            exports_1("ContentAction", ContentAction);
         }
     }
 });
-//# sourceMappingURL=folder-action.js.map
+//# sourceMappingURL=content-action.js.map

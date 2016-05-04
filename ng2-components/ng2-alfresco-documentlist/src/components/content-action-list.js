@@ -27,7 +27,7 @@ System.register(['angular2/core', './document-list'], function(exports_1, contex
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, document_list_1;
-    var DocumentActionList;
+    var ContentActionList;
     return {
         setters:[
             function (core_1_1) {
@@ -37,28 +37,28 @@ System.register(['angular2/core', './document-list'], function(exports_1, contex
                 document_list_1 = document_list_1_1;
             }],
         execute: function() {
-            DocumentActionList = (function () {
-                function DocumentActionList(documentList) {
+            ContentActionList = (function () {
+                function ContentActionList(documentList) {
                     this.documentList = documentList;
                     // saves reference to parent container
                     // so that content children can access it
                 }
-                DocumentActionList.prototype.registerAction = function (action) {
+                ContentActionList.prototype.registerAction = function (action) {
                     if (action) {
-                        this.documentList.documentActions.push(action);
+                        this.documentList.actions.push(action);
                     }
                 };
-                DocumentActionList = __decorate([
+                ContentActionList = __decorate([
                     core_1.Component({
-                        selector: 'document-actions',
+                        selector: 'content-actions',
                         template: ''
                     }), 
                     __metadata('design:paramtypes', [document_list_1.DocumentList])
-                ], DocumentActionList);
-                return DocumentActionList;
+                ], ContentActionList);
+                return ContentActionList;
             }());
-            exports_1("DocumentActionList", DocumentActionList);
+            exports_1("ContentActionList", ContentActionList);
         }
     }
 });
-//# sourceMappingURL=document-action-list.js.map
+//# sourceMappingURL=content-action-list.js.map

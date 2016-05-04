@@ -58,10 +58,7 @@ export class DocumentList implements OnInit, AfterViewChecked {
 
     route: any[] = [];
 
-    documentActions: ContentActionModel[] = [];
-    quickDocumentActions: ContentActionModel[] = [];
-    folderActions: ContentActionModel[] = [];
-    quickFolderActions: ContentActionModel[] = [];
+    actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
 
     canNavigateParent(): boolean {
@@ -84,6 +81,20 @@ export class DocumentList implements OnInit, AfterViewChecked {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
+    }
+
+    getContentActions(target: string, type: string) {
+        if (target && type) {
+
+            let ltarget = target.toLowerCase();
+            let ltype = type.toLowerCase();
+
+            return this.actions.filter(entry => {
+               return entry.target.toLowerCase() === ltarget &&
+                       entry.type.toLowerCase() === ltype;
+            });
+        }
+        return [];
     }
 
     onNavigateParentClick($event) {
@@ -141,12 +152,6 @@ export class DocumentList implements OnInit, AfterViewChecked {
 
     getDocumentThumbnailUrl(document:  DocumentEntity) {
         return this._alfrescoService.getDocumentThumbnailUrl(document);
-    }
-
-    registerDocumentAction(action: ContentActionModel) {
-        if (action) {
-            this.documentActions.push(action);
-        }
     }
 
     executeContentAction(document:DocumentEntity, action: ContentActionModel) {
