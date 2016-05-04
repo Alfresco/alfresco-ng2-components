@@ -65,6 +65,19 @@ Note the use of ```DOCUMENT_LIST_DIRECTIVES``` barrel that consolidates all the 
 It gives you access to ```<document-actions>```, ```<folder-actions>``` and many other directives.
 In addition ```DOCUMENT_LIST_PROVIDERS``` exports all primary services and providers needed for component to function.
 
+### Custom columns
+
+```html
+<alfresco-document-list ...>
+    <content-columns>
+        <content-column title="Created By" source="createdBy"></content-column>
+        <content-column title="Created On" source="createdOn"></content-column>
+    </content-columns>
+</alfresco-document-list>
+```
+
+![Custom columns](docs/assets/custom-columns.png)
+
 ### Custom folder icon
 
 Document list element exposes `folder-icon` property that accepts a CSS class list value with
@@ -88,14 +101,27 @@ Document List supports declarative actions for Documents and Folders.
 Each action can be bound to either default out-of-box handler or a custom behavior.
 You can define both folder and document actions at the same time.
 
-#### Document actions
+#### Menu actions
 
 ```html
 <alfresco-document-list ...>
-    <document-actions>
-        <document-action title="System action" handler="system2"></document-action>
-        <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
-    </document-actions>
+    <content-actions>
+
+        <content-action
+            target="document"
+            type="menu"
+            title="System action"
+            handler="system2">
+        </content-action>
+
+        <content-action
+            target="document"
+            type="menu"
+            title="Custom action"
+            (execute)="myCustomAction1($event)">
+        </content-action>
+
+    </content-actions>
 </alfresco-document-list>
 ```
 
@@ -109,7 +135,7 @@ export class MyView {
 }
 ```
 
-All document actions are rendered as a dropdown menu as on the picture below:
+All document actions with `type="menu"` are rendered as a dropdown menu as on the picture below:
 
 ![Document Actions](docs/assets/document-actions.png)
 
@@ -129,42 +155,75 @@ Initiates download of the corresponding document file.
 
 ```html
 <alfresco-document-list ...>
-    <document-actions>
-        <document-action title="Download" handler="download"></document-action>
-    </document-actions>
+    <content-actions>
+
+        <content-action
+            target="document"
+            type="menu"
+            title="Download"
+            handler="download">
+        </content-action>
+
+    </content-actions>
 </alfresco-document-list>
 ```
 
 ![Download document action](docs/assets/document-action-download.png)
 
 
-#### Quick document actions
+#### Document action buttons
 
-It is also possible to display most frequent actions within a separate `<quick-documents>`
-buttons panel:
+It is also possible to display most frequent actions within a separate buttons panel:
 
 ```html
 <alfresco-document-list ...>
-    <quick-document-actions>
-        <quick-document-action icon="extension" handler="system1"></quick-document-action>
-        <quick-document-action icon="thumb_up" handler="system2"></quick-document-action>
-    </quick-document-actions>
+    <content-actions>
+
+        <content-action
+            target="document"
+            type="button"
+            icon="extension"
+            handler="system1">
+        </content-action>
+
+        <content-action
+            target="document"
+            type="button"
+            icon="thumb_up"
+            handler="system2">
+        </content-action>
+
+    </content-actions>
 </alfresco-document-list>
 ```
 
-Quick actions provide same support for system and custom handlers.
-In addition it is possible setting button icon (css class list), text of the label or both.
+Button actions provide same support for system and custom handlers.
 
 ![Quick document Actions](docs/assets/quick-document-actions.png)
 
 #### Folder actions
 
+Folder actions have the same declaration as document actions except ```taget="folder"``` attribute value.
+
 ```html
 <alfresco-document-list ...>
-    <folder-actions>
-        <folder-action title="Default folder action 1" handler="system1"></folder-action>
-        <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
-    </folder-actions>
+    <content-actions>
+
+        <content-action
+            target="folder"
+            type="menu"
+            title="Default folder action 1"
+            handler="system1">
+        </content-action>
+
+        <content-action
+            target="folder"
+            type="menu"
+            title="Custom folder action"
+            (execute)="myFolderAction1($event)">
+        </content-action>
+
+    </content-actions>
 </alfresco-document-list>
 ```
 
@@ -180,47 +239,27 @@ export class MyView {
 
 ![Folder Actions](docs/assets/folder-actions.png)
 
-#### Quick folder actions
+#### Folder action buttons
 
-Quick folder actions have the same behavior as quick document actions.
-You can use custom or system handler, provide icon and title.
 Every folder action is rendered as a separate button.
 
 ```html
 <alfresco-document-list ...>
-    <quick-folder-actions>
-        <quick-folder-action icon="delete" title="Delete" handler="system1"></quick-folder-action>
-    </quick-folder-actions>
+    <content-actions>
+
+        <content-action
+            target="folder"
+            type="button"
+            icon="delete"
+            title="Delete"
+            handler="system1">
+        </content-action>
+
+    </content-actions>
 </alfresco-document-list>
 ```
 
 ![Quick folder Actions](docs/assets/quick-folder-actions.png)
-
-#### Using all actions at the same time
-
-```html
-<alfresco-document-list #list
-    [thumbnails]="thumbnails"
-    [breadcrumb]="breadcrumb"
-    [navigate]="navigation"
-    [downloads]="downloads"
-    (itemClick)="onItemClick($event)">
-    <quick-folder-actions>
-        <quick-folder-action title="Delete" handler="system1"></quick-folder-action>
-    </quick-folder-actions>
-    <folder-actions>
-        <folder-action title="Default folder action 1" handler="system1"></folder-action>
-        <folder-action title="Custom folder action" (execute)="myFolderAction1($event)"></folder-action>
-    </folder-actions>
-    <quick-document-actions>
-        <quick-document-action icon="glyphicon glyphicon-pushpin" handler="system1"></quick-document-action>
-    </quick-document-actions>
-    <document-actions>
-        <document-action title="System action" handler="system2"></document-action>
-        <document-action title="Custom action" (execute)="myCustomAction1($event)"></document-action>
-    </document-actions>
-</alfresco-document-list>
-```
 
 ## Advanced usage and customization
 
@@ -237,9 +276,16 @@ Example below demonstrates how a new action handler can be registered with the
 
 ```html
 <alfresco-document-list ...>
-    <quick-document-actions>
-        <quick-document-action icon="account_circle" handler="my-handler"></quick-document-action>
-    </quick-document-actions>
+    <content-actions>
+
+        <content-action
+            target="document"
+            type="button"
+            icon="account_circle"
+            handler="my-handler">
+        </content-action>
+
+    </content-actions>
 </alfresco-document-list>
 ```
 
