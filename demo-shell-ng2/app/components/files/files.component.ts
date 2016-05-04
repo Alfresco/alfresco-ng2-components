@@ -32,10 +32,8 @@ declare let __moduleName:string;
     providers: [DOCUMENT_LIST_PROVIDERS]
 })
 export class FilesComponent {
-    thumbnails: boolean = true;
     breadcrumb: boolean = false;
     navigation: boolean = true;
-
     events: any[] = [];
     
     constructor(documentActions: DocumentActionsService) {

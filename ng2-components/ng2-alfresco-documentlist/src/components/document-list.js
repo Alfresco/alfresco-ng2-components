@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', './../services/alfresco.service'], function(exports_1, context_1) {
+System.register(['angular2/core', './../services/alfresco.service', './../models/content-column.model'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, alfresco_service_1;
+    var core_1, alfresco_service_1, content_column_model_1;
     var DocumentList;
     return {
         setters:[
@@ -35,6 +35,9 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
             },
             function (alfresco_service_1_1) {
                 alfresco_service_1 = alfresco_service_1_1;
+            },
+            function (content_column_model_1_1) {
+                content_column_model_1 = content_column_model_1_1;
             }],
         execute: function() {
             DocumentList = (function () {
@@ -42,7 +45,6 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                     this._alfrescoService = _alfrescoService;
                     this.navigate = true;
                     this.breadcrumb = false;
-                    this.thumbnails = true;
                     this.itemClick = new core_1.EventEmitter();
                     this.rootFolder = {
                         name: 'Document Library',
@@ -61,6 +63,11 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                 DocumentList.prototype.ngOnInit = function () {
                     this.route.push(this.rootFolder);
                     this.displayFolderContent(this.rootFolder.path);
+                };
+                DocumentList.prototype.ngAfterContentInit = function () {
+                    if (!this.columns || this.columns.length === 0) {
+                        this.setupDefaultColumns();
+                    }
                 };
                 DocumentList.prototype.ngAfterViewChecked = function () {
                     // workaround for MDL issues with dynamic components
@@ -144,6 +151,18 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                         .getFolder(path)
                         .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
                 };
+                DocumentList.prototype.setupDefaultColumns = function () {
+                    var thumbnailCol = new content_column_model_1.ContentColumnModel();
+                    thumbnailCol.source = '$thumbnail';
+                    var nameCol = new content_column_model_1.ContentColumnModel();
+                    nameCol.title = 'Name';
+                    nameCol.source = 'displayName';
+                    nameCol.cssClass = 'full-width name-column';
+                    this.columns = [
+                        thumbnailCol,
+                        nameCol
+                    ];
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Boolean)
@@ -156,10 +175,6 @@ System.register(['angular2/core', './../services/alfresco.service'], function(ex
                     core_1.Input('folder-icon'), 
                     __metadata('design:type', String)
                 ], DocumentList.prototype, "folderIcon", void 0);
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', Boolean)
-                ], DocumentList.prototype, "thumbnails", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', core_1.EventEmitter)

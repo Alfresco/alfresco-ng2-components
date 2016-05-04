@@ -7,19 +7,15 @@
 <table *ngIf="folder" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
-        <!-- Thumbnails -->
-        <th *ngIf="thumbnails"></th>
-        <!-- Name -->
-        <th class="mdl-data-table__cell--non-numeric full-width">Name</th>
-        <!-- Custom columns -->
-        <th class="mdl-data-table__cell--non-numeric" *ngFor="#col of columns">{{col.title}}</th>
+        <!-- Columns -->
+        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}" *ngFor="#col of columns">{{col.title}}</th>
         <!-- Actions -->
         <th></th>
     </tr>
     </thead>
     <tbody>
     <tr class="parent-folder-link" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)">
-        <td [attr.colspan]="3 + columns?.length">
+        <td [attr.colspan]="1 + columns?.length">
             <button class="mdl-button mdl-js-button mdl-button--icon"
                     (click)="onNavigateParentClick($event)">
                 <i class="material-icons">arrow_upward</i>
@@ -28,38 +24,21 @@
     </tr>
 
     <tr *ngFor="#content of folder.items; #idx = index">
-        <!-- Thumbnails: folder -->
-        <td *ngIf="thumbnails && content.isFolder">
-            <i class="material-icons folder-thumbnail"
-               (click)="onItemClick(content, $event)">{{folderIcon || 'folder_open'}}</i>
-        </td>
-
-        <!-- Thumbnails: document -->
-        <td *ngIf="thumbnails && !content.isFolder">
-            <img *ngIf="thumbnails" class="document-thumbnail"
-                 alt=""
-                 src="{{getDocumentThumbnailUrl(content)}}"
-                 (click)="onItemClick(content, $event)">
-        </td>
-
-        <!-- Name: folder -->
-        <td *ngIf="content.isFolder" class="mdl-data-table__cell--non-numeric folder-row-cell"
+        <!-- Columns -->
+        <td *ngFor="#col of columns" [ngSwitch]="col.source"
+            class="mdl-data-table__cell--non-numeric {{content.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
             (click)="onItemClick(content, $event)">
-            <span class="content-header">
-                {{content.displayName}}
+            <div *ngSwitchWhen="'$thumbnail'">
+                <div *ngIf="content.isFolder">
+                    <i class="material-icons folder-thumbnail">{{folderIcon || 'folder_open'}}</i>
+                </div>
+                <div *ngIf="!content.isFolder">
+                    <img class="document-thumbnail" alt="" src="{{getDocumentThumbnailUrl(content)}}">
+                </div>
+            </div>
+            <span *ngSwitchDefault>
+                {{content[col.source]}}
             </span>
-        </td>
-
-        <!-- Name: document -->
-        <td *ngIf="!content.isFolder" class="mdl-data-table__cell--non-numeric" >
-            <span class="content-header" (click)="onItemClick(content, $event)">
-                {{content.displayName}}
-            </span>
-        </td>
-
-        <!-- Custom columns -->
-        <td *ngFor="#col of columns" class="mdl-data-table__cell--non-numeric {{col.cssClass}}">
-            {{content[col.source]}}
         </td>
 
         <!-- Actions: folder -->

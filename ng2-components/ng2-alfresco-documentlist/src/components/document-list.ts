@@ -21,6 +21,7 @@ import {
     Input,
     Output,
     EventEmitter,
+    AfterContentInit,
     AfterViewChecked
 } from 'angular2/core';
 import {AlfrescoService} from './../services/alfresco.service';
@@ -38,12 +39,11 @@ declare let __moduleName:string;
     templateUrl: './document-list.html',
     providers: [AlfrescoService]
 })
-export class DocumentList implements OnInit, AfterViewChecked {
+export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 
     @Input() navigate: boolean = true;
     @Input() breadcrumb: boolean = false;
     @Input('folder-icon') folderIcon: string;
-    @Input() thumbnails: boolean = true;
 
     @Output() itemClick: EventEmitter<any> = new EventEmitter();
 
@@ -73,6 +73,12 @@ export class DocumentList implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.route.push(this.rootFolder);
         this.displayFolderContent(this.rootFolder.path);
+    }
+
+    ngAfterContentInit() {
+        if (!this.columns || this.columns.length === 0) {
+            this.setupDefaultColumns();
+        }
     }
 
     ngAfterViewChecked() {
@@ -173,5 +179,20 @@ export class DocumentList implements OnInit, AfterViewChecked {
                 folder => this.folder = folder,
                 error => this.errorMessage = <any>error
             );
+    }
+
+    private setupDefaultColumns() {
+        let thumbnailCol = new ContentColumnModel();
+        thumbnailCol.source = '$thumbnail';
+
+        let nameCol = new ContentColumnModel();
+        nameCol.title = 'Name';
+        nameCol.source = 'displayName';
+        nameCol.cssClass = 'full-width name-column';
+
+        this.columns = [
+            thumbnailCol,
+            nameCol
+        ];
     }
 }

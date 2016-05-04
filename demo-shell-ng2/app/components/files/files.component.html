@@ -3,12 +3,6 @@
         <div class="col-md-2">
             <ul class="list-unstyled">
                 <li>
-                    <label mdl class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
-                        <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" [(ngModel)]="thumbnails">
-                        <span class="mdl-checkbox__label">Thumbnails</span>
-                    </label>
-                </li>
-                <li>
                     <label mdl class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2">
                         <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input" [(ngModel)]="breadcrumb">
                         <span class="mdl-checkbox__label">Breadcrumb</span>
@@ -29,13 +23,15 @@
             </ul>
         </div>
         <div class="col-md-10">
-            <alfresco-document-list #list
-                                    [thumbnails]="thumbnails"
-                                    [breadcrumb]="breadcrumb"
-                                    [navigate]="navigation"
-                                    folder-icon=""
-                                    (itemClick)="onItemClick($event)">
+            <alfresco-document-list
+                    #list
+                    [breadcrumb]="breadcrumb"
+                    [navigate]="navigation"
+                    folder-icon=""
+                    (itemClick)="onItemClick($event)">
                 <content-columns>
+                    <content-column source="$thumbnail"></content-column>
+                    <content-column title="Display Name" source="displayName" class="full-width name-column"></content-column>
                     <content-column title="Created By" source="createdBy"></content-column>
                     <content-column title="Created On" source="createdOn"></content-column>
                 </content-columns>

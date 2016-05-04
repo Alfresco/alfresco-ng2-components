@@ -14,17 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { OnInit, EventEmitter, AfterViewChecked } from 'angular2/core';
+import { OnInit, EventEmitter, AfterContentInit, AfterViewChecked } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
 import { FolderEntity, DocumentEntity } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { ContentColumnModel } from './../models/content-column.model';
-export declare class DocumentList implements OnInit, AfterViewChecked {
+export declare class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
     private _alfrescoService;
     navigate: boolean;
     breadcrumb: boolean;
     folderIcon: string;
-    thumbnails: boolean;
     itemClick: EventEmitter<any>;
     rootFolder: {
         name: string;
@@ -39,6 +38,7 @@ export declare class DocumentList implements OnInit, AfterViewChecked {
     canNavigateParent(): boolean;
     constructor(_alfrescoService: AlfrescoService);
     ngOnInit(): void;
+    ngAfterContentInit(): void;
     ngAfterViewChecked(): void;
     getContentActions(target: string, type: string): ContentActionModel[];
     onNavigateParentClick($event: any): void;
@@ -49,4 +49,5 @@ export declare class DocumentList implements OnInit, AfterViewChecked {
     executeContentAction(document: DocumentEntity, action: ContentActionModel): void;
     private getItemPath(item);
     private displayFolderContent(path);
+    private setupDefaultColumns();
 }

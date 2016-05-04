@@ -11,39 +11,23 @@
     cursor: pointer;
 }
 
-:host .content-header {
+:host .parent-folder-link { cursor: pointer; }
+:host .parent-folder-link > td { text-align: left; }
+
+:host .folder-row-cell,
+:host .document-row-cell {
+    cursor: pointer;
+}
+
+:host .folder-row-cell.name-column,
+:host .document-row-cell.name-column {
     font-size: 15px;
 }
 
-:host .content-header:hover {
+:host .folder-row-cell.name-column:hover,
+:host .document-row-cell.name-column:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
-:host .parent-folder-link { cursor: pointer; }
-:host .parent-folder-link > td { text-align: left; }
-:host .folder-row-cell { cursor: pointer; }
-
 :host .breadcrumb { margin-bottom: 4px; }
-
-:host .folder-icon {
-    float: left;
-    margin-right: 10px;
-    font-size: 4em;
-}
-
-:host .file-icon {
-    width: 52px;
-    height: 52px;
-    float: left;
-    margin-right: 10px;
-}
-
-:host .document-header {
-    font-size: 24px;
-    line-height: 32px;
-}
-
-:host .document-header:hover {
-    text-decoration: underline;
-}
