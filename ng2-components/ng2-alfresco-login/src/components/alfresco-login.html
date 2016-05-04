@@ -6,7 +6,7 @@
         <div class="mdl-card__supporting-text">
             <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                 <label for="username" class="mdl-textfield__label">{{'username' | translate }}</label>
-                <input type="text" class="mdl-textfield__input" id="username" ngControl="username" />
+                <input type="text" class="mdl-textfield__input" id="username" ngControl="username" tabindex="1" />
                 <span class="mdl-tooltip mdl-tooltip--validation" for="username" *ngIf="form.controls.username.hasError('required')">
                         <span>{{'input-required-message' | translate }}</span>
                 </span>
@@ -17,7 +17,7 @@
 
             <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.password)}" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <label for="password" class="mdl-textfield__label">Password</label>
-                <input type="password" class="mdl-textfield__input" id="password" ngControl="password" />
+                <input type="password" class="mdl-textfield__input" id="password" ngControl="password" tabindex="2" />
                 <span class="mdl-tooltip mdl-tooltip--validation" for="password" *ngIf="form.controls.password.hasError('required')">
                         <span>{{'input-required-message' | translate }}</span>
                 </span>
