@@ -17,18 +17,36 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var FolderEntity;
+    var FolderEntity, DocumentEntity, LocationEntity, LocationParentEntity;
     return {
         setters:[],
         execute: function() {
-            // contains only limited subset of available fields
+            // Note: contains only limited subset of available fields
             FolderEntity = (function () {
                 function FolderEntity() {
                 }
                 return FolderEntity;
             }());
             exports_1("FolderEntity", FolderEntity);
+            DocumentEntity = (function () {
+                function DocumentEntity() {
+                }
+                return DocumentEntity;
+            }());
+            exports_1("DocumentEntity", DocumentEntity);
+            LocationEntity = (function () {
+                function LocationEntity() {
+                }
+                return LocationEntity;
+            }());
+            exports_1("LocationEntity", LocationEntity);
+            LocationParentEntity = (function () {
+                function LocationParentEntity() {
+                }
+                return LocationParentEntity;
+            }());
+            exports_1("LocationParentEntity", LocationParentEntity);
         }
     }
 });
-//# sourceMappingURL=folder.entity.js.map
+//# sourceMappingURL=document-library.model.js.map

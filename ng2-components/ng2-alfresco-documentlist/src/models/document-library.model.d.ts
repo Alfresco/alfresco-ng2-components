@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { LocationEntity } from './location.entity';
+export declare class FolderEntity {
+    items: DocumentEntity[];
+}
 export declare class DocumentEntity {
     nodeRef: string;
     nodeType: string;
@@ -44,4 +46,16 @@ export declare class DocumentEntity {
     tags: string[];
     activeWorkflows: string;
     location: LocationEntity;
+}
+export declare class LocationEntity {
+    repositoryId: string;
+    site: string;
+    siteTitle: string;
+    container: string;
+    path: string;
+    file: string;
+    parent: LocationParentEntity;
+}
+export declare class LocationParentEntity {
+    nodeRef: string;
 }

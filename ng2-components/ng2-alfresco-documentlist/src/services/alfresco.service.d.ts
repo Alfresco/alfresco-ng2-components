@@ -1,7 +1,6 @@
 import { Http } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
-import { FolderEntity } from './../core/entities/folder.entity';
-import { DocumentEntity } from './../core/entities/document.entity';
+import { FolderEntity, DocumentEntity } from './../models/document-library.model';
 import { AlfrescoSettingsService } from '../../../ng2-alfresco-core/services';
 export declare class AlfrescoService {
     private http;

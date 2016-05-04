@@ -16,8 +16,7 @@
  */
 import { OnInit, EventEmitter, AfterViewChecked } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
-import { FolderEntity } from './../core/entities/folder.entity';
-import { DocumentEntity } from './../core/entities/document.entity';
+import { FolderEntity, DocumentEntity } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { ContentColumnModel } from './../models/content-column.model';
 export declare class DocumentList implements OnInit, AfterViewChecked {

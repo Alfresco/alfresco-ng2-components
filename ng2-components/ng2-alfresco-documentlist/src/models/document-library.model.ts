@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-// contains only limited subset of available fields
-import {LocationEntity} from './location.entity';
+// Note: contains only limited subset of available fields
+    
+export class FolderEntity {
+    items: DocumentEntity[];
+}
 
 export class DocumentEntity {
     nodeRef: string;
@@ -47,4 +50,18 @@ export class DocumentEntity {
     tags: string[];
     activeWorkflows: string;
     location: LocationEntity;
+}
+
+export class LocationEntity {
+    repositoryId: string;
+    site: string;
+    siteTitle: string;
+    container: string;
+    path: string;
+    file: string;
+    parent: LocationParentEntity;
+}
+
+export class LocationParentEntity {
+    nodeRef: string;
 }

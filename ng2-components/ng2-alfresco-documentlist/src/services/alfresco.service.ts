@@ -18,8 +18,7 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
-import {FolderEntity} from './../core/entities/folder.entity';
-import {DocumentEntity} from './../core/entities/document.entity';
+import {FolderEntity, DocumentEntity} from './../models/document-library.model';
 import {AlfrescoSettingsService} from '../../../ng2-alfresco-core/services';
 
 @Injectable()
