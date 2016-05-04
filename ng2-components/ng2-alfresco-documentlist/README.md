@@ -67,9 +67,16 @@ In addition ```DOCUMENT_LIST_PROVIDERS``` exports all primary services and provi
 
 ### Custom columns
 
+It is possible to reorder, extend or completely redefine data columns displayed by the component.
+By default special `$thumbnail` and `displayName` columns are rendered.
+
+A custom set of columns can look like the following:
+
 ```html
 <alfresco-document-list ...>
     <content-columns>
+        <content-column source="$thumbnail"></content-column>
+        <content-column title="Name" source="displayName" class="full-width name-column"></content-column>
         <content-column title="Created By" source="createdBy"></content-column>
         <content-column title="Created On" source="createdOn"></content-column>
     </content-columns>
