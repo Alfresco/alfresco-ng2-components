@@ -22,7 +22,7 @@
 
 :host .parent-folder-link { cursor: pointer; }
 :host .parent-folder-link > td { text-align: left; }
-:host .folder-header-cell { cursor: pointer; }
+:host .folder-row-cell { cursor: pointer; }
 
 :host .breadcrumb { margin-bottom: 4px; }
 

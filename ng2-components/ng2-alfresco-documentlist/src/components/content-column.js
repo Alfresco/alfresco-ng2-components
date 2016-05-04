@@ -49,6 +49,7 @@ System.register(['angular2/core', './content-column-list', './../models/content-
                     var model = new content_column_model_1.ContentColumnModel();
                     model.title = this.title;
                     model.source = this.source;
+                    model.cssClass = this.cssClass;
                     this.list.registerColumn(model);
                 };
                 __decorate([
@@ -59,6 +60,10 @@ System.register(['angular2/core', './content-column-list', './../models/content-
                     core_1.Input(), 
                     __metadata('design:type', String)
                 ], ContentColumn.prototype, "source", void 0);
+                __decorate([
+                    core_1.Input('class'), 
+                    __metadata('design:type', String)
+                ], ContentColumn.prototype, "cssClass", void 0);
                 ContentColumn = __decorate([
                     core_1.Component({
                         selector: 'content-column',

@@ -20,6 +20,7 @@ export declare class ContentColumn implements OnInit {
     private list;
     title: string;
     source: string;
+    cssClass: string;
     constructor(list: ContentColumnList);
     ngOnInit(): void;
 }

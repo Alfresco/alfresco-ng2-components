@@ -43,7 +43,7 @@
         </td>
 
         <!-- Name: folder -->
-        <td *ngIf="content.isFolder" class="mdl-data-table__cell--non-numeric folder-header-cell"
+        <td *ngIf="content.isFolder" class="mdl-data-table__cell--non-numeric folder-row-cell"
             (click)="onItemClick(content, $event)">
             <span class="content-header">
                 {{content.displayName}}
@@ -58,7 +58,7 @@
         </td>
 
         <!-- Custom columns -->
-        <td *ngFor="#col of columns" class="mdl-data-table__cell--non-numeric">
+        <td *ngFor="#col of columns" class="mdl-data-table__cell--non-numeric {{col.cssClass}}">
             {{content[col.source]}}
         </td>
 

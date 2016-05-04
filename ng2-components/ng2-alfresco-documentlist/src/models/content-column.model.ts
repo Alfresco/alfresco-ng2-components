@@ -18,4 +18,5 @@
 export class ContentColumnModel {
     title: string;
     source: string;
+    cssClass: string;
 }

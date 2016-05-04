@@ -26,6 +26,7 @@ import {ContentColumnModel} from './../models/content-column.model';
 export class ContentColumn implements OnInit {
     @Input() title: string = '';
     @Input() source: string;
+    @Input('class') cssClass: string;
 
     constructor(
         private list: ContentColumnList) {
@@ -35,6 +36,7 @@ export class ContentColumn implements OnInit {
         let model = new ContentColumnModel();
         model.title = this.title;
         model.source = this.source;
+        model.cssClass = this.cssClass;
 
         this.list.registerColumn(model);
     }
