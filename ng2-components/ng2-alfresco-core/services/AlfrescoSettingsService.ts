@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import {Injectable} from 'angular2/core';
 
 @Injectable()
@@ -26,5 +27,10 @@ export class AlfrescoSettingsService {
 
     public set host(value:string) {
         this._host = value;
+    }
+
+    getAuthToken(): string {
+        // todo: get proper token value
+        return 'Basic ' + btoa('admin:admin');
     }
 }

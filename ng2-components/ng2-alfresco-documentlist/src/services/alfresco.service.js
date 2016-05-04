@@ -67,7 +67,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../../../
                 AlfrescoService.prototype.getFolder = function (folder) {
                     var headers = new http_1.Headers({
                         'Content-Type': 'application/json',
-                        'Authorization': 'Basic ' + btoa('admin:admin')
+                        'Authorization': this.settings.getAuthToken()
                     });
                     var options = new http_1.RequestOptions({ headers: headers });
                     return this.http

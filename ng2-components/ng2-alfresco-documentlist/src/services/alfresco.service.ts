@@ -48,7 +48,7 @@ export class AlfrescoService {
     getFolder(folder: string) {
         let headers = new Headers({
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa('admin:admin')
+            'Authorization': this.settings.getAuthToken()
         });
         let options = new RequestOptions({ headers: headers });
         return this.http
