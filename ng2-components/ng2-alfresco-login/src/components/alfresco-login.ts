@@ -32,7 +32,7 @@ declare let __moduleName:string;
 
 })
 export class AlfrescoLoginComponent {
-    @Input() method:string = 'GET';
+    @Input() method:string = 'POST';
     translate: TranslateService;
 
     form:ControlGroup;
@@ -79,10 +79,12 @@ export class AlfrescoLoginComponent {
                 }
 
             },
-            () => {
+            (err:any) => {
                 this.error = true;
+                console.log(err);
                 this.success = false;
-            }
+            },
+            () => console.log('Login done')
         );
     }
 

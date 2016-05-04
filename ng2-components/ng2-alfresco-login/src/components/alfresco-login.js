@@ -40,7 +40,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                 function AlfrescoLoginComponent(fb, auth, router, translate) {
                     this.auth = auth;
                     this.router = router;
-                    this.method = 'GET';
+                    this.method = 'POST';
                     this.error = false;
                     this.success = false;
                     this.form = fb.group({
@@ -69,10 +69,11 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                         catch (error) {
                             console.error(error.message);
                         }
-                    }, function () {
+                    }, function (err) {
                         _this.error = true;
+                        console.log(err);
                         _this.success = false;
-                    });
+                    }, function () { return console.log('Login done'); });
                 };
                 /**
                  * The method return if a field is valid or not

@@ -84,6 +84,15 @@ System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2
                         expect(localStorage.getItem('token')).not.toBeDefined();
                     });
                 });
+                testing_1.it('should return no error if method value is GET', function () {
+                    expect(service.login('GET', 'fakeUser', 'fakePassword').hasErrored).toBe(false);
+                });
+                testing_1.it('should return no error if method value is POST', function () {
+                    expect(service.login('POST', 'fakeUser', 'fakePassword').hasErrored).toBe(false);
+                });
+                testing_1.it('should throw an exception if method value is different from GET or POST', function () {
+                    expect(service.login('PUT', 'fakeUser', 'fakePassword').error).toEqual('Invalid method name the value should be GET or POST');
+                });
             });
         }
     }

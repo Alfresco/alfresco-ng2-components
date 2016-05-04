@@ -56,8 +56,11 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                     if (method === 'GET') {
                         return this.loginGet(username, password);
                     }
-                    else {
+                    else if (method === 'POST') {
                         return this.loginPost(username, password);
+                    }
+                    else {
+                        return Rx_1.Observable.throw('Invalid method name the value should be GET or POST');
                     }
                 };
                 /**
@@ -124,8 +127,8 @@ System.register(['angular2/core', 'rxjs/Rx', 'angular2/http'], function(exports_
                  * @returns {ErrorObservable}
                  */
                 AlfrescoAuthenticationService.prototype.handleError = function (error) {
-                    console.error(error);
-                    return Rx_1.Observable.throw(error.json().error || 'Server error');
+                    console.error(error.json().message);
+                    return Rx_1.Observable.throw(error.json().message || 'Server error');
                 };
                 AlfrescoAuthenticationService = __decorate([
                     core_1.Injectable(), 

@@ -20,6 +20,7 @@ import {Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions} from 'angul
 import {MockBackend} from 'angular2/http/testing';
 import {AlfrescoAuthenticationService} from './alfresco-authentication';
 
+
 describe('AlfrescoAuthentication', () => {
     let injector,
         backend,
@@ -98,6 +99,18 @@ describe('AlfrescoAuthentication', () => {
                 expect(localStorage.getItem('token')).not.toBeDefined();
             }
         );
+    });
+
+    it('should return no error if method value is GET', () => {
+        expect(service.login('GET', 'fakeUser', 'fakePassword').hasErrored).toBe(false);
+    });
+
+    it('should return no error if method value is POST', () => {
+        expect(service.login('POST', 'fakeUser', 'fakePassword').hasErrored).toBe(false);
+    });
+
+    it('should throw an exception if method value is different from GET or POST', () => {
+        expect(service.login('PUT', 'fakeUser', 'fakePassword').error).toEqual('Invalid method name the value should be GET or POST');
     });
 
 });

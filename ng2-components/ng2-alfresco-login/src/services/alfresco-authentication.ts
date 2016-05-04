@@ -55,8 +55,10 @@ export class AlfrescoAuthenticationService {
     login(method:string, username:string, password:string) {
         if (method === 'GET') {
             return this.loginGet(username, password);
-        } else {
+        } else if (method === 'POST') {
             return this.loginPost(username, password);
+        } else {
+            return Observable.throw('Invalid method name the value should be GET or POST');
         }
     }
 
@@ -130,7 +132,7 @@ export class AlfrescoAuthenticationService {
      * @returns {ErrorObservable}
      */
     private handleError(error:Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        console.error(error.json().message);
+        return Observable.throw(error.json().message || 'Server error');
     }
 }
