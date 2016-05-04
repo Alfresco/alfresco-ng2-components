@@ -41,6 +41,8 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                     this.auth = auth;
                     this.router = router;
                     this.method = 'POST';
+                    this.onSuccess = new core_1.EventEmitter();
+                    this.onError = new core_1.EventEmitter();
                     this.error = false;
                     this.success = false;
                     this.form = fb.group({
@@ -64,6 +66,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                         .subscribe(function (token) {
                         try {
                             _this.success = true;
+                            _this.onSuccess.emit({
+                                value: 'Login OK'
+                            });
                             _this.router.navigate(['Home']);
                         }
                         catch (error) {
@@ -71,6 +76,9 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                         }
                     }, function (err) {
                         _this.error = true;
+                        _this.onError.emit({
+                            value: 'Login KO'
+                        });
                         console.log(err);
                         _this.success = false;
                     }, function () { return console.log('Login done'); });
@@ -106,6 +114,14 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                     core_1.Input(), 
                     __metadata('design:type', String)
                 ], AlfrescoLoginComponent.prototype, "method", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], AlfrescoLoginComponent.prototype, "onSuccess", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], AlfrescoLoginComponent.prototype, "onError", void 0);
                 AlfrescoLoginComponent = __decorate([
                     core_1.Component({
                         selector: 'alfresco-login',

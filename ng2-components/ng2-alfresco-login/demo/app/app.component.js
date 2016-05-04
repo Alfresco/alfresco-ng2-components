@@ -34,10 +34,16 @@ System.register(['angular2/core', 'ng2-alfresco-login/ng2-alfresco-login', 'angu
                     this.router = router;
                     alfrescoSettingsService.host = 'http://192.168.99.100:8080';
                 }
+                AppComponent.prototype.mySuccessMethod = function ($event) {
+                    console.log('Success Login EventEmitt called with: ' + $event.value);
+                };
+                AppComponent.prototype.myErrorMethod = function ($event) {
+                    console.log('Error Login EventEmitt called with: ' + $event.value);
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: '<alfresco-login></alfresco-login>',
+                        template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
                         directives: [router_1.ROUTER_DIRECTIVES, ng2_alfresco_login_1.AlfrescoLoginComponent]
                     }),
                     router_1.RouteConfig([

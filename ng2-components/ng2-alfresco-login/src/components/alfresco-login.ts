@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component, Input} from 'angular2/core';
+import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/common';
 import {AlfrescoAuthenticationService} from '../services/alfresco-authentication';
@@ -33,6 +33,8 @@ declare let __moduleName:string;
 })
 export class AlfrescoLoginComponent {
     @Input() method:string = 'POST';
+    @Output() onSuccess = new EventEmitter();
+    @Output() onError = new EventEmitter();
     translate: TranslateService;
 
     form:ControlGroup;
@@ -73,6 +75,9 @@ export class AlfrescoLoginComponent {
             (token:any) => {
                 try {
                     this.success = true;
+                    this.onSuccess.emit({
+                        value: 'Login OK'
+                    });
                     this.router.navigate(['Home']);
                 } catch (error) {
                     console.error(error.message);
@@ -81,6 +86,9 @@ export class AlfrescoLoginComponent {
             },
             (err:any) => {
                 this.error = true;
+                this.onError.emit({
+                    value: 'Login KO'
+                });
                 console.log(err);
                 this.success = false;
             },

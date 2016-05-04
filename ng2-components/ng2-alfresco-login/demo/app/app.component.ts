@@ -7,7 +7,7 @@ import {AlfrescoAuthenticationService} from 'ng2-alfresco-login/ng2-alfresco-log
 
 @Component({
     selector: 'my-app',
-    template: '<alfresco-login></alfresco-login>',
+    template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
     directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
 })
 
@@ -21,6 +21,14 @@ export class AppComponent {
                 alfrescoSettingsService:AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
 
+    }
+
+    mySuccessMethod($event) {
+        console.log('Success Login EventEmitt called with: '+$event.value);
+    }
+
+    myErrorMethod($event) {
+        console.log('Error Login EventEmitt called with: '+$event.value);
     }
 
 }

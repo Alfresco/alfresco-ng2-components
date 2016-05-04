@@ -5,4 +5,6 @@ export declare class AppComponent {
     auth: AlfrescoAuthenticationService;
     router: Router;
     constructor(auth: AlfrescoAuthenticationService, router: Router, alfrescoSettingsService: AlfrescoSettingsService);
+    mySuccessMethod($event: any): void;
+    myErrorMethod($event: any): void;
 }
