@@ -77,7 +77,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     }
                 };
                 UploadComponent.prototype.showUndoNotificationBar = function (latestFilesAdded) {
-                    this.snackbarContainer.nativeElement.MaterialSnackbar.showSnackbar({
+                    this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
                         message: 'Upload in progress...',
                         timeout: 5000,
                         actionHandler: function () {

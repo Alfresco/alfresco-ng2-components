@@ -80,7 +80,7 @@ export class UploadComponent {
     }
 
     showUndoNotificationBar(latestFilesAdded){
-        this.snackbarContainer.nativeElement.MaterialSnackbar.showSnackbar({
+        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
             message: 'Upload in progress...',
             timeout: 5000,
             actionHandler: function () {
