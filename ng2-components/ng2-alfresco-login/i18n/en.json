@@ -2,6 +2,7 @@
   "title" : "Welcome",
   "login" : "Login",
   "username" : "Username",
+  "password" : "Password",
   "input-required-message": "Required",
   "input-min-message": "Your username needs to be at least 4 characters.",
   "login-button": "Login",

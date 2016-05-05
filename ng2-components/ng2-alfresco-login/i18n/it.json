@@ -2,6 +2,7 @@
   "title" : "Benvenuto",
   "login" : "Autenticazione",
   "username" : "Nome utente",
+  "password" : "Password",
   "input-required-message": "Campo obbligatorio",
   "input-min-message": "Inserire un nome utente di 4 caratteri minimo.",
   "login-button": "Accedi",
