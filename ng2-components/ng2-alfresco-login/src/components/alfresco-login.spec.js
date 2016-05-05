@@ -55,10 +55,17 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
             }());
             TranslationMock = (function () {
                 function TranslationMock() {
+                    this.onLangChange = new core_1.EventEmitter();
                 }
                 TranslationMock.prototype.setDefaultLang = function () {
                 };
                 TranslationMock.prototype.use = function () {
+                };
+                TranslationMock.prototype.get = function (key, interpolateParams) {
+                    if (!key) {
+                        throw new Error('Parameter "key" required');
+                    }
+                    return Rx_1.Observable.of(key);
                 };
                 return TranslationMock;
             }());
@@ -80,7 +87,25 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                     router = r;
                     location = l;
                 }));
-                testing_1.it('should render `Login` form with input fields user and password with default value', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                testing_1.it('should render `Login` form with all the keys to be translated', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                    return tcb
+                        .createAsync(alfresco_login_1.AlfrescoLoginComponent)
+                        .then(function (fixture) {
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
+                        fixture.detectChanges();
+                        var element = fixture.nativeElement;
+                        testing_1.expect(element.querySelector('h2').innerText).toEqual('login');
+                        testing_1.expect(element.querySelector('[for="username"]')).toBeDefined();
+                        testing_1.expect(element.querySelector('[for="username"]').innerText).toEqual('username');
+                        testing_1.expect(element.querySelector('#username-required').innerText).toEqual('input-required-message');
+                        testing_1.expect(element.querySelector('[for="password"]')).toBeDefined();
+                        testing_1.expect(element.querySelector('[for="password"]').innerText).toEqual('password');
+                        testing_1.expect(element.querySelector('#password-required').innerText).toEqual('input-required-message');
+                    });
+                }));
+                testing_1.it('should render user and password input fields with default values', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
                     return tcb
                         .createAsync(alfresco_login_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
@@ -92,10 +117,14 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(element.querySelector('input[type="text"]').value).toEqual('');
                     });
                 }));
-                testing_1.it('should render the new values after change the user and password values', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                testing_1.it('should render the new values after user and password values are changed', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
                     return tcb
                         .createAsync(alfresco_login_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
+                        fixture.detectChanges();
                         var compiled = fixture.debugElement.nativeElement;
                         var password = compiled.querySelector('input[type="password"]');
                         var username = compiled.querySelector('input[type="text"]');
@@ -105,19 +134,21 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(compiled.querySelector('input[type="text"]').value).toEqual('my username');
                     });
                 }));
-                testing_1.it('should navigate to Home route after the login OK ', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                testing_1.it('should navigate to Home route after the login have succeeded ', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
                     return tcb
                         .createAsync(alfresco_login_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         router.config([new router_2.Route({ path: '/home', name: 'Home', component: alfresco_login_1.AlfrescoLoginComponent })]);
                         spyOn(router, 'navigate').and.callThrough();
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
                         var compiled = fixture.debugElement.nativeElement;
-                        var password = compiled.querySelector('input[type="password"]');
-                        var username = compiled.querySelector('input[type="text"]');
-                        fixture.debugElement.componentInstance.form._value.username = 'fake-username';
-                        fixture.debugElement.componentInstance.form._value.password = 'fake-password';
+                        component.form._value.username = 'fake-username';
+                        component.form._value.password = 'fake-password';
                         compiled.querySelector('button').click();
-                        testing_1.expect(fixture.componentInstance.error).toBe(false);
+                        fixture.detectChanges();
+                        testing_1.expect(component.error).toBe(false);
                         testing_1.expect(router.navigate).toHaveBeenCalledWith(['Home']);
                     });
                 }));
@@ -126,12 +157,14 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         .createAsync(alfresco_login_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         spyOn(router, 'navigate').and.callThrough();
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
                         var compiled = fixture.debugElement.nativeElement;
-                        var password = compiled.querySelector('input[type="password"]');
-                        var username = compiled.querySelector('input[type="text"]');
-                        fixture.debugElement.componentInstance.form._value.username = 'fake-wrong-username';
-                        fixture.debugElement.componentInstance.form._value.password = 'fake-password';
+                        component.form._value.username = 'fake-wrong-username';
+                        component.form._value.password = 'fake-password';
                         compiled.querySelector('button').click();
+                        fixture.detectChanges();
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
                     });
                 }));
@@ -140,12 +173,14 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         .createAsync(alfresco_login_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         spyOn(router, 'navigate').and.callThrough();
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
                         var compiled = fixture.debugElement.nativeElement;
-                        var password = compiled.querySelector('input[type="password"]');
-                        var username = compiled.querySelector('input[type="text"]');
-                        fixture.debugElement.componentInstance.form._value.username = 'fake-username';
-                        fixture.debugElement.componentInstance.form._value.password = 'fake-wrong-password';
+                        component.form._value.username = 'fake-username';
+                        component.form._value.password = 'fake-wrong-password';
                         compiled.querySelector('button').click();
+                        fixture.detectChanges();
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
                     });
                 }));
@@ -154,13 +189,52 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         .createAsync(alfresco_login_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
                         spyOn(router, 'navigate').and.callThrough();
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
                         var compiled = fixture.debugElement.nativeElement;
-                        var password = compiled.querySelector('input[type="password"]');
-                        var username = compiled.querySelector('input[type="text"]');
-                        fixture.debugElement.componentInstance.form._value.username = 'fake-wrong-username';
-                        fixture.debugElement.componentInstance.form._value.password = 'fake-wrong-password';
+                        component.form._value.username = 'fake-wrong-username';
+                        component.form._value.password = 'fake-wrong-password';
                         compiled.querySelector('button').click();
+                        fixture.detectChanges();
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
+                    });
+                }));
+                testing_1.it('should emit onSuccess event after the login has succeeded', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                    return tcb
+                        .createAsync(alfresco_login_1.AlfrescoLoginComponent)
+                        .then(function (fixture) {
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
+                        spyOn(component.onSuccess, 'emit');
+                        component.form._value.username = 'fake-username';
+                        component.form._value.password = 'fake-password';
+                        // trigger the click
+                        var nativeElement = fixture.nativeElement;
+                        var button = nativeElement.querySelector('button');
+                        button.dispatchEvent(new Event('click'));
+                        fixture.detectChanges();
+                        testing_1.expect(component.onSuccess.emit).toHaveBeenCalledWith({ value: 'Login OK' });
+                    });
+                }));
+                testing_1.it('should emit onError event after the login has failed', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                    return tcb
+                        .createAsync(alfresco_login_1.AlfrescoLoginComponent)
+                        .then(function (fixture) {
+                        //pipes.config();
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
+                        spyOn(component.onError, 'emit');
+                        component.form._value.username = 'fake-wrong-username';
+                        component.form._value.password = 'fake-password';
+                        // trigger the click
+                        var nativeElement = fixture.nativeElement;
+                        var button = nativeElement.querySelector('button');
+                        button.dispatchEvent(new Event('click'));
+                        fixture.detectChanges();
+                        testing_1.expect(component.onError.emit).toHaveBeenCalledWith({ value: 'Login KO' });
                     });
                 }));
             });
