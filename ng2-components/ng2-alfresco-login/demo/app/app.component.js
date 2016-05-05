@@ -49,10 +49,9 @@ System.register(['angular2/core', 'ng2-alfresco-login/ng2-alfresco-login', 'angu
                     router_1.RouteConfig([
                         { path: '/', name: 'Login', component: ng2_alfresco_login_1.AlfrescoLoginComponent, useAsDefault: true }
                     ]), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof ng2_alfresco_login_2.AlfrescoAuthenticationService !== 'undefined' && ng2_alfresco_login_2.AlfrescoAuthenticationService) === 'function' && _a) || Object, router_1.Router, (typeof (_b = typeof services_1.AlfrescoSettingsService !== 'undefined' && services_1.AlfrescoSettingsService) === 'function' && _b) || Object])
+                    __metadata('design:paramtypes', [ng2_alfresco_login_2.AlfrescoAuthenticationService, router_1.Router, services_1.AlfrescoSettingsService])
                 ], AppComponent);
                 return AppComponent;
-                var _a, _b;
             }());
             exports_1("AppComponent", AppComponent);
         }
