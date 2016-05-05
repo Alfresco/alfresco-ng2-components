@@ -42,7 +42,9 @@
         "reflect-metadata": "0.1.2",
         "rxjs": "5.0.0-beta.2",
         "zone.js": "0.6.10",
-        "ng2-translate": "^1.11.2"
+        "ng2-translate": "^1.11.2",
+        "angular2": "2.0.0-beta.15",
+        "ng2-alfresco-core": "0.1.0"
     },
     "peerDependencies": {
         "angular2": "2.0.0-beta.15",

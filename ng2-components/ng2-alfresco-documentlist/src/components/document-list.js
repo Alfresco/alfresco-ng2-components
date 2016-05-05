@@ -1,20 +1,4 @@
-/**
- * @license
- * Copyright 2016 Alfresco Software, Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-System.register(['angular2/core', './../services/alfresco.service', './../models/content-column.model'], function(exports_1, context_1) {
+System.register(['angular2/core', './../services/alfresco.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +10,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, alfresco_service_1, content_column_model_1;
+    var core_1, alfresco_service_1;
     var DocumentList;
     return {
         setters:[
@@ -35,9 +19,6 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
             },
             function (alfresco_service_1_1) {
                 alfresco_service_1 = alfresco_service_1_1;
-            },
-            function (content_column_model_1_1) {
-                content_column_model_1 = content_column_model_1_1;
             }],
         execute: function() {
             DocumentList = (function () {
@@ -45,6 +26,8 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     this._alfrescoService = _alfrescoService;
                     this.navigate = true;
                     this.breadcrumb = false;
+                    this.thumbnails = true;
+                    this.downloads = true;
                     this.itemClick = new core_1.EventEmitter();
                     this.rootFolder = {
                         name: 'Document Library',
@@ -52,8 +35,10 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     };
                     this.currentFolderPath = 'swsdp/documentLibrary';
                     this.route = [];
-                    this.actions = [];
-                    this.columns = [];
+                    this.documentActions = [];
+                    this.quickDocumentActions = [];
+                    this.folderActions = [];
+                    this.quickFolderActions = [];
                 }
                 DocumentList.prototype.canNavigateParent = function () {
                     return this.navigate &&
@@ -63,28 +48,6 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                 DocumentList.prototype.ngOnInit = function () {
                     this.route.push(this.rootFolder);
                     this.displayFolderContent(this.rootFolder.path);
-                };
-                DocumentList.prototype.ngAfterContentInit = function () {
-                    if (!this.columns || this.columns.length === 0) {
-                        this.setupDefaultColumns();
-                    }
-                };
-                DocumentList.prototype.ngAfterViewChecked = function () {
-                    // workaround for MDL issues with dynamic components
-                    if (componentHandler) {
-                        componentHandler.upgradeAllRegistered();
-                    }
-                };
-                DocumentList.prototype.getContentActions = function (target, type) {
-                    if (target && type) {
-                        var ltarget_1 = target.toLowerCase();
-                        var ltype_1 = type.toLowerCase();
-                        return this.actions.filter(function (entry) {
-                            return entry.target.toLowerCase() === ltarget_1 &&
-                                entry.type.toLowerCase() === ltype_1;
-                        });
-                    }
-                    return [];
                 };
                 DocumentList.prototype.onNavigateParentClick = function ($event) {
                     if ($event) {
@@ -134,6 +97,11 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                 DocumentList.prototype.getDocumentThumbnailUrl = function (document) {
                     return this._alfrescoService.getDocumentThumbnailUrl(document);
                 };
+                DocumentList.prototype.registerDocumentAction = function (action) {
+                    if (action) {
+                        this.documentActions.push(action);
+                    }
+                };
                 DocumentList.prototype.executeContentAction = function (document, action) {
                     // todo: safety checks
                     action.handler(document);
@@ -151,18 +119,6 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                         .getFolder(path)
                         .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
                 };
-                DocumentList.prototype.setupDefaultColumns = function () {
-                    var thumbnailCol = new content_column_model_1.ContentColumnModel();
-                    thumbnailCol.source = '$thumbnail';
-                    var nameCol = new content_column_model_1.ContentColumnModel();
-                    nameCol.title = 'Name';
-                    nameCol.source = 'displayName';
-                    nameCol.cssClass = 'full-width name-column';
-                    this.columns = [
-                        thumbnailCol,
-                        nameCol
-                    ];
-                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Boolean)
@@ -174,17 +130,26 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                 __decorate([
                     core_1.Input('folder-icon'), 
                     __metadata('design:type', String)
-                ], DocumentList.prototype, "folderIcon", void 0);
+                ], DocumentList.prototype, "folderIconClass", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], DocumentList.prototype, "thumbnails", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], DocumentList.prototype, "downloads", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', core_1.EventEmitter)
                 ], DocumentList.prototype, "itemClick", void 0);
                 DocumentList = __decorate([
                     core_1.Component({
-                        moduleId: __moduleName,
                         selector: 'alfresco-document-list',
-                        styleUrls: ['./document-list.css'],
-                        templateUrl: './document-list.html',
+                        styles: [
+                            "\n            :host .breadcrumb {\n                margin-bottom: 4px;\n            }\n\n            :host .folder-icon {\n                float: left;\n                margin-right: 10px;\n                font-size: 4em;\n            }\n\n            :host .file-icon {\n                width: 52px;\n                height: 52px;\n                float: left;\n                margin-right: 10px;\n            }\n            \n            :host .document-header {\n                font-size: 24px;\n                line-height: 32px;\n            }\n            \n            :host .document-header:hover {\n                text-decoration: underline;\n            }\n        "
+                        ],
+                        template: "\n        <ol *ngIf=\"breadcrumb\" class=\"breadcrumb\">\n            <li *ngFor=\"#r of route; #last = last\" [class.active]=\"last\" [ngSwitch]=\"last\">\n                <span *ngSwitchWhen=\"true\">{{r.name}}</span>\n                <a *ngSwitchDefault href=\"#\" (click)=\"goToRoute(r, $event)\">{{r.name}}</a>\n            </li>\n        </ol>\n        <div *ngIf=\"folder\" class=\"list-group\">\n            <a href=\"#\" *ngIf=\"canNavigateParent()\" (click)=\"onNavigateParentClick($event)\" class=\"list-group-item\">\n                <span class=\"glyphicon glyphicon-level-up\"></span> ...\n            </a>\n            <a href=\"#\" *ngFor=\"#document of folder.items\" class=\"list-group-item clearfix\">\n                \n                <!-- folder actions -->\n                <div *ngIf=\"document.isFolder && folderActions.length > 0\" class=\"btn-group pull-right\">\n                    <button type=\"button\" class=\"btn btn-default\"\n                            *ngFor=\"#qfa of quickFolderActions\" (click)=\"executeContentAction(document, qfa)\">\n                        <span *ngIf=\"qfa.icon\" class=\"{{qfa.icon}}\"></span>\n                        <span *ngIf=\"qfa.title\">{{qfa.title}}</span>\n                    </button>\n                    <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" \n                          aria-haspopup=\"true\" aria-expanded=\"false\">\n                        Actions <span class=\"caret\"></span>\n                    </button>\n                    <ul class=\"dropdown-menu\">\n                        <li *ngFor=\"#folderAction of folderActions\">\n                            <a href=\"#\" (click)=\"executeContentAction(document, folderAction)\">{{folderAction.title}}</a>\n                        </li>\n                    </ul>\n                </div>\n                \n                <!-- document actions -->\n                <div *ngIf=\"!document.isFolder\" class=\"btn-group pull-right\">\n                    <button type=\"button\" class=\"btn btn-default\"\n                            *ngFor=\"#qda of quickDocumentActions\" (click)=\"executeContentAction(document, qda)\">\n                        <span *ngIf=\"qda.icon\" class=\"{{qda.icon}}\"></span>\n                        <span *ngIf=\"qda.title\">{{qda.title}}</span>\n                    </button>\n                    <button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" \n                          aria-haspopup=\"true\" aria-expanded=\"false\">\n                        Actions <span class=\"caret\"></span>\n                    </button>\n                    <ul class=\"dropdown-menu\">\n                        <li>\n                            <a *ngIf=\"downloads && !document.isFolder\" \n                                href=\"{{getContentUrl(document)}}\" \n                                download target=\"_blank\">\n                                Download\n                            </a>\n                        </li>\n                        <li *ngIf=\"documentActions.length > 0\" role=\"separator\" class=\"divider\"></li>\n                        <li *ngFor=\"#documentAction of documentActions\">\n                            <a href=\"#\" (click)=\"executeContentAction(document, documentAction)\">{{documentAction.title}}</a>\n                        </li>\n                    </ul>\n                </div>\n                \n                <i *ngIf=\"thumbnails && document.isFolder\" class=\"folder-icon {{folderIconClass || 'glyphicon glyphicon-folder-close'}}\"\n                    (click)=\"onItemClick(document, $event)\">\n                </i>\n                <img *ngIf=\"thumbnails && !document.isFolder\" class=\"file-icon\"\n                    alt=\"\"\n                    src=\"{{getDocumentThumbnailUrl(document)}}\"\n                    (click)=\"onItemClick(document, $event)\">\n                <h1 class=\"list-group-item-heading document-header\" (click)=\"onItemClick(document, $event)\" >\n                    {{document.displayName}}\n                </h1>\n                <p class=\"list-group-item-text\">{{document.description}}</p>\n                <small>\n                    Modified {{document.modifiedOn}} by {{document.modifiedBy}}\n                </small>\n            </a>\n        </div>\n    ",
                         providers: [alfresco_service_1.AlfrescoService]
                     }), 
                     __metadata('design:paramtypes', [alfresco_service_1.AlfrescoService])

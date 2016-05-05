@@ -1,0 +1,22 @@
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <tbody>
+    <tr *ngFor="#file of filesUploadingList">
+        <td class="mdl-data-table__cell--non-numeric">{{file.name}}</td>
+        <td _ngcontent-hvq-3="">
+            <div _ngcontent-hvq-3="" class="mdl-progress mdl-js-progress is-upgraded" id="{{file.id}}"
+                 data-upgraded=",MaterialProgress">
+                <div class="progressbar bar bar1" style="width: {{file.progress.percent}}%;"></div>
+                <div class="bufferbar bar bar2" style="width: 100%;"></div>
+                <div class="auxbar bar bar3" style="width: 0%;"></div>
+            </div>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">{{file.size}}</td>
+        <td>
+            <span *ngIf="file.done && !file.abort"><i class="material-icons">done</i></span>
+            <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" ><i class="material-icons">play_arrow</i></span>
+            <span *ngIf="file.abort"><i class="material-icons">remove_circle</i></span>
+            <span *ngIf="!file.abort && !file.uploading && !file.done"><i class="material-icons">pause</i></span>
+        </td>
+    </tr>
+    </tbody>
+</table>

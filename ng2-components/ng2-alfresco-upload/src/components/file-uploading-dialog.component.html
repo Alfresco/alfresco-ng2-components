@@ -1,0 +1,20 @@
+<div class="file-dialog" [ngClass]="{show: _isDialogActive}">
+    <div class="header">
+        <div class="title">
+            {{filesUploadingList.length}} uploads complete
+        </div>
+        <div class="buttons">
+            <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}"  (click)="toggleDialogMinimize($event)">
+                <i class="material-icons down">keyboard_arrow_down</i>
+                <i class="material-icons up">keyboard_arrow_up</i>
+            </div>
+
+            <div class="close-button" (click)="toggleDialog($event)">
+                <i class="material-icons">clear</i>
+            </div>
+        </div>
+    </div>
+    <div class="body-dialog" [ngClass]="{hide: _isDialogMinimized}">
+        <alfresco-file-uploading-list [filesUploadingList]="filesUploadingList"></alfresco-file-uploading-list>
+    </div>
+</div>

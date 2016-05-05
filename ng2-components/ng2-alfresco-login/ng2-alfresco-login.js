@@ -1,7 +1,7 @@
-System.register(['./src/components/alfresco-login', './src/services/alfresco-authentication'], function(exports_1, context_1) {
+System.register(['./src/alfresco-login.component', './src/alfresco-authentication.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var alfresco_login_1, alfresco_authentication_1;
+    var alfresco_login_component_1, alfresco_authentication_service_1;
     var ALFRESCO_LOGIN_DIRECTIVES, ALFRESCO_AUTHENTICATION;
     var exportedNames_1 = {
         'ALFRESCO_LOGIN_DIRECTIVES': true,
@@ -16,21 +16,21 @@ System.register(['./src/components/alfresco-login', './src/services/alfresco-aut
     }
     return {
         setters:[
-            function (alfresco_login_1_1) {
-                alfresco_login_1 = alfresco_login_1_1;
-                exportStar_1(alfresco_login_1_1);
+            function (alfresco_login_component_1_1) {
+                alfresco_login_component_1 = alfresco_login_component_1_1;
+                exportStar_1(alfresco_login_component_1_1);
             },
-            function (alfresco_authentication_1_1) {
-                alfresco_authentication_1 = alfresco_authentication_1_1;
-                exportStar_1(alfresco_authentication_1_1);
+            function (alfresco_authentication_service_1_1) {
+                alfresco_authentication_service_1 = alfresco_authentication_service_1_1;
+                exportStar_1(alfresco_authentication_service_1_1);
             }],
         execute: function() {
             exports_1("default",{
-                directives: [alfresco_login_1.AlfrescoLoginComponent],
-                providers: [alfresco_authentication_1.AlfrescoAuthenticationService]
+                directives: [alfresco_login_component_1.AlfrescoLoginComponent],
+                providers: [alfresco_authentication_service_1.AlfrescoAuthenticationService]
             });
-            exports_1("ALFRESCO_LOGIN_DIRECTIVES", ALFRESCO_LOGIN_DIRECTIVES = [alfresco_login_1.AlfrescoLoginComponent]);
-            exports_1("ALFRESCO_AUTHENTICATION", ALFRESCO_AUTHENTICATION = [alfresco_authentication_1.AlfrescoAuthenticationService]);
+            exports_1("ALFRESCO_LOGIN_DIRECTIVES", ALFRESCO_LOGIN_DIRECTIVES = [alfresco_login_component_1.AlfrescoLoginComponent]);
+            exports_1("ALFRESCO_AUTHENTICATION", ALFRESCO_AUTHENTICATION = [alfresco_authentication_service_1.AlfrescoAuthenticationService]);
         }
     }
 });

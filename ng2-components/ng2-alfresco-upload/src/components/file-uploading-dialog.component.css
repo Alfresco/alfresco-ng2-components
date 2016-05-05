@@ -1,0 +1,115 @@
+
+.file-dialog {
+    display: none;
+    -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2);
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+    opacity: 1;
+    -webkit-transition: transform .15s cubic-bezier(0.4, 0.0, 1, 1), opacity .15s cubic-bezier(0.4, 0.0, 1, 1), visibility 0ms linear .15s;
+    transition: transform .15s cubic-bezier(0.4, 0.0, 1, 1), opacity .15s cubic-bezier(0.4, 0.0, 1, 1), visibility 0ms linear .15s;
+    bottom: 0px;
+    left: auto;
+    max-height: 350px;
+    overflow: visible;
+    right: 24px;
+    position: absolute;
+}
+
+.file-dialog .header {
+    width: 900px;
+    background-color: #0c79bf;
+    border: 1px transparent solid;
+    -moz-border-radius-topleft: 2px;
+    -webkit-border-top-left-radius: 2px;
+    border-top-left-radius: 2px;
+    -moz-border-radius-topright: 2px;
+    -webkit-border-top-right-radius: 2px;
+    border-top-right-radius: 2px;
+    bottom: 0px;
+    color: white;
+    font-size: 14px;
+    height: 52px;
+    line-height: 52px;
+    padding: 0px 10px 0px 10px;
+}
+
+.file-dialog .header .title {
+    float: left;
+    min-width: 200px;
+    color: white;
+}
+
+.file-dialog .header .buttons {
+    float: right;
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.file-dialog .header .close-button {
+    cursor: pointer;
+    float: left;
+    height: 35px;
+    width: 35px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+}
+
+.file-dialog .header .close-button:hover {
+    border: 1px solid white;
+    opacity: 1.0;
+}
+
+.file-dialog .header .minimize-button {
+    cursor: pointer;
+    float: left;
+    height: 35px;
+    width: 35px;
+    margin-right: 10px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+}
+
+.up {
+    display: none;
+}
+
+.down {
+    display: block;
+}
+
+.active .up {
+    display: block;
+}
+
+.active .down {
+    display: none;
+}
+
+.file-dialog .header .minimize-button:hover {
+    border: 1px solid white;
+    opacity: 1.0;
+}
+
+.file-dialog .body-dialog {
+    float: left;
+    height: 100%;
+    width: 100%;
+    margin-top: -4px;
+    border-bottom: 1px solid #C0C0C0;
+    border-right: 1px solid #C0C0C0;
+    border-left: 1px solid #C0C0C0;
+    max-height: 200px;
+    overflow-y: auto;
+}

@@ -10,10 +10,17 @@
         "noImplicitAny": false,
         "declaration": true
     },
+    "files":[
+        "node_modules/angular2/typings/browser.d.ts",
+        "typings/browser/ambient/jasmine/index.d.ts",
+        "src/alfresco-login.component.ts",
+        "src/alfresco-login.component.spec.ts",
+        "src/alfresco-authentication.service.ts",
+        "src/alfresco-authentication.service.spec.ts"
+    ],
     "exclude": [
-        "node_modules",
-        "typings/main",
-        "typings/main.d.ts",
-        "demo"
+        "**/node_modules",
+        "**/typings/main",
+        "**/typings/main.d.ts"
     ]
 }
