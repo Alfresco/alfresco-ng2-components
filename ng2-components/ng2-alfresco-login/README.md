@@ -13,11 +13,19 @@ import {AlfrescoLoginComponent} from 'ng2-alfresco-login/ng2-alfresco-login';
 
 @Component({
     selector: 'my-login',
-    template: ' <alfresco-login method="{{methodName}}"></alfresco-login>',
+    template: ' <alfresco-login method="{{methodName}}" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
     directives: [Login]
 })
 export class MyLoginComponent {
     methodName: string = 'POST';
+    
+    mySuccessMethod($event) {
+            console.log('Success Login EventEmitt called with: '+$event.value);
+        }
+    
+    myErrorMethod($event) {
+        console.log('Error Login EventEmitt called with: '+$event.value);
+    }
 }
 ```
 
