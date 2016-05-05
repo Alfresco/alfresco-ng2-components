@@ -26,6 +26,7 @@ export declare class UploadComponent {
     filesUploadingList: FileModel[];
     constructor(el: ElementRef);
     onFilesAdded(files: any): void;
+    onFilesDragged(files: any): void;
     showUndoNotificationBar(latestFilesAdded: any): void;
     showDialog(): void;
 }

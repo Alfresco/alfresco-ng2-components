@@ -66,20 +66,27 @@ export class UploadComponent {
     }
 
     onFilesAdded(files):void {
-        let latestFilesAdded:FileModel [] = [];
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
         if (files.length) {
-            latestFilesAdded = this._uploaderService.addToQueue(files);
+            let latestFilesAdded = this._uploaderService.addToQueue(files);
             this.filesUploadingList = this._uploaderService.getQueue();
             this.showDialog();
             this.showUndoNotificationBar(latestFilesAdded);
         }
     }
 
+    onFilesDragged(files):void {
+        if (files.length) {
+            this._uploaderService.addToQueue(files);
+            this.filesUploadingList = this._uploaderService.getQueue();
+            this.showDialog();
+        }
+    }
+
     showUndoNotificationBar(latestFilesAdded){
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+
         this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
             message: 'Upload in progress...',
             timeout: 5000,

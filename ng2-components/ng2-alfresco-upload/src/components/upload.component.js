@@ -65,18 +65,24 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     });
                 }
                 UploadComponent.prototype.onFilesAdded = function (files) {
-                    var latestFilesAdded = [];
-                    if (componentHandler) {
-                        componentHandler.upgradeAllRegistered();
-                    }
                     if (files.length) {
-                        latestFilesAdded = this._uploaderService.addToQueue(files);
+                        var latestFilesAdded = this._uploaderService.addToQueue(files);
                         this.filesUploadingList = this._uploaderService.getQueue();
                         this.showDialog();
                         this.showUndoNotificationBar(latestFilesAdded);
                     }
                 };
+                UploadComponent.prototype.onFilesDragged = function (files) {
+                    if (files.length) {
+                        this._uploaderService.addToQueue(files);
+                        this.filesUploadingList = this._uploaderService.getQueue();
+                        this.showDialog();
+                    }
+                };
                 UploadComponent.prototype.showUndoNotificationBar = function (latestFilesAdded) {
+                    if (componentHandler) {
+                        componentHandler.upgradeAllRegistered();
+                    }
                     this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
                         message: 'Upload in progress...',
                         timeout: 5000,
