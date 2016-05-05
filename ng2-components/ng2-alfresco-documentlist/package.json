@@ -7,7 +7,9 @@
         "build": "typings install && tsc",
         "tsc": "tsc",
         "tsc:w": "tsc -w",
-        "typings": "typings"
+        "typings": "typings",
+        "test": "live-server --open=test/index.html --mount=/ng2-alfresco-core:../ng2-alfresco-core",
+        "test:w": "concurrently \"npm run tsc:w\" \"npm run test\" "
     },
     "repository": {
         "type": "git",
@@ -38,11 +40,14 @@
         "zone.js": "0.6.10"
     },
     "peerDependencies": {
-        "angular2": "2.0.0-beta.15",
-        "ng2-alfresco-core": "0.1.0"
+        "angular2": "2.0.0-beta.15"
     },
     "devDependencies": {
         "typescript": "^1.8.10",
-        "typings": "^0.7.12"
+        "typings": "^0.7.12",
+        "jasmine-core": "2.4.1",
+        "xo": "^0.14.0",
+        "live-server": "^0.9.2",
+        "concurrently": "^2.0.0"
     }
 }
