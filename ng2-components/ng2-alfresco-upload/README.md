@@ -9,8 +9,6 @@
 </p>
 
 ## Install
-Alternatively you can build component from sources with the following commands:
-
 
 
 ```sh
