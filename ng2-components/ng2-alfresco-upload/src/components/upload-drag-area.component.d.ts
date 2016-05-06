@@ -17,12 +17,31 @@
 import { ElementRef } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
+/**
+ * <alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
+ *
+ * This component, provide a drag and drop are to upload files to alfresco.
+ *
+ * @InputParam {boolean} [true] showDialogUpload - hide/show upload dialog .
+ *
+ *
+ * @returns {UploadDragAreaComponent} .
+ */
 export declare class UploadDragAreaComponent {
     el: ElementRef;
     private _uploaderService;
     fileUploadingDialogComponent: FileUploadingDialogComponent;
+    showUploadDialog: boolean;
     filesUploadingList: FileModel[];
     constructor(el: ElementRef);
-    onFilesDragged(files: any): void;
-    showDialog(): void;
+    /**
+     * Method called when files are dropped in the drag area.
+     *
+     * @param {File[]} files - files dropped in the drag area.
+     */
+    onFilesDropped(files: any): void;
+    /**
+     * Show the upload dialog.
+     */
+    private _showDialog();
 }

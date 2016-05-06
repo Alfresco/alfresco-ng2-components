@@ -43,9 +43,20 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                 file_draggable_directive_1 = file_draggable_directive_1_1;
             }],
         execute: function() {
+            /**
+             * <alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
+             *
+             * This component, provide a drag and drop are to upload files to alfresco.
+             *
+             * @InputParam {boolean} [true] showDialogUpload - hide/show upload dialog .
+             *
+             *
+             * @returns {UploadDragAreaComponent} .
+             */
             UploadDragAreaComponent = (function () {
                 function UploadDragAreaComponent(el) {
                     this.el = el;
+                    this.showUploadDialog = true;
                     this.filesUploadingList = [];
                     console.log('UploadComponent constructor', el);
                     this._uploaderService = new upload_service_1.UploadService({
@@ -60,20 +71,34 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         }
                     });
                 }
-                UploadDragAreaComponent.prototype.onFilesDragged = function (files) {
+                /**
+                 * Method called when files are dropped in the drag area.
+                 *
+                 * @param {File[]} files - files dropped in the drag area.
+                 */
+                UploadDragAreaComponent.prototype.onFilesDropped = function (files) {
                     if (files.length) {
                         this._uploaderService.addToQueue(files);
                         this.filesUploadingList = this._uploaderService.getQueue();
-                        this.showDialog();
+                        if (this.showUploadDialog) {
+                            this._showDialog();
+                        }
                     }
                 };
-                UploadDragAreaComponent.prototype.showDialog = function () {
+                /**
+                 * Show the upload dialog.
+                 */
+                UploadDragAreaComponent.prototype._showDialog = function () {
                     this.fileUploadingDialogComponent.showDialog();
                 };
                 __decorate([
                     core_1.ViewChild('fileUploadingDialog'), 
                     __metadata('design:type', file_uploading_dialog_component_1.FileUploadingDialogComponent)
                 ], UploadDragAreaComponent.prototype, "fileUploadingDialogComponent", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], UploadDragAreaComponent.prototype, "showUploadDialog", void 0);
                 UploadDragAreaComponent = __decorate([
                     core_1.Component({
                         selector: 'alfresco-upload-drag-area',

@@ -14,6 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ *
+ * This object represent the status of an uploading file.
+ *
+ *
+ * @returns {FileModel} .
+ */
 export declare class FileModel {
     id: string;
     status: number;
@@ -33,8 +40,24 @@ export declare class FileModel {
     setError(): void;
     setUploading(): void;
     setXMLHttpRequest(xmlHttpRequest: XMLHttpRequest): void;
+    /**
+     * Stop the uploading of the file.
+     */
     setAbort(): void;
+    /**
+     * Update status of the file when upload finish or is ended.
+     */
     onFinished(status: number, statusText: string, response: string): void;
+    /**
+     * Calculate the size of the file in kb,mb and gb.
+     *
+     * @param {number} sizeinbytes - size in bytes of the file.
+     */
     private _getFileSize(sizeinbytes);
+    /**
+     * Calculate the size of the file in kb,mb and gb.
+     *
+     * @return {string} - return a unique file uploading id.
+     */
     private _generateId();
 }

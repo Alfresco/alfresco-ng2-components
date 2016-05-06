@@ -37,6 +37,17 @@ System.register(['angular2/core', './file-uploading-list.component'], function(e
                 file_uploading_list_component_1 = file_uploading_list_component_1_1;
             }],
         execute: function() {
+            /**
+             * <file-uploading-dialog [filesUploadingList]="FileModel[]" ></file-uploading-dialog>
+             *
+             * This component is a hideable and minimizable wich contains the list of the uploading
+             * files contained in the filesUploadingList.
+             *
+             * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
+             *
+             *
+             * @returns {FileUploadingDialogComponent} .
+             */
             FileUploadingDialogComponent = (function () {
                 function FileUploadingDialogComponent(el) {
                     this.el = el;
@@ -44,12 +55,21 @@ System.register(['angular2/core', './file-uploading-list.component'], function(e
                     this._isDialogMinimized = false;
                     console.log('FileUploadingDialogComponent constructor', el);
                 }
-                FileUploadingDialogComponent.prototype.toggleDialog = function ($event) {
+                /**
+                 * Display and hide the dialog component.
+                 */
+                FileUploadingDialogComponent.prototype.toggleShowDialog = function ($event) {
                     this._isDialogActive = !this._isDialogActive;
                 };
+                /**
+                 * Display the dialog if hidden.
+                 */
                 FileUploadingDialogComponent.prototype.showDialog = function () {
                     this._isDialogActive = true;
                 };
+                /**
+                 * Minimize and expand the dialog component.
+                 */
                 FileUploadingDialogComponent.prototype.toggleDialogMinimize = function ($event) {
                     this._isDialogMinimized = !this._isDialogMinimized;
                 };
@@ -64,7 +84,7 @@ System.register(['angular2/core', './file-uploading-list.component'], function(e
                         directives: [file_uploading_list_component_1.FileUploadingListComponent],
                         templateUrl: './file-uploading-dialog.component.html',
                         styleUrls: ['./file-uploading-dialog.component.css'],
-                        host: { '[class.dialog-show]': 'toggleDialog' }
+                        host: { '[class.dialog-show]': 'toggleShowDialog' }
                     }), 
                     __metadata('design:paramtypes', [core_1.ElementRef])
                 ], FileUploadingDialogComponent);

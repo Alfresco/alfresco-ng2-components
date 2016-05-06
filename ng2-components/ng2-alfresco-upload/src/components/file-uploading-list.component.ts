@@ -19,8 +19,18 @@
 import {Component, ElementRef, Input} from 'angular2/core';
 import {FileModel} from '../models/file.model';
 
-declare let __moduleName:string;
+declare let __moduleName: string;
 
+/**
+ * <alfresco-file-uploading-list [filesUploadingList]="FileModel[]" ></alfresco-file-uploading-list>
+ *
+ * This component show a list of the uploading files contained in the filesUploadingList.
+ *
+ * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
+ *
+ *
+ * @returns {FileUploadingListComponent} .
+ */
 @Component({
     selector: 'alfresco-file-uploading-list',
     moduleId: __moduleName,
@@ -30,9 +40,9 @@ declare let __moduleName:string;
 export class FileUploadingListComponent {
 
     @Input()
-    filesUploadingList:FileModel [];
+    filesUploadingList: FileModel [];
 
-    constructor(public el:ElementRef) {
+    constructor(public el: ElementRef) {
         console.log('filesUploadingList constructor', el);
 
         setInterval(() => {
@@ -40,7 +50,12 @@ export class FileUploadingListComponent {
         }, 1000);
     }
 
-    abort(id):void {
+    /**
+     * Abort the in progress uploading of a specific file.
+     *
+     * @param {string} id - FileModel id of the file to abort.
+     */
+    abort(id): void {
         let file = this.filesUploadingList.filter((uploadingFileModel) => {
             return uploadingFileModel.id == id;
         });

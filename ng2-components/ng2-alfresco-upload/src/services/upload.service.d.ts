@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 import { FileModel } from '../models/file.model';
+/**
+ *
+ * UploadService keep the queue of the file to upload and uploads them.
+ *
+ * @returns {UploadService} .
+ */
 export declare class UploadService {
     private options;
     private _url;
@@ -24,11 +30,37 @@ export declare class UploadService {
     private _fieldName;
     private _formFields;
     private _withCredentials;
-    _queue: FileModel[];
+    private _queue;
     constructor(options: any);
+    /**
+     * Add files to the uploading queue to be uploaded.
+     *
+     * @param {File[]} - files to add to the upload queue.
+     *
+     * return {FileModel[]} - return the file added to the queue in this call.
+     */
     addToQueue(files: any[]): FileModel[];
+    /**
+     * Pick all the files in the queue that are not been uploaded yet and upload it.
+     */
     private _uploadFilesInTheQueue();
+    /**
+     * Upload a file, and enrich it with the xhr.
+     *
+     * @param {FileModel} - files to be uploaded.
+     *
+     */
     uploadFile(uploadingFileModel: any): void;
+    /**
+     * Return all the files in the uploading queue.
+     *
+     * @return {FileModel[]} - files in the upload queue.
+     */
     getQueue(): FileModel[];
+    /**
+     * Check if an item is a file.
+     *
+     * @return {boolean}
+     */
     private _isFile(file);
 }

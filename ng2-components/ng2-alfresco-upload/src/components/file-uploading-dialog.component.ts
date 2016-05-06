@@ -20,37 +20,57 @@ import {Component, ElementRef, Input} from 'angular2/core';
 import {FileModel} from '../models/file.model';
 import {FileUploadingListComponent} from './file-uploading-list.component';
 
-declare let __moduleName:string;
+declare let __moduleName: string;
 
+/**
+ * <file-uploading-dialog [filesUploadingList]="FileModel[]" ></file-uploading-dialog>
+ *
+ * This component is a hideable and minimizable wich contains the list of the uploading
+ * files contained in the filesUploadingList.
+ *
+ * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
+ *
+ *
+ * @returns {FileUploadingDialogComponent} .
+ */
 @Component({
     selector: 'file-uploading-dialog',
     moduleId: __moduleName,
     directives: [FileUploadingListComponent],
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.css'],
-    host: {'[class.dialog-show]': 'toggleDialog'}
+    host: {'[class.dialog-show]': 'toggleShowDialog'}
 })
 export class FileUploadingDialogComponent {
 
     @Input()
-    filesUploadingList:FileModel [];
+    filesUploadingList: FileModel [];
 
-    _isDialogActive:boolean = false;
+    private _isDialogActive: boolean = false;
 
-    _isDialogMinimized:boolean = false;
+    private _isDialogMinimized: boolean = false;
 
-    constructor(public el:ElementRef) {
+    constructor(public el: ElementRef) {
         console.log('FileUploadingDialogComponent constructor', el);
     }
 
-    toggleDialog($event) {
+    /**
+     * Display and hide the dialog component.
+     */
+    toggleShowDialog($event) {
         this._isDialogActive = !this._isDialogActive;
     }
 
+    /**
+     * Display the dialog if hidden.
+     */
     showDialog() {
         this._isDialogActive = true;
     }
 
+    /**
+     * Minimize and expand the dialog component.
+     */
     toggleDialogMinimize($event) {
         this._isDialogMinimized = !this._isDialogMinimized;
     }

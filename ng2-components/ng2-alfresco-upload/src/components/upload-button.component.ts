@@ -16,36 +16,68 @@
  */
 
 
-import {Component, ViewChild, ElementRef} from 'angular2/core';
+import {Component, ViewChild, ElementRef, Input} from 'angular2/core';
 import {UploadService} from '../services/upload.service';
 import {FileModel} from '../models/file.model';
 import {FileUploadingDialogComponent} from './file-uploading-dialog.component';
-import {FileSelectDirective} from '../directives/file-select.directive';
-import {FileDraggableDirective} from '../directives/file-draggable.directive';
 
 declare let componentHandler;
-declare let __moduleName:string;
+declare let __moduleName: string;
 
+/**
+ * <alfresco-upload-button [showDialogUpload]="boolean"
+ *                         [showUdoNotificationBar]="boolean"
+ *                         [uploadFolders]="boolean"
+ *                         [multipleFiles]="boolean"
+ *                         [acceptedFilesType]="string">
+ * </alfresco-upload-button>
+ *
+ * This component, provide a set of buttons to upload files to alfresco.
+ *
+ * @InputParam {boolean} [true] showDialogUpload - hide/show upload dialog.
+ * @InputParam {boolean} [true] showUdoNotificationBar - hide/show notification bar.
+ * @InputParam {boolean} [false] uploadFolders - allow/disallow upload folders (only for chrome).
+ * @InputParam {boolean} [false] multipleFiles - allow/disallow multiple files.
+ * @InputParam {string} [*] acceptedFilesType - array of allowed file extensions.
+ *
+ *
+ * @returns {UploadDragAreaComponent} .
+ */
 @Component({
     selector: 'alfresco-upload-button',
     moduleId: __moduleName,
-    directives: [FileSelectDirective, FileUploadingDialogComponent],
+    directives: [FileUploadingDialogComponent],
     templateUrl: './upload-button.component.html',
-    styleUrls: ['./upload-button.component.css']
+    styleUrls: ['./upload-button.component.css'],
 })
 export class UploadButtonComponent {
 
-    private _uploaderService:UploadService;
+    private _uploaderService: UploadService;
 
     @ViewChild('undoNotificationBar')
     undoNotificationBar;
 
     @ViewChild('fileUploadingDialog')
-    fileUploadingDialogComponent:FileUploadingDialogComponent;
+    fileUploadingDialogComponent: FileUploadingDialogComponent;
 
-    filesUploadingList:FileModel [] = [];
+    @Input()
+    showUploadDialog: boolean = true;
 
-    constructor(public el:ElementRef) {
+    @Input()
+    showUdoNotificationBar: boolean = true;
+
+    @Input()
+    uploadFolders: boolean = false;
+
+    @Input()
+    multipleFiles: boolean = false;
+
+    @Input()
+    acceptedFilesType: string = '*';
+
+    filesUploadingList: FileModel [] = [];
+
+    constructor(public el: ElementRef) {
         console.log('UploadComponent constructor', el);
 
         this._uploaderService = new UploadService({
@@ -61,16 +93,31 @@ export class UploadButtonComponent {
         });
     }
 
-    onFilesAdded(files):void {
+    /**
+     * Method called when files are dropped in the drag area.
+     *
+     * @param {File[]} files - files dropped in the drag area.
+     */
+    onFilesAdded($event): void {
+        let files = $event.currentTarget.files;
         if (files.length) {
             let latestFilesAdded = this._uploaderService.addToQueue(files);
             this.filesUploadingList = this._uploaderService.getQueue();
-            this.showDialog();
-            this.showUndoNotificationBar(latestFilesAdded);
+            if (this.showUploadDialog) {
+                this._showDialog();
+            }
+            if(this.showUdoNotificationBar) {
+                this._showUndoNotificationBar(latestFilesAdded);
+            }
         }
     }
 
-    showUndoNotificationBar(latestFilesAdded) {
+    /**
+     * Show undo notification bar.
+     *
+     * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
+     */
+    private _showUndoNotificationBar(latestFilesAdded) {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
@@ -87,7 +134,10 @@ export class UploadButtonComponent {
         });
     }
 
-    showDialog():void {
+    /**
+     * Show the upload dialog.
+     */
+    private _showDialog(): void {
         this.fileUploadingDialogComponent.showDialog();
     }
 }

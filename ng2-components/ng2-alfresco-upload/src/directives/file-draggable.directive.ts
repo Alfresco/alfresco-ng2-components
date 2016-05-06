@@ -17,6 +17,17 @@
 
 import {Directive, ElementRef, EventEmitter, Output} from 'angular2/core';
 
+/**
+ * [file-draggable]
+ *
+ * This directive, provide a drag and drop area for files and folders.
+ *
+ * @OutputEvent {EventEmitter} onFilesDropped(File)- event fired fot each file dropped
+ * in the drag and drop area.
+ *
+ *
+ * @returns {FileDraggableDirective} .
+ */
 @Directive({
     selector: '[file-draggable]',
     host: {
@@ -28,39 +39,51 @@ import {Directive, ElementRef, EventEmitter, Output} from 'angular2/core';
     }
 })
 export class FileDraggableDirective {
-    @Output()
-    onFilesAdded:EventEmitter<any> = new EventEmitter();
-    files:File [];
-    private _inputFocusClass:boolean = false;
 
-    constructor(public el:ElementRef) {
+    @Output()
+    onFilesDropped: EventEmitter<any> = new EventEmitter();
+
+    files: File [];
+
+    private _inputFocusClass: boolean = false;
+
+    constructor(public el: ElementRef) {
         console.log('FileDraggableComponent constructor', el);
     }
 
-    private _onDropFiles($event):void {
+    /**
+     * Method called when files is dropped in the drag and drop area.
+     *
+     * @param {$event} $event - DOM $event.
+     */
+    private _onDropFiles($event): void {
         this._preventDefault($event);
 
         var items = $event.dataTransfer.items;
         for (var i = 0; i < items.length; i++) {
             var item = items[i].webkitGetAsEntry();
             if (item) {
-                this._traverseFileTree(item, -1);
+                this._traverseFileTree(item);
             } else {
                 let dt = $event.dataTransfer;
                 let files = dt.files;
-                this.onFilesAdded.emit(files);
+                this.onFilesDropped.emit(files);
             }
         }
-        this.onFilesAdded.emit([]);
 
         this._inputFocusClass = false;
     }
 
-    private _traverseFileTree(item, x):void {
+    /**
+     * Travers all the files and folders, and emit an event for each file.
+     *
+     * @param {Object} item - can contains files or folders.
+     */
+    private _traverseFileTree(item): void {
         if (item.isFile) {
             let self = this;
             item.file(function (file) {
-                self.onFilesAdded.emit([file]);
+                self.onFilesDropped.emit([file]);
             });
         } else {
             if (item.isDirectory) {
@@ -68,26 +91,41 @@ export class FileDraggableDirective {
                 let dirReader = item.createReader();
                 dirReader.readEntries(function (entries) {
                     for (var i = 0; i < entries.length; i++) {
-                        self._traverseFileTree(entries[i], i);
+                        self._traverseFileTree(entries[i]);
                     }
                 });
             }
         }
     }
 
-    private _onDragEnter($event):void {
+    /**
+     * Change the style of the drag area when a file drag in.
+     *
+     * @param {$event} $event - DOM $event.
+     */
+    private _onDragEnter($event): void {
         this._preventDefault($event);
 
         this._inputFocusClass = true;
     }
 
-    private _onDragLeave($event):void {
+    /**
+     * Change the style of the drag area when a file drag out.
+     *
+     * @param {$event} $event - DOM $event.
+     */
+    private _onDragLeave($event): void {
         this._preventDefault($event);
 
         this._inputFocusClass = false;
     }
 
-    private _preventDefault($event):void {
+    /**
+     * Prevent default and stop propagation of the DOM event.
+     *
+     * @param {$event} $event - DOM $event.
+     */
+    private _preventDefault($event): void {
         $event.stopPropagation();
         $event.preventDefault();
     }

@@ -15,23 +15,29 @@
  * limitations under the License.
  */
 
-
+/**
+ *
+ * This object represent the status of an uploading file.
+ *
+ *
+ * @returns {FileModel} .
+ */
 export class FileModel {
-    id:string;
-    status:number;
-    statusText:string;
-    progress:Object;
-    name:string;
-    size:string;
-    response:string;
-    done:boolean = false;
-    error:boolean = false;
-    abort:boolean = false;
-    uploading:boolean = false;
-    file:any;
-    _xmlHttpRequest:XMLHttpRequest;
+    id: string;
+    status: number;
+    statusText: string;
+    progress: Object;
+    name: string;
+    size: string;
+    response: string;
+    done: boolean = false;
+    error: boolean = false;
+    abort: boolean = false;
+    uploading: boolean = false;
+    file: any;
+    _xmlHttpRequest: XMLHttpRequest;
 
-    constructor(file:any) {
+    constructor(file: any) {
         this.file = file;
         this.id = this._generateId();
         this.name = file.name;
@@ -43,31 +49,37 @@ export class FileModel {
         };
     }
 
-    setProgres(progress:any):void {
+    setProgres(progress: any): void {
         this.progress = progress;
     }
 
-    setError():void {
+    setError(): void {
         this.error = true;
     }
 
-    setUploading(){
+    setUploading() {
         this.uploading = true;
     }
 
-    setXMLHttpRequest(xmlHttpRequest:XMLHttpRequest){
+    setXMLHttpRequest(xmlHttpRequest: XMLHttpRequest) {
         this._xmlHttpRequest = xmlHttpRequest;
     }
 
-    setAbort():void {
-        if(!this.done && !this.error){
+    /**
+     * Stop the uploading of the file.
+     */
+    setAbort(): void {
+        if (!this.done && !this.error) {
             this.abort = true;
             this.uploading = false;
             this._xmlHttpRequest.abort();
         }
     }
 
-    onFinished(status:number, statusText:string, response:string):void {
+    /**
+     * Update status of the file when upload finish or is ended.
+     */
+    onFinished(status: number, statusText: string, response: string): void {
         this.status = status;
         this.statusText = statusText;
         this.response = response;
@@ -75,7 +87,12 @@ export class FileModel {
         this.uploading = false;
     }
 
-    private _getFileSize(sizeinbytes):string {
+    /**
+     * Calculate the size of the file in kb,mb and gb.
+     *
+     * @param {number} sizeinbytes - size in bytes of the file.
+     */
+    private _getFileSize(sizeinbytes): string {
         let fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
         let size = sizeinbytes;
         let i = 0;
@@ -86,8 +103,13 @@ export class FileModel {
         return Math.round((Math.round(size * 100) / 100)) + ' ' + fSExt[i];
     }
 
-    private _generateId():string {
-        return 'uploading-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    /**
+     * Calculate the size of the file in kb,mb and gb.
+     *
+     * @return {string} - return a unique file uploading id.
+     */
+    private _generateId(): string {
+        return 'uploading-file-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });

@@ -25,6 +25,12 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                 file_model_1 = file_model_1_1;
             }],
         execute: function() {
+            /**
+             *
+             * UploadService keep the queue of the file to upload and uploads them.
+             *
+             * @returns {UploadService} .
+             */
             UploadService = (function () {
                 function UploadService(options) {
                     this.options = options;
@@ -42,6 +48,13 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                     this._fieldName = options.fieldName != null ? options.fieldName : this._fieldName;
                     this._formFields = options.formFields != null ? options.formFields : this._formFields;
                 }
+                /**
+                 * Add files to the uploading queue to be uploaded.
+                 *
+                 * @param {File[]} - files to add to the upload queue.
+                 *
+                 * return {FileModel[]} - return the file added to the queue in this call.
+                 */
                 UploadService.prototype.addToQueue = function (files) {
                     var latestFilesAdded = [];
                     for (var _i = 0, files_1 = files; _i < files_1.length; _i++) {
@@ -55,6 +68,9 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                     this._uploadFilesInTheQueue();
                     return latestFilesAdded;
                 };
+                /**
+                 * Pick all the files in the queue that are not been uploaded yet and upload it.
+                 */
                 UploadService.prototype._uploadFilesInTheQueue = function () {
                     var _this = this;
                     var filesToUpload = this._queue.filter(function (uploadingFileModel) {
@@ -66,6 +82,12 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                     });
                 };
                 ;
+                /**
+                 * Upload a file, and enrich it with the xhr.
+                 *
+                 * @param {FileModel} - files to be uploaded.
+                 *
+                 */
                 UploadService.prototype.uploadFile = function (uploadingFileModel) {
                     var _this = this;
                     var form = new FormData();
@@ -103,9 +125,19 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                     }
                     xmlHttpRequest.send(form);
                 };
+                /**
+                 * Return all the files in the uploading queue.
+                 *
+                 * @return {FileModel[]} - files in the upload queue.
+                 */
                 UploadService.prototype.getQueue = function () {
                     return this._queue;
                 };
+                /**
+                 * Check if an item is a file.
+                 *
+                 * @return {boolean}
+                 */
                 UploadService.prototype._isFile = function (file) {
                     return file !== null && (file instanceof Blob || (file.name && file.size));
                 };

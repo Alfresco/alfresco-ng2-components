@@ -16,14 +16,24 @@
  */
 
 
-import {Component, ViewChild, ElementRef} from 'angular2/core';
+import {Component, ViewChild, ElementRef, Input} from 'angular2/core';
 import {UploadService} from '../services/upload.service';
 import {FileModel} from '../models/file.model';
 import {FileUploadingDialogComponent} from './file-uploading-dialog.component';
 import {FileDraggableDirective} from '../directives/file-draggable.directive';
 
-declare let __moduleName:string;
+declare let __moduleName: string;
 
+/**
+ * <alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
+ *
+ * This component, provide a drag and drop are to upload files to alfresco.
+ *
+ * @InputParam {boolean} [true] showDialogUpload - hide/show upload dialog .
+ *
+ *
+ * @returns {UploadDragAreaComponent} .
+ */
 @Component({
     selector: 'alfresco-upload-drag-area',
     moduleId: __moduleName,
@@ -33,14 +43,17 @@ declare let __moduleName:string;
 })
 export class UploadDragAreaComponent {
 
-    private _uploaderService:UploadService;
+    private _uploaderService: UploadService;
 
     @ViewChild('fileUploadingDialog')
-    fileUploadingDialogComponent:FileUploadingDialogComponent;
+    fileUploadingDialogComponent: FileUploadingDialogComponent;
 
-    filesUploadingList:FileModel [] = [];
+    @Input()
+    showUploadDialog: boolean = true;
 
-    constructor(public el:ElementRef) {
+    filesUploadingList: FileModel [] = [];
+
+    constructor(public el: ElementRef) {
         console.log('UploadComponent constructor', el);
 
         this._uploaderService = new UploadService({
@@ -56,15 +69,25 @@ export class UploadDragAreaComponent {
         });
     }
 
-    onFilesDragged(files):void {
+    /**
+     * Method called when files are dropped in the drag area.
+     *
+     * @param {File[]} files - files dropped in the drag area.
+     */
+    onFilesDropped(files): void {
         if (files.length) {
             this._uploaderService.addToQueue(files);
             this.filesUploadingList = this._uploaderService.getQueue();
-            this.showDialog();
+            if (this.showUploadDialog) {
+                this._showDialog();
+            }
         }
     }
 
-    showDialog():void {
+    /**
+     * Show the upload dialog.
+     */
+    private _showDialog(): void {
         this.fileUploadingDialogComponent.showDialog();
     }
 }

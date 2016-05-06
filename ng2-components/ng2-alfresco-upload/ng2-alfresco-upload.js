@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['./src/components/upload-drag-area.component', './src/directives/file-select.directive', './src/directives/file-draggable.directive', './src/components/upload-button.component', './src/services/upload.service'], function(exports_1, context_1) {
+System.register(['./src/components/upload-drag-area.component', './src/directives/file-draggable.directive', './src/components/upload-button.component', './src/services/upload.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var upload_drag_area_component_1, file_select_directive_1, file_draggable_directive_1, upload_button_component_1;
+    var upload_drag_area_component_1, file_draggable_directive_1, upload_button_component_1;
     var ALFRESCO_ULPOAD_COMPONENT;
     var exportedNames_1 = {
         'ALFRESCO_ULPOAD_COMPONENT': true
@@ -35,10 +35,6 @@ System.register(['./src/components/upload-drag-area.component', './src/directive
                 upload_drag_area_component_1 = upload_drag_area_component_1_1;
                 exportStar_1(upload_drag_area_component_1_1);
             },
-            function (file_select_directive_1_1) {
-                file_select_directive_1 = file_select_directive_1_1;
-                exportStar_1(file_select_directive_1_1);
-            },
             function (file_draggable_directive_1_1) {
                 file_draggable_directive_1 = file_draggable_directive_1_1;
                 exportStar_1(file_draggable_directive_1_1);
@@ -53,12 +49,11 @@ System.register(['./src/components/upload-drag-area.component', './src/directive
         execute: function() {
             exports_1("default",{
                 component: [upload_drag_area_component_1.UploadDragAreaComponent, upload_button_component_1.UploadButtonComponent],
-                directives: [file_select_directive_1.FileSelectDirective, file_draggable_directive_1.FileDraggableDirective]
+                directives: [file_draggable_directive_1.FileDraggableDirective]
             });
             exports_1("ALFRESCO_ULPOAD_COMPONENT", ALFRESCO_ULPOAD_COMPONENT = [
                 upload_drag_area_component_1.UploadDragAreaComponent,
                 upload_button_component_1.UploadButtonComponent,
-                file_select_directive_1.FileSelectDirective,
                 file_draggable_directive_1.FileDraggableDirective
             ]);
         }

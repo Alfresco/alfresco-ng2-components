@@ -21,6 +21,13 @@ System.register([], function(exports_1, context_1) {
     return {
         setters:[],
         execute: function() {
+            /**
+             *
+             * This object represent the status of an uploading file.
+             *
+             *
+             * @returns {FileModel} .
+             */
             FileModel = (function () {
                 function FileModel(file) {
                     this.done = false;
@@ -49,6 +56,9 @@ System.register([], function(exports_1, context_1) {
                 FileModel.prototype.setXMLHttpRequest = function (xmlHttpRequest) {
                     this._xmlHttpRequest = xmlHttpRequest;
                 };
+                /**
+                 * Stop the uploading of the file.
+                 */
                 FileModel.prototype.setAbort = function () {
                     if (!this.done && !this.error) {
                         this.abort = true;
@@ -56,6 +66,9 @@ System.register([], function(exports_1, context_1) {
                         this._xmlHttpRequest.abort();
                     }
                 };
+                /**
+                 * Update status of the file when upload finish or is ended.
+                 */
                 FileModel.prototype.onFinished = function (status, statusText, response) {
                     this.status = status;
                     this.statusText = statusText;
@@ -63,6 +76,11 @@ System.register([], function(exports_1, context_1) {
                     this.done = true;
                     this.uploading = false;
                 };
+                /**
+                 * Calculate the size of the file in kb,mb and gb.
+                 *
+                 * @param {number} sizeinbytes - size in bytes of the file.
+                 */
                 FileModel.prototype._getFileSize = function (sizeinbytes) {
                     var fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
                     var size = sizeinbytes;
@@ -73,8 +91,13 @@ System.register([], function(exports_1, context_1) {
                     }
                     return Math.round((Math.round(size * 100) / 100)) + ' ' + fSExt[i];
                 };
+                /**
+                 * Calculate the size of the file in kb,mb and gb.
+                 *
+                 * @return {string} - return a unique file uploading id.
+                 */
                 FileModel.prototype._generateId = function () {
-                    return 'uploading-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    return 'uploading-file-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                         return v.toString(16);
                     });

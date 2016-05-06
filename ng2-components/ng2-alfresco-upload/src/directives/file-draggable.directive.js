@@ -34,35 +34,55 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
+            /**
+             * [file-draggable]
+             *
+             * This directive, provide a drag and drop area for files and folders.
+             *
+             * @OutputEvent {EventEmitter} onFilesDropped(File)- event fired fot each file dropped
+             * in the drag and drop area.
+             *
+             *
+             * @returns {FileDraggableDirective} .
+             */
             FileDraggableDirective = (function () {
                 function FileDraggableDirective(el) {
                     this.el = el;
-                    this.onFilesAdded = new core_1.EventEmitter();
+                    this.onFilesDropped = new core_1.EventEmitter();
                     this._inputFocusClass = false;
                     console.log('FileDraggableComponent constructor', el);
                 }
+                /**
+                 * Method called when files is dropped in the drag and drop area.
+                 *
+                 * @param {$event} $event - DOM $event.
+                 */
                 FileDraggableDirective.prototype._onDropFiles = function ($event) {
                     this._preventDefault($event);
                     var items = $event.dataTransfer.items;
                     for (var i = 0; i < items.length; i++) {
                         var item = items[i].webkitGetAsEntry();
                         if (item) {
-                            this._traverseFileTree(item, -1);
+                            this._traverseFileTree(item);
                         }
                         else {
                             var dt = $event.dataTransfer;
                             var files = dt.files;
-                            this.onFilesAdded.emit(files);
+                            this.onFilesDropped.emit(files);
                         }
                     }
-                    this.onFilesAdded.emit([]);
                     this._inputFocusClass = false;
                 };
-                FileDraggableDirective.prototype._traverseFileTree = function (item, x) {
+                /**
+                 * Travers all the files and folders, and emit an event for each file.
+                 *
+                 * @param {Object} item - can contains files or folders.
+                 */
+                FileDraggableDirective.prototype._traverseFileTree = function (item) {
                     if (item.isFile) {
                         var self_1 = this;
                         item.file(function (file) {
-                            self_1.onFilesAdded.emit([file]);
+                            self_1.onFilesDropped.emit([file]);
                         });
                     }
                     else {
@@ -71,20 +91,35 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             var dirReader = item.createReader();
                             dirReader.readEntries(function (entries) {
                                 for (var i = 0; i < entries.length; i++) {
-                                    self_2._traverseFileTree(entries[i], i);
+                                    self_2._traverseFileTree(entries[i]);
                                 }
                             });
                         }
                     }
                 };
+                /**
+                 * Change the style of the drag area when a file drag in.
+                 *
+                 * @param {$event} $event - DOM $event.
+                 */
                 FileDraggableDirective.prototype._onDragEnter = function ($event) {
                     this._preventDefault($event);
                     this._inputFocusClass = true;
                 };
+                /**
+                 * Change the style of the drag area when a file drag out.
+                 *
+                 * @param {$event} $event - DOM $event.
+                 */
                 FileDraggableDirective.prototype._onDragLeave = function ($event) {
                     this._preventDefault($event);
                     this._inputFocusClass = false;
                 };
+                /**
+                 * Prevent default and stop propagation of the DOM event.
+                 *
+                 * @param {$event} $event - DOM $event.
+                 */
                 FileDraggableDirective.prototype._preventDefault = function ($event) {
                     $event.stopPropagation();
                     $event.preventDefault();
@@ -92,7 +127,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', core_1.EventEmitter)
-                ], FileDraggableDirective.prototype, "onFilesAdded", void 0);
+                ], FileDraggableDirective.prototype, "onFilesDropped", void 0);
                 FileDraggableDirective = __decorate([
                     core_1.Directive({
                         selector: '[file-draggable]',

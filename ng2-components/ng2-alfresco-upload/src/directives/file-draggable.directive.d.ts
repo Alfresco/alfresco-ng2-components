@@ -15,15 +15,51 @@
  * limitations under the License.
  */
 import { ElementRef, EventEmitter } from 'angular2/core';
+/**
+ * [file-draggable]
+ *
+ * This directive, provide a drag and drop area for files and folders.
+ *
+ * @OutputEvent {EventEmitter} onFilesDropped(File)- event fired fot each file dropped
+ * in the drag and drop area.
+ *
+ *
+ * @returns {FileDraggableDirective} .
+ */
 export declare class FileDraggableDirective {
     el: ElementRef;
-    onFilesAdded: EventEmitter<any>;
+    onFilesDropped: EventEmitter<any>;
     files: File[];
     private _inputFocusClass;
     constructor(el: ElementRef);
+    /**
+     * Method called when files is dropped in the drag and drop area.
+     *
+     * @param {$event} $event - DOM $event.
+     */
     private _onDropFiles($event);
-    private _traverseFileTree(item, x);
+    /**
+     * Travers all the files and folders, and emit an event for each file.
+     *
+     * @param {Object} item - can contains files or folders.
+     */
+    private _traverseFileTree(item);
+    /**
+     * Change the style of the drag area when a file drag in.
+     *
+     * @param {$event} $event - DOM $event.
+     */
     private _onDragEnter($event);
+    /**
+     * Change the style of the drag area when a file drag out.
+     *
+     * @param {$event} $event - DOM $event.
+     */
     private _onDragLeave($event);
+    /**
+     * Prevent default and stop propagation of the DOM event.
+     *
+     * @param {$event} $event - DOM $event.
+     */
     private _preventDefault($event);
 }

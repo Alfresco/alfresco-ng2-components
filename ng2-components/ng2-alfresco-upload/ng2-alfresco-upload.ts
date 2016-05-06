@@ -16,24 +16,37 @@
  */
 
 import {UploadDragAreaComponent} from './src/components/upload-drag-area.component';
-import {FileSelectDirective} from './src/directives/file-select.directive';
 import {FileDraggableDirective} from './src/directives/file-draggable.directive';
 import {UploadButtonComponent} from './src/components/upload-button.component';
+
+/**
+ * ng2-alfresco-upload, provide components to upload files to alfresco repository.
+ *
+ * Components provided:
+ *         - A set of buttons to upload files:
+ *           <alfresco-upload-button [showDialogUpload]="boolean"
+ *                                   [showUdoNotificationBar]="boolean"
+ *                                   [uploadFolders]="boolean"
+ *                                   [multipleFiles]="boolean"
+ *                                   [acceptedFilesType]="string">
+ *           </alfresco-upload-button>
+ *
+ *         - Drag and drop area to upload files:
+ *           <alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
+ */
 
 export * from './src/components/upload-button.component';
 export * from './src/components/upload-drag-area.component';
 export * from './src/services/upload.service';
-export * from './src/directives/file-select.directive';
 export * from './src/directives/file-draggable.directive';
 
 export default {
     component: [UploadDragAreaComponent, UploadButtonComponent],
-    directives: [FileSelectDirective, FileDraggableDirective]
+    directives: [FileDraggableDirective]
 }
 
 export const ALFRESCO_ULPOAD_COMPONENT: [any] = [
     UploadDragAreaComponent,
     UploadButtonComponent,
-    FileSelectDirective,
     FileDraggableDirective
 ];

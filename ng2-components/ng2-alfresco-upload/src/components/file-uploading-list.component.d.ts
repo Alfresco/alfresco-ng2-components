@@ -16,9 +16,24 @@
  */
 import { ElementRef } from 'angular2/core';
 import { FileModel } from '../models/file.model';
+/**
+ * <alfresco-file-uploading-list [filesUploadingList]="FileModel[]" ></alfresco-file-uploading-list>
+ *
+ * This component show a list of the uploading files contained in the filesUploadingList.
+ *
+ * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
+ *
+ *
+ * @returns {FileUploadingListComponent} .
+ */
 export declare class FileUploadingListComponent {
     el: ElementRef;
     filesUploadingList: FileModel[];
     constructor(el: ElementRef);
+    /**
+     * Abort the in progress uploading of a specific file.
+     *
+     * @param {string} id - FileModel id of the file to abort.
+     */
     abort(id: any): void;
 }

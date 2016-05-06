@@ -16,13 +16,33 @@
  */
 import { ElementRef } from 'angular2/core';
 import { FileModel } from '../models/file.model';
+/**
+ * <file-uploading-dialog [filesUploadingList]="FileModel[]" ></file-uploading-dialog>
+ *
+ * This component is a hideable and minimizable wich contains the list of the uploading
+ * files contained in the filesUploadingList.
+ *
+ * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
+ *
+ *
+ * @returns {FileUploadingDialogComponent} .
+ */
 export declare class FileUploadingDialogComponent {
     el: ElementRef;
     filesUploadingList: FileModel[];
-    _isDialogActive: boolean;
-    _isDialogMinimized: boolean;
+    private _isDialogActive;
+    private _isDialogMinimized;
     constructor(el: ElementRef);
-    toggleDialog($event: any): void;
+    /**
+     * Display and hide the dialog component.
+     */
+    toggleShowDialog($event: any): void;
+    /**
+     * Display the dialog if hidden.
+     */
     showDialog(): void;
+    /**
+     * Minimize and expand the dialog component.
+     */
     toggleDialogMinimize($event: any): void;
 }

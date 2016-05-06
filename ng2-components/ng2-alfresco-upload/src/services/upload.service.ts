@@ -19,18 +19,24 @@
 import {FileModel} from '../models/file.model';
 
 
+/**
+ *
+ * UploadService keep the queue of the file to upload and uploads them.
+ *
+ * @returns {UploadService} .
+ */
 export class UploadService {
-    private _url:string;
-    private _method:string = 'POST';
-    private _authTokenPrefix:string = 'Basic';
-    private _authToken:string = undefined;
-    private _fieldName:string = 'file';
-    private _formFields:Object = {};
-    private _withCredentials:boolean;
+    private _url: string;
+    private _method: string = 'POST';
+    private _authTokenPrefix: string = 'Basic';
+    private _authToken: string = undefined;
+    private _fieldName: string = 'file';
+    private _formFields: Object = {};
+    private _withCredentials: boolean;
 
-    _queue:FileModel[] = [];
+    private _queue: FileModel[] = [];
 
-    constructor(private options:any) {
+    constructor(private options: any) {
         console.log('UploadService constructor');
 
         this._withCredentials = options.withCredentials != null ? options.withCredentials : this._withCredentials;
@@ -41,8 +47,15 @@ export class UploadService {
         this._formFields = options.formFields != null ? options.formFields : this._formFields;
     }
 
-    addToQueue(files:any[]):FileModel[] {
-        let latestFilesAdded:FileModel[] = [];
+    /**
+     * Add files to the uploading queue to be uploaded.
+     *
+     * @param {File[]} - files to add to the upload queue.
+     *
+     * return {FileModel[]} - return the file added to the queue in this call.
+     */
+    addToQueue(files: any[]): FileModel[] {
+        let latestFilesAdded: FileModel[] = [];
 
         for (let file of files) {
             if (this._isFile(file)) {
@@ -56,7 +69,10 @@ export class UploadService {
         return latestFilesAdded;
     }
 
-    private _uploadFilesInTheQueue():void {
+    /**
+     * Pick all the files in the queue that are not been uploaded yet and upload it.
+     */
+    private _uploadFilesInTheQueue(): void {
         let filesToUpload = this._queue.filter((uploadingFileModel) => {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
@@ -66,7 +82,13 @@ export class UploadService {
         });
     };
 
-    uploadFile(uploadingFileModel:any):void {
+    /**
+     * Upload a file, and enrich it with the xhr.
+     *
+     * @param {FileModel} - files to be uploaded.
+     *
+     */
+    uploadFile(uploadingFileModel: any): void {
         let form = new FormData();
         form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
         Object.keys(this._formFields).forEach((key) => {
@@ -115,11 +137,21 @@ export class UploadService {
         xmlHttpRequest.send(form);
     }
 
-    getQueue():FileModel[] {
+    /**
+     * Return all the files in the uploading queue.
+     *
+     * @return {FileModel[]} - files in the upload queue.
+     */
+    getQueue(): FileModel[] {
         return this._queue;
     }
 
-    private _isFile(file:any):boolean {
+    /**
+     * Check if an item is a file.
+     *
+     * @return {boolean}
+     */
+    private _isFile(file: any): boolean {
         return file !== null && (file instanceof Blob || (file.name && file.size));
     }
 }

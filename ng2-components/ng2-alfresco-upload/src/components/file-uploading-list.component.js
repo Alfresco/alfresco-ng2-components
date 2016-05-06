@@ -34,6 +34,16 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
+            /**
+             * <alfresco-file-uploading-list [filesUploadingList]="FileModel[]" ></alfresco-file-uploading-list>
+             *
+             * This component show a list of the uploading files contained in the filesUploadingList.
+             *
+             * @InputParam {FileModel[]} filesUploadingList - list of the uploading files .
+             *
+             *
+             * @returns {FileUploadingListComponent} .
+             */
             FileUploadingListComponent = (function () {
                 function FileUploadingListComponent(el) {
                     this.el = el;
@@ -42,6 +52,11 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         console.log('Check for async update from drag directive');
                     }, 1000);
                 }
+                /**
+                 * Abort the in progress uploading of a specific file.
+                 *
+                 * @param {string} id - FileModel id of the file to abort.
+                 */
                 FileUploadingListComponent.prototype.abort = function (id) {
                     var file = this.filesUploadingList.filter(function (uploadingFileModel) {
                         return uploadingFileModel.id == id;
