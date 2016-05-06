@@ -60,7 +60,7 @@ This component, provide a drag and drop are to upload files to alfresco.
 
 #### Basic usage
 ```html
-<alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
+<alfresco-upload-drag-area [showDialogUpload]="true" ></alfresco-upload-drag-area>
 ```
 
 #### Options
