@@ -23,7 +23,7 @@ import {UploadButtonComponent} from './src/components/upload-button.component';
  * ng2-alfresco-upload, provide components to upload files to alfresco repository.
  *
  * Components provided:
- *         - A set of buttons to upload files:
+ *         - A button to upload files
  *           <alfresco-upload-button [showDialogUpload]="boolean"
  *                                   [showUdoNotificationBar]="boolean"
  *                                   [uploadFolders]="boolean"

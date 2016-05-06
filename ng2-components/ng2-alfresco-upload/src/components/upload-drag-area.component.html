@@ -1,5 +1,5 @@
 <div file-draggable id='UploadBorder' class="upload-border" (onFilesDropped)="onFilesDropped($event)"
-     dropzone="" webkitdropzone="copy file:image/png file:image/gif file:image/jpeg" #droparea>
+     dropzone="" webkitdropzone="*" #droparea>
     <ng-content></ng-content>
 </div>
 <file-uploading-dialog [hidden]="showDialogUpload" [filesUploadingList]="filesUploadingList"

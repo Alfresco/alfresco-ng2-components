@@ -1,28 +1,68 @@
 # Alfresco Upload Component for Angular 2
+<p>
+  <a href='https://raw.githubusercontent.com/Alfresco/dev-platform-webcomponents/master/ng2-components/ng2-alfresco-upload/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='my blog' />
+  </a>
+</p>
+
+## Install
+Alternatively you can build component from sources with the following commands:
+
+
+
+```sh
+npm install --save ng2-alfresco-upload
+```
+
+
+
+## Build from sources
+Alternatively you can build component from sources with the following commands:
+
+
+```sh
+npm install
+npm run build
+```
 
 Components included:
 
-* Upload Component
+- [Upload button](#upload-button)
+- [Drag and Drop](#drag-and-drop)
 
-### Custom Upload Component
+### Upload button
+This component, provide a buttons to upload files to alfresco.
 
-```ts
-import {Component} from 'angular2/core';
-import {Login} from 'ng2-alfresco-login/ng2-alfresco-login';
+#### Basic usage
 
-@Component({
-    selector: 'my-login',
-    template: ' <alfresco-login method="{{methodName}}"></alfresco-login>',
-    directives: [Login]
-})
-export class MyLoginComponent {
-    methodName: string = 'POST';
-}
+
+```html
+<alfresco-upload-button [showDialogUpload]="true"
+                        [showUdoNotificationBar]="true"
+                        [uploadFolders]="true"
+                        [multipleFiles]="false"
+                        [acceptedFilesType]="*">
+</alfresco-upload-button>
+```
+#### Options
+
+**showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
+**showUdoNotificationBar**: {boolean} (optional) default true. Hide/show notification bar.<br />
+**uploadFolders**: {boolean} (optional) default false. Allow/disallow upload folders (only for chrome).<br />
+**multipleFiles**: {boolean} (optional) default false. Allow/disallow multiple files.<br />
+**acceptedFilesType**: {string} (optional) default "*". array of allowed file extensions , example: ".jpg,.gif,.png,.svg" .<br />
+
+### Drag and drop
+This component, provide a drag and drop are to upload files to alfresco.
+
+#### Basic usage
+```html
+<alfresco-upload-drag-area [showDialogUpload]="boolean" ></alfresco-upload-drag-area>
 ```
 
-### Build
+#### Options
 
-```
-$ npm install
-$ npm run build
-```
+**showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />

@@ -2,9 +2,9 @@
     vertical-align: middle;
     color: #555;
     padding: 20px;
-    overflow-y: auto;
     display: inline-block;
     text-align: center;
+    overflow-y: hidden;
 }
 
 .input-focus {
