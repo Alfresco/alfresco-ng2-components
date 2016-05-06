@@ -131,9 +131,10 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                         styleUrls: ['./alfresco-login.css'],
                         pipes: [ng2_translate_1.TranslatePipe]
                     }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, alfresco_authentication_1.AlfrescoAuthenticationService, router_1.Router, ng2_translate_1.TranslateService])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, alfresco_authentication_1.AlfrescoAuthenticationService, router_1.Router, (typeof (_a = typeof ng2_translate_1.TranslateService !== 'undefined' && ng2_translate_1.TranslateService) === 'function' && _a) || Object])
                 ], AlfrescoLoginComponent);
                 return AlfrescoLoginComponent;
+                var _a;
             }());
             exports_1("AlfrescoLoginComponent", AlfrescoLoginComponent);
         }
