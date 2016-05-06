@@ -47,10 +47,10 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     this.breadcrumb = false;
                     this.itemClick = new core_1.EventEmitter();
                     this.rootFolder = {
-                        name: 'Document Library',
-                        path: 'swsdp/documentLibrary'
+                        name: 'Company Home',
+                        path: ''
                     };
-                    this.currentFolderPath = 'swsdp/documentLibrary';
+                    this.currentFolderPath = '';
                     this.route = [];
                     this.actions = [];
                     this.columns = [];
