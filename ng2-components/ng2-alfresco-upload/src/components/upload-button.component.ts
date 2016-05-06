@@ -106,7 +106,7 @@ export class UploadButtonComponent {
             if (this.showUploadDialog) {
                 this._showDialog();
             }
-            if(this.showUdoNotificationBar) {
+            if (this.showUdoNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
             }
         }
