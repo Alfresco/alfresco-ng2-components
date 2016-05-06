@@ -27,7 +27,9 @@ export class AlfrescoService {
         private http: Http,
         private settings: AlfrescoSettingsService
     ) {
-        this._host = settings.host;
+        if (settings) {
+            this._host = settings.host;
+        }
     }
 
     private _host: string = 'http://127.0.0.1:8080';

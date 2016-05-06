@@ -15,9 +15,14 @@
  * limitations under the License.
  */
 
-import {Observable} from 'rxjs/Observable';
+import {
+    it,
+    describe,
+    expect
+} from 'angular2/testing';
 import {DocumentList} from '../../src/components/document-list';
 import {ContentColumnModel} from '../../src/models/content-column.model';
+import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
 
 describe('document-list', () => {
 
@@ -42,16 +47,17 @@ describe('document-list', () => {
     });
 
     it('should setup default root for breadcrumb', () => {
-        let service = {
-            getFolder: function() {
-                return Observable.create(observer => {
-                    var value = {};
-                    observer.next(value);
-                    observer.complete();
-                });
-            }
-        };
 
+        let service = new AlfrescoServiceMock();
+        /*
+        spyOn(service, 'getFolder').and.returnValue(
+            Observable.create(observer => {
+                var value = {};
+                observer.next(value);
+                observer.complete();
+            })
+        );
+        */
         let list: DocumentList = new DocumentList(service);
 
         list.ngOnInit();
@@ -60,15 +66,12 @@ describe('document-list', () => {
     });
 
     it('should fetch folder', () => {
-        let folder = {};
-        let service = {
-            getFolder: function() {
-                return Observable.create(observer => {
-                    observer.next(folder);
-                    observer.complete();
-                });
-            }
+        let folder = {
+            'nodeRef': 'workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28'
         };
+        let service = new AlfrescoServiceMock();
+        service._folderToReturn = folder;
+
         let list: DocumentList = new DocumentList(service);
         list.ngOnInit();
 
@@ -77,12 +80,10 @@ describe('document-list', () => {
 
     it('should get content url', () => {
         let url = 'URL';
-        let service = {
-            getContentUrl(content:any) { return url; }
-        };
-        let list: DocumentList = new DocumentList(service);
+        let service = new AlfrescoServiceMock();
+        spyOn(service, 'getContentUrl').and.returnValue(url);
 
-        spyOn(service, 'getContentUrl').and.callThrough();
+        let list: DocumentList = new DocumentList(service);
         let result = list.getContentUrl(null);
 
         expect(result).toBe(url);
@@ -91,12 +92,10 @@ describe('document-list', () => {
 
     it('should get thumbnail url', () => {
         let url = 'URL';
-        let service = {
-            getDocumentThumbnailUrl(content:any) { return url; }
-        };
-        let list: DocumentList = new DocumentList(service);
+        let service = new AlfrescoServiceMock();
+        spyOn(service, 'getDocumentThumbnailUrl').and.returnValue(url);
 
-        spyOn(service, 'getDocumentThumbnailUrl').and.callThrough();
+        let list: DocumentList = new DocumentList(service);
         let result = list.getDocumentThumbnailUrl(null);
 
         expect(result).toBe(url);

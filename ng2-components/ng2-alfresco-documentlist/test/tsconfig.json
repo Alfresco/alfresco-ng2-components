@@ -10,6 +10,12 @@
         "noImplicitAny": false,
         "declaration": false
     },
+    "files": [
+        "../node_modules/angular2/typings/browser.d.ts",
+        "../typings/main/ambient/jasmine/index.d.ts",
+        "assets/alfresco.service.mock.ts",
+        "components/document-list.spec.ts"
+    ],
     "exclude": [
     ]
 }

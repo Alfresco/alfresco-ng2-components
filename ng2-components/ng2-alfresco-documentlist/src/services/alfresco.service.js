@@ -49,7 +49,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../../../
                     this.settings = settings;
                     this._host = 'http://127.0.0.1:8080';
                     this._baseUrlPath = '/alfresco/service/slingshot/doclib/doclist/all/site/';
-                    this._host = settings.host;
+                    if (settings) {
+                        this._host = settings.host;
+                    }
                 }
                 Object.defineProperty(AlfrescoService.prototype, "host", {
                     get: function () {

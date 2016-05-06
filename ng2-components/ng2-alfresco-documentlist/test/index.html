@@ -29,7 +29,7 @@
         //     for imports from the app folder
         System.config({
             packages: {
-                'app': {defaultExtension: 'js'},
+                'test': {defaultExtension: 'js'},
                 'src': {defaultExtension: 'js'},
                 'ng2-alfresco-core': {defaultExtension: 'js'}
             }
@@ -37,7 +37,7 @@
 
         // #3. Import the spec file explicitly
         Promise.all([
-            System.import('test/components/document-list.spec.js')/*,
+            System.import('test/components/document-list.spec')/*,
             System.import('app/my-uppercase.pipe.spec')*/
         ])
         // #4. wait for all imports to load ...
