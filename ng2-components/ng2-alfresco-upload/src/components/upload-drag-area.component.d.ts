@@ -17,16 +17,12 @@
 import { ElementRef } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
-export declare class UploadComponent {
+export declare class UploadDragAreaComponent {
     el: ElementRef;
     private _uploaderService;
-    method: string;
-    undoNotificationBar: any;
     fileUploadingDialogComponent: FileUploadingDialogComponent;
     filesUploadingList: FileModel[];
     constructor(el: ElementRef);
-    onFilesAdded(files: any): void;
     onFilesDragged(files: any): void;
-    showUndoNotificationBar(latestFilesAdded: any): void;
     showDialog(): void;
 }

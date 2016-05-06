@@ -14,32 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['../models/file.model'], function(exports_1, context_1) {
+System.register(['angular2/core', '../models/file.model'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var file_model_1;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var core_1, file_model_1;
     var UploadService;
     return {
         setters:[
+            function (core_1_1) {
+                core_1 = core_1_1;
+            },
             function (file_model_1_1) {
                 file_model_1 = file_model_1_1;
             }],
         execute: function() {
             UploadService = (function () {
-                function UploadService(options) {
+                function UploadService() {
                     this._method = 'POST';
                     this._authTokenPrefix = 'Basic';
                     this._authToken = undefined;
                     this._fieldName = 'file';
                     this._formFields = {};
                     this._queue = [];
-                    console.log('UploadService constructor');
-                    this._withCredentials = options.withCredentials != null ? options.withCredentials : this._withCredentials;
-                    this._url = options.url != null ? options.url : this._url;
-                    this._authTokenPrefix = options.authTokenPrefix != null ? options.authTokenPrefix : this._authTokenPrefix;
-                    this._authToken = options.authToken != null ? options.authToken : this._authToken;
-                    this._fieldName = options.fieldName != null ? options.fieldName : this._fieldName;
-                    this._formFields = options.formFields != null ? options.formFields : this._formFields;
                 }
                 UploadService.prototype.addToQueue = function (files) {
                     var latestFilesAdded = [];
@@ -108,6 +113,10 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                 UploadService.prototype._isFile = function (file) {
                     return file !== null && (file instanceof Blob || (file.name && file.size));
                 };
+                UploadService = __decorate([
+                    core_1.Injectable(),
+                    __metadata('design:paramtypes', [])
+                ], UploadService);
                 return UploadService;
             }());
             exports_1("UploadService", UploadService);

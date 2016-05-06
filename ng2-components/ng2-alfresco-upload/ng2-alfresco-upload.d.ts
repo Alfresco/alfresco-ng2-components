@@ -14,15 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { UploadComponent } from './src/components/upload.component';
+import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
 import { UploadService } from './src/services/upload.service';
 import { FileSelectDirective } from './src/directives/file-select.directive';
 import { FileDraggableDirective } from './src/directives/file-draggable.directive';
-export * from './src/components/upload.component';
+import { UploadButtonComponent } from './src/components/upload-button.component';
+export * from './src/components/upload-button.component';
+export * from './src/components/upload-drag-area.component';
 export * from './src/services/upload.service';
+export * from './src/directives/file-select.directive';
+export * from './src/directives/file-draggable.directive';
 declare var _default: {
-    component: typeof UploadComponent[];
+    component: (typeof UploadDragAreaComponent | typeof UploadButtonComponent)[];
     directives: (typeof FileSelectDirective | typeof FileDraggableDirective)[];
     providers: typeof UploadService[];
 };
 export default _default;
+export declare const ALFRESCO_ULPOAD_COMPONENT: [any];
+export declare const ALFRESCO_ULPOAD_PROVAIDERS: [any];

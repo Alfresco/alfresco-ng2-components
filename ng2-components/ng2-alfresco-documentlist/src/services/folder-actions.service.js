@@ -38,11 +38,21 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 function FolderActionsService() {
                     this.handlers = {};
                     // todo: just for dev/demo purposes, to be replaced with real actions
-                    this.handlers['system1'] = this.handleStandardAction1;
-                    this.handlers['system2'] = this.handleStandardAction2;
+                    this.handlers['system1'] = this.handleStandardAction1.bind(this);
+                    this.handlers['system2'] = this.handleStandardAction2.bind(this);
                 }
                 FolderActionsService.prototype.getHandler = function (key) {
-                    return this.handlers[key];
+                    if (key) {
+                        var lkey = key.toLowerCase();
+                        return this.handlers[lkey];
+                    }
+                    return null;
+                };
+                FolderActionsService.prototype.setHandler = function (key, handler) {
+                    if (key) {
+                        var lkey = key.toLowerCase();
+                        this.handlers[lkey] = handler;
+                    }
                 };
                 FolderActionsService.prototype.handleStandardAction1 = function (document) {
                     window.alert('standard folder action 1');

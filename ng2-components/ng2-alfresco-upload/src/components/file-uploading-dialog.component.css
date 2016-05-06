@@ -17,7 +17,7 @@
     max-height: 350px;
     overflow: visible;
     right: 24px;
-    position: absolute;
+    position: fixed;
 }
 
 .file-dialog .header {

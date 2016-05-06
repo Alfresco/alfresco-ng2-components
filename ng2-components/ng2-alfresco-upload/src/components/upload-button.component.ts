@@ -16,7 +16,7 @@
  */
 
 
-import {Component, Input, ViewChild, ElementRef} from 'angular2/core';
+import {Component, ViewChild, ElementRef} from 'angular2/core';
 import {UploadService} from '../services/upload.service';
 import {FileModel} from '../models/file.model';
 import {FileUploadingDialogComponent} from './file-uploading-dialog.component';
@@ -24,22 +24,18 @@ import {FileSelectDirective} from '../directives/file-select.directive';
 import {FileDraggableDirective} from '../directives/file-draggable.directive';
 
 declare let componentHandler;
-declare let dialogPolyfill;
 declare let __moduleName:string;
 
 @Component({
-    selector: 'alfresco-upload',
+    selector: 'alfresco-upload-button',
     moduleId: __moduleName,
-    directives: [FileSelectDirective, FileDraggableDirective, FileUploadingDialogComponent],
-    templateUrl: './upload.component.html',
-    styleUrls: ['./upload.component.css']
+    directives: [FileSelectDirective, FileUploadingDialogComponent],
+    templateUrl: './upload-button.component.html',
+    styleUrls: ['./upload-button.component.css']
 })
-export class UploadComponent {
+export class UploadButtonComponent {
 
     private _uploaderService:UploadService;
-
-    @Input()
-    method:string = 'GET';
 
     @ViewChild('undoNotificationBar')
     undoNotificationBar;
@@ -74,15 +70,7 @@ export class UploadComponent {
         }
     }
 
-    onFilesDragged(files):void {
-        if (files.length) {
-            this._uploaderService.addToQueue(files);
-            this.filesUploadingList = this._uploaderService.getQueue();
-            this.showDialog();
-        }
-    }
-
-    showUndoNotificationBar(latestFilesAdded){
+    showUndoNotificationBar(latestFilesAdded) {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }

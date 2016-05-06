@@ -14,6 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
 import {Component} from 'angular2/core';
 import {
     DOCUMENT_LIST_DIRECTIVES,
@@ -21,6 +23,7 @@ import {
     DocumentActionsService
 } from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import {MDL} from 'ng2-alfresco-core/material';
+import {ALFRESCO_ULPOAD_COMPONENT, ALFRESCO_ULPOAD_PROVAIDERS} from 'ng2-alfresco-upload/ng2-alfresco-upload';
 
 declare let __moduleName:string;
 
@@ -28,14 +31,14 @@ declare let __moduleName:string;
     moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
-    directives: [DOCUMENT_LIST_DIRECTIVES, MDL],
-    providers: [DOCUMENT_LIST_PROVIDERS]
+    directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENT],
+    providers: [DOCUMENT_LIST_PROVIDERS, ALFRESCO_ULPOAD_PROVAIDERS]
 })
 export class FilesComponent {
     breadcrumb: boolean = false;
     navigation: boolean = true;
     events: any[] = [];
-    
+
     constructor(documentActions: DocumentActionsService) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }

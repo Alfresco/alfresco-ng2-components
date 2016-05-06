@@ -17,19 +17,3 @@
 .mdl-textfield--file .mdl-button--file {
     right: 0;
 }
-
-.upload-border {
-    vertical-align: middle;
-    color: #555;
-    padding: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    display: inline-block;
-    border: 3px dashed #555;
-    text-align: center;
-}
-
-.input-focus {
-    color: #2196F3;
-    border: 3px dashed #2196F3;
-}

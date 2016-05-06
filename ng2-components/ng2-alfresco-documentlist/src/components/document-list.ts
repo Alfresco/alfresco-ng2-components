@@ -41,34 +41,36 @@ declare let __moduleName:string;
 })
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 
-    @Input() navigate: boolean = true;
-    @Input() breadcrumb: boolean = false;
-    @Input('folder-icon') folderIcon: string;
+    @Input()
+    navigate:boolean = true;
+    @Input()
+    breadcrumb:boolean = false;
+    @Input('folder-icon')
+    folderIcon:string;
 
-    @Output() itemClick: EventEmitter<any> = new EventEmitter();
+    @Output()
+    itemClick:EventEmitter<any> = new EventEmitter();
 
     rootFolder = {
         name: 'Document Library',
         path: 'swsdp/documentLibrary'
     };
-    currentFolderPath: string = 'swsdp/documentLibrary';
-    folder: FolderEntity;
+    currentFolderPath:string = 'swsdp/documentLibrary';
+    folder:FolderEntity;
     errorMessage;
 
-    route: any[] = [];
+    route:any[] = [];
 
-    actions: ContentActionModel[] = [];
-    columns: ContentColumnModel[] = [];
+    actions:ContentActionModel[] = [];
+    columns:ContentColumnModel[] = [];
 
-    canNavigateParent(): boolean {
-        return this.navigate &&
-            !this.breadcrumb &&
+    canNavigateParent():boolean {
+        return this.navigate && !this.breadcrumb &&
             this.currentFolderPath !== this.rootFolder.path;
     }
 
-    constructor (
-        private _alfrescoService: AlfrescoService
-    ) {}
+    constructor(private _alfrescoService:AlfrescoService) {
+    }
 
     ngOnInit() {
         this.route.push(this.rootFolder);
@@ -88,15 +90,15 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    getContentActions(target: string, type: string) {
+    getContentActions(target:string, type:string) {
         if (target && type) {
 
             let ltarget = target.toLowerCase();
             let ltype = type.toLowerCase();
 
             return this.actions.filter(entry => {
-               return entry.target.toLowerCase() === ltarget &&
-                       entry.type.toLowerCase() === ltype;
+                return entry.target.toLowerCase() === ltarget &&
+                    entry.type.toLowerCase() === ltype;
             });
         }
         return [];
@@ -116,7 +118,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    onItemClick(item: DocumentEntity, $event) {
+    onItemClick(item:DocumentEntity, $event) {
         if ($event) {
             $event.preventDefault();
         }
@@ -151,20 +153,20 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    getContentUrl(document: DocumentEntity) {
+    getContentUrl(document:DocumentEntity) {
         return this._alfrescoService.getContentUrl(document);
     }
 
-    getDocumentThumbnailUrl(document:  DocumentEntity) {
+    getDocumentThumbnailUrl(document:DocumentEntity) {
         return this._alfrescoService.getDocumentThumbnailUrl(document);
     }
 
-    executeContentAction(document:DocumentEntity, action: ContentActionModel) {
+    executeContentAction(document:DocumentEntity, action:ContentActionModel) {
         // todo: safety checks
         action.handler(document);
     }
 
-    private getItemPath(item: DocumentEntity):string {
+    private getItemPath(item:DocumentEntity):string {
         let container = item.location.container;
         let path = item.location.path !== '/' ? (item.location.path + '/' ) : '/';
         let relativePath = container + path + item.fileName;

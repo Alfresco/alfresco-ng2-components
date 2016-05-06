@@ -23,33 +23,35 @@
             </ul>
         </div>
         <div class="col-md-10">
-            <alfresco-document-list
-                    #list
-                    [breadcrumb]="breadcrumb"
-                    [navigate]="navigation"
-                    folder-icon=""
-                    (itemClick)="onItemClick($event)">
-                <content-columns>
-                    <content-column source="$thumbnail"></content-column>
-                    <content-column title="Display Name" source="displayName" class="full-width name-column"></content-column>
-                    <content-column title="Created By" source="createdBy"></content-column>
-                    <content-column title="Created On" source="createdOn"></content-column>
-                </content-columns>
+            <alfresco-upload-drag-area>
+                <alfresco-document-list
+                        #list
+                        [breadcrumb]="breadcrumb"
+                        [navigate]="navigation"
+                        folder-icon=""
+                        (itemClick)="onItemClick($event)">
+                    <content-columns>
+                        <content-column source="$thumbnail"></content-column>
+                        <content-column title="Display Name" source="displayName" class="full-width name-column"></content-column>
+                        <content-column title="Created By" source="createdBy"></content-column>
+                        <content-column title="Created On" source="createdOn"></content-column>
+                    </content-columns>
 
-                <content-actions>
-                    <!-- folder actions -->
-                    <content-action target="folder" type="button" icon="delete" title="Delete" handler="system1"></content-action>
-                    <content-action target="folder" type="menu" title="Default folder action 1" handler="system1"></content-action>
-                    <content-action target="folder" type="menu" title="Custom folder action" (execute)="myFolderAction1($event)"></content-action>
+                    <content-actions>
+                        <!-- folder actions -->
+                        <content-action target="folder" type="button" icon="delete" title="Delete" handler="system1"></content-action>
+                        <content-action target="folder" type="menu" title="Default folder action 1" handler="system1"></content-action>
+                        <content-action target="folder" type="menu" title="Custom folder action" (execute)="myFolderAction1($event)"></content-action>
 
-                    <!-- document actions -->
-                    <content-action target="document" type="button" icon="account_circle" handler="my-handler"></content-action>
-                    <content-action target="document" type="button" icon="cloud_download" handler="download"></content-action>
-                    <content-action target="document" type="menu" title="Download" handler="download"></content-action>
-                    <content-action target="document" type="menu" title="System action" handler="system2"></content-action>
-                    <content-action target="document" type="menu" title="Custom action" (execute)="myCustomAction1($event)"></content-action>
-                </content-actions>
-            </alfresco-document-list>
+                        <!-- document actions -->
+                        <content-action target="document" type="button" icon="account_circle" handler="my-handler"></content-action>
+                        <content-action target="document" type="button" icon="cloud_download" handler="download"></content-action>
+                        <content-action target="document" type="menu" title="Download" handler="download"></content-action>
+                        <content-action target="document" type="menu" title="System action" handler="system2"></content-action>
+                        <content-action target="document" type="menu" title="Custom action" (execute)="myCustomAction1($event)"></content-action>
+                    </content-actions>
+                </alfresco-document-list>
+            </alfresco-upload-drag-area>
         </div>
     </div>
 </div>

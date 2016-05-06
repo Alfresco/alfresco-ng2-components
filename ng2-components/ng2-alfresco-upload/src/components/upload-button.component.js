@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', '../services/upload.service', './file-uploading-dialog.component', '../directives/file-select.directive', '../directives/file-draggable.directive'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/upload.service', './file-uploading-dialog.component', '../directives/file-select.directive'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,8 +26,8 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, upload_service_1, file_uploading_dialog_component_1, file_select_directive_1, file_draggable_directive_1;
-    var UploadComponent;
+    var core_1, upload_service_1, file_uploading_dialog_component_1, file_select_directive_1;
+    var UploadButtonComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -41,15 +41,11 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
             },
             function (file_select_directive_1_1) {
                 file_select_directive_1 = file_select_directive_1_1;
-            },
-            function (file_draggable_directive_1_1) {
-                file_draggable_directive_1 = file_draggable_directive_1_1;
             }],
         execute: function() {
-            UploadComponent = (function () {
-                function UploadComponent(el) {
+            UploadButtonComponent = (function () {
+                function UploadButtonComponent(el) {
                     this.el = el;
-                    this.method = 'GET';
                     this.filesUploadingList = [];
                     console.log('UploadComponent constructor', el);
                     this._uploaderService = new upload_service_1.UploadService({
@@ -64,7 +60,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         }
                     });
                 }
-                UploadComponent.prototype.onFilesAdded = function (files) {
+                UploadButtonComponent.prototype.onFilesAdded = function (files) {
                     if (files.length) {
                         var latestFilesAdded = this._uploaderService.addToQueue(files);
                         this.filesUploadingList = this._uploaderService.getQueue();
@@ -72,14 +68,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         this.showUndoNotificationBar(latestFilesAdded);
                     }
                 };
-                UploadComponent.prototype.onFilesDragged = function (files) {
-                    if (files.length) {
-                        this._uploaderService.addToQueue(files);
-                        this.filesUploadingList = this._uploaderService.getQueue();
-                        this.showDialog();
-                    }
-                };
-                UploadComponent.prototype.showUndoNotificationBar = function (latestFilesAdded) {
+                UploadButtonComponent.prototype.showUndoNotificationBar = function (latestFilesAdded) {
                     if (componentHandler) {
                         componentHandler.upgradeAllRegistered();
                     }
@@ -94,35 +83,31 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         actionText: 'Undo'
                     });
                 };
-                UploadComponent.prototype.showDialog = function () {
+                UploadButtonComponent.prototype.showDialog = function () {
                     this.fileUploadingDialogComponent.showDialog();
                 };
                 __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', String)
-                ], UploadComponent.prototype, "method", void 0);
-                __decorate([
-                    core_1.ViewChild('undoNotificationBar'), 
+                    core_1.ViewChild('undoNotificationBar'),
                     __metadata('design:type', Object)
-                ], UploadComponent.prototype, "undoNotificationBar", void 0);
+                ], UploadButtonComponent.prototype, "undoNotificationBar", void 0);
                 __decorate([
-                    core_1.ViewChild('fileUploadingDialog'), 
+                    core_1.ViewChild('fileUploadingDialog'),
                     __metadata('design:type', file_uploading_dialog_component_1.FileUploadingDialogComponent)
-                ], UploadComponent.prototype, "fileUploadingDialogComponent", void 0);
-                UploadComponent = __decorate([
+                ], UploadButtonComponent.prototype, "fileUploadingDialogComponent", void 0);
+                UploadButtonComponent = __decorate([
                     core_1.Component({
-                        selector: 'alfresco-upload',
+                        selector: 'alfresco-upload-button',
                         moduleId: __moduleName,
-                        directives: [file_select_directive_1.FileSelectDirective, file_draggable_directive_1.FileDraggableDirective, file_uploading_dialog_component_1.FileUploadingDialogComponent],
-                        templateUrl: './upload.component.html',
-                        styleUrls: ['./upload.component.css']
-                    }), 
+                        directives: [file_select_directive_1.FileSelectDirective, file_uploading_dialog_component_1.FileUploadingDialogComponent],
+                        templateUrl: './upload-button.component.html',
+                        styleUrls: ['./upload-button.component.css']
+                    }),
                     __metadata('design:paramtypes', [core_1.ElementRef])
-                ], UploadComponent);
-                return UploadComponent;
+                ], UploadButtonComponent);
+                return UploadButtonComponent;
             }());
-            exports_1("UploadComponent", UploadComponent);
+            exports_1("UploadButtonComponent", UploadButtonComponent);
         }
     }
 });
-//# sourceMappingURL=upload.component.js.map
+//# sourceMappingURL=upload-button.component.js.map
