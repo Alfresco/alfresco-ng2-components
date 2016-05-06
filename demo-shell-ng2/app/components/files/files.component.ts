@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import {Component} from 'angular2/core';
 import {
     DOCUMENT_LIST_DIRECTIVES,
@@ -45,14 +44,6 @@ export class FilesComponent {
 
     myDocumentActionHandler(obj: any) {
         window.alert('my custom action handler');
-    }
-
-    onItemClick($event) {
-        console.log($event.value);
-        this.events.push({
-            name: 'Item Clicked',
-            value: $event.value
-        });
     }
 
     myCustomAction1(event) {
