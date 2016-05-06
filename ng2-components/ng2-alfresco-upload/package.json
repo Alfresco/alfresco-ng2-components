@@ -41,8 +41,7 @@
     "ng2-translate": "^1.11.2"
   },
   "peerDependencies": {
-    "angular2": "2.0.0-beta.15",
-    "ng2-alfresco-core": "0.1.0"
+    "angular2": "2.0.0-beta.15"
   },
   "devDependencies": {
     "coveralls": "^2.11.9",
