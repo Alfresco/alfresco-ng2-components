@@ -65,7 +65,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                 };
                 DocumentList.prototype.ngAfterContentInit = function () {
                     if (!this.columns || this.columns.length === 0) {
-                        this._setupDefaultColumns();
+                        this.setupDefaultColumns();
                     }
                 };
                 DocumentList.prototype.ngAfterViewChecked = function () {
@@ -98,6 +98,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     }
                 };
                 DocumentList.prototype.onItemClick = function (item, $event) {
+                    if ($event === void 0) { $event = null; }
                     if ($event) {
                         $event.preventDefault();
                     }
@@ -106,7 +107,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     });
                     if (this.navigate && item) {
                         if (item.isFolder) {
-                            var path = this._getItemPath(item);
+                            var path = this.getNodePath(item);
                             this.route.push({
                                 name: item.displayName,
                                 path: path
@@ -127,11 +128,17 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                         }
                     }
                 };
-                DocumentList.prototype.getContentUrl = function (document) {
-                    return this._alfrescoService.getContentUrl(document);
+                DocumentList.prototype.getContentUrl = function (node) {
+                    if (this._alfrescoService) {
+                        return this._alfrescoService.getContentUrl(node);
+                    }
+                    return null;
                 };
-                DocumentList.prototype.getDocumentThumbnailUrl = function (document) {
-                    return this._alfrescoService.getDocumentThumbnailUrl(document);
+                DocumentList.prototype.getDocumentThumbnailUrl = function (node) {
+                    if (this._alfrescoService) {
+                        return this._alfrescoService.getDocumentThumbnailUrl(node);
+                    }
+                    return null;
                 };
                 DocumentList.prototype.executeContentAction = function (node, action) {
                     if (action) {
@@ -147,13 +154,16 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                             .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
                     }
                 };
-                DocumentList.prototype._getItemPath = function (item) {
-                    var container = item.location.container;
-                    var path = item.location.path !== '/' ? (item.location.path + '/') : '/';
-                    var relativePath = container + path + item.fileName;
-                    return item.location.site + '/' + relativePath;
+                DocumentList.prototype.getNodePath = function (node) {
+                    if (node) {
+                        var container = node.location.container;
+                        var path = node.location.path !== '/' ? (node.location.path + '/') : '/';
+                        var relativePath = container + path + node.fileName;
+                        return node.location.site + '/' + relativePath;
+                    }
+                    return null;
                 };
-                DocumentList.prototype._setupDefaultColumns = function () {
+                DocumentList.prototype.setupDefaultColumns = function () {
                     var thumbnailCol = new content_column_model_1.ContentColumnModel();
                     thumbnailCol.source = '$thumbnail';
                     var nameCol = new content_column_model_1.ContentColumnModel();

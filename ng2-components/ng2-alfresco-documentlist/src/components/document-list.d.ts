@@ -42,12 +42,12 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
     ngAfterViewChecked(): void;
     getContentActions(target: string, type: string): ContentActionModel[];
     onNavigateParentClick($event: any): void;
-    onItemClick(item: DocumentEntity, $event: any): void;
+    onItemClick(item: DocumentEntity, $event?: any): void;
     goToRoute(r: any, $event: any): void;
-    getContentUrl(document: DocumentEntity): string;
-    getDocumentThumbnailUrl(document: DocumentEntity): string;
+    getContentUrl(node: DocumentEntity): string;
+    getDocumentThumbnailUrl(node: DocumentEntity): string;
     executeContentAction(node: DocumentEntity, action: ContentActionModel): void;
     displayFolderContent(path: any): void;
-    private _getItemPath(item);
-    private _setupDefaultColumns();
+    getNodePath(node: DocumentEntity): string;
+    setupDefaultColumns(): void;
 }

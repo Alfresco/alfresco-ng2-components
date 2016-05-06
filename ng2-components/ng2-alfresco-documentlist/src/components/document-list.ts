@@ -81,7 +81,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     ngAfterContentInit() {
         if (!this.columns || this.columns.length === 0) {
-            this._setupDefaultColumns();
+            this.setupDefaultColumns();
         }
     }
 
@@ -120,7 +120,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    onItemClick(item: DocumentEntity, $event) {
+    onItemClick(item: DocumentEntity, $event = null) {
         if ($event) {
             $event.preventDefault();
         }
@@ -131,7 +131,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
         if (this.navigate && item) {
             if (item.isFolder) {
-                let path = this._getItemPath(item);
+                let path = this.getNodePath(item);
                 this.route.push({
                     name: item.displayName,
                     path: path
@@ -155,12 +155,18 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    getContentUrl(document: DocumentEntity) {
-        return this._alfrescoService.getContentUrl(document);
+    getContentUrl(node: DocumentEntity) {
+        if (this._alfrescoService) {
+            return this._alfrescoService.getContentUrl(node);
+        }
+        return null;
     }
 
-    getDocumentThumbnailUrl(document: DocumentEntity) {
-        return this._alfrescoService.getDocumentThumbnailUrl(document);
+    getDocumentThumbnailUrl(node: DocumentEntity) {
+        if (this._alfrescoService) {
+            return this._alfrescoService.getDocumentThumbnailUrl(node);
+        }
+        return null;
     }
 
     executeContentAction(node: DocumentEntity, action: ContentActionModel) {
@@ -181,14 +187,17 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    private _getItemPath(item: DocumentEntity): string {
-        let container = item.location.container;
-        let path = item.location.path !== '/' ? (item.location.path + '/' ) : '/';
-        let relativePath = container + path + item.fileName;
-        return item.location.site + '/' + relativePath;
+    getNodePath(node: DocumentEntity): string {
+        if (node) {
+            let container = node.location.container;
+            let path = node.location.path !== '/' ? (node.location.path + '/' ) : '/';
+            let relativePath = container + path + node.fileName;
+            return node.location.site + '/' + relativePath;
+        }
+        return null;
     }
 
-    private _setupDefaultColumns() {
+    setupDefaultColumns(): void {
         let thumbnailCol = new ContentColumnModel();
         thumbnailCol.source = '$thumbnail';
 

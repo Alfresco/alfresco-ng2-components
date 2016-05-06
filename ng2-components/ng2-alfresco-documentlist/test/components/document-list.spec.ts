@@ -30,14 +30,23 @@ describe('document-list', () => {
 
     let alfrescoServiceMock: AlfrescoServiceMock;
     let documentList: DocumentList;
+    let eventMock: any;
 
     beforeEach(() => {
         alfrescoServiceMock = new AlfrescoServiceMock();
         documentList = new DocumentList(alfrescoServiceMock);
+
+        eventMock = {
+            preventDefault: function() {}
+        };
     });
 
     it('should setup default columns', () => {
+        spyOn(documentList, 'setupDefaultColumns').and.callThrough();
+
         documentList.ngAfterContentInit();
+
+        expect(documentList.setupDefaultColumns).toHaveBeenCalled();
         expect(documentList.columns.length).not.toBe(0);
     });
 
@@ -93,6 +102,12 @@ describe('document-list', () => {
         expect(alfrescoServiceMock.getContentUrl).toHaveBeenCalled();
     });
 
+    it('should return no content url without service', () => {
+        let list = new DocumentList(null);
+        let node = new DocumentEntity();
+        expect(list.getContentUrl(node)).toBeNull();
+    });
+
     it('should get thumbnail url', () => {
         let url = 'URL';
         spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
@@ -101,6 +116,12 @@ describe('document-list', () => {
 
         expect(result).toBe(url);
         expect(alfrescoServiceMock.getDocumentThumbnailUrl).toHaveBeenCalled();
+    });
+
+    it('should get no thumbnail url without service', () => {
+        let list = new DocumentList(null);
+        let node = new DocumentEntity();
+        expect(list.getDocumentThumbnailUrl(node)).toBeNull();
     });
     
     it('should execute action with node', () => {
@@ -205,6 +226,92 @@ describe('document-list', () => {
 
         var actions = documentList.getContentActions('unknown', 'value');
         expect(actions.length).toBe(0);
+    });
+
+    it('should emit itemClick event', (done) => {
+        let node: DocumentEntity = new DocumentEntity();
+        documentList.itemClick.subscribe(e => {
+            expect(e.value).toBe(node);
+            done();
+        });
+        documentList.onItemClick(node);
+    });
+
+    it('should prevent default events for item click', () => {
+        spyOn(eventMock, 'preventDefault').and.stub();
+
+        documentList.onItemClick(null, eventMock);
+        expect(eventMock.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should display folder content on click', () => {
+        let path = '/';
+
+        let node = new DocumentEntity();
+        node.isFolder = true;
+        node.displayName = '<display name>';
+
+        spyOn(documentList, 'getNodePath').and.returnValue(path);
+        spyOn(documentList, 'displayFolderContent').and.stub();
+
+        documentList.onItemClick(node);
+
+        expect(documentList.displayFolderContent).toHaveBeenCalledWith(path);
+
+        var routeEntry = documentList.route.pop();
+        expect(routeEntry.name).toBe(node.displayName);
+        expect(routeEntry.path).toBe(path);
+    });
+
+    it('should not display folder content when no target node provided', () => {
+        expect(documentList.navigate).toBe(true);
+        spyOn(documentList, 'displayFolderContent').and.stub();
+
+        documentList.onItemClick(null);
+        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+
+    });
+
+    it('should display folder content only on folder node click', () => {
+        expect(documentList.navigate).toBe(true);
+        spyOn(documentList, 'displayFolderContent').and.stub();
+
+        let node = new DocumentEntity();
+        node.isFolder = false;
+
+        documentList.onItemClick(node);
+
+        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+    });
+
+    it('should not display folder content on click when navigation is off', () => {
+        spyOn(documentList, 'displayFolderContent').and.stub();
+
+        let node = new DocumentEntity();
+        node.isFolder = true;
+        node.displayName = '<display name>';
+
+        documentList.navigate = false;
+        documentList.onItemClick(node);
+
+        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+    });
+
+    it('should require node to get path', () => {
+        expect(documentList.getNodePath(null)).toBe(null);
+    });
+    
+    it('should get node path', () => {
+        let node = {
+            fileName: 'fileName',
+            location: {
+                site: 'swsdp',
+                container: 'documentLibrary',
+                path: '\/'
+            }
+        };
+
+        expect(documentList.getNodePath(node)).toBe('swsdp/documentLibrary/fileName');
     });
 
 });
