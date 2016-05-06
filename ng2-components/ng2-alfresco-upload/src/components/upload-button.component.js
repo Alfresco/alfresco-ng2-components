@@ -87,11 +87,11 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     this.fileUploadingDialogComponent.showDialog();
                 };
                 __decorate([
-                    core_1.ViewChild('undoNotificationBar'),
+                    core_1.ViewChild('undoNotificationBar'), 
                     __metadata('design:type', Object)
                 ], UploadButtonComponent.prototype, "undoNotificationBar", void 0);
                 __decorate([
-                    core_1.ViewChild('fileUploadingDialog'),
+                    core_1.ViewChild('fileUploadingDialog'), 
                     __metadata('design:type', file_uploading_dialog_component_1.FileUploadingDialogComponent)
                 ], UploadButtonComponent.prototype, "fileUploadingDialogComponent", void 0);
                 UploadButtonComponent = __decorate([
@@ -101,7 +101,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         directives: [file_select_directive_1.FileSelectDirective, file_uploading_dialog_component_1.FileUploadingDialogComponent],
                         templateUrl: './upload-button.component.html',
                         styleUrls: ['./upload-button.component.css']
-                    }),
+                    }), 
                     __metadata('design:paramtypes', [core_1.ElementRef])
                 ], UploadButtonComponent);
                 return UploadButtonComponent;

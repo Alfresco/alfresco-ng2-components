@@ -23,7 +23,7 @@ import {
     DocumentActionsService
 } from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import {MDL} from 'ng2-alfresco-core/material';
-import {ALFRESCO_ULPOAD_COMPONENT, ALFRESCO_ULPOAD_PROVAIDERS} from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import {ALFRESCO_ULPOAD_COMPONENT} from 'ng2-alfresco-upload/ng2-alfresco-upload';
 
 declare let __moduleName:string;
 
@@ -32,7 +32,7 @@ declare let __moduleName:string;
     selector: 'files-component',
     templateUrl: './files.component.html',
     directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENT],
-    providers: [DOCUMENT_LIST_PROVIDERS, ALFRESCO_ULPOAD_PROVAIDERS]
+    providers: [DOCUMENT_LIST_PROVIDERS]
 })
 export class FilesComponent {
     breadcrumb: boolean = false;

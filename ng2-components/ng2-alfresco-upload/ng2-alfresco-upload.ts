@@ -16,7 +16,6 @@
  */
 
 import {UploadDragAreaComponent} from './src/components/upload-drag-area.component';
-import {UploadService} from './src/services/upload.service';
 import {FileSelectDirective} from './src/directives/file-select.directive';
 import {FileDraggableDirective} from './src/directives/file-draggable.directive';
 import {UploadButtonComponent} from './src/components/upload-button.component';
@@ -29,8 +28,7 @@ export * from './src/directives/file-draggable.directive';
 
 export default {
     component: [UploadDragAreaComponent, UploadButtonComponent],
-    directives: [FileSelectDirective, FileDraggableDirective],
-    providers: [UploadService]
+    directives: [FileSelectDirective, FileDraggableDirective]
 }
 
 export const ALFRESCO_ULPOAD_COMPONENT: [any] = [
@@ -38,8 +36,4 @@ export const ALFRESCO_ULPOAD_COMPONENT: [any] = [
     UploadButtonComponent,
     FileSelectDirective,
     FileDraggableDirective
-];
-
-export const ALFRESCO_ULPOAD_PROVAIDERS: [any] = [
-    UploadService
 ];

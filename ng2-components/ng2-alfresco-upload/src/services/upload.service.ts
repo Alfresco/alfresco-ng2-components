@@ -16,11 +16,9 @@
  */
 
 
-import {Injectable} from 'angular2/core';
 import {FileModel} from '../models/file.model';
 
 
-@Injectable()
 export class UploadService {
     private _url:string;
     private _method:string = 'POST';
@@ -31,8 +29,6 @@ export class UploadService {
     private _withCredentials:boolean;
 
     _queue:FileModel[] = [];
-
-    constructor(){}
 
     constructor(private options:any) {
         console.log('UploadService constructor');

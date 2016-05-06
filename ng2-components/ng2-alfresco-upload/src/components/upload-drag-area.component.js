@@ -71,7 +71,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     this.fileUploadingDialogComponent.showDialog();
                 };
                 __decorate([
-                    core_1.ViewChild('fileUploadingDialog'),
+                    core_1.ViewChild('fileUploadingDialog'), 
                     __metadata('design:type', file_uploading_dialog_component_1.FileUploadingDialogComponent)
                 ], UploadDragAreaComponent.prototype, "fileUploadingDialogComponent", void 0);
                 UploadDragAreaComponent = __decorate([
@@ -81,7 +81,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         directives: [file_draggable_directive_1.FileDraggableDirective, file_uploading_dialog_component_1.FileUploadingDialogComponent],
                         templateUrl: './upload-drag-area.component.html',
                         styleUrls: ['./upload-drag-area.component.css']
-                    }),
+                    }), 
                     __metadata('design:paramtypes', [core_1.ElementRef])
                 ], UploadDragAreaComponent);
                 return UploadDragAreaComponent;
