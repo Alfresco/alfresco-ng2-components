@@ -65,7 +65,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                 };
                 DocumentList.prototype.ngAfterContentInit = function () {
                     if (!this.columns || this.columns.length === 0) {
-                        this.setupDefaultColumns();
+                        this._setupDefaultColumns();
                     }
                 };
                 DocumentList.prototype.ngAfterViewChecked = function () {
@@ -106,7 +106,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     });
                     if (this.navigate && item) {
                         if (item.isFolder) {
-                            var path = this.getItemPath(item);
+                            var path = this._getItemPath(item);
                             this.route.push({
                                 name: item.displayName,
                                 path: path
@@ -133,24 +133,27 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                 DocumentList.prototype.getDocumentThumbnailUrl = function (document) {
                     return this._alfrescoService.getDocumentThumbnailUrl(document);
                 };
-                DocumentList.prototype.executeContentAction = function (document, action) {
-                    // todo: safety checks
-                    action.handler(document);
+                DocumentList.prototype.executeContentAction = function (node, action) {
+                    if (action) {
+                        action.handler(node);
+                    }
                 };
-                DocumentList.prototype.getItemPath = function (item) {
+                DocumentList.prototype.displayFolderContent = function (path) {
+                    var _this = this;
+                    if (path) {
+                        this.currentFolderPath = path;
+                        this._alfrescoService
+                            .getFolder(path)
+                            .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
+                    }
+                };
+                DocumentList.prototype._getItemPath = function (item) {
                     var container = item.location.container;
                     var path = item.location.path !== '/' ? (item.location.path + '/') : '/';
                     var relativePath = container + path + item.fileName;
                     return item.location.site + '/' + relativePath;
                 };
-                DocumentList.prototype.displayFolderContent = function (path) {
-                    var _this = this;
-                    this.currentFolderPath = path;
-                    this._alfrescoService
-                        .getFolder(path)
-                        .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
-                };
-                DocumentList.prototype.setupDefaultColumns = function () {
+                DocumentList.prototype._setupDefaultColumns = function () {
                     var thumbnailCol = new content_column_model_1.ContentColumnModel();
                     thumbnailCol.source = '$thumbnail';
                     var nameCol = new content_column_model_1.ContentColumnModel();

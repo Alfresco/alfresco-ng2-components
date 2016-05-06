@@ -46,8 +46,8 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
     goToRoute(r: any, $event: any): void;
     getContentUrl(document: DocumentEntity): string;
     getDocumentThumbnailUrl(document: DocumentEntity): string;
-    executeContentAction(document: DocumentEntity, action: ContentActionModel): void;
-    private getItemPath(item);
-    private displayFolderContent(path);
-    private setupDefaultColumns();
+    executeContentAction(node: DocumentEntity, action: ContentActionModel): void;
+    displayFolderContent(path: any): void;
+    private _getItemPath(item);
+    private _setupDefaultColumns();
 }

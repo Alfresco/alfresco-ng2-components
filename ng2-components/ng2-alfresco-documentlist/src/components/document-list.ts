@@ -30,7 +30,7 @@ import {ContentActionModel} from './../models/content-action.model';
 import {ContentColumnModel} from './../models/content-column.model';
 
 declare var componentHandler;
-declare let __moduleName:string;
+declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
@@ -42,34 +42,36 @@ declare let __moduleName:string;
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 
     @Input()
-    navigate:boolean = true;
+    navigate: boolean = true;
+
     @Input()
-    breadcrumb:boolean = false;
+    breadcrumb: boolean = false;
+
     @Input('folder-icon')
-    folderIcon:string;
+    folderIcon: string;
 
     @Output()
-    itemClick:EventEmitter<any> = new EventEmitter();
+    itemClick: EventEmitter<any> = new EventEmitter();
 
     rootFolder = {
         name: 'Document Library',
         path: 'swsdp/documentLibrary'
     };
-    currentFolderPath:string = 'swsdp/documentLibrary';
-    folder:FolderEntity;
+    currentFolderPath: string = 'swsdp/documentLibrary';
+    folder: FolderEntity;
     errorMessage;
 
-    route:any[] = [];
+    route: any[] = [];
 
-    actions:ContentActionModel[] = [];
-    columns:ContentColumnModel[] = [];
+    actions: ContentActionModel[] = [];
+    columns: ContentColumnModel[] = [];
 
-    canNavigateParent():boolean {
+    canNavigateParent(): boolean {
         return this.navigate && !this.breadcrumb &&
             this.currentFolderPath !== this.rootFolder.path;
     }
 
-    constructor(private _alfrescoService:AlfrescoService) {
+    constructor(private _alfrescoService: AlfrescoService) {
     }
 
     ngOnInit() {
@@ -79,7 +81,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     ngAfterContentInit() {
         if (!this.columns || this.columns.length === 0) {
-            this.setupDefaultColumns();
+            this._setupDefaultColumns();
         }
     }
 
@@ -90,7 +92,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    getContentActions(target:string, type:string) {
+    getContentActions(target: string, type: string) {
         if (target && type) {
 
             let ltarget = target.toLowerCase();
@@ -118,7 +120,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    onItemClick(item:DocumentEntity, $event) {
+    onItemClick(item: DocumentEntity, $event) {
         if ($event) {
             $event.preventDefault();
         }
@@ -129,7 +131,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
         if (this.navigate && item) {
             if (item.isFolder) {
-                let path = this.getItemPath(item);
+                let path = this._getItemPath(item);
                 this.route.push({
                     name: item.displayName,
                     path: path
@@ -153,37 +155,40 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    getContentUrl(document:DocumentEntity) {
+    getContentUrl(document: DocumentEntity) {
         return this._alfrescoService.getContentUrl(document);
     }
 
-    getDocumentThumbnailUrl(document:DocumentEntity) {
+    getDocumentThumbnailUrl(document: DocumentEntity) {
         return this._alfrescoService.getDocumentThumbnailUrl(document);
     }
 
-    executeContentAction(document:DocumentEntity, action:ContentActionModel) {
-        // todo: safety checks
-        action.handler(document);
+    executeContentAction(node: DocumentEntity, action: ContentActionModel) {
+        if (action) {
+            action.handler(node);
+        }
     }
 
-    private getItemPath(item:DocumentEntity):string {
+    displayFolderContent(path) {
+        if (path) {
+            this.currentFolderPath = path;
+            this._alfrescoService
+                .getFolder(path)
+                .subscribe(
+                    folder => this.folder = folder,
+                    error => this.errorMessage = <any>error
+                );
+        }
+    }
+
+    private _getItemPath(item: DocumentEntity): string {
         let container = item.location.container;
         let path = item.location.path !== '/' ? (item.location.path + '/' ) : '/';
         let relativePath = container + path + item.fileName;
         return item.location.site + '/' + relativePath;
     }
 
-    private displayFolderContent(path) {
-        this.currentFolderPath = path;
-        this._alfrescoService
-            .getFolder(path)
-            .subscribe(
-                folder => this.folder = folder,
-                error => this.errorMessage = <any>error
-            );
-    }
-
-    private setupDefaultColumns() {
+    private _setupDefaultColumns() {
         let thumbnailCol = new ContentColumnModel();
         thumbnailCol.source = '$thumbnail';
 

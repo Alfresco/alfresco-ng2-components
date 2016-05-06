@@ -23,83 +23,188 @@ import {
 import {DocumentList} from '../../src/components/document-list';
 import {ContentColumnModel} from '../../src/models/content-column.model';
 import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
+import {DocumentEntity} from '../../src/models/document-library.model';
+import {ContentActionModel} from '../../src/models/content-action.model';
 
 describe('document-list', () => {
 
+    let alfrescoServiceMock: AlfrescoServiceMock;
+    let documentList: DocumentList;
+
+    beforeEach(() => {
+        alfrescoServiceMock = new AlfrescoServiceMock();
+        documentList = new DocumentList(alfrescoServiceMock);
+    });
+
     it('should setup default columns', () => {
-        let list: DocumentList = new DocumentList(null);
-        list.ngAfterContentInit();
-        expect(list.columns.length).not.toBe(0);
+        documentList.ngAfterContentInit();
+        expect(documentList.columns.length).not.toBe(0);
     });
 
     it('should use custom columns instead of default ones', () => {
-        let list: DocumentList = new DocumentList(null);
         let column: ContentColumnModel = {
             title: 'title',
             source: 'source',
             cssClass: 'css'
         };
-        list.columns.push(column);
+        documentList.columns.push(column);
 
-        list.ngAfterContentInit();
-        expect(list.columns.length).toBe(1);
-        expect(list.columns[0]).toBe(column);
+        documentList.ngAfterContentInit();
+        expect(documentList.columns.length).toBe(1);
+        expect(documentList.columns[0]).toBe(column);
     });
 
     it('should setup default root for breadcrumb', () => {
+        documentList.ngOnInit();
+        expect(documentList.route.length).toBe(1);
+        expect(documentList.route[0]).toBe(documentList.rootFolder);
+    });
 
-        let service = new AlfrescoServiceMock();
-        /*
-        spyOn(service, 'getFolder').and.returnValue(
-            Observable.create(observer => {
-                var value = {};
-                observer.next(value);
-                observer.complete();
-            })
-        );
-        */
-        let list: DocumentList = new DocumentList(service);
+    it('should display custom root path', () => {
+        spyOn(documentList, 'displayFolderContent').and.stub();
 
-        list.ngOnInit();
-        expect(list.route.length).toBe(1);
-        expect(list.route[0]).toBe(list.rootFolder);
+        let root = {
+            name: '<root>',
+            path: '<path>'
+        };
+
+        documentList.rootFolder = root;
+        documentList.ngOnInit();
+        expect(documentList.displayFolderContent).toHaveBeenCalledWith(root.path);
     });
 
     it('should fetch folder', () => {
         let folder = {
             'nodeRef': 'workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28'
         };
-        let service = new AlfrescoServiceMock();
-        service._folderToReturn = folder;
+        alfrescoServiceMock._folderToReturn = folder;
+        documentList.ngOnInit();
 
-        let list: DocumentList = new DocumentList(service);
-        list.ngOnInit();
-
-        expect(list.folder).toBe(folder);
+        expect(documentList.folder).toBe(folder);
     });
 
     it('should get content url', () => {
         let url = 'URL';
-        let service = new AlfrescoServiceMock();
-        spyOn(service, 'getContentUrl').and.returnValue(url);
+        spyOn(alfrescoServiceMock, 'getContentUrl').and.returnValue(url);
 
-        let list: DocumentList = new DocumentList(service);
-        let result = list.getContentUrl(null);
+        let result = documentList.getContentUrl(null);
 
         expect(result).toBe(url);
-        expect(service.getContentUrl).toHaveBeenCalled();
+        expect(alfrescoServiceMock.getContentUrl).toHaveBeenCalled();
     });
 
     it('should get thumbnail url', () => {
         let url = 'URL';
-        let service = new AlfrescoServiceMock();
-        spyOn(service, 'getDocumentThumbnailUrl').and.returnValue(url);
+        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
 
-        let list: DocumentList = new DocumentList(service);
-        let result = list.getDocumentThumbnailUrl(null);
+        let result = documentList.getDocumentThumbnailUrl(null);
 
         expect(result).toBe(url);
-        expect(service.getDocumentThumbnailUrl).toHaveBeenCalled();
+        expect(alfrescoServiceMock.getDocumentThumbnailUrl).toHaveBeenCalled();
+    });
+    
+    it('should execute action with node', () => {
+        let node = new DocumentEntity();
+        let action = new ContentActionModel();
+        action.handler = function() {};
+
+        spyOn(action, 'handler').and.stub();
+
+        documentList.executeContentAction(node, action);
+        expect(action.handler).toHaveBeenCalledWith(node);
+
+    });
+
+    it('should execute action without node provided', () => {
+        let action = new ContentActionModel();
+        action.handler = function() {};
+
+        spyOn(action, 'handler').and.stub();
+        documentList.executeContentAction(null, action);
+        expect(action.handler).toHaveBeenCalledWith(null);
+    });
+
+    it('should update current folder path', () => {
+        expect(documentList.currentFolderPath).toBe(documentList.rootFolder.path);
+
+        let path = '<path>';
+        documentList.displayFolderContent(path);
+
+        expect(documentList.currentFolderPath).toBe(path);
+    });
+
+    it('should give no content actions for empty target', () => {
+        let actions = documentList.getContentActions(null, 'button');
+        expect(actions.length).toBe(0);
+    });
+
+    it('should give no content actions for empty type', () => {
+        let actions = documentList.getContentActions('folder', null);
+        expect(actions.length).toBe(0);
+    });
+
+    it('should filter content actions for various types and targets', () => {
+        var folderButton = new ContentActionModel();
+        folderButton.target = "folder";
+        folderButton.type = "button";
+
+        var folderMenu = new ContentActionModel();
+        folderMenu.target = "folder";
+        folderMenu.type = "menu";
+
+        var documentButton = new ContentActionModel();
+        documentButton.target = "document";
+        documentButton.type = "button";
+
+        var documentMenu = new ContentActionModel();
+        documentMenu.target = "document";
+        documentMenu.type = "menu";
+
+        documentList.actions = [
+            folderButton,
+            folderMenu,
+            documentButton,
+            documentMenu
+        ];
+
+        let actions = documentList.getContentActions('folder', 'button');
+        expect(actions.length).toBe(1);
+        expect(actions[0]).toBe(folderButton);
+
+        actions = documentList.getContentActions('folder', 'menu');
+        expect(actions.length).toBe(1);
+        expect(actions[0]).toBe(folderMenu);
+
+        actions = documentList.getContentActions('document', 'button');
+        expect(actions.length).toBe(1);
+        expect(actions[0]).toBe(documentButton);
+
+        actions = documentList.getContentActions('document', 'menu');
+        expect(actions.length).toBe(1);
+        expect(actions[0]).toBe(documentMenu);
+    });
+
+    it('should be case insensitive when filtering content actions', () => {
+        var documentButton = new ContentActionModel();
+        documentButton.target = 'document';
+        documentButton.type = 'button';
+
+        documentList.actions = [documentButton];
+
+        var actions = documentList.getContentActions('DoCuMeNt', 'BUTTON');
+        expect(actions.length).toBe(1);
+        expect(actions[0]).toBe(documentButton);
+    });
+
+    it('should find no content actions', () => {
+        var documentButton = new ContentActionModel();
+        documentButton.target = 'document';
+        documentButton.type = 'button';
+
+        documentList.actions = [documentButton];
+
+        var actions = documentList.getContentActions('unknown', 'value');
+        expect(actions.length).toBe(0);
     });
 
 });
