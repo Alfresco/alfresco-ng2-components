@@ -50,14 +50,28 @@ describe('AlfrescoUploadService', () => {
                 siteid: 'fakeSite',
                 containerid: 'fakeFolder'
             }
-        }
+        };
         service = new UploadService(options);
     });
 
-    it('should return true if is a file', () => {
-        let filesFake = [{name: 'fake-name', size: 0}];
+    it('should make XHR request', () => {
+
+        var xhr = {
+            open: jasmine.createSpy('open'),
+            upload: jasmine.createSpy('upload'),
+            send: jasmine.createSpy('send'),
+            setRequestHeader: jasmine.createSpy('setRequestHeader')
+        };
+
+        XMLHttpRequest = jasmine.createSpy('XMLHttpRequest');
+        XMLHttpRequest.and.callFake(function () {
+            return xhr;
+        });
+
+        let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
-        expect(true).toEqual(true);
+
+        expect(xhr.open).toHaveBeenCalled();
     });
 
 

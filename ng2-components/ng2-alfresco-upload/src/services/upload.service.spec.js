@@ -48,7 +48,7 @@ System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2
                     backend = injector.get(http_1.XHRBackend);
                     httpService = injector.get(http_1.Http);
                     options = {
-                        url: 'http://mockUpload',
+                        url: '',
                         withCredentials: true,
                         authToken: btoa('fakeadmin:fakeadmin'),
                         authTokenPrefix: 'Basic',
@@ -60,10 +60,20 @@ System.register(['angular2/testing', 'angular2/core', 'angular2/http', 'angular2
                     };
                     service = new upload_service_1.UploadService(options);
                 });
-                testing_1.it('should return true if is a file', function () {
-                    var filesFake = [{ name: 'fake-name', size: 0 }];
+                testing_1.it('should make XHR request', function () {
+                    var xhr = {
+                        open: jasmine.createSpy('open'),
+                        upload: jasmine.createSpy('upload'),
+                        send: jasmine.createSpy('send'),
+                        setRequestHeader: jasmine.createSpy('setRequestHeader')
+                    };
+                    XMLHttpRequest = jasmine.createSpy('XMLHttpRequest');
+                    XMLHttpRequest.and.callFake(function () {
+                        return xhr;
+                    });
+                    var filesFake = [{ name: 'fake-name', size: 10 }];
                     service.addToQueue(filesFake);
-                    expect(true).toEqual(true);
+                    expect(xhr.open).toHaveBeenCalled();
                 });
             });
         }
