@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import {it, describe} from 'angular2/testing';
+import {it, describe, beforeEach, expect} from 'angular2/testing';
 import {provide, Injector} from 'angular2/core';
-import {Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions} from 'angular2/http';
+import {Http, HTTP_PROVIDERS, XHRBackend} from 'angular2/http';
 import {MockBackend} from 'angular2/http/testing';
-import {UploadService} from './upload.service';
+import {UploadService} from '../../src/services/upload.service';
 
 describe('AlfrescoUploadService', () => {
     let injector,
@@ -56,11 +56,12 @@ describe('AlfrescoUploadService', () => {
 
     it('should make XHR request', () => {
 
-        var xhr = {
+        let xhr = {
             open: jasmine.createSpy('open'),
             upload: jasmine.createSpy('upload'),
             send: jasmine.createSpy('send'),
-            setRequestHeader: jasmine.createSpy('setRequestHeader')
+            setRequestHeader: jasmine.createSpy('setRequestHeader'),
+            onprogress : jasmine.createSpy('onprogress')
         };
 
         XMLHttpRequest = jasmine.createSpy('XMLHttpRequest');

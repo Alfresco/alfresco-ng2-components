@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings",
-    "test": "live-server --open=tests-runner.html"
+    "test": "live-server --open=index.html --entry-file=test/ "
   },
   "repository": {
     "type": "git",
