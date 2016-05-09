@@ -6,24 +6,24 @@
         <div class="mdl-card__supporting-text">
             <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                 <label for="username" class="mdl-textfield__label">{{'username' | translate }}</label>
-                <input type="text" class="mdl-textfield__input" id="username" ngControl="username" tabindex="1" />
+                <input  type="text" class="mdl-textfield__input" id="username" data-automation-id="username" ngControl="username" tabindex="1" />
                 <span class="mdl-tooltip mdl-tooltip--validation" for="username" *ngIf="formError.username">
-                        <span id="username-error">{{formError.username | translate }}</span>
+                        <span id="username-error" data-automation-id="username-error">{{formError.username | translate }}</span>
                 </span>
             </div>
 
             <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.password)}" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <label for="password" class="mdl-textfield__label">{{'password' | translate }}</label>
-                <input type="password" class="mdl-textfield__input" id="password" ngControl="password" tabindex="2" />
+                <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" ngControl="password" tabindex="2" />
                 <span class="mdl-tooltip mdl-tooltip--validation" for="password" *ngIf="formError.password">
-                        <span id="password-required">{{formError.password | translate }}</span>
+                        <span id="password-required" data-automation-id="password-required">{{formError.password | translate }}</span>
                 </span>
             </div>
         </div>
         <div class="mdl-card__actions mdl-card--border">
             <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" [disabled]="!form.valid">{{'login-button' | translate }}</button>
-            <div *ngIf="error" id="login-error" class="mdl-card__supporting-text" style="color: red;">{{'login-error-message' | translate }}</div>
-            <div *ngIf="success" id="login-success" class="mdl-card__supporting-text" style="color: blue;">{{'login-success-message' | translate }}</div>
+            <div *ngIf="error" id="login-error" data-automation-id="login-error" class="mdl-card__supporting-text" style="color: red;">{{'login-error-message' | translate }}</div>
+            <div *ngIf="success" id="login-success" data-automation-id="login-success" class="mdl-card__supporting-text" style="color: blue;">{{'login-success-message' | translate }}</div>
         </div>
         <div class="mdl-card__menu">
             <div class="mdl-spinner mdl-js-spinner"></div>

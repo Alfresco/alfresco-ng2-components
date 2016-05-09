@@ -190,6 +190,7 @@ describe('AlfrescoLogin', () => {
                 component.form.controls.password._value = 'my password';
 
                 fixture.detectChanges();
+                component.onValueChanged();
 
                 expect(compiled.querySelector('input[type="password"]').value).toEqual('my password');
                 expect(compiled.querySelector('input[type="text"]').value).toEqual('my username');
@@ -213,6 +214,7 @@ describe('AlfrescoLogin', () => {
                 component.form.controls.password._value = 'fake-password';
 
                 fixture.detectChanges();
+                component.onValueChanged();
 
                 compiled.querySelector('button').click();
 
@@ -238,6 +240,7 @@ describe('AlfrescoLogin', () => {
                 component.form.controls.password._value = 'fake-password';
 
                 fixture.detectChanges();
+                component.onValueChanged();
 
                 compiled.querySelector('button').click();
 
@@ -263,6 +266,7 @@ describe('AlfrescoLogin', () => {
                 component.form.controls.password._value = 'fake-wrong-password';
 
                 fixture.detectChanges();
+                component.onValueChanged();
 
                 compiled.querySelector('button').click();
 
@@ -289,6 +293,7 @@ describe('AlfrescoLogin', () => {
                 component.form.controls.password._value = 'fake-wrong-password';
 
                 fixture.detectChanges();
+                component.onValueChanged();
 
                 compiled.querySelector('button').click();
 
@@ -316,6 +321,7 @@ describe('AlfrescoLogin', () => {
                 component.form.controls.password._value = 'fake-password';
 
                 fixture.detectChanges();
+                component.onValueChanged();
 
                 let nativeElement = fixture.nativeElement;
                 let button = nativeElement.querySelector('button');
@@ -345,6 +351,7 @@ describe('AlfrescoLogin', () => {
                 component.form.controls.password._value = 'fake-password';
 
                 fixture.detectChanges();
+                component.onValueChanged();
 
                 // trigger the click
                 let nativeElement = fixture.nativeElement;

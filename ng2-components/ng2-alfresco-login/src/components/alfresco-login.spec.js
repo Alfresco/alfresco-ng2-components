@@ -254,6 +254,7 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.form.controls.username._value = 'fake-username';
                         component.form.controls.password._value = 'fake-password';
                         fixture.detectChanges();
+                        component.onValueChanged();
                         var nativeElement = fixture.nativeElement;
                         var button = nativeElement.querySelector('button');
                         button.dispatchEvent(new Event('click'));
@@ -275,6 +276,7 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.form.controls.username._value = 'fake-wrong-username';
                         component.form.controls.password._value = 'fake-password';
                         fixture.detectChanges();
+                        component.onValueChanged();
                         // trigger the click
                         var nativeElement = fixture.nativeElement;
                         var button = nativeElement.querySelector('button');
