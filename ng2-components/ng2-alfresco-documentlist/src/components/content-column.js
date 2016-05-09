@@ -48,14 +48,22 @@ System.register(['angular2/core', './content-column-list', './../models/content-
                 ContentColumn.prototype.ngOnInit = function () {
                     var model = new content_column_model_1.ContentColumnModel();
                     model.title = this.title;
+                    model.srTitle = this.srTitle;
                     model.source = this.source;
                     model.cssClass = this.cssClass;
+                    if (!model.srTitle && model.source === '$thumbnail') {
+                        model.srTitle = 'Thumbnail';
+                    }
                     this.list.registerColumn(model);
                 };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)
                 ], ContentColumn.prototype, "title", void 0);
+                __decorate([
+                    core_1.Input('sr-title'), 
+                    __metadata('design:type', String)
+                ], ContentColumn.prototype, "srTitle", void 0);
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)

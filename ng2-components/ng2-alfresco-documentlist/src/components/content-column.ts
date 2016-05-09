@@ -24,9 +24,21 @@ import {ContentColumnModel} from './../models/content-column.model';
     template: ''
 })
 export class ContentColumn implements OnInit {
-    @Input() title: string = '';
-    @Input() source: string;
-    @Input('class') cssClass: string;
+
+    @Input()
+    title: string = '';
+
+    /**
+     * Title to be used for screen readers.
+     */
+    @Input('sr-title')
+    srTitle: string;
+
+    @Input()
+    source: string;
+
+    @Input('class')
+    cssClass: string;
 
     constructor(
         private list: ContentColumnList) {
@@ -35,8 +47,13 @@ export class ContentColumn implements OnInit {
     ngOnInit() {
         let model = new ContentColumnModel();
         model.title = this.title;
+        model.srTitle = this.srTitle;
         model.source = this.source;
         model.cssClass = this.cssClass;
+
+        if (!model.srTitle && model.source === '$thumbnail') {
+            model.srTitle = 'Thumbnail';
+        }
 
         this.list.registerColumn(model);
     }

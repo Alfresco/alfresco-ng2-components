@@ -16,6 +16,7 @@
  */
 export declare class ContentColumnModel {
     title: string;
+    srTitle: string;
     source: string;
     cssClass: string;
 }

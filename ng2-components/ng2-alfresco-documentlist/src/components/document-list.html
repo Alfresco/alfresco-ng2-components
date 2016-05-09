@@ -8,9 +8,14 @@
     <thead>
     <tr>
         <!-- Columns -->
-        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}" *ngFor="#col of columns">{{col.title}}</th>
+        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}" *ngFor="#col of columns">
+            <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
+            <span *ngIf="col.title">{{col.title}}</span>
+        </th>
         <!-- Actions -->
-        <th></th>
+        <th>
+            <span class="sr-only">Actions</span>
+        </th>
     </tr>
     </thead>
     <tbody>

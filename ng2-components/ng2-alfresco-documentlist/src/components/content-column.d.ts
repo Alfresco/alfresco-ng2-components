@@ -19,6 +19,10 @@ import { ContentColumnList } from './content-column-list';
 export declare class ContentColumn implements OnInit {
     private list;
     title: string;
+    /**
+     * Title to be used for screen readers.
+     */
+    srTitle: string;
     source: string;
     cssClass: string;
     constructor(list: ContentColumnList);
