@@ -18,7 +18,8 @@
 import {
     it,
     describe,
-    expect
+    expect,
+    beforeEach
 } from 'angular2/testing';
 import {DocumentList} from '../../src/components/document-list';
 import {ContentColumnModel} from '../../src/models/content-column.model';
@@ -26,7 +27,7 @@ import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
 import {DocumentEntity} from '../../src/models/document-library.model';
 import {ContentActionModel} from '../../src/models/content-action.model';
 
-describe('document-list', () => {
+describe('DocumentList', () => {
 
     let alfrescoServiceMock: AlfrescoServiceMock;
     let documentList: DocumentList;
@@ -54,7 +55,8 @@ describe('document-list', () => {
         let column: ContentColumnModel = {
             title: 'title',
             source: 'source',
-            cssClass: 'css'
+            cssClass: 'css',
+            srTitle: ''
         };
         documentList.columns.push(column);
 

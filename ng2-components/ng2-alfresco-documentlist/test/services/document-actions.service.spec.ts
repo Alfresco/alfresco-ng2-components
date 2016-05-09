@@ -21,15 +21,21 @@ import {
     expect,
     beforeEach
 } from 'angular2/testing';
-import {FolderActionsService} from '../../src/services/folder-actions.service';
 import {ContentActionHandler} from '../../src/models/content-action.model';
+import {DocumentActionsService} from '../../src/services/document-actions.service';
+import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
 
-describe('FolderActionsService', () => {
+describe('DocumentActionsService', () => {
 
-    let service: FolderActionsService;
-
+    let service: DocumentActionsService;
+    
     beforeEach(() => {
-        service = new FolderActionsService();
+        let alfrescoServiceMock = new AlfrescoServiceMock();
+        service = new DocumentActionsService(alfrescoServiceMock);
+    });
+
+    it('should register default download action', () => {
+        expect(service.getHandler('download')).not.toBeNull();
     });
 
     it('should register custom action handler', () => {
@@ -48,5 +54,4 @@ describe('FolderActionsService', () => {
         expect(service.getHandler('<KEY>')).toBe(handler);
 
     });
-
 });

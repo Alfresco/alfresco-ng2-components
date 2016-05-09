@@ -46,7 +46,7 @@ System.register(['angular2/core', './alfresco.service'], function(exports_1, con
                 DocumentActionsService.prototype.getHandler = function (key) {
                     if (key) {
                         var lkey = key.toLowerCase();
-                        return this.handlers[lkey];
+                        return this.handlers[lkey] || null;
                     }
                     return null;
                 };
@@ -69,7 +69,7 @@ System.register(['angular2/core', './alfresco.service'], function(exports_1, con
                     window.alert('standard document action 2');
                 };
                 DocumentActionsService.prototype.download = function (obj) {
-                    if (obj && !obj.isFolder) {
+                    if (this._alfrescoService && obj && !obj.isFolder) {
                         var link = document.createElement('a');
                         document.body.appendChild(link);
                         link.setAttribute('download', 'download');

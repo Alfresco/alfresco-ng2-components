@@ -55,6 +55,8 @@ export class ContentColumn implements OnInit {
             model.srTitle = 'Thumbnail';
         }
 
-        this.list.registerColumn(model);
+        if (this.list) {
+            this.list.registerColumn(model);
+        }
     }
 }

@@ -44,7 +44,7 @@ System.register(['angular2/core', './document-list'], function(exports_1, contex
                     // so that content children can access it
                 }
                 ContentColumnList.prototype.registerColumn = function (column) {
-                    if (column) {
+                    if (this.documentList && column) {
                         this.documentList.columns.push(column);
                     }
                 };

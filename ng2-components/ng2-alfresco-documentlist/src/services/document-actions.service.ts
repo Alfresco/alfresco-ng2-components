@@ -30,7 +30,7 @@ export class DocumentActionsService {
     getHandler(key: string): ContentActionHandler {
         if (key) {
             let lkey = key.toLowerCase();
-            return this.handlers[lkey];
+            return this.handlers[lkey] || null;
         }
         return null;
     }
@@ -59,7 +59,7 @@ export class DocumentActionsService {
     }
 
     private download(obj: any) {
-        if (obj && !obj.isFolder) {
+        if (this._alfrescoService && obj && !obj.isFolder) {
             let link = document.createElement('a');
             document.body.appendChild(link);
             link.setAttribute('download', 'download');

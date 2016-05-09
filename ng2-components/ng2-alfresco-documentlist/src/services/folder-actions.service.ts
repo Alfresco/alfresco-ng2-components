@@ -31,7 +31,7 @@ export class FolderActionsService {
     getHandler(key: string): ContentActionHandler {
         if (key) {
             let lkey = key.toLowerCase();
-            return this.handlers[lkey];
+            return this.handlers[lkey] || null;
         }
         return null;
     }

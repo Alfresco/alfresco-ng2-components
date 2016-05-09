@@ -30,7 +30,7 @@ export class ContentColumnList {
     }
 
     registerColumn(column: ContentColumnModel) {
-        if (column) {
+        if (this.documentList && column) {
             this.documentList.columns.push(column);
         }
     }

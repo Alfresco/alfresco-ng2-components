@@ -54,7 +54,9 @@ System.register(['angular2/core', './content-column-list', './../models/content-
                     if (!model.srTitle && model.source === '$thumbnail') {
                         model.srTitle = 'Thumbnail';
                     }
-                    this.list.registerColumn(model);
+                    if (this.list) {
+                        this.list.registerColumn(model);
+                    }
                 };
                 __decorate([
                     core_1.Input(), 

@@ -14,7 +14,11 @@
         "../node_modules/angular2/typings/browser.d.ts",
         "../typings/main/ambient/jasmine/index.d.ts",
         "assets/alfresco.service.mock.ts",
-        "components/document-list.spec.ts"
+        "components/document-list.spec.ts",
+        "components/content-column-list.spec.ts",
+        "components/content-column.spec.ts",
+        "services/folder-actions.service.spec.ts",
+        "services/document-actions.service.spec.ts"
     ],
     "exclude": [
     ]

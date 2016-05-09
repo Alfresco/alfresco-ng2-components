@@ -44,7 +44,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 FolderActionsService.prototype.getHandler = function (key) {
                     if (key) {
                         var lkey = key.toLowerCase();
-                        return this.handlers[lkey];
+                        return this.handlers[lkey] || null;
                     }
                     return null;
                 };
