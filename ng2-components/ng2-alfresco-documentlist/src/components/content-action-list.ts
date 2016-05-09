@@ -30,7 +30,7 @@ export class ContentActionList {
     }
 
     registerAction(action: ContentActionModel) {
-        if (action) {
+        if (this.documentList && action) {
             this.documentList.actions.push(action);
         }
     }

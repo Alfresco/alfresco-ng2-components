@@ -44,7 +44,7 @@ System.register(['angular2/core', './document-list'], function(exports_1, contex
                     // so that content children can access it
                 }
                 ContentActionList.prototype.registerAction = function (action) {
-                    if (action) {
+                    if (this.documentList && action) {
                         this.documentList.actions.push(action);
                     }
                 };

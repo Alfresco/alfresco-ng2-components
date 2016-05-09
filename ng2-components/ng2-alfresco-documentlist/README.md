@@ -6,15 +6,6 @@
 npm install --save <TBD>
 ```
 
-## Build from sources
-
-Alternatively you can build component from sources with the following commands:
-
-```sh
-npm install
-npm run build
-```
-
 ## Basic usage
 
 ```html
@@ -346,3 +337,27 @@ export class MyView {
 
 Typically you may want populating all your custom actions at the application root level or
 by means of custom application service.
+
+
+## Build from sources
+
+Alternatively you can build component from sources with the following commands:
+
+```sh
+npm install
+npm run build
+```
+
+## Running unit tests
+
+You can run test with the
+
+```sh
+npm test
+```
+
+or alternatively if you want to enable watchers and live reload:
+
+```sh
+npm run test:w
+```
