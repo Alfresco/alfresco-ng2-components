@@ -24,7 +24,7 @@ import {
 import {DocumentList} from '../../src/components/document-list';
 import {ContentColumnModel} from '../../src/models/content-column.model';
 import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-import {DocumentEntity} from '../../src/models/document-library.model';
+import {DocumentEntity, LocationEntity} from '../../src/models/document-library.model';
 import {ContentActionModel} from '../../src/models/content-action.model';
 
 describe('DocumentList', () => {
@@ -304,14 +304,14 @@ describe('DocumentList', () => {
     });
     
     it('should get node path', () => {
-        let node = {
-            fileName: 'fileName',
-            location: {
-                site: 'swsdp',
-                container: 'documentLibrary',
-                path: '\/'
-            }
-        };
+        let location = new LocationEntity();
+        location.site = 'swsdp';
+        location.container = 'documentLibrary';
+        location.path = '\/';
+
+        let node = new DocumentEntity();
+        node.fileName = 'fileName';
+        node.location = location;
 
         expect(documentList.getNodePath(node)).toBe('swsdp/documentLibrary/fileName');
     });

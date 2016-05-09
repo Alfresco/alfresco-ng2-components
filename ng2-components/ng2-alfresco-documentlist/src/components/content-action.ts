@@ -26,12 +26,24 @@ import {FolderActionsService} from '../services/folder-actions.service';
     template: ''
 })
 export class ContentAction implements OnInit {
-    @Input() title: string = 'Action';
-    @Input() icon: string;
-    @Input() handler: string;
-    @Input() type: string;
-    @Input() target: string;
-    @Output() execute = new EventEmitter();
+
+    @Input()
+    title: string = 'Action';
+
+    @Input()
+    icon: string;
+
+    @Input()
+    handler: string;
+
+    @Input()
+    type: string;
+
+    @Input()
+    target: string;
+
+    @Output()
+    execute = new EventEmitter();
 
     constructor(
         private list: ContentActionList,
@@ -64,11 +76,17 @@ export class ContentAction implements OnInit {
             let ltarget = target.toLowerCase();
 
             if (ltarget === 'document') {
-                return this.documentActions.getHandler(name);
+                if (this.documentActions) {
+                    return this.documentActions.getHandler(name);
+                }
+                return null;
             }
 
             if (ltarget === 'folder') {
-                return this.folderActions.getHandler(name);
+                if (this.folderActions) {
+                    return this.folderActions.getHandler(name);
+                }
+                return null;
             }
         }
         return null;

@@ -77,10 +77,16 @@ System.register(['angular2/core', './../models/content-action.model', './content
                     if (target) {
                         var ltarget = target.toLowerCase();
                         if (ltarget === 'document') {
-                            return this.documentActions.getHandler(name);
+                            if (this.documentActions) {
+                                return this.documentActions.getHandler(name);
+                            }
+                            return null;
                         }
                         if (ltarget === 'folder') {
-                            return this.folderActions.getHandler(name);
+                            if (this.folderActions) {
+                                return this.folderActions.getHandler(name);
+                            }
+                            return null;
                         }
                     }
                     return null;

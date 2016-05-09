@@ -14,6 +14,7 @@
         "../node_modules/angular2/typings/browser.d.ts",
         "../typings/main/ambient/jasmine/index.d.ts",
         "assets/alfresco.service.mock.ts",
+        "components/content-action.spec.ts",
         "components/document-list.spec.ts",
         "components/content-column-list.spec.ts",
         "components/content-column.spec.ts",
