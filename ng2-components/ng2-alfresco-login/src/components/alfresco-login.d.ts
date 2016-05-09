@@ -20,6 +20,7 @@ import { ControlGroup, FormBuilder } from 'angular2/common';
 import { AlfrescoAuthenticationService } from '../services/alfresco-authentication';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 export declare class AlfrescoLoginComponent {
+    private _fb;
     auth: AlfrescoAuthenticationService;
     router: Router;
     method: string;
@@ -29,19 +30,28 @@ export declare class AlfrescoLoginComponent {
     form: ControlGroup;
     error: boolean;
     success: boolean;
+    formError: {
+        [id: string]: string;
+    };
+    private _message;
     /**
      * Constructor
-     * @param fb
+     * @param _fb
      * @param auth
      * @param router
      */
-    constructor(fb: FormBuilder, auth: AlfrescoAuthenticationService, router: Router, translate: TranslateService);
+    constructor(_fb: FormBuilder, auth: AlfrescoAuthenticationService, router: Router, translate: TranslateService);
     /**
      * Method called on submit form
      * @param value
      * @param event
      */
     onSubmit(value: any, event: any): void;
+    /**
+     * The method check the error in the form and push the error in the formError object
+     * @param data
+     */
+    onValueChanged(data: any): void;
     /**
      * The method return if a field is valid or not
      * @param field

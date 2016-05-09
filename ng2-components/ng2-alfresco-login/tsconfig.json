@@ -13,10 +13,10 @@
     "files":[
         "node_modules/angular2/typings/browser.d.ts",
         "typings/browser/ambient/jasmine/index.d.ts",
-        "src/alfresco-login.component.ts",
-        "src/alfresco-login.component.spec.ts",
-        "src/alfresco-authentication.service.ts",
-        "src/alfresco-authentication.service.spec.ts"
+        "src/components/alfresco-login.ts",
+        "src/components/alfresco-login.spec.ts",
+        "src/services/alfresco-authentication.ts",
+        "src/services/alfresco-authentication.spec.ts"
     ],
     "exclude": [
         "**/node_modules",

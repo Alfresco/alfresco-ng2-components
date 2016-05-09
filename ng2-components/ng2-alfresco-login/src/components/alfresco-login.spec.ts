@@ -101,7 +101,7 @@ describe('AlfrescoLogin', () => {
 
                 expect(element.querySelector('[for="username"]')).toBeDefined();
                 expect(element.querySelector('[for="username"]').innerText).toEqual('username');
-                expect(element.querySelector('#username-required').innerText).toEqual('input-required-message');
+                expect(element.querySelector('#username-error').innerText).toEqual('input-required-message');
 
                 expect(element.querySelector('[for="password"]')).toBeDefined();
                 expect(element.querySelector('[for="password"]').innerText).toEqual('password');
@@ -123,6 +123,57 @@ describe('AlfrescoLogin', () => {
             });
     }));
 
+    it('should render min-length error when the username is lower than 4 characters', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+        return tcb
+            .createAsync(AlfrescoLoginComponent)
+            .then((fixture) => {
+                let component = fixture.componentInstance;
+                component.isErrorStyle = function () {
+
+                };
+
+                let compiled = fixture.debugElement.nativeElement;
+
+                component.form.controls['username']._value = 'us';
+
+                fixture.detectChanges();
+
+                component.onValueChanged();
+
+                fixture.detectChanges();
+
+                expect(component.formError).toBeDefined(true);
+                expect(component.formError['username']).toBeDefined(true);
+                expect(component.formError['username']).toEqual('input-min-message');
+                expect(compiled.querySelector('#username-error').innerText).toEqual('input-min-message');
+            });
+    }));
+
+    it('should render no errors when the username and password are correct', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
+        return tcb
+            .createAsync(AlfrescoLoginComponent)
+            .then((fixture) => {
+                let component = fixture.componentInstance;
+                component.isErrorStyle = function () {
+
+                };
+
+                let compiled = fixture.debugElement.nativeElement;
+
+                component.form.controls['username']._value = 'fake-user';
+                component.form.controls['password']._value = 'fake-password';
+
+                fixture.detectChanges();
+
+                component.onValueChanged();
+
+                fixture.detectChanges();
+
+                expect(component.formError).toBeDefined(true);
+                expect(component.formError['username']).toEqual('');
+                expect(component.formError['password']).toEqual('');
+            });
+    }));
 
     it('should render the new values after user and password values are changed', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb

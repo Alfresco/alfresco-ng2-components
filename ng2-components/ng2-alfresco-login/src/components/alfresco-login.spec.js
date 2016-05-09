@@ -99,7 +99,7 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(element.querySelector('h2').innerText).toEqual('login');
                         testing_1.expect(element.querySelector('[for="username"]')).toBeDefined();
                         testing_1.expect(element.querySelector('[for="username"]').innerText).toEqual('username');
-                        testing_1.expect(element.querySelector('#username-required').innerText).toEqual('input-required-message');
+                        testing_1.expect(element.querySelector('#username-error').innerText).toEqual('input-required-message');
                         testing_1.expect(element.querySelector('[for="password"]')).toBeDefined();
                         testing_1.expect(element.querySelector('[for="password"]').innerText).toEqual('password');
                         testing_1.expect(element.querySelector('#password-required').innerText).toEqual('input-required-message');
@@ -115,6 +115,42 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         testing_1.expect(element.querySelector('input[type="text"]')).toBeDefined();
                         testing_1.expect(element.querySelector('input[type="password"]').value).toEqual('');
                         testing_1.expect(element.querySelector('input[type="text"]').value).toEqual('');
+                    });
+                }));
+                testing_1.it('should render min-length error when the username is lower than 4 characters', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                    return tcb
+                        .createAsync(alfresco_login_1.AlfrescoLoginComponent)
+                        .then(function (fixture) {
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
+                        var compiled = fixture.debugElement.nativeElement;
+                        component.form.controls['username']._value = 'us';
+                        fixture.detectChanges();
+                        component.onValueChanged();
+                        fixture.detectChanges();
+                        testing_1.expect(component.formError).toBeDefined(true);
+                        testing_1.expect(component.formError['username']).toBeDefined(true);
+                        testing_1.expect(component.formError['username']).toEqual('input-min-message');
+                        testing_1.expect(compiled.querySelector('#username-error').innerText).toEqual('input-min-message');
+                    });
+                }));
+                testing_1.it('should render no errors when the username and password are correct', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
+                    return tcb
+                        .createAsync(alfresco_login_1.AlfrescoLoginComponent)
+                        .then(function (fixture) {
+                        var component = fixture.componentInstance;
+                        component.isErrorStyle = function () {
+                        };
+                        var compiled = fixture.debugElement.nativeElement;
+                        component.form.controls['username']._value = 'fake-user';
+                        component.form.controls['password']._value = 'fake-password';
+                        fixture.detectChanges();
+                        component.onValueChanged();
+                        fixture.detectChanges();
+                        testing_1.expect(component.formError).toBeDefined(true);
+                        testing_1.expect(component.formError['username']).toEqual('');
+                        testing_1.expect(component.formError['password']).toEqual('');
                     });
                 }));
                 testing_1.it('should render the new values after user and password values are changed', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {

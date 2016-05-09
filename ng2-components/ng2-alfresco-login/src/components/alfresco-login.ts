@@ -20,7 +20,7 @@ import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from 'angular2/c
 import {AlfrescoAuthenticationService} from '../services/alfresco-authentication';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 declare let componentHandler;
-declare let __moduleName:string;
+declare let __moduleName: string;
 
 @Component({
     selector: 'alfresco-login',
@@ -32,32 +32,56 @@ declare let __moduleName:string;
 
 })
 export class AlfrescoLoginComponent {
-    @Input() method:string = 'POST';
+    @Input() method: string = 'POST';
     @Output() onSuccess = new EventEmitter();
     @Output() onError = new EventEmitter();
     translate: TranslateService;
 
-    form:ControlGroup;
-    error:boolean = false;
-    success:boolean = false;
+    form: ControlGroup;
+    error: boolean = false;
+    success: boolean = false;
+
+    formError: { [id: string]: string };
+
+    private _message: { [id:string]:
+        { [id: string]: string }
+    };
 
     /**
      * Constructor
-     * @param fb
+     * @param _fb
      * @param auth
      * @param router
      */
-    constructor(fb:FormBuilder,
-                public auth:AlfrescoAuthenticationService,
-                public router:Router,
-                translate:TranslateService
-                ) {
-        this.form = fb.group({
+    constructor(private _fb: FormBuilder,
+                public auth: AlfrescoAuthenticationService,
+                public router: Router,
+                translate: TranslateService) {
+
+        this.formError = {
+            'username': '',
+            'password': ''
+        };
+
+        this.form = this._fb.group({
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
         });
 
+        this._message = {
+            'username': {
+                'required': 'input-required-message',
+                'minlength': 'input-min-message'
+            },
+            'password': {
+                'required': 'input-required-message'
+            }
+        };
         this.translationInit(translate);
+
+        this.form.valueChanges.subscribe(data => this.onValueChanged(data));
+
+        this.onValueChanged();
     }
 
     /**
@@ -65,14 +89,14 @@ export class AlfrescoLoginComponent {
      * @param value
      * @param event
      */
-    onSubmit(value:any, event) {
+    onSubmit(value: any, event) {
         this.error = false;
         if (event) {
             event.preventDefault();
         }
         this.auth.login(this.method, value.username, value.password)
             .subscribe(
-            (token:any) => {
+            (token: any) => {
                 try {
                     this.success = true;
                     this.onSuccess.emit({
@@ -84,7 +108,7 @@ export class AlfrescoLoginComponent {
                 }
 
             },
-            (err:any) => {
+            (err: any) => {
                 this.error = true;
                 this.onError.emit({
                     value: 'Login KO'
@@ -97,11 +121,27 @@ export class AlfrescoLoginComponent {
     }
 
     /**
+     * The method check the error in the form and push the error in the formError object
+     * @param data
+     */
+    onValueChanged(data: any) {
+        for (let field in this.formError) {
+            this.formError[field] = '';
+            let hasError = this.form.controls[field].errors || (this.form.controls[field].dirty && !this.form.controls[field].valid);
+            if (hasError) {
+                for (let key in this.form.controls[field].errors) {
+                    this.formError[field] += this._message[field][key] + '';
+                }
+            }
+        }
+    }
+
+    /**
      * The method return if a field is valid or not
      * @param field
      * @returns {boolean}
      */
-    isErrorStyle(field:ControlGroup) {
+    isErrorStyle(field: ControlGroup) {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }

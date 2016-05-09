@@ -33,11 +33,13 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
             AlfrescoLoginComponent = (function () {
                 /**
                  * Constructor
-                 * @param fb
+                 * @param _fb
                  * @param auth
                  * @param router
                  */
-                function AlfrescoLoginComponent(fb, auth, router, translate) {
+                function AlfrescoLoginComponent(_fb, auth, router, translate) {
+                    var _this = this;
+                    this._fb = _fb;
                     this.auth = auth;
                     this.router = router;
                     this.method = 'POST';
@@ -45,11 +47,26 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                     this.onError = new core_1.EventEmitter();
                     this.error = false;
                     this.success = false;
-                    this.form = fb.group({
+                    this.formError = {
+                        'username': '',
+                        'password': ''
+                    };
+                    this.form = this._fb.group({
                         username: ['', common_1.Validators.compose([common_1.Validators.required, common_1.Validators.minLength(4)])],
                         password: ['', common_1.Validators.required]
                     });
+                    this._message = {
+                        'username': {
+                            'required': 'input-required-message',
+                            'minlength': 'input-min-message'
+                        },
+                        'password': {
+                            'required': 'input-required-message'
+                        }
+                    };
                     this.translationInit(translate);
+                    this.form.valueChanges.subscribe(function (data) { return _this.onValueChanged(data); });
+                    this.onValueChanged();
                 }
                 /**
                  * Method called on submit form
@@ -82,6 +99,21 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                         console.log(err);
                         _this.success = false;
                     }, function () { return console.log('Login done'); });
+                };
+                /**
+                 * The method check the error in the form and push the error in the formError object
+                 * @param data
+                 */
+                AlfrescoLoginComponent.prototype.onValueChanged = function (data) {
+                    for (var field in this.formError) {
+                        this.formError[field] = '';
+                        var hasError = this.form.controls[field].errors || (this.form.controls[field].dirty && !this.form.controls[field].valid);
+                        if (hasError) {
+                            for (var key in this.form.controls[field].errors) {
+                                this.formError[field] += this._message[field][key] + '';
+                            }
+                        }
+                    }
                 };
                 /**
                  * The method return if a field is valid or not
