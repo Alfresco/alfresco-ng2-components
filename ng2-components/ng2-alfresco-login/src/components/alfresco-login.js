@@ -66,7 +66,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                     };
                     this.translationInit(translate);
                     this.form.valueChanges.subscribe(function (data) { return _this.onValueChanged(data); });
-                    this.onValueChanged();
+                    this.onValueChanged(null);
                 }
                 /**
                  * Method called on submit form

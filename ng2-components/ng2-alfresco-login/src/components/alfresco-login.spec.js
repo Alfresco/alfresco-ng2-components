@@ -125,13 +125,13 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.isErrorStyle = function () {
                         };
                         var compiled = fixture.debugElement.nativeElement;
-                        component.form.controls['username']._value = 'us';
+                        component.form.controls.username._value = 'us';
                         fixture.detectChanges();
                         component.onValueChanged();
                         fixture.detectChanges();
                         testing_1.expect(component.formError).toBeDefined(true);
-                        testing_1.expect(component.formError['username']).toBeDefined(true);
-                        testing_1.expect(component.formError['username']).toEqual('input-min-message');
+                        testing_1.expect(component.formError.username).toBeDefined(true);
+                        testing_1.expect(component.formError.username).toEqual('input-min-message');
                         testing_1.expect(compiled.querySelector('#username-error').innerText).toEqual('input-min-message');
                     });
                 }));
@@ -143,14 +143,15 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.isErrorStyle = function () {
                         };
                         var compiled = fixture.debugElement.nativeElement;
-                        component.form.controls['username']._value = 'fake-user';
-                        component.form.controls['password']._value = 'fake-password';
+                        component.form.controls.username._value = 'fake-user';
+                        component.form.controls.password._value = 'fake-password';
                         fixture.detectChanges();
                         component.onValueChanged();
                         fixture.detectChanges();
                         testing_1.expect(component.formError).toBeDefined(true);
-                        testing_1.expect(component.formError['username']).toEqual('');
-                        testing_1.expect(component.formError['password']).toEqual('');
+                        testing_1.expect(component.formError.username).toEqual('');
+                        testing_1.expect(component.formError.password).toEqual('');
+                        testing_1.expect(compiled.querySelector('#login-error')).toBeNull();
                     });
                 }));
                 testing_1.it('should render the new values after user and password values are changed', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
@@ -160,12 +161,10 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         var component = fixture.componentInstance;
                         component.isErrorStyle = function () {
                         };
-                        fixture.detectChanges();
                         var compiled = fixture.debugElement.nativeElement;
-                        var password = compiled.querySelector('input[type="password"]');
-                        var username = compiled.querySelector('input[type="text"]');
-                        password.value = 'my password';
-                        username.value = 'my username';
+                        component.form.controls.username._value = 'my username';
+                        component.form.controls.password._value = 'my password';
+                        fixture.detectChanges();
                         testing_1.expect(compiled.querySelector('input[type="password"]').value).toEqual('my password');
                         testing_1.expect(compiled.querySelector('input[type="text"]').value).toEqual('my username');
                     });
@@ -180,8 +179,9 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.isErrorStyle = function () {
                         };
                         var compiled = fixture.debugElement.nativeElement;
-                        component.form._value.username = 'fake-username';
-                        component.form._value.password = 'fake-password';
+                        component.form.controls.username._value = 'fake-username';
+                        component.form.controls.password._value = 'fake-password';
+                        fixture.detectChanges();
                         compiled.querySelector('button').click();
                         fixture.detectChanges();
                         testing_1.expect(component.error).toBe(false);
@@ -197,11 +197,13 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.isErrorStyle = function () {
                         };
                         var compiled = fixture.debugElement.nativeElement;
-                        component.form._value.username = 'fake-wrong-username';
-                        component.form._value.password = 'fake-password';
+                        component.form.controls.username._value = 'fake-wrong-username';
+                        component.form.controls.password._value = 'fake-password';
+                        fixture.detectChanges();
                         compiled.querySelector('button').click();
                         fixture.detectChanges();
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
+                        testing_1.expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
                     });
                 }));
                 testing_1.it('should return error with a wrong password ', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
@@ -213,11 +215,13 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.isErrorStyle = function () {
                         };
                         var compiled = fixture.debugElement.nativeElement;
-                        component.form._value.username = 'fake-username';
-                        component.form._value.password = 'fake-wrong-password';
+                        component.form.controls.username._value = 'fake-username';
+                        component.form.controls.password._value = 'fake-wrong-password';
+                        fixture.detectChanges();
                         compiled.querySelector('button').click();
                         fixture.detectChanges();
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
+                        testing_1.expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
                     });
                 }));
                 testing_1.it('should return error with a wrong username and password ', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
@@ -229,11 +233,13 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.isErrorStyle = function () {
                         };
                         var compiled = fixture.debugElement.nativeElement;
-                        component.form._value.username = 'fake-wrong-username';
-                        component.form._value.password = 'fake-wrong-password';
+                        component.form.controls.username._value = 'fake-wrong-username';
+                        component.form.controls.password._value = 'fake-wrong-password';
+                        fixture.detectChanges();
                         compiled.querySelector('button').click();
                         fixture.detectChanges();
                         testing_1.expect(fixture.componentInstance.error).toBe(true);
+                        testing_1.expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
                     });
                 }));
                 testing_1.it('should emit onSuccess event after the login has succeeded', testing_1.injectAsync([testing_1.TestComponentBuilder], function (tcb) {
@@ -244,13 +250,16 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                         component.isErrorStyle = function () {
                         };
                         spyOn(component.onSuccess, 'emit');
-                        component.form._value.username = 'fake-username';
-                        component.form._value.password = 'fake-password';
-                        // trigger the click
+                        var compiled = fixture.debugElement.nativeElement;
+                        component.form.controls.username._value = 'fake-username';
+                        component.form.controls.password._value = 'fake-password';
+                        fixture.detectChanges();
                         var nativeElement = fixture.nativeElement;
                         var button = nativeElement.querySelector('button');
                         button.dispatchEvent(new Event('click'));
                         fixture.detectChanges();
+                        testing_1.expect(fixture.componentInstance.error).toBe(false);
+                        testing_1.expect(compiled.querySelector('#login-success').innerHTML).toEqual('login-success-message');
                         testing_1.expect(component.onSuccess.emit).toHaveBeenCalledWith({ value: 'Login OK' });
                     });
                 }));
@@ -258,18 +267,21 @@ System.register(['angular2/platform/testing/browser', 'angular2/testing', 'angul
                     return tcb
                         .createAsync(alfresco_login_1.AlfrescoLoginComponent)
                         .then(function (fixture) {
-                        //pipes.config();
                         var component = fixture.componentInstance;
                         component.isErrorStyle = function () {
                         };
                         spyOn(component.onError, 'emit');
-                        component.form._value.username = 'fake-wrong-username';
-                        component.form._value.password = 'fake-password';
+                        var compiled = fixture.debugElement.nativeElement;
+                        component.form.controls.username._value = 'fake-wrong-username';
+                        component.form.controls.password._value = 'fake-password';
+                        fixture.detectChanges();
                         // trigger the click
                         var nativeElement = fixture.nativeElement;
                         var button = nativeElement.querySelector('button');
                         button.dispatchEvent(new Event('click'));
                         fixture.detectChanges();
+                        testing_1.expect(fixture.componentInstance.error).toBe(true);
+                        testing_1.expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
                         testing_1.expect(component.onError.emit).toHaveBeenCalledWith({ value: 'Login KO' });
                     });
                 }));

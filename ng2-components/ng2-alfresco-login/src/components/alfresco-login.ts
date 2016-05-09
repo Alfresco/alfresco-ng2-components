@@ -81,7 +81,7 @@ export class AlfrescoLoginComponent {
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
 
-        this.onValueChanged();
+        this.onValueChanged(null);
     }
 
     /**
