@@ -18,7 +18,7 @@ import {it, describe} from 'angular2/testing';
 import {provide, Injector} from 'angular2/core';
 import {Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions} from 'angular2/http';
 import {MockBackend} from 'angular2/http/testing';
-import {AlfrescoAuthenticationService} from './alfresco-authentication';
+import {AlfrescoAuthenticationService} from '../../src/services/alfresco-authentication';
 
 
 describe('AlfrescoAuthentication', () => {

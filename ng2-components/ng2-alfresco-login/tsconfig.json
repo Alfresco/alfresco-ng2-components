@@ -14,9 +14,9 @@
         "node_modules/angular2/typings/browser.d.ts",
         "typings/browser/ambient/jasmine/index.d.ts",
         "src/components/alfresco-login.ts",
-        "src/components/alfresco-login.spec.ts",
+        "test/components/alfresco-login.spec.ts",
         "src/services/alfresco-authentication.ts",
-        "src/services/alfresco-authentication.spec.ts"
+        "test/services/alfresco-authentication.spec.ts"
     ],
     "exclude": [
         "**/node_modules",

@@ -17,49 +17,15 @@
 import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
 import {it, describe, expect, inject, injectAsync, beforeEach, beforeEachProviders, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
 import {Component, provide, Injector, EventEmitter} from 'angular2/core';
-import {AlfrescoLoginComponent} from './alfresco-login';
+import {Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route} from 'angular2/router';
+import {RootRouter} from 'angular2/src/router/router';
 import {Observable} from 'rxjs/Rx';
-import {AlfrescoAuthenticationService} from '../services/alfresco-authentication';
-import { RootRouter } from 'angular2/src/router/router';
-import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from 'angular2/router';
-import { SpyLocation } from 'angular2/src/mock/location_mock';
+import {SpyLocation} from 'angular2/src/mock/location_mock';
 import {dispatchEvent} from 'angular2/src/testing/utils';
 import {TranslateService, LangChangeEvent} from 'ng2-translate/ng2-translate';
-
-class AuthenticationMock {
-    public mockName: string = 'Mocked Service';
-
-    login(method: string, username: string, password: string) {
-        if (username === 'fake-username' && password === 'fake-password') {
-            return Observable.of(true);
-        } else {
-            return Observable.throw('Fake server error');
-        }
-    }
-
-    getProviders(): Array<any> {
-        return [provide(AlfrescoAuthenticationService, {useValue: this})];
-    }
-}
-
-class TranslationMock {
-
-    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
-
-    setDefaultLang() {
-
-    }
-
-    use() {
-    }
-
-    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
-        if (!key) {
-            throw new Error('Parameter "key" required');
-        }
-        return Observable.of(key);
-    }
-}
+import {AlfrescoLoginComponent} from '../../src/components/alfresco-login';
+import {AuthenticationMock} from '../assets/authentication.service.mock';
+import {TranslationMock} from '../assets/translation.service.mock';
 
 describe('AlfrescoLogin', () => {
     let authService, location, router;
