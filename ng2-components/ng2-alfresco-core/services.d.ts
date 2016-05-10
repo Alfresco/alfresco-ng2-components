@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 import { AlfrescoSettingsService } from './services/AlfrescoSettingsService';
+import { AlfrescoTranslationLoader } from './services/AlfrescoTranslationService';
 export * from './services/AlfrescoSettingsService';
+export * from './services/AlfrescoTranslationService';
 declare var _default: {
     directives: undefined[];
-    providers: typeof AlfrescoSettingsService[];
+    providers: (typeof AlfrescoSettingsService | typeof AlfrescoTranslationLoader)[];
 };
 export default _default;
 export declare const ALFRESCO_CORE_PROVIDERS: [any];

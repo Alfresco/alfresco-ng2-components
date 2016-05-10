@@ -14,14 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
 import {AlfrescoSettingsService} from './services/AlfrescoSettingsService';
+import {AlfrescoTranslationLoader} from './services/AlfrescoTranslationService';
 export * from './services/AlfrescoSettingsService';
+export * from './services/AlfrescoTranslationService';
 
 export default {
     directives: [],
-    providers: [AlfrescoSettingsService]
+    providers: [
+        AlfrescoSettingsService,
+        AlfrescoTranslationLoader
+    ]
 }
 
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
-    AlfrescoSettingsService
+    AlfrescoSettingsService,
+    AlfrescoTranslationLoader
 ];
