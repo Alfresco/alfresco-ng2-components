@@ -8,7 +8,7 @@
         "tsc": "tsc",
         "tsc:w": "tsc -w",
         "typings": "typings",
-        "test": "live-server --open=test/index.html --mount=/ng2-alfresco-core:../ng2-alfresco-core",
+        "test": "live-server --open=index.html --entry-file=test/ --mount=/ng2-alfresco-core:../ng2-alfresco-core",
         "test:w": "concurrently \"npm run tsc:w\" \"npm run test\" "
     },
     "repository": {
