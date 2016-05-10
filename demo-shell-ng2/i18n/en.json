@@ -11,6 +11,7 @@
     "DOCUMENT_LIST": {
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
+            "SITE": "Site",
             "CREATED_BY": "Created by",
             "CREATED_ON": "Created on"
         },

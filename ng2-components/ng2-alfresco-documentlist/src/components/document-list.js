@@ -163,6 +163,32 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     }
                     return null;
                 };
+                /**
+                 * Gets a value from an object by composed key
+                 * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
+                 * @param target
+                 * @param key
+                 * @returns {string}
+                 */
+                DocumentList.prototype.getObjectValue = function (target, key) {
+                    var keys = key.split('.');
+                    key = '';
+                    do {
+                        key += keys.shift();
+                        var value = target[key];
+                        if (value !== undefined && (typeof value === 'object' || !keys.length)) {
+                            target = value;
+                            key = '';
+                        }
+                        else if (!keys.length) {
+                            target = undefined;
+                        }
+                        else {
+                            key += '.';
+                        }
+                    } while (keys.length);
+                    return target;
+                };
                 DocumentList.prototype.setupDefaultColumns = function () {
                     var thumbnailCol = new content_column_model_1.ContentColumnModel();
                     thumbnailCol.source = '$thumbnail';

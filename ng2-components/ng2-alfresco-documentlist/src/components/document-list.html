@@ -42,7 +42,7 @@
                 </div>
             </div>
             <span *ngSwitchDefault>
-                {{content[col.source]}}
+                {{getObjectValue(content, col.source)}}
             </span>
         </td>
 

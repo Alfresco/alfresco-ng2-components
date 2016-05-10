@@ -197,6 +197,33 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         return null;
     }
 
+    /**
+     * Gets a value from an object by composed key
+     * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
+     * @param target
+     * @param key
+     * @returns {string}
+     */
+    getObjectValue(target: any, key: string): string {
+        let keys = key.split('.');
+        key = '';
+
+        do {
+            key += keys.shift();
+            let value = target[key];
+            if (value !== undefined && (typeof value === 'object' || !keys.length)) {
+                target = value;
+                key = '';
+            } else if (!keys.length) {
+                target = undefined;
+            } else {
+                key += '.';
+            }
+        } while (keys.length);
+
+        return target;
+    }
+
     setupDefaultColumns(): void {
         let thumbnailCol = new ContentColumnModel();
         thumbnailCol.source = '$thumbnail';

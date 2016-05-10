@@ -49,5 +49,13 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
     executeContentAction(node: DocumentEntity, action: ContentActionModel): void;
     displayFolderContent(path: any): void;
     getNodePath(node: DocumentEntity): string;
+    /**
+     * Gets a value from an object by composed key
+     * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
+     * @param target
+     * @param key
+     * @returns {string}
+     */
+    getObjectValue(target: any, key: string): string;
     setupDefaultColumns(): void;
 }

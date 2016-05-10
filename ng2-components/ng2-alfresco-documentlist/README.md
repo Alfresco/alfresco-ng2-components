@@ -89,6 +89,34 @@ A custom set of columns can look like the following:
 
 ![Custom columns](docs/assets/custom-columns.png)
 
+
+Binding to nested properties is also supported. Assuming you have the node structure similar to following:
+
+```json
+{
+    "nodeRef": "workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28",
+    "nodeType": "cm:folder",
+    "type": "folder",
+    "location": {
+        "repositoryId": "552ca13e-458b-4566-9f3e-d0f9c92facff",
+        "site": "swsdp",
+        "siteTitle": "Sample: Web Site Design Project"
+    }
+}
+```
+
+the binding value for the Site column to display location site will be `location.site`:
+
+```html
+<alfresco-document-list ...>
+    <content-columns>
+        <content-column source="$thumbnail"></content-column>
+        <content-column title="Name" source="displayName" class="full-width name-column"></content-column>
+        <content-column title="Site" source="location.site"></content-column>
+    </content-columns>
+</alfresco-document-list>
+```
+
 ### Custom folder icon
 
 Document list element exposes `folder-icon` property that accepts a CSS class list value with
