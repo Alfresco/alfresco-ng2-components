@@ -58,10 +58,10 @@ In addition ```DOCUMENT_LIST_PROVIDERS``` exports all primary services and provi
 ### Breadcrumb
 
 Document List provides simple breadcrumb element to indicate the current position within a navigation hierarchy.
-It can be enabled via `thumbnails` attribute:
+It can be enabled via `breadcrumb` attribute:
 
 ```html
-<alfresco-document-list [thumbnails]="true">
+<alfresco-document-list [breadcrumb]="true">
 </alfresco-document-list>
 ```
 
