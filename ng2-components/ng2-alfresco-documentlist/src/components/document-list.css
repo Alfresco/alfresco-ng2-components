@@ -26,7 +26,6 @@
 
 :host .folder-row-cell.name-column:hover,
 :host .document-row-cell.name-column:hover {
-    text-decoration: underline;
     cursor: pointer;
 }
 
