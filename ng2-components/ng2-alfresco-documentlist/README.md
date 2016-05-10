@@ -10,7 +10,6 @@ npm install --save <TBD>
 
 ```html
 <alfresco-document-list
-    #list
     [thumbnails]="thumbnails"
     [breadcrumb]="breadcrumb"
     [navigate]="navigation"
@@ -55,6 +54,20 @@ export class MyView {
 Note the use of ```DOCUMENT_LIST_DIRECTIVES``` barrel that consolidates all the document list related directives together.
 It gives you access to ```<document-actions>```, ```<folder-actions>``` and many other directives.
 In addition ```DOCUMENT_LIST_PROVIDERS``` exports all primary services and providers needed for component to function.
+
+### Breadcrumb
+
+Document List provides simple breadcrumb element to indicate the current position within a navigation hierarchy.
+It can be enabled via `thumbnails` attribute:
+
+```html
+<alfresco-document-list [thumbnails]="true">
+</alfresco-document-list>
+```
+
+![Breadcrumb](docs/assets/breadcrumb.png)
+
+Parent folder button is not displayed when breadcrumb is enabled.
 
 ### Custom columns
 
