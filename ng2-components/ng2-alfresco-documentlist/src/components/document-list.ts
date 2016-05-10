@@ -204,7 +204,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param key
      * @returns {string}
      */
-    getObjectValue(target: any, key: string): string {
+    getObjectValue(target: any, key: string): any {
         let keys = key.split('.');
         key = '';
 

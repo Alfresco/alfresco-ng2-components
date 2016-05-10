@@ -316,4 +316,31 @@ describe('DocumentList', () => {
         expect(documentList.getNodePath(node)).toBe('swsdp/documentLibrary/fileName');
     });
 
+    it('should return root object value', () => {
+        var target = {
+            key1: 'value1'
+        };
+
+        expect(documentList.getObjectValue(target, 'key1')).toBe('value1');
+    });
+    
+    it('should return no object value when key is missing', () => {
+        var target = {
+            key1: 'value1'
+        };
+        expect(documentList.getObjectValue(target, 'missing')).toBeUndefined();
+    });
+
+    it('should return nested object value', () => {
+        var target = {
+            key1: {
+                key2: {
+                    key3: 'value1'
+                }
+            } 
+        };
+        
+        expect(documentList.getObjectValue(target, 'key1.key2.key3')).toBe('value1');
+    });
+
 });

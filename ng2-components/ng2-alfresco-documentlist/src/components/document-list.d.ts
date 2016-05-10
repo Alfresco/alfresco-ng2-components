@@ -56,6 +56,6 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
      * @param key
      * @returns {string}
      */
-    getObjectValue(target: any, key: string): string;
+    getObjectValue(target: any, key: string): any;
     setupDefaultColumns(): void;
 }
