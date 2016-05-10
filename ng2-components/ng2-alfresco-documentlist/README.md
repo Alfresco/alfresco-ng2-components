@@ -272,6 +272,57 @@ Every folder action is rendered as a separate button.
 
 ![Quick folder Actions](docs/assets/quick-folder-actions.png)
 
+### Events
+
+Document List emits the following events:
+
+- itemClick
+
+### itemClick event
+
+Emitted when user clicks on document or folder.
+
+```html
+<alfresco-document-list (itemClick)="onItemClick($event)">
+</alfresco-document-list>
+```
+
+```ts
+export class MyView {
+    ...
+    onItemClick(e) {
+        console.log(e.value);
+    }
+}
+```
+
+For the event `value` the full node info is provided, i.e.:
+
+```json
+{
+   "nodeRef": "workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28",
+   "nodeType": "cm:folder",
+   "type": "folder",
+   "mimetype": "",
+   "isFolder": true,
+   "isLink": false,
+   "fileName": "Agency Files",
+   "displayName": "Agency Files",
+   "status": "",
+   "title": "Agency related files",
+   "description": "This folder holds the agency related files for the project",
+   "author": "",
+   "createdOn": "2011-02-15T20:47:03.951Z",
+   "createdBy": "Mike Jackson",
+   "createdByUser": "mjackson",
+   "modifiedOn": "2011-02-15T21:00:43.616Z",
+   "modifiedBy": "Mike Jackson",
+   "modifiedByUser": "mjackson"
+}
+```
+
+_The content of the json above was reduced for the sake of simplicity._
+
 ## Advanced usage and customization
 
 ### Customizing default actions
