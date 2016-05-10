@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="mdl-card__actions mdl-card--border">
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" [disabled]="!form.valid">{{'login-button' | translate }}</button>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" data-automation-id="login-button" [disabled]="!form.valid">{{'login-button' | translate }}</button>
             <div *ngIf="error" id="login-error" data-automation-id="login-error" class="mdl-card__supporting-text" style="color: red;">{{'login-error-message' | translate }}</div>
             <div *ngIf="success" id="login-success" data-automation-id="login-success" class="mdl-card__supporting-text" style="color: blue;">{{'login-success-message' | translate }}</div>
         </div>
