@@ -60,6 +60,12 @@ cd ../../demo-shell-ng
 npm link ng2-alfresco-login
 ```
 
+*dev-platform-js-api client:*
+
+```sh
+npm link ../../dev-platform-js-api
+```
+
 Please refer to [this article](https://docs.npmjs.com/cli/link) for more details on npm link.
 
 ### Building and running
