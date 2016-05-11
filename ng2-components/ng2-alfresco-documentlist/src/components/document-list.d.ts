@@ -35,19 +35,67 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
     route: any[];
     actions: ContentActionModel[];
     columns: ContentColumnModel[];
+    /**
+     * Determines whether navigation to parent folder is available.
+     * @returns {boolean}
+     */
     canNavigateParent(): boolean;
     constructor(_alfrescoService: AlfrescoService);
     ngOnInit(): void;
     ngAfterContentInit(): void;
     ngAfterViewChecked(): void;
+    /**
+     * Get a list of content actions based on target and type.
+     * @param target Target to filter actions by.
+     * @param type Type to filter actions by.
+     * @returns {ContentActionModel[]} List of actions filtered by target and type.
+     */
     getContentActions(target: string, type: string): ContentActionModel[];
-    onNavigateParentClick($event: any): void;
-    onItemClick(item: DocumentEntity, $event?: any): void;
-    goToRoute(r: any, $event: any): void;
+    /**
+     * Invoked when 'parent folder' element is clicked.
+     * @param e DOM event
+     */
+    onNavigateParentClick(e: any): void;
+    /**
+     * Invoked when list row is clicked.
+     * @param item Underlying node item
+     * @param e DOM event (optional)
+     */
+    onItemClick(item: DocumentEntity, e?: any): void;
+    /**
+     * Invoked when a breadcrumb route is clicked.
+     * @param r Route to navigate to
+     * @param e DOM event
+     */
+    goToRoute(r: any, e: any): void;
+    /**
+     * Gets content URL for the given node.
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
     getContentUrl(node: DocumentEntity): string;
+    /**
+     * Gets thumbnail URL for the given document node.
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
     getDocumentThumbnailUrl(node: DocumentEntity): string;
+    /**
+     * Invoked when executing content action for a document or folder.
+     * @param node Node to be the context of the execution.
+     * @param action Action to be executed against the context.
+     */
     executeContentAction(node: DocumentEntity, action: ContentActionModel): void;
+    /**
+     * Loads and displays folder content
+     * @param path Node path
+     */
     displayFolderContent(path: any): void;
+    /**
+     * Gets a path for a given node.
+     * @param node
+     * @returns {string}
+     */
     getNodePath(node: DocumentEntity): string;
     /**
      * Gets a value from an object by composed key
@@ -57,5 +105,8 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
      * @returns {string}
      */
     getObjectValue(target: any, key: string): any;
+    /**
+     * Creates a set of predefined columns.
+     */
     setupDefaultColumns(): void;
 }

@@ -24,12 +24,16 @@ import {ContentColumnModel} from './../models/content-column.model';
     template: ''
 })
 export class ContentColumnList {
-    constructor(private documentList: DocumentList) {
-        // saves reference to parent container
-        // so that content children can access it
+
+    constructor(
+        private documentList: DocumentList) {
     }
 
-    registerColumn(column: ContentColumnModel) {
+    /**
+     * Registers column model within the parent document list component.
+     * @param column Column definition model to register.
+     */
+    registerColumn(column: ContentColumnModel): void {
         if (this.documentList && column) {
             this.documentList.columns.push(column);
         }

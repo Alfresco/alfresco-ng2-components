@@ -66,12 +66,17 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
 
+    /**
+     * Determines whether navigation to parent folder is available.
+     * @returns {boolean}
+     */
     canNavigateParent(): boolean {
         return this.navigate && !this.breadcrumb &&
             this.currentFolderPath !== this.rootFolder.path;
     }
 
-    constructor(private _alfrescoService: AlfrescoService) {
+    constructor(
+        private _alfrescoService: AlfrescoService) {
     }
 
     ngOnInit() {
@@ -92,7 +97,13 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    getContentActions(target: string, type: string) {
+    /**
+     * Get a list of content actions based on target and type.
+     * @param target Target to filter actions by.
+     * @param type Type to filter actions by.
+     * @returns {ContentActionModel[]} List of actions filtered by target and type.
+     */
+    getContentActions(target: string, type: string): ContentActionModel[] {
         if (target && type) {
 
             let ltarget = target.toLowerCase();
@@ -106,9 +117,13 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         return [];
     }
 
-    onNavigateParentClick($event) {
-        if ($event) {
-            $event.preventDefault();
+    /**
+     * Invoked when 'parent folder' element is clicked.
+     * @param e DOM event
+     */
+    onNavigateParentClick(e) {
+        if (e) {
+            e.preventDefault();
         }
 
         if (this.navigate) {
@@ -120,9 +135,14 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    onItemClick(item: DocumentEntity, $event = null) {
-        if ($event) {
-            $event.preventDefault();
+    /**
+     * Invoked when list row is clicked.
+     * @param item Underlying node item
+     * @param e DOM event (optional)
+     */
+    onItemClick(item: DocumentEntity, e = null) {
+        if (e) {
+            e.preventDefault();
         }
 
         this.itemClick.emit({
@@ -141,9 +161,14 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    goToRoute(r, $event) {
-        if ($event) {
-            $event.preventDefault();
+    /**
+     * Invoked when a breadcrumb route is clicked.
+     * @param r Route to navigate to
+     * @param e DOM event
+     */
+    goToRoute(r, e) {
+        if (e) {
+            e.preventDefault();
         }
 
         if (this.navigate) {
@@ -155,26 +180,45 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    getContentUrl(node: DocumentEntity) {
+    /**
+     * Gets content URL for the given node.
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getContentUrl(node: DocumentEntity): string {
         if (this._alfrescoService) {
             return this._alfrescoService.getContentUrl(node);
         }
         return null;
     }
 
-    getDocumentThumbnailUrl(node: DocumentEntity) {
+    /**
+     * Gets thumbnail URL for the given document node.
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getDocumentThumbnailUrl(node: DocumentEntity): string {
         if (this._alfrescoService) {
             return this._alfrescoService.getDocumentThumbnailUrl(node);
         }
         return null;
     }
 
+    /**
+     * Invoked when executing content action for a document or folder.
+     * @param node Node to be the context of the execution.
+     * @param action Action to be executed against the context.
+     */
     executeContentAction(node: DocumentEntity, action: ContentActionModel) {
         if (action) {
             action.handler(node);
         }
     }
 
+    /**
+     * Loads and displays folder content
+     * @param path Node path
+     */
     displayFolderContent(path) {
         if (path) {
             this.currentFolderPath = path;
@@ -187,6 +231,11 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
+    /**
+     * Gets a path for a given node.
+     * @param node
+     * @returns {string}
+     */
     getNodePath(node: DocumentEntity): string {
         if (node) {
             let container = node.location.container;
@@ -224,6 +273,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         return target;
     }
 
+    /**
+     * Creates a set of predefined columns.
+     */
     setupDefaultColumns(): void {
         let thumbnailCol = new ContentColumnModel();
         thumbnailCol.source = '$thumbnail';

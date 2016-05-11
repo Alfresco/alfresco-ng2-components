@@ -21,8 +21,12 @@ import {Observable} from 'rxjs/Observable';
 import {FolderEntity, DocumentEntity} from './../models/document-library.model';
 import {AlfrescoSettingsService} from '../../../ng2-alfresco-core/services';
 
+/**
+ * Internal service used by Document List component.
+ */
 @Injectable()
 export class AlfrescoService {
+
     constructor(
         private http: Http,
         private settings: AlfrescoSettingsService
@@ -47,6 +51,11 @@ export class AlfrescoService {
         return this.host + this._baseUrlPath;
     }
 
+    /**
+     * Gets the folder node with the content.
+     * @param folder Path to folder.
+     * @returns {Observable<FolderEntity>} Folder entity.
+     */
     getFolder(folder: string) {
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -60,13 +69,23 @@ export class AlfrescoService {
             .catch(this.handleError);
     }
 
-    getDocumentThumbnailUrl(document: DocumentEntity) {
+    /**
+     * Get thumbnail URL for the given document node.
+     * @param document Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getDocumentThumbnailUrl(document: DocumentEntity): string {
         return this._host +
             '/alfresco/service/api/node/' +
             document.nodeRef.replace('://', '/') + '/content/thumbnails/doclib?c=queue&amp;ph=true&amp;lastModified=1';
     }
 
-    getContentUrl(document: DocumentEntity) {
+    /**
+     * Get content URL for the given node.
+     * @param document Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getContentUrl(document: DocumentEntity): string {
         return this._host + '/alfresco/service/' + document.contentUrl;
     }
 

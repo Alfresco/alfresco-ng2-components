@@ -40,9 +40,11 @@ System.register(['angular2/core', './document-list'], function(exports_1, contex
             ContentColumnList = (function () {
                 function ContentColumnList(documentList) {
                     this.documentList = documentList;
-                    // saves reference to parent container
-                    // so that content children can access it
                 }
+                /**
+                 * Registers column model within the parent document list component.
+                 * @param column Column definition model to register.
+                 */
                 ContentColumnList.prototype.registerColumn = function (column) {
                     if (this.documentList && column) {
                         this.documentList.columns.push(column);

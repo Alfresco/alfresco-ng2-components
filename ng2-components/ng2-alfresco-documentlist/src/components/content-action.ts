@@ -20,6 +20,7 @@ import {ContentActionModel} from './../models/content-action.model';
 import {ContentActionList} from './content-action-list';
 import {DocumentActionsService} from '../services/document-actions.service';
 import {FolderActionsService} from '../services/folder-actions.service';
+import {ContentActionHandler} from '../models/content-action.model';
 
 @Component({
     selector: 'content-action',
@@ -71,7 +72,7 @@ export class ContentAction implements OnInit {
         this.list.registerAction(model);
     }
 
-    private getSystemHandler(target: string, name: string) {
+    private getSystemHandler(target: string, name: string): ContentActionHandler {
         if (target) {
             let ltarget = target.toLowerCase();
 

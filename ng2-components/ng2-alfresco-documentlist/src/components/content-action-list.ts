@@ -24,12 +24,16 @@ import {ContentActionModel} from './../models/content-action.model';
     template: ''
 })
 export class ContentActionList {
-    constructor(private documentList: DocumentList) {
-        // saves reference to parent container
-        // so that content children can access it
+
+    constructor(
+        private documentList: DocumentList) {
     }
 
-    registerAction(action: ContentActionModel) {
+    /**
+     * Registers action handler within the parent document list component.
+     * @param action Action model to register.
+     */
+    registerAction(action: ContentActionModel): void {
         if (this.documentList && action) {
             this.documentList.actions.push(action);
         }

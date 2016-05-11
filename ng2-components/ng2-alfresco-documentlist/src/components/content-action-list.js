@@ -40,9 +40,11 @@ System.register(['angular2/core', './document-list'], function(exports_1, contex
             ContentActionList = (function () {
                 function ContentActionList(documentList) {
                     this.documentList = documentList;
-                    // saves reference to parent container
-                    // so that content children can access it
                 }
+                /**
+                 * Registers action handler within the parent document list component.
+                 * @param action Action model to register.
+                 */
                 ContentActionList.prototype.registerAction = function (action) {
                     if (this.documentList && action) {
                         this.documentList.actions.push(action);

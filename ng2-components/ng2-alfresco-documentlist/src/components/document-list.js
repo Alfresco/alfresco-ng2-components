@@ -55,6 +55,10 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     this.actions = [];
                     this.columns = [];
                 }
+                /**
+                 * Determines whether navigation to parent folder is available.
+                 * @returns {boolean}
+                 */
                 DocumentList.prototype.canNavigateParent = function () {
                     return this.navigate && !this.breadcrumb &&
                         this.currentFolderPath !== this.rootFolder.path;
@@ -74,6 +78,12 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                         componentHandler.upgradeAllRegistered();
                     }
                 };
+                /**
+                 * Get a list of content actions based on target and type.
+                 * @param target Target to filter actions by.
+                 * @param type Type to filter actions by.
+                 * @returns {ContentActionModel[]} List of actions filtered by target and type.
+                 */
                 DocumentList.prototype.getContentActions = function (target, type) {
                     if (target && type) {
                         var ltarget_1 = target.toLowerCase();
@@ -85,9 +95,13 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     }
                     return [];
                 };
-                DocumentList.prototype.onNavigateParentClick = function ($event) {
-                    if ($event) {
-                        $event.preventDefault();
+                /**
+                 * Invoked when 'parent folder' element is clicked.
+                 * @param e DOM event
+                 */
+                DocumentList.prototype.onNavigateParentClick = function (e) {
+                    if (e) {
+                        e.preventDefault();
                     }
                     if (this.navigate) {
                         this.route.pop();
@@ -97,10 +111,15 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                         }
                     }
                 };
-                DocumentList.prototype.onItemClick = function (item, $event) {
-                    if ($event === void 0) { $event = null; }
-                    if ($event) {
-                        $event.preventDefault();
+                /**
+                 * Invoked when list row is clicked.
+                 * @param item Underlying node item
+                 * @param e DOM event (optional)
+                 */
+                DocumentList.prototype.onItemClick = function (item, e) {
+                    if (e === void 0) { e = null; }
+                    if (e) {
+                        e.preventDefault();
                     }
                     this.itemClick.emit({
                         value: item
@@ -116,9 +135,14 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                         }
                     }
                 };
-                DocumentList.prototype.goToRoute = function (r, $event) {
-                    if ($event) {
-                        $event.preventDefault();
+                /**
+                 * Invoked when a breadcrumb route is clicked.
+                 * @param r Route to navigate to
+                 * @param e DOM event
+                 */
+                DocumentList.prototype.goToRoute = function (r, e) {
+                    if (e) {
+                        e.preventDefault();
                     }
                     if (this.navigate) {
                         var idx = this.route.indexOf(r);
@@ -128,23 +152,42 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                         }
                     }
                 };
+                /**
+                 * Gets content URL for the given node.
+                 * @param node Node to get URL for.
+                 * @returns {string} URL address.
+                 */
                 DocumentList.prototype.getContentUrl = function (node) {
                     if (this._alfrescoService) {
                         return this._alfrescoService.getContentUrl(node);
                     }
                     return null;
                 };
+                /**
+                 * Gets thumbnail URL for the given document node.
+                 * @param node Node to get URL for.
+                 * @returns {string} URL address.
+                 */
                 DocumentList.prototype.getDocumentThumbnailUrl = function (node) {
                     if (this._alfrescoService) {
                         return this._alfrescoService.getDocumentThumbnailUrl(node);
                     }
                     return null;
                 };
+                /**
+                 * Invoked when executing content action for a document or folder.
+                 * @param node Node to be the context of the execution.
+                 * @param action Action to be executed against the context.
+                 */
                 DocumentList.prototype.executeContentAction = function (node, action) {
                     if (action) {
                         action.handler(node);
                     }
                 };
+                /**
+                 * Loads and displays folder content
+                 * @param path Node path
+                 */
                 DocumentList.prototype.displayFolderContent = function (path) {
                     var _this = this;
                     if (path) {
@@ -154,6 +197,11 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                             .subscribe(function (folder) { return _this.folder = folder; }, function (error) { return _this.errorMessage = error; });
                     }
                 };
+                /**
+                 * Gets a path for a given node.
+                 * @param node
+                 * @returns {string}
+                 */
                 DocumentList.prototype.getNodePath = function (node) {
                     if (node) {
                         var container = node.location.container;
@@ -189,6 +237,9 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     } while (keys.length);
                     return target;
                 };
+                /**
+                 * Creates a set of predefined columns.
+                 */
                 DocumentList.prototype.setupDefaultColumns = function () {
                     var thumbnailCol = new content_column_model_1.ContentColumnModel();
                     thumbnailCol.source = '$thumbnail';

@@ -43,6 +43,9 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../../../
                 services_1 = services_1_1;
             }],
         execute: function() {
+            /**
+             * Internal service used by Document List component.
+             */
             AlfrescoService = (function () {
                 function AlfrescoService(http, settings) {
                     this.http = http;
@@ -66,6 +69,11 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../../../
                 AlfrescoService.prototype.getBaseUrl = function () {
                     return this.host + this._baseUrlPath;
                 };
+                /**
+                 * Gets the folder node with the content.
+                 * @param folder Path to folder.
+                 * @returns {Observable<FolderEntity>} Folder entity.
+                 */
                 AlfrescoService.prototype.getFolder = function (folder) {
                     var headers = new http_1.Headers({
                         'Content-Type': 'application/json',
@@ -78,11 +86,21 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable', '../../../
                         .do(function (data) { return console.log(data); }) // eyeball results in the console
                         .catch(this.handleError);
                 };
+                /**
+                 * Get thumbnail URL for the given document node.
+                 * @param document Node to get URL for.
+                 * @returns {string} URL address.
+                 */
                 AlfrescoService.prototype.getDocumentThumbnailUrl = function (document) {
                     return this._host +
                         '/alfresco/service/api/node/' +
                         document.nodeRef.replace('://', '/') + '/content/thumbnails/doclib?c=queue&amp;ph=true&amp;lastModified=1';
                 };
+                /**
+                 * Get content URL for the given node.
+                 * @param document Node to get URL for.
+                 * @returns {string} URL address.
+                 */
                 AlfrescoService.prototype.getContentUrl = function (document) {
                     return this._host + '/alfresco/service/' + document.contentUrl;
                 };
