@@ -95,7 +95,7 @@ export class AlfrescoService {
     /**
      * Gets the folder node with the content.
      * @param folder Path to folder.
-     * @returns {Observable<FolderEntity>} Folder entity.
+     * @returns {Observable<NodePaging>} Folder entity.
      */
     getFolder(folder: string) {
         return Observable.fromPromise(this.getNodesPromise(folder))
