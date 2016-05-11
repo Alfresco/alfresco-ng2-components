@@ -1,7 +1,7 @@
 <form>
     <!--Files Upload-->
     <div *ngIf="!uploadFolders" class="mdl-button mdl-js-button mdl-button--raised mdl-button--file">
-        <i class="material-icons">file_upload</i> Upload File
+        <i class="material-icons">file_upload</i> {{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}
 
         <!--Multiple Files Upload-->
         <span *ngIf="multipleFiles">
@@ -23,7 +23,7 @@
 
     <!--Folders Upload-->
     <div *ngIf="uploadFolders" class="mdl-button mdl-js-button mdl-button--raised mdl-button--file">
-        <i class="material-icons">file_upload</i> Upload Folder
+        <i class="material-icons">file_upload</i> {{'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}
         <input id="uploadFolder" type="file" name="uploadFiles"
                (change)="onFilesAdded($event)"
                multiple="multiple"

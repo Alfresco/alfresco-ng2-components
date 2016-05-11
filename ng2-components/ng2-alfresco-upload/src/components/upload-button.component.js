@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', '../services/upload.service', './file-uploading-dialog.component'], function(exports_1, context_1) {
+System.register(['angular2/core', '../services/upload.service', './file-uploading-dialog.component', 'ng2-translate/ng2-translate'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, upload_service_1, file_uploading_dialog_component_1;
+    var core_1, upload_service_1, file_uploading_dialog_component_1, ng2_translate_1;
     var UploadButtonComponent;
     return {
         setters:[
@@ -38,6 +38,9 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
             },
             function (file_uploading_dialog_component_1_1) {
                 file_uploading_dialog_component_1 = file_uploading_dialog_component_1_1;
+            },
+            function (ng2_translate_1_1) {
+                ng2_translate_1 = ng2_translate_1_1;
             }],
         execute: function() {
             /**
@@ -60,11 +63,11 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
              * @returns {UploadDragAreaComponent} .
              */
             UploadButtonComponent = (function () {
-                function UploadButtonComponent(el) {
+                function UploadButtonComponent(el, translate) {
                     this.el = el;
                     this.showUploadDialog = true;
                     this.showUdoNotificationBar = true;
-                    this.uploadFolders = false;
+                    this.uploadFolders = true;
                     this.multipleFiles = false;
                     this.acceptedFilesType = '*';
                     this.filesUploadingList = [];
@@ -80,6 +83,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                             containerid: 'documentLibrary'
                         }
                     });
+                    this.translationInit(translate);
                 }
                 /**
                  * Method called when files are dropped in the drag area.
@@ -109,14 +113,14 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         componentHandler.upgradeAllRegistered();
                     }
                     this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-                        message: 'Upload in progress...',
+                        message: this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS').value,
                         timeout: 5000,
                         actionHandler: function () {
                             latestFilesAdded.forEach(function (uploadingFileModel) {
                                 uploadingFileModel.setAbort();
                             });
                         },
-                        actionText: 'Undo'
+                        actionText: this.translate.get('FILE_UPLOAD.ACTION.UNDO').value
                     });
                 };
                 /**
@@ -124,6 +128,17 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                  */
                 UploadButtonComponent.prototype._showDialog = function () {
                     this.fileUploadingDialogComponent.showDialog();
+                };
+                /**
+                 * Initial configuration for Multi language
+                 * @param translate
+                 */
+                UploadButtonComponent.prototype.translationInit = function (translate) {
+                    this.translate = translate;
+                    var userLang = navigator.language.split('-')[0]; // use navigator lang if available
+                    userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
+                    this.translate.setDefaultLang(userLang);
+                    this.translate.use(userLang);
                 };
                 __decorate([
                     core_1.ViewChild('undoNotificationBar'), 
@@ -160,8 +175,9 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                         directives: [file_uploading_dialog_component_1.FileUploadingDialogComponent],
                         templateUrl: './upload-button.component.html',
                         styleUrls: ['./upload-button.component.css'],
+                        pipes: [ng2_translate_1.TranslatePipe]
                     }), 
-                    __metadata('design:paramtypes', [core_1.ElementRef])
+                    __metadata('design:paramtypes', [core_1.ElementRef, ng2_translate_1.TranslateService])
                 ], UploadButtonComponent);
                 return UploadButtonComponent;
             }());

@@ -1,2 +1,15 @@
 {
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Upload file",
+      "UPLOAD_FOLDER": "Upload folder"
+    },
+    "MESSAGES": {
+      "COMPLETED": "uploads complete",
+      "PROGRESS": "Upload in progress..."
+    },
+    "ACTION": {
+      "UNDO": "Undo"
+    }
+  }
 }

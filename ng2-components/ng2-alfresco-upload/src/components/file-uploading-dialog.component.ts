@@ -19,6 +19,7 @@
 import {Component, ElementRef, Input} from 'angular2/core';
 import {FileModel} from '../models/file.model';
 import {FileUploadingListComponent} from './file-uploading-list.component';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 declare let __moduleName: string;
 
@@ -39,7 +40,8 @@ declare let __moduleName: string;
     directives: [FileUploadingListComponent],
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.css'],
-    host: {'[class.dialog-show]': 'toggleShowDialog'}
+    host: {'[class.dialog-show]': 'toggleShowDialog'},
+    pipes: [TranslatePipe]
 })
 export class FileUploadingDialogComponent {
 

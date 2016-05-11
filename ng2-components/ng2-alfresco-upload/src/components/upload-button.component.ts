@@ -20,6 +20,7 @@ import {Component, ViewChild, ElementRef, Input} from 'angular2/core';
 import {UploadService} from '../services/upload.service';
 import {FileModel} from '../models/file.model';
 import {FileUploadingDialogComponent} from './file-uploading-dialog.component';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 declare let componentHandler;
 declare let __moduleName: string;
@@ -49,6 +50,7 @@ declare let __moduleName: string;
     directives: [FileUploadingDialogComponent],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.css'],
+    pipes: [TranslatePipe]
 })
 export class UploadButtonComponent {
 
@@ -67,7 +69,7 @@ export class UploadButtonComponent {
     showUdoNotificationBar: boolean = true;
 
     @Input()
-    uploadFolders: boolean = false;
+    uploadFolders: boolean = true;
 
     @Input()
     multipleFiles: boolean = false;
@@ -77,7 +79,10 @@ export class UploadButtonComponent {
 
     filesUploadingList: FileModel [] = [];
 
-    constructor(public el: ElementRef) {
+    translate: TranslateService;
+
+    constructor(public el: ElementRef,
+                translate: TranslateService) {
         console.log('UploadComponent constructor', el);
 
         this._uploaderService = new UploadService({
@@ -91,6 +96,8 @@ export class UploadButtonComponent {
                 containerid: 'documentLibrary'
             }
         });
+
+        this.translationInit(translate);
     }
 
     /**
@@ -123,14 +130,14 @@ export class UploadButtonComponent {
         }
 
         this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-            message: 'Upload in progress...',
+            message: this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS').value,
             timeout: 5000,
             actionHandler: function () {
                 latestFilesAdded.forEach((uploadingFileModel) => {
                     uploadingFileModel.setAbort();
                 });
             },
-            actionText: 'Undo'
+            actionText: this.translate.get('FILE_UPLOAD.ACTION.UNDO').value
         });
     }
 
@@ -139,5 +146,19 @@ export class UploadButtonComponent {
      */
     private _showDialog(): void {
         this.fileUploadingDialogComponent.showDialog();
+    }
+
+    /**
+     * Initial configuration for Multi language
+     * @param translate
+     */
+    translationInit(translate: TranslateService) {
+        this.translate = translate;
+        let userLang = navigator.language.split('-')[0]; // use navigator lang if available
+        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
+
+        this.translate.setDefaultLang(userLang);
+
+        this.translate.use(userLang);
     }
 }

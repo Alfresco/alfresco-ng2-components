@@ -1,2 +1,15 @@
 {
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Carica un file",
+      "UPLOAD_FOLDER": "Carica una cartella"
+    },
+    "MESSAGES": {
+      "COMPLETED": "caricamento completato",
+      "PROGRESS": "caricamento in corso..."
+    },
+    "ACTION": {
+      "UNDO": "Annulla"
+    }
+  }
 }
