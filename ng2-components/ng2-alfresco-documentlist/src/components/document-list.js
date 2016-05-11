@@ -48,7 +48,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     this.itemClick = new core_1.EventEmitter();
                     this.rootFolder = {
                         name: 'Document Library',
-                        path: 'swsdp/documentLibrary'
+                        path: 'Sites/swsdp/documentLibrary'
                     };
                     this.currentFolderPath = 'swsdp/documentLibrary';
                     this.route = [];
@@ -204,8 +204,8 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                  */
                 DocumentList.prototype.getNodePath = function (node) {
                     if (node) {
-                        var pathWithCompanyHome = node.entry.path.name;
-                        return pathWithCompanyHome.replace('/Company Home', '') + '/' + node.entry.name;
+                        var pathWithCompanyHome = item.entry.path.name;
+                        return pathWithCompanyHome.replace('/Company Home', '') + '/' + item.entry.name;
                     }
                     return null;
                 };

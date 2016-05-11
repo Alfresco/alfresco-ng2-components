@@ -56,7 +56,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     rootFolder = {
         name: 'Document Library',
-        path: 'swsdp/documentLibrary'
+        path: 'Sites/swsdp/documentLibrary'
     };
     currentFolderPath: string = 'swsdp/documentLibrary';
     folder: NodePaging;
