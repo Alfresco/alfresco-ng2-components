@@ -67,7 +67,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     this.el = el;
                     this.showUploadDialog = true;
                     this.showUdoNotificationBar = true;
-                    this.uploadFolders = true;
+                    this.uploadFolders = false;
                     this.multipleFiles = false;
                     this.acceptedFilesType = '*';
                     this.filesUploadingList = [];
