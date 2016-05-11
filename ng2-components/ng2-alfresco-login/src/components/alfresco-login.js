@@ -139,7 +139,7 @@ System.register(['angular2/core', 'angular2/router', 'angular2/common', '../serv
                     this.translate = translate;
                     var userLang = navigator.language.split('-')[0]; // use navigator lang if available
                     userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
-                    this.translate.setDefaultLang('en');
+                    this.translate.setDefaultLang(userLang);
                     this.translate.use(userLang);
                 };
                 __decorate([
