@@ -221,7 +221,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param path Node path
      */
     displayFolderContent(path) {
-        if (path) {
+        if (path !== null) {
             this.currentFolderPath = path;
             this._alfrescoService
                 .getFolder(path)
