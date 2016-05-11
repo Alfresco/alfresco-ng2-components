@@ -161,7 +161,7 @@ export class AlfrescoLoginComponent {
         let userLang = navigator.language.split('-')[0]; // use navigator lang if available
         userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
 
-        this.translate.setDefaultLang('en');
+        this.translate.setDefaultLang(userLang);
 
         this.translate.use(userLang);
     }
