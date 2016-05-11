@@ -86,7 +86,7 @@ export class UploadService {
     /**
      * The method create a new XMLHttpRequest instance if doesn't exist
      */
-    private _configureXMLHttpRequest() {
+    private _configureXMLHttpRequest(uploadingFileModel: any) {
         if (this._xmlHttpRequest == undefined) {
             this._xmlHttpRequest = new XMLHttpRequest();
             this._xmlHttpRequest.upload.onprogress = (e) => {
@@ -133,7 +133,7 @@ export class UploadService {
             form.append(key, this._formFields[key]);
         });
 
-        this._configureXMLHttpRequest();
+        this._configureXMLHttpRequest(uploadingFileModel);
         uploadingFileModel.setXMLHttpRequest(this._xmlHttpRequest);
 
         this._xmlHttpRequest.open(this._method, this._url, true);

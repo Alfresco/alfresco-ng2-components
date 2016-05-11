@@ -85,7 +85,7 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                 /**
                  * The method create a new XMLHttpRequest instance if doesn't exist
                  */
-                UploadService.prototype._configureXMLHttpRequest = function () {
+                UploadService.prototype._configureXMLHttpRequest = function (uploadingFileModel) {
                     var _this = this;
                     if (this._xmlHttpRequest == undefined) {
                         this._xmlHttpRequest = new XMLHttpRequest();
@@ -125,7 +125,7 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                     Object.keys(this._formFields).forEach(function (key) {
                         form.append(key, _this._formFields[key]);
                     });
-                    this._configureXMLHttpRequest();
+                    this._configureXMLHttpRequest(uploadingFileModel);
                     uploadingFileModel.setXMLHttpRequest(this._xmlHttpRequest);
                     this._xmlHttpRequest.open(this._method, this._url, true);
                     this._xmlHttpRequest.withCredentials = this._withCredentials;
