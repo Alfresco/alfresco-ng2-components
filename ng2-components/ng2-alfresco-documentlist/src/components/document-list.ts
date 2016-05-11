@@ -25,10 +25,9 @@ import {
     AfterViewChecked
 } from 'angular2/core';
 import {AlfrescoService} from './../services/alfresco.service';
-import {MinimalNodeEntity} from './../models/document-library.model';
+import {MinimalNodeEntity,NodePaging} from './../models/document-library.model';
 import {ContentActionModel} from './../models/content-action.model';
 import {ContentColumnModel} from './../models/content-column.model';
-import {NodePaging} from "../models/document-library.model";
 
 declare var componentHandler;
 declare let __moduleName: string;
