@@ -18,11 +18,10 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response} from 'angular2/http';
 import {TranslateLoader} from 'ng2-translate/ng2-translate';
-import {Http, Response} from 'angular2/http';
-
+import {Observable} from 'rxjs/Observable'
 
 @Injectable()
-export class AlfrescoTranslationLoader implements TranslateLoader {
+export class AlfrescoTranslationLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';
