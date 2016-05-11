@@ -55,10 +55,10 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     itemClick: EventEmitter<any> = new EventEmitter();
 
     rootFolder = {
-        name: 'Company Home',
-        path: ''
+        name: 'Document Library',
+        path: 'swsdp/documentLibrary'
     };
-    currentFolderPath: string = '';
+    currentFolderPath: string = 'swsdp/documentLibrary';
     folder: NodePaging;
     errorMessage;
 
@@ -221,7 +221,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param path Node path
      */
     displayFolderContent(path) {
-        if (path !== null) {
+        if (path) {
             this.currentFolderPath = path;
             this._alfrescoService
                 .getFolder(path)
