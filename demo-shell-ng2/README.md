@@ -13,7 +13,19 @@
 
 ## Prerequisites
 
-- [Alfresco Docker image with CORS support](https://github.com/wabson/alfresco-docker-cors)
+Docker machine with latest `platform-distribution:api-latest` image.
+
+```
+docker login dockerreg.alfresco.com
+docker pull dockerreg.alfresco.com/platform-distribution:api-latest
+docker-compose up
+```
+
+to clean up afterwards
+
+```
+docker-compose rm
+```
 
 ### Configuring development environment
 
