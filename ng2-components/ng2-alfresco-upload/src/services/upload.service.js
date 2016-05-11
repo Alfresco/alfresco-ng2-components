@@ -83,6 +83,36 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                 };
                 ;
                 /**
+                 * The method create a new XMLHttpRequest instance if doesn't exist
+                 */
+                UploadService.prototype._configureXMLHttpRequest = function () {
+                    var _this = this;
+                    if (this._xmlHttpRequest == undefined) {
+                        this._xmlHttpRequest = new XMLHttpRequest();
+                        this._xmlHttpRequest.upload.onprogress = function (e) {
+                            if (e.lengthComputable) {
+                                var percent = Math.round(e.loaded / e.total * 100);
+                                uploadingFileModel.setProgres({
+                                    total: e.total,
+                                    loaded: e.loaded,
+                                    percent: percent
+                                });
+                            }
+                        };
+                        this._xmlHttpRequest.upload.onabort = function (e) {
+                            uploadingFileModel.setAbort();
+                        };
+                        this._xmlHttpRequest.upload.onerror = function (e) {
+                            uploadingFileModel.setError();
+                        };
+                        this._xmlHttpRequest.onreadystatechange = function () {
+                            if (_this._xmlHttpRequest.readyState === XMLHttpRequest.DONE) {
+                                uploadingFileModel.onFinished(_this._xmlHttpRequest.status, _this._xmlHttpRequest.statusText, _this._xmlHttpRequest.response);
+                            }
+                        };
+                    }
+                };
+                /**
                  * Upload a file, and enrich it with the xhr.
                  *
                  * @param {FileModel} - files to be uploaded.
@@ -95,35 +125,14 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                     Object.keys(this._formFields).forEach(function (key) {
                         form.append(key, _this._formFields[key]);
                     });
-                    var xmlHttpRequest = new XMLHttpRequest();
-                    uploadingFileModel.setXMLHttpRequest(xmlHttpRequest);
-                    xmlHttpRequest.upload.onprogress = function (e) {
-                        if (e.lengthComputable) {
-                            var percent = Math.round(e.loaded / e.total * 100);
-                            uploadingFileModel.setProgres({
-                                total: e.total,
-                                loaded: e.loaded,
-                                percent: percent
-                            });
-                        }
-                    };
-                    xmlHttpRequest.upload.onabort = function (e) {
-                        uploadingFileModel.setAbort();
-                    };
-                    xmlHttpRequest.upload.onerror = function (e) {
-                        uploadingFileModel.setError();
-                    };
-                    xmlHttpRequest.onreadystatechange = function () {
-                        if (xmlHttpRequest.readyState === XMLHttpRequest.DONE) {
-                            uploadingFileModel.onFinished(xmlHttpRequest.status, xmlHttpRequest.statusText, xmlHttpRequest.response);
-                        }
-                    };
-                    xmlHttpRequest.open(this._method, this._url, true);
-                    xmlHttpRequest.withCredentials = this._withCredentials;
+                    this._configureXMLHttpRequest();
+                    uploadingFileModel.setXMLHttpRequest(this._xmlHttpRequest);
+                    this._xmlHttpRequest.open(this._method, this._url, true);
+                    this._xmlHttpRequest.withCredentials = this._withCredentials;
                     if (this._authToken) {
-                        xmlHttpRequest.setRequestHeader('Authorization', this._authTokenPrefix + " " + this._authToken);
+                        this._xmlHttpRequest.setRequestHeader('Authorization', this._authTokenPrefix + " " + this._authToken);
                     }
-                    xmlHttpRequest.send(form);
+                    this._xmlHttpRequest.send(form);
                 };
                 /**
                  * Return all the files in the uploading queue.
@@ -140,6 +149,13 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                  */
                 UploadService.prototype._isFile = function (file) {
                     return file !== null && (file instanceof Blob || (file.name && file.size));
+                };
+                /**
+                 * Set XMLHttpRequest method
+                 * @param xhr
+                 */
+                UploadService.prototype.setXMLHttpRequest = function (xhr) {
+                    this._xmlHttpRequest = xhr;
                 };
                 return UploadService;
             }());

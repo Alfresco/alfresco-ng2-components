@@ -30,6 +30,7 @@ export declare class UploadService {
     private _fieldName;
     private _formFields;
     private _withCredentials;
+    private _xmlHttpRequest;
     private _queue;
     constructor(options: any);
     /**
@@ -44,6 +45,10 @@ export declare class UploadService {
      * Pick all the files in the queue that are not been uploaded yet and upload it.
      */
     private _uploadFilesInTheQueue();
+    /**
+     * The method create a new XMLHttpRequest instance if doesn't exist
+     */
+    private _configureXMLHttpRequest();
     /**
      * Upload a file, and enrich it with the xhr.
      *
@@ -63,4 +68,9 @@ export declare class UploadService {
      * @return {boolean}
      */
     private _isFile(file);
+    /**
+     * Set XMLHttpRequest method
+     * @param xhr
+     */
+    setXMLHttpRequest(xhr: XMLHttpRequest): void;
 }

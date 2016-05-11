@@ -8,6 +8,7 @@
     <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
     <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
     <script src="../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+    <script src="../node_modules/jasmine-ajax/lib/mock-ajax.js"></script>
 
     <!-- #1. add the system.js library -->
     <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
@@ -34,7 +35,8 @@
 
         // #3. Import the spec file explicitly
         Promise.all([
-            System.import('test/services/upload.service.spec')
+            System.import('test/services/upload.service.spec'),
+            System.import('test/components/upload-button.component.spec')
         ])
                 // #4. wait for all imports to load ...
                 //     then re-execute `window.onload` which
