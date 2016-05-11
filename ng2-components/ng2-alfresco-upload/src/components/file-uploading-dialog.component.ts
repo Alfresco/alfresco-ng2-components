@@ -19,7 +19,7 @@
 import {Component, ElementRef, Input} from 'angular2/core';
 import {FileModel} from '../models/file.model';
 import {FileUploadingListComponent} from './file-uploading-list.component';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslatePipe} from 'ng2-translate/ng2-translate';
 
 declare let __moduleName: string;
 

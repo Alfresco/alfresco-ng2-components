@@ -69,7 +69,7 @@ export class UploadButtonComponent {
     showUdoNotificationBar: boolean = true;
 
     @Input()
-    uploadFolders: boolean = true;
+    uploadFolders: boolean = false;
 
     @Input()
     multipleFiles: boolean = false;

@@ -8,6 +8,12 @@
       "COMPLETED": "uploads complete",
       "PROGRESS": "Upload in progress..."
     },
+    "FILE_INFO": {
+      "NAME": "File name",
+      "PROGRESS": "File progress",
+      "SIZE": "File size",
+      "ACTION": "Actions"
+    },
     "ACTION": {
       "UNDO": "Undo"
     }

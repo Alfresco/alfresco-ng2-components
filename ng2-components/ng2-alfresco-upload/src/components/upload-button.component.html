@@ -1,10 +1,11 @@
 <form>
     <!--Files Upload-->
     <div *ngIf="!uploadFolders" class="mdl-button mdl-js-button mdl-button--raised mdl-button--file">
-        <i class="material-icons">file_upload</i> {{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}
+        <i class="material-icons">file_upload</i>
 
         <!--Multiple Files Upload-->
         <span *ngIf="multipleFiles">
+            <label for="upload-multiple-files">{{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}</label>
             <input id="upload-multiple-files" type="file" name="uploadFiles"
                    (change)="onFilesAdded($event)"
                    multiple="multiple"
@@ -14,6 +15,7 @@
 
         <!--Single Files Upload-->
         <span *ngIf="!multipleFiles">
+            <label for="upload-single-file">{{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}</label>
             <input id="upload-single-file" type="file" name="uploadFiles"
                    (change)="onFilesAdded($event)"
                    accept="{{acceptedFilesType}}"
@@ -23,7 +25,8 @@
 
     <!--Folders Upload-->
     <div *ngIf="uploadFolders" class="mdl-button mdl-js-button mdl-button--raised mdl-button--file">
-        <i class="material-icons">file_upload</i> {{'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}
+        <i class="material-icons">file_upload</i>
+        <label for="uploadFolder">{{'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}</label>
         <input id="uploadFolder" type="file" name="uploadFiles"
                (change)="onFilesAdded($event)"
                multiple="multiple"
@@ -41,5 +44,5 @@
 <div id="undo-notification-bar"  class="mdl-js-snackbar mdl-snackbar"
      #undoNotificationBar>
     <div class="mdl-snackbar__text"></div>
-    <button class="mdl-snackbar__action" type="button"></button>
+    <button class="mdl-snackbar__action" type="button">{{'FILE_UPLOAD.ACTION.UNDO' | translate}}</button>
 </div>

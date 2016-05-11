@@ -5,8 +5,14 @@
       "UPLOAD_FOLDER": "Carica una cartella"
     },
     "MESSAGES": {
-      "COMPLETED": "caricamento completato",
+      "COMPLETED": "caricamenti completati",
       "PROGRESS": "caricamento in corso..."
+    },
+    "FILE_INFO": {
+      "NAME": "Nome file",
+      "PROGRESS": "Percentuale caricamento",
+      "SIZE": "Dimensione file",
+      "ACTION": "Azioni"
     },
     "ACTION": {
       "UNDO": "Annulla"

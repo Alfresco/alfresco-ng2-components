@@ -1,5 +1,10 @@
 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-    <tbody>
+    <tr>
+        <th>{{'FILE_UPLOAD.FILE_INFO.NAME' | translate}}</th>
+        <th>{{'FILE_UPLOAD.FILE_INFO.PROGRESS' | translate}}</th>
+        <th>{{'FILE_UPLOAD.FILE_INFO.SIZE' | translate}}</th>
+        <th>{{'FILE_UPLOAD.FILE_INFO.ACTION' | translate}}</th>
+    </tr>
     <tr *ngFor="#file of filesUploadingList">
         <td class="mdl-data-table__cell--non-numeric">{{file.name}}</td>
         <td _ngcontent-hvq-3="">
@@ -18,5 +23,4 @@
             <span *ngIf="!file.abort && !file.uploading && !file.done"><i class="material-icons">pause</i></span>
         </td>
     </tr>
-    </tbody>
 </table>
