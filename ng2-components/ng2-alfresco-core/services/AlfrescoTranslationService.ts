@@ -21,7 +21,7 @@ import {TranslateLoader} from 'ng2-translate/ng2-translate';
 import {Observable} from 'rxjs/Observable'
 
 @Injectable()
-export class AlfrescoTranslationLoader {
+export class AlfrescoTranslationLoader implements TranslateLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';
