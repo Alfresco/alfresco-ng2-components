@@ -8,7 +8,8 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false,
-        "declaration": false
+        "declaration": false,
+        "outDir": "../dist"
     },
     "files": [
         "../node_modules/angular2/typings/browser.d.ts",

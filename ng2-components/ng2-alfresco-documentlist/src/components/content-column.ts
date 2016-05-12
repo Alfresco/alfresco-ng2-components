@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input} from 'angular2/core';
-import {ContentColumnList} from './content-column-list'
-import {ContentColumnModel} from './../models/content-column.model';
+import { Component, OnInit, Input } from 'angular2/core';
+import { ContentColumnList } from './content-column-list';
+import { ContentColumnModel } from './../models/content-column.model';
 
 @Component({
     selector: 'content-column',
@@ -40,8 +40,7 @@ export class ContentColumn implements OnInit {
     @Input('class')
     cssClass: string;
 
-    constructor(
-        private list: ContentColumnList) {
+    constructor(private list: ContentColumnList) {
     }
 
     ngOnInit() {

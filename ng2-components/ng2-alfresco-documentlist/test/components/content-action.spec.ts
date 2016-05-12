@@ -48,7 +48,7 @@ describe('ContentAction', () => {
 
         expect(actionList.registerAction).toHaveBeenCalled();
     });
-    
+
     it('should setup and register model', () => {
         let action = new ContentAction(actionList, null, null);
         action.type = 'button';

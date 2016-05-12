@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-// Note: contains only limited subset of available fields
-    
+// note: contains only limited subset of available fields
+
 export class FolderEntity {
     items: DocumentEntity[];
 }
@@ -90,7 +90,7 @@ export class MinimalNodeEntryEntity {
     createdAt: string;
     createdByUser: UserInfo;
     content: ContentInfo;
-    path: PathInfoEntity
+    path: PathInfoEntity;
 }
 
 export class UserInfo {
@@ -108,7 +108,7 @@ export class ContentInfo {
 export class PathInfoEntity {
     elements: PathElementEntity;
     isComplete: boolean;
-    name: string
+    name: string;
 }
 
 export class PathElementEntity {

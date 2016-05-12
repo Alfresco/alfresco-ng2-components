@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -33,7 +33,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        var handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -43,7 +43,7 @@ describe('FolderActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        var handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
 

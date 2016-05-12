@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -28,7 +28,7 @@ import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
 describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
-    
+
     beforeEach(() => {
         let alfrescoServiceMock = new AlfrescoServiceMock();
         service = new DocumentActionsService(alfrescoServiceMock);
@@ -39,7 +39,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        var handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -49,7 +49,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        var handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
 

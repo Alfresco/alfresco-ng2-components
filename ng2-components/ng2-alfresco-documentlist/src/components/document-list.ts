@@ -24,10 +24,10 @@ import {
     AfterContentInit,
     AfterViewChecked
 } from 'angular2/core';
-import {AlfrescoService} from './../services/alfresco.service';
-import {MinimalNodeEntity,NodePaging} from './../models/document-library.model';
-import {ContentActionModel} from './../models/content-action.model';
-import {ContentColumnModel} from './../models/content-column.model';
+import { AlfrescoService } from './../services/alfresco.service';
+import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
+import { ContentActionModel } from './../models/content-action.model';
+import { ContentColumnModel } from './../models/content-column.model';
 
 declare var componentHandler;
 declare let __moduleName: string;
@@ -78,8 +78,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
             this.currentFolderPath !== this.rootFolder.path;
     }
 
-    constructor(
-        private _alfrescoService: AlfrescoService) {
+    constructor(private _alfrescoService: AlfrescoService) {
     }
 
     ngOnInit() {

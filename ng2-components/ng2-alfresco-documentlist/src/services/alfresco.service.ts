@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import {Injectable} from 'angular2/core';
-import {Http, Response, RequestOptions, Headers} from 'angular2/http';
-import {Observable} from 'rxjs/Observable';
-import {NodePaging, MinimalNodeEntity} from './../models/document-library.model';
-import {AlfrescoSettingsService} from '../../../ng2-alfresco-core/services';
+import { Injectable } from 'angular2/core';
+import { Http, Response } from 'angular2/http';
+import { Observable } from 'rxjs/Observable';
+import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
+import { AlfrescoSettingsService } from '../../../ng2-alfresco-core/services';
 
-declare var AlfrescoApi: any;
+declare let AlfrescoApi: any;
 
 /**
  * Internal service used by Document List component.
@@ -29,27 +29,25 @@ declare var AlfrescoApi: any;
 @Injectable()
 export class AlfrescoService {
 
-    constructor(
-        private http: Http,
-        private settings: AlfrescoSettingsService
-    ) {
+    private _host: string = 'http://127.0.0.1:8080';
+    private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
+
+    constructor(private http: Http,
+                private settings: AlfrescoSettingsService) {
         if (settings) {
             this._host = settings.host;
         }
     }
 
-    private _host: string = 'http://127.0.0.1:8080';
-    private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
-
-    public get host():string {
+    public get host(): string {
         return this._host;
     }
 
-    public set host(value:string) {
+    public set host(value: string) {
         this._host = value;
     }
 
-    private getBaseUrl():string {
+    private getBaseUrl(): string {
         return this.host + this._baseUrlPath;
     }
 
@@ -58,11 +56,11 @@ export class AlfrescoService {
     }
 
     private getAlfrescoClient() {
-        var defaultClient = new AlfrescoApi.ApiClient();
+        let defaultClient = new AlfrescoApi.ApiClient();
         defaultClient.basePath = this.getBaseUrl();
 
         // Configure HTTP basic authorization: basicAuth
-        var basicAuth = defaultClient.authentications['basicAuth'];
+        let basicAuth = defaultClient.authentications['basicAuth'];
         basicAuth.username = 'ROLE_TICKET';
         basicAuth.password = this.getAlfrescoTicket();
 
@@ -71,15 +69,15 @@ export class AlfrescoService {
 
     private getNodesPromise(folder: string) {
 
-        var alfrescoClient = this.getAlfrescoClient();
-        return new Promise(function(resolve, reject) {
-            var apiInstance = new AlfrescoApi.NodesApi(alfrescoClient);
-            var nodeId = '-root-';
-            var opts = {
+        let alfrescoClient = this.getAlfrescoClient();
+        return new Promise(function (resolve, reject) {
+            let apiInstance = new AlfrescoApi.NodesApi(alfrescoClient);
+            let nodeId = '-root-';
+            let opts = {
                 relativePath: folder,
                 include: ['path']
             };
-            var callback = function(error, data /*, response*/) {
+            let callback = function (error, data /*, response*/) {
                 if (error) {
                     console.error(error);
                     reject(error);
@@ -124,7 +122,7 @@ export class AlfrescoService {
             document.entry.id + '/content';
     }
 
-    private handleError (error: Response) {
+    private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);

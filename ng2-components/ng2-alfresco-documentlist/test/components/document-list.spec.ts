@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -21,11 +21,11 @@ import {
     expect,
     beforeEach
 } from 'angular2/testing';
-import {DocumentList} from '../../src/components/document-list';
-import {ContentColumnModel} from '../../src/models/content-column.model';
-import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-import {DocumentEntity, LocationEntity} from '../../src/models/document-library.model';
-import {ContentActionModel} from '../../src/models/content-action.model';
+import { DocumentList } from '../../src/components/document-list';
+import { ContentColumnModel } from '../../src/models/content-column.model';
+import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
+import { DocumentEntity, LocationEntity } from '../../src/models/document-library.model';
+import { ContentActionModel } from '../../src/models/content-action.model';
 
 describe('DocumentList', () => {
 
@@ -38,7 +38,9 @@ describe('DocumentList', () => {
         documentList = new DocumentList(alfrescoServiceMock);
 
         eventMock = {
-            preventDefault: function() {}
+            preventDefault: function () {
+                console.log('mock preventDefault');
+            }
         };
     });
 
@@ -125,11 +127,13 @@ describe('DocumentList', () => {
         let node = new DocumentEntity();
         expect(list.getDocumentThumbnailUrl(node)).toBeNull();
     });
-    
+
     it('should execute action with node', () => {
         let node = new DocumentEntity();
         let action = new ContentActionModel();
-        action.handler = function() {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
 
         spyOn(action, 'handler').and.stub();
 
@@ -140,7 +144,9 @@ describe('DocumentList', () => {
 
     it('should execute action without node provided', () => {
         let action = new ContentActionModel();
-        action.handler = function() {};
+        action.handler = function () {
+            console.log('mock handler');
+        };
 
         spyOn(action, 'handler').and.stub();
         documentList.executeContentAction(null, action);
@@ -167,21 +173,21 @@ describe('DocumentList', () => {
     });
 
     it('should filter content actions for various types and targets', () => {
-        var folderButton = new ContentActionModel();
-        folderButton.target = "folder";
-        folderButton.type = "button";
+        let folderButton = new ContentActionModel();
+        folderButton.target = 'folder';
+        folderButton.type = 'button';
 
-        var folderMenu = new ContentActionModel();
-        folderMenu.target = "folder";
-        folderMenu.type = "menu";
+        let folderMenu = new ContentActionModel();
+        folderMenu.target = 'folder';
+        folderMenu.type = 'menu';
 
-        var documentButton = new ContentActionModel();
-        documentButton.target = "document";
-        documentButton.type = "button";
+        let documentButton = new ContentActionModel();
+        documentButton.target = 'document';
+        documentButton.type = 'button';
 
-        var documentMenu = new ContentActionModel();
-        documentMenu.target = "document";
-        documentMenu.type = "menu";
+        let documentMenu = new ContentActionModel();
+        documentMenu.target = 'document';
+        documentMenu.type = 'menu';
 
         documentList.actions = [
             folderButton,
@@ -208,25 +214,25 @@ describe('DocumentList', () => {
     });
 
     it('should be case insensitive when filtering content actions', () => {
-        var documentButton = new ContentActionModel();
+        let documentButton = new ContentActionModel();
         documentButton.target = 'document';
         documentButton.type = 'button';
 
         documentList.actions = [documentButton];
 
-        var actions = documentList.getContentActions('DoCuMeNt', 'BUTTON');
+        let actions = documentList.getContentActions('DoCuMeNt', 'BUTTON');
         expect(actions.length).toBe(1);
         expect(actions[0]).toBe(documentButton);
     });
 
     it('should find no content actions', () => {
-        var documentButton = new ContentActionModel();
+        let documentButton = new ContentActionModel();
         documentButton.target = 'document';
         documentButton.type = 'button';
 
         documentList.actions = [documentButton];
 
-        var actions = documentList.getContentActions('unknown', 'value');
+        let actions = documentList.getContentActions('unknown', 'value');
         expect(actions.length).toBe(0);
     });
 
@@ -260,7 +266,7 @@ describe('DocumentList', () => {
 
         expect(documentList.displayFolderContent).toHaveBeenCalledWith(path);
 
-        var routeEntry = documentList.route.pop();
+        let routeEntry = documentList.route.pop();
         expect(routeEntry.name).toBe(node.displayName);
         expect(routeEntry.path).toBe(path);
     });
@@ -302,7 +308,7 @@ describe('DocumentList', () => {
     it('should require node to get path', () => {
         expect(documentList.getNodePath(null)).toBe(null);
     });
-    
+
     it('should get node path', () => {
         let location = new LocationEntity();
         location.site = 'swsdp';
@@ -317,29 +323,29 @@ describe('DocumentList', () => {
     });
 
     it('should return root object value', () => {
-        var target = {
+        let target = {
             key1: 'value1'
         };
 
         expect(documentList.getObjectValue(target, 'key1')).toBe('value1');
     });
-    
+
     it('should return no object value when key is missing', () => {
-        var target = {
+        let target = {
             key1: 'value1'
         };
         expect(documentList.getObjectValue(target, 'missing')).toBeUndefined();
     });
 
     it('should return nested object value', () => {
-        var target = {
+        let target = {
             key1: {
                 key2: {
                     key3: 'value1'
                 }
-            } 
+            }
         };
-        
+
         expect(documentList.getObjectValue(target, 'key1.key2.key3')).toBe('value1');
     });
 

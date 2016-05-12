@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -36,7 +36,7 @@ describe('ContentColumn', () => {
         documentList = new DocumentList(alfrescoServiceMock);
         columnList = new ContentColumnList(documentList);
     });
-    
+
     it('should register model within parent column list', () => {
         spyOn(columnList, 'registerColumn').and.callThrough();
 
