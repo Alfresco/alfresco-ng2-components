@@ -16,7 +16,7 @@
  */
 
 
-import { Component, ViewChild, ElementRef, Input } from 'angular2/core';
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
@@ -78,6 +78,9 @@ export class UploadButtonComponent {
     @Input()
     uploaddirectory: string = '';
 
+    @Output()
+    onSuccess = new EventEmitter();
+
     filesUploadingList: FileModel [] = [];
 
     translate: TranslateService;
@@ -112,7 +115,7 @@ export class UploadButtonComponent {
         let files = $event.currentTarget.files;
         if (files.length) {
             let latestFilesAdded = this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory);
+            this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory, this.onSuccess);
             this.filesUploadingList = this._uploaderService.getQueue();
             if (this.showUploadDialog) {
                 this._showDialog();

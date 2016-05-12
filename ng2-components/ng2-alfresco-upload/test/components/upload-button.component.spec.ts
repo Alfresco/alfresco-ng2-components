@@ -18,10 +18,10 @@
 
 import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
 import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder, setBaseTestProviders } from 'angular2/testing';
-import { provide } from 'angular2/core';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { Component, provide, Injector } from 'angular2/core';
 import { UploadButtonComponent } from '../../src/components/upload-button.component';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
+import { TranslationMock } from '../assets/translation.service.mock';
 
 describe('AlfrescoUploadButton', () => {
 
@@ -44,7 +44,7 @@ describe('AlfrescoUploadButton', () => {
                 });
         }));
 
-    it('should render upload-multiple-file button if multipleFiles=true',
+    it('should render upload-multiple-file button if multipleFiles is true',
         injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
