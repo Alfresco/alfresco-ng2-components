@@ -17,7 +17,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var FolderEntity, DocumentEntity, LocationEntity, LocationParentEntity;
+    var FolderEntity, DocumentEntity, LocationEntity, LocationParentEntity, NodePaging, NodePagingList, MinimalNodeEntity, MinimalNodeEntryEntity, UserInfo, ContentInfo, PathInfoEntity, PathElementEntity;
     return {
         setters:[],
         execute: function() {
@@ -46,6 +46,54 @@ System.register([], function(exports_1, context_1) {
                 return LocationParentEntity;
             }());
             exports_1("LocationParentEntity", LocationParentEntity);
+            NodePaging = (function () {
+                function NodePaging() {
+                }
+                return NodePaging;
+            }());
+            exports_1("NodePaging", NodePaging);
+            NodePagingList = (function () {
+                function NodePagingList() {
+                }
+                return NodePagingList;
+            }());
+            exports_1("NodePagingList", NodePagingList);
+            MinimalNodeEntity = (function () {
+                function MinimalNodeEntity() {
+                }
+                return MinimalNodeEntity;
+            }());
+            exports_1("MinimalNodeEntity", MinimalNodeEntity);
+            MinimalNodeEntryEntity = (function () {
+                function MinimalNodeEntryEntity() {
+                }
+                return MinimalNodeEntryEntity;
+            }());
+            exports_1("MinimalNodeEntryEntity", MinimalNodeEntryEntity);
+            UserInfo = (function () {
+                function UserInfo() {
+                }
+                return UserInfo;
+            }());
+            exports_1("UserInfo", UserInfo);
+            ContentInfo = (function () {
+                function ContentInfo() {
+                }
+                return ContentInfo;
+            }());
+            exports_1("ContentInfo", ContentInfo);
+            PathInfoEntity = (function () {
+                function PathInfoEntity() {
+                }
+                return PathInfoEntity;
+            }());
+            exports_1("PathInfoEntity", PathInfoEntity);
+            PathElementEntity = (function () {
+                function PathElementEntity() {
+                }
+                return PathElementEntity;
+            }());
+            exports_1("PathElementEntity", PathElementEntity);
         }
     }
 });

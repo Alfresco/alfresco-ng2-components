@@ -13,7 +13,19 @@
 
 ## Prerequisites
 
-- [Alfresco Docker image with CORS support](https://github.com/wabson/alfresco-docker-cors)
+Docker machine with latest `platform-distribution:api-latest` image.
+
+```
+docker login dockerreg.alfresco.com
+docker pull dockerreg.alfresco.com/platform-distribution:api-latest
+docker-compose up
+```
+
+to clean up afterwards
+
+```
+docker-compose rm
+```
 
 ### Configuring development environment
 
@@ -46,6 +58,12 @@ cd ng2-components/ng2-alfresco-login
 npm link
 cd ../../demo-shell-ng
 npm link ng2-alfresco-login
+```
+
+*dev-platform-js-api client:*
+
+```sh
+npm link ../../dev-platform-js-api
 ```
 
 Please refer to [this article](https://docs.npmjs.com/cli/link) for more details on npm link.

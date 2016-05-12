@@ -4,7 +4,7 @@
             <content-column source="$thumbnail"></content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                    source="displayName"
+                    source="name"
                     class="full-width name-column">
             </content-column>
             <content-column
@@ -13,11 +13,11 @@
             </content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                    source="createdBy">
+                    source="createdByUser.displayName">
             </content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                    source="createdOn">
+                    source="createdAt">
             </content-column>
         </content-columns>
 

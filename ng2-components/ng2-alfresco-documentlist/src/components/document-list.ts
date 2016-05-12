@@ -25,7 +25,7 @@ import {
     AfterViewChecked
 } from 'angular2/core';
 import {AlfrescoService} from './../services/alfresco.service';
-import {FolderEntity, DocumentEntity} from './../models/document-library.model';
+import {MinimalNodeEntity,NodePaging} from './../models/document-library.model';
 import {ContentActionModel} from './../models/content-action.model';
 import {ContentColumnModel} from './../models/content-column.model';
 
@@ -55,10 +55,10 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     rootFolder = {
         name: 'Document Library',
-        path: 'swsdp/documentLibrary'
+        path: 'Sites/swsdp/documentLibrary'
     };
     currentFolderPath: string = 'swsdp/documentLibrary';
-    folder: FolderEntity;
+    folder: NodePaging;
     errorMessage;
 
     route: any[] = [];
@@ -140,7 +140,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param item Underlying node item
      * @param e DOM event (optional)
      */
-    onItemClick(item: DocumentEntity, e = null) {
+    onItemClick(item: MinimalNodeEntity, e = null) {
         if (e) {
             e.preventDefault();
         }
@@ -150,10 +150,10 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         });
 
         if (this.navigate && item) {
-            if (item.isFolder) {
+            if (item.entry.isFolder) {
                 let path = this.getNodePath(item);
                 this.route.push({
-                    name: item.displayName,
+                    name: item.entry.name,
                     path: path
                 });
                 this.displayFolderContent(path);
@@ -185,7 +185,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getContentUrl(node: DocumentEntity): string {
+    getContentUrl(node: MinimalNodeEntity): string {
         if (this._alfrescoService) {
             return this._alfrescoService.getContentUrl(node);
         }
@@ -197,7 +197,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(node: DocumentEntity): string {
+    getDocumentThumbnailUrl(node: MinimalNodeEntity): string {
         if (this._alfrescoService) {
             return this._alfrescoService.getDocumentThumbnailUrl(node);
         }
@@ -209,7 +209,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
      */
-    executeContentAction(node: DocumentEntity, action: ContentActionModel) {
+    executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
         if (action) {
             action.handler(node);
         }
@@ -220,7 +220,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param path Node path
      */
     displayFolderContent(path) {
-        if (path) {
+        if (path !== null) {
             this.currentFolderPath = path;
             this._alfrescoService
                 .getFolder(path)
@@ -236,12 +236,10 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param node
      * @returns {string}
      */
-    getNodePath(node: DocumentEntity): string {
+    getNodePath(node: MinimalNodeEntity): string {
         if (node) {
-            let container = node.location.container;
-            let path = node.location.path !== '/' ? (node.location.path + '/' ) : '/';
-            let relativePath = container + path + node.fileName;
-            return node.location.site + '/' + relativePath;
+            let pathWithCompanyHome = item.entry.path.name;
+            return pathWithCompanyHome.replace('/Company Home', '') + '/' + item.entry.name;
         }
         return null;
     }

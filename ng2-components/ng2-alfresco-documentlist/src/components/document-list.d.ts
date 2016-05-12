@@ -16,7 +16,7 @@
  */
 import { OnInit, EventEmitter, AfterContentInit, AfterViewChecked } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
-import { FolderEntity, DocumentEntity } from './../models/document-library.model';
+import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { ContentColumnModel } from './../models/content-column.model';
 export declare class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
@@ -30,7 +30,7 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
         path: string;
     };
     currentFolderPath: string;
-    folder: FolderEntity;
+    folder: NodePaging;
     errorMessage: any;
     route: any[];
     actions: ContentActionModel[];
@@ -61,7 +61,7 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
      * @param item Underlying node item
      * @param e DOM event (optional)
      */
-    onItemClick(item: DocumentEntity, e?: any): void;
+    onItemClick(item: MinimalNodeEntity, e?: any): void;
     /**
      * Invoked when a breadcrumb route is clicked.
      * @param r Route to navigate to
@@ -73,19 +73,19 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getContentUrl(node: DocumentEntity): string;
+    getContentUrl(node: MinimalNodeEntity): string;
     /**
      * Gets thumbnail URL for the given document node.
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(node: DocumentEntity): string;
+    getDocumentThumbnailUrl(node: MinimalNodeEntity): string;
     /**
      * Invoked when executing content action for a document or folder.
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
      */
-    executeContentAction(node: DocumentEntity, action: ContentActionModel): void;
+    executeContentAction(node: MinimalNodeEntity, action: ContentActionModel): void;
     /**
      * Loads and displays folder content
      * @param path Node path
@@ -96,7 +96,7 @@ export declare class DocumentList implements OnInit, AfterViewChecked, AfterCont
      * @param node
      * @returns {string}
      */
-    getNodePath(node: DocumentEntity): string;
+    getNodePath(node: MinimalNodeEntity): string;
     /**
      * Gets a value from an object by composed key
      * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'

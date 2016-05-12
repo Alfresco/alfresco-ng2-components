@@ -28,26 +28,26 @@
         </td>
     </tr>
 
-    <tr *ngFor="#content of folder.items; #idx = index">
+    <tr *ngFor="#content of folder.list.entries; #idx = index">
         <!-- Columns -->
         <td *ngFor="#col of columns" [ngSwitch]="col.source"
-            class="mdl-data-table__cell--non-numeric {{content.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
+            class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
             (click)="onItemClick(content, $event)">
             <div *ngSwitchWhen="'$thumbnail'">
-                <div *ngIf="content.isFolder">
+                <div *ngIf="content.entry.isFolder">
                     <i class="material-icons folder-thumbnail">{{folderIcon || 'folder_open'}}</i>
                 </div>
-                <div *ngIf="!content.isFolder">
+                <div *ngIf="!content.entry.isFolder">
                     <img class="document-thumbnail" alt="" src="{{getDocumentThumbnailUrl(content)}}">
                 </div>
             </div>
             <span *ngSwitchDefault>
-                {{getObjectValue(content, col.source)}}
+                {{getObjectValue(content.entry, col.source)}}
             </span>
         </td>
 
         <!-- Actions: folder -->
-        <td *ngIf="content.isFolder">
+        <td *ngIf="content.entry.isFolder">
             <!-- action buttons -->
             <button class="mdl-button mdl-js-button mdl-button--icon"
                     *ngFor="#action of getContentActions('folder', 'button')"
@@ -69,7 +69,7 @@
             </ul>
         </td>
         <!-- Actions: document -->
-        <td *ngIf="!content.isFolder">
+        <td *ngIf="!content.entry.isFolder">
             <!-- action buttons -->
             <button class="mdl-button mdl-js-button mdl-button--icon"
                     *ngFor="#action of getContentActions('document', 'button')"

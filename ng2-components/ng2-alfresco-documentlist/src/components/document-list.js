@@ -48,7 +48,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     this.itemClick = new core_1.EventEmitter();
                     this.rootFolder = {
                         name: 'Document Library',
-                        path: 'swsdp/documentLibrary'
+                        path: 'Sites/swsdp/documentLibrary'
                     };
                     this.currentFolderPath = 'swsdp/documentLibrary';
                     this.route = [];
@@ -125,10 +125,10 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                         value: item
                     });
                     if (this.navigate && item) {
-                        if (item.isFolder) {
+                        if (item.entry.isFolder) {
                             var path = this.getNodePath(item);
                             this.route.push({
-                                name: item.displayName,
+                                name: item.entry.name,
                                 path: path
                             });
                             this.displayFolderContent(path);
@@ -204,10 +204,8 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                  */
                 DocumentList.prototype.getNodePath = function (node) {
                     if (node) {
-                        var container = node.location.container;
-                        var path = node.location.path !== '/' ? (node.location.path + '/') : '/';
-                        var relativePath = container + path + node.fileName;
-                        return node.location.site + '/' + relativePath;
+                        var pathWithCompanyHome = item.entry.path.name;
+                        return pathWithCompanyHome.replace('/Company Home', '') + '/' + item.entry.name;
                     }
                     return null;
                 };

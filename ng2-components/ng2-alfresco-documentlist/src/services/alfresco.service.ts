@@ -18,8 +18,10 @@
 import {Injectable} from 'angular2/core';
 import {Http, Response, RequestOptions, Headers} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
-import {FolderEntity, DocumentEntity} from './../models/document-library.model';
+import {NodePaging, MinimalNodeEntity} from './../models/document-library.model';
 import {AlfrescoSettingsService} from '../../../ng2-alfresco-core/services';
+
+declare var AlfrescoApi: any;
 
 /**
  * Internal service used by Document List component.
@@ -37,7 +39,7 @@ export class AlfrescoService {
     }
 
     private _host: string = 'http://127.0.0.1:8080';
-    private _baseUrlPath: string = '/alfresco/service/slingshot/doclib/doclist/all/site/';
+    private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
 
     public get host():string {
         return this._host;
@@ -51,21 +53,54 @@ export class AlfrescoService {
         return this.host + this._baseUrlPath;
     }
 
+    private getAlfrescoTicket() {
+        return localStorage.getItem('token');
+    }
+
+    private getAlfrescoClient() {
+        var defaultClient = new AlfrescoApi.ApiClient();
+        defaultClient.basePath = this.getBaseUrl();
+
+        // Configure HTTP basic authorization: basicAuth
+        var basicAuth = defaultClient.authentications['basicAuth'];
+        basicAuth.username = 'ROLE_TICKET';
+        basicAuth.password = this.getAlfrescoTicket();
+
+        return defaultClient;
+    }
+
+    private getNodesPromise(folder: string) {
+
+        var alfrescoClient = this.getAlfrescoClient();
+        return new Promise(function(resolve, reject) {
+            var apiInstance = new AlfrescoApi.NodesApi(alfrescoClient);
+            var nodeId = '-root-';
+            var opts = {
+                relativePath: folder,
+                include: ['path']
+            };
+            var callback = function(error, data /*, response*/) {
+                if (error) {
+                    console.error(error);
+                    reject(error);
+                } else {
+                    console.log('API returned data', data);
+                    resolve(data);
+                }
+            };
+            apiInstance.getNodeChildren(nodeId, opts, callback);
+        });
+    }
+
     /**
      * Gets the folder node with the content.
      * @param folder Path to folder.
-     * @returns {Observable<FolderEntity>} Folder entity.
+     * @returns {Observable<NodePaging>} Folder entity.
      */
     getFolder(folder: string) {
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': this.settings.getAuthToken()
-        });
-        let options = new RequestOptions({ headers: headers });
-        return this.http
-            .get(this.getBaseUrl() + folder, options)
-            .map(res => <FolderEntity> res.json())
-            .do(data => console.log(data)) // eyeball results in the console
+        return Observable.fromPromise(this.getNodesPromise(folder))
+            .map(res => <NodePaging> res)
+            .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
     }
 
@@ -74,10 +109,8 @@ export class AlfrescoService {
      * @param document Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(document: DocumentEntity): string {
-        return this._host +
-            '/alfresco/service/api/node/' +
-            document.nodeRef.replace('://', '/') + '/content/thumbnails/doclib?c=queue&amp;ph=true&amp;lastModified=1';
+    getDocumentThumbnailUrl(document: MinimalNodeEntity) {
+        return this.getContentUrl(document) + '/thumbnails/doclib?c=queue&ph=true&lastModified=1';
     }
 
     /**
@@ -85,14 +118,16 @@ export class AlfrescoService {
      * @param document Node to get URL for.
      * @returns {string} URL address.
      */
-    getContentUrl(document: DocumentEntity): string {
-        return this._host + '/alfresco/service/' + document.contentUrl;
+    getContentUrl(document: MinimalNodeEntity) {
+        return this._host +
+            '/alfresco/service/api/node/workspace/SpacesStore/' +
+            document.entry.id + '/content';
     }
 
     private handleError (error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return Observable.throw(error || 'Server error');
     }
 }

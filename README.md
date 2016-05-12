@@ -18,6 +18,7 @@ For development configuration please refer to* **Configuring development environ
 ##### Using setup script (recommended)
 
 ```sh
+git clone https://github.com/Alfresco/dev-platform-js-api.git
 git clone https://github.com/Alfresco/dev-platform-webcomponents.git
 cd dev-platform-webcomponents
 ./start.sh
@@ -26,7 +27,9 @@ cd dev-platform-webcomponents
 ##### Manual setup
 
 ```sh
+git clone https://github.com/Alfresco/dev-platform-js-api.git
 git clone https://github.com/Alfresco/dev-platform-webcomponents.git
+
 cd dev-platform-webcomponents/demo-shell-ng2
 
 npm install
@@ -34,6 +37,7 @@ npm install ../ng2-components/ng2-alfresco-core
 npm install ../ng2-components/ng2-alfresco-login
 npm install ../ng2-components/ng2-alfresco-documentlist
 npm install ../ng2-components/ng2-alfresco-upload
+npm install ../../dev-platform-js-api
 
 npm run build.dev
 ```
