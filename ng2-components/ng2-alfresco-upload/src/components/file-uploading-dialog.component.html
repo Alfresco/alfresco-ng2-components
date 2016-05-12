@@ -4,12 +4,12 @@
             {{filesUploadingList.length}} {{'FILE_UPLOAD.MESSAGES.COMPLETED' | translate}}
         </div>
         <div class="buttons">
-            <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}"  (click)="toggleDialogMinimize($event)">
+            <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}"  (click)="toggleDialogMinimize()">
                 <i class="material-icons down">keyboard_arrow_down</i>
                 <i class="material-icons up">keyboard_arrow_up</i>
             </div>
 
-            <div class="close-button" (click)="toggleShowDialog($event)">
+            <div class="close-button" (click)="toggleShowDialog()">
                 <i class="material-icons">clear</i>
             </div>
         </div>

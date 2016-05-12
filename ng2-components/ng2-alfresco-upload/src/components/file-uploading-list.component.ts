@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -16,9 +16,9 @@
  */
 
 
-import {Component, ElementRef, Input} from 'angular2/core';
-import {FileModel} from '../models/file.model';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import { Component, ElementRef, Input } from 'angular2/core';
+import { FileModel } from '../models/file.model';
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
 
 declare let __moduleName: string;
 
@@ -47,9 +47,7 @@ export class FileUploadingListComponent {
     constructor(public el: ElementRef) {
         console.log('filesUploadingList constructor', el);
 
-        setInterval(() => {
-            console.log('Check for async update from drag directive');
-        }, 1000);
+        setInterval(() => {console.log('Check for async update from drag directive'); }, 1000);
     }
 
     /**
@@ -57,9 +55,9 @@ export class FileUploadingListComponent {
      *
      * @param {string} id - FileModel id of the file to abort.
      */
-    abort(id): void {
+    abort(id: string): void {
         let file = this.filesUploadingList.filter((uploadingFileModel) => {
-            return uploadingFileModel.id == id;
+            return uploadingFileModel.id === id;
         });
         file[0].setAbort();
     }

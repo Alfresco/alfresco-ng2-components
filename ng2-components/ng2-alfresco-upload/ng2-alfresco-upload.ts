@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {UploadDragAreaComponent} from './src/components/upload-drag-area.component';
-import {FileDraggableDirective} from './src/directives/file-draggable.directive';
-import {UploadButtonComponent} from './src/components/upload-button.component';
+import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
+import { FileDraggableDirective } from './src/directives/file-draggable.directive';
+import { UploadButtonComponent } from './src/components/upload-button.component';
 
 /**
  * ng2-alfresco-upload, provide components to upload files to alfresco repository.
@@ -41,12 +41,12 @@ export * from './src/services/upload.service';
 export * from './src/directives/file-draggable.directive';
 
 export default {
-    component: [UploadDragAreaComponent, UploadButtonComponent],
-    directives: [FileDraggableDirective]
-}
+  component: [UploadDragAreaComponent, UploadButtonComponent],
+  directives: [FileDraggableDirective]
+};
 
 export const ALFRESCO_ULPOAD_COMPONENT: [any] = [
-    UploadDragAreaComponent,
-    UploadButtonComponent,
-    FileDraggableDirective
+  UploadDragAreaComponent,
+  UploadButtonComponent,
+  FileDraggableDirective
 ];

@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -14,323 +14,346 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import {it, describe, expect, inject, injectAsync, beforeEach, beforeEachProviders, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
-import {Component, provide, Injector, EventEmitter} from 'angular2/core';
-import {Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route} from 'angular2/router';
-import {RootRouter} from 'angular2/src/router/router';
-import {Observable} from 'rxjs/Rx';
-import {SpyLocation} from 'angular2/src/mock/location_mock';
-import {dispatchEvent} from 'angular2/src/testing/utils';
-import {TranslateService, LangChangeEvent} from 'ng2-translate/ng2-translate';
-import {AlfrescoLoginComponent} from '../../src/components/alfresco-login';
-import {AuthenticationMock} from '../assets/authentication.service.mock';
-import {TranslationMock} from '../assets/translation.service.mock';
+
+import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
+import {
+  it,
+  describe,
+  expect,
+  inject,
+  injectAsync,
+  beforeEach,
+  beforeEachProviders,
+  TestComponentBuilder,
+  setBaseTestProviders
+} from 'angular2/testing';
+import { provide } from 'angular2/core';
+import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from 'angular2/router';
+import { RootRouter } from 'angular2/src/router/router';
+import { SpyLocation } from 'angular2/src/mock/location_mock';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AlfrescoLoginComponent } from '../../src/components/alfresco-login';
+import { AuthenticationMock } from '../assets/authentication.service.mock';
+import { TranslationMock } from '../assets/translation.service.mock';
 
 describe('AlfrescoLogin', () => {
-    let authService, location, router;
+  let authService, location, router;
 
-    setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+  setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
 
-    beforeEachProviders(() => {
-        authService = new AuthenticationMock();
+  beforeEachProviders(() => {
+    authService = new AuthenticationMock();
 
-        return [
-            authService.getProviders(),
-            RouteRegistry,
-            provide(Location, {useClass: SpyLocation}),
-            provide(ROUTER_PRIMARY_COMPONENT, {useValue: AlfrescoLoginComponent}),
-            provide(Router, {useClass: RootRouter}),
-            provide(TranslateService, {useClass: TranslationMock})
-        ];
-    });
+    return [
+      authService.getProviders(),
+      RouteRegistry,
+      provide(Location, {useClass: SpyLocation}),
+      provide(ROUTER_PRIMARY_COMPONENT, {useValue: AlfrescoLoginComponent}),
+      provide(Router, {useClass: RootRouter}),
+      provide(TranslateService, {useClass: TranslationMock})
+    ];
+  });
 
-    beforeEach(inject([Router, Location], (r, l) => {
-        router = r;
-        location = l;
+  beforeEach(inject([Router, Location], (r, l) => {
+    router = r;
+    location = l;
+  }));
+
+  it('should render `Login` form with all the keys to be translated',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
+
+          fixture.detectChanges();
+
+          let element = fixture.nativeElement;
+
+          expect(element.querySelector('h2').innerText).toEqual('login');
+
+          expect(element.querySelector('[for="username"]')).toBeDefined();
+          expect(element.querySelector('[for="username"]').innerText).toEqual('username');
+          expect(element.querySelector('#username-error').innerText).toEqual('input-required-message');
+
+          expect(element.querySelector('[for="password"]')).toBeDefined();
+          expect(element.querySelector('[for="password"]').innerText).toEqual('password');
+          expect(element.querySelector('#password-required').innerText).toEqual('input-required-message');
+
+        });
     }));
 
-    it('should render `Login` form with all the keys to be translated', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
-
-                };
-
-                fixture.detectChanges();
-
-                let element = fixture.nativeElement;
-
-                expect(element.querySelector('h2').innerText).toEqual('login');
-
-                expect(element.querySelector('[for="username"]')).toBeDefined();
-                expect(element.querySelector('[for="username"]').innerText).toEqual('username');
-                expect(element.querySelector('#username-error').innerText).toEqual('input-required-message');
-
-                expect(element.querySelector('[for="password"]')).toBeDefined();
-                expect(element.querySelector('[for="password"]').innerText).toEqual('password');
-                expect(element.querySelector('#password-required').innerText).toEqual('input-required-message');
-
-            });
+  it('should render user and password input fields with default values',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          let element = fixture.nativeElement;
+          expect(element.querySelector('form')).toBeDefined();
+          expect(element.querySelector('input[type="password"]')).toBeDefined();
+          expect(element.querySelector('input[type="text"]')).toBeDefined();
+          expect(element.querySelector('input[type="password"]').value).toEqual('');
+          expect(element.querySelector('input[type="text"]').value).toEqual('');
+        });
     }));
 
-    it('should render user and password input fields with default values', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                let element = fixture.nativeElement;
-                expect(element.querySelector('form')).toBeDefined();
-                expect(element.querySelector('input[type="password"]')).toBeDefined();
-                expect(element.querySelector('input[type="text"]')).toBeDefined();
-                expect(element.querySelector('input[type="password"]').value).toEqual('');
-                expect(element.querySelector('input[type="text"]').value).toEqual('');
-            });
+  it('should render min-length error when the username is lower than 4 characters',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
+
+          let compiled = fixture.debugElement.nativeElement;
+
+          component.form.controls.username._value = 'us';
+
+          fixture.detectChanges();
+
+          component.onValueChanged();
+
+          fixture.detectChanges();
+
+          expect(component.formError).toBeDefined(true);
+          expect(component.formError.username).toBeDefined(true);
+          expect(component.formError.username).toEqual('input-min-message');
+          expect(compiled.querySelector('#username-error').innerText).toEqual('input-min-message');
+        });
     }));
 
-    it('should render min-length error when the username is lower than 4 characters', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should render no errors when the username and password are correct',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
+          let compiled = fixture.debugElement.nativeElement;
 
-                let compiled = fixture.debugElement.nativeElement;
+          component.form.controls.username._value = 'fake-user';
+          component.form.controls.password._value = 'fake-password';
 
-                component.form.controls.username._value = 'us';
+          fixture.detectChanges();
 
-                fixture.detectChanges();
+          component.onValueChanged();
 
-                component.onValueChanged();
+          fixture.detectChanges();
 
-                fixture.detectChanges();
-
-                expect(component.formError).toBeDefined(true);
-                expect(component.formError.username).toBeDefined(true);
-                expect(component.formError.username).toEqual('input-min-message');
-                expect(compiled.querySelector('#username-error').innerText).toEqual('input-min-message');
-            });
+          expect(component.formError).toBeDefined(true);
+          expect(component.formError.username).toEqual('');
+          expect(component.formError.password).toEqual('');
+          expect(compiled.querySelector('#login-error')).toBeNull();
+        });
     }));
 
-    it('should render no errors when the username and password are correct', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should render the new values after user and password values are changed',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
+          let compiled = fixture.debugElement.nativeElement;
+          component.form.controls.username._value = 'my username';
+          component.form.controls.password._value = 'my password';
 
-                let compiled = fixture.debugElement.nativeElement;
+          fixture.detectChanges();
+          component.onValueChanged();
 
-                component.form.controls.username._value = 'fake-user';
-                component.form.controls.password._value = 'fake-password';
-
-                fixture.detectChanges();
-
-                component.onValueChanged();
-
-                fixture.detectChanges();
-
-                expect(component.formError).toBeDefined(true);
-                expect(component.formError.username).toEqual('');
-                expect(component.formError.password).toEqual('');
-                expect(compiled.querySelector('#login-error')).toBeNull();
-            });
+          expect(compiled.querySelector('input[type="password"]').value).toEqual('my password');
+          expect(compiled.querySelector('input[type="text"]').value).toEqual('my username');
+        });
     }));
 
-    it('should render the new values after user and password values are changed', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should navigate to Home route after the login have succeeded ',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          router.config([new Route({path: '/home', name: 'Home', component: AlfrescoLoginComponent})]);
+          spyOn(router, 'navigate').and.callThrough();
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
+          let compiled = fixture.debugElement.nativeElement;
 
-                let compiled = fixture.debugElement.nativeElement;
-                component.form.controls.username._value = 'my username';
-                component.form.controls.password._value = 'my password';
+          component.form.controls.username._value = 'fake-username';
+          component.form.controls.password._value = 'fake-password';
 
-                fixture.detectChanges();
-                component.onValueChanged();
+          fixture.detectChanges();
+          component.onValueChanged();
 
-                expect(compiled.querySelector('input[type="password"]').value).toEqual('my password');
-                expect(compiled.querySelector('input[type="text"]').value).toEqual('my username');
-            });
+          compiled.querySelector('button').click();
+
+          fixture.detectChanges();
+
+          expect(component.error).toBe(false);
+          expect(router.navigate).toHaveBeenCalledWith(['Home']);
+        });
     }));
 
-    it('should navigate to Home route after the login have succeeded ', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                router.config([new Route({path: '/home', name: 'Home', component: AlfrescoLoginComponent})]);
-                spyOn(router, 'navigate').and.callThrough();
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should return error with a wrong username ',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          spyOn(router, 'navigate').and.callThrough();
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
+          let compiled = fixture.debugElement.nativeElement;
 
-                let compiled = fixture.debugElement.nativeElement;
+          component.form.controls.username._value = 'fake-wrong-username';
+          component.form.controls.password._value = 'fake-password';
 
-                component.form.controls.username._value = 'fake-username';
-                component.form.controls.password._value = 'fake-password';
+          fixture.detectChanges();
+          component.onValueChanged();
 
-                fixture.detectChanges();
-                component.onValueChanged();
+          compiled.querySelector('button').click();
 
-                compiled.querySelector('button').click();
+          fixture.detectChanges();
 
-                fixture.detectChanges();
-
-                expect(component.error).toBe(false);
-                expect(router.navigate).toHaveBeenCalledWith(['Home']);
-            });
+          expect(fixture.componentInstance.error).toBe(true);
+          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+        });
     }));
 
-    it('should return error with a wrong username ', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                spyOn(router, 'navigate').and.callThrough();
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should return error with a wrong password ',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          spyOn(router, 'navigate').and.callThrough();
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
-                let compiled = fixture.debugElement.nativeElement;
+          let compiled = fixture.debugElement.nativeElement;
 
-                component.form.controls.username._value = 'fake-wrong-username';
-                component.form.controls.password._value = 'fake-password';
+          component.form.controls.username._value = 'fake-username';
+          component.form.controls.password._value = 'fake-wrong-password';
 
-                fixture.detectChanges();
-                component.onValueChanged();
+          fixture.detectChanges();
+          component.onValueChanged();
 
-                compiled.querySelector('button').click();
+          compiled.querySelector('button').click();
 
-                fixture.detectChanges();
+          fixture.detectChanges();
 
-                expect(fixture.componentInstance.error).toBe(true);
-                expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
-            });
+          expect(fixture.componentInstance.error).toBe(true);
+          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+        });
     }));
 
-    it('should return error with a wrong password ', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                spyOn(router, 'navigate').and.callThrough();
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should return error with a wrong username and password ',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          spyOn(router, 'navigate').and.callThrough();
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
-                let compiled = fixture.debugElement.nativeElement;
+          let compiled = fixture.debugElement.nativeElement;
 
-                component.form.controls.username._value = 'fake-username';
-                component.form.controls.password._value = 'fake-wrong-password';
+          component.form.controls.username._value = 'fake-wrong-username';
+          component.form.controls.password._value = 'fake-wrong-password';
 
-                fixture.detectChanges();
-                component.onValueChanged();
+          fixture.detectChanges();
+          component.onValueChanged();
 
-                compiled.querySelector('button').click();
+          compiled.querySelector('button').click();
 
-                fixture.detectChanges();
+          fixture.detectChanges();
 
-                expect(fixture.componentInstance.error).toBe(true);
-                expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
-            });
-    }));
-
-    it('should return error with a wrong username and password ', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                spyOn(router, 'navigate').and.callThrough();
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
-
-                };
-
-                let compiled = fixture.debugElement.nativeElement;
-
-                component.form.controls.username._value = 'fake-wrong-username';
-                component.form.controls.password._value = 'fake-wrong-password';
-
-                fixture.detectChanges();
-                component.onValueChanged();
-
-                compiled.querySelector('button').click();
-
-                fixture.detectChanges();
-
-                expect(fixture.componentInstance.error).toBe(true);
-                expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
-            });
+          expect(fixture.componentInstance.error).toBe(true);
+          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+        });
     }));
 
 
-    it('should emit onSuccess event after the login has succeeded', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should emit onSuccess event after the login has succeeded',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
-                spyOn(component.onSuccess, 'emit');
+          spyOn(component.onSuccess, 'emit');
 
-                let compiled = fixture.debugElement.nativeElement;
+          let compiled = fixture.debugElement.nativeElement;
 
-                component.form.controls.username._value = 'fake-username';
-                component.form.controls.password._value = 'fake-password';
+          component.form.controls.username._value = 'fake-username';
+          component.form.controls.password._value = 'fake-password';
 
-                fixture.detectChanges();
-                component.onValueChanged();
+          fixture.detectChanges();
+          component.onValueChanged();
 
-                let nativeElement = fixture.nativeElement;
-                let button = nativeElement.querySelector('button');
-                button.dispatchEvent(new Event('click'));
+          let nativeElement = fixture.nativeElement;
+          let button = nativeElement.querySelector('button');
+          button.dispatchEvent(new Event('click'));
 
-                fixture.detectChanges();
+          fixture.detectChanges();
 
-                expect(fixture.componentInstance.error).toBe(false);
-                expect(compiled.querySelector('#login-success').innerHTML).toEqual('login-success-message');
-                expect(component.onSuccess.emit).toHaveBeenCalledWith({value: 'Login OK'});
-            });
+          expect(fixture.componentInstance.error).toBe(false);
+          expect(compiled.querySelector('#login-success').innerHTML).toEqual('login-success-message');
+          expect(component.onSuccess.emit).toHaveBeenCalledWith({value: 'Login OK'});
+        });
     }));
 
-    it('should emit onError event after the login has failed', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoLoginComponent)
-            .then((fixture) => {
-                let component = fixture.componentInstance;
-                component.isErrorStyle = function () {
+  it('should emit onError event after the login has failed',
+    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      return tcb
+        .createAsync(AlfrescoLoginComponent)
+        .then((fixture) => {
+          let component = fixture.componentInstance;
+          component.isErrorStyle = function () {
+            console.log('mock');
+          };
 
-                };
-                spyOn(component.onError, 'emit');
+          spyOn(component.onError, 'emit');
 
-                let compiled = fixture.debugElement.nativeElement;
+          let compiled = fixture.debugElement.nativeElement;
 
-                component.form.controls.username._value = 'fake-wrong-username';
-                component.form.controls.password._value = 'fake-password';
+          component.form.controls.username._value = 'fake-wrong-username';
+          component.form.controls.password._value = 'fake-password';
 
-                fixture.detectChanges();
-                component.onValueChanged();
+          fixture.detectChanges();
+          component.onValueChanged();
 
-                // trigger the click
-                let nativeElement = fixture.nativeElement;
-                let button = nativeElement.querySelector('button');
-                button.dispatchEvent(new Event('click'));
+          // trigger the click
+          let nativeElement = fixture.nativeElement;
+          let button = nativeElement.querySelector('button');
+          button.dispatchEvent(new Event('click'));
 
-                fixture.detectChanges();
+          fixture.detectChanges();
 
-                expect(fixture.componentInstance.error).toBe(true);
-                expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
-                expect(component.onError.emit).toHaveBeenCalledWith({value: 'Login KO'});
-            });
+          expect(fixture.componentInstance.error).toBe(true);
+          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+          expect(component.onError.emit).toHaveBeenCalledWith({value: 'Login KO'});
+        });
     }));
 
 });
-

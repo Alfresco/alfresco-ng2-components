@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Observable} from 'rxjs/Observable';
-import {provide, EventEmitter} from 'angular2/core';
-import {LangChangeEvent} from 'ng2-translate/ng2-translate';
+import { Observable } from 'rxjs/Observable';
+import { EventEmitter } from 'angular2/core';
+import { LangChangeEvent } from 'ng2-translate/ng2-translate';
 
 
 export class TranslationMock {
@@ -25,10 +25,11 @@ export class TranslationMock {
     public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
 
     setDefaultLang() {
-
+      console.log('mock');
     }
 
     use() {
+      console.log('mock');
     }
 
     public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {

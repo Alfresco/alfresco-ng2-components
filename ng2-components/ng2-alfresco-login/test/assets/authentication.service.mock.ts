@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import {Observable} from 'rxjs/Observable';
-import {provide} from 'angular2/core';
+import { Observable } from 'rxjs/Observable';
+import { provide } from 'angular2/core';
 
-import {AlfrescoAuthenticationService} from '../../src/services/alfresco-authentication';
+import { AlfrescoAuthenticationService } from '../../src/services/alfresco-authentication';
 
 export class AuthenticationMock {
+
     login(method: string, username: string, password: string) {
         if (username === 'fake-username' && password === 'fake-password') {
             return Observable.of(true);

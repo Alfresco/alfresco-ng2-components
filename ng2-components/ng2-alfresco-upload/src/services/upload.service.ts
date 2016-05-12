@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -16,7 +16,7 @@
  */
 
 
-import {FileModel} from '../models/file.model';
+import { FileModel } from '../models/file.model';
 
 
 /**
@@ -60,8 +60,8 @@ export class UploadService {
 
         for (let file of files) {
             if (this._isFile(file)) {
-                let uploadingFileModel = new FileModel(file)
-                latestFilesAdded.push(uploadingFileModel)
+                let uploadingFileModel = new FileModel(file);
+                latestFilesAdded.push(uploadingFileModel);
                 this._queue.push(uploadingFileModel);
             }
         }
@@ -85,7 +85,7 @@ export class UploadService {
      * The method create a new XMLHttpRequest instance if doesn't exist
      */
     private _configureXMLHttpRequest(uploadingFileModel: any) {
-        if (this._xmlHttpRequest == undefined) {
+        if (this._xmlHttpRequest === undefined) {
             this._xmlHttpRequest = new XMLHttpRequest();
             this._xmlHttpRequest.upload.onprogress = (e) => {
                 if (e.lengthComputable) {
@@ -127,7 +127,7 @@ export class UploadService {
     uploadFile(uploadingFileModel: any, directory: string): void {
         let form = new FormData();
         form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
-        Object.keys(this._formFields).forEach((key) => {
+        Object.keys(this._formFields).forEach((key: any) => {
             form.append(key, this._formFields[key]);
         });
 

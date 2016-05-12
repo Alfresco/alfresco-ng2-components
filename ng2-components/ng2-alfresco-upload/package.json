@@ -4,7 +4,10 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "build": "tslint -c tslint.json **/*.ts && typings install && tsc && license-check",
+    "build": "npm run tslint-test && npm run tslint-src && npm run tslint-root && typings install && rm -rf dist && tsc && license-check",
+    "tslint-test" : "tslint -c tslint.json test/**/*.ts",
+    "tslint-src" : "tslint -c tslint.json src/**/*.ts",
+    "tslint-root" : "tslint -c tslint.json *.ts",
     "licensecheck": "license-check",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
@@ -57,9 +60,12 @@
   },
   "license-check-config": {
     "src": [
+      "**/*.js",
       "**/*.ts",
-      "!/node_modules/**/*",
-      "!/typings/**/*"
+      "!/**/coverage/**/*",
+      "!/**/demo/**/*",
+      "!/**/node_modules/**/*",
+      "!/**/typings/**/*"
     ],
     "path": "assets/license_header.txt",
     "blocking": false,

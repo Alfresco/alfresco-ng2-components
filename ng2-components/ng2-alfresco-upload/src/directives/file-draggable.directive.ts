@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Directive, ElementRef, EventEmitter, Output} from 'angular2/core';
+import { Directive, ElementRef, EventEmitter, Output } from 'angular2/core';
 
 /**
  * [file-draggable]
@@ -56,12 +56,12 @@ export class FileDraggableDirective {
      *
      * @param {$event} $event - DOM $event.
      */
-    private _onDropFiles($event): void {
+    _onDropFiles($event: any): void {
         this._preventDefault($event);
 
-        var items = $event.dataTransfer.items;
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i].webkitGetAsEntry();
+        let items = $event.dataTransfer.items;
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i].webkitGetAsEntry();
             if (item) {
                 this._traverseFileTree(item);
             } else {
@@ -79,18 +79,18 @@ export class FileDraggableDirective {
      *
      * @param {Object} item - can contains files or folders.
      */
-    private _traverseFileTree(item): void {
+    private _traverseFileTree(item: any): void {
         if (item.isFile) {
             let self = this;
-            item.file(function (file) {
+            item.file(function (file: File) {
                 self.onFilesDropped.emit([file]);
             });
         } else {
             if (item.isDirectory) {
                 let self = this;
                 let dirReader = item.createReader();
-                dirReader.readEntries(function (entries) {
-                    for (var i = 0; i < entries.length; i++) {
+                dirReader.readEntries(function (entries: any) {
+                    for (let i = 0; i < entries.length; i++) {
                         self._traverseFileTree(entries[i]);
                     }
                 });
@@ -103,7 +103,7 @@ export class FileDraggableDirective {
      *
      * @param {$event} $event - DOM $event.
      */
-    private _onDragEnter($event): void {
+    _onDragEnter($event: Event): void {
         this._preventDefault($event);
 
         this._inputFocusClass = true;
@@ -114,7 +114,7 @@ export class FileDraggableDirective {
      *
      * @param {$event} $event - DOM $event.
      */
-    private _onDragLeave($event): void {
+    _onDragLeave($event: Event): void {
         this._preventDefault($event);
 
         this._inputFocusClass = false;
@@ -125,7 +125,7 @@ export class FileDraggableDirective {
      *
      * @param {$event} $event - DOM $event.
      */
-    private _preventDefault($event): void {
+    _preventDefault($event: Event): void {
         $event.stopPropagation();
         $event.preventDefault();
     }

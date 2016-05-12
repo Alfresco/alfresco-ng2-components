@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -14,29 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Injectable} from 'angular2/core';
-import {Observable} from 'rxjs/Rx';
-import {Http, Headers, URLSearchParams, Response} from 'angular2/http';
 
-declare let xml2json:any;
+import { Injectable } from 'angular2/core';
+import { Observable } from 'rxjs/Rx';
+import { Http, Headers, URLSearchParams, Response } from 'angular2/http';
+
+declare let xml2json: any;
 
 /**
  * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
  */
 @Injectable()
 export class AlfrescoAuthenticationService {
-    token:string;
+    token: string;
 
-    private _host:string = 'http://192.168.99.100:8080';
-    private _baseUrl:string = this._host + '/alfresco/service/api/';
+    private _host: string = 'http://192.168.99.100:8080';
+    private _baseUrl: string = this._host + '/alfresco/service/api/';
 
     /**
      * Constructor
      * @param http
      */
-    constructor(public http:Http) {
+    constructor(public http: Http) {
         this.token = localStorage.getItem('token');
     }
+
     /**
      * The method return tru if the user is logged in
      * @returns {boolean}
@@ -52,7 +54,7 @@ export class AlfrescoAuthenticationService {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(method:string, username:string, password:string) {
+    login(method: string, username: string, password: string) {
         if (method === 'GET') {
             return this.loginGet(username, password);
         } else if (method === 'POST') {
@@ -68,13 +70,13 @@ export class AlfrescoAuthenticationService {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    loginGet(username:string, password:string) {
+    loginGet(username: string, password: string) {
         const searchParams = new URLSearchParams();
         searchParams.set('u', username);
         searchParams.set('pw', password);
 
         return this.http.get(this._baseUrl + 'login', {search: searchParams})
-            .map((res:any) => {
+            .map((res: any) => {
                 let data = JSON.parse(xml2json(res.text(), '  '));
                 this.token = data.ticket;
                 this.saveJwt(this.token);
@@ -88,16 +90,16 @@ export class AlfrescoAuthenticationService {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    loginPost(username:string, password:string) {
+    loginPost(username: string, password: string) {
         let credentials = '{ username: ' + username + ', password: ' + password + ' }';
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
         return this.http.post(this._baseUrl + 'login', credentials, {
-            headers: headers
-        })
-            .map((res:any) => {
+                headers: headers
+            })
+            .map((res: any) => {
                 let response = res.json();
                 this.token = response.data.ticket;
                 this.saveJwt(this.token);
@@ -131,7 +133,7 @@ export class AlfrescoAuthenticationService {
      * @param error
      * @returns {ErrorObservable}
      */
-    private handleError(error:Response) {
+    private handleError(error: Response) {
         console.error(error.json().message);
         return Observable.throw(error.json().message || 'Server error');
     }

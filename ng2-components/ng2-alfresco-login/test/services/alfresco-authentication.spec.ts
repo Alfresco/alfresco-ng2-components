@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {it, describe} from 'angular2/testing';
-import {provide, Injector} from 'angular2/core';
-import {Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions} from 'angular2/http';
-import {MockBackend} from 'angular2/http/testing';
-import {AlfrescoAuthenticationService} from '../../src/services/alfresco-authentication';
+
+import { it, describe } from 'angular2/testing';
+import { provide, Injector } from 'angular2/core';
+import { Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions } from 'angular2/http';
+import { MockBackend } from 'angular2/http/testing';
+import { AlfrescoAuthenticationService } from '../../src/services/alfresco-authentication';
 
 
 describe('AlfrescoAuthentication', () => {
@@ -81,12 +82,12 @@ describe('AlfrescoAuthentication', () => {
         service.token = '';
         service.login('POST', 'fakeUser', 'fakePassword')
             .subscribe(() => {
-                expect(service.isLoggedIn()).toBe(true);
-                expect(service.token).toEqual('fake-post-token');
-                expect(localStorage.getItem('token')).toBeDefined();
-                expect(localStorage.getItem('token')).toEqual('fake-post-token');
-            }
-        );
+                    expect(service.isLoggedIn()).toBe(true);
+                    expect(service.token).toEqual('fake-post-token');
+                    expect(localStorage.getItem('token')).toBeDefined();
+                    expect(localStorage.getItem('token')).toEqual('fake-post-token');
+                }
+            );
     });
 
     it('should return false and token undefined on log out', () => {
@@ -94,11 +95,11 @@ describe('AlfrescoAuthentication', () => {
         localStorage.setItem('token', 'fake-token');
         service.logout()
             .subscribe(() => {
-                expect(service.isLoggedIn()).toBe(false);
-                expect(service.token).not.toBeDefined();
-                expect(localStorage.getItem('token')).not.toBeDefined();
-            }
-        );
+                    expect(service.isLoggedIn()).toBe(false);
+                    expect(service.token).not.toBeDefined();
+                    expect(localStorage.getItem('token')).not.toBeDefined();
+                }
+            );
     });
 
     it('should return no error if method value is GET', () => {

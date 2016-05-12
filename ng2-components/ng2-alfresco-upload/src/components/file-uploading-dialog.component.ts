@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-
-import {Component, ElementRef, Input} from 'angular2/core';
-import {FileModel} from '../models/file.model';
-import {FileUploadingListComponent} from './file-uploading-list.component';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import { Component, ElementRef, Input } from 'angular2/core';
+import { FileModel } from '../models/file.model';
+import { FileUploadingListComponent } from './file-uploading-list.component';
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
 
 declare let __moduleName: string;
 
@@ -59,7 +58,7 @@ export class FileUploadingDialogComponent {
     /**
      * Display and hide the dialog component.
      */
-    toggleShowDialog($event) {
+    toggleShowDialog() {
         this._isDialogActive = !this._isDialogActive;
     }
 
@@ -73,7 +72,7 @@ export class FileUploadingDialogComponent {
     /**
      * Minimize and expand the dialog component.
      */
-    toggleDialogMinimize($event) {
+    toggleDialogMinimize() {
         this._isDialogMinimized = !this._isDialogMinimized;
     }
 }

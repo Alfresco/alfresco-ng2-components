@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -16,13 +16,13 @@
  */
 
 
-import {Component, ViewChild, ElementRef, Input} from 'angular2/core';
-import {UploadService} from '../services/upload.service';
-import {FileModel} from '../models/file.model';
-import {FileUploadingDialogComponent} from './file-uploading-dialog.component';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import { Component, ViewChild, ElementRef, Input } from 'angular2/core';
+import { UploadService } from '../services/upload.service';
+import { FileModel } from '../models/file.model';
+import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
+import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 
-declare let componentHandler;
+declare let componentHandler: any;
 declare let __moduleName: string;
 
 /**
@@ -54,10 +54,8 @@ declare let __moduleName: string;
 })
 export class UploadButtonComponent {
 
-    private _uploaderService: UploadService;
-
     @ViewChild('undoNotificationBar')
-    undoNotificationBar;
+    undoNotificationBar: any;
 
     @ViewChild('fileUploadingDialog')
     fileUploadingDialogComponent: FileUploadingDialogComponent;
@@ -84,6 +82,8 @@ export class UploadButtonComponent {
 
     translate: TranslateService;
 
+    private _uploaderService: UploadService;
+
     constructor(public el: ElementRef,
                 translate: TranslateService) {
         console.log('UploadComponent constructor', el);
@@ -108,7 +108,7 @@ export class UploadButtonComponent {
      *
      * @param {File[]} files - files dropped in the drag area.
      */
-    onFilesAdded($event): void {
+    onFilesAdded($event: any): void {
         let files = $event.currentTarget.files;
         if (files.length) {
             let latestFilesAdded = this._uploaderService.addToQueue(files);
@@ -124,35 +124,6 @@ export class UploadButtonComponent {
     }
 
     /**
-     * Show undo notification bar.
-     *
-     * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
-     */
-    private _showUndoNotificationBar(latestFilesAdded) {
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
-        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-            message: this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS').value,
-            timeout: 5000,
-            actionHandler: function () {
-                latestFilesAdded.forEach((uploadingFileModel) => {
-                    uploadingFileModel.setAbort();
-                });
-            },
-            actionText: this.translate.get('FILE_UPLOAD.ACTION.UNDO').value
-        });
-    }
-
-    /**
-     * Show the upload dialog.
-     */
-    private _showDialog(): void {
-        this.fileUploadingDialogComponent.showDialog();
-    }
-
-    /**
      * Initial configuration for Multi language
      * @param translate
      */
@@ -164,5 +135,34 @@ export class UploadButtonComponent {
         this.translate.setDefaultLang(userLang);
 
         this.translate.use(userLang);
+    }
+
+    /**
+     * Show undo notification bar.
+     *
+     * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
+     */
+    private _showUndoNotificationBar(latestFilesAdded: FileModel[]) {
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+
+        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
+            message: this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS'),
+            timeout: 5000,
+            actionHandler: function () {
+                latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
+                    uploadingFileModel.setAbort();
+                });
+            },
+            actionText: this.translate.get('FILE_UPLOAD.ACTION.UNDO')
+        });
+    }
+
+    /**
+     * Show the upload dialog.
+     */
+    private _showDialog(): void {
+        this.fileUploadingDialogComponent.showDialog();
     }
 }

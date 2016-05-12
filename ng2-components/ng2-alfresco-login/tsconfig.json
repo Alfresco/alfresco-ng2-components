@@ -1,26 +1,28 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "system",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "removeComments": false,
-        "noImplicitAny": false,
-        "declaration": true
-    },
-    "files":[
-        "node_modules/angular2/typings/browser.d.ts",
-        "typings/browser/ambient/jasmine/index.d.ts",
-        "src/components/alfresco-login.ts",
-        "test/components/alfresco-login.spec.ts",
-        "src/services/alfresco-authentication.ts",
-        "test/services/alfresco-authentication.spec.ts"
-    ],
-    "exclude": [
-        "**/node_modules",
-        "**/typings/main",
-        "**/typings/main.d.ts"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "dist"
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "typings/browser.d.ts",
+    "typings/browser",
+    "demo",
+    "src"
+  ],
+  "compileOnSave": false
 }

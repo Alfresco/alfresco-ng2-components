@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {AlfrescoLoginComponent} from './src/components/alfresco-login';
-import {AlfrescoAuthenticationService} from './src/services/alfresco-authentication';
+
+import { AlfrescoLoginComponent } from './src/components/alfresco-login';
+import { AlfrescoAuthenticationService } from './src/services/alfresco-authentication';
 
 export * from './src/components/alfresco-login';
 export * from './src/services/alfresco-authentication';
@@ -23,7 +24,7 @@ export * from './src/services/alfresco-authentication';
 export default {
     directives: [AlfrescoLoginComponent],
     providers: [AlfrescoAuthenticationService]
-}
+};
 
 export const ALFRESCO_LOGIN_DIRECTIVES: [any] = [AlfrescoLoginComponent];
 export const ALFRESCO_AUTHENTICATION: [any] = [AlfrescoAuthenticationService];

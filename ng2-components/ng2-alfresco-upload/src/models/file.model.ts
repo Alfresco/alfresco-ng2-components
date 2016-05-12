@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -92,7 +92,7 @@ export class FileModel {
      *
      * @param {number} sizeinbytes - size in bytes of the file.
      */
-    private _getFileSize(sizeinbytes): string {
+    private _getFileSize(sizeinbytes: number): string {
         let fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
         let size = sizeinbytes;
         let i = 0;
@@ -110,7 +110,7 @@ export class FileModel {
      */
     private _generateId(): string {
         return 'uploading-file-' + 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
     }
