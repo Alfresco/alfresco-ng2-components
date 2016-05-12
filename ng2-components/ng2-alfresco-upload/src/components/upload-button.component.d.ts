@@ -17,6 +17,7 @@
 import { ElementRef } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 /**
  * <alfresco-upload-button [showDialogUpload]="boolean"
  *                         [showUdoNotificationBar]="boolean"
@@ -46,8 +47,10 @@ export declare class UploadButtonComponent {
     uploadFolders: boolean;
     multipleFiles: boolean;
     acceptedFilesType: string;
+    uploaddirectory: string;
     filesUploadingList: FileModel[];
-    constructor(el: ElementRef);
+    translate: TranslateService;
+    constructor(el: ElementRef, translate: TranslateService);
     /**
      * Method called when files are dropped in the drag area.
      *
@@ -64,4 +67,9 @@ export declare class UploadButtonComponent {
      * Show the upload dialog.
      */
     private _showDialog();
+    /**
+     * Initial configuration for Multi language
+     * @param translate
+     */
+    translationInit(translate: TranslateService): void;
 }

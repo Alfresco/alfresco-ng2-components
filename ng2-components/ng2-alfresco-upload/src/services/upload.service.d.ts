@@ -42,20 +42,20 @@ export declare class UploadService {
      */
     addToQueue(files: any[]): FileModel[];
     /**
-     * Pick all the files in the queue that are not been uploaded yet and upload it.
+     * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
-    private _uploadFilesInTheQueue();
+    uploadFilesInTheQueue(directory: string): void;
     /**
      * The method create a new XMLHttpRequest instance if doesn't exist
      */
-    private _configureXMLHttpRequest();
+    private _configureXMLHttpRequest(uploadingFileModel);
     /**
-     * Upload a file, and enrich it with the xhr.
+     * Upload a file into the directory folder, and enrich it with the xhr.
      *
      * @param {FileModel} - files to be uploaded.
      *
      */
-    uploadFile(uploadingFileModel: any): void;
+    uploadFile(uploadingFileModel: any, directory: string): void;
     /**
      * Return all the files in the uploading queue.
      *

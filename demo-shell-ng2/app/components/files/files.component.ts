@@ -39,6 +39,8 @@ export class FilesComponent {
     breadcrumb: boolean = false;
     navigation: boolean = true;
     events: any[] = [];
+    absolutePath: string = '';
+    relativePath: string = '';
 
     constructor(documentActions: DocumentActionsService) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
@@ -54,5 +56,18 @@ export class FilesComponent {
 
     myFolderAction1(event) {
         alert('Custom folder action for ' + event.value.displayName);
+    }
+
+    refreshDirectyory(event: Object) {
+        this.absolutePath = event.value;
+        this.relativePath = this.getRelativeDirectory(this.absolutePath);
+    }
+
+    getRelativeDirectory(currentFolderPath: string): string {
+        if(currentFolderPath.indexOf('swsdp/documentLibrary/') !=-1) {
+            return currentFolderPath.replace('swsdp/documentLibrary/', '')
+        } else {
+            return currentFolderPath.replace('swsdp/documentLibrary', '')
+        }
     }
 }

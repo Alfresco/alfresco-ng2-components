@@ -77,6 +77,9 @@ export class UploadButtonComponent {
     @Input()
     acceptedFilesType: string = '*';
 
+    @Input()
+    uploaddirectory: string = '';
+
     filesUploadingList: FileModel [] = [];
 
     translate: TranslateService;
@@ -109,6 +112,7 @@ export class UploadButtonComponent {
         let files = $event.currentTarget.files;
         if (files.length) {
             let latestFilesAdded = this._uploaderService.addToQueue(files);
+            this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory);
             this.filesUploadingList = this._uploaderService.getQueue();
             if (this.showUploadDialog) {
                 this._showDialog();

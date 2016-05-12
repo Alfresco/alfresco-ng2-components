@@ -65,20 +65,19 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                             this._queue.push(uploadingFileModel);
                         }
                     }
-                    this._uploadFilesInTheQueue();
                     return latestFilesAdded;
                 };
                 /**
-                 * Pick all the files in the queue that are not been uploaded yet and upload it.
+                 * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
                  */
-                UploadService.prototype._uploadFilesInTheQueue = function () {
+                UploadService.prototype.uploadFilesInTheQueue = function (directory) {
                     var _this = this;
                     var filesToUpload = this._queue.filter(function (uploadingFileModel) {
                         return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
                     });
                     filesToUpload.forEach(function (uploadingFileModel) {
                         uploadingFileModel.setUploading();
-                        _this.uploadFile(uploadingFileModel);
+                        _this.uploadFile(uploadingFileModel, directory);
                     });
                 };
                 ;
@@ -113,18 +112,19 @@ System.register(['../models/file.model'], function(exports_1, context_1) {
                     }
                 };
                 /**
-                 * Upload a file, and enrich it with the xhr.
+                 * Upload a file into the directory folder, and enrich it with the xhr.
                  *
                  * @param {FileModel} - files to be uploaded.
                  *
                  */
-                UploadService.prototype.uploadFile = function (uploadingFileModel) {
+                UploadService.prototype.uploadFile = function (uploadingFileModel, directory) {
                     var _this = this;
                     var form = new FormData();
                     form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
                     Object.keys(this._formFields).forEach(function (key) {
                         form.append(key, _this._formFields[key]);
                     });
+                    form.append('uploaddirectory', directory);
                     this._configureXMLHttpRequest(uploadingFileModel);
                     uploadingFileModel.setXMLHttpRequest(this._xmlHttpRequest);
                     this._xmlHttpRequest.open(this._method, this._url, true);

@@ -46,6 +46,7 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     this.navigate = true;
                     this.breadcrumb = false;
                     this.itemClick = new core_1.EventEmitter();
+                    this.folderClick = new core_1.EventEmitter();
                     this.rootFolder = {
                         name: 'Document Library',
                         path: 'Sites/swsdp/documentLibrary'
@@ -190,7 +191,10 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                  */
                 DocumentList.prototype.displayFolderContent = function (path) {
                     var _this = this;
-                    if (path) {
+                    if (path !== null) {
+                        this.folderClick.emit({
+                            value: path
+                        });
                         this.currentFolderPath = path;
                         this._alfrescoService
                             .getFolder(path)
@@ -266,6 +270,10 @@ System.register(['angular2/core', './../services/alfresco.service', './../models
                     core_1.Output(), 
                     __metadata('design:type', core_1.EventEmitter)
                 ], DocumentList.prototype, "itemClick", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', core_1.EventEmitter)
+                ], DocumentList.prototype, "folderClick", void 0);
                 DocumentList = __decorate([
                     core_1.Component({
                         moduleId: __moduleName,

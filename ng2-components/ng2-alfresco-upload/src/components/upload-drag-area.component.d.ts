@@ -33,6 +33,7 @@ export declare class UploadDragAreaComponent {
     fileUploadingDialogComponent: FileUploadingDialogComponent;
     showUploadDialog: boolean;
     filesUploadingList: FileModel[];
+    uploaddirectory: string;
     constructor(el: ElementRef);
     /**
      * Method called when files are dropped in the drag area.

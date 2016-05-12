@@ -70,6 +70,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     this.uploadFolders = false;
                     this.multipleFiles = false;
                     this.acceptedFilesType = '*';
+                    this.uploaddirectory = '';
                     this.filesUploadingList = [];
                     console.log('UploadComponent constructor', el);
                     this._uploaderService = new upload_service_1.UploadService({
@@ -94,6 +95,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     var files = $event.currentTarget.files;
                     if (files.length) {
                         var latestFilesAdded = this._uploaderService.addToQueue(files);
+                        this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory);
                         this.filesUploadingList = this._uploaderService.getQueue();
                         if (this.showUploadDialog) {
                             this._showDialog();
@@ -168,6 +170,10 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     core_1.Input(), 
                     __metadata('design:type', String)
                 ], UploadButtonComponent.prototype, "acceptedFilesType", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], UploadButtonComponent.prototype, "uploaddirectory", void 0);
                 UploadButtonComponent = __decorate([
                     core_1.Component({
                         selector: 'alfresco-upload-button',

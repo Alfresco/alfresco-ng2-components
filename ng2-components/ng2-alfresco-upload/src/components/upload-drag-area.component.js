@@ -58,6 +58,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     this.el = el;
                     this.showUploadDialog = true;
                     this.filesUploadingList = [];
+                    this.uploaddirectory = '';
                     console.log('UploadComponent constructor', el);
                     this._uploaderService = new upload_service_1.UploadService({
                         url: 'http://192.168.99.100:8080/alfresco/service/api/upload',
@@ -79,6 +80,7 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                 UploadDragAreaComponent.prototype.onFilesDropped = function (files) {
                     if (files.length) {
                         this._uploaderService.addToQueue(files);
+                        this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory);
                         this.filesUploadingList = this._uploaderService.getQueue();
                         if (this.showUploadDialog) {
                             this._showDialog();
@@ -99,6 +101,10 @@ System.register(['angular2/core', '../services/upload.service', './file-uploadin
                     core_1.Input(), 
                     __metadata('design:type', Boolean)
                 ], UploadDragAreaComponent.prototype, "showUploadDialog", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], UploadDragAreaComponent.prototype, "uploaddirectory", void 0);
                 UploadDragAreaComponent = __decorate([
                     core_1.Component({
                         selector: 'alfresco-upload-drag-area',

@@ -65,21 +65,19 @@ export class UploadService {
                 this._queue.push(uploadingFileModel);
             }
         }
-        this._uploadFilesInTheQueue();
-
         return latestFilesAdded;
     }
 
     /**
-     * Pick all the files in the queue that are not been uploaded yet and upload it.
+     * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
-    private _uploadFilesInTheQueue(): void {
+    public uploadFilesInTheQueue(directory: string): void {
         let filesToUpload = this._queue.filter((uploadingFileModel) => {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
         filesToUpload.forEach((uploadingFileModel) => {
             uploadingFileModel.setUploading();
-            this.uploadFile(uploadingFileModel);
+            this.uploadFile(uploadingFileModel, directory);
         });
     };
 
@@ -121,17 +119,19 @@ export class UploadService {
     }
 
     /**
-     * Upload a file, and enrich it with the xhr.
+     * Upload a file into the directory folder, and enrich it with the xhr.
      *
      * @param {FileModel} - files to be uploaded.
      *
      */
-    uploadFile(uploadingFileModel: any): void {
+    uploadFile(uploadingFileModel: any, directory: string): void {
         let form = new FormData();
         form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
         Object.keys(this._formFields).forEach((key) => {
             form.append(key, this._formFields[key]);
         });
+
+        form.append('uploaddirectory', directory);
 
         this._configureXMLHttpRequest(uploadingFileModel);
         uploadingFileModel.setXMLHttpRequest(this._xmlHttpRequest);
