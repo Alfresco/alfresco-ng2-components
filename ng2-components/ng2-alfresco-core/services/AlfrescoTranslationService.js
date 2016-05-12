@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-System.register(['angular2/core', 'angular2/http'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1;
+    var core_1, http_1, Observable_1;
     var AlfrescoTranslationLoader;
     return {
         setters:[
@@ -35,6 +35,9 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
             }],
         execute: function() {
             AlfrescoTranslationLoader = (function () {
@@ -44,10 +47,16 @@ System.register(['angular2/core', 'angular2/http'], function(exports_1, context_
                     this.suffix = '.json';
                 }
                 AlfrescoTranslationLoader.prototype.getTranslation = function (lang) {
-                    return this.http.get('node_modules/ng2-alfresco-login/' + (this.prefix + "/" + lang + this.suffix))
-                        .map(function (res) { return res.json(); })
-                        .concat(this.http.get('node_modules/ng2-alfresco-upload/' + (this.prefix + "/" + lang + this.suffix))
-                        .map(function (res) { return res.json(); }));
+                    var _this = this;
+                    return new Observable_1.Observable.create(function (observer) {
+                        Observable_1.Observable.forkJoin(_this.http.get(_this.prefix + "/" + lang + _this.suffix).map(function (res) { return res.json(); }), _this.http.get('node_modules/ng2-alfresco-upload/' + (_this.prefix + "/" + lang + _this.suffix)).map(function (res) { return res.json(); }), _this.http.get('node_modules/ng2-alfresco-login/' + (_this.prefix + "/" + lang + _this.suffix)).map(function (res) { return res.json(); })).subscribe(function (data) {
+                            var multiLanguage = JSON.parse((JSON.stringify(data[0])
+                                + JSON.stringify(data[1])
+                                + JSON.stringify(data[2])).replace(/}{/g, ","));
+                            observer.next(multiLanguage);
+                            observer.complete();
+                        });
+                    });
                 };
                 AlfrescoTranslationLoader = __decorate([
                     core_1.Injectable(), 

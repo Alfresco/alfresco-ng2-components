@@ -1,12 +1,5 @@
 {
     "title": "Welcome",
-    "login": "Login",
-    "username": "Username",
-    "input-required-message": "Required",
-    "input-min-message": "Your username needs to be at least 4 characters.",
-    "login-button": "Login",
-    "login-error-message": "You have entered an invalid username or password",
-
 
     "DOCUMENT_LIST": {
         "COLUMNS": {
