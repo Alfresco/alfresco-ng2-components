@@ -29,7 +29,17 @@
         System.config({
             packages: {
                 'test': {defaultExtension: 'js'},
-                'src': {defaultExtension: 'js'}
+                'src': {defaultExtension: 'js'},
+                'ng2-translate': {
+                    defaultExtension: 'js'
+                },
+                'rxjs': {
+                    defaultExtension: 'js'
+                }
+            },
+            map: {
+                'ng2-translate': '../node_modules/ng2-translate',
+                'rxjs': '../node_modules/rxjs'
             }
         });
 

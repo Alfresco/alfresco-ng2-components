@@ -67,14 +67,12 @@ describe('AlfrescoUploadService', () => {
     });
 
     it('should add an element in the queue and returns it', () => {
-        service.setXMLHttpRequest(xhr);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
-        service.setXMLHttpRequest(xhr);
         let filesFake = [{name: 'fake-name', size: 10}, {name: 'fake-name2', size: 20} ];
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(2);
@@ -84,7 +82,7 @@ describe('AlfrescoUploadService', () => {
         service.setXMLHttpRequest(xhr);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
-
+        service.uploadFilesInTheQueue('');
         expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
         expect(doneFn).not.toHaveBeenCalled();
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -99,7 +97,7 @@ describe('AlfrescoUploadService', () => {
         service.setXMLHttpRequest(xhr);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
-
+        service.uploadFilesInTheQueue('');
         expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
         expect(doneFn).not.toHaveBeenCalled();
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -114,6 +112,7 @@ describe('AlfrescoUploadService', () => {
         service.setXMLHttpRequest(xhr);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
+        service.uploadFilesInTheQueue('');
         let file = service.getQueue();
         file[0].setAbort();
         expect(xhr.abort).toHaveBeenCalled();

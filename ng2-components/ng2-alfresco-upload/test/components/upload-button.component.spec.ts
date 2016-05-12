@@ -17,13 +17,21 @@
 
 
 import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import {it, describe, expect, injectAsync, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
+import {it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
 import {Component, provide, Injector} from 'angular2/core';
 import {UploadButtonComponent} from '../../../src/components/upload-button.component';
+import {TranslateService, LangChangeEvent} from 'ng2-translate/ng2-translate';
+import {TranslationMock} from '../assets/translation.service.mock';
 
 describe('AlfrescoUploadButton', () => {
 
     setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+
+    beforeEachProviders(() => {
+        return [
+            provide(TranslateService, {useClass: TranslationMock})
+        ];
+    });
 
     it('should render upload-single-file button as default', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
