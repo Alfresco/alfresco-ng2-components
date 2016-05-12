@@ -124,7 +124,7 @@ export class UploadService {
      * @param {FileModel} - files to be uploaded.
      *
      */
-    uploadFile(uploadingFileModel: any, directory: string): void {
+    uploadFile(uploadingFileModel: FileModel, directory?: string): void {
         let form = new FormData();
         form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
         Object.keys(this._formFields).forEach((key: any) => {

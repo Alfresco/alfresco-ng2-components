@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -16,14 +16,10 @@
  */
 
 
-import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import {it, describe, expect, injectAsync, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
-import {Component} from 'angular2/core';
-import {FileUploadingDialogComponent} from '../../../src/components/file-uploading-dialog.component';
+import { it, describe, expect, injectAsync, TestComponentBuilder } from 'angular2/testing';
+import { FileUploadingDialogComponent } from '../../src/components/file-uploading-dialog.component';
 
 describe('FileUploadDialog', () => {
-
-    //setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
 
     it('should render dialog box with css class show', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
