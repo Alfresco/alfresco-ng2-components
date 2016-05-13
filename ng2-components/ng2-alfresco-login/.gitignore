@@ -6,3 +6,6 @@ typings
 coverage
 *.js
 *.js.map
+
+!karma.conf.js
+!test-main.js
