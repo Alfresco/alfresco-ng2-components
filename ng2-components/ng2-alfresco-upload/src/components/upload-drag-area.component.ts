@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, ElementRef, Input } from 'angular2/core';
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
@@ -55,6 +55,9 @@ export class UploadDragAreaComponent {
     @Input()
     uploaddirectory: string = '';
 
+    @Output()
+    onSuccess = new EventEmitter();
+
     constructor(public el: ElementRef) {
         console.log('UploadComponent constructor', el);
 
@@ -79,7 +82,7 @@ export class UploadDragAreaComponent {
     onFilesDropped(files: File[]): void {
         if (files.length) {
             this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory);
+            this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory, this.onSuccess);
             this.filesUploadingList = this._uploaderService.getQueue();
             if (this.showUploadDialog) {
                 this._showDialog();

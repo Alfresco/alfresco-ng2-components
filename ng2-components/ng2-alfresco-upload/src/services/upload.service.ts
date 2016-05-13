@@ -72,7 +72,7 @@ export class UploadService {
     /**
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
-    public uploadFilesInTheQueue(directory: string, elementEmit: EventEmitter): void {
+    public uploadFilesInTheQueue(directory: string, elementEmit: EventEmitter<any>): void {
         let filesToUpload = this._queue.filter((uploadingFileModel) => {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
@@ -85,7 +85,7 @@ export class UploadService {
     /**
      * The method create a new XMLHttpRequest instance if doesn't exist
      */
-    private _configureXMLHttpRequest(uploadingFileModel: any, elementEmit: EventEmitter) {
+    private _configureXMLHttpRequest(uploadingFileModel: any, elementEmit: EventEmitter<any>) {
         if (this._xmlHttpRequest === undefined) {
             this._xmlHttpRequest = new XMLHttpRequest();
             this._xmlHttpRequest.upload.onprogress = (e) => {
@@ -128,7 +128,7 @@ export class UploadService {
      * @param {FileModel} - files to be uploaded.
      *
      */
-    uploadFile(uploadingFileModel: FileModel, directory: string, elementEmit: EventEmitter): void {
+    uploadFile(uploadingFileModel: FileModel, directory: string, elementEmit: EventEmitter<any>): void {
         let form = new FormData();
         form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
         Object.keys(this._formFields).forEach((key: any) => {
