@@ -11,9 +11,7 @@
 
 ### Running demo project
 
-**Note**: *Steps below show the quickest way to get demo shell up and running.
-For development configuration please refer to* **Configuring development environment**
-*section further in this document.*
+*Steps below show the quickest way to get demo shell up and running.*
 
 ##### Using setup script (recommended)
 
