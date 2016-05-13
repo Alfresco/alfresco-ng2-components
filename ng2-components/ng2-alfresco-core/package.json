@@ -4,10 +4,15 @@
     "version": "0.1.0",
     "author": "Alfresco Software, Ltd.",
     "scripts": {
-        "build": "typings install && tsc",
+        "build": "npm run tslint-test && npm run tslint-src && npm run tslint-root && typings install && rm -rf dist && tsc && license-check",
+        "tslint-test": "tslint -c tslint.json test/**/*.ts",
+        "tslint-src": "tslint -c tslint.json src/**/*.ts",
+        "tslint-root": "tslint -c tslint.json *.ts",
+        "licensecheck": "license-check",
         "tsc": "tsc",
         "tsc:w": "tsc -w",
-        "typings": "typings"
+        "typings": "typings",
+        "test": "karma start karma.conf.js"
     },
     "repository": {
         "type": "git",
@@ -21,6 +26,10 @@
         {
             "name": "Denys Vuika",
             "email": "denis.vuyka@gmail.com"
+        },
+        {
+            "name": "Mario Romano",
+            "email": "mario.romano83@gmail.com"
         }
     ],
     "keywords": [
@@ -35,14 +44,44 @@
         "es6-shim": "^0.35.0",
         "reflect-metadata": "0.1.2",
         "rxjs": "5.0.0-beta.2",
-        "zone.js": "0.6.10",
-        "ng2-translate": "^1.11.2"
+        "zone.js": "^0.6.12",
+        "ng2-translate": "^1.11.2",
+        "es6-module-loader": "^0.17.8"
     },
     "peerDependencies": {
         "angular2": "2.0.0-beta.15"
     },
     "devDependencies": {
         "typescript": "^1.8.10",
-        "typings": "^0.7.12"
+        "typings": "^0.7.12",
+        "jasmine-spec-reporter": "^2.4.0",
+        "karma": "~0.13.22",
+        "karma-chrome-launcher": "~1.0.1",
+        "karma-coverage": "^1.0.0",
+        "karma-ie-launcher": "^1.0.0",
+        "karma-jasmine": "~1.0.2",
+        "karma-mocha-reporter": "^2.0.3",
+        "karma-phantomjs-launcher": "^1.0.0",
+        "traceur": "^0.0.91",
+        "remap-istanbul": "^0.6.3",
+        "phantomjs-prebuilt": "^2.1.7",
+        "coveralls": "^2.11.9",
+        "jasmine-ajax": "^3.2.0",
+        "jasmine-core": "2.4.1"
+    },
+    "license-check-config": {
+        "src": [
+            "**/*.js",
+            "**/*.ts",
+            "!/**/coverage/**/*",
+            "!/**/demo/**/*",
+            "!/**/node_modules/**/*",
+            "!/**/typings/**/*",
+            "!*.js"
+        ],
+        "path": "assets/license_header.txt",
+        "blocking": false,
+        "logInfo": false,
+        "logError": true
     }
 }
