@@ -6,7 +6,7 @@
   "scripts": {
     "build.dev": "gulp dev",
     "build.prod": "gulp build",
-    "prestart": "npm install",
+    "prestart": "npm install && npm run tsc -p tsconfig.dev.json",
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "test": "live-server --open=tests-runner.html",
     "tsc": "tsc",
