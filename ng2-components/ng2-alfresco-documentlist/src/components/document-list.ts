@@ -222,7 +222,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param path Node path
      */
     displayFolderContent(path) {
-        if (path !== null) {
+        if (path !== null && path !== this.currentFolderPath) {
             this.folderClick.emit({
                 value: path
             });
@@ -233,6 +233,12 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
                     folder => this.folder = folder,
                     error => this.errorMessage = <any>error
                 );
+        }
+    }
+
+    reload() {
+        if (this.currentFolderPath) {
+            this.displayFolderContent(this.currentFolderPath);
         }
     }
 
