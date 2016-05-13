@@ -4,8 +4,5 @@ jspm_packages
 .idea
 typings
 coverage
-*.js
-*.js.map
-
-!karma.conf.js
-!test-main.js
+src/*.js
+src/*.js.map

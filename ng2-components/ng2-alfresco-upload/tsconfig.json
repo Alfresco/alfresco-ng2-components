@@ -21,8 +21,7 @@
     "dist",
     "typings/browser.d.ts",
     "typings/browser",
-    "demo",
-    "src"
+    "demo"
   ],
   "compileOnSave": false
 }
