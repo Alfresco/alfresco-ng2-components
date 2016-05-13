@@ -1,11 +1,19 @@
 {
-  "title" : "Benvenuto",
-  "login" : "Autenticazione",
-  "username" : "Nome utente",
-  "password" : "Password",
-  "input-required-message": "Campo obbligatorio",
-  "input-min-message": "Inserire un nome utente di 4 caratteri minimo.",
-  "login-button": "Accedi",
-  "login-error-message": "Nome utente o password non validi",
-  "login-success-message": "Login effettuata con successo"
+  "LOGIN": {
+    "LABEL": {
+      "LOGIN": "Autenticazione",
+      "USERNAME": "Nome utente",
+      "PASSWORD": "Password"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Campo obbligatorio",
+      "USERNAME-MIN": "Inserire un nome utente di minimo 4 caratteri.",
+      "PASSWORD-REQUIRED": "Campo obbligatorio",
+      "LOGIN-ERROR": "Nome utente o password non validi",
+      "LOGIN-SUCCESS": "Login effettuata con successo"
+    },
+    "BUTTON": {
+      "LOGIN": "Accedi"
+    }
+  }
 }

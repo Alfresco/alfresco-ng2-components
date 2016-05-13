@@ -1,11 +1,19 @@
 {
-  "title" : "Welcome",
-  "login" : "Login",
-  "username" : "Username",
-  "password" : "Password",
-  "input-required-message": "Required",
-  "input-min-message": "Your username needs to be at least 4 characters.",
-  "login-button": "Login",
-  "login-error-message": "You have entered an invalid username or password",
-  "login-success-message": "Login successful"
+  "LOGIN": {
+    "LABEL": {
+      "LOGIN": "Login",
+      "USERNAME": "Username",
+      "PASSWORD": "Password"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Required",
+      "USERNAME-MIN": "Your username needs to be at least 4 characters.",
+      "PASSWORD-REQUIRED": "Required",
+      "LOGIN-ERROR": "You have entered an invalid username or password",
+      "LOGIN-SUCCESS": "Login successful"
+    },
+    "BUTTON": {
+      "LOGIN": "Login"
+    }
+  }
 }

@@ -73,11 +73,11 @@ export class AlfrescoLoginComponent {
 
     this._message = {
       'username': {
-        'required': 'input-required-message',
-        'minlength': 'input-min-message'
+        'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED',
+        'minlength': 'LOGIN.MESSAGES.USERNAME-MIN'
       },
       'password': {
-        'required': 'input-required-message'
+        'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
       }
     };
     this.translationInit(translate);
