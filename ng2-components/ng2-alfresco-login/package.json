@@ -30,6 +30,10 @@
         {
             "name": "Maurizio Vitale",
             "email": "maurizio.vitale84@gmail.com"
+        },
+        {
+            "name": "Mario Romano",
+            "email": "mario.romano83@gmail.com"
         }
     ],
     "keywords": [
@@ -79,7 +83,8 @@
             "!/**/coverage/**/*",
             "!/**/demo/**/*",
             "!/**/node_modules/**/*",
-            "!/**/typings/**/*"
+            "!/**/typings/**/*",
+            "!*.js"
         ],
         "path": "assets/license_header.txt",
         "blocking": false,

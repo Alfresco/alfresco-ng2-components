@@ -1,23 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false,
-    "declaration": true,
-    "outDir": "dist"
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "typings/browser.d.ts",
-    "typings/browser",
-    "demo",
-    "src"
-  ],
-  "compileOnSave": false
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "removeComments": true,
+        "noLib": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "outDir": "dist"
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "typings/browser.d.ts",
+        "typings/browser",
+        "demo"
+    ],
+    "compileOnSave": false
 }
