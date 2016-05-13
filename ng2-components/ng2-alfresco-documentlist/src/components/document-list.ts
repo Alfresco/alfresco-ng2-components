@@ -154,6 +154,11 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         if (this.navigate && item) {
             if (item.entry.isFolder) {
                 let path = this.getNodePath(item);
+
+                this.folderClick.emit({
+                    value: path
+                });
+
                 this.route.push({
                     name: item.entry.name,
                     path: path
@@ -223,9 +228,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      */
     displayFolderContent(path) {
         if (path !== null) {
-            this.folderClick.emit({
-                value: path
-            });
             this.currentFolderPath = path;
             this._alfrescoService
                 .getFolder(path)
