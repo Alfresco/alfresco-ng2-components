@@ -48,7 +48,7 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Observable'], function(
                 }
                 AlfrescoTranslationLoader.prototype.getTranslation = function (lang) {
                     var _this = this;
-                    return new Observable_1.Observable.create(function (observer) {
+                    return Observable_1.Observable.create(function (observer) {
                         Observable_1.Observable.forkJoin(_this.http.get(_this.prefix + "/" + lang + _this.suffix).map(function (res) { return res.json(); }), _this.http.get('node_modules/ng2-alfresco-upload/' + (_this.prefix + "/" + lang + _this.suffix)).map(function (res) { return res.json(); }), _this.http.get('node_modules/ng2-alfresco-login/' + (_this.prefix + "/" + lang + _this.suffix)).map(function (res) { return res.json(); })).subscribe(function (data) {
                             var multiLanguage = JSON.parse((JSON.stringify(data[0])
                                 + JSON.stringify(data[1])
