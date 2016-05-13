@@ -222,7 +222,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      * @param path Node path
      */
     displayFolderContent(path) {
-        if (path !== null && path !== this.currentFolderPath) {
+        if (path !== null) {
             this.folderClick.emit({
                 value: path
             });
