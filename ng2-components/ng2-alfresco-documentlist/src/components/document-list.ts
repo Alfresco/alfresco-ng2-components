@@ -243,8 +243,8 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      */
     getNodePath(node: MinimalNodeEntity): string {
         if (node) {
-            let pathWithCompanyHome = item.entry.path.name;
-            return pathWithCompanyHome.replace('/Company Home', '') + '/' + item.entry.name;
+            let pathWithCompanyHome = node.entry.path.name;
+            return pathWithCompanyHome.replace('/Company Home', '') + '/' + node.entry.name;
         }
         return null;
     }
