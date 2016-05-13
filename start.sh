@@ -8,4 +8,5 @@ npm install ../ng2-components/ng2-alfresco-login
 npm install ../ng2-components/ng2-alfresco-upload
 npm install ../../dev-platform-js-api
 
-npm run build.dev
+#npm run build.dev
+npm start
