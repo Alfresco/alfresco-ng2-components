@@ -7,7 +7,7 @@
 
 ## Prerequisites
 
-- [Alfresco Docker image with CORS support](https://github.com/wabson/alfresco-docker-cors)
+- Alfresco repository with CORS enabled. A Docker-compose file is provided by the [demo-shell](demo-shell-ng2/README.md) app.
 
 ### Running demo project
 
