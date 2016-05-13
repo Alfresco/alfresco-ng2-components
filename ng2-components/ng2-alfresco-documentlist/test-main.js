@@ -23,7 +23,9 @@ System.config({
     defaultJSExtensions: true,
     paths: {
         'angular2/*': 'node_modules/angular2/*.js',
-        'rxjs/*': 'node_modules/rxjs/*.js'
+        'rxjs/*': 'node_modules/rxjs/*.js',
+        'ng2-alfresco-core/*': 'node_modules/ng2-alfresco-core/services.js',
+        'ng2-alfresco-core/services/*': 'node_modules/ng2-alfresco-core/services/*'
     }
 });
 

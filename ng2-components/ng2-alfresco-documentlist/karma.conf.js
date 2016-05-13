@@ -33,6 +33,8 @@ module.exports = function(config) {
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'dist/**/*.js', included: false, watched: true },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false }, // PhantomJS2 (and possibly others) might require it
+            { pattern: 'node_modules/ng2-alfresco-core/services.js', included: false, watched: false }, // source files
+            { pattern: 'node_modules/ng2-alfresco-core/services/*.js', included: false, watched: false }, // source files
 
             // suppress annoying 404 warnings for resources, images, etc.
             //{ pattern: 'dist/src/assets/**/*', watched: false, included: false, served: true },
