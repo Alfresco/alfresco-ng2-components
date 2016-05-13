@@ -67,7 +67,8 @@
         "phantomjs-prebuilt": "^2.1.7",
         "coveralls": "^2.11.9",
         "jasmine-ajax": "^3.2.0",
-        "jasmine-core": "2.4.1"
+        "jasmine-core": "2.4.1",
+        "license-check": "^1.0.4"
     },
     "license-check-config": {
         "src": [
