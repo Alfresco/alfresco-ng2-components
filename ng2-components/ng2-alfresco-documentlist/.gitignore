@@ -4,5 +4,8 @@ jspm_packages
 .idea
 typings
 coverage
-src/*.js
-src/*.js.map
+dist
+src/**/*.js
+src/**/*.js.map
+ng2-alfresco-documentlist.js
+ng2-alfresco-documentlist.js.map
