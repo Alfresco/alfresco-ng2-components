@@ -1,5 +1,6 @@
-<alfresco-upload-drag-area [showUploadDialog]="true" uploaddirectory="{{relativePath}}" >
-    <alfresco-document-list (folderClick)="refreshDirectyory($event)">
+<alfresco-upload-drag-area [showUploadDialog]="true" uploaddirectory="{{relativePath}}"
+    (onSuccess)="refreshDocumentList($event)">
+    <alfresco-document-list (folderClick)="refreshDirectyory($event)" currentFolderPath="{{absolutePath}}">
         <content-columns>
             <content-column source="$thumbnail"></content-column>
             <content-column

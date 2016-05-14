@@ -39,7 +39,7 @@ export class FilesComponent {
     breadcrumb: boolean = false;
     navigation: boolean = true;
     events: any[] = [];
-    absolutePath: string = '';
+    absolutePath: string = '/Sites/swsdp/documentLibrary';
     relativePath: string = '';
 
     constructor(documentActions: DocumentActionsService) {
@@ -63,11 +63,15 @@ export class FilesComponent {
         this.relativePath = this.getRelativeDirectory(this.absolutePath);
     }
 
+    refreshDocumentList(event: Object) {
+        this.absolutePath += '/';
+    }
+
     getRelativeDirectory(currentFolderPath: string): string {
-        if(currentFolderPath.indexOf('swsdp/documentLibrary/') !=-1) {
-            return currentFolderPath.replace('swsdp/documentLibrary/', '')
+        if(currentFolderPath.indexOf('/Sites/swsdp/documentLibrary/') !=-1) {
+            return currentFolderPath.replace('/Sites/swsdp/documentLibrary/', '')
         } else {
-            return currentFolderPath.replace('swsdp/documentLibrary', '')
+            return currentFolderPath.replace('/Sites/swsdp/documentLibrary', '')
         }
     }
 }
