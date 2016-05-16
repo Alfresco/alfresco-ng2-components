@@ -1,4 +1,6 @@
-module.exports = function(config) {
+'use strict';
+
+module.exports = function (config) {
     config.set({
 
         basePath: '.',
@@ -33,7 +35,9 @@ module.exports = function(config) {
 
         port: 9876,
 
-        logLevel: config.LOG_DEBUG,
+        // level of logging
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        logLevel: config.LOG_INFO,
 
         colors: true,
 
@@ -45,11 +49,12 @@ module.exports = function(config) {
         plugins: [
             'karma-jasmine',
             'karma-coverage',
-            'karma-chrome-launcher'
+            'karma-chrome-launcher',
+            'karma-mocha-reporter'
         ],
 
         // Coverage reporter generates the coverage
-        reporters: ['progress', 'dots', 'coverage'],
+        reporters: ['mocha', 'coverage'],
 
         // Source files that you wanna generate coverage for.
         // Do not include tests or libraries (these files will be instrumented by Istanbul)
@@ -58,8 +63,11 @@ module.exports = function(config) {
         },
 
         coverageReporter: {
-            reporters:[
-                {type: 'json', subdir: '.', file: 'coverage-final.json'}
+            dir: 'coverage/',
+            reporters: [
+                {type: 'text-summary'},
+                {type: 'json', subdir: '.', file: 'coverage-final.json'},
+                {type: 'html'}
             ]
         },
 
