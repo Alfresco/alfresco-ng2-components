@@ -33,8 +33,6 @@ declare let __moduleName: string;
 
 })
 export class AlfrescoLoginComponent {
-  @Input()
-  method: string = 'POST';
   @Output()
   onSuccess = new EventEmitter();
   @Output()
@@ -97,7 +95,7 @@ export class AlfrescoLoginComponent {
     if (event) {
       event.preventDefault();
     }
-    this.auth.login(this.method, value.username, value.password)
+    this.auth.login(value.username, value.password)
       .subscribe(
         (token: any) => {
           try {
