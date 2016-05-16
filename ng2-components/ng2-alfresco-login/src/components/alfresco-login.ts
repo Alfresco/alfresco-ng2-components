@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, Output, EventEmitter } from 'angular2/core';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { AlfrescoAuthenticationService } from '../services/alfresco-authentication';

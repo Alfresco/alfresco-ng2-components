@@ -17,7 +17,7 @@
 
 import { Injectable } from 'angular2/core';
 import { Observable } from 'rxjs/Rx';
-import { Http, Headers, URLSearchParams, Response } from 'angular2/http';
+import { Http, Headers, Response } from 'angular2/http';
 
 declare let xml2json: any;
 
