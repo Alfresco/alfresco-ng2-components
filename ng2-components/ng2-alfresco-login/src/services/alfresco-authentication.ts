@@ -29,7 +29,7 @@ export class AlfrescoAuthenticationService {
     token: string;
 
     private _host: string = 'http://192.168.99.100:8080';
-    private _baseUrl: string = this._host + '/alfresco/service/api/';
+    private _baseUrl: string = this._host + '/alfresco/api/-default-/public/authentication/versions/1';
 
     /**
      * Constructor
@@ -48,40 +48,13 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
-     * Method to delegate GET or POST login
-     * @param method
+     * Method to delegate to POST login
      * @param username
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(method: string, username: string, password: string) {
-        if (method === 'GET') {
-            return this.loginGet(username, password);
-        } else if (method === 'POST') {
-            return this.loginPost(username, password);
-        } else {
-            return Observable.throw('Invalid method name the value should be GET or POST');
-        }
-    }
-
-    /**
-     * The method provide the login with GET Request
-     * @param username
-     * @param password
-     * @returns {Observable<R>|Observable<T>}
-     */
-    loginGet(username: string, password: string) {
-        const searchParams = new URLSearchParams();
-        searchParams.set('u', username);
-        searchParams.set('pw', password);
-
-        return this.http.get(this._baseUrl + 'login', {search: searchParams})
-            .map((res: any) => {
-                let data = JSON.parse(xml2json(res.text(), '  '));
-                this.token = data.ticket;
-                this.saveJwt(this.token);
-            })
-            .catch(this.handleError);
+    login(username: string, password: string) {
+        return this.loginPost(username, password);
     }
 
     /**
@@ -91,18 +64,39 @@ export class AlfrescoAuthenticationService {
      * @returns {Observable<R>|Observable<T>}
      */
     loginPost(username: string, password: string) {
-        let credentials = '{ username: ' + username + ', password: ' + password + ' }';
+        let credentials = '{ "userId": "' + username + '", "password": "' + password + '" }';
 
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
 
-        return this.http.post(this._baseUrl + 'login', credentials, {
+        return this.http.post(this._baseUrl + '/tickets', credentials, {
                 headers: headers
             })
             .map((res: any) => {
                 let response = res.json();
-                this.token = response.data.ticket;
+                this.token = response.entry.id;
                 this.saveJwt(this.token);
+            })
+            .catch(this.handleError);
+    }
+
+    /**
+     * Delete the current login ticket from the server
+     *
+     * @returns {Observable<R>|Observable<T>}
+     */
+    loginDelete() {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'Basic ' + btoa(this.token));
+
+        return this.http.delete(this._baseUrl + '/tickets/-me-', {
+                headers: headers
+            })
+            .map((res: any) => {
+                this.removeJwt();
+                this.token = undefined;
             })
             .catch(this.handleError);
     }
@@ -118,14 +112,18 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
+     * Remove the login token from localStorage
+     */
+    removeJwt() {
+        localStorage.removeItem('token');
+    }
+
+    /**
      * The method remove the token from the local storage
      * @returns {Observable<T>}
      */
     logout() {
-        this.token = undefined;
-        localStorage.removeItem('token');
-
-        return Observable.of(true);
+        return this.loginDelete();
     }
 
     /**
@@ -134,7 +132,7 @@ export class AlfrescoAuthenticationService {
      * @returns {ErrorObservable}
      */
     private handleError(error: Response) {
-        console.error(error.json().message);
+        console.error('Error when logging in', error);
         return Observable.throw(error.json().message || 'Server error');
     }
 }

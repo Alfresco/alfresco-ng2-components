@@ -22,7 +22,7 @@ import { AlfrescoAuthenticationService } from '../../src/services/alfresco-authe
 
 export class AuthenticationMock {
 
-    login(method: string, username: string, password: string) {
+    login(username: string, password: string) {
         if (username === 'fake-username' && password === 'fake-password') {
             return Observable.of(true);
         } else {

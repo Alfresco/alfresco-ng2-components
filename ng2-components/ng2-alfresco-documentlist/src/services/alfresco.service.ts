@@ -68,26 +68,14 @@ export class AlfrescoService {
     }
 
     private getNodesPromise(folder: string) {
-
         let alfrescoClient = this.getAlfrescoClient();
-        return new Promise(function (resolve, reject) {
-            let apiInstance = new AlfrescoApi.NodesApi(alfrescoClient);
-            let nodeId = '-root-';
-            let opts = {
-                relativePath: folder,
-                include: ['path']
-            };
-            let callback = function (error, data /*, response*/) {
-                if (error) {
-                    console.error(error);
-                    reject(error);
-                } else {
-                    console.log('API returned data', data);
-                    resolve(data);
-                }
-            };
-            apiInstance.getNodeChildren(nodeId, opts, callback);
-        });
+        let apiInstance = new AlfrescoApi.NodesApi(alfrescoClient);
+        let nodeId = '-root-';
+        let opts = {
+            relativePath: folder,
+            include: ['path']
+        };
+        return apiInstance.getNodeChildren(nodeId, opts);
     }
 
     /**

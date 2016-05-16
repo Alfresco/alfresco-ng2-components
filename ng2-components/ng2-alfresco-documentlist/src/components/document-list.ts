@@ -24,7 +24,6 @@ import {
     AfterContentInit,
     AfterViewChecked
 } from 'angular2/core';
-
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
@@ -42,6 +41,8 @@ declare let __moduleName: string;
 })
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 
+    DEFAULT_ROOT_FOLDER: string = '/Sites/swsdp/documentLibrary';
+
     @Input()
     navigate: boolean = true;
 
@@ -58,10 +59,13 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     folderClick: EventEmitter<any> = new EventEmitter();
 
     rootFolder = {
-        name: 'Document Library',
-        path: 'Sites/swsdp/documentLibrary'
+        name: '',
+        path: ''
     };
-    currentFolderPath: string = 'Sites/swsdp/documentLibrary';
+
+    @Input()
+    currentFolderPath: string;
+
     folder: NodePaging;
     errorMessage;
 
@@ -82,9 +86,24 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     constructor(private _alfrescoService: AlfrescoService) {
     }
 
+    _createRootFolder(): any {
+        let folderArray =  this.currentFolderPath.split('/');
+        let nameFolder = folderArray[folderArray.length - 1];
+        return {
+            name: nameFolder,
+            path: this.currentFolderPath
+        };
+    }
+
     ngOnInit() {
+        this.currentFolderPath = this.currentFolderPath || this.DEFAULT_ROOT_FOLDER;
+        this.rootFolder = this._createRootFolder();
         this.route.push(this.rootFolder);
         this.displayFolderContent(this.rootFolder.path);
+    }
+
+    ngOnChanges(change) {
+        this.reload();
     }
 
     ngAfterContentInit() {
@@ -133,6 +152,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
             this.route.pop();
             let parent = this.route.length > 0 ? this.route[this.route.length - 1] : this.rootFolder;
             if (parent) {
+                this.folderClick.emit({
+                    value: parent.path
+                });
                 this.displayFolderContent(parent.path);
             }
         }
@@ -152,8 +174,8 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
             value: item
         });
 
-        if (this.navigate && item) {
-            if (item.entry && item.entry.isFolder) {
+        if (this.navigate && item && item.entry) {
+            if (item.entry.isFolder) {
                 let path = this.getNodePath(item);
 
                 this.folderClick.emit({
