@@ -24,6 +24,7 @@ import {
     AfterContentInit,
     AfterViewChecked
 } from 'angular2/core';
+
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
@@ -60,7 +61,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         name: 'Document Library',
         path: 'Sites/swsdp/documentLibrary'
     };
-    currentFolderPath: string = 'swsdp/documentLibrary';
+    currentFolderPath: string = 'Sites/swsdp/documentLibrary';
     folder: NodePaging;
     errorMessage;
 
@@ -152,7 +153,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         });
 
         if (this.navigate && item) {
-            if (item.entry.isFolder) {
+            if (item.entry && item.entry.isFolder) {
                 let path = this.getNodePath(item);
 
                 this.folderClick.emit({

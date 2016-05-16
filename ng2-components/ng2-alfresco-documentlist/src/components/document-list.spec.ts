@@ -21,11 +21,12 @@ import {
     expect,
     beforeEach
 } from 'angular2/testing';
-import { DocumentList } from '../../src/components/document-list';
-import { ContentColumnModel } from '../../src/models/content-column.model';
+
+import { DocumentList } from './document-list';
+import { ContentColumnModel } from '../models/content-column.model';
 import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
-import { MinimalNodeEntity } from '../../src/models/document-library.model';
-import { ContentActionModel } from '../../src/models/content-action.model';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from '../models/document-library.model';
+import { ContentActionModel } from '../models/content-action.model';
 
 describe('DocumentList', () => {
 
@@ -256,6 +257,7 @@ describe('DocumentList', () => {
         let path = '/';
 
         let node = new MinimalNodeEntity();
+        node.entry = new MinimalNodeEntryEntity();
         node.entry.isFolder = true;
         node.entry.name = '<display name>';
 
@@ -285,6 +287,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'displayFolderContent').and.stub();
 
         let node = new MinimalNodeEntity();
+        node.entry = new MinimalNodeEntryEntity();
         node.entry.isFolder = false;
 
         documentList.onItemClick(node);
@@ -296,6 +299,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'displayFolderContent').and.stub();
 
         let node = new MinimalNodeEntity();
+        node.entry = new MinimalNodeEntryEntity();
         node.entry.isFolder = true;
         node.entry.name = '<display name>';
 

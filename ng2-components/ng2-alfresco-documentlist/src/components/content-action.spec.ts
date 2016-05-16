@@ -22,12 +22,14 @@ import {
     beforeEach
 } from 'angular2/testing';
 import {EventEmitter} from 'angular2/core';
-import {DocumentList} from '../../src/components/document-list';
+
+import {DocumentList} from './document-list';
 import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-import {ContentActionList} from '../../src/components/content-action-list';
-import {ContentAction} from '../../src/components/content-action';
-import {DocumentActionsService} from '../../src/services/document-actions.service';
-import {FolderActionsService} from '../../src/services/folder-actions.service';
+
+import {ContentActionList} from './content-action-list';
+import {ContentAction} from './content-action';
+import {DocumentActionsService} from '../services/document-actions.service';
+import {FolderActionsService} from '../services/folder-actions.service';
 
 describe('ContentAction', () => {
 
@@ -175,5 +177,4 @@ describe('ContentAction', () => {
         let model = documentList.actions[0];
         model.handler('<obj>');
     });
-
 });

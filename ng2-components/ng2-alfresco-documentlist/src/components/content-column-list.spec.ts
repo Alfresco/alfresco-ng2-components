@@ -21,10 +21,11 @@ import {
     expect,
     beforeEach
 } from 'angular2/testing';
-import {DocumentList} from '../../src/components/document-list';
+
+import {DocumentList} from './document-list';
 import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-import {ContentColumnList} from '../../src/components/content-column-list';
-import {ContentColumnModel} from '../../src/models/content-column.model';
+import {ContentColumnList} from './content-column-list';
+import {ContentColumnModel} from '../models/content-column.model';
 
 describe('ContentColumnList', () => {
 
