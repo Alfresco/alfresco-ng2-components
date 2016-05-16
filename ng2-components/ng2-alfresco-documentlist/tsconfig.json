@@ -1,27 +1,20 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
-        "declaration": true,
-        "removeComments": true,
-        "noLib": false,
+        "module": "system",
+        "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "allowUnreachableCode": false,
-        "allowUnusedLabels": false,
-        "noImplicitAny": false,
-        "noImplicitReturns": false,
-        "noImplicitUseStrict": false,
-        "noFallthroughCasesInSwitch": true,
+        "removeComments": true,
+        "declaration": true,
         "outDir": "dist"
     },
     "exclude": [
+        "backup",
+
         "node_modules",
-        "dist",
-        "typings/browser.d.ts",
-        "typings/browser",
-        "demo"
-    ],
-    "compileOnSave": false
+        "typings/main",
+        "typings/main.d.ts"
+    ]
 }

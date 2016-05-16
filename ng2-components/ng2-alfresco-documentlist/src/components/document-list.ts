@@ -41,7 +41,7 @@ declare let __moduleName: string;
 })
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 
-    const DEFAULT_ROOT_FOLDER: string = "/Sites/swsdp/documentLibrary";
+    DEFAULT_ROOT_FOLDER: string = '/Sites/swsdp/documentLibrary';
 
     @Input()
     navigate: boolean = true;
@@ -86,9 +86,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     constructor(private _alfrescoService: AlfrescoService) {
     }
 
-    _createRootFolder(): Object {
+    _createRootFolder(): any {
         let folderArray =  this.currentFolderPath.split('/');
-        let nameFolder = folderArray[folderArray.length -1] ;
+        let nameFolder = folderArray[folderArray.length - 1];
         return {
             name: nameFolder,
             path: this.currentFolderPath
@@ -103,7 +103,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     }
 
     ngOnChanges(change) {
-        this.reload(this.currentFolderPath);
+        this.reload();
     }
 
     ngAfterContentInit() {
@@ -174,7 +174,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
             value: item
         });
 
-        if (this.navigate && item) {
+        if (this.navigate && item && item.entry) {
             if (item.entry.isFolder) {
                 let path = this.getNodePath(item);
 

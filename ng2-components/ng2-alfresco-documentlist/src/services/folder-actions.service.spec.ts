@@ -21,8 +21,8 @@ import {
     expect,
     beforeEach
 } from 'angular2/testing';
-import {FolderActionsService} from '../../src/services/folder-actions.service';
-import {ContentActionHandler} from '../../src/models/content-action.model';
+import {FolderActionsService} from './folder-actions.service';
+import {ContentActionHandler} from '../models/content-action.model';
 
 describe('FolderActionsService', () => {
 
