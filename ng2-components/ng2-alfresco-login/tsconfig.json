@@ -8,6 +8,13 @@
         "sourceMap": true,
         "removeComments": true,
         "declaration": true,
+        "noLib": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
         "outDir": "dist"
     },
     "exclude": [

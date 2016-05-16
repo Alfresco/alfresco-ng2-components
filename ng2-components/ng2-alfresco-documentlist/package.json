@@ -73,9 +73,7 @@
     "traceur": "^0.0.91",
     "tslint": "^3.8.1",
     "typescript": "^1.8.10",
-    "typings": "^0.7.12",
-    "xo": "^0.14.0",
-    "yargs": "^4.7.0"
+    "typings": "^0.7.12"
   },
   "license-check-config": {
     "src": [
