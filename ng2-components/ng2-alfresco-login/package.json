@@ -4,15 +4,23 @@
     "version": "0.1.0",
     "author": "Alfresco Software, Ltd.",
     "scripts": {
-        "build": "npm run tslint-test && npm run tslint-src && npm run tslint-root && typings install && rm -rf dist && tsc && license-check",
+        "postinstall": "npm run typings",
+        "typings": "typings install",
+        "start": "npm run test && http-server -c-1 -o -p 8875 .",
+        "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
+        "tslint": "npm run tslint-test && npm run tslint-src && npm run tslint-root",
         "tslint-test": "tslint -c tslint.json test/**/*.ts",
         "tslint-src": "tslint -c tslint.json src/**/*.ts",
         "tslint-root": "tslint -c tslint.json *.ts",
+        "copytemplates": "npm run copy-html && npm run copy-css",
+        "copy-html": "copyfiles './src/**/*.html' dist",
+        "copy-css": "copyfiles './src/**/*.css' dist",
         "licensecheck": "license-check",
         "tsc": "tsc",
-        "tsc:w": "tsc -w",
-        "typings": "typings",
-        "test": "karma start karma.conf.js"
+        "pretest": "npm run build",
+        "test": "karma start karma.conf.js",
+        "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
+        "coverage": "http-server -c-1 -o -p 9875 ./coverage"
     },
     "repository": {
         "type": "git",
@@ -53,29 +61,26 @@
         "ng2-translate": "^1.11.2"
     },
     "peerDependencies": {
-        "angular2": "2.0.0-beta.15",
-        "ng2-alfresco-core": "0.1.0"
+        "angular2": "2.0.0-beta.15"
     },
     "devDependencies": {
+        "copyfiles": "^0.2.1",
+        "coveralls": "^2.11.9",
+        "http-server": "0.8.5",
         "jasmine-core": "2.4.1",
-        "live-server": "^0.9.2",
-        "typescript": "^1.8.10",
-        "typings": "^0.7.12",
-        "license-check": "^1.0.4",
-        "tslint": "^3.8.1",
-        "concurrently": "^2.0.0",
-        "jasmine-spec-reporter": "^2.4.0",
         "karma": "~0.13.22",
         "karma-chrome-launcher": "~1.0.1",
         "karma-coverage": "^1.0.0",
-        "karma-ie-launcher": "^1.0.0",
         "karma-jasmine": "~1.0.2",
         "karma-mocha-reporter": "^2.0.3",
-        "karma-phantomjs-launcher": "^1.0.0",
-        "traceur": "^0.0.91",
+        "license-check": "^1.0.4",
         "remap-istanbul": "^0.6.3",
-        "phantomjs-prebuilt": "^2.1.7",
-        "coveralls": "^2.11.9"
+        "traceur": "^0.0.91",
+        "tslint": "^3.8.1",
+        "typescript": "^1.8.10",
+        "typings": "^0.7.12",
+        "xo": "^0.14.0",
+        "yargs": "^4.7.0"
     },
     "license-check-config": {
         "src": [
