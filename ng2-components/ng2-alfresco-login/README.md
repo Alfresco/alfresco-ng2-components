@@ -8,6 +8,23 @@
   </a>
 </p>
 
+## Install
+
+
+```sh
+npm install --save ng2-alfresco-login
+```
+
+
+## Build from sources
+Alternatively you can build component from sources with the following commands:
+
+
+```sh
+npm install
+npm run build
+```
+
 Components included:
 
 * Alfresco Login Component
@@ -35,17 +52,6 @@ export class MyLoginComponent {
         console.log('Error Login EventEmitt called with: '+$event.value);
     }
 }
-```
-
-### Build
-```sh
-npm install
-npm npm run build
-```
-
-### Test
-```sh
-npm test
 ```
 
 ### Demo
@@ -81,4 +87,19 @@ npm link ng2-alfresco-login
 cd demo
 npm install
 npm start
+```
+
+## Running unit tests
+
+```sh
+npm test
+```
+
+This task rebuilds all the code, runs tslint, license checks and other quality check tools 
+before performing unit testing. 
+
+## Code coverage
+
+```sh
+npm run coverage
 ```

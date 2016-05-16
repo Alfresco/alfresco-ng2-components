@@ -10,3 +10,36 @@
 
 Core library for other ng2-alfresco components.
 This should be added as a dependency for any project using the components.
+
+## Install
+
+
+```sh
+npm install --save ng2-alfresco-core
+```
+
+
+## Build from sources
+Alternatively you can build component from sources with the following commands:
+
+
+```sh
+npm install
+npm run build
+```
+
+
+## Running unit tests
+
+```sh
+npm test
+```
+
+This task rebuilds all the code, runs tslint, license checks and other quality check tools 
+before performing unit testing. 
+
+## Code coverage
+
+```sh
+npm run coverage
+```

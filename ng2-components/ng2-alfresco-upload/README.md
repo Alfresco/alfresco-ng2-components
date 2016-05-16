@@ -16,7 +16,6 @@ npm install --save ng2-alfresco-upload
 ```
 
 
-
 ## Build from sources
 Alternatively you can build component from sources with the following commands:
 
@@ -64,3 +63,18 @@ This component, provide a drag and drop are to upload files to alfresco.
 #### Options
 
 **showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
+
+## Running unit tests
+
+```sh
+npm test
+```
+
+This task rebuilds all the code, runs tslint, license checks and other quality check tools 
+before performing unit testing. 
+
+## Code coverage
+
+```sh
+npm run coverage
+```

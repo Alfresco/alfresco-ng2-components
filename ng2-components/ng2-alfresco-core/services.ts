@@ -27,7 +27,7 @@ export default {
         AlfrescoSettingsService,
         AlfrescoTranslationLoader
     ]
-}
+};
 
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
     AlfrescoSettingsService,
