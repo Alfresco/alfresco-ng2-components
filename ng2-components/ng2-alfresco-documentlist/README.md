@@ -1,4 +1,5 @@
 # Document List Component for Angular 2
+
 <p>
   <a href='https://raw.githubusercontent.com/Alfresco/dev-platform-webcomponents/master/ng2-components/ng2-alfresco-upload/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
@@ -7,6 +8,7 @@
      <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='my blog' />
   </a>
 </p>
+
 ## Install
 
 ```sh
@@ -449,14 +451,15 @@ npm run build
 
 ## Running unit tests
 
-You can run test with the
-
 ```sh
 npm test
 ```
 
-or alternatively if you want to enable watchers and live reload:
+This task rebuilds all the code, runs tslint, license checks and other quality check tools 
+before performing unit testing. 
+
+## Code coverage
 
 ```sh
-npm run test:w
+npm run coverage
 ```
