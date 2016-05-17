@@ -96,7 +96,7 @@ export class AlfrescoService {
      * @returns {string} URL address.
      */
     getDocumentThumbnailUrl(document: MinimalNodeEntity) {
-        return this.getContentUrl(document) + '/thumbnails/doclib?c=queue&ph=true&lastModified=1';
+        return this.getContentUrl(document) + '/thumbnails/doclib?c=queue&ph=true&lastModified=1&alf_ticket=' + this.getAlfrescoTicket();
     }
 
     /**
