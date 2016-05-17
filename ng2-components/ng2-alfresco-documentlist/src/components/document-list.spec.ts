@@ -82,6 +82,7 @@ describe('DocumentList', () => {
             path: '<path>'
         };
 
+        documentList.currentFolderPath = root.path;
         documentList.rootFolder = root;
         documentList.ngOnInit();
         expect(documentList.displayFolderContent).toHaveBeenCalledWith(root.path);
