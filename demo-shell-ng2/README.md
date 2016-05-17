@@ -60,6 +60,15 @@ cd ../../demo-shell-ng2
 npm link ng2-alfresco-login
 ```
 
+*ng2-alfresco-upload component:*
+
+```sh
+cd ng2-components/ng2-alfresco-upload
+npm link
+cd ../../demo-shell-ng
+npm link ng2-alfresco-upload
+```
+
 *dev-platform-js-api client:*
 
 Navigate to the corresponding project folder.
