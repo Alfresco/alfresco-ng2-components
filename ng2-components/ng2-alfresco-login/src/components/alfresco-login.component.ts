@@ -27,8 +27,8 @@ declare let __moduleName: string;
   selector: 'alfresco-login',
   moduleId: __moduleName,
   directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
-  templateUrl: './alfresco-login.html',
-  styleUrls: ['./alfresco-login.css'],
+  templateUrl: './alfresco-login.component.html',
+  styleUrls: ['./alfresco-login.component.css'],
   pipes: [TranslatePipe]
 
 })

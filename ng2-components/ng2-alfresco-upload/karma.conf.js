@@ -5,16 +5,16 @@ module.exports = function (config) {
 
         basePath: '.',
 
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine-ajax', 'jasmine'],
 
         files: [
             // paths loaded by Karma
             {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: false},
             {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
             {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: false},
-            {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: false},
-            {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: false},
-            {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: false},
+            {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, served: true, watched: false},
+            {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, served: true, watched: false},
+            {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, served: true, watched: false},
             {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: false},
             {pattern: 'node_modules/alfresco-core-rest-api/bundle.js', included: true, watched: false},
             {pattern: 'node_modules/ng2-translate/bundles/ng2-translate.js', included: true, watched: false},
@@ -53,6 +53,7 @@ module.exports = function (config) {
         plugins: [
             'karma-jasmine',
             'karma-coverage',
+            'karma-jasmine-ajax',
             'karma-chrome-launcher',
             'karma-mocha-reporter'
         ],
@@ -73,6 +74,8 @@ module.exports = function (config) {
                 {type: 'json', subdir: '.', file: 'coverage-final.json'},
                 {type: 'html'}
             ]
-        }
+        },
+
+        singleRun: false
     })
 };

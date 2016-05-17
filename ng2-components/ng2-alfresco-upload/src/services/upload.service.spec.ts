@@ -16,8 +16,8 @@
  */
 
 import { it, describe, beforeEach, expect } from 'angular2/testing';
-import { UploadService } from '../../src/services/upload.service';
-import { FileModel } from '../../src/models/file.model';
+import { UploadService } from './upload.service';
+import { FileModel } from './../models/file.model';
 
 declare let jasmine: any;
 

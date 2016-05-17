@@ -17,7 +17,7 @@
 
 
 import { it, describe, expect, injectAsync, TestComponentBuilder } from 'angular2/testing';
-import { FileUploadingDialogComponent } from '../../src/components/file-uploading-dialog.component';
+import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 
 describe('FileUploadDialog', () => {
 
