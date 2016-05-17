@@ -1,3 +1,6 @@
-# All the Alfresco Angular 2 components
+# Alfresco Angular 2 Components
 
-prefix for components ng2-alfresco-
+- [Core library](ng2-alfresco-core/README.md)
+- [Document List](ng2-alfresco-documentlist/README.md)
+- [Login](ng2-alfresco-login/README.md)
+- [Upload](ng2-alfresco-upload/README.md)
