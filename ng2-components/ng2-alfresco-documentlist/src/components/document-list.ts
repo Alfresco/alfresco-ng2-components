@@ -348,14 +348,14 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     sort(node: NodePaging, options: ColumnSortingModel) {
         if (this._hasEntries(node)) {
             node.list.entries.sort((a: MinimalNodeEntity, b: MinimalNodeEntity) => {
-                if (a.entry.isFolder != b.entry.isFolder) {
+                if (a.entry.isFolder !== b.entry.isFolder) {
                     return options.direction === 'asc'
                         ? (a.entry.isFolder ? -1 : 1)
                         : (a.entry.isFolder ? 1 : -1);
                 }
 
-                var left = this.getObjectValue(a.entry, options.key).toString();
-                var right = this.getObjectValue(b.entry, options.key).toString();
+                let left = this.getObjectValue(a.entry, options.key).toString();
+                let right = this.getObjectValue(b.entry, options.key).toString();
 
                 return options.direction === 'asc'
                     ? left.localeCompare(right)
