@@ -12,7 +12,7 @@
 
 
 ```sh
-npm install --save ng2-alfresco-login
+npm install --save ng2-alfresco-core ng2-alfresco-login
 ```
 
 
