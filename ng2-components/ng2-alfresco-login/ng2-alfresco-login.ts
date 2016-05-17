@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { AlfrescoLoginComponent } from './src/components/alfresco-login';
-import { AlfrescoAuthenticationService } from './src/services/alfresco-authentication';
+import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
+import { AlfrescoAuthenticationService } from './src/services/alfresco-authentication.service';
 
-export * from './src/components/alfresco-login';
-export * from './src/services/alfresco-authentication';
+export * from './src/components/alfresco-login.component';
+export * from './src/services/alfresco-authentication.service';
 
 export default {
     directives: [AlfrescoLoginComponent],

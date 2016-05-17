@@ -18,7 +18,7 @@
 import { Observable } from 'rxjs/Observable';
 import { provide } from 'angular2/core';
 
-import { AlfrescoAuthenticationService } from '../../src/services/alfresco-authentication';
+import { AlfrescoAuthenticationService } from './../services/alfresco-authentication.service';
 
 export class AuthenticationMock {
 

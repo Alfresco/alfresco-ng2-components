@@ -19,7 +19,7 @@
 import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
 import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder, setBaseTestProviders } from 'angular2/testing';
 import { provide } from 'angular2/core';
-import { UploadButtonComponent } from '../../src/components/upload-button.component';
+import { UploadButtonComponent } from './upload-button.component';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TranslationMock } from '../assets/translation.service.mock';
 

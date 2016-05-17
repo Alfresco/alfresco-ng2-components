@@ -32,9 +32,9 @@ import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from
 import { RootRouter } from 'angular2/src/router/router';
 import { SpyLocation } from 'angular2/src/mock/location_mock';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { AlfrescoLoginComponent } from '../../src/components/alfresco-login';
-import { AuthenticationMock } from '../assets/authentication.service.mock';
-import { TranslationMock } from '../assets/translation.service.mock';
+import { AlfrescoLoginComponent } from './alfresco-login.component';
+import { AuthenticationMock } from './../assets/authentication.service.mock';
+import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('AlfrescoLogin', () => {
   let authService, location, router;

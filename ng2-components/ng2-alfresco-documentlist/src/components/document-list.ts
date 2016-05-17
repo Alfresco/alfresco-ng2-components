@@ -64,7 +64,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     };
 
     @Input()
-    currentFolderPath: string;
+    currentFolderPath: string = '';
 
     folder: NodePaging;
     errorMessage;
