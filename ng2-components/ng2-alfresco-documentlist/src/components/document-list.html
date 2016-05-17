@@ -8,8 +8,9 @@
     <thead>
     <tr>
         <!-- Columns -->
-        <th class="mdl-data-table__cell--non-numeric column-header {{col.cssClass}}"
+        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
             *ngFor="#col of columns"
+            [class.column-header]="col.title"
             [class.mdl-data-table__header--sorted-ascending]="sorting.key === col.source && sorting.direction === 'asc'"
             [class.mdl-data-table__header--sorted-descending]="sorting.key === col.source && sorting.direction === 'desc'"
             (click)="onColumnHeaderClick(col)">

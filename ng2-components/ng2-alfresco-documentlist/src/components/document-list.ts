@@ -332,7 +332,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     }
 
     onColumnHeaderClick(column: ContentColumnModel) {
-        if (column) {
+        if (column && this._isSortableColumn(column)) {
             if (this.sorting.key === column.source) {
                 this.sorting.direction = this.sorting.direction === 'asc' ? 'desc' : 'asc';
             } else {
@@ -367,5 +367,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     private _hasEntries(node: NodePaging): boolean {
         return (node && node.list && node.list.entries && node.list.entries.length > 0);
+    }
+
+    private _isSortableColumn(column: ContentColumnModel) {
+        return column && column.source && !column.source.startsWith('$');
     }
 }
