@@ -38,7 +38,7 @@ docker-compose rm
 ```sh
 cd ng2-components/ng2-alfresco-core
 npm link
-cd ../../demo-shell-ng
+cd ../../demo-shell-ng2
 npm link ng2-alfresco-core
 ```
 
@@ -47,7 +47,7 @@ npm link ng2-alfresco-core
 ```sh
 cd ng2-components/ng2-alfresco-documentlist
 npm link
-cd ../../demo-shell-ng
+cd ../../demo-shell-ng2
 npm link ng2-alfresco-documentlist
 ```
 
@@ -56,7 +56,7 @@ npm link ng2-alfresco-documentlist
 ```sh
 cd ng2-components/ng2-alfresco-login
 npm link
-cd ../../demo-shell-ng
+cd ../../demo-shell-ng2
 npm link ng2-alfresco-login
 ```
 
