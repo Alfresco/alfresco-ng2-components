@@ -32,6 +32,9 @@ export * from './src/components/content-column-list';
 export * from './src/components/content-action';
 export * from './src/components/content-action-list';
 
+// models
+export * from './src/models/column-sorting.model';
+
 // services
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';

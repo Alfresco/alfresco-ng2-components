@@ -11,6 +11,15 @@
     cursor: pointer;
 }
 
+:host .column-header {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+}
+
 :host .parent-folder-link { cursor: pointer; }
 :host .parent-folder-link > td { text-align: left; }
 

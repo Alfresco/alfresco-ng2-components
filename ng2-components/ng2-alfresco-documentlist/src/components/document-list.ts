@@ -28,6 +28,7 @@ import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { ContentColumnModel } from './../models/content-column.model';
+import { ColumnSortingModel } from './../models/column-sorting.model';
 
 declare var componentHandler;
 declare let __moduleName: string;
@@ -73,6 +74,11 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
+
+    sorting: ColumnSortingModel = {
+        key: 'name',
+        direction: 'asc'
+    };
 
     /**
      * Determines whether navigation to parent folder is available.
@@ -255,7 +261,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
             this._alfrescoService
                 .getFolder(path)
                 .subscribe(
-                    folder => this.folder = folder,
+                    folder => this.folder = this.sort(folder, this.sorting),
                     error => this.errorMessage = <any>error
                 );
         }
@@ -316,12 +322,50 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
         let nameCol = new ContentColumnModel();
         nameCol.title = 'Name';
-        nameCol.source = 'displayName';
+        nameCol.source = 'name';
         nameCol.cssClass = 'full-width name-column';
 
         this.columns = [
             thumbnailCol,
             nameCol
         ];
+    }
+
+    onColumnHeaderClick(column: ContentColumnModel) {
+        if (column) {
+            if (this.sorting.key === column.source) {
+                this.sorting.direction = this.sorting.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                this.sorting = <ColumnSortingModel> {
+                    key: column.source,
+                    direction: 'asc'
+                };
+            }
+            this.sort(this.folder, this.sorting);
+        }
+    }
+
+    sort(node: NodePaging, options: ColumnSortingModel) {
+        if (this._hasEntries(node)) {
+            node.list.entries.sort((a: MinimalNodeEntity, b: MinimalNodeEntity) => {
+                if (a.entry.isFolder != b.entry.isFolder) {
+                    return options.direction === 'asc'
+                        ? (a.entry.isFolder ? -1 : 1)
+                        : (a.entry.isFolder ? 1 : -1);
+                }
+
+                var left = this.getObjectValue(a.entry, options.key).toString();
+                var right = this.getObjectValue(b.entry, options.key).toString();
+
+                return options.direction === 'asc'
+                    ? left.localeCompare(right)
+                    : right.localeCompare(left);
+            });
+        }
+        return node;
+    }
+
+    private _hasEntries(node: NodePaging): boolean {
+        return (node && node.list && node.list.entries && node.list.entries.length > 0);
     }
 }
