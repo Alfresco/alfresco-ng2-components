@@ -62,8 +62,16 @@ npm link ng2-alfresco-login
 
 *dev-platform-js-api client:*
 
+Navigate to the corresponding project folder.
+
 ```sh
-npm link ../../dev-platform-js-api
+npm link
+```
+
+Navigate to the demo-shell-ng folder
+
+```sh
+npm link alfresco-core-rest-api
 ```
 
 Please refer to [this article](https://docs.npmjs.com/cli/link) for more details on npm link.
