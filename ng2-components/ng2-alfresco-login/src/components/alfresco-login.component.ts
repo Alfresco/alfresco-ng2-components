@@ -18,7 +18,7 @@
 import { Component, Output, EventEmitter } from 'angular2/core';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
-import { AlfrescoAuthenticationService } from '../services/alfresco-authentication';
+import { AlfrescoAuthenticationService } from './../services/alfresco-authentication.service';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 declare let componentHandler;
 declare let __moduleName: string;
