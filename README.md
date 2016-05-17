@@ -23,3 +23,10 @@ cd dev-platform-webcomponents
 ```
 
 For development environment configuration please refer to [project docs](demo-shell-ng2/README.md).
+
+## Components
+
+- [Core library](ng2-components/ng2-alfresco-core/README.md)
+- [Document List](ng2-components/ng2-alfresco-documentlist/README.md)
+- [Login](ng2-components/ng2-alfresco-login/README.md)
+- [Upload](ng2-components/ng2-alfresco-upload/README.md)
