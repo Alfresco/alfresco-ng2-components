@@ -12,7 +12,7 @@
 ## Install
 
 ```sh
-npm install --save <TBD>
+npm install --save ng2-alfresco-core ng2-alfresco-documentlist
 ```
 
 ## Basic usage
