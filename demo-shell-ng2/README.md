@@ -20,7 +20,7 @@ docker login dockerreg.alfresco.com
 docker pull dockerreg.alfresco.com/platform-distribution:api-latest
 docker-compose up
 ```
-**Note:** for complete installation on Windows please review the instructions here: [Windows installation](Windows.md) 
+**Note:** for complete installation on Windows please review the instructions here: [Windows installation](WINDOWS.md)
 
 to clean up afterwards
 
