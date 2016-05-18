@@ -55,11 +55,11 @@ import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-uplo
 @Component({
     selector: 'my-view',
     template: `<alfresco-upload-button [showDialogUpload]="true"
-        [showUdoNotificationBar]="true"
-        [uploadFolders]="true"
-        [multipleFiles]="false"
-        [acceptedFilesType]="*">
-        </alfresco-upload-button>`,
+                                       [showUdoNotificationBar]="true"
+                                       [uploadFolders]="true"
+                                       [multipleFiles]="false"
+                                       [acceptedFilesType]="*">
+               </alfresco-upload-button>`,
     directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
 export class MyView {
