@@ -89,6 +89,10 @@ npm install
 npm start
 ```
 
+`start` script also includes live reload and watchers for all the `.ts` files.
+TypeScript watchers are also configured for `node_modules` folder within demo shell
+and provide live reload for all the component libraries as well.
+
 **(Option 2) Build and watch with Gulp:**
 
 ```sh
