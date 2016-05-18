@@ -4,7 +4,7 @@
     "version": "0.1.0",
     "author": "Alfresco Software, Ltd.",
     "scripts": {
-        "postinstall": "npm run typings",
+        "postinstall": "npm run build && typings install",
         "typings": "typings install",
         "start": "npm run test && http-server -c-1 -o -p 8875 .",
         "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",

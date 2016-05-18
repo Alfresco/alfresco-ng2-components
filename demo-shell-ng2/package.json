@@ -4,16 +4,16 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "build.dev": "gulp dev",
-    "build.prod": "gulp build",
     "prestart": "npm install",
-    "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "start.dev": "concurrently \"npm run tsc:w\" \"npm run serve\" ",
+    "start": "concurrently \"npm run tsc:w\" \"npm run serve\" ",
     "test": "live-server --open=tests-runner.html",
     "tsc": "tsc",
     "tsc:w": "tsc -w -p tsconfig.dev.json",
-    "lite": "lite-server",
+    "serve": "live-server",
     "typings": "typings",
-    "postinstall": "typings install"
+    "postinstall": "typings install && npm link ../ng2-components/ng2-alfresco-core &&  npm link ../ng2-components/ng2-alfresco-documentlist && npm link ../ng2-components/ng2-alfresco-login && npm link ../ng2-components/ng2-alfresco-upload && npm link ../ng2-components/ng2-alfresco-datatable",
+    "postupdate": "npm link ../ng2-components/ng2-alfresco-core &&  npm link ../ng2-components/ng2-alfresco-documentlist && npm link ../ng2-components/ng2-alfresco-login && npm link ../ng2-components/ng2-alfresco-upload && npm link ../ng2-components/ng2-alfresco-datatable"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,7 @@
     "alfresco"
   ],
   "dependencies": {
+    "alfresco-core-rest-api": "https://github.com/Alfresco/dev-platform-js-api",
     "angular2": "2.0.0-beta.15",
     "bootstrap": "^3.3.6",
     "es6-shim": "^0.35.0",

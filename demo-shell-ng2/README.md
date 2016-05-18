@@ -28,82 +28,23 @@ to clean up afterwards
 docker-compose rm
 ```
 
-### Configuring development environment
+### Building and running steps:
 
-*All scripts assume you are at the project root folder*
-
-**Install symlinks for Alfresco components**
-
-**On Linux, you may need to use sudo cmd or add user write permissions to /usr/lib/node_modules**
-
-*ng2-alfresco-core:*
+1. Install dependencies
 
 ```sh
-npm link ../ng2-components/ng2-alfresco-core
-```
-
-*ng2-alfresco-datatable component:*
-
-```sh
-npm link ../ng2-components/ng2-alfresco-datatable
-```
-
-*ng2-alfresco-documentlist component:*
-
-```sh
-npm link ../ng2-components/ng2-alfresco-documentlist
-```
-
-*ng2-alfresco-login component:*
-
-```sh
-npm link ../ng2-components/ng2-alfresco-login
-```
-
-*ng2-alfresco-upload component:*
-
-```sh
-npm link ../ng2-components/ng2-alfresco-upload
-```
-
-*dev-platform-js-api client:*
-
-```sh
-npm link ../../dev-platform-js-api
-```
-
-Please refer to [this article](https://docs.npmjs.com/cli/link) for more details on npm link.
-
-### Building and running
-
-**Install dependencies:**
-
-```sh
-cd dev-platform-webcomponents/demo-shell-ng2/
 npm install
 ```
 
-**(Option 1) Fast build and watch for dev purposes:**
+2. Fast build and watch for dev purposes
 
 ```sh
-npm start
+npm start.dev
 ```
 
-`start` script also includes live reload and watchers for all the `.ts` files.
+>`start` script also includes live reload and watchers for all the `.ts` files.
 TypeScript watchers are also configured for `node_modules` folder within demo shell
 and provide live reload for all the component libraries as well.
-
-**(Option 2) Build and watch with Gulp:**
-
-```sh
-npm run build.dev
-```
-
-*or*
-
-```sh
-gulp dev
-```
 
 
 ###Multi-language
