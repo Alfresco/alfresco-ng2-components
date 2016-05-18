@@ -34,54 +34,36 @@ docker-compose rm
 
 **Install symlinks for Alfresco components**
 
+**On Linux, you may need to use sudo cmd or add user write permissions to /usr/lib/node_modules**
+
 *ng2-alfresco-core:*
 
 ```sh
-cd ng2-components/ng2-alfresco-core
-npm link
-cd ../../demo-shell-ng2
-npm link ng2-alfresco-core
+npm link ../ng2-components/ng2-alfresco-core
 ```
 
 *ng2-alfresco-documentlist component:*
 
 ```sh
-cd ng2-components/ng2-alfresco-documentlist
-npm link
-cd ../../demo-shell-ng2
-npm link ng2-alfresco-documentlist
+npm link ../ng2-components/ng2-alfresco-documentlist
 ```
 
 *ng2-alfresco-login component:*
 
 ```sh
-cd ng2-components/ng2-alfresco-login
-npm link
-cd ../../demo-shell-ng2
-npm link ng2-alfresco-login
+npm link ../ng2-components/ng2-alfresco-login
 ```
 
 *ng2-alfresco-upload component:*
 
 ```sh
-cd ng2-components/ng2-alfresco-upload
-npm link
-cd ../../demo-shell-ng
-npm link ng2-alfresco-upload
+npm link ../ng2-components/ng2-alfresco-upload
 ```
 
 *dev-platform-js-api client:*
 
-Navigate to the corresponding project folder.
-
 ```sh
-npm link
-```
-
-Navigate to the demo-shell-ng folder
-
-```sh
-npm link alfresco-core-rest-api
+npm link ../../dev-platform-js-api
 ```
 
 Please refer to [this article](https://docs.npmjs.com/cli/link) for more details on npm link.
