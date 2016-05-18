@@ -44,6 +44,28 @@ This component, provide a buttons to upload files to alfresco.
                         [acceptedFilesType]="*">
 </alfresco-upload-button>
 ```
+
+Example of a component that declares upload component :
+
+
+```ts
+import { Component } from 'angular2/core';
+import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+
+@Component({
+    selector: 'my-view',
+    template: `<alfresco-upload-button [showDialogUpload]="true"
+        [showUdoNotificationBar]="true"
+        [uploadFolders]="true"
+        [multipleFiles]="false"
+        [acceptedFilesType]="*">
+        </alfresco-upload-button>`,
+    directives: [ALFRESCO_ULPOAD_COMPONENT]
+})
+export class MyView {
+
+}
+```
 #### Options
 
 **showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
