@@ -14,16 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Component} from 'angular2/core';
-import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {AlfrescoAuthenticationService} from 'ng2-alfresco-login/ng2-alfresco-login';
-import {MDL} from 'ng2-alfresco-core/material';
-import {FilesComponent} from './components/files/files.component';
-import {AlfrescoLoginComponent} from 'ng2-alfresco-login/ng2-alfresco-login';
-import {AuthRouterOutlet} from './components/router/AuthRouterOutlet';
-import {AlfrescoSettingsService} from 'ng2-alfresco-core/services';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
-import {UploadButtonComponent} from 'ng2-alfresco-upload/ng2-alfresco-upload';
+
+import { Component } from 'angular2/core';
+import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-login';
+import { MDL } from 'ng2-alfresco-core/material';
+import { FilesComponent } from './components/files/files.component';
+import { AlfrescoLoginComponent } from 'ng2-alfresco-login/ng2-alfresco-login';
+import { AuthRouterOutlet } from './components/router/AuthRouterOutlet';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core/services';
+import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { UploadButtonComponent } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
 
 declare var document: any;
 
@@ -36,26 +38,27 @@ declare var document: any;
 @RouteConfig([
     {path: '/home', name: 'Home', component: FilesComponent},
     {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
+    {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
     {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
     {path: '/login', name: 'Login', component: AlfrescoLoginComponent}
 ])
 export class AppComponent {
     translate: TranslateService;
 
-    constructor(public auth:AlfrescoAuthenticationService,
-                public router:Router,
+    constructor(public auth: AlfrescoAuthenticationService,
+                public router: Router,
                 translate: TranslateService,
-                alfrescoSettingsService:AlfrescoSettingsService) {
+                alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
 
         this.translationInit(translate);
     }
 
-    isActive(instruction:any[]):boolean {
+    isActive(instruction: any[]): boolean {
         return this.router.isRouteActive(this.router.generate(instruction));
     }
 
-    isLoggedIn():boolean {
+    isLoggedIn(): boolean {
         return this.auth.isLoggedIn();
     }
 
@@ -67,7 +70,7 @@ export class AppComponent {
             );
     }
 
-    changeLanguage(lang:string) {
+    changeLanguage(lang: string) {
         this.translate.use(lang);
     }
 
