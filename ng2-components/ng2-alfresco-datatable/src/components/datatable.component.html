@@ -1,0 +1,100 @@
+<ol *ngIf="breadcrumb" class="breadcrumb">
+    <li *ngFor="#r of route; #last = last" [class.active]="last" [ngSwitch]="last">
+        <span *ngSwitchWhen="true">{{r.name}}</span>
+        <a *ngSwitchDefault href="#" (click)="goToRoute(r, $event)">{{r.name}}</a>
+    </li>
+</ol>
+<table *ngIf="folder" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <thead>
+    <tr>
+        <!-- Columns -->
+        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
+            *ngFor="#col of columns"
+            [class.column-header]="col.title"
+            [class.mdl-data-table__header--sorted-ascending]="sorting.key === col.source && sorting.direction === 'asc'"
+            [class.mdl-data-table__header--sorted-descending]="sorting.key === col.source && sorting.direction === 'desc'"
+            (click)="onColumnHeaderClick(col)">
+            <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
+            <span *ngIf="col.title">{{col.title}}</span>
+        </th>
+        <!-- Actions -->
+        <th>
+            <span class="sr-only">Actions</span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="parent-folder-link" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)">
+        <td [attr.colspan]="1 + columns?.length">
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    (click)="onNavigateParentClick($event)">
+                <i class="material-icons">arrow_upward</i>
+            </button>
+        </td>
+    </tr>
+
+    <tr *ngFor="#content of folder.list.entries; #idx = index">
+        <!-- Columns -->
+        <td *ngFor="#col of columns" [ngSwitch]="col.source"
+            class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
+            (click)="onItemClick(content, $event)">
+            <div *ngSwitchWhen="'$thumbnail'">
+                <div *ngIf="content.entry.isFolder">
+                    <i class="material-icons folder-thumbnail">{{folderIcon || 'folder_open'}}</i>
+                </div>
+                <div *ngIf="!content.entry.isFolder">
+                    <img class="document-thumbnail" alt="" src="{{getDocumentThumbnailUrl(content)}}">
+                </div>
+            </div>
+            <span *ngSwitchDefault>
+                {{getObjectValue(content.entry, col.source)}}
+            </span>
+        </td>
+
+        <!-- Actions: folder -->
+        <td *ngIf="content.entry.isFolder">
+            <!-- action buttons -->
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    *ngFor="#action of getContentActions('folder', 'button')"
+                    (click)="executeContentAction(content, action)">
+                <i class="material-icons">{{action.icon}}</i>
+            </button>
+
+            <!-- action menu -->
+            <button [id]="'folder_action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                [attr.for]="'folder_action_menu_' + idx">
+                <li class="mdl-menu__item"
+                    *ngFor="#action of getContentActions('folder', 'menu')"
+                    (click)="executeContentAction(content, action)">
+                    {{action.title}}
+                </li>
+            </ul>
+        </td>
+        <!-- Actions: document -->
+        <td *ngIf="!content.entry.isFolder">
+            <!-- action buttons -->
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    *ngFor="#action of getContentActions('document', 'button')"
+                    (click)="executeContentAction(content, action)">
+                <i class="material-icons">{{action.icon}}</i>
+            </button>
+
+            <!-- action menu -->
+            <button [id]="'document_action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                [attr.for]="'document_action_menu_' + idx">
+                <li class="mdl-menu__item"
+                    *ngFor="#action of getContentActions('document', 'menu')"
+                    (click)="executeContentAction(content, action)">
+                    {{action.title}}
+                </li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>

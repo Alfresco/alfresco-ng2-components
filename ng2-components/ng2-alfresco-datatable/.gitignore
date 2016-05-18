@@ -1,0 +1,10 @@
+npm-debug.log
+node_modules/
+.idea/
+typings
+coverage/
+dist/
+src/**/*.js
+src/**/*.js.map
+ng2-alfresco-datatable.js
+ng2-alfresco-datatable.js.map
