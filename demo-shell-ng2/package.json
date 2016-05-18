@@ -64,7 +64,6 @@
     "gulp-tslint": "^3.6.0",
     "gulp-typescript": "^2.8.0",
     "jasmine-core": "2.4.1",
-    "lite-server": "^2.2.0",
     "live-server": "^0.9.2",
     "tsconfig-glob": "^0.3.3",
     "typescript": "^1.8.10",
