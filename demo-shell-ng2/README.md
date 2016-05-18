@@ -42,6 +42,12 @@ docker-compose rm
 npm link ../ng2-components/ng2-alfresco-core
 ```
 
+*ng2-alfresco-datatable component:*
+
+```sh
+npm link ../ng2-components/ng2-alfresco-datatable
+```
+
 *ng2-alfresco-documentlist component:*
 
 ```sh
