@@ -30,13 +30,13 @@ docker-compose rm
 
 ### Building and running steps:
 
-1. Install dependencies
+1 Install dependencies
 
 ```sh
 npm install
 ```
 
-2. Fast build and watch for dev purposes
+2 Fast build and watch for dev purposes
 
 ```sh
 npm start.dev
