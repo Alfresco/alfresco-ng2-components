@@ -19,6 +19,17 @@
 git clone https://github.com/Alfresco/dev-platform-js-api.git
 git clone https://github.com/Alfresco/dev-platform-webcomponents.git
 cd dev-platform-webcomponents
+```
+
+* Start the demo and Install all the dependencies (do it the first time or after an a project update)
+
+```sh
+./start.sh -install
+```
+
+* Start the demo 
+
+```sh
 ./start.sh
 ```
 
