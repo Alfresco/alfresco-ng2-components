@@ -21,7 +21,7 @@ git clone https://github.com/Alfresco/dev-platform-webcomponents.git
 cd dev-platform-webcomponents
 ```
 
-* Start the demo and Install all the dependencies (do it the first time or after an a project update)
+* Start the demo and Install all the dependencies (do it the first time or after a project update)
 
 ```sh
 ./start.sh -install
@@ -40,5 +40,6 @@ For development environment configuration please refer to [project docs](demo-sh
 - [Core library](ng2-components/ng2-alfresco-core/README.md)
 - [DataTable](ng2-components/ng2-alfresco-datatable/README.md)
 - [DocumentList](ng2-components/ng2-alfresco-documentlist/README.md)
+- [Viewer](ng2-components/ng2-alfresco-viewer/README.md)
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
