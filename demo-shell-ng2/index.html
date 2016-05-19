@@ -32,35 +32,9 @@
     <script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
 
     <!-- 2. Configure SystemJS -->
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-            map: {
-                'ng2-uploader': 'node_modules/ng2-uploader',
-                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable',
-                'ng2-alfresco-documentlist': 'node_modules/ng2-alfresco-documentlist',
-                'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
-                'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
-                'ng2-translate': 'node_modules/ng2-translate',
-                'rxjs': 'node_modules/rxjs'
-            },
-            packages: {
-                app: {
-                    format: 'register',
-                    defaultExtension: 'js'
-                },
-                'ng2-uploader': {defaultExtension: 'js'},
-                'ng2-alfresco-core': {defaultExtension: 'js'},
-                'ng2-alfresco-documentlist': {defaultExtension: 'js'},
-                'ng2-alfresco-login': {defaultExtension: 'js'},
-                'ng2-alfresco-upload': {defaultExtension: 'js'},
-                'ng2-alfresco-datatable': {defaultExtension: 'js'},
-                'ng2-translate': {defaultExtension: 'js'},
-                'rxjs': {defaultExtension: 'js'}
-            }
-        });
-        System.import('app/main')
-                .then(null, console.error.bind(console));
+        System.import('app/main').catch(function(err){ console.error(err); });
     </script>
 </head>
 <!-- 3. Display the application -->
