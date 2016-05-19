@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular 2 Viewer - Demo</title>
+    <base href="/">
+
+    <!-- 1. Load libraries -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
+
+    <script>
+        System.config({
+            defaultJSExtensions: true,
+            map: {
+                'rxjs': 'node_modules/rxjs',
+                'angular2': 'node_modules/angular2',
+                'PDFJS': 'node_modules/pdfjs-dist/build',
+                'app': 'dist/main'
+            },
+            packages: {
+                'app': {
+                   defaultExtension: 'js'
+                },
+                'rxjs': {
+                    defaultExtension: 'js'
+                },
+                'angular2': {
+                    defaultExtension: 'js'
+                },
+                'PDFJS': {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+
+        System.import('app').catch(console.log.bind(console));
+    </script>
+
+</head>
+<body>
+
+<ng2-alfresco-viewer>Loading...</ng2-alfresco-viewer>
+
+</body>
+</html>

@@ -15,4 +15,23 @@
  * limitations under the License.
  */
 
-export * from './src/ng-2-alfresco-viewer.component';
+import {Component} from 'angular2/core';
+
+@Component({
+    selector: 'ng2-alfresco-viewer',
+    styles: [
+      `
+              :host h1 {
+                  font-size:22px
+              }
+          `
+    ],
+    template: `<H1>ng2-alfresco-viewer</H1>`
+})
+export class Ng2AlfrescoViewerComponent {
+
+    constructor() {
+        console.log('../contructor');
+    }
+
+}

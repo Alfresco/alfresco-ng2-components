@@ -4,13 +4,13 @@
     "pdf",
     "alfresco-component"
   ],
-  "name": "ng-2-alfresco-viewer",
+  "name": "ng2-alfresco-viewer",
   "description": "Alfresco documents viewer",
   "version": "0.1.1",
   "author": "Eugenio Romano",
   "scripts": {
     "typings": "typings install",
-    "start": "npm run test && http-server -c-1 -o -p 8875 .",
+    "start": "http-server -c-1 -o -p 8875 .",
     "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
     "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json src/**/*.ts",
@@ -25,15 +25,14 @@
     "test": "karma start karma.conf.js",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
     "coverage": "http-server -c-1 -o -p 9875 ./coverage",
-    "deploy": "http-server -c-1 -o -p 9875 ./demo/demo.html",
     "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alfresco/ng-2-alfresco-viewer.git"
+    "url": "https://github.com/alfresco/ng2-alfresco-viewer.git"
   },
   "bugs": {
-    "url": "https://github.com/alfresco/ng-2-alfresco-viewer/issues"
+    "url": "https://github.com/alfresco/ng2-alfresco-viewer/issues"
   },
   "dependencies": {
     "angular2": "2.0.0-beta.15",
