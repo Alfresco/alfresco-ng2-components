@@ -25,23 +25,30 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';
+    private _componentList: string[] = [];
 
     constructor(private http: Http) {
     }
 
+    addComponentList(name: string) {
+        this._componentList.push(name);
+    }
+
     getTranslation(lang: string): Observable<any> {
+
+        let observableBatch = [];
+        this._componentList.forEach((component) => {
+            observableBatch.push(this.http.get(`${component}/${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()))
+        });
+
         return Observable.create(observer => {
-            Observable.forkJoin(
-                this.http.get(`${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()),
-                this.http.get('node_modules/ng2-alfresco-upload/' +
-                    `${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()),
-                this.http.get('node_modules/ng2-alfresco-login/' +
-                    `${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json())
-            ).subscribe(
-                data => {
-                    let multiLanguage = JSON.parse((JSON.stringify(data[0])
-                    + JSON.stringify(data[1])
-                    + JSON.stringify(data[2])).replace(/}{/g, ','));
+            Observable.forkJoin(observableBatch).subscribe(
+                    translations => {
+                        let multiLanguage = '' ;
+                        translations.forEach((translate) => {
+                            multiLanguage += JSON.stringify(translate);
+                         });
+                    observer.next(JSON.parse(multiLanguage.replace(/}{/g, '','')));
                     observer.next(multiLanguage);
                     observer.complete();
                 });

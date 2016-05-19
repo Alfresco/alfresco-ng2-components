@@ -167,7 +167,8 @@ export class AlfrescoLoginComponent {
         userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
 
         this.translate.setDefaultLang(userLang);
-
+        this.translate.currentLoader.addComponentList('node_modules/ng2-alfresco-login');
+        this.translate.getTranslation(userLang);
         this.translate.use(userLang);
     }
 }
