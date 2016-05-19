@@ -13,11 +13,29 @@
 
 All the components are stored in our private repository, the address is http://52.16.120.219:4873/. The repository is visible only from the Alfresco VPN.
 
-How to configure it:
+##### How to configure it:
 
 ```sh
 npm set registry http://52.16.120.219:4873
 npm adduser --registry http://52.16.120.219:4873
+```
+
+##### How to publish on it:
+
+Add the repository to your package.json. 
+ATTENTION: If you don't add the following lines, the package is published on the public Npm repository.
+
+```json
+  "publishConfig": {
+    "registry": "http://52.16.120.219:4873/"
+  }
+```
+
+Run the command below:
+
+```sh
+npm version patch
+npm publish
 ```
 
 ### Running demo project
