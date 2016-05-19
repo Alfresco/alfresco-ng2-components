@@ -39,7 +39,7 @@ npm install
 2 Fast build and watch for dev purposes
 
 ```sh
-npm start.dev
+npm start
 ```
 
 >`start` script also includes live reload and watchers for all the `.ts` files.
