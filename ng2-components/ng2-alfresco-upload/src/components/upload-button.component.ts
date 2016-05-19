@@ -20,7 +20,7 @@ import { Component, ViewChild, ElementRef, Input, Output, EventEmitter, Optional
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
 import 'rxjs/Rx';
 
 declare let componentHandler: any;
@@ -51,7 +51,7 @@ declare let __moduleName: string;
     directives: [FileUploadingDialogComponent],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.css'],
-    pipes: [TranslatePipe]
+    pipes: [AlfrescoPipeTranslate]
 })
 export class UploadButtonComponent {
 
@@ -87,12 +87,12 @@ export class UploadButtonComponent {
 
     filesUploadingList: FileModel [] = [];
 
-    translate: TranslateService;
+    translate: AlfrescoTranslationService;
 
     private _uploaderService: UploadService;
 
     constructor(public el: ElementRef,
-                @Optional() translate: TranslateService) {
+                @Optional() translate: AlfrescoTranslationService) {
         console.log('UploadComponent constructor', el);
 
         let site = this.getSiteId();
@@ -106,9 +106,7 @@ export class UploadButtonComponent {
             }
         });
 
-        if (translate) {
-            this.translationInit(translate);
-        }
+        translate.translationInit('node_modules/ng2-alfresco-upload');
     }
 
     /**
@@ -129,21 +127,6 @@ export class UploadButtonComponent {
                 this._showUndoNotificationBar(latestFilesAdded);
             }
         }
-    }
-
-    /**
-     * Initial configuration for Multi language
-     * @param translate
-     */
-    translationInit(translate: TranslateService) {
-        this.translate = translate;
-        let userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
-
-        this.translate.setDefaultLang(userLang);
-        this.translate.currentLoader.addComponentList('node_modules/ng2-alfresco-upload');
-        this.translate.getTranslation(userLang);
-        this.translate.use(userLang);
     }
 
     /**

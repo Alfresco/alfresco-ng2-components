@@ -18,7 +18,7 @@
 import { Component, ElementRef, Input } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
 
 declare let __moduleName: string;
 
@@ -40,7 +40,7 @@ declare let __moduleName: string;
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.css'],
     host: {'[class.dialog-show]': 'toggleShowDialog'},
-    pipes: [TranslatePipe]
+    pipes: [AlfrescoPipeTranslate]
 })
 export class FileUploadingDialogComponent {
 

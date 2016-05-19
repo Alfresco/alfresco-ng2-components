@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { bootstrap }    from 'angular2/platform/browser';
-import { AppComponent } from './app.component';
-import { ROUTER_PROVIDERS } from 'angular2/router';
-import { HTTP_PROVIDERS }    from 'angular2/http';
-import { ALFRESCO_AUTHENTICATION } from 'ng2-alfresco-login/ng2-alfresco-login';
-import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService } from 'ng2-alfresco-core/services';
+import { Injectable, ChangeDetectorRef, Pipe } from 'angular2/core';
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { AlfrescoTranslationService } from './AlfrescoTranslationService.service';
 
-bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
-    HTTP_PROVIDERS,
-    AlfrescoTranslationService,
-    ALFRESCO_AUTHENTICATION,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@Injectable()
+@Pipe({
+    name: 'translate',
+    pure: false // required to update the value when the promise is resolved
+})
+export class AlfrescoPipeTranslate extends TranslatePipe {
+
+    constructor(translate: AlfrescoTranslationService, _ref: ChangeDetectorRef) {
+        super(translate, _ref);
+    }
+}

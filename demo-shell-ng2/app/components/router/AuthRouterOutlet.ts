@@ -16,7 +16,7 @@
  */
 import { ElementRef, DynamicComponentLoader, Directive, Attribute } from 'angular2/core';
 import { Router, RouterOutlet, ComponentInstruction } from 'angular2/router';
-import {AlfrescoAuthenticationService} from 'ng2-alfresco-login/ng2-alfresco-login';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-login';
 
 @Directive({selector: 'auth-router-outlet'})
 export class AuthRouterOutlet extends RouterOutlet {
@@ -24,11 +24,9 @@ export class AuthRouterOutlet extends RouterOutlet {
     publicRoutes: Array<string>;
     private router: Router;
 
-    constructor(
-        _elementRef: ElementRef, _loader: DynamicComponentLoader,
-        _parentRouter: Router, @Attribute('name') nameAttr: string,
-        private authentication: AlfrescoAuthenticationService
-    ) {
+    constructor(_elementRef: ElementRef, _loader: DynamicComponentLoader,
+                _parentRouter: Router, @Attribute('name') nameAttr: string,
+                private authentication: AlfrescoAuthenticationService) {
         super(_elementRef, _loader, _parentRouter, nameAttr);
 
         this.router = _parentRouter;

@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from 'angular2/core';
-import { Http, Response } from 'angular2/http';
-import { TranslateLoader } from 'ng2-translate/ng2-translate';
+import { Response, Http } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
+import { TranslateLoader } from 'ng2-translate/ng2-translate';
 
 @Injectable()
 export class AlfrescoTranslationLoader implements TranslateLoader {
@@ -45,11 +45,11 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
         return Observable.create(observer => {
             Observable.forkJoin(observableBatch).subscribe(
                 (translations: any[]) => {
-                    let multiLanguage:any = '';
+                    let multiLanguage: any = '';
                     translations.forEach((translate) => {
                         multiLanguage += JSON.stringify(translate);
                     });
-                    observer.next(JSON.parse(multiLanguage.replace(/}{/g, '', '')));
+                    observer.next(JSON.parse(multiLanguage.replace(/}{/g, ',')));
                     observer.next(multiLanguage);
                     observer.complete();
                 });

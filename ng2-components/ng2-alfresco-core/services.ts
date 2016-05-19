@@ -16,20 +16,29 @@
  */
 
 
-import {AlfrescoSettingsService} from './services/AlfrescoSettingsService';
-import {AlfrescoTranslationLoader} from './services/AlfrescoTranslationService';
-export * from './services/AlfrescoSettingsService';
-export * from './services/AlfrescoTranslationService';
+import {AlfrescoSettingsService} from './services/AlfrescoSettingsService.service';
+import {AlfrescoTranslationLoader} from './services/AlfrescoTranslationLoader.service';
+import {AlfrescoTranslationService} from './services/AlfrescoTranslationService.service';
+import {AlfrescoPipeTranslate} from './services/AlfrescoPipeTranslate.service';
+
+export * from './services/AlfrescoSettingsService.service';
+export * from './services/AlfrescoTranslationLoader.service';
+export * from './services/AlfrescoTranslationService.service';
+export * from './services/AlfrescoPipeTranslate.service';
 
 export default {
     directives: [],
     providers: [
         AlfrescoSettingsService,
-        AlfrescoTranslationLoader
+        AlfrescoTranslationLoader,
+        AlfrescoTranslationService,
+        AlfrescoPipeTranslate
     ]
 };
 
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
     AlfrescoSettingsService,
-    AlfrescoTranslationLoader
+    AlfrescoTranslationLoader,
+    AlfrescoTranslationService,
+    AlfrescoPipeTranslate
 ];

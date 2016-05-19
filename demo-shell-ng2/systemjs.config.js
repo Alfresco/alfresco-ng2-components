@@ -19,11 +19,10 @@
 
     // map tells the System loader where to look for things
     var map = {
-        'ng2-uploader': 'node_modules/ng2-uploader',
-        'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
+        'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist',
         'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable/dist',
         'ng2-alfresco-documentlist': 'node_modules/ng2-alfresco-documentlist/dist',
-        'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
+        'ng2-alfresco-login': 'node_modules/ng2-alfresco-login/dist',
         'ng2-alfresco-search': 'node_modules/ng2-alfresco-search/dist',
         'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload/dist',
         'ng2-translate': 'node_modules/ng2-translate',
@@ -36,7 +35,6 @@
             format: 'register',
             defaultExtension: 'js'
         },
-        'ng2-uploader': {defaultExtension: 'js'},
         'ng2-alfresco-core': {defaultExtension: 'js'},
         'ng2-alfresco-datatable': {defaultExtension: 'js'},
         'ng2-alfresco-documentlist': {defaultExtension: 'js'},

@@ -23,7 +23,7 @@ import {
 } from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
 import { MDL } from 'ng2-alfresco-core/material';
 import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
-import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
 
 declare let __moduleName: string;
 
@@ -33,7 +33,7 @@ declare let __moduleName: string;
     templateUrl: './files.component.html',
     directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENT],
     providers: [DOCUMENT_LIST_PROVIDERS],
-    pipes: [TranslatePipe]
+    pipes: [AlfrescoPipeTranslate]
 })
 export class FilesComponent {
     breadcrumb: boolean = false;

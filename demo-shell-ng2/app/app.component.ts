@@ -18,13 +18,11 @@
 import { Component } from 'angular2/core';
 import { ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-login';
 import { MDL } from 'ng2-alfresco-core/material';
 import { FilesComponent } from './components/files/files.component';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login/ng2-alfresco-login';
+import { AlfrescoLoginComponent, AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-login';
 import { AuthRouterOutlet } from './components/router/AuthRouterOutlet';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core/services';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
 import { UploadButtonComponent } from 'ng2-alfresco-upload/ng2-alfresco-upload';
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
 import { AlfrescoSearchComponent } from 'ng2-alfresco-search/ng2-alfresco-search';
@@ -35,7 +33,7 @@ declare var document: any;
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
     directives: [ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
-    pipes: [TranslatePipe]
+    pipes: [AlfrescoPipeTranslate]
 })
 @RouteConfig([
     {path: '/home', name: 'Home', component: FilesComponent},
@@ -52,7 +50,7 @@ export class AppComponent {
     constructor(private _fb: FormBuilder,
                 public auth: AlfrescoAuthenticationService,
                 public router: Router,
-                translate: TranslateService,
+                translate: AlfrescoTranslationService,
                 alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
 
@@ -60,7 +58,7 @@ export class AppComponent {
             searchTerm: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
         });
 
-        this.translationInit(translate);
+        translate.translationInit('');
     }
 
     isActive(instruction: any[]): boolean {
@@ -81,18 +79,6 @@ export class AppComponent {
 
     changeLanguage(lang: string) {
         this.translate.use(lang);
-    }
-
-    translationInit(translate: TranslateService) {
-        this.translate = translate;
-        let userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
-
-        this.translate.setDefaultLang('en');
-
-        this.translate.currentLoader.addComponentList('');
-        this.translate.getTranslation(userLang);
-        this.translate.use(userLang);
     }
 
     hideDrawer() {

@@ -19,7 +19,7 @@ import { Component, Output, EventEmitter } from 'angular2/core';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { AlfrescoAuthenticationService } from './../services/alfresco-authentication.service';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
 declare let componentHandler: any;
 declare let __moduleName: string;
 
@@ -29,7 +29,7 @@ declare let __moduleName: string;
     directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
     templateUrl: './alfresco-login.component.html',
     styleUrls: ['./alfresco-login.component.css'],
-    pipes: [TranslatePipe]
+    pipes: [AlfrescoPipeTranslate]
 
 })
 export class AlfrescoLoginComponent {
@@ -37,7 +37,6 @@ export class AlfrescoLoginComponent {
     onSuccess = new EventEmitter();
     @Output()
     onError = new EventEmitter();
-    translate: TranslateService;
 
     form: ControlGroup;
     error: boolean = false;
@@ -57,7 +56,7 @@ export class AlfrescoLoginComponent {
     constructor(private _fb: FormBuilder,
                 public auth: AlfrescoAuthenticationService,
                 public router: Router,
-                translate: TranslateService) {
+                private translate: AlfrescoTranslationService) {
 
         this.formError = {
             'username': '',
@@ -78,6 +77,8 @@ export class AlfrescoLoginComponent {
                 'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
             }
         };
+
+        translate.translationInit('node_modules/ng2-alfresco-login');
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
 
