@@ -17,26 +17,29 @@
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
 
+    <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
+    <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
+
+    <script>
+        PDFJS.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.js';
+    </script>
+
     <script>
         System.config({
             defaultJSExtensions: true,
             map: {
                 'rxjs': 'node_modules/rxjs',
                 'angular2': 'node_modules/angular2',
-                'PDFJS': 'node_modules/pdfjs-dist/build',
                 'app': 'dist/main'
             },
             packages: {
                 'app': {
-                   defaultExtension: 'js'
+                    defaultExtension: 'js'
                 },
                 'rxjs': {
                     defaultExtension: 'js'
                 },
                 'angular2': {
-                    defaultExtension: 'js'
-                },
-                'PDFJS': {
                     defaultExtension: 'js'
                 }
             }
@@ -47,7 +50,7 @@
 
 </head>
 <body>
-
+<canvas id="the-canvas" style="border:1px solid black;"/>
 <ng2-alfresco-viewer>Loading...</ng2-alfresco-viewer>
 
 </body>
