@@ -1,0 +1,14 @@
+npm-debug.log
+.idea
+
+assets/
+coverage/
+demo/
+node_modules
+typings/
+src/
+
+/ng2-alfresco-search.ts
+/ng2-alfresco-search.d.ts
+/ng2-alfresco-search.js
+/ng2-alfresco-search.js.map
