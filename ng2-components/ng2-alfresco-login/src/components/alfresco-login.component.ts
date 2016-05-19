@@ -78,7 +78,6 @@ export class AlfrescoLoginComponent {
                 'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
             }
         };
-        this.translationInit(translate);
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
 
@@ -155,20 +154,5 @@ export class AlfrescoLoginComponent {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Initial configuration for Multi language
-     * @param translate
-     */
-    translationInit(translate: TranslateService) {
-        this.translate = translate;
-        let userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
-
-        this.translate.setDefaultLang(userLang);
-        this.translate.currentLoader.addComponentList('node_modules/ng2-alfresco-login');
-        this.translate.getTranslation(userLang);
-        this.translate.use(userLang);
     }
 }
