@@ -15,7 +15,33 @@
  * limitations under the License.
  */
 
-export class ColumnSortingModel {
+export interface DataTableAdapter {
+
+    rows: DataRow[];
+    columns: DataColumn[];
+
+    getValue(row: DataRow, col: DataColumn): any;
+    getSorting(): DataSorting;
+    setSorting(sorting: DataSorting): void;
+}
+
+export interface DataRow {
+    hasValue(key: string): boolean;
+    getValue(key: string): any;
+}
+
+export interface DataColumn {
     key: string;
-    direction: string = 'asc';
+    type: string; // text|image
+    sortable: boolean;
+    title: string;
+    srTitle: string;
+    cssClass: string;
+}
+
+export class DataSorting {
+    constructor(
+        public key: string,
+        public direction: string) {
+    }
 }

@@ -16,43 +16,14 @@
  */
 
 import { DataTableComponent } from './src/components/datatable.component';
-import { DataColumnComponent } from './src/components/data-column.component';
-import { DataColumnListComponent } from './src/components/data-column-list.component';
-import { DataActionComponent } from './src/components/data-action.component';
-import { DataActionListComponent } from './src/components/data-action-list.component';
-
-import { FolderActionsService } from './src/services/folder-actions.service';
-import { DocumentActionsService } from './src/services/document-actions.service';
-import { AlfrescoService } from './src/services/alfresco.service';
 
 // components
 export * from './src/components/datatable.component';
-export * from './src/components/data-column.component';
-export * from './src/components/data-column-list.component';
-export * from './src/components/data-action.component';
-export * from './src/components/data-action-list.component';
 
-// models
-export * from './src/models/data-action.model';
-export * from './src/models/data-column.model';
-export * from './src/models/column-sorting.model';
-
-// services
-export * from './src/services/folder-actions.service';
-export * from './src/services/document-actions.service';
-export * from './src/services/alfresco.service';
-
+// data
+export * from './src/data/datatable-adapter';
+export * from './src/data/object-datatable-adapter';
 
 export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
-    DataTableComponent,
-    DataColumnComponent,
-    DataColumnListComponent,
-    DataActionComponent,
-    DataActionListComponent
-];
-
-export const ALFRESCO_DATATABLE_PROVIDERS: [any] = [
-    AlfrescoService,
-    FolderActionsService,
-    DocumentActionsService
+    DataTableComponent
 ];
