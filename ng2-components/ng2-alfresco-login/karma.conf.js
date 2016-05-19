@@ -75,6 +75,6 @@ module.exports = function (config) {
             ]
         },
 
-        singleRun: false
+        singleRun: true
     })
 };

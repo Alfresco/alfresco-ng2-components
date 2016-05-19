@@ -1,3 +1,5 @@
+///<reference path="../../node_modules/angular2/typings/browser.d.ts"/>
+
 /**
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
@@ -15,13 +17,18 @@
  * limitations under the License.
  */
 
-import {Component} from 'angular2/core';
+import { Component } from 'angular2/core';
+import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 
 @Component({
-    selector: 'home',
-    template: 'Welcome'
+    selector: 'my-demo',
+    template: `<alfresco-upload-button [showDialogUpload]="true"
+                                       [showUdoNotificationBar]="true"
+                                       [uploadFolders]="false"
+                                       [multipleFiles]="false">
+               </alfresco-upload-button>`,
+    directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
-
-export class HomeComponent {
+export class MyDemoComponent {
 
 }

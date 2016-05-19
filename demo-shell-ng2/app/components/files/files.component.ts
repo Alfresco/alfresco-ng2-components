@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import {Component} from 'angular2/core';
+import { Component } from 'angular2/core';
 import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService
 } from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
-import {MDL} from 'ng2-alfresco-core/material';
-import {ALFRESCO_ULPOAD_COMPONENT} from 'ng2-alfresco-upload/ng2-alfresco-upload';
-import {TranslatePipe} from 'ng2-translate/ng2-translate';
+import { MDL } from 'ng2-alfresco-core/material';
+import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
 
-declare let __moduleName:string;
+declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
@@ -68,7 +68,7 @@ export class FilesComponent {
     }
 
     getRelativeDirectory(currentFolderPath: string): string {
-        if(currentFolderPath.indexOf('/Sites/swsdp/documentLibrary/') !=-1) {
+        if (currentFolderPath.indexOf('/Sites/swsdp/documentLibrary/') != -1) {
             return currentFolderPath.replace('/Sites/swsdp/documentLibrary/', '')
         } else {
             return currentFolderPath.replace('/Sites/swsdp/documentLibrary', '')

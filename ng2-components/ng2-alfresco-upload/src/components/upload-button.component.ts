@@ -16,11 +16,12 @@
  */
 
 
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter, Optional } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import 'rxjs/Rx';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -88,7 +89,7 @@ export class UploadButtonComponent {
     private _uploaderService: UploadService;
 
     constructor(public el: ElementRef,
-                translate: TranslateService) {
+                @Optional() translate: TranslateService) {
         console.log('UploadComponent constructor', el);
 
         this._uploaderService = new UploadService({
@@ -103,7 +104,9 @@ export class UploadButtonComponent {
             }
         });
 
-        this.translationInit(translate);
+        if (translate) {
+            this.translationInit(translate);
+        }
     }
 
     /**
