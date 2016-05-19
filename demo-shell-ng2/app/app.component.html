@@ -6,6 +6,19 @@
             <span class="mdl-layout-title">Alfresco</span>
             <!-- Add spacer, to align navigation to the right -->
             <div class="mdl-layout-spacer"></div>
+
+            <form [ngFormModel]="searchForm" (submit)="onSearch(searchForm.value, $event)">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchTerm">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="searchTerm" ngControl="searchTerm">
+                        <label class="mdl-textfield__label" for="searchTerm">Expandable Input</label>
+                    </div>
+                </div>
+            </form>
+
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
                 <a class="mdl-navigation__link" data-automation-id="files" href="" [routerLink]="['Files']">DocumentList</a>

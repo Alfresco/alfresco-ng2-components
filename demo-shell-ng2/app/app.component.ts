@@ -16,6 +16,7 @@
  */
 
 import { Component } from 'angular2/core';
+import { ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-login';
 import { MDL } from 'ng2-alfresco-core/material';
@@ -26,6 +27,7 @@ import { AlfrescoSettingsService } from 'ng2-alfresco-core/services';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 import { UploadButtonComponent } from 'ng2-alfresco-upload/ng2-alfresco-upload';
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
+import { AlfrescoSearchComponent } from 'ng2-alfresco-search/ng2-alfresco-search';
 
 declare var document: any;
 
@@ -40,16 +42,23 @@ declare var document: any;
     {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
     {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
     {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
-    {path: '/login', name: 'Login', component: AlfrescoLoginComponent}
+    {path: '/login', name: 'Login', component: AlfrescoLoginComponent},
+    {path: '/search', name: 'Search', component: AlfrescoSearchComponent}
 ])
 export class AppComponent {
     translate: TranslateService;
+    searchForm: ControlGroup;
 
-    constructor(public auth: AlfrescoAuthenticationService,
+    constructor(private _fb: FormBuilder,
+                public auth: AlfrescoAuthenticationService,
                 public router: Router,
                 translate: TranslateService,
                 alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+
+        this.searchForm = this._fb.group({
+            searchTerm: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
+        });
 
         this.translationInit(translate);
     }
@@ -89,5 +98,17 @@ export class AppComponent {
     hideDrawer() {
         // todo: workaround for drawer closing
         document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+    }
+
+    /**
+     * Method called on submit form
+     * @param value
+     * @param event
+     */
+    onSearch(value: any, event) {
+        if (event) {
+            event.preventDefault();
+        }
+        this.router.navigate(['Search', value]);
     }
 }

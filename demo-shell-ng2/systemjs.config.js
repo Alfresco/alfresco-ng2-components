@@ -24,6 +24,7 @@
         'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable/dist',
         'ng2-alfresco-documentlist': 'node_modules/ng2-alfresco-documentlist/dist',
         'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
+        'ng2-alfresco-search': 'node_modules/ng2-alfresco-search',
         'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload/dist',
         'ng2-translate': 'node_modules/ng2-translate',
         'rxjs': 'node_modules/rxjs'
@@ -37,10 +38,11 @@
         },
         'ng2-uploader': {defaultExtension: 'js'},
         'ng2-alfresco-core': {defaultExtension: 'js'},
+        'ng2-alfresco-datatable': {defaultExtension: 'js'},
         'ng2-alfresco-documentlist': {defaultExtension: 'js'},
         'ng2-alfresco-login': {defaultExtension: 'js'},
+        'ng2-alfresco-search': {defaultExtension: 'js'},
         'ng2-alfresco-upload': {defaultExtension: 'js'},
-        'ng2-alfresco-datatable': {defaultExtension: 'js'},
         'ng2-translate': {defaultExtension: 'js'},
         'rxjs': {defaultExtension: 'js'}
     };

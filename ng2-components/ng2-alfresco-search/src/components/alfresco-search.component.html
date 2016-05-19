@@ -1,0 +1,17 @@
+<h1>Search results</h1>
+<p *ngIf="results">Found {{results.length}} results for {{currentSearchTerm}}</p>
+<table *ngIf="results" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <thead>
+    <tr>
+        <th>
+            <span class="mdl-data-table__cell--non-numeric">Name</span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="#result of results; #idx = index">
+        <td>{{result.entry.name}}</td>
+    </tr>
+    </tbody>
+</table>
