@@ -3,7 +3,11 @@ cd demo-shell-ng2
 
 #!/bin/sh
 if  [[ $1 = "-install" ]]; then
+    npm install
+    npm run start
+elif  [[ $1 = "-update " ]]; then
+    npm run update
     npm run start
 else
-    npm run start.dev
+    npm run start
 fi

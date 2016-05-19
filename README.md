@@ -49,10 +49,16 @@ git clone https://github.com/Alfresco/dev-platform-webcomponents.git
 cd dev-platform-webcomponents
 ```
 
-* Start the demo and Install all the dependencies (do it the first time or after a project update)
+* Start the demo and Install all the dependencies (do it the first time)
 
 ```sh
 ./start.sh -install
+```
+
+* Start the demo and update the dependencies
+
+```sh
+./start.sh -update
 ```
 
 * Start the demo 
