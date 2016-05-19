@@ -38,17 +38,18 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
 
         let observableBatch = [];
         this._componentList.forEach((component) => {
-            observableBatch.push(this.http.get(`${component}/${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()))
+            observableBatch.push(this.http.get(`${component}/${this.prefix}/${lang}${this.suffix}`)
+                .map((res: Response) => res.json()));
         });
 
         return Observable.create(observer => {
             Observable.forkJoin(observableBatch).subscribe(
-                    translations => {
-                        let multiLanguage = '' ;
-                        translations.forEach((translate) => {
-                            multiLanguage += JSON.stringify(translate);
-                         });
-                    observer.next(JSON.parse(multiLanguage.replace(/}{/g, '','')));
+                (translations: any[]) => {
+                    let multiLanguage:any = '';
+                    translations.forEach((translate) => {
+                        multiLanguage += JSON.stringify(translate);
+                    });
+                    observer.next(JSON.parse(multiLanguage.replace(/}{/g, '', '')));
                     observer.next(multiLanguage);
                     observer.complete();
                 });
