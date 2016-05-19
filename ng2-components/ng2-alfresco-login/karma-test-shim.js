@@ -20,7 +20,8 @@ System.config({
         }
     },
     map: {
-        'ng2-translate': '/base/node_modules/ng2-translate/bundles'
+        'ng2-translate': '/base/node_modules/ng2-translate/bundles',
+        'ng2-alfresco-core': '/base/dist/node_modules/ng2-alfresco-core'
     }
 });
 
