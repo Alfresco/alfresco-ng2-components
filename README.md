@@ -22,7 +22,7 @@ npm adduser --registry http://52.16.120.219:4873
 
 ##### How to publish on it:
 
-Add the repository to your package.json. 
+- Add the repository to your package.json. 
 ATTENTION: If you don't add the following lines, the package is published on the public Npm repository.
 
 ```json
@@ -30,8 +30,7 @@ ATTENTION: If you don't add the following lines, the package is published on the
     "registry": "http://52.16.120.219:4873/"
   }
 ```
-
-Run the command below:
+- Then run the command below each time you want to publish a new version:
 
 ```sh
 npm version patch
