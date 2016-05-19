@@ -47,7 +47,10 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     data: DataTableAdapter;
 
     @Output()
-    onRowClick: EventEmitter<any> = new EventEmitter();
+    rowClick: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    rowDblClick: EventEmitter<any> = new EventEmitter();
 
     ngOnInit() {
         if (this.data) {
@@ -64,12 +67,22 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         }
     }
 
-    onRowClicked(row: DataRow, e?) {
+    onRowClick(row: DataRow, e?) {
         if (e) {
             e.preventDefault();
         }
 
-        this.onRowClick.emit({
+        this.rowClick.emit({
+            value: row
+        });
+    }
+
+    onRowDblClick(row: DataRow, e?) {
+        if (e) {
+            e.preventDefault();
+        }
+
+        this.rowDblClick.emit({
             value: row
         });
     }
