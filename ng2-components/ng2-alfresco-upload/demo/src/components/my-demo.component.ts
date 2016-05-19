@@ -18,7 +18,7 @@
  */
 
 import { Component } from 'angular2/core';
-import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
+import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
 
 @Component({
     selector: 'my-demo',

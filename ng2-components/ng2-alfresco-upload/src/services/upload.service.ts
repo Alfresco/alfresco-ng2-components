@@ -21,6 +21,8 @@ import { EventEmitter } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
 import { Response } from 'angular2/http';
 
+declare let AlfrescoApi: any;
+
 /**
  *
  * UploadService keep the queue of the file to upload and uploads them.
@@ -195,7 +197,7 @@ export class UploadService {
         let xmlHttpRequest = this.createXMLHttpRequestInstance(uploadingFileModel, elementEmit);
 
         xmlHttpRequest.open(this._method, this._host + this._url, true);
-        let authToken = btoa(basicAuth.username +':'+ basicAuth.password);
+        let authToken = btoa(basicAuth.username + ':' + basicAuth.password);
         if (authToken) {
             xmlHttpRequest.setRequestHeader('Authorization', `${basicAuth.type} ${authToken}`);
         }
@@ -230,14 +232,14 @@ export class UploadService {
         let apiInstance = new AlfrescoApi.NodesApi(this._alfrescoClient);
         let nodeId = '-root-';
         let nodeBody = {
-            'name':name,
-            'nodeType':'cm:folder',
-            'relativePath':relativePath
+            'name': name,
+            'nodeType': 'cm:folder',
+            'relativePath': relativePath
         };
         return Observable.fromPromise(apiInstance.addNode(nodeId, nodeBody))
             .map(res => {
                 console.log(res);
-            } )
+            })
             .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
     }

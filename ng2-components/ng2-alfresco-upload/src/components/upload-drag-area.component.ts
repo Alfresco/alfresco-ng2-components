@@ -131,9 +131,9 @@ export class UploadDragAreaComponent {
                         });
                     },
                     error => {
-                        error;
+                        console.log(error);
                     }
-            );
+                );
         }
     }
 
@@ -144,8 +144,8 @@ export class UploadDragAreaComponent {
      */
     private _traverseFileTree(item: any): void {
         if (item.isFile) {
-                let self = this;
-                self.onFilesEntityDropped(item);
+            let self = this;
+            self.onFilesEntityDropped(item);
         } else {
             if (item.isDirectory) {
                 let self = this;
@@ -166,7 +166,7 @@ export class UploadDragAreaComponent {
      * @returns {string}
      */
     private getSiteId(): string {
-        return this.currentFolderPath.replace('/Sites/','').split('/')[0];
+        return this.currentFolderPath.replace('/Sites/', '').split('/')[0];
     }
 
     /**
@@ -174,6 +174,6 @@ export class UploadDragAreaComponent {
      * @returns {string}
      */
     private getContainerId(): string {
-        return this.currentFolderPath.replace('/Sites/','').split('/')[1];
+        return this.currentFolderPath.replace('/Sites/', '').split('/')[1];
     }
 }

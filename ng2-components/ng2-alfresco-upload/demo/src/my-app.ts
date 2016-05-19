@@ -20,7 +20,7 @@ import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
 import { MyDemoComponent } from "./components/my-demo.component";
 import { TranslateLoader, TranslateService } from 'ng2-translate/ng2-translate';
-import { AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { AlfrescoTranslationLoader } from 'ng2-alfresco-core/services/AlfrescoTranslationService';
 
 @Component({
     selector: 'my-app',

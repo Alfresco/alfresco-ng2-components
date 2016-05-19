@@ -180,7 +180,7 @@ export class UploadButtonComponent {
      * @returns {any}
      */
     private getSiteId(): string {
-        return this.currentFolderPath.replace('/Sites/','').split('/')[0];
+        return this.currentFolderPath.replace('/Sites/', '').split('/')[0];
     }
 
     /**
@@ -188,6 +188,6 @@ export class UploadButtonComponent {
      * @returns {any}
      */
     private getContainerId(): string {
-        return this.currentFolderPath.replace('/Sites/','').split('/')[1];
+        return this.currentFolderPath.replace('/Sites/', '').split('/')[1];
     }
 }
