@@ -41,7 +41,7 @@ This component, provide a buttons to upload files to alfresco.
                         [showUdoNotificationBar]="true"
                         [uploadFolders]="true"
                         [multipleFiles]="false"
-                        [acceptedFilesType]="*">
+                        [acceptedFilesType]=".jpg,.gif,.png,.svg">
 </alfresco-upload-button>
 ```
 
@@ -58,7 +58,7 @@ import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-uplo
                                        [showUdoNotificationBar]="true"
                                        [uploadFolders]="true"
                                        [multipleFiles]="false"
-                                       [acceptedFilesType]="*">
+                                       [acceptedFilesType]=".jpg,.gif,.png,.svg">
                </alfresco-upload-button>`,
     directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
