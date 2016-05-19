@@ -31,5 +31,8 @@
     "keywords": [
         "angular2",
         "typescript"
-    ]
+    ],
+    "publishConfig": {
+        "registry": "http://52.16.120.219:4873/"
+    }
 }

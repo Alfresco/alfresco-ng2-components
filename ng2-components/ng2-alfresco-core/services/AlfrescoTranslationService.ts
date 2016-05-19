@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import {Injectable} from 'angular2/core';
-import {Http, Response} from 'angular2/http';
-import {TranslateLoader} from 'ng2-translate/ng2-translate';
-import {Observable} from 'rxjs/Observable'
+import { Injectable } from 'angular2/core';
+import { Http, Response } from 'angular2/http';
+import { TranslateLoader } from 'ng2-translate/ng2-translate';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AlfrescoTranslationLoader implements TranslateLoader {
@@ -32,16 +32,18 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
     getTranslation(lang: string): Observable<any> {
         return Observable.create(observer => {
             Observable.forkJoin(
-                this.http.get(`${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()),
-                this.http.get('node_modules/ng2-alfresco-upload/' + `${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()),
-                this.http.get('node_modules/ng2-alfresco-login/' + `${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json())
+                this.http.get('${this.prefix}/${lang}${this.suffix}').map((res: Response) => res.json()),
+                this.http.get('node_modules/ng2-alfresco-upload/' +
+                    `${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()),
+                this.http.get('node_modules/ng2-alfresco-login/' +
+                    `${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json())
             ).subscribe(
                 data => {
-                let multiLanguage = JSON.parse((JSON.stringify(data[0])
+                    let multiLanguage = JSON.parse((JSON.stringify(data[0])
                     + JSON.stringify(data[1])
-                    + JSON.stringify(data[2])).replace(/}{/g, ","));
-                observer.next(multiLanguage);
-                observer.complete();
+                    + JSON.stringify(data[2])).replace(/}{/g, ','));
+                    observer.next(multiLanguage);
+                    observer.complete();
                 });
         });
     }

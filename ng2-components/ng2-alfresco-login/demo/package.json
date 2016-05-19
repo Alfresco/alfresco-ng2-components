@@ -1,34 +1,38 @@
 {
-    "name": "ng2-alfresco-login-demo",
-    "description": "Alfresco Angular2 Login Component - Demo",
-    "version": "0.1.0",
-    "author": "Alfresco Software, Ltd.",
-    "main": "index.js",
-    "scripts": {
-        "postinstall": "npm run typings && npm link ng2-alfresco-login",
-        "typings": "typings install",
-        "start": "npm run test && http-server -c-1 -o -p 8875 .",
-        "build": "rm -rf dist && tsc",
-        "pretest": "npm install && npm run build"
-    },
-    "license": "MIT",
-    "dependencies": {
-        "angular2": "2.0.0-beta.13",
-        "es6-promise": "3.0.2",
-        "es6-shim": "0.35.0",
-        "reflect-metadata": "0.1.2",
-        "rxjs": "5.0.0-beta.2",
-        "zone.js": "0.6.6",
-        "ng2-translate": "^1.11.2"
-    },
-    "devDependencies": {
-        "http-server": "0.8.5",
-        "systemjs": "0.19.17",
-        "typescript": "1.7.5",
-        "typings": "0.6.8"
-    },
-    "keywords": [
-        "angular2",
-        "typescript"
-    ]
+  "name": "ng2-alfresco-login-demo",
+  "description": "Alfresco Angular2 Login Component - Demo",
+  "version": "0.1.0",
+  "author": "Alfresco Software, Ltd.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run typings",
+    "typings": "typings install",
+    "start": "npm run test && http-server -c-1 -o -p 8875 .",
+    "build": "rm -rf dist && tsc",
+    "pretest": "npm install && npm run build"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "angular2": "2.0.0-beta.13",
+    "es6-promise": "3.0.2",
+    "es6-shim": "0.35.0",
+    "ng2-alfresco-login": "^0.1.0",
+    "ng2-translate": "^1.11.2",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.6.6"
+  },
+  "devDependencies": {
+    "http-server": "0.8.5",
+    "systemjs": "0.19.17",
+    "typescript": "1.7.5",
+    "typings": "0.6.8"
+  },
+  "keywords": [
+    "angular2",
+    "typescript"
+  ],
+  "publishConfig": {
+    "registry": "http://52.16.120.219:4873/"
+  }
 }

@@ -1,97 +1,100 @@
 {
-    "name": "ng2-alfresco-upload",
-    "description": "Alfresco Angular2 Upload Component",
-    "version": "0.1.0",
-    "author": "Alfresco Software, Ltd.",
-    "scripts": {
-        "postinstall": "npm run build && typings install",
-        "typings": "typings install",
-        "start": "npm run test && http-server -c-1 -o -p 8875 .",
-        "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
-        "tslint": "npm run tslint-test && npm run tslint-src && npm run tslint-root",
-        "tslint-test": "tslint -c tslint.json test/**/*.ts",
-        "tslint-src": "tslint -c tslint.json src/**/*.ts",
-        "tslint-root": "tslint -c tslint.json *.ts",
-        "copytemplates": "npm run copy-html && npm run copy-css && npm run copy-i18n",
-        "copy-html": "copyfiles './src/**/*.html' dist",
-        "copy-css": "copyfiles './src/**/*.css' dist",
-        "copy-i18n": "copyfiles './i18n/**/*.json' dist",
-        "licensecheck": "license-check",
-        "tsc": "tsc",
-        "pretest": "npm run build",
-        "test": "karma start karma.conf.js",
-        "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
-        "coverage": "http-server -c-1 -o -p 9875 ./coverage"
+  "name": "ng2-alfresco-upload",
+  "description": "Alfresco Angular2 Upload Component",
+  "version": "0.1.1",
+  "author": "Alfresco Software, Ltd.",
+  "scripts": {
+    "typings": "typings install",
+    "start": "npm run test && http-server -c-1 -o -p 8875 .",
+    "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
+    "tslint": "npm run tslint-src && npm run tslint-root",
+    "tslint-src": "tslint -c tslint.json src/**/*.ts",
+    "tslint-root": "tslint -c tslint.json *.ts",
+    "copytemplates": "npm run copy-html && npm run copy-css && npm run copy-i18n",
+    "copy-html": "copyfiles './src/**/*.html' dist",
+    "copy-css": "copyfiles './src/**/*.css' dist",
+    "copy-i18n": "copyfiles './i18n/**/*.json' dist",
+    "licensecheck": "license-check",
+    "tsc": "tsc",
+    "pretest": "npm run build",
+    "test": "karma start karma.conf.js",
+    "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
+    "coverage": "http-server -c-1 -o -p 9875 ./coverage",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/dev-platform-webcomponents.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/dev-platform-webcomponents/issues"
+  },
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Mario Romano",
+      "email": "mario.romano83@gmail.com"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/Alfresco/dev-platform-webcomponents.git"
-    },
-    "bugs": {
-        "url": "https://github.com/Alfresco/dev-platform-webcomponents/issues"
-    },
-    "license": "Apache-2.0",
-    "contributors": [
-        {
-            "name": "Mario Romano",
-            "email": "mario.romano83@gmail.com"
-        },
-        {
-            "name": "Eugenio Romano",
-            "email": "eugenio.romano83@gmail.com"
-        }
-    ],
-    "keywords": [
-        "ng2",
-        "angular",
-        "angular2",
-        "alfresco"
-    ],
-    "dependencies": {
-        "angular2": "2.0.0-beta.15",
-        "systemjs": "0.19.26",
-        "es6-shim": "^0.35.0",
-        "reflect-metadata": "0.1.2",
-        "rxjs": "5.0.0-beta.2",
-        "ng2-translate": "^1.11.2",
-        "zone.js": "^0.6.12",
-        "es6-module-loader": "^0.17.8"
-    },
-    "peerDependencies": {
-        "angular2": "2.0.0-beta.15"
-    },
-    "devDependencies": {
-        "copyfiles": "^0.2.1",
-        "coveralls": "^2.11.9",
-        "http-server": "0.8.5",
-        "jasmine-ajax": "^3.2.0",
-        "jasmine-core": "2.4.1",
-        "karma": "~0.13.22",
-        "karma-chrome-launcher": "~1.0.1",
-        "karma-coverage": "^1.0.0",
-        "karma-jasmine": "~1.0.2",
-        "karma-jasmine-ajax": "^0.1.13",
-        "karma-mocha-reporter": "^2.0.3",
-        "license-check": "^1.0.4",
-        "remap-istanbul": "^0.6.3",
-        "traceur": "^0.0.91",
-        "tslint": "^3.8.1",
-        "typescript": "^1.8.10",
-        "typings": "^0.7.12"
-    },
-    "license-check-config": {
-        "src": [
-            "**/*.js",
-            "**/*.ts",
-            "!/**/coverage/**/*",
-            "!/**/demo/**/*",
-            "!/**/node_modules/**/*",
-            "!/**/typings/**/*",
-            "!*.js"
-        ],
-        "path": "assets/license_header.txt",
-        "blocking": false,
-        "logInfo": false,
-        "logError": true
+    {
+      "name": "Eugenio Romano",
+      "email": "eugenio.romano83@gmail.com"
     }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "alfresco"
+  ],
+  "dependencies": {
+    "angular2": "2.0.0-beta.15",
+    "es6-module-loader": "^0.17.8",
+    "es6-shim": "^0.35.0",
+    "ng2-alfresco-core": "^0.1.0",
+    "ng2-translate": "^1.11.2",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "systemjs": "0.19.26",
+    "zone.js": "^0.6.12"
+  },
+  "peerDependencies": {
+    "angular2": "2.0.0-beta.15"
+  },
+  "devDependencies": {
+    "copyfiles": "^0.2.1",
+    "coveralls": "^2.11.9",
+    "http-server": "0.8.5",
+    "jasmine-ajax": "^3.2.0",
+    "jasmine-core": "2.4.1",
+    "karma": "~0.13.22",
+    "karma-chrome-launcher": "~1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-jasmine": "~1.0.2",
+    "karma-jasmine-ajax": "^0.1.13",
+    "karma-mocha-reporter": "^2.0.3",
+    "license-check": "^1.0.4",
+    "remap-istanbul": "^0.6.3",
+    "traceur": "^0.0.91",
+    "tslint": "^3.8.1",
+    "typescript": "^1.8.10",
+    "typings": "^0.7.12"
+  },
+  "license-check-config": {
+    "src": [
+      "**/*.js",
+      "**/*.ts",
+      "!/**/coverage/**/*",
+      "!/**/demo/**/*",
+      "!/**/node_modules/**/*",
+      "!/**/typings/**/*",
+      "!*.js"
+    ],
+    "path": "assets/license_header.txt",
+    "blocking": false,
+    "logInfo": false,
+    "logError": true
+  },
+  "publishConfig": {
+    "registry": "http://52.16.120.219:4873/"
+  }
 }
