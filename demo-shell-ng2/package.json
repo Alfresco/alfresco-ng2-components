@@ -4,15 +4,11 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "prestart": "npm install",
-    "start.dev": "concurrently \"npm run tsc:w\" \"npm run serve\" ",
     "start": "concurrently \"npm run tsc:w\" \"npm run serve\" ",
     "tsc": "tsc",
-    "tsc:w": "tsc -w -p tsconfig.dev.json",
+    "tsc:w": "tsc -w",
     "serve": "lite-server",
-    "typings": "typings",
-    "postinstall": "typings install && npm link ../ng2-components/ng2-alfresco-core &&  npm link ../ng2-components/ng2-alfresco-documentlist && npm link ../ng2-components/ng2-alfresco-login && npm link ../ng2-components/ng2-alfresco-upload && npm link ../ng2-components/ng2-alfresco-datatable",
-    "postupdate": "npm link ../ng2-components/ng2-alfresco-core &&  npm link ../ng2-components/ng2-alfresco-documentlist && npm link ../ng2-components/ng2-alfresco-login && npm link ../ng2-components/ng2-alfresco-upload && npm link ../ng2-components/ng2-alfresco-datatable"
+    "typings": "typings"
   },
   "repository": {
     "type": "git",
