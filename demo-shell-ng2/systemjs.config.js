@@ -24,7 +24,7 @@
         'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable/dist',
         'ng2-alfresco-documentlist': 'node_modules/ng2-alfresco-documentlist/dist',
         'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
-        'ng2-alfresco-search': 'node_modules/ng2-alfresco-search',
+        'ng2-alfresco-search': 'node_modules/ng2-alfresco-search/dist',
         'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload/dist',
         'ng2-translate': 'node_modules/ng2-translate',
         'rxjs': 'node_modules/rxjs'
