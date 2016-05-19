@@ -349,9 +349,13 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         if (this._hasEntries(node)) {
             node.list.entries.sort((a: MinimalNodeEntity, b: MinimalNodeEntity) => {
                 if (a.entry.isFolder !== b.entry.isFolder) {
+                    // Uncomment if it is needed to make files go top on desc
+                    /*
                     return options.direction === 'asc'
                         ? (a.entry.isFolder ? -1 : 1)
                         : (a.entry.isFolder ? 1 : -1);
+                    */
+                    return a.entry.isFolder ? -1 : 1;
                 }
 
                 let left = this.getObjectValue(a.entry, options.key).toString();
