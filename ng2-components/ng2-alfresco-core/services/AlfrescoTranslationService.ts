@@ -32,7 +32,7 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
     getTranslation(lang: string): Observable<any> {
         return Observable.create(observer => {
             Observable.forkJoin(
-                this.http.get('${this.prefix}/${lang}${this.suffix}').map((res: Response) => res.json()),
+                this.http.get(`${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()),
                 this.http.get('node_modules/ng2-alfresco-upload/' +
                     `${this.prefix}/${lang}${this.suffix}`).map((res: Response) => res.json()),
                 this.http.get('node_modules/ng2-alfresco-login/' +
