@@ -21,7 +21,7 @@
     var map = {
         'ng2-uploader': 'node_modules/ng2-uploader',
         'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-        'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable',
+        'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable/dist',
         'ng2-alfresco-documentlist': 'node_modules/ng2-alfresco-documentlist/dist',
         'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
         'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload/dist',
