@@ -20,7 +20,6 @@ import { Http, Response } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
 import { AlfrescoSettingsService } from 'ng2-alfresco-core/services';
-import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 
 declare let AlfrescoApi: any;
 
@@ -87,29 +86,9 @@ export class AlfrescoService {
      */
     getLiveSearchResults(term: string) {
         return Observable.fromPromise(this.getSearchNodesPromise(term))
-            .map(res => <NodePaging> res)
+            .map(res => <any> res)
             .do(data => console.log('Search data', data)) // eyeball results in the console
             .catch(this.handleError);
-    }
-
-    /**
-     * Get thumbnail URL for the given document node.
-     * @param document Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getDocumentThumbnailUrl(document: MinimalNodeEntity) {
-        return this.getContentUrl(document) + '/thumbnails/doclib?c=queue&ph=true&lastModified=1&alf_ticket=' + this.getAlfrescoTicket();
-    }
-
-    /**
-     * Get content URL for the given node.
-     * @param document Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getContentUrl(document: MinimalNodeEntity) {
-        return this._host +
-            '/alfresco/service/api/node/workspace/SpacesStore/' +
-            document.entry.id + '/content';
     }
 
     private handleError(error: Response) {
