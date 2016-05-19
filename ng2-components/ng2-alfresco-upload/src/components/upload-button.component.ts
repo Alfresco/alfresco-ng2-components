@@ -77,6 +77,9 @@ export class UploadButtonComponent {
     acceptedFilesType: string = '*';
 
     @Input()
+    currentFolderPath: string = '/Sites/swsdp/documentLibrary';
+
+    @Input()
     uploaddirectory: string = '';
 
     @Output()
@@ -92,15 +95,14 @@ export class UploadButtonComponent {
                 @Optional() translate: TranslateService) {
         console.log('UploadComponent constructor', el);
 
+        let site = this.getSiteId();
+        let container = this.getContainerId();
+
         this._uploaderService = new UploadService({
-            url: 'http://192.168.99.100:8080/alfresco/service/api/upload',
-            withCredentials: true,
-            authToken: btoa('admin:admin'),
-            authTokenPrefix: 'Basic',
             fieldName: 'filedata',
             formFields: {
-                siteid: 'swsdp',
-                containerid: 'documentLibrary'
+                siteid: site,
+                containerid: container
             }
         });
 
@@ -170,5 +172,21 @@ export class UploadButtonComponent {
      */
     private _showDialog(): void {
         this.fileUploadingDialogComponent.showDialog();
+    }
+
+    /**
+     * Return the site from the path
+     * @returns {any}
+     */
+    private getSiteId(): string {
+        return this.currentFolderPath.replace('/Sites/','').split('/')[0];
+    }
+
+    /**
+     * Return the container from the path
+     * @returns {any}
+     */
+    private getContainerId(): string {
+        return this.currentFolderPath.replace('/Sites/','').split('/')[1];
     }
 }

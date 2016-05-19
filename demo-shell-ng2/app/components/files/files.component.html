@@ -1,4 +1,4 @@
-<alfresco-upload-drag-area [showUploadDialog]="true" uploaddirectory="{{relativePath}}"
+<alfresco-upload-drag-area [showUploadDialog]="true" currentFolderPath="{{absolutePath}}" uploaddirectory="{{relativePath}}"
     (onSuccess)="refreshDocumentList($event)">
     <alfresco-document-list (folderClick)="refreshDirectyory($event)" currentFolderPath="{{absolutePath}}">
         <content-columns>
@@ -7,6 +7,10 @@
                     title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                     source="name"
                     class="full-width name-column">
+            </content-column>
+            <content-column
+                    title="{{'DOCUMENT_LIST.COLUMNS.SITE' | translate}}"
+                    source="location.site">
             </content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
@@ -74,4 +78,4 @@
     </alfresco-document-list>
 </alfresco-upload-drag-area>
 
-<alfresco-upload-button uploaddirectory="{{relativePath}}" (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
+<alfresco-upload-button uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}" (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>

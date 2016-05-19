@@ -21,19 +21,13 @@ import { FileModel } from './../models/file.model';
 
 declare let jasmine: any;
 
-describe('AlfrescoUploadService', () => {
-    let service: UploadService,
-        options: any,
-        xhr: XMLHttpRequest,
-        doneFn: any,
-        errorFn: any;
+let doneFn = jasmine.createSpy('success');
+let errorFn = jasmine.createSpy('error');
 
-    beforeEach(() => {
-        jasmine.Ajax.install();
+class MockUploadService extends UploadService {
 
-        doneFn = jasmine.createSpy('success');
-        errorFn = jasmine.createSpy('error');
-        xhr = new XMLHttpRequest();
+    createXMLHttpRequestInstance() {
+        let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (this.readyState === this.DONE && this.status === 200) {
                 doneFn(this.responseText);
@@ -42,6 +36,16 @@ describe('AlfrescoUploadService', () => {
             }
         };
         xhr.abort = jasmine.createSpy('abort');
+        return xhr;
+    }
+}
+
+describe('AlfrescoUploadService', () => {
+    let service: MockUploadService,
+        options: any;
+
+    beforeEach(() => {
+        jasmine.Ajax.install();
 
         options = {
             url: '/some/cool/url',
@@ -54,7 +58,7 @@ describe('AlfrescoUploadService', () => {
                 containerid: 'fakeFolder'
             }
         };
-        service = new UploadService(options);
+        service = new MockUploadService(options);
     });
 
     afterEach(() => {
@@ -78,12 +82,27 @@ describe('AlfrescoUploadService', () => {
     });
 
     it('should make XHR done request after the file is added in the queue', () => {
-        service.setXMLHttpRequest(xhr);
+        let mockUploadSuccessResponses = {
+            upload: {
+                success: {
+                    status: 200,
+                    responseText: '{"nodeRef":"workspace://SpacesStore/fake","fileName": "fake-name.png","status":' +
+                    '{"code": 200,"name": "OK","description": "fake file uploaded successfully"}}'
+                }
+            }
+        };
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', null);
-        expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
+
+        let request = jasmine.Ajax.requests.mostRecent();
+        // request.respondWith(mockUploadSuccessResponses.upload.success);
+        expect(request.url).toBe('/some/cool/url');
+        expect(request.method).toBe('POST');
+        // expect(request.data()).toEqual({fileName: 'fake-name.png'});
+
         expect(doneFn).not.toHaveBeenCalled();
+        console.log(mockUploadSuccessResponses);
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'text/plain',
@@ -93,12 +112,10 @@ describe('AlfrescoUploadService', () => {
     });
 
     it('should make XHR error request after an error occur', () => {
-        service.setXMLHttpRequest(xhr);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', null);
         expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
-        expect(doneFn).not.toHaveBeenCalled();
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
             contentType: 'text/plain',
@@ -108,30 +125,27 @@ describe('AlfrescoUploadService', () => {
     });
 
     it('should make XHR abort request after the xhr abort is called', () => {
-        service.setXMLHttpRequest(xhr);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', null);
         let file = service.getQueue();
         file[0].setAbort();
-        expect(xhr.abort).toHaveBeenCalled();
+        expect(file[0]._xmlHttpRequest.abort).toHaveBeenCalled();
     });
 
     it('should make XHR done request after the file is upload', () => {
-        service.setXMLHttpRequest(xhr);
         let filesFake = {name: 'fake-name', size: 10};
 
         let uploadingFileModel = new FileModel(filesFake);
         service.uploadFile(uploadingFileModel, '', null);
 
         expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
-        expect(doneFn).not.toHaveBeenCalled();
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'text/plain',
-            responseText: 'File uploaded'
+            responseText: 'Single File uploaded'
         });
-        expect(doneFn).toHaveBeenCalledWith('File uploaded');
+        expect(doneFn).toHaveBeenCalledWith('Single File uploaded');
     });
 
 });

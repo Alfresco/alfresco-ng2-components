@@ -55,21 +55,23 @@ export class UploadDragAreaComponent {
     @Input()
     uploaddirectory: string = '';
 
+    @Input()
+    currentFolderPath: string = '/Sites/swsdp/documentLibrary';
+
     @Output()
     onSuccess = new EventEmitter();
 
     constructor(public el: ElementRef) {
         console.log('UploadComponent constructor', el);
 
+        let site = this.getSiteId();
+        let container = this.getContainerId();
+
         this._uploaderService = new UploadService({
-            url: 'http://192.168.99.100:8080/alfresco/service/api/upload',
-            withCredentials: true,
-            authToken: btoa('admin:admin'),
-            authTokenPrefix: 'Basic',
             fieldName: 'filedata',
             formFields: {
-                siteid: 'swsdp',
-                containerid: 'documentLibrary'
+                siteid: site,
+                containerid: container
             }
         });
     }
@@ -91,9 +93,87 @@ export class UploadDragAreaComponent {
     }
 
     /**
+     * Called when the file are dropped in the drag area
+     * @param item - FileEntity
+     */
+    onFilesEntityDropped(item: any): void {
+        let self = this;
+        item.file(function (file: any) {
+            self._uploaderService.addToQueue([file]);
+            let path = item.fullPath.replace(item.name, '');
+            let filePath = self.uploaddirectory + path;
+            self._uploaderService.uploadFilesInTheQueue(filePath, self.onSuccess);
+            self.filesUploadingList = self._uploaderService.getQueue();
+            if (self.showUploadDialog) {
+                self._showDialog();
+            }
+        });
+    }
+
+    /**
+     * Called when a folder are dropped in the drag area
+     * @param folder - name of the dropped folder
+     */
+    onFolderEntityDropped(folder: any): void {
+        if (folder.isDirectory) {
+            let relativePath = folder.fullPath.replace(folder.name, '');
+            relativePath = this.currentFolderPath + relativePath;
+
+            this._uploaderService.createFolder(relativePath, folder.name)
+                .subscribe(
+                    message => {
+                        let self = this;
+                        let dirReader = folder.createReader();
+                        dirReader.readEntries(function (entries: any) {
+                            for (let i = 0; i < entries.length; i++) {
+                                self._traverseFileTree(entries[i]);
+                            }
+                        });
+                    },
+                    error => {
+                        error;
+                    }
+            );
+        }
+    }
+
+    /**
+     * Travers all the files and folders, and create it on the alfresco.
+     *
+     * @param {Object} item - can contains files or folders.
+     */
+    private _traverseFileTree(item: any): void {
+        if (item.isFile) {
+                let self = this;
+                self.onFilesEntityDropped(item);
+        } else {
+            if (item.isDirectory) {
+                let self = this;
+                self.onFolderEntityDropped(item);
+            }
+        }
+    }
+
+    /**
      * Show the upload dialog.
      */
     private _showDialog(): void {
         this.fileUploadingDialogComponent.showDialog();
+    }
+
+    /**
+     * Return the site from the path
+     * @returns {string}
+     */
+    private getSiteId(): string {
+        return this.currentFolderPath.replace('/Sites/','').split('/')[0];
+    }
+
+    /**
+     * Return the container from the path
+     * @returns {string}
+     */
+    private getContainerId(): string {
+        return this.currentFolderPath.replace('/Sites/','').split('/')[1];
     }
 }

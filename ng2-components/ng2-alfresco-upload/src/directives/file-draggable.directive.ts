@@ -43,6 +43,12 @@ export class FileDraggableDirective {
     @Output()
     onFilesDropped: EventEmitter<any> = new EventEmitter();
 
+    @Output()
+    onFilesEntityDropped: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    onFolderEntityDropped: EventEmitter<any> = new EventEmitter();
+
     files: File [];
 
     private _inputFocusClass: boolean = false;
@@ -75,25 +81,17 @@ export class FileDraggableDirective {
     }
 
     /**
-     * Travers all the files and folders, and emit an event for each file.
+     * Travers all the files and folders, and emit an event for each file or directory.
      *
      * @param {Object} item - can contains files or folders.
      */
     private _traverseFileTree(item: any): void {
         if (item.isFile) {
             let self = this;
-            item.file(function (file: File) {
-                self.onFilesDropped.emit([file]);
-            });
+            self.onFilesEntityDropped.emit(item);
         } else {
             if (item.isDirectory) {
-                let self = this;
-                let dirReader = item.createReader();
-                dirReader.readEntries(function (entries: any) {
-                    for (let i = 0; i < entries.length; i++) {
-                        self._traverseFileTree(entries[i]);
-                    }
-                });
+                this.onFolderEntityDropped.emit(item);
             }
         }
     }
