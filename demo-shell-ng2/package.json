@@ -7,10 +7,9 @@
     "prestart": "npm install",
     "start.dev": "concurrently \"npm run tsc:w\" \"npm run serve\" ",
     "start": "concurrently \"npm run tsc:w\" \"npm run serve\" ",
-    "test": "live-server --open=tests-runner.html",
     "tsc": "tsc",
     "tsc:w": "tsc -w -p tsconfig.dev.json",
-    "serve": "live-server",
+    "serve": "lite-server",
     "typings": "typings",
     "postinstall": "typings install && npm link ../ng2-components/ng2-alfresco-core &&  npm link ../ng2-components/ng2-alfresco-documentlist && npm link ../ng2-components/ng2-alfresco-login && npm link ../ng2-components/ng2-alfresco-upload && npm link ../ng2-components/ng2-alfresco-datatable",
     "postupdate": "npm link ../ng2-components/ng2-alfresco-core &&  npm link ../ng2-components/ng2-alfresco-documentlist && npm link ../ng2-components/ng2-alfresco-login && npm link ../ng2-components/ng2-alfresco-upload && npm link ../ng2-components/ng2-alfresco-datatable"
@@ -64,7 +63,7 @@
     "gulp-tslint": "^3.6.0",
     "gulp-typescript": "^2.8.0",
     "jasmine-core": "2.4.1",
-    "live-server": "^0.9.2",
+    "lite-server": "^2.2.0",
     "tsconfig-glob": "^0.3.3",
     "typescript": "^1.8.10",
     "typings": "^0.7.12"
