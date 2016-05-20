@@ -91,6 +91,26 @@ export class AlfrescoService {
             .catch(this.handleError);
     }
 
+    /**
+     * Get thumbnail URL for the given document node.
+     * @param document Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getDocumentThumbnailUrl(document: any) {
+        return this.getContentUrl(document) + '/thumbnails/doclib?c=queue&ph=true&lastModified=1&alf_ticket=' + this.getAlfrescoTicket();
+    }
+
+    /**
+     * Get content URL for the given node.
+     * @param document Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getContentUrl(document: any) {
+        return this._host +
+            '/alfresco/service/api/node/workspace/SpacesStore/' +
+            document.entry.id + '/content';
+    }
+
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console

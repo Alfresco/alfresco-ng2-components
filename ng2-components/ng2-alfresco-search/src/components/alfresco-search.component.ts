@@ -56,6 +56,30 @@ export class AlfrescoSearchComponent {
     }
 
     /**
+     * Gets content URL for the given node.
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getContentUrl(node: any): string {
+        if (this._alfrescoService) {
+            return this._alfrescoService.getContentUrl(node);
+        }
+        return null;
+    }
+
+    /**
+     * Gets thumbnail URL for the given document node.
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getDocumentThumbnailUrl(node: any): string {
+        if (this._alfrescoService) {
+            return this._alfrescoService.getDocumentThumbnailUrl(node);
+        }
+        return null;
+    }
+
+    /**
      * Loads and displays folder content
      * @param searchTerm Search query entered by user
      */

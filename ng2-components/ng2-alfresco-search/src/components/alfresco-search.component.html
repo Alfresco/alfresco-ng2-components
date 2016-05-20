@@ -5,14 +5,26 @@
     <thead>
     <tr>
         <th>
+            <span class="mdl-data-table__cell--non-numeric"></span>
+        </th>
+        <th>
             <span class="mdl-data-table__cell--non-numeric">Name</span>
+        </th>
+        <th>
+            <span class="mdl-data-table__cell--non-numeric">Modified by</span>
+        </th>
+        <th>
+            <span class="mdl-data-table__cell--non-numeric">Modified at</span>
         </th>
     </tr>
     </thead>
     <tbody>
 
     <tr *ngFor="#result of results; #idx = index">
+        <td><img src="{{getDocumentThumbnailUrl(result)}}" /></td>
         <td>{{result.entry.name}}</td>
+        <td>{{result.entry.modifiedByUser.displayName}}</td>
+        <td>{{result.entry.modifiedAt}}</td>
     </tr>
     </tbody>
 </table>
