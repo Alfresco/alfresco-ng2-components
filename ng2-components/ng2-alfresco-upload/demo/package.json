@@ -7,7 +7,8 @@
     "scripts": {
         "postinstall": "npm run build && npm run typings",
         "typings": "typings install",
-        "start": "rm -rf dist && npm install && http-server -c-1 -o -p 8875 .",
+        "start": "rm -rf dist && npm install && npm run server",
+        "server" : "http-server -c-1 -o -p 8875 .",
         "build": "rm -rf dist && tsc"
     },
     "license": "MIT",

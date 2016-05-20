@@ -29,7 +29,8 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
     template: `<alfresco-upload-button [showDialogUpload]="true"
                                        [showUdoNotificationBar]="true"
                                        [uploadFolders]="false"
-                                       [multipleFiles]="false">
+                                       [multipleFiles]="false"
+                                       (onSuccess)="customMethod($event)">
                </alfresco-upload-button>
 
                <br><br>
@@ -37,7 +38,8 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
                <alfresco-upload-button [showDialogUpload]="true"
                                        [showUdoNotificationBar]="true"
                                        [uploadFolders]="true"
-                                       [multipleFiles]="false">
+                                       [multipleFiles]="false"
+                                       (onSuccess)="customMethod($event)">
                </alfresco-upload-button>
 
                <br><br>
@@ -45,12 +47,13 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
                <alfresco-upload-button [showDialogUpload]="true"
                                        [showUdoNotificationBar]="true"
                                        [uploadFolders]="false"
-                                       [multipleFiles]="true">
+                                       [multipleFiles]="true"
+                                       (onSuccess)="customMethod($event)">
                </alfresco-upload-button>
 
                <br><br>
 
-               <alfresco-upload-drag-area [showDialogUpload]="true" >
+               <alfresco-upload-drag-area [showDialogUpload]="true" (onSuccess)="customMethod($event)" >
                      <div style="width: 200px; height: 100px; border: 1px solid #888888">
                          DRAG HERE
                      </div>
@@ -59,7 +62,11 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
 })
 export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://192.168.99.100:2323';
+        alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+    }
+
+    public customMethod(event: Object): void {
+        console.log('File uploaded');
     }
 }
 

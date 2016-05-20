@@ -116,8 +116,9 @@ export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
             alfrescoSettingsService.host = 'http://myalfrescoip';
     }
-    customMethod(event: Object) {
-        console.log('File uploaded');
+    
+    public customMethod(event: Object): void {
+            console.log('File uploaded');
     }
 }
 
@@ -172,8 +173,9 @@ export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
             alfrescoSettingsService.host = 'http://myalfrescoip';
     }
-    customMethod(event: Object) {
-        console.log('File uploaded');
+    
+    public customMethod(event: Object): void {
+            console.log('File uploaded');
     }
 }
 
