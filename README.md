@@ -13,7 +13,7 @@
 
 All the components are stored in our private repository visible only from the internal Alfresco lan: 
 
-http://52.16.120.219:4873/
+http://devproducts.alfresco.me:4873
 
 ##### How to configure it:
 
