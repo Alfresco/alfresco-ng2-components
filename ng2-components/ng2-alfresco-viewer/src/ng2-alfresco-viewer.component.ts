@@ -15,48 +15,51 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component, Input } from 'angular2/core';
+import { RouteParams } from 'angular2/router';
 
 declare let PDFJS: any;
+declare let __moduleName:string;
 
 @Component({
+    moduleId: __moduleName,
     selector: 'ng2-alfresco-viewer',
-    styles: [
-        `
-              :host h1 {
-                  font-size:22px
-              }
-          `
-    ],
-    template: `<H1>ng2-alfresco-viewer</H1>`
+    templateUrl: './ng2-alfresco-viewer.component.html',
+    styleUrls: ['./ng2-alfresco-viewer.component.css']
 })
 export class Ng2AlfrescoViewerComponent {
 
+    nameFile:String;
+
     constructor() {
+        this.nameFile = 'localTestFile.pdf';
+
         PDFJS.getDocument('../localTestFile.pdf').then(function getPdfHelloWorld(pdf) {
             //
             // Fetch the first page
             //
-            pdf.getPage(1).then(function getPageHelloWorld(page) {
+            pdf.getPage(1).then(function (page) {
                 let scale = 1.5;
                 let viewport = page.getViewport(scale);
 
                 //
                 // Prepare canvas using PDF page dimensions
                 //
-                let canvas: any = document.getElementById('the-canvas');
-                let context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+                let canvas:any = document.getElementById('the-canvas');
+                if (canvas) {
+                    let context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
 
-                //
-                // Render PDF page into canvas context
-                //
-                let renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-                page.render(renderContext);
+                    //
+                    // Render PDF page into canvas context
+                    //
+                    let renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                }
             });
         });
         console.log('../contructor');

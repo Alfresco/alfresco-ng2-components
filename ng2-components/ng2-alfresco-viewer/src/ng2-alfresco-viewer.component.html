@@ -1,0 +1,84 @@
+<div class="toolbar-container">
+
+    <!-- Start Layout -->
+    <div class="mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header mdl-layout__header--scroll">
+            <div class="mdl-layout__header-row">
+
+                <!-- File Title -->
+                <span class="mdl-layout-title">{{nameFile}}</span>
+                <div class="mdl-layout-spacer"></div>
+
+                <!-- Start Navigation -->
+                <nav class="mdl-navigation">
+                    <div class="button-container">
+                        <button
+                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                            <i id="tt2" class="icon material-icons">print</i>
+                        </button>
+                    </div>
+
+                    <div class="button-container">
+                        <button
+                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                            <i id="tt3" class="icon material-icons">cloud_upload</i>
+                        </button>
+                    </div>
+
+                    <div class="button-container">
+                        <button
+                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                            <i id="tt4" class="icon material-icons">share</i>
+                        </button>
+                    </div>
+
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                          mdl-textfield--floating-label mdl-textfield--align-right">
+                        <label class="mdl-button mdl-js-button mdl-button--icon"
+                               for="waterfall-exp">
+                            <i class="material-icons">search</i>
+                        </label>
+
+                        <div class="mdl-textfield__expandable-holder">
+                            <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp">
+                        </div>
+                    </div>
+                </nav>
+                <!-- End Navigation -->
+
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Thumbnail</span>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+                    <div class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+
+                        <!-- Start Pdf Canvas -->
+                        <div id="canvas-container">
+                            <canvas id="the-canvas" style="border:1px solid black;"></canvas>
+                        </div>
+                        <!-- End Pdf Canvas -->
+
+                    </div>
+                </div>
+                <footer class="mdl-mini-footer">
+                    <div class="mdl-mini-footer--left-section">
+                        <ul class="mdl-mini-footer--link-list">
+                            <li><a href="#">Footer link 1</a></li>
+                            <li><a href="#">Footer link 2</a></li>
+                            <li><a href="#">Footer link 3</a></li>
+                        </ul>
+                    </div>
+                </footer>
+
+            </div>
+        </main>
+    </div>
+    <!-- End Layout -->
+
+</div>

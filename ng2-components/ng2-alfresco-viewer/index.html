@@ -5,8 +5,10 @@
     <title>Angular 2 Viewer - Demo</title>
     <base href="/">
 
-    <!-- 1. Load libraries -->
-    <!-- IE required polyfills, in this exact order -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
     <script src="node_modules/es6-shim/es6-shim.min.js"></script>
     <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
     <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
@@ -19,7 +21,7 @@
 
     <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
     <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
-
+    
     <script>
         PDFJS.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.js';
     </script>
@@ -50,8 +52,6 @@
 
 </head>
 <body>
-<canvas id="the-canvas" style="border:1px solid black;"/>
-<ng2-alfresco-viewer>Loading...</ng2-alfresco-viewer>
-
+<ng2-alfresco-viewer><div class="mdl-spinner mdl-js-spinner is-active"></div></ng2-alfresco-viewer>
 </body>
 </html>
