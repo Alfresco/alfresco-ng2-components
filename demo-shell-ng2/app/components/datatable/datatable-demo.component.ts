@@ -89,8 +89,8 @@ export class DataTableDemoComponent {
 
     replaceColumns() {
         let schema = [
-            { type: 'text', key: 'id', sortable: true },
-            { type: 'text', key: 'name', sortable: true, cssClass: 'full-width name-column' }
+            { type: 'text', key: 'id', title: 'Id', sortable: true },
+            { type: 'text', key: 'name', title: 'Name', sortable: true, cssClass: 'full-width name-column' }
         ];
         let columns = schema.map(col => new ObjectDataColumn(col));
         this.data.setColumns(columns);
