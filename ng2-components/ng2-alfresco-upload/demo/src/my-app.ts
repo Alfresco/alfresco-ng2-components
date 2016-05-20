@@ -15,26 +15,54 @@
  * limitations under the License.
  */
 
-import { Component, provide } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { MyDemoComponent } from "./components/my-demo.component";
-import { TranslateLoader, TranslateService } from 'ng2-translate/ng2-translate';
-import { AlfrescoTranslationLoader } from 'ng2-alfresco-core/services/AlfrescoTranslationService';
+import { AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+
 
 @Component({
     selector: 'my-app',
-    template: '<my-demo></my-demo>',
-    directives: [MyDemoComponent]
+    template: `<alfresco-upload-button [showDialogUpload]="true"
+                                       [showUdoNotificationBar]="true"
+                                       [uploadFolders]="false"
+                                       [multipleFiles]="false">
+               </alfresco-upload-button>
+
+               <br><br>
+
+               <alfresco-upload-button [showDialogUpload]="true"
+                                       [showUdoNotificationBar]="true"
+                                       [uploadFolders]="true"
+                                       [multipleFiles]="false">
+               </alfresco-upload-button>
+
+               <br><br>
+
+               <alfresco-upload-button [showDialogUpload]="true"
+                                       [showUdoNotificationBar]="true"
+                                       [uploadFolders]="false"
+                                       [multipleFiles]="true">
+               </alfresco-upload-button>
+
+               <br><br>
+
+               <alfresco-upload-drag-area [showDialogUpload]="true" >
+                     <div style="width: 200px; height: 100px; border: 1px solid #888888">
+                         DRAG HERE
+                     </div>
+               </alfresco-upload-drag-area>`,
+    directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
-class VgDemo {
+export class MyDemoApp {
     constructor() {
 
     }
 }
 
-bootstrap(VgDemo, [
+bootstrap(MyDemoApp, [
     HTTP_PROVIDERS,
-    provide(TranslateLoader, {useClass: AlfrescoTranslationLoader}),
-    TranslateService
+    AlfrescoTranslationService,
+    AlfrescoTranslationLoader
 ]);
