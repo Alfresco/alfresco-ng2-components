@@ -6,3 +6,7 @@
 - [Viewer](ng2-components/ng2-alfresco-viewer/README.md)
 - [Login](ng2-alfresco-login/README.md)
 - [Upload](ng2-alfresco-upload/README.md)
+
+You can browse all the components at the following address:
+
+http://52.51.231.4
