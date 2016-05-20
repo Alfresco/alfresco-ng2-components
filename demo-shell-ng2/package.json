@@ -39,7 +39,7 @@
     "alfresco"
   ],
   "dependencies": {
-    "alfresco-core-rest-api": "git@github.com:Alfresco/dev-platform-js-api.git#master",
+    "alfresco-core-rest-api": "^0.1.0",
     "angular2": "2.0.0-beta.15",
     "bootstrap": "^3.3.6",
     "es6-shim": "^0.35.0",
