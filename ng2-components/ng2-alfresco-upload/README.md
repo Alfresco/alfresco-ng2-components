@@ -33,6 +33,50 @@ Components included:
 ### Upload button
 This component, provide a buttons to upload files to alfresco.
 
+#### Dependencies
+
+Add the following dependency to your index.html:
+
+```html
+    <script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
+```
+
+Make sure your systemjs.config has the following configuration:
+
+```javascript
+    System.config({
+            defaultJSExtensions: true,
+            map: {
+                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist',
+                'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload/dist',
+                'ng2-translate': 'node_modules/ng2-translate',
+                'rxjs': 'node_modules/rxjs',
+                'angular2' : 'node_modules/angular2',
+                'app': 'dist/src'
+            },
+            packages: {
+                'app': {
+                    defaultExtension: 'js'
+                },
+                'ng2-alfresco-core': {
+                    defaultExtension: 'js'
+                },
+                'ng2-alfresco-upload': {
+                    defaultExtension: 'js'
+                },
+                'ng2-translate': {
+                    defaultExtension: 'js'
+                },
+                'rxjs': {
+                    defaultExtension: 'js'
+                },
+                'angular2': {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+```
+
 #### Basic usage
 
 
@@ -45,15 +89,18 @@ This component, provide a buttons to upload files to alfresco.
 </alfresco-upload-button>
 ```
 
-Example of a component that declares upload component :
-
+Example of an App that declares upload button component :
 
 ```ts
 import { Component } from 'angular2/core';
+import { bootstrap } from 'angular2/platform/browser';
+import { HTTP_PROVIDERS } from 'angular2/http';
+import { AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
 import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
 
+
 @Component({
-    selector: 'my-view',
+    selector: 'my-app',
     template: `<alfresco-upload-button [showDialogUpload]="true"
                                        [showUdoNotificationBar]="true"
                                        [uploadFolders]="true"
@@ -62,9 +109,17 @@ import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-uplo
                </alfresco-upload-button>`,
     directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
-export class MyView {
+export class MyDemoApp {
+    constructor() {
 
+    }
 }
+
+bootstrap(MyDemoApp, [
+    HTTP_PROVIDERS,
+    AlfrescoTranslationService,
+    AlfrescoTranslationLoader
+]);
 ```
 #### Options
 
@@ -78,10 +133,42 @@ export class MyView {
 This component, provide a drag and drop are to upload files to alfresco.
 
 #### Basic usage
+
 ```html
 <alfresco-upload-drag-area [showDialogUpload]="true" ></alfresco-upload-drag-area>
 ```
 
+Example of an App that declares upload drag and drop component :
+
+```ts
+import { Component } from 'angular2/core';
+import { bootstrap } from 'angular2/platform/browser';
+import { HTTP_PROVIDERS } from 'angular2/http';
+import { AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+
+
+@Component({
+    selector: 'my-app',
+    template: `<alfresco-upload-drag-area [showDialogUpload]="true" >
+                     <div style="width: 200px; height: 100px; border: 1px solid #888888">
+                         DRAG HERE
+                     </div>
+               </alfresco-upload-drag-area>`,
+    directives: [ALFRESCO_ULPOAD_COMPONENT]
+})
+export class MyDemoApp {
+    constructor() {
+
+    }
+}
+
+bootstrap(MyDemoApp, [
+    HTTP_PROVIDERS,
+    AlfrescoTranslationService,
+    AlfrescoTranslationLoader
+]);
+```
 #### Options
 
 **showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
@@ -99,4 +186,14 @@ before performing unit testing.
 
 ```sh
 npm run coverage
+```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
 ```
