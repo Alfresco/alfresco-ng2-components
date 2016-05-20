@@ -11,7 +11,9 @@
 
 ## Private Npm repository configuration
 
-All the components are stored in our private repository, the address is http://52.16.120.219:4873/. The repository is visible only from the Alfresco VPN.
+All the components are stored in our private repository visible only from the internal Alfresco lan: 
+
+http://52.16.120.219:4873/
 
 ##### How to configure it:
 
