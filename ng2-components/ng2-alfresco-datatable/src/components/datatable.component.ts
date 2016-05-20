@@ -90,7 +90,10 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     onColumnHeaderClick(column: DataColumn) {
         if (column && column.sortable) {
             let current = this.data.getSorting();
-            let newDirection = current.direction === 'asc' ? 'desc' : 'asc';
+            let newDirection = 'asc';
+            if (column.key === current.key) {
+                newDirection = current.direction === 'asc' ? 'desc' : 'asc';
+            }
             this.data.setSorting(new DataSorting(column.key, newDirection));
         }
     }
