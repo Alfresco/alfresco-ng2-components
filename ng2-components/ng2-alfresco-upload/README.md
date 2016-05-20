@@ -86,7 +86,8 @@ Make sure your systemjs.config has the following configuration:
                         [showUdoNotificationBar]="true"
                         [uploadFolders]="true"
                         [multipleFiles]="false"
-                        [acceptedFilesType]=".jpg,.gif,.png,.svg">
+                        [acceptedFilesType]=".jpg,.gif,.png,.svg"
+                        (onSuccess)="customMethod($event)">
 </alfresco-upload-button>
 ```
 
@@ -106,13 +107,17 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
                                        [showUdoNotificationBar]="true"
                                        [uploadFolders]="true"
                                        [multipleFiles]="false"
-                                       [acceptedFilesType]=".jpg,.gif,.png,.svg">
+                                       [acceptedFilesType]=".jpg,.gif,.png,.svg"
+                                       (onSuccess)="customMethod($event)">
                </alfresco-upload-button>`,
     directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
 export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
             alfrescoSettingsService.host = 'http://myalfrescoip';
+    }
+    customMethod(event: Object) {
+        console.log('File uploaded');
     }
 }
 
@@ -124,6 +129,9 @@ bootstrap(MyDemoApp, [
     UploadService
 ]);
 ```
+#### Events
+**onSuccess**: The event is emitted when the file is uploaded<br />
+
 #### Options
 
 **showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
@@ -138,7 +146,7 @@ This component, provide a drag and drop are to upload files to alfresco.
 #### Basic usage
 
 ```html
-<alfresco-upload-drag-area [showDialogUpload]="true" ></alfresco-upload-drag-area>
+<alfresco-upload-drag-area [showDialogUpload]="true" (onSuccess)="customMethod($event)"></alfresco-upload-drag-area>
 ```
 
 Example of an App that declares upload drag and drop component :
@@ -153,7 +161,7 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
 
 @Component({
     selector: 'my-app',
-    template: `<alfresco-upload-drag-area [showDialogUpload]="true" >
+    template: `<alfresco-upload-drag-area [showDialogUpload]="true" (onSuccess)="customMethod($event)" >
                      <div style="width: 200px; height: 100px; border: 1px solid #888888">
                          DRAG HERE
                      </div>
@@ -163,6 +171,9 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
 export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
             alfrescoSettingsService.host = 'http://myalfrescoip';
+    }
+    customMethod(event: Object) {
+        console.log('File uploaded');
     }
 }
 
@@ -174,6 +185,9 @@ bootstrap(MyDemoApp, [
     UploadService
 ]);
 ```
+#### Events
+**onSuccess**: The event is emitted when the file is uploaded<br />
+
 #### Options
 
 **showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />

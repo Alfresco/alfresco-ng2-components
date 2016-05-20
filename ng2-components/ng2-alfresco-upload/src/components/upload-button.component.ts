@@ -31,7 +31,8 @@ declare let __moduleName: string;
  *                         [showUdoNotificationBar]="boolean"
  *                         [uploadFolders]="boolean"
  *                         [multipleFiles]="boolean"
- *                         [acceptedFilesType]="string">
+ *                         [acceptedFilesType]="string"
+ *                         (onSuccess)="customMethod($event)">
  * </alfresco-upload-button>
  *
  * This component, provide a set of buttons to upload files to alfresco.
@@ -42,6 +43,7 @@ declare let __moduleName: string;
  * @InputParam {boolean} [false] multipleFiles - allow/disallow multiple files.
  * @InputParam {string} [*] acceptedFilesType - array of allowed file extensions.
  *
+ * @Output - onSuccess - The event is emitted when the file is uploaded
  *
  * @returns {UploadDragAreaComponent} .
  */
