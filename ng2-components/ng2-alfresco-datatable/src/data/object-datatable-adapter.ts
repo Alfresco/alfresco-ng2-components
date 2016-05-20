@@ -70,11 +70,6 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return this._sorting;
     }
 
-    getColumnByKey(key: string) {
-        let columns = this._columns.filter(col => col.key === key);
-        return columns.length > 0 ? columns[0] : null;
-    }
-
     setSorting(sorting: DataSorting): void {
         this._sorting = sorting;
 
