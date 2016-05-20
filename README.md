@@ -11,7 +11,7 @@
 
 ## Private Npm repository configuration
 
-All the components are stored in our private repository visible only from the internal Alfresco lan: 
+All the distribution packages of our components are stored in our private repository visible only from the internal Alfresco lan: 
 
 http://devproducts.alfresco.me:4873
 
