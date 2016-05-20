@@ -16,8 +16,8 @@ All the components are stored in our private repository, the address is http://5
 ##### How to configure it:
 
 ```sh
-npm set registry http://52.16.120.219:4873
-npm adduser --registry http://52.16.120.219:4873
+npm set registry http://52.51.231.43:4873
+npm adduser --registry http://52.51.231.43:4873
 ```
 
 ##### How to publish on it:
