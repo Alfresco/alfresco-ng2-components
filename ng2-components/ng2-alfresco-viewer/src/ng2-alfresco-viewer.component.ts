@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import {Component} from 'angular2/core';
+import { Component } from 'angular2/core';
+
+declare let PDFJS: any;
 
 @Component({
     selector: 'ng2-alfresco-viewer',
     styles: [
-      `
+        `
               :host h1 {
                   font-size:22px
               }
@@ -42,7 +44,7 @@ export class Ng2AlfrescoViewerComponent {
                 //
                 // Prepare canvas using PDF page dimensions
                 //
-                let  canvas:any = document.getElementById('the-canvas');
+                let canvas: any = document.getElementById('the-canvas');
                 let context = canvas.getContext('2d');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
