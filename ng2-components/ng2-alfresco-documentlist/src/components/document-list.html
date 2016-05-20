@@ -26,8 +26,7 @@
     <tbody>
     <tr class="parent-folder-link" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)">
         <td [attr.colspan]="1 + columns?.length">
-            <button class="mdl-button mdl-js-button mdl-button--icon"
-                    (click)="onNavigateParentClick($event)">
+            <button class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">arrow_upward</i>
             </button>
         </td>
