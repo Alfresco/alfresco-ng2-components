@@ -15,6 +15,7 @@ This should be added as a dependency for any project using the components.
 
 
 ```sh
+npm set registry http://devproducts.alfresco.me:4873
 npm install --save ng2-alfresco-core
 ```
 

@@ -9,4 +9,4 @@
 
 You can browse all the components at the following address:
 
-http://52.51.231.4
+http://devproducts.alfresco.me/

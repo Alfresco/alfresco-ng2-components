@@ -12,6 +12,7 @@
 ## Installation
 
 ```bash
+npm set registry http://devproducts.alfresco.me:4873
 npm install ng2-alfresco-viewer --save
 ```
 

@@ -88,6 +88,6 @@
     "logError": true
   },
   "publishConfig": {
-    "registry": "http://52.16.120.219:4873/"
+    "registry": "http://devproducts.alfresco.me:4873/"
   }
 }
