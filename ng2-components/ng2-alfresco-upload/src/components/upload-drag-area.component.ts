@@ -42,8 +42,6 @@ declare let __moduleName: string;
 })
 export class UploadDragAreaComponent {
 
-    private _uploaderService: UploadService;
-
     @ViewChild('fileUploadingDialog')
     fileUploadingDialogComponent: FileUploadingDialogComponent;
 
@@ -61,13 +59,14 @@ export class UploadDragAreaComponent {
     @Output()
     onSuccess = new EventEmitter();
 
-    constructor(public el: ElementRef) {
+    constructor(public el: ElementRef,
+                private _uploaderService: UploadService) {
         console.log('UploadComponent constructor', el);
 
         let site = this.getSiteId();
         let container = this.getContainerId();
 
-        this._uploaderService = new UploadService({
+        this._uploaderService.setOptions({
             fieldName: 'filedata',
             formFields: {
                 siteid: site,

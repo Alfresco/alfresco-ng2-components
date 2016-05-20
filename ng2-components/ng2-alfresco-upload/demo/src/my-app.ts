@@ -1,4 +1,6 @@
-/**
+///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
+
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -18,8 +20,8 @@
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
-import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng2-alfresco-upload';
 
 
 @Component({
@@ -56,13 +58,15 @@ import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-uplo
     directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
 export class MyDemoApp {
-    constructor() {
-
+    constructor(alfrescoSettingsService: AlfrescoSettingsService) {
+        alfrescoSettingsService.host = 'http://192.168.99.100:2323';
     }
 }
 
 bootstrap(MyDemoApp, [
     HTTP_PROVIDERS,
     AlfrescoTranslationService,
-    AlfrescoTranslationLoader
+    AlfrescoTranslationLoader,
+    AlfrescoSettingsService,
+    UploadService
 ]);

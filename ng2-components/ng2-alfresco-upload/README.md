@@ -96,8 +96,8 @@ Example of an App that declares upload button component :
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
-import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng2-alfresco-upload';
 
 
 @Component({
@@ -111,15 +111,17 @@ import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-uplo
     directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
 export class MyDemoApp {
-    constructor() {
-
+    constructor(alfrescoSettingsService: AlfrescoSettingsService) {
+            alfrescoSettingsService.host = 'http://myalfrescoip';
     }
 }
 
 bootstrap(MyDemoApp, [
     HTTP_PROVIDERS,
     AlfrescoTranslationService,
-    AlfrescoTranslationLoader
+    AlfrescoTranslationLoader,
+    AlfrescoSettingsService,
+    UploadService
 ]);
 ```
 #### Options
@@ -145,8 +147,8 @@ Example of an App that declares upload drag and drop component :
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
-import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng2-alfresco-upload';
 
 
 @Component({
@@ -159,15 +161,17 @@ import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-uplo
     directives: [ALFRESCO_ULPOAD_COMPONENT]
 })
 export class MyDemoApp {
-    constructor() {
-
+    constructor(alfrescoSettingsService: AlfrescoSettingsService) {
+            alfrescoSettingsService.host = 'http://myalfrescoip';
     }
 }
 
 bootstrap(MyDemoApp, [
     HTTP_PROVIDERS,
     AlfrescoTranslationService,
-    AlfrescoTranslationLoader
+    AlfrescoTranslationLoader,
+    AlfrescoSettingsService,
+    UploadService
 ]);
 ```
 #### Options

@@ -22,7 +22,7 @@ import { AlfrescoTranslationLoader } from './AlfrescoTranslationLoader.service';
 
 @Injectable()
 export class AlfrescoTranslationService extends TranslateService {
-    userLang: string;
+    userLang: string = 'en' ;
     currentLoader: AlfrescoTranslationLoader;
 
     constructor(http: Http, currentLoader: AlfrescoTranslationLoader, @Optional() missingTranslationHandler: MissingTranslationHandler) {

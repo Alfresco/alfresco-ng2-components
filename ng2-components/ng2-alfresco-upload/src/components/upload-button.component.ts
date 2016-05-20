@@ -16,7 +16,7 @@
  */
 
 
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter, Optional } from 'angular2/core';
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
@@ -89,17 +89,16 @@ export class UploadButtonComponent {
 
     translate: AlfrescoTranslationService;
 
-    private _uploaderService: UploadService;
 
     constructor(public el: ElementRef,
-                @Optional() translate: AlfrescoTranslationService) {
+                private _uploaderService: UploadService,
+                translate: AlfrescoTranslationService) {
         console.log('UploadComponent constructor', el);
 
         let site = this.getSiteId();
         let container = this.getContainerId();
 
-        this._uploaderService = new UploadService({
-            fieldName: 'filedata',
+        this._uploaderService.setOptions({
             formFields: {
                 siteid: site,
                 containerid: container

@@ -17,9 +17,10 @@
 
 
 import { FileModel } from '../models/file.model';
-import { EventEmitter } from 'angular2/core';
+import { EventEmitter, Injectable } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
 import { Response } from 'angular2/http';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core/services';
 
 declare let AlfrescoApi: any;
 
@@ -29,27 +30,37 @@ declare let AlfrescoApi: any;
  *
  * @returns {UploadService} .
  */
+@Injectable()
 export class UploadService {
     private _host: string = 'http://192.168.99.100:8080';
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
     private _url: string = '/alfresco/service/api/upload';
 
     private _method: string = 'POST';
-    private _fieldName: string = 'file';
+    private _fieldName: string = 'filedata';
     private _formFields: Object = {};
 
     private _queue: FileModel[] = [];
 
     private _alfrescoClient: any;
 
-    constructor(private options: any) {
+    constructor(private settings: AlfrescoSettingsService) {
         console.log('UploadService constructor');
 
+        if (settings) {
+            this._host = settings.host;
+        }
         this._alfrescoClient = this.getAlfrescoClient();
+    }
 
-        this._host = options.host || this._host;
+    /**
+     * Configure the service
+     *
+     * @param {Object} - options to init the object
+     *
+     */
+    public setOptions(options: any): void {
         this._baseUrlPath = options.baseUrlPath || this._baseUrlPath;
-        this._fieldName = options.fieldName != null ? options.fieldName : this._fieldName;
         this._formFields = options.formFields != null ? options.formFields : this._formFields;
     }
 
