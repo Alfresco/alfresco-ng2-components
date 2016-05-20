@@ -19,7 +19,9 @@ import { Component } from 'angular2/core';
 import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter, DataSorting
+    ObjectDataTableAdapter, 
+    DataSorting,
+    ObjectDataRow
 } from 'ng2-alfresco-datatable/ng2-alfresco-datatable';
 
 declare let __moduleName: string;
@@ -34,20 +36,19 @@ declare let __moduleName: string;
 export class DataTableDemoComponent {
     data: ObjectDataTableAdapter;
 
+    private _imageUrl: string = 'http://placehold.it/140x100';
+    private _createdBy: any = {
+        name: 'Denys Vuika',
+        email: 'denys.vuika@alfresco.com'
+    };
+
     constructor() {
-
-        let imageUrl = 'http://placehold.it/140x100';
-        let createdBy = {
-            name: 'Denys Vuika',
-            email: 'denys.vuika@alfresco.com'
-        };
-
         this.data = new ObjectDataTableAdapter(
             [
-                {id: 1, name: 'Name 1', createdBy: createdBy, icon: 'material-icons://folder_open'},
-                {id: 2, name: 'Name 2', createdBy: createdBy, icon: 'material-icons://accessibility'},
-                {id: 3, name: 'Name 3', createdBy: createdBy, icon: 'material-icons://alarm'},
-                {id: 4, name: 'Image 1', createdBy: createdBy, icon: imageUrl}
+                {id: 1, name: 'Name 1', createdBy: this._createdBy, icon: 'material-icons://folder_open'},
+                {id: 2, name: 'Name 2', createdBy: this._createdBy, icon: 'material-icons://accessibility'},
+                {id: 3, name: 'Name 3', createdBy: this._createdBy, icon: 'material-icons://alarm'},
+                {id: 4, name: 'Image 1', createdBy: this._createdBy, icon: this._imageUrl}
             ],
             [
                 {type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail'},
@@ -58,5 +59,17 @@ export class DataTableDemoComponent {
         );
 
         this.data.setSorting(new DataSorting('name', 'asc'));
+    }
+
+    addRow() {
+        let id = this.data.getRows().length + 1;
+        let row = new ObjectDataRow({
+            id: id,
+            name: 'Name ' + id,
+            icon: 'material-icons://extension',
+            createdBy: this._createdBy
+        });
+        this.data.getRows().push(row);
+        this.data.sort();
     }
 }

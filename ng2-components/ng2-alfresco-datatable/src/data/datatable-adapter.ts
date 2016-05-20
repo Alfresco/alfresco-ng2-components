@@ -17,12 +17,12 @@
 
 export interface DataTableAdapter {
 
-    rows: DataRow[];
-    columns: DataColumn[];
-
+    getRows(): Array<DataRow>;
+    getColumns(): Array<DataColumn>;
     getValue(row: DataRow, col: DataColumn): any;
     getSorting(): DataSorting;
     setSorting(sorting: DataSorting): void;
+    sort(key?: string, direction?: string): void;
 }
 
 export interface DataRow {
@@ -33,15 +33,15 @@ export interface DataRow {
 export interface DataColumn {
     key: string;
     type: string; // text|image
-    sortable: boolean;
-    title: string;
-    srTitle: string;
-    cssClass: string;
+    sortable?: boolean;
+    title?: string;
+    srTitle?: string;
+    cssClass?: string;
 }
 
 export class DataSorting {
     constructor(
-        public key: string,
-        public direction: string) {
+        public key?: string,
+        public direction?: string) {
     }
 }

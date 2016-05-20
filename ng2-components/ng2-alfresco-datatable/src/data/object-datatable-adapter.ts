@@ -26,23 +26,31 @@ import {
 export class ObjectDataTableAdapter implements DataTableAdapter {
 
     private _sorting;
-
-    rows: DataRow[];
-    columns: DataColumn[];
+    private _rows: DataRow[];
+    private _columns: DataColumn[];
 
     constructor(data: any[], schema: DataColumn[]) {
-        this.rows = [];
+        this._rows = [];
+        this._columns = [];
 
         if (data && data.length > 0) {
 
-            this.rows = data.map(item => {
+            this._rows = data.map(item => {
                 return new ObjectDataRow(item);
             });
 
-            this.columns = schema.map(item => {
+            this._columns = schema.map(item => {
                 return new ObjectDataColumn(item);
             });
         }
+    }
+
+    getRows(): Array<DataRow> {
+        return this._rows;
+    }
+
+    getColumns(): Array<DataColumn> {
+        return this._columns;
     }
 
     getValue(row: DataRow, col: DataColumn): any {
@@ -54,26 +62,37 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     }
 
     getColumnByKey(key: string) {
-        let columns = this.columns.filter(col => col.key === key);
+        let columns = this._columns.filter(col => col.key === key);
         return columns.length > 0 ? columns[0] : null;
     }
 
     setSorting(sorting: DataSorting): void {
         this._sorting = sorting;
 
-        this.rows.sort((a: DataRow, b: DataRow) => {
-            let left = a.getValue(sorting.key).toString();
-            let right = b.getValue(sorting.key).toString();
+        if (sorting && sorting.key) {
+            this._rows.sort((a: DataRow, b: DataRow) => {
+                let left = a.getValue(sorting.key).toString();
+                let right = b.getValue(sorting.key).toString();
 
-            return sorting.direction === 'asc'
-                ? left.localeCompare(right)
-                : right.localeCompare(left);
-        });
+                return sorting.direction === 'asc'
+                    ? left.localeCompare(right)
+                    : right.localeCompare(left);
+            });
+        }
+    }
+
+    sort(key?: string, direction?: string): void {
+        let sorting = this._sorting || new DataSorting();
+        if (key) {
+            sorting.key = key;
+            sorting.direction = direction || 'asc';
+        }
+        this.setSorting(sorting);
     }
 }
 
 // Simple implementation of the DataRow interface.
-class ObjectDataRow implements DataRow {
+export class ObjectDataRow implements DataRow {
     constructor(
         private obj: any) {
     }
@@ -115,7 +134,7 @@ class ObjectDataRow implements DataRow {
 }
 
 // Simple implementation of the DataColumn interface.
-class ObjectDataColumn implements DataColumn {
+export class ObjectDataColumn implements DataColumn {
 
     key: string;
     type: string; // text|image
@@ -124,7 +143,7 @@ class ObjectDataColumn implements DataColumn {
     srTitle: string;
     cssClass: string;
 
-    constructor(private obj: any) {
+    constructor(obj: any) {
         this.key = obj.key;
         this.type = obj.type;
         this.sortable = obj.sortable;

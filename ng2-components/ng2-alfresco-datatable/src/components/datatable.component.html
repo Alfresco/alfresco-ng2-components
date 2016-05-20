@@ -3,7 +3,7 @@
     <tr>
         <!-- Columns -->
         <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
-            *ngFor="#col of data.columns"
+            *ngFor="#col of data.getColumns()"
             [class.column-header]="col.title"
             [class.mdl-data-table__header--sorted-ascending]="isColumnSorted(col, 'asc')"
             [class.mdl-data-table__header--sorted-descending]="isColumnSorted(col, 'desc')"
@@ -20,9 +20,9 @@
     <tbody>
     <!-- todo: special 'navigate parent row' support -->
 
-    <tr *ngFor="#row of data.rows; #idx = index">
+    <tr *ngFor="#row of data.getRows(); #idx = index">
 
-        <td *ngFor="#col of data.columns" [ngSwitch]="col.type"
+        <td *ngFor="#col of data.getColumns()" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)" (dblclick)="onRowDblClick(row, $event)">
             <div *ngSwitchWhen="'image'">
