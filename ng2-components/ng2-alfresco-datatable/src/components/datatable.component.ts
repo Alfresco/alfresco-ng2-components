@@ -17,6 +17,7 @@
 
 import {
     Component,
+    // NgZone,
     OnInit,
     Input,
     Output,
@@ -46,11 +47,18 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     @Input()
     data: DataTableAdapter;
 
+    @Input()
+    multiselect: boolean = false;
+
     @Output()
     rowClick: EventEmitter<any> = new EventEmitter();
 
     @Output()
     rowDblClick: EventEmitter<any> = new EventEmitter();
+
+    isSelectAllChecked: boolean = false;
+
+    constructor(/*private _ngZone?: NgZone*/) {}
 
     ngOnInit() {
         if (this.data) {
@@ -95,6 +103,26 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
                 newDirection = current.direction === 'asc' ? 'desc' : 'asc';
             }
             this.data.setSorting(new DataSorting(column.key, newDirection));
+        }
+    }
+
+    onSelectAllClick(e?) {
+        if (e) {
+            e.preventDefault();
+        }
+
+        this.isSelectAllChecked = !this.isSelectAllChecked;
+
+        if (this.multiselect) {
+            let rows = this.data.getRows();
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].isSelected = this.isSelectAllChecked;
+            }
+            /*
+             this._ngZone.run(() => {
+             this.data.getRows()[1].isSelected = true;
+             });
+             */
         }
     }
 

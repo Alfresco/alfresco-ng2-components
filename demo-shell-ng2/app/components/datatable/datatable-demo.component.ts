@@ -35,6 +35,8 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 })
 export class DataTableDemoComponent {
+
+    multiselect: boolean = false;
     data: ObjectDataTableAdapter;
 
     private _imageUrl: string = 'http://placehold.it/140x100';
@@ -88,7 +90,7 @@ export class DataTableDemoComponent {
     replaceColumns() {
         let schema = [
             { type: 'text', key: 'id', sortable: true },
-            { type: 'text', key: 'name', sortable: true }
+            { type: 'text', key: 'name', sortable: true, cssClass: 'full-width name-column' }
         ];
         let columns = schema.map(col => new ObjectDataColumn(col));
         this.data.setColumns(columns);

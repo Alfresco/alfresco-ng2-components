@@ -1,7 +1,18 @@
-<table *ngIf="data" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+<table
+    *ngIf="data"
+    class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
         <!-- Columns -->
+        <th *ngIf="multiselect">
+            <label
+                class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
+                [class.is-checked]="isSelectAllChecked"
+                for="table-header"
+                (click)="onSelectAllClick($event)">
+                <input type="checkbox" id="table-header" class="mdl-checkbox__input" />
+            </label>
+        </th>
         <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
             *ngFor="#col of data.getColumns()"
             [class.column-header]="col.title"
@@ -21,7 +32,14 @@
     <!-- todo: special 'navigate parent row' support -->
 
     <tr *ngFor="#row of data.getRows(); #idx = index">
-
+        <td *ngIf="multiselect">
+            <label
+                class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
+                [attr.for]="'row[' + idx + ']'"
+                [class.is-checked]="row.isSelected">
+                <input type="checkbox" [attr.id]="'row[' + idx + ']'" class="mdl-checkbox__input" [(ngModel)]="row.isSelected" />
+            </label>
+        </td>
         <td *ngFor="#col of data.getColumns()" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)" (dblclick)="onRowDblClick(row, $event)">

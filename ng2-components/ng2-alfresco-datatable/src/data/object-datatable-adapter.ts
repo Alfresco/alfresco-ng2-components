@@ -97,6 +97,9 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
 
 // Simple implementation of the DataRow interface.
 export class ObjectDataRow implements DataRow {
+
+    isSelected: boolean = false;
+
     constructor(
         private obj: any) {
     }
