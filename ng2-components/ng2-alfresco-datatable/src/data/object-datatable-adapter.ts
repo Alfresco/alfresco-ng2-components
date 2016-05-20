@@ -49,8 +49,17 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return this._rows;
     }
 
+    setRows(rows: Array<DataRow>) {
+        this._rows = rows || [];
+        this.sort();
+    }
+
     getColumns(): Array<DataColumn> {
         return this._columns;
+    }
+
+    setColumns(columns: Array<DataColumn>) {
+        this._columns = columns || [];
     }
 
     getValue(row: DataRow, col: DataColumn): any {

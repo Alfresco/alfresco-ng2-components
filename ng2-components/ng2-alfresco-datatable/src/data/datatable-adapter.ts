@@ -18,7 +18,9 @@
 export interface DataTableAdapter {
 
     getRows(): Array<DataRow>;
+    setRows(rows: Array<DataRow>): void;
     getColumns(): Array<DataColumn>;
+    setColumns(columns: Array<DataColumn>): void;
     getValue(row: DataRow, col: DataColumn): any;
     getSorting(): DataSorting;
     setSorting(sorting: DataSorting): void;

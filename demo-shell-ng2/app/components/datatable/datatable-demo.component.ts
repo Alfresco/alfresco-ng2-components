@@ -58,7 +58,7 @@ export class DataTableDemoComponent {
             ]
         );
 
-        this.data.setSorting(new DataSorting('name', 'asc'));
+        this.data.setSorting(new DataSorting('id', 'asc'));
     }
 
     addRow() {
@@ -71,5 +71,16 @@ export class DataTableDemoComponent {
         });
         this.data.getRows().push(row);
         this.data.sort();
+    }
+
+    replaceRows() {
+        let objects = [
+            {id: 10, name: 'Name 10', createdBy: this._createdBy, icon: 'material-icons://face'},
+            {id: 11, name: 'Name 11', createdBy: this._createdBy, icon: 'material-icons://language'},
+            {id: 12, name: 'Name 12', createdBy: this._createdBy, icon: 'material-icons://pets'},
+            {id: 13, name: 'Image 13', createdBy: this._createdBy, icon: this._imageUrl}
+        ];
+        let rows = objects.map(obj => new ObjectDataRow(obj));
+        this.data.setRows(rows);
     }
 }
