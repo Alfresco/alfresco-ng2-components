@@ -50,7 +50,6 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
                         multiLanguage += JSON.stringify(translate);
                     });
                     observer.next(JSON.parse(multiLanguage.replace(/}{/g, ',')));
-                    observer.next(multiLanguage);
                     observer.complete();
                 });
         });

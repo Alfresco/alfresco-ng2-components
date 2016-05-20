@@ -1,3 +1,41 @@
 {
   "title" : "Benvenuto"
+
+  "DOCUMENT_LIST": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "Mostra name",
+      "CREATED_BY": "Creato da",
+      "CREATED_ON": "Creato il"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "SYSTEM_1": "Azione 1 di sistema sulla cartella",
+        "CUSTOM": "Azione personalizzata su cartella"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Download",
+        "SYSTEM_2": "System document action 2",
+        "CUSTOM": "Custom action"
+      }
+    }
+  },
+
+  "DATATABLE": {
+    "COLUMNS": {
+      "DISPLAY_NAME": "Display name",
+      "CREATED_BY": "Created by",
+      "CREATED_ON": "Created on"
+    },
+    "ACTIONS": {
+      "FOLDER": {
+        "SYSTEM_1": "System folder action 1",
+        "CUSTOM": "Custom folder action"
+      },
+      "DOCUMENT": {
+        "DOWNLOAD": "Download",
+        "SYSTEM_2": "System document action 2",
+        "CUSTOM": "Custom action"
+      }
+    }
+  }
 }

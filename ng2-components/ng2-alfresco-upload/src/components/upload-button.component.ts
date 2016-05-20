@@ -106,7 +106,7 @@ export class UploadButtonComponent {
             }
         });
 
-        translate.translationInit('node_modules/ng2-alfresco-upload');
+        translate.addComponent('node_modules/ng2-alfresco-upload');
     }
 
     /**

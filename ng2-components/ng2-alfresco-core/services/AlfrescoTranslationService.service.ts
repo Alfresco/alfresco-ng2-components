@@ -22,20 +22,24 @@ import { AlfrescoTranslationLoader } from './AlfrescoTranslationLoader.service';
 
 @Injectable()
 export class AlfrescoTranslationService extends TranslateService {
-
+    userLang: string;
     currentLoader: AlfrescoTranslationLoader;
 
     constructor(http: Http, currentLoader: AlfrescoTranslationLoader, @Optional() missingTranslationHandler: MissingTranslationHandler) {
         super(http, currentLoader, missingTranslationHandler);
     }
 
-    translationInit(path: string): void {
+    translationInit(name: string = ''): void {
         let userLang = navigator.language.split('-')[0]; // use navigator lang if available
         userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
+        this.userLang = userLang;
+        this.setDefaultLang(this.userLang);
+        this.addComponent(name);
+        this.use(this.userLang);
+    }
 
-        this.setDefaultLang(userLang);
-        this.currentLoader.addComponentList(path);
-        this.getTranslation(userLang);
-        this.use(userLang);
+    addComponent(name: string) {
+        this.currentLoader.addComponentList(name);
+        this.getTranslation(this.userLang);
     }
 }

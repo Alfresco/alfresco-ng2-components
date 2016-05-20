@@ -44,7 +44,7 @@ declare var document: any;
     {path: '/search', name: 'Search', component: AlfrescoSearchComponent}
 ])
 export class AppComponent {
-    translate: TranslateService;
+    translate: AlfrescoTranslationService;
     searchForm: ControlGroup;
 
     constructor(private _fb: FormBuilder,
@@ -58,7 +58,8 @@ export class AppComponent {
             searchTerm: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
         });
 
-        translate.translationInit('');
+        this.translate = translate;
+        this.translate.translationInit();
     }
 
     isActive(instruction: any[]): boolean {
