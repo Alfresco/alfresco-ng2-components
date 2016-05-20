@@ -10,7 +10,7 @@
   "author": "Eugenio Romano",
   "scripts": {
     "typings": "typings install",
-    "start": "http-server -c-1 -o -p 8875 .",
+    "start": "npm run build && http-server -c-1 -o -p 8875 .",
     "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
     "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json src/**/*.ts",
