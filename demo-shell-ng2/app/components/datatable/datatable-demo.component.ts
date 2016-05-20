@@ -21,7 +21,8 @@ import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter, 
     DataSorting,
-    ObjectDataRow
+    ObjectDataRow,
+    ObjectDataColumn
 } from 'ng2-alfresco-datatable/ng2-alfresco-datatable';
 
 declare let __moduleName: string;
@@ -82,5 +83,14 @@ export class DataTableDemoComponent {
         ];
         let rows = objects.map(obj => new ObjectDataRow(obj));
         this.data.setRows(rows);
+    }
+
+    replaceColumns() {
+        let schema = [
+            { type: 'text', key: 'id', sortable: true },
+            { type: 'text', key: 'name', sortable: true }
+        ];
+        let columns = schema.map(col => new ObjectDataColumn(col));
+        this.data.setColumns(columns);
     }
 }
