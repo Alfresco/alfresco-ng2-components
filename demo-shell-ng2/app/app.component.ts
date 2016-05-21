@@ -18,14 +18,14 @@
 import { Component } from 'angular2/core';
 import { ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { MDL } from 'ng2-alfresco-core/material';
+import { MDL } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { FilesComponent } from './components/files/files.component';
-import { AlfrescoLoginComponent, AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-login';
+import { AlfrescoLoginComponent, AlfrescoAuthenticationService } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
 import { AuthRouterOutlet } from './components/router/AuthRouterOutlet';
-import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
-import { UploadButtonComponent } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { UploadButtonComponent } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
-import { AlfrescoSearchComponent } from 'ng2-alfresco-search/ng2-alfresco-search';
+import { AlfrescoSearchComponent } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
 
 declare var document: any;
 

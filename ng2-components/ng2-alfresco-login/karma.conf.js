@@ -11,13 +11,13 @@ module.exports = function (config) {
             // paths loaded by Karma
             {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: false},
             {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
-            {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: false},
-            {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: false},
-            {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: false},
-            {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: false},
+            { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false, served: true },
+            {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, served: true, watched: false},
+            {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, served: true, watched: false},
+            {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, served: true, watched: false},
             {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: false},
             {pattern: 'node_modules/alfresco-core-rest-api/bundle.js', included: true, watched: false},
-            {pattern: 'node_modules/ng2-translate/bundles/ng2-translate.js', included: true, watched: false},
+            {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
 
             {pattern: 'karma-test-shim.js', included: true, watched: true},
 

@@ -26,8 +26,7 @@ module.exports = function (config) {
             {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
 
             // paths to support debugging with source maps in dev tools
-            {pattern: 'services/**/*.ts', included: false, watched: false},
-            {pattern: 'material/**/*.ts', included: false, watched: false},
+            {pattern: 'src/**/*.ts', included: false, watched: false},
             {pattern: 'dist/**/*.js.map', included: false, watched: false}
         ],
 
@@ -75,6 +74,6 @@ module.exports = function (config) {
             ]
         },
 
-        singleRun: false
+        singleRun: true
     })
 };

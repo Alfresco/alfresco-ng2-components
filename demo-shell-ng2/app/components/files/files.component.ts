@@ -20,10 +20,10 @@ import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService
-} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
-import { MDL } from 'ng2-alfresco-core/material';
-import { ALFRESCO_ULPOAD_COMPONENT } from 'ng2-alfresco-upload/ng2-alfresco-upload';
-import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
+} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
+import { MDL } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
+import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -31,7 +31,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
-    directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENT],
+    directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENTS],
     providers: [DOCUMENT_LIST_PROVIDERS],
     pipes: [AlfrescoPipeTranslate]
 })
@@ -58,7 +58,7 @@ export class FilesComponent {
         alert('Custom folder action for ' + event.value.displayName);
     }
 
-    refreshDirectyory(event: Object) {
+    refreshDirectyory(event: any) {
         this.absolutePath = event.value;
         this.relativePath = this.getRelativeDirectory(this.absolutePath);
     }

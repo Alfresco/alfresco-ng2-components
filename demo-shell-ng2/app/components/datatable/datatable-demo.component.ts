@@ -16,14 +16,14 @@
  */
 
 import { Component } from 'angular2/core';
-import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/services';
+import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter, 
     DataSorting,
     ObjectDataRow,
     ObjectDataColumn
-} from 'ng2-alfresco-datatable/ng2-alfresco-datatable';
+} from 'ng2-alfresco-datatable/dist/ng2-alfresco-datatable';
 
 declare let __moduleName: string;
 

@@ -18,7 +18,7 @@
 import {Http} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 
-import {AlfrescoSettingsService} from 'ng2-alfresco-core/services';
+import {AlfrescoSettingsService} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import {AlfrescoService} from './../../src/services/alfresco.service';
 
 export class AlfrescoServiceMock extends AlfrescoService {

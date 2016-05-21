@@ -7,8 +7,12 @@ demo/
 node_modules
 typings/
 src/
+fonts/
 
-/ng2-alfresco-documentlist.ts
-/ng2-alfresco-documentlist.d.ts
-/ng2-alfresco-documentlist.js
-/ng2-alfresco-documentlist.js.map
+/.editorconfig
+/.travis.yml
+/*.js
+/*.json
+/*.ts
+/*.js.map
+/.npmignore

@@ -14,14 +14,16 @@ System.config({
             format: 'register',
             map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
         },
-        'ng2-translate': {
-            defaultExtension: 'js',
-            format: 'register'
+        'ng2-alfresco-core/dist': {
+            defaultExtension: 'js'
+        },
+        'rxjs': {
+            defaultExtension: 'js'
         }
     },
     map: {
-        'ng2-translate': '/base/node_modules/ng2-translate/bundles',
-        'ng2-alfresco-core': '/base/dist/node_modules/ng2-alfresco-core'
+        'ng2-alfresco-core/dist': '/base/node_modules/ng2-alfresco-core/dist',
+        'rxjs': '/base/node_modules/rxjs'
     }
 });
 
@@ -33,14 +35,13 @@ System.import('angular2/src/platform/browser/browser_adapter')
             __karma__.start();
         },
         function(error) {
+            console.log(error);
             __karma__.error(error.stack || error);
         }
     );
 
 function createPathRecords(pathsMapping, appPath) {
     // creates local module name mapping to global path with karma's fingerprint in path, e.g.:
-    // './vg-player/vg-player':
-    // '/base/dist/vg-player/vg-player.js?f4523daf879cfb7310ef6242682ccf10b2041b3e'
     var moduleName = './' + resolveKeyPathForMapping('base/dist/', appPath);
     moduleName = moduleName.replace(/\.js$/, '');
     pathsMapping[moduleName] = appPath + '?' + window.__karma__.files[appPath];
@@ -60,7 +61,6 @@ function resolveTestFiles() {
         .filter(onlySpecFiles)
         .map(function(moduleName) {
             // loads all spec files via their global module names (e.g.
-            // 'base/dist/vg-player/vg-player.spec')
             return System.import(moduleName);
         });
 }

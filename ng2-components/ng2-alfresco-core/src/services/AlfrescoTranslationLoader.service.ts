@@ -18,7 +18,7 @@
 import { Injectable } from 'angular2/core';
 import { Response, Http } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
-import { TranslateLoader } from 'ng2-translate/ng2-translate';
+import { TranslateLoader } from './AlfrescoTranslationService.service';
 
 @Injectable()
 export class AlfrescoTranslationLoader implements TranslateLoader {

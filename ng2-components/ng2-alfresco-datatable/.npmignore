@@ -7,8 +7,12 @@ demo/
 node_modules
 typings/
 src/
+fonts/
 
-/ng2-alfresco-datatable.ts
-/ng2-alfresco-datatable.d.ts
-/ng2-alfresco-datatable.js
-/ng2-alfresco-datatable.js.map
+/.editorconfig
+/.travis.yml
+/*.js
+/*.json
+/*.ts
+/*.js.map
+/.npmignore

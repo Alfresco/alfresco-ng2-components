@@ -16,18 +16,18 @@
  */
 
 
-import {AlfrescoSettingsService} from './services/AlfrescoSettingsService.service';
-import {AlfrescoTranslationLoader} from './services/AlfrescoTranslationLoader.service';
-import {AlfrescoTranslationService} from './services/AlfrescoTranslationService.service';
-import {AlfrescoPipeTranslate} from './services/AlfrescoPipeTranslate.service';
+import {AlfrescoSettingsService} from './src/services/AlfrescoSettingsService.service';
+import {AlfrescoTranslationLoader} from './src/services/AlfrescoTranslationLoader.service';
+import {AlfrescoTranslationService} from './src/services/AlfrescoTranslationService.service';
+import {AlfrescoPipeTranslate} from './src/services/AlfrescoPipeTranslate.service';
 
-export * from './services/AlfrescoSettingsService.service';
-export * from './services/AlfrescoTranslationLoader.service';
-export * from './services/AlfrescoTranslationService.service';
-export * from './services/AlfrescoPipeTranslate.service';
+export * from './src/services/AlfrescoSettingsService.service';
+export * from './src/services/AlfrescoTranslationLoader.service';
+export * from './src/services/AlfrescoTranslationService.service';
+export * from './src/services/AlfrescoPipeTranslate.service';
+export * from './src/material/MaterialDesignLiteUpgradeElement';
 
 export default {
-    directives: [],
     providers: [
         AlfrescoSettingsService,
         AlfrescoTranslationLoader,
@@ -42,3 +42,4 @@ export const ALFRESCO_CORE_PROVIDERS: [any] = [
     AlfrescoTranslationService,
     AlfrescoPipeTranslate
 ];
+

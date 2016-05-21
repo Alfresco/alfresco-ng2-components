@@ -7,8 +7,12 @@ demo/
 node_modules
 typings/
 src/
+fonts/
 
-/ng2-alfresco-search.ts
-/ng2-alfresco-search.d.ts
-/ng2-alfresco-search.js
-/ng2-alfresco-search.js.map
+/.editorconfig
+/.travis.yml
+/*.js
+/*.json
+/*.ts
+/*.js.map
+/.npmignore

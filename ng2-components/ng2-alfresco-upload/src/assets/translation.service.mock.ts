@@ -17,7 +17,11 @@
 
 import { Observable } from 'rxjs/Observable';
 import { EventEmitter } from 'angular2/core';
-import { LangChangeEvent } from 'ng2-translate/ng2-translate';
+
+export interface LangChangeEvent {
+    lang: string;
+    translations: any;
+}
 
 export class TranslationMock {
 

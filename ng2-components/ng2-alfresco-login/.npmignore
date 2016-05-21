@@ -7,8 +7,12 @@ demo/
 node_modules
 typings/
 src/
+fonts/
 
-/ng2-alfresco-upload.ts
-/ng2-alfresco-upload.d.ts
-/ng2-alfresco-upload.js
-/ng2-alfresco-upload.js.map
+/.editorconfig
+/.travis.yml
+/*.js
+/*.json
+/*.ts
+/*.js.map
+/.npmignore

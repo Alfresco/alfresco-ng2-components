@@ -20,8 +20,8 @@
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
-import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng2-alfresco-upload';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 
 
 @Component({
@@ -58,7 +58,7 @@ import { ALFRESCO_ULPOAD_COMPONENT, UploadService } from 'ng2-alfresco-upload/ng
                          DRAG HERE
                      </div>
                </alfresco-upload-drag-area>`,
-    directives: [ALFRESCO_ULPOAD_COMPONENT]
+    directives: [ALFRESCO_ULPOAD_COMPONENTS]
 })
 export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {

@@ -31,7 +31,7 @@ import { provide } from 'angular2/core';
 import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from 'angular2/router';
 import { RootRouter } from 'angular2/src/router/router';
 import { SpyLocation } from 'angular2/src/mock/location_mock';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -50,7 +50,7 @@ describe('AlfrescoLogin', () => {
       provide(Location, {useClass: SpyLocation}),
       provide(ROUTER_PRIMARY_COMPONENT, {useValue: AlfrescoLoginComponent}),
       provide(Router, {useClass: RootRouter}),
-      provide(TranslateService, {useClass: TranslationMock})
+      provide(AlfrescoTranslationService, {useClass: TranslationMock})
     ];
   });
 

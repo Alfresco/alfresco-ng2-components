@@ -19,7 +19,7 @@ import { Injectable } from 'angular2/core';
 import { Http, Response } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
-import { AlfrescoSettingsService } from 'ng2-alfresco-core/services';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 declare let AlfrescoApi: any;
 
