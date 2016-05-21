@@ -48,9 +48,8 @@ Make sure your systemjs.config has the following configuration:
     System.config({
                 defaultJSExtensions: true,
                 map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist',
+                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
                     'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
-                    'ng2-translate': 'node_modules/ng2-translate',
                     'rxjs': 'node_modules/rxjs',
                     'angular2' : 'node_modules/angular2',
                     'app': 'dist/src'
@@ -63,9 +62,6 @@ Make sure your systemjs.config has the following configuration:
                         defaultExtension: 'js'
                     },
                     'ng2-alfresco-upload': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-translate': {
                         defaultExtension: 'js'
                     },
                     'rxjs': {
@@ -97,7 +93,7 @@ Example of an App that declares upload button component :
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 
 
@@ -156,7 +152,7 @@ Example of an App that declares upload drag and drop component :
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/services';
+import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 
 
