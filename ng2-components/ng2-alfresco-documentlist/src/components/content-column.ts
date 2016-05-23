@@ -58,4 +58,13 @@ export class ContentColumn implements OnInit {
             this.list.registerColumn(model);
         }
     }
+
+    ngOnChanges(change) {
+        let model = new ContentColumnModel();
+        model.title = this.title;
+        model.source = this.source;
+        if (this.list) {
+            this.list.updateColumn(model);
+        }
+    }
 }
