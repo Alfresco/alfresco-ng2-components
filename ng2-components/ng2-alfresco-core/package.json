@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-core",
   "description": "Alfresco Angular 2 Components core",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "typings": "typings install",
