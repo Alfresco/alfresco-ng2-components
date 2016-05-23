@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from 'angular2/core';
 import {ContentActionModel} from './../models/content-action.model';
 import {ContentActionList} from './content-action-list';
 import {DocumentActionsService} from '../services/document-actions.service';
@@ -26,7 +26,7 @@ import {ContentActionHandler} from '../models/content-action.model';
     selector: 'content-action',
     template: ''
 })
-export class ContentAction implements OnInit {
+export class ContentAction implements OnInit, OnChanges {
 
     @Input()
     title: string = 'Action';
@@ -46,30 +46,39 @@ export class ContentAction implements OnInit {
     @Output()
     execute = new EventEmitter();
 
+    model: ContentActionModel;
+
     constructor(
         private list: ContentActionList,
         private documentActions: DocumentActionsService,
         private folderActions: FolderActionsService) {
+        this.model = new ContentActionModel();
     }
 
     ngOnInit() {
-        let model = new ContentActionModel();
-        model.type = this.type;
-        model.title = this.title;
-        model.icon = this.icon;
-        model.target = this.target;
+        this.model = new ContentActionModel({
+            type: this.type,
+            title: this.title,
+            icon: this.icon,
+            target: this.target
+        });
 
         if (this.handler) {
-            model.handler = this.getSystemHandler(this.target, this.handler);
+            this.model.handler = this.getSystemHandler(this.target, this.handler);
         } else if (this.execute) {
-            model.handler = (document: any): void => {
+            this.model.handler = (document: any): void => {
                 this.execute.emit({
                     value: document
                 });
             };
         }
 
-        this.list.registerAction(model);
+        this.list.registerAction(this.model);
+    }
+
+    ngOnChanges() {
+        // update localizable properties
+        this.model.title = this.title;
     }
 
     private getSystemHandler(target: string, name: string): ContentActionHandler {

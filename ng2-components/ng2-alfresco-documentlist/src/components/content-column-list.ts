@@ -38,18 +38,4 @@ export class ContentColumnList {
             this.documentList.columns.push(column);
         }
     }
-
-    /**
-     * Update the title with the new value
-     * @param column Column definition model.
-     */
-    updateColumn(column: ContentColumnModel): void {
-        if (this.documentList && column) {
-            this.documentList.columns.forEach((tmpColumn) => {
-                if (tmpColumn.source === column.source) {
-                    tmpColumn.title = column.title;
-                }
-            });
-        }
-    }
 }

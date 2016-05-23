@@ -20,4 +20,13 @@ export class ContentColumnModel {
     srTitle: string;
     source: string;
     cssClass: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.title = obj.title;
+            this.srTitle = obj.srTitle;
+            this.source = obj.source;
+            this.cssClass = obj.cssClass;
+        }
+    }
 }
