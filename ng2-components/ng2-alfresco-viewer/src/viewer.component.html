@@ -7,13 +7,32 @@
 
                 <!-- File Title -->
                 <span class="mdl-layout-title">{{nameFile}}</span>
+
+                <!-- pagination toolbar start -->
+                <div id="viewer-toolbar-pagination">
+                    <div id="viewer-previouspage-button" class="left" (click)="previousPage()">
+                        <i class="icon material-icons">keyboard_arrow_left</i>
+                    </div>
+
+                    <input id="viewer-pagenumber-input"  #page
+                           (keyup.enter)="inputPage(page.value)" class="left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
+                    <span id="viewer-total-pages"  class="left">/ {{totalPages}}</span>
+
+                    <div id="viewer-nextpage-button" (click)="nextPage()"  class="left">
+                        <i class="icon material-icons" >keyboard_arrow_right</i>
+                    </div>
+                </div>
+                <!-- pagination toolbar end -->
+
+                <span class="vertical-divider"></span>
+
                 <div class="mdl-layout-spacer"></div>
 
                 <!-- Start Navigation -->
                 <nav class="mdl-navigation">
                     <div class="button-container">
                         <button
-                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
+                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="cazzo()">
                             <i id="tt2" class="icon material-icons">print</i>
                         </button>
                     </div>
@@ -21,14 +40,14 @@
                     <div class="button-container">
                         <button
                             class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
-                            <i id="tt3" class="icon material-icons">cloud_upload</i>
+                            <i id="cloud-upload" class="icon material-icons">cloud_upload</i>
                         </button>
                     </div>
 
                     <div class="button-container">
                         <button
                             class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
-                            <i id="tt4" class="icon material-icons">share</i>
+                            <i id="share" class="icon material-icons">share</i>
                         </button>
                     </div>
 
@@ -56,13 +75,30 @@
 
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-                    <div class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+                    <div
+                        class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
 
                         <!-- Start Pdf Canvas -->
                         <div id="canvas-container">
                             <canvas id="the-canvas" style="border:1px solid black;"></canvas>
                         </div>
                         <!-- End Pdf Canvas -->
+
+                        <div class="previous-page-button">
+                            <button
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                (click)="previousPage()">
+                                <i class="icon material-icons">keyboard_arrow_left</i>
+                            </button>
+                        </div>
+
+                        <div class="next-page-button">
+                            <button
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                (click)="nextPage()">
+                                <i class="icon material-icons">keyboard_arrow_right</i>
+                            </button>
+                        </div>
 
                     </div>
                 </div>

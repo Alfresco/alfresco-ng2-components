@@ -21,10 +21,7 @@
 
     <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
     <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
-    
-    <script>
-        PDFJS.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.js';
-    </script>
+    <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
 
     <script>
         System.config({
@@ -35,6 +32,9 @@
                 'app': 'dist/main'
             },
             packages: {
+                'pdfjsDistBuildPdf': {
+                    defaultExtension: 'js'
+                },
                 'app': {
                     defaultExtension: 'js'
                 },
@@ -52,6 +52,8 @@
 
 </head>
 <body>
-<ng2-alfresco-viewer><div class="mdl-spinner mdl-js-spinner is-active"></div></ng2-alfresco-viewer>
+<alfresco-viewer [urlFile]="'localTestFile.pdf'">
+    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+</alfresco-viewer>
 </body>
 </html>

@@ -15,4 +15,4 @@
  * limitations under the License.
  */
 
-export * from './src/ng2-alfresco-viewer.component';
+export * from './src/viewer.component';

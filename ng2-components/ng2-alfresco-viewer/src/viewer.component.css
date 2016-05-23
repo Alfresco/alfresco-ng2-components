@@ -1,0 +1,31 @@
+.button-container {
+    padding: 0 40px;
+}
+
+.page-content {
+    background: #3E3E3E;
+}
+
+.previous-page-button {
+    top: 50%;
+    left: 7%;
+    position: fixed;
+}
+
+.next-page-button {
+    top: 50%;
+    right: 7%;
+    position: fixed;
+}
+
+.left {
+    float: left;
+}
+
+#viewer-toolbar-pagination {
+    margin-left: 25%;
+}
+
+#viewer-pagenumber-input {
+    width: 30px;
+}
