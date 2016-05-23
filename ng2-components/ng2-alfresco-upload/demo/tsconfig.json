@@ -13,6 +13,7 @@
   "exclude": [
     "dist",
     "node_modules",
-    "typings"
+    "typings/main",
+    "typings/main.d.ts"
   ]
 }

@@ -1,5 +1,3 @@
-///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
-
 /*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
