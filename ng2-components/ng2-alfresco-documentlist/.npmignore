@@ -6,7 +6,6 @@ coverage/
 demo/
 node_modules
 typings/
-src/
 fonts/
 
 /.editorconfig
