@@ -42,6 +42,8 @@ export class FilesComponent {
     absolutePath: string = '/Sites/swsdp/documentLibrary';
     relativePath: string = '';
 
+    acceptedFilesType: string = '.jpg,.pdf,.js';
+
     constructor(documentActions: DocumentActionsService) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }

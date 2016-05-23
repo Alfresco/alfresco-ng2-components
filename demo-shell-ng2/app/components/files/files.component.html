@@ -74,4 +74,14 @@
     </alfresco-document-list>
 </alfresco-upload-drag-area>
 
+
+<h5>Single file upload</h5>
 <alfresco-upload-button uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}" (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
+<h5>Folder upload</h5>
+<alfresco-upload-button uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}" [uploadFolders]="true"
+                        (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
+<h5>Multiple file upload</h5>
+<input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
+<alfresco-upload-button uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}" acceptedFilesType="{{acceptedFilesType}}"
+                        [multipleFiles]="true"
+                        (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
