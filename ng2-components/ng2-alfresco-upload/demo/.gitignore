@@ -1,5 +1,4 @@
-node_modules
+typings/
+node_modules/
 .idea
-coverage
-dist
-typings
+dist/

@@ -52,6 +52,7 @@ Make sure your systemjs.config has the following configuration:
                     'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
                     'rxjs': 'node_modules/rxjs',
                     'angular2' : 'node_modules/angular2',
+                    'ng2-translate': 'node_modules/ng2-translate',
                     'app': 'dist/src'
                 },
                 packages: {
