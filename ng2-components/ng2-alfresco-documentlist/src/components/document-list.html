@@ -33,7 +33,7 @@
     </tr>
 
     <tr *ngFor="#content of folder.list.entries; #idx = index"
-        [attr.automation-id]="getObjectValue(content.entry, 'name')">
+        [attr.data.automation-id]="getObjectValue(content.entry, 'name')">
         <!-- Columns -->
         <td *ngFor="#col of columns" [ngSwitch]="col.source"
             class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
