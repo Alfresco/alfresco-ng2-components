@@ -108,8 +108,10 @@ export class AlfrescoTranslationService {
     }
 
     addComponent(name: string) {
-        this.currentLoader.addComponentList(name);
-        this.getTranslation(this.userLang);
+        if (!this.currentLoader.existComponent(name)) {
+            this.currentLoader.addComponentList(name);
+            this.getTranslation(this.userLang);
+        }
     }
 
     /**

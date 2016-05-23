@@ -34,11 +34,15 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
         this._componentList.push(name);
     }
 
-    getTranslation(lang: string): Observable<any> {
+    existComponent(name: string) {
+        return this._componentList.indexOf(name) >= 0;
+    }
 
+    getTranslation(lang: string): Observable<any> {
+        let self = this;
         let observableBatch = [];
         this._componentList.forEach((component) => {
-            observableBatch.push(this.http.get(`${component}/${this.prefix}/${lang}${this.suffix}`)
+            observableBatch.push(this.http.get(`${component}/${self.prefix}/${lang}${self.suffix}`)
                 .map((res: Response) => res.json()));
         });
 
