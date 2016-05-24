@@ -31,6 +31,12 @@ Components included:
 * Alfresco Login Component
 * Alfresco Authentication Service
 
+### Basci usage
+
+```html
+<alfresco-login></alfresco-login>
+```
+
 ### Custom Login Component
 
 ```ts
