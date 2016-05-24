@@ -30,6 +30,14 @@
     {
       "name": "Will Abson",
       "email": "will.abson@alfresco.com"
+    },
+    {
+      "name": "Eugenio Romano",
+      "email": "eugenio.romano@alfresco.com"
+    },
+    {
+      "name": "Maurizio Vitale",
+      "email": "maurizio.vitale@alfresco.com"
     }
   ],
   "keywords": [
@@ -53,6 +61,7 @@
     "ng2-alfresco-login": "^0.1.0",
     "ng2-alfresco-search": "^0.1.2",
     "ng2-alfresco-upload": "^0.1.0",
+    "ng2-translate": "^1.11.3",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "systemjs": "0.19.26",

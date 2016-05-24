@@ -21,6 +21,16 @@ export class ContentActionModel {
     handler: ContentActionHandler;
     type: string;
     target: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.icon = obj.icon;
+            this.title = obj.title;
+            this.handler = obj.handler;
+            this.type = obj.type;
+            this.target = obj.target;
+        }
+    }
 }
 
 export interface ContentActionHandler {

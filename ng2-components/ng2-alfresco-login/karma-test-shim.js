@@ -17,13 +17,17 @@ System.config({
         'ng2-alfresco-core/dist': {
             defaultExtension: 'js'
         },
+        'ng2-translate': {
+            defaultExtension: 'js'
+        },
         'rxjs': {
             defaultExtension: 'js'
         }
     },
     map: {
         'ng2-alfresco-core/dist': '/base/node_modules/ng2-alfresco-core/dist',
-        'rxjs': '/base/node_modules/rxjs'
+        'rxjs': '/base/node_modules/rxjs',
+        'ng2-translate' : '/base/node_modules/ng2-translate'
     }
 });
 

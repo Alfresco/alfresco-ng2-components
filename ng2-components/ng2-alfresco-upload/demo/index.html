@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Angular 2 Upload</title>
+    <title>Alfresco Angular 2 Upload - Demo</title>
     <base href="/">
 
     <!-- Google Material Design Lite -->
@@ -30,11 +30,12 @@
                 'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
                 'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
                 'rxjs': 'node_modules/rxjs',
-                'angular2' : 'node_modules/angular2',
-                'app': 'dist/src'
+                'angular2': 'node_modules/angular2',
+                'ng2-translate': 'node_modules/ng2-translate',
+                'src': 'src'
             },
             packages: {
-                'app': {
+                'src': {
                     defaultExtension: 'js'
                 },
                 'ng2-alfresco-core': {
@@ -51,8 +52,7 @@
                 }
             }
         });
-
-        System.import('dist/my-app').catch(console.log.bind(console));
+        System.import('dist/main').catch(console.log.bind(console));
     </script>
 
 </head>

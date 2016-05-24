@@ -34,7 +34,7 @@ describe('AlfrescoUploadButton', () => {
     });
 
     it('should render upload-single-file button as default',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
@@ -45,7 +45,7 @@ describe('AlfrescoUploadButton', () => {
         }));
 
     it('should render upload-multiple-file button if multipleFiles is true',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
@@ -58,7 +58,7 @@ describe('AlfrescoUploadButton', () => {
         }));
 
     it('should render an uploadFolder button if uploadFolder is true',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
@@ -70,7 +70,7 @@ describe('AlfrescoUploadButton', () => {
                 });
         }));
 
-    it('should call onFilesAdded method', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    it('should call onFilesAdded method', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
         return tcb
             .createAsync(UploadButtonComponent)
             .then((fixture) => {
@@ -88,8 +88,8 @@ describe('AlfrescoUploadButton', () => {
             });
     }));
 
-    it('should render dialog box with css class show ',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    it('should render dialog box with css class show',
+        injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {

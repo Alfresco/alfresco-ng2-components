@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from 'angular2/core';
+import { Component, OnInit, Input, OnChanges } from 'angular2/core';
 import { ContentColumnList } from './content-column-list';
 import { ContentColumnModel } from './../models/content-column.model';
 
@@ -23,7 +23,7 @@ import { ContentColumnModel } from './../models/content-column.model';
     selector: 'content-column',
     template: ''
 })
-export class ContentColumn implements OnInit {
+export class ContentColumn implements OnInit, OnChanges {
 
     @Input()
     title: string = '';
@@ -40,22 +40,32 @@ export class ContentColumn implements OnInit {
     @Input('class')
     cssClass: string;
 
+    model: ContentColumnModel;
+
     constructor(private list: ContentColumnList) {
+        this.model = new ContentColumnModel();
     }
 
     ngOnInit() {
-        let model = new ContentColumnModel();
-        model.title = this.title;
-        model.srTitle = this.srTitle;
-        model.source = this.source;
-        model.cssClass = this.cssClass;
+        this.model = new ContentColumnModel({
+            title: this.title,
+            srTitle: this.srTitle,
+            source: this.source,
+            cssClass: this.cssClass
+        });
 
-        if (!model.srTitle && model.source === '$thumbnail') {
-            model.srTitle = 'Thumbnail';
+        if (!this.model.srTitle && this.model.source === '$thumbnail') {
+            this.model.srTitle = 'Thumbnail';
         }
 
         if (this.list) {
-            this.list.registerColumn(model);
+            this.list.registerColumn(this.model);
         }
+    }
+
+    ngOnChanges(change) {
+        // update localizable properties
+        this.model.title = this.title;
+        this.model.srTitle = this.srTitle;
     }
 }

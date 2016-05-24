@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-login",
   "description": "Alfresco Angular2 Login Component",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "typings": "typings install",
@@ -63,7 +63,8 @@
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "systemjs": "0.19.26",
-    "zone.js": "^0.6.12"
+    "zone.js": "^0.6.12",
+    "ng2-translate": "^1.11.3"
   },
   "peerDependencies": {
     "angular2": "2.0.0-beta.15"

@@ -17,18 +17,18 @@
 
 import {describe, expect, it, injectAsync, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
 import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import {Ng2AlfrescoViewerComponent} from '../src/ng2-alfresco-viewer.component';
+import {ViewerComponent} from '../src/viewer.component';
 
 describe('Basic Example test ng2-alfresco-viewer', () => {
-  setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+    setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
 
-  it('Test hello world', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-    return tcb
-      .createAsync(Ng2AlfrescoViewerComponent)
-      .then((fixture) => {
-        let element = fixture.nativeElement;
-        expect(element.querySelector('h1')).toBeDefined();
-        expect(element.getElementsByTagName('h1')[0].innerHTML).toEqual('ng2-alfresco-viewer');
-      });
-  }));
+    it('Test hello world', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(ViewerComponent)
+            .then((fixture) => {
+                let element = fixture.nativeElement;
+                expect(element.querySelector('h1')).toBeDefined();
+                expect(element.getElementsByTagName('h1')[0].innerHTML).toEqual('ng2-alfresco-viewer');
+            });
+    }));
 });
