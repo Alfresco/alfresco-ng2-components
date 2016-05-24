@@ -24,7 +24,9 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
 
 @Component({
     selector: 'my-app',
-    template: `<alfresco-upload-button [showDialogUpload]="true"
+    template: `<label for="token">Access Token</label><br>
+               <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br><br>
+               <alfresco-upload-button [showDialogUpload]="true"
                                        [showUdoNotificationBar]="true"
                                        [uploadFolders]="false"
                                        [multipleFiles]="false"
@@ -59,8 +61,17 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
     directives: [ALFRESCO_ULPOAD_COMPONENTS]
 })
 export class MyDemoApp {
+    token: string;
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+
+        if(localStorage.getItem('token')) {
+            this.token = localStorage.getItem('token');
+        }
+    }
+
+    updateToken() {
+        localStorage.setItem('token', this.token);
     }
 
     public customMethod(event: Object): void {
