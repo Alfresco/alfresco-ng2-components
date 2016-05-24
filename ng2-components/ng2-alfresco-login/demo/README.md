@@ -1,4 +1,4 @@
-# angular2-testing
+# angular2-alfresco-login
 
 Install:
 

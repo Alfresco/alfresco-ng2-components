@@ -18,11 +18,9 @@
  */
 
 import { Component } from 'angular2/core';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login/ng2-alfresco-login';
+import { AlfrescoLoginComponent, AlfrescoAuthenticationService } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core/services';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-login';
-
+import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 @Component({
     selector: 'my-login',
@@ -33,7 +31,7 @@ import { AlfrescoAuthenticationService } from 'ng2-alfresco-login/ng2-alfresco-l
 @RouteConfig([
     {path: '/', name: 'Login', component: AlfrescoLoginComponent, useAsDefault: true}
 ])
-export class MyLoginComponent {
+export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
