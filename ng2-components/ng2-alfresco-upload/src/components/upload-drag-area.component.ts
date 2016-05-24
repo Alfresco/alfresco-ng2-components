@@ -68,7 +68,6 @@ export class UploadDragAreaComponent {
         let container = this.getContainerId();
 
         this._uploaderService.setOptions({
-            fieldName: 'filedata',
             formFields: {
                 siteid: site,
                 containerid: container

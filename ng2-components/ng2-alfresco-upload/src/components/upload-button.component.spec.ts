@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-
-import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
-import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder, setBaseTestProviders } from 'angular2/testing';
+import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder } from 'angular2/testing';
 import { provide } from 'angular2/core';
 import { UploadButtonComponent } from './upload-button.component';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
+import { UploadServiceMock } from '../assets/upload.service.mock';
+import { UploadService } from '../services/upload.service';
+
 
 describe('AlfrescoUploadButton', () => {
 
-    setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
-
     beforeEachProviders(() => {
         return [
-            provide(AlfrescoTranslationService, {useClass: TranslationMock})
+            provide(AlfrescoTranslationService, {useClass: TranslationMock}),
+            provide(UploadService, {useClass: UploadServiceMock})
         ];
     });
 
@@ -38,6 +38,8 @@ describe('AlfrescoUploadButton', () => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    component.multipleFiles = false;
                     let compiled = fixture.debugElement.nativeElement;
                     fixture.detectChanges();
                     expect(compiled.querySelector('#upload-single-file')).toBeDefined();

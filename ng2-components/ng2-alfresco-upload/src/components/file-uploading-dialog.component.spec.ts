@@ -15,21 +15,38 @@
  * limitations under the License.
  */
 
-
-import { it, describe, expect, injectAsync, TestComponentBuilder } from 'angular2/testing';
+import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
+import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder, setBaseTestProviders } from 'angular2/testing';
+import { provide } from 'angular2/core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
+import { FileModel } from '../models/file.model';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { TranslationMock } from '../assets/translation.service.mock';
 
 describe('FileUploadDialog', () => {
+
+    setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+
+    beforeEachProviders(() => {
+        return [
+            provide(AlfrescoTranslationService, {useClass: TranslationMock})
+        ];
+    });
 
     it('should render dialog box with css class show', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
             .createAsync(FileUploadingDialogComponent)
             .then((fixture) => {
+                let fileFake = {
+                    id: 'fake-id',
+                    name: 'fake-name'
+                };
+                let file = new FileModel(fileFake);
                 let component = fixture.componentInstance;
-                fixture.detectChanges();
+                component.filesUploadingList = [file];
 
                 let compiled = fixture.debugElement.nativeElement;
-                component._showDialog();
+                component.showDialog();
                 fixture.detectChanges();
 
                 expect(compiled.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');

@@ -60,6 +60,7 @@ export class UploadService {
      *
      */
     public setOptions(options: any): void {
+        this._url = options.url || this._url;
         this._baseUrlPath = options.baseUrlPath || this._baseUrlPath;
         this._formFields = options.formFields != null ? options.formFields : this._formFields;
     }
@@ -68,24 +69,32 @@ export class UploadService {
      * Get the host
      * @returns {string}
      */
-    public get host(): string {
+    public getHost(): string {
         return this._host;
     }
 
     /**
-     * Set the host
-     * @param value
+     * Get the url
+     * @returns {string}
      */
-    public set host(value: string) {
-        this._host = value;
+    public getUrl(): string {
+        return this._url;
     }
 
     /**
      * Get the base url
      * @returns {string}
      */
-    private getBaseUrl(): string {
-        return this._host + this._baseUrlPath;
+    public getBaseUrl(): string {
+        return this._baseUrlPath;
+    }
+
+    /**
+     * Get the form fields
+     * @returns {Object}
+     */
+    public getFormFileds(): Object {
+        return this._formFields;
     }
 
     /**
@@ -102,7 +111,6 @@ export class UploadService {
      */
     private getAlfrescoClient() {
         let defaultClient = new AlfrescoApi.ApiClient();
-        defaultClient.basePath = this.getBaseUrl();
 
         // Configure HTTP basic authorization: basicAuth
         let basicAuth = defaultClient.authentications['basicAuth'];
@@ -206,6 +214,7 @@ export class UploadService {
         form.append('uploaddirectory', directory);
 
         let xmlHttpRequest = this.createXMLHttpRequestInstance(uploadingFileModel, elementEmit);
+        uploadingFileModel._xmlHttpRequest = xmlHttpRequest;
 
         xmlHttpRequest.open(this._method, this._host + this._url, true);
         let authToken = btoa(basicAuth.username + ':' + basicAuth.password);

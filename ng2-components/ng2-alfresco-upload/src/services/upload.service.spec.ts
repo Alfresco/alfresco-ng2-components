@@ -44,20 +44,18 @@ describe('AlfrescoUploadService', () => {
     let service: MockUploadService,
         options: any;
 
+    options = {
+        host: 'fakehost',
+        url: '/some/cool/url',
+        baseUrlPath: 'fakebasepath',
+        formFields: {
+            siteid: 'fakeSite',
+            containerid: 'fakeFolder'
+        }
+    };
+
     beforeEach(() => {
         jasmine.Ajax.install();
-
-        options = {
-            url: '/some/cool/url',
-            withCredentials: true,
-            authToken: btoa('fakeadmin:fakeadmin'),
-            authTokenPrefix: 'Basic',
-            fieldName: 'fakeFileData',
-            formFields: {
-                siteid: 'fakeSite',
-                containerid: 'fakeFolder'
-            }
-        };
         service = new MockUploadService(options);
     });
 
@@ -65,44 +63,56 @@ describe('AlfrescoUploadService', () => {
         jasmine.Ajax.uninstall();
     });
 
+    it('should show the default option if no method setOption is called', () => {
+        let empty = {};
+        service.setOptions(empty);
+        expect(service.getUrl()).toEqual('/alfresco/service/api/upload');
+        expect(service.getBaseUrl()).toEqual('/alfresco/api/-default-/public/alfresco/versions/1');
+        let formFields: Object = {};
+        expect(service.getFormFileds()).toEqual(formFields);
+    });
+
+    it('should set the basic option an empty queue if no elements are added', () => {
+        service.setOptions(options);
+        expect(service.getUrl()).toEqual('/some/cool/url');
+        expect(service.getBaseUrl()).toEqual('fakebasepath');
+        expect(service.getFormFileds()).toEqual({
+            siteid: 'fakeSite',
+            containerid: 'fakeFolder'
+        });
+    });
+
     it('should return an empty queue if no elements are added', () => {
+        service.setOptions(options);
         expect(service.getQueue().length).toEqual(0);
     });
 
     it('should add an element in the queue and returns it', () => {
+        service.setOptions(options);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
+        service.setOptions(options);
         let filesFake = [{name: 'fake-name', size: 10}, {name: 'fake-name2', size: 20}];
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(2);
     });
 
     it('should make XHR done request after the file is added in the queue', () => {
-        let mockUploadSuccessResponses = {
-            upload: {
-                success: {
-                    status: 200,
-                    responseText: '{"nodeRef":"workspace://SpacesStore/fake","fileName": "fake-name.png","status":' +
-                    '{"code": 200,"name": "OK","description": "fake file uploaded successfully"}}'
-                }
-            }
-        };
+        service.setOptions(options);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', null);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        // request.respondWith(mockUploadSuccessResponses.upload.success);
-        expect(request.url).toBe('/some/cool/url');
+        expect(request.url).toBe('fakehost/some/cool/url');
         expect(request.method).toBe('POST');
         // expect(request.data()).toEqual({fileName: 'fake-name.png'});
 
         expect(doneFn).not.toHaveBeenCalled();
-        console.log(mockUploadSuccessResponses);
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'text/plain',
@@ -112,10 +122,11 @@ describe('AlfrescoUploadService', () => {
     });
 
     it('should make XHR error request after an error occur', () => {
+        service.setOptions(options);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', null);
-        expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
+        expect(jasmine.Ajax.requests.mostRecent().url).toBe('fakehost/some/cool/url');
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
             contentType: 'text/plain',
@@ -125,6 +136,7 @@ describe('AlfrescoUploadService', () => {
     });
 
     it('should make XHR abort request after the xhr abort is called', () => {
+        service.setOptions(options);
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', null);
@@ -134,12 +146,13 @@ describe('AlfrescoUploadService', () => {
     });
 
     it('should make XHR done request after the file is upload', () => {
+        service.setOptions(options);
         let filesFake = {name: 'fake-name', size: 10};
 
         let uploadingFileModel = new FileModel(filesFake);
         service.uploadFile(uploadingFileModel, '', null);
 
-        expect(jasmine.Ajax.requests.mostRecent().url).toBe('/some/cool/url');
+        expect(jasmine.Ajax.requests.mostRecent().url).toBe('fakehost/some/cool/url');
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'text/plain',
@@ -147,5 +160,4 @@ describe('AlfrescoUploadService', () => {
         });
         expect(doneFn).toHaveBeenCalledWith('Single File uploaded');
     });
-
 });

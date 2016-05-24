@@ -35,6 +35,10 @@ export class TranslationMock {
         console.log('mock');
     }
 
+    addComponent() {
+
+    }
+
     public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
         if (!key) {
             throw new Error('Parameter "key" required');
