@@ -5,7 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run build && npm run typings",
+    "postinstall": "npm run typings && npm run build",
     "typings": "typings install",
     "start": "rm -rf dist && npm install && npm run server",
     "server": "lite-server",
