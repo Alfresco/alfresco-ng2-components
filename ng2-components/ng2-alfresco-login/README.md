@@ -31,63 +31,124 @@ Components included:
 * Alfresco Login Component
 * Alfresco Authentication Service
 
-### Basci usage
+#### Dependencies
+
+Add the following dependency to your index.html:
+
+```html
+    <script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
+```
+
+Make sure your systemjs.config has the following configuration:
+
+```javascript
+    System.config({
+                defaultJSExtensions: true,
+                map: {
+                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
+                    'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
+                    'rxjs': 'node_modules/rxjs',
+                    'angular2' : 'node_modules/angular2',
+                    'ng2-translate': 'node_modules/ng2-translate',
+                    'src': 'src'
+                },
+                packages: {
+                    'src': {
+                        defaultExtension: 'js'
+                    },
+                    'ng2-alfresco-core': {
+                        defaultExtension: 'js'
+                    },
+                    'ng2-alfresco-login': {
+                        defaultExtension: 'js'
+                    },
+                    'rxjs': {
+                        defaultExtension: 'js'
+                    },
+                    'angular2': {
+                        defaultExtension: 'js'
+                    }
+                }
+            });
+    
+```
+
+#### Basic usage
+
 
 ```html
 <alfresco-login></alfresco-login>
 ```
 
-### Custom Login Component
+Example of an App that use Alfresco login component :
 
+main.ts
 ```ts
-import {Component} from 'angular2/core';
-import {AlfrescoLoginComponent} from 'ng2-alfresco-login/ng2-alfresco-login';
+
+import { bootstrap } from 'angular2/platform/browser';
+import { AppComponent } from './components/app-component';
+import { ALFRESCO_AUTHENTICATION } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
+import { ROUTER_PROVIDERS } from 'angular2/router';
+import { HTTP_PROVIDERS } from 'angular2/http';
+import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
+bootstrap(AppComponent, [
+    ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
+    AlfrescoTranslationLoader,
+    AlfrescoTranslationService,
+    ALFRESCO_AUTHENTICATION,
+    ALFRESCO_CORE_PROVIDERS
+]);
+
+```
+
+app-components.ts
+```ts
+
+import { Component } from 'angular2/core';
+import { AlfrescoLoginComponent, AlfrescoAuthenticationService } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
+import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 @Component({
     selector: 'my-login',
-    template: ' <alfresco-login method="{{methodName}}" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
-    directives: [ALFRESCO_LOGIN_DIRECTIVES]
+    template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
+    directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
 })
-export class MyLoginComponent {
-    methodName: string = 'POST';
-    
-    mySuccessMethod($event) {
-            console.log('Success Login EventEmitt called with: '+$event.value);
-        }
-    
-    myErrorMethod($event) {
-        console.log('Error Login EventEmitt called with: '+$event.value);
+
+@RouteConfig([
+    {path: '/', name: 'Login', component: AlfrescoLoginComponent, useAsDefault: true}
+])
+export class AppComponent {
+
+    constructor(public auth: AlfrescoAuthenticationService,
+                public router: Router,
+                alfrescoSettingsService: AlfrescoSettingsService) {
+        alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+
     }
+
+    mySuccessMethod($event) {
+        console.log('Success Login EventEmitt called with: ' + $event.value);
+    }
+
+    myErrorMethod($event) {
+        console.log('Error Login EventEmitt called with: ' + $event.value);
+    }
+
 }
+
 ```
-
-### Demo
-
-## Configuring development environment
-
-*All scripts assume you are at the project root folder*
-
-**Install symlinks for Alfresco components**
-
-*ng2-alfresco-core:*
-
-```sh
-cd ng2-components/ng2-alfresco-core
-npm link
-cd ../ng2-alfresco-login/demo
-npm link ng2-alfresco-core
-```
+#### Events
+**onSuccess**: The event is emitted when the login is done
+**onError**: The event is emitted when the login fails<br />
 
 
-*ng2-alfresco-login component:*
+#### Options
 
-```sh
-cd ng2-components/ng2-alfresco-login
-npm link
-cd ../ng2-alfresco-login/demo
-npm link ng2-alfresco-login
-```
-
+**method**: {string} optional) default POST. The method attribute specifies how to send form-data
+The form-data can be sent as URL variables (with method="get") or as HTTP post transaction (with method="post").<br />
 **Start the demo**
 
 ```sh
