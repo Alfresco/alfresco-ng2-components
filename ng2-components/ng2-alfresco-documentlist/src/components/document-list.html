@@ -11,7 +11,7 @@
         <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
             *ngFor="#col of columns"
             [class.column-header]="col.title"
-            [attr.data.automation-id]=“‘auto_id_’ + col.source”
+            [attr.data-automation-id]="'auto_id_' + col.source"
             [class.mdl-data-table__header--sorted-ascending]="sorting.key === col.source && sorting.direction === 'asc'"
             [class.mdl-data-table__header--sorted-descending]="sorting.key === col.source && sorting.direction === 'desc'"
             (click)="onColumnHeaderClick(col)">
@@ -34,7 +34,7 @@
     </tr>
 
     <tr *ngFor="#content of folder.list.entries; #idx = index"
-        [attr.data.automation-id]="getObjectValue(content.entry, 'name')">
+        [attr.data-automation-id]="getObjectValue(content.entry, 'name')">
         <!-- Columns -->
         <td *ngFor="#col of columns" [ngSwitch]="col.source"
             class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
