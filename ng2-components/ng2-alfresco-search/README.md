@@ -31,6 +31,14 @@ npm run build
 npm test
 ```
 
+#### Basic usage
+
+
+```html
+<alfresco-search></alfresco-search>
+```
+
+
 This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
 
