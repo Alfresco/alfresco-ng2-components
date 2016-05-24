@@ -8,7 +8,10 @@
         "postinstall": "npm run typings && npm run build  && npm link ng2-alfresco-viewer",
         "typings": "typings install",
         "start": "rm -rf dist && npm install && http-server -c-1 -o -p 8875 .",
-        "build": "rm -rf dist && tsc"
+        "build": "npm run tslint &&  rm -rf dist && tsc",
+        "tslint": "npm run tslint-src && npm run tslint-root",
+        "tslint-src": "tslint -c tslint.json src/**/*.ts",
+        "tslint-root": "tslint -c tslint.json *.ts"
     },
     "license": "Apache-2.0",
     "dependencies": {
@@ -25,6 +28,7 @@
     "devDependencies": {
         "http-server": "0.8.5",
         "systemjs": "0.19.17",
+        "tslint": "^3.8.1",
         "typescript": "1.7.5",
         "typings": "0.6.8"
     },

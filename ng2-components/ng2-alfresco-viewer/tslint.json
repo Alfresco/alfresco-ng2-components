@@ -117,7 +117,8 @@
         "check-operator",
         "check-separator",
         "check-type",
-        "check-module"
+        "check-module",
+        "check-decl"
     ]
   }
 }
