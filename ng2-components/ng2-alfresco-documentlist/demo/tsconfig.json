@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "ES5",
-        "module": "commonjs",
+        "module": "system",
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -11,7 +11,9 @@
         "outDir": "dist"
     },
     "exclude": [
+        "dist",
         "node_modules",
-        "typings"
+        "typings/main",
+        "typings/main.d.ts"
     ]
 }

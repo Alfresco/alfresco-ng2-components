@@ -17,7 +17,7 @@
 
 import { Injectable } from 'angular2/core';
 import { Http, Response } from 'angular2/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
@@ -29,26 +29,19 @@ declare let AlfrescoApi: any;
 @Injectable()
 export class AlfrescoService {
 
-    private _host: string = 'http://127.0.0.1:8080';
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
 
-    constructor(private http: Http,
-                private settings: AlfrescoSettingsService) {
-        if (settings) {
-            this._host = settings.host;
-        }
+    constructor(
+        private http: Http,
+        private settings: AlfrescoSettingsService) {
     }
 
-    public get host(): string {
-        return this._host;
-    }
-
-    public set host(value: string) {
-        this._host = value;
+    public getHost(): string {
+        return this.settings.host;
     }
 
     private getBaseUrl(): string {
-        return this.host + this._baseUrlPath;
+        return this.getHost() + this._baseUrlPath;
     }
 
     private getAlfrescoTicket() {
@@ -105,7 +98,7 @@ export class AlfrescoService {
      * @returns {string} URL address.
      */
     getContentUrl(document: MinimalNodeEntity) {
-        return this._host +
+        return this.getHost() +
             '/alfresco/service/api/node/workspace/SpacesStore/' +
             document.entry.id + '/content';
     }

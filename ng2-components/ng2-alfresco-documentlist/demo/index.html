@@ -22,46 +22,41 @@
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
 
+    <!-- Additional Alfresco libraries -->
+    <script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
+
+    <script>
+        localStorage.setItem('token', 'TICKET_c9c419c7b7f56be3e5ab5f05ae805cd62cb3800e');
+    </script>
+
     <script>
         System.config({
             defaultJSExtensions: true,
             map: {
-                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
                 'ng2-translate': 'node_modules/ng2-translate',
+                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
+                'ng2-alfresco-documentlist': 'node_modules/ng2-alfresco-documentlist',
                 'rxjs': 'node_modules/rxjs',
                 'angular2' : 'node_modules/angular2',
-                'app': 'dist/src'
+                'app': 'dist'
             },
             packages: {
-                'app': {
-                    defaultExtension: 'js'
-                },
-                'ng2-alfresco-core': {
-                    defaultExtension: 'js'
-                },
-                'ng2-alfresco-upload': {
-                    defaultExtension: 'js'
-                },
-                'ng2-translate': {
-                    defaultExtension: 'js'
-                },
-                'rxjs': {
-                    defaultExtension: 'js'
-                },
-                'angular2': {
-                    defaultExtension: 'js'
-                }
+                'app': { format: 'register', defaultExtension: 'js' },
+                'ng2-translate': { defaultExtension: 'js' },
+                'ng2-alfresco-core': { defaultExtension: 'js' },
+                'ng2-alfresco-documentlist': { defaultExtension: 'js' },
+                'rxjs': { defaultExtension: 'js' },
+                'angular2': { defaultExtension: 'js' }
             }
         });
 
-        System.import('dist/src/my-app').catch(console.log.bind(console));
+        System.import('app/main').catch(console.log.bind(console));
     </script>
 
 </head>
 <body>
 
-<my-app></my-app>
+<alfresco-documentlist-demo></alfresco-documentlist-demo>
 
 </body>
 </html>
