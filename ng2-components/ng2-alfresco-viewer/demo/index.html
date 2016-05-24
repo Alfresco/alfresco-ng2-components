@@ -22,28 +22,24 @@
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
 
+    <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
+    <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
+    <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
+
     <script>
         System.config({
             defaultJSExtensions: true,
             map: {
-                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
-                'ng2-translate': 'node_modules/ng2-translate',
+                'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer',
                 'rxjs': 'node_modules/rxjs',
-                'angular2' : 'node_modules/angular2',
-                'app': 'dist/src'
+                'angular2': 'node_modules/angular2',
+                'app': 'dist/main'
             },
             packages: {
-                'app': {
+                'src': {
                     defaultExtension: 'js'
                 },
-                'ng2-alfresco-core': {
-                    defaultExtension: 'js'
-                },
-                'ng2-alfresco-upload': {
-                    defaultExtension: 'js'
-                },
-                'ng2-translate': {
+                'ng2-alfresco-viewer': {
                     defaultExtension: 'js'
                 },
                 'rxjs': {
@@ -54,8 +50,7 @@
                 }
             }
         });
-
-        System.import('dist/src/my-app').catch(console.log.bind(console));
+        System.import('app').catch(console.log.bind(console));
     </script>
 
 </head>

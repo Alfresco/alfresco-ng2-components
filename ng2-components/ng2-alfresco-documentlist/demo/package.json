@@ -10,7 +10,7 @@
         "start": "rm -rf dist && npm install && http-server -c-1 -o -p 8875 .",
         "build": "rm -rf dist && tsc"
     },
-    "license": "MIT",
+    "license": "Apache-2.0",
     "dependencies": {
         "angular2": "2.0.0-beta.13",
         "es6-promise": "3.0.2",

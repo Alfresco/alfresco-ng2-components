@@ -39,10 +39,9 @@ export class ViewerComponent {
     totalPages: number;
 
     ngOnInit() {
-        console.log('A.urlFile ' + this.urlFile);
+        console.log('urlFile ' + this.urlFile);
 
-        this.urlFile = this.urlFile ? this.urlFile : 'localTestFile.pdf';
-        this.nameFile = PDFJS.getFilenameFromUrl(this.loadFile);
+        this.nameFile = PDFJS.getFilenameFromUrl(this.urlFile);
 
         PDFJS.getDocument(this.urlFile).then((pdf) => {
             this.currentPdf = pdf;

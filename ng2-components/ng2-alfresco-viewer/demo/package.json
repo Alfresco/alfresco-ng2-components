@@ -5,20 +5,20 @@
     "author": "Alfresco Software, Ltd.",
     "main": "index.js",
     "scripts": {
-        "postinstall": "npm run build && npm run typings && npm link ng2-alfresco-upload && npm link ng2-alfresco-core",
+        "postinstall": "npm run typings && npm run build  && npm link ng2-alfresco-viewer",
         "typings": "typings install",
         "start": "rm -rf dist && npm install && http-server -c-1 -o -p 8875 .",
         "build": "rm -rf dist && tsc"
     },
-    "license": "MIT",
+    "license": "Apache-2.0",
     "dependencies": {
-        "angular2": "2.0.0-beta.13",
+        "angular2": "2.0.0-beta.15",
         "es6-promise": "3.0.2",
         "es6-shim": "0.35.0",
         "reflect-metadata": "0.1.2",
         "rxjs": "5.0.0-beta.2",
         "zone.js": "0.6.6",
-        "ng2-translate": "^1.11.2",
+        "ng2-alfresco-viewer": "^0.1.4",
         "material-design-icons": "^2.2.3",
         "material-design-lite": "^1.1.3"
     },
