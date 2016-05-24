@@ -1,3 +1,10 @@
+:host .show {
+    display: block !important;
+}
+
+:host .hide {
+    display: none !important;
+}
 
 .file-dialog {
     display: none;
