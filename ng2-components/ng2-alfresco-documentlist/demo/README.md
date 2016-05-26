@@ -1,4 +1,4 @@
-# Document List demo
+# DocumentList demo
 
 Install:
 

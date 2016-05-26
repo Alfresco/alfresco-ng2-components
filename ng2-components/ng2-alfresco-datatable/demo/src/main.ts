@@ -16,23 +16,59 @@
  */
 
 import { Component } from 'angular2/core';
+import { bootstrap } from 'angular2/platform/browser';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter, 
+    ObjectDataTableAdapter,
     DataSorting,
     ObjectDataRow,
     ObjectDataColumn
 } from 'ng2-alfresco-datatable/dist/ng2-alfresco-datatable';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
-    selector: 'datatable-demo',
-    templateUrl: './datatable-demo.component.html',
+    selector: 'alfresco-datatable-demo',
+    template: `
+        <div class="container">
+            <div class="p-10">
+                <alfresco-datatable [data]="data" [multiselect]="multiselect"></alfresco-datatable>
+            </div>
+            <div class="p-10">
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                    <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" [(ngModel)]="multiselect">
+                    <span class="mdl-checkbox__label">Multiselect</span>
+                </label>
+            </div>
+            <div class="p-10">
+                <button
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                    (click)="reset()">
+                    Reset to default
+                </button>
+                <button
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                    (click)="addRow()">
+                    Add row
+                </button>
+                <button
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                    (click)="replaceRows()">
+                    Replace rows
+                </button>
+                <button
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                    (click)="replaceColumns()">
+                    Replace columns
+                </button>
+            </div>
+        </div>
+    `,
+    styles: [
+        ':host > .container {padding: 10px}',
+        '.p-10 { padding: 10px; }'
+    ],
     directives: [ALFRESCO_DATATABLE_DIRECTIVES]
 })
-export class DataTableDemoComponent {
+class DataTableDemo {
 
     multiselect: boolean = false;
     data: ObjectDataTableAdapter;
@@ -98,3 +134,5 @@ export class DataTableDemoComponent {
         this.data.setColumns(columns);
     }
 }
+
+bootstrap(DataTableDemo, []);
