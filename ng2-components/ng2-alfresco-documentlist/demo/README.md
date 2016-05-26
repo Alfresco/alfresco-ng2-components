@@ -6,12 +6,15 @@ Install:
 npm install
 ```
 
-Set authentication token value in the `index.html`
+Update host and credentials
 
-```html
-<script>
-    localStorage.setItem('token', '<AUTH-TOKEN>');
-</script>
+**src/main.ts**
+```ts
+login() {
+    let host = 'http://192.168.99.100:8080';
+    let credentials = { "userId": "admin", "password": "admin" };
+    ...
+}
 ```
 
 Run the project:
