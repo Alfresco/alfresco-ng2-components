@@ -19,8 +19,6 @@ import { bootstrap }    from 'angular2/platform/browser';
 import { AppComponent } from './components/app-component';
 import { ALFRESCO_AUTHENTICATION } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
 import { ROUTER_PROVIDERS } from 'angular2/router';
-import { provide } from 'angular2/core';
-import { Http } from 'angular2/http';
 import { HTTP_PROVIDERS }    from 'angular2/http';
 import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 

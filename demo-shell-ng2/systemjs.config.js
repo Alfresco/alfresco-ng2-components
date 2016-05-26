@@ -25,6 +25,7 @@
         'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
         'ng2-alfresco-search': 'node_modules/ng2-alfresco-search',
         'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
+        'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer',
         'rxjs': 'node_modules/rxjs',
         'ng2-translate': 'node_modules/ng2-translate'
     };
@@ -41,6 +42,7 @@
         'ng2-alfresco-login': {defaultExtension: 'js'},
         'ng2-alfresco-search': {defaultExtension: 'js'},
         'ng2-alfresco-upload': {defaultExtension: 'js'},
+        'ng2-alfresco-viewer': {defaultExtension: 'js'},
         'ng2-translate': {defaultExtension: 'js'},
         'rxjs': {defaultExtension: 'js'}
     };

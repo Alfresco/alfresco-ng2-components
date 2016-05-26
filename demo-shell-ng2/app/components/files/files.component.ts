@@ -70,10 +70,10 @@ export class FilesComponent {
     }
 
     getRelativeDirectory(currentFolderPath: string): string {
-        if (currentFolderPath.indexOf('/Sites/swsdp/documentLibrary/') != -1) {
-            return currentFolderPath.replace('/Sites/swsdp/documentLibrary/', '')
+        if (currentFolderPath.indexOf('/Sites/swsdp/documentLibrary/') !== -1) {
+            return currentFolderPath.replace('/Sites/swsdp/documentLibrary/', '');
         } else {
-            return currentFolderPath.replace('/Sites/swsdp/documentLibrary', '')
+            return currentFolderPath.replace('/Sites/swsdp/documentLibrary', '');
         }
     }
 }

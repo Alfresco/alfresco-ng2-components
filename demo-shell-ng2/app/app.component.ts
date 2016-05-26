@@ -27,6 +27,7 @@ import { UploadButtonComponent } from 'ng2-alfresco-upload/dist/ng2-alfresco-upl
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
 import { AlfrescoSearchComponent } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
 import { LoginDemoComponent } from './components/login/login-demo.component';
+import { ViewerFileComponent } from './components/viewer/viewer.component';
 
 declare var document: any;
 
@@ -42,7 +43,8 @@ declare var document: any;
     {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
     {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
     {path: '/login', name: 'Login', component: LoginDemoComponent},
-    {path: '/search', name: 'Search', component: AlfrescoSearchComponent}
+    {path: '/search', name: 'Search', component: AlfrescoSearchComponent},
+    {path: '/viewer', name: 'Viewer', component: ViewerFileComponent}
 ])
 export class AppComponent {
     translate: AlfrescoTranslationService;

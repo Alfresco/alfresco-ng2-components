@@ -18,7 +18,7 @@
 import { Component } from 'angular2/core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter, 
+    ObjectDataTableAdapter,
     DataSorting,
     ObjectDataRow,
     ObjectDataColumn

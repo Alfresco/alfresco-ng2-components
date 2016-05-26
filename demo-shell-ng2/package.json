@@ -4,11 +4,14 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "start": "concurrently \"npm run tsc:w\" \"npm run serve\" ",
+    "start": "npm run tslint && concurrently \"npm run tsc:w\" \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "serve": "lite-server",
-    "typings": "typings"
+    "typings": "typings",
+    "tslint": "npm run tslint-src && npm run tslint-root",
+    "tslint-src": "tslint -c tslint.json app/**/*.ts",
+    "tslint-root": "tslint -c tslint.json *.ts"
   },
   "repository": {
     "type": "git",
@@ -58,6 +61,7 @@
     "ng2-alfresco-login": "^0.1.0",
     "ng2-alfresco-search": "^0.1.2",
     "ng2-alfresco-upload": "^0.1.0",
+    "ng2-alfresco-viewer": "^0.1.5",
     "ng2-translate": "^1.11.3",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
