@@ -1,4 +1,4 @@
-# angular2-testing
+# Document List demo
 
 Install:
 
