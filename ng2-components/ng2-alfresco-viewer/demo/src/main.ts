@@ -17,14 +17,14 @@
 
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
-import { ViewerComponent } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
+import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
 @Component({
     selector: 'my-app',
     template: `   <alfresco-viewer [urlFile]="'localTestFile.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                    </alfresco-viewer>`,
-    directives: [ViewerComponent]
+    directives: [VIEWERCOMPONENT]
 })
 class MyDemoApp {
     constructor() {
@@ -32,5 +32,5 @@ class MyDemoApp {
     }
 }
 bootstrap(MyDemoApp, [
-    ViewerComponent
+    VIEWERCOMPONENT
 ]);
