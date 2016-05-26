@@ -43,8 +43,8 @@
         'ng2-alfresco-search': {defaultExtension: 'js'},
         'ng2-alfresco-upload': {defaultExtension: 'js'},
         'ng2-alfresco-viewer': {defaultExtension: 'js'},
-        'ng2-translate': {defaultExtension: 'js'},
-        'rxjs': {defaultExtension: 'js'}
+        'rxjs': {defaultExtension: 'js'},
+        'ng2-translate': {defaultExtension: 'js'}
     };
 
     var config = {

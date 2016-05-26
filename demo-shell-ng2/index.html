@@ -38,8 +38,26 @@
 </head>
 <!-- 3. Display the application -->
 <body>
-
-<my-app>Loading...</my-app>
-
+<style>
+  #loader{
+      margin-top :25%;
+      margin-left :40%;
+      width:300px;
+  }
+  #loader-text{
+      width:300px;
+      white-space: nowrap;
+      text-align: center;
+      position: relative;
+  }
+</style>
+    <my-app>
+        <div id="loader">
+            <div>
+                <div id="loader-spin"  class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            </div>
+            <div id="loader-text">Loading Demo Shell..</div>
+        </div>
+    </my-app>
 </body>
 </html>
