@@ -18,6 +18,8 @@
 import { Component } from 'angular2/core';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
+declare let __moduleName: string;
+
 @Component({
     moduleId: __moduleName,
     selector: 'viewer-component',
