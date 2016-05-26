@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { Observable } from 'rxjs/Rx';
+import { HTTP_PROVIDERS, Http, Headers, Response } from 'angular2/http';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
@@ -36,7 +37,7 @@ import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-
     selector: 'alfresco-documentlist-demo',
     template: `
         <div class="container">
-            <alfresco-document-list>
+            <alfresco-document-list *ngIf="authenticated">
                 <content-columns>
                     <content-column source="$thumbnail"></content-column>
                     <content-column
@@ -114,8 +115,12 @@ import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-
     providers: [DOCUMENT_LIST_PROVIDERS],
     pipes: [AlfrescoPipeTranslate]
 })
-class DocumentListDemo {
+class DocumentListDemo implements OnInit {
+
+    authenticated: boolean;
+
     constructor(
+        private http: Http,
         settings: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
         documentActions: DocumentActionsService) {
@@ -123,6 +128,10 @@ class DocumentListDemo {
         settings.host = 'http://192.168.99.100:8080';
         translation.translationInit();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
+    }
+
+    ngOnInit() {
+        this.login();
     }
 
     myDocumentActionHandler(obj: any) {
@@ -135,6 +144,29 @@ class DocumentListDemo {
 
     myFolderAction1(event) {
         alert('Custom folder action for ' + event.value.displayName);
+    }
+
+    private handleError(error: Response) {
+        console.error('Error when logging in', error);
+        return Observable.throw(error.json().message || 'Server error');
+    }
+
+    login() {
+        let host = 'http://192.168.99.100:8080';
+        let credentials = { "userId": "admin", "password": "admin" };
+        let url = `${host}/alfresco/api/-default-/public/authentication/versions/1/tickets`;
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+
+        this.http.post(url, JSON.stringify(credentials), { headers: headers })
+            .map(res => res.json().entry.id)
+            .catch(this.handleError)
+            .subscribe(token => {
+                localStorage.setItem('token', token);
+                this.authenticated = true;
+            });
     }
 }
 
