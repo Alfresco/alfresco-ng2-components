@@ -5,7 +5,8 @@
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "typings": "typings install",
-    "start": "npm run test && http-server -c-1 -o -p 8875 .",
+    "start": "npm run build && npm run server",
+    "server": "http-server -c-1 -o -p 8875 .",
     "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
     "tslint": "npm run tslint-src && npm run tslint-root && npm run tslint-demo",
     "tslint-src": "tslint -c tslint.json src/**/*.ts",
