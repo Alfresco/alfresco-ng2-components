@@ -16,15 +16,7 @@
  */
 
 import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
-import { AlfrescoAuthenticationService } from './src/services/alfresco-authentication.service';
 
 export * from './src/components/alfresco-login.component';
-export * from './src/services/alfresco-authentication.service';
-
-export default {
-    directives: [AlfrescoLoginComponent],
-    providers: [AlfrescoAuthenticationService]
-};
 
 export const ALFRESCO_LOGIN_DIRECTIVES: [any] = [AlfrescoLoginComponent];
-export const ALFRESCO_AUTHENTICATION: [any] = [AlfrescoAuthenticationService];

@@ -19,8 +19,6 @@ import { Injectable } from 'angular2/core';
 import { Observable } from 'rxjs/Rx';
 import { Http, Headers, Response } from 'angular2/http';
 
-declare let xml2json: any;
-
 /**
  * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
  */

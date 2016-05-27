@@ -15,28 +15,21 @@
  * limitations under the License.
  */
 
-
 import {AlfrescoSettingsService} from './src/services/AlfrescoSettingsService.service';
 import {AlfrescoTranslationLoader} from './src/services/AlfrescoTranslationLoader.service';
 import {AlfrescoTranslationService} from './src/services/AlfrescoTranslationService.service';
 import {AlfrescoPipeTranslate} from './src/services/AlfrescoPipeTranslate.service';
+import { AlfrescoAuthenticationService } from './src/services/alfresco-authentication.service';
 
 export * from './src/services/AlfrescoSettingsService.service';
 export * from './src/services/AlfrescoTranslationLoader.service';
 export * from './src/services/AlfrescoTranslationService.service';
 export * from './src/services/AlfrescoPipeTranslate.service';
 export * from './src/material/MaterialDesignLiteUpgradeElement';
-
-export default {
-    providers: [
-        AlfrescoSettingsService,
-        AlfrescoTranslationLoader,
-        AlfrescoTranslationService,
-        AlfrescoPipeTranslate
-    ]
-};
+export * from './src/services/alfresco-authentication.service';
 
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
+    AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,

@@ -18,8 +18,12 @@
 import { Component, Output, EventEmitter } from 'angular2/core';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
-import { AlfrescoAuthenticationService } from './../services/alfresco-authentication.service';
-import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import {
+    AlfrescoTranslationService,
+    AlfrescoPipeTranslate,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
 declare let componentHandler: any;
 declare let __moduleName: string;
 
@@ -52,6 +56,7 @@ export class AlfrescoLoginComponent {
      * @param _fb
      * @param auth
      * @param router
+     * @param translate
      */
     constructor(private _fb: FormBuilder,
                 public auth: AlfrescoAuthenticationService,

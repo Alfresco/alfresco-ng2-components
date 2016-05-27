@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { ElementRef, DynamicComponentLoader, Directive, Attribute } from 'angular2/core';
 import { Router, RouterOutlet, ComponentInstruction } from 'angular2/router';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 @Directive({selector: 'auth-router-outlet'})
 export class AuthRouterOutlet extends RouterOutlet {
