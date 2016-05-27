@@ -31,6 +31,12 @@ npm run build
 npm test
 ```
 
+## Running unit tests in browser
+
+```sh
+npm test-browser
+```
+
 #### Basic usage
 
 

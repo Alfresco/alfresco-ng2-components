@@ -19,9 +19,10 @@
     "licensecheck": "license-check",
     "tsc": "tsc",
     "pretest": "npm run build",
-    "test": "karma start karma.conf.js",
+    "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
+    "test-browser": "karma start karma.conf.js --reporters kjhtml ",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/coverage-final.json -o coverage -t html",
-    "coverage": "http-server -c-1 -o -p 9875 ./coverage",
+    "coverage": "http-server -c-1 -o -p 9875 ./coverage/report",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -80,6 +81,7 @@
     "karma-coverage": "^1.0.0",
     "karma-jasmine": "~1.0.2",
     "karma-mocha-reporter": "^2.0.3",
+    "karma-jasmine-html-reporter": "^0.2.0",
     "license-check": "^1.0.4",
     "remap-istanbul": "^0.6.3",
     "traceur": "^0.0.91",

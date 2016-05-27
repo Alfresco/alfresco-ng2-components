@@ -197,6 +197,12 @@ bootstrap(MyDemoApp, [
 npm test
 ```
 
+## Running unit tests in browser
+
+```sh
+npm test-browser
+```
+
 This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
 
