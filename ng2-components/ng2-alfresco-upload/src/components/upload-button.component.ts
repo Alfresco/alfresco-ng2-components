@@ -106,8 +106,8 @@ export class UploadButtonComponent {
                 containerid: container
             }
         });
-
-        translate.addComponent('node_modules/ng2-alfresco-upload');
+        this.translate = translate;
+        this.translate.addComponent('node_modules/ng2-alfresco-upload');
     }
 
     /**
@@ -117,9 +117,44 @@ export class UploadButtonComponent {
      */
     onFilesAdded($event: any): void {
         let files = $event.currentTarget.files;
+        this.uploadFiles(this.uploaddirectory, files);
+    }
+
+    /**
+     * Method called when a folder is dropped in the drag area.
+     *
+     * @param {File[]} files - files of a folder dropped in the drag area.
+     */
+    onDirectoryAdded($event: any): void {
+        let files = $event.currentTarget.files;
+        let hashMapDir = this.convertIntoHashMap(files);
+
+        hashMapDir.forEach((filesDir, directoryPath) => {
+            let directoryName = this.getDirectoryName(directoryPath);
+            let absolutePath = this.currentFolderPath + this.getDirectoryPath(directoryPath);
+
+            this._uploaderService.createFolder(absolutePath, directoryName)
+                .subscribe(
+                    res => {
+                        let relativeDir = this.uploaddirectory + '/' + directoryPath;
+                        this.uploadFiles(relativeDir, filesDir);
+                    },
+                    error => {
+                    console.log(error);
+                }
+            );
+        });
+    }
+
+    /**
+     * Upload a list of file in the specified path
+     * @param path
+     * @param files
+     */
+    private uploadFiles(path: string, files: any[]) {
         if (files.length) {
             let latestFilesAdded = this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory, this.onSuccess);
+            this._uploaderService.uploadFilesInTheQueue(path, this.onSuccess);
             this.filesUploadingList = this._uploaderService.getQueue();
             if (this.showUploadDialog) {
                 this._showDialog();
@@ -127,6 +162,52 @@ export class UploadButtonComponent {
             if (this.showUdoNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
             }
+        }
+    }
+
+    /**
+     * It converts the array given as input into a map. The map is a key values pairs, where the key is the directory name and the value are
+     * all the files that the directory contains.
+     * @param files - array of files
+     * @returns {Map}
+     */
+    private convertIntoHashMap(files: any[]) {
+        let directoryMap = new Map<string, Object[]>();
+        for (let file of files) {
+            let directory = this.getDirectoryPath(file.webkitRelativePath);
+            let filesSomeDir = directoryMap.get(directory) || [];
+            filesSomeDir.push(file);
+            directoryMap.set(directory, filesSomeDir);
+        }
+        return directoryMap;
+    }
+
+    /**
+     * Split the directory path given as input and cut the last directory name
+     * @param directory
+     * @returns {string}
+     */
+    private getDirectoryPath(directory: string) {
+        let relativeDirPath = '';
+        let dirPath = directory.split('/');
+        if (dirPath.length > 1) {
+            dirPath.pop();
+            relativeDirPath = '/' + dirPath.join('/');
+        }
+        return relativeDirPath;
+    }
+
+    /**
+     * Split a directory path passed in input and return the first directory name
+     * @param directory
+     * @returns {string}
+     */
+    private getDirectoryName(directory: string) {
+        let dirPath = directory.split('/');
+        if (dirPath.length > 1) {
+            return dirPath.pop();
+        } else {
+            return dirPath[0];
         }
     }
 
@@ -140,15 +221,19 @@ export class UploadButtonComponent {
             componentHandler.upgradeAllRegistered();
         }
 
+        let messageTranslate, actionTranslate: any;
+        messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
+        actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
+
         this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-            message: this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS'),
+            message: messageTranslate.value,
             timeout: 5000,
             actionHandler: function () {
                 latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
                     uploadingFileModel.setAbort();
                 });
             },
-            actionText: this.translate.get('FILE_UPLOAD.ACTION.UNDO')
+            actionText: actionTranslate.value
         });
     }
 

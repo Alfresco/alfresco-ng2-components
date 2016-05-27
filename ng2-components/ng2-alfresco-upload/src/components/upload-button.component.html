@@ -28,7 +28,7 @@
         <i class="material-icons">file_upload</i>
         <label for="uploadFolder">{{'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}</label>
         <input id="uploadFolder" type="file" name="uploadFiles"
-               (change)="onFilesAdded($event)"
+               (change)="onDirectoryAdded($event)"
                multiple="multiple"
                accept="{{acceptedFilesType}}"
                webkitdirectory directory

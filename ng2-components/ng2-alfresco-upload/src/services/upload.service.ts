@@ -111,6 +111,7 @@ export class UploadService {
      */
     private getAlfrescoClient() {
         let defaultClient = new AlfrescoApi.ApiClient();
+        defaultClient.basePath = this.getHost() + this.getBaseUrl();
 
         // Configure HTTP basic authorization: basicAuth
         let basicAuth = defaultClient.authentications['basicAuth'];
@@ -258,7 +259,7 @@ export class UploadService {
         };
         return Observable.fromPromise(apiInstance.addNode(nodeId, nodeBody))
             .map(res => {
-                console.log(res);
+                return res;
             })
             .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
