@@ -17,12 +17,14 @@
 
 import { Component, OnInit } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
-import { Observable } from 'rxjs/Rx';
-import { HTTP_PROVIDERS, Http, Headers, Response } from 'angular2/http';
+import { HTTP_PROVIDERS } from 'angular2/http';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoPipeTranslate,
+    AlfrescoTranslationService
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 import {
@@ -30,8 +32,6 @@ import {
     DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService
 } from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
-import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-
 
 @Component({
     selector: 'alfresco-documentlist-demo',
@@ -120,7 +120,7 @@ class DocumentListDemo implements OnInit {
     authenticated: boolean;
 
     constructor(
-        private http: Http,
+        private authService: AlfrescoAuthenticationService,
         settings: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
         documentActions: DocumentActionsService) {
@@ -147,26 +147,9 @@ class DocumentListDemo implements OnInit {
     }
 
     login() {
-        let host = 'http://192.168.99.100:8080';
-        let credentials = { 'userId': 'admin', 'password': 'admin' };
-        let url = `${host}/alfresco/api/-default-/public/authentication/versions/1/tickets`;
-
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-
-        this.http.post(url, JSON.stringify(credentials), { headers: headers })
-            .map(res => res.json().entry.id)
-            .catch(this.handleError)
-            .subscribe(token => {
-                localStorage.setItem('token', token);
-                this.authenticated = true;
-            });
-    }
-
-    private handleError(error: Response) {
-        console.error('Error when logging in', error);
-        return Observable.throw(error.json().message || 'Server error');
+       this.authService.login('admin', 'admin').subscribe(token => {
+           this.authenticated = true;
+       });
     }
 }
 

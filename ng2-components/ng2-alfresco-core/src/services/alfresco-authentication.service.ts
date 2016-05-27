@@ -75,6 +75,7 @@ export class AlfrescoAuthenticationService {
                 let response = res.json();
                 this.token = response.entry.id;
                 this.saveJwt(this.token);
+                return this.token;
             })
             .catch(this.handleError);
     }
