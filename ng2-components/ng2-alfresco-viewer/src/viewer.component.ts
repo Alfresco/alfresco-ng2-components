@@ -60,7 +60,7 @@ export class ViewerComponent {
             let scale = 1.5;
             let viewport = page.getViewport(scale);
 
-            let canvas: any = document.getElementById('the-canvas');
+            let canvas: any = document.getElementById('viewer-the-canvas');
 
             if (canvas) {
                 let context = canvas.getContext('2d');

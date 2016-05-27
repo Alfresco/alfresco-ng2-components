@@ -62,10 +62,11 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
 })
 export class MyDemoApp {
     token: string;
+
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
 
-        if(localStorage.getItem('token')) {
+        if (localStorage.getItem('token')) {
             this.token = localStorage.getItem('token');
         }
     }

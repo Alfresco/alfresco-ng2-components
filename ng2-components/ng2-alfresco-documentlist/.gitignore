@@ -13,3 +13,4 @@ demo/**/*.js.map
 demo/**/*.d.ts
 ng2-alfresco-documentlist.js
 ng2-alfresco-documentlist.js.map
+!systemjs.config.js

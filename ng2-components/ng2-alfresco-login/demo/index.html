@@ -23,37 +23,9 @@
     <script src="node_modules/angular2/bundles/http.dev.js"></script>
     <script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
 
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-            defaultJSExtensions: true,
-            map: {
-                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
-                'rxjs': 'node_modules/rxjs',
-                'angular2' : 'node_modules/angular2',
-                'ng2-translate': 'node_modules/ng2-translate',
-                'src': 'src'
-            },
-            packages: {
-                'src': {
-                    defaultExtension: 'js'
-                },
-                'ng2-alfresco-core': {
-                    defaultExtension: 'js'
-                },
-                'ng2-alfresco-login': {
-                    defaultExtension: 'js'
-                },
-                'rxjs': {
-                    defaultExtension: 'js'
-                },
-                'angular2': {
-                    defaultExtension: 'js'
-                }
-            }
-        });
-
-        System.import('dist/main').catch(console.log.bind(console));
+        System.import('app').catch(function(err){ console.error(err); });
     </script>
 
 </head>

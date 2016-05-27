@@ -58,7 +58,8 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
     isSelectAllChecked: boolean = false;
 
-    constructor(/*private _ngZone?: NgZone*/) {}
+    constructor(/*private _ngZone?: NgZone*/) {
+    }
 
     ngOnInit() {
         if (this.data) {

@@ -29,6 +29,12 @@
     "bugs": {
         "url": "https://github.com/alfresco/ng2-alfresco-viewer/issues"
     },
+    "contributors": [
+        {
+            "name": "Eugenio Romano",
+            "email": "eugenio.romano@alfresco.com"
+        }
+    ],
     "keywords": [
         "ng2",
         "angular",

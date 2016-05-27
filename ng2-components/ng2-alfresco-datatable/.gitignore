@@ -8,3 +8,4 @@ src/**/*.js
 src/**/*.js.map
 ng2-alfresco-datatable.js
 ng2-alfresco-datatable.js.map
+!systemjs.config.js

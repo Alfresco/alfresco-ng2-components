@@ -74,7 +74,7 @@ import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-
                             title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
                             (execute)="myFolderAction1($event)">
                     </content-action>
-        
+
                     <!-- document actions -->
                     <content-action
                             target="document"
@@ -146,14 +146,9 @@ class DocumentListDemo implements OnInit {
         alert('Custom folder action for ' + event.value.displayName);
     }
 
-    private handleError(error: Response) {
-        console.error('Error when logging in', error);
-        return Observable.throw(error.json().message || 'Server error');
-    }
-
     login() {
         let host = 'http://192.168.99.100:8080';
-        let credentials = { "userId": "admin", "password": "admin" };
+        let credentials = { 'userId': 'admin', 'password': 'admin' };
         let url = `${host}/alfresco/api/-default-/public/authentication/versions/1/tickets`;
 
         let headers = new Headers();
@@ -167,6 +162,11 @@ class DocumentListDemo implements OnInit {
                 localStorage.setItem('token', token);
                 this.authenticated = true;
             });
+    }
+
+    private handleError(error: Response) {
+        console.error('Error when logging in', error);
+        return Observable.throw(error.json().message || 'Server error');
     }
 }
 

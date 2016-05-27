@@ -10,7 +10,7 @@
 
                 <!-- pagination toolbar start -->
                 <div id="viewer-toolbar-pagination">
-                    <div id="viewer-previouspage-button" class="left" (click)="previousPage()">
+                    <div id="viewer-previous-page-page-button-input" class="left" (click)="previousPage()">
                         <i class="icon material-icons">keyboard_arrow_left</i>
                     </div>
 
@@ -18,7 +18,7 @@
                            (keyup.enter)="inputPage(page.value)" class="left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
                     <span id="viewer-total-pages"  class="left">/ {{totalPages}}</span>
 
-                    <div id="viewer-nextpage-button" (click)="nextPage()"  class="left">
+                    <div id="viewer-next-page-button-button-input" (click)="nextPage()"  class="left">
                         <i class="icon material-icons" >keyboard_arrow_right</i>
                     </div>
                 </div>
@@ -33,23 +33,10 @@
                     <div class="button-container">
                         <button
                             class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="cazzo()">
-                            <i id="tt2" class="icon material-icons">print</i>
+                            <i id="viewer-print-button" class="icon material-icons">print</i>
                         </button>
                     </div>
 
-                    <div class="button-container">
-                        <button
-                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
-                            <i id="cloud-upload" class="icon material-icons">cloud_upload</i>
-                        </button>
-                    </div>
-
-                    <div class="button-container">
-                        <button
-                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored">
-                            <i id="share" class="icon material-icons">share</i>
-                        </button>
-                    </div>
 
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                           mdl-textfield--floating-label mdl-textfield--align-right">
@@ -79,12 +66,12 @@
                         class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
 
                         <!-- Start Pdf Canvas -->
-                        <div id="canvas-container">
-                            <canvas id="the-canvas" style="border:1px solid black;"></canvas>
+                        <div id="viewer-canvas-container">
+                            <canvas id="viewer-the-canvas" style="border:1px solid black;"></canvas>
                         </div>
                         <!-- End Pdf Canvas -->
 
-                        <div class="previous-page-button">
+                        <div id="viewer-previous-page-button" class="previous-page-button">
                             <button
                                 class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                                 (click)="previousPage()">
@@ -92,7 +79,7 @@
                             </button>
                         </div>
 
-                        <div class="next-page-button">
+                        <div id="viewer-next-page-button" class="next-page-button">
                             <button
                                 class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                                 (click)="nextPage()">

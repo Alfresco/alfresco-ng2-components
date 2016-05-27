@@ -17,18 +17,44 @@
 
 import {describe, expect, it, injectAsync, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
 import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import {ViewerComponent} from '../src/viewer.component';
+import {ViewerComponent} from './viewer.component';
 
-describe('Basic Example test ng2-alfresco-viewer', () => {
+describe('Ng2-alfresco-viewer', () => {
     setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
 
-    it('Test hello world', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(ViewerComponent)
-            .then((fixture) => {
-                let element = fixture.nativeElement;
-                expect(element.querySelector('h1')).toBeDefined();
-                expect(element.getElementsByTagName('h1')[0].innerHTML).toEqual('ng2-alfresco-viewer');
-            });
-    }));
+    describe('View', () => {
+        it('Next an Previous Buttons have to be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    expect(element.querySelector('#viewer-previous-page-button')).toBeDefined();
+                    expect(element.querySelector('#viewer-next-page-button')).toBeDefined();
+                });
+        }));
+
+        it('Input Page elements have to be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
+                    expect(element.querySelector('#viewer-total-pages')).toBeDefined();
+
+                    expect(element.querySelector('#viewer-previous-page-page-button-input')).toBeDefined();
+                    expect(element.querySelector('#viewer-next-page-page-button-input')).toBeDefined();
+                });
+        }));
+
+        it('Total number of pages should be showed', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    component.totalPages = 10;
+                    expect(element.querySelector('#viewer-total-pages').innerHTML()).toEqual('10');
+                });
+        }));
+    });
 });

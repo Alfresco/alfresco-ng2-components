@@ -26,31 +26,9 @@
     <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
     <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
 
+    <script src="systemjs.config.js"></script>
     <script>
-        System.config({
-            defaultJSExtensions: true,
-            map: {
-                'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer',
-                'rxjs': 'node_modules/rxjs',
-                'angular2': 'node_modules/angular2',
-                'app': 'dist/main'
-            },
-            packages: {
-                'src': {
-                    defaultExtension: 'js'
-                },
-                'ng2-alfresco-viewer': {
-                    defaultExtension: 'js'
-                },
-                'rxjs': {
-                    defaultExtension: 'js'
-                },
-                'angular2': {
-                    defaultExtension: 'js'
-                }
-            }
-        });
-        System.import('app').catch(console.log.bind(console));
+        System.import('app').catch(function(err){ console.error(err); });
     </script>
 
 </head>
