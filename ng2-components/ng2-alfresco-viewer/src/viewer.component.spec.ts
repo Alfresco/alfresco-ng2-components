@@ -25,7 +25,16 @@ describe('Ng2-alfresco-viewer', () => {
 
     describe('View', () => {
 
-        it('Next an Previous Buttons have to be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('Canvas should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    expect(element.querySelector('#vviewer-the-canvas')).toBeDefined();
+                });
+        }));
+
+        it('Next an Previous Buttons should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
@@ -35,7 +44,7 @@ describe('Ng2-alfresco-viewer', () => {
                 });
         }));
 
-        it('Input Page elements have to be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('Input Page elements should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {

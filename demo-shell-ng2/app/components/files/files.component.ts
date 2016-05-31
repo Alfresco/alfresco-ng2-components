@@ -24,6 +24,7 @@ import {
 import { MDL } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
 declare let __moduleName: string;
 
@@ -31,7 +32,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
-    directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENTS],
+    directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENTS, VIEWERCOMPONENT],
     providers: [DOCUMENT_LIST_PROVIDERS],
     pipes: [AlfrescoPipeTranslate]
 })
@@ -40,6 +41,9 @@ export class FilesComponent {
     navigation: boolean = true;
     absolutePath: string = '/Sites/swsdp/documentLibrary';
     relativePath: string = '';
+
+    urlFile: string;
+    fileShowed: boolean = false;
 
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
@@ -61,6 +65,20 @@ export class FilesComponent {
 
     refreshDocumentList() {
         this.absolutePath += '/';
+    }
+
+    showFile(event) {
+        if (event.value.entry.isFile) {
+            let workSpace = 'workspace/SpacesStore/' + event.value.entry.id;
+            let nameFile = event.value.entry.name;
+
+            let host = 'http://192.168.99.100:8080/';
+            this.urlFile = host + 'alfresco/s/slingshot/node/content/' + workSpace + '/' + nameFile;
+
+            this.fileShowed = true;
+        } else {
+            this.fileShowed = false;
+        }
     }
 
     onFolderChanged(event?: any) {

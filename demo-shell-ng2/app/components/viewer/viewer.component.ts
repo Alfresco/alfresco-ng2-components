@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component, Input } from 'angular2/core';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
 declare let __moduleName: string;
@@ -30,19 +30,15 @@ export class ViewerFileComponent {
 
     hrefFile: string;
 
-    constructor() {
-        console.log('constructor');
-        let host = 'http://192.168.99.100:8080/';
-        let nameFile = 'Energy_Bill_20May16.pdf';
-        let workSpace = 'workspace/SpacesStore/01f144c6-bd6f-43ed-8b92-e417ad629467/';
-        this.hrefFile = host + 'alfresco/s/slingshot/node/content/' + workSpace + nameFile + '?alf_ticket=' + this.getAlfrescoTicket();
-    }
+    @Input()
+    nameFile: string;
 
-    /**
-     * Get the token from the local storage
-     * @returns {any}
-     */
-    private getAlfrescoTicket(): string {
-        return localStorage.getItem('token');
+    @Input()
+    workSpace: string;
+
+    constructor() {
+        let host = 'http://192.168.99.100:8080/';
+        this.hrefFile = host + 'alfresco/s/slingshot/node/content/' + this.workSpace
+            + '/' + this.nameFile;
     }
 }
