@@ -141,13 +141,6 @@ bootstrap(AppComponent, [
 
 **method**: {string} optional) default POST. The method attribute specifies how to send form-data
 The form-data can be sent as URL variables (with method="get") or as HTTP post transaction (with method="post").<br />
-**Start the demo**
-
-```sh
-cd demo
-npm install
-npm start
-```
 
 ## Running unit tests
 
@@ -169,3 +162,14 @@ before performing unit testing.
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
