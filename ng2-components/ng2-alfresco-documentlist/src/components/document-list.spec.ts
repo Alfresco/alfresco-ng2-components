@@ -140,7 +140,7 @@ describe('DocumentList', () => {
         spyOn(action, 'handler').and.stub();
 
         documentList.executeContentAction(node, action);
-        expect(action.handler).toHaveBeenCalledWith(node);
+        expect(action.handler).toHaveBeenCalledWith(node, documentList);
 
     });
 
@@ -152,7 +152,7 @@ describe('DocumentList', () => {
 
         spyOn(action, 'handler').and.stub();
         documentList.executeContentAction(null, action);
-        expect(action.handler).toHaveBeenCalledWith(null);
+        expect(action.handler).toHaveBeenCalledWith(null, documentList);
     });
 
     it('should update current folder path', () => {
