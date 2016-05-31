@@ -85,41 +85,24 @@ Example of an App that use Alfresco login component :
 main.ts
 ```ts
 
-import { bootstrap } from 'angular2/platform/browser';
-import { AppComponent } from './components/app-component';
-import { ALFRESCO_AUTHENTICATION } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
+import { bootstrap }    from 'angular2/platform/browser';
+import { Component } from 'angular2/core';
+import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoLoginComponent } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
 import { ROUTER_PROVIDERS } from 'angular2/router';
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { HTTP_PROVIDERS }    from 'angular2/http';
 import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
-bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
-    HTTP_PROVIDERS,
-    AlfrescoTranslationLoader,
-    AlfrescoTranslationService,
-    ALFRESCO_AUTHENTICATION,
-    ALFRESCO_CORE_PROVIDERS
-]);
-
-```
-
-app-components.ts
-```ts
-
-import { Component } from 'angular2/core';
-import { AlfrescoLoginComponent, AlfrescoAuthenticationService } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-
-@Component({
-    selector: 'my-login',
-    template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
-    directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
-})
 
 @RouteConfig([
     {path: '/', name: 'Login', component: AlfrescoLoginComponent, useAsDefault: true}
 ])
+@Component({
+    selector: 'my-app',
+    template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
+    directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
+})
 export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
@@ -138,6 +121,15 @@ export class AppComponent {
     }
 
 }
+
+bootstrap(AppComponent, [
+    ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
+    AlfrescoTranslationLoader,
+    AlfrescoTranslationService,
+    AlfrescoAuthenticationService,
+    ALFRESCO_CORE_PROVIDERS
+]);
 
 ```
 #### Events

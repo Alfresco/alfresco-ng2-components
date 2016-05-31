@@ -1,4 +1,4 @@
-/**
+/*!
  * @license
  * Copyright 2016 Alfresco Software, Ltd.
  *
@@ -16,17 +16,47 @@
  */
 
 import { bootstrap }    from 'angular2/platform/browser';
-import { AppComponent } from './components/app-component';
-import { ALFRESCO_AUTHENTICATION } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
+import { Component } from 'angular2/core';
+import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoLoginComponent } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
 import { ROUTER_PROVIDERS } from 'angular2/router';
 import { HTTP_PROVIDERS }    from 'angular2/http';
 import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
+
+@RouteConfig([
+    {path: '/', name: 'Login', component: AlfrescoLoginComponent, useAsDefault: true}
+])
+@Component({
+    selector: 'my-app',
+    template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
+    directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
+})
+export class AppComponent {
+
+    constructor(public auth: AlfrescoAuthenticationService,
+                public router: Router,
+                alfrescoSettingsService: AlfrescoSettingsService) {
+        alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+
+    }
+
+    mySuccessMethod($event) {
+        console.log('Success Login EventEmitt called with: ' + $event.value);
+    }
+
+    myErrorMethod($event) {
+        console.log('Error Login EventEmitt called with: ' + $event.value);
+    }
+
+}
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
-    ALFRESCO_AUTHENTICATION,
+    AlfrescoAuthenticationService,
     ALFRESCO_CORE_PROVIDERS
 ]);
