@@ -27,7 +27,22 @@ declare let __moduleName: string;
     directives: [VIEWERCOMPONENT]
 })
 export class ViewerFileComponent {
+
+    hrefFile: string;
+
     constructor() {
         console.log('constructor');
+        let host = 'http://192.168.99.100:8080/';
+        let nameFile = 'Energy_Bill_20May16.pdf';
+        let workSpace = 'workspace/SpacesStore/01f144c6-bd6f-43ed-8b92-e417ad629467/';
+        this.hrefFile = host + 'alfresco/s/slingshot/node/content/' + workSpace + nameFile + '?alf_ticket=' + this.getAlfrescoTicket();
+    }
+
+    /**
+     * Get the token from the local storage
+     * @returns {any}
+     */
+    private getAlfrescoTicket(): string {
+        return localStorage.getItem('token');
     }
 }

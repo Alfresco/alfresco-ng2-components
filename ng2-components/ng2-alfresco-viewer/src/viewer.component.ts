@@ -41,15 +41,19 @@ export class ViewerComponent {
     ngOnInit() {
         console.log('urlFile ' + this.urlFile);
 
-        this.nameFile = PDFJS.getFilenameFromUrl(this.urlFile);
+        this.nameFile = this.getPDFJS().getFilenameFromUrl(this.urlFile);
 
-        PDFJS.getDocument(this.urlFile).then((pdf) => {
+        return this.getPDFJS().getDocument(this.urlFile).then((pdf) => {
             this.currentPdf = pdf;
             this.totalPages = pdf.numPages;
             this.currentPage = 1;
             this.displayPage = 1;
             this.loadPage(this.currentPdf, this.currentPage);
         });
+    }
+
+    getPDFJS() {
+        return PDFJS;
     }
 
     loadPage(pdf: any, numberPage: number) {
@@ -59,7 +63,6 @@ export class ViewerComponent {
 
             let scale = 1.5;
             let viewport = page.getViewport(scale);
-
             let canvas: any = document.getElementById('viewer-the-canvas');
 
             if (canvas) {

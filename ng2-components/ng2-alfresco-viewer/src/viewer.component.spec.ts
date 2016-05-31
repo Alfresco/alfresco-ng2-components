@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
-import {describe, expect, it, injectAsync, TestComponentBuilder, setBaseTestProviders} from 'angular2/testing';
-import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import {ViewerComponent} from './viewer.component';
+import { describe, expect, it, injectAsync, TestComponentBuilder, setBaseTestProviders, beforeEach } from 'angular2/testing';
+import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
+import { ViewerComponent } from './viewer.component';
+import { PDFJSmock } from './assets/PDFJS.mock';
 
 describe('Ng2-alfresco-viewer', () => {
     setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
 
     describe('View', () => {
+
         it('Next an Previous Buttons have to be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
@@ -52,8 +54,27 @@ describe('Ng2-alfresco-viewer', () => {
                 .then((fixture) => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-                    component.totalPages = 10;
-                    expect(element.querySelector('#viewer-total-pages').innerHTML()).toEqual('10');
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+
+                    component.ngOnInit().then((resolve) => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-total-pages').innerHTML).toEqual('/10');
+
+                        resolve();
+                    });
+                });
+        }));
+
+        it('Name File should be showed', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+
+                    fixture.detectChanges();
+                    expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-name');
                 });
         }));
     });

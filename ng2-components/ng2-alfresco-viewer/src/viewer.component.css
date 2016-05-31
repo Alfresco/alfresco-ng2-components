@@ -29,3 +29,10 @@
 #viewer-pagenumber-input {
     width: 30px;
 }
+
+.viewer-name-file {
+    width: 20%;
+    height: 18px;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
