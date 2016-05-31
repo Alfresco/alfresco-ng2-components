@@ -6,3 +6,33 @@
 .cursor {
     cursor: pointer;
 }
+
+.body-dialog-header {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    background-color: #f5f5f5;
+    border-bottom: solid 1px #eee;
+    height: 30px;
+    line-height: 30px;
+}
+
+.body-dialog-action {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding: 0 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.body-dialog-cancel {
+    -webkit-flex: none;
+    flex: none;
+    display: inline;
+    padding-right: 13px;
+    text-align: right;
+}

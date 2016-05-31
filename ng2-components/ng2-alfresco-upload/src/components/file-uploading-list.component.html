@@ -1,3 +1,8 @@
+<div [ngClass]="{hide:  isUploadCompleted()}" [ngClass]="{show:   !isUploadCompleted()}"
+     class="body-dialog-header">
+    <div class="body-dialog-action"></div>
+    <div class="body-dialog-cancel"><a href="#" (click)="cancelAllFiles()">{{'FILE_UPLOAD.BUTTON.CANCEL' | translate}}</a></div>
+</div>
 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <tr>
         <th>{{'FILE_UPLOAD.FILE_INFO.NAME' | translate}}</th>

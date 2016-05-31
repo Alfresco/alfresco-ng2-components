@@ -61,4 +61,30 @@ export class FileUploadingListComponent {
         });
         file[0].setAbort();
     }
+
+    /**
+     * Call the abort method for each file
+     */
+    cancelAllFiles() {
+        this.filesUploadingList.forEach((uploadingFileModel: FileModel) => {
+            uploadingFileModel.setAbort();
+        });
+    }
+
+    /**
+     * Verify if all the files are in state done or abort
+     * @returns {boolean} - false if there is a file in progress
+     */
+    isUploadCompleted() {
+        let isPending = false;
+        let isAllCompleted = true;
+        for (let i = 0; i < this.filesUploadingList.length && !isPending; i++) {
+            let uploadingFileModel = this.filesUploadingList[i];
+            if (!uploadingFileModel.done && !uploadingFileModel.abort) {
+                isPending = true;
+                isAllCompleted = false;
+            }
+        }
+        return isAllCompleted;
+    }
 }

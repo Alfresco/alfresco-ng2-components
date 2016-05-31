@@ -2,7 +2,8 @@
   "FILE_UPLOAD": {
     "BUTTON": {
       "UPLOAD_FILE": "Carica un file",
-      "UPLOAD_FOLDER": "Carica una cartella"
+      "UPLOAD_FOLDER": "Carica una cartella",
+      "CANCEL": "CANCELLA"
     },
     "MESSAGES": {
       "COMPLETED": "caricamenti completati",
