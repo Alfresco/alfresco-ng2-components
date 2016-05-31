@@ -106,6 +106,12 @@ import {
                             title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
                             (execute)="myCustomAction1($event)">
                     </content-action>
+                    <content-action
+                            target="document"
+                            type="menu"
+                            title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                            handler="delete">
+                    </content-action>
                 </content-actions>
             </alfresco-document-list>
         </div>

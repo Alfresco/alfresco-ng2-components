@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from 'angular2/core';
-import { Http, Response } from 'angular2/http';
+import { Response } from 'angular2/http';
 import { Observable } from 'rxjs/Rx';
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -32,7 +32,6 @@ export class AlfrescoService {
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
 
     constructor(
-        private http: Http,
         private settings: AlfrescoSettingsService) {
     }
 
@@ -69,6 +68,13 @@ export class AlfrescoService {
             include: ['path']
         };
         return apiInstance.getNodeChildren(nodeId, opts);
+    }
+
+    deleteNode(nodeId: string) {
+        let client = this.getAlfrescoClient();
+        let nodesApi = new AlfrescoApi.NodesApi(client);
+        let opts = {};
+        return Observable.fromPromise(nodesApi.deleteNode(nodeId, opts));
     }
 
     /**

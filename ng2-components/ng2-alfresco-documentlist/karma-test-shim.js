@@ -14,16 +14,14 @@ System.config({
             format: 'register',
             map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
         },
-        'ng2-alfresco-core/dist': {
-            defaultExtension: 'js'
-        },
-        'rxjs': {
-            defaultExtension: 'js'
-        }
+        'ng2-alfresco-core/dist': { defaultExtension: 'js' },
+        'rxjs': { defaultExtension: 'js' },
+        'ng2-translate': { defaultExtension: 'js' }
     },
     map: {
         'ng2-alfresco-core/dist': '/base/node_modules/ng2-alfresco-core/dist',
-        'rxjs': '/base/node_modules/rxjs'
+        'rxjs': '/base/node_modules/rxjs',
+        'ng2-translate': '/base/node_modules/ng2-translate/bundles'
     }
 });
 

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import {Http} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import {AlfrescoService} from '../../src/services/alfresco.service';
 import {AlfrescoSettingsService} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -25,10 +24,9 @@ export class AlfrescoServiceMock extends AlfrescoService {
     _folderToReturn: any = {};
 
     constructor(
-        http: Http = null,
         settings: AlfrescoSettingsService = null
     ) {
-        super(http, settings);
+        super(settings);
     }
 
     getFolder(folder: string) {

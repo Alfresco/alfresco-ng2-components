@@ -34,5 +34,5 @@ export class ContentActionModel {
 }
 
 export interface ContentActionHandler {
-    (obj: any): any;
+    (obj: any, target?: any): any;
 }

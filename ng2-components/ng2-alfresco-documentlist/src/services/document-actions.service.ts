@@ -42,30 +42,47 @@ export class DocumentActionsService {
         }
     }
 
+    canExecuteAction(obj: any): boolean {
+        return this._alfrescoService && obj && !obj.isFolder;
+    }
+
     private setupActionHandlers() {
         this.handlers['download'] = this.download.bind(this);
+        this.handlers['delete'] = this.deleteNode.bind(this);
 
-        // todo: just for dev/demo purposes, to be replaced with real actions
+        // TODO: for demo purposes only, will be removed during future revisions
         this.handlers['system1'] = this.handleStandardAction1.bind(this);
         this.handlers['system2'] = this.handleStandardAction2.bind(this);
     }
 
+    // TODO: for demo purposes only, will be removed during future revisions
     private handleStandardAction1(obj: any) {
         window.alert('standard document action 1');
     }
 
+    // TODO: for demo purposes only, will be removed during future revisions
     private handleStandardAction2(obj: any) {
         window.alert('standard document action 2');
     }
 
     private download(obj: any) {
-        if (this._alfrescoService && obj && !obj.isFolder) {
+        if (this.canExecuteAction(obj)) {
             let link = document.createElement('a');
             document.body.appendChild(link);
             link.setAttribute('download', 'download');
             link.href = this._alfrescoService.getContentUrl(obj);
             link.click();
             document.body.removeChild(link);
+        }
+    }
+
+    private deleteNode(obj: any, target?: any) {
+        if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
+            this._alfrescoService.deleteNode(obj.entry.id).subscribe(() => {
+                if (target && typeof target.reload === 'function') {
+                    target.reload();
+                }
+            });
         }
     }
 }

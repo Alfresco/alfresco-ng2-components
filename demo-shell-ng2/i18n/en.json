@@ -14,6 +14,7 @@
             },
             "DOCUMENT": {
                 "DOWNLOAD": "Download",
+                "DELETE": "Delete",
                 "SYSTEM_2": "System document action 2",
                 "CUSTOM": "Custom action"
             }

@@ -247,7 +247,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
      */
     executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
         if (action) {
-            action.handler(node);
+            action.handler(node, this);
         }
     }
 

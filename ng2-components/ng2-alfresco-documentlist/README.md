@@ -194,6 +194,7 @@ All document actions with `type="menu"` are rendered as a dropdown menu as on th
 The following action handlers are provided out-of-box:
 
 - Download
+- Delete
 
 All system handler names are case-insensitive, `handler="download"` and `handler="DOWNLOAD"`
 will trigger the same `download` action.
