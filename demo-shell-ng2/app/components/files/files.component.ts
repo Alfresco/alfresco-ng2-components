@@ -38,7 +38,6 @@ declare let __moduleName: string;
 export class FilesComponent {
     breadcrumb: boolean = false;
     navigation: boolean = true;
-    events: any[] = [];
     absolutePath: string = '/Sites/swsdp/documentLibrary';
     relativePath: string = '';
 
@@ -60,20 +59,14 @@ export class FilesComponent {
         alert('Custom folder action for ' + event.value.displayName);
     }
 
-    refreshDirectyory(event: any) {
-        this.absolutePath = event.value;
-        this.relativePath = this.getRelativeDirectory(this.absolutePath);
-    }
-
-    refreshDocumentList(event: Object) {
+    refreshDocumentList() {
         this.absolutePath += '/';
     }
 
-    getRelativeDirectory(currentFolderPath: string): string {
-        if (currentFolderPath.indexOf('/Sites/swsdp/documentLibrary/') !== -1) {
-            return currentFolderPath.replace('/Sites/swsdp/documentLibrary/', '');
-        } else {
-            return currentFolderPath.replace('/Sites/swsdp/documentLibrary', '');
+    onFolderChanged(event?: any) {
+        if (event) {
+            this.absolutePath = event.absolutePath;
+            this.relativePath = event.relativePath;
         }
     }
 }

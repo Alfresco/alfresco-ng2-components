@@ -57,7 +57,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     itemClick: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    folderClick: EventEmitter<any> = new EventEmitter();
+    folderChange: EventEmitter<any> = new EventEmitter();
 
     rootFolder = {
         name: '',
@@ -67,13 +67,29 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     @Input()
     currentFolderPath: string = '';
 
-    folder: NodePaging;
     errorMessage;
-
     route: any[] = [];
 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
+
+    private _folder: NodePaging;
+
+    get folder(): NodePaging {
+        return this._folder;
+    }
+
+    set folder(value: NodePaging) {
+        let isChanged = this._folder !== value;
+        this._folder = value;
+        if (isChanged) {
+            this.folderChange.emit({
+                value: value,
+                absolutePath: this.currentFolderPath,
+                relativePath: this.getRelativePath(this.currentFolderPath)
+            });
+        }
+    }
 
     sorting: ColumnSortingModel = {
         key: 'name',
@@ -158,9 +174,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
             this.route.pop();
             let parent = this.route.length > 0 ? this.route[this.route.length - 1] : this.rootFolder;
             if (parent) {
-                this.folderClick.emit({
-                    value: parent.path
-                });
                 this.displayFolderContent(parent.path);
             }
         }
@@ -183,11 +196,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         if (this.navigate && item && item.entry) {
             if (item.entry.isFolder) {
                 let path = this.getNodePath(item);
-
-                this.folderClick.emit({
-                    value: path
-                });
-
                 this.route.push({
                     name: item.entry.name,
                     path: path
@@ -375,5 +383,13 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     private _isSortableColumn(column: ContentColumnModel) {
         return column && column.source && !column.source.startsWith('$');
+    }
+
+    private getRelativePath(path: string): string {
+        if (path.indexOf('/Sites/swsdp/documentLibrary/') !== -1) {
+            return path.replace('/Sites/swsdp/documentLibrary/', '');
+        } else {
+            return path.replace('/Sites/swsdp/documentLibrary', '');
+        }
     }
 }

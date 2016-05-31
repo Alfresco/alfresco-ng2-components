@@ -1,9 +1,12 @@
-<alfresco-upload-drag-area [showUploadDialog]="true" currentFolderPath="{{absolutePath}}" uploaddirectory="{{relativePath}}"
-    (onSuccess)="refreshDocumentList($event)">
+<alfresco-upload-drag-area
+        [showUploadDialog]="true"
+        currentFolderPath="{{absolutePath}}"
+        uploaddirectory="{{relativePath}}"
+        (onSuccess)="refreshDocumentList($event)">
     <alfresco-document-list 
-            (folderClick)="refreshDirectyory($event)"
-            currentFolderPath="{{absolutePath}}"
-            [breadcrumb]="breadcrumb">
+            [currentFolderPath]="absolutePath"
+            [breadcrumb]="breadcrumb"
+            (folderChange)="onFolderChanged($event)">
         <content-columns>
             <content-column source="$thumbnail"></content-column>
             <content-column
@@ -94,6 +97,13 @@
         <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" [(ngModel)]="breadcrumb">
         <span class="mdl-checkbox__label">Breadcrumb</span>
     </label>
+</div>
+
+<div class="p-10">
+    <ul>
+        <li>Relative path: {{relativePath}}</li>
+        <li>Absolute path: {{absolutePath}}</li>
+    </ul>
 </div>
 
 <h5>Single file upload</h5>

@@ -39,7 +39,7 @@
         <td *ngFor="#col of columns" [ngSwitch]="col.source"
             class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
             (click)="onItemClick(content, $event)"
-            [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : getObjectValue(content.entry, col.source)">
+            [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
             <div *ngSwitchWhen="'$thumbnail'">
                 <div *ngIf="content.entry.isFolder">
                     <i class="material-icons folder-thumbnail">{{folderIcon || 'folder_open'}}</i>
