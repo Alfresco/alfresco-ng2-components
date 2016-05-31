@@ -21,7 +21,7 @@ System.config({
     map: {
         'ng2-alfresco-core': '/base/node_modules/ng2-alfresco-core',
         'rxjs': '/base/node_modules/rxjs',
-        'ng2-translate': '/base/node_modules/ng2-translate/bundles'
+        'ng2-translate': '/base/node_modules/ng2-translate'
     }
 });
 
