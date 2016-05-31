@@ -16,13 +16,51 @@ npm set registry http://devproducts.alfresco.me:4873
 npm install ng2-alfresco-viewer --save
 ```
 
-## Example
+#### Basic usage
 
 ```html
-<ng2-alfresco-viewer></ng2-alfresco-viewer>
+<ng2-alfresco-viewer [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
 ```
 
-## Reference
+#### Dependencies
+
+Add the following dependency to your index.html:
+
+```html
+    <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
+    <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
+    <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
+```
+
+Make sure your systemjs.config has the following configuration:
+
+```javascript
+    System.config({
+                defaultJSExtensions: true,
+                map: {
+                    'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer',
+                    'rxjs': 'node_modules/rxjs',
+                    'angular2': 'node_modules/angular2',
+                    'app': 'dist/main'
+                },
+                packages: {
+                    'src': {
+                        defaultExtension: 'js'
+                    },
+                    'ng2-alfresco-viewer': {
+                        defaultExtension: 'js'
+                    },
+                    'rxjs': {
+                        defaultExtension: 'js'
+                    },
+                    'angular2': {
+                        defaultExtension: 'js'
+                    }
+                }
+            });
+```
+
+#### Options
 
 Attribute     | Options     | Default      | Description
 ---           | ---         | ---          | ---
@@ -33,37 +71,37 @@ Method        | Parameters   | Returns     | Description
 ---           | ---          | ---         | ---
 `methodName()`   | None.        | void    | Lorem ipsum dolor.
 
-## Develop command list 
+## Running unit tests
 
-* To test your project
+```sh
+npm test
+```
 
-    ```sh
-    $ npm run test
-    ```
+## Running unit tests in browser
 
-* To run the test in the browser
+```sh
+npm test-browser
+```
 
-    ```sh
-    $ npm run test-browser
-    ```
+This task rebuilds all the code, runs tslint, license checks and other quality check tools
+before performing unit testing.
 
-* To run the test coverage
+## Code coverage
 
-    ```sh
-    $ npm run coverage
-    ```
+```sh
+npm run coverage
+```
 
-* To build the distribution files before releasing a new version.
+## Demo
 
-    ```sh
-    $ npm run start
-    ```
+If you want have a demo of how the component works, please check the demo folder :
 
-* To provide a live demo
+```sh
+cd demo
+npm install
+npm start
+```
 
-    ```sh
-    $ npm run deploy
-    ```
 
 ## History
 
