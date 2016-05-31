@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "start": "npm run tslint && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
+    "start": "npm run tslint && typings install && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "serve": "lite-server",
