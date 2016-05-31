@@ -37,6 +37,11 @@ module.exports = function (config) {
             '/src/': '/base/src/'
         },
 
+        // list of files to exclude
+        exclude: [
+            'node_modules/**/*spec.js'
+        ],
+
         port: 9876,
 
         // level of logging
