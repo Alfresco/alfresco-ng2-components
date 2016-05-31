@@ -23,7 +23,7 @@ import {AlfrescoService} from './alfresco.service';
 export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private _alfrescoService: AlfrescoService) {
+    constructor(private _alfrescoService?: AlfrescoService) {
         this.setupActionHandlers();
     }
 
@@ -43,7 +43,7 @@ export class DocumentActionsService {
     }
 
     canExecuteAction(obj: any): boolean {
-        return this._alfrescoService && obj && !obj.isFolder;
+        return this._alfrescoService && obj && obj.entry.isFile === true;
     }
 
     private setupActionHandlers() {

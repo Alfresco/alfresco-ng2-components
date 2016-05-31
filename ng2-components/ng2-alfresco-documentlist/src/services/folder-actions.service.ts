@@ -17,15 +17,14 @@
 
 import {Injectable} from 'angular2/core';
 import {ContentActionHandler} from '../models/content-action.model';
+import {AlfrescoService} from './alfresco.service';
 
 @Injectable()
 export class FolderActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor() {
-        // todo: just for dev/demo purposes, to be replaced with real actions
-        this.handlers['system1'] = this.handleStandardAction1.bind(this);
-        this.handlers['system2'] = this.handleStandardAction2.bind(this);
+    constructor(private _alfrescoService?: AlfrescoService) {
+        this.setupActionHandlers();
     }
 
     getHandler(key: string): ContentActionHandler {
@@ -43,11 +42,35 @@ export class FolderActionsService {
         }
     }
 
+    canExecuteAction(obj: any): boolean {
+        return this._alfrescoService && obj && obj.entry.isFolder === true;
+    }
+
+    private setupActionHandlers() {
+        this.handlers['delete'] = this.deleteNode.bind(this);
+
+        // TODO: for demo purposes only, will be removed during future revisions
+        this.handlers['system1'] = this.handleStandardAction1.bind(this);
+        this.handlers['system2'] = this.handleStandardAction2.bind(this);
+    }
+
+    // TODO: for demo purposes only, will be removed during future revisions
     private handleStandardAction1(document: any) {
         window.alert('standard folder action 1');
     }
 
+    // TODO: for demo purposes only, will be removed during future revisions
     private handleStandardAction2(document: any) {
         window.alert('standard folder action 2');
+    }
+
+    private deleteNode(obj: any, target?: any) {
+        if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
+            this._alfrescoService.deleteNode(obj.entry.id).subscribe(() => {
+                if (target && typeof target.reload === 'function') {
+                    target.reload();
+                }
+            });
+        }
     }
 }

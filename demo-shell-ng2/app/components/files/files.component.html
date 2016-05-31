@@ -41,6 +41,12 @@
                     title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
                     (execute)="myFolderAction1($event)">
             </content-action>
+            <content-action
+                    target="folder"
+                    type="menu"
+                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                    handler="delete">
+            </content-action>
 
             <!-- document actions -->
             <content-action
