@@ -316,6 +316,7 @@ Every folder action is rendered as a separate button.
 Document List emits the following events:
 
 - itemClick
+- folderChange
 
 ### itemClick event
 
@@ -361,6 +362,32 @@ For the event `value` the full node info is provided, i.e.:
 ```
 
 _The content of the json above was reduced for the sake of simplicity._
+
+### folderChange event
+
+This event is emitted every time current folder is changed. 
+Event handler gets the following data available:
+
+- folder
+- absolutePath
+- relativePath
+
+```html
+<alfresco-document-list 
+    (folderchange)="onFolderChanged($event)">
+</alfresco-document-list>
+```
+
+```ts
+export class MyView {
+    ...
+    onFolderChanged(e) {
+        console.log(e.value);
+        console.log(e.absolutePath);
+        console.log(e.relativePath);
+    }
+}
+```
 
 ## Advanced usage and customization
 
