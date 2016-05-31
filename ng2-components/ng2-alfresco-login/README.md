@@ -14,7 +14,6 @@
 ```sh
 npm set registry http://devproducts.alfresco.me:4873
 npm install --save ng2-alfresco-core ng2-alfresco-login alfresco-core-rest-api ng2-alfresco-upload ng2-translate
-
 ```
 
 

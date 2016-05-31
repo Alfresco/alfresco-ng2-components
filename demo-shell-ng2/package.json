@@ -4,14 +4,15 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "start": "npm run tslint && concurrently \"npm run tsc:w\" \"npm run serve\" ",
+    "start": "npm run tslint && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "serve": "lite-server",
     "typings": "typings",
     "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json app/**/*.ts",
-    "tslint-root": "tslint -c tslint.json *.ts"
+    "tslint-root": "tslint -c tslint.json *.ts",
+    "licensecheck": "license-check"
   },
   "repository": {
     "type": "git",
@@ -75,7 +76,24 @@
     "lite-server": "^2.2.0",
     "tslint": "^3.8.1",
     "typescript": "^1.8.10",
-    "typings": "^0.7.12"
+    "typings": "^0.7.12",
+    "license-check": "^1.0.4"
+  },
+  "license-check-config": {
+    "src": [
+      "**/*.js",
+      "**/*.ts",
+      "!/**/coverage/**/*",
+      "!/**/demo/**/*",
+      "!/**/node_modules/**/*",
+      "!/**/typings/**/*",
+      "!*.js",
+      "!app/js/xml2json.js"
+    ],
+    "path": "assets/license_header.txt",
+    "blocking": false,
+    "logInfo": false,
+    "logError": true
   },
   "publishConfig": {
     "registry": "http://devproducts.alfresco.me:4873/"
