@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-documentlist",
   "description": "Alfresco Angular2 Document List Component",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "typings": "typings install",
@@ -17,12 +17,12 @@
     "copy-i18n": "copyfiles './i18n/**/*.json' dist",
     "licensecheck": "license-check",
     "tsc": "tsc",
-      "pretest": "npm run build",
-      "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
-      "test-browser": "karma start karma.conf.js --reporters kjhtml ",
-      "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
-      "coverage": "http-server -c-1 -o -p 9875 ./coverage/report",
-      "prepublish": "npm run build"
+    "pretest": "npm run build",
+    "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
+    "test-browser": "karma start karma.conf.js --reporters kjhtml ",
+    "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
+    "coverage": "http-server -c-1 -o -p 9875 ./coverage/report",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
