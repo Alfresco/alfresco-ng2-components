@@ -74,7 +74,7 @@ module.exports = function (config) {
             reporters: [
                 {type: 'text'},
                 {type: 'text-summary'},
-                {type: 'json', subdir: '.', file: 'coverage-final.json'},
+                {type: 'json', file: 'coverage-final.json'},
                 {type: 'html'}
             ]
         },

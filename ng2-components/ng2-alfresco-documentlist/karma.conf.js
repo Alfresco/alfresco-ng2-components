@@ -59,11 +59,12 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-coverage',
             'karma-chrome-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-jasmine-html-reporter'
         ],
 
         // Coverage reporter generates the coverage
-        reporters: ['mocha', 'coverage'],
+        reporters: ['mocha', 'coverage', 'kjhtml'],
 
         // Source files that you wanna generate coverage for.
         // Do not include tests or libraries (these files will be instrumented by Istanbul)
@@ -72,11 +73,13 @@ module.exports = function (config) {
         },
 
         coverageReporter: {
+            dir: 'coverage/',
+            subdir: 'report',
             reporters: [
-                {type: 'json', subdir: '.', file: 'coverage-final.json'}
+                {type: 'text'},
+                {type: 'json', file: 'coverage-final.json'},
+                {type: 'html'}
             ]
-        },
-
-        singleRun: true
+        }
     })
 };
