@@ -59,6 +59,22 @@ export class MyView {
 
 ![DataTable demo](docs/assets/datatable-demo.png)
 
+### Properties
+
+| Name | Type | Default | Description
+| --- | --- | --- | --- |
+| data | DataTableAdapter | empty **ObjectDataTableAdapter** | data source |
+| multiselect | boolean | false | toggle multiple row selection, renders checkboxes at the beginning of each row |
+| actions | boolean | false | toggle data actions column |
+
+### Events
+
+| Name | Description
+| --- | --- |
+| rowClick | emitted when user clicks the row |
+| rowDblClick | emitted when user double-clicks the row |
+
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
