@@ -31,9 +31,11 @@ export class ViewerComponent {
     @Input()
     urlFile: string;
 
-    nameFile: string;
+    @Input()
+    overlayMode: boolean = false;
 
-    currentPdf: any;
+    nameFile: string;
+    currentPdfDocument: any;
     currentPage: number;
     displayPage: number;
     totalPages: number;
@@ -44,12 +46,12 @@ export class ViewerComponent {
 
             this.urlFile = this.addAlfrescoTicket(this.urlFile);
 
-            return this.getPDFJS().getDocument(this.urlFile).then((pdf) => {
-                this.currentPdf = pdf;
-                this.totalPages = pdf.numPages;
+            return this.getPDFJS().getDocument(this.urlFile, null, null).then((pdfDocument) => {
+                this.currentPdfDocument = pdfDocument;
+                this.totalPages = pdfDocument.numPages;
                 this.currentPage = 1;
                 this.displayPage = 1;
-                this.loadPage(this.currentPdf, this.currentPage);
+                this.loadPage(this.currentPdfDocument);
             });
         } else {
             console.log('Url File is a required value');
@@ -64,29 +66,17 @@ export class ViewerComponent {
         return PDFJS;
     }
 
-    loadPage(pdf: any, numberPage: number) {
-        pdf.getPage(numberPage).then((page) => {
+    loadPage(pdfDocument: any) {
 
-            console.log(page.numPages);
+        PDFJS.verbosity = 5;
 
-            let scale = 1.5;
-            let viewport = page.getViewport(scale);
-            let canvas: any = document.getElementById('viewer-the-canvas');
+        let documentContainer: any = document.getElementById('viewer-canvas-container');
 
-            if (canvas) {
-                let context = canvas.getContext('2d');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-
-                // Render PDF page into canvas context
-                let renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
-
-                page.render(renderContext);
-            }
+        let pdfViewer = new PDFJS.PDFViewer({
+            container: documentContainer
         });
+
+        pdfViewer.setDocument(pdfDocument);
     }
 
     /**
@@ -96,7 +86,7 @@ export class ViewerComponent {
         if (this.currentPage > 1) {
             this.currentPage--;
             this.displayPage = this.currentPage;
-            this.loadPage(this.currentPdf, this.currentPage);
+            this.loadPage(this.currentPdfDocument);
         }
     }
 
@@ -107,7 +97,7 @@ export class ViewerComponent {
         if (this.currentPage < this.totalPages) {
             this.currentPage++;
             this.displayPage = this.currentPage;
-            this.loadPage(this.currentPdf, this.currentPage);
+            this.loadPage(this.currentPdfDocument);
         }
     }
 
@@ -121,7 +111,7 @@ export class ViewerComponent {
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
             this.currentPage = pageInput;
-            this.loadPage(this.currentPdf, this.currentPage);
+            this.loadPage(this.currentPdfDocument);
         } else {
             this.displayPage = this.currentPage;
         }

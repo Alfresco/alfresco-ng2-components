@@ -30,7 +30,23 @@ describe('Ng2-alfresco-viewer', () => {
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
                     let element = fixture.nativeElement;
-                    expect(element.querySelector('#vviewer-the-canvas')).toBeDefined();
+
+                    expect(element.querySelector('#viewer-the-canvas')).toBeDefined();
+                    expect(element.querySelector('#viewer-canvas-container')).toBeDefined();
+                });
+        }));
+
+        it('shadow overlay shoudl be present if overlay is true', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+
+                    component.overlayMode = true;
+
+                    fixture.detectChanges();
+                    expect(element.querySelector('#viewer-shadow-transparent')).toBeDefined();
                 });
         }));
 
@@ -63,12 +79,12 @@ describe('Ng2-alfresco-viewer', () => {
                 .then((fixture) => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
+
+                    component.urlFile = 'fake-url-file';
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
 
-                    component.ngOnInit().then((resolve) => {
-                        fixture.detectChanges();
+                    component.ngOnChanges().then((resolve) => {
                         expect(element.querySelector('#viewer-total-pages').innerHTML).toEqual('/10');
-
                         resolve();
                     });
                 });
@@ -81,9 +97,14 @@ describe('Ng2-alfresco-viewer', () => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.urlFile = 'fake-url-file';
 
                     fixture.detectChanges();
-                    expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-name');
+
+                    component.ngOnChanges().then((resolve) => {
+                        expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-name');
+                        resolve();
+                    });
                 });
         }));
     });

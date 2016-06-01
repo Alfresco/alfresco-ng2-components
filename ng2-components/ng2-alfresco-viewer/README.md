@@ -74,7 +74,7 @@ Make sure your systemjs.config has the following configuration:
 #### Basic usage
 
 ```html
-<ng2-alfresco-viewer [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
+<ng2-alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
 ```
 
 Example of an App that declares the file viewer component :
@@ -86,7 +86,7 @@ import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
 @Component({
     selector: 'my-app',
-    template: `   <alfresco-viewer [urlFile]="'local_filename.pdf'">
+    template: `   <alfresco-viewer [overlayMode]="true" [urlFile]="'local_filename.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                    </alfresco-viewer>`,
     directives: [VIEWERCOMPONENT]
@@ -101,16 +101,14 @@ bootstrap(MyDemoApp, [
 ]);
 ```
 
+
 #### Options
 
 Attribute     | Options     | Default      | Description
 ---           | ---         | ---          | ---
-`foo`         | *string*    | `bar`        | Lorem ipsum dolor.
-
-
-Method        | Parameters   | Returns     | Description
----           | ---          | ---         | ---
-`methodName()`   | None.        | void    | Lorem ipsum dolor.
+`urlFile`         | *string*    |        | Url where load the file
+---           | ---         | ---          | ---
+`overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content 
 
 
 ## Build from sources

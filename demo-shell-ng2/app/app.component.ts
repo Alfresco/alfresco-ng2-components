@@ -38,6 +38,7 @@ declare var document: any;
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
+    styleUrls: ['app/app.component.css'],
     directives: [ALFRESCO_SEARCH_DIRECTIVES, ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
     pipes: [AlfrescoPipeTranslate]
 })
