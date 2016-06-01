@@ -33,7 +33,7 @@ declare var componentHandler: any;
 export class AlfrescoSearchControlComponent {
 
     @Input()
-    searchTerm = 'Default search';
+    searchTerm = '';
 
     @Output()
     searchChange = new EventEmitter();
