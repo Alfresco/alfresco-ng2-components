@@ -1,25 +1,28 @@
-# &lt;ng2-alfresco-viewer&gt;
-[![NPM version][npm-image]][npm-url] 
-[![Build Status][travis-image]][travis-url] 
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Coverage percentage][coveralls-image]][coveralls-url]
-[![Style guide][style-image]][style-url]          
-[![Alfresco component][alfrescocomponent-image]][alfrescocomponent-url]          
-                  
-## About ng2-alfresco-viewer
-> Alfresco documents viewer
+# Alfresco File Viewer Component for Angular 2
+<p>
+  <a href='https://raw.githubusercontent.com/Alfresco/dev-platform-webcomponents/master/ng2-components/ng2-alfresco-viewer/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='my blog' />
+  </a>
+</p>
 
-## Installation
+## Install
 
-```bash
+
+```sh
 npm set registry http://devproducts.alfresco.me:4873
-npm install ng2-alfresco-viewer --save
+npm install --save ng2-alfresco-viewer
 ```
 
-#### Basic usage
 
-```html
-<ng2-alfresco-viewer [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
+## Build from sources
+Alternatively you can build component from sources with the following commands:
+
+```sh
+npm install
+npm run build
 ```
 
 #### Dependencies
@@ -58,6 +61,12 @@ Make sure your systemjs.config has the following configuration:
                     }
                 }
             });
+```
+
+#### Basic usage
+
+```html
+<ng2-alfresco-viewer [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
 ```
 
 #### Options
