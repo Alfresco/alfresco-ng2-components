@@ -117,6 +117,7 @@ export class UploadButtonComponent {
      */
     onFilesAdded($event: any): void {
         let files = $event.currentTarget.files;
+        this.printFileInfo(files);
         this.uploadFiles(this.uploaddirectory, files);
     }
 
@@ -127,6 +128,7 @@ export class UploadButtonComponent {
      */
     onDirectoryAdded($event: any): void {
         let files = $event.currentTarget.files;
+        this.printFileInfo(files);
         let hashMapDir = this.convertIntoHashMap(files);
 
         hashMapDir.forEach((filesDir, directoryPath) => {
@@ -258,5 +260,17 @@ export class UploadButtonComponent {
      */
     private getContainerId(): string {
         return this.currentFolderPath.replace('/Sites/', '').split('/')[1];
+    }
+
+    /**
+     * Prints the basic information of a file
+     * @param files
+     */
+    printFileInfo(files: any) {
+        for (let file of files) {
+            console.log('Name: ' + file.name);
+            console.log('Size: ' + file.size);
+            console.log('Path: ' + file.webkitRelativePath);
+        }
     }
 }
