@@ -69,6 +69,30 @@ Make sure your systemjs.config has the following configuration:
 <ng2-alfresco-viewer [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
 ```
 
+Example of an App that declares the file viewer component :
+
+```ts
+import { Component } from 'angular2/core';
+import { bootstrap } from 'angular2/platform/browser';
+import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
+
+@Component({
+    selector: 'my-app',
+    template: `   <alfresco-viewer [urlFile]="'local_filename.pdf'">
+                    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                   </alfresco-viewer>`,
+    directives: [VIEWERCOMPONENT]
+})
+class MyDemoApp {
+    constructor() {
+        console.log('constructor');
+    }
+}
+bootstrap(MyDemoApp, [
+    VIEWERCOMPONENT
+]);
+```
+
 #### Options
 
 Attribute     | Options     | Default      | Description
