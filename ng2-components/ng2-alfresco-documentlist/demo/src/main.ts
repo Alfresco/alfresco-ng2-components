@@ -53,6 +53,10 @@ import {
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
                             source="createdAt">
                     </content-column>
+                    <content-column
+                            title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                            source="createdAt">
+                    </content-column>
                 </content-columns>
                 <content-actions>
                     <!-- folder actions -->
@@ -74,11 +78,13 @@ import {
                             title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
                             (execute)="myFolderAction1($event)">
                     </content-action>
-                    <content-column
-                            title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                            source="createdAt">
-                    </content-column>
-
+                    <content-action
+                            target="folder"
+                            type="menu"
+                            title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                            handler="delete">
+                    </content-action>
+                    
                     <!-- document actions -->
                     <content-action
                             target="document"
