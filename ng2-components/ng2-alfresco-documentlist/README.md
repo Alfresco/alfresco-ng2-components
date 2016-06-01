@@ -45,10 +45,8 @@ Also make sure you include these dependencies in your .html page:
 
 ```html
 <alfresco-document-list
-    [thumbnails]="thumbnails"
     [breadcrumb]="breadcrumb"
     [navigate]="navigation"
-    [downloads]="downloads"
     (itemClick)="onItemClick($event)">
 </alfresco-document-list>
 ```
@@ -69,19 +67,11 @@ import {
     providers: [DOCUMENT_LIST_PROVIDERS]
 })
 export class MyView {
-    thumbnails: boolean = true;
     breadcrumb: boolean = false;
     navigation: boolean = true;
-    downloads: boolean = true;
-
-    events: any[] = [];
 
     onItemClick($event) {
         console.log($event.value);
-        this.events.push({
-            name: 'Item Clicked',
-            value: $event.value
-        });
     }
 }
 ```
