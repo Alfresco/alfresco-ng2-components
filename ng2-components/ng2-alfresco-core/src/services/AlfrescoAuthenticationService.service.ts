@@ -18,6 +18,7 @@
 import { Injectable } from 'angular2/core';
 import { Observable } from 'rxjs/Rx';
 import { Http, Headers, Response } from 'angular2/http';
+import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 
 /**
  * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
@@ -26,22 +27,25 @@ import { Http, Headers, Response } from 'angular2/http';
 export class AlfrescoAuthenticationService {
     token: string;
 
-    private _host: string = 'http://192.168.99.100:8080';
-    private _baseUrl: string = this._host + '/alfresco/api/-default-/public/authentication/versions/1';
+    private _authUrl: string = '/alfresco/api/-default-/public/authentication/versions/1';
 
     /**
      * Constructor
      * @param http
      */
-    constructor(public http: Http) {
+    constructor(public http: Http, private alfrescoSettingsService: AlfrescoSettingsService) {
         this.token = localStorage.getItem('token');
+    }
+
+    getBaseUrl(): string {
+        return this.alfrescoSettingsService.host + this._authUrl;
     }
 
     /**
      * The method return tru if the user is logged in
      * @returns {boolean}
      */
-    isLoggedIn() {
+    isLoggedIn(): boolean {
         return !!localStorage.getItem('token');
     }
 
@@ -68,7 +72,7 @@ export class AlfrescoAuthenticationService {
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
 
-        return this.http.post(this._baseUrl + '/tickets', credentials, {
+        return this.http.post(this.getBaseUrl() + '/tickets', credentials, {
                 headers: headers
             })
             .map((res: any) => {
@@ -90,7 +94,7 @@ export class AlfrescoAuthenticationService {
         headers.append('Content-Type', 'application/json');
         headers.append('Authorization', 'Basic ' + btoa(this.token));
 
-        return this.http.delete(this._baseUrl + '/tickets/-me-', {
+        return this.http.delete(this.getBaseUrl() + '/tickets/-me-', {
                 headers: headers
             })
             .map((res: any) => {

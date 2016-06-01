@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import {Injectable} from 'angular2/core';
+import { Injectable } from 'angular2/core';
 
 @Injectable()
 export class AlfrescoSettingsService {
     private _host: string = 'http://127.0.0.1:8080';
 
-    public get host():string {
+    public get host(): string {
         return this._host;
     }
 
-    public set host(value:string) {
+    public set host(value: string) {
         this._host = value;
     }
 
