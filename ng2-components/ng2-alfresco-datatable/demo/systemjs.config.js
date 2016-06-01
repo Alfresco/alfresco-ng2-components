@@ -19,8 +19,6 @@
 
     // map tells the System loader where to look for things
     var map = {
-        'ng2-translate': 'node_modules/ng2-translate',
-        'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
         'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable',
         'rxjs': 'node_modules/rxjs',
         'angular2' : 'node_modules/angular2',
@@ -30,8 +28,6 @@
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
         'app': { format: 'register', defaultExtension: 'js' },
-        'ng2-translate': { defaultExtension: 'js' },
-        'ng2-alfresco-core': { defaultExtension: 'js' },
         'ng2-alfresco-datatable': { defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
         'angular2': { defaultExtension: 'js' }

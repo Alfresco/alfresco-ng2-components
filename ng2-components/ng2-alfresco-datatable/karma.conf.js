@@ -15,8 +15,6 @@ module.exports = function (config) {
             {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
             {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
             {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: true},
-            {pattern: 'node_modules/alfresco-core-rest-api/bundle.js', included: true, watched: false},
-            {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
 
             {pattern: 'karma-test-shim.js', included: true, watched: true},
 
