@@ -26,6 +26,23 @@ Add the following dependency to your index.html:
     <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
 ```
 
+#### Style
+The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
+design dependency to your project:
+
+```sh
+npm install --save material-design-icons material-design-lite
+```
+
+Also make sure you include these dependencies in your .html page:
+
+```html
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+```
+
 Make sure your systemjs.config has the following configuration:
 
 ```javascript
@@ -94,23 +111,6 @@ Attribute     | Options     | Default      | Description
 Method        | Parameters   | Returns     | Description
 ---           | ---          | ---         | ---
 `methodName()`   | None.        | void    | Lorem ipsum dolor.
-
-#### Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
-
-```sh
-npm install --save material-design-icons material-design-lite
-```
-
-Also make sure you include these dependencies in your .html page:
-
-```html
-    <!-- Google Material Design Lite -->
-    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-    <script src="node_modules/material-design-lite/material.min.js"></script>
-    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
 
 
 ## Build from sources
