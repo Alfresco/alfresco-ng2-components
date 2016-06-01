@@ -16,7 +16,6 @@
  */
 
 import { Component } from 'angular2/core';
-import { ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 import { MDL } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { FilesComponent } from './components/files/files.component';
@@ -29,7 +28,8 @@ import {
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { UploadButtonComponent } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
-import { AlfrescoSearchComponent } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+import { SearchComponent } from './components/search/search.component';
+import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
 import { LoginDemoComponent } from './components/login/login-demo.component';
 import { ViewerFileComponent } from './components/viewer/viewer.component';
 
@@ -38,7 +38,7 @@ declare var document: any;
 @Component({
     selector: 'my-app',
     templateUrl: 'app/app.component.html',
-    directives: [ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
+    directives: [ALFRESCO_SEARCH_DIRECTIVES, ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
     pipes: [AlfrescoPipeTranslate]
 })
 @RouteConfig([
@@ -47,23 +47,18 @@ declare var document: any;
     {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
     {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
     {path: '/login', name: 'Login', component: LoginDemoComponent},
-    {path: '/search', name: 'Search', component: AlfrescoSearchComponent},
+    {path: '/search', name: 'Search', component: SearchComponent},
     {path: '/viewer', name: 'Viewer', component: ViewerFileComponent}
 ])
 export class AppComponent {
     translate: AlfrescoTranslationService;
-    searchForm: ControlGroup;
+    searchTerm: string = '';
 
-    constructor(private _fb: FormBuilder,
-                public auth: AlfrescoAuthenticationService,
+    constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
                 translate: AlfrescoTranslationService,
                 alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
-
-        this.searchForm = this._fb.group({
-            searchTerm: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
-        });
 
         this.translate = translate;
         this.translate.translationInit();
@@ -95,14 +90,13 @@ export class AppComponent {
     }
 
     /**
-     * Method called on submit form
-     * @param value
-     * @param event
+     * Called when a new search term is submitted
+     *
+     * @param params Parameters relating to the search
      */
-    onSearch(value: any, event) {
-        if (event) {
-            event.preventDefault();
-        }
-        this.router.navigate(['Search', value]);
+    searchTermChange(params) {
+        this.router.navigate(['Search', {
+            q: params.value
+        }]);
     }
 }
