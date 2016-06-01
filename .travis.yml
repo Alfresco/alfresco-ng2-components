@@ -1,0 +1,14 @@
+language: node_js
+env:
+  - MODULE=ng2-alfresco-core
+  - MODULE=ng2-alfresco-datatable
+  - MODULE=ng2-alfresco-documentlist
+  - MODULE=ng2-alfresco-login
+  - MODULE=ng2-alfresco-search
+  - MODULE=ng2-alfresco-upload
+node_js:
+  - v5
+install: cd ./$MODULE; npm run coverage
+sudo: false
+# Send coverage data to Coveralls
+after_script: "cat ./$MODULE/coverage/lcov.info | ./$MODULE/node_modules/coveralls/bin/coveralls.js"
