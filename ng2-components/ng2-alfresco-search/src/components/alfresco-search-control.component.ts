@@ -38,6 +38,9 @@ export class AlfrescoSearchControlComponent {
     @Input()
     inputType = 'text';
 
+    @Input()
+    expandable: boolean = true;
+
     @Output()
     searchChange = new EventEmitter();
 
@@ -54,6 +57,14 @@ export class AlfrescoSearchControlComponent {
 
     ngAfterViewInit() {
         componentHandler.upgradeAllRegistered();
+    }
+
+    getTextFieldClassName(): string {
+        return 'mdl-textfield mdl-js-textfield' + (this.expandable ? ' mdl-textfield--expandable' : '');
+    }
+
+    getTextFieldHolderClassName(): string {
+        return this.expandable ? ' mdl-textfield__expandable-holder' : '';
     }
 
     /**
