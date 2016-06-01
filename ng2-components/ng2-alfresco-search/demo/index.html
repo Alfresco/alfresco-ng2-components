@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alfresco Angular 2 Search - Demo</title>
+    <base href="/">
+
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+    <!-- 1. Load libraries -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
+    <script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
+
+    <script>
+        System.config({
+            defaultJSExtensions: true,
+            map: {
+                'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
+                'ng2-alfresco-search': 'node_modules/ng2-alfresco-search',
+                'rxjs': 'node_modules/rxjs',
+                'angular2': 'node_modules/angular2',
+                'ng2-translate': 'node_modules/ng2-translate',
+                'src': 'src'
+            },
+            packages: {
+                'src': {
+                    defaultExtension: 'js'
+                },
+                'ng2-alfresco-core': {
+                    defaultExtension: 'js'
+                },
+                'ng2-alfresco-search': {
+                    defaultExtension: 'js'
+                },
+                'rxjs': {
+                    defaultExtension: 'js'
+                },
+                'angular2': {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('dist/main').catch(console.log.bind(console));
+    </script>
+
+</head>
+<body>
+
+<div mdl class="mdl-layout mdl-js-layout">
+    <alfresco-search-demo></alfresco-search-demo>
+</div>
+
+</body>
+</html>

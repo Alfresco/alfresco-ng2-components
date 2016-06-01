@@ -1,7 +1,5 @@
-<div style="padding: 20px;">
-<h1>Search results</h1>
-<p *ngIf="results">Found {{results.length}} results for {{currentSearchTerm}}</p>
-<table *ngIf="results" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+<p *ngIf="searchTerm">Found {{results.length}} results for {{searchTerm}}</p>
+<table *ngIf="searchTerm && results.length" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
         <th>
@@ -28,4 +26,3 @@
     </tr>
     </tbody>
 </table>
-</div>

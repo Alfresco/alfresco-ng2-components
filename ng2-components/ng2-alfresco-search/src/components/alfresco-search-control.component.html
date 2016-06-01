@@ -1,0 +1,11 @@
+<form (submit)="onSearch($event)">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+        <label class="mdl-button mdl-js-button mdl-button--icon" for="searchTerm">
+            <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="searchTerm" [ngFormControl]="searchControl" [(ngModel)]="searchTerm">
+            <label class="mdl-textfield__label" for="searchTerm">Search content</label>
+        </div>
+    </div>
+</form>

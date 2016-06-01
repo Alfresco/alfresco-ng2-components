@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from 'angular2/core';
+import { Component, Input, Optional, OnChanges, OnInit } from 'angular2/core';
 import { RouteParams } from 'angular2/router';
 import { AlfrescoService } from './../services/alfresco.service';
 
@@ -25,34 +25,35 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-search',
     styles: [
-        `
-              :host h1 {
-                  font-size:22px
-              }
-          `
     ],
     templateUrl: './alfresco-search.component.html',
     providers: [AlfrescoService]
 })
-export class AlfrescoSearchComponent {
+export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     @Input()
-    currentSearchTerm: string = '';
+    searchTerm: string = '';
 
-    folder: any;
     results: any;
+
     errorMessage;
 
     route: any[] = [];
 
     constructor(
-        private _alfrescoService: AlfrescoService, params: RouteParams) {
+        private _alfrescoService: AlfrescoService, @Optional() params: RouteParams) {
         this.results = [];
-        this.currentSearchTerm = params.get('searchTerm');
+        if (params) {
+            this.searchTerm = params.get('q');
+        }
     }
 
     ngOnInit() {
-        this.displaySearchResults(this.currentSearchTerm);
+        this.displaySearchResults(this.searchTerm);
+    }
+
+    ngOnChanges(changes) {
+        this.displaySearchResults(this.searchTerm);
     }
 
     /**
@@ -80,7 +81,7 @@ export class AlfrescoSearchComponent {
     }
 
     /**
-     * Loads and displays folder content
+     * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
     displaySearchResults(searchTerm) {

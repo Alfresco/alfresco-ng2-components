@@ -16,11 +16,29 @@
  */
 
 import { AlfrescoService } from './src/services/alfresco.service';
+import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
+import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
 
 // services
 export * from './src/services/alfresco.service';
 
 export * from './src/components/alfresco-search.component';
+export * from './src/components/alfresco-search-control.component';
+
+export default {
+    directives: [
+        AlfrescoSearchComponent,
+        AlfrescoSearchControlComponent
+    ],
+    providers: [
+        AlfrescoService
+    ]
+};
+
+export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
+    AlfrescoSearchComponent,
+    AlfrescoSearchControlComponent
+];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
     AlfrescoService
