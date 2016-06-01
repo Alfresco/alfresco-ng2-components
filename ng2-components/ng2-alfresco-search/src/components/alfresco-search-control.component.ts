@@ -35,6 +35,9 @@ export class AlfrescoSearchControlComponent {
     @Input()
     searchTerm = '';
 
+    @Input()
+    inputType = 'text';
+
     @Output()
     searchChange = new EventEmitter();
 

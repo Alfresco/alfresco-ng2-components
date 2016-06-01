@@ -82,6 +82,7 @@ Also make sure you include these dependencies in your .html page:
 
 ```html
 <alfresco-search-control [searchTerm]="searchTerm"
+                        inputType="search"
                         (searchChange)="customMethod($event);">
 </alfresco-search-control>
 ```
@@ -141,7 +142,8 @@ bootstrap(SearchDemo, [
 
 #### Options
 
-**searchTerm**: {string} optional) default "". Search term to pre-populate the field with<br />
+**searchTerm**: {string} (optional) default "". Search term to pre-populate the field with<br />
+**inputType**: {string} (optional) default "text". Type of the input field to render, e.g. "search" or "text" (default)<br />
 
 ### Search results
 
