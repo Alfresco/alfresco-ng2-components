@@ -32,7 +32,7 @@ declare let AlfrescoApi: any;
  */
 @Injectable()
 export class UploadService {
-    private _host: string = 'http://192.168.99.100:8080';
+    private _host: string = '';
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
     private _url: string = '/alfresco/service/api/upload';
 
@@ -47,9 +47,7 @@ export class UploadService {
     constructor(private settings: AlfrescoSettingsService) {
         console.log('UploadService constructor');
 
-        if (settings) {
-            this._host = settings.host;
-        }
+        this._host = settings.host;
         this._alfrescoClient = this.getAlfrescoClient();
     }
 
