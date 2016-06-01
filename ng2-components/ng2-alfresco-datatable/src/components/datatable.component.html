@@ -23,7 +23,7 @@
             <span *ngIf="col.title">{{col.title}}</span>
         </th>
         <!-- Actions -->
-        <th>
+        <th *ngIf="actions">
             <span class="sr-only">Actions</span>
         </th>
     </tr>
@@ -56,7 +56,7 @@
 
         </td>
 
-        <td><!-- todo: actions --></td>
+        <td *ngIf="actions"><!-- todo: actions --></td>
 
     </tr>
     </tbody>

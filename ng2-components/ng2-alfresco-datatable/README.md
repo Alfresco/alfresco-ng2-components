@@ -13,8 +13,51 @@
 
 ```sh
 npm set registry http://devproducts.alfresco.me:4873
-npm install --save ng2-alfresco-core ng2-alfresco-datatable
+npm install --save ng2-alfresco-datatable material-design-lite material-design-icons
 ```
+
+## Basic usage
+
+```html
+<alfresco-datatable 
+    [data]="data">
+</alfresco-datatable>
+```
+
+```ts
+import { Component } from 'angular2/core';
+import { 
+    ALFRESCO_DATATABLE_DIRECTIVES,
+    ObjectDataTableAdapter
+} from 'ng2-alfresco-datatable/ng2-alfresco-datatable';
+
+@Component({
+    selector: 'my-view',
+    template: '<YOUR TEMPLATE>',
+    directives: [ALFRESCO_DATATABLE_DIRECTIVES]
+})
+export class MyView {
+    data: ObjectDataTableAdapter;
+    
+    constructor() {
+        this.data = new ObjectDataTableAdapter(
+            // data
+            [
+                { id: 1, name: 'Name 1' },
+                { id: 2, name: 'Name 2' }
+            ],
+            // schema
+            [
+                {type: 'text', key: 'id', title: 'Id', sortable: true},
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
+            ]
+        );
+    }
+}
+
+```
+
+![DataTable demo](docs/assets/datatable-demo.png)
 
 ## Build from sources
 

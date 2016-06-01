@@ -50,6 +50,9 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     @Input()
     multiselect: boolean = false;
 
+    @Input()
+    actions: boolean = false;
+
     @Output()
     rowClick: EventEmitter<any> = new EventEmitter();
 

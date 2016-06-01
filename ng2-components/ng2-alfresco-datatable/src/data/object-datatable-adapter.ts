@@ -39,9 +39,14 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
                 return new ObjectDataRow(item);
             });
 
-            this._columns = schema.map(item => {
-                return new ObjectDataColumn(item);
-            });
+            if (schema && schema.length > 0) {
+                this._columns = schema.map(item => {
+                    return new ObjectDataColumn(item);
+                });
+
+                this.sort(this._columns[0].key, 'asc');
+            }
+
         }
     }
 
