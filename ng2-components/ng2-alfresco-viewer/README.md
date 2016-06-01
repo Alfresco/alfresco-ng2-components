@@ -104,11 +104,10 @@ bootstrap(MyDemoApp, [
 
 #### Options
 
-Attribute     | Options     | Default      | Description
+Attribute     | Options     | Default      | Description | Mandatory
 ---           | ---         | ---          | ---
-`urlFile`         | *string*    |        | Url where load the file
----           | ---         | ---          | ---
-`overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content 
+`urlFile`         | *string*    |        |  Url where to load the file | mandatory
+`overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content |
 
 
 ## Build from sources

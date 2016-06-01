@@ -36,13 +36,13 @@ describe('Ng2-alfresco-viewer', () => {
                 });
         }));
 
-        it('shadow overlay shoudl be present if overlay is true', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('shadow overlay should be present if overlay is true', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-
+                    component.urlFile = 'fake-url-file';
                     component.overlayMode = true;
 
                     fixture.detectChanges();
@@ -90,7 +90,7 @@ describe('Ng2-alfresco-viewer', () => {
                 });
         }));
 
-        it('Name File should be showed', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('Name File should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
@@ -105,6 +105,20 @@ describe('Ng2-alfresco-viewer', () => {
                         expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-name');
                         resolve();
                     });
+                });
+        }));
+    });
+
+    describe('Attribute', () => {
+        it('Url File should be mandatory', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+
+                    expect(() => {
+                        component.urlFile = 'fake-url-file';
+                    }).toThrow();
                 });
         }));
     });

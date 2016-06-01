@@ -40,6 +40,12 @@ export class ViewerComponent {
     displayPage: number;
     totalPages: number;
 
+    ngOnInit() {
+        if (!this.urlFile) {
+            throw new Error('Attribute urlFile is required');
+        }
+    }
+
     ngOnChanges(changes: {[urlFile: string]: SimpleChange}) {
         if (this.urlFile) {
             this.nameFile = this.getPDFJS().getFilenameFromUrl(this.urlFile);
@@ -53,8 +59,6 @@ export class ViewerComponent {
                 this.displayPage = 1;
                 this.loadPage(this.currentPdfDocument);
             });
-        } else {
-            console.log('Url File is a required value');
         }
     }
 
