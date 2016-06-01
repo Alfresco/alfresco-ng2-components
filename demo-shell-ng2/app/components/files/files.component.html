@@ -5,6 +5,7 @@
             uploaddirectory="{{relativePath}}"
             (onSuccess)="refreshDocumentList($event)">
         <alfresco-document-list
+                #documentList
                 [currentFolderPath]="absolutePath"
                 [breadcrumb]="breadcrumb"
                 (itemClick)="showFile($event)"
@@ -103,10 +104,21 @@
 
     <div class="p-10">
         <ul>
-            <li>Relative path: {{relativePath}}</li>
-            <li>Absolute path: {{absolutePath}}</li>
+            <li>Current relative path: {{relativePath}}</li>
+            <li>Current absolute path: {{absolutePath}}</li>
+            <li>
+                <button (click)="documentList.changePath('/Sites/swsdp/documentLibrary/Agency Files/Contracts')">Go to agency contracts</button>
+            </li>
+            <li>
+                <button (click)="documentList.changePath('')">Got to site root</button>
+            </li>
+            <li>
+                <button (click)="documentList.changePath('/')">Go to root</button>
+            </li>
         </ul>
     </div>
+
+
 
     <h5>Single file upload</h5>
     <alfresco-upload-button data-automation-id="single-file-upload" uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}"
