@@ -16,16 +16,6 @@ npm set registry http://devproducts.alfresco.me:4873
 npm install --save ng2-alfresco-upload
 ```
 
-
-## Build from sources
-Alternatively you can build component from sources with the following commands:
-
-
-```sh
-npm install
-npm run build
-```
-
 Components included:
 
 - [Upload button](#upload-button)
@@ -190,6 +180,32 @@ bootstrap(MyDemoApp, [
 #### Options
 
 **showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
+
+#### Style
+The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
+design dependency to your project:
+
+```sh
+npm install --save material-design-icons material-design-lite
+```
+
+Also make sure you include these dependencies in your .html page:
+
+```html
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+```
+
+## Build from sources
+Alternatively you can build component from sources with the following commands:
+
+
+```sh
+npm install
+npm run build
+```
 
 ## Running unit tests
 

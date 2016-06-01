@@ -468,6 +468,22 @@ export class MyView {
 Typically you may want populating all your custom actions at the application root level or
 by means of custom application service.
 
+#### Style
+The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
+design dependency to your project:
+
+```sh
+npm install --save material-design-icons material-design-lite
+```
+
+Also make sure you include these dependencies in your .html page:
+
+```html
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+```
 
 ## Build from sources
 
