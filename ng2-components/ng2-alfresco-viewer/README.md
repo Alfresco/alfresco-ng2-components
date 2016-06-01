@@ -21,9 +21,9 @@ npm install --save ng2-alfresco-viewer
 Add the following dependency to your index.html:
 
 ```html
-    <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
-    <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
-    <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
+<script src="node_modules/pdfjs-dist/build/pdf.js"></script>
+<script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
+<script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
 ```
 
 #### Style
@@ -37,10 +37,10 @@ npm install --save material-design-icons material-design-lite
 Also make sure you include these dependencies in your .html page:
 
 ```html
-    <!-- Google Material Design Lite -->
-    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-    <script src="node_modules/material-design-lite/material.min.js"></script>
-    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+<!-- Google Material Design Lite -->
+<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+<script src="node_modules/material-design-lite/material.min.js"></script>
+<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
 Make sure your systemjs.config has the following configuration:
