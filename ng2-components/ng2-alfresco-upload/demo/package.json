@@ -47,7 +47,7 @@
     "angular2": "2.0.0-beta.15",
     "es6-shim": "^0.35.0",
     "material-design-icons": "^2.2.3",
-    "material-design-lite": "^1.1.3"
+    "material-design-lite": "^1.1.3",
     "ng2-alfresco-upload": "^0.1.0",
     "ng2-translate": "^1.11.3",
     "reflect-metadata": "0.1.2",
