@@ -74,6 +74,44 @@ export class MyView {
 | rowClick | emitted when user clicks the row |
 | rowDblClick | emitted when user double-clicks the row |
 
+## Data sources
+
+DataTable component gets data by means of data adapter. 
+It is possible having data retrieved from different kinds of sources by implementing
+a custom `DataTableAdapter`:
+
+```ts
+interface DataTableAdapter {
+
+    getRows(): Array<DataRow>;
+    setRows(rows: Array<DataRow>): void;
+    getColumns(): Array<DataColumn>;
+    setColumns(columns: Array<DataColumn>): void;
+    getValue(row: DataRow, col: DataColumn): any;
+    getSorting(): DataSorting;
+    setSorting(sorting: DataSorting): void;
+    sort(key?: string, direction?: string): void;
+
+}
+```
+
+DataTable ships `ObjectDataTableAdapter` out-of-box. This is a simple data adapter
+that binds to object arrays and turns object fields into columns:
+
+```ts
+let data = new ObjectDataTableAdapter(
+    // data
+    [
+        { id: 1, name: 'Name 1' },
+        { id: 2, name: 'Name 2' }
+    ],
+    // schema
+    [
+        {type: 'text', key: 'id', title: 'Id', sortable: true},
+        {type: 'text', key: 'name', title: 'Name', sortable: true}
+    ]
+);
+```
 
 ## Build from sources
 
