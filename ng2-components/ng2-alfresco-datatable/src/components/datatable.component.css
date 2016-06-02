@@ -1,18 +1,18 @@
 :host .full-width { width: 100%; }
 
-:host .folder-thumbnail {
+:host .icon-cell {
     font-size: 48px;
-    cursor: pointer;
+    cursor: default;
 }
 
-:host .document-thumbnail {
+:host .image-cell {
     width: 48px;
     height: 48px;
-    cursor: pointer;
+    cursor: default;
 }
 
 :host .data-cell {
-    cursor: pointer;
+    cursor: default;
 }
 
 :host .column-header {
@@ -24,46 +24,15 @@
     -webkit-touch-callout: none; /* iOS Safari */
 }
 
-:host .parent-folder-link { cursor: pointer; }
-:host .parent-folder-link > td { text-align: left; }
+/* Utils */
 
-:host .folder-row-cell,
-:host .document-row-cell {
-    cursor: pointer;
-}
-
-:host .folder-row-cell.name-column,
-:host .document-row-cell.name-column {
-    font-size: 15px;
-}
-
-:host .folder-row-cell.name-column:hover,
-:host .document-row-cell.name-column:hover {
-    cursor: pointer;
-}
-
-/* breadcrumb */
-
-:host .breadcrumb {
-    text-align: left;
-    padding: 8px 15px;
-    list-style: none;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    margin: 0 0 4px;
-}
-
-:host .breadcrumb > li {
-    display: inline-block;
-    box-sizing: border-box;
-}
-
-:host .breadcrumb > li+li:before {
-    content: "/\00a0";
-    padding: 0 0 0 5px;
-    color: #ccc;
-}
-
-:host .breadcrumb > .active {
-    color: #777;
+:host .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
 }

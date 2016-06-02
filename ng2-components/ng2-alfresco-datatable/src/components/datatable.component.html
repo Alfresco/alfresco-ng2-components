@@ -29,7 +29,6 @@
     </tr>
     </thead>
     <tbody>
-    <!-- todo: special 'navigate parent row' support -->
 
     <tr *ngFor="#row of data.getRows(); #idx = index">
         <td *ngIf="multiselect">
@@ -44,8 +43,8 @@
             class="mdl-data-table__cell--non-numeric data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)" (dblclick)="onRowDblClick(row, $event)">
             <div *ngSwitchWhen="'image'">
-                <i *ngIf="isIconValue(row, col)" class="material-icons folder-thumbnail">{{asIconValue(row, col)}}</i>
-                <img *ngIf="!isIconValue(row, col)" class="document-thumbnail" alt="" src="{{data.getValue(row, col)}}">
+                <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
+                <img *ngIf="!isIconValue(row, col)" class="image-cell" alt="" src="{{data.getValue(row, col)}}">
             </div>
             <div *ngSwitchWhen="'text'">
                 {{data.getValue(row, col)}}
