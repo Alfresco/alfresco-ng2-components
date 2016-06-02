@@ -25,7 +25,6 @@ import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
  */
 @Injectable()
 export class AlfrescoAuthenticationService {
-    token: string;
 
     private _authUrl: string = '/alfresco/api/-default-/public/authentication/versions/1';
 
@@ -34,7 +33,6 @@ export class AlfrescoAuthenticationService {
      * @param http
      */
     constructor(public http: Http, private alfrescoSettingsService: AlfrescoSettingsService) {
-        this.token = localStorage.getItem('token');
     }
 
     getBaseUrl(): string {
@@ -77,9 +75,8 @@ export class AlfrescoAuthenticationService {
             })
             .map((res: any) => {
                 let response = res.json();
-                this.token = response.entry.id;
-                this.saveJwt(this.token);
-                return this.token;
+                this.saveToken(response.entry.id);
+                return this.getToken();
             })
             .catch(this.handleError);
     }
@@ -92,32 +89,40 @@ export class AlfrescoAuthenticationService {
     loginDelete() {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Basic ' + btoa(this.token));
+        headers.append('Authorization', 'Basic ' + btoa(this.getToken()));
 
         return this.http.delete(this.getBaseUrl() + '/tickets/-me-', {
                 headers: headers
             })
             .map((res: any) => {
-                this.removeJwt();
-                this.token = undefined;
+                this.removeToken();
+                this.saveToken('');
             })
             .catch(this.handleError);
     }
 
     /**
-     * The method save the toke in the localStorage
-     * @param jwt
+     * Return the token stored in the localStorage
+     * @param token
      */
-    saveJwt(jwt) {
-        if (jwt) {
-            localStorage.setItem('token', jwt);
+    public getToken (): string {
+        return localStorage.getItem('token');
+    }
+
+    /**
+     * The method save the toke in the localStorage
+     * @param token
+     */
+    public saveToken(token): void {
+        if (token) {
+            localStorage.setItem('token', token);
         }
     }
 
     /**
      * Remove the login token from localStorage
      */
-    removeJwt() {
+    public removeToken() :void {
         localStorage.removeItem('token');
     }
 
@@ -125,7 +130,7 @@ export class AlfrescoAuthenticationService {
      * The method remove the token from the local storage
      * @returns {Observable<T>}
      */
-    logout() {
+    public logout() {
         return this.loginDelete();
     }
 
