@@ -1,7 +1,7 @@
 <ol *ngIf="breadcrumb" data-automation-id="breadcrumb" class="breadcrumb">
     <li *ngFor="#r of route; #last = last" [class.active]="last" [ngSwitch]="last">
         <span *ngSwitchWhen="true">{{r.name}}</span>
-        <a *ngSwitchDefault href="#" (click)="goToRoute(r, $event)">{{r.name}}</a>
+        <a *ngSwitchDefault href="#" [attr.data-automation-id]="’breadcrumb_’ + r.name" (click)="goToRoute(r, $event)">{{r.name}}</a>
     </li>
 </ol>
 <table *ngIf="folder" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
