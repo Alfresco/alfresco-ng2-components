@@ -109,7 +109,7 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
     template: `<alfresco-upload-button [showUdoNotificationBar]="true"
                                        [uploadFolders]="true"
                                        [multipleFiles]="false"
-                                       [acceptedFilesType]=".jpg,.gif,.png,.svg"
+                                       [acceptedFilesType]="'.jpg,.gif,.png,.svg'"
                                        (onSuccess)="customMethod($event)">
                </alfresco-upload-button>`,
     directives: [ALFRESCO_ULPOAD_COMPONENT]

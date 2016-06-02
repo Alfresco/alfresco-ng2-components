@@ -15,17 +15,28 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 
 
 @Component({
     selector: 'my-app',
-    template: `<label for="token">Access Token</label><br>
-               <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br><br>
+    template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br>
+               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+               <div *ngIf="!authenticated" style="color:#FF2323">
+                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    operations.
+               </div>
+               <hr>
                <alfresco-upload-button [showUdoNotificationBar]="true"
                                        [uploadFolders]="false"
                                        [multipleFiles]="false"
@@ -55,33 +66,51 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
                          DRAG HERE
                      </div>
                </alfresco-upload-drag-area>
-               <file-uploading-dialog></file-uploading-dialog>`,
+               <file-uploading-dialog></file-uploading-dialog>
+               `,
     directives: [ALFRESCO_ULPOAD_COMPONENTS]
 })
-export class MyDemoApp {
+export class MyDemoApp implements OnInit {
+
+    authenticated: boolean;
+
+    host: string = 'http://192.168.99.101:8080';
+
     token: string;
 
-    constructor(alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+    constructor(private authService: AlfrescoAuthenticationService, private alfrescoSettingsService: AlfrescoSettingsService) {
+        alfrescoSettingsService.host = this.host;
 
         if (localStorage.getItem('token')) {
             this.token = localStorage.getItem('token');
         }
     }
 
-    updateToken() {
+    public updateToken(): void {
         localStorage.setItem('token', this.token);
+    }
+
+    public updateHost(): void {
+        this.alfrescoSettingsService.host = this.host;
     }
 
     public customMethod(event: Object): void {
         console.log('File uploaded');
     }
+
+    public ngOnInit(): void {
+        this.login();
+    }
+
+    public login(): void {
+        this.authService.login('admin', 'admin').subscribe(token => {
+            this.authenticated = true;
+        });
+    }
 }
 
 bootstrap(MyDemoApp, [
     HTTP_PROVIDERS,
-    AlfrescoTranslationService,
-    AlfrescoTranslationLoader,
-    AlfrescoSettingsService,
+    ALFRESCO_CORE_PROVIDERS,
     UploadService
 ]);

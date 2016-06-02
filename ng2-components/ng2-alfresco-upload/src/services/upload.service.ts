@@ -33,7 +33,6 @@ declare let AlfrescoApi: any;
  */
 @Injectable()
 export class UploadService {
-    private _host: string = '';
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
     private _url: string = '/alfresco/service/api/upload';
 
@@ -51,7 +50,6 @@ export class UploadService {
     constructor(private settings: AlfrescoSettingsService) {
         console.log('UploadService constructor');
         this.filesUpload$ = new Observable(observer =>  this._filesUploadObserver = observer).share();
-        this._host = settings.host;
         this._alfrescoClient = this.getAlfrescoClient();
     }
 
@@ -72,7 +70,7 @@ export class UploadService {
      * @returns {string}
      */
     public getHost(): string {
-        return this._host;
+        return this.settings.host;
     }
 
     /**
@@ -220,7 +218,7 @@ export class UploadService {
         let xmlHttpRequest = this.createXMLHttpRequestInstance(uploadingFileModel, elementEmit);
         uploadingFileModel._xmlHttpRequest = xmlHttpRequest;
 
-        xmlHttpRequest.open(this._method, this._host + this._url, true);
+        xmlHttpRequest.open(this._method, this.getHost() + this._url, true);
         let authToken = btoa(basicAuth.username + ':' + basicAuth.password);
         if (authToken) {
             xmlHttpRequest.setRequestHeader('Authorization', `${basicAuth.type} ${authToken}`);
