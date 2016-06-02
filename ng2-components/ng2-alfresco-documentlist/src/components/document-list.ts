@@ -97,6 +97,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         direction: 'asc'
     };
 
+    constructor(
+        private _alfrescoService: AlfrescoService) {}
+
     /**
      * Determines whether navigation to parent folder is available.
      * @returns {boolean}
@@ -105,9 +108,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return this.navigate && !this.breadcrumb &&
             this.currentFolderPath !== this.rootFolder.path;
     }
-
-    constructor(
-        private _alfrescoService: AlfrescoService) {}
 
     ngOnInit() {
         this.changePath(this.currentFolderPath);

@@ -36,8 +36,19 @@ import {
 @Component({
     selector: 'alfresco-documentlist-demo',
     template: `
+        <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateToken();doclist.reload()" [(ngModel)]="token"><br>
+               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateHost();doclist.reload()" [(ngModel)]="host"><br><br>
+               <div *ngIf="!authenticated" style="color:#FF2323">
+                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    operations.
+               </div>
+               <hr>
         <div class="container">
-            <alfresco-document-list *ngIf="authenticated">
+
+            <alfresco-document-list #doclist>
+
                 <content-columns>
                     <content-column source="$thumbnail"></content-column>
                     <content-column
@@ -124,9 +135,6 @@ import {
                     </content-action>
                 </content-actions>
             </alfresco-document-list>
-            <div *ngIf="!authenticated">
-                Authentication failed to ip {{ host }}
-            </div>
         </div>
     `,
     styles: [':host > .container {padding: 10px}'],
@@ -140,15 +148,31 @@ class DocumentListDemo implements OnInit {
 
     host: string = 'http://192.168.99.100:8080';
 
+    token: string;
+
     constructor(
         private authService: AlfrescoAuthenticationService,
-        settings: AlfrescoSettingsService,
+        private alfrescoSettingsService: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
-        documentActions: DocumentActionsService) {
+        private documentActions: DocumentActionsService) {
 
-        settings.host = this.host;
+        alfrescoSettingsService.host = this.host;
+
+        if (localStorage.getItem('token')) {
+            this.token = localStorage.getItem('token');
+        }
+
         translation.translationInit();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
+    }
+
+    public updateToken(): void {
+        localStorage.setItem('token', this.token);
+    }
+
+    public updateHost(): void {
+        this.alfrescoSettingsService.host = this.host;
+        this.login();
     }
 
     ngOnInit() {

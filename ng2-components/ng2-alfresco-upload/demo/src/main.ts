@@ -92,6 +92,7 @@ export class MyDemoApp implements OnInit {
 
     public updateHost(): void {
         this.alfrescoSettingsService.host = this.host;
+        this.login();
     }
 
     public customMethod(event: Object): void {
