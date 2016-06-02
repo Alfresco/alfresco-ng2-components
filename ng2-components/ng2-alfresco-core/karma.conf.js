@@ -1,6 +1,7 @@
 'use strict';
 
-var configuration = {
+module.exports = function (config) {
+    var configuration = {
 
         basePath: '.',
 
@@ -85,12 +86,11 @@ var configuration = {
         },
 
         singleRun: true
-}
+    }
 
-if (process.env.TRAVIS) {
-    configuration.browsers = ['Chrome_travis_ci'];
-}
+    if (process.env.TRAVIS) {
+        configuration.browsers = ['Chrome_travis_ci'];
+    }
 
-module.exports = function (config) {
     config.set(configuration)
 };
