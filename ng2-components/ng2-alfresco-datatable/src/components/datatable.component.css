@@ -17,6 +17,9 @@
 
 :host .column-header {
     cursor: pointer;
+}
+
+:host .non-selectable {
     user-select: none;
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
     -moz-user-select: none;      /* Firefox */

@@ -13,7 +13,7 @@
                 <input type="checkbox" id="table-header" class="mdl-checkbox__input" />
             </label>
         </th>
-        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
+        <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
             *ngFor="#col of data.getColumns()"
             [class.column-header]="col.title"
             [class.mdl-data-table__header--sorted-ascending]="isColumnSorted(col, 'asc')"
@@ -40,7 +40,7 @@
             </label>
         </td>
         <td *ngFor="#col of data.getColumns()" [ngSwitch]="col.type"
-            class="mdl-data-table__cell--non-numeric data-cell {{col.cssClass}}"
+            class="mdl-data-table__cell--non-numeric data-cell non-selectable {{col.cssClass}}"
             (click)="onRowClick(row, $event)" (dblclick)="onRowDblClick(row, $event)">
             <div *ngSwitchWhen="'image'">
                 <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
