@@ -136,7 +136,9 @@ export class UploadService {
                 let uploadingFileModel = new FileModel(file);
                 latestFilesAdded.push(uploadingFileModel);
                 this._queue.push(uploadingFileModel);
-                this._filesUploadObserver.next(this._queue);
+                if (this._filesUploadObserver) {
+                    this._filesUploadObserver.next(this._queue);
+                }
             }
         }
         return latestFilesAdded;
@@ -169,6 +171,9 @@ export class UploadService {
                     loaded: e.loaded,
                     percent: percent
                 });
+                if (this._filesUploadObserver) {
+                    this._filesUploadObserver.next(this._queue);
+                }
             }
         };
 
