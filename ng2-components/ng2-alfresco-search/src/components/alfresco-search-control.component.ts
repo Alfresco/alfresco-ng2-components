@@ -16,7 +16,7 @@
  */
 
 import { Control, Validators } from 'angular2/common';
-import { Component, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
 
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -33,7 +33,7 @@ declare var componentHandler: any;
     providers: [AlfrescoService],
     pipes: [AlfrescoPipeTranslate]
 })
-export class AlfrescoSearchControlComponent {
+export class AlfrescoSearchControlComponent implements AfterViewInit {
 
     @Input()
     searchTerm = '';
