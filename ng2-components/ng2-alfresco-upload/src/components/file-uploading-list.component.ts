@@ -46,8 +46,6 @@ export class FileUploadingListComponent {
 
     constructor(public el: ElementRef) {
         console.log('filesUploadingList constructor', el);
-
-        setInterval(() => {console.log('Check for async update from drag directive'); }, 1000);
     }
 
     /**
