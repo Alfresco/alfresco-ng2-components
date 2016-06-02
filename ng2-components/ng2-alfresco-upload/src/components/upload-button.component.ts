@@ -107,6 +107,8 @@ export class UploadButtonComponent {
         let files = $event.currentTarget.files;
         this.printFileInfo(files);
         this.uploadFiles(this.uploaddirectory, files);
+        // reset the value of the input file
+        $event.target.value = '';
     }
 
     /**
@@ -134,6 +136,8 @@ export class UploadButtonComponent {
                 }
             );
         });
+        // reset the value of the input file
+        $event.target.value = '';
     }
 
     /**
