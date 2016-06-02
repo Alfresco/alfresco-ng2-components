@@ -19,6 +19,8 @@ import { Component, Input, Optional, OnChanges, OnInit } from 'angular2/core';
 import { RouteParams } from 'angular2/router';
 import { AlfrescoService } from './../services/alfresco.service';
 
+import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
 declare let __moduleName: string;
 
 @Component({
@@ -27,7 +29,8 @@ declare let __moduleName: string;
     styles: [
     ],
     templateUrl: './alfresco-search.component.html',
-    providers: [AlfrescoService]
+    providers: [AlfrescoService],
+    pipes: [AlfrescoPipeTranslate]
 })
 export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
@@ -41,7 +44,12 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     route: any[] = [];
 
     constructor(
-        private _alfrescoService: AlfrescoService, @Optional() params: RouteParams) {
+        private _alfrescoService: AlfrescoService,
+        private translate: AlfrescoTranslationService,
+        @Optional() params: RouteParams)
+    {
+        translate.addComponent('node_modules/ng2-alfresco-search');
+
         this.results = [];
         if (params) {
             this.searchTerm = params.get('q');

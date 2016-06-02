@@ -1,4 +1,4 @@
-<p *ngIf="searchTerm">Found {{results.length}} results for {{searchTerm}}</p>
+<p *ngIf="searchTerm">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</p>
 <table *ngIf="searchTerm && results.length" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
@@ -6,13 +6,13 @@
             <span class="mdl-data-table__cell--non-numeric"></span>
         </th>
         <th>
-            <span class="mdl-data-table__cell--non-numeric">Name</span>
+            <span class="mdl-data-table__cell--non-numeric">{{'SEARCH.RESULTS.COLUMNS.NAME' | translate}}</span>
         </th>
         <th>
-            <span class="mdl-data-table__cell--non-numeric">Modified by</span>
+            <span class="mdl-data-table__cell--non-numeric">{{'SEARCH.RESULTS.COLUMNS.MODIFIED_BY' | translate}}</span>
         </th>
         <th>
-            <span class="mdl-data-table__cell--non-numeric">Modified at</span>
+            <span class="mdl-data-table__cell--non-numeric">{{'SEARCH.RESULTS.COLUMNS.MODIFIED_AT' | translate}}</span>
         </th>
     </tr>
     </thead>
