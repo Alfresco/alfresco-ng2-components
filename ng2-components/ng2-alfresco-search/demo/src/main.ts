@@ -35,15 +35,20 @@ import {
 
 @Component({
     selector: 'alfresco-search-demo',
-    template: `
-        <div class="container"  *ngIf="authenticated">
-            <alfresco-search-control [searchTerm]="searchTerm"
-                (searchChange)="searchTermChange($event);"></alfresco-search-control>
-            <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
-        </div>
-        <div *ngIf="!authenticated">
-                Authentication failed to ip {{ host }}
-        </div>
+    template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br>
+               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+               <div *ngIf="!authenticated" style="color:#FF2323">
+                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    operations.
+               </div>
+               <hr>
+                <div class="container" >
+                    <alfresco-search-control [searchTerm]="searchTerm"
+                        (searchChange)="searchTermChange($event);"></alfresco-search-control>
+                    <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
+                </div>
     `,
     styles: [':host > .container {padding: 10px}'],
     providers: [ALFRESCO_SEARCH_PROVIDERS],
@@ -56,16 +61,31 @@ class SearchDemo implements OnInit {
 
     public searchTerm: string = 'test';
 
-    host: string = 'http://192.168.99.101:8080';
+    host: string = 'http://192.168.99.100:8080';
+
+    token: string;
 
     constructor(
         private authService: AlfrescoAuthenticationService,
-        settings: AlfrescoSettingsService,
+        private alfrescoSettingsService: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
         searchService: AlfrescoService) {
 
-        settings.host = this.host;
+        alfrescoSettingsService.host = this.host;
+        if (localStorage.getItem('token')) {
+            this.token = localStorage.getItem('token');
+        }
+
         translation.translationInit();
+    }
+
+    public updateToken(): void {
+        localStorage.setItem('token', this.token);
+    }
+
+    public updateHost(): void {
+        this.alfrescoSettingsService.host = this.host;
+        this.login();
     }
 
     ngOnInit() {
