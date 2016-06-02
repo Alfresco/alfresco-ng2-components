@@ -30,26 +30,38 @@ import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslatio
 ])
 @Component({
     selector: 'my-app',
-    template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
+    template: `<label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+               {{ status }}
+               <hr>
+               <alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>`,
     directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
 })
 export class AppComponent {
 
-    constructor(public auth: AlfrescoAuthenticationService,
-                public router: Router,
-                alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+    public host: string = 'http://192.168.99.100:8080';
 
+    public token: string;
+
+    public status: string = '';
+
+    constructor(public auth: AlfrescoAuthenticationService, public router: Router, private alfrescoSettingsService: AlfrescoSettingsService) {
+        alfrescoSettingsService.host = this.host;
+    }
+
+    public updateHost(): void {
+        this.alfrescoSettingsService.host = this.host;
     }
 
     mySuccessMethod($event) {
         console.log('Success Login EventEmitt called with: ' + $event.value);
+        this.status = $event.value;
     }
 
     myErrorMethod($event) {
         console.log('Error Login EventEmitt called with: ' + $event.value);
+        this.status = $event.value;
     }
-
 }
 
 bootstrap(AppComponent, [

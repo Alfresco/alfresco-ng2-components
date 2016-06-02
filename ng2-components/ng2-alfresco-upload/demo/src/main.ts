@@ -74,7 +74,7 @@ export class MyDemoApp implements OnInit {
 
     authenticated: boolean;
 
-    host: string = 'http://192.168.99.101:8080';
+    host: string = 'http://192.168.99.100:8080';
 
     token: string;
 
