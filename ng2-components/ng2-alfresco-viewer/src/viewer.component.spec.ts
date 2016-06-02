@@ -33,8 +33,8 @@ describe('Ng2-alfresco-viewer', () => {
 
                     fixture.detectChanges();
 
-                    expect(element.querySelector('#viewer-the-canvas')).not.toBeNull();
-                    expect(element.querySelector('#viewer-canvas-container')).not.toBeNull();
+                    expect(element.querySelector('#viewer-viewerPdf')).not.toBeNull();
+                    expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
                 });
         }));
 
@@ -92,9 +92,8 @@ describe('Ng2-alfresco-viewer', () => {
                     component.urlFile = 'fake-url-file';
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
 
-                    component.ngOnChanges().then((resolve) => {
+                    component.ngOnChanges().then(() => {
                         expect(element.querySelector('#viewer-total-pages').innerHTML).toEqual('/10');
-                        resolve();
                     });
                 });
         }));
@@ -105,14 +104,13 @@ describe('Ng2-alfresco-viewer', () => {
                 .then((fixture) => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+
                     component.urlFile = 'fake-url-file';
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
 
-                    fixture.detectChanges();
-
-                    component.ngOnChanges().then((resolve) => {
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
                         expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-name');
-                        resolve();
                     });
                 });
         }));
@@ -129,22 +127,6 @@ describe('Ng2-alfresco-viewer', () => {
                     fixture.detectChanges();
 
                     expect(element.querySelector('#viewer-close-button')).not.toBeNull();
-                });
-        }));
-
-        it('if showViewer is false the viewer should be hide', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(ViewerComponent)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-                    let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.showViewer = false;
-
-                    fixture.detectChanges();
-
-                    expect(element.querySelector('#viewer-the-canvas')).toBeNull();
-                    expect(element.querySelector('#viewer-canvas-container')).toBeNull();
                 });
         }));
     });
@@ -179,17 +161,79 @@ describe('Ng2-alfresco-viewer', () => {
                 .then((fixture) => {
                     let component = fixture.componentInstance;
                     let element = fixture.nativeElement;
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+
                     component.urlFile = 'fake-url-file';
                     component.showViewer = false;
 
                     fixture.detectChanges();
-                    expect(element.querySelector('#viewer-the-canvas')).toBeNull();
-                    expect(element.querySelector('#viewer-canvas-container')).toBeNull();
+                    expect(element.querySelector('#viewer-viewerPdf')).toBeNull();
+                    expect(element.querySelector('#viewer-pdf-container')).toBeNull();
                 });
         }));
     });
 
     describe('User interaction', () => {
+        it('Click on next page should move to the next page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.urlFile = 'fake-url-file';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
+                        element.querySelector('#viewer-next-page-button').click();
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('2');
+                    });
+                });
+        }));
+
+        it('Click on previous page should move to the previous page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.urlFile = 'fake-url-file';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
+                        element.querySelector('#viewer-next-page-button').click();
+                        element.querySelector('#viewer-next-page-button').click();
+                        element.querySelector('#viewer-previous-page-button').click();
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('2');
+                    });
+                });
+        }));
+
+        /* tslint:disable:max-line-length */
+        it('Click on previous page should not move to the previous page if is page 1', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.urlFile = 'fake-url-file';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
+                        element.querySelector('#viewer-previous-page-button').click();
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
+                    });
+                });
+        }));
+
         it('Click on close button should hide the viewer', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
@@ -200,11 +244,10 @@ describe('Ng2-alfresco-viewer', () => {
                     component.urlFile = 'fake-url-file';
 
                     fixture.detectChanges();
-                    expect(element.querySelector('#viewer-canvas-container')).not.toBeNull();
+                    expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
                     element.querySelector('#viewer-close-button').click();
                     fixture.detectChanges();
-                    expect(element.querySelector('#viewer-canvas-container')).toBeNull();
-
+                    expect(element.querySelector('#viewer-pdf-container')).toBeNull();
                 });
         }));
     });

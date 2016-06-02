@@ -18,6 +18,8 @@
 
 export class PDFJSmock {
 
+    currentPageNumber: number = 1;
+
     getFilenameFromUrl(url: string) {
         return 'fake-name';
     }

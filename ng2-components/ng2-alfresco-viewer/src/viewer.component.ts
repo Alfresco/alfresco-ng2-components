@@ -53,8 +53,6 @@ export class ViewerComponent {
     };
 
     ngOnChanges(changes) {
-        console.log(changes);
-
         if (this.showViewer) {
             if (!this.urlFile) {
                 throw new Error('Attribute urlFile is required');
@@ -65,12 +63,15 @@ export class ViewerComponent {
 
                 let urlFileTicket = this.addAlfrescoTicket(this.urlFile);
 
-                return this.getPDFJS().getDocument(urlFileTicket, null, null).then((pdfDocument) => {
-                    this.currentPdfDocument = pdfDocument;
-                    this.totalPages = pdfDocument.numPages;
-                    this.page = 1;
-                    this.displayPage = 1;
-                    this.loadPage(this.currentPdfDocument);
+                return new Promise((resolve) => {
+                    this.getPDFJS().getDocument(urlFileTicket, null, null).then((pdfDocument) => {
+                        this.currentPdfDocument = pdfDocument;
+                        this.totalPages = pdfDocument.numPages;
+                        this.page = 1;
+                        this.displayPage = 1;
+                        this.initPDFViewer(this.currentPdfDocument);
+                    });
+                    resolve();
                 });
             }
         }
@@ -84,14 +85,15 @@ export class ViewerComponent {
         return PDFJS;
     }
 
-    loadPage(pdfDocument: any) {
-
+    initPDFViewer(pdfDocument: any) {
         PDFJS.verbosity = 5;
 
-        let documentContainer: any = document.getElementById('viewer-canvas-container');
+        let documentContainer: any = document.getElementById('viewer-pdf-container');
+        let viewer: any = document.getElementById('viewer-viewerPdf');
 
         this.pdfViewer = new PDFJS.PDFViewer({
-            container: documentContainer
+            container: documentContainer,
+            viewer: viewer
         });
 
         this.pdfViewer.setDocument(pdfDocument);
@@ -105,9 +107,9 @@ export class ViewerComponent {
             this.page--;
             this.displayPage = this.page;
 
-            let currentPage = this.pdfViewer.getPageView(this.page - 1);
+            this.pdfViewer.currentPageNumber = this.page;
 
-            if (currentPage.renderingState === this.renderingStates.FINISHED) {
+            if (this.pdfViewer.currentPage.renderingState === this.renderingStates.FINISHED) {
                 // remove loader
             } else {
                 // add loader
@@ -122,7 +124,8 @@ export class ViewerComponent {
         if (this.page < this.totalPages) {
             this.page++;
             this.displayPage = this.page;
-            this.pdfViewer.getPageView(this.page - 1);
+
+            this.pdfViewer.currentPageNumber = this.page;
         }
     }
 
@@ -136,7 +139,8 @@ export class ViewerComponent {
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
             this.page = pageInput;
-            this.loadPage(this.currentPdfDocument);
+
+            this.pdfViewer.currentPageNumber = this.page;
         } else {
             this.displayPage = this.page;
         }

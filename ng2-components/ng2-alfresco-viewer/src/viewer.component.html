@@ -15,7 +15,7 @@
 
                     <!-- Pagination toolbar start -->
                     <div id="viewer-toolbar-pagination">
-                        <div id="viewer-previous-page-button-input" class="left" (click)="previousPage()">
+                        <div id="viewer-previous-page-button" class="left" (click)="previousPage()">
                             <i class="icon material-icons">keyboard_arrow_left</i>
                         </div>
 
@@ -23,7 +23,7 @@
                                (keyup.enter)="inputPage(page.value)" class="left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
                         <span id="viewer-total-pages"  class="left">/ {{totalPages}}</span>
 
-                        <div id="viewer-next-page-button-button-input" (click)="nextPage()"  class="left">
+                        <div id="viewer-next-page-button" (click)="nextPage()"  class="left">
                             <i class="icon material-icons" >keyboard_arrow_right</i>
                         </div>
                     </div>
@@ -59,8 +59,8 @@
                             class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
 
                             <!-- Start Pdf Canvas -->
-                            <div id="viewer-canvas-container" class="viewer-canvas-container">
-                                <div id="viewer-the-canvas" style="border:1px solid black;"></div>
+                            <div id="viewer-pdf-container" class="viewer-pdf-container">
+                                <div id="viewer-viewerPdf" style="border:1px solid black;"></div>
                             </div>
                             <!-- End Pdf Canvas -->
 
