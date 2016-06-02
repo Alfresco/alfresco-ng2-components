@@ -50,10 +50,34 @@ export class DataTableDemoComponent {
     reset() {
         this.data = new ObjectDataTableAdapter(
             [
-                {id: 1, name: 'Name 1', createdOn: new Date(2016, 6, 2, 15, 8, 1), createdBy: this._createdBy, icon: 'material-icons://folder_open'},
-                {id: 2, name: 'Name 2', createdOn: new Date(2016, 6, 2, 15, 8, 2), createdBy: this._createdBy, icon: 'material-icons://accessibility'},
-                {id: 3, name: 'Name 3', createdOn: new Date(2016, 6, 2, 15, 8, 3), createdBy: this._createdBy, icon: 'material-icons://alarm'},
-                {id: 4, name: 'Image 1', createdOn: new Date(2016, 6, 2, 15, 8, 4), createdBy: this._createdBy, icon: this._imageUrl}
+                {
+                    id: 1,
+                    name: 'Name 1',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 1),
+                    createdBy: this._createdBy,
+                    icon: 'material-icons://folder_open'
+                },
+                {
+                    id: 2,
+                    name: 'Name 2',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 2),
+                    createdBy: this._createdBy,
+                    icon: 'material-icons://accessibility'
+                },
+                {
+                    id: 3,
+                    name: 'Name 3',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 3),
+                    createdBy: this._createdBy,
+                    icon: 'material-icons://alarm'
+                },
+                {
+                    id: 4,
+                    name: 'Image 1',
+                    createdOn: new Date(2016, 6, 2, 15, 8, 4),
+                    createdBy: this._createdBy,
+                    icon: this._imageUrl
+                }
             ],
             [
                 {type: 'image', key: 'icon', title: '', srTitle: 'Thumbnail'},
