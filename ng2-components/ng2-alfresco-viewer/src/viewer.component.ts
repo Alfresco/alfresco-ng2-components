@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, SimpleChange } from 'angular2/core';
+import { Component, Input, Output } from 'angular2/core';
+import { EventEmitter } from 'angular2/src/facade/async';
 
 declare let PDFJS: any;
 declare let __moduleName: string;
@@ -34,31 +35,44 @@ export class ViewerComponent {
     @Input()
     overlayMode: boolean = false;
 
+    @Input()
+    showViewer: boolean = true;
+    @Output()
+    showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     nameFile: string;
     currentPdfDocument: any;
-    currentPage: number;
+    page: number;
     displayPage: number;
     totalPages: number;
 
-    ngOnInit() {
-        if (!this.urlFile) {
-            throw new Error('Attribute urlFile is required');
-        }
-    }
+    pdfViewer: any;
 
-    ngOnChanges(changes: {[urlFile: string]: SimpleChange}) {
-        if (this.urlFile) {
-            this.nameFile = this.getPDFJS().getFilenameFromUrl(this.urlFile);
+    renderingStates = {
+        FINISHED: 3 as number
+    };
 
-            this.urlFile = this.addAlfrescoTicket(this.urlFile);
+    ngOnChanges(changes) {
+        console.log(changes);
 
-            return this.getPDFJS().getDocument(this.urlFile, null, null).then((pdfDocument) => {
-                this.currentPdfDocument = pdfDocument;
-                this.totalPages = pdfDocument.numPages;
-                this.currentPage = 1;
-                this.displayPage = 1;
-                this.loadPage(this.currentPdfDocument);
-            });
+        if (this.showViewer) {
+            if (!this.urlFile) {
+                throw new Error('Attribute urlFile is required');
+            }
+
+            if (this.urlFile) {
+                this.nameFile = this.getPDFJS().getFilenameFromUrl(this.urlFile);
+
+                let urlFileTicket = this.addAlfrescoTicket(this.urlFile);
+
+                return this.getPDFJS().getDocument(urlFileTicket, null, null).then((pdfDocument) => {
+                    this.currentPdfDocument = pdfDocument;
+                    this.totalPages = pdfDocument.numPages;
+                    this.page = 1;
+                    this.displayPage = 1;
+                    this.loadPage(this.currentPdfDocument);
+                });
+            }
         }
     }
 
@@ -76,21 +90,28 @@ export class ViewerComponent {
 
         let documentContainer: any = document.getElementById('viewer-canvas-container');
 
-        let pdfViewer = new PDFJS.PDFViewer({
+        this.pdfViewer = new PDFJS.PDFViewer({
             container: documentContainer
         });
 
-        pdfViewer.setDocument(pdfDocument);
+        this.pdfViewer.setDocument(pdfDocument);
     }
 
     /**
      * load the previous page
      */
     previousPage() {
-        if (this.currentPage > 1) {
-            this.currentPage--;
-            this.displayPage = this.currentPage;
-            this.loadPage(this.currentPdfDocument);
+        if (this.page > 1) {
+            this.page--;
+            this.displayPage = this.page;
+
+            let currentPage = this.pdfViewer.getPageView(this.page - 1);
+
+            if (currentPage.renderingState === this.renderingStates.FINISHED) {
+                // remove loader
+            } else {
+                // add loader
+            }
         }
     }
 
@@ -98,10 +119,10 @@ export class ViewerComponent {
      * load the next page
      */
     nextPage() {
-        if (this.currentPage < this.totalPages) {
-            this.currentPage++;
-            this.displayPage = this.currentPage;
-            this.loadPage(this.currentPdfDocument);
+        if (this.page < this.totalPages) {
+            this.page++;
+            this.displayPage = this.page;
+            this.pdfViewer.getPageView(this.page - 1);
         }
     }
 
@@ -114,10 +135,10 @@ export class ViewerComponent {
         let pageInput = parseInt(page, 10);
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
-            this.currentPage = pageInput;
+            this.page = pageInput;
             this.loadPage(this.currentPdfDocument);
         } else {
-            this.displayPage = this.currentPage;
+            this.displayPage = this.page;
         }
     }
 
@@ -127,6 +148,14 @@ export class ViewerComponent {
      */
     private addAlfrescoTicket(url: string) {
         return url + '?alf_ticket=' + this.getAlfrescoTicket();
+    }
+
+    /**
+     * close the viewer
+     */
+    close() {
+        this.showViewer = false;
+        this.showViewerChange.emit(this.showViewer);
     }
 
     /**

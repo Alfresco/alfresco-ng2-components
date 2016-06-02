@@ -1,111 +1,100 @@
-
-<div *ngIf="overlayMode">
-    <div id="viewer-shadow-transparent" class="viewer-shadow-transparent"></div>
-</div>
-
-<div id="viewer-main-container" class="viewer-main-container" [ngClass]="{'viewer-overlay-view': overlayMode }">
-
-    <!-- Start Layout -->
-    <div mdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-
-                <!-- File Title -->
-                <span  id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{nameFile}}</span>
-
-                <!-- Pagination toolbar start -->
-                <div id="viewer-toolbar-pagination">
-                    <div id="viewer-previous-page-page-button-input" class="left" (click)="previousPage()">
-                        <i class="icon material-icons">keyboard_arrow_left</i>
-                    </div>
-
-                    <input id="viewer-pagenumber-input"  #page
-                           (keyup.enter)="inputPage(page.value)" class="left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
-                    <span id="viewer-total-pages"  class="left">/ {{totalPages}}</span>
-
-                    <div id="viewer-next-page-button-button-input" (click)="nextPage()"  class="left">
-                        <i class="icon material-icons" >keyboard_arrow_right</i>
-                    </div>
-                </div>
-                <!-- Pagination toolbar end -->
-
-                <span class="vertical-divider"></span>
-
-                <div class="mdl-layout-spacer"></div>
-
-                <!-- Start Navigation -->
-                <nav class="mdl-navigation">
-                    <div class="button-container">
-                        <button
-                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="cazzo()">
-                            <i id="viewer-print-button" class="icon material-icons">print</i>
-                        </button>
-                    </div>
-
-
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                          mdl-textfield--floating-label mdl-textfield--align-right">
-                        <label class="mdl-button mdl-js-button mdl-button--icon"
-                               for="waterfall-exp">
-                            <i class="material-icons">search</i>
-                        </label>
-
-                        <div class="mdl-textfield__expandable-holder">
-                            <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp">
-                        </div>
-                    </div>
-                </nav>
-                <!-- End Navigation -->
-
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Thumbnail</span>
-        </div>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-
-                <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-                    <div
-                        class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-
-                        <!-- Start Pdf Canvas -->
-                        <div id="viewer-canvas-container" class="viewer-canvas-container">
-                            <div id="viewer-the-canvas" style="border:1px solid black;"></div>
-                        </div>
-                        <!-- End Pdf Canvas -->
-
-                        <div id="viewer-previous-page-button" class="previous-page-button">
-                            <button
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                (click)="previousPage()">
-                                <i class="icon material-icons">keyboard_arrow_left</i>
-                            </button>
-                        </div>
-
-                        <div id="viewer-next-page-button" class="next-page-button">
-                            <button
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                (click)="nextPage()">
-                                <i class="icon material-icons">keyboard_arrow_right</i>
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-                <footer class="mdl-mini-footer">
-                    <div class="mdl-mini-footer--left-section">
-                        <ul class="mdl-mini-footer--link-list">
-                            <li><a href="#">Footer link 1</a></li>
-                            <li><a href="#">Footer link 2</a></li>
-                            <li><a href="#">Footer link 3</a></li>
-                        </ul>
-                    </div>
-                </footer>
-
-            </div>
-        </main>
+<div *ngIf="showViewer">
+    <div *ngIf="overlayMode">
+        <div id="viewer-shadow-transparent" class="viewer-shadow-transparent"></div>
     </div>
-    <!-- End Layout -->
+
+    <div id="viewer-main-container" class="viewer-main-container" [ngClass]="{'viewer-overlay-view': overlayMode }">
+
+        <!-- Start Layout -->
+        <div mdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+
+                    <!-- File Title -->
+                    <span  id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{nameFile}}</span>
+
+                    <!-- Pagination toolbar start -->
+                    <div id="viewer-toolbar-pagination">
+                        <div id="viewer-previous-page-button-input" class="left" (click)="previousPage()">
+                            <i class="icon material-icons">keyboard_arrow_left</i>
+                        </div>
+
+                        <input id="viewer-pagenumber-input"  #page
+                               (keyup.enter)="inputPage(page.value)" class="left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
+                        <span id="viewer-total-pages"  class="left">/ {{totalPages}}</span>
+
+                        <div id="viewer-next-page-button-button-input" (click)="nextPage()"  class="left">
+                            <i class="icon material-icons" >keyboard_arrow_right</i>
+                        </div>
+                    </div>
+                    <!-- Pagination toolbar end -->
+
+                    <span class="vertical-divider"></span>
+
+                    <div class="mdl-layout-spacer"></div>
+
+                    <!-- Start Navigation -->
+                    <nav class="mdl-navigation">
+                        <div id="viewer-toolbar-view-options">
+                            <div class="button-container">
+                                <button
+                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
+                                    <i id="viewer-close-button" class="icon material-icons">close</i>
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- End Navigation -->
+                </div>
+            </header>
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Thumbnail</span>
+            </div>
+            <main class="mdl-layout__content">
+                <div class="page-content">
+
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+                        <div
+                            class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+
+                            <!-- Start Pdf Canvas -->
+                            <div id="viewer-canvas-container" class="viewer-canvas-container">
+                                <div id="viewer-the-canvas" style="border:1px solid black;"></div>
+                            </div>
+                            <!-- End Pdf Canvas -->
+
+                            <div id="viewer-previous-page-button" class="previous-page-button">
+                                <button
+                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                    (click)="previousPage()">
+                                    <i class="icon material-icons">keyboard_arrow_left</i>
+                                </button>
+                            </div>
+
+                            <div id="viewer-next-page-button" class="next-page-button">
+                                <button
+                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                    (click)="nextPage()">
+                                    <i class="icon material-icons">keyboard_arrow_right</i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <footer class="mdl-mini-footer">
+                        <div class="mdl-mini-footer--left-section">
+                            <ul class="mdl-mini-footer--link-list">
+                                <li><a href="#">Footer link 1</a></li>
+                                <li><a href="#">Footer link 2</a></li>
+                                <li><a href="#">Footer link 3</a></li>
+                            </ul>
+                        </div>
+                    </footer>
+
+                </div>
+            </main>
+        </div>
+        <!-- End Layout -->
+    </div>
 </div>

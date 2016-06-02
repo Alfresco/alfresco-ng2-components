@@ -21,7 +21,7 @@ import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
 @Component({
     selector: 'my-app',
-    template: `   <alfresco-viewer [overlayMode]="true" [urlFile]="'localTestFile.pdf'">
+    template: `   <alfresco-viewer [showViewer]="true" [overlayMode]="true" [urlFile]="'localTestFile.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                    </alfresco-viewer>`,
     directives: [VIEWERCOMPONENT]
