@@ -124,6 +124,9 @@ import {
                     </content-action>
                 </content-actions>
             </alfresco-document-list>
+            <div *ngIf="!authenticated">
+                Authentication failed to ip {{ host }}
+            </div>
         </div>
     `,
     styles: [':host > .container {padding: 10px}'],
@@ -135,13 +138,15 @@ class DocumentListDemo implements OnInit {
 
     authenticated: boolean;
 
+    host: string = 'http://192.168.99.101:8080';
+
     constructor(
         private authService: AlfrescoAuthenticationService,
         settings: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
         documentActions: DocumentActionsService) {
 
-        settings.host = 'http://192.168.99.100:8080';
+        settings.host = this.host;
         translation.translationInit();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
