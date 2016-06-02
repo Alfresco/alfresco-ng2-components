@@ -65,9 +65,7 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        if (this.data) {
-            console.log(this.data);
-        } else {
+        if (!this.data) {
             this.data = new ObjectDataTableAdapter([], []);
         }
     }
@@ -89,7 +87,7 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         });
     }
 
-    onRowDblClick(row: DataRow, e?) {
+    onRowDblClick(row: DataRow, e?: Event) {
         if (e) {
             e.preventDefault();
         }
@@ -103,14 +101,14 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         if (column && column.sortable) {
             let current = this.data.getSorting();
             let newDirection = 'asc';
-            if (column.key === current.key) {
+            if (current && column.key === current.key) {
                 newDirection = current.direction === 'asc' ? 'desc' : 'asc';
             }
             this.data.setSorting(new DataSorting(column.key, newDirection));
         }
     }
 
-    onSelectAllClick(e?) {
+    onSelectAllClick(e?: Event) {
         if (e) {
             e.preventDefault();
         }

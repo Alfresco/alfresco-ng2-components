@@ -160,7 +160,7 @@ export class ObjectDataColumn implements DataColumn {
 
     constructor(obj: any) {
         this.key = obj.key;
-        this.type = obj.type;
+        this.type = obj.type || 'text';
         this.sortable = obj.sortable;
         this.title = obj.title;
         this.srTitle = obj.srTitle;
