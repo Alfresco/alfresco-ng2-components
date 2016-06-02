@@ -92,6 +92,7 @@ npm install --save material-design-icons material-design-lite
                         [acceptedFilesType]=".jpg,.gif,.png,.svg"
                         (onSuccess)="customMethod($event)">
 </alfresco-upload-button>
+<file-uploading-dialog></file-uploading-dialog>
 ```
 
 Example of an App that declares upload button component :
@@ -100,37 +101,37 @@ Example of an App that declares upload button component :
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoSettingsService , ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 
 
 @Component({
     selector: 'my-app',
     template: `<alfresco-upload-button [showUdoNotificationBar]="true"
-                                       [uploadFolders]="true"
+                                       [uploadFolders]="false"
                                        [multipleFiles]="false"
                                        [acceptedFilesType]="'.jpg,.gif,.png,.svg'"
                                        (onSuccess)="customMethod($event)">
-               </alfresco-upload-button>`,
-    directives: [ALFRESCO_ULPOAD_COMPONENT]
+               </alfresco-upload-button>
+               <file-uploading-dialog></file-uploading-dialog>`,
+    directives: [ALFRESCO_ULPOAD_COMPONENTS]
 })
 export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
-            alfrescoSettingsService.host = 'http://myalfrescoip';
+        alfrescoSettingsService.host = 'http://myalfrescoip';
     }
-    
+
     public customMethod(event: Object): void {
-            console.log('File uploaded');
+        console.log('File uploaded');
     }
 }
 
 bootstrap(MyDemoApp, [
     HTTP_PROVIDERS,
-    AlfrescoTranslationService,
-    AlfrescoTranslationLoader,
-    AlfrescoSettingsService,
+    ALFRESCO_CORE_PROVIDERS,
     UploadService
 ]);
+
 ```
 #### Events
 **onSuccess**: The event is emitted when the file is uploaded<br />
@@ -149,6 +150,7 @@ This component, provide a drag and drop are to upload files to alfresco.
 
 ```html
 <alfresco-upload-drag-area (onSuccess)="customMethod($event)"></alfresco-upload-drag-area>
+<file-uploading-dialog></file-uploading-dialog>
 ```
 
 Example of an App that declares upload drag and drop component :
@@ -157,7 +159,7 @@ Example of an App that declares upload drag and drop component :
 import { Component } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoSettingsService, ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 
 
@@ -167,26 +169,26 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
                      <div style="width: 200px; height: 100px; border: 1px solid #888888">
                          DRAG HERE
                      </div>
-               </alfresco-upload-drag-area>`,
-    directives: [ALFRESCO_ULPOAD_COMPONENT]
+               </alfresco-upload-drag-area>
+               <file-uploading-dialog></file-uploading-dialog>`,
+    directives: [ALFRESCO_ULPOAD_COMPONENTS]
 })
 export class MyDemoApp {
     constructor(alfrescoSettingsService: AlfrescoSettingsService) {
-            alfrescoSettingsService.host = 'http://myalfrescoip';
+        alfrescoSettingsService.host = 'http://myalfrescoip';
     }
-    
+
     public customMethod(event: Object): void {
-            console.log('File uploaded');
+        console.log('File uploaded');
     }
 }
 
 bootstrap(MyDemoApp, [
     HTTP_PROVIDERS,
-    AlfrescoTranslationService,
-    AlfrescoTranslationLoader,
-    AlfrescoSettingsService,
+    ALFRESCO_CORE_PROVIDERS,
     UploadService
 ]);
+
 ```
 #### Events
 **onSuccess**: The event is emitted when the file is uploaded<br />
