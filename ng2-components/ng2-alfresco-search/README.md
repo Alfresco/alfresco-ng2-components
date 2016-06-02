@@ -166,6 +166,7 @@ bootstrap(SearchDemo, [
 **searchTerm**: {string} (optional) default "". Search term to pre-populate the field with<br />
 **inputType**: {string} (optional) default "text". Type of the input field to render, e.g. "search" or "text" (default)<br />
 **expandable** {boolean} (optional) default true. Whether to use an expanding search control, if false then a regular input is used.
+**autocomplete** {boolean} (optional) default true. Whether the browser should offer field auto-completion for the input field to the user.
 
 ### Search results
 

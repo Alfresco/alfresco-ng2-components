@@ -39,6 +39,9 @@ export class AlfrescoSearchControlComponent {
     inputType = 'text';
 
     @Input()
+    autocomplete: boolean = true;
+
+    @Input()
     expandable: boolean = true;
 
     @Output()
@@ -65,6 +68,10 @@ export class AlfrescoSearchControlComponent {
 
     getTextFieldHolderClassName(): string {
         return this.expandable ? ' mdl-textfield__expandable-holder' : '';
+    }
+
+    getAutoComplete(): string {
+        return this.autocomplete ? 'on' : 'off';
     }
 
     /**
