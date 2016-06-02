@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component, ChangeDetectorRef } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -51,13 +51,15 @@ export class FileUploadingDialogComponent {
 
     private _isDialogMinimized: boolean = false;
 
-    constructor(private _uploaderService: UploadService) {}
+    constructor(private cd: ChangeDetectorRef,
+                private _uploaderService: UploadService) {}
 
     ngOnInit() {
         this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
             this.filesUploadingList = fileList;
             if (this.filesUploadingList.length > 0) {
                 this.isDialogActive = true;
+                this.cd.detectChanges();
             }
         });
     }
