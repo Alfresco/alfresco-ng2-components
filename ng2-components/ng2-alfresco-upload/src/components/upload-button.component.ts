@@ -19,7 +19,6 @@
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
-import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import 'rxjs/Rx';
 
@@ -50,7 +49,6 @@ declare let __moduleName: string;
 @Component({
     selector: 'alfresco-upload-button',
     moduleId: __moduleName,
-    directives: [FileUploadingDialogComponent],
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.css'],
     pipes: [AlfrescoPipeTranslate]
@@ -59,9 +57,6 @@ export class UploadButtonComponent {
 
     @ViewChild('undoNotificationBar')
     undoNotificationBar: any;
-
-    @ViewChild('fileUploadingDialog')
-    fileUploadingDialogComponent: FileUploadingDialogComponent;
 
     @Input()
     showUploadDialog: boolean = true;
@@ -86,8 +81,6 @@ export class UploadButtonComponent {
 
     @Output()
     onSuccess = new EventEmitter();
-
-    filesUploadingList: FileModel [] = [];
 
     translate: AlfrescoTranslationService;
 
@@ -157,10 +150,6 @@ export class UploadButtonComponent {
         if (files.length) {
             let latestFilesAdded = this._uploaderService.addToQueue(files);
             this._uploaderService.uploadFilesInTheQueue(path, this.onSuccess);
-            this.filesUploadingList = this._uploaderService.getQueue();
-            if (this.showUploadDialog) {
-                this._showDialog();
-            }
             if (this.showUdoNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
             }
@@ -237,13 +226,6 @@ export class UploadButtonComponent {
             },
             actionText: actionTranslate.value
         });
-    }
-
-    /**
-     * Show the upload dialog.
-     */
-    private _showDialog(): void {
-        this.fileUploadingDialogComponent.showDialog();
     }
 
     /**

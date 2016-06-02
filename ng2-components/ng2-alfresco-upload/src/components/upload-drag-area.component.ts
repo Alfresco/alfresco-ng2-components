@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, Input, Output, EventEmitter } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
-import { FileModel } from '../models/file.model';
-import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
 declare let __moduleName: string;
@@ -37,19 +35,11 @@ declare let __moduleName: string;
 @Component({
     selector: 'alfresco-upload-drag-area',
     moduleId: __moduleName,
-    directives: [FileDraggableDirective, FileUploadingDialogComponent],
+    directives: [FileDraggableDirective],
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css']
 })
 export class UploadDragAreaComponent {
-
-    @ViewChild('fileUploadingDialog')
-    fileUploadingDialogComponent: FileUploadingDialogComponent;
-
-    @Input()
-    showUploadDialog: boolean = true;
-
-    filesUploadingList: FileModel [] = [];
 
     @Input()
     uploaddirectory: string = '';
@@ -60,9 +50,7 @@ export class UploadDragAreaComponent {
     @Output()
     onSuccess = new EventEmitter();
 
-    constructor(public el: ElementRef,
-                private _uploaderService: UploadService) {
-        console.log('UploadComponent constructor', el);
+    constructor(private _uploaderService: UploadService) {
 
         let site = this.getSiteId();
         let container = this.getContainerId();
@@ -84,10 +72,6 @@ export class UploadDragAreaComponent {
         if (files.length) {
             this._uploaderService.addToQueue(files);
             this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory, this.onSuccess);
-            this.filesUploadingList = this._uploaderService.getQueue();
-            if (this.showUploadDialog) {
-                this._showDialog();
-            }
         }
     }
 
@@ -102,10 +86,6 @@ export class UploadDragAreaComponent {
             let path = item.fullPath.replace(item.name, '');
             let filePath = self.uploaddirectory + path;
             self._uploaderService.uploadFilesInTheQueue(filePath, self.onSuccess);
-            self.filesUploadingList = self._uploaderService.getQueue();
-            if (self.showUploadDialog) {
-                self._showDialog();
-            }
         });
     }
 
@@ -151,13 +131,6 @@ export class UploadDragAreaComponent {
                 self.onFolderEntityDropped(item);
             }
         }
-    }
-
-    /**
-     * Show the upload dialog.
-     */
-    private _showDialog(): void {
-        this.fileUploadingDialogComponent.showDialog();
     }
 
     /**

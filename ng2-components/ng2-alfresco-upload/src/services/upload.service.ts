@@ -19,6 +19,7 @@
 import { FileModel } from '../models/file.model';
 import { EventEmitter, Injectable } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
 import { Response } from 'angular2/http';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
@@ -42,11 +43,14 @@ export class UploadService {
 
     private _queue: FileModel[] = [];
 
+    filesUpload$: Observable<FileModel[]>;
+    private _filesUploadObserver: Observer<FileModel[]>;
+
     private _alfrescoClient: any;
 
     constructor(private settings: AlfrescoSettingsService) {
         console.log('UploadService constructor');
-
+        this.filesUpload$ = new Observable(observer =>  this._filesUploadObserver = observer).share();
         this._host = settings.host;
         this._alfrescoClient = this.getAlfrescoClient();
     }
@@ -134,6 +138,7 @@ export class UploadService {
                 let uploadingFileModel = new FileModel(file);
                 latestFilesAdded.push(uploadingFileModel);
                 this._queue.push(uploadingFileModel);
+                this._filesUploadObserver.next(this._queue);
             }
         }
         return latestFilesAdded;

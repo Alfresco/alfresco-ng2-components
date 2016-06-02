@@ -18,6 +18,7 @@
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
 import { FileDraggableDirective } from './src/directives/file-draggable.directive';
 import { UploadButtonComponent } from './src/components/upload-button.component';
+import { FileUploadingDialogComponent } from './src/components/file-uploading-dialog.component';
 import { UploadService } from './src/services/upload.service';
 
 /**
@@ -37,19 +38,21 @@ import { UploadService } from './src/services/upload.service';
  */
 
 export * from './src/components/upload-button.component';
+export * from './src/components/file-uploading-dialog.component';
 export * from './src/components/upload-drag-area.component';
 export * from './src/services/upload.service';
 export * from './src/directives/file-draggable.directive';
 
 export default {
-    components: [UploadDragAreaComponent, UploadButtonComponent],
+    components: [UploadDragAreaComponent, UploadButtonComponent, FileUploadingDialogComponent],
     providers: [FileDraggableDirective],
     directives: [UploadService]
 };
 
 export const ALFRESCO_ULPOAD_COMPONENTS: [any] = [
     UploadDragAreaComponent,
-    UploadButtonComponent
+    UploadButtonComponent,
+    FileUploadingDialogComponent
 ];
 
 export const ALFRESCO_ULPOAD_DIRECTIVES: [any] = [
