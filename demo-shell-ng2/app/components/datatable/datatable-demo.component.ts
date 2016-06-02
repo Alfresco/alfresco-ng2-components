@@ -96,6 +96,7 @@ export class DataTableDemoComponent {
         let row = new ObjectDataRow({
             id: id,
             name: 'Name ' + id,
+            createdOn: new Date(),
             icon: 'material-icons://extension',
             createdBy: this._createdBy
         });
