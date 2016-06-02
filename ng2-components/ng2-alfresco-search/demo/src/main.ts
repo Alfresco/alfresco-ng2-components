@@ -36,10 +36,13 @@ import {
 @Component({
     selector: 'alfresco-search-demo',
     template: `
-        <div class="container">
-            <alfresco-search-control *ngIf="authenticated" [searchTerm]="searchTerm"
+        <div class="container"  *ngIf="authenticated">
+            <alfresco-search-control [searchTerm]="searchTerm"
                 (searchChange)="searchTermChange($event);"></alfresco-search-control>
             <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
+        </div>
+        <div *ngIf="!authenticated">
+                Authentication failed to ip {{ host }}
         </div>
     `,
     styles: [':host > .container {padding: 10px}'],
@@ -53,13 +56,15 @@ class SearchDemo implements OnInit {
 
     public searchTerm: string = 'foo bar';
 
+    host: string = 'http://192.168.99.100:8080';
+
     constructor(
         private authService: AlfrescoAuthenticationService,
         settings: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
         searchService: AlfrescoService) {
 
-        settings.host = 'http://192.168.99.100:8080';
+        settings.host = this.host;
         translation.translationInit();
     }
 
