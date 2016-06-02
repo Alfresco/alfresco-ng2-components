@@ -3,7 +3,7 @@
         <div id="viewer-shadow-transparent" class="viewer-shadow-transparent"></div>
     </div>
 
-    <div id="viewer-main-container" class="viewer-main-container" [ngClass]="{'viewer-overlay-view': overlayMode }">
+    <div id="viewer-main-container" class="viewer-main-container" [ngClass]="{'viewer-overlay-view': overlayMode }" (keypress)=eventHandler() >
 
         <!-- Start Layout -->
         <div mdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -60,7 +60,14 @@
 
                             <!-- Start Pdf Canvas -->
                             <div id="viewer-pdf-container" class="viewer-pdf-container">
-                                <div id="viewer-viewerPdf" style="border:1px solid black;"></div>
+                                <div id="viewer-viewerPdf" style="border:1px solid black;">
+                                    <div id="loader">
+                                        <div>
+                                            <div id="loader-spin"  class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                                        </div>
+                                        <div id="loader-text">Loading...</div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- End Pdf Canvas -->
 

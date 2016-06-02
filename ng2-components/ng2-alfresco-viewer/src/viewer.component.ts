@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output } from 'angular2/core';
+import { Component, Input, Output, HostListener } from 'angular2/core';
 import { EventEmitter } from 'angular2/src/facade/async';
 
 declare let PDFJS: any;
@@ -143,6 +143,14 @@ export class ViewerComponent {
             this.pdfViewer.currentPageNumber = this.page;
         } else {
             this.displayPage = this.page;
+        }
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        let key = event.keyCode;
+        if (key === 27) {//esc
+            this.close();
         }
     }
 

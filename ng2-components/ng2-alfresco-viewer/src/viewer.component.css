@@ -18,6 +18,19 @@
     float: left;
 }
 
+#loader{
+    margin: auto;
+    padding-top: 20px;
+    width:300px;
+}
+#loader-text{
+    width:300px;
+    white-space: nowrap;
+    text-align: center;
+    position: relative;
+    color: #000;
+}
+
 #viewer-toolbar-pagination {
     margin-left: 25%;
 }
@@ -67,3 +80,4 @@
 :host .canvasWrapper {
     box-shadow: 0px 0px 8px 2px #000;
 }
+
