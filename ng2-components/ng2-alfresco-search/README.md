@@ -100,35 +100,56 @@ import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoPipeTranslate,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 import {
-    ALFRESCO_SEARCH_PROVIDERS,
-    ALFRESCO_SEARCH_DIRECTIVES,
-    AlfrescoService
+    ALFRESCO_SEARCH_DIRECTIVES
 } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',
     template: `
-        <alfresco-search-control [searchTerm]="searchTerm" (searchChange)="searchTermChange($event);">
+        <alfresco-search-control *ngIf="authenticated" [searchTerm]="searchTerm" (searchChange)="searchTermChange($event);">
         </alfresco-search-control>
+        <div *ngIf="!authenticated">
+                Authentication failed to ip {{ host }}
+        </div>
     `,
     directives: [ALFRESCO_SEARCH_DIRECTIVES]
 })
 class SearchDemo implements OnInit {
 
-    public searchTerm: string = 'foo bar';
+    public searchTerm: string = 'test';
 
-    constructor() {
+    authenticated: boolean;
+
+    host: string = 'http://192.168.99.100:8080';
+
+    constructor(
+        private authService: AlfrescoAuthenticationService,
+        settings: AlfrescoSettingsService,
+        translation: AlfrescoTranslationService) {
+
+        settings.host = this.host;
+        translation.translationInit();
     }
 
     searchTermChange(event) {
         console.log('Search term changed', event);
         this.searchTerm = event.value;
     }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.authService.login('admin', 'admin').subscribe(token => {
+            this.authenticated = true;
+        });
+    }
+
 }
 
 bootstrap(SearchDemo, [
@@ -219,30 +240,71 @@ search term. If no ruter is present pon the page of if the router does not provi
 results page will be shown.
 
 ```ts
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
 import { bootstrap } from 'angular2/platform/browser';
 import { HTTP_PROVIDERS } from 'angular2/http';
 
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoTranslationService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
+import {
+    ALFRESCO_SEARCH_DIRECTIVES
+} from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+
 
 @Component({
     selector: 'alfresco-search-demo',
     template: `
-        <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
+        <alfresco-search *ngIf="authenticated"  [searchTerm]="searchTerm"></alfresco-search>
+         <div *ngIf="!authenticated">
+                Authentication failed to ip {{ host }}
+        </div>
     `,
     directives: [ALFRESCO_SEARCH_DIRECTIVES]
 })
-class SearchDemo {
-    searchTerm: string = '';
-    constructor() {
+class SearchDemo implements OnInit {
+
+    public searchTerm: string = 'test';
+
+    authenticated: boolean;
+
+    host: string = 'http://192.168.99.101:8080';
+
+    constructor(
+        private authService: AlfrescoAuthenticationService,
+        settings: AlfrescoSettingsService,
+        translation: AlfrescoTranslationService) {
+
+        settings.host = this.host;
+        translation.translationInit();
     }
+
+    searchTermChange(event) {
+        console.log('Search term changed', event);
+        this.searchTerm = event.value;
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.authService.login('admin', 'admin').subscribe(token => {
+            this.authenticated = true;
+        });
+    }
+
 }
 
 bootstrap(SearchDemo, [
     HTTP_PROVIDERS,
     ALFRESCO_CORE_PROVIDERS
 ]);
+
 ```
 
 Example of an component that displays search results, taking the search term from a `@Input` property provided by the container.

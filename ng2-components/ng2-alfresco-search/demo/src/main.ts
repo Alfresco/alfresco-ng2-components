@@ -54,9 +54,9 @@ class SearchDemo implements OnInit {
 
     authenticated: boolean;
 
-    public searchTerm: string = 'foo bar';
+    public searchTerm: string = 'test';
 
-    host: string = 'http://192.168.99.100:8080';
+    host: string = 'http://192.168.99.101:8080';
 
     constructor(
         private authService: AlfrescoAuthenticationService,
