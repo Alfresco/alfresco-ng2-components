@@ -54,26 +54,78 @@ Also make sure you include these dependencies in your .html page:
 Example of the component that declares document list and provides values for bindings:
 
 ```ts
-import {Component} from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
+import { bootstrap } from 'angular2/platform/browser';
+import { HTTP_PROVIDERS } from 'angular2/http';
+
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoPipeTranslate,
+    AlfrescoTranslationService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
 import {
     DOCUMENT_LIST_DIRECTIVES,
-    DOCUMENT_LIST_PROVIDERS
-} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+    DOCUMENT_LIST_PROVIDERS,
+    DocumentActionsService
+} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
 
 @Component({
-    selector: 'my-view',
-    template: '<YOUR TEMPLATE>',
+    selector: 'alfresco-documentlist-demo',
+    template: `
+        <div class="container">
+            <alfresco-document-list [breadcrumb]="true"  *ngIf="authenticated">
+            </alfresco-document-list>
+        </div>
+    `,
+    styles: [':host > .container {padding: 10px}'],
     directives: [DOCUMENT_LIST_DIRECTIVES],
-    providers: [DOCUMENT_LIST_PROVIDERS]
+    providers: [DOCUMENT_LIST_PROVIDERS],
+    pipes: [AlfrescoPipeTranslate]
 })
-export class MyView {
-    breadcrumb: boolean = false;
-    navigation: boolean = true;
+class DocumentListDemo implements OnInit {
 
-    onItemClick($event) {
-        console.log($event.value);
+    authenticated: boolean;
+
+    constructor(private authService: AlfrescoAuthenticationService,
+                settings: AlfrescoSettingsService,
+                translation: AlfrescoTranslationService,
+                documentActions: DocumentActionsService) {
+
+        settings.host = 'http://192.168.99.100:8080';
+        translation.translationInit();
+        documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    myDocumentActionHandler(obj: any) {
+        window.alert('my custom action handler');
+    }
+
+    myCustomAction1(event) {
+        alert('Custom document action for ' + event.value.displayName);
+    }
+
+    myFolderAction1(event) {
+        alert('Custom folder action for ' + event.value.displayName);
+    }
+
+    login() {
+        this.authService.login('admin', 'admin').subscribe(token => {
+            this.authenticated = true;
+        });
     }
 }
+
+bootstrap(DocumentListDemo, [
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS
+]);
 ```
 
 Note the use of ```DOCUMENT_LIST_DIRECTIVES``` barrel that consolidates all the document list related directives together.
