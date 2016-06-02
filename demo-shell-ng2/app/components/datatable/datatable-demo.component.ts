@@ -106,10 +106,34 @@ export class DataTableDemoComponent {
 
     replaceRows() {
         let objects = [
-            {id: 10, name: 'Name 10', createdBy: this._createdBy, icon: 'material-icons://face'},
-            {id: 11, name: 'Name 11', createdBy: this._createdBy, icon: 'material-icons://language'},
-            {id: 12, name: 'Name 12', createdBy: this._createdBy, icon: 'material-icons://pets'},
-            {id: 13, name: 'Image 13', createdBy: this._createdBy, icon: this._imageUrl}
+            {
+                id: 10,
+                name: 'Name 10',
+                createdBy: this._createdBy,
+                createdOn: new Date(2016, 6, 2, 15, 8, 5),
+                icon: 'material-icons://face'
+            },
+            {
+                id: 11,
+                name: 'Name 11',
+                createdBy: this._createdBy,
+                createdOn: new Date(2016, 6, 2, 15, 8, 6),
+                icon: 'material-icons://language'
+            },
+            {
+                id: 12,
+                name: 'Name 12',
+                createdBy: this._createdBy,
+                createdOn: new Date(2016, 6, 2, 15, 8, 7),
+                icon: 'material-icons://pets'
+            },
+            {
+                id: 13,
+                name: 'Image 13',
+                createdBy: this._createdBy,
+                createdOn: new Date(2016, 6, 2, 15, 8, 8),
+                icon: this._imageUrl
+            }
         ];
         let rows = objects.map(obj => new ObjectDataRow(obj));
         this.data.setRows(rows);
