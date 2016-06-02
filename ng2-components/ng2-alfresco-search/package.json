@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-search",
   "description": "Alfresco Angular2 Search Component",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "typings": "typings install",

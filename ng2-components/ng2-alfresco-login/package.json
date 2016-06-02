@@ -1,16 +1,15 @@
 {
   "name": "ng2-alfresco-login",
   "description": "Alfresco Angular2 Login Component",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "typings": "typings install",
     "start": "npm run build && npm run server",
     "server": "http-server -c-1 -o -p 8875 .",
     "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
-    "tslint": "npm run tslint-src && npm run tslint-root && npm run tslint-demo",
+    "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json src/**/*.ts, src/**/*.spec.ts ",
-    "tslint-demo": "tslint -c tslint.json demo/**/*.ts",
     "tslint-root": "tslint -c tslint.json *.ts",
     "copytemplates": "npm run copy-html && npm run copy-css && npm run copy-i18n",
     "copy-html": "copyfiles './src/**/*.html' dist",

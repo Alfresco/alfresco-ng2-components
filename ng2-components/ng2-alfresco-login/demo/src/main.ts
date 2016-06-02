@@ -45,7 +45,9 @@ export class AppComponent {
 
     public status: string = '';
 
-    constructor(public auth: AlfrescoAuthenticationService, public router: Router, private alfrescoSettingsService: AlfrescoSettingsService) {
+    constructor(public auth: AlfrescoAuthenticationService,
+                public router: Router,
+                private alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = this.host;
     }
 
