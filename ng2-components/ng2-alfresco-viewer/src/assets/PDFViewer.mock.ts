@@ -16,19 +16,11 @@
  */
 
 
-export class PDFJSmock {
+export class PDFViewermock {
 
-    getFilenameFromUrl(url: string) {
-        return 'fake-name';
-    }
+    currentPageNumber: number = 1;
 
-    getDocument(url: string) {
-        return new Promise((resolve) => {
-            resolve({numPages: '10'});
-        });
-    }
-
-    getPage(numberPage: number) {
-        console.log('getPage ${numberPage}');
-    }
+    currentPage = {
+        renderingState: 3 as number
+    };
 }

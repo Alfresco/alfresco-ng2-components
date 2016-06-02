@@ -19,6 +19,7 @@ import { describe, expect, it, injectAsync, TestComponentBuilder, setBaseTestPro
 import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
 import { ViewerComponent } from './viewer.component';
 import { PDFJSmock } from './assets/PDFJS.mock';
+import { PDFViewermock } from './assets/PDFViewer.mock';
 
 describe('Ng2-alfresco-viewer', () => {
     setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
@@ -181,6 +182,7 @@ describe('Ng2-alfresco-viewer', () => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.pdfViewer = new PDFViewermock();
                     component.urlFile = 'fake-url-file';
 
                     component.ngOnChanges().then(() => {
@@ -200,6 +202,7 @@ describe('Ng2-alfresco-viewer', () => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.pdfViewer = new PDFViewermock();
                     component.urlFile = 'fake-url-file';
 
                     component.ngOnChanges().then(() => {
@@ -222,6 +225,7 @@ describe('Ng2-alfresco-viewer', () => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.pdfViewer = new PDFViewermock();
                     component.urlFile = 'fake-url-file';
 
                     component.ngOnChanges().then(() => {
