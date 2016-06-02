@@ -110,7 +110,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         private _alfrescoService: AlfrescoService) {}
 
     ngOnInit() {
-        this.changePath(null);
+        this.changePath(this.currentFolderPath);
     }
 
     ngOnChanges(change) {
