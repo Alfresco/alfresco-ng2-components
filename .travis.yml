@@ -1,4 +1,6 @@
 language: node_js
+node_js:
+  - "4.2"
 sudo: false
 before_install:
   - export CHROME_BIN=chromium-browser
@@ -15,8 +17,6 @@ env:
     - MODULE=ng2-alfresco-search
     - MODULE=ng2-alfresco-upload
 
-node_js:
-  - v5
 
 
 before_script: cd ./ng2-components/$MODULE; npm install --registry $DEV_REGISTRY
