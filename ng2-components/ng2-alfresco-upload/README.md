@@ -86,8 +86,7 @@ npm install --save material-design-icons material-design-lite
 
 
 ```html
-<alfresco-upload-button [showDialogUpload]="true"
-                        [showUdoNotificationBar]="true"
+<alfresco-upload-button [showUdoNotificationBar]="true"
                         [uploadFolders]="true"
                         [multipleFiles]="false"
                         [acceptedFilesType]=".jpg,.gif,.png,.svg"
@@ -107,8 +106,7 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
 
 @Component({
     selector: 'my-app',
-    template: `<alfresco-upload-button [showDialogUpload]="true"
-                                       [showUdoNotificationBar]="true"
+    template: `<alfresco-upload-button [showUdoNotificationBar]="true"
                                        [uploadFolders]="true"
                                        [multipleFiles]="false"
                                        [acceptedFilesType]=".jpg,.gif,.png,.svg"
@@ -139,7 +137,6 @@ bootstrap(MyDemoApp, [
 
 #### Options
 
-**showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
 **showUdoNotificationBar**: {boolean} (optional) default true. Hide/show notification bar.<br />
 **uploadFolders**: {boolean} (optional) default false. Allow/disallow upload folders (only for chrome).<br />
 **multipleFiles**: {boolean} (optional) default false. Allow/disallow multiple files.<br />
@@ -151,7 +148,7 @@ This component, provide a drag and drop are to upload files to alfresco.
 #### Basic usage
 
 ```html
-<alfresco-upload-drag-area [showDialogUpload]="true" (onSuccess)="customMethod($event)"></alfresco-upload-drag-area>
+<alfresco-upload-drag-area (onSuccess)="customMethod($event)"></alfresco-upload-drag-area>
 ```
 
 Example of an App that declares upload drag and drop component :
@@ -166,7 +163,7 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
 
 @Component({
     selector: 'my-app',
-    template: `<alfresco-upload-drag-area [showDialogUpload]="true" (onSuccess)="customMethod($event)" >
+    template: `<alfresco-upload-drag-area (onSuccess)="customMethod($event)" >
                      <div style="width: 200px; height: 100px; border: 1px solid #888888">
                          DRAG HERE
                      </div>
@@ -194,9 +191,16 @@ bootstrap(MyDemoApp, [
 #### Events
 **onSuccess**: The event is emitted when the file is uploaded<br />
 
-#### Options
+### Files Dialog
+This component provides a dialog that shows all the files uploaded 
+with upload button or drag & drop area components. This component should
+ be used in combination with upload button or drag & drop area.
 
-**showDialogUpload**: {boolean} optional) default true. Hide/show upload dialog.<br />
+#### Basic usage
+
+```html
+<file-uploading-dialog></file-uploading-dialog>
+```
 
 ## Build from sources
 Alternatively you can build component from sources with the following commands:

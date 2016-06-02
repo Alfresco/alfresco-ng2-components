@@ -18,7 +18,6 @@
 
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
-import { FileModel } from '../models/file.model';
 import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import 'rxjs/Rx';
 
@@ -26,8 +25,7 @@ declare let componentHandler: any;
 declare let __moduleName: string;
 
 /**
- * <alfresco-upload-button [showDialogUpload]="boolean"
- *                         [showUdoNotificationBar]="boolean"
+ * <alfresco-upload-button [showUdoNotificationBar]="boolean"
  *                         [uploadFolders]="boolean"
  *                         [multipleFiles]="boolean"
  *                         [acceptedFilesType]="string"
@@ -36,7 +34,6 @@ declare let __moduleName: string;
  *
  * This component, provide a set of buttons to upload files to alfresco.
  *
- * @InputParam {boolean} [true] showDialogUpload - hide/show upload dialog.
  * @InputParam {boolean} [true] showUdoNotificationBar - hide/show notification bar.
  * @InputParam {boolean} [false] uploadFolders - allow/disallow upload folders (only for chrome).
  * @InputParam {boolean} [false] multipleFiles - allow/disallow multiple files.
@@ -57,9 +54,6 @@ export class UploadButtonComponent {
 
     @ViewChild('undoNotificationBar')
     undoNotificationBar: any;
-
-    @Input()
-    showUploadDialog: boolean = true;
 
     @Input()
     showUdoNotificationBar: boolean = true;

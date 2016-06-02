@@ -26,8 +26,7 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
     selector: 'my-app',
     template: `<label for="token">Access Token</label><br>
                <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br><br>
-               <alfresco-upload-button [showDialogUpload]="true"
-                                       [showUdoNotificationBar]="true"
+               <alfresco-upload-button [showUdoNotificationBar]="true"
                                        [uploadFolders]="false"
                                        [multipleFiles]="false"
                                        (onSuccess)="customMethod($event)">
@@ -35,8 +34,7 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
 
                <br><br>
 
-               <alfresco-upload-button [showDialogUpload]="true"
-                                       [showUdoNotificationBar]="true"
+               <alfresco-upload-button [showUdoNotificationBar]="true"
                                        [uploadFolders]="true"
                                        [multipleFiles]="false"
                                        (onSuccess)="customMethod($event)">
@@ -44,8 +42,7 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
 
                <br><br>
 
-               <alfresco-upload-button [showDialogUpload]="true"
-                                       [showUdoNotificationBar]="true"
+               <alfresco-upload-button [showUdoNotificationBar]="true"
                                        [uploadFolders]="false"
                                        [multipleFiles]="true"
                                        (onSuccess)="customMethod($event)">
@@ -53,11 +50,12 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/d
 
                <br><br>
 
-               <alfresco-upload-drag-area [showDialogUpload]="true" (onSuccess)="customMethod($event)" >
+               <alfresco-upload-drag-area (onSuccess)="customMethod($event)" >
                      <div style="width: 200px; height: 100px; border: 1px solid #888888">
                          DRAG HERE
                      </div>
-               </alfresco-upload-drag-area>`,
+               </alfresco-upload-drag-area>
+               <file-uploading-dialog></file-uploading-dialog>`,
     directives: [ALFRESCO_ULPOAD_COMPONENTS]
 })
 export class MyDemoApp {

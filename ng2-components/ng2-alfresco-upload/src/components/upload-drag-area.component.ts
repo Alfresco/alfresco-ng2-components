@@ -22,11 +22,9 @@ import { FileDraggableDirective } from '../directives/file-draggable.directive';
 declare let __moduleName: string;
 
 /**
- * <alfresco-upload-drag-area [showDialogUpload]="boolean" (onSuccess)="customMethod($event)></alfresco-upload-drag-area>
+ * <alfresco-upload-drag-area (onSuccess)="customMethod($event)></alfresco-upload-drag-area>
  *
  * This component, provide a drag and drop are to upload files to alfresco.
- *
- * @InputParam {boolean} [true] showDialogUpload - hide/show upload dialog .
  *
  * @Output - onSuccess - The event is emitted when the file is uploaded
  *
