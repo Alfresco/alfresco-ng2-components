@@ -26,7 +26,6 @@
             <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" ><i data-automation-id="abort_cancel_upload"
                                                                                      class="material-icons">remove_circle_outline</i></span>
             <span *ngIf="file.abort"><i class="material-icons">remove_circle</i></span>
-            <span *ngIf="!file.abort && !file.uploading && !file.done"><i class="material-icons">pause</i></span>
         </td>
     </tr>
 </table>

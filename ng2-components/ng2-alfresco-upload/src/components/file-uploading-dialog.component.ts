@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef } from 'angular2/core';
+import { Component, ChangeDetectorRef, OnInit } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -43,11 +43,13 @@ declare let __moduleName: string;
     host: {'[class.dialog-show]': 'toggleShowDialog'},
     pipes: [AlfrescoPipeTranslate]
 })
-export class FileUploadingDialogComponent {
+export class FileUploadingDialogComponent implements OnInit{
 
     isDialogActive: boolean = false;
 
     filesUploadingList: FileModel [];
+
+    totalCompleted: number = 0;
 
     private _isDialogMinimized: boolean = false;
 
@@ -61,6 +63,10 @@ export class FileUploadingDialogComponent {
                 this.isDialogActive = true;
                 this.cd.detectChanges();
             }
+        });
+        this._uploaderService.totalCompleted$.subscribe((total: number) => {
+            this.totalCompleted = total;
+            this.cd.detectChanges();
         });
     }
 

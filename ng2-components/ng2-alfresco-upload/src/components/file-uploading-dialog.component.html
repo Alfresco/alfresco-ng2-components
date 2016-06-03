@@ -1,7 +1,7 @@
 <div *ngIf="filesUploadingList" class="file-dialog" [ngClass]="{show: isDialogActive}">
     <div class="header">
         <div class="title">
-            {{filesUploadingList.length}} {{'FILE_UPLOAD.MESSAGES.COMPLETED' | translate}}
+            {{totalCompleted}} {{'FILE_UPLOAD.MESSAGES.COMPLETED' | translate}}
         </div>
         <div class="buttons">
             <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}"  (click)="toggleDialogMinimize()">
