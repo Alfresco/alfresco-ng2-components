@@ -58,7 +58,6 @@
     "systemjs": "0.19.26",
     "zone.js": "^0.6.12",
     "alfresco-core-rest-api": "^0.1.0",
-    "ng2-translate": "^1.11.3"
   },
   "devDependencies": {
     "copyfiles": "^0.2.1",
