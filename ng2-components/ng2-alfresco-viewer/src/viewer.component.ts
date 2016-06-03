@@ -103,7 +103,7 @@ export class ViewerComponent {
      * load the previous page
      */
     previousPage() {
-        if (this.page > 1) {
+        if (this.pdfViewer && this.page > 1) {
             this.page--;
             this.displayPage = this.page;
 
@@ -121,7 +121,7 @@ export class ViewerComponent {
      * load the next page
      */
     nextPage() {
-        if (this.page < this.totalPages) {
+        if (this.pdfViewer && this.page < this.totalPages) {
             this.page++;
             this.displayPage = this.page;
 
@@ -149,8 +149,12 @@ export class ViewerComponent {
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         let key = event.keyCode;
-        if (key === 27) {//esc
+        if (key === 27) { //esc
             this.close();
+        } else if (key === 39) { //right arrow
+            this.nextPage();
+        } else if (key === 37) {//left arrow
+            this.previousPage();
         }
     }
 
