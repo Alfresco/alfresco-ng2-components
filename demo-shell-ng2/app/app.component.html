@@ -9,7 +9,7 @@
 
             <!-- Search box -->
             <alfresco-search-control *ngIf="isLoggedIn()" [searchTerm]="searchTerm"
-            (searchChange)="searchTermChange($event);"></alfresco-search-control>
+            (searchChange)="searchTermChange($event);" [autocomplete]="false"></alfresco-search-control>
 
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
