@@ -210,7 +210,7 @@ Make sure your `systemjs.config` has the following configuration:
 You must also add the following dependency to your index.html:
 
 ```html
-<script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
+<script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
 #### Style

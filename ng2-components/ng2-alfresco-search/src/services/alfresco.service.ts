@@ -30,9 +30,11 @@ declare let AlfrescoApi: any;
 export class AlfrescoService {
 
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
+    private _alfrescoClient;
 
     constructor(private http: Http,
                 private settings: AlfrescoSettingsService) {
+        this._alfrescoClient = AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getAlfrescoTicket());
     }
 
     public getHost(): string {
@@ -47,21 +49,8 @@ export class AlfrescoService {
         return localStorage.getItem('token');
     }
 
-    private getAlfrescoClient() {
-        let defaultClient = new AlfrescoApi.ApiClient();
-        defaultClient.basePath = this.getBaseUrl();
-
-        // Configure HTTP basic authorization: basicAuth
-        let basicAuth = defaultClient.authentications['basicAuth'];
-        basicAuth.username = 'ROLE_TICKET';
-        basicAuth.password = this.getAlfrescoTicket();
-
-        return defaultClient;
-    }
-
     private getSearchNodesPromise(term: string) {
-        let alfrescoClient = this.getAlfrescoClient();
-        let apiInstance = new AlfrescoApi.SearchApi(alfrescoClient);
+        let apiInstance = new AlfrescoApi.Core.SearchApi(this._alfrescoClient);
         let nodeId = '-root-';
         let opts = {
             include: ['path'],
