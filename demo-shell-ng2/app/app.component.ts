@@ -63,6 +63,7 @@ export class AppComponent {
 
         this.translate = translate;
         this.translate.translationInit();
+        this.translate.addComponent('');
     }
 
     isActive(instruction: any[]): boolean {

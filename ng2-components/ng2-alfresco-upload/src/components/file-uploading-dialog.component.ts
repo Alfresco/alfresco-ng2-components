@@ -18,7 +18,7 @@
 import { Component, ChangeDetectorRef, OnInit } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 declare let __moduleName: string;
@@ -54,7 +54,10 @@ export class FileUploadingDialogComponent implements OnInit{
     private _isDialogMinimized: boolean = false;
 
     constructor(private cd: ChangeDetectorRef,
-                private _uploaderService: UploadService) {}
+                translate: AlfrescoTranslationService,
+                private _uploaderService: UploadService) {
+        translate.addComponent('node_modules/ng2-alfresco-upload');
+    }
 
     ngOnInit() {
         this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
