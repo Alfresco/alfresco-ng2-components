@@ -17,13 +17,14 @@
 
 import { Component, Input, Output, HostListener } from 'angular2/core';
 import { EventEmitter } from 'angular2/src/facade/async';
+import { PdfViewerComponent } from './pdfViewer.component';
 
-declare let PDFJS: any;
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-viewer',
+    directives: [PdfViewerComponent],
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })
@@ -37,6 +38,7 @@ export class ViewerComponent {
 
     @Input()
     showViewer: boolean = true;
+
     @Output()
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -46,124 +48,22 @@ export class ViewerComponent {
     displayPage: number;
     totalPages: number;
 
-    pdfViewer: any;
-
-    renderingStates = {
-        FINISHED: 3 as number
-    };
+    extension: string;
 
     ngOnChanges(changes) {
         if (this.showViewer) {
             if (!this.urlFile) {
                 throw new Error('Attribute urlFile is required');
             }
-
-            if (this.urlFile) {
-                this.nameFile = this.getPDFJS().getFilenameFromUrl(this.urlFile);
-
-                let urlFileTicket = this.addAlfrescoTicket(this.urlFile);
-
-                return new Promise((resolve) => {
-                    this.getPDFJS().getDocument(urlFileTicket, null, null).then((pdfDocument) => {
-                        this.currentPdfDocument = pdfDocument;
-                        this.totalPages = pdfDocument.numPages;
-                        this.page = 1;
-                        this.displayPage = 1;
-                        this.initPDFViewer(this.currentPdfDocument);
-                    });
-                    resolve();
-                });
-            }
+            return new Promise((resolve) => {
+                if (this.urlFile) {
+                    this.nameFile = this.getFilenameFromUrl(this.urlFile);
+                    this.extension = this.getFileExtension(this.nameFile);
+                }
+                resolve();
+            });
         }
-    }
 
-    /**
-     * return the PDFJS global object (exist to facilitate the mock of PDFJS in the test)
-     * @returns {PDFJS}
-     */
-    getPDFJS() {
-        return PDFJS;
-    }
-
-    initPDFViewer(pdfDocument: any) {
-        PDFJS.verbosity = 5;
-
-        let documentContainer: any = document.getElementById('viewer-pdf-container');
-        let viewer: any = document.getElementById('viewer-viewerPdf');
-
-        this.pdfViewer = new PDFJS.PDFViewer({
-            container: documentContainer,
-            viewer: viewer
-        });
-
-        this.pdfViewer.setDocument(pdfDocument);
-    }
-
-    /**
-     * load the previous page
-     */
-    previousPage() {
-        if (this.pdfViewer && this.page > 1) {
-            this.page--;
-            this.displayPage = this.page;
-
-            this.pdfViewer.currentPageNumber = this.page;
-
-            if (this.pdfViewer.currentPage.renderingState === this.renderingStates.FINISHED) {
-                // remove loader
-            } else {
-                // add loader
-            }
-        }
-    }
-
-    /**
-     * load the next page
-     */
-    nextPage() {
-        if (this.pdfViewer && this.page < this.totalPages) {
-            this.page++;
-            this.displayPage = this.page;
-
-            this.pdfViewer.currentPageNumber = this.page;
-        }
-    }
-
-    /**
-     * load the page in input
-     *
-     * @param {string} page - page to load
-     */
-    inputPage(page: string) {
-        let pageInput = parseInt(page, 10);
-
-        if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
-            this.page = pageInput;
-
-            this.pdfViewer.currentPageNumber = this.page;
-        } else {
-            this.displayPage = this.page;
-        }
-    }
-
-    @HostListener('document:keydown', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
-        let key = event.keyCode;
-        if (key === 27) { //esc
-            this.close();
-        } else if (key === 39) { //right arrow
-            this.nextPage();
-        } else if (key === 37) {//left arrow
-            this.previousPage();
-        }
-    }
-
-    /**
-     * Add Ticket to the file request
-     * @returns {string}
-     */
-    private addAlfrescoTicket(url: string) {
-        return url + '?alf_ticket=' + this.getAlfrescoTicket();
     }
 
     /**
@@ -175,10 +75,62 @@ export class ViewerComponent {
     }
 
     /**
-     * Get the token from the local storage
-     * @returns {string}
+     * get File name from url
      */
-    private getAlfrescoTicket(): string {
-        return localStorage.getItem('token');
+    getFilenameFromUrl(url: string) {
+        let anchor = url.indexOf('#');
+        let query = url.indexOf('?');
+        let end = Math.min(
+            anchor > 0 ? anchor : url.length,
+            query > 0 ? query : url.length);
+        return url.substring(url.lastIndexOf('/', end) + 1, end);
+    }
+
+    /**
+     * Get the token from the local storage
+     *
+     * @param {string} fileName - file name
+     * @returns {string} file name extension
+     */
+    private getFileExtension(fileName: string) {
+        return fileName.split('.').pop().toLowerCase();
+    }
+
+    /**
+     * check if the current file is a suppoerted image extension
+     */
+    private isImage() {
+        return this.extension === 'png' || this.extension === 'jpg' ||
+            this.extension === 'jpeg' || this.extension === 'gif' || this.extension === 'bmp';
+    }
+
+    /**
+     * check if the current file is a suppoerted pdf extension
+     */
+    private isPdf() {
+        return this.extension === 'pdf';
+    }
+
+    /**
+     * check if the current file is not a supported extension
+     */
+    private notSupportedExtension() {
+        return !this.isImage() && !this.isPdf();
+    }
+
+    /**
+     * Litener Keyboard Event
+     * @param {KeyboardEvent} event
+     */
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        let key = event.keyCode;
+        if (key === 27) { //esc
+            this.close();
+        } else if (key === 39) { //right arrow
+            //this.nextPage();
+        } else if (key === 37) {//left arrow
+            //this.previousPage();
+        }
     }
 }

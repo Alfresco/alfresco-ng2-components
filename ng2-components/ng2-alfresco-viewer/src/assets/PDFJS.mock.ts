@@ -18,10 +18,6 @@
 
 export class PDFJSmock {
 
-    getFilenameFromUrl(url: string) {
-        return 'fake-name';
-    }
-
     getDocument(url: string) {
         return new Promise((resolve) => {
             resolve({numPages: '10'});

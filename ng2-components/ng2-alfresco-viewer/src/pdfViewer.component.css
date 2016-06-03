@@ -1,0 +1,15 @@
+.viewer-pdf-container {
+    background: #3E3E3E;
+}
+
+:host .page {
+    margin: 10px auto !important;
+    overflow: visible;
+    border: 9px solid transparent;
+    background-clip: content-box;
+    background-color: white;
+}
+
+:host .canvasWrapper {
+    box-shadow: 0px 0px 8px 2px #000;
+}
