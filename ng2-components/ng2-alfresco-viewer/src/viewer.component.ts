@@ -59,11 +59,12 @@ export class ViewerComponent {
                 if (this.urlFile) {
                     this.nameFile = this.getFilenameFromUrl(this.urlFile);
                     this.extension = this.getFileExtension(this.nameFile);
+
+                    this.urlFile = this.addAlfrescoTicket(this.urlFile);
                 }
                 resolve();
             });
         }
-
     }
 
     /**
@@ -133,4 +134,21 @@ export class ViewerComponent {
             //this.previousPage();
         }
     }
+
+    /**
+     * Add Ticket to the file request
+     * @returns {string}
+     */
+    private addAlfrescoTicket(url: string) {
+        return url + '?alf_ticket=' + this.getAlfrescoTicket();
+    }
+
+    /**
+     * Get the token from the local storage
+     * @returns {string}
+     */
+    private getAlfrescoTicket() {
+        return localStorage.getItem('token');
+    }
+
 }

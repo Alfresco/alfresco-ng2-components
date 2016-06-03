@@ -48,10 +48,8 @@ export class PdfViewerComponent {
         }
 
         if (this.urlFile) {
-            let urlFileTicket = this.addAlfrescoTicket(this.urlFile);
-
             return new Promise((resolve) => {
-                this.getPDFJS().getDocument(urlFileTicket, null, null).then((pdfDocument) => {
+                this.getPDFJS().getDocument(this.urlFile, null, null).then((pdfDocument) => {
                     this.currentPdfDocument = pdfDocument;
                     this.totalPages = pdfDocument.numPages;
                     this.page = 1;
@@ -61,22 +59,6 @@ export class PdfViewerComponent {
                 resolve();
             });
         }
-    }
-
-    /**
-     * Add Ticket to the file request
-     * @returns {string}
-     */
-    private addAlfrescoTicket(url: string) {
-        return url + '?alf_ticket=' + this.getAlfrescoTicket();
-    }
-
-    /**
-     * Get the token from the local storage
-     * @returns {string}
-     */
-    private getAlfrescoTicket() {
-        return localStorage.getItem('token');
     }
 
     /**
