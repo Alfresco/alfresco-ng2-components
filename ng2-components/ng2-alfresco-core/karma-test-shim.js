@@ -11,12 +11,12 @@ System.config({
     packages: {
         'base/dist': {
             defaultExtension: 'js',
-            format: 'register',
+            format: 'cjs',
             map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
         },
         'ng2-translate': {
             defaultExtension: 'js',
-            format: 'register'
+            format: 'cjs'
         }
     },
     map: {
