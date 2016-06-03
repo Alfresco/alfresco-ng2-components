@@ -69,6 +69,7 @@
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                 [attr.for]="'folder_action_menu_' + idx">
                 <li class="mdl-menu__item"
+                    [data-automation-id]="action.title"
                     *ngFor="#action of getContentActions('folder', 'menu')"
                     (click)="executeContentAction(content, action)">
                     {{action.title}}
@@ -91,6 +92,7 @@
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                 [attr.for]="'document_action_menu_' + idx">
                 <li class="mdl-menu__item"
+                    [data-automation-id]="action.title"
                     *ngFor="#action of getContentActions('document', 'menu')"
                     (click)="executeContentAction(content, action)">
                     {{action.title}}
