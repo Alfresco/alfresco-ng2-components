@@ -25,7 +25,7 @@ import {
 // Simple implementation of the DataTableAdapter interface.
 export class ObjectDataTableAdapter implements DataTableAdapter {
 
-    private _sorting;
+    private _sorting: DataSorting;
     private _rows: DataRow[];
     private _columns: DataColumn[];
 
@@ -34,19 +34,23 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         this._columns = [];
 
         if (data && data.length > 0) {
-
             this._rows = data.map(item => {
                 return new ObjectDataRow(item);
             });
+        }
 
-            if (schema && schema.length > 0) {
-                this._columns = schema.map(item => {
-                    return new ObjectDataColumn(item);
-                });
+        if (schema && schema.length > 0) {
+            this._columns = schema.map(item => {
+                return new ObjectDataColumn(item);
+            });
 
+            // Sort by first sortable or just first column
+            let sortable = this._columns.filter(c => c.sortable);
+            if (sortable.length > 0) {
+                this.sort(sortable[0].key, 'asc');
+            } else {
                 this.sort(this._columns[0].key, 'asc');
             }
-
         }
     }
 
@@ -68,6 +72,12 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     }
 
     getValue(row: DataRow, col: DataColumn): any {
+        if (!row) {
+            throw new Error('Row not found');
+        }
+        if (!col) {
+            throw new Error('Column not found');
+        }
         return row.getValue(col.key);
     }
 
@@ -108,8 +118,10 @@ export class ObjectDataRow implements DataRow {
 
     isSelected: boolean = false;
 
-    constructor(
-        private obj: any) {
+    constructor(private obj: any) {
+        if (!obj) {
+            throw new Error('Object source not found');
+        }
     }
 
     /**
@@ -120,6 +132,11 @@ export class ObjectDataRow implements DataRow {
      * @returns {string}
      */
     getObjectValue(target: any, key: string): any {
+
+        if (!target) {
+            return undefined;
+        }
+
         let keys = key.split('.');
         key = '';
 
