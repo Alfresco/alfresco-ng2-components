@@ -200,6 +200,7 @@ export class UploadService {
                     xmlHttpRequest.statusText,
                     xmlHttpRequest.response
                 );
+                this._filesUploadObserver.next(this._queue);
                 if (!uploadingFileModel.abort && !uploadingFileModel.error) {
                     if (this._totalCompletedObserver) {
                         this._totalCompletedObserver.next(++this.totalCompleted);
