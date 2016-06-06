@@ -61,6 +61,7 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
     isSelectAllChecked: boolean = false;
 
+    // TODO: left for reference, will be removed during future revisions
     constructor(/*private _ngZone?: NgZone*/) {
     }
 
@@ -117,27 +118,39 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
         if (this.multiselect) {
             let rows = this.data.getRows();
-            for (let i = 0; i < rows.length; i++) {
-                rows[i].isSelected = this.isSelectAllChecked;
+            if (rows && rows.length > 0) {
+                for (let i = 0; i < rows.length; i++) {
+                    rows[i].isSelected = this.isSelectAllChecked;
+                }
+                // TODO: left for reference, will be removed during future revisions
+                /*
+                 this._ngZone.run(() => {
+                 this.data.getRows()[1].isSelected = true;
+                 });
+                 */
             }
-            /*
-             this._ngZone.run(() => {
-             this.data.getRows()[1].isSelected = true;
-             });
-             */
         }
     }
 
     isIconValue(row: DataRow, col: DataColumn) {
-        return row.getValue(col.key).startsWith('material-icons://');
+        if (row && col) {
+            return row.getValue(col.key).startsWith('material-icons://');
+        }
+        return false;
     }
 
     asIconValue(row: DataRow, col: DataColumn) {
-        return row.getValue(col.key).replace('material-icons://', '');
+        if (this.isIconValue(row, col)) {
+            return row.getValue(col.key).replace('material-icons://', '');
+        }
+        return null;
     }
 
     isColumnSorted(col: DataColumn, direction: string) {
-        let sorting = this.data.getSorting();
-        return sorting.key === col.key && sorting.direction === direction;
+        if (col && direction) {
+            let sorting = this.data.getSorting();
+            return sorting && sorting.key === col.key && sorting.direction === direction;
+        }
+        return false;
     }
 }
