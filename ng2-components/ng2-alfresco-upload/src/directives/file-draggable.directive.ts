@@ -34,7 +34,7 @@ import { Directive, ElementRef, EventEmitter, Output } from 'angular2/core';
         '(drop)': '_onDropFiles($event)',
         '(dragenter)': '_onDragEnter($event)',
         '(dragleave)': '_onDragLeave($event)',
-        '(dragover)': '_preventDefault($event)',
+        '(dragover)': '_onDragOver($event)',
         '[class.input-focus]': '_inputFocusClass'
     }
 })
@@ -116,6 +116,17 @@ export class FileDraggableDirective {
         this._preventDefault($event);
 
         this._inputFocusClass = false;
+    }
+
+    /**
+     * Change the style of the drag area when a file is over the drag area.
+     *
+     * @param $event
+     * @private
+     */
+    _onDragOver($event: Event): void {
+        this._preventDefault($event);
+        this._inputFocusClass = true;
     }
 
     /**
