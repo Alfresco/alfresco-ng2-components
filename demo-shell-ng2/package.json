@@ -51,7 +51,7 @@
     "alfresco"
   ],
   "dependencies": {
-    "alfresco-core-rest-api": "^0.1.0",
+    "alfresco-js-api": "^0.1.0",
     "angular2": "2.0.0-beta.15",
     "es6-shim": "^0.35.0",
     "material-design-icons": "^2.2.3",
