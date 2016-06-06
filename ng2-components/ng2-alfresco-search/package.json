@@ -1,96 +1,101 @@
 {
-  "name": "ng2-alfresco-search",
-  "description": "Alfresco Angular2 Search Component",
-  "version": "0.1.12",
-  "author": "Alfresco Software, Ltd.",
-  "scripts": {
-    "typings": "typings install",
-    "start": "npm run build && npm run server",
-    "server": "http-server -c-1 -o -p 8875 .",
-    "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
-    "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/**/*.ts, src/**/*.spec.ts ",
-    "tslint-root": "tslint -c tslint.json *.ts",
-    "copytemplates": "npm run copy-html && npm run copy-css",
-    "copy-html": "copyfiles './src/**/*.html' dist",
-    "copy-css": "copyfiles './src/**/*.css' dist",
-    "licensecheck": "license-check",
-    "tsc": "tsc",
-    "pretest": "npm run build",
-    "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
-    "test-browser": "karma start karma.conf.js --reporters kjhtml ",
-    "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
-    "coverage": "npm run test && http-server -c-1 -o -p 9875 ./coverage/report",
-    "prepublish": "npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Alfresco/dev-platform-webcomponents.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Alfresco/dev-platform-webcomponents/issues"
-  },
-  "license": "Apache-2.0",
-  "contributors": [
-    {
-      "name": "Will Abson",
-      "email": "will.abson@alfresco.com"
-    }
-  ],
-  "keywords": [
-    "ng2",
-    "angular",
-    "angular2",
-    "alfresco"
-  ],
-  "dependencies": {
-    "angular2": "2.0.0-beta.15",
-    "systemjs": "0.19.26",
-    "es6-shim": "^0.35.0",
-    "ng2-alfresco-core": "^0.1.25",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "zone.js": "^0.6.12",
-    "es6-module-loader": "^0.17.8",
-    "alfresco-js-api": "^0.1.0"
-  },
-  "peerDependencies": {
-    "angular2": "2.0.0-beta.15"
-  },
-  "devDependencies": {
-    "copyfiles": "^0.2.1",
-    "coveralls": "^2.11.9",
-    "http-server": "0.8.5",
-    "jasmine-core": "2.4.1",
-    "karma": "~0.13.22",
-    "karma-chrome-launcher": "~1.0.1",
-    "karma-coverage": "^1.0.0",
-    "karma-jasmine": "~1.0.2",
-    "karma-mocha-reporter": "^2.0.3",
-    "karma-jasmine-html-reporter": "^0.2.0",
-    "license-check": "^1.0.4",
-    "remap-istanbul": "^0.6.3",
-    "traceur": "^0.0.91",
-    "tslint": "^3.8.1",
-    "typescript": "^1.8.10",
-    "typings": "^0.7.12"
-  },
-  "license-check-config": {
-    "src": [
-      "**/*.js",
-      "**/*.ts",
-      "!/**/coverage/**/*",
-      "!/**/demo/**/*",
-      "!/**/node_modules/**/*",
-      "!/**/typings/**/*",
-      "!*.js"
+    "name": "ng2-alfresco-search",
+    "description": "Alfresco Angular2 Search Component",
+    "version": "0.1.12",
+    "author": "Alfresco Software, Ltd.",
+    "scripts": {
+        "typings": "typings install",
+        "server": "http-server -c-1 -o -p 8875 .",
+        "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
+        "build:w": "npm run tslint && typings install && rm -rf dist && npm run watch-task",
+        "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copytemplates:w\"  \"license-check\"",
+        "tslint": "npm run tslint-src && npm run tslint-root",
+        "tslint-src": "tslint -c tslint.json src/**/*.ts, src/**/*.spec.ts ",
+        "tslint-root": "tslint -c tslint.json *.ts",
+        "copytemplates": "npm run copy-html-css && npm run copy-i18n",
+        "copytemplates:w": "concurrently \"npm run copy-html-css:w\" \"npm run copy-i18n:w\"",
+        "copy-html-css": "cpx './src/**/*.{html,css}' dist/src",
+        "copy-html-css:w": "cpx './src/**/*.{html,css}' dist/src -w",
+        "copy-i18n": "copyfiles './i18n/**/*.json' dist/i18n",
+        "copy-i18n:w": "cpx './i18n/**/*.json' dist/i18n -w",
+        "tsc": "tsc",
+        "tsc:w": "tsc -w",
+        "pretest": "npm run build",
+        "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
+        "test-browser": "concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
+        "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
+        "coverage": "npm run test && http-server -c-1 -o -p 9875 ./coverage/report",
+        "prepublish": "npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Alfresco/dev-platform-webcomponents.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Alfresco/dev-platform-webcomponents/issues"
+    },
+    "license": "Apache-2.0",
+    "contributors": [
+        {
+            "name": "Will Abson",
+            "email": "will.abson@alfresco.com"
+        }
     ],
-    "path": "assets/license_header.txt",
-    "blocking": false,
-    "logInfo": false,
-    "logError": true
-  },
-  "publishConfig": {
-    "registry": "http://devproducts.alfresco.me:4873/"
-  }
+    "keywords": [
+        "ng2",
+        "angular",
+        "angular2",
+        "alfresco"
+    ],
+    "dependencies": {
+        "angular2": "2.0.0-beta.15",
+        "systemjs": "0.19.26",
+        "es6-shim": "^0.35.0",
+        "ng2-alfresco-core": "^0.1.25",
+        "reflect-metadata": "0.1.2",
+        "rxjs": "5.0.0-beta.2",
+        "zone.js": "^0.6.12",
+        "es6-module-loader": "^0.17.8",
+        "alfresco-js-api": "^0.1.0"
+    },
+    "peerDependencies": {
+        "angular2": "2.0.0-beta.15"
+    },
+    "devDependencies": {
+        "concurrently": "^2.1.0",
+        "coveralls": "^2.11.9",
+        "cpx": "^1.3.1",
+        "http-server": "0.8.5",
+        "jasmine-core": "2.4.1",
+        "karma": "~0.13.22",
+        "karma-chrome-launcher": "~1.0.1",
+        "karma-coverage": "^1.0.0",
+        "karma-jasmine": "~1.0.2",
+        "karma-mocha-reporter": "^2.0.3",
+        "karma-jasmine-html-reporter": "^0.2.0",
+        "license-check": "^1.0.4",
+        "remap-istanbul": "^0.6.3",
+        "traceur": "^0.0.91",
+        "tslint": "^3.8.1",
+        "typescript": "^1.8.10",
+        "typings": "^0.7.12"
+    },
+    "license-check-config": {
+        "src": [
+            "**/*.js",
+            "**/*.ts",
+            "!/**/coverage/**/*",
+            "!/**/demo/**/*",
+            "!/**/node_modules/**/*",
+            "!/**/typings/**/*",
+            "!*.js"
+        ],
+        "path": "assets/license_header.txt",
+        "blocking": false,
+        "logInfo": false,
+        "logError": true
+    },
+    "publishConfig": {
+        "registry": "http://devproducts.alfresco.me:4873/"
+    }
 }
