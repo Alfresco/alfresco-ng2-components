@@ -26,10 +26,9 @@ export class AlfrescoServiceMock extends AlfrescoService {
     _folderToReturn: any = {};
 
     constructor(
-        http: Http = null,
         settings: AlfrescoSettingsService = null
     ) {
-        super(http, settings);
+        super(settings);
     }
 
     getFolder(folder: string) {
