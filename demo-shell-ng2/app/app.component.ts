@@ -62,8 +62,7 @@ export class AppComponent {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
 
         this.translate = translate;
-        this.translate.translationInit();
-        this.translate.addComponent('');
+        this.translate.translationInit(' ');
     }
 
     isActive(instruction: any[]): boolean {
