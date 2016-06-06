@@ -38,6 +38,8 @@ describe('DataTable', () => {
     let eventMock: any;
 
     beforeEach(() => {
+        // reset MDL handler
+        window['componentHandler'] = null;
         dataTable = new DataTableComponent();
 
         eventMock = {
@@ -58,7 +60,7 @@ describe('DataTable', () => {
         expect(dataTable.data).toBe(data);
     });
 
-    it('should emit row click event', (done) => {
+    it('should emit row click event', done => {
         let row = <DataRow> {};
 
         dataTable.rowClick.subscribe(e => {
@@ -69,10 +71,28 @@ describe('DataTable', () => {
         dataTable.onRowClick(row, null);
     });
 
-    it('should prevent default event on row click event', () => {
+    it('should emit row double-click event', done => {
+        let row = <DataRow> {};
+
+        dataTable.rowDblClick.subscribe(e => {
+            expect(e.value).toBe(row);
+            done();
+        });
+
+        dataTable.onRowDblClick(row, null);
+    });
+
+    it('should prevent default behavior on row click event', () => {
         let e = jasmine.createSpyObj('event', ['preventDefault']);
         dataTable.ngOnInit();
         dataTable.onRowClick(null, e);
+        expect(e.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should prevent default behavior on row double-click event', () => {
+        let e = jasmine.createSpyObj('event', ['preventDefault']);
+        dataTable.ngOnInit();
+        dataTable.onRowDblClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
     });
 
@@ -136,6 +156,14 @@ describe('DataTable', () => {
             })
         );
 
+    });
+
+    it('should upgrade MDL components on view checked', () => {
+        let handler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered']);
+        window['componentHandler'] = handler;
+
+        dataTable.ngAfterViewChecked();
+        expect(handler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
 });
