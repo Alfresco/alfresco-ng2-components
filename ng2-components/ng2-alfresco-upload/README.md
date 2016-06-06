@@ -213,6 +213,12 @@ npm install
 npm run build
 ```
 
+##Build the files and keep watching the modify
+
+    ```sh
+    $ npm run build:w
+    ```
+    
 ## Running unit tests
 
 ```sh
