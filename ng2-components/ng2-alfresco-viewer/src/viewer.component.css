@@ -2,20 +2,16 @@
     padding: 0 40px;
 }
 
-.previous-page-button {
-    top: 50%;
-    left: 7%;
-    position: fixed;
-}
-
-.next-page-button {
-    top: 50%;
-    right: 7%;
-    position: fixed;
-}
-
 .left {
     float: left;
+}
+
+#page-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1;
+    margin: 20px;
 }
 
 #loader{
@@ -37,6 +33,10 @@
 
 #viewer-pagenumber-input {
     width: 30px;
+}
+
+.mdl-grid {
+    width: 100vw;
 }
 
 .viewer-name-file {
@@ -70,4 +70,8 @@
     height: 100%;
 }
 
-
+.center-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

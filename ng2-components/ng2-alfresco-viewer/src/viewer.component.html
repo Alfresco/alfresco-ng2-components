@@ -38,7 +38,7 @@
                         <div id="viewer-toolbar-view-options">
                             <div class="button-container">
                                 <button
-                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
+                                    class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
                                     <i id="viewer-close-button" class="icon material-icons">close</i>
                                 </button>
                             </div>
@@ -50,40 +50,37 @@
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">Thumbnail</span>
             </div>
-            <main class="mdl-layout__content">
-                <div class="page-content">
+            <main id="page-content" class="mdl-layout__content">
 
-                    <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
-                        <div
-                            class="mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-
-                            <div id="viewer-content-container">
-                            <!-- Start View Switch-->
-                                <div *ngIf="isPdf()"><pdf-viewer [urlFile]="urlFile" ></pdf-viewer></div>
-                                <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="viewer-image"/></div>
-                                <div *ngIf="notSupportedExtension()"><div id="viewer-unsupported">Not Supported Download</div></div>
-                            <!-- End View Switch -->
-                            </div>
-
-                            <div id="viewer-previous-file-button" class="previous-page-button" ng-hide="true">
-                                <button
-                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                    (click)="previousFile()">
-                                    <i class="icon material-icons">keyboard_arrow_left</i>
-                                </button>
-                            </div>
-
-                            <div id="viewer-next-file-button" class="next-page-button"  ng-hide="true">
-                                <button
-                                    class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                    (click)="nextFile()">
-                                    <i class="icon material-icons">keyboard_arrow_right</i>
-                                </button>
-                            </div>
-
-                        </div>
+                <div class="mdl-grid">
+                    <div id="viewer-previous-file-button" class="center-element mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
+                        <button
+                            class="center-element mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                            (click)="previousFile()">
+                            <i class="icon material-icons ">keyboard_arrow_left</i>
+                        </button>
                     </div>
+
+                    <div class="center-element mdl-cell mdl-cell--8-col" >
+
+                        <div id="viewer-content-container" class="center-element mdl-cell" >
+                        <!-- Start View Switch-->
+                            <div *ngIf="isPdf()"><pdf-viewer [urlFile]="urlFile" ></pdf-viewer></div>
+                            <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="center-element viewer-image"/></div>
+                            <div *ngIf="notSupportedExtension()"><div id="viewer-unsupported">Not Supported Download</div></div>
+                        <!-- End View Switch -->
+                        </div>
+
+                    </div>
+
+                    <div id="viewer-next-file-button" class="center-element mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
+                        <button
+                            class="center-element mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                            (click)="nextFile()">
+                            <i class="icon material-icons">keyboard_arrow_right</i>
+                        </button>
+                    </div>
+
                 </div>
             </main>
         </div>

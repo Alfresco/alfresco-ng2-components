@@ -48,13 +48,15 @@ export class PdfViewerComponent {
         }
 
         if (this.urlFile) {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 this.getPDFJS().getDocument(this.urlFile, null, null).then((pdfDocument) => {
                     this.currentPdfDocument = pdfDocument;
                     this.totalPages = pdfDocument.numPages;
                     this.page = 1;
                     this.displayPage = 1;
                     this.initPDFViewer(this.currentPdfDocument);
+                }, (error) => {
+                    reject(error);
                 });
                 resolve();
             });
