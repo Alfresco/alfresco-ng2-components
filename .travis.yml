@@ -3,7 +3,7 @@ node_js:
   - "4.2"
 
 addons:
-  firefox: "42.0"
+  firefox: "47.0"
 
 before_install:
   - export DISPLAY=:99.0
@@ -15,8 +15,8 @@ env:
   matrix:
 #    - MODULE=ng2-alfresco-core
 #    - MODULE=ng2-alfresco-datatable
-    - MODULE=ng2-alfresco-documentlist
-#    - MODULE=ng2-alfresco-login
+#    - MODULE=ng2-alfresco-documentlist
+    - MODULE=ng2-alfresco-login
 #    - MODULE=ng2-alfresco-search
 #    - MODULE=ng2-alfresco-upload
 
