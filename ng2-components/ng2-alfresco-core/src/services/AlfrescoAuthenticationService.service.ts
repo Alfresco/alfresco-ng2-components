@@ -20,6 +20,8 @@ import { Observable } from 'rxjs/Rx';
 import { Http, Headers, Response } from 'angular2/http';
 import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 
+declare let AlfrescoApi: any;
+
 /**
  * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
  */
@@ -30,13 +32,17 @@ export class AlfrescoAuthenticationService {
 
     /**
      * Constructor
-     * @param http
+     * @param alfrescoSettingsService
      */
-    constructor(public http: Http, private alfrescoSettingsService: AlfrescoSettingsService) {
+    constructor(private alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
     getBaseUrl(): string {
         return this.alfrescoSettingsService.host + this._authUrl;
+    }
+
+    private getAlfrescoClient() {
+        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getToken());
     }
 
     /**
@@ -58,27 +64,28 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
-     * The method provide the login with POST Request
+     * Perform a login on behalf of the user and store the ticket returned
+     *
      * @param username
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
     loginPost(username: string, password: string) {
-        let credentials = '{ "userId": "' + username + '", "password": "' + password + '" }';
-
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-
-        return this.http.post(this.getBaseUrl() + '/tickets', credentials, {
-                headers: headers
-            })
-            .map((res: any) => {
-                let response = res.json();
+        return Observable.fromPromise(this.getCreateTicketPromise(username, password))
+            .map(res => <any> res)
+            .do(response => {
                 this.saveToken(response.entry.id);
                 return this.getToken();
             })
             .catch(this.handleError);
+    }
+
+    getCreateTicketPromise(username: string, password: string) {
+        let apiInstance = new AlfrescoApi.Auth.AuthenticationApi(this.getAlfrescoClient());
+        let loginRequest = new AlfrescoApi.Auth.LoginRequest();
+        loginRequest.userId = username;
+        loginRequest.password = password;
+        return apiInstance.createTicket(loginRequest);
     }
 
     /**
@@ -87,18 +94,18 @@ export class AlfrescoAuthenticationService {
      * @returns {Observable<R>|Observable<T>}
      */
     loginDelete() {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Basic ' + btoa(this.getToken()));
-
-        return this.http.delete(this.getBaseUrl() + '/tickets/-me-', {
-                headers: headers
-            })
-            .map((res: any) => {
+        return Observable.fromPromise(this.getDeleteTicketPromise())
+            .map(res => <any> res)
+            .do(response => {
                 this.removeToken();
                 this.saveToken('');
             })
             .catch(this.handleError);
+    }
+
+    getDeleteTicketPromise() {
+        let apiInstance = new AlfrescoApi.Auth.AuthenticationApi(this.getAlfrescoClient());
+        return apiInstance.deleteTicket();
     }
 
     /**
@@ -141,6 +148,6 @@ export class AlfrescoAuthenticationService {
      */
     private handleError(error: Response) {
         console.error('Error when logging in', error);
-        return Observable.throw(error.json().message || 'Server error');
+        return Observable.throw(error || 'Server error');
     }
 }
