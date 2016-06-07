@@ -64,6 +64,10 @@
     color: #777;
 }
 
+:host .empty-folder-content {
+    padding: 0 !important;
+}
+
 :host .empty-folder-content > img {
     width: 100%;
 }
