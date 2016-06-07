@@ -13,7 +13,11 @@
       "LOGIN-SUCCESS": "Login successful"
     },
     "BUTTON": {
-      "LOGIN": "Login"
+      "LOGIN": "SIGN IN"
+    },
+    "ACTION": {
+      "HELP": "NEED HELP?",
+      "REGISTER": "REGISTER"
     }
   }
 }

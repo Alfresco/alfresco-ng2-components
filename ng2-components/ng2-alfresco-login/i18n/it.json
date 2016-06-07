@@ -15,5 +15,9 @@
     "BUTTON": {
       "LOGIN": "Accedi"
     }
+  },
+  "ACTION": {
+    "HELP": "BISOGNO DI AIUTO?",
+    "REGISTER": "REGISTRATI"
   }
 }

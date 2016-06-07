@@ -37,6 +37,9 @@ declare let __moduleName: string;
 
 })
 export class AlfrescoLoginComponent {
+
+    __baseUrl = __moduleName.replace('/alfresco-login.component.js', '');
+
     @Output()
     onSuccess = new EventEmitter();
     @Output()
