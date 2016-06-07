@@ -1,7 +1,6 @@
-<p *ngIf="searchTerm">
-<p *ngIf="results.length">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</p>
-<p *ngIf="results.length == 0">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
-<table *ngIf="searchTerm && results.length" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+<p *ngIf="results && results.length">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</p>
+<p *ngIf="results&& results.length == 0">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
+<table *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
         <th>
@@ -28,3 +27,4 @@
     </tr>
     </tbody>
 </table>
+<p *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>

@@ -50,7 +50,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     {
         translate.addComponent('node_modules/ng2-alfresco-search');
 
-        this.results = [];
+        this.results = null;
         if (params) {
             this.searchTerm = params.get('q');
         }
@@ -97,8 +97,14 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
             this._alfrescoService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
-                    results => this.results = results.list.entries,
-                    error => this.errorMessage = <any>error
+                    results => {
+                        this.results = results.list.entries
+                        this.errorMessage = null;
+                    },
+                    error => {
+                        this.results = null;
+                        this.errorMessage = <any>error;
+                    }
                 );
         }
     }

@@ -6,6 +6,7 @@
         "RESULTS": {
             "SUMMARY": "Found {{numResults}} results for {{searchTerm}}",
             "NONE": "No results found for {{searchTerm}}",
+            "ERROR": "An error occurred while running the search",
             "COLUMNS": {
                 "NAME": "Name",
                 "MODIFIED_BY": "Modified by",
