@@ -37,7 +37,9 @@ describe('PdfViewer', () => {
                     expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
                 });
         }));
+    });
 
+    describe('User interaction', () => {
         it('Total number of pages should be loaded', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(PdfViewerComponent)
@@ -45,73 +47,88 @@ describe('PdfViewer', () => {
                     let component = fixture.componentInstance;
                     component.urlFile = 'fake-url-file';
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    spyOn(component, 'initPDFViewer').and.returnValue(() => {
-                        console.log('viewer');
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
                     });
 
-                    component.ngOnChanges().then(()=> {
+                    component.ngOnChanges().then(() => {
                         expect(component.totalPages).toEqual('10');
                     });
-
-                });
-        }));
-    });
-
-    xdescribe('User interaction', () => {
-        it('Click on next page should move to the next page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(PdfViewerComponent)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-                    let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.pdfViewer = new PDFViewermock();
-                    component.urlFile = 'fake-url-file';
-
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
-                    element.querySelector('#viewer-next-page-button').click();
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pagenumber-input').value).toBe('2');
                 });
         }));
 
-        it('Click on previous page should move to the previous page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('nextPage should move to the next page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(PdfViewerComponent)
                 .then((fixture) => {
-                    let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.pdfViewer = new PDFViewermock();
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
                     component.urlFile = 'fake-url-file';
 
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
-                    element.querySelector('#viewer-next-page-button').click();
-                    element.querySelector('#viewer-next-page-button').click();
-                    element.querySelector('#viewer-previous-page-button').click();
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pagenumber-input').value).toBe('2');
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(1);
+                        component.nextPage();
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(2);
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
+                });
+        }));
+
+        it('previous page should move to the previous page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
+                    component.urlFile = 'fake-url-file';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(1);
+                        component.nextPage();
+                        component.nextPage();
+                        component.previousPage();
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(2);
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
                 });
         }));
 
         /* tslint:disable:max-line-length */
-        it('Click on previous page should not move to the previous page if is page 1', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('previous page should not move to the previous page if is page 1', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(PdfViewerComponent)
                 .then((fixture) => {
-                    let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
                     spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.pdfViewer = new PDFViewermock();
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
                     component.urlFile = 'fake-url-file';
 
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
-                    element.querySelector('#viewer-previous-page-button').click();
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(1);
+                        component.previousPage();
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(1);
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
                 });
         }));
     });
