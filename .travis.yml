@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "4.2"
-sudo: false
+sudo: true
 before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
