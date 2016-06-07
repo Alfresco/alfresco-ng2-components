@@ -6,6 +6,7 @@ before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  
 env:
   global:
     - DEV_REGISTRY=http://devproducts.alfresco.me:4873
@@ -17,7 +18,10 @@ env:
 #    - MODULE=ng2-alfresco-search
 #    - MODULE=ng2-alfresco-upload
 
-before_script: cd ./ng2-components/$MODULE; npm install --registry $DEV_REGISTRY
+before_script:
+  - npm install material-design-lite material-design-icons -g
+  - npm set registry $DEV_REGISTRY
+  - cd ./ng2-components/$MODULE; npm install
 script: npm run test
 # Send coverage data to Coveralls
 #after_script: "cat ./ng2-components/$MODULE/coverage/lcov.info | ./ng2-components/$MODULE/node_modules/coveralls/bin/coveralls.js"
