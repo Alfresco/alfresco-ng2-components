@@ -114,22 +114,6 @@ describe('DocumentList', () => {
         expect(list.getContentUrl(node)).toBeNull();
     });
 
-    it('should get thumbnail url', () => {
-        let url = 'URL';
-        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        let result = documentList.getDocumentThumbnailUrl(null);
-
-        expect(result).toBe(url);
-        expect(alfrescoServiceMock.getDocumentThumbnailUrl).toHaveBeenCalled();
-    });
-
-    it('should get no thumbnail url without service', () => {
-        let list = new DocumentList(null);
-        let node = new MinimalNodeEntity();
-        expect(list.getDocumentThumbnailUrl(node)).toBeNull();
-    });
-
     it('should execute action with node', () => {
         let node = new MinimalNodeEntity();
         let action = new ContentActionModel();
