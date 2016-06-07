@@ -14,24 +14,20 @@ before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - sudo apt-get update
-  - sudo apt-get install -y libappindicator1 fonts-liberation
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i google-chrome*.deb
 
 env:
   global:
     - DEV_REGISTRY=http://devproducts.alfresco.me:4873
   matrix:
-    - MODULE=ng2-alfresco-core
+#    - MODULE=ng2-alfresco-core
 #    - MODULE=ng2-alfresco-datatable
-#    - MODULE=ng2-alfresco-documentlist
+    - MODULE=ng2-alfresco-documentlist
 #    - MODULE=ng2-alfresco-login
 #    - MODULE=ng2-alfresco-search
 #    - MODULE=ng2-alfresco-upload
 
 before_script:
-#  - npm set registry $DEV_REGISTRY
+  - npm set registry $DEV_REGISTRY
   - cd ./ng2-components/$MODULE; npm install
 script: npm run test
 # Send coverage data to Coveralls
