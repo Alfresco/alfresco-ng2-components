@@ -43,8 +43,9 @@ declare var document: any;
 })
 @RouteConfig([
     {path: '/home', name: 'Home', component: FilesComponent},
-    {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
+    {path: '/fles', name: 'Files', component: FilesComponent},
     {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
+    {path: '/', name: 'Login', component: LoginDemoComponent, useAsDefault: true},
     {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
     {path: '/login', name: 'Login', component: LoginDemoComponent},
     {path: '/search', name: 'Search', component: SearchComponent}
