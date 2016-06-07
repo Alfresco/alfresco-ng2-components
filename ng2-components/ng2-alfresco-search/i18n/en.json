@@ -5,6 +5,7 @@
         },
         "RESULTS": {
             "SUMMARY": "Found {{numResults}} results for {{searchTerm}}",
+            "NONE": "No results found for {{searchTerm}}",
             "COLUMNS": {
                 "NAME": "Name",
                 "MODIFIED_BY": "Modified by",
