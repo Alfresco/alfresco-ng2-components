@@ -23,7 +23,8 @@ import {
 } from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
 import {
     MDL,
-    AlfrescoSettingsService
+    AlfrescoSettingsService,
+    AlfrescoContentService
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -46,12 +47,14 @@ export class FilesComponent {
     relativePath: string = '';
 
     urlFile: string;
+    mimeType: string;
     fileShowed: boolean = false;
 
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
     constructor(
         private settings: AlfrescoSettingsService,
+        private contentService: AlfrescoContentService,
         documentActions: DocumentActionsService) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
@@ -74,11 +77,9 @@ export class FilesComponent {
 
     showFile(event) {
         if (event.value.entry.isFile) {
-            let workSpace = 'workspace/SpacesStore/' + event.value.entry.id;
             let nameFile = event.value.entry.name;
-
-            this.urlFile = this.settings.host + '/alfresco/s/slingshot/node/content/' + workSpace + '/' + nameFile;
-
+            this.mimeType = event.value.entry.content.mimeType;
+            this.urlFile = this.contentService.getContentUrl(event.value);
             this.fileShowed = true;
         } else {
             this.fileShowed = false;

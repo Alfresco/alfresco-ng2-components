@@ -35,6 +35,9 @@ export class ViewerComponent {
     urlFile: string;
 
     @Input()
+    mimeType: string = null;
+
+    @Input()
     overlayMode: boolean = false;
 
     @Input()
@@ -63,8 +66,6 @@ export class ViewerComponent {
                 if (this.urlFile) {
                     this.nameFile = this.getFilenameFromUrl(this.urlFile);
                     this.extension = this.getFileExtension(this.nameFile);
-
-                    this.urlFile = this.addAlfrescoTicket(this.urlFile);
                 }
                 resolve();
             });
@@ -116,7 +117,7 @@ export class ViewerComponent {
      * check if the current file is a suppoerted pdf extension
      */
     private isPdf() {
-        return this.extension === 'pdf';
+        return this.extension === 'pdf' || this.mimeType == 'application/pdf';
     }
 
     /**
@@ -140,22 +141,6 @@ export class ViewerComponent {
         } else if (key === 37) {//left arrow
             //this.previousPage();
         }
-    }
-
-    /**
-     * Add Ticket to the file request
-     * @returns {string}
-     */
-    private addAlfrescoTicket(url: string) {
-        return url + '?alf_ticket=' + this.getAlfrescoTicket();
-    }
-
-    /**
-     * Get the token from the local storage
-     * @returns {string}
-     */
-    private getAlfrescoTicket() {
-        return localStorage.getItem('token');
     }
 
     /**
