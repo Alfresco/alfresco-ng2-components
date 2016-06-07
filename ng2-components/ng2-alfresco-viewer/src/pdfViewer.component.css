@@ -2,6 +2,10 @@
     background: #3E3E3E;
 }
 
+.viewer-loader-text {
+    text-align: center;
+}
+
 :host .page {
     margin: 10px auto !important;
     overflow: visible;
