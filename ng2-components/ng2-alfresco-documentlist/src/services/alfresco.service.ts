@@ -48,20 +48,12 @@ export class AlfrescoService {
     }
 
     private getAlfrescoClient() {
-        let defaultClient = new AlfrescoApi.ApiClient();
-        defaultClient.basePath = this.getBaseUrl();
-
-        // Configure HTTP basic authorization: basicAuth
-        let basicAuth = defaultClient.authentications['basicAuth'];
-        basicAuth.username = 'ROLE_TICKET';
-        basicAuth.password = this.getAlfrescoTicket();
-
-        return defaultClient;
+        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getAlfrescoTicket());
     }
 
     private getNodesPromise(folder: string) {
         let alfrescoClient = this.getAlfrescoClient();
-        let apiInstance = new AlfrescoApi.NodesApi(alfrescoClient);
+        let apiInstance = new AlfrescoApi.Core.NodesApi(alfrescoClient);
         let nodeId = '-root-';
         let opts = {
             relativePath: folder,
@@ -72,7 +64,7 @@ export class AlfrescoService {
 
     deleteNode(nodeId: string) {
         let client = this.getAlfrescoClient();
-        let nodesApi = new AlfrescoApi.NodesApi(client);
+        let nodesApi = new AlfrescoApi.Core.NodesApi(client);
         let opts = {};
         return Observable.fromPromise(nodesApi.deleteNode(nodeId, opts));
     }

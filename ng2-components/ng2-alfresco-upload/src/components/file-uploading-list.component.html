@@ -1,7 +1,7 @@
 <div [ngClass]="{hide:  isUploadCompleted()}" [ngClass]="{show:   !isUploadCompleted()}"
      class="body-dialog-header">
     <div class="body-dialog-action"></div>
-    <div class="body-dialog-cancel"><a data-automation-id="cancel_upload_all" href="#" (click)="cancelAllFiles()">{{'FILE_UPLOAD.BUTTON.CANCEL' | translate}}</a></div>
+    <div class="body-dialog-cancel"><a data-automation-id="cancel_upload_all" href="#" (click)="cancelAllFiles($event)">{{'FILE_UPLOAD.BUTTON.CANCEL' | translate}}</a></div>
 </div>
 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <tr>
@@ -26,7 +26,6 @@
             <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" ><i data-automation-id="abort_cancel_upload"
                                                                                      class="material-icons">remove_circle_outline</i></span>
             <span *ngIf="file.abort"><i class="material-icons">remove_circle</i></span>
-            <span *ngIf="!file.abort && !file.uploading && !file.done"><i class="material-icons">pause</i></span>
         </td>
     </tr>
 </table>

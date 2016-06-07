@@ -16,7 +16,6 @@
  */
 
 import { Injectable } from 'angular2/core';
-import { Http, Response } from 'angular2/http';
 import { Observable } from 'rxjs/Observable';
 
 import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -31,8 +30,7 @@ export class AlfrescoService {
 
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
 
-    constructor(private http: Http,
-                private settings: AlfrescoSettingsService) {
+    constructor(private settings: AlfrescoSettingsService) {
     }
 
     public getHost(): string {
@@ -48,20 +46,11 @@ export class AlfrescoService {
     }
 
     private getAlfrescoClient() {
-        let defaultClient = new AlfrescoApi.ApiClient();
-        defaultClient.basePath = this.getBaseUrl();
-
-        // Configure HTTP basic authorization: basicAuth
-        let basicAuth = defaultClient.authentications['basicAuth'];
-        basicAuth.username = 'ROLE_TICKET';
-        basicAuth.password = this.getAlfrescoTicket();
-
-        return defaultClient;
+        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getAlfrescoTicket());
     }
 
     private getSearchNodesPromise(term: string) {
-        let alfrescoClient = this.getAlfrescoClient();
-        let apiInstance = new AlfrescoApi.SearchApi(alfrescoClient);
+        let apiInstance = new AlfrescoApi.Core.SearchApi(this.getAlfrescoClient());
         let nodeId = '-root-';
         let opts = {
             include: ['path'],
@@ -103,7 +92,7 @@ export class AlfrescoService {
             document.entry.id + '/content';
     }
 
-    private handleError(error: Response) {
+    private handleError(error: any) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);

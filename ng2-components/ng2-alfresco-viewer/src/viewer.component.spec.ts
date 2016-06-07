@@ -15,30 +15,12 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, injectAsync, TestComponentBuilder, setBaseTestProviders } from 'angular2/testing';
-import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
+import { describe, expect, it, injectAsync, TestComponentBuilder } from 'angular2/testing';
 import { ViewerComponent } from './viewer.component';
-import { PDFJSmock } from './assets/PDFJS.mock';
-import { PDFViewermock } from './assets/PDFViewer.mock';
 
-describe('Ng2-alfresco-viewer', () => {
-    setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+describe('ViewerComponent', () => {
 
     describe('View', () => {
-
-        it('Canvas should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(ViewerComponent)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-
-                    fixture.detectChanges();
-
-                    expect(element.querySelector('#viewer-viewerPdf')).not.toBeNull();
-                    expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
-                });
-        }));
-
         it('shadow overlay should be present if overlay is true', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
@@ -83,35 +65,17 @@ describe('Ng2-alfresco-viewer', () => {
                 });
         }));
 
-        it('Total number of pages should be showed', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(ViewerComponent)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-                    let component = fixture.componentInstance;
-
-                    component.urlFile = 'fake-url-file';
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-
-                    component.ngOnChanges().then(() => {
-                        expect(element.querySelector('#viewer-total-pages').innerHTML).toEqual('/10');
-                    });
-                });
-        }));
-
         it('Name File should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-
-                    component.urlFile = 'fake-url-file';
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    component.urlFile = 'http://localhost:9876/fake-url-file.pdf';
 
                     component.ngOnChanges().then(() => {
                         fixture.detectChanges();
-                        expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-name');
+                        expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-url-file.pdf');
                     });
                 });
         }));
@@ -122,12 +86,26 @@ describe('Ng2-alfresco-viewer', () => {
                 .then((fixture) => {
                     let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
                     component.urlFile = 'fake-url-file';
 
                     fixture.detectChanges();
 
                     expect(element.querySelector('#viewer-close-button')).not.toBeNull();
+                });
+        }));
+
+        it('Click on close button should hide the viewer', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    component.urlFile = 'fake-url-file';
+
+                    fixture.detectChanges();
+                    element.querySelector('#viewer-close-button').click();
+                    fixture.detectChanges();
+                    expect(element.querySelector('#viewer-main-container')).toBeNull();
                 });
         }));
     });
@@ -162,96 +140,61 @@ describe('Ng2-alfresco-viewer', () => {
                 .then((fixture) => {
                     let component = fixture.componentInstance;
                     let element = fixture.nativeElement;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-
                     component.urlFile = 'fake-url-file';
                     component.showViewer = false;
 
                     fixture.detectChanges();
-                    expect(element.querySelector('#viewer-viewerPdf')).toBeNull();
-                    expect(element.querySelector('#viewer-pdf-container')).toBeNull();
+                    expect(element.querySelector('#viewer-main-container')).toBeNull();
                 });
         }));
     });
 
-    describe('User interaction', () => {
-        it('Click on next page should move to the next page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    /* tslint:disable:max-line-length */
+    describe('Extension Type Test', () => {
+        it('if extension file is a pdf the pdf viewer should be loaded', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
-                    let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.pdfViewer = new PDFViewermock();
-                    component.urlFile = 'fake-url-file';
+                    let element = fixture.nativeElement;
+                    component.urlFile = 'fake-url-file.pdf';
 
                     component.ngOnChanges().then(() => {
                         fixture.detectChanges();
-                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
-                        element.querySelector('#viewer-next-page-button').click();
-                        fixture.detectChanges();
-                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('2');
-                    });
-                });
-        }));
-
-        it('Click on previous page should move to the previous page', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(ViewerComponent)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-                    let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.pdfViewer = new PDFViewermock();
-                    component.urlFile = 'fake-url-file';
-
-                    component.ngOnChanges().then(() => {
-                        fixture.detectChanges();
-                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
-                        element.querySelector('#viewer-next-page-button').click();
-                        element.querySelector('#viewer-next-page-button').click();
-                        element.querySelector('#viewer-previous-page-button').click();
-                        fixture.detectChanges();
-                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('2');
+                        expect(element.querySelector('pdf-viewer')).not.toBeNull();
                     });
                 });
         }));
 
         /* tslint:disable:max-line-length */
-        it('Click on previous page should not move to the previous page if is page 1', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('if extension file is a image the img viewer should be loaded', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
-                    let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.pdfViewer = new PDFViewermock();
-                    component.urlFile = 'fake-url-file';
+                    let element = fixture.nativeElement;
+                    component.urlFile = 'fake-url-file.png';
 
                     component.ngOnChanges().then(() => {
                         fixture.detectChanges();
-                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
-                        element.querySelector('#viewer-previous-page-button').click();
-                        fixture.detectChanges();
-                        expect(element.querySelector('#viewer-pagenumber-input').value).toBe('1');
+                        expect(element.querySelector('#viewer-image')).not.toBeNull();
                     });
                 });
         }));
 
-        it('Click on close button should hide the viewer', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        /* tslint:disable:max-line-length */
+        it('if extension file is a not supported the not supported div should be loaded', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)
                 .then((fixture) => {
-                    let element = fixture.nativeElement;
                     let component = fixture.componentInstance;
-                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
-                    component.urlFile = 'fake-url-file';
+                    let element = fixture.nativeElement;
+                    component.urlFile = 'fake-url-file.unsupported';
 
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
-                    element.querySelector('#viewer-close-button').click();
-                    fixture.detectChanges();
-                    expect(element.querySelector('#viewer-pdf-container')).toBeNull();
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-unsupported')).not.toBeNull();
+                    });
                 });
         }));
     });

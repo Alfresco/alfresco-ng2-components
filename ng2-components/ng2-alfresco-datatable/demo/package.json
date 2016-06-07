@@ -1,51 +1,50 @@
 {
-    "name": "ng2-alfresco-datatable-demo",
-    "description": "Alfresco Angular2 DataTable Component - Demo",
-    "version": "0.1.0",
-    "author": "Alfresco Software, Ltd.",
-    "contributors": [
-        {
-            "name": "Denys Vuika",
-            "email": "denis.vuyka@gmail.com"
-        }
-    ],
-    "main": "index.js",
-    "scripts": {
-        "postinstall": "npm run typings && npm run build",
-        "typings": "typings install",
-        "start": "rm -rf dist && npm install && npm run server",
-        "server": "lite-server",
-        "build": "npm run tslint &&  rm -rf dist && tsc",
-        "tslint": "npm run tslint-src && npm run tslint-root",
-        "tslint-src": "tslint -c tslint.json src/**/*.ts",
-        "tslint-root": "tslint -c tslint.json *.ts"
-    },
-    "license": "Apache-2.0",
-    "dependencies": {
-        "angular2": "2.0.0-beta.15",
-        "es6-promise": "3.0.2",
-        "es6-shim": "0.35.0",
-        "reflect-metadata": "0.1.2",
-        "rxjs": "5.0.0-beta.2",
-        "material-design-icons": "^2.2.3",
-        "material-design-lite": "^1.1.3",
-        "zone.js": "0.6.10",
-        "ng2-translate": "^1.11.3",
-        "ng2-alfresco-datatable": "^0.1.0"
-    },
-    "devDependencies": {
-        "browser-sync": "^2.10.0",
-        "concurrently": "^2.0.0",
-        "lite-server": "^2.2.0",
-        "tslint": "^3.8.1",
-        "typescript": "^1.8.10",
-        "typings": "^0.7.12"
-    },
-    "keywords": [
-        "angular2",
-        "typescript"
-    ],
-    "publishConfig": {
-        "registry": "http://devproducts.alfresco.me:4873/"
+  "name": "ng2-alfresco-datatable-demo",
+  "description": "Alfresco Angular2 DataTable Component - Demo",
+  "version": "0.1.0",
+  "author": "Alfresco Software, Ltd.",
+  "contributors": [
+    {
+      "name": "Denys Vuika",
+      "email": "denis.vuyka@gmail.com"
     }
+  ],
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run typings && npm run build",
+    "typings": "typings install",
+    "start": "rm -rf dist && npm install && npm run server",
+    "server": "wsrv -o",
+    "build": "npm run tslint &&  rm -rf dist && tsc",
+    "tslint": "npm run tslint-src && npm run tslint-root",
+    "tslint-src": "tslint -c tslint.json src/**/*.ts",
+    "tslint-root": "tslint -c tslint.json *.ts"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "angular2": "2.0.0-beta.15",
+    "es6-promise": "3.0.2",
+    "es6-shim": "0.35.0",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "material-design-icons": "^2.2.3",
+    "material-design-lite": "^1.1.3",
+    "zone.js": "0.6.10",
+    "ng2-alfresco-datatable": "^0.1.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.10.0",
+    "concurrently": "^2.0.0",
+    "tslint": "^3.8.1",
+    "typescript": "^1.8.10",
+    "typings": "^0.7.12",
+    "wsrv": "^0.1.0"
+  },
+  "keywords": [
+    "angular2",
+    "typescript"
+  ],
+  "publishConfig": {
+    "registry": "http://devproducts.alfresco.me:4873/"
+  }
 }

@@ -9,7 +9,7 @@
 
             <!-- Search box -->
             <alfresco-search-control *ngIf="isLoggedIn()" [searchTerm]="searchTerm"
-            (searchChange)="searchTermChange($event);"></alfresco-search-control>
+            (searchChange)="searchTermChange($event);" [autocomplete]="false"></alfresco-search-control>
 
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
@@ -17,7 +17,6 @@
                 <a class="mdl-navigation__link" data-automation-id="datatable" href="" [routerLink]="['DataTable']">DataTable</a>
                 <a class="mdl-navigation__link" data-automation-id="uploader" href="" [routerLink]="['Uploader']">Uploader</a>
                 <a class="mdl-navigation__link" data-automation-id="login" href="" [routerLink]="['Login']">Login</a>
-                <a class="mdl-navigation__link" data-automation-id="viewer" href="" [routerLink]="['Viewer']">Viewer</a>
             </nav>
             <!-- Right aligned menu below button -->
             <button id="demo-menu-language-right" data-automation-id="language-menu"
@@ -54,7 +53,6 @@
             <a class="mdl-navigation__link" href="" [routerLink]="['DataTable']" (click)="hideDrawer()">DataTable</a>
             <a class="mdl-navigation__link" href="" [routerLink]="['Uploader']" (click)="hideDrawer()">Uploader</a>
             <a class="mdl-navigation__link" href="" [routerLink]="['Login']" (click)="hideDrawer()">Login</a>
-            <a class="mdl-navigation__link" href="" [routerLink]="['Viewer']" (click)="hideDrawer()">Viewer</a>
         </nav>
     </div>
     <main class="mdl-layout__content">

@@ -16,8 +16,10 @@
  */
 
 import { Control, Validators } from 'angular2/common';
-import { Component, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
+
+import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 declare let __moduleName: string;
 declare var componentHandler: any;
@@ -28,9 +30,10 @@ declare var componentHandler: any;
     styles: [
     ],
     templateUrl: './alfresco-search-control.component.html',
-    providers: [AlfrescoService]
+    providers: [AlfrescoService],
+    pipes: [AlfrescoPipeTranslate]
 })
-export class AlfrescoSearchControlComponent {
+export class AlfrescoSearchControlComponent implements AfterViewInit {
 
     @Input()
     searchTerm = '';
@@ -49,13 +52,14 @@ export class AlfrescoSearchControlComponent {
 
     searchControl: Control;
 
-    constructor() {
+    constructor(private translate: AlfrescoTranslationService) {
 
         this.searchControl = new Control(
             this.searchTerm,
             Validators.compose([Validators.required, Validators.minLength(3)])
         );
 
+        translate.addComponent('node_modules/ng2-alfresco-search');
     }
 
     ngAfterViewInit() {

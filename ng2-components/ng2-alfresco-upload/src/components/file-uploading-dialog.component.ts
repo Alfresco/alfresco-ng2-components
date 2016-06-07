@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef } from 'angular2/core';
+import { Component, ChangeDetectorRef, OnInit } from 'angular2/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 declare let __moduleName: string;
@@ -43,16 +43,21 @@ declare let __moduleName: string;
     host: {'[class.dialog-show]': 'toggleShowDialog'},
     pipes: [AlfrescoPipeTranslate]
 })
-export class FileUploadingDialogComponent {
+export class FileUploadingDialogComponent implements OnInit{
 
     isDialogActive: boolean = false;
 
     filesUploadingList: FileModel [];
 
+    totalCompleted: number = 0;
+
     private _isDialogMinimized: boolean = false;
 
     constructor(private cd: ChangeDetectorRef,
-                private _uploaderService: UploadService) {}
+                translate: AlfrescoTranslationService,
+                private _uploaderService: UploadService) {
+        translate.addComponent('node_modules/ng2-alfresco-upload');
+    }
 
     ngOnInit() {
         this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
@@ -61,6 +66,10 @@ export class FileUploadingDialogComponent {
                 this.isDialogActive = true;
                 this.cd.detectChanges();
             }
+        });
+        this._uploaderService.totalCompleted$.subscribe((total: number) => {
+            this.totalCompleted = total;
+            this.cd.detectChanges();
         });
     }
 

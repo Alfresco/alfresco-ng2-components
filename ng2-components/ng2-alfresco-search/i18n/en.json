@@ -1,0 +1,15 @@
+{
+    "SEARCH": {
+        "CONTROL": {
+            "LABEL": "Search content"
+        },
+        "RESULTS": {
+            "SUMMARY": "Found {{numResults}} results for {{searchTerm}}",
+            "COLUMNS": {
+                "NAME": "Name",
+                "MODIFIED_BY": "Modified by",
+                "MODIFIED_AT": "Modified at"
+            }
+        }
+    }
+}

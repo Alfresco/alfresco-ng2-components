@@ -43,13 +43,18 @@ export class UploadService {
     private _queue: FileModel[] = [];
 
     filesUpload$: Observable<FileModel[]>;
+    totalCompleted$: Observable<number>;
     private _filesUploadObserver: Observer<FileModel[]>;
+    private _totalCompletedObserver: Observer<number>;
 
     private _alfrescoClient: any;
+
+    public totalCompleted: number = 0;
 
     constructor(private settings: AlfrescoSettingsService) {
         console.log('UploadService constructor');
         this.filesUpload$ = new Observable(observer =>  this._filesUploadObserver = observer).share();
+        this.totalCompleted$ = new Observable(observer =>  this._totalCompletedObserver = observer).share();
         this._alfrescoClient = this.getAlfrescoClient();
     }
 
@@ -195,6 +200,12 @@ export class UploadService {
                     xmlHttpRequest.statusText,
                     xmlHttpRequest.response
                 );
+                this._filesUploadObserver.next(this._queue);
+                if (!uploadingFileModel.abort && !uploadingFileModel.error) {
+                    if (this._totalCompletedObserver) {
+                        this._totalCompletedObserver.next(++this.totalCompleted);
+                    }
+                }
             }
         };
         return xmlHttpRequest;
