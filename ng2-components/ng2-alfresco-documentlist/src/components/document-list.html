@@ -100,5 +100,18 @@
             </ul>
         </td>
     </tr>
+
+    <tr *ngIf="folder?.list?.entries?.length === 0">
+        <td class="mdl-data-table__cell--non-numeric empty-folder-content"
+            [attr.colspan]="1 + columns?.length">
+            <template *ngIf="emptyFolderTemplate"
+                      ngFor [ngForOf]="[folder]"
+                      [ngForTemplate]="emptyFolderTemplate">
+            </template>
+            <img *ngIf="!emptyFolderTemplate"
+                 [src]="__baseUrl + '/document-list.empty-folder.png'">
+        </td>
+    </tr>
+
     </tbody>
 </table>

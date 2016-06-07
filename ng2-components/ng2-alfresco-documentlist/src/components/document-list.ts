@@ -23,7 +23,8 @@ import {
     EventEmitter,
     AfterContentInit,
     AfterViewChecked,
-    OnChanges
+    OnChanges,
+    TemplateRef
 } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
@@ -44,6 +45,8 @@ declare let __moduleName: string;
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit, OnChanges {
 
     DEFAULT_ROOT_FOLDER: string = '/Sites/swsdp/documentLibrary';
+
+    __baseUrl = __moduleName.replace('/document-list.js', '');
 
     @Input()
     navigate: boolean = true;
@@ -73,6 +76,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
+    emptyFolderTemplate: TemplateRef;
 
     private _folder: NodePaging;
 

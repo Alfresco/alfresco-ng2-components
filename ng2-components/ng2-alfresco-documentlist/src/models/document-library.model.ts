@@ -17,10 +17,12 @@
 
 // note: contains only limited subset of available fields
 
+// TODO: deprecated
 export class FolderEntity {
     items: DocumentEntity[];
 }
 
+// TODO: deprecated
 export class DocumentEntity {
     nodeRef: string;
     nodeType: string;
@@ -52,6 +54,7 @@ export class DocumentEntity {
     location: LocationEntity;
 }
 
+// TODO: deprecated
 export class LocationEntity {
     repositoryId: string;
     site: string;
@@ -62,6 +65,7 @@ export class LocationEntity {
     parent: LocationParentEntity;
 }
 
+// TODO: deprecated
 export class LocationParentEntity {
     nodeRef: string;
 }

@@ -9,6 +9,13 @@
             [breadcrumb]="breadcrumb"
             (itemClick)="showFile($event)"
             (folderChange)="onFolderChanged($event)">
+        <!--
+        <empty-folder-content>
+            <template>
+                <h1>Sorry, no content here</h1>
+            </template>
+        </empty-folder-content>
+        -->
         <content-columns>
             <content-column source="$thumbnail"></content-column>
             <content-column

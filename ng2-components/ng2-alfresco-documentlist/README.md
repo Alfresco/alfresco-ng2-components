@@ -458,6 +458,29 @@ export class MyView {
 
 ## Advanced usage and customization
 
+### Custom 'empty folder' template
+
+By default Document List provides the following content for the empty folder:
+
+![Default empty folder](docs/assets/empty-folder-template-default.png)
+
+This can be changed by means of the custom html template:
+
+```html
+<alfresco-document-list ...>
+    <empty-folder-content>
+        <template>
+            <h1>Sorry, no content here</h1>
+        </template>
+    </empty-folder-content>
+</alfresco-document-list>
+```
+
+That will give the following output:
+
+![Custom empty folder](docs/assets/empty-folder-template-custom.png)
+
+
 ### Customizing default actions
 
 It is possible extending or replacing the list of available system actions for documents and folders.
