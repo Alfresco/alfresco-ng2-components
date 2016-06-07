@@ -1,11 +1,6 @@
 :host .full-width { width: 100%; }
 
-:host .folder-thumbnail {
-    font-size: 48px;
-    cursor: pointer;
-}
-
-:host .document-thumbnail {
+:host .thumbnail {
     width: 48px;
     height: 48px;
     cursor: pointer;

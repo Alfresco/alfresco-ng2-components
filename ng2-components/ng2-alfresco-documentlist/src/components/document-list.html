@@ -41,12 +41,7 @@
             (click)="onItemClick(content, $event)"
             [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
             <div *ngSwitchWhen="'$thumbnail'">
-                <div *ngIf="content.entry.isFolder">
-                    <i class="material-icons folder-thumbnail">{{folderIcon || 'folder_open'}}</i>
-                </div>
-                <div *ngIf="!content.entry.isFolder">
-                    <img class="document-thumbnail" alt="" src="{{getDocumentThumbnailUrl(content)}}">
-                </div>
+                <img class="thumbnail" src="{{getThumbnailUrl(content)}}">
             </div>
             <span *ngSwitchDefault>
                 {{getObjectValue(content.entry, col.source)}}
@@ -109,7 +104,7 @@
                       [ngForTemplate]="emptyFolderTemplate">
             </template>
             <img *ngIf="!emptyFolderTemplate"
-                 [src]="__baseUrl + '/document-list.empty-folder.png'">
+                 [src]="__baseUrl + '/img/document-list.empty-folder.png'">
         </td>
     </tr>
 

@@ -46,7 +46,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     DEFAULT_ROOT_FOLDER: string = '/Sites/swsdp/documentLibrary';
 
-    __baseUrl = __moduleName.replace('/document-list.js', '');
+    __baseUrl = __moduleName.replace('/components/document-list.js', '');
 
     @Input()
     navigate: boolean = true;
@@ -56,6 +56,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     @Input('folder-icon')
     folderIcon: string;
+
+    @Input()
+    thumbnails: boolean = false;
 
     @Output()
     itemClick: EventEmitter<any> = new EventEmitter();
@@ -237,14 +240,35 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     /**
-     * Gets thumbnail URL for the given document node.
+     * Gets thumbnail URL for the given node.
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(node: MinimalNodeEntity): string {
-        if (this._alfrescoService) {
-            return this._alfrescoService.getDocumentThumbnailUrl(node);
+    getThumbnailUrl(node: MinimalNodeEntity): string {
+        if (node && node.entry) {
+            let entry = node.entry;
+
+            if (entry.isFolder) {
+                return `${this.__baseUrl}/img/ft_ic_folder.svg`;
+            }
+
+            if (entry.isFile) {
+                if (this.thumbnails) {
+                    if (this._alfrescoService) {
+                        return this._alfrescoService.getDocumentThumbnailUrl(node);
+                    }
+                    return null;
+                }
+
+                if (entry.content && entry.content.mimeType) {
+                    let icon = this._alfrescoService.getMimeTypeIcon(entry.content.mimeType);
+                    return `${this.__baseUrl}/img/${icon}`;
+                }
+            }
+
+            return `${this.__baseUrl}/img/ft_ic_miscellaneous.svg`;
         }
+
         return null;
     }
 
