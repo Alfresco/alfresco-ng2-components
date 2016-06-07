@@ -65,18 +65,6 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     }
 
     /**
-     * Gets content URL for the given node.
-     * @param node Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getContentUrl(node: any): string {
-        if (this._alfrescoService) {
-            return this._alfrescoService.getContentUrl(node);
-        }
-        return null;
-    }
-
-    /**
      * Gets thumbnail URL for the given document node.
      * @param node Node to get URL for.
      * @returns {string} URL address.

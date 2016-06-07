@@ -18,7 +18,11 @@
 import { Injectable } from 'angular2/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import {
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 declare let AlfrescoApi: any;
 
@@ -28,25 +32,15 @@ declare let AlfrescoApi: any;
 @Injectable()
 export class AlfrescoService {
 
-    private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
-
-    constructor(private settings: AlfrescoSettingsService) {
-    }
-
-    public getHost(): string {
-        return this.settings.host;
-    }
-
-    private getBaseUrl(): string {
-        return this.getHost() + this._baseUrlPath;
-    }
-
-    private getAlfrescoTicket() {
-        return localStorage.getItem('token');
+    constructor(
+        private settings: AlfrescoSettingsService,
+        private authService: AlfrescoAuthenticationService,
+        private contentService: AlfrescoContentService
+    ) {
     }
 
     private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getAlfrescoTicket());
+        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
     }
 
     private getSearchNodesPromise(term: string) {
@@ -78,18 +72,7 @@ export class AlfrescoService {
      * @returns {string} URL address.
      */
     getDocumentThumbnailUrl(document: any) {
-        return this.getContentUrl(document) + '/thumbnails/doclib?c=queue&ph=true&lastModified=1&alf_ticket=' + this.getAlfrescoTicket();
-    }
-
-    /**
-     * Get content URL for the given node.
-     * @param document Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getContentUrl(document: any) {
-        return this.getHost() +
-            '/alfresco/service/api/node/workspace/SpacesStore/' +
-            document.entry.id + '/content';
+        return this.contentService.getDocumentThumbnailUrl(document);
     }
 
     private handleError(error: any) {

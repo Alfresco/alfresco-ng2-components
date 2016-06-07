@@ -17,16 +17,22 @@
 
 import {Observable} from 'rxjs/Observable';
 import {AlfrescoService} from '../../src/services/alfresco.service';
-import {AlfrescoSettingsService} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import {
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 export class AlfrescoServiceMock extends AlfrescoService {
 
     _folderToReturn: any = {};
 
     constructor(
-        settings: AlfrescoSettingsService = null
+        settings: AlfrescoSettingsService = null,
+        authService: AlfrescoAuthenticationService = null,
+        contentService: AlfrescoContentService = null
     ) {
-        super(settings);
+        super(settings, authService, contentService);
     }
 
     getFolder(folder: string) {
