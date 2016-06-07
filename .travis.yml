@@ -20,6 +20,7 @@ env:
 
 before_script:
   - npm install gulp gulp-cli bower material-design-lite material-design-icons -g
+  - bower install traceur_runtime
   - npm set registry $DEV_REGISTRY
   - cd ./ng2-components/$MODULE; npm install
 script: npm run test
