@@ -20,6 +20,8 @@ export class ContentColumnModel {
     srTitle: string;
     source: string;
     cssClass: string;
+    type: string = 'text'; // text|date|image|number
+    format: string = 'medium';
 
     constructor(obj?: any) {
         if (obj) {
@@ -27,6 +29,8 @@ export class ContentColumnModel {
             this.srTitle = obj.srTitle;
             this.source = obj.source;
             this.cssClass = obj.cssClass;
+            this.type = obj.type || 'text';
+            this.format = obj.format;
         }
     }
 }

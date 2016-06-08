@@ -26,6 +26,7 @@ import {
     OnChanges,
     TemplateRef
 } from 'angular2/core';
+import { DatePipe } from 'angular2/common';
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
@@ -345,12 +346,36 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return target;
     }
 
+    getCellValue(row: MinimalNodeEntity, col: ContentColumnModel): any {
+        let value = this._getObjectValueRaw(row.entry, col.source);
+
+        if (col.type === 'date') {
+            let datePipe = new DatePipe();
+            if (datePipe.supports(value)) {
+                // TODO: to be changed to plan non-array value post angular2 beta.15
+                let pattern = col.format ? [col.format] : [];
+                return datePipe.transform(value, pattern);
+            }
+        }
+
+        if (col.type === 'image') {
+
+            if (col.source === '$thumbnail') {
+                return this.getThumbnailUrl(row);
+            }
+
+        }
+
+        return value;
+    }
+
     /**
      * Creates a set of predefined columns.
      */
     setupDefaultColumns(): void {
         let thumbnailCol = new ContentColumnModel();
         thumbnailCol.source = '$thumbnail';
+        thumbnailCol.type = 'image';
 
         let nameCol = new ContentColumnModel();
         nameCol.title = 'Name';

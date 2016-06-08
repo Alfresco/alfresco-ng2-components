@@ -40,6 +40,12 @@ export class ContentColumn implements OnInit, OnChanges {
     @Input('class')
     cssClass: string;
 
+    @Input()
+    type: string = 'text';
+
+    @Input()
+    format: string;
+
     model: ContentColumnModel;
 
     constructor(private list: ContentColumnList) {
@@ -51,7 +57,9 @@ export class ContentColumn implements OnInit, OnChanges {
             title: this.title,
             srTitle: this.srTitle,
             source: this.source,
-            cssClass: this.cssClass
+            cssClass: this.cssClass,
+            type: this.type,
+            format: this.format
         });
 
         if (!this.model.srTitle && this.model.source === '$thumbnail') {

@@ -59,7 +59,9 @@ describe('DocumentList', () => {
             title: 'title',
             source: 'source',
             cssClass: 'css',
-            srTitle: ''
+            srTitle: '',
+            type: 'text',
+            format: ''
         };
         documentList.columns.push(column);
 

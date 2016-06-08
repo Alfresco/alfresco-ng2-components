@@ -36,15 +36,18 @@
     <tr *ngFor="#content of folder.list.entries; #idx = index"
         [attr.data-automation-id]="getObjectValue(content.entry, 'name')">
         <!-- Columns -->
-        <td *ngFor="#col of columns" [ngSwitch]="col.source"
+        <td *ngFor="#col of columns" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
             (click)="onItemClick(content, $event)"
             [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
-            <div *ngSwitchWhen="'$thumbnail'">
-                <img class="thumbnail" src="{{getThumbnailUrl(content)}}">
+            <div *ngSwitchWhen="'image'" class="cell-value">
+                <img class="thumbnail" [src]="getCellValue(content, col)">
             </div>
-            <span *ngSwitchDefault>
-                {{getObjectValue(content.entry, col.source)}}
+            <span *ngSwitchWhen="'date'" class="cell-value">
+                {{ getCellValue(content, col) }}
+            </span>
+            <span *ngSwitchDefault class="cell-value">
+                {{ getCellValue(content, col) }}
             </span>
         </td>
 

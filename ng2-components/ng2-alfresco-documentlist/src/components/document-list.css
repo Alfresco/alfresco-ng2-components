@@ -23,6 +23,8 @@
     cursor: pointer;
 }
 
+:host .cell-value {}
+
 :host .folder-row-cell.name-column,
 :host .document-row-cell.name-column {
     font-size: 15px;
