@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-documentlist",
   "description": "Alfresco Angular2 Document List Component",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "typings": "typings install",
