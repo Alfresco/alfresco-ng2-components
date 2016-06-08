@@ -62,10 +62,6 @@ import {
                     </content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                            source="createdAt">
-                    </content-column>
-                    <content-column
-                            title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
                             source="createdAt"
                             type="date"
                             format="medium">
