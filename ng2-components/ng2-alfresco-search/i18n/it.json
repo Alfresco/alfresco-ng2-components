@@ -1,0 +1,17 @@
+{
+    "SEARCH": {
+        "CONTROL": {
+            "LABEL": "Contenuto ricerca"
+        },
+        "RESULTS": {
+            "SUMMARY": "Trovati {{numResults}} risultati per {{searchTerm}}",
+            "NONE": "Nessun risultato trovato per {{searchTerm}}",
+            "ERROR": "La ricerca é andata in errore, riprova",
+            "COLUMNS": {
+                "NAME": "Nome",
+                "MODIFIED_BY": "Modificato da",
+                "MODIFIED_AT": "Modificato il"
+            }
+        }
+    }
+}
