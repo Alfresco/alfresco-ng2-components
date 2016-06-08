@@ -156,10 +156,10 @@ A custom set of columns can look like the following:
 ```html
 <alfresco-document-list ...>
     <content-columns>
-        <content-column source="$thumbnail"></content-column>
+        <content-column source="$thumbnail" type="image"></content-column>
         <content-column title="Name" source="name" class="full-width name-column"></content-column>
         <content-column title="Created By" source="createdByUser.displayName"></content-column>
-        <content-column title="Created On" source="createdAt"></content-column>
+        <content-column title="Created On" source="createdAt" type="date" format="medium"></content-column>
     </content-columns>
 </alfresco-document-list>
 ```
@@ -187,12 +187,28 @@ the binding value for the Site column to display location site will be `location
 ```html
 <alfresco-document-list ...>
     <content-columns>
-        <content-column source="$thumbnail"></content-column>
+        <content-column source="$thumbnail" type="image"></content-column>
         <content-column title="Name" source="displayName" class="full-width name-column"></content-column>
         <content-column title="Site" source="location.site"></content-column>
     </content-columns>
 </alfresco-document-list>
 ```
+
+### Column definition
+
+HTML attributes:
+
+| Name | Type | Default | Description
+| --- | --- | --- | --- |
+| title | string | | Column title |
+| sr-title | string | | Screen reader title, used only when `title` is empty |
+| source | string | | Column source, example: `createdByUser.displayName` |
+| class | string | | CSS class list, example: `full-width name-column` |
+| type | string | text | Column type, text\|date\|number |
+| format | string | | Value format pattern |
+
+For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
+For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
 
 ### Custom folder icon
 
