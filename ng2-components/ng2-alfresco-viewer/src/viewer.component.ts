@@ -18,13 +18,14 @@
 import { Component, Input, Output, HostListener } from 'angular2/core';
 import { EventEmitter } from 'angular2/src/facade/async';
 import { PdfViewerComponent } from './pdfViewer.component';
+import { NotSupportedFormat } from './notSupportedFormat.component';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-viewer',
-    directives: [PdfViewerComponent],
+    directives: [PdfViewerComponent, NotSupportedFormat],
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })
@@ -167,12 +168,5 @@ export class ViewerComponent {
                 this.otherMenu.hidden = true;
             }
         }
-    }
-
-    /**
-     * Download file
-     */
-    private download(){
-        window.open(this.urlFile);
     }
 }

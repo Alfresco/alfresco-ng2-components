@@ -1,0 +1,18 @@
+
+.viewer-download-text  {
+    text-align: center;
+}
+
+.viewer-margin-cloud-download{
+    margin-right: 20px;
+}
+
+.viewer-margin {
+    margin: auto !important;
+}
+
+.center-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

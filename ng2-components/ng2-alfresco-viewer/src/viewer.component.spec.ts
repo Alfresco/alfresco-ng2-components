@@ -193,7 +193,7 @@ describe('ViewerComponent', () => {
 
                     component.ngOnChanges().then(() => {
                         fixture.detectChanges();
-                        expect(element.querySelector('#viewer-unsupported')).not.toBeNull();
+                        expect(element.querySelector('not-supported-format')).not.toBeNull();
                     });
                 });
         }));

@@ -63,23 +63,14 @@
 
                     <div class="center-element mdl-cell mdl-cell--8-col" >
 
-                        <div id="viewer-content-container" class="center-element mdl-cell" >
+                        <div id="viewer-content-container" class="viewer-content-container mdl-cell" >
                         <!-- Start View Switch-->
-                            <div *ngIf="isPdf()"><pdf-viewer [urlFile]="urlFile" ></pdf-viewer></div>
+                            <div *ngIf="isPdf()">
+                                <pdf-viewer [urlFile]="urlFile" ></pdf-viewer>
+                            </div>
                             <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="center-element viewer-image"/></div>
                             <div *ngIf="notSupportedExtension()">
-                                <section class="section--center mdl-grid mdl-grid--no-spacing">
-                                    <div class="viewer-margin mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
-                                        <div class="viewer-download-text mdl-card__supporting-text">
-                                            <h4>File {{nameFile}} is an unsupported format</h4>
-                                        </div>
-                                        <div class="mdl-card__actions">
-                                            <button class="viewer-margin center-element mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
-                                                <i class="viewer-margin-cloud-download material-icons">cloud_download</i>   Download
-                                            </button>
-                                        </div>
-                                    </div>
-                                </section>
+                                <not-supported-format [urlFile]="urlFile" [nameFile]="nameFile" ></not-supported-format>
                             </div>
                         <!-- End View Switch -->
                         </div>
