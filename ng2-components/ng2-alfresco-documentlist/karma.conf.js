@@ -1,8 +1,7 @@
 'use strict';
 
 module.exports = function (config) {
-    config.set({
-
+    var configuration = {
         basePath: '.',
 
         frameworks: ['jasmine'],
@@ -52,13 +51,20 @@ module.exports = function (config) {
 
         autoWatch: true,
 
-        browsers: ['Firefox'],
+        browsers: ['Chrome'],
+
+        customLaunchers: {
+            Chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
 
         // Karma plugins loaded
         plugins: [
             'karma-jasmine',
             'karma-coverage',
-            'karma-firefox-launcher',
+            'karma-chrome-launcher',
             'karma-mocha-reporter',
             'karma-jasmine-html-reporter'
         ],
@@ -81,5 +87,11 @@ module.exports = function (config) {
                 {type: 'html'}
             ]
         }
-    })
+    }
+
+    if (process.env.TRAVIS) {
+        configuration.browsers = ['Chrome_travis_ci'];
+    }
+
+    config.set(configuration)
 };
