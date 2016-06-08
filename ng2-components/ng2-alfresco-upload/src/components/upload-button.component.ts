@@ -104,7 +104,7 @@ export class UploadButtonComponent {
      * @param {File[]} files - files dropped in the drag area.
      */
     onFilesAdded($event: any): void {
-        let files = $event.currentTarget.files;alfres
+        let files = $event.currentTarget.files;
         this.printFileInfo(files);
         this.uploadFiles(this.uploaddirectory, files);
         // reset the value of the input file
