@@ -42,6 +42,8 @@ export class ViewerComponent {
     @Output()
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    otherMenu: any;
+
     nameFile: string;
     currentPdfDocument: any;
     page: number;
@@ -52,6 +54,7 @@ export class ViewerComponent {
 
     ngOnChanges(changes) {
         if (this.showViewer) {
+            this.hideOtherMenu();
             if (!this.urlFile) {
                 throw new Error('Attribute urlFile is required');
             }
@@ -71,6 +74,9 @@ export class ViewerComponent {
      * close the viewer
      */
     close() {
+        if (this.otherMenu) {
+            this.otherMenu.hidden = false;
+        }
         this.showViewer = false;
         this.showViewerChange.emit(this.showViewer);
     }
@@ -151,4 +157,10 @@ export class ViewerComponent {
         return localStorage.getItem('token');
     }
 
+    private hideOtherMenu() {
+        this.otherMenu = document.querySelector("header");
+        if (this.otherMenu) {
+            this.otherMenu.hidden = true;
+        }
+    }
 }

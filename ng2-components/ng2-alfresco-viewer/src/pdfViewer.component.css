@@ -4,6 +4,7 @@
 
 .viewer-loader-text {
     text-align: center;
+    color: #000;
 }
 
 :host .page {
