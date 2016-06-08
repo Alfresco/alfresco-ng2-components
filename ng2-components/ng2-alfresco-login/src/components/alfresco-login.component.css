@@ -1,8 +1,29 @@
+:host .show {
+    display: block !important;
+}
+
+:host .hide {
+    display: none !important;
+}
+
+:host .icon-inline {
+    position: absolute;
+    display: block;
+    top: 25%;
+    left: 90%;
+    width: 30px;
+    overflow: hidden;
+}
+
 @media only screen and (min-width: 400px) {
     .center {
         display: block;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    .alfresco-logo {
+        margin-top: 30px;
     }
 
     .content-layout {
@@ -22,7 +43,8 @@
     }
 
     .login-card-wide.mdl-card {
-        width: 512px;
+        width: 448px;
+        height: 466px;
         margin: auto;
         border-radius: 8px;
         background-color: #ffffff;
@@ -70,7 +92,17 @@
 }
 
 .ng-invalid.ng-invalid.ng-touched ~ .mdl-tooltip--validation {
-    background-color: rgb(222, 50, 38);
+    background-color: transparent;
+    color: red;
+    font-size: 12px;
+}
+
+:host .is-active{
+    background-color: transparent;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.33;
+    color: #ff1744;
 }
 
 

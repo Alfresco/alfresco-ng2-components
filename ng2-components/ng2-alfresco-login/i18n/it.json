@@ -3,7 +3,8 @@
     "LABEL": {
       "LOGIN": "Autenticazione",
       "USERNAME": "Nome utente",
-      "PASSWORD": "Password"
+      "PASSWORD": "Password",
+      "REMEMBER": "Ricordami"
     },
     "MESSAGES": {
       "USERNAME-REQUIRED": "Campo obbligatorio",
