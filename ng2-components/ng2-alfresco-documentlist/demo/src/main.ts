@@ -160,7 +160,7 @@ class DocumentListDemo implements OnInit {
             this.token = localStorage.getItem('token');
         }
 
-        translation.translationInit();
+        translation.translationInit(' ');
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 
