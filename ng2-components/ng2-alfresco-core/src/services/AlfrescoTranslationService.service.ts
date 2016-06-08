@@ -27,18 +27,13 @@ export class AlfrescoTranslationService extends TranslateService {
 
     constructor(http: Http, currentLoader: AlfrescoTranslationLoader, @Optional() missingTranslationHandler: MissingTranslationHandler) {
         super(http, currentLoader, missingTranslationHandler);
-    }
-
-    translationInit(name?: string): void {
-        let userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
-        this.userLang = userLang;
+        this.userLang = navigator.language.split('-')[0]; // use navigator lang if available
+        this.userLang = /(fr|en)/gi.test(this.userLang) ? this.userLang : 'en';
         this.setDefaultLang(this.userLang);
-        this.addComponent(name);
     }
 
-    addComponent(name: string) {
-        if (name && !this.currentLoader.existComponent(name)) {
+    addTranslationFolder(name: string = '') {
+        if (!this.currentLoader.existComponent(name)) {
             this.currentLoader.addComponentList(name);
             this.getTranslation(this.userLang);
         }

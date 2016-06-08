@@ -88,7 +88,7 @@ export class AlfrescoLoginComponent {
             }
         };
 
-        translate.addComponent('node_modules/ng2-alfresco-login');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-login');
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
 

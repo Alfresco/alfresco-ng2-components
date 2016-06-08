@@ -56,7 +56,7 @@ export class FileUploadingDialogComponent implements OnInit{
     constructor(private cd: ChangeDetectorRef,
                 translate: AlfrescoTranslationService,
                 private _uploaderService: UploadService) {
-        translate.addComponent('node_modules/ng2-alfresco-upload');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
     }
 
     ngOnInit() {

@@ -95,7 +95,7 @@ export class UploadButtonComponent {
             }
         });
         this.translate = translate;
-        this.translate.addComponent('node_modules/ng2-alfresco-upload');
+        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
     }
 
     /**
@@ -104,7 +104,7 @@ export class UploadButtonComponent {
      * @param {File[]} files - files dropped in the drag area.
      */
     onFilesAdded($event: any): void {
-        let files = $event.currentTarget.files;
+        let files = $event.currentTarget.files;alfres
         this.printFileInfo(files);
         this.uploadFiles(this.uploaddirectory, files);
         // reset the value of the input file

@@ -95,7 +95,7 @@ class DocumentListDemo implements OnInit {
                 documentActions: DocumentActionsService) {
 
         settings.host = 'http://192.168.99.100:8080';
-        translation.translationInit();
+        translation.addTranslationFolder();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 

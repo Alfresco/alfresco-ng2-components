@@ -48,7 +48,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
         private translate: AlfrescoTranslationService,
         @Optional() params: RouteParams)
     {
-        translate.addComponent('node_modules/ng2-alfresco-search');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-search');
 
         this.results = null;
         if (params) {

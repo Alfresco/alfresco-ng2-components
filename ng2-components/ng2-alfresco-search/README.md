@@ -132,7 +132,7 @@ class SearchDemo implements OnInit {
         translation: AlfrescoTranslationService) {
 
         settings.host = this.host;
-        translation.translationInit();
+        translation.addTranslationFolder();
     }
 
     searchTermChange(event) {
@@ -281,7 +281,7 @@ class SearchDemo implements OnInit {
         translation: AlfrescoTranslationService) {
 
         settings.host = this.host;
-        translation.translationInit();
+        translation.addTranslationFolder();
     }
 
     searchTermChange(event) {

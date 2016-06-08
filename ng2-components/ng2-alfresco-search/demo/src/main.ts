@@ -76,7 +76,7 @@ class SearchDemo implements OnInit {
             this.token = localStorage.getItem('token');
         }
 
-        translation.translationInit();
+        translation.addTranslationFolder();
     }
 
     public updateToken(): void {
