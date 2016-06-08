@@ -15,14 +15,39 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component, OnInit } from 'angular2/core';
+import { ActivitiService } from './activiti.service';
 
 @Component({
     selector: 'tasks-demo',
     template: `
         <h2>Tasks</h2>
-    `
+        <ul>
+            <li *ngFor="#task of tasks">
+                {{task.name}}
+            </li>
+        </ul>
+    `,
+    providers: [ActivitiService]
 })
-export class TasksDemoComponent {
+export class TasksDemoComponent implements OnInit {
+
+    tasks: any[];
+
+    constructor(
+        private activitiService: ActivitiService) {}
+
+    ngOnInit() {
+        this.activitiService
+            .login('denys.vuika@alfresco.com', 'test')
+            .then(() => {
+                this.activitiService
+                    .getTasks()
+                    .then((tasks) => {
+                        this.tasks = tasks || []
+                        console.log(this.tasks);
+                    });
+            });
+    }
 
 }
