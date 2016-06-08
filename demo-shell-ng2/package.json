@@ -7,7 +7,7 @@
     "start": "npm run tslint && typings install && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "serve": "browser-sync start --server -c browser-sync-config.js",
+    "serve": "node browser-sync-config.js",
     "typings": "typings",
     "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json app/**/*.ts",
