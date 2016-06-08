@@ -20,7 +20,7 @@ before_install:
 env:
   global:
     - DEV_REGISTRY=http://52.31.51.143:8080/
-    - PROXY=http://travis:XpSUeVI1@52.31.51.143:8080/
+#    - PROXY=http://travis:XpSUeVI1@52.31.51.143:8080/
   matrix:
 #    - MODULE=ng2-alfresco-core
 #    - MODULE=ng2-alfresco-datatable
@@ -31,8 +31,8 @@ env:
 
 before_script:
   - npm set registry $DEV_REGISTRY
-  - npm config set proxy $PROXY
-  - npm config set https-proxy $PROXY
+#  - npm config set proxy $PROXY
+#  - npm config set https-proxy $PROXY
   - cd ./ng2-components/$MODULE; npm install
 script: npm run test
 # Send coverage data to Coveralls
