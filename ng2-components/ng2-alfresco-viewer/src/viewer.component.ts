@@ -157,10 +157,22 @@ export class ViewerComponent {
         return localStorage.getItem('token');
     }
 
+    /**
+     * Hide the othe possible menu in th eapplication
+     */
     private hideOtherMenu() {
-        this.otherMenu = document.querySelector("header");
-        if (this.otherMenu) {
-            this.otherMenu.hidden = true;
+        if (this.overlayMode) {
+            this.otherMenu = document.querySelector('header');
+            if (this.otherMenu) {
+                this.otherMenu.hidden = true;
+            }
         }
+    }
+
+    /**
+     * Download file
+     */
+    private download(){
+        window.open(this.urlFile);
     }
 }

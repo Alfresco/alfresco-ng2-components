@@ -62,3 +62,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.viewer-margin {
+    margin: auto !important;
+}
+
+.viewer-download-text  {
+    text-align: center;
+}
+
+.viewer-margin-cloud-download{
+    margin-right: 20px;
+}
