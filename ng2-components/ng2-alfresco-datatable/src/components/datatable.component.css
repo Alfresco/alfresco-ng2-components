@@ -19,6 +19,8 @@
     cursor: pointer;
 }
 
+/* Utils */
+
 :host .non-selectable {
     user-select: none;
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -26,8 +28,6 @@
     -ms-user-select: none;       /* IE/Edge */
     -webkit-touch-callout: none; /* iOS Safari */
 }
-
-/* Utils */
 
 :host .sr-only {
     position: absolute;

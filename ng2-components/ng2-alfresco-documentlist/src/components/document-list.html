@@ -8,7 +8,7 @@
     <thead>
     <tr>
         <!-- Columns -->
-        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
+        <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
             *ngFor="#col of columns"
             [class.column-header]="col.title"
             [attr.data-automation-id]="'auto_id_' + col.source"
@@ -25,8 +25,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr data-automation-id="folder_up_row" class="parent-folder-link" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)">
-        <td [attr.colspan]="1 + columns?.length">
+    <tr *ngIf="canNavigateParent()"
+        data-automation-id="folder_up_row"
+        class="parent-folder-link"
+        (click)="onNavigateParentClick($event)"
+        (dblclick)="onNavigateParentDblClick($event)">
+        <td [attr.colspan]="1 + columns?.length" class="non-selectable">
             <button class="mdl-button mdl-js-button mdl-button--icon">
                 <i data-automation-id="folder_up_icon" class="material-icons">arrow_upward</i>
             </button>
@@ -37,8 +41,9 @@
         [attr.data-automation-id]="getObjectValue(content.entry, 'name')">
         <!-- Columns -->
         <td *ngFor="#col of columns" [ngSwitch]="col.type"
-            class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
+            class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onItemClick(content, $event)"
+            (dblclick)="onItemDblClick(content, $event)"
             [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
             <div *ngSwitchWhen="'image'" class="cell-value">
                 <img class="thumbnail" [src]="getCellValue(content, col)">

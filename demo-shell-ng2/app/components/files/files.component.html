@@ -7,7 +7,7 @@
             #documentList
             [currentFolderPath]="absolutePath"
             [breadcrumb]="breadcrumb"
-            (itemClick)="showFile($event)"
+            (preview)="showFile($event)"
             (folderChange)="onFolderChanged($event)">
         <!--
         <empty-folder-content>

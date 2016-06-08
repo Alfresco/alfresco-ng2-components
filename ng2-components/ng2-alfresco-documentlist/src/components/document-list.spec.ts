@@ -251,6 +251,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'getNodePath').and.returnValue(path);
         spyOn(documentList, 'displayFolderContent').and.stub();
 
+        documentList.navigationMode = 'click';
         documentList.onItemClick(node);
 
         expect(documentList.displayFolderContent).toHaveBeenCalledWith(path);
