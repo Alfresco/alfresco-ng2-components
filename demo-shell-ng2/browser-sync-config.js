@@ -8,7 +8,9 @@ browserSync.init({
         middleware: [ historyApiFallback() ]
     },
 
-    files: ['dist/**/*.{html,htm,css,js}',
+    files: [
+        'app/**/*.{html,htm,css,js}',
+        'dist/**/*.{html,htm,css,js}',
         'node_modules/ng2-alfresco-core/dist/**/*.{html,htm,css,js}',
         'node_modules/ng2-alfresco-datatable/dist/**/*.{html,htm,css,js}',
         'node_modules/ng2-alfresco-documentlist/dist/**/*.{html,htm,css,js}',
