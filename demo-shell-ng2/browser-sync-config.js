@@ -9,6 +9,7 @@ browserSync.init({
     },
 
     files: [
+        'index.html',
         'app/**/*.{html,htm,css,js}',
         'dist/**/*.{html,htm,css,js}',
         'node_modules/ng2-alfresco-core/dist/**/*.{html,htm,css,js}',
