@@ -54,7 +54,8 @@ export class AlfrescoService {
         let nodeId = '-root-';
         let opts = {
             include: ['path'],
-            rootNodeId: nodeId
+            rootNodeId: nodeId,
+            nodeType: 'cm:content'
         };
         return apiInstance.liveSearchNodes(term, opts);
     }
