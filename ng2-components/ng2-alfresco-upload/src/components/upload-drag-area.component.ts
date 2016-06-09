@@ -15,11 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, ViewChild, Input, Output, EventEmitter } from 'angular2/core';
 import { UploadService } from '../services/upload.service';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
+import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { FileModel } from '../models/file.model';
 
 declare let __moduleName: string;
+declare let componentHandler: any;
+
+const ERROR_FOLDER_ALREADY_EXIST = 409;
 
 /**
  * <alfresco-upload-drag-area (onSuccess)="customMethod($event)></alfresco-upload-drag-area>
@@ -35,9 +40,16 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     directives: [FileDraggableDirective],
     templateUrl: './upload-drag-area.component.html',
-    styleUrls: ['./upload-drag-area.component.css']
+    styleUrls: ['./upload-drag-area.component.css'],
+    pipes: [AlfrescoPipeTranslate]
 })
 export class UploadDragAreaComponent {
+
+    @ViewChild('undoNotificationBar')
+    undoNotificationBar: any;
+
+    @Input()
+    showUdoNotificationBar: boolean = true;
 
     @Input()
     uploaddirectory: string = '';
@@ -48,7 +60,10 @@ export class UploadDragAreaComponent {
     @Output()
     onSuccess = new EventEmitter();
 
-    constructor(private _uploaderService: UploadService) {
+    translate: AlfrescoTranslationService;
+
+    constructor(private _uploaderService: UploadService,
+                translate: AlfrescoTranslationService) {
 
         let site = this.getSiteId();
         let container = this.getContainerId();
@@ -59,6 +74,9 @@ export class UploadDragAreaComponent {
                 containerid: container
             }
         });
+
+        this.translate = translate;
+        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
     }
 
     /**
@@ -70,6 +88,10 @@ export class UploadDragAreaComponent {
         if (files.length) {
             this._uploaderService.addToQueue(files);
             this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory, this.onSuccess);
+            let latestFilesAdded = this._uploaderService.getQueue();
+            if (this.showUdoNotificationBar) {
+                this._showUndoNotificationBar(latestFilesAdded);
+            }
         }
     }
 
@@ -84,6 +106,10 @@ export class UploadDragAreaComponent {
             let path = item.fullPath.replace(item.name, '');
             let filePath = self.uploaddirectory + path;
             self._uploaderService.uploadFilesInTheQueue(filePath, self.onSuccess);
+            let latestFilesAdded = self._uploaderService.getQueue();
+            if (self.showUdoNotificationBar) {
+                self._showUndoNotificationBar(latestFilesAdded);
+            }
         });
     }
 
@@ -108,6 +134,11 @@ export class UploadDragAreaComponent {
                         });
                     },
                     error => {
+                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                        let errorMessage = this.formatString(errorMessagePlaceholder, [folder.name]);
+                        if (errorMessage) {
+                            this._showErrorNotificationBar(errorMessage);
+                        }
                         console.log(error);
                     }
                 );
@@ -145,5 +176,74 @@ export class UploadDragAreaComponent {
      */
     private getContainerId(): string {
         return this.currentFolderPath.replace('/Sites/', '').split('/')[1];
+    }
+
+    /**
+     * Show undo notification bar.
+     *
+     * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
+     */
+    private _showUndoNotificationBar(latestFilesAdded: FileModel[]) {
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+
+        let messageTranslate, actionTranslate: any;
+        messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
+        actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
+
+        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
+            message: messageTranslate.value,
+            timeout: 3000,
+            actionHandler: function () {
+                latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
+                    uploadingFileModel.setAbort();
+                });
+            },
+            actionText: actionTranslate.value
+        });
+    }
+
+    /**
+     * Show the error inside Notification bar
+     * @param Error message
+     * @private
+     */
+    private _showErrorNotificationBar(errorMessage: string) {
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+
+        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
+            message: errorMessage,
+            timeout: 3000
+        });
+    }
+
+    /**
+     * Retrive the error message using the error status code
+     * @param response - object that contain the HTTP response
+     * @returns {string}
+     */
+    private getErrorMessage(response: any): string {
+        if(response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
+            let errorMessage: any;
+            errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            return errorMessage.value;
+        }
+    }
+
+    /**
+     * Replace a placeholder {0} in a message with the input keys
+     * @param message - the message that conains the placeholder
+     * @param keys - array of value
+     * @returns {string} - The message without placeholder
+     */
+    private formatString(message: string, keys: any []) {
+        let i = keys.length;
+        while (i--) {
+            message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
+        }
+        return message;
     }
 }

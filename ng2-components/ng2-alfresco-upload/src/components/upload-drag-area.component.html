@@ -5,3 +5,10 @@
      dropzone="" webkitdropzone="*" #droparea>
     <ng-content></ng-content>
 </div>
+
+<!--Notification bar-->
+<div id="undo-notification-bar"  class="mdl-js-snackbar mdl-snackbar"
+     #undoNotificationBar>
+    <div class="mdl-snackbar__text"></div>
+    <button data-automation-id="undo_upload_button" class="mdl-snackbar__action" type="button">{{'FILE_UPLOAD.ACTION.UNDO' | translate}}</button>
+</div>
