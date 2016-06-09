@@ -1,14 +1,9 @@
 :host .full-width { width: 100%; }
 
-:host .folder-thumbnail {
-    font-size: 48px;
-    cursor: pointer;
-}
-
-:host .document-thumbnail {
+:host .thumbnail {
     width: 48px;
     height: 48px;
-    cursor: pointer;
+    cursor: default;
 }
 
 :host .column-header {
@@ -20,22 +15,17 @@
     -webkit-touch-callout: none; /* iOS Safari */
 }
 
-:host .parent-folder-link { cursor: pointer; }
+:host .parent-folder-link { cursor: default; }
 :host .parent-folder-link > td { text-align: left; }
 
-:host .folder-row-cell,
-:host .document-row-cell {
-    cursor: pointer;
+:host .data-cell {
+    cursor: default;
 }
+:host .cell-value {}
 
-:host .folder-row-cell.name-column,
-:host .document-row-cell.name-column {
+:host .data-cell.name-column {
     font-size: 15px;
-}
-
-:host .folder-row-cell.name-column:hover,
-:host .document-row-cell.name-column:hover {
-    cursor: pointer;
+    cursor: default;
 }
 
 /* breadcrumb */
@@ -64,7 +54,23 @@
     color: #777;
 }
 
+:host .empty-folder-content {
+    padding: 0 !important;
+}
+
+:host .empty-folder-content > img {
+    width: 100%;
+}
+
 /* Utils */
+
+:host .non-selectable {
+    user-select: none;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+}
 
 :host .sr-only {
     position: absolute;

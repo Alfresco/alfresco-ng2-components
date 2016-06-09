@@ -20,6 +20,7 @@ import { ContentColumn } from './src/components/content-column';
 import { ContentColumnList } from './src/components/content-column-list';
 import { ContentAction } from './src/components/content-action';
 import { ContentActionList } from './src/components/content-action-list';
+import { EmptyFolderContent } from './src/components/empty-folder-content';
 
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
@@ -31,6 +32,7 @@ export * from './src/components/content-column';
 export * from './src/components/content-column-list';
 export * from './src/components/content-action';
 export * from './src/components/content-action-list';
+export * from './src/components/empty-folder-content';
 
 // models
 export * from './src/models/column-sorting.model';
@@ -60,7 +62,8 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     ContentColumn,
     ContentColumnList,
     ContentAction,
-    ContentActionList
+    ContentActionList,
+    EmptyFolderContent
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: [any] = [

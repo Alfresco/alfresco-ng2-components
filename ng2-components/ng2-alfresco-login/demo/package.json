@@ -5,14 +5,14 @@
     "author": "Alfresco Software, Ltd.",
     "main": "index.js",
     "scripts": {
-        "postinstall": "npm run typings && npm run build",
-        "typings": "typings install",
-        "start": "rm -rf dist && npm install && npm run server",
-        "server": "lite-server",
-        "build": "npm run tslint &&  rm -rf dist && tsc",
-        "tslint": "npm run tslint-src && npm run tslint-root",
-        "tslint-src": "tslint -c tslint.json src/**/*.ts",
-        "tslint-root": "tslint -c tslint.json *.ts"
+      "typings": "typings install",
+      "start": "npm install && npm run typings && concurrently \"npm run build:w\" \"npm run server\" ",
+      "server": "node browser-sync-config.js",
+      "build": "npm run tslint &&  rm -rf dist && tsc",
+      "build:w": "npm run tslint &&  rm -rf dist && tsc -w",
+      "tslint": "npm run tslint-src && npm run tslint-root",
+      "tslint-src": "tslint -c tslint.json src/**/*.ts",
+      "tslint-root": "tslint -c tslint.json *.ts"
     },
     "license": "Apache-2.0",
     "contributors": [
@@ -57,7 +57,6 @@
     "devDependencies": {
         "browser-sync": "^2.10.0",
         "concurrently": "^2.0.0",
-        "lite-server": "^2.2.0",
         "tslint": "^3.8.1",
         "typescript": "^1.8.10",
         "typings": "^0.7.12"

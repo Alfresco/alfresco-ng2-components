@@ -7,22 +7,37 @@
             #documentList
             [currentFolderPath]="absolutePath"
             [breadcrumb]="breadcrumb"
-            (itemClick)="showFile($event)"
+            (preview)="showFile($event)"
             (folderChange)="onFolderChanged($event)">
+        <!--
+        <empty-folder-content>
+            <template>
+                <h1>Sorry, no content here</h1>
+            </template>
+        </empty-folder-content>
+        -->
         <content-columns>
-            <content-column source="$thumbnail"></content-column>
+            <content-column source="$thumbnail" type="image"></content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                     source="name"
                     class="full-width name-column">
             </content-column>
+            <!--
+            <content-column
+                    title="Type"
+                    source="content.mimeType">
+            </content-column>
+            -->
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                     source="createdByUser.displayName">
             </content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                    source="createdAt">
+                    source="createdAt"
+                    type="date"
+                    format="medium">
             </content-column>
         </content-columns>
 

@@ -59,7 +59,7 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
             Validators.compose([Validators.required, Validators.minLength(3)])
         );
 
-        translate.addComponent('node_modules/ng2-alfresco-search');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-search');
     }
 
     ngAfterViewInit() {

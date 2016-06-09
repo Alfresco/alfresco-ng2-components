@@ -132,7 +132,7 @@ class SearchDemo implements OnInit {
         translation: AlfrescoTranslationService) {
 
         settings.host = this.host;
-        translation.translationInit();
+        translation.addTranslationFolder();
     }
 
     searchTermChange(event) {
@@ -281,7 +281,7 @@ class SearchDemo implements OnInit {
         translation: AlfrescoTranslationService) {
 
         settings.host = this.host;
-        translation.translationInit();
+        translation.addTranslationFolder();
     }
 
     searchTermChange(event) {
@@ -358,7 +358,7 @@ npm install
 npm run build
 ```
 
-##Build the files and keep watching the modify
+##Build the files and keep watching for changes
 
     ```sh
     $ npm run build:w

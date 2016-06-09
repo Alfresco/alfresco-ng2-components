@@ -31,6 +31,7 @@ import { DataTableDemoComponent } from './components/datatable/datatable-demo.co
 import { SearchComponent } from './components/search/search.component';
 import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
 import { LoginDemoComponent } from './components/login/login-demo.component';
+import { TasksDemoComponent } from './components/tasks/tasks-demo.component';
 
 declare var document: any;
 
@@ -43,11 +44,13 @@ declare var document: any;
 })
 @RouteConfig([
     {path: '/home', name: 'Home', component: FilesComponent},
-    {path: '/', name: 'Files', component: FilesComponent, useAsDefault: true},
+    {path: '/files', name: 'Files', component: FilesComponent},
     {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
+    {path: '/', name: 'Login', component: LoginDemoComponent, useAsDefault: true},
     {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
     {path: '/login', name: 'Login', component: LoginDemoComponent},
-    {path: '/search', name: 'Search', component: SearchComponent}
+    {path: '/search', name: 'Search', component: SearchComponent},
+    {path: '/tasks', name: 'Tasks', component: TasksDemoComponent}
 ])
 export class AppComponent {
     translate: AlfrescoTranslationService;
@@ -60,7 +63,7 @@ export class AppComponent {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
 
         this.translate = translate;
-        this.translate.translationInit(' ');
+        this.translate.addTranslationFolder();
     }
 
     isActive(instruction: any[]): boolean {

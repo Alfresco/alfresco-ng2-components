@@ -35,7 +35,7 @@ export class TranslationMock {
         console.log('mock');
     }
 
-    addComponent() {
+    addTranslationFolder() {
 
     }
 

@@ -18,13 +18,14 @@
 import { Component, Input, Output, HostListener } from 'angular2/core';
 import { EventEmitter } from 'angular2/src/facade/async';
 import { PdfViewerComponent } from './pdfViewer.component';
+import { NotSupportedFormat } from './notSupportedFormat.component';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-viewer',
-    directives: [PdfViewerComponent],
+    directives: [PdfViewerComponent, NotSupportedFormat],
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })
@@ -42,6 +43,8 @@ export class ViewerComponent {
     @Output()
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    otherMenu: any;
+
     nameFile: string;
     currentPdfDocument: any;
     page: number;
@@ -52,6 +55,7 @@ export class ViewerComponent {
 
     ngOnChanges(changes) {
         if (this.showViewer) {
+            this.hideOtherMenu();
             if (!this.urlFile) {
                 throw new Error('Attribute urlFile is required');
             }
@@ -71,6 +75,9 @@ export class ViewerComponent {
      * close the viewer
      */
     close() {
+        if (this.otherMenu) {
+            this.otherMenu.hidden = false;
+        }
         this.showViewer = false;
         this.showViewerChange.emit(this.showViewer);
     }
@@ -151,4 +158,15 @@ export class ViewerComponent {
         return localStorage.getItem('token');
     }
 
+    /**
+     * Hide the othe possible menu in th eapplication
+     */
+    private hideOtherMenu() {
+        if (this.overlayMode) {
+            this.otherMenu = document.querySelector('header');
+            if (this.otherMenu) {
+                this.otherMenu.hidden = true;
+            }
+        }
+    }
 }

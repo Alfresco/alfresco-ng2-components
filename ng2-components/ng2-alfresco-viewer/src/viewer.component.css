@@ -14,19 +14,6 @@
     margin: 20px;
 }
 
-#loader{
-    margin: auto;
-    padding-top: 20px;
-    width:300px;
-}
-#loader-text{
-    width:300px;
-    white-space: nowrap;
-    text-align: center;
-    position: relative;
-    color: #000;
-}
-
 #viewer-toolbar-pagination {
     margin-left: 25%;
 }
@@ -71,7 +58,11 @@
 }
 
 .center-element {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+.viewer-content-container {
+    width: 100%;
 }

@@ -37,6 +37,18 @@ describe('PdfViewer', () => {
                     expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
                 });
         }));
+
+        it('Loader should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+
+                    fixture.detectChanges();
+
+                    expect(element.querySelector('#viewer-loader')).not.toBeNull();
+                });
+        }));
     });
 
     describe('User interaction', () => {

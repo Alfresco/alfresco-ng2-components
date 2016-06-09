@@ -59,7 +59,9 @@ describe('DocumentList', () => {
             title: 'title',
             source: 'source',
             cssClass: 'css',
-            srTitle: ''
+            srTitle: '',
+            type: 'text',
+            format: ''
         };
         documentList.columns.push(column);
 
@@ -112,22 +114,6 @@ describe('DocumentList', () => {
         let list = new DocumentList(null);
         let node = new MinimalNodeEntity();
         expect(list.getContentUrl(node)).toBeNull();
-    });
-
-    it('should get thumbnail url', () => {
-        let url = 'URL';
-        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        let result = documentList.getDocumentThumbnailUrl(null);
-
-        expect(result).toBe(url);
-        expect(alfrescoServiceMock.getDocumentThumbnailUrl).toHaveBeenCalled();
-    });
-
-    it('should get no thumbnail url without service', () => {
-        let list = new DocumentList(null);
-        let node = new MinimalNodeEntity();
-        expect(list.getDocumentThumbnailUrl(node)).toBeNull();
     });
 
     it('should execute action with node', () => {
@@ -265,6 +251,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'getNodePath').and.returnValue(path);
         spyOn(documentList, 'displayFolderContent').and.stub();
 
+        documentList.navigationMode = 'click';
         documentList.onItemClick(node);
 
         expect(documentList.displayFolderContent).toHaveBeenCalledWith(path);

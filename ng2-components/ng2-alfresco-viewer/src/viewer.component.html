@@ -54,7 +54,7 @@
 
                 <div class="mdl-grid">
                     <div id="viewer-previous-file-button" class="center-element mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
-                        <button
+                        <button  *ngIf="false"
                             class="center-element mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                             (click)="previousFile()">
                             <i class="icon material-icons ">keyboard_arrow_left</i>
@@ -63,18 +63,22 @@
 
                     <div class="center-element mdl-cell mdl-cell--8-col" >
 
-                        <div id="viewer-content-container" class="center-element mdl-cell" >
+                        <div id="viewer-content-container" class="viewer-content-container mdl-cell" >
                         <!-- Start View Switch-->
-                            <div *ngIf="isPdf()"><pdf-viewer [urlFile]="urlFile" ></pdf-viewer></div>
+                            <div *ngIf="isPdf()">
+                                <pdf-viewer [urlFile]="urlFile" ></pdf-viewer>
+                            </div>
                             <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="center-element viewer-image"/></div>
-                            <div *ngIf="notSupportedExtension()"><div id="viewer-unsupported">Not Supported Download</div></div>
+                            <div *ngIf="notSupportedExtension()">
+                                <not-supported-format [urlFile]="urlFile" [nameFile]="nameFile" ></not-supported-format>
+                            </div>
                         <!-- End View Switch -->
                         </div>
 
                     </div>
 
                     <div id="viewer-next-file-button" class="center-element mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
-                        <button
+                        <button *ngIf="false"
                             class="center-element mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                             (click)="nextFile()">
                             <i class="icon material-icons">keyboard_arrow_right</i>

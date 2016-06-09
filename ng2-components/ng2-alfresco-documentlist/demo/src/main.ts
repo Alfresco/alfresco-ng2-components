@@ -50,7 +50,7 @@ import {
             <alfresco-document-list #doclist>
 
                 <content-columns>
-                    <content-column source="$thumbnail"></content-column>
+                    <content-column source="$thumbnail" type="image"></content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                             source="name"
@@ -62,11 +62,9 @@ import {
                     </content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                            source="createdAt">
-                    </content-column>
-                    <content-column
-                            title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                            source="createdAt">
+                            source="createdAt"
+                            type="date"
+                            format="medium">
                     </content-column>
                 </content-columns>
                 <content-actions>
@@ -162,7 +160,7 @@ class DocumentListDemo implements OnInit {
             this.token = localStorage.getItem('token');
         }
 
-        translation.translationInit();
+        translation.addTranslationFolder();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 

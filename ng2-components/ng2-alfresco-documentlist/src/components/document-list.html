@@ -8,7 +8,7 @@
     <thead>
     <tr>
         <!-- Columns -->
-        <th class="mdl-data-table__cell--non-numeric {{col.cssClass}}"
+        <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
             *ngFor="#col of columns"
             [class.column-header]="col.title"
             [attr.data-automation-id]="'auto_id_' + col.source"
@@ -25,8 +25,12 @@
     </tr>
     </thead>
     <tbody>
-    <tr data-automation-id="folder_up_row" class="parent-folder-link" *ngIf="canNavigateParent()" (click)="onNavigateParentClick($event)">
-        <td [attr.colspan]="1 + columns?.length">
+    <tr *ngIf="canNavigateParent()"
+        data-automation-id="folder_up_row"
+        class="parent-folder-link"
+        (click)="onNavigateParentClick($event)"
+        (dblclick)="onNavigateParentDblClick($event)">
+        <td [attr.colspan]="1 + columns?.length" class="non-selectable">
             <button class="mdl-button mdl-js-button mdl-button--icon">
                 <i data-automation-id="folder_up_icon" class="material-icons">arrow_upward</i>
             </button>
@@ -36,20 +40,19 @@
     <tr *ngFor="#content of folder.list.entries; #idx = index"
         [attr.data-automation-id]="getObjectValue(content.entry, 'name')">
         <!-- Columns -->
-        <td *ngFor="#col of columns" [ngSwitch]="col.source"
-            class="mdl-data-table__cell--non-numeric {{content.entry.isFolder ? 'folder-row-cell' : 'document-row-cell'}} {{col.cssClass}}"
+        <td *ngFor="#col of columns" [ngSwitch]="col.type"
+            class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onItemClick(content, $event)"
+            (dblclick)="onItemDblClick(content, $event)"
             [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
-            <div *ngSwitchWhen="'$thumbnail'">
-                <div *ngIf="content.entry.isFolder">
-                    <i class="material-icons folder-thumbnail">{{folderIcon || 'folder_open'}}</i>
-                </div>
-                <div *ngIf="!content.entry.isFolder">
-                    <img class="document-thumbnail" alt="" src="{{getDocumentThumbnailUrl(content)}}">
-                </div>
+            <div *ngSwitchWhen="'image'" class="cell-value">
+                <img class="thumbnail" [src]="getCellValue(content, col)">
             </div>
-            <span *ngSwitchDefault>
-                {{getObjectValue(content.entry, col.source)}}
+            <span *ngSwitchWhen="'date'" class="cell-value">
+                {{ getCellValue(content, col) }}
+            </span>
+            <span *ngSwitchDefault class="cell-value">
+                {{ getCellValue(content, col) }}
             </span>
         </td>
 
@@ -100,5 +103,18 @@
             </ul>
         </td>
     </tr>
+
+    <tr *ngIf="folder?.list?.entries?.length === 0">
+        <td class="mdl-data-table__cell--non-numeric empty-folder-content"
+            [attr.colspan]="1 + columns?.length">
+            <template *ngIf="emptyFolderTemplate"
+                      ngFor [ngForOf]="[folder]"
+                      [ngForTemplate]="emptyFolderTemplate">
+            </template>
+            <img *ngIf="!emptyFolderTemplate"
+                 [src]="__baseUrl + '/img/document-list.empty-folder.png'">
+        </td>
+    </tr>
+
     </tbody>
 </table>

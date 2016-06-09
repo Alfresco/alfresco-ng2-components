@@ -23,8 +23,10 @@ import {
     EventEmitter,
     AfterContentInit,
     AfterViewChecked,
-    OnChanges
+    OnChanges,
+    TemplateRef
 } from 'angular2/core';
+import { DatePipe } from 'angular2/common';
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
@@ -45,8 +47,13 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     DEFAULT_ROOT_FOLDER: string = '/Sites/swsdp/documentLibrary';
 
+    __baseUrl = __moduleName.replace('/components/document-list.js', '');
+
     @Input()
     navigate: boolean = true;
+
+    @Input('navigation-mode')
+    navigationMode: string = 'dblclick'; // click|dblclick
 
     @Input()
     breadcrumb: boolean = false;
@@ -54,11 +61,20 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     @Input('folder-icon')
     folderIcon: string;
 
+    @Input()
+    thumbnails: boolean = false;
+
     @Output()
     itemClick: EventEmitter<any> = new EventEmitter();
 
     @Output()
+    itemDblClick: EventEmitter<any> = new EventEmitter();
+
+    @Output()
     folderChange: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    preview: EventEmitter<any> = new EventEmitter();
 
     rootFolder = {
         name: '',
@@ -73,6 +89,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
+    emptyFolderTemplate: TemplateRef;
 
     private _folder: NodePaging;
 
@@ -161,17 +178,23 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
      * Invoked when 'parent folder' element is clicked.
      * @param e DOM event
      */
-    onNavigateParentClick(e) {
+    onNavigateParentClick(e?: Event) {
         if (e) {
             e.preventDefault();
         }
 
-        if (this.navigate) {
-            this.route.pop();
-            let parent = this.route.length > 0 ? this.route[this.route.length - 1] : this.rootFolder;
-            if (parent) {
-                this.displayFolderContent(parent.path);
-            }
+        if (this.navigate && this.navigationMode === 'click') {
+            this.navigateToParent();
+        }
+    }
+
+    onNavigateParentDblClick(e?: Event) {
+        if (e) {
+            e.preventDefault();
+        }
+
+        if (this.navigate && this.navigationMode === 'dblclick') {
+            this.navigateToParent();
         }
     }
 
@@ -180,7 +203,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
      * @param item Underlying node item
      * @param e DOM event (optional)
      */
-    onItemClick(item: MinimalNodeEntity, e = null) {
+    onItemClick(item: MinimalNodeEntity, e?: Event) {
         if (e) {
             e.preventDefault();
         }
@@ -189,15 +212,61 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
             value: item
         });
 
-        if (this.navigate && item && item.entry) {
-            if (item.entry.isFolder) {
-                let path = this.getNodePath(item);
-                this.route.push({
-                    name: item.entry.name,
-                    path: path
-                });
-                this.displayFolderContent(path);
+        if (this.navigate && this.navigationMode === 'click') {
+            if (item && item.entry) {
+                if (item.entry.isFile) {
+                    this.preview.emit({
+                        value: item
+                    });
+                }
+
+                if (item.entry.isFolder) {
+                    this.performNavigation(item);
+                }
             }
+        }
+    }
+
+    onItemDblClick(item: MinimalNodeEntity, e?: Event) {
+        if (e) {
+            e.preventDefault();
+        }
+
+        this.itemDblClick.emit({
+            value: item
+        });
+
+        if (this.navigate && this.navigationMode === 'dblclick') {
+            if (item && item.entry) {
+                if (item.entry.isFile) {
+                    this.preview.emit({
+                        value: item
+                    });
+                }
+
+                if (item.entry.isFolder) {
+                    this.performNavigation(item);
+                }
+            }
+        }
+    }
+
+    private performNavigation(node: MinimalNodeEntity) {
+        if (node && node.entry && node.entry.isFolder) {
+            let path = this.getNodePath(node);
+            this.route.push({
+                name: node.entry.name,
+                path: path
+            });
+            this.displayFolderContent(path);
+        }
+    }
+
+    navigateToParent() {
+        this.route.pop();
+        let parent = this.route.length > 0 ? this.route[this.route.length - 1] : this.rootFolder;
+        if (parent) {
+            this.displayFolderContent(parent.path);
         }
     }
 
@@ -233,14 +302,35 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     /**
-     * Gets thumbnail URL for the given document node.
+     * Gets thumbnail URL for the given node.
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(node: MinimalNodeEntity): string {
-        if (this._alfrescoService) {
-            return this._alfrescoService.getDocumentThumbnailUrl(node);
+    getThumbnailUrl(node: MinimalNodeEntity): string {
+        if (node && node.entry) {
+            let entry = node.entry;
+
+            if (entry.isFolder) {
+                return `${this.__baseUrl}/img/ft_ic_folder.svg`;
+            }
+
+            if (entry.isFile) {
+                if (this.thumbnails) {
+                    if (this._alfrescoService) {
+                        return this._alfrescoService.getDocumentThumbnailUrl(node);
+                    }
+                    return null;
+                }
+
+                if (entry.content && entry.content.mimeType) {
+                    let icon = this._alfrescoService.getMimeTypeIcon(entry.content.mimeType);
+                    return `${this.__baseUrl}/img/${icon}`;
+                }
+            }
+
+            return `${this.__baseUrl}/img/ft_ic_miscellaneous.svg`;
         }
+
         return null;
     }
 
@@ -317,12 +407,36 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return target;
     }
 
+    getCellValue(row: MinimalNodeEntity, col: ContentColumnModel): any {
+        let value = this._getObjectValueRaw(row.entry, col.source);
+
+        if (col.type === 'date') {
+            let datePipe = new DatePipe();
+            if (datePipe.supports(value)) {
+                // TODO: to be changed to plan non-array value post angular2 beta.15
+                let pattern = col.format ? [col.format] : [];
+                return datePipe.transform(value, pattern);
+            }
+        }
+
+        if (col.type === 'image') {
+
+            if (col.source === '$thumbnail') {
+                return this.getThumbnailUrl(row);
+            }
+
+        }
+
+        return value;
+    }
+
     /**
      * Creates a set of predefined columns.
      */
     setupDefaultColumns(): void {
         let thumbnailCol = new ContentColumnModel();
         thumbnailCol.source = '$thumbnail';
+        thumbnailCol.type = 'image';
 
         let nameCol = new ContentColumnModel();
         nameCol.title = 'Name';

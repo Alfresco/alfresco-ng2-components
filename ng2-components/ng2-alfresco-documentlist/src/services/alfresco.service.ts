@@ -23,6 +23,7 @@ import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-cor
 
 declare let AlfrescoApi: any;
 
+// TODO: consider renaming to something like 'DocumentListService'
 /**
  * Internal service used by Document List component.
  */
@@ -30,6 +31,35 @@ declare let AlfrescoApi: any;
 export class AlfrescoService {
 
     private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
+
+    mimeTypeIcons: any = {
+        'image/png': 'ft_ic_raster_image.svg',
+        'image/jpeg': 'ft_ic_raster_image.svg',
+        'image/gif': 'ft_ic_raster_image.svg',
+        'application/pdf': 'ft_ic_pdf.svg',
+        'application/vnd.ms-excel': 'ft_ic_ms_excel.svg',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'ft_ic_ms_excel.svg',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.template': 'ft_ic_ms_excel.svg',
+        'application/msword': 'ft_ic_ms_word.svg',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'ft_ic_ms_word.svg',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.template': 'ft_ic_ms_word.svg',
+        'application/vnd.ms-powerpoint': 'ft_ic_ms_powerpoint.svg',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'ft_ic_ms_powerpoint.svg',
+        'application/vnd.openxmlformats-officedocument.presentationml.template': 'ft_ic_ms_powerpoint.svg',
+        'application/vnd.openxmlformats-officedocument.presentationml.slideshow': 'ft_ic_ms_powerpoint.svg',
+        'video/mp4': 'ft_ic_video.svg',
+        'text/plain': 'ft_ic_document.svg',
+        'application/x-javascript': 'ft_ic_document.svg',
+        'application/json': 'ft_ic_document.svg',
+        'image/svg+xml': 'ft_ic_vector_image.svg',
+        'text/html': 'ft_ic_website.svg',
+        'application/x-compressed': 'ft_ic_archive.svg',
+        'application/x-zip-compressed': 'ft_ic_archive.svg',
+        'application/zip': 'ft_ic_archive.svg',
+        'application/vnd.apple.keynote': 'ft_ic_presentation.svg',
+        'application/vnd.apple.pages': 'ft_ic_document.svg',
+        'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
+    };
 
     constructor(
         private settings: AlfrescoSettingsService) {
@@ -99,6 +129,11 @@ export class AlfrescoService {
         return this.getHost() +
             '/alfresco/service/api/node/workspace/SpacesStore/' +
             document.entry.id + '/content';
+    }
+
+    getMimeTypeIcon(mimeType: string): string {
+        let icon = this.mimeTypeIcons[mimeType];
+        return icon || 'ft_ic_miscellaneous.svg';
     }
 
     private handleError(error: Response) {

@@ -37,6 +37,11 @@ declare let __moduleName: string;
 
 })
 export class AlfrescoLoginComponent {
+
+    __baseUrl = __moduleName.replace('/alfresco-login.component.js', '');
+
+    isPasswordShow: boolean = false;
+
     @Output()
     onSuccess = new EventEmitter();
     @Output()
@@ -68,7 +73,7 @@ export class AlfrescoLoginComponent {
             'password': ''
         };
 
-        this.form = this._fb.group({
+        this.form =  this._fb.group({
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
         });
@@ -83,7 +88,7 @@ export class AlfrescoLoginComponent {
             }
         };
 
-        translate.addComponent('node_modules/ng2-alfresco-login');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-login');
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
 
@@ -143,6 +148,18 @@ export class AlfrescoLoginComponent {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Display and hide the password value.
+     */
+    toggleShowPassword() {
+        this.isPasswordShow = !this.isPasswordShow;
+        if (this.isPasswordShow) {
+            (<HTMLInputElement>document.getElementById("password")).type = 'text'
+        } else {
+            (<HTMLInputElement>document.getElementById("password")).type = 'password';
         }
     }
 
