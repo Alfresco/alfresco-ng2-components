@@ -21,7 +21,7 @@
         "tsc": "tsc",
         "tsc:w": "tsc -w",
         "pretest": "npm run build",
-        "test": "karma start karma.conf.js --single-run",
+        "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
         "test-browser": "concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
         "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
         "coverage": "npm run test && http-server -c-1 -o -p 9875 ./coverage/report",
