@@ -4,9 +4,10 @@
             <i class="material-icons">search</i>
         </label>
         <div [class]="getTextFieldHolderClassName()">
-            <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" id="searchControl" [ngFormControl]="searchControl" [(ngModel)]="searchTerm">
+            <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()"
+                   id="searchControl" [ngFormControl]="searchControl" [(ngModel)]="searchTerm" (focus)="onFocus()" (blur)="onBlur()">
             <label class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
         </div>
     </div>
 </form>
-<alfresco-search-autocomplete [searchTerm]="autocompleteSearchTerm"></alfresco-search-autocomplete>
+<alfresco-search-autocomplete [searchTerm]="autocompleteSearchTerm" [ngClass]="{active: searchActive, valid: searchValid}"></alfresco-search-autocomplete>

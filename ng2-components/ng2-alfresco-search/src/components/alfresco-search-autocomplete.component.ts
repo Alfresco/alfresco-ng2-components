@@ -42,6 +42,9 @@ declare let __moduleName: string;
             height: 32px;
             padding: 8px;
             text-align: left;
+        }
+        :host.active.valid {
+            display: block;
         }`
     ],
     templateUrl: './alfresco-search-autocomplete.component.html',
@@ -57,6 +60,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
 
     errorMessage;
 
+    @Input()
+    ngClass: any;
+
     route: any[] = [];
 
     constructor(
@@ -65,18 +71,13 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
         private el: ElementRef,
         private renderer: Renderer
     ) {
-        console.log('Autocomplete constructor');
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
         this.results = null;
     }
 
     ngOnChanges(changes) {
-        console.log('Autocomplete changes');
-        if (this.searchTerm.length >= 3) {
+        if (changes.searchTerm) {
             this.displaySearchResults(this.searchTerm);
-            this.renderer.setElementStyle(this.el.nativeElement, 'display', 'block');
-        } else {
-            this.renderer.setElementStyle(this.el.nativeElement, 'display', 'none');
         }
     }
 
@@ -85,7 +86,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
      * @param searchTerm Search query entered by user
      */
     displaySearchResults(searchTerm) {
-        if (searchTerm !== null) {
+        if (searchTerm !== null && searchTerm !== '') {
             this._alfrescoService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(

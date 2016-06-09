@@ -56,6 +56,10 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
     @Input()
     autocompleteSearchTerm = '';
 
+    searchActive = false;
+
+    searchValid = false;
+
     constructor(private translate: AlfrescoTranslationService) {
 
         this.searchControl = new Control(
@@ -63,11 +67,13 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
             Validators.compose([Validators.required, Validators.minLength(3)])
         );
 
-        this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
-            (value: string) => {
-                this.autocompleteSearchTerm = value;
-            }
-        );
+        this.searchControl.valueChanges.map(value => this.searchControl.valid ? value : '')
+            .debounceTime(400).distinctUntilChanged().subscribe(
+                (value: string) => {
+                    this.autocompleteSearchTerm = value;
+                    this.searchValid = this.searchControl.valid;
+                }
+            );
 
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
     }
@@ -103,6 +109,20 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
             });
             // this.router.navigate(['Search', term]);
         }
+    }
+
+    onFocus(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        this.searchActive = true;
+    }
+
+    onBlur(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        this.searchActive = false;
     }
 
 }
