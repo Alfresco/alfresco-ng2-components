@@ -1,0 +1,8 @@
+<table *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <tbody>
+    <tr *ngFor="#result of results; #idx = index">
+        <td>{{result.entry.name}}</td>
+    </tr>
+    </tbody>
+</table>
+<p *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>

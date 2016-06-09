@@ -17,9 +17,10 @@
 
 import { Control, Validators } from 'angular2/common';
 import { Component, Input, Output, EventEmitter, AfterViewInit } from 'angular2/core';
-import { AlfrescoService } from './../services/alfresco.service';
 
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 
 declare let __moduleName: string;
 declare var componentHandler: any;
@@ -30,7 +31,7 @@ declare var componentHandler: any;
     styles: [
     ],
     templateUrl: './alfresco-search-control.component.html',
-    providers: [AlfrescoService],
+    directives: [AlfrescoSearchAutocompleteComponent],
     pipes: [AlfrescoPipeTranslate]
 })
 export class AlfrescoSearchControlComponent implements AfterViewInit {
@@ -52,11 +53,20 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
 
     searchControl: Control;
 
+    @Input()
+    autocompleteSearchTerm = '';
+
     constructor(private translate: AlfrescoTranslationService) {
 
         this.searchControl = new Control(
             this.searchTerm,
             Validators.compose([Validators.required, Validators.minLength(3)])
+        );
+
+        this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged().subscribe(
+            (value: string) => {
+                this.autocompleteSearchTerm = value;
+            }
         );
 
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
