@@ -29,7 +29,7 @@ import {
 import { UploadButtonComponent } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
 import { SearchComponent } from './components/search/search.component';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+import { SearchBarComponent } from './components/search/search-bar.component';
 import { LoginDemoComponent } from './components/login/login-demo.component';
 import { TasksDemoComponent } from './components/tasks/tasks-demo.component';
 
@@ -39,7 +39,7 @@ declare var document: any;
     selector: 'alfresco-app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
-    directives: [ALFRESCO_SEARCH_DIRECTIVES, ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
+    directives: [SearchBarComponent, ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
     pipes: [AlfrescoPipeTranslate]
 })
 @RouteConfig([
@@ -89,16 +89,5 @@ export class AppComponent {
     hideDrawer() {
         // todo: workaround for drawer closing
         document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
-    }
-
-    /**
-     * Called when a new search term is submitted
-     *
-     * @param params Parameters relating to the search
-     */
-    searchTermChange(params) {
-        this.router.navigate(['Search', {
-            q: params.value
-        }]);
     }
 }

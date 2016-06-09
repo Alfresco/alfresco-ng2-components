@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, OnChanges, Renderer } from 'angular2/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer } from 'angular2/core';
 import { AlfrescoService } from './../services/alfresco.service';
 
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -31,6 +31,10 @@ declare let __moduleName: string;
             z-index: 1;
             display: none;
             color: #555;
+        }
+        :host a {
+            color: #555;
+            text-decoration: none;
         }
         :host table {
             width: 300px;
@@ -65,7 +69,8 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
     @Input()
     ngClass: any;
 
-    route: any[] = [];
+    @Output()
+    preview: EventEmitter<any> = new EventEmitter();
 
     constructor(
         private _alfrescoService: AlfrescoService,
@@ -101,6 +106,19 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
                         this.errorMessage = <any>error;
                     }
                 );
+        }
+    }
+
+    onItemClick(node, event?: Event) {
+        if (event) {
+            event.preventDefault();
+        }
+        if (node && node.entry) {
+            if (node.entry.isFile) {
+                this.preview.emit({
+                    value: node
+                });
+            }
         }
     }
 

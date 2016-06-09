@@ -51,6 +51,9 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
     @Output()
     searchChange = new EventEmitter();
 
+    @Output()
+    preview = new EventEmitter();
+
     searchControl: Control;
 
     @Input()
@@ -111,18 +114,20 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
         }
     }
 
-    onFocus(event) {
-        if (event) {
-            event.preventDefault();
-        }
+    onFileClicked(event) {
+        this.preview.emit({
+            value: event.value
+        });
+    }
+
+    onFocus() {
         this.searchActive = true;
     }
 
-    onBlur(event) {
-        if (event) {
-            event.preventDefault();
-        }
-        this.searchActive = false;
+    onBlur() {
+        window.setTimeout(() => {
+            this.searchActive = false;
+        }, 100);
     }
 
 }

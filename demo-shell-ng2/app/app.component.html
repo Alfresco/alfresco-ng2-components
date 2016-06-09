@@ -7,9 +7,8 @@
             <!-- Add spacer, to align navigation to the right -->
             <div class="mdl-layout-spacer"></div>
 
-            <!-- Search box -->
-            <alfresco-search-control *ngIf="isLoggedIn()" [searchTerm]="searchTerm"
-            (searchChange)="searchTermChange($event);" [autocomplete]="false"></alfresco-search-control>
+            <!-- Search bar -->
+            <search-bar></search-bar>
 
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
