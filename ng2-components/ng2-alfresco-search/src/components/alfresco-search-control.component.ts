@@ -82,7 +82,9 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        componentHandler.upgradeAllRegistered();
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
     }
 
     getTextFieldClassName(): string {
