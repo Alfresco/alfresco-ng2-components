@@ -28,6 +28,7 @@
     },
     "devDependencies": {
         "browser-sync": "^2.10.0",
+        "connect-history-api-fallback": "^1.2.0",
         "concurrently": "^2.0.0",
         "tslint": "^3.8.1",
         "typescript": "^1.8.10",
