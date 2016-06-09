@@ -21,7 +21,7 @@ import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresc
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 import {
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService
+    AlfrescoContentService
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 declare let __moduleName: string;
@@ -37,12 +37,14 @@ declare let __moduleName: string;
 export class SearchBarComponent {
 
     urlFile: string;
+    mimeType: string;
     fileShowed: boolean = false;
 
     constructor(
         public router: Router,
         public auth: AlfrescoAuthenticationService,
-        public settings: AlfrescoSettingsService
+        public contentService: AlfrescoContentService
+
     ) {
     }
 
@@ -63,9 +65,8 @@ export class SearchBarComponent {
 
     onFileClicked(event) {
         if (event.value.entry.isFile) {
-            let workSpace = 'workspace/SpacesStore/' + event.value.entry.id;
-            let nameFile = event.value.entry.name;
-            this.urlFile = this.settings.host + '/alfresco/s/slingshot/node/content/' + workSpace + '/' + nameFile;
+            this.mimeType = event.value.entry.content.mimeType;
+            this.urlFile = this.contentService.getContentUrl(event.value);
             this.fileShowed = true;
         }
     }
