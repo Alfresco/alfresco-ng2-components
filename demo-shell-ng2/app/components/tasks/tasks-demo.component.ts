@@ -19,10 +19,7 @@ import { Component, OnInit } from 'angular2/core';
 import { ActivitiService } from './activiti.service';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter,
-    DataSorting,
-    ObjectDataRow,
-    ObjectDataColumn
+    ObjectDataTableAdapter
 } from 'ng2-alfresco-datatable/dist/ng2-alfresco-datatable';
 
 @Component({
@@ -52,7 +49,7 @@ export class TasksDemoComponent implements OnInit {
                     .then((data) => {
                         let tasks = data || [];
                         console.log(tasks);
-                        this.loadTasks(tasks)
+                        this.loadTasks(tasks);
                     });
             });
     }
