@@ -32,7 +32,8 @@ env:
 before_script:
   - npm set proxy $DEV_REGISTRY
   - npm config set https-proxy $DEV_REGISTRY
-  - cd ./ng2-components/$MODULE; npm install --registry $DEV_REGISTRY --verbose
+  - cd ./ng2-components/$MODULE; npm install --registry $DEV_REGISTRY 
+  - tree -l ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
 #after_script: "cat ./ng2-components/$MODULE/coverage/lcov.info | ./ng2-components/$MODULE/node_modules/coveralls/bin/coveralls.js"
