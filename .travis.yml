@@ -23,11 +23,11 @@ env:
     - DEV_REGISTRY=http://devproducts.alfresco.me:8081/
   matrix:
 #    - MODULE=ng2-alfresco-core
-#    - MODULE=ng2-alfresco-datatable
+    - MODULE=ng2-alfresco-datatable
     - MODULE=ng2-alfresco-documentlist
     - MODULE=ng2-alfresco-login
     - MODULE=ng2-alfresco-search
-#    - MODULE=ng2-alfresco-upload
+    - MODULE=ng2-alfresco-upload
 
 before_script:
   - npm set proxy $DEV_REGISTRY
