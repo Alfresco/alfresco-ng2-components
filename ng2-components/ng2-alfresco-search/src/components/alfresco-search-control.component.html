@@ -4,7 +4,7 @@
             <i class="material-icons">search</i>
         </label>
         <div [class]="getTextFieldHolderClassName()">
-            <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" id="searchTerm" [ngFormControl]="searchControl" [(ngModel)]="searchTerm">
+            <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" id="searchTerm" data-automation-id="search_input" [ngFormControl]="searchControl" [(ngModel)]="searchTerm">
             <label class="mdl-textfield__label" for="searchTerm">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
         </div>
     </div>
