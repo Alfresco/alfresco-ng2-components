@@ -6,6 +6,7 @@ module.exports = function (config) {
 
         frameworks: ['jasmine'],
 
+
         files: [
             // paths loaded by Karma
             {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
