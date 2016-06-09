@@ -4,9 +4,14 @@
             <i class="material-icons">search</i>
         </label>
         <div [class]="getTextFieldHolderClassName()">
+<<<<<<< cb5f0a1c272a4d5a76f07ef64efb2612c2129586
             <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()"
                    id="searchControl" [ngFormControl]="searchControl" [(ngModel)]="searchTerm" (focus)="onFocus($event)" (blur)="onBlur($event)">
             <label class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
+=======
+            <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" id="searchTerm" data-automation-id="search_input" [ngFormControl]="searchControl" [(ngModel)]="searchTerm">
+            <label class="mdl-textfield__label" for="searchTerm">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
+>>>>>>> #177 added data automation id for search
         </div>
     </div>
 </form>
