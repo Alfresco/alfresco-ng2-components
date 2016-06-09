@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-viewer",
   "description": "Alfresco documents viewer",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "author": "Eugenio Romano",
   "scripts": {
     "typings": "typings install",
