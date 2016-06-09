@@ -42,6 +42,8 @@ declare let __moduleName: string;
             height: 32px;
             padding: 8px;
             text-align: left;
+            border-top: none;
+            border-bottom: none;
         }
         :host.active.valid {
             display: block;
