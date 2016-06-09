@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (config) {
-    configuration = {
+    var configuration = {
         basePath: '.',
 
         frameworks: ['jasmine'],
@@ -91,6 +91,6 @@ module.exports = function (config) {
     if (process.env.TRAVIS) {
         configuration.browsers = ['Chrome_travis_ci'];
     }
-    
+
     config.set(configuration)
 };
