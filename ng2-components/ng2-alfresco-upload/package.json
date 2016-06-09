@@ -61,7 +61,8 @@
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "systemjs": "0.19.26",
-    "zone.js": "^0.6.12"
+    "zone.js": "^0.6.12",
+    "ng2-translate": "1.11.1"
   },
   "peerDependencies": {
     "angular2": "2.0.0-beta.15"
