@@ -22,7 +22,7 @@ env:
   global:
     - DEV_REGISTRY=http://devproducts.alfresco.me:8081/
   matrix:
-    - MODULE=ng2-alfresco-core
+#    - MODULE=ng2-alfresco-core
 #    - MODULE=ng2-alfresco-datatable
     - MODULE=ng2-alfresco-documentlist
 #    - MODULE=ng2-alfresco-login
