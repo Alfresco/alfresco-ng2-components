@@ -24,7 +24,7 @@ env:
   matrix:
     - MODULE=ng2-alfresco-core
 #    - MODULE=ng2-alfresco-datatable
-'    - MODULE=ng2-alfresco-documentlist
+#    - MODULE=ng2-alfresco-documentlist
 #    - MODULE=ng2-alfresco-login
 #    - MODULE=ng2-alfresco-search
 #    - MODULE=ng2-alfresco-upload
