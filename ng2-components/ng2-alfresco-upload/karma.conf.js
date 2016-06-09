@@ -1,8 +1,7 @@
 'use strict';
 
 module.exports = function (config) {
-    config.set({
-
+    var configuration = {
         basePath: '.',
 
         frameworks: ['jasmine-ajax', 'jasmine'],
@@ -50,6 +49,13 @@ module.exports = function (config) {
 
         browsers: ['Chrome'],
 
+        customLaunchers: {
+            Chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
+
         // Karma plugins loaded
         plugins: [
             'karma-jasmine',
@@ -80,5 +86,11 @@ module.exports = function (config) {
         },
 
         singleRun: true
-    })
+    }
+
+    if (process.env.TRAVIS) {
+        configuration.browsers = ['Chrome_travis_ci'];
+    }
+
+    config.set(configuration)
 };

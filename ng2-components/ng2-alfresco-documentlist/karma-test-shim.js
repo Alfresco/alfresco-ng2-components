@@ -16,7 +16,7 @@ System.config({
         },
         'ng2-alfresco-core': { defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
-        'ng2-translate': { defaultExtension: 'js' }
+        'ng2-translate': { defaultExtension: 'js'}
     },
     map: {
         'ng2-alfresco-core': '/base/node_modules/ng2-alfresco-core',

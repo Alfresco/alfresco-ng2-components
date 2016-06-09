@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function (config) {
-    config.set({
+    var configuration = {
 
         basePath: '.',
 
@@ -17,6 +17,7 @@ module.exports = function (config) {
             {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: false},
             {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: false},
             {pattern: 'node_modules/ng2-translate/bundles/ng2-translate.js', included: true, watched: false},
+            {pattern: 'bower_components/traceur-runtime/traceur-runtime.js', included: true, watched: true},
 
             {pattern: 'karma-test-shim.js', included: true, watched: true},
 
@@ -48,6 +49,14 @@ module.exports = function (config) {
 
         browsers: ['Chrome'],
 
+        customLaunchers: {
+            Chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        },
+
+
         // Karma plugins loaded
         plugins: [
             'karma-jasmine',
@@ -58,7 +67,7 @@ module.exports = function (config) {
         ],
 
         // Coverage reporter generates the coverage
-        reporters: ['mocha', 'coverage', 'kjhtml'],
+        reporters: ['mocha'],
 
         // Source files that you wanna generate coverage for.
         // Do not include tests or libraries (these files will be instrumented by Istanbul)
@@ -78,5 +87,11 @@ module.exports = function (config) {
         },
 
         singleRun: true
-    })
+    }
+
+    if (process.env.TRAVIS) {
+        configuration.browsers = ['Chrome_travis_ci'];
+    }
+
+    config.set(configuration)
 };
