@@ -3,7 +3,7 @@ dist: trusty
 sudo: required
 
 node_js:
-  - "4.2"
+  - "5"
 
 addons:
   apt:
