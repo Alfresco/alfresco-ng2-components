@@ -41,7 +41,10 @@ declare let __moduleName: string;
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html',
-    providers: [AlfrescoService]
+    providers: [AlfrescoService],
+    host: {
+        '(contextmenu)': 'onShowContextMenu($event)'
+    }
 })
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit, OnChanges {
 
@@ -248,6 +251,12 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
                     this.performNavigation(item);
                 }
             }
+        }
+    }
+
+    onShowContextMenu(e?: Event) {
+        if (e) {
+            e.preventDefault();
         }
     }
 
