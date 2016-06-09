@@ -25,6 +25,8 @@ import 'rxjs/Rx';
 declare let componentHandler: any;
 declare let __moduleName: string;
 
+const ERROR_FOLDER_ALREADY_EXIST = 409;
+
 /**
  * <alfresco-upload-button [showUdoNotificationBar]="boolean"
  *                         [uploadFolders]="boolean"
@@ -132,8 +134,13 @@ export class UploadButtonComponent {
                         this.uploadFiles(relativeDir, filesDir);
                     },
                     error => {
-                    console.log(error);
-                }
+                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                        let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
+                        if (errorMessage) {
+                            this._showErrorNotificationBar(errorMessage);
+                        }
+                        console.log(error);
+                    }
             );
         });
         // reset the value of the input file
@@ -217,13 +224,42 @@ export class UploadButtonComponent {
 
         this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
             message: messageTranslate.value,
-            timeout: 5000,
+            timeout: 3000,
             actionHandler: function () {
                 latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
                     uploadingFileModel.setAbort();
                 });
             },
             actionText: actionTranslate.value
+        });
+    }
+
+    /**
+     * Retrive the error message using the error status code
+     * @param response - object that contain the HTTP response
+     * @returns {string}
+     */
+    private getErrorMessage(response: any): string {
+        if(response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
+            let errorMessage: any;
+            errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            return errorMessage.value;
+        }
+    }
+
+    /**
+     * Show the error inside Notification bar
+     * @param Error message
+     * @private
+     */
+    private _showErrorNotificationBar(errorMessage: string) {
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+
+        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
+            message: errorMessage,
+            timeout: 3000
         });
     }
 
@@ -253,5 +289,19 @@ export class UploadButtonComponent {
             console.log('Size: ' + file.size);
             console.log('Path: ' + file.webkitRelativePath);
         }
+    }
+
+    /**
+     * Replace a placeholder {0} in a message with the input keys
+     * @param message - the message that conains the placeholder
+     * @param keys - array of value
+     * @returns {string} - The message without placeholder
+     */
+    private formatString(message: string, keys: any []) {
+        let i = keys.length;
+        while (i--) {
+            message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
+        }
+        return message;
     }
 }
