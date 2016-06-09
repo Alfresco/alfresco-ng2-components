@@ -36,7 +36,7 @@ import { TasksDemoComponent } from './components/tasks/tasks-demo.component';
 declare var document: any;
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
     directives: [ALFRESCO_SEARCH_DIRECTIVES, ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
