@@ -73,10 +73,11 @@
     "browser-sync": "^2.10.0",
     "concurrently": "^2.0.0",
     "del": "^2.1.0",
+    "flag-icon-css": "^2.3.0",
+    "license-check": "^1.0.4",
     "tslint": "^3.8.1",
     "typescript": "^1.8.10",
-    "typings": "^0.7.12",
-    "license-check": "^1.0.4"
+    "typings": "^0.7.12"
   },
   "license-check-config": {
     "src": [
