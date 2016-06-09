@@ -1,0 +1,6 @@
+<alfresco-search-control *ngIf="isLoggedIn()" [searchTerm]="searchTerm" [autocomplete]="false"
+    (searchChange)="searchTermChange($event);"(preview)="onFileClicked($event)"></alfresco-search-control>
+
+<alfresco-viewer [(showViewer)]="fileShowed" [urlFile]="urlFile" [overlayMode]="true">
+    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+</alfresco-viewer>
