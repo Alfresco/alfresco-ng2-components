@@ -70,7 +70,7 @@
                             </div>
                             <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="center-element viewer-image"/></div>
                             <div *ngIf="notSupportedExtension()">
-                                <not-supported-format [urlFile]="urlFile" [displayName]="displayName" ></not-supported-format>
+                                <not-supported-format [urlFile]="urlFile" [nameFile]="displayName" ></not-supported-format>
                             </div>
                         <!-- End View Switch -->
                         </div>
