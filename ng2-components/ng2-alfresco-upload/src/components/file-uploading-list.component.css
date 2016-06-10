@@ -36,3 +36,14 @@
     padding-right: 13px;
     text-align: right;
 }
+
+.truncate {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mdl-progress{
+    width: 300px;
+}
