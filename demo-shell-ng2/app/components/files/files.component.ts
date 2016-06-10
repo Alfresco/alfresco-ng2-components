@@ -23,7 +23,6 @@ import {
 } from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
 import {
     MDL,
-    AlfrescoSettingsService,
     AlfrescoContentService
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
@@ -53,7 +52,6 @@ export class FilesComponent {
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
     constructor(
-        private settings: AlfrescoSettingsService,
         private contentService: AlfrescoContentService,
         documentActions: DocumentActionsService) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
