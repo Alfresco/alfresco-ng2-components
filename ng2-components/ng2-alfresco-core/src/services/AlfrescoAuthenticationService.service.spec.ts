@@ -16,25 +16,20 @@
  */
 
 import { it, describe, beforeEach } from 'angular2/testing';
-import { provide, Injector } from 'angular2/core';
-import { Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing';
-import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
+import { Injector } from 'angular2/core';
 import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
+import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
+import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
+
+declare var AlfrescoApi: any;
 
 
 describe('AlfrescoAuthentication', () => {
     let injector,
-        backend,
-        mockBackend,
-        httpService,
         service;
 
     beforeEach(() => {
         injector = Injector.resolveAndCreate([
-            HTTP_PROVIDERS,
-            MockBackend,
-            provide(XHRBackend, {useClass: MockBackend}),
             AlfrescoAuthenticationService,
             AlfrescoSettingsService
         ]);
@@ -58,14 +53,12 @@ describe('AlfrescoAuthentication', () => {
             return keys[i] || null;
         });
 
-        mockBackend = injector.get(MockBackend);
-        backend = injector.get(XHRBackend);
-        httpService = injector.get(Http);
+        window['AlfrescoApi'] = AlfrescoApiMock;
         service = injector.get(AlfrescoAuthenticationService);
     });
 
     it('should return true and token if the user is logged in', () => {
-        service.saveJwt('fake-local-token');
+        service.saveToken('fake-local-token');
         expect(service.isLoggedIn()).toBe(true);
         expect(localStorage.getItem('token')).toBeDefined();
         expect(localStorage.getItem('token')).toEqual('fake-local-token');
@@ -78,11 +71,8 @@ describe('AlfrescoAuthentication', () => {
     });
 
     it('should return true and token on sign in', () => {
-        backend.connections.subscribe(connection => {
-            connection.mockRespond(new Response(new ResponseOptions({body: {data: {ticket: 'fake-post-token'}}})));
-        });
         service.token = '';
-        service.login('POST', 'fakeUser', 'fakePassword')
+        service.login('fake-username', 'fake-password')
             .subscribe(() => {
                     expect(service.isLoggedIn()).toBe(true);
                     expect(service.token).toEqual('fake-post-token');
@@ -102,18 +92,6 @@ describe('AlfrescoAuthentication', () => {
                     expect(localStorage.getItem('token')).not.toBeDefined();
                 }
             );
-    });
-
-    it('should return no error if method value is GET', () => {
-        expect(service.login('GET', 'fakeUser', 'fakePassword').hasErrored).toBe(false);
-    });
-
-    it('should return no error if method value is POST', () => {
-        expect(service.login('POST', 'fakeUser', 'fakePassword').hasErrored).toBe(false);
-    });
-
-    it('should throw an exception if method value is different from GET or POST', () => {
-        expect(service.login('PUT', 'fakeUser', 'fakePassword').error).toEqual('Invalid method name the value should be GET or POST');
     });
 
 });
