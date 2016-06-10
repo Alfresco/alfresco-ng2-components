@@ -30,6 +30,7 @@
 .file-dialog .header {
     background-color: rgb(31,188,210);
     border: 1px transparent solid;
+    border-bottom: 1px solid #c7c7c7;
     -moz-border-radius-topleft: 2px;
     -webkit-border-top-left-radius: 2px;
     border-top-left-radius: 2px;
@@ -111,7 +112,6 @@
 .file-dialog .body-dialog {
     float: left;
     height: 100%;
-    width: 100%;
     margin-top: -4px;
     border-bottom: 1px solid #C0C0C0;
     border-right: 1px solid #C0C0C0;
