@@ -32,5 +32,18 @@ describe('Not Supported Format View', () => {
                     expect(element.querySelector('#viewer-download-button')).not.toBeNull();
                 });
         }));
+        it('should display the name of the file', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(NotSupportedFormat)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    component.nameFile = 'Example Content.xls';
+
+                    fixture.detectChanges();
+
+                    expect(element.querySelector('h4 span').innerHTML).toEqual('Example Content.xls');
+                });
+        }));
     });
 });
