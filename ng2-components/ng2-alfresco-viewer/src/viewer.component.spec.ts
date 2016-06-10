@@ -215,4 +215,71 @@ describe('ViewerComponent', () => {
                 });
         }));
     });
+
+    /* tslint:disable:max-line-length */
+    describe('MimeType handling', () => {
+        it('should display a PDF file identified by mimetype when the filename has no extension', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+                    component.urlFile = 'content';
+                    component.mimeType = 'application/pdf';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                    });
+                });
+        }));
+
+        it('should display a PDF file identified by mimetype when the file extension is wrong', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+                    component.urlFile = 'content.bin';
+                    component.mimeType = 'application/pdf';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                    });
+                });
+        }));
+
+        it('should display an image file identified by mimetype when the filename has no extension', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+                    component.urlFile = 'content';
+                    component.mimeType = 'image/png';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-image')).not.toBeNull();
+                    });
+                });
+        }));
+
+        it('should display a image file identified by mimetype when the file extension is wrong', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+                    component.urlFile = 'content.bin';
+                    component.mimeType = 'image/png';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-image')).not.toBeNull();
+                    });
+                });
+        }));
+    });
 });

@@ -109,7 +109,8 @@ Attribute     | Options     | Default      | Description | Mandatory
 `urlFile`         | *string*    |        |  Url where to load the file | mandatory
 `fileName`         | *string*    | Parsed from `urlFile` |  Name of the file to display in the title bar. If not specified will take the last part of the URL |
 `overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content |
-`showViewer`         | *boolean*    | `true`        | Hide o show the viewer |
+`showViewer`         | *boolean*    | `true`        | Hide or show the viewer |
+`mimeType`         | *string*    | `true`        | MimeType of the file, used to detect if the browser can display the content. If not supplied the component will attempt to guess based on file extension of the `urlFile` |
 
 
 
