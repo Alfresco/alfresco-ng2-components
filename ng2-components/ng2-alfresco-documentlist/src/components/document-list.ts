@@ -299,18 +299,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     /**
-     * Gets content URL for the given node.
-     * @param node Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getContentUrl(node: MinimalNodeEntity): string {
-        if (this._alfrescoService) {
-            return this._alfrescoService.getContentUrl(node);
-        }
-        return null;
-    }
-
-    /**
      * Gets thumbnail URL for the given node.
      * @param node Node to get URL for.
      * @returns {string} URL address.

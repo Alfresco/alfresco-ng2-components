@@ -16,6 +16,7 @@
  */
 
 import {Observable} from 'rxjs/Observable';
+import { MinimalNodeEntity } from '../models/document-library.model';
 import {AlfrescoService} from '../../src/services/alfresco.service';
 import {
     AlfrescoSettingsService,
@@ -40,5 +41,9 @@ export class AlfrescoServiceMock extends AlfrescoService {
             observer.next(this._folderToReturn);
             observer.complete();
         });
+    }
+
+    getDocumentThumbnailUrl(folder: MinimalNodeEntity) {
+        return '';
     }
 }

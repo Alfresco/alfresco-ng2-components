@@ -100,20 +100,34 @@ describe('DocumentList', () => {
         expect(documentList.folder).toBe(folder);
     });
 
-    it('should get content url', () => {
+    it('should return thumbnail url for a file when thumbnails turned on', () => {
         let url = 'URL';
-        spyOn(alfrescoServiceMock, 'getContentUrl').and.returnValue(url);
+        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
 
-        let result = documentList.getContentUrl(null);
+        let node = new MinimalNodeEntity();
+        node.entry = new MinimalNodeEntryEntity();
+        node.entry.isFile = true;
+        documentList.thumbnails = true;
+        let result = documentList.getThumbnailUrl(node);
 
         expect(result).toBe(url);
-        expect(alfrescoServiceMock.getContentUrl).toHaveBeenCalled();
+        expect(alfrescoServiceMock.getDocumentThumbnailUrl).toHaveBeenCalled();
     });
 
-    it('should return no content url without service', () => {
+    it('should return a null thumbnail url for a null item', () => {
+        let url = 'URL';
+        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
+
+        let result = documentList.getThumbnailUrl(null);
+
+        expect(result).toBeNull();
+        expect(alfrescoServiceMock.getDocumentThumbnailUrl).not.toHaveBeenCalled();
+    });
+
+    it('should return no thumbnail url without service', () => {
         let list = new DocumentList(null);
         let node = new MinimalNodeEntity();
-        expect(list.getContentUrl(node)).toBeNull();
+        expect(list.getThumbnailUrl(node)).toBeNull();
     });
 
     it('should execute action with node', () => {
