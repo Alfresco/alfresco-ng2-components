@@ -77,7 +77,6 @@ export class FilesComponent {
 
     showFile(event) {
         if (event.value.entry.isFile) {
-            let nameFile = event.value.entry.name;
             this.mimeType = event.value.entry.content.mimeType;
             this.urlFile = this.contentService.getContentUrl(event.value);
             this.fileShowed = true;
