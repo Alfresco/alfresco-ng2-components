@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, HostListener } from 'angular2/core';
+import { Component, ElementRef, Input, Output, HostListener } from 'angular2/core';
 import { EventEmitter } from 'angular2/src/facade/async';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
@@ -58,6 +58,9 @@ export class ViewerComponent {
     totalPages: number;
 
     extension: string;
+
+    constructor(private element: ElementRef) {
+    }
 
     ngOnChanges(changes) {
         if (this.showViewer) {
@@ -158,11 +161,24 @@ export class ViewerComponent {
         }
     }
 
+    private closestElement(el: HTMLElement, nodeName: string) {
+        let parent = el.parentElement;
+        if (parent) {
+            if (parent.nodeName.toLowerCase() === nodeName) {
+                return parent;
+            } else {
+                return this.closestElement(parent, nodeName);
+            }
+        } else {
+            return null;
+        }
+    }
+
     /**
-     * Hide the othe possible menu in th eapplication
+     * Hide the other possible menu in the application
      */
     private hideOtherMenu() {
-        if (this.overlayMode) {
+        if (this.overlayMode && !this.closestElement(this.element.nativeElement, 'header')) {
             this.otherMenu = document.querySelector('header');
             if (this.otherMenu) {
                 this.otherMenu.hidden = true;
