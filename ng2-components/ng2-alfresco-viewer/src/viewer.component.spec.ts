@@ -36,35 +36,6 @@ describe('ViewerComponent', () => {
                 });
         }));
 
-        it('Next an Previous Buttons should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(ViewerComponent)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-
-                    fixture.detectChanges();
-
-                    expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
-                    expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
-                });
-        }));
-
-        it('Input Page elements should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(ViewerComponent)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-
-                    fixture.detectChanges();
-
-                    expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
-                    expect(element.querySelector('#viewer-total-pages')).toBeDefined();
-
-                    expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
-                    expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
-                });
-        }));
-
         it('Name File should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)

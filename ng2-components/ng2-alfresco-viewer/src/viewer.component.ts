@@ -154,10 +154,6 @@ export class ViewerComponent {
         let key = event.keyCode;
         if (key === 27) { //esc
             this.close();
-        } else if (key === 39) { //right arrow
-            //this.nextPage();
-        } else if (key === 37) {//left arrow
-            //this.previousPage();
         }
     }
 

@@ -10,3 +10,22 @@
     </div>
 </div>
 <!-- End Pdf Canvas -->
+
+
+<!-- Pagination toolbar start -->
+<div id="viewer-toolbar-pagination" class="viewer-toolbar-pagination mdl-cell--hide-tablet mdl-cell--hide-phone">
+    <div id="viewer-previous-page-button" class="button-page left" (click)="previousPage()">
+        <i class="icon material-icons">keyboard_arrow_left</i>
+    </div>
+
+    <div class="viewer-page-counter left" >
+        <input id="viewer-pagenumber-input"  #page
+               (keyup.enter)="inputPage(page.value)" class="viewer-pagenumber-input left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
+        <div id="viewer-total-pages"  class="left viewer-total-pages">/ {{totalPages}}</div>
+    </div>
+
+    <div id="viewer-next-page-button" (click)="nextPage()"  class="button-page left">
+        <i class="icon material-icons" >keyboard_arrow_right</i>
+    </div>
+</div>
+<!-- Pagination toolbar end -->

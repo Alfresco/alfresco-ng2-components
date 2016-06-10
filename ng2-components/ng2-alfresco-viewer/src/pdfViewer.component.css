@@ -18,3 +18,65 @@
 :host .canvasWrapper {
     box-shadow: 0px 0px 8px 2px #000;
 }
+
+.left {
+    float: left;
+}
+
+.viewer-toolbar-pagination{
+    padding-top: 4px;
+    top: 80px;
+    right:35px;
+    width:auto;
+    position:fixed;
+    border-radius: 10px;
+    background: #3E3E3E;
+    color: white;
+}
+
+.viewer-pagenumber-input {
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    display: block;
+    font-size: 16px;
+    font-family: "Helvetica","Arial",sans-serif;
+    padding: 4px 0;
+    background: 0 0;
+    text-align: right;
+    color: inherit;
+    width: 33px;
+    margin-right: 4px;
+}
+
+.viewer-total-pages {
+    margin-right: 22px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    display: block;
+    font-size: 16px;
+    font-family: "Helvetica","Arial",sans-serif;
+    margin: 0;
+    padding: 3px 0;
+    background: 0 0;
+    text-align: left;
+    color: inherit;
+}
+
+.viewer-page-counter {
+    margin-right: 20px;
+}
+
+.button-page {
+    margin-right: 4px;
+    height: 24px;
+    width: 24px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.button-page:hover {
+    cursor: pointer;
+    background: grey;
+    border-radius: 24px;
+
+}

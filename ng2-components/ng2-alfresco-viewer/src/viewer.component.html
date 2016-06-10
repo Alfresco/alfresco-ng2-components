@@ -13,22 +13,6 @@
                     <!-- File Title -->
                     <span  id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{displayName}}</span>
 
-                    <!-- Pagination toolbar start -->
-                    <div id="viewer-toolbar-pagination">
-                        <div id="viewer-previous-page-button" class="left" (click)="previousPage()">
-                            <i class="icon material-icons">keyboard_arrow_left</i>
-                        </div>
-
-                        <input id="viewer-pagenumber-input"  #page
-                               (keyup.enter)="inputPage(page.value)" class="left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
-                        <span id="viewer-total-pages"  class="left">/ {{totalPages}}</span>
-
-                        <div id="viewer-next-page-button" (click)="nextPage()"  class="left">
-                            <i class="icon material-icons" >keyboard_arrow_right</i>
-                        </div>
-                    </div>
-                    <!-- Pagination toolbar end -->
-
                     <span class="vertical-divider"></span>
 
                     <div class="mdl-layout-spacer"></div>

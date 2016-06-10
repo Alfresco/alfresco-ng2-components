@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from 'angular2/core';
+import { Component, Input, HostListener } from 'angular2/core';
 
 declare let PDFJS: any;
 declare let __moduleName: string;
@@ -131,4 +131,19 @@ export class PdfViewerComponent {
             this.displayPage = this.page;
         }
     }
+
+    /**
+     * Litener Keyboard Event
+     * @param {KeyboardEvent} event
+     */
+    @HostListener('document:keydown', ['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        let key = event.keyCode;
+        if (key === 39) { //right arrow
+            this.nextPage();
+        } else if (key === 37) {//left arrow
+            this.previousPage();
+        }
+    }
+
 }

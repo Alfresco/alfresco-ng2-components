@@ -101,7 +101,6 @@ bootstrap(MyDemoApp, [
 ]);
 ```
 
-
 #### Options
 
 Attribute     | Options     | Default      | Description | Mandatory
@@ -111,8 +110,6 @@ Attribute     | Options     | Default      | Description | Mandatory
 `overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content |
 `showViewer`         | *boolean*    | `true`        | Hide or show the viewer |
 `mimeType`         | *string*    | `true`        | MimeType of the file, used to detect if the browser can display the content. If not supplied the component will attempt to guess based on file extension of the `urlFile` |
-
-
 
 ## Build from sources
 Alternatively you can build component from sources with the following commands:
