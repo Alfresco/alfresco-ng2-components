@@ -148,7 +148,7 @@
                         [multipleFiles]="true"
                         (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
 
-<alfresco-viewer [(showViewer)]="fileShowed" [urlFile]="urlFile" [overlayMode]="true">
+<alfresco-viewer [(showViewer)]="fileShowed" [urlFile]="urlFile" [mimeType]="mimeType" [overlayMode]="true">
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
 </alfresco-viewer>
 <file-uploading-dialog></file-uploading-dialog>

@@ -18,12 +18,18 @@
 import {Injectable} from 'angular2/core';
 import {ContentActionHandler} from '../models/content-action.model';
 import {AlfrescoService} from './alfresco.service';
+import {
+    AlfrescoContentService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 @Injectable()
 export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private _alfrescoService?: AlfrescoService) {
+    constructor(
+        private _alfrescoService?: AlfrescoService,
+        private _contentService?: AlfrescoContentService
+    ) {
         this.setupActionHandlers();
     }
 
@@ -70,7 +76,7 @@ export class DocumentActionsService {
             let link = document.createElement('a');
             document.body.appendChild(link);
             link.setAttribute('download', 'download');
-            link.href = this._alfrescoService.getContentUrl(obj);
+            link.href = this._contentService.getContentUrl(obj);
             link.click();
             document.body.removeChild(link);
         }

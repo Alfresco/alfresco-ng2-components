@@ -20,6 +20,7 @@ import { AlfrescoTranslationLoader } from './src/services/AlfrescoTranslationLoa
 import { AlfrescoTranslationService } from './src/services/AlfrescoTranslationService.service';
 import { AlfrescoPipeTranslate } from './src/services/AlfrescoPipeTranslate.service';
 import { AlfrescoAuthenticationService } from './src/services/AlfrescoAuthenticationService.service';
+import { AlfrescoContentService } from './src/services/AlfrescoContentService.service';
 
 export * from './src/services/AlfrescoSettingsService.service';
 export * from './src/services/AlfrescoTranslationLoader.service';
@@ -27,9 +28,11 @@ export * from './src/services/AlfrescoTranslationService.service';
 export * from './src/services/AlfrescoPipeTranslate.service';
 export * from './src/material/MaterialDesignLiteUpgradeElement';
 export * from './src/services/AlfrescoAuthenticationService.service';
+export * from './src/services/AlfrescoContentService.service';
 
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
     AlfrescoAuthenticationService,
+    AlfrescoContentService,
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,

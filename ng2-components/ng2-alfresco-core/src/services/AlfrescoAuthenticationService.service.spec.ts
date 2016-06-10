@@ -20,6 +20,7 @@ import { provide, Injector } from 'angular2/core';
 import { Http, HTTP_PROVIDERS, XHRBackend, Response, ResponseOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing';
 import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
+import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 
 
 describe('AlfrescoAuthentication', () => {
@@ -34,7 +35,8 @@ describe('AlfrescoAuthentication', () => {
             HTTP_PROVIDERS,
             MockBackend,
             provide(XHRBackend, {useClass: MockBackend}),
-            AlfrescoAuthenticationService
+            AlfrescoAuthenticationService,
+            AlfrescoSettingsService
         ]);
 
         let store = {};
