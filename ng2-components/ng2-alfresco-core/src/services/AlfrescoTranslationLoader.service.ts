@@ -43,7 +43,11 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
         let observableBatch = [];
         this._componentList.forEach((component) => {
             observableBatch.push(this.http.get(`${component}/${self.prefix}/${lang}${self.suffix}`)
-                .map((res: Response) => res.json()));
+                .map((res: Response) => res.json())
+                .catch( (err: any, source: Observable<any>, caught: Observable<any>)  =>  {
+                    // Empty Observable just to go ahead
+                    return Observable.of('');
+                }));
         });
 
         return Observable.create(observer => {
@@ -51,10 +55,17 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
                 (translations: any[]) => {
                     let multiLanguage: any = '';
                     translations.forEach((translate) => {
-                        multiLanguage += JSON.stringify(translate);
+                        if(translate !== '') {
+                            multiLanguage += JSON.stringify(translate);
+                        }
                     });
-                    observer.next(JSON.parse(multiLanguage.replace(/}{/g, ',')));
+                    if(multiLanguage !== '') {
+                        observer.next(JSON.parse(multiLanguage.replace(/}{/g, ',')));
+                    }
                     observer.complete();
+                },
+                (err: any) => {
+                        console.error(err);
                 });
         });
     }
