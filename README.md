@@ -1,8 +1,16 @@
 # ALFRESCO WEB COMPONENTS
 
+<p>
 <a title='Build Status' href="https://travis-ci.com/Alfresco/dev-platform-webcomponents">
   <img src='https://travis-ci.com/Alfresco/dev-platform-webcomponents.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis Status' />
 </a>
+  <a href='https://raw.githubusercontent.com/Alfresco/dev-platform-webcomponents/master/ng2-components/ng2-alfresco-viewer/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='my blog' />
+  </a>
+</p>
   
 <p align="center">
   <img title="alfresco" alt='alfresco' src='assets/alfresco.png'  width="280px" height="150px"></img>
