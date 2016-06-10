@@ -105,19 +105,30 @@ export class ViewerComponent {
         return fileName.split('.').pop().toLowerCase();
     }
 
-    /**
-     * check if the current file is a suppoerted image extension
-     */
     private isImage() {
+        return this.isImageExtension() || this.isImageMimeType();
+    }
+
+    /**
+     * check if the current file is a supported image extension
+     */
+    private isImageExtension() {
         return this.extension === 'png' || this.extension === 'jpg' ||
             this.extension === 'jpeg' || this.extension === 'gif' || this.extension === 'bmp';
+    }
+
+    /**
+     * check if the current file has an image-based mimetype
+     */
+    private isImageMimeType() {
+        return this.mimeType !== null && this.mimeType.indexOf('image/') === 0;
     }
 
     /**
      * check if the current file is a suppoerted pdf extension
      */
     private isPdf() {
-        return this.extension === 'pdf' || this.mimeType == 'application/pdf';
+        return this.extension === 'pdf' || this.mimeType === 'application/pdf';
     }
 
     /**
