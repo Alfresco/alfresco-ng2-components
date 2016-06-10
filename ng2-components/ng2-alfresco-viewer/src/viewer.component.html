@@ -11,7 +11,7 @@
                 <div class="mdl-layout__header-row">
 
                     <!-- File Title -->
-                    <span  id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{nameFile}}</span>
+                    <span  id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{displayName}}</span>
 
                     <!-- Pagination toolbar start -->
                     <div id="viewer-toolbar-pagination">
@@ -70,7 +70,7 @@
                             </div>
                             <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="center-element viewer-image"/></div>
                             <div *ngIf="notSupportedExtension()">
-                                <not-supported-format [urlFile]="urlFile" [nameFile]="nameFile" ></not-supported-format>
+                                <not-supported-format [urlFile]="urlFile" [displayName]="displayName" ></not-supported-format>
                             </div>
                         <!-- End View Switch -->
                         </div>

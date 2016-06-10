@@ -107,6 +107,7 @@ bootstrap(MyDemoApp, [
 Attribute     | Options     | Default      | Description | Mandatory
 ---           | ---         | ---          | ---         | ---
 `urlFile`         | *string*    |        |  Url where to load the file | mandatory
+`fileName`         | *string*    | Parsed from `urlFile` |  Name of the file to display in the title bar. If not specified will take the last part of the URL |
 `overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content |
 `showViewer`         | *boolean*    | `true`        | Hide o show the viewer |
 

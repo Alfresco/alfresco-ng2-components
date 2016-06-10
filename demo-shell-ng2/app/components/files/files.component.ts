@@ -46,6 +46,7 @@ export class FilesComponent {
     relativePath: string = '';
 
     urlFile: string;
+    fileName: string;
     mimeType: string;
     fileShowed: boolean = false;
 
@@ -75,6 +76,7 @@ export class FilesComponent {
 
     showFile(event) {
         if (event.value.entry.isFile) {
+            this.fileName = event.value.entry.name;
             this.mimeType = event.value.entry.content.mimeType;
             this.urlFile = this.contentService.getContentUrl(event.value);
             this.fileShowed = true;

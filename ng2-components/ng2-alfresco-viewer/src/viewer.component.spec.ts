@@ -80,6 +80,23 @@ describe('ViewerComponent', () => {
                 });
         }));
 
+        /* tslint:disable:max-line-length */
+        it('should pick up filename from the fileName property when specified', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(ViewerComponent)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+                    component.urlFile = 'http://localhost:9876/fake-url-file.pdf';
+                    component.fileName = 'My Example.pdf';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('My Example.pdf');
+                    });
+                });
+        }));
+
         it('Close button should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(ViewerComponent)

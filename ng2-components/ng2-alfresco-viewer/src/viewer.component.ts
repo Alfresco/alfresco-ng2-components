@@ -35,6 +35,9 @@ export class ViewerComponent {
     urlFile: string;
 
     @Input()
+    fileName: string = null;
+
+    @Input()
     mimeType: string = null;
 
     @Input()
@@ -48,7 +51,7 @@ export class ViewerComponent {
 
     otherMenu: any;
 
-    nameFile: string;
+    displayName: string;
     currentPdfDocument: any;
     page: number;
     displayPage: number;
@@ -64,8 +67,9 @@ export class ViewerComponent {
             }
             return new Promise((resolve) => {
                 if (this.urlFile) {
-                    this.nameFile = this.getFilenameFromUrl(this.urlFile);
-                    this.extension = this.getFileExtension(this.nameFile);
+                    let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
+                    this.displayName = this.fileName !== null ? this.fileName : filenameFromUrl;
+                    this.extension = this.getFileExtension(filenameFromUrl);
                 }
                 resolve();
             });

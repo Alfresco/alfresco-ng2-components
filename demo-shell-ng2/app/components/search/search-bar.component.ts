@@ -37,6 +37,7 @@ declare let __moduleName: string;
 export class SearchBarComponent {
 
     urlFile: string;
+    fileName: string;
     mimeType: string;
     fileShowed: boolean = false;
 
@@ -65,6 +66,7 @@ export class SearchBarComponent {
 
     onFileClicked(event) {
         if (event.value.entry.isFile) {
+            this.fileName = event.value.entry.name;
             this.mimeType = event.value.entry.content.mimeType;
             this.urlFile = this.contentService.getContentUrl(event.value);
             this.fileShowed = true;
