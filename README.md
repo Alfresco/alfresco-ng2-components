@@ -1,8 +1,12 @@
 # ALFRESCO WEB COMPONENTS
 
+<a title='Build Status' href="https://travis-ci.com/Alfresco/dev-platform-webcomponents">
+  <img src='https://travis-ci.com/Alfresco/dev-platform-webcomponents.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis Status' />
+</a>
+  
 <p align="center">
   <img title="alfresco" alt='alfresco' src='assets/alfresco.png'  width="280px" height="150px"></img>
-  <img title="angular2" alt='angular2' src='assets/angular2.png'  width="150px" height="150px"></img>
+  <img title="angular2" alt='angular2' src='assets/angular2.png'  width="150px" height="150px"></img>    
 </p>
 
 ## Prerequisites
