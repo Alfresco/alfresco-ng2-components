@@ -101,7 +101,7 @@ generators will create for you a full working project with all the right librari
   <img title="yeoman generator" src='https://github.com/yeoman/media/blob/master/optimized/yeoman-150x150-opaque.png' alt='yeoman logo'  />
 </p>
 
-### How to build a new component
+### How to build a new Alfresco Angular 2 component
 
 To generate your Alfresco Angular 2 component you can use our Yeoman generator
 
