@@ -92,6 +92,10 @@ For development environment configuration please refer to [project docs](demo-sh
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
 
+You can browse all the components at the following address:
+
+http://devproducts.alfresco.me/
+
 ## Yeoman generators
 
 To speed up the development of your Alfresco Angular 2 application or Alfresco Angular 2 component use one of our Yeoman generators. These
