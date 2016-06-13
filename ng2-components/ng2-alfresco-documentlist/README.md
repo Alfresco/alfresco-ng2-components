@@ -377,12 +377,35 @@ Every folder action is rendered as a separate button.
 
 ![Quick folder Actions](docs/assets/quick-folder-actions.png)
 
+### Navigation mode
+
+By default DocumentList component uses 'double-click' mode for navigation.
+That means user will see the contents of the folder by double-clicking its name
+or icon (similar Google Drive behaviour). However it is possible switching to 
+other modes, like single-click navigation for example.
+ 
+The following navigation modes are supported:
+
+- click
+- dblclick
+
+The following example switches navigation to single clicks:
+
+```html
+<alfresco-document-list navigation-mode="click">
+</alfresco-document-list>
+```
+
 ### Events
 
 Document List emits the following events:
 
-- itemClick
-- folderChange
+| Name | Description |
+| --- | --- |
+| itemClick | emitted when user clicks a document list entry |
+| itemDblClick | emitted when user double-clicks document a document list entry |
+| folderChange | emitted once current display folder has changed |
+| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 
 ### itemClick event
 
