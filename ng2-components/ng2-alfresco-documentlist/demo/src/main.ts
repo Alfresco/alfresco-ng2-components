@@ -24,7 +24,8 @@ import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoPipeTranslate,
-    AlfrescoTranslationService
+    AlfrescoTranslationService,
+    CONTEXT_MENU_DIRECTIVES
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 import {
@@ -133,10 +134,11 @@ import {
                     </content-action>
                 </content-actions>
             </alfresco-document-list>
+            <context-menu-holder></context-menu-holder>
         </div>
     `,
     styles: [':host > .container {padding: 10px}'],
-    directives: [DOCUMENT_LIST_DIRECTIVES],
+    directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
     providers: [DOCUMENT_LIST_PROVIDERS],
     pipes: [AlfrescoPipeTranslate]
 })
