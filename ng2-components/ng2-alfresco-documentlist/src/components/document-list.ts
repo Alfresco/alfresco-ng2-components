@@ -27,6 +27,8 @@ import {
     TemplateRef
 } from 'angular2/core';
 import { DatePipe } from 'angular2/common';
+import { Subject } from 'rxjs/Rx';
+import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
@@ -42,6 +44,7 @@ declare let __moduleName: string;
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html',
     providers: [AlfrescoService],
+    directives: [CONTEXT_MENU_DIRECTIVES],
     host: {
         '(contextmenu)': 'onShowContextMenu($event)'
     }
@@ -117,8 +120,66 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         direction: 'asc'
     };
 
+    contextActionHandler: Subject<any> = new Subject();
+
+    testActions: any[];
+
     constructor(
-        private _alfrescoService: AlfrescoService) {}
+        private _alfrescoService: AlfrescoService) {
+
+        this.testActions = [
+            {
+                title: 'Item 1',
+                subject: new Subject()
+            },
+            {
+                title: 'Item 2',
+                subject: new Subject()
+            },
+            {
+                title: 'Item 3',
+                subject: new Subject()
+            },
+            {
+                title: 'Item 4',
+                subject: new Subject()
+            }
+        ];
+    }
+
+    getContextActions(node: MinimalNodeEntity) {
+        if (node && node.entry) {
+            let targetType;
+
+            if (node.entry.isFolder) {
+                targetType = 'folder';
+            }
+
+            if (node.entry.isFile) {
+                targetType = 'document';
+            }
+
+            if (targetType) {
+                let actions = this.getContentActions(targetType, 'menu');
+                if (actions && actions.length > 0) {
+                    return actions.map(a => {
+                        return {
+                            model: a,
+                            node: node,
+                            subject: this.contextActionHandler
+                        }
+                    });
+                }
+            }
+        }
+        return null;
+    }
+
+    contextActionCallback(action) {
+        if (action) {
+            this.executeContentAction(action.node, action.model);
+        }
+    }
 
     /**
      * Determines whether navigation to parent folder is available.
@@ -131,6 +192,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     ngOnInit() {
         this.changePath(this.currentFolderPath);
+        this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
     }
 
     ngOnChanges(change) {
@@ -337,7 +399,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
      * @param action Action to be executed against the context.
      */
     executeContentAction(node: MinimalNodeEntity, action: ContentActionModel) {
-        if (action) {
+        if (node && node.entry && action) {
             action.handler(node, this);
         }
     }
@@ -513,3 +575,5 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         }
     }
 }
+
+

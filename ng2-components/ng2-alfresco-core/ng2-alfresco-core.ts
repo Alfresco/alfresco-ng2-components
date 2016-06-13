@@ -21,6 +21,9 @@ import { AlfrescoTranslationService } from './src/services/AlfrescoTranslationSe
 import { AlfrescoPipeTranslate } from './src/services/AlfrescoPipeTranslate.service';
 import { AlfrescoAuthenticationService } from './src/services/AlfrescoAuthenticationService.service';
 import { AlfrescoContentService } from './src/services/AlfrescoContentService.service';
+import { ContextMenuService } from './src/services/context-menu.service';
+import { ContextMenuHolderComponent } from './src/components/context-menu-holder.component';
+import { ContextMenuDirective } from './src/components/context-menu.directive';
 
 export * from './src/services/AlfrescoSettingsService.service';
 export * from './src/services/AlfrescoTranslationLoader.service';
@@ -30,12 +33,26 @@ export * from './src/material/MaterialDesignLiteUpgradeElement';
 export * from './src/services/AlfrescoAuthenticationService.service';
 export * from './src/services/AlfrescoContentService.service';
 
+export * from './src/services/context-menu.service';
+export * from './src/components/context-menu-holder.component';
+export * from './src/components/context-menu.directive';
+
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
-    AlfrescoPipeTranslate
+    AlfrescoPipeTranslate,
+    ContextMenuService
+];
+
+export const CONTEXT_MENU_PROVIDERS: [any] = [
+    ContextMenuService
+];
+
+export const CONTEXT_MENU_DIRECTIVES: [any] = [
+    ContextMenuHolderComponent,
+    ContextMenuDirective
 ];
 

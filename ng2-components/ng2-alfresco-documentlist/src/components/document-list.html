@@ -44,6 +44,7 @@
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onItemClick(content, $event)"
             (dblclick)="onItemDblClick(content, $event)"
+            [context-menu]="getContextActions(content)"
             [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
             <div *ngSwitchWhen="'image'" class="cell-value">
                 <img class="thumbnail" [src]="getCellValue(content, col)">

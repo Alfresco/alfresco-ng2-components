@@ -25,6 +25,7 @@ import {
     MDL,
     AlfrescoContentService
 } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
 import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
@@ -35,7 +36,13 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
-    directives: [DOCUMENT_LIST_DIRECTIVES, MDL, ALFRESCO_ULPOAD_COMPONENTS, VIEWERCOMPONENT],
+    directives: [
+        DOCUMENT_LIST_DIRECTIVES,
+        MDL,
+        ALFRESCO_ULPOAD_COMPONENTS,
+        VIEWERCOMPONENT,
+        CONTEXT_MENU_DIRECTIVES
+    ],
     providers: [DOCUMENT_LIST_PROVIDERS],
     pipes: [AlfrescoPipeTranslate]
 })
@@ -63,11 +70,11 @@ export class FilesComponent {
     }
 
     myCustomAction1(event) {
-        alert('Custom document action for ' + event.value.displayName);
+        alert('Custom document action for ' + event.value.entry.name);
     }
 
     myFolderAction1(event) {
-        alert('Custom folder action for ' + event.value.displayName);
+        alert('Custom folder action for ' + event.value.entry.name);
     }
 
     refreshDocumentList() {
