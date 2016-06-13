@@ -73,15 +73,13 @@ describe('AlfrescoLogin', () => {
 
           let element = fixture.nativeElement;
 
-          expect(element.querySelector('h2').innerText).toEqual('login');
-
           expect(element.querySelector('[for="username"]')).toBeDefined();
-          expect(element.querySelector('[for="username"]').innerText).toEqual('username');
-          expect(element.querySelector('#username-error').innerText).toEqual('input-required-message');
+          expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
+          expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
 
           expect(element.querySelector('[for="password"]')).toBeDefined();
-          expect(element.querySelector('[for="password"]').innerText).toEqual('password');
-          expect(element.querySelector('#password-required').innerText).toEqual('input-required-message');
+          expect(element.querySelector('[for="password"]').innerText).toEqual('LOGIN.LABEL.PASSWORD');
+          expect(element.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
 
         });
     }));
@@ -122,8 +120,8 @@ describe('AlfrescoLogin', () => {
 
           expect(component.formError).toBeDefined(true);
           expect(component.formError.username).toBeDefined(true);
-          expect(component.formError.username).toEqual('input-min-message');
-          expect(compiled.querySelector('#username-error').innerText).toEqual('input-min-message');
+          expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+          expect(compiled.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
         });
     }));
 
@@ -230,7 +228,7 @@ describe('AlfrescoLogin', () => {
           fixture.detectChanges();
 
           expect(fixture.componentInstance.error).toBe(true);
-          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+          expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
         });
     }));
 
@@ -258,7 +256,7 @@ describe('AlfrescoLogin', () => {
           fixture.detectChanges();
 
           expect(fixture.componentInstance.error).toBe(true);
-          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+          expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
         });
     }));
 
@@ -286,7 +284,7 @@ describe('AlfrescoLogin', () => {
           fixture.detectChanges();
 
           expect(fixture.componentInstance.error).toBe(true);
-          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+          expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
         });
     }));
 
@@ -318,7 +316,7 @@ describe('AlfrescoLogin', () => {
           fixture.detectChanges();
 
           expect(fixture.componentInstance.error).toBe(false);
-          expect(compiled.querySelector('#login-success').innerHTML).toEqual('login-success-message');
+          expect(compiled.querySelector('#login-success').innerHTML).toEqual('LOGIN.MESSAGES.LOGIN-SUCCESS');
           expect(component.onSuccess.emit).toHaveBeenCalledWith({value: 'Login OK'});
         });
     }));
@@ -351,9 +349,53 @@ describe('AlfrescoLogin', () => {
           fixture.detectChanges();
 
           expect(fixture.componentInstance.error).toBe(true);
-          expect(compiled.querySelector('#login-error').innerText).toEqual('login-error-message');
+          expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
           expect(component.onError.emit).toHaveBeenCalledWith({value: 'Login KO'});
         });
     }));
+
+  it('should render the password in clear when the toggleShowPassword is call',
+      injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(AlfrescoLoginComponent)
+            .then((fixture) => {
+              let component = fixture.componentInstance;
+
+              let compiled = fixture.debugElement.nativeElement;
+
+              fixture.detectChanges();
+
+              component.isPasswordShow = false;
+              component.toggleShowPassword();
+
+              fixture.detectChanges();
+
+              expect(component.isPasswordShow).toBe(true);
+              expect(compiled.querySelector('#password').type).toEqual('text');
+            });
+      }));
+
+  it('should render the hide password when the password is in clear and the toggleShowPassword is call',
+      injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(AlfrescoLoginComponent)
+            .then((fixture) => {
+              let component = fixture.componentInstance;
+
+              let compiled = fixture.debugElement.nativeElement;
+
+              fixture.detectChanges();
+
+              component.isPasswordShow = true;
+              component.toggleShowPassword();
+
+              fixture.detectChanges();
+
+              expect(component.isPasswordShow).toBe(false);
+              expect(compiled.querySelector('#password').type).toEqual('password');
+            });
+      }));
+
+
 
 });

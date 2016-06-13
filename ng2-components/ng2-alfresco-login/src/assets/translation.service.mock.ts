@@ -27,18 +27,11 @@ export class TranslationMock {
 
     public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
 
-    setDefaultLang() {
-      console.log('mock');
-    }
-
-    use() {
-      console.log('mock');
-    }
-
     public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
-        if (!key) {
-            throw new Error('Parameter "key" required');
-        }
         return Observable.of(key);
+    }
+
+    addTranslationFolder() {
+
     }
 }

@@ -35,8 +35,10 @@ export module AlfrescoApiMock {
                 if (loginRequest.userId === 'fake-username' && loginRequest.password === 'fake-password') {
                     return new Promise(function (resolve, reject) {
                         resolve({
-                            userId: 'fake-username',
-                            ticket: 'TICKET_blah'
+                            entry: {
+                                userId: 'fake-username',
+                                id: 'fake-post-token'
+                            }
                         });
                     });
                 } else {
