@@ -591,7 +591,7 @@ export class MyView {
 }
 ```
 
-![Custom handler 1](docs/assets/custom-doc-handler-1.png)
+![Custom handler 1](docs/assets/custom-doc-handler-1.png?raw=true)
 
 Upon execution users will see the following dialog:
 
