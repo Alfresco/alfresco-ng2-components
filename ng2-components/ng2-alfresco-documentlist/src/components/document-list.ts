@@ -64,9 +64,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     @Input()
     breadcrumb: boolean = false;
 
-    @Input('folder-icon')
-    folderIcon: string;
-
     @Input()
     thumbnails: boolean = false;
 
