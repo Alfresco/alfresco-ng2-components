@@ -132,6 +132,7 @@ describe('DocumentList', () => {
 
     it('should execute action with node', () => {
         let node = new MinimalNodeEntity();
+        node.entry = new MinimalNodeEntryEntity();
         let action = new ContentActionModel();
         action.handler = function () {
             console.log('mock handler');
@@ -144,7 +145,7 @@ describe('DocumentList', () => {
 
     });
 
-    it('should execute action without node provided', () => {
+    it('should not execute action without node provided', () => {
         let action = new ContentActionModel();
         action.handler = function () {
             console.log('mock handler');
@@ -152,7 +153,7 @@ describe('DocumentList', () => {
 
         spyOn(action, 'handler').and.stub();
         documentList.executeContentAction(null, action);
-        expect(action.handler).toHaveBeenCalledWith(null, documentList);
+        expect(action.handler).not.toHaveBeenCalled();
     });
 
     it('should update current folder path', () => {
