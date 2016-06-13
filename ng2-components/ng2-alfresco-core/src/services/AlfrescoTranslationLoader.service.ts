@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable } from 'angular2/core';
-import { Response, Http } from 'angular2/http';
+import { Injectable } from '@angular/core';
+import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { TranslateLoader } from 'ng2-translate/ng2-translate';
 
@@ -44,7 +44,7 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
         this._componentList.forEach((component) => {
             observableBatch.push(this.http.get(`${component}/${self.prefix}/${lang}${self.suffix}`)
                 .map((res: Response) => res.json())
-                .catch( (err: any, source: Observable<any>, caught: Observable<any>)  =>  {
+                .catch( (/*err: any, source: Observable<any>, caught: Observable<any>*/)  =>  {
                     // Empty Observable just to go ahead
                     return Observable.of('');
                 }));

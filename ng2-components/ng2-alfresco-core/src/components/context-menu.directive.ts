@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, Input } from 'angular2/core';
+import { Directive, Input } from '@angular/core';
 import { ContextMenuService } from './../services/context-menu.service';
 
 @Directive({

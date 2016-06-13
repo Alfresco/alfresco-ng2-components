@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Directive, AfterViewInit} from 'angular2/core';
+import { Directive, AfterViewInit } from '@angular/core';
 declare var componentHandler;
 
 @Directive({

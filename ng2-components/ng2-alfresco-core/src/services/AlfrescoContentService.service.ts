@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from 'angular2/core';
+import { Injectable } from '@angular/core';
 
 import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
 import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
