@@ -92,14 +92,27 @@ For development environment configuration please refer to [project docs](demo-sh
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
 
-## How to build a new component 
+## Yeoman generator
 
-If you want generate your Alfresco Angular 2 Component you can use our Yeoman generator
+To speed up the development of you Alfresco Angular 2 application or Alfresco Angular 2 component use one of our Yeoman generators. These
+generators will create for you a full working project with all the right libraries and tools.
+
 <p align="center">
   <img title="yeoman generator" src='https://github.com/yeoman/media/blob/master/optimized/yeoman-150x150-opaque.png' alt='yeoman logo'  />
 </p>
 
-- [Yeoman Generator Angular 2 Alfresco Component](https://github.com/Alfresco/generator-ng2-alfresco-component)
+### How to build a new component
+
+To generate your Alfresco Angular 2 component you can use our Yeoman generator
+
+- [Yeoman Generator Angular 2 Alfresco component](https://github.com/Alfresco/generator-ng2-alfresco-component)
+
+
+### How to build a new Alfresco Angular 2 application
+
+To generate your Alfresco Angular 2 application you can use our Yeoman generator
+
+- [Yeoman Generator Angular 2 Alfresco application](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
 
 
