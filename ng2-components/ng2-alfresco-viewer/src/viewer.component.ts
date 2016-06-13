@@ -52,10 +52,6 @@ export class ViewerComponent {
     otherMenu: any;
 
     displayName: string;
-    currentPdfDocument: any;
-    page: number;
-    displayPage: number;
-    totalPages: number;
 
     extension: string;
 
@@ -64,7 +60,7 @@ export class ViewerComponent {
 
     ngOnChanges(changes) {
         if (this.showViewer) {
-            this.hideOtherMenu();
+            this.hideOtherHeaderBar();
             if (!this.urlFile) {
                 throw new Error('Attribute urlFile is required');
             }
@@ -92,6 +88,8 @@ export class ViewerComponent {
 
     /**
      * get File name from url
+     *
+     * @returns {string} name file
      */
     getFilenameFromUrl(url: string) {
         let anchor = url.indexOf('#');
@@ -112,12 +110,19 @@ export class ViewerComponent {
         return fileName.split('.').pop().toLowerCase();
     }
 
+    /**
+     * Check if the content is an image thorugh the extension or mime type
+     *
+     * @returns {boolean}
+     */
     private isImage() {
         return this.isImageExtension() || this.isImageMimeType();
     }
 
     /**
      * check if the current file is a supported image extension
+     *
+     * @returns {boolean}
      */
     private isImageExtension() {
         return this.extension === 'png' || this.extension === 'jpg' ||
@@ -126,23 +131,29 @@ export class ViewerComponent {
 
     /**
      * check if the current file has an image-based mimetype
+     *
+     * @returns {boolean}
      */
     private isImageMimeType() {
         return this.mimeType !== null && this.mimeType.indexOf('image/') === 0;
     }
 
     /**
-     * check if the current file is a suppoerted pdf extension
+     * check if the current file is a supported pdf extension
+     *
+     * @returns {boolean}
      */
     private isPdf() {
         return this.extension === 'pdf' || this.mimeType === 'application/pdf';
     }
 
     /**
-     * check if the current file is not a supported extension
+     * check if the current file is  a supported extension
+     *
+     * @returns {boolean}
      */
-    private notSupportedExtension() {
-        return !this.isImage() && !this.isPdf();
+    private supportedExtension() {
+        return this.isImage() || this.isPdf();
     }
 
     /**
@@ -157,8 +168,23 @@ export class ViewerComponent {
         }
     }
 
-    private closestElement(el: HTMLElement, nodeName: string) {
-        let parent = el.parentElement;
+    /**
+     * Check if the viewer is used inside and header element
+     *
+     * @returns {boolean}
+     */
+    private isParentElementHeaderBar() {
+        return !!this.closestElement(this.element.nativeElement, 'header');
+    }
+
+    /**
+     * Check if the viewer is used inside and header element
+     * @param {HTMLElement} elelemnt
+     * @param {string} nodeName
+     * @returns {HTMLElement}
+     */
+    private closestElement(elelemnt: HTMLElement, nodeName: string) {
+        let parent = elelemnt.parentElement;
         if (parent) {
             if (parent.nodeName.toLowerCase() === nodeName) {
                 return parent;
@@ -173,8 +199,8 @@ export class ViewerComponent {
     /**
      * Hide the other possible menu in the application
      */
-    private hideOtherMenu() {
-        if (this.overlayMode && !this.closestElement(this.element.nativeElement, 'header')) {
+    private hideOtherHeaderBar() {
+        if (this.overlayMode && !this.isParentElementHeaderBar()) {
             this.otherMenu = document.querySelector('header');
             if (this.otherMenu) {
                 this.otherMenu.hidden = true;

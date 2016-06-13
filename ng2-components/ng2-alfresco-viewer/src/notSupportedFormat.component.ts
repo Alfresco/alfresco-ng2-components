@@ -34,9 +34,9 @@ export class NotSupportedFormat {
     urlFile: string;
 
     /**
-     * Download file
+     * Download file opening it in a new window
      */
-    private download(){
+    private download() {
         window.open(this.urlFile);
     }
 }

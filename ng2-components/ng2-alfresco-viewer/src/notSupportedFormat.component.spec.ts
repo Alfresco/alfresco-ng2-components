@@ -46,4 +46,24 @@ describe('Not Supported Format View', () => {
                 });
         }));
     });
+
+    describe('User Interaction', () => {
+        it('Click on Download button should call download method', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(NotSupportedFormat)
+                .then((fixture) => {
+                    let element = fixture.nativeElement;
+                    let component = fixture.componentInstance;
+
+                    fixture.detectChanges();
+
+                    spyOn(component, 'download');
+
+                    let downloadButton = element.querySelector('#viewer-download-button');
+                    downloadButton.click();
+
+                    expect(component.download).toHaveBeenCalled();
+                });
+        }));
+    });
 });
