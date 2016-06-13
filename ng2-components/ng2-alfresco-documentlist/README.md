@@ -377,6 +377,45 @@ Every folder action is rendered as a separate button.
 
 ![Quick folder Actions](docs/assets/quick-folder-actions.png)
 
+
+### Context Menu
+
+DocumentList also provide integration for 'Context Menu Service' from the
+`ng2-alfresco-core` library.
+
+You can automatically turn all menu actions (for the files and folders) 
+into context menu items like shown below:
+
+![Folder context menu](docs/assets/folder-context-menu.png)
+
+Enabling context menu is very simple:
+
+```ts
+import {
+    CONTEXT_MENU_DIRECTIVES,
+    CONTEXT_MENU_PROVIDERS
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
+import {
+    DOCUMENT_LIST_DIRECTIVES,
+    DOCUMENT_LIST_PROVIDERS
+} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
+
+@Component({
+    selector: 'my-view',
+    template: `
+        <alfresco-document-list>...</alfresco-document-list>
+        <context-menu-holder></context-menu-holder>
+    `,
+    directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
+    providers: [DOCUMENT_LIST_PROVIDERS, CONTEXT_MENU_PROVIDERS]
+})
+export class MyView {
+}
+```
+
+This enables context menu items for documents and folders.
+
 ### Navigation mode
 
 By default DocumentList component uses 'double-click' mode for navigation.
