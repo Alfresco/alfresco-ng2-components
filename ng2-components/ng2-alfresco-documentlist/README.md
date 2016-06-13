@@ -210,23 +210,6 @@ HTML attributes:
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
 
-### Custom folder icon
-
-Document list element exposes `folder-icon` property that accepts a CSS class list value with
-[folder_open](https://design.google.com/icons/#ic_folder_open) by default.
-
-![Default folder icon](docs/assets/folder-icon-default.png)
-
-You can provide any list of classes in order to customize look and feel of the icon.
-Example below shows the use of [folder_special](https://design.google.com/icons/#ic_folder_special) icon instead of the default one:
-
-```html
-<alfresco-document-list folder-icon="folder_special" ...>
-</alfresco-document-list>
-```
-
-![Custom folder icon](docs/assets/folder-icon-custom.png)
-
 ### Actions
 
 Document List supports declarative actions for Documents and Folders.
@@ -394,12 +377,74 @@ Every folder action is rendered as a separate button.
 
 ![Quick folder Actions](docs/assets/quick-folder-actions.png)
 
+
+### Context Menu
+
+DocumentList also provide integration for 'Context Menu Service' from the
+`ng2-alfresco-core` library.
+
+You can automatically turn all menu actions (for the files and folders) 
+into context menu items like shown below:
+
+![Folder context menu](docs/assets/folder-context-menu.png)
+
+Enabling context menu is very simple:
+
+```ts
+import {
+    CONTEXT_MENU_DIRECTIVES,
+    CONTEXT_MENU_PROVIDERS
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+
+import {
+    DOCUMENT_LIST_DIRECTIVES,
+    DOCUMENT_LIST_PROVIDERS
+} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
+
+@Component({
+    selector: 'my-view',
+    template: `
+        <alfresco-document-list>...</alfresco-document-list>
+        <context-menu-holder></context-menu-holder>
+    `,
+    directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
+    providers: [DOCUMENT_LIST_PROVIDERS, CONTEXT_MENU_PROVIDERS]
+})
+export class MyView {
+}
+```
+
+This enables context menu items for documents and folders.
+
+### Navigation mode
+
+By default DocumentList component uses 'double-click' mode for navigation.
+That means user will see the contents of the folder by double-clicking its name
+or icon (similar Google Drive behaviour). However it is possible switching to 
+other modes, like single-click navigation for example.
+ 
+The following navigation modes are supported:
+
+- click
+- dblclick
+
+The following example switches navigation to single clicks:
+
+```html
+<alfresco-document-list navigation-mode="click">
+</alfresco-document-list>
+```
+
 ### Events
 
 Document List emits the following events:
 
-- itemClick
-- folderChange
+| Name | Description |
+| --- | --- |
+| itemClick | emitted when user clicks a document list entry |
+| itemDblClick | emitted when user double-clicks document a document list entry |
+| folderChange | emitted once current display folder has changed |
+| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 
 ### itemClick event
 
