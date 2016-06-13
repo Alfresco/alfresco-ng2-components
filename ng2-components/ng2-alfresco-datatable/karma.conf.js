@@ -52,7 +52,7 @@ module.exports = function (config) {
                 flags: ['--no-sandbox']
             }
         },
-        
+
         // Karma plugins loaded
         plugins: [
             'karma-jasmine',
@@ -80,9 +80,8 @@ module.exports = function (config) {
                 {type: 'json', file: 'coverage-final.json'},
                 {type: 'html'}
             ]
-        },
+        }
 
-        singleRun: true
     }
 
     if (process.env.TRAVIS) {

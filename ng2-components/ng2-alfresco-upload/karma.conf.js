@@ -83,9 +83,7 @@ module.exports = function (config) {
                 {type: 'json', file: 'coverage-final.json'},
                 {type: 'html'}
             ]
-        },
-
-        singleRun: true
+        }
     }
 
     if (process.env.TRAVIS) {
