@@ -75,7 +75,7 @@ describe('AlfrescoAuthentication', () => {
         service.login('fake-username', 'fake-password')
             .subscribe(() => {
                     expect(service.isLoggedIn()).toBe(true);
-                    expect(service.token).toEqual('fake-post-token');
+                    expect(service.getToken()).toEqual('fake-post-token');
                     expect(localStorage.getItem('token')).toBeDefined();
                     expect(localStorage.getItem('token')).toEqual('fake-post-token');
                 }
@@ -83,13 +83,12 @@ describe('AlfrescoAuthentication', () => {
     });
 
     it('should return false and token undefined on log out', () => {
-        service.token = 'fake-token';
         localStorage.setItem('token', 'fake-token');
         service.logout()
             .subscribe(() => {
                     expect(service.isLoggedIn()).toBe(false);
-                    expect(service.token).not.toBeDefined();
-                    expect(localStorage.getItem('token')).not.toBeDefined();
+                    expect(service.getToken()).toBe(null);
+                    expect(localStorage.getItem('token')).toBe(null);
                 }
             );
     });
