@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from 'angular2/core';
+import { Component, Input } from '@angular/core';
 
 declare let __moduleName: string;
 

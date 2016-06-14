@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, HostListener } from 'angular2/core';
-import { EventEmitter } from 'angular2/src/facade/async';
+import { Component, ElementRef, Input, Output, HostListener, EventEmitter } from '@angular/core';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 

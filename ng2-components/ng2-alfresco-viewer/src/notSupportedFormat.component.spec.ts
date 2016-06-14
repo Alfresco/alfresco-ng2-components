@@ -15,6 +15,16 @@
  * limitations under the License.
  */
 
+import { describe, it, expect } from '@angular/core/testing';
+
+describe('Not Supported Format View', () => {
+    it ('should be migrated to angular 2 rc.1', () => {
+        expect(false).toBe(true);
+    });
+});
+
+
+/*
 import { describe, expect, it, injectAsync, TestComponentBuilder } from 'angular2/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 
@@ -67,3 +77,4 @@ describe('Not Supported Format View', () => {
         }));
     });
 });
+*/
