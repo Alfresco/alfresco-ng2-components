@@ -33,6 +33,7 @@ env:
 before_script:
   - npm set proxy $DEV_REGISTRY
   - npm config set https-proxy $DEV_REGISTRY
+  - npm config set "@angular:registry" http://registry.npmjs.org/
   - cd ./ng2-components/$MODULE; npm install --registry $DEV_REGISTRY
   - ls -ltrh ./node_modules/
 script: npm run test
