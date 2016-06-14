@@ -15,6 +15,16 @@
  * limitations under the License.
  */
 
+
+import { describe, it, expect } from '@angular/core/testing';
+
+describe('AlfrescoUploadButton', () => {
+    it ('should be migrated to angular 2 rc.1', () => {
+        expect(false).toBe(true);
+    });
+});
+
+/*
 import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder } from 'angular2/testing';
 import { provide } from 'angular2/core';
 import { UploadButtonComponent } from './upload-button.component';
@@ -105,3 +115,4 @@ describe('AlfrescoUploadButton', () => {
                 });
         }));
 });
+*/

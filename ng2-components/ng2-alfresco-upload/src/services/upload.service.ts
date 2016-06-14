@@ -16,12 +16,12 @@
  */
 
 
-import { FileModel } from '../models/file.model';
-import { EventEmitter, Injectable } from 'angular2/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { Response } from 'angular2/http';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { FileModel } from '../models/file.model';
 
 declare let AlfrescoApi: any;
 
@@ -53,8 +53,8 @@ export class UploadService {
 
     constructor(private settings: AlfrescoSettingsService) {
         console.log('UploadService constructor');
-        this.filesUpload$ = new Observable(observer =>  this._filesUploadObserver = observer).share();
-        this.totalCompleted$ = new Observable(observer =>  this._totalCompletedObserver = observer).share();
+        this.filesUpload$ = new Observable<FileModel[]>(observer =>  this._filesUploadObserver = observer).share();
+        this.totalCompleted$ = new Observable<number>(observer =>  this._totalCompletedObserver = observer).share();
         this._alfrescoClient = this.getAlfrescoClient();
     }
 

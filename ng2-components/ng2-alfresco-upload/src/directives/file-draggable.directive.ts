@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Output } from 'angular2/core';
+import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
 
 /**
  * [file-draggable]
