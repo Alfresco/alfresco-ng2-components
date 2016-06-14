@@ -3,25 +3,50 @@ Error.stackTraceLimit = Infinity;
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
-// // Cancel Karma's synchronous start,
-// // we will call `__karma__.start()` later, once all the specs are loaded.
 __karma__.loaded = function() {};
 
-System.config({
-    packages: {
-        'base/dist': {
-            defaultExtension: 'js',
-            format: 'register',
-            map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
-        },
-        'rxjs': { defaultExtension: 'js' }
-    },
-    map: {
-        'rxjs': '/base/node_modules/rxjs'
-    }
+var map = {
+    'app': 'base/dist',
+    'rxjs': 'base/node_modules/rxjs',
+    '@angular': 'base/node_modules/@angular'
+};
+
+var packages = {
+    'app': { main: 'main.js',  defaultExtension: 'js' },
+    'rxjs': { defaultExtension: 'js' }
+};
+
+var packageNames = [
+    '@angular/common',
+    '@angular/compiler',
+    '@angular/core',
+    '@angular/http',
+    '@angular/platform-browser',
+    '@angular/platform-browser-dynamic',
+    '@angular/router',
+    '@angular/router-deprecated',
+    '@angular/testing',
+    '@angular/upgrade',
+];
+
+packageNames.forEach(function(pkgName) {
+    packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
 });
 
-System.import('angular2/src/platform/browser/browser_adapter')
+packages['base/dist'] = {
+    defaultExtension: 'js',
+    format: 'register',
+    map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
+};
+
+var config = {
+    map: map,
+    packages: packages
+};
+
+System.config(config);
+
+System.import('@angular/platform-browser/src/browser/browser_adapter')
     .then(function(browser_adapter) { browser_adapter.BrowserDomAdapter.makeCurrent(); })
     .then(function() { return Promise.all(resolveTestFiles()); })
     .then(
@@ -29,15 +54,16 @@ System.import('angular2/src/platform/browser/browser_adapter')
             __karma__.start();
         },
         function(error) {
-            __karma__.error(error.stack || error);
+            if(typeof __karma__.error == 'fucntion') {
+                __karma__.error(error.stack || error);
+            }else{
+                console.error(error);
+            }
         }
     );
-
 function createPathRecords(pathsMapping, appPath) {
-    // creates local module name mapping to global path with karma's fingerprint in path, e.g.:
-    // './vg-player/vg-player':
-    // '/base/dist/vg-player/vg-player.js?f4523daf879cfb7310ef6242682ccf10b2041b3e'
-    var moduleName = './' + resolveKeyPathForMapping('base/dist/', appPath);
+    var pathParts = appPath.split('/');
+    var moduleName = './' + pathParts.slice(Math.max(pathParts.length - 2, 1)).join('/');
     moduleName = moduleName.replace(/\.js$/, '');
     pathsMapping[moduleName] = appPath + '?' + window.__karma__.files[appPath];
     return pathsMapping;
@@ -59,13 +85,4 @@ function resolveTestFiles() {
             // 'base/dist/vg-player/vg-player.spec')
             return System.import(moduleName);
         });
-}
-
-function resolveKeyPathForMapping(basePathWhereToStart, appPath) {
-    var location = appPath.indexOf(basePathWhereToStart);
-    if (location > -1) {
-        return appPath.substring(basePathWhereToStart.length + 1);
-    } else {
-        return appPath;
-    }
 }

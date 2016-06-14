@@ -9,14 +9,12 @@ module.exports = function (config) {
 
     files: [
       // paths loaded by Karma
-      {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: false},
+      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
       {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
-      {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/alfresco-core-rest-api/bundle.js', included: true, watched: false},
+      {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
+      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
 
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
