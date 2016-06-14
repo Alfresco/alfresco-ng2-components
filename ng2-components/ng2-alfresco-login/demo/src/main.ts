@@ -15,14 +15,21 @@
  * limitations under the License.
  */
 
-import { bootstrap }    from 'angular2/platform/browser';
-import { Component } from 'angular2/core';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { Component } from '@angular/core';
+import {
+    Router,
+    RouteConfig,
+    ROUTER_PROVIDERS,
+    ROUTER_DIRECTIVES
+} from '@angular/router-deprecated';
 import { AlfrescoLoginComponent } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
-import { ROUTER_PROVIDERS } from 'angular2/router';
-import { HTTP_PROVIDERS }    from 'angular2/http';
-import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { HTTP_PROVIDERS } from '@angular/http';
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 
 @RouteConfig([
@@ -69,8 +76,5 @@ export class AppComponent {
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
-    AlfrescoTranslationLoader,
-    AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
     ALFRESCO_CORE_PROVIDERS
 ]);

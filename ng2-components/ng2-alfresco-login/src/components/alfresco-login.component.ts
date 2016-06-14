@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter } from 'angular2/core';
-import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
-import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
 import {
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
