@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "typings": "typings install",
+    "postinstall": "npm run typings && npm run build",
     "start": "npm install && npm run typings && concurrently \"npm run build:w\" \"npm run server\" ",
     "server": "node browser-sync-config.js",
     "build": "npm run tslint &&  rm -rf dist && tsc",

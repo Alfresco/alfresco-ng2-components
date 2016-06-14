@@ -5,7 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "main": "index.js",
   "scripts": {
-    "postinstall": "typings install",
+    "postinstall": "npm run typings && npm run build",
     "typings": "typings install",
     "start": "npm install && npm run typings && concurrently \"npm run build:w\" \"npm run server\" ",
     "server": "node browser-sync-config.js",
