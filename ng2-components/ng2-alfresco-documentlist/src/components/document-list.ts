@@ -25,8 +25,8 @@ import {
     AfterViewChecked,
     OnChanges,
     TemplateRef
-} from 'angular2/core';
-import { DatePipe } from 'angular2/common';
+} from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs/Rx';
 import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { AlfrescoService } from './../services/alfresco.service';
@@ -92,7 +92,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
-    emptyFolderTemplate: TemplateRef;
+    emptyFolderTemplate: TemplateRef<any>;
 
     private _folder: NodePaging;
 
@@ -469,9 +469,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         if (col.type === 'date') {
             let datePipe = new DatePipe();
             if (datePipe.supports(value)) {
-                // TODO: to be changed to plan non-array value post angular2 beta.15
-                let pattern = col.format ? [col.format] : [];
-                return datePipe.transform(value, pattern);
+                return datePipe.transform(value, col.format);
             }
         }
 

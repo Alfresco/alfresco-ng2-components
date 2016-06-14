@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, OnChanges } from 'angular2/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { ContentColumnList } from './content-column-list';
 import { ContentColumnModel } from './../models/content-column.model';
 

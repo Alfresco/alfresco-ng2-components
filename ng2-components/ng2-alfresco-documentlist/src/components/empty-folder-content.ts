@@ -21,7 +21,7 @@ import {
     TemplateRef,
     OnInit,
     AfterContentInit
-} from 'angular2/core';
+} from '@angular/core';
 import { DocumentList } from './document-list';
 
 @Directive({

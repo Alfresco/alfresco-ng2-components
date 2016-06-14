@@ -20,7 +20,7 @@ import {
     describe,
     expect,
     beforeEach
-} from 'angular2/testing';
+} from '@angular/core/testing';
 import {FolderActionsService} from './folder-actions.service';
 import {ContentActionHandler} from '../models/content-action.model';
 

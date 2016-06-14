@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, OnInit, OnChanges, Input, Output, EventEmitter} from '@angular/core';
 import {ContentActionModel} from './../models/content-action.model';
 import {ContentActionList} from './content-action-list';
 import {DocumentActionsService} from '../services/document-actions.service';
