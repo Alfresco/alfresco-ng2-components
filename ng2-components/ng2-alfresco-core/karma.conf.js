@@ -1,22 +1,20 @@
 'use strict';
 
 module.exports = function (config) {
-  config.set({
-
+  var configuration = {
     basePath: '.',
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
       // paths loaded by Karma
-      {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: false},
+      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
       {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
-      {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/ng2-translate/bundles/ng2-translate.js', included: true, watched: false},
+      {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
+      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/rxjs/**/*.map', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
 
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
@@ -40,7 +38,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     colors: true,
 
@@ -48,10 +46,18 @@ module.exports = function (config) {
 
     browsers: ['Chrome'],
 
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
+
     // Karma plugins loaded
     plugins: [
       'karma-jasmine',
       'karma-coverage',
+      'karma-jasmine-ajax',
       'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-jasmine-html-reporter'
@@ -71,11 +77,15 @@ module.exports = function (config) {
       subdir: 'report',
       reporters: [
         {type: 'text'},
-        {type: 'text-summary'},
         {type: 'json', file: 'coverage-final.json'},
         {type: 'html'}
       ]
     }
+  }
 
-  })
+  if (process.env.TRAVIS) {
+    configuration.browsers = ['Chrome_travis_ci'];
+  }
+
+  config.set(configuration)
 };

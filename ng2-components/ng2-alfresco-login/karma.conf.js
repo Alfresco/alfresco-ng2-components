@@ -4,18 +4,17 @@ module.exports = function (config) {
   var configuration = {
     basePath: '.',
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
       // paths loaded by Karma
-      {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: false},
+      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
       {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
-      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false, served: true},
-      {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, served: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, served: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, served: true, watched: false},
-      {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: false},
-      {pattern: 'node_modules/alfresco-core-rest-api/bundle.js', included: true, watched: false},
+      {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
+      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/rxjs/**/*.map', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
       {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
 
@@ -41,7 +40,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     colors: true,
 
@@ -60,6 +59,7 @@ module.exports = function (config) {
     plugins: [
       'karma-jasmine',
       'karma-coverage',
+      'karma-jasmine-ajax',
       'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-jasmine-html-reporter'
@@ -79,7 +79,6 @@ module.exports = function (config) {
       subdir: 'report',
       reporters: [
         {type: 'text'},
-        {type: 'text-summary'},
         {type: 'json', file: 'coverage-final.json'},
         {type: 'html'}
       ]
