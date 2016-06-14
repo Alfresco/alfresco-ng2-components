@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter,

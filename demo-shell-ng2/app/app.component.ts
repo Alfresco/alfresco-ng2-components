@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { Router, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { MDL } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { FilesComponent } from './components/files/files.component';
-import { AuthRouterOutlet } from './components/router/AuthRouterOutlet';
+
 import {
     AlfrescoSettingsService,
     AlfrescoTranslationService,
@@ -39,7 +39,7 @@ declare var document: any;
     selector: 'alfresco-app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
-    directives: [SearchBarComponent, ROUTER_DIRECTIVES, AuthRouterOutlet, MDL],
+    directives: [SearchBarComponent, ROUTER_DIRECTIVES, MDL],
     pipes: [AlfrescoPipeTranslate]
 })
 @RouteConfig([

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS,

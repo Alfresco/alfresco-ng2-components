@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "serve": "node browser-sync-config.js",
-    "typings": "typings",
+    "typings": "typings install",
     "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json app/**/*.ts",
     "tslint-root": "tslint -c tslint.json *.ts",
@@ -51,23 +51,35 @@
     "alfresco"
   ],
   "dependencies": {
-    "alfresco-js-api": "^0.1.0",
-    "angular2": "2.0.0-beta.15",
-    "es6-shim": "^0.35.0",
+    "@angular/common": "2.0.0-rc.1",
+    "@angular/compiler": "2.0.0-rc.1",
+    "@angular/core": "2.0.0-rc.1",
+    "@angular/http": "2.0.0-rc.1",
+    "@angular/platform-browser": "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
+    "@angular/router": "2.0.0-rc.1",
+    "@angular/router-deprecated": "2.0.0-rc.1",
+    "@angular/upgrade": "2.0.0-rc.1",
+    "systemjs": "0.19.27",
+    "core-js": "^2.4.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "^0.6.12",
+    "angular2-in-memory-web-api": "0.0.11",
+
     "material-design-icons": "^2.2.3",
     "material-design-lite": "^1.1.3",
+    "ng2-translate": "2.1.0",
+    "pdfjs-dist": "^1.5.258",
+
+    "alfresco-js-api": "^0.1.0",
     "ng2-alfresco-core": "^0.1.0",
     "ng2-alfresco-datatable": "^0.1.0",
     "ng2-alfresco-documentlist": "^0.1.0",
     "ng2-alfresco-login": "^0.1.0",
     "ng2-alfresco-search": "^0.1.9",
     "ng2-alfresco-upload": "^0.1.0",
-    "ng2-alfresco-viewer": "^0.1.13",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "systemjs": "0.19.26",
-    "zone.js": "0.6.10",
-    "ng2-translate": "1.11.1"
+    "ng2-alfresco-viewer": "^0.1.13"
   },
   "devDependencies": {
     "browser-sync": "^2.10.0",
@@ -78,7 +90,7 @@
     "license-check": "^1.0.4",
     "tslint": "^3.8.1",
     "typescript": "^1.8.10",
-    "typings": "^0.7.12"
+    "typings": "^1.0.4"
   },
   "license-check-config": {
     "src": [
