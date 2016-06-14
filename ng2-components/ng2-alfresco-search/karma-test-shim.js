@@ -26,7 +26,7 @@ var packageNames = [
     '@angular/router',
     '@angular/router-deprecated',
     '@angular/testing',
-    '@angular/upgrade',
+    '@angular/upgrade'
 ];
 
 packageNames.forEach(function(pkgName) {
@@ -54,7 +54,7 @@ System.import('@angular/platform-browser/src/browser/browser_adapter')
             __karma__.start();
         },
         function(error) {
-            if(typeof __karma__.error == 'fucntion') {
+            if(typeof __karma__.error == 'function') {
                 __karma__.error(error.stack || error);
             }else{
                 console.error(error);
