@@ -14,7 +14,7 @@
             </label>
         </th>
         <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
-            *ngFor="#col of data.getColumns()"
+            *ngFor="let col of data.getColumns()"
             [class.column-header]="col.title"
             [class.mdl-data-table__header--sorted-ascending]="isColumnSorted(col, 'asc')"
             [class.mdl-data-table__header--sorted-descending]="isColumnSorted(col, 'desc')"
@@ -30,7 +30,7 @@
     </thead>
     <tbody>
 
-    <tr *ngFor="#row of data.getRows(); #idx = index">
+    <tr *ngFor="let row of data.getRows(); let idx = index">
         <td *ngIf="multiselect">
             <label
                 class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
@@ -39,7 +39,7 @@
                 <input type="checkbox" [attr.id]="'row[' + idx + ']'" class="mdl-checkbox__input" [(ngModel)]="row.isSelected" />
             </label>
         </td>
-        <td *ngFor="#col of data.getColumns()" [ngSwitch]="col.type"
+        <td *ngFor="let col of data.getColumns()" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)" (dblclick)="onRowDblClick(row, $event)">
             <div *ngSwitchWhen="'image'">

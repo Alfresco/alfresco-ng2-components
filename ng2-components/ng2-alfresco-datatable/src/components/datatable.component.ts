@@ -23,7 +23,7 @@ import {
     Output,
     EventEmitter,
     AfterViewChecked
-} from 'angular2/core';
+} from '@angular/core';
 
 import {
     DataTableAdapter,
