@@ -15,23 +15,14 @@
  * limitations under the License.
  */
 
-import { describe, it, expect } from '@angular/core/testing';
-
-describe('Not Supported Format View', () => {
-    it ('should be migrated to angular 2 rc.1', () => {
-        expect(false).toBe(true);
-    });
-});
-
-
-/*
-import { describe, expect, it, injectAsync, TestComponentBuilder } from 'angular2/testing';
+import { describe, expect, it, inject } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 
 describe('Not Supported Format View', () => {
 
     describe('View', () => {
-        it('Download button should be present', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('Download button should be present', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(NotSupportedFormat)
                 .then((fixture) => {
@@ -42,7 +33,7 @@ describe('Not Supported Format View', () => {
                     expect(element.querySelector('#viewer-download-button')).not.toBeNull();
                 });
         }));
-        it('should display the name of the file', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('should display the name of the file', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(NotSupportedFormat)
                 .then((fixture) => {
@@ -58,7 +49,7 @@ describe('Not Supported Format View', () => {
     });
 
     describe('User Interaction', () => {
-        it('Click on Download button should call download method', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        it('Click on Download button should call download method', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(NotSupportedFormat)
                 .then((fixture) => {
@@ -77,4 +68,4 @@ describe('Not Supported Format View', () => {
         }));
     });
 });
-*/
+
