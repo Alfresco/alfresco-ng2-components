@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {DocumentList} from './document-list';
 import {ContentActionModel} from './../models/content-action.model';
 

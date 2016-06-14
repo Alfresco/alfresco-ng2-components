@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable, ChangeDetectorRef, Pipe } from 'angular2/core';
+import { Injectable, ChangeDetectorRef, Pipe } from '@angular/core';
 import { TranslatePipe } from 'ng2-translate/ng2-translate';
 import { AlfrescoTranslationService } from './AlfrescoTranslationService.service';
 

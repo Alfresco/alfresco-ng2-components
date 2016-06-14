@@ -20,8 +20,8 @@ import {
     describe,
     expect,
     beforeEach
-} from 'angular2/testing';
-import {EventEmitter} from 'angular2/core';
+} from '@angular/core/testing';
+import {EventEmitter} from '@angular/core';
 
 import {DocumentList} from './document-list';
 import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';

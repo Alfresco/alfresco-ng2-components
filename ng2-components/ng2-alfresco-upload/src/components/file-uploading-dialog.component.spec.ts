@@ -15,6 +15,15 @@
  * limitations under the License.
  */
 
+import { describe, it, expect } from '@angular/core/testing';
+
+describe('FileUploadDialog', () => {
+   it ('should be migrated to angular 2 rc.1', () => {
+       expect(false).toBe(true);
+   });
+});
+
+/*
 import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
 import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder, setBaseTestProviders } from 'angular2/testing';
 import { provide } from 'angular2/core';
@@ -53,3 +62,4 @@ describe('FileUploadDialog', () => {
             });
     }));
 });
+*/

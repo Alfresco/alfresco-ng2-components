@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import { AlfrescoLoginComponent } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
 
 declare let __moduleName: string;

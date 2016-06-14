@@ -1,6 +1,6 @@
 <table *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <tbody>
-    <tr *ngFor="#result of results; #idx = index">
+    <tr *ngFor="let result of results; let idx = index">
         <td><a href="#" (click)="onItemClick(result, $event)">{{result.entry.name}}</a></td>
     </tr>
     </tbody>

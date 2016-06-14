@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter,

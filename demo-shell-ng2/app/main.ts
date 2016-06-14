@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { bootstrap }    from 'angular2/platform/browser';
-import { AppComponent } from './app.component';
-import { ROUTER_PROVIDERS } from 'angular2/router';
-import { HTTP_PROVIDERS }    from 'angular2/http';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
+import { AppComponent } from './app.component';
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,

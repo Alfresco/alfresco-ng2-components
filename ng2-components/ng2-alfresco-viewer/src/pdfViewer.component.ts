@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, HostListener } from 'angular2/core';
+import { Component, Input, HostListener } from '@angular/core';
 
 declare let PDFJS: any;
 declare let __moduleName: string;

@@ -1,5 +1,5 @@
 <ol *ngIf="breadcrumb" data-automation-id="breadcrumb" class="breadcrumb">
-    <li *ngFor="#r of route; #last = last" [class.active]="last" [ngSwitch]="last">
+    <li *ngFor="let r of route; let last = last" [class.active]="last" [ngSwitch]="last">
         <span *ngSwitchWhen="true">{{r.name}}</span>
         <a *ngSwitchDefault href="#" [attr.data-automation-id]="'breadcrumb_' + r.name" (click)="goToRoute(r, $event)">{{r.name}}</a>
     </li>
@@ -9,7 +9,7 @@
     <tr>
         <!-- Columns -->
         <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
-            *ngFor="#col of columns"
+            *ngFor="let col of columns"
             [class.column-header]="col.title"
             [attr.data-automation-id]="'auto_id_' + col.source"
             [class.mdl-data-table__header--sorted-ascending]="sorting.key === col.source && sorting.direction === 'asc'"
@@ -37,10 +37,10 @@
         </td>
     </tr>
 
-    <tr *ngFor="#content of folder.list.entries; #idx = index"
+    <tr *ngFor="let content of folder.list.entries; let idx = index"
         [attr.data-automation-id]="getObjectValue(content.entry, 'name')">
         <!-- Columns -->
-        <td *ngFor="#col of columns" [ngSwitch]="col.type"
+        <td *ngFor="let col of columns" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onItemClick(content, $event)"
             (dblclick)="onItemDblClick(content, $event)"
@@ -61,7 +61,7 @@
         <td *ngIf="content.entry.isFolder">
             <!-- action buttons -->
             <button class="mdl-button mdl-js-button mdl-button--icon"
-                    *ngFor="#action of getContentActions('folder', 'button')"
+                    *ngFor="let action of getContentActions('folder', 'button')"
                     (click)="executeContentAction(content, action)">
                 <i class="material-icons">{{action.icon}}</i>
             </button>
@@ -74,7 +74,7 @@
                 [attr.for]="'folder_action_menu_' + idx">
                 <li class="mdl-menu__item"
                     [attr.data-automation-id]="action.title"
-                    *ngFor="#action of getContentActions('folder', 'menu')"
+                    *ngFor="let action of getContentActions('folder', 'menu')"
                     (click)="executeContentAction(content, action)">
                     {{action.title}}
                 </li>
@@ -84,7 +84,7 @@
         <td *ngIf="!content.entry.isFolder">
             <!-- action buttons -->
             <button class="mdl-button mdl-js-button mdl-button--icon"
-                    *ngFor="#action of getContentActions('document', 'button')"
+                    *ngFor="let action of getContentActions('document', 'button')"
                     (click)="executeContentAction(content, action)">
                 <i class="material-icons">{{action.icon}}</i>
             </button>
@@ -97,7 +97,7 @@
                 [attr.for]="'document_action_menu_' + idx">
                 <li class="mdl-menu__item"
                     [attr.data-automation-id]="action.title"
-                    *ngFor="#action of getContentActions('document', 'menu')"
+                    *ngFor="let action of getContentActions('document', 'menu')"
                     (click)="executeContentAction(content, action)">
                     {{action.title}}
                 </li>

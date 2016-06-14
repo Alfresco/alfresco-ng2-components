@@ -20,7 +20,7 @@ import {
     describe,
     expect,
     beforeEach
-} from 'angular2/testing';
+} from '@angular/core/testing';
 
 import {DocumentList} from './document-list';
 import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';

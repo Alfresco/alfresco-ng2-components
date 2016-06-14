@@ -16,7 +16,7 @@
  */
 
 
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from 'angular2/core';
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';

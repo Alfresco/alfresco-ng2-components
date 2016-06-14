@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef, OnInit } from 'angular2/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Observable';
-import { provide } from 'angular2/core';
+import { Observable } from 'rxjs/Rx';
+import { provide } from '@angular/core';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 export class AuthenticationMock {
 
-    login(username: string, password: string) {
+    login(username: string, password: string): Observable<boolean> {
         if (username === 'fake-username' && password === 'fake-password') {
             return Observable.of(true);
         } else {

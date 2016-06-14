@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
 @Component({

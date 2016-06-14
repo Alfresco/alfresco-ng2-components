@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-import {Http} from 'angular2/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs/Rx';
 
 import {
     AlfrescoSettingsService,

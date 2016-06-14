@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { ElementRef, DynamicComponentLoader, Directive, Attribute } from 'angular2/core';
-import { Router, RouterOutlet, ComponentInstruction } from 'angular2/router';
+/*
+import { ElementRef, DynamicComponentLoader, Directive, Attribute } from '@angular/core';
+import { Router, RouterOutlet, ComponentInstruction } from '@angular/router-deprecated';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
 @Directive({selector: 'auth-router-outlet'})
@@ -49,3 +50,4 @@ export class AuthRouterOutlet extends RouterOutlet {
             || this.authentication.isLoggedIn();
     }
 }
+*/

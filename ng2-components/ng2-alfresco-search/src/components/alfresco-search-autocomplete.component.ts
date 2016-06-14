@@ -15,7 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer } from 'angular2/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    Renderer
+} from '@angular/core';
 import { AlfrescoService } from './../services/alfresco.service';
 
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';

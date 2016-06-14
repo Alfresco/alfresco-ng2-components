@@ -15,6 +15,13 @@
  * limitations under the License.
  */
 
+describe('AlfrescoLogin', () => {
+    it('should be upgraded to angular 2.0.0-rc.1', () => {
+        expect(false).toBe(true);
+    });
+});
+
+/*
 import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
 import {
   it,
@@ -26,8 +33,8 @@ import {
   beforeEachProviders,
   TestComponentBuilder,
   setBaseTestProviders
-} from 'angular2/testing';
-import { provide } from 'angular2/core';
+} from '@angular/core/testing';
+import { provide } from '@angular/core';
 import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from 'angular2/router';
 import { RootRouter } from 'angular2/src/router/router';
 import { SpyLocation } from 'angular2/src/mock/location_mock';
@@ -399,3 +406,4 @@ describe('AlfrescoLogin', () => {
 
 
 });
+*/

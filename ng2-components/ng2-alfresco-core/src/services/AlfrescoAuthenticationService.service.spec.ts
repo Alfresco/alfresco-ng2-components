@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { it, describe, beforeEach } from 'angular2/testing';
-import { Injector } from 'angular2/core';
+import { it, describe, beforeEach } from '@angular/core/testing';
+import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
@@ -29,7 +29,7 @@ describe('AlfrescoAuthentication', () => {
         service;
 
     beforeEach(() => {
-        injector = Injector.resolveAndCreate([
+        injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoAuthenticationService,
             AlfrescoSettingsService
         ]);

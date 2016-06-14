@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable, Optional } from 'angular2/core';
-import { Http } from 'angular2/http';
+import { Injectable, Optional } from '@angular/core';
+import { Http } from '@angular/http';
 import { MissingTranslationHandler, TranslateService } from 'ng2-translate/ng2-translate';
 import { AlfrescoTranslationLoader } from './AlfrescoTranslationLoader.service';
 

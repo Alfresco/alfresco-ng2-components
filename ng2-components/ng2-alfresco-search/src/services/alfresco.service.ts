@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable } from 'angular2/core';
-import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 import {
     AlfrescoSettingsService,

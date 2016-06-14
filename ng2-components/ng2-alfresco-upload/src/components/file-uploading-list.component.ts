@@ -16,7 +16,7 @@
  */
 
 
-import { Component, ElementRef, Input } from 'angular2/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { FileModel } from '../models/file.model';
 import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 

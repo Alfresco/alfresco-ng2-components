@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {ContentActionHandler} from '../models/content-action.model';
 import {AlfrescoService} from './alfresco.service';
 import {

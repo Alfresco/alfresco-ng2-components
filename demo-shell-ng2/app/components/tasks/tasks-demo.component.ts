@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from 'angular2/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivitiService } from './activiti.service';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,

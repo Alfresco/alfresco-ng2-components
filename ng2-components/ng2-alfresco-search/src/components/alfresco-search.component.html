@@ -19,7 +19,7 @@
     </thead>
     <tbody>
 
-    <tr *ngFor="#result of results; #idx = index">
+    <tr *ngFor="let result of results; let idx = index">
         <td><img src="{{getDocumentThumbnailUrl(result)}}" /></td>
         <td>{{result.entry.name}}</td>
         <td>{{result.entry.modifiedByUser.displayName}}</td>

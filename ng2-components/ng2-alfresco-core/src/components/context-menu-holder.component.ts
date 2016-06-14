@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import { ContextMenuService } from './../services/context-menu.service';
 
 @Component({
@@ -59,7 +59,7 @@ import { ContextMenuService } from './../services/context-menu.service';
     template: `
         <div [ngStyle]="locationCss" class="menu-container">
             <ul class="context-menu">
-                <li (click)="link.subject.next(link)" class="mdl-menu__item link" *ngFor="#link of links">
+                <li (click)="link.subject.next(link)" class="mdl-menu__item link" *ngFor="let link of links">
                     {{link.title || link.model?.title}}
                 </li>
             </ul>

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Control, Validators } from 'angular2/common';
-import { Component, Input, Output, EventEmitter, AfterViewInit } from 'angular2/core';
+import { Control, Validators } from '@angular/common';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 
