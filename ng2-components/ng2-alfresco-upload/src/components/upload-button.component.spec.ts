@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
-
-import { describe, it, expect } from '@angular/core/testing';
-
-describe('AlfrescoUploadButton', () => {
-    it ('should be migrated to angular 2 rc.1', () => {
-        expect(false).toBe(true);
-    });
-});
-
-/*
-import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder } from 'angular2/testing';
-import { provide } from 'angular2/core';
+import { describe, expect, it, inject, beforeEachProviders } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
+import { provide } from '@angular/core';
 import { UploadButtonComponent } from './upload-button.component';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
-
 
 describe('AlfrescoUploadButton', () => {
 
@@ -44,7 +34,7 @@ describe('AlfrescoUploadButton', () => {
     });
 
     it('should render upload-single-file button as default',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
@@ -57,7 +47,7 @@ describe('AlfrescoUploadButton', () => {
         }));
 
     it('should render upload-multiple-file button if multipleFiles is true',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
@@ -70,7 +60,7 @@ describe('AlfrescoUploadButton', () => {
         }));
 
     it('should render an uploadFolder button if uploadFolder is true',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
@@ -82,7 +72,7 @@ describe('AlfrescoUploadButton', () => {
                 });
         }));
 
-    it('should call onFilesAdded method', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    it('should call onFilesAdded method', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
             .createAsync(UploadButtonComponent)
             .then((fixture) => {
@@ -101,7 +91,7 @@ describe('AlfrescoUploadButton', () => {
     }));
 
     it('should render dialog box with css class show',
-        injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(UploadButtonComponent)
                 .then((fixture) => {
@@ -115,4 +105,4 @@ describe('AlfrescoUploadButton', () => {
                 });
         }));
 });
-*/
+

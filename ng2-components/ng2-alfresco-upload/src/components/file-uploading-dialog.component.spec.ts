@@ -15,18 +15,13 @@
  * limitations under the License.
  */
 
-import { describe, it, expect } from '@angular/core/testing';
-
-describe('FileUploadDialog', () => {
-   it ('should be migrated to angular 2 rc.1', () => {
-       expect(false).toBe(true);
-   });
-});
-
-/*
-import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
-import { it, describe, expect, injectAsync, beforeEachProviders, TestComponentBuilder, setBaseTestProviders } from 'angular2/testing';
-import { provide } from 'angular2/core';
+import { describe, expect, it, inject, beforeEachProviders, setBaseTestProviders } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
+import {
+    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
+} from '@angular/platform-browser-dynamic/testing';
+import { provide } from '@angular/core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileModel } from '../models/file.model';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
@@ -34,7 +29,7 @@ import { TranslationMock } from '../assets/translation.service.mock';
 
 describe('FileUploadDialog', () => {
 
-    setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+    setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
 
     beforeEachProviders(() => {
         return [
@@ -42,7 +37,7 @@ describe('FileUploadDialog', () => {
         ];
     });
 
-    it('should render dialog box with css class show', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    it('should render dialog box with css class show', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
             .createAsync(FileUploadingDialogComponent)
             .then((fixture) => {
@@ -62,4 +57,3 @@ describe('FileUploadDialog', () => {
             });
     }));
 });
-*/

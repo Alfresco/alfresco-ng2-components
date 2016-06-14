@@ -8,12 +8,16 @@ __karma__.loaded = function() {};
 var map = {
     'app': 'base/dist',
     'rxjs': 'base/node_modules/rxjs',
-    '@angular': 'base/node_modules/@angular'
+    '@angular': 'base/node_modules/@angular',
+    'ng2-alfresco-core/dist': '/base/node_modules/ng2-alfresco-core/dist',
+    'ng2-translate' : '/base/node_modules/ng2-translate'
 };
 
 var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
-    'rxjs': { defaultExtension: 'js' }
+    'rxjs': { defaultExtension: 'js' },
+    'ng2-alfresco-core/dist': { defaultExtension: 'js' },
+    'ng2-translate': { defaultExtension: 'js' }
 };
 
 var packageNames = [
@@ -26,7 +30,7 @@ var packageNames = [
     '@angular/router',
     '@angular/router-deprecated',
     '@angular/testing',
-    '@angular/upgrade',
+    '@angular/upgrade'
 ];
 
 packageNames.forEach(function(pkgName) {
@@ -54,7 +58,7 @@ System.import('@angular/platform-browser/src/browser/browser_adapter')
             __karma__.start();
         },
         function(error) {
-            if(typeof __karma__.error == 'fucntion') {
+            if(typeof __karma__.error == 'function') {
                 __karma__.error(error.stack || error);
             }else{
                 console.error(error);
