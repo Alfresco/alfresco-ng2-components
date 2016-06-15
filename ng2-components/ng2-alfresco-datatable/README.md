@@ -29,7 +29,7 @@ import { Component } from 'angular2/core';
 import { 
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable/ng2-alfresco-datatable';
+} from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'my-view',
