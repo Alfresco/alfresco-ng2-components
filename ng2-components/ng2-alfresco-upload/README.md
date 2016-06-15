@@ -29,7 +29,7 @@ This component, provide a buttons to upload files to alfresco.
 Add the following dependency to your index.html:
 
 ```html
-<script src="node_modules/alfresco-core-rest-api/bundle.js"></script>
+<script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
 Also make sure you include these dependencies in your .html page:

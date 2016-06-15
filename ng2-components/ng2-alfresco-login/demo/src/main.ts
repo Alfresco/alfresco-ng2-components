@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { bootstrap } from '@angular/platform-browser-dynamic';
 import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 import {
     Router,
     RouteConfig,

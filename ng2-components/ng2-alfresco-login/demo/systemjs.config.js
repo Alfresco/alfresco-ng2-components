@@ -21,8 +21,8 @@
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
 
         'ng2-translate': { defaultExtension: 'js' },
-        'ng2-alfresco-login': { defaultExtension: 'js' },
-        'ng2-alfresco-core': { defaultExtension: 'js' }
+        'ng2-alfresco-core': { defaultExtension: 'js' },
+        'ng2-alfresco-login': { defaultExtension: 'js' }
     };
     var ngPackageNames = [
         'common',
