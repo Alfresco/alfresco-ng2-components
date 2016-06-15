@@ -135,9 +135,11 @@ export class UploadButtonComponent {
                     },
                     error => {
                         let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                        let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
-                        if (errorMessage) {
-                            this._showErrorNotificationBar(errorMessage);
+                        if (errorMessagePlaceholder) {
+                            let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
+                            if (errorMessage) {
+                                this._showErrorNotificationBar(errorMessage);
+                            }
                         }
                         console.log(error);
                     }
@@ -222,16 +224,18 @@ export class UploadButtonComponent {
         messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
 
-        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-            message: messageTranslate.value,
-            timeout: 3000,
-            actionHandler: function () {
-                latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                    uploadingFileModel.setAbort();
-                });
-            },
-            actionText: actionTranslate.value
-        });
+        if(this.undoNotificationBar.nativeElement.MaterialSnackbar) {
+            this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
+                message: messageTranslate.value,
+                timeout: 3000,
+                actionHandler: function () {
+                    latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
+                        uploadingFileModel.setAbort();
+                    });
+                },
+                actionText: actionTranslate.value
+            });
+        }
     }
 
     /**
@@ -257,10 +261,12 @@ export class UploadButtonComponent {
             componentHandler.upgradeAllRegistered();
         }
 
-        this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-            message: errorMessage,
-            timeout: 3000
-        });
+        if (this.undoNotificationBar.nativeElement.MaterialSnackbar) {
+            this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
+                message: errorMessage,
+                timeout: 3000
+            });
+        }
     }
 
     /**

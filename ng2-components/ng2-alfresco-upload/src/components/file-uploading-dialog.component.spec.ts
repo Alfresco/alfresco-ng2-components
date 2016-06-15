@@ -24,8 +24,11 @@ import {
 import { provide } from '@angular/core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileModel } from '../models/file.model';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
+import { UploadServiceMock } from '../assets/upload.service.mock';
+import { UploadService } from '../services/upload.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('FileUploadDialog', () => {
 
@@ -33,27 +36,150 @@ describe('FileUploadDialog', () => {
 
     beforeEachProviders(() => {
         return [
-            provide(AlfrescoTranslationService, {useClass: TranslationMock})
+            provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsService}),
+            provide(AlfrescoTranslationService, {useClass: TranslationMock}),
+            provide(UploadService, {useClass: UploadServiceMock})
         ];
     });
 
-    it('should render dialog box with css class show', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(FileUploadingDialogComponent)
-            .then((fixture) => {
-                let fileFake = {
-                    id: 'fake-id',
-                    name: 'fake-name'
-                };
-                let file = new FileModel(fileFake);
-                let component = fixture.componentInstance;
-                component.filesUploadingList = [file];
+    it('should render completed upload 1 when an element is added to Observer',
+        inject([TestComponentBuilder, UploadService],
+            (tcb: TestComponentBuilder, updService: UploadService) => {
+                return tcb
+                    .createAsync(FileUploadingDialogComponent)
+                    .then((fixture) => {
+                        let fileFake = {
+                            id: 'fake-id',
+                            name: 'fake-name'
+                        };
+                        let file = new FileModel(fileFake);
+                        file.progress = {'percent': 50};
 
-                let compiled = fixture.debugElement.nativeElement;
-                component.showDialog();
-                fixture.detectChanges();
+                        updService.totalCompleted$ = new Observable(observer => {
+                            observer.next(1);
+                        });
 
-                expect(compiled.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
-            });
-    }));
+                        let component = fixture.componentInstance;
+                        fixture.detectChanges();
+                        component.filesUploadingList = [file];
+
+                        let compiled = fixture.debugElement.nativeElement;
+
+                        fixture.detectChanges();
+
+                        expect(compiled.querySelector('#total-upload-completed').innerText).toEqual('1');
+                    }
+                );
+            }
+        )
+    );
+
+    it('should render dialog box with css class show when an element is added to Observer',
+        inject([TestComponentBuilder, UploadService],
+            (tcb: TestComponentBuilder, updService: UploadService) => {
+                return tcb
+                    .createAsync(FileUploadingDialogComponent)
+                    .then((fixture) => {
+                        let fileFake = {
+                            id: 'fake-id',
+                            name: 'fake-name'
+                        };
+                        let file = new FileModel(fileFake);
+                        file.progress = {'percent': 50};
+
+                        updService.addToQueue([file]);
+
+
+                        let component = fixture.componentInstance;
+                        fixture.detectChanges();
+                        component.filesUploadingList = [file];
+
+                        let compiled = fixture.debugElement.nativeElement;
+
+                        fixture.detectChanges();
+
+                        expect(compiled.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
+                    }
+                );
+            }
+        )
+    );
+
+    it('should render dialog box with css class show when the toggleShowDialog is called',
+        inject([TestComponentBuilder, UploadService],
+            (tcb: TestComponentBuilder, updService: UploadService) => {
+                return tcb
+                    .createAsync(FileUploadingDialogComponent)
+                    .then((fixture) => {
+                        let fileFake = {
+                            id: 'fake-id',
+                            name: 'fake-name'
+                        };
+                        let file = new FileModel(fileFake);
+
+                        let component = fixture.componentInstance;
+                        fixture.detectChanges();
+                        component.filesUploadingList = [file];
+
+                        let compiled = fixture.debugElement.nativeElement;
+
+                        component.toggleShowDialog();
+                        fixture.detectChanges();
+
+                        expect(compiled.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
+                    }
+                );
+            }
+        )
+    );
+
+    it('should render dialog box with css class hide',
+        inject([TestComponentBuilder],
+            (tcb: TestComponentBuilder) => {
+                return tcb
+                    .createAsync(FileUploadingDialogComponent)
+                    .then((fixture) => {
+                        let fileFake = {
+                            id: 'fake-id',
+                            name: 'fake-name'
+                        };
+                        let file = new FileModel(fileFake);
+                        let component = fixture.componentInstance;
+                        component.filesUploadingList = [file];
+                        component.isDialogActive = true;
+
+                        let compiled = fixture.debugElement.nativeElement;
+
+                        component.toggleShowDialog();
+                        fixture.detectChanges();
+
+                        expect(compiled.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog');
+                    }
+                );
+            }
+        )
+    );
+
+    it('should render minimize dialog as default',
+        inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(FileUploadingDialogComponent)
+                .then((fixture) => {
+                    let fileFake = {
+                        id: 'fake-id',
+                        name: 'fake-name'
+                    };
+                    let file = new FileModel(fileFake);
+                    let component = fixture.componentInstance;
+                    component.filesUploadingList = [file];
+                    component.isDialogActive = true;
+
+                    let compiled = fixture.debugElement.nativeElement;
+
+                    component.toggleDialogMinimize();
+                    fixture.detectChanges();
+
+                    expect(compiled.querySelector('.minimize-button').getAttribute('class')).toEqual('minimize-button active');
+                });
+        }));
 });

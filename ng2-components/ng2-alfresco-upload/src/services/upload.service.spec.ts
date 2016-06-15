@@ -18,6 +18,10 @@
 import { it, describe, beforeEach, expect } from '@angular/core/testing';
 import { UploadService } from './upload.service';
 import { FileModel } from './../models/file.model';
+import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
+
+
+declare var AlfrescoApi: any;
 
 declare let jasmine: any;
 
@@ -56,6 +60,7 @@ describe('AlfrescoUploadService', () => {
 
     beforeEach(() => {
         jasmine.Ajax.install();
+        window['AlfrescoApi'] = AlfrescoApiMock;
         service = new MockUploadService(options);
     });
 
@@ -159,5 +164,44 @@ describe('AlfrescoUploadService', () => {
             responseText: 'Single File uploaded'
         });
         expect(doneFn).toHaveBeenCalledWith('Single File uploaded');
+    });
+
+    it('should make XHR done request after the folder is created', (done)  => {
+        let fakeRest = {
+            entry: {
+                isFile: false,
+                isFolder: true
+            }
+        };
+        service.setOptions(options);
+        let defaultPath = '';
+        let folderName = 'fake-folder';
+        service.createFolder(defaultPath, folderName).subscribe(res => {
+            expect(res).toEqual(fakeRest);
+            done();
+        });
+    });
+
+    it('should throws an exception when a folder already exist', (done)  => {
+        let fakeRest = {
+            response: {
+                body: {
+                    error: {
+                        statusCode: 409
+                    }
+                }
+            }
+        };
+        service.setOptions(options);
+        let defaultPath = '';
+        let folderName = 'folder-duplicate-fake';
+        service.createFolder(defaultPath, folderName).subscribe(
+                res => {
+            },
+                error => {
+                expect(error).toEqual(fakeRest);
+                done();
+            }
+        );
     });
 });
