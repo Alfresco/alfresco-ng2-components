@@ -27,7 +27,7 @@ import {
     CONTEXT_MENU_DIRECTIVES,
     AlfrescoPipeTranslate
 } from 'ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
+import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 
 declare let __moduleName: string;

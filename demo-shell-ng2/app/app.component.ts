@@ -26,7 +26,7 @@ import {
     AlfrescoPipeTranslate,
     AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
-import { UploadButtonComponent } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
+import { UploadButtonComponent } from 'ng2-alfresco-upload';
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
