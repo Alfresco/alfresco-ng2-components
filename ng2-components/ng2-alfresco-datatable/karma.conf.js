@@ -4,7 +4,7 @@ module.exports = function (config) {
   var configuration = {
     basePath: '.',
 
-    frameworks: ['jasmine-ajax', 'jasmine'],
+    frameworks: [/*'jasmine-ajax',*/ 'jasmine'],
 
     files: [
       // paths loaded by Karma
@@ -58,7 +58,7 @@ module.exports = function (config) {
     plugins: [
       'karma-jasmine',
       'karma-coverage',
-      'karma-jasmine-ajax',
+      //'karma-jasmine-ajax',
       'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-jasmine-html-reporter'
@@ -82,7 +82,7 @@ module.exports = function (config) {
         {type: 'html'}
       ]
     }
-  }
+  };
 
   if (process.env.TRAVIS) {
     configuration.browsers = ['Chrome_travis_ci'];
