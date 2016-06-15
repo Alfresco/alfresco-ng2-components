@@ -18,7 +18,7 @@
 import { Control, Validators } from '@angular/common';
 import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 
-import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 

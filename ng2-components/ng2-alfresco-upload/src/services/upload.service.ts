@@ -20,7 +20,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 declare let AlfrescoApi: any;

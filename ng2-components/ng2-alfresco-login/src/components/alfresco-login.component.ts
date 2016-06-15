@@ -22,7 +22,7 @@ import {
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
     AlfrescoAuthenticationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 declare let componentHandler: any;
 declare let __moduleName: string;

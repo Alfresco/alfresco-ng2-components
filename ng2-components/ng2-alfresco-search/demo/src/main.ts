@@ -25,13 +25,13 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoPipeTranslate,
     AlfrescoTranslationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     ALFRESCO_SEARCH_PROVIDERS,
     ALFRESCO_SEARCH_DIRECTIVES,
     AlfrescoService
-} from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+} from 'ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',

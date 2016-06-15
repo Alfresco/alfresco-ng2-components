@@ -21,7 +21,7 @@ import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 import {AlfrescoService} from './../../src/services/alfresco.service';
 
 export class AlfrescoServiceMock extends AlfrescoService {

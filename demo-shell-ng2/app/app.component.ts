@@ -17,16 +17,16 @@
 
 import { Component } from '@angular/core';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
-import { MDL } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
 import { FilesComponent } from './components/files/files.component';
 
 import {
+    MDL,
     AlfrescoSettingsService,
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
     AlfrescoAuthenticationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { UploadButtonComponent } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
+} from 'ng2-alfresco-core';
+import { UploadButtonComponent } from 'ng2-alfresco-upload';
 import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchBarComponent } from './components/search/search-bar.component';

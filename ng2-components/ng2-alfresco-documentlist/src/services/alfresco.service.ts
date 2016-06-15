@@ -23,7 +23,7 @@ import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 declare let AlfrescoApi: any;
 

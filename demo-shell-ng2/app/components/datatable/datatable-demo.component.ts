@@ -22,7 +22,7 @@ import {
     DataSorting,
     ObjectDataRow,
     ObjectDataColumn
-} from 'ng2-alfresco-datatable/dist/ng2-alfresco-datatable';
+} from 'ng2-alfresco-datatable';
 
 declare let __moduleName: string;
 

@@ -23,13 +23,13 @@ import {
     ROUTER_PROVIDERS,
     ROUTER_DIRECTIVES
 } from '@angular/router-deprecated';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
+import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
 import { HTTP_PROVIDERS } from '@angular/http';
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 
 @RouteConfig([

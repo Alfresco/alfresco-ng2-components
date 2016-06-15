@@ -24,7 +24,7 @@ import {
 import { provide } from '@angular/core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileModel } from '../models/file.model';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 
 describe('FileUploadDialog', () => {

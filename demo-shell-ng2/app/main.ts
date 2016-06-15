@@ -18,8 +18,8 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
+import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
+import { UploadService } from 'ng2-alfresco-upload';
 import { AppComponent } from './app.component';
 
 bootstrap(AppComponent, [

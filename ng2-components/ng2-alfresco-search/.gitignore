@@ -6,6 +6,6 @@ coverage/
 dist/
 src/**/*.js
 src/**/*.js.map
-ng2-alfresco-search.js
-ng2-alfresco-search.js.map
+index.js
+index.js.map
 !systemjs.config.js

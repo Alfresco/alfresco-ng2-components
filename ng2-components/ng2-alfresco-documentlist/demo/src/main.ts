@@ -26,13 +26,13 @@ import {
     AlfrescoPipeTranslate,
     AlfrescoTranslationService,
     CONTEXT_MENU_DIRECTIVES
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService
-} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
+} from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'alfresco-documentlist-demo',
