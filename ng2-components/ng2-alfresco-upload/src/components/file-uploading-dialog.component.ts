@@ -60,17 +60,21 @@ export class FileUploadingDialogComponent implements OnInit{
     }
 
     ngOnInit() {
-        this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
-            this.filesUploadingList = fileList;
-            if (this.filesUploadingList.length > 0) {
-                this.isDialogActive = true;
+        if(this._uploaderService.filesUpload$) {
+            this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
+                this.filesUploadingList = fileList;
+                if (this.filesUploadingList.length > 0) {
+                    this.isDialogActive = true;
+                    this.cd.detectChanges();
+                }
+            });
+        }
+        if(this._uploaderService.totalCompleted$) {
+            this._uploaderService.totalCompleted$.subscribe((total: number) => {
+                this.totalCompleted = total;
                 this.cd.detectChanges();
-            }
-        });
-        this._uploaderService.totalCompleted$.subscribe((total: number) => {
-            this.totalCompleted = total;
-            this.cd.detectChanges();
-        });
+            });
+        }
     }
 
     /**

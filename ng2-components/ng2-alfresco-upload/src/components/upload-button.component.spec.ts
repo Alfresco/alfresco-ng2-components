@@ -19,15 +19,25 @@ import { describe, expect, it, inject, beforeEachProviders } from '@angular/core
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { provide } from '@angular/core';
 import { UploadButtonComponent } from './upload-button.component';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
+import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
+
+
+declare var AlfrescoApi: any;
 
 describe('AlfrescoUploadButton', () => {
 
+    beforeEach( () => {
+        window['AlfrescoApi'] = AlfrescoApiMock;
+        window['componentHandler'] = null;
+    });
+
     beforeEachProviders(() => {
         return [
+            provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsService}),
             provide(AlfrescoTranslationService, {useClass: TranslationMock}),
             provide(UploadService, {useClass: UploadServiceMock})
         ];
@@ -72,37 +82,74 @@ describe('AlfrescoUploadButton', () => {
                 });
         }));
 
-    it('should call onFilesAdded method', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    it('should call uploadFile with the default folder', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
             .createAsync(UploadButtonComponent)
             .then((fixture) => {
                 let component = fixture.componentInstance;
-                component.onFilesAdded = jasmine.createSpy('onFilesAdded');
+                component.uploaddirectory = 'folder-default';
+                component.uploadFiles = jasmine.createSpy('uploadFiles');
 
                 fixture.detectChanges();
+                let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
 
                 let fakeEvent = {
-                    currentTarget: {files: [{name: 'fake-name', size: 10}]}
+                    currentTarget: {
+                        files: [file]
+                    },
+                    target: {value: 'fake-value'}
                 };
 
                 component.onFilesAdded(fakeEvent);
-                expect(component.onFilesAdded).toHaveBeenCalledWith(fakeEvent);
+                expect(component.uploadFiles).toHaveBeenCalledWith('folder-default', [file]);
             });
     }));
 
-    it('should render dialog box with css class show',
-        inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(UploadButtonComponent)
-                .then((fixture) => {
-                    let component = fixture.componentInstance;
-                    fixture.detectChanges();
-                    let compiled = fixture.debugElement.nativeElement;
+    it('should create a folder and call upload file', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(UploadButtonComponent)
+            .then((fixture) => {
+                let component = fixture.componentInstance;
 
-                    component._showDialog();
-                    fixture.detectChanges();
-                    expect(compiled.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
-                });
-        }));
+                component.uploadFiles = jasmine.createSpy('uploadFiles');
+                let doneFn = jasmine.createSpy('success');
+
+                fixture.detectChanges();
+
+                let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+
+                let fakeEvent = {
+                    currentTarget: {
+                        files: [file]
+                    },
+                    target: {value: 'fake-value'}
+                };
+                component.onDirectoryAdded(fakeEvent);
+                expect(doneFn).not.toHaveBeenCalledWith(fakeEvent);
+            });
+    }));
+
+    it('should throws an exception when the folder already exist', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(UploadButtonComponent)
+            .then((fixture) => {
+                let component = fixture.componentInstance;
+
+                component.uploadFiles = jasmine.createSpy('uploadFiles');
+
+                fixture.detectChanges();
+
+                let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'folder-duplicate-fake/fake-name-1.json'};
+
+                let fakeEvent = {
+                    currentTarget: {
+                        files: [file]
+                    },
+                    target: {value: 'fake-value'}
+                };
+                component.onDirectoryAdded(fakeEvent);
+                expect(component.uploadFiles).not.toHaveBeenCalledWith(fakeEvent);
+            });
+    }));
+
 });
-

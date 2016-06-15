@@ -43,7 +43,7 @@ export class UploadService {
     private _queue: FileModel[] = [];
 
     filesUpload$: Observable<FileModel[]>;
-    totalCompleted$: Observable<number>;
+    totalCompleted$: Observable<any>;
     private _filesUploadObserver: Observer<FileModel[]>;
     private _totalCompletedObserver: Observer<number>;
 
@@ -115,15 +115,7 @@ export class UploadService {
      * @returns {AlfrescoApi.ApiClient}
      */
     private getAlfrescoClient() {
-        let defaultClient = new AlfrescoApi.ApiClient();
-        defaultClient.basePath = this.getHost() + this.getBaseUrl();
-
-        // Configure HTTP basic authorization: basicAuth
-        let basicAuth = defaultClient.authentications['basicAuth'];
-        basicAuth.username = 'ROLE_TICKET';
-        basicAuth.password = this.getAlfrescoTicket();
-
-        return defaultClient;
+        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getAlfrescoTicket());
     }
 
     /**
@@ -160,7 +152,7 @@ export class UploadService {
             uploadingFileModel.setUploading();
             this.uploadFile(uploadingFileModel, directory, elementEmit);
         });
-    };
+    }
 
     /**
      * Create an XMLHttpRequest and return it
@@ -220,8 +212,6 @@ export class UploadService {
     uploadFile(uploadingFileModel: FileModel, directory: string, elementEmit: EventEmitter<any>): void {
         // Configure HTTP basic authorization: basicAuth
         let basicAuth = this._alfrescoClient.authentications['basicAuth'];
-        basicAuth.username = 'ROLE_TICKET';
-        basicAuth.password = this.getAlfrescoTicket();
 
         let form = new FormData();
         form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
