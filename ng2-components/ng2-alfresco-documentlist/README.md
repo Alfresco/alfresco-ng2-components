@@ -24,21 +24,21 @@ Add the following dependency to your index.html:
 <script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
-Also make sure you include these dependencies in your .html page:
-
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
-
 #### Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
 design dependency to your project:
 
 ```sh
 npm install --save material-design-icons material-design-lite
+```
+
+Also make sure you include the following in your .html page:
+
+```html
+<!-- Google Material Design Lite -->
+<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+<script src="node_modules/material-design-lite/material.min.js"></script>
+<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
 ## Basic usage
@@ -64,13 +64,13 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoPipeTranslate,
     AlfrescoTranslationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService
-} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
+} from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'alfresco-documentlist-demo',
@@ -394,12 +394,12 @@ Enabling context menu is very simple:
 import {
     CONTEXT_MENU_DIRECTIVES,
     CONTEXT_MENU_PROVIDERS
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS
-} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
+} from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'my-view',
@@ -574,7 +574,7 @@ function each time upon being invoked.
 ```ts
 import {
     DocumentActionsService
-} from 'ng2-alfresco-documentlist/ng2-alfresco-documentlist';
+} from 'ng2-alfresco-documentlist';
 
 export class MyView {
 
