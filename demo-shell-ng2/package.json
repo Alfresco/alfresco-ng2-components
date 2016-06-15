@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
+    "clean": "rm -rf node_modules typings",
     "start": "npm run tslint && typings install && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
@@ -85,7 +86,6 @@
     "browser-sync": "^2.10.0",
     "concurrently": "^2.0.0",
     "connect-history-api-fallback": "^1.2.0",
-    "del": "^2.1.0",
     "flag-icon-css": "^2.3.0",
     "license-check": "^1.0.4",
     "tslint": "^3.8.1",

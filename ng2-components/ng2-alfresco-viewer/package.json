@@ -4,6 +4,7 @@
   "version": "0.1.19",
   "author": "Eugenio Romano",
   "scripts": {
+    "clean": "rm -rf dist node_modules typings",
     "typings": "typings install",
     "start": "npm run build && npm run server",
     "server": "http-server -c-1 -o -p 8875 .",

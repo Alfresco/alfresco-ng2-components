@@ -4,6 +4,7 @@
   "version": "0.1.24",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
+    "clean": "rm -rf dist node_modules typings",
     "typings": "typings install",
     "server": "http-server -c-1 -o -p 8875 .",
     "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",

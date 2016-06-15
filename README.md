@@ -69,6 +69,12 @@ cd dev-platform-webcomponents
 ./start.sh -install
 ```
 
+* Start the demo and Install all the dependencies and remove the previous version of the npm package(do it after big changes)
+
+```sh
+./start.sh -cleanInstall
+```
+
 * Start the demo and update the dependencies
 
 ```sh

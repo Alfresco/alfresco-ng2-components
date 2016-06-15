@@ -8,6 +8,10 @@ if  [[ $1 = "-install" ]]; then
 elif  [[ $1 = "-update " ]]; then
     npm run update
     npm run start
+elif  [[ $1 = "-cleanInstall" ]]; then
+    npm run clean
+    npm install
+    npm run start
 else
     npm run start
 fi
