@@ -4,7 +4,7 @@ module.exports = function (config) {
   var configuration = {
     basePath: '.',
 
-    frameworks: ['jasmine-ajax', 'jasmine'],
+    frameworks: [/*'jasmine-ajax',*/ 'jasmine'],
 
     files: [
       // paths loaded by Karma
@@ -40,7 +40,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
 
     colors: true,
 
@@ -59,7 +59,7 @@ module.exports = function (config) {
     plugins: [
       'karma-jasmine',
       'karma-coverage',
-      'karma-jasmine-ajax',
+      //'karma-jasmine-ajax',
       'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-jasmine-html-reporter'
