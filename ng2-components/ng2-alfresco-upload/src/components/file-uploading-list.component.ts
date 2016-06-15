@@ -18,7 +18,7 @@
 
 import { Component, ElementRef, Input } from '@angular/core';
 import { FileModel } from '../models/file.model';
-import { AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 

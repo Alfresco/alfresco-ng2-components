@@ -11,7 +11,7 @@
         'rxjs':                       'node_modules/rxjs',
 
         'ng2-translate': 'node_modules/ng2-translate',
-        'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
+        'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist',
         'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable/dist',
         'ng2-alfresco-documentlist': 'node_modules/ng2-alfresco-documentlist',
         'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
@@ -26,7 +26,7 @@
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
 
         'ng2-translate': { defaultExtension: 'js' },
-        'ng2-alfresco-core': {defaultExtension: 'js'},
+        'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js'},
         'ng2-alfresco-datatable': { main: 'index.js', defaultExtension: 'js'},
         'ng2-alfresco-documentlist': {defaultExtension: 'js'},
         'ng2-alfresco-login': {defaultExtension: 'js'},

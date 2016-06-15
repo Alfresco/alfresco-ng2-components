@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs/Rx';
-import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';

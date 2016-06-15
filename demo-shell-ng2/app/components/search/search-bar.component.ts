@@ -22,7 +22,7 @@ import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 import {
     AlfrescoAuthenticationService,
     AlfrescoContentService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 

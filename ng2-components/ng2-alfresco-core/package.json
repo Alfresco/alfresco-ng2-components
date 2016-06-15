@@ -25,6 +25,8 @@
     "coverage": "npm run test && http-server -c-1 -o -p 9875 ./coverage/report",
     "prepublish": "npm run build"
   },
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/dev-platform-webcomponents.git"

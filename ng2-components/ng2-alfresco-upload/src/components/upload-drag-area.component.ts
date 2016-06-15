@@ -18,7 +18,7 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
-import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 declare let __moduleName: string;

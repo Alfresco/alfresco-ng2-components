@@ -20,7 +20,7 @@ import {ContentActionHandler} from '../models/content-action.model';
 import {AlfrescoService} from './alfresco.service';
 import {
     AlfrescoContentService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentActionsService {

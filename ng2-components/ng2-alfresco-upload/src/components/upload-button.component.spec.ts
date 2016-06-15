@@ -19,7 +19,7 @@ import { describe, expect, it, inject, beforeEachProviders } from '@angular/core
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { provide } from '@angular/core';
 import { UploadButtonComponent } from './upload-button.component';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';

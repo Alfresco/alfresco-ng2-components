@@ -19,7 +19,7 @@ import { Component, Input, Optional, OnChanges, OnInit } from '@angular/core';
 import { RouteParams } from '@angular/router-deprecated';
 import { AlfrescoService } from './../services/alfresco.service';
 
-import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 

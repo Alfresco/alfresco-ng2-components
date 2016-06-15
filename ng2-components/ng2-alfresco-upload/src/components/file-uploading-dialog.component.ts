@@ -18,7 +18,7 @@
 import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 declare let __moduleName: string;

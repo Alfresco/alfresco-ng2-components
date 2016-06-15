@@ -25,7 +25,7 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoPipeTranslate,
     AlfrescoTranslationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     ALFRESCO_SEARCH_PROVIDERS,

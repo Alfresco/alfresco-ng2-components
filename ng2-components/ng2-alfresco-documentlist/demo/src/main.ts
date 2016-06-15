@@ -26,7 +26,7 @@ import {
     AlfrescoPipeTranslate,
     AlfrescoTranslationService,
     CONTEXT_MENU_DIRECTIVES
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     DOCUMENT_LIST_DIRECTIVES,
