@@ -20,7 +20,7 @@ import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService
-} from 'ng2-alfresco-documentlist/dist/ng2-alfresco-documentlist';
+} from 'ng2-alfresco-documentlist';
 import {
     MDL,
     AlfrescoContentService,
