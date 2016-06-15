@@ -26,41 +26,6 @@ Components included:
 This component displays a search box on the page, which the user can use to enter a search query. It is decoupled from
 the related [search results](#search-results) component which performs a query and displays results.
 
-#### Dependencies
-
-Make sure your `systemjs.config` has the following configuration:
-
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                    'ng2-alfresco-upload': 'node_modules/ng2-alfresco-search',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2' : 'node_modules/angular2',
-                    'ng2-translate': 'node_modules/ng2-translate',
-                    'app': 'dist/src'
-                },
-                packages: {
-                    'app': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-core': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-search': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
-```
-
 #### Style
 The style of this component is based on Google Material Design, so if you want to visualize it correctly you have to add 
 the material-design-lite dependency to your project:
@@ -92,20 +57,20 @@ but instead the component could emit an event to be consumed upstream, or it cou
 results component embedded inside the same component.
 
 ```ts
-import { Component, OnInit } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { Component, OnInit } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoTranslationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+} from 'ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',
@@ -174,39 +139,6 @@ This component displays the results of a search to the user.
 
 #### Dependencies
 
-Make sure your `systemjs.config` has the following configuration:
-
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                    'ng2-alfresco-upload': 'node_modules/ng2-alfresco-search',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2' : 'node_modules/angular2',
-                    'ng2-translate': 'node_modules/ng2-translate',
-                    'app': 'dist/src'
-                },
-                packages: {
-                    'app': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-core': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-search': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
-```
-
 You must also add the following dependency to your index.html:
 
 ```html
@@ -241,20 +173,20 @@ search term. If no ruter is present pon the page of if the router does not provi
 results page will be shown.
 
 ```ts
-import { Component, OnInit } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { Component, OnInit } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoTranslationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+} from 'ng2-alfresco-search';
 
 
 @Component({
@@ -313,12 +245,12 @@ Example of an component that displays search results, taking the search term fro
 When the input is updated by the application, the search control will run a new search and display the results.
 
 ```ts
-import { Component, Input } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
+import { Component, Input } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS } from 'angular2/http';
 
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
+import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',
@@ -370,7 +302,7 @@ npm run build
 npm test
 ```
 
-## Running unit tests in browser
+### Running unit tests in browser
 
 ```sh
 npm test-browser
@@ -379,7 +311,7 @@ npm test-browser
 This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
 
-## Code coverage
+### Code coverage
 
 ```sh
 npm run coverage
