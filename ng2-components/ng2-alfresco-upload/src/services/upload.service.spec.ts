@@ -46,6 +46,7 @@ class MockUploadService extends UploadService {
 
 describe('AlfrescoUploadService', () => {
     let service: MockUploadService,
+        serviceUpload: UploadService,
         options: any;
 
     options = {
@@ -62,6 +63,7 @@ describe('AlfrescoUploadService', () => {
         jasmine.Ajax.install();
         window['AlfrescoApi'] = AlfrescoApiMock;
         service = new MockUploadService(options);
+        serviceUpload = new UploadService(options);
     });
 
     afterEach(() => {
@@ -203,5 +205,17 @@ describe('AlfrescoUploadService', () => {
                 done();
             }
         );
+    });
+
+    it('should create an XHR object ', ()  => {
+        service.setOptions(options);
+        let filesFake = {name: 'fake-name', size: 10};
+        let uploadingFileModel = new FileModel(filesFake);
+        let xhrRequest = serviceUpload.createXMLHttpRequestInstance(uploadingFileModel, null);
+        expect(xhrRequest.upload).toBeDefined();
+        expect(xhrRequest.upload.onabort).toBeDefined();
+        expect(xhrRequest.upload.onprogress).toBeDefined();
+        expect(xhrRequest.upload.onerror).toBeDefined();
+        expect(xhrRequest.onreadystatechange).toBeDefined();
     });
 });
