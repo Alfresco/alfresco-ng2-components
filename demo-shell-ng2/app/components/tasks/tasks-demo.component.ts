@@ -20,7 +20,7 @@ import { ActivitiService } from './activiti.service';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable/dist/ng2-alfresco-datatable';
+} from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'tasks-demo',
