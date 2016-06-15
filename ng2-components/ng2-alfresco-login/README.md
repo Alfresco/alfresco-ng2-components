@@ -29,6 +29,14 @@ Add the following dependency to your index.html:
 <script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
+#### Style
+The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
+design dependency to your project:
+
+```sh
+npm install --save material-design-icons material-design-lite
+```
+
 Also make sure you include these dependencies in your .html page:
 
 ```html
@@ -36,48 +44,6 @@ Also make sure you include these dependencies in your .html page:
 <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
 <script src="node_modules/material-design-lite/material.min.js"></script>
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
-
-Make sure your systemjs.config has the following configuration:
-
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                    'ng2-alfresco-login': 'node_modules/ng2-alfresco-login',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2' : 'node_modules/angular2',
-                    'ng2-translate': 'node_modules/ng2-translate',
-                    'src': 'src'
-                },
-                packages: {
-                    'src': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-core': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-login': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
-    
-```
-
-#### Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
-
-```sh
-npm install --save material-design-icons material-design-lite
 ```
 
 #### Basic usage
@@ -92,15 +58,23 @@ Example of an App that use Alfresco login component :
 main.ts
 ```ts
 
-import { bootstrap }    from 'angular2/platform/browser';
-import { Component } from 'angular2/core';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
-import { ROUTER_PROVIDERS } from 'angular2/router';
-import { HTTP_PROVIDERS }    from 'angular2/http';
-import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { Component } from '@angular/core';
+import { 
+    Router, 
+    RouteConfig, 
+    ROUTER_DIRECTIVES, 
+    ROUTER_PROVIDERS 
+} from '@angular/router-deprecated';
+import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { 
+    ALFRESCO_CORE_PROVIDERS, 
+    AlfrescoTranslationService, 
+    AlfrescoTranslationLoader,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
 
 @RouteConfig([
     {path: '/', name: 'Login', component: AlfrescoLoginComponent, useAsDefault: true}
@@ -132,9 +106,6 @@ export class AppComponent {
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
-    AlfrescoTranslationLoader,
-    AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
     ALFRESCO_CORE_PROVIDERS
 ]);
 
