@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
+import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'my-app',
