@@ -31,7 +31,7 @@ import {
     ALFRESCO_SEARCH_PROVIDERS,
     ALFRESCO_SEARCH_DIRECTIVES,
     AlfrescoService
-} from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+} from 'ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',

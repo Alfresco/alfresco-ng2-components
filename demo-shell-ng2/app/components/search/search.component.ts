@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
 
 declare let __moduleName: string;
 

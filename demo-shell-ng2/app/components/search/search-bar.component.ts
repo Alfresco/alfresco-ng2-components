@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
 import {
     AlfrescoAuthenticationService,
