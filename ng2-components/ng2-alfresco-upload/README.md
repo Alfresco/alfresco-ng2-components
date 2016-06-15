@@ -32,6 +32,14 @@ Add the following dependency to your index.html:
 <script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
+#### Style
+The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
+design dependency to your project:
+
+```sh
+npm install --save material-design-icons material-design-lite
+```
+
 Also make sure you include these dependencies in your .html page:
 
 ```html
@@ -41,49 +49,7 @@ Also make sure you include these dependencies in your .html page:
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
-Make sure your systemjs.config has the following configuration:
-
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                    'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2' : 'node_modules/angular2',
-                    'ng2-translate': 'node_modules/ng2-translate',
-                    'app': 'dist/src'
-                },
-                packages: {
-                    'app': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-core': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-upload': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
-```
-
-#### Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
-
-```sh
-npm install --save material-design-icons material-design-lite
-```
-
 #### Basic usage
-
 
 ```html
 <alfresco-upload-button [showUdoNotificationBar]="true"
@@ -98,12 +64,11 @@ npm install --save material-design-icons material-design-lite
 Example of an App that declares upload button component :
 
 ```ts
-import { Component } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService , ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
-
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { AlfrescoSettingsService , ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
+import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'my-app',
@@ -156,12 +121,11 @@ This component, provide a drag and drop are to upload files to alfresco.
 Example of an App that declares upload drag and drop component :
 
 ```ts
-import { Component } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
-
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { AlfrescoSettingsService, ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
+import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'my-app',
