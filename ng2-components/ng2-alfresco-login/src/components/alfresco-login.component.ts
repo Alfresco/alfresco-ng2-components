@@ -37,7 +37,7 @@ declare let __moduleName: string;
 })
 export class AlfrescoLoginComponent {
 
-    __baseUrl = __moduleName.replace('/alfresco-login.component.js', '');
+    baseComponentPath = __moduleName.replace('/alfresco-login.component.js', '');
 
     isPasswordShow: boolean = false;
 
@@ -148,9 +148,9 @@ export class AlfrescoLoginComponent {
     toggleShowPassword() {
         this.isPasswordShow = !this.isPasswordShow;
         if (this.isPasswordShow) {
-            (<HTMLInputElement>document.getElementById("password")).type = 'text'
+            (<HTMLInputElement>document.getElementById('password')).type = 'text';
         } else {
-            (<HTMLInputElement>document.getElementById("password")).type = 'password';
+            (<HTMLInputElement>document.getElementById('password')).type = 'password';
         }
     }
 
@@ -163,10 +163,6 @@ export class AlfrescoLoginComponent {
         if (typeof componentHandler !== 'undefined') {
             componentHandler.upgradeAllRegistered();
         }
-        if (field.valid) {
-            return false;
-        } else {
-            return true;
-        }
+        return !field.valid;
     }
 }
