@@ -17,12 +17,6 @@
 
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import {
-    Router,
-    RouteConfig,
-    ROUTER_PROVIDERS,
-    ROUTER_DIRECTIVES
-} from '@angular/router-deprecated';
 import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
 import { HTTP_PROVIDERS } from '@angular/http';
 import {
@@ -32,17 +26,14 @@ import {
 } from 'ng2-alfresco-core';
 
 
-@RouteConfig([
-    {path: '/', name: 'Login', component: AlfrescoLoginComponent, useAsDefault: true}
-])
 @Component({
     selector: 'my-app',
     template: `<label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
                {{ status }}
                <hr>
-               <alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>`,
-    directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
+               <alfresco-login (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>`,
+    directives: [AlfrescoLoginComponent]
 })
 export class AppComponent {
 
@@ -53,7 +44,6 @@ export class AppComponent {
     public status: string = '';
 
     constructor(public auth: AlfrescoAuthenticationService,
-                public router: Router,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = this.host;
     }
@@ -74,7 +64,6 @@ export class AppComponent {
 }
 
 bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
     ALFRESCO_CORE_PROVIDERS
 ]);
