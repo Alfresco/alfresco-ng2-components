@@ -106,7 +106,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
                     results => {
-                        this.results = results.list.entries
+                        this.results = results.list.entries;
                         this.errorMessage = null;
                     },
                     error => {

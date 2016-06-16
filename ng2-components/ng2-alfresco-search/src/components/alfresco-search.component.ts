@@ -26,8 +26,7 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-search',
-    styles: [
-    ],
+    styles: [],
     templateUrl: './alfresco-search.component.html',
     providers: [AlfrescoService],
     pipes: [AlfrescoPipeTranslate]
@@ -43,11 +42,9 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     route: any[] = [];
 
-    constructor(
-        private _alfrescoService: AlfrescoService,
-        private translate: AlfrescoTranslationService,
-        @Optional() params: RouteParams)
-    {
+    constructor(private _alfrescoService: AlfrescoService,
+                private translate: AlfrescoTranslationService,
+                @Optional() params: RouteParams) {
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
 
         this.results = null;
@@ -86,7 +83,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
                     results => {
-                        this.results = results.list.entries
+                        this.results = results.list.entries;
                         this.errorMessage = null;
                     },
                     error => {
