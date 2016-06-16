@@ -11,7 +11,7 @@
     "build:w": "npm run tslint && typings install && rm -rf dist && npm run watch-task",
     "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copytemplates:w\"  \"license-check\"",
     "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/**/*.ts, src/**/*.spec.ts ",
+    "tslint-src": "tslint -c tslint.json src/**/*.*.ts",
     "tslint-root": "tslint -c tslint.json *.ts",
     "copytemplates": "npm run copy-html-css && npm run copy-i18n && npm run copy-images",
     "copytemplates:w": "concurrently \"npm run copy-html-css:w\" \"npm run copy-images:w\" \"npm run copy-i18n:w\"",

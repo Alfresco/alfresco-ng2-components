@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Http, Headers, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 
 declare let AlfrescoApi: any;
@@ -129,7 +129,7 @@ export class AlfrescoAuthenticationService {
     /**
      * Remove the login token from localStorage
      */
-    public removeToken() :void {
+    public removeToken(): void {
         localStorage.removeItem('token');
     }
 
