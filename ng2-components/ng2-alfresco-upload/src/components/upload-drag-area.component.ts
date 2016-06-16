@@ -226,7 +226,7 @@ export class UploadDragAreaComponent {
      * @returns {string}
      */
     private getErrorMessage(response: any): string {
-        if(response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
+        if (response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
             let errorMessage: any;
             errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;

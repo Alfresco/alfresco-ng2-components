@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-import { UploadService } from '../services/upload.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { FileModel } from '../models/file.model';
 
 export class UploadServiceMock {
@@ -52,7 +49,7 @@ export class UploadServiceMock {
                         userId: 'fake-username',
                         id: 'fake-post-token'
                     }
-                })
+                });
             });
         } else {
             promise = new Promise(function (resolve, reject) {

@@ -224,7 +224,7 @@ export class UploadButtonComponent {
         messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
 
-        if(this.undoNotificationBar.nativeElement.MaterialSnackbar) {
+        if (this.undoNotificationBar.nativeElement.MaterialSnackbar) {
             this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
                 message: messageTranslate.value,
                 timeout: 3000,
@@ -244,7 +244,7 @@ export class UploadButtonComponent {
      * @returns {string}
      */
     private getErrorMessage(response: any): string {
-        if(response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
+        if (response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
             let errorMessage: any;
             errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;

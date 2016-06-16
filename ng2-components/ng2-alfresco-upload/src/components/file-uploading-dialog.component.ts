@@ -43,7 +43,7 @@ declare let __moduleName: string;
     host: {'[class.dialog-show]': 'toggleShowDialog'},
     pipes: [AlfrescoPipeTranslate]
 })
-export class FileUploadingDialogComponent implements OnInit{
+export class FileUploadingDialogComponent implements OnInit {
 
     isDialogActive: boolean = false;
 
@@ -60,7 +60,7 @@ export class FileUploadingDialogComponent implements OnInit{
     }
 
     ngOnInit() {
-        if(this._uploaderService.filesUpload$) {
+        if (this._uploaderService.filesUpload$) {
             this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
                 this.filesUploadingList = fileList;
                 if (this.filesUploadingList.length > 0) {
@@ -69,7 +69,7 @@ export class FileUploadingDialogComponent implements OnInit{
                 }
             });
         }
-        if(this._uploaderService.totalCompleted$) {
+        if (this._uploaderService.totalCompleted$) {
             this._uploaderService.totalCompleted$.subscribe((total: number) => {
                 this.totalCompleted = total;
                 this.cd.detectChanges();

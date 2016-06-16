@@ -64,7 +64,7 @@ export class FileUploadingListComponent {
      * Call the abort method for each file
      */
     cancelAllFiles($event) {
-        if($event) {
+        if ($event) {
             $event.preventDefault();
         }
         this.filesUploadingList.forEach((uploadingFileModel: FileModel) => {
