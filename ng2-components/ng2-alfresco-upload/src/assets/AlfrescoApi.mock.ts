@@ -21,39 +21,40 @@ export class AlfrescoApiMock {
         return {authentications: {basicAuth: {password: 'fake-password', type: 'fake-basic', username: 'fake-user'}}};
     }
 
+    static get NodesApi() {
+        return NodesApiMock;
+    }
+
 }
-export module AlfrescoApiMock {
 
-    export class NodesApi {
+export class NodesApiMock {
 
-        constructor(alfrescoClient: any) {
-        }
+    constructor(alfrescoClient: any) {
+    }
 
-        addNode(nodeId, nodeBody, opts) {
-            if (nodeId && nodeBody.name !== 'folder-duplicate-fake') {
-                return new Promise(function (resolve, reject) {
-                    resolve({
-                        entry: {
-                            isFile: false,
-                            isFolder: true
-                        }
-                    });
+    addNode(nodeId, nodeBody, opts) {
+        if (nodeId && nodeBody.name !== 'folder-duplicate-fake') {
+            return new Promise(function (resolve, reject) {
+                resolve({
+                    entry: {
+                        isFile: false,
+                        isFolder: true
+                    }
                 });
-            } else {
-                return new Promise(function (resolve, reject) {
-                    reject({
-                        response: {
-                            body: {
-                                error: {
-                                    statusCode: 409
-                                }
+            });
+        } else {
+            return new Promise(function (resolve, reject) {
+                reject({
+                    response: {
+                        body: {
+                            error: {
+                                statusCode: 409
                             }
                         }
-                    });
+                    }
                 });
-            }
+            });
         }
-
     }
 
 }
