@@ -55,11 +55,11 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
                 (translations: any[]) => {
                     let multiLanguage: any = '';
                     translations.forEach((translate) => {
-                        if(translate !== '') {
+                        if (translate !== '') {
                             multiLanguage += JSON.stringify(translate);
                         }
                     });
-                    if(multiLanguage !== '') {
+                    if (multiLanguage !== '') {
                         observer.next(JSON.parse(multiLanguage.replace(/}{/g, ',')));
                     }
                     observer.complete();

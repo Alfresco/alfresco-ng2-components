@@ -54,7 +54,7 @@ import { ContextMenuService } from './../services/context-menu.service';
     ],
     host:{
         '(document:click)':'clickedOutside()'
-        //'(click)':'clickInside()'
+        // '(click)':'clickInside()'
     },
     template: `
         <div [ngStyle]="locationCss" class="menu-container">
@@ -76,16 +76,16 @@ export class ContextMenuHolderComponent {
         _contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
     }
 
-    get locationCss(){
+    get locationCss() {
         return {
             position: 'fixed',
-            display: this.isShown ? 'block': 'none',
+            display: this.isShown ? 'block' : 'none',
             left: this.mouseLocation.left + 'px',
             top: this.mouseLocation.top + 'px'
         };
     }
 
-    clickedOutside(){
+    clickedOutside() {
         this.isShown = false;
     }
 
