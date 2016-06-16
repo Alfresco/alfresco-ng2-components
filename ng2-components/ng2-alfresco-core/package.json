@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-core",
   "description": "Alfresco Angular 2 Components core",
-  "version": "0.1.34",
+  "version": "0.1.33",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rm -rf dist node_modules typings",
@@ -10,7 +10,7 @@
     "server": "http-server -c-1 -o -p 8875 .",
     "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
     "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/**/*.*.ts",
+    "tslint-src": "tslint -c tslint.json src/**/*.ts",
     "tslint-root": "tslint -c tslint.json *.ts",
     "copytemplates": "npm run copy-html && npm run copy-css && npm run copy-i18n",
     "copy-html": "copyfiles './src/**/*.html' dist",
