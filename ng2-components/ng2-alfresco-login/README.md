@@ -92,31 +92,26 @@ Example of an App that use Alfresco login component :
 main.ts
 ```ts
 
-import { bootstrap }    from 'angular2/platform/browser';
-import { Component } from 'angular2/core';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login/dist/ng2-alfresco-login';
-import { ROUTER_PROVIDERS } from 'angular2/router';
-import { HTTP_PROVIDERS }    from 'angular2/http';
-import { ALFRESCO_CORE_PROVIDERS, AlfrescoTranslationService, AlfrescoTranslationLoader } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
+import { HTTP_PROVIDERS } from '@angular/http';
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
 
-
-@RouteConfig([
-    {path: '/', name: 'Login', component: AlfrescoLoginComponent, useAsDefault: true}
-])
 @Component({
     selector: 'my-app',
-    template: '<alfresco-login method="POST" (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
-    directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent]
+    template: '<alfresco-login (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
+    directives: [AlfrescoLoginComponent]
 })
 export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
-                public router: Router,
                 alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = 'http://192.168.99.100:8080';
-
     }
 
     mySuccessMethod($event) {
@@ -130,11 +125,7 @@ export class AppComponent {
 }
 
 bootstrap(AppComponent, [
-    ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
-    AlfrescoTranslationLoader,
-    AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
     ALFRESCO_CORE_PROVIDERS
 ]);
 
