@@ -15,6 +15,9 @@ module.exports = function (config) {
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
 
+      {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
+      {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
+
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
       // paths loaded via module imports
@@ -81,7 +84,7 @@ module.exports = function (config) {
         {type: 'html'}
       ]
     }
-  }
+  };
 
   if (process.env.TRAVIS) {
     configuration.browsers = ['Chrome_travis_ci'];
