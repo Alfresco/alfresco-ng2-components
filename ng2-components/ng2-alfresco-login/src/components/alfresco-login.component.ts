@@ -16,7 +16,6 @@
  */
 
 import { Component, Output, EventEmitter } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
 import {
     AlfrescoTranslationService,
@@ -30,7 +29,7 @@ declare let __moduleName: string;
 @Component({
     selector: 'alfresco-login',
     moduleId: __moduleName,
-    directives: [ROUTER_DIRECTIVES, FORM_DIRECTIVES],
+    directives: [FORM_DIRECTIVES],
     templateUrl: './alfresco-login.component.html',
     styleUrls: ['./alfresco-login.component.css'],
     pipes: [AlfrescoPipeTranslate]
@@ -60,12 +59,10 @@ export class AlfrescoLoginComponent {
      * Constructor
      * @param _fb
      * @param auth
-     * @param router
      * @param translate
      */
     constructor(private _fb: FormBuilder,
                 public auth: AlfrescoAuthenticationService,
-                public router: Router,
                 private translate: AlfrescoTranslationService) {
 
         this.formError = {
@@ -108,16 +105,10 @@ export class AlfrescoLoginComponent {
         this.auth.login(value.username, value.password)
             .subscribe(
                 (token: any) => {
-                    try {
-                        this.success = true;
-                        this.onSuccess.emit({
-                            value: 'Login OK'
-                        });
-                        this.router.navigate(['Home']);
-                    } catch (error) {
-                        console.error(error.message);
-                    }
-
+                    this.success = true;
+                    this.onSuccess.emit({
+                        value: 'Login OK'
+                    });
                 },
                 (err: any) => {
                     this.error = true;
