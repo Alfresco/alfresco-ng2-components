@@ -69,7 +69,7 @@ import { ContextMenuService } from './../services/context-menu.service';
 export class ContextMenuHolderComponent {
     links = [];
     isShown = false;
-    private mouseLocation :{ left: number, top: number} = { left:0, top:0 };
+    private mouseLocation: { left: number, top: number } = { left: 0, top: 0 };
 
     constructor(
         private _contextMenuService: ContextMenuService) {
@@ -93,9 +93,11 @@ export class ContextMenuHolderComponent {
         this.isShown = true;
         this.links = links;
 
-        this.mouseLocation = {
-            left: e.clientX,
-            top: e.clientY
-        };
+        if (e) {
+            this.mouseLocation = {
+                left: e.clientX,
+                top: e.clientY
+            };
+        }
     }
 }

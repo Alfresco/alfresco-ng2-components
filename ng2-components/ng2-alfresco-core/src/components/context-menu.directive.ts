@@ -31,8 +31,12 @@ export class ContextMenuDirective {
     constructor(
         private _contextMenuService: ContextMenuService) {}
 
-    onShowContextMenu(event: MouseEvent) {
-        this._contextMenuService.show.next({ event: event, obj: this.links });
-        event.preventDefault();
+    onShowContextMenu(event?: MouseEvent) {
+        if (this._contextMenuService) {
+            this._contextMenuService.show.next({event: event, obj: this.links});
+        }
+        if (event) {
+            event.preventDefault();
+        }
     }
 }
