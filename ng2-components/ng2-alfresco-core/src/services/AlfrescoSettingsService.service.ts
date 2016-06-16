@@ -20,9 +20,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AlfrescoSettingsService {
 
-    private _host: string = 'http://127.0.0.1:8080';
-    private _contextPath = '/alfresco';
-    private _apiBasePath: string = '/api/-default-/public/alfresco/versions/1';
+    static DEFAULT_HOST_ADDRESS: string = 'http://127.0.0.1:8080';
+    static DEFAULT_CONTEXT_PATH: string = '/alfresco';
+    static DEFAULT_BASE_API_PATH: string = '/api/-default-/public/alfresco/versions/1';
+
+    private _host: string = AlfrescoSettingsService.DEFAULT_HOST_ADDRESS;
+    private _contextPath = AlfrescoSettingsService.DEFAULT_CONTEXT_PATH;
+    private _apiBasePath: string = AlfrescoSettingsService.DEFAULT_BASE_API_PATH;
 
     public get host(): string {
         return this._host;
@@ -34,10 +38,5 @@ export class AlfrescoSettingsService {
 
     getApiBaseUrl(): string {
         return this._host + this._contextPath + this._apiBasePath;
-    }
-
-    getAuthToken(): string {
-        // todo: get proper token value
-        return 'Basic ' + btoa('admin:admin');
     }
 }
