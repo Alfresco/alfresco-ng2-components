@@ -15,59 +15,42 @@
  * limitations under the License.
  */
 
-describe('AlfrescoLogin', () => {
-    it('should be upgraded to angular 2.0.0-rc.1', () => {
-        expect(false).toBe(true);
-    });
-});
 
-/*
-import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS } from 'angular2/platform/testing/browser';
+import {
+    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
+} from '@angular/platform-browser-dynamic/testing';
 import {
   it,
   describe,
   expect,
   inject,
-  injectAsync,
-  beforeEach,
   beforeEachProviders,
-  TestComponentBuilder,
   setBaseTestProviders
 } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
 import { provide } from '@angular/core';
-import { Location, Router, RouteRegistry, ROUTER_PRIMARY_COMPONENT, Route } from 'angular2/router';
-import { RootRouter } from 'angular2/src/router/router';
-import { SpyLocation } from 'angular2/src/mock/location_mock';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('AlfrescoLogin', () => {
-  let authService, location, router;
+  let authService;
 
-  setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
+  setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
 
   beforeEachProviders(() => {
     authService = new AuthenticationMock();
 
     return [
       authService.getProviders(),
-      RouteRegistry,
-      provide(Location, {useClass: SpyLocation}),
-      provide(ROUTER_PRIMARY_COMPONENT, {useValue: AlfrescoLoginComponent}),
-      provide(Router, {useClass: RootRouter}),
       provide(AlfrescoTranslationService, {useClass: TranslationMock})
     ];
   });
 
-  beforeEach(inject([Router, Location], (r, l) => {
-    router = r;
-    location = l;
-  }));
-
   it('should render `Login` form with all the keys to be translated',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
@@ -92,7 +75,7 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should render user and password input fields with default values',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
@@ -106,7 +89,7 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should render min-length error when the username is lower than 4 characters',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
@@ -133,7 +116,7 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should render no errors when the username and password are correct',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
@@ -161,7 +144,7 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should render the new values after user and password values are changed',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
@@ -182,13 +165,11 @@ describe('AlfrescoLogin', () => {
         });
     }));
 
-  it('should navigate to Home route after the login have succeeded ',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+  it('should return success true after the login have succeeded ',
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
-          router.config([new Route({path: '/home', name: 'Home', component: AlfrescoLoginComponent})]);
-          spyOn(router, 'navigate').and.callThrough();
           let component = fixture.componentInstance;
           component.isErrorStyle = function () {
             console.log('mock');
@@ -207,16 +188,15 @@ describe('AlfrescoLogin', () => {
           fixture.detectChanges();
 
           expect(component.error).toBe(false);
-          expect(router.navigate).toHaveBeenCalledWith(['Home']);
+          expect(component.success).toBe(true);
         });
     }));
 
   it('should return error with a wrong username ',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
-          spyOn(router, 'navigate').and.callThrough();
           let component = fixture.componentInstance;
           component.isErrorStyle = function () {
             console.log('mock');
@@ -240,11 +220,10 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should return error with a wrong password ',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
-          spyOn(router, 'navigate').and.callThrough();
           let component = fixture.componentInstance;
           component.isErrorStyle = function () {
             console.log('mock');
@@ -268,11 +247,10 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should return error with a wrong username and password ',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
-          spyOn(router, 'navigate').and.callThrough();
           let component = fixture.componentInstance;
           component.isErrorStyle = function () {
             console.log('mock');
@@ -297,7 +275,7 @@ describe('AlfrescoLogin', () => {
 
 
   it('should emit onSuccess event after the login has succeeded',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
@@ -329,7 +307,7 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should emit onError event after the login has failed',
-    injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
       return tcb
         .createAsync(AlfrescoLoginComponent)
         .then((fixture) => {
@@ -362,7 +340,7 @@ describe('AlfrescoLogin', () => {
     }));
 
   it('should render the password in clear when the toggleShowPassword is call',
-      injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {
@@ -383,7 +361,7 @@ describe('AlfrescoLogin', () => {
       }));
 
   it('should render the hide password when the password is in clear and the toggleShowPassword is call',
-      injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+      inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
             .createAsync(AlfrescoLoginComponent)
             .then((fixture) => {
@@ -403,7 +381,5 @@ describe('AlfrescoLogin', () => {
             });
       }));
 
-
-
 });
-*/
+
