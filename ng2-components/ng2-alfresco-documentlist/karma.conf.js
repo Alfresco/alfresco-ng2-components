@@ -30,6 +30,10 @@ module.exports = function (config) {
       {pattern: 'dist/**/*.js.map', included: false, watched: false}
     ],
 
+    exclude: [
+      'node_modules/**/*spec.js'
+    ],
+
     // proxied base paths
     proxies: {
       // required for component assets fetched by Angular's compiler
@@ -83,7 +87,7 @@ module.exports = function (config) {
         {type: 'html'}
       ]
     }
-  }
+  };
 
   if (process.env.TRAVIS) {
     configuration.browsers = ['Chrome_travis_ci'];

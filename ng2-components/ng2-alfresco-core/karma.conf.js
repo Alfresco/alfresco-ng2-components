@@ -28,6 +28,10 @@ module.exports = function (config) {
       {pattern: 'dist/**/*.js.map', included: false, watched: false}
     ],
 
+    exclude: [
+      'node_modules/**/*spec.js'
+    ],
+
     // proxied base paths
     proxies: {
       // required for component assets fetched by Angular's compiler
