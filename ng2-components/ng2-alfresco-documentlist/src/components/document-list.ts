@@ -53,7 +53,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     DEFAULT_ROOT_FOLDER: string = '/Sites/swsdp/documentLibrary';
 
-    __baseUrl = __moduleName.replace('/components/document-list.js', '');
+    baseComponentPath = __moduleName.replace('/components/document-list.js', '');
 
     @Input()
     navigate: boolean = true;
@@ -164,7 +164,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
                             model: a,
                             node: node,
                             subject: this.contextActionHandler
-                        }
+                        };
                     });
                 }
             }
@@ -367,7 +367,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
             let entry = node.entry;
 
             if (entry.isFolder) {
-                return `${this.__baseUrl}/img/ft_ic_folder.svg`;
+                return `${this.baseComponentPath}/img/ft_ic_folder.svg`;
             }
 
             if (entry.isFile) {
@@ -380,11 +380,11 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
                 if (entry.content && entry.content.mimeType) {
                     let icon = this._alfrescoService.getMimeTypeIcon(entry.content.mimeType);
-                    return `${this.__baseUrl}/img/${icon}`;
+                    return `${this.baseComponentPath}/img/${icon}`;
                 }
             }
 
-            return `${this.__baseUrl}/img/ft_ic_miscellaneous.svg`;
+            return `${this.baseComponentPath}/img/ft_ic_miscellaneous.svg`;
         }
 
         return null;

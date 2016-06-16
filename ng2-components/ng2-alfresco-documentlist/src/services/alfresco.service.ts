@@ -34,8 +34,6 @@ declare let AlfrescoApi: any;
 @Injectable()
 export class AlfrescoService {
 
-    private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
-
     mimeTypeIcons: any = {
         'image/png': 'ft_ic_raster_image.svg',
         'image/jpeg': 'ft_ic_raster_image.svg',
