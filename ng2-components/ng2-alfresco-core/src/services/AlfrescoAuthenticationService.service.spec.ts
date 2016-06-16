@@ -19,10 +19,8 @@ import { it, describe, beforeEach } from '@angular/core/testing';
 import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
-import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
 
 declare var AlfrescoApi: any;
-
 
 describe('AlfrescoAuthentication', () => {
     let injector,
@@ -53,7 +51,6 @@ describe('AlfrescoAuthentication', () => {
             return keys[i] || null;
         });
 
-        window['AlfrescoApi'] = AlfrescoApiMock;
         service = injector.get(AlfrescoAuthenticationService);
     });
 
@@ -71,6 +68,17 @@ describe('AlfrescoAuthentication', () => {
     });
 
     it('should return true and token on sign in', () => {
+
+        let p = new Promise(function (resolve, reject) {
+            resolve({
+                entry: {
+                    userId: 'fake-username',
+                    id: 'fake-post-token'
+                }
+            });
+        });
+        spyOn(service, 'getCreateTicketPromise').and.returnValue(p);
+
         service.token = '';
         service.login('fake-username', 'fake-password')
             .subscribe(() => {
@@ -83,12 +91,19 @@ describe('AlfrescoAuthentication', () => {
     });
 
     it('should return false and token undefined on log out', () => {
+
+        let p = new Promise(function (resolve, reject) {
+            resolve();
+        });
+
+        spyOn(service, 'getDeleteTicketPromise').and.returnValue(p);
+
         localStorage.setItem('token', 'fake-token');
         service.logout()
             .subscribe(() => {
                     expect(service.isLoggedIn()).toBe(false);
-                    expect(service.getToken()).toBe(null);
-                    expect(localStorage.getItem('token')).toBe(null);
+                    expect(service.getToken()).toBeUndefined();
+                    expect(localStorage.getItem('token')).toBeUndefined();
                 }
             );
     });
