@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-viewer",
   "description": "Alfresco documents viewer",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "author": "Eugenio Romano",
   "scripts": {
     "clean": "rm -rf dist node_modules typings",
@@ -69,7 +69,6 @@
     "rxjs": "5.0.0-beta.6",
     "zone.js": "^0.6.12",
     "angular2-in-memory-web-api": "0.0.11",
-
     "pdfjs-dist": "^1.5.258"
   },
   "devDependencies": {
