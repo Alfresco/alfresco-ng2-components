@@ -25,7 +25,6 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let translation = jasmine.createSpyObj('AlfrescoTranslationService', [
             'addTranslationFolder'
         ]);
-
         let search = new AlfrescoSearchAutocompleteComponent(null, translation, null);
         expect(search).toBeDefined();
 

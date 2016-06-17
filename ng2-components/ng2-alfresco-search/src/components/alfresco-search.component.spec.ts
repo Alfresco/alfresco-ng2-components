@@ -26,7 +26,7 @@ describe('AlfrescoSearchComponent', () => {
             'addTranslationFolder'
         ]);
 
-        let search = new AlfrescoSearchComponent(null, translation, null);
+        let search = new AlfrescoSearchComponent(null, translation, null, null);
         expect(search).toBeDefined();
         expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search');
     });

@@ -53,11 +53,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
 
-    constructor(
-        private _alfrescoSearchService: AlfrescoSearchService,
-        private translate: AlfrescoTranslationService,
-        private _alfrescoThumbnailService: AlfrescoThumbnailService
-    ) {
+    constructor(private _alfrescoSearchService: AlfrescoSearchService,
+                private translate: AlfrescoTranslationService,
+                private _alfrescoThumbnailService: AlfrescoThumbnailService) {
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
         this.results = null;
     }

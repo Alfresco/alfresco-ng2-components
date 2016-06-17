@@ -54,9 +54,7 @@ export class AlfrescoThumbnailService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
     };
 
-    constructor(
-        private contentService: AlfrescoContentService
-    ) {
+    constructor(private contentService: AlfrescoContentService) {
     }
 
     /**
