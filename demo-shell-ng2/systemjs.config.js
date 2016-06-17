@@ -26,7 +26,7 @@
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
 
         'ng2-translate': { defaultExtension: 'js' },
-        
+
         'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js'},
         'ng2-alfresco-datatable': { main: 'index.js', defaultExtension: 'js'},
         'ng2-alfresco-documentlist': { main: 'index.js', defaultExtension: 'js'},
@@ -52,7 +52,7 @@
     }
     // Bundled (~40 requests):
     function packUmd(pkgName) {
-        packages['@angular/'+pkgName] = { main: pkgName + '.umd.js', defaultExtension: 'js' };
+        packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
     }
     // Most environments should use UMD; some (Karma) need the individual index files
     var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
