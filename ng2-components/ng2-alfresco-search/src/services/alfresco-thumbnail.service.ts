@@ -24,6 +24,7 @@ declare let AlfrescoApi: any;
 
 @Injectable()
 export class AlfrescoThumbnailService {
+
     mimeTypeIcons: any = {
         'image/png': 'ft_ic_raster_image.svg',
         'image/jpeg': 'ft_ic_raster_image.svg',
