@@ -17,15 +17,13 @@
 
 import {
     Component,
-    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
-    Output,
-    Renderer
+    Output
 } from '@angular/core';
-import { AlfrescoService } from './../services/alfresco.service';
-
+import { AlfrescoSearchService } from './../services/alfresco-search.service';
+import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
@@ -33,39 +31,14 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-search-autocomplete',
-    styles: [
-        `:host {
-            position: absolute;
-            z-index: 1;
-            display: none;
-            color: #555;
-        }
-        :host a {
-            color: #555;
-            text-decoration: none;
-        }
-        :host table {
-            width: 300px;
-        }
-        :host .mdl-data-table tbody tr {
-            height: 32px;
-        }
-        :host .mdl-data-table td {
-            height: 32px;
-            padding: 8px;
-            text-align: left;
-            border-top: none;
-            border-bottom: none;
-        }
-        :host.active.valid {
-            display: block;
-        }`
-    ],
     templateUrl: './alfresco-search-autocomplete.component.html',
-    providers: [AlfrescoService],
+    styleUrls: ['./alfresco-search-autocomplete.component.css'],
+    providers: [AlfrescoSearchService],
     pipes: [AlfrescoPipeTranslate]
 })
 export class AlfrescoSearchAutocompleteComponent implements OnChanges {
+
+    baseComponentPath = __moduleName.replace('/components/alfresco-search-autocomplete.component.js', '');
 
     @Input()
     searchTerm: string = '';
@@ -81,18 +54,17 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
     preview: EventEmitter<any> = new EventEmitter();
 
     constructor(
-        private _alfrescoService: AlfrescoService,
+        private _alfrescoSearchService: AlfrescoSearchService,
         private translate: AlfrescoTranslationService,
-        private el: ElementRef,
-        private renderer: Renderer
+        private _alfrescoThumbnailService: AlfrescoThumbnailService
     ) {
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
         this.results = null;
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges(changes): void {
         if (changes.searchTerm) {
-            this.displaySearchResults(this.searchTerm);
+            this._displaySearchResults(this.searchTerm);
         }
     }
 
@@ -100,9 +72,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    displaySearchResults(searchTerm) {
+    private _displaySearchResults(searchTerm) {
         if (searchTerm !== null && searchTerm !== '') {
-            this._alfrescoService
+            this._alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
                     results => {
@@ -117,7 +89,19 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
         }
     }
 
-    onItemClick(node, event?: Event) {
+    /**
+     * Gets thumbnail URL for the given document node.
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    _getMimeTypeIcon(node: any): string {
+        if (node.entry.content && node.entry.content.mimeType) {
+            let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
+            return `${this.baseComponentPath}/img/${icon}`;
+        }
+    }
+
+    _onItemClick(node, event?: Event): void {
         if (event) {
             event.preventDefault();
         }

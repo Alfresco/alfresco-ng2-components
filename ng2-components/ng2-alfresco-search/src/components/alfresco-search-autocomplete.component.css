@@ -1,0 +1,38 @@
+:host {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    color: #555;
+    margin: -21px 0px 0px 0px;
+}
+:host a {
+    color: #555;
+    text-decoration: none;
+}
+:host table {
+    width: 300px;
+}
+:host .mdl-data-table tbody tr {
+    height: 32px;
+}
+:host .mdl-data-table td {
+    height: 32px;
+    padding: 8px;
+    text-align: left;
+    border-top: none;
+    border-bottom: none;
+}
+:host.active.valid {
+    display: block;
+}
+
+.img-td{
+    width: 30px;
+}
+
+.truncate{
+    width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
