@@ -95,11 +95,11 @@ export class PdfViewerComponent {
 
             this.pdfViewer.currentPageNumber = this.page;
 
-            if (this.pdfViewer.currentPage.renderingState === this.renderingStates.FINISHED) {
-                // remove loader
-            } else {
-                // add loader
-            }
+            //if (this.pdfViewer.currentPage.renderingState === this.renderingStates.FINISHED) {
+            //    // remove loader
+            //} else {
+            //    // add loader
+            //}
         }
     }
 
