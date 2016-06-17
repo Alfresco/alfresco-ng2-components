@@ -1,6 +1,6 @@
 <ol *ngIf="breadcrumb" data-automation-id="breadcrumb" class="breadcrumb">
     <li *ngFor="let r of route; let last = last" [class.active]="last" [ngSwitch]="last">
-        <span *ngSwitchWhen="true">{{r.name}}</span>
+        <span *ngSwitchCase="true">{{r.name}}</span>
         <a *ngSwitchDefault href="#" [attr.data-automation-id]="'breadcrumb_' + r.name" (click)="goToRoute(r, $event)">{{r.name}}</a>
     </li>
 </ol>
@@ -46,10 +46,10 @@
             (dblclick)="onItemDblClick(content, $event)"
             [context-menu]="getContextActions(content)"
             [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
-            <div *ngSwitchWhen="'image'" class="cell-value">
+            <div *ngSwitchCase="'image'" class="cell-value">
                 <img class="thumbnail" [src]="getCellValue(content, col)">
             </div>
-            <span *ngSwitchWhen="'date'" class="cell-value">
+            <span *ngSwitchCase="'date'" class="cell-value">
                 {{ getCellValue(content, col) }}
             </span>
             <span *ngSwitchDefault class="cell-value">

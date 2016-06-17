@@ -42,11 +42,11 @@
         <td *ngFor="let col of data.getColumns()" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)" (dblclick)="onRowDblClick(row, $event)">
-            <div *ngSwitchWhen="'image'">
+            <div *ngSwitchCase="'image'">
                 <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                 <img *ngIf="!isIconValue(row, col)" class="image-cell" alt="" src="{{data.getValue(row, col)}}">
             </div>
-            <div *ngSwitchWhen="'text'">
+            <div *ngSwitchCase="'text'">
                 {{data.getValue(row, col)}}
             </div>
             <span *ngSwitchDefault>
