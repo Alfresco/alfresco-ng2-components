@@ -1,8 +1,8 @@
-<table *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+<table data-automation-id="autocomplete_results" *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <tbody>
     <tr *ngFor="let result of results; let idx = index">
-        <td><a href="#" (click)="onItemClick(result, $event)">{{result.entry.name}}</a></td>
+        <td><a attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}" href="#" (click)="onItemClick(result, $event)">{{result.entry.name}}</a></td>
     </tr>
     </tbody>
 </table>
-<p *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
+<p data-automation-id="autocomplete_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>

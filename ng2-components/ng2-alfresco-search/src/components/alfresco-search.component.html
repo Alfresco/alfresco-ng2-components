@@ -1,6 +1,6 @@
-<p *ngIf="results && results.length">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</p>
-<p *ngIf="results&& results.length == 0">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
-<table *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+<p data-automation-id="search_result_found" *ngIf="results && results.length">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</p>
+<p data-automation-id="search_no_result_found" *ngIf="results&& results.length == 0">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
+<table data-automation-id="search_result_table" *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
         <th>
@@ -18,13 +18,13 @@
     </tr>
     </thead>
     <tbody>
-
-    <tr *ngFor="let result of results; let idx = index">
+    <tr *ngFor="let result of results; let idx = index" >
         <td><img src="{{getDocumentThumbnailUrl(result)}}" /></td>
-        <td>{{result.entry.name}}</td>
-        <td>{{result.entry.modifiedByUser.displayName}}</td>
+        <td attr.data-automation-id=file_{{result.entry.name}}>{{result.entry.name}}</td>
+        <td attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}}>{{result.entry.modifiedByUser.displayName}}</td>
         <td>{{result.entry.modifiedAt}}</td>
     </tr>
+
     </tbody>
 </table>
-<p *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
+<p data-automation-id="search_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
