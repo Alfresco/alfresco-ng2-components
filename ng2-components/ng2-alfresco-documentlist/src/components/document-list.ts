@@ -447,11 +447,11 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
         if (col.type === 'date') {
             let datePipe = new DatePipe();
-            // TODO: review when angular 2 is released
-            // .supports has been marked as private in RC2
-            // if (datePipe.supports(value)) {
-            return datePipe.transform(value, col.format);
-            // }
+            try {
+                return datePipe.transform(value, col.format);
+            } catch (err) {
+                console.error(`DocumentList: error parsing date ${value} to format ${col.format}`);
+            }
         }
 
         if (col.type === 'image') {
