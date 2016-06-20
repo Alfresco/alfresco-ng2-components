@@ -1,5 +1,5 @@
 <!-- Start Pdf Canvas -->
-<div id="viewer-pdf-container" class="center-element viewer-pdf-container" (keypress)=eventHandler()>
+<div id="viewer-pdf-container" class="center-element viewer-pdf-container" (keypress)=eventHandler() (window:resize)="onResize($event)">
     <div id="viewer-viewerPdf" class="center-element" >
         <div id="loader-container" class="loader-container">
             <div class="loader-item">
@@ -29,3 +29,11 @@
     </div>
 </div>
 <!-- Pagination toolbar end -->
+
+<!-- Command toolbar start -->
+<div id="viewer-toolbar-command" class="viewer-toolbar-command mdl-cell--hide-tablet mdl-cell--hide-phone">
+    <div id="viewer-scale-page-button" class="button-page left" (click)="scalePage('page-fit')">
+        <i class="icon material-icons">zoom_out_map</i>
+    </div>
+</div>
+<!-- Command toolbar end -->

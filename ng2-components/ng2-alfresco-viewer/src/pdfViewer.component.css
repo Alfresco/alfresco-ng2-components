@@ -54,6 +54,18 @@
     color: white;
 }
 
+.viewer-toolbar-command{
+    height: 30px;
+    padding-top: 4px;
+    top: 80px;
+    left:35px;
+    width:auto;
+    position:fixed;
+    border-radius: 10px;
+    background: #3E3E3E;
+    color: white;
+}
+
 .viewer-pagenumber-input {
     border: none;
     border-bottom: 1px solid rgba(0,0,0,.12);
