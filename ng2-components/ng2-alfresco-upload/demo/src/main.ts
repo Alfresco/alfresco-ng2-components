@@ -74,7 +74,7 @@ export class MyDemoApp implements OnInit {
 
     authenticated: boolean;
 
-    host: string = 'http://192.168.99.100:8080';
+    public host: string = 'http://devproducts-platform.alfresco.me';
 
     token: string;
 
