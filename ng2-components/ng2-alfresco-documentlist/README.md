@@ -519,6 +519,64 @@ export class MyView {
 
 ## Advanced usage and customization
 
+### Hiding columns on small screens
+
+You can hide columns on small screens by means of custom CSS rules:
+
+```css
+@media all and (max-width: 768px) {
+
+    alfresco-document-list >>> th.desktop-only .cell-value {
+        display: none;
+    }
+
+    alfresco-document-list >>> td.desktop-only .cell-value {
+        display: none;
+    }
+}
+```
+
+Now you can declare columns and assign `desktop-only` class where needed:
+
+```html
+<alfresco-document-list ...>
+    <content-columns>
+        
+        <!-- always visible columns -->
+        
+        <content-column source="$thumbnail" type="image"></content-column>
+        <content-column 
+                title="Name" 
+                source="name" 
+                class="full-width name-column">
+        </content-column>
+        
+        <!-- desktop-only columns -->
+        
+        <content-column
+                title="Created by"
+                source="createdByUser.displayName"
+                class="desktop-only">
+        </content-column>
+        <content-column
+                title="Created on"
+                source="createdAt"
+                type="date"
+                format="medium"
+                class="desktop-only">
+        </content-column>
+    </content-columns>
+</alfresco-document-list>
+```
+
+**Desktop View**
+
+![Responsive Desktop](docs/assets/responsive-desktop.png)
+
+**Mobile View**
+
+![Responsive Mobile](docs/assets/responsive-mobile.png)
+
 ### Custom 'empty folder' template
 
 By default Document List provides the following content for the empty folder:
@@ -628,19 +686,19 @@ npm install
 npm run build
 ```
 
-##Build the files and keep watching for changes
+### Build the files and keep watching for changes
 
-    ```sh
-    $ npm run build:w
-    ```
+```sh
+$ npm run build:w
+```
     
-## Running unit tests
+### Running unit tests
 
 ```sh
 npm test
 ```
 
-## Running unit tests in browser
+### Running unit tests in browser
 
 ```sh
 npm test-browser
@@ -649,7 +707,7 @@ npm test-browser
 This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
 
-## Code coverage
+### Code coverage
 
 ```sh
 npm run coverage

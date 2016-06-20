@@ -31,13 +31,15 @@
             -->
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                    source="createdByUser.displayName">
+                    source="createdByUser.displayName"
+                    class="desktop-only">
             </content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
                     source="createdAt"
                     type="date"
-                    format="medium">
+                    format="medium"
+                    class="desktop-only">
             </content-column>
         </content-columns>
 

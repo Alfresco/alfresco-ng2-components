@@ -15,8 +15,8 @@
             [class.mdl-data-table__header--sorted-ascending]="sorting.key === col.source && sorting.direction === 'asc'"
             [class.mdl-data-table__header--sorted-descending]="sorting.key === col.source && sorting.direction === 'desc'"
             (click)="onColumnHeaderClick(col)">
-            <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
-            <span *ngIf="col.title">{{col.title}}</span>
+            <span *ngIf="col.srTitle" class="cell-value sr-only">{{col.srTitle}}</span>
+            <span *ngIf="col.title" class="cell-value">{{col.title}}</span>
         </th>
         <!-- Actions -->
         <th>

@@ -36,6 +36,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
+    styleUrls: ['./files.component.css'],
     directives: [
         DOCUMENT_LIST_DIRECTIVES,
         MDL,

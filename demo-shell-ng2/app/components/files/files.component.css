@@ -1,0 +1,17 @@
+/* small desktop */
+@media all and (max-width: 1200px) {}
+
+/* tablet */
+@media all and (max-width: 1024px) {}
+
+    /* mobile phone */
+@media all and (max-width: 768px) {
+
+    alfresco-document-list >>> th.desktop-only .cell-value {
+        display: none;
+    }
+
+    alfresco-document-list >>> td.desktop-only .cell-value {
+        display: none;
+    }
+}
