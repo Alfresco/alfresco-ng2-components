@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-login",
   "description": "Alfresco Angular2 Login Component",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rm -rf dist node_modules typings",

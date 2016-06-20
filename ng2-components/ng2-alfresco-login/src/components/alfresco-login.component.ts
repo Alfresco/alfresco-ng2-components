@@ -127,6 +127,7 @@ export class AlfrescoLoginComponent {
      * @param data
      */
     onValueChanged(data: any) {
+        this.error = false;
         for (let field in this.formError) {
             if (field) {
                 this.formError[field] = '';
