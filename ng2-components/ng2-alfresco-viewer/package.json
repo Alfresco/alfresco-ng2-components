@@ -4,12 +4,12 @@
   "version": "0.1.21",
   "author": "Eugenio Romano",
   "scripts": {
-    "clean": "rm -rf dist node_modules typings",
+    "clean": "rimraf dist node_modules typings",
     "typings": "typings install",
     "start": "npm run build && npm run server",
     "server": "http-server -c-1 -o -p 8875 .",
-    "build": "npm run tslint && typings install && rm -rf dist && tsc && npm run copytemplates && license-check",
-    "build:w": "npm run tslint && typings install && rm -rf dist && npm run watch-task",
+    "build": "npm run tslint && typings install && rimraf dist && tsc && npm run copytemplates && license-check",
+    "build:w": "npm run tslint && typings install && rimraf dist && npm run watch-task",
     "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copytemplates:w\"  \"license-check\"",
     "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json src/**/*.ts",
@@ -69,7 +69,8 @@
     "rxjs": "5.0.0-beta.6",
     "zone.js": "^0.6.12",
     "angular2-in-memory-web-api": "0.0.12",
-    "pdfjs-dist": "^1.5.258"
+    "pdfjs-dist": "^1.5.258",
+    "rimraf": "^2.5.2"
   },
   "devDependencies": {
     "concurrently": "^2.1.0",
