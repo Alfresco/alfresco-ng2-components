@@ -29,8 +29,7 @@ import {
 
 import {
     ALFRESCO_SEARCH_PROVIDERS,
-    ALFRESCO_SEARCH_DIRECTIVES,
-    AlfrescoService
+    ALFRESCO_SEARCH_DIRECTIVES
 } from 'ng2-alfresco-search';
 
 @Component({
@@ -65,11 +64,9 @@ class SearchDemo implements OnInit {
 
     token: string;
 
-    constructor(
-        private authService: AlfrescoAuthenticationService,
-        private alfrescoSettingsService: AlfrescoSettingsService,
-        translation: AlfrescoTranslationService,
-        searchService: AlfrescoService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private alfrescoSettingsService: AlfrescoSettingsService,
+                translation: AlfrescoTranslationService) {
 
         alfrescoSettingsService.host = this.host;
         if (localStorage.getItem('token')) {
@@ -93,9 +90,15 @@ class SearchDemo implements OnInit {
     }
 
     login() {
-       this.authService.login('admin', 'admin').subscribe(token => {
-           this.authenticated = true;
-       });
+        this.authService.login('admin', 'admin').subscribe(
+            token => {
+                console.log(token);
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
     }
 
     searchTermChange(event) {
@@ -106,5 +109,6 @@ class SearchDemo implements OnInit {
 
 bootstrap(SearchDemo, [
     HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
+    ALFRESCO_CORE_PROVIDERS,
+    ALFRESCO_SEARCH_PROVIDERS
 ]);

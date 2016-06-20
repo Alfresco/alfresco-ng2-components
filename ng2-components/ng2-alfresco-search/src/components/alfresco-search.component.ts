@@ -17,8 +17,8 @@
 
 import { Component, Input, Optional, OnChanges, OnInit } from '@angular/core';
 import { RouteParams } from '@angular/router-deprecated';
-import { AlfrescoService } from './../services/alfresco.service';
-
+import { AlfrescoSearchService } from './../services/alfresco-search.service';
+import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
@@ -28,10 +28,12 @@ declare let __moduleName: string;
     selector: 'alfresco-search',
     styles: [],
     templateUrl: './alfresco-search.component.html',
-    providers: [AlfrescoService],
+    providers: [AlfrescoSearchService],
     pipes: [AlfrescoPipeTranslate]
 })
 export class AlfrescoSearchComponent implements OnChanges, OnInit {
+
+    baseComponentPath = __moduleName.replace('/components/alfresco-search.component.js', '');
 
     @Input()
     searchTerm: string = '';
@@ -42,8 +44,9 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     route: any[] = [];
 
-    constructor(private _alfrescoService: AlfrescoService,
+    constructor(private _alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
+                private _alfrescoThumbnailService: AlfrescoThumbnailService,
                 @Optional() params: RouteParams) {
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
 
@@ -53,12 +56,12 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
         }
     }
 
-    ngOnInit() {
-        this.displaySearchResults(this.searchTerm);
+    ngOnInit(): void {
+        this._displaySearchResults(this.searchTerm);
     }
 
-    ngOnChanges(changes) {
-        this.displaySearchResults(this.searchTerm);
+    ngOnChanges(changes): void {
+        this._displaySearchResults(this.searchTerm);
     }
 
     /**
@@ -66,20 +69,20 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(node: any): string {
-        if (this._alfrescoService) {
-            return this._alfrescoService.getDocumentThumbnailUrl(node);
+    _getMimeTypeIcon(node: any): string {
+        if (node.entry.content && node.entry.content.mimeType) {
+            let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
+            return `${this.baseComponentPath}/img/${icon}`;
         }
-        return null;
     }
 
     /**
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    displaySearchResults(searchTerm) {
+    private _displaySearchResults(searchTerm): void {
         if (searchTerm !== null) {
-            this._alfrescoService
+            this._alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
                     results => {
