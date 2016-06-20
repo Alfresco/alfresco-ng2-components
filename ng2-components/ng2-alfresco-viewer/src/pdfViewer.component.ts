@@ -31,6 +31,9 @@ export class PdfViewerComponent {
     @Input()
     urlFile: string;
 
+    @Input()
+    nameFile: string;
+
     currentPdfDocument: any;
     page: number;
     displayPage: number;

@@ -19,7 +19,7 @@
 }
 
 .viewer-name-file {
-    width: 20%;
+    width: 50%;
     height: 21px;
     overflow: hidden !important;
     text-overflow: ellipsis;

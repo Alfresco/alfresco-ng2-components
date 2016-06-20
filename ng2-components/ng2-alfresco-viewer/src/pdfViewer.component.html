@@ -1,11 +1,11 @@
 <!-- Start Pdf Canvas -->
 <div id="viewer-pdf-container" class="center-element viewer-pdf-container" (keypress)=eventHandler()>
     <div id="viewer-viewerPdf" class="center-element" >
-        <div id="viewer-loader" class="center-element" >
-            <div>
-                <div id="loader-spin"  class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-            </div>
-            <div id="viewer-loader-text" class="viewer-loader-text">Loading...</div>
+        <div id="loader-container" class="loader-container">
+            <div class="loader-item">
+                <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                <div id="loader-text" class="loader-text">Loading <span>{{nameFile}}</span> ...</div>
+            </div >
         </div>
     </div>
 </div>

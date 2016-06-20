@@ -2,9 +2,29 @@
     background: #3E3E3E;
 }
 
-.viewer-loader-text {
+.loader-container {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex-direction: row;
+    -moz-box-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    height:100%;
+}
+
+.loader-item {
+    margin: auto;
+    max-height:100px;
+    max-width:300px;
+}
+
+.loader-text{
+    white-space: nowrap;
     text-align: center;
-    color: #000;
+    position: relative;
+    color : #fff;
 }
 
 :host .page {

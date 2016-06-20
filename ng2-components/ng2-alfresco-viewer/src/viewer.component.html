@@ -20,20 +20,18 @@
                     <!-- Start Navigation -->
                     <nav class="mdl-navigation">
                         <div id="viewer-toolbar-view-options">
-                            <div class="button-container">
-                                <button
-                                    class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
-                                    <i id="viewer-close-button" class="icon material-icons">close</i>
-                                </button>
-                            </div>
+                            <button
+                                class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
+                                <i id="viewer-close-button" class="icon material-icons">close</i>
+                            </button>
                         </div>
                     </nav>
                     <!-- End Navigation -->
                 </div>
             </header>
-            <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">Thumbnail</span>
-            </div>
+            <!--<div class="mdl-layout__drawer">-->
+                <!--<span class="mdl-layout-title">Thumbnail</span>-->
+            <!--</div>-->
             <main id="page-content" class="mdl-layout__content">
 
                 <div class="mdl-grid">
@@ -50,7 +48,7 @@
                         <div id="viewer-content-container" class="viewer-content-container mdl-cell" >
                         <!-- Start View Switch-->
                             <div *ngIf="isPdf()">
-                                <pdf-viewer [urlFile]="urlFile" ></pdf-viewer>
+                                <pdf-viewer [urlFile]="urlFile" [nameFile]="displayName" ></pdf-viewer>
                             </div>
                             <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="center-element viewer-image"/></div>
                             <div *ngIf="!supportedExtension()">
