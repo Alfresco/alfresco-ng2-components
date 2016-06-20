@@ -22,9 +22,9 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoContentService
 } from 'ng2-alfresco-core';
-import {AlfrescoService} from './../../src/services/alfresco.service';
+import {AlfrescoSearchService} from './../../src/services/alfresco-search.service';
 
-export class AlfrescoServiceMock extends AlfrescoService {
+export class AlfrescoServiceMock extends AlfrescoSearchService {
 
     _folderToReturn: any = {};
 

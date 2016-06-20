@@ -15,20 +15,17 @@
  * limitations under the License.
  */
 
-import { it, describe } from '@angular/core/testing';
-import { AlfrescoSearchComponent } from './alfresco-search.component';
+import {
+    describe,
+    beforeEach
+} from '@angular/core/testing';
+import {AlfrescoSearchService} from './alfresco-search.service';
 
-describe('AlfrescoSearchComponent', () => {
+describe('AlfrescoSearchService', () => {
 
-    it('should setup i18n folder', () => {
+    let service: AlfrescoSearchService;
 
-        let translation = jasmine.createSpyObj('AlfrescoTranslationService', [
-            'addTranslationFolder'
-        ]);
-
-        let search = new AlfrescoSearchComponent(null, translation, null, null);
-        expect(search).toBeDefined();
-        expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search');
+    beforeEach(() => {
+        service = new AlfrescoSearchService(null, null, null);
     });
-
 });

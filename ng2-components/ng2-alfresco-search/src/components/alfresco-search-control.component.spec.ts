@@ -16,9 +16,9 @@
  */
 
 import { it, describe } from '@angular/core/testing';
-import { AlfrescoSearchComponent } from './alfresco-search.component';
+import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
 
-describe('AlfrescoSearchComponent', () => {
+describe('AlfrescoSearchControlComponent', () => {
 
     it('should setup i18n folder', () => {
 
@@ -26,9 +26,8 @@ describe('AlfrescoSearchComponent', () => {
             'addTranslationFolder'
         ]);
 
-        let search = new AlfrescoSearchComponent(null, translation, null, null);
-        expect(search).toBeDefined();
-        expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search');
-    });
+        let alfrescoSearchControlComponent = new AlfrescoSearchControlComponent(translation);
+        expect(alfrescoSearchControlComponent).toBeDefined();
 
+    });
 });

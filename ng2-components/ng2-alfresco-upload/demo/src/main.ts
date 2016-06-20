@@ -103,10 +103,16 @@ export class MyDemoApp implements OnInit {
         this.login();
     }
 
-    public login(): void {
-        this.authService.login('admin', 'admin').subscribe(token => {
-            this.authenticated = true;
-        });
+    login() {
+        this.authService.login('admin', 'admin').subscribe(
+            token => {
+                console.log(token);
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
     }
 }
 

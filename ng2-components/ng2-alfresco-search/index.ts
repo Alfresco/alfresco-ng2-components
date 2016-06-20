@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { AlfrescoService } from './src/services/alfresco.service';
+import { AlfrescoSearchService } from './src/services/alfresco-search.service';
+import { AlfrescoThumbnailService } from './src/services/alfresco-thumbnail.service';
 import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
 import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
 
 // services
-export * from './src/services/alfresco.service';
-
+export * from './src/services/alfresco-search.service';
+export * from './src/services/alfresco-thumbnail.service';
 export * from './src/components/alfresco-search.component';
 export * from './src/components/alfresco-search-control.component';
 
@@ -31,7 +32,8 @@ export default {
         AlfrescoSearchControlComponent
     ],
     providers: [
-        AlfrescoService
+        AlfrescoSearchService,
+        AlfrescoThumbnailService
     ]
 };
 
@@ -41,5 +43,6 @@ export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
-    AlfrescoService
+    AlfrescoSearchService,
+    AlfrescoThumbnailService
 ];

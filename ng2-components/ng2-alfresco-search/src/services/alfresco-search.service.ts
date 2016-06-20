@@ -30,13 +30,11 @@ declare let AlfrescoApi: any;
  * Internal service used by Document List component.
  */
 @Injectable()
-export class AlfrescoService {
+export class AlfrescoSearchService {
 
-    constructor(
-        private settings: AlfrescoSettingsService,
-        private authService: AlfrescoAuthenticationService,
-        private contentService: AlfrescoContentService
-    ) {
+    constructor(private settings: AlfrescoSettingsService,
+                private authService: AlfrescoAuthenticationService,
+                private contentService: AlfrescoContentService) {
     }
 
     private getAlfrescoClient() {
@@ -60,23 +58,14 @@ export class AlfrescoService {
      * @param term Search term
      * @returns {Observable<NodePaging>} Search results
      */
-    getLiveSearchResults(term: string) {
+    public getLiveSearchResults(term: string): Observable<any> {
         return Observable.fromPromise(this.getSearchNodesPromise(term))
             .map(res => <any> res)
             .do(data => console.log('Search data', data)) // eyeball results in the console
             .catch(this.handleError);
     }
 
-    /**
-     * Get thumbnail URL for the given document node.
-     * @param document Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getDocumentThumbnailUrl(document: any) {
-        return this.contentService.getDocumentThumbnailUrl(document);
-    }
-
-    private handleError(error: any) {
+    private handleError(error: any): Observable<any> {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);

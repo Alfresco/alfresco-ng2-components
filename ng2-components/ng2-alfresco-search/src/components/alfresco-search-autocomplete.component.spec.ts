@@ -16,19 +16,18 @@
  */
 
 import { it, describe } from '@angular/core/testing';
-import { AlfrescoSearchComponent } from './alfresco-search.component';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 
-describe('AlfrescoSearchComponent', () => {
+describe('AlfrescoSearchAutocompleteComponent', () => {
 
     it('should setup i18n folder', () => {
 
         let translation = jasmine.createSpyObj('AlfrescoTranslationService', [
             'addTranslationFolder'
         ]);
-
-        let search = new AlfrescoSearchComponent(null, translation, null, null);
+        let search = new AlfrescoSearchAutocompleteComponent(null, translation, null);
         expect(search).toBeDefined();
-        expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search');
+
     });
 
 });

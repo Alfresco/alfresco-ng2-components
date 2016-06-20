@@ -17,9 +17,7 @@
 
 import { Control, Validators } from '@angular/common';
 import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
-
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
-
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 
 declare let __moduleName: string;
@@ -31,6 +29,7 @@ declare var componentHandler: any;
     styles: [
     ],
     templateUrl: './alfresco-search-control.component.html',
+    styleUrls: ['./alfresco-search-control.component.css'],
     directives: [AlfrescoSearchAutocompleteComponent],
     pipes: [AlfrescoPipeTranslate]
 })
@@ -43,7 +42,7 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
     inputType = 'text';
 
     @Input()
-    autocomplete: boolean = true;
+    autocomplete: boolean = false;
 
     @Input()
     expandable: boolean = true;
@@ -81,21 +80,21 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
         translate.addTranslationFolder('node_modules/ng2-alfresco-search');
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
     }
 
-    getTextFieldClassName(): string {
+    _getTextFieldClassName(): string {
         return 'mdl-textfield mdl-js-textfield' + (this.expandable ? ' mdl-textfield--expandable' : '');
     }
 
-    getTextFieldHolderClassName(): string {
-        return this.expandable ? ' mdl-textfield__expandable-holder' : '';
+    _getTextFieldHolderClassName(): string {
+        return this.expandable ? 'search-field mdl-textfield__expandable-holder' : 'search-field';
     }
 
-    getAutoComplete(): string {
+    _getAutoComplete(): string {
         return this.autocomplete ? 'on' : 'off';
     }
 
@@ -104,7 +103,7 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
      *
      * @param event Submit event that was fired
      */
-    onSearch(event) {
+    _onSearch(event): void {
         if (event) {
             event.preventDefault();
         }
@@ -116,20 +115,20 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
         }
     }
 
-    onFileClicked(event) {
+    _onFileClicked(event): void {
         this.preview.emit({
             value: event.value
         });
     }
 
-    onFocus() {
+    _onFocus(): void {
         this.searchActive = true;
     }
 
-    onBlur() {
+    _onBlur(): void {
         window.setTimeout(() => {
             this.searchActive = false;
-        }, 100);
+        }, 200);
     }
 
 }
