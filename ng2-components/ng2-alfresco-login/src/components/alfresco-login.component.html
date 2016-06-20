@@ -5,8 +5,9 @@
                 <img class="center" [src]="baseComponentPath + '/../assets/images/logo_for_light_bg_28.png'">
             </div>
             <div class="mdl-card__supporting-text">
-                <div class="error">
-                    <div *ngIf="error" id="login-error" data-automation-id="login-error" class="mdl-card__supporting-text" style="color: red;">{{'LOGIN.MESSAGES.LOGIN-ERROR' | translate }}</div>
+                <div>
+                    <div *ngIf="error" id="login-error" data-automation-id="login-error"
+                         class="error mdl-card__supporting-text">{{'LOGIN.MESSAGES.LOGIN-ERROR' | translate }}</div>
                     <div *ngIf="success" id="login-success" data-automation-id="login-success" class="mdl-card__supporting-text" style="color: blue;">{{'LOGIN.MESSAGES.LOGIN-SUCCESS' | translate }}</div>
                 </div>
                 <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}"
@@ -39,11 +40,11 @@
                     </span>
                 </div>
                 <br>
-                <button style="margin-top: 10px;" type="submit"
+                <button type="submit"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                         data-automation-id="login-button" [disabled]="!form.valid">{{'LOGIN.BUTTON.LOGIN' | translate }}</button>
                 <br>
-                <div style="margin-top: 10px;" class="center" style="margin-left: 50px;">
+                <div class="center">
                     <label class=" mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="remember">
                         <input type="checkbox" id="remember" class="center mdl-checkbox__input">
                         <span class="mdl-checkbox__label">{{'LOGIN.LABEL.REMEMBER' | translate }}</span>
@@ -52,8 +53,8 @@
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-card__link">
                 <div class="login-action">
-                    <div class="login-action-left" style="margin-left: 40px;"> <a href="">{{'LOGIN.ACTION.HELP' | translate }}</a> </div>
-                    <div class="login-action-right" style="margin-right: 40px;"> <a href="">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
+                    <div class="login-action-left"> <a href="">{{'LOGIN.ACTION.HELP' | translate }}</a> </div>
+                    <div class="login-action-right"> <a href="">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
                     </div>
                 </div>
             </div>
