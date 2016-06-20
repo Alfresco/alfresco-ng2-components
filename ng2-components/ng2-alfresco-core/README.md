@@ -1,4 +1,5 @@
-### Alfresco Angular2 Components core
+# Alfresco Angular2 Components core
+
 <p>
   <a href='https://raw.githubusercontent.com/Alfresco/dev-platform-webcomponents/master/ng2-components/ng2-alfresco-upload/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
@@ -13,35 +14,81 @@ This should be added as a dependency for any project using the components.
 
 ## Install
 
-
 ```sh
 npm set registry http://devproducts.alfresco.me:4873
 npm install --save ng2-alfresco-core
 ```
 
+## Main components and services
+
+### Components
+
+- Context Menu directive
+
+#### Context Menu directive
+
+_See **Demo Shell** or **DocumentList** implementation for more details and use cases._
+
+```html
+<my-component [context-menu]="menuItems"></my-component>
+<context-menu-holder></context-menu-holder>
+```
+
+```ts
+@Component({
+    selector: 'my-component
+})
+export class MyComponent implements OnInit {
+
+    menuItems: any[];
+    
+    constructor() {
+        this.menuItems = [
+            { title: 'Item 1', subject: new Subject() },
+            { title: 'Item 2', subject: new Subject() },
+            { title: 'Item 3', subject: new Subject() }
+        ];
+    }
+    
+    ngOnInit() {
+        this.menuItems.forEach(l => l.subject.subscribe(item => this.commandCallback(item)));
+    }
+    
+    commandCallback(item) {
+        alert(`Executing ${item.title} command.`);
+    }
+
+}
+```
+
+### Services
+
+- Authentication Service
+- Translation Service
+- Context Menu Service
 
 ## Build from sources
-Alternatively you can build component from sources with the following commands:
 
+Alternatively you can build component from sources with the following commands:
 
 ```sh
 npm install
 npm run build
 ```
 
-##Build the files and keep watching for changes
+### Build the files and keep watching for changes
 
-    ```sh
-    $ npm run build:w
-    ```
+```sh
+$ npm run build:w
+```
 
-## Running unit tests
+### Running unit tests
 
 ```sh
 npm test
 ```
 
-## Running unit tests in browser
+### Running unit tests in browser
 
 ```sh
 npm test-browser
@@ -50,7 +97,7 @@ npm test-browser
 This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
 
-## Code coverage
+### Code coverage
 
 ```sh
 npm run coverage

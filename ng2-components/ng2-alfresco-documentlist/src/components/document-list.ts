@@ -119,29 +119,8 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     contextActionHandler: Subject<any> = new Subject();
 
-    testActions: any[];
-
     constructor(
         private _alfrescoService: AlfrescoService) {
-
-        this.testActions = [
-            {
-                title: 'Item 1',
-                subject: new Subject()
-            },
-            {
-                title: 'Item 2',
-                subject: new Subject()
-            },
-            {
-                title: 'Item 3',
-                subject: new Subject()
-            },
-            {
-                title: 'Item 4',
-                subject: new Subject()
-            }
-        ];
     }
 
     getContextActions(node: MinimalNodeEntity) {
