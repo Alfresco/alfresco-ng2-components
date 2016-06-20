@@ -100,7 +100,7 @@ export class AlfrescoService {
     getFolder(folder: string) {
         return Observable.fromPromise(this.getNodesPromise(folder))
             .map(res => <NodePaging> res)
-            .do(data => console.log('Node data', data)) // eyeball results in the console
+            // .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
     }
 
