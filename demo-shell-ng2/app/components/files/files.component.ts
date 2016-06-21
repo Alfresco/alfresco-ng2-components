@@ -48,10 +48,7 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 })
 export class FilesComponent {
-    breadcrumb: boolean = false;
-    navigation: boolean = true;
-    absolutePath: string = '/Sites/swsdp/documentLibrary';
-    relativePath: string = '';
+    currentPath: string = '/Sites/swsdp/documentLibrary';
 
     urlFile: string;
     fileName: string;
@@ -78,10 +75,6 @@ export class FilesComponent {
         alert('Custom folder action for ' + event.value.entry.name);
     }
 
-    refreshDocumentList() {
-        this.absolutePath += '/';
-    }
-
     showFile(event) {
         if (event.value.entry.isFile) {
             this.fileName = event.value.entry.name;
@@ -95,8 +88,7 @@ export class FilesComponent {
 
     onFolderChanged(event?: any) {
         if (event) {
-            this.absolutePath = event.absolutePath;
-            this.relativePath = event.relativePath;
+            this.currentPath = event.path;
         }
     }
 }
