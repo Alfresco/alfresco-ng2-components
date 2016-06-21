@@ -18,6 +18,7 @@
 import {describe, expect, it, inject } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { ViewerComponent } from './viewer.component';
+import { EventMock } from './assets/event.mock';
 
  describe('ViewerComponent', () => {
 
@@ -93,6 +94,23 @@ import { ViewerComponent } from './viewer.component';
 
                      fixture.detectChanges();
                      element.querySelector('#viewer-close-button').click();
+                     fixture.detectChanges();
+                     expect(element.querySelector('#viewer-main-container')).toBeNull();
+                 });
+         }));
+
+         it('Esc button should hide the viewer', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+             return tcb
+                 .createAsync(ViewerComponent)
+                 .then((fixture) => {
+                     let element = fixture.nativeElement;
+                     let component = fixture.componentInstance;
+                     component.urlFile = 'fake-url-file';
+
+
+
+                     fixture.detectChanges();
+                     EventMock.keyDown(27);
                      fixture.detectChanges();
                      expect(element.querySelector('#viewer-main-container')).toBeNull();
                  });
