@@ -23,4 +23,25 @@ export class PDFViewermock {
     currentPage = {
         renderingState: 3 as number
     };
+
+    _pages: any =
+        [{
+            width: 793,
+            scale: 1,
+            update: this.update
+        }, {
+            width: 793,
+            scale: 1,
+            update: this.update
+        }, {
+            width: 793,
+            scale: 1,
+            update: this.update
+        }];
+
+    _currentPageNumber: number = 0;
+
+    update() {
+        console.log('update page');
+    }
 }

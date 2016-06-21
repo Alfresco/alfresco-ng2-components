@@ -237,5 +237,56 @@ describe('PdfViewer', () => {
                     });
                 });
         }));
+
+        it('Input page should move to the inserted page', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
+                    component.urlFile = 'fake-url-file';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(1);
+                        component.inputPage('4');
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(4);
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
+                });
+        }));
     });
+
+    describe('Rezize interaction', () => {
+
+        it('resize event should trigger setScaleUpdatePages', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    spyOn(component, 'initPDFViewer');
+                    spyOn(component, 'setScaleUpdatePages');
+
+                    component.documentContainer = element.querySelector('#viewer-pdf-container');
+                    component.pdfViewer = new PDFViewermock();
+                    component.urlFile = 'fake-url-file';
+
+                    EventMock.resizeMobileView();
+
+                    expect(component.setScaleUpdatePages).toHaveBeenCalled();
+                });
+        }));
+
+    });
+
 });

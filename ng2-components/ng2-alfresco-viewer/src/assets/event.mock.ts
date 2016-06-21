@@ -25,6 +25,11 @@ export class EventMock {
         document.dispatchEvent(event);
     }
 
+    static resizeMobileView() {
+        window.innerWidth = 320;
+        window.innerHeight = 568;
+        window.dispatchEvent(new Event('resize'));
+    }
 }
 
 
