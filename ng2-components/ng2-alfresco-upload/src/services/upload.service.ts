@@ -33,7 +33,6 @@ declare let AlfrescoApi: any;
  */
 @Injectable()
 export class UploadService {
-    private _baseUrlPath: string = '/alfresco/api/-default-/public/alfresco/versions/1';
     private _url: string = '/alfresco/service/api/upload';
 
     private _method: string = 'POST';
@@ -66,7 +65,6 @@ export class UploadService {
      */
     public setOptions(options: any): void {
         this._url = options.url || this._url;
-        this._baseUrlPath = options.baseUrlPath || this._baseUrlPath;
         this._formFields = options.formFields != null ? options.formFields : this._formFields;
     }
 
@@ -84,14 +82,6 @@ export class UploadService {
      */
     public getUrl(): string {
         return this._url;
-    }
-
-    /**
-     * Get the base url
-     * @returns {string}
-     */
-    public getBaseUrl(): string {
-        return this._baseUrlPath;
     }
 
     /**
@@ -115,7 +105,7 @@ export class UploadService {
      * @returns {AlfrescoApi.ApiClient}
      */
     private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getAlfrescoTicket());
+        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.getAlfrescoTicket());
     }
 
     /**
@@ -224,7 +214,7 @@ export class UploadService {
         let xmlHttpRequest = this.createXMLHttpRequestInstance(uploadingFileModel, elementEmit);
         uploadingFileModel._xmlHttpRequest = xmlHttpRequest;
 
-        xmlHttpRequest.open(this._method, this.getHost() + this._url, true);
+        xmlHttpRequest.open(this._method, this.getHost() + this.getUrl(), true);
         let authToken = btoa(basicAuth.username + ':' + basicAuth.password);
         if (authToken) {
             xmlHttpRequest.setRequestHeader('Authorization', `${basicAuth.type} ${authToken}`);
