@@ -24,7 +24,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'pdf-viewer',
     templateUrl: './pdfViewer.component.html',
-    styleUrls: ['./pdfViewer.component.css']
+    styleUrls: ['./pdfViewer.component.css', './pdfViewerHost.component.css' ]
 })
 export class PdfViewerComponent {
 
@@ -84,6 +84,7 @@ export class PdfViewerComponent {
 
     initPDFViewer(pdfDocument: any) {
         PDFJS.verbosity = 5;
+        PDFJS.disableWorker = true;
 
         this.documentContainer = document.getElementById('viewer-pdf-container');
         let viewer: any = document.getElementById('viewer-viewerPdf');
@@ -106,10 +107,8 @@ export class PdfViewerComponent {
 
         let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber];
 
-        let pageWidthScale = (this.documentContainer.clientWidth) /
-            currentPage.width * currentPage.scale;
-        let pageHeightScale = (this.documentContainer.clientHeight ) /
-            currentPage.width * currentPage.scale;
+        let pageWidthScale = (this.documentContainer.clientWidth) / currentPage.width * currentPage.scale;
+        let pageHeightScale = (this.documentContainer.clientHeight ) /  currentPage.width * currentPage.scale;
 
         let scale;
 
@@ -154,7 +153,10 @@ export class PdfViewerComponent {
 
             this.pdfViewer._pages.forEach(function (currentPage) {
                 currentPage.update(newScale);
+                console.log(currentPage.viewport);
             });
+
+            this.pdfViewer.update();
         }
     }
 
@@ -183,6 +185,13 @@ export class PdfViewerComponent {
      * Method triggered when the page is resized
      */
     onResize() {
+        this.scalePage(this.currentScaleMode);
+    }
+
+    /**
+     * Method triggered when the page is resized
+     */
+    pageFit() {
         this.scalePage('page-fit');
     }
 

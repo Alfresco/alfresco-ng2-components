@@ -51,10 +51,9 @@ describe('PdfViewer', () => {
 
                     fixture.detectChanges();
 
-                    expect(element.querySelector('#viewer-loader')).not.toBeNull();
+                    expect(element.querySelector('#loader-container')).not.toBeNull();
                 });
         }));
-
 
         it('Next an Previous Buttons should be present', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb

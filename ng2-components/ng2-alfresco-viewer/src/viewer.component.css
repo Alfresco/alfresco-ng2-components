@@ -11,7 +11,11 @@
     flex-direction: row;
     flex-wrap: wrap;
     flex: 1;
-    margin: 20px;
+}
+
+.mdl-grid {
+    width: 100vw;
+    padding: 0px !important;
 }
 
 .viewer-name-file {
