@@ -6,7 +6,8 @@
     display: none !important;
 }
 
-.file-dialog {
+:host .file-dialog {
+    width: 800px;
     display: none;
     -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2);
     box-shadow: -2px -1px 8px 3px rgba(0, 0, 0, .2);
@@ -27,7 +28,7 @@
     position: fixed;
 }
 
-.file-dialog .header {
+:host .file-dialog .header {
     background-color: rgb(31,188,210);
     border: 1px transparent solid;
     border-bottom: 1px solid #c7c7c7;
@@ -45,13 +46,13 @@
     padding: 0px 10px 0px 10px;
 }
 
-.file-dialog .header .title {
+:host .file-dialog .header .title {
     float: left;
-    min-width: 200px;
+    min-width: 170px;
     color: white;
 }
 
-.file-dialog .header .buttons {
+:host .file-dialog .header .buttons {
     float: right;
     padding: 10px 10px 10px 10px;
     text-align: center;
@@ -60,7 +61,7 @@
     opacity: 0.5;
 }
 
-.file-dialog .header .close-button {
+:host .file-dialog .header .close-button {
     cursor: pointer;
     float: left;
     height: 35px;
@@ -71,12 +72,12 @@
     border: 1px solid transparent;
 }
 
-.file-dialog .header .close-button:hover {
+:host .file-dialog .header .close-button:hover {
     border: 1px solid white;
     opacity: 1.0;
 }
 
-.file-dialog .header .minimize-button {
+:host .file-dialog .header .minimize-button {
     cursor: pointer;
     float: left;
     height: 35px;
@@ -109,7 +110,7 @@
     opacity: 1.0;
 }
 
-.file-dialog .body-dialog {
+:host .file-dialog .body-dialog {
     float: left;
     height: 100%;
     margin-top: -4px;
@@ -118,4 +119,16 @@
     border-left: 1px solid #C0C0C0;
     max-height: 200px;
     overflow-y: auto;
+    width: 99.6%;
+}
+
+:host .mdl-data-table th {
+    text-align: left;
+}
+
+
+@media only screen and (min-width: 360px) and (max-width: 640px) {
+    .file-dialog {
+        width: 315px;
+    }
 }
