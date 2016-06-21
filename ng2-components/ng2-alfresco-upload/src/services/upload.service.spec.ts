@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
-import { it, describe, beforeEach, expect } from '@angular/core/testing';
+import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { UploadService } from './upload.service';
+import { provide } from '@angular/core';
 import { FileModel } from './../models/file.model';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
 
 
@@ -29,6 +32,10 @@ let doneFn = jasmine.createSpy('success');
 let errorFn = jasmine.createSpy('error');
 
 class MockUploadService extends UploadService {
+
+    constructor(settings: AlfrescoSettingsService) {
+        super(settings);
+    }
 
     createXMLHttpRequestInstance() {
         let xhr = new XMLHttpRequest();
@@ -45,9 +52,7 @@ class MockUploadService extends UploadService {
 }
 
 describe('AlfrescoUploadService', () => {
-    let service: MockUploadService,
-        serviceUpload: UploadService,
-        options: any;
+    let service, options: any;
 
     options = {
         host: 'fakehost',
@@ -59,12 +64,17 @@ describe('AlfrescoUploadService', () => {
         }
     };
 
-    beforeEach(() => {
+    window['AlfrescoApi'] = AlfrescoApiMock;
+
+    beforeEachProviders(() => [
+        provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsServiceMock}),
+        provide(UploadService, {useClass: MockUploadService})
+    ]);
+
+    beforeEach( inject([UploadService], (uploadService: UploadService) => {
         jasmine.Ajax.install();
-        window['AlfrescoApi'] = AlfrescoApiMock;
-        service = new MockUploadService(options);
-        serviceUpload = new UploadService(options);
-    });
+        service = uploadService;
+    }));
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
@@ -74,15 +84,13 @@ describe('AlfrescoUploadService', () => {
         let empty = {};
         service.setOptions(empty);
         expect(service.getUrl()).toEqual('/alfresco/service/api/upload');
-        expect(service.getBaseUrl()).toEqual('/alfresco/api/-default-/public/alfresco/versions/1');
         let formFields: Object = {};
         expect(service.getFormFileds()).toEqual(formFields);
     });
 
-    it('should set the basic option an empty queue if no elements are added', () => {
+    it('should show the option passed as input', () => {
         service.setOptions(options);
         expect(service.getUrl()).toEqual('/some/cool/url');
-        expect(service.getBaseUrl()).toEqual('fakebasepath');
         expect(service.getFormFileds()).toEqual({
             siteid: 'fakeSite',
             containerid: 'fakeFolder'
@@ -207,15 +215,4 @@ describe('AlfrescoUploadService', () => {
         );
     });
 
-    it('should create an XHR object ', ()  => {
-        service.setOptions(options);
-        let filesFake = {name: 'fake-name', size: 10};
-        let uploadingFileModel = new FileModel(filesFake);
-        let xhrRequest = serviceUpload.createXMLHttpRequestInstance(uploadingFileModel, null);
-        expect(xhrRequest.upload).toBeDefined();
-        expect(xhrRequest.upload.onabort).toBeDefined();
-        expect(xhrRequest.upload.onprogress).toBeDefined();
-        expect(xhrRequest.upload.onerror).toBeDefined();
-        expect(xhrRequest.onreadystatechange).toBeDefined();
-    });
 });
