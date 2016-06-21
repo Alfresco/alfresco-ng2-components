@@ -48,11 +48,19 @@
     width: 300px;
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+    .truncate {
+        width: 60px;
+    }
+    .mdl-progress {
+        width: 60px;
+    }
+}
+
 @media only screen and (min-width: 360px) and (max-width: 640px) {
     .truncate {
         max-width: 80px;
     }
-
     .mdl-progress {
         max-width: 80px;
     }
