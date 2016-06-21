@@ -1,4 +1,4 @@
-<div *ngIf="filesUploadingList" class="file-dialog" [ngClass]="{show: isDialogActive}">
+<div class="file-dialog" [ngClass]="{show: isDialogActive}">
     <div class="header">
         <div class="title">
             <span id="total-upload-completed">{{totalCompleted}}</span> {{'FILE_UPLOAD.MESSAGES.COMPLETED' | translate}}
@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <div class="body-dialog" [ngClass]="{hide: _isDialogMinimized}">
+    <div class="body-dialog" *ngIf="filesUploadingList"  [ngClass]="{hide: _isDialogMinimized}">
         <alfresco-file-uploading-list [filesUploadingList]="filesUploadingList"></alfresco-file-uploading-list>
     </div>
 </div>

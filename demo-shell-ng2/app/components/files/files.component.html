@@ -125,6 +125,9 @@
         <li>
             <button (click)="documentList.changePath('/')">Go to root</button>
         </li>
+        <li>
+            <button (click)="fileDialog.toggleShowDialog()">Show/Hide File Dialog</button>
+        </li>
     </ul>
 </div>
 
@@ -162,4 +165,4 @@
                  [overlayMode]="true">
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
 </alfresco-viewer>
-<file-uploading-dialog></file-uploading-dialog>
+<file-uploading-dialog #fileDialog></file-uploading-dialog>
