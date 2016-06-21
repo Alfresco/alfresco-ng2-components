@@ -24,12 +24,15 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'pdf-viewer',
     templateUrl: './pdfViewer.component.html',
-    styleUrls: ['./pdfViewer.component.css']
+    styleUrls: ['./pdfViewer.component.css', './pdfViewerHost.component.css']
 })
 export class PdfViewerComponent {
 
     @Input()
     urlFile: string;
+
+    @Input()
+    nameFile: string;
 
     currentPdfDocument: any;
     page: number;
@@ -38,9 +41,10 @@ export class PdfViewerComponent {
 
     pdfViewer: any;
 
-    renderingStates = {
-        FINISHED: 3 as number
-    };
+    currentScaleMode: string = 'auto';
+    currentScale: number;
+
+    MAX_AUTO_SCALE: number = 1.25;
 
     ngOnChanges(changes) {
         if (!this.urlFile) {
@@ -55,6 +59,11 @@ export class PdfViewerComponent {
                     this.page = 1;
                     this.displayPage = 1;
                     this.initPDFViewer(this.currentPdfDocument);
+
+                    this.currentPdfDocument.getPage(1).then(() => {
+                        this.scalePage('auto');
+                    });
+
                 }, (error) => {
                     reject(error);
                 });
@@ -73,8 +82,9 @@ export class PdfViewerComponent {
 
     initPDFViewer(pdfDocument: any) {
         PDFJS.verbosity = 5;
+        PDFJS.disableWorker = true;
 
-        let documentContainer: any = document.getElementById('viewer-pdf-container');
+        let documentContainer = document.getElementById('viewer-pdf-container');
         let viewer: any = document.getElementById('viewer-viewerPdf');
 
         this.pdfViewer = new PDFJS.PDFViewer({
@@ -83,6 +93,107 @@ export class PdfViewerComponent {
         });
 
         this.pdfViewer.setDocument(pdfDocument);
+    }
+
+
+    /**
+     * Method to scale the page current support implementation
+     * @param {string} scaleMode - new scale mode
+     */
+    scalePage(scaleMode) {
+        this.currentScaleMode = scaleMode;
+
+        if (this.pdfViewer) {
+            let documentContainer = document.getElementById('viewer-pdf-container');
+            let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber];
+
+            let padding = 20;
+            let pageWidthScale = (documentContainer.clientWidth - padding) / currentPage.width * currentPage.scale;
+            let pageHeightScale = (documentContainer.clientHeight - padding) / currentPage.width * currentPage.scale;
+
+            let scale;
+
+            switch (this.currentScaleMode) {
+                case 'page-actual':
+                    scale = 1;
+                    break;
+                case 'page-width':
+                    scale = pageWidthScale;
+                    break;
+                case 'page-height':
+                    scale = pageHeightScale;
+                    break;
+                case 'page-fit':
+                    scale = Math.min(pageWidthScale, pageHeightScale);
+                    break;
+                case 'auto':
+                    let horizontalScale;
+                    if (this.isLandscape) {
+                        horizontalScale = Math.min(pageHeightScale, pageWidthScale);
+                    } else {
+                        horizontalScale = pageWidthScale;
+                    }
+                    scale = Math.min(this.MAX_AUTO_SCALE, horizontalScale);
+
+                    break;
+                default:
+                    console.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
+                    return;
+            }
+
+            this.setScaleUpdatePages(scale);
+        }
+    }
+
+    /**
+     * Update all the pages with the newScale scale
+     * @param {number} newScale - new scale page
+     */
+    setScaleUpdatePages(newScale: number) {
+        if (!this.isSameScale(this.currentScale, newScale)) {
+            this.currentScale = newScale;
+
+            this.pdfViewer._pages.forEach(function (currentPage) {
+                currentPage.update(newScale);
+            });
+
+            this.pdfViewer.update();
+        }
+    }
+
+    /**
+     * method to check if the request scale of the page is the same for avoid unuseful re-rendering
+     *
+     * @param {number} oldScale - old scale page
+     * @param {number} newScale - new scale page
+     */
+    isSameScale(oldScale: number, newScale: number) {
+        return (newScale === oldScale);
+    }
+
+
+    /**
+     * method to check if is a land scape view
+     *
+     * @param {number} width
+     * @param {number} height
+     */
+    isLandscape(width: number, height: number) {
+        return (width > height);
+    }
+
+    /**
+     * Method triggered when the page is resized
+     */
+    onResize() {
+        this.scalePage(this.currentScaleMode);
+    }
+
+    /**
+     * Method triggered when the page is resized
+     */
+    pageFit() {
+        this.scalePage('page-fit');
     }
 
     /**
@@ -94,12 +205,6 @@ export class PdfViewerComponent {
             this.displayPage = this.page;
 
             this.pdfViewer.currentPageNumber = this.page;
-
-            //if (this.pdfViewer.currentPage.renderingState === this.renderingStates.FINISHED) {
-            //    // remove loader
-            //} else {
-            //    // add loader
-            //}
         }
     }
 
@@ -125,7 +230,7 @@ export class PdfViewerComponent {
 
         if (!isNaN(pageInput) && pageInput > 0 && pageInput <= this.totalPages) {
             this.page = pageInput;
-
+            this.displayPage = this.page;
             this.pdfViewer.currentPageNumber = this.page;
         } else {
             this.displayPage = this.page;

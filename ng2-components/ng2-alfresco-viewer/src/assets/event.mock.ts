@@ -16,32 +16,20 @@
  */
 
 
-export class PDFViewermock {
+export class EventMock {
 
-    currentPageNumber: number = 1;
+    static keyDown(key: any) {
+        let event: any = document.createEvent('Event');
+        event.keyCode = key;
+        event.initEvent('keydown');
+        document.dispatchEvent(event);
+    }
 
-    currentPage = {
-        renderingState: 3 as number
-    };
-
-    _pages: any =
-        [{
-            width: 793,
-            scale: 1,
-            update: this.update
-        }, {
-            width: 793,
-            scale: 1,
-            update: this.update
-        }, {
-            width: 793,
-            scale: 1,
-            update: this.update
-        }];
-
-    _currentPageNumber: number = 0;
-
-    update() {
-        console.log('update page');
+    static resizeMobileView() {
+        window.innerWidth = 320;
+        window.innerHeight = 568;
+        window.dispatchEvent(new Event('resize'));
     }
 }
+
+

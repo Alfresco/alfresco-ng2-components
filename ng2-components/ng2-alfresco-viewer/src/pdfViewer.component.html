@@ -1,11 +1,11 @@
 <!-- Start Pdf Canvas -->
-<div id="viewer-pdf-container" class="center-element viewer-pdf-container" (keypress)=eventHandler()>
-    <div id="viewer-viewerPdf" class="center-element" >
-        <div id="viewer-loader" class="center-element" >
-            <div>
-                <div id="loader-spin"  class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-            </div>
-            <div id="viewer-loader-text" class="viewer-loader-text">Loading...</div>
+<div id="viewer-pdf-container" class="viewer-pdf-container" (keypress)=eventHandler() (window:resize)="onResize($event)">
+    <div id="viewer-viewerPdf" class="pdfViewer" >
+        <div id="loader-container" class="loader-container">
+            <div class="loader-item">
+                <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                <div id="loader-text" class="loader-text">Loading <span>{{nameFile}}</span> ...</div>
+            </div >
         </div>
     </div>
 </div>
@@ -24,8 +24,16 @@
         <div id="viewer-total-pages"  class="left viewer-total-pages">/ {{totalPages}}</div>
     </div>
 
-    <div id="viewer-next-page-button" (click)="nextPage()"  class="button-page left">
+    <div id="viewer-next-page-button" class="button-page left"  (click)="nextPage()" >
         <i class="icon material-icons" >keyboard_arrow_right</i>
     </div>
 </div>
 <!-- Pagination toolbar end -->
+
+<!-- Command toolbar start -->
+<div id="viewer-toolbar-command" class="viewer-toolbar-command mdl-cell--hide-tablet mdl-cell--hide-phone">
+    <div id="viewer-scale-page-button" class="button-page left" (click)="pageFit()">
+        <i class="icon material-icons">zoom_out_map</i>
+    </div>
+</div>
+<!-- Command toolbar end -->

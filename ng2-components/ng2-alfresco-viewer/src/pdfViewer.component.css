@@ -2,21 +2,29 @@
     background: #3E3E3E;
 }
 
-.viewer-loader-text {
+.loader-container {
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -webkit-flex;     /* NEW - Chrome */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex-direction: row;
+    -moz-box-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    height:100%;
+}
+
+.loader-item {
+    margin: auto;
+    max-height:100px;
+    max-width:300px;
+}
+
+.loader-text{
+    white-space: nowrap;
     text-align: center;
-    color: #000;
-}
-
-:host .page {
-    margin: 10px auto !important;
-    overflow: visible;
-    border: 9px solid transparent;
-    background-clip: content-box;
-    background-color: white;
-}
-
-:host .canvasWrapper {
-    box-shadow: 0px 0px 8px 2px #000;
+    position: relative;
+    color : #fff;
 }
 
 .left {
@@ -27,6 +35,18 @@
     padding-top: 4px;
     top: 80px;
     right:35px;
+    width:auto;
+    position:fixed;
+    border-radius: 10px;
+    background: #3E3E3E;
+    color: white;
+}
+
+.viewer-toolbar-command{
+    height: 30px;
+    padding-top: 4px;
+    top: 80px;
+    left:35px;
     width:auto;
     position:fixed;
     border-radius: 10px;
