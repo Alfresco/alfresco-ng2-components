@@ -115,7 +115,7 @@ export class UploadService {
      * @returns {AlfrescoApi.ApiClient}
      */
     private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getAlfrescoTicket());
+        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.getAlfrescoTicket());
     }
 
     /**
