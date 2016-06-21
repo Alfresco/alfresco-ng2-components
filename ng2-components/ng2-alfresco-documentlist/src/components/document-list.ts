@@ -51,7 +51,7 @@ declare let __moduleName: string;
 })
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit, OnChanges {
 
-    DEFAULT_ROOT_FOLDER: string = '/Sites/swsdp/documentLibrary';
+    DEFAULT_ROOT_FOLDER: string = '/';
 
     baseComponentPath = __moduleName.replace('/components/document-list.js', '');
 
@@ -62,7 +62,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     navigationMode: string = 'dblclick'; // click|dblclick
 
     @Input()
-    breadcrumb: boolean = false;
+    breadcrumb: boolean = true;
 
     @Input()
     thumbnails: boolean = false;
@@ -80,15 +80,15 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     preview: EventEmitter<any> = new EventEmitter();
 
     rootFolder = {
-        name: '',
-        path: ''
+        name: 'Root',
+        path: '/'
     };
 
     @Input()
-    currentFolderPath: string = '';
+    currentFolderPath: string = this.DEFAULT_ROOT_FOLDER;
 
     errorMessage;
-    route: any[] = [];
+    route: { name: string, path: string }[] = [];
 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
@@ -106,8 +106,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         if (isChanged) {
             this.folderChange.emit({
                 value: value,
-                absolutePath: this.currentFolderPath,
-                relativePath: this.getRelativePath(this.currentFolderPath)
+                path: this.currentFolderPath
             });
         }
     }
@@ -157,15 +156,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         }
     }
 
-    /**
-     * Determines whether navigation to parent folder is available.
-     * @returns {boolean}
-     */
-    canNavigateParent(): boolean {
-        return this.navigate && !this.breadcrumb &&
-            this.currentFolderPath !== this.rootFolder.path;
-    }
-
     ngOnInit() {
         this.changePath(this.currentFolderPath);
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
@@ -190,9 +180,8 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     changePath(path: string) {
         this.currentFolderPath = path || this.DEFAULT_ROOT_FOLDER;
-        this.rootFolder = this._createRootFolder(this.currentFolderPath);
-        this.route = [this.rootFolder];
-        this.displayFolderContent(this.rootFolder.path);
+        this.route = this.parsePath(this.currentFolderPath);
+        this.displayFolderContent(this.currentFolderPath);
     }
 
     /**
@@ -213,30 +202,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
             });
         }
         return [];
-    }
-
-    /**
-     * Invoked when 'parent folder' element is clicked.
-     * @param e DOM event
-     */
-    onNavigateParentClick(e?: Event) {
-        if (e) {
-            e.preventDefault();
-        }
-
-        if (this.navigate && this.navigationMode === 'click') {
-            this.navigateToParent();
-        }
-    }
-
-    onNavigateParentDblClick(e?: Event) {
-        if (e) {
-            e.preventDefault();
-        }
-
-        if (this.navigate && this.navigationMode === 'dblclick') {
-            this.navigateToParent();
-        }
     }
 
     /**
@@ -306,14 +271,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
                 path: path
             });
             this.displayFolderContent(path);
-        }
-    }
-
-    navigateToParent() {
-        this.route.pop();
-        let parent = this.route.length > 0 ? this.route[this.route.length - 1] : this.rootFolder;
-        if (parent) {
-            this.displayFolderContent(parent.path);
         }
     }
 
@@ -526,14 +483,29 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return val;
     }
 
-    private _createRootFolder(path: string): any {
-        let parts =  path.split('/');
-        let namePart = parts[parts.length - 1];
-        return {
-            name: namePart,
-            path: path
-        };
-    }
+    private parsePath(path: string): { name: string, path: string }[] {
+        let parts = path.split('/').filter(val => val ? true : false);
+
+        let result = [
+            this.rootFolder
+        ];
+
+        let parentPath: string = this.rootFolder.path;
+
+        for (let i = 0; i < parts.length; i++) {
+            if (!parentPath.endsWith('/')) {
+                parentPath += '/';
+            }
+            parentPath += parts[i];
+
+            result.push({
+                name: parts[i],
+                path: parentPath
+            });
+        }
+
+        return result;
+    };
 
     private _hasEntries(node: NodePaging): boolean {
         return (node && node.list && node.list.entries && node.list.entries.length > 0);
@@ -542,14 +514,4 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     private _isSortableColumn(column: ContentColumnModel) {
         return column && column.source && !column.source.startsWith('$');
     }
-
-    private getRelativePath(path: string): string {
-        if (path.indexOf('/Sites/swsdp/documentLibrary/') !== -1) {
-            return path.replace('/Sites/swsdp/documentLibrary/', '');
-        } else {
-            return path.replace('/Sites/swsdp/documentLibrary', '');
-        }
-    }
 }
-
-

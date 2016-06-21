@@ -316,21 +316,6 @@ describe('DocumentList', () => {
         expect(documentList.getNodePath(null)).toBe(null);
     });
 
-    /*
-    it('should get node path', () => {
-        let location = new LocationEntity();
-        location.site = 'swsdp';
-        location.container = 'documentLibrary';
-        location.path = '\/';
-
-        let node = new DocumentEntity();
-        node.fileName = 'fileName';
-        node.location = location;
-
-        expect(documentList.getNodePath(node)).toBe('swsdp/documentLibrary/fileName');
-    });
-    */
-
     it('should return root object value', () => {
         let target = {
             key1: 'value1'

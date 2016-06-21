@@ -1,12 +1,11 @@
 <alfresco-upload-drag-area
         [showUploadDialog]="true"
-        currentFolderPath="{{absolutePath}}"
-        uploaddirectory="{{relativePath}}"
-        (onSuccess)="refreshDocumentList($event)">
+        [currentFolderPath]="currentPath"
+        [uploaddirectory]="currentPath"
+        (onSuccess)="documentList.reload()">
     <alfresco-document-list
             #documentList
-            [currentFolderPath]="absolutePath"
-            [breadcrumb]="breadcrumb"
+            [currentFolderPath]="currentPath"
             (preview)="showFile($event)"
             (folderChange)="onFolderChanged($event)">
         <!--
@@ -114,21 +113,10 @@
 <context-menu-holder></context-menu-holder>
 
 <div class="p-10">
-    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
-        <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input" [(ngModel)]="breadcrumb">
-        <span class="mdl-checkbox__label">Breadcrumb</span>
-    </label>
-</div>
-
-<div class="p-10">
     <ul>
-        <li>Current relative path: {{relativePath}}</li>
-        <li>Current absolute path: {{absolutePath}}</li>
+        <li>Current path: {{documentList.currentFolderPath}}</li>
         <li>
             <button (click)="documentList.changePath('/Sites/swsdp/documentLibrary/Agency Files/Contracts')">Go to agency contracts</button>
-        </li>
-        <li>
-            <button (click)="documentList.changePath('')">Got to site root</button>
         </li>
         <li>
             <button (click)="documentList.changePath('/')">Go to root</button>
@@ -139,20 +127,35 @@
 
 
 <h5>Single file upload</h5>
-<alfresco-upload-button data-automation-id="single-file-upload" uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}"
-                         (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
+<alfresco-upload-button data-automation-id="single-file-upload"
+                        [uploaddirectory]="currentPath"
+                        [currentFolderPath]="currentPath"
+                        (onSuccess)="documentList.reload()">
+</alfresco-upload-button>
+
 <h5>Folder upload</h5>
-<alfresco-upload-button data-automation-id="folder-upload" uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}"
+<alfresco-upload-button data-automation-id="folder-upload"
+                        [uploaddirectory]="currentPath"
+                        [currentFolderPath]="currentPath"
                         [uploadFolders]="true"
-                        (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
+                        (onSuccess)="documentList.reload()">
+</alfresco-upload-button>
+
 <h5>Multiple file upload</h5>
 <input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
-<alfresco-upload-button data-automation-id="multiple-file-upload" uploaddirectory="{{relativePath}}" currentFolderPath="{{absolutePath}}"
+<alfresco-upload-button data-automation-id="multiple-file-upload"
+                        [uploaddirectory]="currentPath"
+                        [currentFolderPath]="currentPath"
                         acceptedFilesType="{{acceptedFilesType}}"
                         [multipleFiles]="true"
-                        (onSuccess)="refreshDocumentList($event)"></alfresco-upload-button>
+                        (onSuccess)="documentList.reload()">
+</alfresco-upload-button>
 
-<alfresco-viewer [(showViewer)]="fileShowed" [urlFile]="urlFile" [fileName]="fileName" [mimeType]="mimeType" [overlayMode]="true">
+<alfresco-viewer [(showViewer)]="fileShowed"
+                 [urlFile]="urlFile"
+                 [fileName]="fileName"
+                 [mimeType]="mimeType"
+                 [overlayMode]="true">
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
 </alfresco-viewer>
 <file-uploading-dialog></file-uploading-dialog>
