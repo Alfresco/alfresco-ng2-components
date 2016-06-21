@@ -62,9 +62,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     navigationMode: string = 'dblclick'; // click|dblclick
 
     @Input()
-    breadcrumb: boolean = true;
-
-    @Input()
     thumbnails: boolean = false;
 
     @Output()
@@ -79,16 +76,10 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
 
-    rootFolder = {
-        name: 'Root',
-        path: '/'
-    };
-
     @Input()
     currentFolderPath: string = this.DEFAULT_ROOT_FOLDER;
 
     errorMessage;
-    route: { name: string, path: string }[] = [];
 
     actions: ContentActionModel[] = [];
     columns: ContentColumnModel[] = [];
@@ -180,7 +171,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     changePath(path: string) {
         this.currentFolderPath = path || this.DEFAULT_ROOT_FOLDER;
-        this.route = this.parsePath(this.currentFolderPath);
         this.displayFolderContent(this.currentFolderPath);
     }
 
@@ -266,30 +256,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     private performNavigation(node: MinimalNodeEntity) {
         if (node && node.entry && node.entry.isFolder) {
             let path = this.getNodePath(node);
-            this.route.push({
-                name: node.entry.name,
-                path: path
-            });
             this.displayFolderContent(path);
-        }
-    }
-
-    /**
-     * Invoked when a breadcrumb route is clicked.
-     * @param r Route to navigate to
-     * @param e DOM event
-     */
-    goToRoute(r, e) {
-        if (e) {
-            e.preventDefault();
-        }
-
-        if (this.navigate) {
-            let idx = this.route.indexOf(r);
-            if (idx > -1) {
-                this.route.splice(idx + 1);
-                this.displayFolderContent(r.path);
-            }
         }
     }
 
@@ -482,30 +449,6 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
         return val;
     }
-
-    private parsePath(path: string): { name: string, path: string }[] {
-        let parts = path.split('/').filter(val => val ? true : false);
-
-        let result = [
-            this.rootFolder
-        ];
-
-        let parentPath: string = this.rootFolder.path;
-
-        for (let i = 0; i < parts.length; i++) {
-            if (!parentPath.endsWith('/')) {
-                parentPath += '/';
-            }
-            parentPath += parts[i];
-
-            result.push({
-                name: parts[i],
-                path: parentPath
-            });
-        }
-
-        return result;
-    };
 
     private _hasEntries(node: NodePaging): boolean {
         return (node && node.list && node.list.entries && node.list.entries.length > 0);

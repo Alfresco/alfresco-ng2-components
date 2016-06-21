@@ -48,7 +48,14 @@ import {
                <hr>
         <div class="container">
 
-            <alfresco-document-list #doclist>
+            <alfresco-document-list-breadcrumb
+                    [currentFolderPath]="currentPath"
+                    [target]="documentList">
+            </alfresco-document-list-breadcrumb>
+            <alfresco-document-list 
+                    #documentList
+                    [currentFolderPath]="currentPath"
+                    (folderChange)="onFolderChanged($event)">
 
                 <content-columns>
                     <content-column source="$thumbnail" type="image"></content-column>
@@ -144,6 +151,7 @@ import {
 })
 class DocumentListDemo implements OnInit {
 
+    currentPath: string = '/';
     authenticated: boolean;
 
     public host: string = 'http://devproducts-platform.alfresco.me';
@@ -201,6 +209,12 @@ class DocumentListDemo implements OnInit {
                 console.log(error);
                 this.authenticated = false;
             });
+    }
+
+    onFolderChanged(event?: any) {
+        if (event) {
+            this.currentPath = event.path;
+        }
     }
 }
 

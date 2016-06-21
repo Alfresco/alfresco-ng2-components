@@ -3,6 +3,10 @@
         [currentFolderPath]="currentPath"
         [uploaddirectory]="currentPath"
         (onSuccess)="documentList.reload()">
+    <alfresco-document-list-breadcrumb
+        [currentFolderPath]="currentPath"
+        [target]="documentList">
+    </alfresco-document-list-breadcrumb>
     <alfresco-document-list
             #documentList
             [currentFolderPath]="currentPath"
