@@ -12,7 +12,7 @@
     "tslint": "npm run tslint-src && npm run tslint-root",
     "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
     "tslint-root": "tslint -c tslint.json *.ts",
-    "copytemplates": "npm run copy-html && npm run copy-i18n",
+    "copytemplates": "npm run copy-html-css && npm run copy-i18n",
     "copy-html-css": "cpx \"./src/**/*.{html,css}\" ./dist/src",
     "copy-html-css:w": "cpx \"./src/**/*.{html,css}\" ./dist/src -w",
     "copy-i18n": "cpx \"./i18n/**/*.json\" ./dist/i18n",
