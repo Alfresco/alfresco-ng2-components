@@ -70,26 +70,6 @@ describe('DocumentList', () => {
         expect(documentList.columns[0]).toBe(column);
     });
 
-    it('should setup default root for breadcrumb', () => {
-        documentList.ngOnInit();
-        expect(documentList.route.length).toBe(1);
-        expect(documentList.route[0]).toBe(documentList.rootFolder);
-    });
-
-    it('should display custom root path', () => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
-
-        let root = {
-            name: '<root>',
-            path: '<path>'
-        };
-
-        documentList.currentFolderPath = root.path;
-        documentList.rootFolder = root;
-        documentList.ngOnInit();
-        expect(documentList.displayFolderContent).toHaveBeenCalledWith(root.path);
-    });
-
     it('should fetch folder', () => {
         let folder = {
             'nodeRef': 'workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28'
@@ -154,15 +134,6 @@ describe('DocumentList', () => {
         spyOn(action, 'handler').and.stub();
         documentList.executeContentAction(null, action);
         expect(action.handler).not.toHaveBeenCalled();
-    });
-
-    it('should update current folder path', () => {
-        expect(documentList.currentFolderPath).toBe(documentList.rootFolder.path);
-
-        let path = '<path>';
-        documentList.displayFolderContent(path);
-
-        expect(documentList.currentFolderPath).toBe(path);
     });
 
     it('should give no content actions for empty target', () => {
@@ -270,10 +241,6 @@ describe('DocumentList', () => {
         documentList.onItemClick(node);
 
         expect(documentList.displayFolderContent).toHaveBeenCalledWith(path);
-
-        let routeEntry = documentList.route.pop();
-        expect(routeEntry.name).toBe(node.entry.name);
-        expect(routeEntry.path).toBe(path);
     });
 
     it('should not display folder content when no target node provided', () => {
