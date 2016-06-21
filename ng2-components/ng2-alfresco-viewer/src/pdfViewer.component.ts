@@ -107,8 +107,9 @@ export class PdfViewerComponent {
 
         let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber];
 
-        let pageWidthScale = (this.documentContainer.clientWidth) / currentPage.width * currentPage.scale;
-        let pageHeightScale = (this.documentContainer.clientHeight ) /  currentPage.width * currentPage.scale;
+        let padding = 20;
+        let pageWidthScale = (this.documentContainer.clientWidth - padding) / currentPage.width * currentPage.scale;
+        let pageHeightScale = (this.documentContainer.clientHeight  - padding) /  currentPage.width * currentPage.scale;
 
         let scale;
 
