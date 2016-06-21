@@ -151,7 +151,7 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private supportedExtension() {
+    supportedExtension() {
         return this.isImage() || this.isPdf();
     }
 
@@ -162,7 +162,7 @@ export class ViewerComponent {
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         let key = event.keyCode;
-        if (key === 27) { //esc
+        if (key === 27) { // esc
             this.close();
         }
     }

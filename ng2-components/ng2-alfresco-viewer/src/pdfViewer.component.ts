@@ -244,9 +244,9 @@ export class PdfViewerComponent {
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         let key = event.keyCode;
-        if (key === 39) { //right arrow
+        if (key === 39) {  // right arrow
             this.nextPage();
-        } else if (key === 37) {//left arrow
+        } else if (key === 37) { // left arrow
             this.previousPage();
         }
     }
