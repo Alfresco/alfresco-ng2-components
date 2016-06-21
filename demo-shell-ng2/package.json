@@ -11,7 +11,7 @@
     "serve": "node browser-sync-config.js",
     "typings": "typings install",
     "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json app/**/*.ts",
+    "tslint-src": "tslint -c tslint.json app/{,**/}**.ts",
     "tslint-root": "tslint -c tslint.json *.ts",
     "licensecheck": "license-check"
   },

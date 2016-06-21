@@ -18,7 +18,7 @@
     "server": "wsrv -o",
     "build": "npm run tslint && rimraf dist && tsc",
     "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/**/*.ts",
+    "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
     "tslint-root": "tslint -c tslint.json *.ts"
   },
   "license": "Apache-2.0",
