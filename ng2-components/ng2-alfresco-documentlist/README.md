@@ -24,6 +24,16 @@ Add the following dependency to your index.html:
 <script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
+The following component needs to be added to your systemjs.config: 
+
+- ng2-translate
+- ng2-alfresco-core
+- ng2-alfresco-documentlist
+
+Please refer to the following example to have an idea of how your systemjs.config should look like :
+
+https://github.com/Alfresco/dev-platform-webcomponents/blob/master/ng2-components/ng2-alfresco-documentlist/demo/systemjs.config.js
+
 #### Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
 design dependency to your project:
@@ -32,7 +42,7 @@ design dependency to your project:
 npm install --save material-design-icons material-design-lite
 ```
 
-Also make sure you include the following in your .html page:
+Also make sure you include these dependencies in your .html page:
 
 ```html
 <!-- Google Material Design Lite -->
@@ -40,6 +50,7 @@ Also make sure you include the following in your .html page:
 <script src="node_modules/material-design-lite/material.min.js"></script>
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
+
 
 ## Basic usage
 
@@ -54,16 +65,17 @@ Also make sure you include the following in your .html page:
 Example of the component that declares document list and provides values for bindings:
 
 ```ts
-import { Component, OnInit } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { Component, OnInit } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoPipeTranslate,
-    AlfrescoTranslationService
+    AlfrescoTranslationService,
+    CONTEXT_MENU_DIRECTIVES
 } from 'ng2-alfresco-core';
 
 import {

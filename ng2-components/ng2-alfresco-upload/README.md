@@ -32,47 +32,15 @@ Add the following dependency to your index.html:
 <script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
-Also make sure you include these dependencies in your .html page:
+The following component needs to be added to your systemjs.config: 
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+- ng2-translate
+- ng2-alfresco-core
+- ng2-alfresco-upload
 
-Make sure your systemjs.config has the following configuration:
+Please refer to the following example to have an idea of how your systemjs.config should look like :
 
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                    'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2' : 'node_modules/angular2',
-                    'ng2-translate': 'node_modules/ng2-translate',
-                    'app': 'dist/src'
-                },
-                packages: {
-                    'app': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-core': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-upload': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
-```
+https://github.com/Alfresco/dev-platform-webcomponents/blob/master/ng2-components/ng2-alfresco-upload/demo/systemjs.config.js
 
 #### Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
@@ -80,6 +48,15 @@ design dependency to your project:
 
 ```sh
 npm install --save material-design-icons material-design-lite
+```
+
+Also make sure you include these dependencies in your .html page:
+
+```html
+<!-- Google Material Design Lite -->
+<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+<script src="node_modules/material-design-lite/material.min.js"></script>
+<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
 #### Basic usage
@@ -98,12 +75,14 @@ npm install --save material-design-icons material-design-lite
 Example of an App that declares upload button component :
 
 ```ts
-import { Component } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService , ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
-
+import { Component, OnInit } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService
+} from 'ng2-alfresco-core';
+import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'my-app',
@@ -156,12 +135,14 @@ This component, provide a drag and drop are to upload files to alfresco.
 Example of an App that declares upload drag and drop component :
 
 ```ts
-import { Component } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
-import { AlfrescoSettingsService, ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload/dist/ng2-alfresco-upload';
-
+import { Component, OnInit } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService
+} from 'ng2-alfresco-core';
+import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'my-app',

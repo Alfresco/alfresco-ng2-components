@@ -25,8 +25,8 @@ npm install --save ng2-alfresco-datatable material-design-lite material-design-i
 ```
 
 ```ts
-import { Component } from 'angular2/core';
-import { 
+import { Component } from '@angular/core';
+import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter
 } from 'ng2-alfresco-datatable';
@@ -38,7 +38,7 @@ import {
 })
 export class MyView {
     data: ObjectDataTableAdapter;
-    
+
     constructor() {
         this.data = new ObjectDataTableAdapter(
             // data
