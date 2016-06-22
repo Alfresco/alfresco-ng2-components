@@ -11,14 +11,14 @@
   ],
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf dist node_modules typings",
+    "clean": "rimraf dist node_modules typings",
     "postinstall": "npm run typings && npm run build",
     "typings": "typings install",
-    "start": "rm -rf dist && npm install && npm run server",
+    "start": "rimraf dist && npm install && npm run server",
     "server": "wsrv -o",
-    "build": "npm run tslint &&  rm -rf dist && tsc",
+    "build": "npm run tslint && rimraf dist && tsc",
     "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/**/*.ts",
+    "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
     "tslint-root": "tslint -c tslint.json *.ts"
   },
   "license": "Apache-2.0",
@@ -38,6 +38,7 @@
     "rxjs": "5.0.0-beta.6",
     "zone.js": "^0.6.12",
     "angular2-in-memory-web-api": "0.0.12",
+    "rimraf": "^2.5.2",
 
     "material-design-icons": "^2.2.3",
     "material-design-lite": "^1.1.3",

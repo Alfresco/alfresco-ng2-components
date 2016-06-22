@@ -36,7 +36,7 @@ export class NotSupportedFormat {
     /**
      * Download file opening it in a new window
      */
-    private download() {
+    download() {
         window.open(this.urlFile);
     }
 }

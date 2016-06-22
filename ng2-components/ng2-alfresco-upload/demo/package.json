@@ -5,15 +5,15 @@
   "author": "Alfresco Software, Ltd.",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf dist node_modules typings",
+    "clean": "rimraf dist node_modules typings",
     "typings": "typings install",
     "postinstall": "npm run typings && npm run build",
     "start": "npm install && npm run typings && concurrently \"npm run build:w\" \"npm run server\" ",
     "server": "node browser-sync-config.js",
-    "build": "npm run tslint &&  rm -rf dist && tsc",
-    "build:w": "npm run tslint &&  rm -rf dist && tsc -w",
+    "build": "npm run tslint && rimraf dist && tsc",
+    "build:w": "npm run tslint && rimraf dist && tsc -w",
     "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/**/*.ts",
+    "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
     "tslint-root": "tslint -c tslint.json *.ts"
   },
   "license": "Apache-2.0",
@@ -67,7 +67,8 @@
     "alfresco-js-api": "^0.1.0",
     "ng2-alfresco-core": "^0.1.0",
     "ng2-translate": "2.2.0",
-    "ng2-alfresco-upload": "^0.1.0"
+    "ng2-alfresco-upload": "^0.1.0",
+    "rimraf": "^2.5.2"
   },
   "devDependencies": {
     "browser-sync": "^2.10.0",

@@ -4,14 +4,14 @@
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "clean": "rm -rf node_modules typings",
+    "clean": "rimraf node_modules typings",
     "start": "npm run tslint && typings install && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "serve": "node browser-sync-config.js",
     "typings": "typings install",
     "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json app/**/*.ts",
+    "tslint-src": "tslint -c tslint.json app/{,**/}**.ts",
     "tslint-root": "tslint -c tslint.json *.ts",
     "licensecheck": "license-check"
   },
@@ -80,7 +80,8 @@
     "ng2-alfresco-login": "^0.1.0",
     "ng2-alfresco-search": "^0.1.9",
     "ng2-alfresco-upload": "^0.1.0",
-    "ng2-alfresco-viewer": "^0.1.13"
+    "ng2-alfresco-viewer": "^0.1.13",
+    "rimraf": "^2.5.2"
   },
   "devDependencies": {
     "browser-sync": "^2.10.0",
