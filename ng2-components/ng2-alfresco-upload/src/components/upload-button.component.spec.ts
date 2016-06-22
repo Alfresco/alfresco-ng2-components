@@ -87,8 +87,9 @@ describe('AlfrescoUploadButton', () => {
             .createAsync(UploadButtonComponent)
             .then((fixture) => {
                 let component = fixture.componentInstance;
-                component.uploaddirectory = 'folder-default';
-                component.uploadFiles = jasmine.createSpy('uploadFiles');
+                component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
+                component.onSuccess = null;
+                component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
                 fixture.detectChanges();
                 let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
@@ -101,7 +102,7 @@ describe('AlfrescoUploadButton', () => {
                 };
 
                 component.onFilesAdded(fakeEvent);
-                expect(component.uploadFiles).toHaveBeenCalledWith('folder-default', [file]);
+                expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('/root-fake-/sites-fake/folder-fake', null);
             });
     }));
 

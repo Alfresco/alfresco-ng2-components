@@ -73,9 +73,6 @@ export class UploadButtonComponent {
     @Input()
     currentFolderPath: string = '/Sites/swsdp/documentLibrary';
 
-    @Input()
-    uploaddirectory: string = '';
-
     @Output()
     onSuccess = new EventEmitter();
 
@@ -87,15 +84,8 @@ export class UploadButtonComponent {
                 translate: AlfrescoTranslationService) {
         console.log('UploadComponent constructor', el);
 
-        let site = this.getSiteId();
-        let container = this.getContainerId();
-
-        this._uploaderService.setOptions({
-            formFields: {
-                siteid: site,
-                containerid: container
-            }
-        });
+        let formFields = this.createFormFields();
+        this._uploaderService.setOptions(formFields);
         this.translate = translate;
         this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
     }
@@ -108,7 +98,7 @@ export class UploadButtonComponent {
     onFilesAdded($event: any): void {
         let files = $event.currentTarget.files;
         this.printFileInfo(files);
-        this.uploadFiles(this.uploaddirectory, files);
+        this.uploadFiles(this.currentFolderPath, files);
         // reset the value of the input file
         $event.target.value = '';
     }
@@ -130,19 +120,19 @@ export class UploadButtonComponent {
             this._uploaderService.createFolder(absolutePath, directoryName)
                 .subscribe(
                     res => {
-                        let relativeDir = this.uploaddirectory + '/' + directoryPath;
-                        this.uploadFiles(relativeDir, filesDir);
-                    },
+                    let relativeDir = this.currentFolderPath + '/' + directoryPath;
+                    this.uploadFiles(relativeDir, filesDir);
+                },
                     error => {
-                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                        if (errorMessagePlaceholder) {
-                            let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
-                            if (errorMessage) {
-                                this._showErrorNotificationBar(errorMessage);
-                            }
+                    let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                    if (errorMessagePlaceholder) {
+                        let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
+                        if (errorMessage) {
+                            this._showErrorNotificationBar(errorMessage);
                         }
-                        console.log(error);
                     }
+                    console.log(error);
+                }
             );
         });
         // reset the value of the input file
@@ -244,7 +234,7 @@ export class UploadButtonComponent {
      * @returns {string}
      */
     private getErrorMessage(response: any): string {
-        if (response.body && response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
+        if (response.body && response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
             let errorMessage: any;
             errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;
@@ -267,22 +257,6 @@ export class UploadButtonComponent {
                 timeout: 3000
             });
         }
-    }
-
-    /**
-     * Return the site from the path
-     * @returns {any}
-     */
-    private getSiteId(): string {
-        return this.currentFolderPath.replace('/Sites/', '').split('/')[0];
-    }
-
-    /**
-     * Return the container from the path
-     * @returns {any}
-     */
-    private getContainerId(): string {
-        return this.currentFolderPath.replace('/Sites/', '').split('/')[1];
     }
 
     /**
@@ -309,5 +283,13 @@ export class UploadButtonComponent {
             message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
         }
         return message;
+    }
+
+    private createFormFields(): any {
+        return {
+            formFields: {
+                overwrite: true
+            }
+        };
     }
 }

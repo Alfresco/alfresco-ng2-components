@@ -33,7 +33,7 @@ declare let AlfrescoApi: any;
  */
 @Injectable()
 export class UploadService {
-    private _url: string = '/alfresco/service/api/upload';
+    private _url: string = '/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children';
 
     private _method: string = 'POST';
     private _fieldName: string = 'filedata';
@@ -206,10 +206,10 @@ export class UploadService {
         let form = new FormData();
         form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
         Object.keys(this._formFields).forEach((key: any) => {
-            form.append(key, this._formFields[key]);
+           form.append(key, this._formFields[key]);
         });
 
-        form.append('uploaddirectory', directory);
+        form.append('relativePath', directory);
 
         let xmlHttpRequest = this.createXMLHttpRequestInstance(uploadingFileModel, elementEmit);
         uploadingFileModel._xmlHttpRequest = xmlHttpRequest;
