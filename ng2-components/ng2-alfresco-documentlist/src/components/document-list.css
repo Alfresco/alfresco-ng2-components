@@ -23,11 +23,6 @@
 }
 :host .cell-value {}
 
-:host .data-cell.name-column {
-    font-size: 15px;
-    cursor: default;
-}
-
 /* Empty folder */
 
 :host .empty-folder-content {
@@ -57,4 +52,35 @@
     overflow: hidden;
     clip: rect(0,0,0,0);
     border: 0;
+}
+
+
+:host .ellipsis-cell > div
+{
+    position: relative;
+    overflow: hidden;
+    height: 1em;
+}
+
+
+/* visible content */
+:host .ellipsis-cell > div > span
+{
+    display: block;
+    position: absolute;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1em;		/* for vertical align of text */
+}
+
+
+/* cell stretching content */
+:host .ellipsis-cell > div:after
+{
+    content: attr(title);
+    overflow: hidden;
+    height: 0;
+    display: block;
 }

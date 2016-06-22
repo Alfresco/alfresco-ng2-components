@@ -31,12 +31,12 @@
             <div *ngSwitchCase="'image'" class="cell-value">
                 <img class="thumbnail" [src]="getCellValue(content, col)">
             </div>
-            <span *ngSwitchCase="'date'" class="cell-value">
-                {{ getCellValue(content, col) }}
-            </span>
-            <span *ngSwitchDefault class="cell-value">
-                {{ getCellValue(content, col) }}
-            </span>
+            <div *ngSwitchCase="'date'" class="cell-value">
+                <span>{{ getCellValue(content, col) }}</span>
+            </div>
+            <div *ngSwitchDefault class="cell-value">
+                <span>{{ getCellValue(content, col) }}</span>
+            </div>
         </td>
 
         <!-- Actions: folder -->

@@ -62,7 +62,7 @@ import {
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                             source="name"
-                            class="full-width name-column">
+                            class="full-width ellipsis-cell">
                     </content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
