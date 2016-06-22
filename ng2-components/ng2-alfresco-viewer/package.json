@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-viewer",
   "description": "Alfresco documents viewer",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "author": "Eugenio Romano",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
