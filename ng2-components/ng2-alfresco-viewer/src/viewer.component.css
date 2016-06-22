@@ -26,6 +26,7 @@
 }
 
 .viewer-shadow-transparent {
+    z-index: 1000;
     background-color: #3E3E3E;
     position: fixed;
     top: 0;
