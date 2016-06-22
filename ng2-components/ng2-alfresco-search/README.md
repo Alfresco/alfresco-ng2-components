@@ -28,42 +28,25 @@ the related [search results](#search-results) component which performs a query a
 
 #### Dependencies
 
-Make sure your `systemjs.config` has the following configuration:
+Add the following dependency to your index.html:
 
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                    'ng2-alfresco-upload': 'node_modules/ng2-alfresco-search',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2' : 'node_modules/angular2',
-                    'ng2-translate': 'node_modules/ng2-translate',
-                    'app': 'dist/src'
-                },
-                packages: {
-                    'app': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-core': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-search': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
+```html
+<script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
+The following component needs to be added to your systemjs.config: 
+
+- ng2-translate
+- ng2-alfresco-core
+- ng2-alfresco-search
+
+Please refer to the following example to have an idea of how your systemjs.config should look like :
+
+https://github.com/Alfresco/dev-platform-webcomponents/blob/master/ng2-components/ng2-alfresco-search/demo/systemjs.config.js
+
 #### Style
-The style of this component is based on Google Material Design, so if you want to visualize it correctly you have to add 
-the material-design-lite dependency to your project:
+The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
+design dependency to your project:
 
 ```sh
 npm install --save material-design-icons material-design-lite
@@ -92,20 +75,18 @@ but instead the component could emit an event to be consumed upstream, or it cou
 results component embedded inside the same component.
 
 ```ts
-import { Component, OnInit } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
-
+import { Component, OnInit } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoTranslationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-
+} from 'ng2-alfresco-core';
 import {
     ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+} from 'ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',
@@ -174,48 +155,25 @@ This component displays the results of a search to the user.
 
 #### Dependencies
 
-Make sure your `systemjs.config` has the following configuration:
-
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core',
-                    'ng2-alfresco-upload': 'node_modules/ng2-alfresco-search',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2' : 'node_modules/angular2',
-                    'ng2-translate': 'node_modules/ng2-translate',
-                    'app': 'dist/src'
-                },
-                packages: {
-                    'app': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-core': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-search': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
-```
-
-You must also add the following dependency to your index.html:
+Add the following dependency to your index.html:
 
 ```html
 <script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
+The following component needs to be added to your systemjs.config: 
+
+- ng2-translate
+- ng2-alfresco-core
+- ng2-alfresco-search
+
+Please refer to the following example to have an idea of how your systemjs.config should look like :
+
+https://github.com/Alfresco/dev-platform-webcomponents/blob/master/ng2-components/ng2-alfresco-search/demo/systemjs.config.js
+
 #### Style
-The style of this component is based on Google Material Design, so if you want to visualize it correctly you have to add 
-the material-design-lite dependency to your project:
+The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
+design dependency to your project:
 
 ```sh
 npm install --save material-design-icons material-design-lite
@@ -241,21 +199,20 @@ search term. If no ruter is present pon the page of if the router does not provi
 results page will be shown.
 
 ```ts
-import { Component, OnInit } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { Component, OnInit } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoTranslationService
-} from 'ng2-alfresco-core/dist/ng2-alfresco-core';
+} from 'ng2-alfresco-core';
 
 import {
     ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search/dist/ng2-alfresco-search';
-
+} from 'ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',
@@ -305,7 +262,6 @@ bootstrap(SearchDemo, [
     HTTP_PROVIDERS,
     ALFRESCO_CORE_PROVIDERS
 ]);
-
 ```
 
 Example of an component that displays search results, taking the search term from a `@Input` property provided by the container.
@@ -313,12 +269,15 @@ Example of an component that displays search results, taking the search term fro
 When the input is updated by the application, the search control will run a new search and display the results.
 
 ```ts
-import { Component, Input } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { HTTP_PROVIDERS } from 'angular2/http';
-
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core/dist/ng2-alfresco-core';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search/dist/ng2-alfresco-search';
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+import {
+    ALFRESCO_CORE_PROVIDERS
+} from 'ng2-alfresco-core';
+import {
+    ALFRESCO_SEARCH_DIRECTIVES
+} from 'ng2-alfresco-search';
 
 @Component({
     selector: 'alfresco-search-demo',

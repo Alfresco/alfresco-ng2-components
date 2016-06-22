@@ -18,7 +18,6 @@
 import { Component, OnInit } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS } from '@angular/http';
-
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
@@ -26,7 +25,6 @@ import {
     AlfrescoPipeTranslate,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
-
 import {
     ALFRESCO_SEARCH_PROVIDERS,
     ALFRESCO_SEARCH_DIRECTIVES

@@ -25,42 +25,9 @@ Add the following dependency to your index.html:
 <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
 ```
 
-Also make sure you include these dependencies in your .html page:
-
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
-
 Make sure your systemjs.config has the following configuration:
 
-```javascript
-    System.config({
-                defaultJSExtensions: true,
-                map: {
-                    'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer',
-                    'rxjs': 'node_modules/rxjs',
-                    'angular2': 'node_modules/angular2',
-                    'app': 'dist/main'
-                },
-                packages: {
-                    'src': {
-                        defaultExtension: 'js'
-                    },
-                    'ng2-alfresco-viewer': {
-                        defaultExtension: 'js'
-                    },
-                    'rxjs': {
-                        defaultExtension: 'js'
-                    },
-                    'angular2': {
-                        defaultExtension: 'js'
-                    }
-                }
-            });
-```
+https://github.com/Alfresco/dev-platform-webcomponents/blob/master/ng2-components/ng2-alfresco-viewer/demo/systemjs.config.js
 
 #### Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
@@ -68,6 +35,15 @@ design dependency to your project:
 
 ```sh
 npm install --save material-design-icons material-design-lite
+```
+
+Also make sure you include these dependencies in your .html page:
+
+```html
+<!-- Google Material Design Lite -->
+<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+<script src="node_modules/material-design-lite/material.min.js"></script>
+<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
 #### Basic usage
@@ -79,13 +55,13 @@ npm install --save material-design-icons material-design-lite
 Example of an App that declares the file viewer component :
 
 ```ts
-import { Component } from 'angular2/core';
-import { bootstrap } from 'angular2/platform/browser';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer/dist/ng2-alfresco-viewer';
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'my-app',
-    template: `   <alfresco-viewer [overlayMode]="true" [urlFile]="'local_filename.pdf'">
+    template: `   <alfresco-viewer [showViewer]="true" [overlayMode]="true" [urlFile]="'local_filename.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                    </alfresco-viewer>`,
     directives: [VIEWERCOMPONENT]
