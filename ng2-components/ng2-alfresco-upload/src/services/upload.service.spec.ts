@@ -83,7 +83,7 @@ describe('AlfrescoUploadService', () => {
     it('should show the default option if no method setOption is called', () => {
         let empty = {};
         service.setOptions(empty);
-        expect(service.getUrl()).toEqual('/alfresco/service/api/upload');
+        expect(service.getUrl()).toEqual('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
         let formFields: Object = {};
         expect(service.getFormFileds()).toEqual(formFields);
     });

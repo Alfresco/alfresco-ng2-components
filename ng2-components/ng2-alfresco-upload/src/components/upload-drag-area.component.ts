@@ -52,9 +52,6 @@ export class UploadDragAreaComponent {
     showUdoNotificationBar: boolean = true;
 
     @Input()
-    uploaddirectory: string = '';
-
-    @Input()
     currentFolderPath: string = '/Sites/swsdp/documentLibrary';
 
     @Output()
@@ -65,15 +62,8 @@ export class UploadDragAreaComponent {
     constructor(private _uploaderService: UploadService,
                 translate: AlfrescoTranslationService) {
 
-        let site = this.getSiteId();
-        let container = this.getContainerId();
-
-        this._uploaderService.setOptions({
-            formFields: {
-                siteid: site,
-                containerid: container
-            }
-        });
+        let formFields = this.createFormFields();
+        this._uploaderService.setOptions(formFields);
 
         this.translate = translate;
         this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
@@ -87,7 +77,7 @@ export class UploadDragAreaComponent {
     onFilesDropped(files: File[]): void {
         if (files.length) {
             this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(this.uploaddirectory, this.onSuccess);
+            this._uploaderService.uploadFilesInTheQueue(this.currentFolderPath, this.onSuccess);
             let latestFilesAdded = this._uploaderService.getQueue();
             if (this.showUdoNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
@@ -104,7 +94,7 @@ export class UploadDragAreaComponent {
         item.file(function (file: any) {
             self._uploaderService.addToQueue([file]);
             let path = item.fullPath.replace(item.name, '');
-            let filePath = self.uploaddirectory + path;
+            let filePath = self.currentFolderPath + path;
             self._uploaderService.uploadFilesInTheQueue(filePath, self.onSuccess);
             let latestFilesAdded = self._uploaderService.getQueue();
             if (self.showUdoNotificationBar) {
@@ -160,22 +150,6 @@ export class UploadDragAreaComponent {
                 self.onFolderEntityDropped(item);
             }
         }
-    }
-
-    /**
-     * Return the site from the path
-     * @returns {string}
-     */
-    private getSiteId(): string {
-        return this.currentFolderPath.replace('/Sites/', '').split('/')[0];
-    }
-
-    /**
-     * Return the container from the path
-     * @returns {string}
-     */
-    private getContainerId(): string {
-        return this.currentFolderPath.replace('/Sites/', '').split('/')[1];
     }
 
     /**
@@ -245,5 +219,13 @@ export class UploadDragAreaComponent {
             message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
         }
         return message;
+    }
+
+    private createFormFields(): any {
+        return {
+            formFields: {
+                overwrite: true
+            }
+        };
     }
 }
