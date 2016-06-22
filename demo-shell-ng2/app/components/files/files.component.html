@@ -1,7 +1,7 @@
 <alfresco-upload-drag-area
         [showUploadDialog]="true"
         [currentFolderPath]="currentPath"
-        [uploaddirectory]="currentPath"
+        [uploaddirectory]=""
         (onSuccess)="documentList.reload()">
     <alfresco-document-list-breadcrumb
         [currentFolderPath]="currentPath"
@@ -120,10 +120,13 @@
     <ul>
         <li>Current path: {{documentList.currentFolderPath}}</li>
         <li>
-            <button (click)="documentList.changePath('/Sites/swsdp/documentLibrary/Agency Files/Contracts')">Go to agency contracts</button>
+            <button (click)="documentList.currentFolderPath = '/Sites/swsdp/documentLibrary';">Go to Document Library</button>
         </li>
         <li>
-            <button (click)="documentList.changePath('/')">Go to root</button>
+            <button (click)="documentList.currentFolderPath = '/Sites/swsdp/documentLibrary/Agency Files/Contracts'">Go to agency contracts</button>
+        </li>
+        <li>
+            <button (click)="documentList.currentFolderPath = '/'">Go to root</button>
         </li>
         <li>
             <button (click)="fileDialog.toggleShowDialog()">Show/Hide File Dialog</button>

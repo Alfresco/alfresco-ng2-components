@@ -76,8 +76,19 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
 
+    private _path = this.DEFAULT_ROOT_FOLDER;
+
+    get currentFolderPath(): string {
+        return this._path;
+    }
+
     @Input()
-    currentFolderPath: string = this.DEFAULT_ROOT_FOLDER;
+    set currentFolderPath(value: string) {
+        if (value !== this._path) {
+            this._path = value || this.DEFAULT_ROOT_FOLDER;
+            this.displayFolderContent(this._path);
+        }
+    }
 
     errorMessage;
 
@@ -109,9 +120,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     contextActionHandler: Subject<any> = new Subject();
 
-    constructor(
-        private _alfrescoService: AlfrescoService) {
-    }
+    constructor(private alfrescoService: AlfrescoService) {}
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
@@ -148,7 +157,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     ngOnInit() {
-        this.changePath(this.currentFolderPath);
+        this.displayFolderContent(this.currentFolderPath);
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
     }
 
@@ -167,11 +176,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
-    }
 
-    changePath(path: string) {
-        this.currentFolderPath = path || this.DEFAULT_ROOT_FOLDER;
-        this.displayFolderContent(this.currentFolderPath);
     }
 
     /**
@@ -255,8 +260,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     private performNavigation(node: MinimalNodeEntity) {
         if (node && node.entry && node.entry.isFolder) {
-            let path = this.getNodePath(node);
-            this.displayFolderContent(path);
+            this.currentFolderPath = this.getNodePath(node);
         }
     }
 
@@ -275,14 +279,14 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
             if (entry.isFile) {
                 if (this.thumbnails) {
-                    if (this._alfrescoService) {
-                        return this._alfrescoService.getDocumentThumbnailUrl(node);
+                    if (this.alfrescoService) {
+                        return this.alfrescoService.getDocumentThumbnailUrl(node);
                     }
                     return null;
                 }
 
                 if (entry.content && entry.content.mimeType) {
-                    let icon = this._alfrescoService.getMimeTypeIcon(entry.content.mimeType);
+                    let icon = this.alfrescoService.getMimeTypeIcon(entry.content.mimeType);
                     return `${this.baseComponentPath}/img/${icon}`;
                 }
             }
@@ -304,14 +308,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         }
     }
 
-    /**
-     * Loads and displays folder content
-     * @param path Node path
-     */
-    displayFolderContent(path) {
+    displayFolderContent(path: string) {
         if (path !== null) {
-            this.currentFolderPath = path;
-            this._alfrescoService
+            this.alfrescoService
                 .getFolder(path)
                 .subscribe(
                     folder => this.folder = this.sort(folder, this.sorting),
@@ -367,7 +366,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     getCellValue(row: MinimalNodeEntity, col: ContentColumnModel): any {
-        let value = this._getObjectValueRaw(row.entry, col.source);
+        let value = this.getObjectValueRaw(row.entry, col.source);
 
         if (col.type === 'date') {
             let datePipe = new DatePipe();
@@ -409,7 +408,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     onColumnHeaderClick(column: ContentColumnModel) {
-        if (column && this._isSortableColumn(column)) {
+        if (column && this.isSortableColumn(column)) {
             if (this.sorting.key === column.source) {
                 this.sorting.direction = this.sorting.direction === 'asc' ? 'desc' : 'asc';
             } else {
@@ -423,14 +422,14 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     sort(node: NodePaging, options: ColumnSortingModel) {
-        if (this._hasEntries(node)) {
+        if (this.hasEntries(node)) {
             node.list.entries.sort((a: MinimalNodeEntity, b: MinimalNodeEntity) => {
                 if (a.entry.isFolder !== b.entry.isFolder) {
                     return a.entry.isFolder ? -1 : 1;
                 }
 
-                let left = this._getObjectValueRaw(a.entry, options.key).toString();
-                let right = this._getObjectValueRaw(b.entry, options.key).toString();
+                let left = this.getObjectValueRaw(a.entry, options.key).toString();
+                let right = this.getObjectValueRaw(b.entry, options.key).toString();
 
                 return options.direction === 'asc'
                     ? left.localeCompare(right)
@@ -440,7 +439,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return node;
     }
 
-    private _getObjectValueRaw(target: any, key: string) {
+    private getObjectValueRaw(target: any, key: string) {
         let val = this.getObjectValue(target, key);
 
         if (val instanceof Date) {
@@ -450,11 +449,11 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return val;
     }
 
-    private _hasEntries(node: NodePaging): boolean {
+    private hasEntries(node: NodePaging): boolean {
         return (node && node.list && node.list.entries && node.list.entries.length > 0);
     }
 
-    private _isSortableColumn(column: ContentColumnModel) {
+    private isSortableColumn(column: ContentColumnModel) {
         return column && column.source && !column.source.startsWith('$');
     }
 }

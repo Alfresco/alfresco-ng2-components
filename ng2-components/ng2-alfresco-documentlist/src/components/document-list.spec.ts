@@ -240,7 +240,7 @@ describe('DocumentList', () => {
         documentList.navigationMode = 'click';
         documentList.onItemClick(node);
 
-        expect(documentList.displayFolderContent).toHaveBeenCalledWith(path);
+        expect(documentList.currentFolderPath).toBe(path);
     });
 
     it('should not display folder content when no target node provided', () => {

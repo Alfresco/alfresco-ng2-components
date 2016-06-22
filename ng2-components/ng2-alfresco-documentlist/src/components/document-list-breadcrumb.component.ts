@@ -79,7 +79,7 @@ export class DocumentListBreadcrumb {
             });
 
             if (this.target) {
-                this.target.changePath(route.path);
+                this.target.currentFolderPath = route.path;
             }
         }
     }
