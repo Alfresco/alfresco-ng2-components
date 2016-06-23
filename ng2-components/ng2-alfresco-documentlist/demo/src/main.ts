@@ -52,7 +52,7 @@ import {
                     [currentFolderPath]="currentPath"
                     [target]="documentList">
             </alfresco-document-list-breadcrumb>
-            <alfresco-document-list 
+            <alfresco-document-list  #doclist
                     #documentList
                     [currentFolderPath]="currentPath"
                     (folderChange)="onFolderChanged($event)">
@@ -156,7 +156,7 @@ class DocumentListDemo implements OnInit {
     currentPath: string = '/';
     authenticated: boolean;
 
-    public host: string = 'http://192.168.99.100:8080/';
+    public host: string = 'http://devproducts-platform.alfresco.me';
 
     token: string;
 
