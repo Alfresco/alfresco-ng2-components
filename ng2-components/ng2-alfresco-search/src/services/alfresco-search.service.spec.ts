@@ -26,6 +26,6 @@ describe('AlfrescoSearchService', () => {
     let service: AlfrescoSearchService;
 
     beforeEach(() => {
-        service = new AlfrescoSearchService(null, null, null);
+        service = new AlfrescoSearchService(null, null);
     });
 });

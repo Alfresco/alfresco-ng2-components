@@ -19,8 +19,7 @@ import {Observable} from 'rxjs/Rx';
 
 import {
     AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService
+    AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
 import {AlfrescoSearchService} from './../../src/services/alfresco-search.service';
 
@@ -30,10 +29,9 @@ export class AlfrescoServiceMock extends AlfrescoSearchService {
 
     constructor(
         settings: AlfrescoSettingsService = null,
-        authService: AlfrescoAuthenticationService = null,
-        contentService: AlfrescoContentService = null
+        authService: AlfrescoAuthenticationService = null
     ) {
-        super(settings, authService, contentService);
+        super(settings, authService);
     }
 
     getFolder(folder: string) {

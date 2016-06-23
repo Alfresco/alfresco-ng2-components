@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { provide } from '@angular/core';
 import { it, describe, expect, inject, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { RouteParams } from '@angular/router-deprecated';
