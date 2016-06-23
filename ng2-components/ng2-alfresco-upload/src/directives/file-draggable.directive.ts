@@ -66,15 +66,21 @@ export class FileDraggableDirective {
         this._preventDefault($event);
 
         let items = $event.dataTransfer.items;
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i].webkitGetAsEntry();
-            if (item) {
-                this._traverseFileTree(item);
-            } else {
-                let dt = $event.dataTransfer;
-                let files = dt.files;
-                this.onFilesDropped.emit(files);
+        if (items) {
+            for (let i = 0; i < items.length; i++) {
+                let item = items[i].webkitGetAsEntry();
+                if (item) {
+                    this._traverseFileTree(item);
+                } else {
+                    let dt = $event.dataTransfer;
+                    let files = dt.files;
+                    this.onFilesDropped.emit(files);
+                }
             }
+        } else {
+            // safari or FF
+            let files = $event.dataTransfer.files;
+            this.onFilesDropped.emit(files);
         }
 
         this._inputFocusClass = false;
