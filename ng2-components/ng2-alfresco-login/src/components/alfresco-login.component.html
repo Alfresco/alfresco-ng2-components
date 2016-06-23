@@ -18,8 +18,7 @@
                             <span id="username-error" class="mdl-textfield__error" style="visibility: visible" data-automation-id="username-error">{{formError.username | translate }}</span>
                     </span>
                 </div>
-
-                <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.password)}"
+                <div
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <i [ngClass]="{hide: isPasswordShow}" [ngClass]="{show: !isPasswordShow}" (click)="toggleShowPassword()" data-automation-id="show_password"
                        class="icon-inline">
@@ -35,7 +34,7 @@
                     </i>
                     <label for="password" class="mdl-textfield__label">{{'LOGIN.LABEL.PASSWORD' | translate }}</label>
                     <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" ngControl="password" tabindex="2" />
-                    <span class="mdl-tooltip--validation is-active" for="password" *ngIf="formError.password">
+                    <span class="mdl-tooltip--validation" for="password" *ngIf="formError.password">
                             <span id="password-required" class="mdl-textfield__error" style="visibility: visible" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
                 </div>
