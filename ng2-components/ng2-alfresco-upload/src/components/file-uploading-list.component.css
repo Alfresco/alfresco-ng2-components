@@ -45,10 +45,17 @@
 }
 
 :host .mdl-progress{
-    width: 300px;
+    width: 150px;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+@media (max-device-width: 360px){
+    .truncate {
+        max-width: 50px;
+        margin-left: 0px;
+    }
+}
+
+@media (max-device-width: 568px) {
     .truncate {
         width: 60px;
     }
@@ -57,17 +64,26 @@
     }
 }
 
-@media only screen and (min-width: 360px) and (max-width: 640px) {
+@media (max-width: 740px) {
     .truncate {
         max-width: 80px;
     }
+
     .mdl-progress {
-        max-width: 80px;
+        max-width: 70px;
+    }
+
+    .size-column {
+        display: none;
     }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 740px) {
     .truncate {
         width: 249px;
+    }
+
+    .size-column {
+        display: table-cell;
     }
 }

@@ -7,7 +7,7 @@
 }
 
 :host .file-dialog {
-    width: 800px;
+    width: 700px;
     display: none;
     -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .2);
     box-shadow: -2px -1px 8px 3px rgba(0, 0, 0, .2);
@@ -29,7 +29,7 @@
 }
 
 :host .file-dialog .header {
-    background-color: rgb(31,188,210);
+    background-color: rgb(31, 188, 210);
     border: 1px transparent solid;
     border-bottom: 1px solid #c7c7c7;
     -moz-border-radius-topleft: 2px;
@@ -126,32 +126,26 @@
     text-align: left;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+@media only screen and (max-device-width: 520px){
+    .file-dialog {
+        width: 100%;
+        padding: 0 0 0 0;
+        margin: 0 0 0 0;
+        right: 0;
+        left: 0;
+        position: absolute;
+    }
+}
+
+@media (max-device-width: 568px) {
     .file-dialog {
         width: 280px;
     }
 }
 
-@media only screen and (min-width: 360px) and (max-width: 640px) {
-    .file-dialog {
-        width: 315px;
-    }
-}
-
-@media only screen and (min-width: 375px) and (max-width: 667px) {
+@media (max-width: 740px) {
     .file-dialog {
         width: 325px;
     }
 }
 
-@media only screen and (min-width: 411px) and (max-width: 731px) {
-    .file-dialog {
-        width: 365px;
-    }
-}
-
-@media only screen and (min-width: 435px) and (max-width: 773px) {
-    .content-layout {
-        height: 420px
-    }
-}
