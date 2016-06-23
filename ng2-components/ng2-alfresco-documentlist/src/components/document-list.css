@@ -93,22 +93,13 @@
 
 /* mobile phone */
 @media all and (max-width: 768px) {
-
-    :host th.desktop-only .cell-value {
-        display: none;
-    }
-
-    :host td.desktop-only .cell-value {
+    .desktop-only {
         display: none;
     }
 }
 
 @media (max-device-width: 768px){
-    :host th.desktop-only .cell-value {
-        display: none;
-    }
-
-    :host td.desktop-only .cell-value {
+    .desktop-only {
         display: none;
     }
 }
