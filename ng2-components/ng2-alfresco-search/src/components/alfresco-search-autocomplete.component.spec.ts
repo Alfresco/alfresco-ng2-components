@@ -16,11 +16,7 @@
  */
 
 import { provide } from '@angular/core';
-import {
-    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
-} from '@angular/platform-browser-dynamic/testing';
-import { it, describe, expect, inject, beforeEachProviders, setBaseTestProviders } from '@angular/core/testing';
+import { it, describe, expect, inject, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchServiceMock } from './../assets/alfresco-search.service.mock';
@@ -34,8 +30,6 @@ import {
 describe('AlfrescoSearchAutocompleteComponent', () => {
 
     let searchService;
-
-    setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
 
     beforeEachProviders(() => {
         searchService = new SearchServiceMock();

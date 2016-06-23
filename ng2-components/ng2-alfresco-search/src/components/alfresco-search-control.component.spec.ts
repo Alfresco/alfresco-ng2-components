@@ -15,17 +15,35 @@
  * limitations under the License.
  */
 
-import {
-    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
-} from '@angular/platform-browser-dynamic/testing';
-import { it, describe, expect, inject, setBaseTestProviders } from '@angular/core/testing';
+import { provide } from '@angular/core';
+import { it, describe, expect, inject, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
+import { SearchServiceMock } from './../assets/alfresco-search.service.mock';
+import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
+import { TranslationMock } from './../assets/translation.service.mock';
+import {
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 describe('AlfrescoSearchControlComponent', () => {
 
-    setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
+    let searchService;
+
+    beforeEachProviders(() => {
+        searchService = new SearchServiceMock();
+
+        return [
+            searchService.getProviders(),
+            provide(AlfrescoThumbnailService, {}),
+            provide(AlfrescoTranslationService, {useClass: TranslationMock}),
+            provide(AlfrescoSettingsService, {}),
+            provide(AlfrescoAuthenticationService, {}),
+            provide(AlfrescoContentService, {})
+        ];
+    });
 
     it('should setup i18n folder', () => {
 
@@ -40,13 +58,15 @@ describe('AlfrescoSearchControlComponent', () => {
 
     it('should emit searchChange when search term changed',
         inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb.createAsync(AlfrescoSearchControlComponent).then((componentFixture) => {
-                componentFixture.componentInstance.searchTerm = 'customSearchTerm';
-                componentFixture.detectChanges();
-                componentFixture.componentInstance.searchChange.subscribe(e => {
-                    expect(e.value).toBe('customSearchTerm');
+            return tcb
+                .createAsync(AlfrescoSearchControlComponent)
+                .then((componentFixture) => {
+                    componentFixture.componentInstance.searchTerm = 'customSearchTerm';
+                    componentFixture.detectChanges();
+                    componentFixture.componentInstance.searchChange.subscribe(e => {
+                        expect(e.value).toBe('customSearchTerm');
+                    });
                 });
-            });
         }));
 
     describe('Component rendering', () => {
