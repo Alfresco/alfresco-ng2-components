@@ -120,13 +120,19 @@
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .content-layout {
-        height: 690px
+        height: 950px
     }
 }
 
 @media only screen and (min-width: 1024px) and (max-width: 1440px) {
     .content-layout {
-        height: 690px;
+        height: 970px;
+    }
+}
+
+@media only screen and (min-width: 1440px){
+    .content-layout {
+        height: 1000px;
     }
 }
 
