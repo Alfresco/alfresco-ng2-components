@@ -21,6 +21,7 @@ import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchServiceMock } from './../assets/alfresco-search.service.mock';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
@@ -29,13 +30,9 @@ import {
 
 describe('AlfrescoSearchAutocompleteComponent', () => {
 
-    let searchService;
-
     beforeEachProviders(() => {
-        searchService = new SearchServiceMock();
-
         return [
-            searchService.getProviders(),
+            provide(AlfrescoSearchService, {useClass: SearchServiceMock}),
             provide(AlfrescoThumbnailService, {}),
             provide(AlfrescoTranslationService, {}),
             provide(AlfrescoSettingsService, {}),

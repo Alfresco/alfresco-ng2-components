@@ -27,16 +27,14 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
+
 
 describe('AlfrescoSearchControlComponent', () => {
 
-    let searchService;
-
     beforeEachProviders(() => {
-        searchService = new SearchServiceMock();
-
         return [
-            searchService.getProviders(),
+            provide(AlfrescoSearchService, {useClass: SearchServiceMock}),
             provide(AlfrescoThumbnailService, {}),
             provide(AlfrescoTranslationService, {useClass: TranslationMock}),
             provide(AlfrescoSettingsService, {}),

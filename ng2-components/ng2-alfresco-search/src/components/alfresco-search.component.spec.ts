@@ -23,6 +23,7 @@ import { AlfrescoSearchComponent } from './alfresco-search.component';
 import { SearchServiceMock } from './../assets/alfresco-search.service.mock';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
@@ -31,18 +32,15 @@ import {
 
 describe('AlfrescoSearchComponent', () => {
 
-    let searchService;
-
     beforeEachProviders(() => {
-        searchService = new SearchServiceMock();
 
         return [
-            searchService.getProviders(),
-            provide(AlfrescoThumbnailService, {}),
-            provide(AlfrescoTranslationService, {useClass: TranslationMock}),
-            provide(AlfrescoSettingsService, {}),
-            provide(AlfrescoAuthenticationService, {}),
-            provide(AlfrescoContentService, {})
+            { provide: AlfrescoSearchService, useClass: SearchServiceMock },
+            { provide: AlfrescoThumbnailService },
+            { provide: AlfrescoTranslationService, useClass: TranslationMock },
+            { provide: AlfrescoSettingsService },
+            { provide: AlfrescoAuthenticationService },
+            { provide: AlfrescoContentService }
         ];
     });
 
@@ -94,19 +92,13 @@ describe('AlfrescoSearchComponent', () => {
         it('should display the returned search results',
             inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
                 return tcb
+                    .overrideProviders(AlfrescoSearchComponent, [
+                        { provide: AlfrescoSearchService, useClass: SearchServiceMock }
+                    ])
                     .createAsync(AlfrescoSearchComponent)
                     .then((fixture) => {
                         let componentInstance = fixture.componentInstance;
-                        componentInstance.results = [{
-                            entry: {
-                                id: '123',
-                                name: 'MyDoc',
-                                content: {
-                                    mimetype: 'text/plain'
-                                }
-                            }
-                        }];
-
+                        componentInstance.searchTerm = '<term>';
                         componentInstance.ngOnChanges();
                         fixture.detectChanges();
 

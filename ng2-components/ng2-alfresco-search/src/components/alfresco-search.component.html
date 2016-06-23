@@ -22,8 +22,8 @@
     <tr *ngFor="let result of results; let idx = index">
         <td><img src="{{getMimeTypeIcon(result)}}" /></td>
         <td attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
-        <td attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}} >{{result.entry.modifiedByUser
-            .displayName}}</td>
+        <td attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}}>
+            {{result.entry.modifiedByUser.displayName}}</td>
         <td>{{result.entry.modifiedAt | date}}</td>
     </tr>
 

@@ -15,29 +15,36 @@
  * limitations under the License.
  */
 
-import { provide } from '@angular/core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import { Observable } from 'rxjs/Rx';
 
-export class SearchServiceMock {
+export class SearchServiceMock extends AlfrescoSearchService {
 
-    public getLiveSearchResults(term: string): Observable<any> {
+    getLiveSearchResults(term: string): Observable<any> {
         if (term.length > 3) {
             return Observable.of({
-                entries: [
-                    {
-                        entry: {
-                            id: '123'
+                list: {
+                    entries: [
+                        {
+                            entry: {
+                                id: '123',
+                                name: 'MyDoc',
+                                content: {
+                                    mimetype: 'text/plain'
+                                },
+                                createdByUser: {
+                                    displayName: 'John Doe'
+                                },
+                                modifiedByUser: {
+                                    displayName: 'John Doe'
+                                }
+                            }
                         }
-                    }
-                ]
+                    ]
+                }
             });
         } else {
             return Observable.throw('Fake server error');
         }
-    }
-
-    getProviders(): Array<any> {
-        return [provide(AlfrescoSearchService, {useValue: this})];
     }
 }
