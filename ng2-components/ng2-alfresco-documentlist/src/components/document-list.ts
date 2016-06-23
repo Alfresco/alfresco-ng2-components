@@ -24,7 +24,8 @@ import {
     AfterContentInit,
     AfterViewChecked,
     OnChanges,
-    TemplateRef
+    TemplateRef,
+    NgZone
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs/Rx';
@@ -120,7 +121,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     contextActionHandler: Subject<any> = new Subject();
 
-    constructor(private alfrescoService: AlfrescoService) {}
+    constructor(
+        private alfrescoService: AlfrescoService,
+        private ngZone: NgZone) {}
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
@@ -320,9 +323,11 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     reload() {
-        if (this.currentFolderPath) {
-            this.displayFolderContent(this.currentFolderPath);
-        }
+        this.ngZone.run(() => {
+            if (this.currentFolderPath) {
+                this.displayFolderContent(this.currentFolderPath);
+            }
+        });
     }
 
     /**

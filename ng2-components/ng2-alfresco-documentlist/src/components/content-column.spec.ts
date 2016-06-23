@@ -34,7 +34,7 @@ describe('ContentColumn', () => {
 
     beforeEach(() => {
         let alfrescoServiceMock = new AlfrescoServiceMock();
-        documentList = new DocumentList(alfrescoServiceMock);
+        documentList = new DocumentList(alfrescoServiceMock, null);
         columnList = new ContentColumnList(documentList);
     });
 

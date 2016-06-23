@@ -36,7 +36,7 @@ describe('DocumentList', () => {
 
     beforeEach(() => {
         alfrescoServiceMock = new AlfrescoServiceMock();
-        documentList = new DocumentList(alfrescoServiceMock);
+        documentList = new DocumentList(alfrescoServiceMock, null);
 
         eventMock = {
             preventDefault: function () {
@@ -105,7 +105,7 @@ describe('DocumentList', () => {
     });
 
     it('should return no thumbnail url without service', () => {
-        let list = new DocumentList(null);
+        let list = new DocumentList(null, null);
         let node = new MinimalNodeEntity();
         expect(list.getThumbnailUrl(node)).toBeNull();
     });
