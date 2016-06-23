@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, HostListener, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject } from '@angular/core';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
+import { DOCUMENT } from '@angular/platform-browser';
 
 declare let __moduleName: string;
 
@@ -54,12 +55,13 @@ export class ViewerComponent {
 
     extension: string;
 
-    constructor(private element: ElementRef) {
+    constructor(private element: ElementRef, @Inject(DOCUMENT) private document) {
     }
 
     ngOnChanges(changes) {
         if (this.showViewer) {
             this.hideOtherHeaderBar();
+            this.blockOtherScrollBar();
             if (!this.urlFile) {
                 throw new Error('Attribute urlFile is required');
             }
@@ -78,6 +80,7 @@ export class ViewerComponent {
      * close the viewer
      */
     close() {
+        this.unblockOtherScrollBar();
         if (this.otherMenu) {
             this.otherMenu.hidden = false;
         }
@@ -164,6 +167,32 @@ export class ViewerComponent {
         let key = event.keyCode;
         if (key === 27) { // esc
             this.close();
+        }
+    }
+
+    /**
+     * Check if in the document there are scrollable main area and disable it
+     *
+     * @returns {boolean}
+     */
+    private blockOtherScrollBar() {
+        let mainElements: any = document.getElementsByTagName('main');
+
+        for (let i = 0; i < mainElements.length; i++) {
+            mainElements[i].style.overflow = 'hidden';
+        }
+    }
+
+    /**
+     * Check if in the document there are scrollable main area and renable it
+     *
+     * @returns {boolean}
+     */
+    private unblockOtherScrollBar() {
+        let mainElements: any = document.getElementsByTagName('main');
+
+        for (let i = 0; i < mainElements.length; i++) {
+            mainElements[i].style.overflow = '';
         }
     }
 
