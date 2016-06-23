@@ -11,7 +11,7 @@
         <th>{{'FILE_UPLOAD.FILE_INFO.ACTION' | translate}}</th>
     </tr>
     <tr *ngFor="let file of filesUploadingList">
-        <td data-automation-id="'dialog_' + file.name" class="mdl-data-table__cell--non-numeric"><div class="truncate">{{file.name}}</div></td>
+        <td attr.data-automation-id="dialog_{{file.name}}" class="mdl-data-table__cell--non-numeric"><div class="truncate">{{file.name}}</div></td>
         <td _ngcontent-hvq-3="">
             <div _ngcontent-hvq-3="" class="mdl-progress mdl-js-progress is-upgraded" id="{{file.id}}"
                  data-upgraded=",MaterialProgress">
