@@ -18,6 +18,9 @@
 Core library for other ng2-alfresco components.
 This should be added as a dependency for any project using the components.
 
+### Node
+To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
+
 ## Install
 
 ```sh

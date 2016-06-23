@@ -14,8 +14,10 @@
   </a>
 </p>
 
-## Install
+### Node
+To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
 
+## Install
 
 ```sh
 npm set registry http://devproducts.alfresco.me:4873

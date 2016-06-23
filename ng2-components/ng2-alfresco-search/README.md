@@ -15,6 +15,9 @@
   </a>
 </p>
 
+### Node
+To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
+
 ## Install
 
 ```sh
