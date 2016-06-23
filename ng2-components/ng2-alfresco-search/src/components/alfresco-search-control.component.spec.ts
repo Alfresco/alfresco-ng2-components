@@ -124,6 +124,7 @@ describe('AlfrescoSearchControlComponent', () => {
                         componentFixture.detectChanges();
                         expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(1);
                         expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(1);
+                        expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(1);
                 });
             })
         );
@@ -134,10 +135,12 @@ describe('AlfrescoSearchControlComponent', () => {
                     .createAsync(AlfrescoSearchControlComponent)
                     .then((componentFixture) => {
                         const element = componentFixture.nativeElement;
-                        componentFixture.componentInstance.expandable = true;
+                        componentFixture.detectChanges();
+                        componentFixture.componentInstance.expandable = false;
                         componentFixture.detectChanges();
                         expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(0);
                         expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(0);
+                        expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(0);
                 });
             })
         );
