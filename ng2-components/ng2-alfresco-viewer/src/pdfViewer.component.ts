@@ -213,6 +213,7 @@ export class PdfViewerComponent {
             newScale = Math.ceil(newScale * 10) / 10;
             newScale = Math.min(this.MAX_SCALE, newScale);
         } while (--ticks > 0 && newScale < this.MAX_SCALE);
+        this.currentScaleMode = 'auto';
         this.setScaleUpdatePages(newScale);
     }
 
@@ -226,6 +227,7 @@ export class PdfViewerComponent {
             newScale = Math.floor(newScale * 10) / 10;
             newScale = Math.max(this.MIN_SCALE, newScale);
         } while (--ticks > 0 && newScale > this.MIN_SCALE);
+        this.currentScaleMode = 'auto';
         this.setScaleUpdatePages(newScale);
     }
 
