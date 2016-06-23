@@ -84,3 +84,31 @@
     height: 0;
     display: block;
 }
+
+/* small desktop */
+@media all and (max-width: 1200px) {}
+
+/* tablet */
+@media all and (max-width: 1024px) {}
+
+/* mobile phone */
+@media all and (max-width: 768px) {
+
+    :host th.desktop-only .cell-value {
+        display: none;
+    }
+
+    :host td.desktop-only .cell-value {
+        display: none;
+    }
+}
+
+@media (max-device-width: 768px){
+    :host th.desktop-only .cell-value {
+        display: none;
+    }
+
+    :host td.desktop-only .cell-value {
+        display: none;
+    }
+}

@@ -66,13 +66,15 @@ import {
                     </content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                            source="createdByUser.displayName">
+                            source="createdByUser.displayName"
+                            class="desktop-only">
                     </content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
                             source="createdAt"
                             type="date"
-                            format="medium">
+                            format="medium"
+                            class="desktop-only">
                     </content-column>
                 </content-columns>
                 <content-actions>
@@ -154,7 +156,7 @@ class DocumentListDemo implements OnInit {
     currentPath: string = '/';
     authenticated: boolean;
 
-    public host: string = 'http://devproducts-platform.alfresco.me';
+    public host: string = 'http://192.168.99.100:8080/';
 
     token: string;
 
