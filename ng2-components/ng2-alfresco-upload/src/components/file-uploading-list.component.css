@@ -65,3 +65,9 @@
         max-width: 80px;
     }
 }
+
+@media (min-width: 640px) {
+    .truncate {
+        width: 249px;
+    }
+}
