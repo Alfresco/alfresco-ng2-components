@@ -90,10 +90,13 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                             name: 'MyDoc',
                             content: {
                                 mimetype: 'text/plain'
+                            },
+                            createdByUser: {
+                                displayName: 'John Doe'
                             }
                         }
                     }];
-
+                    componentInstance.searchTerm = '<term>';
                     fixture.detectChanges();
 
                     let element = fixture.nativeElement;
