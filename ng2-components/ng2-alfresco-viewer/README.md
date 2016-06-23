@@ -4,7 +4,13 @@
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
   </a>
   <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='my blog' />
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+  <a title='Build Status' href="https://travis-ci.com/Alfresco/dev-platform-webcomponents">
+     <img src='https://travis-ci.com/Alfresco/dev-platform-webcomponents.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis Status' />
   </a>
 </p>
 
