@@ -190,10 +190,14 @@ export class PdfViewerComponent {
     }
 
     /**
-     * Method triggered when the page is resized
+     * toggle the fit page pdf
      */
     pageFit() {
-        this.scalePage('page-fit');
+        if (this.currentScaleMode !== 'page-fit') {
+            this.scalePage('page-fit');
+        } else {
+            this.scalePage('auto');
+        }
     }
 
     /**
