@@ -39,21 +39,21 @@
                     </span>
                 </div>
                 <br>
-                <button type="submit"
+                <button type="submit" id="login-button"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                         data-automation-id="login-button" [disabled]="!form.valid">{{'LOGIN.BUTTON.LOGIN' | translate }}</button>
                 <br>
                 <div class="center">
                     <label class=" mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="remember">
                         <input type="checkbox" id="remember" class="center mdl-checkbox__input">
-                        <span class="mdl-checkbox__label">{{'LOGIN.LABEL.REMEMBER' | translate }}</span>
+                        <span id="login-remember" class="mdl-checkbox__label">{{'LOGIN.LABEL.REMEMBER' | translate }}</span>
                     </label>
                 </div>
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-card__link">
                 <div class="login-action">
-                    <div class="login-action-left"> <a href="">{{'LOGIN.ACTION.HELP' | translate }}</a> </div>
-                    <div class="login-action-right"> <a href="">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
+                    <div id="login-action-help" class="login-action-left"> <a href="">{{'LOGIN.ACTION.HELP' | translate }}</a> </div>
+                    <div id="login-action-register" class="login-action-right"> <a href="">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
                     </div>
                 </div>
             </div>
