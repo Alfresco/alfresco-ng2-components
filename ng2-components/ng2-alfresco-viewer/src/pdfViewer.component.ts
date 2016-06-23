@@ -45,6 +45,9 @@ export class PdfViewerComponent {
     currentScale: number;
 
     MAX_AUTO_SCALE: number = 1.25;
+    DEFAULT_SCALE_DELTA: number = 1.1;
+    MIN_SCALE: number = 0.25;
+    MAX_SCALE: number = 10.0;
 
     ngOnChanges(changes) {
         if (!this.urlFile) {
@@ -198,6 +201,32 @@ export class PdfViewerComponent {
         } else {
             this.scalePage('auto');
         }
+    }
+
+    /**
+     * zoom in page pdf
+     */
+    zoomIn(ticks) {
+        let newScale = this.currentScale;
+        do {
+            newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
+            newScale = Math.ceil(newScale * 10) / 10;
+            newScale = Math.min(this.MAX_SCALE, newScale);
+        } while (--ticks > 0 && newScale < this.MAX_SCALE);
+        this.setScaleUpdatePages(newScale);
+    }
+
+    /**
+     * zoom out page pdf
+     */
+    zoomOut(ticks) {
+        let newScale = this.currentScale;
+        do {
+            newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
+            newScale = Math.floor(newScale * 10) / 10;
+            newScale = Math.max(this.MIN_SCALE, newScale);
+        } while (--ticks > 0 && newScale > this.MIN_SCALE);
+        this.setScaleUpdatePages(newScale);
     }
 
     /**
