@@ -15,10 +15,57 @@
  * limitations under the License.
  */
 
-import { it, describe } from '@angular/core/testing';
+import { provide } from '@angular/core';
+import {
+    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
+} from '@angular/platform-browser-dynamic/testing';
+import { it, describe, expect, inject, beforeEachProviders, setBaseTestProviders } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
+import { RouteParams } from '@angular/router-deprecated';
 import { AlfrescoSearchComponent } from './alfresco-search.component';
+import { SearchServiceMock } from './../assets/alfresco-search.service.mock';
+import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
+import {
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 describe('AlfrescoSearchComponent', () => {
+
+    let searchService;
+
+    setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
+
+    beforeEachProviders(() => {
+        searchService = new SearchServiceMock();
+
+        return [
+            searchService.getProviders(),
+            provide(AlfrescoThumbnailService, {}),
+            provide(AlfrescoTranslationService, {}),
+            provide(AlfrescoSettingsService, {}),
+            provide(AlfrescoAuthenticationService, {}),
+            provide(AlfrescoContentService, {})
+        ];
+    });
+
+    it('should not have a search term by default', () => {
+        let search = new AlfrescoSearchComponent(null, null, null, null);
+        expect(search).toBeDefined();
+        expect(search.searchTerm).toBe('');
+    });
+
+    it('should take the provided search term from query param provided via RouteParams', () => {
+        let search = new AlfrescoSearchComponent(null, null, null, new RouteParams({ q: 'exampleTerm692' }));
+        expect(search.searchTerm).toBe('exampleTerm692');
+    });
+
+    it('should have a null search term if no query param provided via RouteParams', () => {
+        let search = new AlfrescoSearchComponent(null, null, null, new RouteParams({}));
+        expect(search.searchTerm).toBeNull();
+    });
 
     it('should setup i18n folder', () => {
 
@@ -29,6 +76,51 @@ describe('AlfrescoSearchComponent', () => {
         let search = new AlfrescoSearchComponent(null, translation, null, null);
         expect(search).toBeDefined();
         expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search');
+    });
+
+    describe('Rendering search results', () => {
+
+        it('should display search results when a search term is provided',
+            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+                return tcb
+                    .createAsync(AlfrescoSearchComponent)
+                    .then((fixture) => {
+                        let componentInstance = fixture.componentInstance,
+                            searchTerm = 'customSearchTerm';
+                        spyOn(componentInstance, 'displaySearchResults').and.stub();
+                        componentInstance.searchTerm = searchTerm;
+                        componentInstance.ngOnChanges();
+                        fixture.detectChanges();
+                        expect(componentInstance.displaySearchResults).toHaveBeenCalledWith(searchTerm);
+
+                    });
+            }));
+
+        it('should display the returned search results',
+            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+                return tcb
+                    .createAsync(AlfrescoSearchComponent)
+                    .then((fixture) => {
+                        let componentInstance = fixture.componentInstance;
+                        componentInstance.results = [{
+                            entry: {
+                                id: '123',
+                                name: 'MyDoc',
+                                content: {
+                                    mimetype: 'text/plain'
+                                }
+                            }
+                        }];
+
+                        componentInstance.ngOnChanges();
+                        fixture.detectChanges();
+
+                        let element = fixture.nativeElement;
+                        expect(element.querySelectorAll('table tbody tr').length).toBe(1);
+
+                    });
+            }));
+
     });
 
 });

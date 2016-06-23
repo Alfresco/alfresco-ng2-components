@@ -86,15 +86,15 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
         }
     }
 
-    _getTextFieldClassName(): string {
+    getTextFieldClassName(): string {
         return 'mdl-textfield mdl-js-textfield' + (this.expandable ? ' mdl-textfield--expandable' : '');
     }
 
-    _getTextFieldHolderClassName(): string {
+    getTextFieldHolderClassName(): string {
         return this.expandable ? 'search-field mdl-textfield__expandable-holder' : 'search-field';
     }
 
-    _getAutoComplete(): string {
+    getAutoComplete(): string {
         return this.autocomplete ? 'on' : 'off';
     }
 
@@ -103,7 +103,7 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
      *
      * @param event Submit event that was fired
      */
-    _onSearch(event): void {
+    onSearch(event): void {
         if (event) {
             event.preventDefault();
         }
@@ -115,17 +115,17 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
         }
     }
 
-    _onFileClicked(event): void {
+    onFileClicked(event): void {
         this.preview.emit({
             value: event.value
         });
     }
 
-    _onFocus(): void {
+    onFocus(): void {
         this.searchActive = true;
     }
 
-    _onBlur(): void {
+    onBlur(): void {
         window.setTimeout(() => {
             this.searchActive = false;
         }, 200);
