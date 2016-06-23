@@ -14,8 +14,8 @@
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                     <label for="username" class="mdl-textfield__label">{{'LOGIN.LABEL.USERNAME' | translate }}</label>
                     <input  type="text" class="mdl-textfield__input" id="username" data-automation-id="username" ngControl="username" tabindex="1" />
-                    <span class="mdl-tooltip mdl-tooltip--validation" for="username" *ngIf="formError.username">
-                            <span id="username-error" data-automation-id="username-error">{{formError.username | translate }}</span>
+                    <span class="mdl-tooltip--validation" for="username" *ngIf="formError.username">
+                            <span id="username-error" class="mdl-textfield__error" style="visibility: visible" data-automation-id="username-error">{{formError.username | translate }}</span>
                     </span>
                 </div>
 
@@ -35,8 +35,8 @@
                     </i>
                     <label for="password" class="mdl-textfield__label">{{'LOGIN.LABEL.PASSWORD' | translate }}</label>
                     <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" ngControl="password" tabindex="2" />
-                    <span class="mdl-tooltip mdl-tooltip--validation is-active" for="password" *ngIf="formError.password">
-                            <span id="password-required" data-automation-id="password-required">{{formError.password | translate }}</span>
+                    <span class="mdl-tooltip--validation is-active" for="password" *ngIf="formError.password">
+                            <span id="password-required" class="mdl-textfield__error" style="visibility: visible" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
                 </div>
                 <br>
