@@ -45,9 +45,8 @@
     z-index: 1000;
 }
 
-.viewer-image {
-    max-height: 100%;
-    margin: auto;
+img-viewer {
+    height: 100%;
 }
 
 .center-element {

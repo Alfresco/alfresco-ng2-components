@@ -50,7 +50,9 @@
                             <div *ngIf="isPdf()">
                                 <pdf-viewer [urlFile]="urlFile" [nameFile]="displayName" ></pdf-viewer>
                             </div>
-                            <div *ngIf="isImage()" ><img src="{{urlFile}}"  id="viewer-image" class="center-element viewer-image"/></div>
+                            <div class="center-element" *ngIf="isImage()" >
+                                <img-viewer [urlFile]="urlFile" [nameFile]="displayName"></img-viewer>
+                            </div>
                             <div *ngIf="!supportedExtension()">
                                 <not-supported-format [urlFile]="urlFile" [nameFile]="displayName" ></not-supported-format>
                             </div>
