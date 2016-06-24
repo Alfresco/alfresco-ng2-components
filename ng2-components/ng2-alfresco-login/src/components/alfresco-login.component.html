@@ -14,12 +14,11 @@
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                     <label for="username" class="mdl-textfield__label">{{'LOGIN.LABEL.USERNAME' | translate }}</label>
                     <input  type="text" class="mdl-textfield__input" id="username" data-automation-id="username" ngControl="username" tabindex="1" />
-                    <span class="mdl-tooltip mdl-tooltip--validation" for="username" *ngIf="formError.username">
-                            <span id="username-error" data-automation-id="username-error">{{formError.username | translate }}</span>
+                    <span class="mdl-tooltip--validation" for="username" *ngIf="formError.username">
+                            <span id="username-error" class="mdl-textfield__error" style="visibility: visible" data-automation-id="username-error">{{formError.username | translate }}</span>
                     </span>
                 </div>
-
-                <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.password)}"
+                <div
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <i [ngClass]="{hide: isPasswordShow}" [ngClass]="{show: !isPasswordShow}" (click)="toggleShowPassword()" data-automation-id="show_password"
                        class="icon-inline">
@@ -35,26 +34,26 @@
                     </i>
                     <label for="password" class="mdl-textfield__label">{{'LOGIN.LABEL.PASSWORD' | translate }}</label>
                     <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" ngControl="password" tabindex="2" />
-                    <span class="mdl-tooltip mdl-tooltip--validation is-active" for="password" *ngIf="formError.password">
-                            <span id="password-required" data-automation-id="password-required">{{formError.password | translate }}</span>
+                    <span class="mdl-tooltip--validation" for="password" *ngIf="formError.password">
+                            <span id="password-required" class="mdl-textfield__error" style="visibility: visible" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
                 </div>
                 <br>
-                <button type="submit"
+                <button type="submit" id="login-button"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                         data-automation-id="login-button" [disabled]="!form.valid">{{'LOGIN.BUTTON.LOGIN' | translate }}</button>
                 <br>
                 <div class="center">
                     <label class=" mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="remember">
                         <input type="checkbox" id="remember" class="center mdl-checkbox__input">
-                        <span class="mdl-checkbox__label">{{'LOGIN.LABEL.REMEMBER' | translate }}</span>
+                        <span id="login-remember" class="mdl-checkbox__label">{{'LOGIN.LABEL.REMEMBER' | translate }}</span>
                     </label>
                 </div>
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-card__link">
                 <div class="login-action">
-                    <div class="login-action-left"> <a href="">{{'LOGIN.ACTION.HELP' | translate }}</a> </div>
-                    <div class="login-action-right"> <a href="">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
+                    <div id="login-action-help" class="login-action-left"> <a href="">{{'LOGIN.ACTION.HELP' | translate }}</a> </div>
+                    <div id="login-action-register" class="login-action-right"> <a href="">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
                     </div>
                 </div>
             </div>

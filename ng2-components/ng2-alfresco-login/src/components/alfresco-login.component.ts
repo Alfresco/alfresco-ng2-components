@@ -89,7 +89,7 @@ export class AlfrescoLoginComponent {
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
 
-        this.onValueChanged(null);
+        // this.onValueChanged(null);
     }
 
     /**
@@ -131,7 +131,8 @@ export class AlfrescoLoginComponent {
         for (let field in this.formError) {
             if (field) {
                 this.formError[field] = '';
-                let hasError = this.form.controls[field].errors || (this.form.controls[field].dirty && !this.form.controls[field].valid);
+                let hasError = (this.form.controls[field].errors && !this.form.controls[field].pristine) ||
+                    (this.form.controls[field].dirty && !this.form.controls[field].valid);
                 if (hasError) {
                     for (let key in this.form.controls[field].errors) {
                         if (key) {
@@ -164,6 +165,6 @@ export class AlfrescoLoginComponent {
         if (typeof componentHandler !== 'undefined') {
             componentHandler.upgradeAllRegistered();
         }
-        return !field.valid;
+        return !field.valid && field.dirty && !field.pristine;
     }
 }
