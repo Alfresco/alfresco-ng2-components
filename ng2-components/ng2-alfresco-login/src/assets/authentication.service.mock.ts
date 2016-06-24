@@ -16,17 +16,14 @@
  */
 
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
-export class AuthenticationMock extends AlfrescoAuthenticationService  {
+// TODO: should be extending AlfrescoAuthenticationService
+export class AuthenticationMock /*extends AlfrescoAuthenticationService*/ {
 
-    constructor(settings: AlfrescoSettingsService = null) {
-        super(settings);
-    }
-
-    login(username: string, password: string): Observable<string> {
+    // TODO: real auth service returns Observable<string>
+    login(username: string, password: string): Observable<boolean> {
         if (username === 'fake-username' && password === 'fake-password') {
-            return Observable.of('fake-token');
+            return Observable.of(true);
         } else {
             return Observable.throw('Fake server error');
         }
