@@ -15,6 +15,9 @@ module.exports = function (config) {
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
 
+      {pattern: 'node_modules/material-design-lite/material.min.js', included: true, watched: false},
+      {pattern: 'node_modules/alfresco-js-api/bundle.js', included: true, watched: false},
+
       {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
 

@@ -15,17 +15,23 @@
  * limitations under the License.
  */
 
-import {
-    describe,
-    beforeEach
-} from '@angular/core/testing';
-import {AlfrescoSearchService} from './alfresco-search.service';
+import { Observable } from 'rxjs/Rx';
+import { EventEmitter } from '@angular/core';
 
-describe('AlfrescoSearchService', () => {
+export interface LangChangeEvent {
+    lang: string;
+    translations: any;
+}
 
-    let service: AlfrescoSearchService;
+export class TranslationMock {
 
-    beforeEach(() => {
-        service = new AlfrescoSearchService(null, null);
-    });
-});
+    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
+
+    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+        return Observable.of(key);
+    }
+
+    addTranslationFolder() {
+
+    }
+}

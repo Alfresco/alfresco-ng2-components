@@ -48,7 +48,10 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService,
                 @Optional() params: RouteParams) {
-        translate.addTranslationFolder('node_modules/ng2-alfresco-search');
+
+        if (translate !== null) {
+            translate.addTranslationFolder('node_modules/ng2-alfresco-search');
+        }
 
         this.results = null;
         if (params) {
@@ -57,11 +60,11 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     }
 
     ngOnInit(): void {
-        this._displaySearchResults(this.searchTerm);
+        this.displaySearchResults(this.searchTerm);
     }
 
     ngOnChanges(changes): void {
-        this._displaySearchResults(this.searchTerm);
+        this.displaySearchResults(this.searchTerm);
     }
 
     /**
@@ -69,7 +72,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    _getMimeTypeIcon(node: any): string {
+    getMimeTypeIcon(node: any): string {
         if (node.entry.content && node.entry.content.mimeType) {
             let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
             return `${this.baseComponentPath}/img/${icon}`;
@@ -80,7 +83,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    private _displaySearchResults(searchTerm): void {
+    public displaySearchResults(searchTerm): void {
         if (searchTerm !== null) {
             this._alfrescoSearchService
                 .getLiveSearchResults(searchTerm)

@@ -20,8 +20,7 @@ import { Observable } from 'rxjs/Rx';
 
 import {
     AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService
+    AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
 
 declare let AlfrescoApi: any;
@@ -33,8 +32,7 @@ declare let AlfrescoApi: any;
 export class AlfrescoSearchService {
 
     constructor(private settings: AlfrescoSettingsService,
-                private authService: AlfrescoAuthenticationService,
-                private contentService: AlfrescoContentService) {
+                private authService: AlfrescoAuthenticationService) {
     }
 
     private getAlfrescoClient() {

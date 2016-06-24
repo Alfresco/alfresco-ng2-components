@@ -28,4 +28,21 @@ describe('AlfrescoThumbnailService', () => {
     beforeEach(() => {
         service = new AlfrescoThumbnailService(null);
     });
+
+    it('should return the correct icon for a plain text file', () => {
+        expect(service.getMimeTypeIcon('text/plain')).toBe('ft_ic_document.svg');
+    });
+
+    it('should return the correct icon for a PNG file', () => {
+        expect(service.getMimeTypeIcon('image/png')).toBe('ft_ic_raster_image.svg');
+    });
+
+    it('should return the correct icon for a MP4 video file', () => {
+        expect(service.getMimeTypeIcon('video/mp4')).toBe('ft_ic_video.svg');
+    });
+
+    it('should return a generic icon for an unknown file', () => {
+        expect(service.getMimeTypeIcon('x-unknown/yyy')).toBe('ft_ic_miscellaneous.svg');
+    });
+
 });

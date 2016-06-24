@@ -56,13 +56,15 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
     constructor(private _alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService) {
-        translate.addTranslationFolder('node_modules/ng2-alfresco-search');
+        if (translate) {
+            translate.addTranslationFolder('node_modules/ng2-alfresco-search');
+        }
         this.results = null;
     }
 
     ngOnChanges(changes): void {
         if (changes.searchTerm) {
-            this._displaySearchResults(this.searchTerm);
+            this.displaySearchResults(this.searchTerm);
         }
     }
 
@@ -70,7 +72,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    private _displaySearchResults(searchTerm) {
+    public displaySearchResults(searchTerm) {
         if (searchTerm !== null && searchTerm !== '') {
             this._alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
@@ -99,7 +101,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
         }
     }
 
-    _onItemClick(node, event?: Event): void {
+    onItemClick(node, event?: Event): void {
         if (event) {
             event.preventDefault();
         }
