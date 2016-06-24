@@ -59,7 +59,7 @@ export class AlfrescoAuthenticationService {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(username: string, password: string) {
+    login(username: string, password: string): Observable<string> {
         return this.loginPost(username, password);
     }
 

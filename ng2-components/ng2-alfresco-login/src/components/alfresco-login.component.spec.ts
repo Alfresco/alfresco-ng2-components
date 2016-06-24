@@ -15,37 +15,26 @@
  * limitations under the License.
  */
 
-
-import {
-    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
-} from '@angular/platform-browser-dynamic/testing';
 import {
     it,
     describe,
     expect,
     inject,
-    beforeEachProviders,
-    setBaseTestProviders
+    beforeEachProviders
 } from '@angular/core/testing';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import { provide } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('AlfrescoLogin', () => {
-    let authService;
-
-    setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
 
     beforeEachProviders(() => {
-        authService = new AuthenticationMock();
-
         return [
-            authService.getProviders(),
-            provide(AlfrescoTranslationService, {useClass: TranslationMock})
+            { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
+            { provide: AlfrescoTranslationService, useClass: TranslationMock }
         ];
     });
 
