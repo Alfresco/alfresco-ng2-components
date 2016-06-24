@@ -17,15 +17,12 @@
 
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { UploadService } from './upload.service';
-import { provide } from '@angular/core';
 import { FileModel } from './../models/file.model';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
 
-
 declare var AlfrescoApi: any;
-
 declare let jasmine: any;
 
 let doneFn = jasmine.createSpy('success');
@@ -66,10 +63,12 @@ describe('AlfrescoUploadService', () => {
 
     window['AlfrescoApi'] = AlfrescoApiMock;
 
-    beforeEachProviders(() => [
-        provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsServiceMock}),
-        provide(UploadService, {useClass: MockUploadService})
-    ]);
+    beforeEachProviders(() => {
+        return [
+            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            { provide: UploadService, useClass: MockUploadService }
+        ];
+    });
 
     beforeEach( inject([UploadService], (uploadService: UploadService) => {
         jasmine.Ajax.install();

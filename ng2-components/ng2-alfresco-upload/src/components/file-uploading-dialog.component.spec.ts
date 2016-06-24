@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject, beforeEachProviders, setBaseTestProviders } from '@angular/core/testing';
+import { describe, expect, it, inject, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import {
-    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
-} from '@angular/platform-browser-dynamic/testing';
-import { provide } from '@angular/core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileModel } from '../models/file.model';
 import { AlfrescoTranslationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
@@ -32,13 +27,11 @@ import { Observable } from 'rxjs/Observable';
 
 describe('FileUploadDialog', () => {
 
-    setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
-
     beforeEachProviders(() => {
         return [
-            provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsService}),
-            provide(AlfrescoTranslationService, {useClass: TranslationMock}),
-            provide(UploadService, {useClass: UploadServiceMock})
+            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsService },
+            { provide: AlfrescoTranslationService, useClass: TranslationMock },
+            { provide: UploadService, useClass: UploadServiceMock }
         ];
     });
 

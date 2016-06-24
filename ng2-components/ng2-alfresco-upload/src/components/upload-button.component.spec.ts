@@ -17,7 +17,6 @@
 
 import { describe, expect, it, inject, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import { provide } from '@angular/core';
 import { UploadButtonComponent } from './upload-button.component';
 import { AlfrescoTranslationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -37,9 +36,9 @@ describe('AlfrescoUploadButton', () => {
 
     beforeEachProviders(() => {
         return [
-            provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsService}),
-            provide(AlfrescoTranslationService, {useClass: TranslationMock}),
-            provide(UploadService, {useClass: UploadServiceMock})
+            { provide: AlfrescoSettingsService },
+            { provide: AlfrescoTranslationService, useClass: TranslationMock },
+            { provide: UploadService, useClass: UploadServiceMock }
         ];
     });
 
