@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Optional, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, Optional, OnChanges, OnInit } from '@angular/core';
 import { RouteParams } from '@angular/router-deprecated';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
@@ -37,6 +37,9 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     @Input()
     searchTerm: string = '';
+
+    @Output()
+    preview: EventEmitter<any> = new EventEmitter();
 
     results: any;
 
@@ -97,6 +100,19 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                         this.errorMessage = <any>error;
                     }
                 );
+        }
+    }
+
+    onItemClick(node, event?: Event): void {
+        if (event) {
+            event.preventDefault();
+        }
+        if (node && node.entry) {
+            if (node.entry.isFile) {
+                this.preview.emit({
+                    value: node
+                });
+            }
         }
     }
 

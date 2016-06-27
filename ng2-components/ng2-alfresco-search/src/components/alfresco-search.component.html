@@ -19,7 +19,7 @@
     </thead>
     <tbody>
 
-    <tr *ngFor="let result of results; let idx = index">
+    <tr *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)">
         <td><img src="{{getMimeTypeIcon(result)}}" /></td>
         <td attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
         <td attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}}>
