@@ -109,4 +109,35 @@ describe('AlfrescoSearchComponent', () => {
 
     });
 
+    describe('search result actions', () => {
+
+        it('should emit preview when file item clicked',
+            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+                return tcb
+                    .overrideProviders(AlfrescoSearchComponent, [
+                        { provide: AlfrescoSearchService, useClass: SearchServiceMock }
+                    ])
+                    .createAsync(AlfrescoSearchComponent)
+                    .then((fixture) => {
+                        let componentInstance = fixture.componentInstance;
+                        componentInstance.results = [{
+                            entry: {
+                                id: '123',
+                                name: 'MyDoc',
+                                content: {
+                                    mimetype: 'text/plain'
+                                },
+                                isFile: true
+                            }
+                        }];
+                        fixture.detectChanges(componentInstance.results[0]);
+                        componentInstance.preview.subscribe(e => {
+                            expect(e.value).toBe(componentInstance.results[0]);
+                        });
+                        componentInstance.onItemClick();
+
+                    });
+            }));
+    });
+
 });
