@@ -50,6 +50,21 @@ System.config(config);
 
 System.import('@angular/platform-browser/src/browser/browser_adapter')
     .then(function(browser_adapter) { browser_adapter.BrowserDomAdapter.makeCurrent(); })
+    .then(function () {
+        return Promise.all([
+            System.import('@angular/core/testing'),
+            System.import('@angular/platform-browser-dynamic/testing')
+        ])
+    })
+    .then(function (providers) {
+        var testing = providers[0];
+        var testingBrowser = providers[1];
+
+        testing.setBaseTestProviders(
+            testingBrowser.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+            testingBrowser.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
+
+    })
     .then(function() { return Promise.all(resolveTestFiles()); })
     .then(
         function() {

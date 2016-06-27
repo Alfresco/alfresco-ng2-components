@@ -15,20 +15,15 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject, setBaseTestProviders } from '@angular/core/testing';
+import { describe, expect, it, inject } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import {
-    TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-    TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
-} from '@angular/platform-browser-dynamic/testing';
+
 import { PdfViewerComponent } from './pdfViewer.component';
 import { PDFJSmock } from './assets/PDFJS.mock';
 import { PDFViewermock } from './assets/PDFViewer.mock';
 import { EventMock } from './assets/event.mock';
 
 describe('PdfViewer', () => {
-    setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-        TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
 
     describe('View', () => {
         it('Canvas should be present', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
