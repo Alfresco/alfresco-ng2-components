@@ -8,7 +8,7 @@
             "NONE": "No results found for {{searchTerm}}",
             "ERROR": "An error occurred while running the search",
             "COLUMNS": {
-                "NAME": "Name",
+                "NAME": "Display name",
                 "MODIFIED_BY": "Modified by",
                 "MODIFIED_AT": "Modified at"
             }
