@@ -114,25 +114,25 @@
 
 @media only screen and (min-width: 435px) and (max-width: 773px) {
     .content-layout {
-        height: 700px
+        height: 680px
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .content-layout {
-        height: 950px
+        height: 690px
     }
 }
 
-@media only screen and (min-width: 1024px) and (max-width: 1440px) {
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
     .content-layout {
-        height: 970px;
+        height: 680px;
     }
 }
 
-@media only screen and (min-width: 1440px){
+@media only screen and (min-width: 1440px) and (max-width: 2000px) {
     .content-layout {
-        height: 1000px;
+        height: 950px;
     }
 }
 
