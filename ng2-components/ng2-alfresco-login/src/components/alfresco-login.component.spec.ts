@@ -89,6 +89,24 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('input[type="text"]').value).toEqual('');
     });
 
+    it('should render validation min-length error when the username is just 1 character', () => {
+        let compiled = componentFixture.debugElement.nativeElement;
+        let usernameInput = compiled.querySelector('#username');
+
+        componentFixture.detectChanges();
+
+        usernameInput.value = '1';
+        usernameInput.dispatchEvent(new Event('input'));
+
+        componentFixture.detectChanges();
+
+        expect(component.formError).toBeDefined();
+        expect(component.formError.username).toBeDefined();
+        expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+        expect(compiled.querySelector('#username-error')).toBeDefined();
+        expect(compiled.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+    });
+
     it('should render validation min-length error when the username is lower than 4 characters', () => {
         let compiled = componentFixture.debugElement.nativeElement;
         let usernameInput = compiled.querySelector('#username');
@@ -100,10 +118,6 @@ describe('AlfrescoLogin', () => {
 
         componentFixture.detectChanges();
 
-        component.onValueChanged(null);
-
-        componentFixture.detectChanges();
-
         expect(component.formError).toBeDefined();
         expect(component.formError.username).toBeDefined();
         expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
@@ -111,18 +125,15 @@ describe('AlfrescoLogin', () => {
         expect(compiled.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
     });
 
-    it('should render validation required error when the username is empty', () => {
+    it('should render validation required error when the username is empty and dirty', () => {
         let compiled = componentFixture.debugElement.nativeElement;
         let usernameInput = compiled.querySelector('#username');
 
         componentFixture.detectChanges();
 
         usernameInput.value = '';
+        component.form.controls.username.markAsDirty();
         usernameInput.dispatchEvent(new Event('input'));
-
-        componentFixture.detectChanges();
-
-        component.onValueChanged(null);
 
         componentFixture.detectChanges();
 
@@ -133,18 +144,15 @@ describe('AlfrescoLogin', () => {
         expect(compiled.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
     });
 
-    it('should render validation required error when the password is empty', () => {
+    it('should render validation required error when the password is empty and dirty', () => {
         let compiled = componentFixture.debugElement.nativeElement;
         let passwordInput = compiled.querySelector('#password');
 
         componentFixture.detectChanges();
 
         passwordInput.value = '';
+        component.form.controls.password.markAsDirty();
         passwordInput.dispatchEvent(new Event('input'));
-
-        componentFixture.detectChanges();
-
-        component.onValueChanged(null);
 
         componentFixture.detectChanges();
 
@@ -164,12 +172,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';
+
+        component.form.controls.username.markAsDirty();
+        component.form.controls.password.markAsDirty();
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
-
-        componentFixture.detectChanges();
-
-        component.onValueChanged(null);
 
         componentFixture.detectChanges();
 
@@ -189,12 +197,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-change-username';
         passwordInput.value = 'fake-change-password';
+
+        component.form.controls.username.markAsDirty();
+        component.form.controls.password.markAsDirty();
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
-
-        componentFixture.detectChanges();
-
-        component.onValueChanged(null);
 
         componentFixture.detectChanges();
 
@@ -214,12 +222,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
         componentFixture.detectChanges();
 
-        component.onValueChanged(null);
         compiled.querySelector('button').click();
 
         componentFixture.detectChanges();
@@ -240,12 +248,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-wrong-username';
         passwordInput.value = 'fake-password';
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
         componentFixture.detectChanges();
 
-        component.onValueChanged(null);
         compiled.querySelector('button').click();
 
         componentFixture.detectChanges();
@@ -268,12 +276,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-wrong-password';
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
         componentFixture.detectChanges();
 
-        component.onValueChanged(null);
         compiled.querySelector('button').click();
 
         componentFixture.detectChanges();
@@ -296,12 +304,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-wrong-username';
         passwordInput.value = 'fake-wrong-password';
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
         componentFixture.detectChanges();
 
-        component.onValueChanged(null);
         compiled.querySelector('button').click();
 
         componentFixture.detectChanges();
@@ -326,12 +334,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
         componentFixture.detectChanges();
 
-        component.onValueChanged(null);
         compiled.querySelector('button').click();
 
         componentFixture.detectChanges();
@@ -357,12 +365,12 @@ describe('AlfrescoLogin', () => {
 
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-wrong-password';
+
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
         componentFixture.detectChanges();
 
-        component.onValueChanged(null);
         compiled.querySelector('button').click();
 
         componentFixture.detectChanges();

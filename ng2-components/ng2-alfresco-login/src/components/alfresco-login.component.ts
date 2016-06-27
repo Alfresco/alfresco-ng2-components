@@ -131,7 +131,7 @@ export class AlfrescoLoginComponent {
         for (let field in this.formError) {
             if (field) {
                 this.formError[field] = '';
-                let hasError = (this.form.controls[field].errors && !this.form.controls[field].pristine) ||
+                let hasError = (this.form.controls[field].errors && data[field] !== '') ||
                     (this.form.controls[field].dirty && !this.form.controls[field].valid);
                 if (hasError) {
                     for (let key in this.form.controls[field].errors) {
