@@ -53,6 +53,9 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
     @Output()
     preview = new EventEmitter();
 
+    @Output()
+    expand = new EventEmitter();
+
     searchControl: Control;
 
     @Input()
@@ -123,12 +126,22 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
 
     onFocus(): void {
         this.searchActive = true;
+        if (this.expandable) {
+            this.expand.emit({
+                expanded: true
+            });
+        }
     }
 
     onBlur(): void {
         window.setTimeout(() => {
             this.searchActive = false;
         }, 200);
+        if (this.expandable && (this.searchControl.value === '' || this.searchControl.value === undefined)) {
+            this.expand.emit({
+                expanded: false
+            });
+        }
     }
 
 }
