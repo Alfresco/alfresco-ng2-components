@@ -1,11 +1,11 @@
 .upload-border {
     vertical-align: middle;
     color: #555;
-    padding: 20px;
     text-align: center;
 }
 
 .input-focus {
     color: #2196F3;
+    margin-left: 3px;
     border: 3px dashed #2196F3;
 }

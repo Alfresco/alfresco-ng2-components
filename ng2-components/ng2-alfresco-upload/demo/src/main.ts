@@ -61,13 +61,14 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
 
                <br><br>
 
-               <alfresco-upload-drag-area (onSuccess)="customMethod($event)" >
-                     <div style="width: 200px; height: 100px; border: 1px solid #888888">
+               <alfresco-upload-drag-area (onSuccess)="customMethod($event)" class="upload-border">
+                     <div class="drag-area">
                          DRAG HERE
                      </div>
                </alfresco-upload-drag-area>
                <file-uploading-dialog></file-uploading-dialog>
                `,
+    styles: [`.upload-border { position: absolute; padding: 5px 5px }`, `.drag-area { width: 200px; height: 100px; border: 1px solid #888888;}`],
     directives: [ALFRESCO_ULPOAD_COMPONENTS]
 })
 export class MyDemoApp implements OnInit {
