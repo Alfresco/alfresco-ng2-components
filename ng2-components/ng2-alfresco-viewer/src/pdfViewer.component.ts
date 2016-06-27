@@ -216,7 +216,7 @@ export class PdfViewerComponent {
      * @param {number} ticks
      */
     zoomIn(ticks: number) {
-        let newScale = this.currentScale;
+        let newScale: any = this.currentScale;
         do {
             newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
             newScale = Math.ceil(newScale * 10) / 10;
@@ -232,7 +232,7 @@ export class PdfViewerComponent {
      * @param {number} ticks
      */
     zoomOut(ticks: number) {
-        let newScale = this.currentScale;
+        let newScale: any = this.currentScale;
         do {
             newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
             newScale = Math.floor(newScale * 10) / 10;
