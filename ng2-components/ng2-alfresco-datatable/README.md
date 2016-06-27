@@ -1,7 +1,7 @@
 # DataTable Component for Angular 2
 
 <p>
-  <a href='https://raw.githubusercontent.com/Alfresco/dev-platform-webcomponents/master/ng2-components/ng2-alfresco-upload/LICENSE'>
+  <a href='https://raw.githubusercontent.com/Alfresco/app-dev-framework/master/ng2-components/ng2-alfresco-upload/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
   </a>
   <a href='https://www.alfresco.com/'>
@@ -10,8 +10,8 @@
   <a href='https://www.alfresco.com/'>
      <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
   </a>
-  <a title='Build Status' href="https://travis-ci.com/Alfresco/dev-platform-webcomponents">
-     <img src='https://travis-ci.com/Alfresco/dev-platform-webcomponents.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis Status' />
+  <a title='Build Status' href="https://travis-ci.com/Alfresco/app-dev-framework">
+     <img src='https://travis-ci.com/Alfresco/app-dev-framework.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis Status' />
   </a>
 </p>
 

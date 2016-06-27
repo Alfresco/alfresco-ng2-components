@@ -59,8 +59,8 @@ npm publish
 
 ```sh
 git clone https://github.com/Alfresco/dev-platform-js-api.git
-git clone https://github.com/Alfresco/dev-platform-webcomponents.git
-cd dev-platform-webcomponents
+git clone https://github.com/Alfresco/app-dev-framework.git
+cd app-dev-framework
 ```
 
 * Start the demo and Install all the dependencies (do it the first time)

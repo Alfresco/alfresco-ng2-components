@@ -1,6 +1,6 @@
 # Alfresco Angular 2 Components
-  <a title='Build Status' href="https://travis-ci.com/Alfresco/dev-platform-webcomponents">
-    <img src='https://travis-ci.com/Alfresco/dev-platform-webcomponents.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis Status' />
+  <a title='Build Status' href="https://travis-ci.com/Alfresco/app-dev-framework">
+    <img src='https://travis-ci.com/Alfresco/app-dev-framework.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis Status' />
   </a>
   
 - [Core library](ng2-alfresco-core/README.md)
