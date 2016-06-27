@@ -77,6 +77,7 @@ export class PdfViewerComponent {
 
     /**
      * return the PDFJS global object (exist to facilitate the mock of PDFJS in the test)
+     *
      * @returns {PDFJS}
      */
     getPDFJS() {
@@ -101,6 +102,7 @@ export class PdfViewerComponent {
 
     /**
      * Method to scale the page current support implementation
+     *
      * @param {string} scaleMode - new scale mode
      */
     scalePage(scaleMode) {
@@ -150,6 +152,7 @@ export class PdfViewerComponent {
 
     /**
      * Update all the pages with the newScale scale
+     *
      * @param {number} newScale - new scale page
      */
     setScaleUpdatePages(newScale: number) {
@@ -169,6 +172,8 @@ export class PdfViewerComponent {
      *
      * @param {number} oldScale - old scale page
      * @param {number} newScale - new scale page
+     *
+     * @returns {boolean}
      */
     isSameScale(oldScale: number, newScale: number) {
         return (newScale === oldScale);
@@ -180,6 +185,8 @@ export class PdfViewerComponent {
      *
      * @param {number} width
      * @param {number} height
+     *
+     * @returns {boolean}
      */
     isLandscape(width: number, height: number) {
         return (width > height);
@@ -205,8 +212,10 @@ export class PdfViewerComponent {
 
     /**
      * zoom in page pdf
+     *
+     * @param {number} ticks
      */
-    zoomIn(ticks) {
+    zoomIn(ticks: number) {
         let newScale = this.currentScale;
         do {
             newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
@@ -219,8 +228,10 @@ export class PdfViewerComponent {
 
     /**
      * zoom out page pdf
+     *
+     * @param {number} ticks
      */
-    zoomOut(ticks) {
+    zoomOut(ticks: number) {
         let newScale = this.currentScale;
         do {
             newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
