@@ -19,6 +19,7 @@ import { Control, Validators } from '@angular/common';
 import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
+import { SearchTermValidator } from './../forms/search-term-validator';
 
 declare let __moduleName: string;
 declare var componentHandler: any;
@@ -66,7 +67,7 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
 
         this.searchControl = new Control(
             this.searchTerm,
-            Validators.compose([Validators.required, Validators.minLength(3)])
+            Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
 
         this.searchControl.valueChanges.map(value => this.searchControl.valid ? value : '')
