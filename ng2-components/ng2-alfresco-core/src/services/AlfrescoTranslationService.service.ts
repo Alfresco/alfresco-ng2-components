@@ -16,7 +16,6 @@
  */
 
 import { Injectable, Optional } from '@angular/core';
-import { Http } from '@angular/http';
 import { MissingTranslationHandler, TranslateService } from 'ng2-translate/ng2-translate';
 import { AlfrescoTranslationLoader } from './AlfrescoTranslationLoader.service';
 
@@ -25,8 +24,8 @@ export class AlfrescoTranslationService extends TranslateService {
     userLang: string = 'en' ;
     currentLoader: AlfrescoTranslationLoader;
 
-    constructor(http: Http, currentLoader: AlfrescoTranslationLoader, @Optional() missingTranslationHandler: MissingTranslationHandler) {
-        super(http, currentLoader, missingTranslationHandler);
+    constructor(currentLoader: AlfrescoTranslationLoader, @Optional() missingTranslationHandler: MissingTranslationHandler) {
+        super(currentLoader, missingTranslationHandler);
         this.userLang = navigator.language.split('-')[0]; // use navigator lang if available
         this.userLang = /(fr|en)/gi.test(this.userLang) ? this.userLang : 'en';
         this.setDefaultLang(this.userLang);
