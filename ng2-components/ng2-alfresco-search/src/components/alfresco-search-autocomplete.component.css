@@ -1,6 +1,6 @@
 :host {
     position: absolute;
-    z-index: 1;
+    z-index: 5;
     display: none;
     color: #555;
     margin: -21px 0px 0px 0px;
@@ -35,4 +35,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 400px) {
+    :host {
+        right: 0;
+    }
+    .truncate{
+        width: 200px;
+    }
 }
