@@ -45,6 +45,9 @@ export class PdfViewerComponent {
     currentScale: number;
 
     MAX_AUTO_SCALE: number = 1.25;
+    DEFAULT_SCALE_DELTA: number = 1.1;
+    MIN_SCALE: number = 0.25;
+    MAX_SCALE: number = 10.0;
 
     ngOnChanges(changes) {
         if (!this.urlFile) {
@@ -74,6 +77,7 @@ export class PdfViewerComponent {
 
     /**
      * return the PDFJS global object (exist to facilitate the mock of PDFJS in the test)
+     *
      * @returns {PDFJS}
      */
     getPDFJS() {
@@ -98,6 +102,7 @@ export class PdfViewerComponent {
 
     /**
      * Method to scale the page current support implementation
+     *
      * @param {string} scaleMode - new scale mode
      */
     scalePage(scaleMode) {
@@ -147,6 +152,7 @@ export class PdfViewerComponent {
 
     /**
      * Update all the pages with the newScale scale
+     *
      * @param {number} newScale - new scale page
      */
     setScaleUpdatePages(newScale: number) {
@@ -166,6 +172,8 @@ export class PdfViewerComponent {
      *
      * @param {number} oldScale - old scale page
      * @param {number} newScale - new scale page
+     *
+     * @returns {boolean}
      */
     isSameScale(oldScale: number, newScale: number) {
         return (newScale === oldScale);
@@ -177,6 +185,8 @@ export class PdfViewerComponent {
      *
      * @param {number} width
      * @param {number} height
+     *
+     * @returns {boolean}
      */
     isLandscape(width: number, height: number) {
         return (width > height);
@@ -190,10 +200,46 @@ export class PdfViewerComponent {
     }
 
     /**
-     * Method triggered when the page is resized
+     * toggle the fit page pdf
      */
     pageFit() {
-        this.scalePage('page-fit');
+        if (this.currentScaleMode !== 'page-fit') {
+            this.scalePage('page-fit');
+        } else {
+            this.scalePage('auto');
+        }
+    }
+
+    /**
+     * zoom in page pdf
+     *
+     * @param {number} ticks
+     */
+    zoomIn(ticks: number) {
+        let newScale: any = this.currentScale;
+        do {
+            newScale = (newScale * this.DEFAULT_SCALE_DELTA).toFixed(2);
+            newScale = Math.ceil(newScale * 10) / 10;
+            newScale = Math.min(this.MAX_SCALE, newScale);
+        } while (--ticks > 0 && newScale < this.MAX_SCALE);
+        this.currentScaleMode = 'auto';
+        this.setScaleUpdatePages(newScale);
+    }
+
+    /**
+     * zoom out page pdf
+     *
+     * @param {number} ticks
+     */
+    zoomOut(ticks: number) {
+        let newScale: any = this.currentScale;
+        do {
+            newScale = (newScale / this.DEFAULT_SCALE_DELTA).toFixed(2);
+            newScale = Math.floor(newScale * 10) / 10;
+            newScale = Math.max(this.MIN_SCALE, newScale);
+        } while (--ticks > 0 && newScale > this.MIN_SCALE);
+        this.currentScaleMode = 'auto';
+        this.setScaleUpdatePages(newScale);
     }
 
     /**
