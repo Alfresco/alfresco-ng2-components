@@ -19,7 +19,6 @@ h3, h4 {
     font-family: 'Muli', "Helvetica", "Arial", sans-serif !important;
 }
 
-
 h5, h6 {
     font-family: 'Muli', "Helvetica", "Arial", sans-serif !important;
     margin: 24px 0 16px
@@ -29,11 +28,13 @@ blockquote {
     font-family: 'Muli', "Helvetica", "Arial", sans-serif !important;
 }
 
+input {
+    font-family: 'Muli', "Helvetica", "Arial", sans-serif !important;
+}
 
 .mdl-typography--display-4, .mdl-typography--display-4-color-contrast {
     font-family: 'Muli', "Helvetica", "Arial", sans-serif !important;
 }
-
 
 .mdl-typography--display-3, .mdl-typography--display-3-color-contrast {
     font-family: 'Muli', "Helvetica", "Arial", sans-serif !important;
