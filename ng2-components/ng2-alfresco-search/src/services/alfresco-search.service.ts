@@ -59,7 +59,6 @@ export class AlfrescoSearchService {
     public getLiveSearchResults(term: string): Observable<any> {
         return Observable.fromPromise(this.getSearchNodesPromise(term))
             .map(res => <any> res)
-            .do(data => console.log('Search data', data)) // eyeball results in the console
             .catch(this.handleError);
     }
 
