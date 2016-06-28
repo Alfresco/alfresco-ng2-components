@@ -17,20 +17,20 @@
 
 import { Observable } from 'rxjs/Observable';
 import { FileModel } from '../models/file.model';
+import { UploadService } from '../services/upload.service';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
-export class UploadServiceMock {
-
-    private _baseUrlPath: string = 'fakebaseurlpath';
-    private _url: string = 'fakeurl';
-    private _formFields: Object = {};
+export class UploadServiceMock extends UploadService {
 
     filesUpload$: Observable<any>;
     totalCompleted$: Observable<number>;
 
+    constructor(settings: AlfrescoSettingsService) {
+        super(settings);
+    }
+
     public setOptions(options: any): void {
-        this._url = options._url || this._url;
-        this._baseUrlPath = options.baseUrlPath || this._baseUrlPath;
-        this._formFields = options.formFields != null ? options.formFields : this._formFields;
+        super.setOptions(options);
     }
 
     addToQueue(files: any[]): FileModel[] {
@@ -76,7 +76,4 @@ export class UploadServiceMock {
 
     public uploadFilesInTheQueue(directory: string, elementEmit: any): void {
     };
-
-
-
 }
