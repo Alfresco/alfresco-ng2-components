@@ -26,7 +26,20 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-search',
-    styles: [],
+    styles: [`
+        :host .mdl-data-table td {
+            max-width: 0;
+            white-space: nowrap;
+        }
+        :host .mdl-data-table td.col-mimetype-icon {
+            width: 24px;
+        }
+        :host .col-display-name {
+            min-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    `],
     templateUrl: './alfresco-search.component.html',
     providers: [AlfrescoSearchService],
     pipes: [AlfrescoPipeTranslate]

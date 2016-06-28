@@ -3,7 +3,7 @@
 <table data-automation-id="search_result_table" *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
-        <th class="mdl-data-table__cell--non-numeric"></th>
+        <th class="mdl-data-table__cell--non-numeric col-mimetype-icon"></th>
         <th class="mdl-data-table__cell--non-numeric col-display-name">
             {{'SEARCH.RESULTS.COLUMNS.NAME' | translate}}
         </th>
@@ -18,7 +18,7 @@
     <tbody>
 
     <tr *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)">
-        <td><img src="{{getMimeTypeIcon(result)}}" /></td>
+        <td class="col-mimetype-icon"><img src="{{getMimeTypeIcon(result)}}" /></td>
         <td class="mdl-data-table__cell--non-numeric col-display-name"
             attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
         <td class="mdl-data-table__cell--non-numeric  col-modified-by"

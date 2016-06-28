@@ -37,8 +37,14 @@ declare let __moduleName: string;
             cursor: pointer;
         }
         @media screen and (max-width: 600px) {
+            :host .col-display-name {
+                min-width: 100px;
+            }
             :host .col-modified-at, :host .col-modified-by {
                 display: none;
+            }
+            :host div.search-results-container table {
+                width: 100%;
             }
         }
     `],
