@@ -15,6 +15,7 @@ module.exports = function (config) {
       {pattern: 'node_modules/rxjs/**/*.map', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
+      {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
 
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
