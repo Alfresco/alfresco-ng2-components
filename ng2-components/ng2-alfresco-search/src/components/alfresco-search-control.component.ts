@@ -16,7 +16,7 @@
  */
 
 import { Control, Validators } from '@angular/common';
-import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, ElementRef, EventEmitter, AfterViewInit, ViewChild } from '@angular/core';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 
@@ -57,6 +57,8 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
     expand = new EventEmitter();
 
     searchControl: Control;
+
+    @ViewChild('searchInput', {}) searchInput: ElementRef;
 
     @Input()
     autocompleteSearchTerm = '';
@@ -114,7 +116,7 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
             this.searchChange.emit({
                 value: this.searchTerm
             });
-            // this.router.navigate(['Search', term]);
+            this.searchInput.nativeElement.blur();
         }
     }
 
