@@ -8,8 +8,8 @@
       "clean": "rimraf dist node_modules typings",
       "typings": "typings install",
       "postinstall": "npm run typings && npm run build",
-      "start": "npm install && npm run typings && concurrently \"npm run build:w\" \"npm run server\" ",
-      "server": "node browser-sync-config.js",
+      "start": "concurrently \"npm run build:w\" \"npm run server\" ",
+      "server": "wsrv -o -s",
       "build": "npm run tslint && rimraf dist && tsc",
       "build:w": "npm run tslint && rimraf dist && tsc -w",
       "tslint": "npm run tslint-src && npm run tslint-root",
@@ -44,12 +44,11 @@
       "ng2-alfresco-documentlist": "0.1.34"
     },
     "devDependencies": {
-      "browser-sync": "2.10.0",
-      "connect-history-api-fallback": "1.2.0",
       "concurrently": "2.0.0",
       "tslint": "3.8.1",
       "typescript": "1.8.10",
-      "typings": "1.0.4"
+      "typings": "1.0.4",
+      "wsrv": "0.1.3"
     },
     "keywords": [
         "angular2",
