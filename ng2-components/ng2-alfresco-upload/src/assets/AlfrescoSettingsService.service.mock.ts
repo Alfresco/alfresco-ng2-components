@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export class AlfrescoSettingsServiceMock {
 
     static DEFAULT_HOST_ADDRESS: string = 'fakehost';

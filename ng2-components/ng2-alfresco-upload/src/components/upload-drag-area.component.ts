@@ -76,13 +76,35 @@ export class UploadDragAreaComponent {
      */
     onFilesDropped(files: File[]): void {
         if (files.length) {
-            this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(this.currentFolderPath, this.onSuccess);
-            let latestFilesAdded = this._uploaderService.getQueue();
-            if (this.showUdoNotificationBar) {
-                this._showUndoNotificationBar(latestFilesAdded);
+            if (this.checkValidity(files)) {
+                this._uploaderService.addToQueue(files);
+                this._uploaderService.uploadFilesInTheQueue(this.currentFolderPath, this.onSuccess);
+                let latestFilesAdded = this._uploaderService.getQueue();
+                if (this.showUdoNotificationBar) {
+                    this._showUndoNotificationBar(latestFilesAdded);
+                }
+            } else {
+                let errorMessage: any;
+                errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
+                if (this.showUdoNotificationBar) {
+                    this._showErrorNotificationBar(errorMessage.value);
+                } else {
+                    console.error(errorMessage.value);
+                }
             }
         }
+    }
+
+    /**
+     * Check il the file is valid or not
+     * @param files
+     * @returns {boolean}
+     */
+    checkValidity(files: File[]): boolean {
+        if (files.length && files[0].type === '') {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -126,10 +148,12 @@ export class UploadDragAreaComponent {
                     error => {
                         let errorMessagePlaceholder = this.getErrorMessage(error.response);
                         let errorMessage = this.formatString(errorMessagePlaceholder, [folder.name]);
-                        if (errorMessage) {
+                        if (this.showUdoNotificationBar) {
                             this._showErrorNotificationBar(errorMessage);
+                        } else {
+                            console.error(errorMessage);
                         }
-                        console.log(error);
+
                     }
                 );
         }

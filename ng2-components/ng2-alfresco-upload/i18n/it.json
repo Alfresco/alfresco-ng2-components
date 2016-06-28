@@ -8,7 +8,8 @@
     "MESSAGES": {
       "COMPLETED": "caricamenti completati",
       "PROGRESS": "caricamento in corso...",
-      "FOLDER_ALREADY_EXIST": "Cartella {0} già presente"
+      "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
+      "FOLDER_NOT_SUPPORTED": "L' upload di cartelle non é supportato dal tuo browser"
     },
     "FILE_INFO": {
       "NAME": "Nome file",

@@ -23,7 +23,7 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
-
+import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 
 declare var AlfrescoApi: any;
 
@@ -38,7 +38,7 @@ describe('AlfrescoUploadButton', () => {
 
     beforeEachProviders(() => {
         return [
-            { provide: AlfrescoSettingsService },
+            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
             { provide: UploadService, useClass: UploadServiceMock }
         ];
