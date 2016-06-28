@@ -80,6 +80,13 @@ Then uncomment filter mappings:
 
 If you don't have Node.js installed then access this [page](https://nodejs.org/en/download/) and use the appropriate installer for your OS.
 
+Make sure the Node.js version is > 5:
+
+```
+$ node -v
+v5.12.0
+```
+
 ## Installing npm
 
 The npm package manager is included with Node.js, however it is not usually the latest version as npm is updated more frequently than node.js.
@@ -97,36 +104,3 @@ Set up Alfresco's private npm repository as follows:
 
 `$ npm set registry http://devproducts.alfresco.me:4873`
 
-### Add a user to the private npm registry (OPTIONAL)
-
-Note. This step is not needed if you are just going to use (i.e. read) the components.
-
-You can add yourself as a user to the private npm repository so you can publish to it.
-The user needs to have been registered with the repository beforehand.
-
-Example:
-
-```
-$ npm adduser --registry http://devproducts.alfresco.me:4873
-Username: <user name goes here>
-Password: 
-Email: (this IS public) <alfresco email address goes here>
-```
-
-#### How to publish on it:
-
-Add the repository to your *package.json* file: 
-
-```json
-  "publishConfig": {
-    "registry": "http://devproducts.alfresco.me:4873/"
-  }
-```
-*ATTENTION*: If you don't add these lines, then the package is published to the public npm repository.
-
-Then run the command below each time you want to publish a new version of a component:
-
-```sh
-npm version patch
-npm publish
-```
