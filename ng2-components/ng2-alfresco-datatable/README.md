@@ -34,6 +34,8 @@ npm install --save ng2-alfresco-datatable material-design-lite material-design-i
 </alfresco-datatable>
 ```
 
+Example of an App that declares the file viewer component :
+
 ```ts
 import { Component } from '@angular/core';
 import {

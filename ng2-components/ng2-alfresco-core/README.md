@@ -11,7 +11,8 @@
      <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
   </a>
   <a title='Build Status' href="https://travis-ci.com/Alfresco/app-dev-framework">
-    <img src='https://travis-ci.com/Alfresco/app-dev-framework.svg?token=SCyeWaC53Nr62GmuRyZA&branch=master'  alt='travis
+      <img src='https://travis-ci.com/Alfresco/app-dev-framework.svg?token=SCyeWaC53Nr62GmuRyZA&branch=master'  alt='travis
+      Status' />
   </a>
 </p>
 
