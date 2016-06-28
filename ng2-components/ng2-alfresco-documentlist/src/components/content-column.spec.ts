@@ -77,4 +77,20 @@ describe('ContentColumn', () => {
         expect(model.srTitle).toBe('Thumbnail');
     });
 
+    it('should sync localizable fields with model', () => {
+
+        let column = new ContentColumn(columnList);
+        column.title = 'title1';
+        column.srTitle = 'srTitle1';
+        column.ngOnInit();
+
+        expect(column.model.title).toBe(column.title);
+        expect(column.model.srTitle).toBe(column.srTitle);
+
+        column.title = 'title2';
+        column.ngOnChanges(null);
+
+        expect(column.model.title).toBe('title2');
+    });
+
 });

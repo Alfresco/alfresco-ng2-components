@@ -21,23 +21,28 @@ import {
     expect,
     beforeEach
 } from '@angular/core/testing';
-import {EventEmitter} from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
-import {DocumentList} from './document-list';
-import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-
-import {ContentActionList} from './content-action-list';
-import {ContentAction} from './content-action';
-import {DocumentActionsService} from '../services/document-actions.service';
-import {FolderActionsService} from '../services/folder-actions.service';
+import { DocumentList } from './document-list';
+import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
+import { ContentActionList } from './content-action-list';
+import { ContentAction } from './content-action';
+import { DocumentActionsService } from '../services/document-actions.service';
+import { FolderActionsService } from '../services/folder-actions.service';
+import { ContentActionHandler } from '../models/content-action.model';
 
 describe('ContentAction', () => {
 
     let documentList: DocumentList;
     let actionList: ContentActionList;
+    let documentActions: DocumentActionsService;
+    let folderActions: FolderActionsService;
 
     beforeEach(() => {
         let alfrescoServiceMock = new AlfrescoServiceMock();
+        documentActions = new DocumentActionsService(null, null);
+        folderActions = new FolderActionsService(null);
+
         documentList = new DocumentList(alfrescoServiceMock, null);
         actionList = new ContentActionList(documentList);
     });
@@ -73,7 +78,6 @@ describe('ContentAction', () => {
     it('should get action handler from document actions service', () => {
 
         let handler = function() {};
-        let documentActions = new DocumentActionsService(null);
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
 
         let action = new ContentAction(actionList, documentActions, null);
@@ -91,7 +95,6 @@ describe('ContentAction', () => {
 
     it('should get action handler from folder actions service', () => {
         let handler = function() {};
-        let folderActions = new FolderActionsService();
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
 
         let action = new ContentAction(actionList, null, folderActions);
@@ -108,10 +111,7 @@ describe('ContentAction', () => {
     });
 
     it('should require target to get system handler', () => {
-        let folderActions = new FolderActionsService();
         spyOn(folderActions, 'getHandler').and.stub();
-
-        let documentActions = new DocumentActionsService(null);
         spyOn(documentActions, 'getHandler').and.stub();
 
         let action = new ContentAction(actionList, documentActions, folderActions);
@@ -133,7 +133,6 @@ describe('ContentAction', () => {
     });
 
     it('should be case insensitive for document target', () => {
-        let documentActions = new DocumentActionsService(null);
         spyOn(documentActions, 'getHandler').and.stub();
 
         let action = new ContentAction(actionList, documentActions, null);
@@ -146,7 +145,6 @@ describe('ContentAction', () => {
     });
 
     it('should be case insensitive for folder target', () => {
-        let folderActions = new FolderActionsService();
         spyOn(folderActions, 'getHandler').and.stub();
 
         let action = new ContentAction(actionList, null, folderActions);
@@ -176,5 +174,55 @@ describe('ContentAction', () => {
 
         let model = documentList.actions[0];
         model.handler('<obj>');
+    });
+
+    it('should sync localizable fields with model', () => {
+
+        let action = new ContentAction(actionList, null, null);
+        action.title = 'title1';
+        action.ngOnInit();
+
+        expect(action.model.title).toBe(action.title);
+
+        action.title = 'title2';
+        action.ngOnChanges(null);
+
+        expect(action.model.title).toBe('title2');
+    });
+
+    it('should not find document action handler with missing service', () => {
+        let action = new ContentAction(actionList, null, null);
+        expect(action.getSystemHandler('document', 'name')).toBeNull();
+    });
+
+    it('should not find folder action handler with missing service', () => {
+        let action = new ContentAction(actionList, null, null);
+        expect(action.getSystemHandler('folder', 'name')).toBeNull();
+    });
+
+    it('should find document action handler via service', () => {
+        let handler = <ContentActionHandler> function (obj: any, target?: any) {};
+        let action = new ContentAction(actionList, documentActions, null);
+        spyOn(documentActions, 'getHandler').and.returnValue(handler);
+        expect(action.getSystemHandler('document', 'name')).toBe(handler);
+    });
+
+    it('should find folder action handler via service', () => {
+        let handler = <ContentActionHandler> function (obj: any, target?: any) {};
+        let action = new ContentAction(actionList, null, folderActions);
+        spyOn(folderActions, 'getHandler').and.returnValue(handler);
+        expect(action.getSystemHandler('folder', 'name')).toBe(handler);
+    });
+
+    it('should not find actions for unknown target type', () => {
+        spyOn(folderActions, 'getHandler').and.stub();
+        spyOn(documentActions, 'getHandler').and.stub();
+
+        let action = new ContentAction(actionList, documentActions, folderActions);
+
+        expect(action.getSystemHandler('unknown', 'name')).toBeNull();
+        expect(folderActions.getHandler).not.toHaveBeenCalled();
+        expect(documentActions.getHandler).not.toHaveBeenCalled();
+
     });
 });

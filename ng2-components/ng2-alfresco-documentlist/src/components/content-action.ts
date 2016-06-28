@@ -76,12 +76,12 @@ export class ContentAction implements OnInit, OnChanges {
         this.list.registerAction(this.model);
     }
 
-    ngOnChanges() {
+    ngOnChanges(changes) {
         // update localizable properties
         this.model.title = this.title;
     }
 
-    private getSystemHandler(target: string, name: string): ContentActionHandler {
+    getSystemHandler(target: string, name: string): ContentActionHandler {
         if (target) {
             let ltarget = target.toLowerCase();
 
