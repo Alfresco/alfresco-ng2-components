@@ -10,7 +10,8 @@ the features provided by the Alfresco ECM system. And a lot of customers customi
 
 However, there are use-cases that Share does not fit very well, such as:
 
-- Minimal role based clients, exposing limited functionality based on role 
+- Feature-based clients, exposing functionality to perform a specific task(s)
+- Role-based clients, exposing functionality based on role 
 - Clients where the UI layout and style differs significantly from the Share layout and styling
 - [Mashup clients](http://whatis.techtarget.com/definition/mash-up)
 
