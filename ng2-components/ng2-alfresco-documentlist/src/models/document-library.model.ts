@@ -17,59 +17,6 @@
 
 // note: contains only limited subset of available fields
 
-// TODO: deprecated
-export class FolderEntity {
-    items: DocumentEntity[];
-}
-
-// TODO: deprecated
-export class DocumentEntity {
-    nodeRef: string;
-    nodeType: string;
-    type: string;
-    mimetype: string;
-    isFolder: boolean;
-    isLink: boolean;
-    fileName: string;
-    displayName: string;
-    status: string;
-    title: string;
-    description: string;
-    author: string;
-    createdOn: string;
-    createdBy: string;
-    createdByUser: string;
-    modifiedOn: string;
-    modifiedBy: string;
-    modifiedByUser: string;
-    lockedBy: string;
-    lockedByUser: string;
-    size: number;
-    version: string;
-    contentUrl: string;
-    webdavUrl: string;
-    actionSet: string;
-    tags: string[];
-    activeWorkflows: string;
-    location: LocationEntity;
-}
-
-// TODO: deprecated
-export class LocationEntity {
-    repositoryId: string;
-    site: string;
-    siteTitle: string;
-    container: string;
-    path: string;
-    file: string;
-    parent: LocationParentEntity;
-}
-
-// TODO: deprecated
-export class LocationParentEntity {
-    nodeRef: string;
-}
-
 export class NodePaging {
     list: NodePagingList;
 }

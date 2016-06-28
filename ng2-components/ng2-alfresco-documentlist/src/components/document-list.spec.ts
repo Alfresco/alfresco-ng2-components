@@ -21,28 +21,40 @@ import {
     expect,
     beforeEach
 } from '@angular/core/testing';
-
+import { NgZone } from '@angular/core';
 import { DocumentList } from './document-list';
 import { ContentColumnModel } from '../models/content-column.model';
 import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from '../models/document-library.model';
 import { ContentActionModel } from '../models/content-action.model';
+import {
+    PageNode,
+    FileNode,
+    FolderNode
+} from '../assets/document-library.model.mock';
+import { ColumnSortingModel } from '../models/column-sorting.model';
 
 describe('DocumentList', () => {
 
     let alfrescoServiceMock: AlfrescoServiceMock;
     let documentList: DocumentList;
     let eventMock: any;
+    let componentHandler;
 
     beforeEach(() => {
         alfrescoServiceMock = new AlfrescoServiceMock();
-        documentList = new DocumentList(alfrescoServiceMock, null);
+        let zone = new NgZone(false);
+        documentList = new DocumentList(alfrescoServiceMock, zone);
 
         eventMock = {
             preventDefault: function () {
                 console.log('mock preventDefault');
             }
         };
+
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
     });
 
     it('should setup default columns', () => {
@@ -84,9 +96,7 @@ describe('DocumentList', () => {
         let url = 'URL';
         spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
 
-        let node = new MinimalNodeEntity();
-        node.entry = new MinimalNodeEntryEntity();
-        node.entry.isFile = true;
+        let node = new FileNode();
         documentList.thumbnails = true;
         let result = documentList.getThumbnailUrl(node);
 
@@ -104,15 +114,8 @@ describe('DocumentList', () => {
         expect(alfrescoServiceMock.getDocumentThumbnailUrl).not.toHaveBeenCalled();
     });
 
-    it('should return no thumbnail url without service', () => {
-        let list = new DocumentList(null, null);
-        let node = new MinimalNodeEntity();
-        expect(list.getThumbnailUrl(node)).toBeNull();
-    });
-
     it('should execute action with node', () => {
-        let node = new MinimalNodeEntity();
-        node.entry = new MinimalNodeEntryEntity();
+        let node = new FileNode();
         let action = new ContentActionModel();
         action.handler = function () {
             console.log('mock handler');
@@ -211,7 +214,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit itemClick event', (done) => {
-        let node: MinimalNodeEntity = new MinimalNodeEntity();
+        let node = new FileNode();
         documentList.itemClick.subscribe(e => {
             expect(e.value).toBe(node);
             done();
@@ -219,25 +222,28 @@ describe('DocumentList', () => {
         documentList.onItemClick(node);
     });
 
-    it('should prevent default events for item click', () => {
+    it('should prevent default item single click event', () => {
         spyOn(eventMock, 'preventDefault').and.stub();
 
         documentList.onItemClick(null, eventMock);
         expect(eventMock.preventDefault).toHaveBeenCalled();
     });
 
+    it('should prevent default item double click event', () => {
+        spyOn(eventMock, 'preventDefault').and.stub();
+        documentList.onItemDblClick(null, eventMock);
+        expect(eventMock.preventDefault).toHaveBeenCalled();
+    });
+
     it('should display folder content on click', () => {
         let path = '/';
 
-        let node = new MinimalNodeEntity();
-        node.entry = new MinimalNodeEntryEntity();
-        node.entry.isFolder = true;
-        node.entry.name = '<display name>';
+        let node = new FolderNode('<display name>');
 
         spyOn(documentList, 'getNodePath').and.returnValue(path);
         spyOn(documentList, 'displayFolderContent').and.stub();
 
-        documentList.navigationMode = 'click';
+        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
         documentList.onItemClick(node);
 
         expect(documentList.currentFolderPath).toBe(path);
@@ -256,10 +262,7 @@ describe('DocumentList', () => {
         expect(documentList.navigate).toBe(true);
         spyOn(documentList, 'displayFolderContent').and.stub();
 
-        let node = new MinimalNodeEntity();
-        node.entry = new MinimalNodeEntryEntity();
-        node.entry.isFolder = false;
-
+        let node = new FileNode();
         documentList.onItemClick(node);
 
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
@@ -268,11 +271,7 @@ describe('DocumentList', () => {
     it('should not display folder content on click when navigation is off', () => {
         spyOn(documentList, 'displayFolderContent').and.stub();
 
-        let node = new MinimalNodeEntity();
-        node.entry = new MinimalNodeEntryEntity();
-        node.entry.isFolder = true;
-        node.entry.name = '<display name>';
-
+        let node = new FolderNode('<display name>');
         documentList.navigate = false;
         documentList.onItemClick(node);
 
@@ -308,6 +307,400 @@ describe('DocumentList', () => {
         };
 
         expect(documentList.getObjectValue(target, 'key1.key2.key3')).toBe('value1');
+    });
+
+    it('should display folder content for new folder path', () => {
+        spyOn(documentList, 'displayFolderContent').and.stub();
+        let newPath = '/some/new/path';
+        documentList.currentFolderPath = newPath;
+        expect(documentList.displayFolderContent).toHaveBeenCalledWith(newPath);
+    });
+
+    it('should not display folder content for same path', () => {
+        spyOn(documentList, 'displayFolderContent').and.stub();
+        documentList.currentFolderPath = '/test';
+        expect(documentList.displayFolderContent).toHaveBeenCalledTimes(1);
+
+        documentList.currentFolderPath = '/test';
+        expect(documentList.displayFolderContent).toHaveBeenCalledTimes(1);
+    });
+
+    it('should reset to default path', () => {
+        spyOn(documentList, 'displayFolderContent').and.stub();
+        documentList.currentFolderPath = null;
+
+        expect(documentList.currentFolderPath).toBe(documentList.DEFAULT_ROOT_FOLDER);
+        expect(documentList.displayFolderContent).toHaveBeenCalledWith(documentList.DEFAULT_ROOT_FOLDER);
+    });
+
+    it('should emit folder changed event', (done) => {
+        documentList.folderChange.subscribe(e => {
+            done();
+        });
+        documentList.folder = new PageNode();
+    });
+
+    it('should emit folder changed event with folder details', (done) => {
+        let folder = new PageNode();
+        let path = '/path';
+
+        documentList.folderChange.subscribe(e => {
+            expect(e.value).toBe(folder);
+            expect(e.path).toBe(path);
+            done();
+        });
+
+        spyOn(documentList, 'displayFolderContent').and.stub();
+        documentList.currentFolderPath = path;
+        documentList.folder = folder;
+    });
+
+    it('should not emit folder changed event', () => {
+        let folder = new PageNode();
+        let calls = 0;
+        documentList.folderChange.subscribe(e => {
+            calls++;
+        });
+
+        documentList.folder = folder;
+        documentList.folder = folder;
+        expect(calls).toBe(1);
+    });
+
+    it('should reload on binding changes', () => {
+        spyOn(documentList, 'reload').and.stub();
+        documentList.ngOnChanges(null);
+        expect(documentList.reload).toHaveBeenCalled();
+    });
+
+    it('should execute context action on callback', () => {
+        let action = {
+            node: {},
+            model: {}
+        };
+
+        spyOn(documentList, 'executeContentAction').and.stub();
+        documentList.contextActionCallback(action);
+        expect(documentList.executeContentAction).toHaveBeenCalledWith(action.node, action.model);
+    });
+
+    it('should not execute context action on callback', () => {
+        spyOn(documentList, 'executeContentAction').and.stub();
+        documentList.contextActionCallback(null);
+        expect(documentList.executeContentAction).not.toHaveBeenCalled();
+    });
+
+    it('should upgrade material design components', () => {
+        documentList.ngAfterViewChecked();
+        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
+    });
+
+    it('should subscribe to context action handler', () => {
+        let value = {};
+        spyOn(documentList, 'contextActionCallback').and.stub();
+        documentList.ngOnInit();
+        documentList.contextActionHandler.next(value);
+        expect(documentList.contextActionCallback).toHaveBeenCalledWith(value);
+    });
+
+    it('should suppress default context menu', () => {
+        spyOn(eventMock, 'preventDefault').and.stub();
+        documentList.onShowContextMenu(eventMock);
+        expect(eventMock.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should emit file preview event on single click', (done) => {
+        let file = new FileNode();
+        documentList.preview.subscribe(e => {
+            expect(e.value).toBe(file);
+            done();
+        });
+        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.onItemClick(file, null);
+    });
+
+    it('should emit file preview event on double click', (done) => {
+        let file = new FileNode();
+        documentList.preview.subscribe(e => {
+            expect(e.value).toBe(file);
+            done();
+        });
+        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.onItemDblClick(file, null);
+    });
+
+    it('should perform folder navigation on single click', () => {
+        let folder = new FolderNode();
+        spyOn(documentList, 'performNavigation').and.stub();
+
+        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.onItemClick(folder, null);
+        expect(documentList.performNavigation).toHaveBeenCalled();
+    });
+
+    it('should perform folder navigation on double click', () => {
+        let folder = new FolderNode();
+        spyOn(documentList, 'performNavigation').and.stub();
+
+        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.onItemDblClick(folder, null);
+        expect(documentList.performNavigation).toHaveBeenCalled();
+    });
+
+    it('should not perform folder navigation on double click when single mode', () => {
+        let folder = new FolderNode();
+        spyOn(documentList, 'performNavigation').and.stub();
+
+        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.onItemDblClick(folder, null);
+
+        expect(documentList.performNavigation).not.toHaveBeenCalled();
+    });
+
+    it('should not perform folder navigation on double click when navigation off', () => {
+        let folder = new FolderNode();
+        spyOn(documentList, 'performNavigation').and.stub();
+
+        documentList.navigate = false;
+        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.onItemDblClick(folder, null);
+
+        expect(documentList.performNavigation).not.toHaveBeenCalled();
+    });
+
+    it('should perform navigation for folder node only', () => {
+        let folder = new FolderNode();
+        let file = new FileNode();
+        spyOn(documentList, 'getNodePath').and.returnValue('/path');
+
+        expect(documentList.performNavigation(folder)).toBeTruthy();
+        expect(documentList.performNavigation(file)).toBeFalsy();
+        expect(documentList.performNavigation(null)).toBeFalsy();
+    });
+
+    it('should not get node path for null node', () => {
+        expect(documentList.getNodePath(null)).toBeNull();
+    });
+
+    it('should trim company home from node path', () => {
+        let file = new FileNode('file.txt');
+        file.entry.path.name = '/Company Home/folder1';
+        expect(documentList.getNodePath(file)).toBe('/folder1/file.txt');
+    });
+
+
+    it('should require valid node for file preview', () => {
+        let file = new FileNode();
+        file.entry = null;
+        let called = false;
+
+        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.preview.subscribe(val => called = true);
+
+        documentList.onItemClick(file, null);
+        expect(called).toBeFalsy();
+
+        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.onItemDblClick(file, null);
+        expect(called).toBeFalsy();
+    });
+
+    it('should require valid node for folder navigation', () => {
+        let folder = new FolderNode();
+        folder.entry = null;
+        spyOn(documentList, 'performNavigation').and.stub();
+
+        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.onItemClick(folder, null);
+
+        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.onItemDblClick(folder, null);
+
+        expect(documentList.performNavigation).not.toHaveBeenCalled();
+    });
+
+    it('should display folder content on reload', () => {
+        spyOn(documentList, 'displayFolderContent').and.callThrough();
+        documentList.reload();
+        expect(documentList.displayFolderContent).toHaveBeenCalled();
+    });
+
+    it('should generate thumbnail for unknown content', () => {
+        documentList.baseComponentPath = '/root';
+        let node = new FileNode();
+        node.entry.isFile = false;
+
+        expect(documentList.getThumbnailUrl(node)).toBe('/root/img/ft_ic_miscellaneous.svg');
+    });
+
+    it('should generate folder icon path', () => {
+        documentList.baseComponentPath = '/root';
+        let folder = new FolderNode();
+        expect(documentList.getThumbnailUrl(folder)).toBe('/root/img/ft_ic_folder.svg');
+    });
+
+    it('should generate file icon path based on mime type', () => {
+        let fileName = 'custom-icon.svg';
+        spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(fileName);
+        documentList.baseComponentPath = '/root';
+
+        let file = new FileNode();
+        file.entry.content.mimeType = 'text/plain';
+
+        expect(documentList.getThumbnailUrl(file)).toBe(`/root/img/${fileName}`);
+    });
+
+    it('should fallback to default icon for missing mime type', () => {
+        spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(null);
+        documentList.baseComponentPath = '/root';
+
+        let file = new FileNode();
+        file.entry.content.mimeType = null;
+
+        expect(documentList.getThumbnailUrl(file)).toBe('/root/img/ft_ic_miscellaneous.svg');
+    });
+
+    it('should fallback to default icon for unknown mime type', () => {
+        spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(null);
+        documentList.baseComponentPath = '/root';
+
+        let file = new FileNode();
+        file.entry.content.mimeType = 'text/plain';
+
+        expect(documentList.getThumbnailUrl(file)).toBe('/root/img/ft_ic_miscellaneous.svg');
+    });
+
+    it('should resolve thumbnail url for a file', () => {
+        let url = 'http://<some url>';
+        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
+
+        documentList.thumbnails = true;
+
+        let file = new FileNode();
+        expect(documentList.getThumbnailUrl(file)).toBe(url);
+    });
+
+    it('should return no thumbnail url with missing service', () => {
+        let list = new DocumentList(null, null);
+        list.thumbnails = true;
+
+        let file = new FileNode();
+        expect(list.getThumbnailUrl(file)).toBeNull();
+    });
+
+    it('should sort on column header click', () => {
+        let col = new ContentColumnModel();
+        col.source = 'id';
+
+        spyOn(documentList, 'sort').and.callThrough();
+
+        documentList.onColumnHeaderClick(col);
+
+        expect(documentList.sorting).toEqual(
+            jasmine.objectContaining({
+                key: 'id',
+                direction: 'asc'
+            })
+        );
+        expect(documentList.sort).toHaveBeenCalled();
+    });
+
+    it('should invert sorting on column header click', () => {
+        let col = new ContentColumnModel();
+        col.source = 'id';
+
+        spyOn(documentList, 'sort').and.callThrough();
+
+        documentList.sorting = <ColumnSortingModel> { key: 'id', direction: 'asc' };
+        documentList.onColumnHeaderClick(col);
+
+        expect(documentList.sorting).toEqual(
+            jasmine.objectContaining({
+                key: 'id',
+                direction: 'desc'
+            })
+        );
+
+        documentList.onColumnHeaderClick(col);
+        expect(documentList.sorting).toEqual(
+            jasmine.objectContaining({
+                key: 'id',
+                direction: 'asc'
+            })
+        );
+
+        expect(documentList.sort).toHaveBeenCalledTimes(2);
+    });
+
+    it('should use ascending direction for different column header click', () => {
+        let col = new ContentColumnModel();
+        col.source = 'id';
+
+        spyOn(documentList, 'sort').and.callThrough();
+
+        documentList.sorting = <ColumnSortingModel> { key: 'col1', direction: 'desc' };
+        documentList.onColumnHeaderClick(col);
+
+        expect(documentList.sorting).toEqual(
+            jasmine.objectContaining({
+                key: 'id',
+                direction: 'asc'
+            })
+        );
+
+        expect(documentList.sort).toHaveBeenCalled();
+    });
+
+    it('should not sort by column header when instance is missing', () => {
+        spyOn(documentList, 'sort').and.callThrough();
+        documentList.onColumnHeaderClick(null);
+        expect(documentList.sort).not.toHaveBeenCalled();
+    });
+
+    it('should convert cell value to formatted date', () => {
+
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let dateValue = 'Jul 15, 2015, 9:43:11 PM';
+
+        let file = new FileNode();
+        file.entry.createdAt = rawValue;
+
+        let col = new ContentColumnModel();
+        col.source = 'createdAt';
+        col.type = 'date';
+        col.format = 'medium'; // Jul 15, 2015, 9:43:11 PM
+
+        let value = documentList.getCellValue(file, col);
+        expect(value).toBe(dateValue);
+
+    });
+
+    it('should return date value as string', () => {
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+
+        let file = new FileNode();
+        file.entry.createdAt = rawValue;
+
+        let col = new ContentColumnModel();
+        col.source = 'createdAt';
+        col.type = 'string';
+
+        let value = documentList.getCellValue(file, col);
+        expect(value).toBe(rawValue);
+    });
+
+    it('should convert cell value to thumbnail', () => {
+        let url = 'http://<address>';
+        spyOn(documentList, 'getThumbnailUrl').and.returnValue(url);
+
+        let file = new FileNode();
+
+        let col = new ContentColumnModel();
+        col.source = '$thumbnail';
+        col.type = 'image';
+
+        let value = documentList.getCellValue(file, col);
+        expect(value).toBe(url);
     });
 
 });

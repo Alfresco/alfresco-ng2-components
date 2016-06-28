@@ -42,11 +42,11 @@ export class DocumentListBreadcrumb {
     @Input()
     set currentFolderPath(val: string) {
         if (this._currentFolderPath !== val) {
-            this._currentFolderPath = val;
-
             if (val) {
+                this._currentFolderPath = val;
                 this.route = this.parsePath(val);
             } else {
+                this._currentFolderPath = this.rootFolder.path;
                 this.route = [ this.rootFolder ];
             }
         }
