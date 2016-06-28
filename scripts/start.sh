@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd demo-shell-ng2
+cd ../demo-shell-ng2
 
 #!/bin/sh
 if  [[ $1 = "-install" ]]; then

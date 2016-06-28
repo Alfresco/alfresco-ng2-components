@@ -30,43 +30,6 @@ See the following [page](Introduction.md) for an introduction to the Alfresco Ap
 Before you start using this development framework, make sure you have installed all required software and done all the 
 necessary configuration, see this [page](Prerequisites.md).
 
-## Downloading the source code for the framework
-
-The source code comes in two parts, one for the JavaScript API that wraps the Alfresco REST API, and one part with the 
-actual application development framework, including the Angular 2 based web components:
-
-```
-$ git clone https://github.com/Alfresco/alfresco-js-api.git
-$ git clone https://github.com/Alfresco/app-dev-framework.git
-```
-
-## Running a demo project
-
-The Alfresco application development framework comes with a demo project that you can run to get a 
-feel for what's available.
-
-Start by navigating into the app development framework source folder: 
-
-`$ cd app-dev-framework`
-
-Start the demo and Install all the dependencies (*Note. do it this way only the first time, and be aware, it will take some time*)
-
-`app-dev-framework$ ./start.sh -install`
-
-Start the demo (*the standard way of starting the demo after first initialization*): 
-
-`app-dev-framework$ ./start.sh`
-
-Start the demo, install all the dependencies, and remove the previous version of the npm packages (*Note. do this only after big changes*):
-
-`app-dev-framework$ ./start.sh -cleanInstall`
-
-Start the demo and update the dependencies:
-
-`app-dev-framework$ ./start.sh -update`
-
-For development environment configuration please refer to [project docs](demo-shell-ng2/README.md).
-
 ## Components
 
 The following is a list of some of the components that you can use when building your custom Alfresco web client:
