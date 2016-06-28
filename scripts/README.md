@@ -3,10 +3,11 @@
 The Alfresco application development framework comes with a demo project that you can run to get a
 feel for what's available.
 
-* Start by navigating into the app development framework source folder:
+* Start by navigating into the app development framework source folder, and then the script folder:
 
 ```ssh
  cd app-dev-framework
+ cd scripts
 ```
 
 * Start the demo and Install all the dependencies (*Note. do it this way only the first time, and be aware, it will take some time*)
