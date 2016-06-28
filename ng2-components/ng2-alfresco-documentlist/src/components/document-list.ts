@@ -52,6 +52,9 @@ declare let __moduleName: string;
 })
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit, OnChanges {
 
+    static SINGLE_CLICK_NAVIGATION: string = 'click';
+    static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
+
     DEFAULT_ROOT_FOLDER: string = '/';
 
     baseComponentPath = __moduleName.replace('/components/document-list.js', '');
@@ -216,7 +219,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
             value: item
         });
 
-        if (this.navigate && this.navigationMode === 'click') {
+        if (this.navigate && this.navigationMode === DocumentList.SINGLE_CLICK_NAVIGATION) {
             if (item && item.entry) {
                 if (item.entry.isFile) {
                     this.preview.emit({
@@ -240,7 +243,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
             value: item
         });
 
-        if (this.navigate && this.navigationMode === 'dblclick') {
+        if (this.navigate && this.navigationMode === DocumentList.DOUBLE_CLICK_NAVIGATION) {
             if (item && item.entry) {
                 if (item.entry.isFile) {
                     this.preview.emit({
@@ -261,10 +264,12 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         }
     }
 
-    private performNavigation(node: MinimalNodeEntity) {
+    performNavigation(node: MinimalNodeEntity): boolean {
         if (node && node.entry && node.entry.isFolder) {
             this.currentFolderPath = this.getNodePath(node);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -290,7 +295,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
                 if (entry.content && entry.content.mimeType) {
                     let icon = this.alfrescoService.getMimeTypeIcon(entry.content.mimeType);
-                    return `${this.baseComponentPath}/img/${icon}`;
+                    if (icon) {
+                        return `${this.baseComponentPath}/img/${icon}`;
+                    }
                 }
             }
 
