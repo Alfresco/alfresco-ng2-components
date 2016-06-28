@@ -73,8 +73,8 @@ module.exports = function (config) {
     ],
 
     // Coverage reporter generates the coverage
-    reporters: ['mocha', 'coverage', 'kjhtml'],
-
+    reporters: ['mocha', 'coverage', 'coveralls', 'kjhtml'],
+    
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
@@ -88,7 +88,8 @@ module.exports = function (config) {
         {type: 'text'},
         {type: 'text-summary'},
         {type: 'json', file: 'coverage-final.json'},
-        {type: 'html'}
+        {type: 'html'},
+        {type: 'lcov'}
       ]
     }
   };
