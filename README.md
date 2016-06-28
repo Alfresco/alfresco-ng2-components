@@ -17,79 +17,55 @@
   <img title="angular2" alt='angular2' src='assets/angular2.png'  width="150px" height="150px"></img>    
 </p>
 
+## Introduction
+
+See the following [page](Introduction.md) for an introduction to the Alfresco Application Development Framework. 
+
 ## Prerequisites
 
-- Alfresco repository with CORS enabled. A Docker-compose file is provided by the [demo-shell](demo-shell-ng2/README.md) app.
+Before you start using this development framework, make sure you have installed all required software and done all the 
+necessary configuration, see this [page](Prerequisites.md).
 
-## Private Npm repository configuration
+## Downloading the source code for the framework
 
-All the distribution packages of our components are stored in our private repository visible only from the internal Alfresco lan: 
+The source code comes in two parts, one for the JavaScript API that wraps the Alfresco REST API, and one part with the 
+actual application development framework, including the Angular 2 based web components:
 
-http://devproducts.alfresco.me:4873
-
-##### How to configure it:
-
-```sh
-npm set registry http://devproducts.alfresco.me:4873
-npm adduser --registry http://devproducts.alfresco.me:4873
+```
+$ git clone https://github.com/Alfresco/alfresco-js-api.git
+$ git clone https://github.com/Alfresco/app-dev-framework.git
 ```
 
-##### How to publish on it:
+## Running a demo project
 
-- Add the repository to your package.json. 
-ATTENTION: If you don't add the following lines, the package is published on the public Npm repository.
+The Alfresco application development framework comes with a demo project that you can run to get a 
+feel for what's available.
 
-```json
-  "publishConfig": {
-    "registry": "http://devproducts.alfresco.me:4873/"
-  }
-```
-- Then run the command below each time you want to publish a new version:
+Start by navigating into the app development framework source folder: 
 
-```sh
-npm version patch
-npm publish
-```
+`$ cd app-dev-framework`
 
-### Running demo project
+Start the demo and Install all the dependencies (*Note. do it this way only the first time, and be aware, it will take some time*)
 
-*Steps below show the quickest way to get demo shell up and running.*
+`app-dev-framework$ ./start.sh -install`
 
-##### Using setup script (recommended)
+Start the demo (*the standard way of starting the demo after first initialization*): 
 
-```sh
-git clone https://github.com/Alfresco/dev-platform-js-api.git
-git clone https://github.com/Alfresco/app-dev-framework.git
-cd app-dev-framework
-```
+`app-dev-framework$ ./start.sh`
 
-* Start the demo and Install all the dependencies (do it the first time)
+Start the demo, install all the dependencies, and remove the previous version of the npm packages (*Note. do this only after big changes*):
 
-```sh
-./start.sh -install
-```
+`app-dev-framework$ ./start.sh -cleanInstall`
 
-* Start the demo and Install all the dependencies and remove the previous version of the npm package(do it after big changes)
+Start the demo and update the dependencies:
 
-```sh
-./start.sh -cleanInstall
-```
-
-* Start the demo and update the dependencies
-
-```sh
-./start.sh -update
-```
-
-* Start the demo 
-
-```sh
-./start.sh
-```
+`app-dev-framework$ ./start.sh -update`
 
 For development environment configuration please refer to [project docs](demo-shell-ng2/README.md).
 
 ## Components
+
+The following is a list of some of the components that you can use when building your custom Alfresco web client:
 
 - [Core library](ng2-components/ng2-alfresco-core/README.md)
 - [DataTable](ng2-components/ng2-alfresco-datatable/README.md)
@@ -98,29 +74,28 @@ For development environment configuration please refer to [project docs](demo-sh
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
 
-You can browse all the components at the following address:
-
-http://devproducts.alfresco.me/
+You can browse all the components at the following [page](http://devproducts.alfresco.me/).
 
 ## Yeoman generators
 
-To speed up the development of your Alfresco Angular 2 application or Alfresco Angular 2 component use one of our Yeoman generators. These
-generators will create for you a full working project with all the right libraries and tools.
+To speed up the development of your Alfresco Angular 2 application, or Alfresco Angular 2 component, use one of the Yeoman generators. 
+
+These generators will create a full working project with all the right libraries and tools.
 
 <p align="center">
   <img title="yeoman generator" src='https://github.com/yeoman/media/blob/master/optimized/yeoman-150x150-opaque.png' alt='yeoman logo'  />
 </p>
 
-### How to build a new Alfresco Angular 2 component
+### Generate an Alfresco web component starter project
 
-To generate your Alfresco Angular 2 component you can use our Yeoman generator
+To generate your Alfresco Angular 2 component you can use the following Yeoman generator:
 
 - [Yeoman Generator Angular 2 Alfresco component](https://github.com/Alfresco/generator-ng2-alfresco-component)
 
 
-### How to build a new Alfresco Angular 2 application
+### Generate an Alfresco web application starter project
 
-To generate your Alfresco Angular 2 application you can use our Yeoman generator
+To generate your Alfresco Angular 2 application you can use the following Yeoman generator:
 
 - [Yeoman Generator Angular 2 Alfresco application](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
