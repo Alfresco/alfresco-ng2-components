@@ -1,8 +1,8 @@
 # ALFRESCO WEB COMPONENTS
 
 <p>
-  <a title='Build Status' href="https://travis-ci.com/Alfresco/dev-platform-webcomponents">
-    <img src='https://travis-ci.com/Alfresco/dev-platform-webcomponents.svg?token=FPzV2wyyCU8imY6wHR2B&branch=master'  alt='travis
+  <a title='Build Status' href="https://travis-ci.com/Alfresco/app-dev-framework">
+    <img src='https://travis-ci.com/Alfresco/app-dev-framework.svg?token=SCyeWaC53Nr62GmuRyZA&branch=master'  alt='travis
     Status' />
   </a>
   <a href='https://raw.githubusercontent.com/Alfresco/dev-platform-webcomponents/master/ng2-components/ng2-alfresco-viewer/LICENSE'>
