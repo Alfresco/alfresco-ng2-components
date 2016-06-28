@@ -1,4 +1,4 @@
-# ALFRESCO WEB COMPONENTS
+# ALFRESCO ANGULAR 2 COMPONENTS
 
 <p>
   <a title='Build Status' href="https://travis-ci.com/Alfresco/app-dev-framework">
