@@ -4,13 +4,13 @@
     <thead>
     <tr>
         <th class="mdl-data-table__cell--non-numeric"></th>
-        <th class="mdl-data-table__cell--non-numeric">
+        <th class="mdl-data-table__cell--non-numeric col-display-name">
             {{'SEARCH.RESULTS.COLUMNS.NAME' | translate}}
         </th>
-        <th class="mdl-data-table__cell--non-numeric">
+        <th class="mdl-data-table__cell--non-numeric col-modified-by">
             {{'SEARCH.RESULTS.COLUMNS.MODIFIED_BY' | translate}}
         </th>
-        <th class="mdl-data-table__cell--non-numeric">
+        <th class="mdl-data-table__cell--non-numeric col-modified-at">
             {{'SEARCH.RESULTS.COLUMNS.MODIFIED_AT' | translate}}
         </th>
     </tr>
@@ -19,12 +19,12 @@
 
     <tr *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)">
         <td><img src="{{getMimeTypeIcon(result)}}" /></td>
-        <td class="mdl-data-table__cell--non-numeric"
+        <td class="mdl-data-table__cell--non-numeric col-display-name"
             attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
-        <td class="mdl-data-table__cell--non-numeric"
+        <td class="mdl-data-table__cell--non-numeric  col-modified-by"
             attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}}>
             {{result.entry.modifiedByUser.displayName}}</td>
-        <td>{{result.entry.modifiedAt | date}}</td>
+        <td class="col-modified-at">{{result.entry.modifiedAt | date}}</td>
     </tr>
 
     </tbody>
