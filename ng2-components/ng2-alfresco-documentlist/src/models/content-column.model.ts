@@ -16,11 +16,17 @@
  */
 
 export class ContentColumnModel {
+
+    static TYPE_TEXT: string = 'text';
+    static TYPE_DATE: string = 'date';
+    static TYPE_IMAGE: string = 'image';
+    // static TYPE_NUMBER: string = 'number';
+
     title: string;
     srTitle: string;
     source: string;
     cssClass: string;
-    type: string = 'text'; // text|date|image|number
+    type: string = ContentColumnModel.TYPE_TEXT;
     format: string = 'medium';
 
     constructor(obj?: any) {
@@ -29,8 +35,17 @@ export class ContentColumnModel {
             this.srTitle = obj.srTitle;
             this.source = obj.source;
             this.cssClass = obj.cssClass;
-            this.type = obj.type || 'text';
+            this.type = obj.type || ContentColumnModel.TYPE_TEXT;
             this.format = obj.format;
         }
+    }
+
+    static getSupportedTypes(): string[] {
+        return [
+            ContentColumnModel.TYPE_TEXT,
+            ContentColumnModel.TYPE_DATE,
+            ContentColumnModel.TYPE_IMAGE
+            // ContentColumnModel.TYPE_NUMBER
+        ];
     }
 }
