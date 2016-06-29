@@ -50,7 +50,7 @@ The following is a list of some of the components that you can use when building
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
 
-You can browse all the components at the following [page](http://devproducts.alfresco.me/).
+You can browse all the components at the following [page](http://devproducts.alfresco.com/).
 
 ## Yeoman generators
 

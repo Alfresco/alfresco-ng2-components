@@ -5,7 +5,8 @@ The [Angular 2](https://angular.io/) based application development framework req
 - An Alfresco Platform Repository to talk to, which has [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) enabled. 
 - [Node.js](https://nodejs.org/en/) JavaScript runtime.
 - [npm](https://www.npmjs.com/) package manager for JavaScript.
-- Access to the [Alfresco private npm repository](http://devproducts.alfresco.me) that contains the web components (note, you need VPN access to view)
+- Access to the [Alfresco private npm repository](http://devproducts.alfresco.com) that contains the web components (note, you need VPN
+access to view)
  
 ## Installing Alfresco
  

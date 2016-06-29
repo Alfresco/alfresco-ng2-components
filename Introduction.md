@@ -28,7 +28,7 @@ Here is a list of some of the available web components:
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
 
-You can browse all the components at this [page](http://devproducts.alfresco.me/).
+You can browse all the components at this [page](http://devproducts.alfresco.com/).
 
 An architecture overview looks like this:
 

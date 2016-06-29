@@ -124,7 +124,7 @@ class DocumentListDemo implements OnInit {
                 translation: AlfrescoTranslationService,
                 documentActions: DocumentActionsService) {
 
-        settings.host = 'http://192.168.99.100:8080';
+        settings.host = 'http://myalfrescoip';
         translation.addTranslationFolder();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }

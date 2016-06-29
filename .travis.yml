@@ -19,8 +19,6 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 env:
-  global:
-    - DEV_REGISTRY=http://devproducts.alfresco.me:8081/
   matrix:
     - MODULE=ng2-alfresco-core
     - MODULE=ng2-alfresco-datatable
@@ -31,9 +29,7 @@ env:
     - MODULE=ng2-alfresco-viewer
 
 before_script:
-  - npm set proxy $DEV_REGISTRY
-  - npm config set https-proxy $DEV_REGISTRY
-  - cd ./ng2-components/$MODULE; npm install --registry $DEV_REGISTRY
+  - cd ./ng2-components/$MODULE; npm install
   - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls

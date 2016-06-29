@@ -34,4 +34,4 @@
 
 You can browse all the components at the following address:
 
-http://devproducts.alfresco.me/
+http://devproducts.alfresco.com/
