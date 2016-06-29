@@ -189,6 +189,7 @@ export class PdfViewerComponent {
      * @returns {boolean}
      */
     isLandscape(width: number, height: number) {
+        console.log('width  ' + width + 'height  ' + height);
         return (width > height);
     }
 

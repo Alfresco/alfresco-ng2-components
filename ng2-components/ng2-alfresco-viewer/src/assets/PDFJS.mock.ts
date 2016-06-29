@@ -25,6 +25,5 @@ export class PDFJSmock {
     }
 
     getPage(numberPage: number) {
-        console.log('getPage ${numberPage}');
     }
 }

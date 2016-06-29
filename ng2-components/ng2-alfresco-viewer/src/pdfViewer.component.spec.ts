@@ -257,6 +257,93 @@ describe('PdfViewer', () => {
                     });
                 });
         }));
+
+        /* tslint:disable:max-line-length */
+        it('zoomIn should increment the scale value', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
+                    component.urlFile = 'fake-url-file';
+                    component.currentScale = 1;
+
+                    let zoomInButton = element.querySelector('#viewer-zoom-in-button');
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        zoomInButton.click();
+                        expect(component.currentScaleMode).toBe('auto');
+                        expect(component.currentScale).toBe(1.1);
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
+                });
+        }));
+
+        it('zoomOut should decrement the scale value', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
+                    component.urlFile = 'fake-url-file';
+                    component.currentScale = 1;
+
+                    let zoomOutButton = element.querySelector('#viewer-zoom-out-button');
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        zoomOutButton.click();
+                        expect(component.currentScaleMode).toBe('auto');
+                        expect(component.currentScale).toBe(0.9);
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
+                });
+        }));
+
+        it('fit in button should toggle page-fit and auto scale mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+                    let element = fixture.nativeElement;
+
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
+                    component.urlFile = 'fake-url-file';
+                    component.currentScale = 1;
+
+                    let fitPage = element.querySelector('#viewer-scale-page-button');
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(component.currentScaleMode).toBe('auto');
+                        fitPage.click();
+                        expect(component.currentScaleMode).toBe('page-fit');
+                        fitPage.click();
+                        expect(component.currentScaleMode).toBe('auto');
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
+                });
+        }));
     });
 
     describe('Rezize interaction', () => {
@@ -281,7 +368,6 @@ describe('PdfViewer', () => {
                     expect(component.setScaleUpdatePages).toHaveBeenCalled();
                 });
         }));
-
     });
 
 });

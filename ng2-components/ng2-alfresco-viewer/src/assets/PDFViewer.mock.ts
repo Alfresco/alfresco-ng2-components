@@ -42,6 +42,5 @@ export class PDFViewermock {
     _currentPageNumber: number = 0;
 
     update() {
-        console.log('update page');
     }
 }
