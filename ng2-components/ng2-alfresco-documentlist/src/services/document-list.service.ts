@@ -68,26 +68,21 @@ export class DocumentListService {
     ) {
     }
 
-    private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
+    private getAlfrescoApi() {
+        return this.authService.getAlfrescoApi();
     }
 
     private getNodesPromise(folder: string) {
-        let alfrescoClient = this.getAlfrescoClient();
-        let apiInstance = new AlfrescoApi.Core.NodesApi(alfrescoClient);
         let nodeId = '-root-';
         let opts = {
             relativePath: folder,
             include: ['path']
         };
-        return apiInstance.getNodeChildren(nodeId, opts);
+        return this.getAlfrescoApi().getNodeChildren(nodeId, opts);
     }
 
     deleteNode(nodeId: string) {
-        let client = this.getAlfrescoClient();
-        let nodesApi = new AlfrescoApi.Core.NodesApi(client);
-        let opts = {};
-        return Observable.fromPromise(nodesApi.deleteNode(nodeId, opts));
+        return Observable.fromPromise(this.getAlfrescoApi().deleteNode(nodeId));
     }
 
     /**

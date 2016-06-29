@@ -30,8 +30,8 @@ export class AlfrescoContentService {
      * @param document Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(document: any) {
-        this.authService.alfrescoApi.getDocumentThumbnailUrl(document.entry.id);
+    getDocumentThumbnailUrl(document: any): string {
+        return this.authService.alfrescoApi.getDocumentThumbnailUrl(document.entry.id);
     }
 
     /**
@@ -39,7 +39,7 @@ export class AlfrescoContentService {
      * @param document Node to get URL for.
      * @returns {string} URL address.
      */
-    getContentUrl(document: any) {
-        this.authService.alfrescoApi.getContentUrl(document.entry.id);
+    getContentUrl(document: any): string {
+        return this.authService.alfrescoApi.getContentUrl(document.entry.id);
     }
 }

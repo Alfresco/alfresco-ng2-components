@@ -90,6 +90,10 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         });
     }
 
+    getAlfrescoApi(): any {
+        return this.alfrescoApi;
+    }
+
     /**
      * The method return tru if the user is logged in
      * @returns {boolean}
