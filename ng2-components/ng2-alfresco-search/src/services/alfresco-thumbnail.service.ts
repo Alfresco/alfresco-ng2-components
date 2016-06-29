@@ -26,32 +26,32 @@ declare let AlfrescoApi: any;
 export class AlfrescoThumbnailService {
 
     mimeTypeIcons: any = {
-        'image/png': 'ft_ic_raster_image.svg',
-        'image/jpeg': 'ft_ic_raster_image.svg',
-        'image/gif': 'ft_ic_raster_image.svg',
-        'application/pdf': 'ft_ic_pdf.svg',
-        'application/vnd.ms-excel': 'ft_ic_ms_excel.svg',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'ft_ic_ms_excel.svg',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.template': 'ft_ic_ms_excel.svg',
-        'application/msword': 'ft_ic_ms_word.svg',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'ft_ic_ms_word.svg',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.template': 'ft_ic_ms_word.svg',
-        'application/vnd.ms-powerpoint': 'ft_ic_ms_powerpoint.svg',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'ft_ic_ms_powerpoint.svg',
-        'application/vnd.openxmlformats-officedocument.presentationml.template': 'ft_ic_ms_powerpoint.svg',
-        'application/vnd.openxmlformats-officedocument.presentationml.slideshow': 'ft_ic_ms_powerpoint.svg',
-        'video/mp4': 'ft_ic_video.svg',
-        'text/plain': 'ft_ic_document.svg',
-        'application/x-javascript': 'ft_ic_document.svg',
-        'application/json': 'ft_ic_document.svg',
-        'image/svg+xml': 'ft_ic_vector_image.svg',
-        'text/html': 'ft_ic_website.svg',
-        'application/x-compressed': 'ft_ic_archive.svg',
-        'application/x-zip-compressed': 'ft_ic_archive.svg',
-        'application/zip': 'ft_ic_archive.svg',
-        'application/vnd.apple.keynote': 'ft_ic_presentation.svg',
-        'application/vnd.apple.pages': 'ft_ic_document.svg',
-        'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
+        'image/png': 'ft_ic_raster_image',
+        'image/jpeg': 'ft_ic_raster_image',
+        'image/gif': 'ft_ic_raster_image',
+        'application/pdf': 'ft_ic_pdf',
+        'application/vnd.ms-excel': 'ft_ic_ms_excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'ft_ic_ms_excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.template': 'ft_ic_ms_excel',
+        'application/msword': 'ft_ic_ms_word',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'ft_ic_ms_word',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.template': 'ft_ic_ms_word',
+        'application/vnd.ms-powerpoint': 'ft_ic_ms_powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'ft_ic_ms_powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.template': 'ft_ic_ms_powerpoint',
+        'application/vnd.openxmlformats-officedocument.presentationml.slideshow': 'ft_ic_ms_powerpoint',
+        'video/mp4': 'ft_ic_video',
+        'text/plain': 'ft_ic_document',
+        'application/x-javascript': 'ft_ic_document',
+        'application/json': 'ft_ic_document',
+        'image/svg+xml': 'ft_ic_vector_image',
+        'text/html': 'ft_ic_website',
+        'application/x-compressed': 'ft_ic_archive',
+        'application/x-zip-compressed': 'ft_ic_archive',
+        'application/zip': 'ft_ic_archive',
+        'application/vnd.apple.keynote': 'ft_ic_presentation',
+        'application/vnd.apple.pages': 'ft_ic_document',
+        'application/vnd.apple.numbers': 'ft_ic_spreadsheet'
     };
 
     constructor(private contentService: AlfrescoContentService) {
@@ -66,8 +66,12 @@ export class AlfrescoThumbnailService {
         return this.contentService.getDocumentThumbnailUrl(document);
     }
 
-    public getMimeTypeIcon(mimeType: string): string {
+    public getMimeTypeKey(mimeType: string): string {
         let icon = this.mimeTypeIcons[mimeType];
-        return icon || 'ft_ic_miscellaneous.svg';
+        return icon || 'ft_ic_miscellaneous';
+    }
+
+    public getMimeTypeIcon(mimeType: string): string {
+        return this.getMimeTypeKey(mimeType) + '.svg';
     }
 }

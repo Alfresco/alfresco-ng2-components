@@ -53,9 +53,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
 
-    constructor(private _alfrescoSearchService: AlfrescoSearchService,
+    constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
-                private _alfrescoThumbnailService: AlfrescoThumbnailService) {
+                private alfrescoThumbnailService: AlfrescoThumbnailService) {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-alfresco-search');
         }
@@ -74,7 +74,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
      */
     public displaySearchResults(searchTerm) {
         if (searchTerm !== null && searchTerm !== '') {
-            this._alfrescoSearchService
+            this.alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
                     results => {
@@ -94,10 +94,23 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    _getMimeTypeIcon(node: any): string {
+    getMimeTypeIcon(node: any): string {
         if (node.entry.content && node.entry.content.mimeType) {
-            let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
+            let icon = this.alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
             return `${this.baseComponentPath}/img/${icon}`;
+        }
+    }
+
+    /**
+     * Gets thumbnail message key for the given document node, which can be used to look up alt text
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getMimeTypeKey(node: any): string {
+        if (node.entry.content && node.entry.content.mimeType) {
+            return 'SEARCH.ICONS.' + this.alfrescoThumbnailService.getMimeTypeKey(node.entry.content.mimeType);
+        } else {
+            return '';
         }
     }
 

@@ -96,6 +96,19 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     }
 
     /**
+     * Gets thumbnail message key for the given document node, which can be used to look up alt text
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getMimeTypeKey(node: any): string {
+        if (node.entry.content && node.entry.content.mimeType) {
+            return 'SEARCH.ICONS.' + this._alfrescoThumbnailService.getMimeTypeKey(node.entry.content.mimeType);
+        } else {
+            return '';
+        }
+    }
+
+    /**
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
