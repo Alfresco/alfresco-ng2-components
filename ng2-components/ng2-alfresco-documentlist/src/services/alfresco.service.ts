@@ -34,6 +34,8 @@ declare let AlfrescoApi: any;
 @Injectable()
 export class AlfrescoService {
 
+    static DEFAULT_MIME_TYPE_ICON: string = 'ft_ic_miscellaneous.svg';
+
     mimeTypeIcons: any = {
         'image/png': 'ft_ic_raster_image.svg',
         'image/jpeg': 'ft_ic_raster_image.svg',
@@ -106,16 +108,19 @@ export class AlfrescoService {
 
     /**
      * Get thumbnail URL for the given document node.
-     * @param document Node to get URL for.
+     * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(document: MinimalNodeEntity) {
-        return this.contentService.getDocumentThumbnailUrl(document);
+    getDocumentThumbnailUrl(node: MinimalNodeEntity) {
+        if (node && this.contentService) {
+            return this.contentService.getDocumentThumbnailUrl(node);
+        }
+        return null;
     }
 
     getMimeTypeIcon(mimeType: string): string {
         let icon = this.mimeTypeIcons[mimeType];
-        return icon || 'ft_ic_miscellaneous.svg';
+        return icon || AlfrescoService.DEFAULT_MIME_TYPE_ICON;
     }
 
     private handleError(error: Response) {
