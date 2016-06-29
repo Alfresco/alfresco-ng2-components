@@ -67,9 +67,9 @@
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.1.3",
 
-    "alfresco-js-api": "0.1.0",
-    "ng2-alfresco-core": "0.1.36",
-    "ng2-alfresco-search": "0.1.21"
+    "alfresco-js-api": "^0.1.0",
+    "ng2-alfresco-core": "^0.1.36",
+    "ng2-alfresco-search": "^0.1.21"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",

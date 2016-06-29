@@ -82,8 +82,8 @@
     "zone.js": "0.6.12",
     "rimraf": "2.5.2",
     "ng2-translate": "2.2.2",
-    "ng2-alfresco-core": "0.1.35",
-    "alfresco-js-api": "0.1.0",
+    "ng2-alfresco-core": "^0.1.35",
+    "alfresco-js-api": "^0.1.0",
     "coveralls": "^2.11.9"
   },
   "devDependencies": {
