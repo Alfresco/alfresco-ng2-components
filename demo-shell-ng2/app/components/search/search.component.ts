@@ -36,6 +36,17 @@ declare let __moduleName: string;
         :host tbody tr {
             cursor: pointer;
         }
+        @media screen and (max-width: 600px) {
+            :host .col-display-name {
+                min-width: 100px;
+            }
+            :host .col-modified-at, :host .col-modified-by {
+                display: none;
+            }
+            :host div.search-results-container table {
+                width: 100%;
+            }
+        }
     `],
     directives: [ ALFRESCO_SEARCH_DIRECTIVES, VIEWERCOMPONENT ]
 })

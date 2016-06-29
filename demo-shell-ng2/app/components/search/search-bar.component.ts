@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router-deprecated';
 import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
@@ -40,6 +40,9 @@ export class SearchBarComponent {
     fileName: string;
     mimeType: string;
     fileShowed: boolean = false;
+
+    @Output()
+    expand = new EventEmitter();
 
     constructor(
         public router: Router,
@@ -71,5 +74,9 @@ export class SearchBarComponent {
             this.urlFile = this.contentService.getContentUrl(event.value);
             this.fileShowed = true;
         }
+    }
+
+    onExpandToggle(event) {
+        this.expand.emit(event);
     }
 }

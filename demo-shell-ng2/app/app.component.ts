@@ -82,6 +82,16 @@ export class AppComponent {
             );
     }
 
+    onToggleSearch(event) {
+        let expandedHeaderClass = 'header-search-expanded',
+            header = document.querySelector('header');
+        if (event.expanded) {
+            header.classList.add(expandedHeaderClass);
+        } else {
+            header.classList.remove(expandedHeaderClass);
+        }
+    }
+
     changeLanguage(lang: string) {
         this.translate.use(lang);
     }

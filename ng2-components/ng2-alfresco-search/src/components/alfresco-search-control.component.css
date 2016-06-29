@@ -1,3 +1,13 @@
-.search-field{
+.search-field {
     width: 267px;
+}
+@media only screen and (max-width: 400px) {
+    .search-field {
+        width: 200px;
+    }
+}
+@media only screen and (max-width: 320px) {
+    .search-field {
+        width: 160px;
+    }
 }

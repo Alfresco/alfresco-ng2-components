@@ -3,28 +3,28 @@
 <table data-automation-id="search_result_table" *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
-        <th>
-            <span class="mdl-data-table__cell--non-numeric"></span>
+        <th class="mdl-data-table__cell--non-numeric col-mimetype-icon"></th>
+        <th class="mdl-data-table__cell--non-numeric col-display-name">
+            {{'SEARCH.RESULTS.COLUMNS.NAME' | translate}}
         </th>
-        <th>
-            <span class="mdl-data-table__cell--non-numeric">{{'SEARCH.RESULTS.COLUMNS.NAME' | translate}}</span>
+        <th class="mdl-data-table__cell--non-numeric col-modified-by">
+            {{'SEARCH.RESULTS.COLUMNS.MODIFIED_BY' | translate}}
         </th>
-        <th>
-            <span class="mdl-data-table__cell--non-numeric">{{'SEARCH.RESULTS.COLUMNS.MODIFIED_BY' | translate}}</span>
-        </th>
-        <th>
-            <span class="mdl-data-table__cell--non-numeric">{{'SEARCH.RESULTS.COLUMNS.MODIFIED_AT' | translate}}</span>
+        <th class="mdl-data-table__cell--non-numeric col-modified-at">
+            {{'SEARCH.RESULTS.COLUMNS.MODIFIED_AT' | translate}}
         </th>
     </tr>
     </thead>
     <tbody>
 
     <tr *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)">
-        <td><img src="{{getMimeTypeIcon(result)}}" /></td>
-        <td attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
-        <td attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}}>
+        <td class="col-mimetype-icon"><img src="{{getMimeTypeIcon(result)}}" /></td>
+        <td class="mdl-data-table__cell--non-numeric col-display-name"
+            attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
+        <td class="mdl-data-table__cell--non-numeric  col-modified-by"
+            attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}}>
             {{result.entry.modifiedByUser.displayName}}</td>
-        <td>{{result.entry.modifiedAt | date}}</td>
+        <td class="col-modified-at">{{result.entry.modifiedAt | date}}</td>
     </tr>
 
     </tbody>
