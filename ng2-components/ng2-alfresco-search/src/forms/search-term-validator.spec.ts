@@ -16,7 +16,7 @@
  */
 
 import { Control } from '@angular/common';
-import { SearchTermValidator } from './search-term-validator.ts';
+import { SearchTermValidator } from './search-term-validator';
 
 describe('Search term validator', () => {
 
@@ -32,13 +32,13 @@ describe('Search term validator', () => {
 
     it('should fail validation for a value with less than the specified required number of alphanumeric characters', () => {
         const control = new Control('a', SearchTermValidator.minAlphanumericChars(2));
-        expect(control.valid).toBe(true);
+        expect(control.valid).toBe(false);
     });
 
     /* tslint:disable:max-line-length */
     it('should fail validation for a value with less than the specified required number of alphanumeric characters but with other non-alphanumeric characters', () => {
         const control = new Control('a ._-?b', SearchTermValidator.minAlphanumericChars(3));
-        expect(control.valid).toBe(true);
+        expect(control.valid).toBe(false);
     });
 
 });
