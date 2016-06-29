@@ -22,10 +22,11 @@
         </td>
         <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone size-column">{{file.size}}</td>
         <td>
-            <span *ngIf="file.done && !file.abort"><i data-automation-id="done_icon" class="material-icons">done</i></span>
+            <span *ngIf="file.done && !file.abort" ><i data-automation-id="done_icon" class="material-icons action-icons">done</i></span>
             <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" ><i data-automation-id="abort_cancel_upload"
-                                                                                     class="material-icons">remove_circle_outline</i></span>
-            <span *ngIf="file.abort"><i class="material-icons">remove_circle</i></span>
+                                                                                     class="material-icons action-icons">
+                remove_circle_outline</i></span>
+            <span *ngIf="file.abort"><i class="material-icons action-icons">remove_circle</i></span>
         </td>
     </tr>
 </table>

@@ -37,6 +37,10 @@
     text-align: right;
 }
 
+.action-icons {
+    text-align: center;
+    width: 100%;
+}
 :host .truncate {
     margin-left: auto;
     white-space: nowrap;
