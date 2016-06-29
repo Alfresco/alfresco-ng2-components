@@ -31,23 +31,6 @@ npm start
 TypeScript watchers are also configured for `node_modules` folder within demo shell
 and provide live reload for all the component libraries as well.
 
-#### Docker build
-
-A Dockerfile is provided as part of the demo-shell. This can be used to build a local image using the current code
-that you have in your development environment. The `node_modules` folder will not be copied over, instead `npm install`
-is executed during the build to bring in the required dependencies from the registry, which ensures that you start from
-a clean base.
-
-Another advantage is that you do not need to have Node and npm installed locally, since these are already included with the
-base image.
-
-    docker build -t demo-shell --rm .
-    docker run -it --rm --name demo-shell-ng2 -p 3000 demo-shell
-
-When you are done testing you can remove the image that you created
-
-    docker rmi demo-shell
-
 ###Multi-language
 To support a new language you need to create your language file (.json) and add it to `i18n/` folder.
 
