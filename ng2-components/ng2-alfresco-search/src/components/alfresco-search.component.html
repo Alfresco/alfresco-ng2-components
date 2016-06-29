@@ -1,6 +1,6 @@
-<p data-automation-id="search_result_found" *ngIf="results && results.length">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</p>
 <p data-automation-id="search_no_result_found" *ngIf="results&& results.length == 0">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</p>
 <table data-automation-id="search_result_table" *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <caption data-automation-id="search_result_found">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</caption>
     <thead>
     <tr>
         <th class="mdl-data-table__cell--non-numeric col-mimetype-icon"></th>

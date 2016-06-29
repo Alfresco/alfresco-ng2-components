@@ -27,6 +27,10 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-search',
     styles: [`
+        :host .mdl-data-table caption {
+            margin: 0 0 16px 0;
+            text-align: left;
+        }
         :host .mdl-data-table td {
             max-width: 0;
             white-space: nowrap;
