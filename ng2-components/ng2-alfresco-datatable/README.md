@@ -1,8 +1,8 @@
 # DataTable Component for Angular 2
 
 <p>
-  <a title='Build Status' href="https://travis-ci.com/Alfresco/alfresco-ng2-components">
-    <img src='https://travis-ci.com/Alfresco/alfresco-ng2-components.svg?token=SCyeWaC53Nr62GmuRyZA&branch=master'  alt='travis
+  <a title='Build Status' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
     Status' />
   </a>
   <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
