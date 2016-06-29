@@ -87,20 +87,4 @@ $ node -v
 v5.12.0
 ```
 
-## Installing npm
-
-The npm package manager is included with Node.js, however it is not usually the latest version as npm is updated more frequently than node.js.
-
-Update npm as follows:
-
-`$ npm install npm -g`
-
-## Configure Alfresco Private npm repository 
-
-All the distribution packages for the application development framework components are stored in Alfresco's private npm repository, 
-which is visible only from the internal Alfresco LAN (or through VPN). We need to tell npm about this repository.
-  
-Set up Alfresco's private npm repository as follows:
-
-`$ npm set registry http://devproducts.alfresco.me:4873`
 

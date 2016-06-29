@@ -78,8 +78,5 @@
       "tslint": "^3.8.1",
       "typescript": "^1.8.10",
       "typings": "^1.0.4"
-    },
-    "publishConfig": {
-        "registry": "http://devproducts.alfresco.me:4873/"
     }
 }
