@@ -45,7 +45,7 @@ import { EventMock } from './assets/event.mock';
                      let element = fixture.nativeElement;
                      let component = fixture.componentInstance;
                      component.urlFile = 'http://localhost:9876/fake-url-file.pdf';
-
+                     
                      component.ngOnChanges().then(() => {
                          fixture.detectChanges();
                          expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-url-file.pdf');
@@ -106,8 +106,6 @@ import { EventMock } from './assets/event.mock';
                      let element = fixture.nativeElement;
                      let component = fixture.componentInstance;
                      component.urlFile = 'fake-url-file';
-
-
 
                      fixture.detectChanges();
                      EventMock.keyDown(27);
