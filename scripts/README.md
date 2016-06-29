@@ -6,7 +6,7 @@ feel for what's available.
 * Start by navigating into the app development framework source folder, and then the script folder:
 
 ```ssh
- cd app-dev-framework
+ cd alfresco-ng2-components
  cd scripts
 ```
 

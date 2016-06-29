@@ -1,7 +1,14 @@
 # Alfresco Angular2 Components core
 
 <p>
-  <a href='https://raw.githubusercontent.com/Alfresco/app-dev-framework/master/ng2-components/ng2-alfresco-upload/LICENSE'>
+  <a title='Build Status' href="https://travis-ci.com/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.com/Alfresco/alfresco-ng2-components.svg?token=SCyeWaC53Nr62GmuRyZA&branch=master'  alt='travis
+    Status' />
+  </a>
+  <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
+    <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
   </a>
   <a href='https://www.alfresco.com/'>
@@ -15,13 +22,6 @@
   </a>
   <a href='https://www.alfresco.com/'>
      <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
-  </a>
-  <a title='Build Status' href="https://travis-ci.com/Alfresco/alfresco-ng2-components">
-    <img src='https://travis-ci.com/Alfresco/alfresco-ng2-components.svg?token=SCyeWaC53Nr62GmuRyZA&branch=master'  alt='travis
-    Status' />
-  </a>
-  <a href='https://coveralls.io/github/Alfresco/app-dev-framework'>
-    <img src='https://coveralls.io/repos/github/Alfresco/app-dev-framework/badge.svg?t=SfuVVj' alt='Coverage Status' />
   </a>
 </p>
 

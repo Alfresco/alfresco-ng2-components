@@ -33,7 +33,7 @@ You can browse all the components at this [page](http://devproducts.alfresco.me/
 An architecture overview looks like this:
 
 <p align="center">
-  <img title="alfresco-dev-framework-architecture" alt='alfresco' src='assets/alfresco-app-dev-framework-architecture.png'></img>
+  <img title="alfresco-ng2-components-architecture" alt='alfresco' src='assets/alfresco-app-dev-framework-architecture.png'></img>
 </p>
 
 Here we can also see that there is an Alfresco JavaScript framework in use that wraps the Alfresco REST API. To make things easier for the client developer.
