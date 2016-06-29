@@ -118,7 +118,7 @@
       "!*.js"
     ],
     "path": "assets/license_header.txt",
-    "blocking": false,
+    "blocking": true,
     "logInfo": false,
     "logError": true
   },
