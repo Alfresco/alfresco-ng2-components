@@ -105,4 +105,93 @@ describe('AlfrescoUploadDragArea', () => {
         expect(component._showUndoNotificationBar).toHaveBeenCalled();
     });
 
+    it('should upload a file when dropped', done => {
+        let component = componentFixture.componentInstance;
+        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
+        component.onSuccess = null;
+
+        componentFixture.detectChanges();
+        spyOn(component._uploaderService, 'uploadFilesInTheQueue');
+        spyOn(component, '_showUndoNotificationBar').and.callFake( () => {
+            expect(component._showUndoNotificationBar).toHaveBeenCalled();
+            done();
+        });
+
+        let itemEntity = {
+            fullPath: '/folder-fake/file-fake.png',
+            isDirectory: false,
+            isFile: true,
+            name: 'file-fake.png',
+            file: (callbackFile) => {
+                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                callbackFile(fileFake);
+            }
+        };
+
+        component.onFilesEntityDropped(itemEntity);
+        expect(component._uploaderService.uploadFilesInTheQueue)
+            .toHaveBeenCalledWith('/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+    });
+
+    it('should throws an exception and show it in the notification bar when the folder already exist', done => {
+        let component = componentFixture.componentInstance;
+        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
+        component.showUdoNotificationBar = true;
+
+        componentFixture.detectChanges();
+        spyOn(component, '_showErrorNotificationBar').and.callFake( () => {
+            expect(component._showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            done();
+        });
+
+        let folderEntry = {
+            fullPath: '/folder-duplicate-fake',
+            isDirectory: true,
+            isFile: false,
+            name: 'folder-duplicate-fake'
+        };
+
+        component.onFolderEntityDropped(folderEntry);
+    });
+
+    it('should create a folder and call onFilesEntityDropped with the file inside the folder', done => {
+        let component = componentFixture.componentInstance;
+        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
+        component.onSuccess = null;
+
+        componentFixture.detectChanges();
+
+        let itemEntity = {
+            fullPath: '/folder-fake/file-fake.png',
+            isDirectory: false,
+            isFile: true,
+            name: 'file-fake.png',
+            file: (callbackFile) => {
+                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                callbackFile(fileFake);
+            }
+        };
+
+        spyOn(component, 'onFilesEntityDropped').and.callFake( () => {
+            expect(component.onFilesEntityDropped).toHaveBeenCalledWith(itemEntity);
+            done();
+        });
+
+        let folderEntry = {
+            fullPath: '/folder-fake',
+            isDirectory: true,
+            isFile: false,
+            name: 'folder-fake',
+            createReader: () => {
+                return {
+                    readEntries: (callback) => {
+                        let entries = [itemEntity, itemEntity];
+                        callback(entries);
+                    }
+                };
+            }
+        };
+
+        component.onFolderEntityDropped(folderEntry);
+    });
 });

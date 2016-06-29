@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Directive, EventEmitter, Output } from '@angular/core';
 
 /**
  * [file-draggable]
@@ -53,8 +53,7 @@ export class FileDraggableDirective {
 
     private _inputFocusClass: boolean = false;
 
-    constructor(public el: ElementRef) {
-        console.log('FileDraggableComponent constructor', el);
+    constructor() {
     }
 
     /**
@@ -68,12 +67,13 @@ export class FileDraggableDirective {
         let items = $event.dataTransfer.items;
         if (items) {
             for (let i = 0; i < items.length; i++) {
-                let item = items[i].webkitGetAsEntry();
-                if (item) {
-                    this._traverseFileTree(item);
+                if (typeof items[i].webkitGetAsEntry !== 'undefined') {
+                    let item = items[i].webkitGetAsEntry();
+                    if (item) {
+                        this._traverseFileTree(item);
+                    }
                 } else {
-                    let dt = $event.dataTransfer;
-                    let files = dt.files;
+                    let files = $event.dataTransfer.files;
                     this.onFilesDropped.emit(files);
                 }
             }
@@ -143,5 +143,14 @@ export class FileDraggableDirective {
     _preventDefault($event: Event): void {
         $event.stopPropagation();
         $event.preventDefault();
+    }
+
+
+    /**
+     * Return the value of input focus class
+     * @returns {boolean}
+     */
+    getInputFocus () {
+        return this._inputFocusClass;
     }
 }

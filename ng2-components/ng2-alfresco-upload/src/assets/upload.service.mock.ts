@@ -34,10 +34,11 @@ export class UploadServiceMock extends UploadService {
     }
 
     addToQueue(files: any[]): FileModel[] {
+        let result = super.addToQueue(files);
         this.filesUpload$ = new Observable(observer => {
             observer.next(files);
         });
-        return files;
+        return result;
     }
 
     createFolder(relativePath: string, name: string) {
@@ -46,8 +47,10 @@ export class UploadServiceMock extends UploadService {
             promise = new Promise(function (resolve, reject) {
                 resolve({
                     entry: {
-                        userId: 'fake-username',
-                        id: 'fake-post-token'
+                        isFile: false,
+                        isFolder: true,
+                        name: name,
+                        nodeType: 'cm:folder'
                     }
                 });
             });

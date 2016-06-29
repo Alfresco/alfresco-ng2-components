@@ -32,10 +32,6 @@ export class AlfrescoSettingsServiceMock {
         return this._host;
     }
 
-    public set host(value: string) {
-        this._host = value;
-    }
-
     getApiBaseUrl(): string {
         return this._host + this._contextPath + this._apiBasePath;
     }
