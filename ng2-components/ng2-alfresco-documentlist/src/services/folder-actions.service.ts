@@ -35,11 +35,13 @@ export class FolderActionsService {
         return null;
     }
 
-    setHandler(key: string, handler: ContentActionHandler): void {
+    setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
             let lkey = key.toLowerCase();
             this.handlers[lkey] = handler;
+            return true;
         }
+        return false;
     }
 
     canExecuteAction(obj: any): boolean {

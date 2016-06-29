@@ -33,6 +33,7 @@ export class FileNode extends MinimalNodeEntity {
     constructor(name?: string) {
         super();
         this.entry = new MinimalNodeEntryEntity();
+        this.entry.id = 'file-id';
         this.entry.isFile = true;
         this.entry.isFolder = false;
         this.entry.name = name;
@@ -45,6 +46,7 @@ export class FolderNode extends MinimalNodeEntity {
     constructor(name?: string) {
         super();
         this.entry = new MinimalNodeEntryEntity();
+        this.entry.id = 'folder-id';
         this.entry.isFile = false;
         this.entry.isFolder = true;
         this.entry.name = name;

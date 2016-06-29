@@ -18,17 +18,15 @@
 import {Injectable} from '@angular/core';
 import {ContentActionHandler} from '../models/content-action.model';
 import {AlfrescoService} from './alfresco.service';
-import {
-    AlfrescoContentService
-} from 'ng2-alfresco-core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
     constructor(
-        private _alfrescoService?: AlfrescoService,
-        private _contentService?: AlfrescoContentService
+        private alfrescoService?: AlfrescoService,
+        private contentService?: AlfrescoContentService
     ) {
         this.setupActionHandlers();
     }
@@ -41,15 +39,17 @@ export class DocumentActionsService {
         return null;
     }
 
-    setHandler(key: string, handler: ContentActionHandler): void {
+    setHandler(key: string, handler: ContentActionHandler): boolean {
         if (key) {
             let lkey = key.toLowerCase();
             this.handlers[lkey] = handler;
+            return true;
         }
+        return false;
     }
 
     canExecuteAction(obj: any): boolean {
-        return this._alfrescoService && obj && obj.entry.isFile === true;
+        return this.alfrescoService && obj && obj.entry.isFile === true;
     }
 
     private setupActionHandlers() {
@@ -71,20 +71,22 @@ export class DocumentActionsService {
         window.alert('standard document action 2');
     }
 
-    private download(obj: any) {
-        if (this.canExecuteAction(obj)) {
+    private download(obj: any): boolean {
+        if (this.canExecuteAction(obj) && this.contentService) {
             let link = document.createElement('a');
             document.body.appendChild(link);
             link.setAttribute('download', 'download');
-            link.href = this._contentService.getContentUrl(obj);
+            link.href = this.contentService.getContentUrl(obj);
             link.click();
             document.body.removeChild(link);
+            return true;
         }
+        return false;
     }
 
     private deleteNode(obj: any, target?: any) {
         if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
-            this._alfrescoService.deleteNode(obj.entry.id).subscribe(() => {
+            this.alfrescoService.deleteNode(obj.entry.id).subscribe(() => {
                 if (target && typeof target.reload === 'function') {
                     target.reload();
                 }

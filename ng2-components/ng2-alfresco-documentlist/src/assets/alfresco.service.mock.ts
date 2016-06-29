@@ -41,4 +41,11 @@ export class AlfrescoServiceMock extends AlfrescoService {
             observer.complete();
         });
     }
+
+    deleteNode(nodeId: string) {
+        return Observable.create(observer => {
+            observer.next();
+            observer.complete();
+        });
+    }
 }

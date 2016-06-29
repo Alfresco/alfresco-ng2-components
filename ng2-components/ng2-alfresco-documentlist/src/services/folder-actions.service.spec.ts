@@ -23,13 +23,21 @@ import {
 } from '@angular/core/testing';
 import {FolderActionsService} from './folder-actions.service';
 import {ContentActionHandler} from '../models/content-action.model';
+import {
+    FileNode,
+    FolderNode
+} from '../assets/document-library.model.mock';
+import { AlfrescoService } from './alfresco.service';
+import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
 
 describe('FolderActionsService', () => {
 
     let service: FolderActionsService;
+    let alfrescoService: AlfrescoService;
 
     beforeEach(() => {
-        service = new FolderActionsService();
+        alfrescoService = new AlfrescoServiceMock();
+        service = new FolderActionsService(alfrescoService);
     });
 
     it('should register custom action handler', () => {
@@ -46,7 +54,96 @@ describe('FolderActionsService', () => {
         let handler: ContentActionHandler = function (obj: any) {};
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
+    });
 
+    it('should not find handler with invalid key', () => {
+        expect(service.getHandler(null)).toBeNull();
+        expect(service.getHandler('')).toBeNull();
+    });
+
+    it('should allow action execution only when service available', () => {
+        let folder = new FolderNode();
+        expect(service.canExecuteAction(folder)).toBeTruthy();
+
+        service = new FolderActionsService(null);
+        expect(service.canExecuteAction(folder)).toBeFalsy();
+    });
+
+    it('should allow action execution only for folder nodes', () => {
+        expect(service.canExecuteAction(null)).toBeFalsy();
+        expect(service.canExecuteAction(new FileNode())).toBeFalsy();
+        expect(service.canExecuteAction(new FolderNode())).toBeTruthy();
+    });
+
+    it('should set new handler only by key', () => {
+        let handler: ContentActionHandler = function (obj: any) {};
+        expect(service.setHandler(null, handler)).toBeFalsy();
+        expect(service.setHandler('', handler)).toBeFalsy();
+        expect(service.setHandler('my-handler', handler)).toBeTruthy();
+    });
+
+    // TODO: to be removed once demo handlers are removed
+    it('should execute demo actions', () => {
+        spyOn(window, 'alert').and.stub();
+
+        service.getHandler('system1')(null);
+        expect(window.alert).toHaveBeenCalledWith('standard folder action 1');
+
+        service.getHandler('system2')(null);
+        expect(window.alert).toHaveBeenCalledWith('standard folder action 2');
+    });
+
+
+    // TODO: to be removed once demo handlers are removed
+    it('should register demo handlers', () => {
+        expect(service.getHandler('system1')).toBeDefined();
+        expect(service.getHandler('system2')).toBeDefined();
+    });
+
+    it('should register delete action', () => {
+        expect(service.getHandler('delete')).toBeDefined();
+    });
+
+    it('should delete folder node', () => {
+        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+
+        let folder = new FolderNode();
+        service.getHandler('delete')(folder);
+
+        expect(alfrescoService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
+    });
+
+    it('should support deletion only folder node', () => {
+        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+
+        let file = new FileNode();
+        service.getHandler('delete')(file);
+        expect(alfrescoService.deleteNode).not.toHaveBeenCalled();
+
+        let folder = new FolderNode();
+        service.getHandler('delete')(folder);
+        expect(alfrescoService.deleteNode).toHaveBeenCalled();
+    });
+
+    it('should require node id to delete', () => {
+        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+
+        let folder = new FolderNode();
+        folder.entry.id = null;
+        service.getHandler('delete')(folder);
+
+        expect(alfrescoService.deleteNode).not.toHaveBeenCalled();
+    });
+
+    it('should reload target upon node deletion', () => {
+        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+
+        let target = jasmine.createSpyObj('obj', ['reload']);
+        let folder = new FolderNode();
+        service.getHandler('delete')(folder, target);
+
+        expect(alfrescoService.deleteNode).toHaveBeenCalled();
+        expect(target.reload).toHaveBeenCalled();
     });
 
 });
