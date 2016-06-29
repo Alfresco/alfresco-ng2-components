@@ -111,8 +111,5 @@
     "blocking": true,
     "logInfo": false,
     "logError": true
-  },
-  "publishConfig": {
-    "registry": "http://devproducts.alfresco.me:4873/"
   }
 }

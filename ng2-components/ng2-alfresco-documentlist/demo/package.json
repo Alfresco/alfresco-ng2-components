@@ -53,8 +53,5 @@
     "keywords": [
         "angular2",
         "typescript"
-    ],
-    "publishConfig": {
-        "registry": "http://devproducts.alfresco.me:4873/"
-    }
+    ]
 }

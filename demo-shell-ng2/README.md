@@ -13,34 +13,6 @@
 ### Node
 To correctly use this demo check that on your machine is running Node version 5.0.0 or higher.
 
-## Prerequisites
-
-Docker machine with latest `platform-distribution:api-latest` image.
-
-```
-# docker-login is only needed the first time; after this your credentials will be cached
-docker login dockerreg.alfresco.com
-docker pull dockerreg.alfresco.com/platform-distribution:api-latest
-docker-compose up
-```
-**Note:** for complete installation on Windows please review the instructions here: [Windows installation](WINDOWS.md)
-
-to clean up afterwards
-
-```
-docker-compose rm
-```
-
-If you are using the local build you must also have configured your npm to use our private registry, where the
-components are published. Currently the registry can only be accessed from Alfresco's London and Maidenhead offices.
-
-    npm set registry http://devproducts.alfresco.me:4873
-
-Note this is a global setting which will apply to all your npm projects. You can use `npm config delete registry` to
-remove the setting once you no longer need it, or you can temporarily comment out the line in your `.npmrc` file.
-
-### Building and running
-
 #### Local build
 
 1 Install dependencies

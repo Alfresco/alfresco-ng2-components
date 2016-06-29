@@ -30,7 +30,6 @@ To correctly use this component check that on your machine is running Node versi
 ## Install
 
 ```sh
-npm set registry http://devproducts.alfresco.me:4873
 npm install --save ng2-alfresco-viewer
 ```
 
