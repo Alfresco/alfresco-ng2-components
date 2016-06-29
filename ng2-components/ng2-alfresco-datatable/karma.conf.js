@@ -83,7 +83,8 @@ module.exports = function (config) {
       reporters: [
         {type: 'text'},
         {type: 'json', file: 'coverage-final.json'},
-        {type: 'html'}
+        {type: 'html'},
+        {type: 'lcov'}
       ]
     }
   };

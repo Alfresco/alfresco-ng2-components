@@ -37,4 +37,5 @@ before_script:
   - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
-#after_script: "cat ./ng2-components/$MODULE/coverage/lcov.info | ./ng2-components/$MODULE/node_modules/coveralls/bin/coveralls.js"
+after_success:
+  - "cat ./coverage/report/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose"
