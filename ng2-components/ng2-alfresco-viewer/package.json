@@ -33,10 +33,10 @@
   "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alfresco/ng2-alfresco-viewer.git"
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
   },
   "bugs": {
-    "url": "https://github.com/alfresco/ng2-alfresco-viewer/issues"
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "contributors": [
     {
