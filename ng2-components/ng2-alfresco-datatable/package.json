@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-datatable",
   "description": "Alfresco Angular2 DataTable Component",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
