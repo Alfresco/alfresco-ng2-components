@@ -32,10 +32,10 @@
   "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Alfresco/dev-platform-webcomponents.git"
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
   },
   "bugs": {
-    "url": "https://github.com/Alfresco/dev-platform-webcomponents/issues"
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "license": "Apache-2.0",
   "contributors": [
