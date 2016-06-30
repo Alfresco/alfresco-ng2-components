@@ -73,7 +73,14 @@ export class ContentAction implements OnInit, OnChanges {
             };
         }
 
-        this.list.registerAction(this.model);
+        this.register();
+    }
+
+    register(): boolean {
+        if (this.list) {
+            return this.list.registerAction(this.model);
+        }
+        return false;
     }
 
     ngOnChanges(changes) {

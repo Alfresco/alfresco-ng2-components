@@ -849,15 +849,29 @@ describe('DocumentList', () => {
 
     it('should put folders to top on sort', () => {
         let folder = new FolderNode();
-        let file = new FileNode();
-        let page = new PageNode([file, folder]);
+        let file1 = new FileNode('file1');
+        let file2 = new FileNode('file2');
+        let page = new PageNode([file1, file2, folder]);
 
+        // asc
         documentList.sort(page, new ColumnSortingModel({
-            key: 'name'
+            key: 'name',
+            direction: 'asc'
         }));
 
         expect(page.list.entries[0]).toBe(folder);
-        expect(page.list.entries[1]).toBe(file);
+        expect(page.list.entries[1]).toBe(file1);
+        expect(page.list.entries[2]).toBe(file2);
+
+        // desc
+        documentList.sort(page, new ColumnSortingModel({
+            key: 'name',
+            direction: 'desc'
+        }));
+
+        expect(page.list.entries[0]).toBe(folder);
+        expect(page.list.entries[1]).toBe(file2);
+        expect(page.list.entries[2]).toBe(file1);
     });
 
     it('should sort by dates up to ms', () => {
@@ -868,6 +882,8 @@ describe('DocumentList', () => {
         file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
 
         let page = new PageNode([file1, file2]);
+
+        // desc
         documentList.sort(page, new ColumnSortingModel({
             key: 'dateProp',
             direction: 'desc'
@@ -875,6 +891,15 @@ describe('DocumentList', () => {
 
         expect(page.list.entries[0]).toBe(file2);
         expect(page.list.entries[1]).toBe(file1);
+
+        // asc
+        documentList.sort(page, new ColumnSortingModel({
+            key: 'dateProp',
+            direction: 'asc'
+        }));
+
+        expect(page.list.entries[0]).toBe(file1);
+        expect(page.list.entries[1]).toBe(file2);
     });
 
 });

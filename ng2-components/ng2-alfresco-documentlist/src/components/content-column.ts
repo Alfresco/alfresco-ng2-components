@@ -66,9 +66,14 @@ export class ContentColumn implements OnInit, OnChanges {
             this.model.srTitle = 'Thumbnail';
         }
 
+        this.register();
+    }
+
+    register(): boolean {
         if (this.list) {
-            this.list.registerColumn(this.model);
+            return this.list.registerColumn(this.model);
         }
+        return false;
     }
 
     ngOnChanges(change) {

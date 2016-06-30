@@ -30,6 +30,7 @@ import { ContentAction } from './content-action';
 import { DocumentActionsService } from '../services/document-actions.service';
 import { FolderActionsService } from '../services/folder-actions.service';
 import { ContentActionHandler } from '../models/content-action.model';
+import { FileNode } from '../assets/document-library.model.mock';
 
 describe('ContentAction', () => {
 
@@ -224,5 +225,48 @@ describe('ContentAction', () => {
         expect(folderActions.getHandler).not.toHaveBeenCalled();
         expect(documentActions.getHandler).not.toHaveBeenCalled();
 
+    });
+
+    it('should wire model with custom event handler', (done) => {
+        let action = new ContentAction(actionList, documentActions, folderActions);
+        let file = new FileNode();
+
+        let handler = new EventEmitter();
+        handler.subscribe((e) => {
+            expect(e.value).toBe(file);
+            done();
+        });
+
+        action.execute = handler;
+
+        action.ngOnInit();
+        action.model.handler(file);
+    });
+
+    it('should allow registering model without handler', () => {
+        let action = new ContentAction(actionList, documentActions, folderActions);
+
+        spyOn(actionList, 'registerAction').and.callThrough();
+        action.execute = null;
+        action.ngOnInit();
+
+        expect(action.model.handler).toBeUndefined();
+        expect(actionList.registerAction).toHaveBeenCalledWith(action.model);
+    });
+
+    it('should register on init', () => {
+        let action = new ContentAction(actionList, null, null);
+        spyOn(action, 'register').and.callThrough();
+
+        action.ngOnInit();
+        expect(action.register).toHaveBeenCalled();
+    });
+
+    it('should require action list to register action with', () => {
+        let action = new ContentAction(actionList, null, null);
+        expect(action.register()).toBeTruthy();
+
+        action = new ContentAction(null, null, null);
+        expect(action.register()).toBeFalsy();
     });
 });

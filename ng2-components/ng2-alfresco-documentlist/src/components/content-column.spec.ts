@@ -93,4 +93,20 @@ describe('ContentColumn', () => {
         expect(column.model.title).toBe('title2');
     });
 
+    it('should register on init', () => {
+        let column = new ContentColumn(columnList);
+        spyOn(column, 'register').and.callThrough();
+
+        column.ngOnInit();
+        expect(column.register).toHaveBeenCalled();
+    });
+
+    it('should require action list to register action with', () => {
+        let column = new ContentColumn(columnList);
+        expect(column.register()).toBeTruthy();
+
+        column = new ContentColumn(null);
+        expect(column.register()).toBeFalsy();
+    });
+
 });

@@ -106,4 +106,27 @@ describe('DocumentListBreadcrumb', () => {
         expect(documentList.currentFolderPath).toBe(node.path);
     });
 
+    it('should do nothing for same path', () => {
+        let called = 0;
+
+        component.pathChanged.subscribe(() => called++);
+
+        component.currentFolderPath = '/';
+        component.currentFolderPath = '/';
+
+        expect(called).toBe(0);
+    });
+
+    it('should emit path changed event', (done) => {
+        let path = '/some/path';
+
+        component.pathChanged.subscribe(e => {
+            expect(e.value).toBe(path);
+            expect(e.route).toBe(component.route);
+            done();
+        });
+
+        component.currentFolderPath = path;
+    });
+
 });
