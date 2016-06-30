@@ -86,7 +86,7 @@ describe('DocumentList', () => {
         let folder = {
             'nodeRef': 'workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28'
         };
-        alfrescoServiceMock._folderToReturn = folder;
+        alfrescoServiceMock.folderToReturn = folder;
         documentList.ngOnInit();
 
         expect(documentList.folder).toBe(folder);
@@ -672,7 +672,6 @@ describe('DocumentList', () => {
 
         let value = documentList.getCellValue(file, col);
         expect(value).toBe(dateValue);
-
     });
 
     it('should return date value as string', () => {
@@ -701,6 +700,181 @@ describe('DocumentList', () => {
 
         let value = documentList.getCellValue(file, col);
         expect(value).toBe(url);
+    });
+
+    it('should require path to display folder content', () => {
+        spyOn(alfrescoServiceMock, 'getFolder').and.callThrough();
+
+        documentList.displayFolderContent(null);
+        documentList.displayFolderContent('');
+
+        expect(alfrescoServiceMock.getFolder).not.toHaveBeenCalled();
+    });
+
+    it('should require node to resolve context menu actions', () => {
+        expect(documentList.getContextActions(null)).toBeNull();
+
+        let file = new FileNode();
+        file.entry = null;
+
+        expect(documentList.getContextActions(file)).toBeNull();
+    });
+
+    it('should fetch context menu actions for a file node', () => {
+        let actionModel = {};
+        spyOn(documentList, 'getContentActions').and.returnValue([actionModel]);
+
+        let file = new FileNode();
+        let actions = documentList.getContextActions(file);
+
+        expect(documentList.getContentActions).toHaveBeenCalledWith('document', 'menu');
+        expect(actions.length).toBe(1);
+        expect(actions[0].model).toBe(actionModel);
+        expect(actions[0].node).toBe(file);
+        expect(actions[0].subject).toBe(documentList.contextActionHandler);
+    });
+
+    it('should fetch context menu actions for a folder node', () => {
+        let actionModel = {};
+        spyOn(documentList, 'getContentActions').and.returnValue([actionModel]);
+
+        let folder = new FolderNode();
+        let actions = documentList.getContextActions(folder);
+
+        expect(documentList.getContentActions).toHaveBeenCalledWith('folder', 'menu');
+        expect(actions.length).toBe(1);
+        expect(actions[0].model).toBe(actionModel);
+        expect(actions[0].node).toBe(folder);
+        expect(actions[0].subject).toBe(documentList.contextActionHandler);
+    });
+
+    it('should fetch no context menu actions for unknown type', () => {
+        spyOn(documentList, 'getContentActions').and.stub();
+
+        let node = new FileNode();
+        node.entry.isFile = false;
+        node.entry.isFolder = false;
+
+        let actions = documentList.getContextActions(node);
+
+        expect(documentList.getContentActions).not.toHaveBeenCalled();
+        expect(actions).toBeNull();
+    });
+
+    it('should return null value when no content actions found', () => {
+        spyOn(documentList, 'getContentActions').and.returnValue([]);
+
+        let file = new FileNode();
+        let actions = documentList.getContextActions(file);
+
+        expect(actions).toBeNull();
+        expect(documentList.getContentActions).toHaveBeenCalled();
+    });
+
+    it('should update error message when folder content display fails', () => {
+        let error = 'My Error';
+        alfrescoServiceMock.getFolderReject = true;
+        alfrescoServiceMock.getFolderRejectError = error;
+
+        documentList.displayFolderContent('/some/path');
+        expect(documentList.errorMessage).toBe(error);
+    });
+
+    it('should get object value via property path', () => {
+        let obj = {
+            name: {
+                firstName: '<name>'
+            }
+        };
+
+        expect(documentList.getObjectValue(obj, 'name.firstName')).toBe('<name>');
+    });
+
+    it('should not get object value via invalid path', () => {
+        expect(documentList.getObjectValue({}, 'some.missing.path')).toBeUndefined();
+    });
+
+    it('should log error when having date conversion issues', () => {
+
+        let value = '<wrong-date>';
+        let file = new FileNode();
+        file.entry.createdAt = value;
+
+        let col = new ContentColumnModel({
+            source: 'createdAt',
+            type: 'date',
+            format: 'medium'
+        });
+
+        spyOn(console, 'error').and.stub();
+
+        let result = documentList.getCellValue(file, col);
+
+        expect(result).toBe(value);
+        expect(console.error).toHaveBeenCalledWith(`DocumentList: error parsing date ${value} to format ${col.format}`);
+    });
+
+    it('should convert thumbnail if column source defined', () => {
+        let file = new FileNode();
+        let col = new ContentColumnModel({
+            source: 'name',
+            type: 'image'
+        });
+
+        expect(documentList.getCellValue(file, col)).toBe(file.entry.name);
+    });
+
+    it('should require current folder path to reload', () => {
+
+        // Redefine 'currentFolderPath' to disable native setter validation
+        Object.defineProperty(documentList, 'currentFolderPath', {
+            value: null
+        });
+        expect(documentList.currentFolderPath).toBeNull();
+
+        spyOn(documentList, 'displayFolderContent').and.stub();
+
+        documentList.reload();
+
+        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+    });
+
+    it('should not sort empty page', () => {
+        let page = new PageNode();
+        spyOn(page.list.entries, 'sort').and.stub();
+
+        documentList.sort(page, null);
+        expect(page.list.entries.sort).not.toHaveBeenCalled();
+    });
+
+    it('should put folders to top on sort', () => {
+        let folder = new FolderNode();
+        let file = new FileNode();
+        let page = new PageNode([file, folder]);
+
+        documentList.sort(page, new ColumnSortingModel({
+            key: 'name'
+        }));
+
+        expect(page.list.entries[0]).toBe(folder);
+        expect(page.list.entries[1]).toBe(file);
+    });
+
+    it('should sort by dates up to ms', () => {
+        let file1 = new FileNode();
+        file1.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 1);
+
+        let file2 = new FileNode();
+        file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
+
+        let page = new PageNode([file1, file2]);
+        documentList.sort(page, new ColumnSortingModel({
+            key: 'dateProp',
+            direction: 'desc'
+        }));
+
+        expect(page.list.entries[0]).toBe(file2);
+        expect(page.list.entries[1]).toBe(file1);
     });
 
 });

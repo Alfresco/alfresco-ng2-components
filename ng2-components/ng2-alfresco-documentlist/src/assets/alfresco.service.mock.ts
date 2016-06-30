@@ -25,7 +25,9 @@ import {
 
 export class AlfrescoServiceMock extends AlfrescoService {
 
-    _folderToReturn: any = {};
+    folderToReturn: any = {};
+    getFolderReject: boolean = false;
+    getFolderRejectError: string = 'Error';
 
     constructor(
         settings?: AlfrescoSettingsService,
@@ -36,8 +38,11 @@ export class AlfrescoServiceMock extends AlfrescoService {
     }
 
     getFolder(folder: string) {
+        if (this.getFolderReject) {
+            return Observable.throw(this.getFolderRejectError);
+        }
         return Observable.create(observer => {
-            observer.next(this._folderToReturn);
+            observer.next(this.folderToReturn);
             observer.complete();
         });
     }

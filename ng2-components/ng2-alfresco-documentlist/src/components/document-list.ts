@@ -319,7 +319,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     }
 
     displayFolderContent(path: string) {
-        if (path !== null) {
+        if (path) {
             this.alfrescoService
                 .getFolder(path)
                 .subscribe(

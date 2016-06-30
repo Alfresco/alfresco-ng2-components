@@ -22,43 +22,46 @@ import {
     beforeEach
 } from '@angular/core/testing';
 
-import {DocumentList} from './document-list';
-import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-import {ContentColumnList} from './content-column-list';
-import {ContentColumnModel} from '../models/content-column.model';
+import { DocumentList } from './document-list';
+import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
+import { ContentActionModel } from './../models/content-action.model';
+import { ContentActionList } from './content-action-list';
 
 describe('ContentColumnList', () => {
 
     let documentList: DocumentList;
-    let columnList: ContentColumnList;
+    let actionList: ContentActionList;
 
     beforeEach(() => {
         let alfrescoServiceMock = new AlfrescoServiceMock();
         documentList = new DocumentList(alfrescoServiceMock, null);
-        columnList = new ContentColumnList(documentList);
+        actionList = new ContentActionList(documentList);
     });
 
-    it('should register column within parent document list', () => {
-        expect(documentList.columns.length).toBe(0);
+    it('should register action', () => {
+        spyOn(documentList.actions, 'push').and.callThrough();
 
-        let result = columnList.registerColumn(new ContentColumnModel());
+        let action = new ContentActionModel();
+        let result = actionList.registerAction(action);
 
         expect(result).toBeTruthy();
-        expect(documentList.columns.length).toBe(1);
+        expect(documentList.actions.push).toHaveBeenCalledWith(action);
     });
 
     it('should require document list instance to register action', () => {
-        columnList = new ContentColumnList(null);
-        let col = new ContentColumnModel();
-        expect(columnList.registerColumn(col)).toBeFalsy();
+        actionList = new ContentActionList(null);
+        let action = new ContentActionModel();
+        expect(actionList.registerAction(action)).toBeFalsy();
     });
 
     it('should require action instance to register', () => {
         spyOn(documentList.actions, 'push').and.callThrough();
-        let result = columnList.registerColumn(null);
+        let result = actionList.registerAction(null);
 
         expect(result).toBeFalsy();
         expect(documentList.actions.push).not.toHaveBeenCalled();
     });
 
 });
+
+
