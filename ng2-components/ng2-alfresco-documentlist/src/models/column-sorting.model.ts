@@ -16,6 +16,16 @@
  */
 
 export class ColumnSortingModel {
+
+    static DEFAULT_DIRECTION: string = 'asc';
+
     key: string;
-    direction: string = 'asc';
+    direction: string = ColumnSortingModel.DEFAULT_DIRECTION;
+
+    constructor(opts?: any) {
+        if (opts) {
+            this.key = opts.key;
+            this.direction = opts.direction || ColumnSortingModel.DEFAULT_DIRECTION;
+        }
+    }
 }

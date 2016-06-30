@@ -49,6 +49,10 @@ export class DocumentListBreadcrumb {
                 this._currentFolderPath = this.rootFolder.path;
                 this.route = [ this.rootFolder ];
             }
+            this.pathChanged.emit({
+                value: this._currentFolderPath,
+                route: this.route
+            });
         }
     }
 
@@ -64,6 +68,9 @@ export class DocumentListBreadcrumb {
 
     @Output()
     navigate: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    pathChanged: EventEmitter<any> = new EventEmitter();
 
     onRoutePathClick(route: PathNode, e?: Event) {
         if (e) {

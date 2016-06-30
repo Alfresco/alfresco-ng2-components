@@ -20,12 +20,15 @@ import {
     MinimalNodeEntity,
     MinimalNodeEntryEntity,
     PathInfoEntity,
-    ContentInfo
+    ContentInfo,
+    NodePagingList
 } from '../models/document-library.model';
 
 export class PageNode extends NodePaging {
-    constructor() {
+    constructor(entries?: MinimalNodeEntity[]) {
         super();
+        this.list = new NodePagingList();
+        this.list.entries = entries || [];
     }
 }
 

@@ -33,9 +33,11 @@ export class ContentActionList {
      * Registers action handler within the parent document list component.
      * @param action Action model to register.
      */
-    registerAction(action: ContentActionModel): void {
+    registerAction(action: ContentActionModel): boolean {
         if (this.documentList && action) {
             this.documentList.actions.push(action);
+            return true;
         }
+        return false;
     }
 }
