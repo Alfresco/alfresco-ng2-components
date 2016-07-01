@@ -8,6 +8,9 @@
   <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
     <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
   </a>
+  <a href='https://www.npmjs.com/package/ng2-alfresco-datatable'>
+    <img src='https://img.shields.io/npm/dm/ng2-alfresco-datatable.svg' alt='npm downloads' />
+  </a>
   <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
   </a>
