@@ -60,7 +60,7 @@ export class AppComponent {
                 public router: Router,
                 translate: AlfrescoTranslationService,
                 alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://192.168.99.100:8080';
+        alfrescoSettingsService.host = 'http://localhost:8080';
 
         this.translate = translate;
         this.translate.addTranslationFolder();
