@@ -1,5 +1,7 @@
 # ALFRESCO ANGULAR 2 COMPONENTS
 
+[![Join the chat at https://gitter.im/Alfresco/alfresco-ng2-components](https://badges.gitter.im/Alfresco/alfresco-ng2-components.svg)](https://gitter.im/Alfresco/alfresco-ng2-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <p>
   <a title='Build Status' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
