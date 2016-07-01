@@ -9,7 +9,7 @@
     <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
   </a>
   <a href='https://www.npmjs.com/package/ng2-alfresco-core'>
-    <img src='https://img.shields.io/npm/dm/ng2-alfresco-core.svg' alt='npm downloads' />
+    <img src='https://img.shields.io/npm/dt/ng2-alfresco-core.svg' alt='npm downloads' />
   </a>
   <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
      <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
