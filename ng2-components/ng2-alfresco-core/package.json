@@ -25,7 +25,7 @@
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run build",
-    "travis": "npm link"
+    "travis": ""
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
