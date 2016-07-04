@@ -17,6 +17,7 @@ before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - cd ng2-components/ng2-alfresco-core; npm version patch; sed -i "s/0\\.0\\.0-PLACEHOLDER/^0.1.0/g" package.json; npm install; npm link
 
 env:
   matrix:
