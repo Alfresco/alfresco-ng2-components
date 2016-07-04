@@ -1,5 +1,5 @@
 .viewer-pdf-container {
-    overflow: auto;
+    overflow: hidden;
     background: #3E3E3E;
 }
 
