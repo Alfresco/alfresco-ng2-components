@@ -91,6 +91,10 @@ export class PdfViewerComponent {
         let documentContainer = document.getElementById('viewer-pdf-container');
         let viewer: any = document.getElementById('viewer-viewerPdf');
 
+        window.document.addEventListener('scroll', (event) => {
+            this.watchScroll(event.target);
+        }, true);
+
         this.pdfViewer = new PDFJS.PDFViewer({
             container: documentContainer,
             viewer: viewer
@@ -283,6 +287,50 @@ export class PdfViewerComponent {
             this.displayPage = this.page;
         }
     }
+
+    /**
+     * Litener Scroll Event
+     *
+     * @param {any} target
+     */
+    watchScroll(target) {
+        let outputPage = this.getVisibleElement(target);
+        if (outputPage) {
+            this.page = outputPage.id;
+            this.displayPage = this.page;
+        }
+    }
+
+    /**
+     * find out what elements are visible within a scroll pane
+     *
+     * @param {any} target
+     *
+     * @returns {Object} page
+     */
+    getVisibleElement(target) {
+        return this.pdfViewer._pages.find((page) => {
+            return this.isOnScreen(page, target);
+        });
+    }
+
+    /**
+     * check if a page is visible
+     *
+     * @param {any} page
+     * @param {any} target
+     *
+     * @returns {boolean}
+     */
+    isOnScreen(page: any, target: any) {
+        let viewport: any = {};
+        viewport.top = target.scrollTop;
+        viewport.bottom = viewport.top + target.scrollHeight;
+        let bounds: any = {};
+        bounds.top = page.div.offsetTop;
+        bounds.bottom = bounds.top + page.viewport.height;
+        return ((bounds.top <= viewport.bottom) && (bounds.bottom >= viewport.top));
+    };
 
     /**
      * Litener Keyboard Event
