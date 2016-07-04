@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-core",
   "description": "Alfresco Angular 2 Components core",
-  "version": "0.1.39",
+  "version": "0.0.0-PLACEHOLDER",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
