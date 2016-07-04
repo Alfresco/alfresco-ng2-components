@@ -41,15 +41,19 @@
         </td>
         <td *ngFor="let col of data.getColumns()" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
-            (click)="onRowClick(row, $event)" (dblclick)="onRowDblClick(row, $event)">
-            <div *ngSwitchCase="'image'">
+            (click)="onRowClick(row, $event)"
+            (dblclick)="onRowDblClick(row, $event)">
+            <div *ngSwitchCase="'image'" class="cell-value">
                 <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                 <img *ngIf="!isIconValue(row, col)" class="image-cell" alt="" src="{{data.getValue(row, col)}}">
             </div>
-            <div *ngSwitchCase="'text'">
+            <div *ngSwitchCase="'date'" class="cell-value">
                 {{data.getValue(row, col)}}
             </div>
-            <span *ngSwitchDefault>
+            <div *ngSwitchCase="'text'" class="cell-value">
+                {{data.getValue(row, col)}}
+            </div>
+            <span *ngSwitchDefault class="cell-value">
                <!-- empty cell for unknown column type -->
             </span>
 

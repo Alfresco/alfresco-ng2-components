@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { DatePipe } from '@angular/common';
+
 import {
     DataTableAdapter,
     DataRow,
@@ -78,7 +80,20 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         if (!col) {
             throw new Error('Column not found');
         }
-        return row.getValue(col.key);
+
+        let value = row.getValue(col.key);
+
+        if (col.type === 'date') {
+            let datePipe = new DatePipe();
+            let format = col.format || 'medium';
+            try {
+                return datePipe.transform(value, format);
+            } catch (err) {
+                console.error(`DocumentList: error parsing date ${value} to format ${format}`);
+            }
+        }
+
+        return value;
     }
 
     getSorting(): DataSorting {

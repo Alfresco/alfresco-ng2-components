@@ -25,7 +25,7 @@ export interface DataTableAdapter {
     getSorting(): DataSorting;
     setSorting(sorting: DataSorting): void;
     sort(key?: string, direction?: string): void;
-
+    
 }
 
 export interface DataRow {
@@ -39,7 +39,8 @@ export interface DataRow {
 export interface DataColumn {
 
     key: string;
-    type: string; // text|image
+    type: string; // text|image|date
+    format?: string;
     sortable?: boolean;
     title?: string;
     srTitle?: string;
