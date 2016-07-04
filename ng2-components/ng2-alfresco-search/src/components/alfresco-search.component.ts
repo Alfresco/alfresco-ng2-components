@@ -27,6 +27,10 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-search',
     styles: [`
+        :host .mdl-data-table caption {
+            margin: 0 0 16px 0;
+            text-align: left;
+        }
         :host .mdl-data-table td {
             max-width: 0;
             white-space: nowrap;
@@ -92,6 +96,19 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
         if (node.entry.content && node.entry.content.mimeType) {
             let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
             return `${this.baseComponentPath}/img/${icon}`;
+        }
+    }
+
+    /**
+     * Gets thumbnail message key for the given document node, which can be used to look up alt text
+     * @param node Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getMimeTypeKey(node: any): string {
+        if (node.entry.content && node.entry.content.mimeType) {
+            return 'SEARCH.ICONS.' + this._alfrescoThumbnailService.getMimeTypeKey(node.entry.content.mimeType);
+        } else {
+            return '';
         }
     }
 

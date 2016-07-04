@@ -6,8 +6,8 @@
         <div [class]="getTextFieldHolderClassName()">
             <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" data-automation-id="search_input"
                    #searchInput id="searchControl" [ngFormControl]="searchControl" [(ngModel)]="searchTerm" (focus)="onFocus($event)"
-                   (blur)="onBlur($event)">
-            <label class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
+                   (blur)="onBlur($event)" aria-labelledby="searchLabel">
+            <label id="searchLabel" class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
         </div>
     </div>
 </form>

@@ -2,7 +2,7 @@
     <tbody>
     <tr *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)"
         attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}" >
-        <td class="img-td"><img src="{{_getMimeTypeIcon(result)}}" /></td>
+        <td class="img-td"><img src="{{getMimeTypeIcon(result)}}" alt="{{getMimeTypeKey(result)|translate}}" /></td>
         <td><div class="truncate" ><b>{{result.entry.name}}</b></div><div class="truncate">{{result.entry.createdByUser.displayName}}</div></td>
     </tr>
     </tbody>

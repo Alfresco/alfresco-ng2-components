@@ -12,6 +12,19 @@
                 "MODIFIED_BY": "Modified by",
                 "MODIFIED_AT": "Modified at"
             }
+        },
+        "ICONS": {
+            "ft_ic_raster_image": "Image file",
+            "ft_ic_pdf": "PDF document",
+            "ft_ic_ms_excel": "Microsoft Excel file",
+            "ft_ic_ms_word": "Microsoft Word document",
+            "ft_ic_ms_powerpoint": "Microsoft PowerPoint file",
+            "ft_ic_video": "Video file",
+            "ft_ic_document": "Document file",
+            "ft_ic_website": "Web resource",
+            "ft_ic_archive": "Acrchive file",
+            "ft_ic_presentation": "Presentation file",
+            "ft_ic_spreadsheet": "Spreadsheet file"
         }
     }
 }
