@@ -29,7 +29,7 @@ env:
     - MODULE=ng2-alfresco-viewer
 
 before_script:
-  - cd ng2-components/$MODULE; npm version patch; sed -i '' "s/0\\.0\\.0-PLACEHOLDER/^0.1.0/g" package.json; npm install
+  - cd ng2-components/$MODULE; npm version patch; sed -i "s/0\\.0\\.0-PLACEHOLDER/^0.1.0/g" package.json; npm install
   - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
