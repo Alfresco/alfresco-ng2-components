@@ -17,7 +17,6 @@ before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - ./scripts/update-version.sh ^0.0.1
 
 env:
   matrix:
@@ -30,7 +29,9 @@ env:
     - MODULE=ng2-alfresco-viewer
 
 before_script:
-  - cd ./ng2-components/$MODULE; npm install
+  - cd ./ng2-components/$MODULE
+  - find package.json -print0 | xargs -0 sed -i '' "s/0\\.0\\.0-PLACEHOLDER/^0.0.1/g"
+  - npm install
   - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
