@@ -40,7 +40,6 @@
     "zone.js": "0.6.12",
     "license-check": "1.1.5",
 
-    "rimraf": "2.5.2",
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.1.3",
     "ng2-translate": "2.2.2",
@@ -51,6 +50,7 @@
   "devDependencies": {
     "browser-sync": "2.10.0",
     "concurrently": "2.0.0",
+    "rimraf": "2.5.2",
     "tslint": "3.8.1",
     "typescript": "1.8.10",
     "typings": "1.0.4",
