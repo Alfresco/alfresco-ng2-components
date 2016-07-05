@@ -28,15 +28,33 @@ export class PDFViewermock {
         [{
             width: 793,
             scale: 1,
-            update: this.update
+            update: this.update,
+            div: {
+                offsetTop: 400
+            },
+            viewport: {
+                height: 400
+            }
         }, {
             width: 793,
             scale: 1,
-            update: this.update
+            update: this.update,
+            div: {
+                offsetTop: 800
+            },
+            viewport: {
+                height: 400
+            }
         }, {
             width: 793,
             scale: 1,
-            update: this.update
+            update: this.update,
+            div: {
+                offsetTop: 1200
+            },
+            viewport: {
+                height: 400
+            }
         }];
 
     _currentPageNumber: number = 0;
