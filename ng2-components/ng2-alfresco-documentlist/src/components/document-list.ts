@@ -79,6 +79,15 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     @Input()
     thumbnails: boolean = false;
 
+    @Input()
+    multiselect: boolean = false;
+
+    @Input()
+    contentActions: boolean = false;
+
+    @Input()
+    contextMenuActions: boolean = false;
+
     @Output()
     itemClick: EventEmitter<any> = new EventEmitter();
 
@@ -182,6 +191,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     }
 
     ngOnInit() {
+        this.data.thumbnails = this.thumbnails;
         this.displayFolderContent(this.currentFolderPath);
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
     }
@@ -198,10 +208,10 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     ngAfterViewInit() {
         if (this.dataTable) {
-            // this.dataTable.contextActionResolver = this.resolveContextAction;
             if (this.emptyFolderTemplate) {
                 this.dataTable.noContentTemplate = this.emptyFolderTemplate;
             }
+
         }
     }
 
@@ -231,6 +241,20 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
             });
         }
         return [];
+    }
+
+    getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
+        let target = null;
+
+        if (node.entry.isFile) {
+            target = 'document';
+        }
+
+        if (node.entry.isFolder) {
+            target = 'folder';
+        }
+
+        return this.getContentActions(target, 'menu');
     }
 
     /**
@@ -549,11 +573,33 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         this.data.setSorting(new DataSorting('id', 'asc'));
     }
 
-    onRowContextMenu(event) {
-        let args = event.args;
-        let node = (<ShareDataRow> args.row).node;
-        if (node) {
-            args.actions = this.getContextActions(node) || [];
+    onShowRowContextMenu(event) {
+        if (this.contextMenuActions) {
+            let args = event.args;
+            let node = (<ShareDataRow> args.row).node;
+            if (node) {
+                args.actions = this.getContextActions(node) || [];
+            }
         }
-    };
+    }
+
+    onShowRowActionsMenu(event) {
+        if (this.contentActions) {
+            let args = event.args;
+            let node = (<ShareDataRow> args.row).node;
+            if (node) {
+                args.actions = this.getNodeActions(node) || [];
+            }
+        }
+    }
+
+    onExecuteRowAction(event) {
+        if (this.contentActions) {
+            let args = event.args;
+            let node = (<ShareDataRow> args.row).node;
+            let action = (<ContentActionModel> args.action);
+            this.executeContentAction(node, action);
+        }
+    }
+
 }

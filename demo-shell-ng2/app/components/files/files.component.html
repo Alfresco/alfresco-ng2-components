@@ -10,6 +10,8 @@
     <alfresco-document-list
             #documentList
             [currentFolderPath]="currentPath"
+            [contextMenuActions]="true"
+            [contentActions]="true"
             (preview)="showFile($event)"
             (folderChange)="onFolderChanged($event)">
         <!--

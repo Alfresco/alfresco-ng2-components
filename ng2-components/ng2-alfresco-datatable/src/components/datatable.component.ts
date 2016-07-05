@@ -26,7 +26,6 @@ import {
     TemplateRef
 } from '@angular/core';
 
-// import { Subject } from 'rxjs/Rx';
 import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 
 import {
@@ -70,7 +69,13 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     isSelectAllChecked: boolean = false;
 
     @Output()
-    showContextMenu: EventEmitter<any> = new EventEmitter();
+    showRowContextMenu: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    showRowActionsMenu: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    executeRowAction: EventEmitter<any> = new EventEmitter();
 
     // TODO: left for reference, will be removed during future revisions
     constructor(/*private _ngZone?: NgZone*/) {
@@ -169,9 +174,20 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         return false;
     }
 
-    getContextActions(row: DataRow, col: DataColumn) {
+    getContextMenuActions(row: DataRow, col: DataColumn) {
         let args = { row: row, col: col, actions: [] };
-        this.showContextMenu.emit({ args: args });
+        this.showRowContextMenu.emit({ args: args });
         return args.actions;
+    }
+
+    getRowActions(row: DataRow, col: DataColumn) {
+        let args = { row: row, col: col, actions: [] };
+        this.showRowActionsMenu.emit({ args: args });
+        return args.actions;
+    }
+
+    onExecuteRowAction(row: DataRow, action: any) {
+        let args = { row: row, action: action };
+        this.executeRowAction.emit({ args: args });
     }
 }

@@ -25,12 +25,13 @@ import {
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 import { AlfrescoService as DataService } from './../services/alfresco.service';
 
-
 export class ShareDataTableAdapter implements DataTableAdapter {
 
     private sorting: DataSorting;
     private rows: DataRow[];
     private columns: DataColumn[];
+
+    thumbnails: boolean = false;
 
     constructor(private dataService: DataService,
                 private basePath: string,
@@ -84,14 +85,22 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (col.type === 'image') {
 
             if (col.key === '$thumbnail') {
-                let isFolder = <boolean> row.getValue('isFolder');
-                if (isFolder) {
+                let node = (<ShareDataRow> row).node;
+
+                if (node.entry.isFolder) {
                     return `${this.basePath}/img/ft_ic_folder.svg`;
                 }
 
-                let isFile = <boolean> row.getValue('isFile');
-                if (isFile) {
-                    let mimeType = row.getValue('content.mimeType');
+                if (node.entry.isFile) {
+
+                    if (this.thumbnails) {
+                        if (this.dataService) {
+                            return this.dataService.getDocumentThumbnailUrl(node);
+                        }
+                        return null;
+                    }
+
+                    let mimeType = node.entry.content.mimeType;
                     if (mimeType) {
                         let icon = this.dataService.getMimeTypeIcon(mimeType);
                         if (icon) {

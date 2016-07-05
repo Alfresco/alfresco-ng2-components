@@ -15,6 +15,7 @@
         </th>
         <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
             *ngFor="let col of data.getColumns()"
+            [attr.data-automation-id]="'auto_id_' + col.key"
             [class.column-header]="col.title"
             [class.mdl-data-table__header--sorted-ascending]="isColumnSorted(col, 'asc')"
             [class.mdl-data-table__header--sorted-descending]="isColumnSorted(col, 'desc')"
@@ -43,7 +44,7 @@
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)"
             (dblclick)="onRowDblClick(row, $event)"
-            [context-menu]="getContextActions(row, col)">
+            [context-menu]="getContextMenuActions(row, col)">
             <div *ngSwitchCase="'image'" class="cell-value">
                 <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                 <img *ngIf="!isIconValue(row, col)" class="image-cell" alt="" src="{{data.getValue(row, col)}}">
@@ -60,11 +61,25 @@
 
         </td>
 
-        <td *ngIf="actions"><!-- todo: actions --></td>
+        <td *ngIf="actions">
+            <!-- action menu -->
+            <button [id]="'action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                [attr.for]="'action_menu_' + idx">
+                <li class="mdl-menu__item"
+                    [attr.data-automation-id]="action.title"
+                    *ngFor="let action of getRowActions(row)"
+                    (click)="onExecuteRowAction(row, action)">
+                    {{action.title}}
+                </li>
+            </ul>
+        </td>
 
     </tr>
     <tr *ngIf="data.getRows().length === 0">
-        <td class="mdl-data-table__cell--non-numeric empty-folder-content"
+        <td class="mdl-data-table__cell--non-numeric no-content-container"
             [attr.colspan]="1 + data.getColumns().length">
             <template *ngIf="noContentTemplate"
                       ngFor [ngForOf]="[data]"

@@ -55,6 +55,9 @@ import {
             <alfresco-document-list  #doclist
                     #documentList
                     [currentFolderPath]="currentPath"
+                    [contextMenuActions]="true"
+                    [contentActions]="true"
+                    [multiselect]="true"
                     (folderChange)="onFolderChanged($event)">
                 <!--
                 <empty-folder-content>

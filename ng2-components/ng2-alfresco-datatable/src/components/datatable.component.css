@@ -14,9 +14,25 @@
 :host .data-cell {
     cursor: default;
 }
+:host .cell-value {}
 
 :host .column-header {
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
+}
+
+/* Empty folder */
+
+:host .no-content-container {
+    padding: 0 !important;
+}
+
+:host .no-content-container > img {
+    width: 100%;
 }
 
 /* Utils */
