@@ -30,11 +30,19 @@ import {
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs/Rx';
 import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
+
+import {
+    ALFRESCO_DATATABLE_DIRECTIVES,
+    DataSorting,
+    DataRowEvent
+} from 'ng2-alfresco-datatable';
+
 import { AlfrescoService } from './../services/alfresco.service';
 import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { ContentColumnModel } from './../models/content-column.model';
 import { ColumnSortingModel } from './../models/column-sorting.model';
+import { ShareDataTableAdapter, ShareDataRow } from './../data/share-datatable-adapter';
 
 declare var componentHandler;
 declare let __moduleName: string;
@@ -45,7 +53,7 @@ declare let __moduleName: string;
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html',
     providers: [AlfrescoService],
-    directives: [CONTEXT_MENU_DIRECTIVES],
+    directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES],
     host: {
         '(contextmenu)': 'onShowContextMenu($event)'
     }
@@ -124,9 +132,13 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     contextActionHandler: Subject<any> = new Subject();
 
+    data: ShareDataTableAdapter;
+
     constructor(
         private alfrescoService: AlfrescoService,
-        private ngZone: NgZone) {}
+        private ngZone: NgZone) {
+        this.setupTable();
+    }
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
@@ -326,6 +338,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
                     folder => this.folder = this.sort(folder, this.sorting),
                     error => this.errorMessage = <any>error
                 );
+            this.data.loadPath(path);
         }
     }
 
@@ -451,6 +464,42 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return node;
     }
 
+    onRowClick(event: DataRowEvent) {
+        let item = (<ShareDataRow> event.value).node;
+
+        if (this.navigate && this.navigationMode === DocumentList.SINGLE_CLICK_NAVIGATION) {
+            if (item && item.entry) {
+                if (item.entry.isFile) {
+                    this.preview.emit({
+                        value: item
+                    });
+                }
+
+                if (item.entry.isFolder) {
+                    this.performNavigation(item);
+                }
+            }
+        }
+
+    }
+
+    onRowDblClick(event?: DataRowEvent) {
+        let item = (<ShareDataRow> event.value).node;
+        if (this.navigate && this.navigationMode === DocumentList.DOUBLE_CLICK_NAVIGATION) {
+            if (item && item.entry) {
+                if (item.entry.isFile) {
+                    this.preview.emit({
+                        value: item
+                    });
+                }
+
+                if (item.entry.isFolder) {
+                    this.performNavigation(item);
+                }
+            }
+        }
+    }
+
     private getObjectValueRaw(target: any, key: string) {
         let val = this.getObjectValue(target, key);
 
@@ -467,5 +516,20 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     private isSortableColumn(column: ContentColumnModel) {
         return column && column.source && !column.source.startsWith('$');
+    }
+
+    private setupTable() {
+        this.data = new ShareDataTableAdapter(
+            this.alfrescoService,
+            this.baseComponentPath,
+            [
+                { type: 'image', key: '$thumbnail', title: '', srTitle: 'Thumbnail' },
+                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width', sortable: true },
+                { type: 'text', key: 'createdByUser.displayName', title: 'Created by', sortable: true },
+                { type: 'date', format: 'medium', key: 'createdAt', title: 'Created on', sortable: true }
+            ]
+        );
+
+        this.data.setSorting(new DataSorting('id', 'asc'));
     }
 }

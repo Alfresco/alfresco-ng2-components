@@ -29,7 +29,8 @@ import {
     DataTableAdapter,
     DataRow,
     DataColumn,
-    DataSorting
+    DataSorting,
+    DataRowEvent
 } from './../data/datatable-adapter';
 import { ObjectDataTableAdapter } from '../data/object-datatable-adapter';
 
@@ -54,10 +55,10 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     actions: boolean = false;
 
     @Output()
-    rowClick: EventEmitter<any> = new EventEmitter();
+    rowClick: EventEmitter<DataRowEvent> = new EventEmitter();
 
     @Output()
-    rowDblClick: EventEmitter<any> = new EventEmitter();
+    rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter();
 
     isSelectAllChecked: boolean = false;
 
@@ -84,7 +85,8 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         }
 
         this.rowClick.emit({
-            value: row
+            value: row,
+            event: e
         });
     }
 
@@ -94,7 +96,8 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         }
 
         this.rowDblClick.emit({
-            value: row
+            value: row,
+            event: e
         });
     }
 
@@ -134,14 +137,16 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
     isIconValue(row: DataRow, col: DataColumn) {
         if (row && col) {
-            return row.getValue(col.key).startsWith('material-icons://');
+            let value = row.getValue(col.key);
+            return value && value.startsWith('material-icons://');
         }
         return false;
     }
 
     asIconValue(row: DataRow, col: DataColumn) {
         if (this.isIconValue(row, col)) {
-            return row.getValue(col.key).replace('material-icons://', '');
+            let value = row.getValue(col.key) || '';
+            return value.replace('material-icons://', '');
         }
         return null;
     }

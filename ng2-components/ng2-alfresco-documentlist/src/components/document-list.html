@@ -1,3 +1,8 @@
+<alfresco-datatable
+    [data]="data"
+    (rowClick)="onRowClick($event)"
+    (rowDblClick)="onRowDblClick($event)">
+</alfresco-datatable>
 <table *ngIf="folder" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>
