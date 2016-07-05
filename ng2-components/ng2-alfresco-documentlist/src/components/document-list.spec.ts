@@ -15,6 +15,16 @@
  * limitations under the License.
  */
 
+import { describe, it, expect } from '@angular/core/testing';
+
+describe('DocumentList', () => {
+
+    it('should be upgraded', () => {
+        expect(false).toBeTruthy();
+    });
+
+});
+
 /*
 import {
     it,

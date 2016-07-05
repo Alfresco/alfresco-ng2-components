@@ -15,6 +15,16 @@
  * limitations under the License.
  */
 
+import { describe, it, expect } from '@angular/core/testing';
+
+describe('ContentAction', () => {
+
+    it('should be upgraded', () => {
+        expect(false).toBeTruthy();
+    });
+
+});
+
 /*
 import {
     it,
