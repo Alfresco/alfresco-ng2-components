@@ -40,7 +40,7 @@ import {
     ObjectDataColumn
 } from 'ng2-alfresco-datatable';
 
-import { AlfrescoService } from './../services/alfresco.service';
+import { DocumentListService } from './../services/document-list.service';
 import { MinimalNodeEntity } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow } from './../data/share-datatable-adapter';
@@ -53,7 +53,7 @@ declare let __moduleName: string;
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html',
-    providers: [AlfrescoService],
+    providers: [DocumentListService],
     directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES],
     host: {
         '(contextmenu)': 'onShowContextMenu($event)'
@@ -125,7 +125,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     data: ShareDataTableAdapter;
 
     constructor(
-        private alfrescoService: AlfrescoService,
+        private documentListService: DocumentListService,
         private ngZone: NgZone) {
 
         this.setupData();
@@ -329,7 +329,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     }
 
     private setupData() {
-        this.data = new ShareDataTableAdapter(this.alfrescoService, this.baseComponentPath, []);
+        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
         this.data.setSorting(new DataSorting('id', 'asc'));
     }
 

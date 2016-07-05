@@ -25,7 +25,7 @@ import { DocumentListBreadcrumb } from './src/components/document-list-breadcrum
 
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
-import { AlfrescoService } from './src/services/alfresco.service';
+import { DocumentListService } from './src/services/document-list.service';
 
 // components
 export * from './src/components/document-list';
@@ -39,7 +39,7 @@ export * from './src/components/document-list-breadcrumb.component';
 // services
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
-export * from './src/services/alfresco.service';
+export * from './src/services/document-list.service';
 
 export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     DocumentList,
@@ -52,7 +52,7 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: [any] = [
-    AlfrescoService,
+    DocumentListService,
     FolderActionsService,
     DocumentActionsService
 ];

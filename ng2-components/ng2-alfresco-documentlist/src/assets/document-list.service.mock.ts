@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import {Observable} from 'rxjs/Observable';
-import {AlfrescoService} from '../../src/services/alfresco.service';
+import { Observable } from 'rxjs/Observable';
+import { DocumentListService } from './../services/document-list.service';
 import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService
 } from 'ng2-alfresco-core';
 
-export class AlfrescoServiceMock extends AlfrescoService {
+export class DocumentListServiceMock extends DocumentListService {
 
     folderToReturn: any = {};
     getFolderReject: boolean = false;

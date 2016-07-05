@@ -23,7 +23,7 @@ import {
 } from 'ng2-alfresco-datatable';
 
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
-import { AlfrescoService as DataService } from './../services/alfresco.service';
+import { DocumentListService } from './../services/document-list.service';
 
 export class ShareDataTableAdapter implements DataTableAdapter {
 
@@ -33,7 +33,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     thumbnails: boolean = false;
 
-    constructor(private dataService: DataService,
+    constructor(private documentListService: DocumentListService,
                 private basePath: string,
                 schema: DataColumn[]) {
         this.rows = [];
@@ -94,8 +94,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 if (node.entry.isFile) {
 
                     if (this.thumbnails) {
-                        if (this.dataService) {
-                            return this.dataService.getDocumentThumbnailUrl(node);
+                        if (this.documentListService) {
+                            return this.documentListService.getDocumentThumbnailUrl(node);
                         }
                         return null;
                     }
@@ -103,7 +103,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                     if (node.entry.content && node.entry.content.mimeType) {
                         let mimeType = node.entry.content.mimeType;
                         if (mimeType) {
-                            let icon = this.dataService.getMimeTypeIcon(mimeType);
+                            let icon = this.documentListService.getMimeTypeIcon(mimeType);
                             if (icon) {
                                 return `${this.basePath}/img/${icon}`;
                             }
@@ -163,8 +163,8 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     loadPath(path: string) {
-        if (path && this.dataService) {
-            this.dataService
+        if (path && this.documentListService) {
+            this.documentListService
                 .getFolder(path)
                 .subscribe(val => {
                     let page = <NodePaging>val;
