@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 for PACKAGE in \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
@@ -10,10 +12,9 @@ for PACKAGE in \
   ng2-alfresco-viewer
 do
   echo "====== clean component: ${PACKAGE} ====="
-  cd ../ng2-components/${PACKAGE}
+  cd "$DIR/../ng2-components/${PACKAGE}"
   npm run clean
-  cd ../../scripts/
 done
 
-cd ./../demo-shell-ng2
+cd "$DIR/../demo-shell-ng2"
 npm run clean
