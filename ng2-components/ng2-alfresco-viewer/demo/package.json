@@ -9,7 +9,7 @@
     "typings": "typings install",
     "postinstall": "npm run typings && npm run build",
     "start": "concurrently \"npm run build:w\" \"npm run server\" ",
-    "server": "wsrv -o -l -s",
+    "server": "wsrv -o -s -l",
     "build": "npm run tslint && rimraf dist && tsc",
     "build:w": "npm run tslint && rimraf dist && tsc -w",
     "tslint": "npm run tslint-src && npm run tslint-root",
