@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-upload",
   "description": "Alfresco Angular2 Upload Component",
-  "version": "0.1.55",
+  "version": "0.0.0-PLACEHOLDER",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
@@ -25,7 +25,8 @@
     "test-browser": "concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "travis": "npm link ng2-alfresco-core"
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -77,7 +78,7 @@
     "rimraf": "2.5.2",
     "ng2-translate": "2.2.2",
     "alfresco-js-api": "^0.1.0",
-    "ng2-alfresco-core": "^0.1.35"
+    "ng2-alfresco-core": "0.0.0-PLACEHOLDER"
   },
   "peerDependencies": {
     "material-design-icons": "^2.2.3",

@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-core",
   "description": "Alfresco Angular 2 Components core",
-  "version": "0.1.39",
+  "version": "0.0.0-PLACEHOLDER",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
@@ -24,7 +24,8 @@
     "test-browser": "karma start karma.conf.js --reporters kjhtml ",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "travis": "echo 'placeholder'"
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

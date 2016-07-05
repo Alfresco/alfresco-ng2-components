@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-documentlist",
   "description": "Alfresco Angular2 Document List Component",
-  "version": "0.1.37",
+  "version": "0.0.0-PLACEHOLDER",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
@@ -27,7 +27,8 @@
     "test-browser": "concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "travis": "npm link ng2-alfresco-core"
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -73,7 +74,7 @@
     "zone.js": "0.6.12",
     "rimraf": "2.5.2",
     "ng2-translate": "2.2.2",
-    "ng2-alfresco-core": "^0.1.35",
+    "ng2-alfresco-core": "0.0.0-PLACEHOLDER",
     "alfresco-js-api": "^0.1.0"
   },
   "peerDependencies": {
