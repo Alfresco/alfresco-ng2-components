@@ -22,10 +22,12 @@ import {
     Output,
     EventEmitter,
     AfterContentInit,
+    AfterViewInit,
     AfterViewChecked,
     OnChanges,
     TemplateRef,
-    NgZone
+    NgZone,
+    ViewChild
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs/Rx';
@@ -34,7 +36,8 @@ import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     DataSorting,
-    DataRowEvent
+    DataRowEvent,
+    DataTableComponent
 } from 'ng2-alfresco-datatable';
 
 import { AlfrescoService } from './../services/alfresco.service';
@@ -58,7 +61,7 @@ declare let __moduleName: string;
         '(contextmenu)': 'onShowContextMenu($event)'
     }
 })
-export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit, OnChanges {
+export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, AfterContentInit, OnChanges {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -87,6 +90,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
+
+    @ViewChild(DataTableComponent)
+    dataTable: DataTableComponent;
 
     private _path = this.DEFAULT_ROOT_FOLDER;
 
@@ -137,7 +143,8 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     constructor(
         private alfrescoService: AlfrescoService,
         private ngZone: NgZone) {
-        this.setupTable();
+
+        this.setupData();
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -186,6 +193,15 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
     ngAfterContentInit() {
         if (!this.columns || this.columns.length === 0) {
             this.setupDefaultColumns();
+        }
+    }
+
+    ngAfterViewInit() {
+        if (this.dataTable) {
+            // this.dataTable.contextActionResolver = this.resolveContextAction;
+            if (this.emptyFolderTemplate) {
+                this.dataTable.noContentTemplate = this.emptyFolderTemplate;
+            }
         }
     }
 
@@ -518,7 +534,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
         return column && column.source && !column.source.startsWith('$');
     }
 
-    private setupTable() {
+    private setupData() {
         this.data = new ShareDataTableAdapter(
             this.alfrescoService,
             this.baseComponentPath,
@@ -532,4 +548,12 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit,
 
         this.data.setSorting(new DataSorting('id', 'asc'));
     }
+
+    onRowContextMenu(event) {
+        let args = event.args;
+        let node = (<ShareDataRow> args.row).node;
+        if (node) {
+            args.actions = this.getContextActions(node) || [];
+        }
+    };
 }

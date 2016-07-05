@@ -56,7 +56,13 @@ import {
                     #documentList
                     [currentFolderPath]="currentPath"
                     (folderChange)="onFolderChanged($event)">
-
+                <!--
+                <empty-folder-content>
+                    <template>
+                        <h1>Sorry, no content here</h1>
+                    </template>
+                </empty-folder-content>
+                -->
                 <content-columns>
                     <content-column source="$thumbnail" type="image"></content-column>
                     <content-column
@@ -195,11 +201,13 @@ class DocumentListDemo implements OnInit {
     }
 
     myCustomAction1(event) {
-        alert('Custom document action for ' + event.value.displayName);
+        let entry = event.value.entry;
+        alert(`Custom document action for ${entry.name}`);
     }
 
     myFolderAction1(event) {
-        alert('Custom folder action for ' + event.value.displayName);
+        let entry = event.value.entry;
+        alert(`Custom folder action for ${entry.name}`);
     }
 
     login() {

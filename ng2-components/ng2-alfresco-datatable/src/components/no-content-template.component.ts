@@ -15,18 +15,27 @@
  * limitations under the License.
  */
 
-import { DataTableComponent } from './src/components/datatable.component';
-import { NoContentTemplateComponent } from './src/components/no-content-template.component';
+import {
+    Directive,
+    ContentChild,
+    TemplateRef,
+    AfterContentInit
+} from '@angular/core';
+import { DataTableComponent } from './datatable.component';
 
-// components
-export * from './src/components/datatable.component';
-export * from './src/components/no-content-template.component';
+@Directive({
+    selector: 'no-content-template'
+})
+export class NoContentTemplateComponent implements AfterContentInit {
 
-// data
-export * from './src/data/datatable-adapter';
-export * from './src/data/object-datatable-adapter';
+    @ContentChild(TemplateRef)
+    template: any;
 
-export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
-    DataTableComponent,
-    NoContentTemplateComponent
-];
+    constructor(
+        private dataTable: DataTableComponent) {
+    }
+
+    ngAfterContentInit() {
+        this.dataTable.noContentTemplate = this.template;
+    }
+}

@@ -26,17 +26,20 @@ import { ContextMenuService } from './../services/context-menu.service';
 })
 export class ContextMenuDirective {
     @Input('context-menu')
-    links;
+    links: any[];
 
     constructor(
         private _contextMenuService: ContextMenuService) {}
 
     onShowContextMenu(event?: MouseEvent) {
-        if (this._contextMenuService) {
-            this._contextMenuService.show.next({event: event, obj: this.links});
-        }
         if (event) {
             event.preventDefault();
+        }
+
+        if (this.links && this.links.length > 0) {
+            if (this._contextMenuService) {
+                this._contextMenuService.show.next({event: event, obj: this.links});
+            }
         }
     }
 }

@@ -42,7 +42,8 @@
         <td *ngFor="let col of data.getColumns()" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)"
-            (dblclick)="onRowDblClick(row, $event)">
+            (dblclick)="onRowDblClick(row, $event)"
+            [context-menu]="getContextActions(row, col)">
             <div *ngSwitchCase="'image'" class="cell-value">
                 <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                 <img *ngIf="!isIconValue(row, col)" class="image-cell" alt="" src="{{data.getValue(row, col)}}">
@@ -61,6 +62,15 @@
 
         <td *ngIf="actions"><!-- todo: actions --></td>
 
+    </tr>
+    <tr *ngIf="data.getRows().length === 0">
+        <td class="mdl-data-table__cell--non-numeric empty-folder-content"
+            [attr.colspan]="1 + data.getColumns().length">
+            <template *ngIf="noContentTemplate"
+                      ngFor [ngForOf]="[data]"
+                      [ngForTemplate]="noContentTemplate">
+            </template>
+        </td>
     </tr>
     </tbody>
 </table>

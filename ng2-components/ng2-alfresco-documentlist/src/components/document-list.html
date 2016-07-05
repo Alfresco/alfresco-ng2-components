@@ -1,8 +1,15 @@
 <alfresco-datatable
     [data]="data"
+    (showContextMenu)="onRowContextMenu($event)"
     (rowClick)="onRowClick($event)"
     (rowDblClick)="onRowDblClick($event)">
+    <no-content-template>
+        <template>
+            <img [src]="baseComponentPath + '/img/document-list.empty-folder.png'">
+        </template>
+    </no-content-template>
 </alfresco-datatable>
+
 <table *ngIf="folder" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <thead>
     <tr>

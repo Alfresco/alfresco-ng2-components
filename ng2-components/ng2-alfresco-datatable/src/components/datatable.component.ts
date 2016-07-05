@@ -22,8 +22,12 @@ import {
     Input,
     Output,
     EventEmitter,
-    AfterViewChecked
+    AfterViewChecked,
+    TemplateRef
 } from '@angular/core';
+
+// import { Subject } from 'rxjs/Rx';
+import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 
 import {
     DataTableAdapter,
@@ -41,7 +45,8 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
-    templateUrl: './datatable.component.html'
+    templateUrl: './datatable.component.html',
+    directives: [CONTEXT_MENU_DIRECTIVES]
 })
 export class DataTableComponent implements OnInit, AfterViewChecked {
 
@@ -55,12 +60,17 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     actions: boolean = false;
 
     @Output()
-    rowClick: EventEmitter<DataRowEvent> = new EventEmitter();
+    rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
     @Output()
-    rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter();
+    rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
+
+    noContentTemplate: TemplateRef<any>;
 
     isSelectAllChecked: boolean = false;
+
+    @Output()
+    showContextMenu: EventEmitter<any> = new EventEmitter();
 
     // TODO: left for reference, will be removed during future revisions
     constructor(/*private _ngZone?: NgZone*/) {
@@ -157,5 +167,11 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
             return sorting && sorting.key === col.key && sorting.direction === direction;
         }
         return false;
+    }
+
+    getContextActions(row: DataRow, col: DataColumn) {
+        let args = { row: row, col: col, actions: [] };
+        this.showContextMenu.emit({ args: args });
+        return args.actions;
     }
 }
