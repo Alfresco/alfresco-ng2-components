@@ -68,7 +68,7 @@
 
     "alfresco-js-api": "^0.1.0",
     "ng2-alfresco-core": "^0.1.36",
-    "ng2-alfresco-search": "file:../"
+    "ng2-alfresco-search": "^0.1.25"
   },
   "devDependencies": {
     "concurrently": "2.0.0",
