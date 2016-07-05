@@ -346,8 +346,7 @@ describe('PdfViewer', () => {
         }));
     });
 
-    describe('Rezize interaction', () => {
-
+    describe('Resize interaction', () => {
         it('resize event should trigger setScaleUpdatePages', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
             return tcb
                 .createAsync(PdfViewerComponent)
@@ -366,6 +365,35 @@ describe('PdfViewer', () => {
                     EventMock.resizeMobileView();
 
                     expect(component.setScaleUpdatePages).toHaveBeenCalled();
+                });
+        }));
+    });
+
+    describe('scroll interaction', () => {
+        it('scroll page should return the current page', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+            return tcb
+                .createAsync(PdfViewerComponent)
+                .then((fixture) => {
+                    let component = fixture.componentInstance;
+
+                    spyOn(component, 'getPDFJS').and.returnValue(new PDFJSmock());
+                    spyOn(component, 'initPDFViewer').and.callFake(() => {
+                        component.pdfViewer = new PDFViewermock();
+                    });
+
+                    component.urlFile = 'fake-url-file';
+
+                    component.ngOnChanges().then(() => {
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(1);
+                        component.inputPage('4');
+                        fixture.detectChanges();
+                        expect(component.displayPage).toBe(4);
+                        component.watchScroll({scrollTop: 10000});
+                        expect(component.displayPage).toBe(4);
+                    }).catch((error) => {
+                        expect(error).toBeUndefined();
+                    });
                 });
         }));
     });

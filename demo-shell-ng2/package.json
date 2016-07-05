@@ -76,13 +76,13 @@
     "flag-icon-css": "2.3.0",
 
     "alfresco-js-api": "^0.1.0",
-    "ng2-alfresco-core": "^0.1.36",
-    "ng2-alfresco-datatable": "^0.1.12",
-    "ng2-alfresco-documentlist": "^0.1.34",
-    "ng2-alfresco-login": "^0.1.29",
-    "ng2-alfresco-search": "^0.1.21",
-    "ng2-alfresco-upload": "^0.1.49",
-    "ng2-alfresco-viewer": "^0.1.32"
+    "ng2-alfresco-core": "0.0.0-PLACEHOLDER",
+    "ng2-alfresco-datatable": "0.0.0-PLACEHOLDER",
+    "ng2-alfresco-documentlist": "0.0.0-PLACEHOLDER",
+    "ng2-alfresco-login": "0.0.0-PLACEHOLDER",
+    "ng2-alfresco-search": "0.0.0-PLACEHOLDER",
+    "ng2-alfresco-upload": "0.0.0-PLACEHOLDER",
+    "ng2-alfresco-viewer": "0.0.0-PLACEHOLDER"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",
