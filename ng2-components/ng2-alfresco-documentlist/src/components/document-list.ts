@@ -34,7 +34,6 @@ import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
-    DataSorting,
     DataRowEvent,
     DataTableComponent,
     ObjectDataColumn
@@ -128,7 +127,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         private documentListService: DocumentListService,
         private ngZone: NgZone) {
 
-        this.setupData();
+        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -326,11 +325,6 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
                 }
             }
         }
-    }
-
-    private setupData() {
-        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
-        this.data.setSorting(new DataSorting('id', 'asc'));
     }
 
     onShowRowContextMenu(event) {
