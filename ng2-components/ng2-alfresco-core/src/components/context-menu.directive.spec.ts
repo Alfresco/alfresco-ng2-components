@@ -34,6 +34,7 @@ describe('ContextMenuDirective', () => {
             done();
         });
 
+        directive.links = [{}];
         directive.onShowContextMenu(null);
     });
 

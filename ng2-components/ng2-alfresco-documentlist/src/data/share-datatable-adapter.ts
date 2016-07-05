@@ -100,11 +100,13 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                         return null;
                     }
 
-                    let mimeType = node.entry.content.mimeType;
-                    if (mimeType) {
-                        let icon = this.dataService.getMimeTypeIcon(mimeType);
-                        if (icon) {
-                            return `${this.basePath}/img/${icon}`;
+                    if (node.entry.content && node.entry.content.mimeType) {
+                        let mimeType = node.entry.content.mimeType;
+                        if (mimeType) {
+                            let icon = this.dataService.getMimeTypeIcon(mimeType);
+                            if (icon) {
+                                return `${this.basePath}/img/${icon}`;
+                            }
                         }
                     }
                 }
@@ -125,7 +127,11 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         this.sorting = sorting;
 
         if (sorting && sorting.key) {
-            this.rows.sort((a: DataRow, b: DataRow) => {
+            this.rows.sort((a: ShareDataRow, b: ShareDataRow) => {
+                if (a.node.entry.isFolder !== b.node.entry.isFolder) {
+                    return a.node.entry.isFolder ? -1 : 1;
+                }
+
                 let left = a.getValue(sorting.key);
                 if (left) {
                     left = (left instanceof Date) ? left.valueOf().toString() : left.toString();

@@ -38,9 +38,6 @@ export class ContentAction implements OnInit, OnChanges {
     handler: string;
 
     @Input()
-    type: string;
-
-    @Input()
     target: string;
 
     @Output()
@@ -57,7 +54,6 @@ export class ContentAction implements OnInit, OnChanges {
 
     ngOnInit() {
         this.model = new ContentActionModel({
-            type: this.type,
             title: this.title,
             icon: this.icon,
             target: this.target

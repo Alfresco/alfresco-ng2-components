@@ -35,6 +35,37 @@
     width: 100%;
 }
 
+:host .ellipsis-cell > div
+{
+    position: relative;
+    overflow: hidden;
+    /*height: 1em;*/
+}
+
+
+/* visible content */
+:host .ellipsis-cell > div > span
+{
+    display: block;
+    position: absolute;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1em;		/* for vertical align of text */
+}
+
+
+/* cell stretching content */
+:host .ellipsis-cell > div:after
+{
+    content: attr(title);
+    overflow: hidden;
+    height: 0;
+    display: block;
+}
+
+
 /* Utils */
 
 :host .non-selectable {
@@ -54,4 +85,23 @@
     overflow: hidden;
     clip: rect(0,0,0,0);
     border: 0;
+}
+
+/* small desktop */
+@media all and (max-width: 1200px) {}
+
+/* tablet */
+@media all and (max-width: 1024px) {}
+
+/* mobile phone */
+@media all and (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+@media (max-device-width: 768px){
+    .desktop-only {
+        display: none;
+    }
 }

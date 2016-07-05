@@ -36,9 +36,6 @@ export * from './src/components/content-action-list';
 export * from './src/components/empty-folder-content';
 export * from './src/components/document-list-breadcrumb.component';
 
-// models
-export * from './src/models/column-sorting.model';
-
 // services
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';

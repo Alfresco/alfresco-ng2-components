@@ -16,6 +16,7 @@ module.exports = function (config) {
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
       {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
+      {pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.js', included: false, served: true, watched: false},
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
 
       {pattern: 'karma-test-shim.js', included: true, watched: true},
@@ -71,7 +72,7 @@ module.exports = function (config) {
 
     // Coverage reporter generates the coverage
     reporters: ['mocha', 'coverage', 'coveralls', 'kjhtml'],
-    
+
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {

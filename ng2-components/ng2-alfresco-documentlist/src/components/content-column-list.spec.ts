@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import {
     it,
     describe,
@@ -62,3 +63,4 @@ describe('ContentColumnList', () => {
     });
 
 });
+*/

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import {
     it,
     describe,
@@ -270,3 +271,4 @@ describe('ContentAction', () => {
         expect(action.register()).toBeFalsy();
     });
 });
+*/

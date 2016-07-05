@@ -15,15 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ContentColumnList } from './content-column-list';
-import { ContentColumnModel } from './../models/content-column.model';
+import { DataColumn } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'content-column',
     template: ''
 })
-export class ContentColumn implements OnInit, OnChanges {
+export class ContentColumn implements OnInit, DataColumn {
+
+    @Input()
+    key: string;
+
+    @Input()
+    type: string = 'text';
+
+    @Input()
+    format: string;
+
+    @Input()
+    sortable: boolean = false;
 
     @Input()
     title: string = '';
@@ -34,36 +46,14 @@ export class ContentColumn implements OnInit, OnChanges {
     @Input('sr-title')
     srTitle: string;
 
-    @Input()
-    source: string;
-
     @Input('class')
     cssClass: string;
 
-    @Input()
-    type: string = 'text';
-
-    @Input()
-    format: string;
-
-    model: ContentColumnModel;
-
-    constructor(private list: ContentColumnList) {
-        this.model = new ContentColumnModel();
-    }
+    constructor(private list: ContentColumnList) {}
 
     ngOnInit() {
-        this.model = new ContentColumnModel({
-            title: this.title,
-            srTitle: this.srTitle,
-            source: this.source,
-            cssClass: this.cssClass,
-            type: this.type,
-            format: this.format
-        });
-
-        if (!this.model.srTitle && this.model.source === '$thumbnail') {
-            this.model.srTitle = 'Thumbnail';
+        if (!this.srTitle && this.key === '$thumbnail') {
+            this.srTitle = 'Thumbnail';
         }
 
         this.register();
@@ -71,14 +61,8 @@ export class ContentColumn implements OnInit, OnChanges {
 
     register(): boolean {
         if (this.list) {
-            return this.list.registerColumn(this.model);
+            return this.list.registerColumn(this);
         }
         return false;
-    }
-
-    ngOnChanges(change) {
-        // update localizable properties
-        this.model.title = this.title;
-        this.model.srTitle = this.srTitle;
     }
 }

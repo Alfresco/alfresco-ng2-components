@@ -29,7 +29,6 @@ import {
     NgZone,
     ViewChild
 } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs/Rx';
 import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 
@@ -37,14 +36,13 @@ import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     DataSorting,
     DataRowEvent,
-    DataTableComponent
+    DataTableComponent,
+    ObjectDataColumn
 } from 'ng2-alfresco-datatable';
 
 import { AlfrescoService } from './../services/alfresco.service';
-import { MinimalNodeEntity, NodePaging } from './../models/document-library.model';
+import { MinimalNodeEntity } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
-import { ContentColumnModel } from './../models/content-column.model';
-import { ColumnSortingModel } from './../models/column-sorting.model';
 import { ShareDataTableAdapter, ShareDataRow } from './../data/share-datatable-adapter';
 
 declare var componentHandler;
@@ -73,7 +71,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     @Input()
     navigate: boolean = true;
 
-    @Input('navigation-mode')
+    @Input()
     navigationMode: string = 'dblclick'; // click|dblclick
 
     @Input()
@@ -89,10 +87,10 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     contextMenuActions: boolean = false;
 
     @Output()
-    itemClick: EventEmitter<any> = new EventEmitter();
+    nodeClick: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    itemDblClick: EventEmitter<any> = new EventEmitter();
+    nodeDblClick: EventEmitter<any> = new EventEmitter();
 
     @Output()
     folderChange: EventEmitter<any> = new EventEmitter();
@@ -114,39 +112,16 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         if (value !== this._path) {
             this._path = value || this.DEFAULT_ROOT_FOLDER;
             this.displayFolderContent(this._path);
-        }
-    }
-
-    errorMessage;
-
-    actions: ContentActionModel[] = [];
-    columns: ContentColumnModel[] = [];
-    emptyFolderTemplate: TemplateRef<any>;
-
-    private _folder: NodePaging;
-
-    get folder(): NodePaging {
-        return this._folder;
-    }
-
-    set folder(value: NodePaging) {
-        let isChanged = this._folder !== value;
-        this._folder = value;
-        if (isChanged) {
             this.folderChange.emit({
-                value: value,
                 path: this.currentFolderPath
             });
         }
     }
 
-    sorting: ColumnSortingModel = {
-        key: 'name',
-        direction: 'asc'
-    };
-
+    errorMessage;
+    actions: ContentActionModel[] = [];
+    emptyFolderTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
-
     data: ShareDataTableAdapter;
 
     constructor(
@@ -158,27 +133,15 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     getContextActions(node: MinimalNodeEntity) {
         if (node && node.entry) {
-            let targetType;
-
-            if (node.entry.isFolder) {
-                targetType = 'folder';
-            }
-
-            if (node.entry.isFile) {
-                targetType = 'document';
-            }
-
-            if (targetType) {
-                let actions = this.getContentActions(targetType, 'menu');
-                if (actions && actions.length > 0) {
-                    return actions.map(a => {
-                        return {
-                            model: a,
-                            node: node,
-                            subject: this.contextActionHandler
-                        };
-                    });
-                }
+            let actions = this.getNodeActions(node);
+            if (actions && actions.length > 0) {
+                return actions.map(a => {
+                    return {
+                        model: a,
+                        node: node,
+                        subject: this.contextActionHandler
+                    };
+                });
             }
         }
         return null;
@@ -196,12 +159,13 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
     }
 
-    ngOnChanges(change) {
+    ngOnChanges(/*change*/) {
         this.reload();
     }
 
     ngAfterContentInit() {
-        if (!this.columns || this.columns.length === 0) {
+        let columns = this.data.getColumns();
+        if (!columns || columns.length === 0) {
             this.setupDefaultColumns();
         }
     }
@@ -223,26 +187,6 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     }
 
-    /**
-     * Get a list of content actions based on target and type.
-     * @param target Target to filter actions by.
-     * @param type Type to filter actions by.
-     * @returns {ContentActionModel[]} List of actions filtered by target and type.
-     */
-    getContentActions(target: string, type: string): ContentActionModel[] {
-        if (target && type) {
-
-            let ltarget = target.toLowerCase();
-            let ltype = type.toLowerCase();
-
-            return this.actions.filter(entry => {
-                return entry.target.toLowerCase() === ltarget &&
-                    entry.type.toLowerCase() === ltype;
-            });
-        }
-        return [];
-    }
-
     getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
         let target = null;
 
@@ -254,60 +198,15 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
             target = 'folder';
         }
 
-        return this.getContentActions(target, 'menu');
-    }
+        if (target) {
 
-    /**
-     * Invoked when list row is clicked.
-     * @param item Underlying node item
-     * @param e DOM event (optional)
-     */
-    onItemClick(item: MinimalNodeEntity, e?: Event) {
-        if (e) {
-            e.preventDefault();
+            let ltarget = target.toLowerCase();
+
+            return this.actions.filter(entry => {
+                return entry.target.toLowerCase() === ltarget;
+            });
         }
-
-        this.itemClick.emit({
-            value: item
-        });
-
-        if (this.navigate && this.navigationMode === DocumentList.SINGLE_CLICK_NAVIGATION) {
-            if (item && item.entry) {
-                if (item.entry.isFile) {
-                    this.preview.emit({
-                        value: item
-                    });
-                }
-
-                if (item.entry.isFolder) {
-                    this.performNavigation(item);
-                }
-            }
-        }
-    }
-
-    onItemDblClick(item: MinimalNodeEntity, e?: Event) {
-        if (e) {
-            e.preventDefault();
-        }
-
-        this.itemDblClick.emit({
-            value: item
-        });
-
-        if (this.navigate && this.navigationMode === DocumentList.DOUBLE_CLICK_NAVIGATION) {
-            if (item && item.entry) {
-                if (item.entry.isFile) {
-                    this.preview.emit({
-                        value: item
-                    });
-                }
-
-                if (item.entry.isFolder) {
-                    this.performNavigation(item);
-                }
-            }
-        }
+        return [];
     }
 
     onShowContextMenu(e?: Event) {
@@ -325,41 +224,6 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     }
 
     /**
-     * Gets thumbnail URL for the given node.
-     * @param node Node to get URL for.
-     * @returns {string} URL address.
-     */
-    getThumbnailUrl(node: MinimalNodeEntity): string {
-        if (node && node.entry) {
-            let entry = node.entry;
-
-            if (entry.isFolder) {
-                return `${this.baseComponentPath}/img/ft_ic_folder.svg`;
-            }
-
-            if (entry.isFile) {
-                if (this.thumbnails) {
-                    if (this.alfrescoService) {
-                        return this.alfrescoService.getDocumentThumbnailUrl(node);
-                    }
-                    return null;
-                }
-
-                if (entry.content && entry.content.mimeType) {
-                    let icon = this.alfrescoService.getMimeTypeIcon(entry.content.mimeType);
-                    if (icon) {
-                        return `${this.baseComponentPath}/img/${icon}`;
-                    }
-                }
-            }
-
-            return `${this.baseComponentPath}/img/ft_ic_miscellaneous.svg`;
-        }
-
-        return null;
-    }
-
-    /**
      * Invoked when executing content action for a document or folder.
      * @param node Node to be the context of the execution.
      * @param action Action to be executed against the context.
@@ -372,12 +236,6 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     displayFolderContent(path: string) {
         if (path) {
-            this.alfrescoService
-                .getFolder(path)
-                .subscribe(
-                    folder => this.folder = this.sort(folder, this.sorting),
-                    error => this.errorMessage = <any>error
-                );
             this.data.loadPath(path);
         }
     }
@@ -404,108 +262,33 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     }
 
     /**
-     * Gets a value from an object by composed key
-     * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
-     * @param target
-     * @param key
-     * @returns {string}
-     */
-    getObjectValue(target: any, key: string): any {
-        let keys = key.split('.');
-        key = '';
-
-        do {
-            key += keys.shift();
-            let value = target[key];
-            if (value !== undefined && (typeof value === 'object' || !keys.length)) {
-                target = value;
-                key = '';
-            } else if (!keys.length) {
-                target = undefined;
-            } else {
-                key += '.';
-            }
-        } while (keys.length);
-
-        return target;
-    }
-
-    getCellValue(row: MinimalNodeEntity, col: ContentColumnModel): any {
-        let value = this.getObjectValueRaw(row.entry, col.source);
-
-        if (col.type === 'date') {
-            let datePipe = new DatePipe();
-            try {
-                return datePipe.transform(value, col.format);
-            } catch (err) {
-                console.error(`DocumentList: error parsing date ${value} to format ${col.format}`);
-            }
-        }
-
-        if (col.type === 'image') {
-
-            if (col.source === '$thumbnail') {
-                return this.getThumbnailUrl(row);
-            }
-
-        }
-
-        return value;
-    }
-
-    /**
      * Creates a set of predefined columns.
      */
     setupDefaultColumns(): void {
-        let thumbnailCol = new ContentColumnModel();
-        thumbnailCol.source = '$thumbnail';
-        thumbnailCol.type = 'image';
+        let colThumbnail = new ObjectDataColumn({
+            type: 'image',
+            key: '$thumbnail',
+            title: '',
+            srTitle: 'Thumbnail'
+        });
 
-        let nameCol = new ContentColumnModel();
-        nameCol.title = 'Name';
-        nameCol.source = 'name';
-        nameCol.cssClass = 'full-width name-column';
+        let colName = new ObjectDataColumn({
+            type: 'text',
+            key: 'name',
+            title: 'Name',
+            cssClass: 'full-width',
+            sortable: true
+        });
 
-        this.columns = [
-            thumbnailCol,
-            nameCol
-        ];
-    }
-
-    onColumnHeaderClick(column: ContentColumnModel) {
-        if (column && this.isSortableColumn(column)) {
-            if (this.sorting.key === column.source) {
-                this.sorting.direction = this.sorting.direction === 'asc' ? 'desc' : 'asc';
-            } else {
-                this.sorting = <ColumnSortingModel> {
-                    key: column.source,
-                    direction: 'asc'
-                };
-            }
-            this.sort(this.folder, this.sorting);
-        }
-    }
-
-    sort(node: NodePaging, options: ColumnSortingModel) {
-        if (this.hasEntries(node)) {
-            node.list.entries.sort((a: MinimalNodeEntity, b: MinimalNodeEntity) => {
-                if (a.entry.isFolder !== b.entry.isFolder) {
-                    return a.entry.isFolder ? -1 : 1;
-                }
-
-                let left = this.getObjectValueRaw(a.entry, options.key).toString();
-                let right = this.getObjectValueRaw(b.entry, options.key).toString();
-
-                return options.direction === 'asc'
-                    ? left.localeCompare(right)
-                    : right.localeCompare(left);
-            });
-        }
-        return node;
+        this.data.setColumns([colThumbnail, colName]);
     }
 
     onRowClick(event: DataRowEvent) {
         let item = (<ShareDataRow> event.value).node;
+
+        this.nodeClick.emit({
+            value: item
+        });
 
         if (this.navigate && this.navigationMode === DocumentList.SINGLE_CLICK_NAVIGATION) {
             if (item && item.entry) {
@@ -525,6 +308,11 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     onRowDblClick(event?: DataRowEvent) {
         let item = (<ShareDataRow> event.value).node;
+
+        this.nodeDblClick.emit({
+            value: item
+        });
+
         if (this.navigate && this.navigationMode === DocumentList.DOUBLE_CLICK_NAVIGATION) {
             if (item && item.entry) {
                 if (item.entry.isFile) {
@@ -540,36 +328,8 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         }
     }
 
-    private getObjectValueRaw(target: any, key: string) {
-        let val = this.getObjectValue(target, key);
-
-        if (val instanceof Date) {
-            val = val.valueOf();
-        }
-
-        return val;
-    }
-
-    private hasEntries(node: NodePaging): boolean {
-        return (node && node.list && node.list.entries && node.list.entries.length > 0);
-    }
-
-    private isSortableColumn(column: ContentColumnModel) {
-        return column && column.source && !column.source.startsWith('$');
-    }
-
     private setupData() {
-        this.data = new ShareDataTableAdapter(
-            this.alfrescoService,
-            this.baseComponentPath,
-            [
-                { type: 'image', key: '$thumbnail', title: '', srTitle: 'Thumbnail' },
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width', sortable: true },
-                { type: 'text', key: 'createdByUser.displayName', title: 'Created by', sortable: true },
-                { type: 'date', format: 'medium', key: 'createdAt', title: 'Created on', sortable: true }
-            ]
-        );
-
+        this.data = new ShareDataTableAdapter(this.alfrescoService, this.baseComponentPath, []);
         this.data.setSorting(new DataSorting('id', 'asc'));
     }
 
