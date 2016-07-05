@@ -78,11 +78,11 @@ export class DocumentListService {
             relativePath: folder,
             include: ['path']
         };
-        return this.getAlfrescoApi().getNodeChildren(nodeId, opts);
+        return this.getAlfrescoApi().node.getNodeChildren(nodeId, opts);
     }
 
     deleteNode(nodeId: string) {
-        return Observable.fromPromise(this.getAlfrescoApi().deleteNode(nodeId));
+        return Observable.fromPromise(this.getAlfrescoApi().node.deleteNode(nodeId));
     }
 
     /**
