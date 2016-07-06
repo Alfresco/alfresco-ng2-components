@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+"$DIR/npm-clean.sh"
+
 for PACKAGE in \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
@@ -13,5 +15,8 @@ for PACKAGE in \
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== PUBLISHING: ${DESTDIR} ====="
-  npm publish ${DESTDIR}
+  cd ${DESTDIR}
+  npm install
+  npm publish
+  cd ${DIR}
 done

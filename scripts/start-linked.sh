@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+"$DIR/npm-link-demo-shell.sh"
+
 cd "$DIR/../demo-shell-ng2"
 
 if  [[ $1 = "-install" ]]; then

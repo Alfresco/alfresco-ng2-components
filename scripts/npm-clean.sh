@@ -18,3 +18,5 @@ done
 
 cd "$DIR/../demo-shell-ng2"
 npm run clean
+
+cd ${DIR}
