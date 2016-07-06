@@ -15,17 +15,6 @@
  * limitations under the License.
  */
 
-import { describe, it, expect } from '@angular/core/testing';
-
-describe('ContentColumn', () => {
-
-    it('should be upgraded', () => {
-        expect(false).toBeTruthy();
-    });
-
-});
-
-/*
 import {
     it,
     describe,
@@ -33,10 +22,10 @@ import {
     beforeEach
 } from '@angular/core/testing';
 
-import {DocumentList} from './document-list';
-import {ContentColumn} from './content-column';
-import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-import {ContentColumnList} from './content-column-list';
+import { DocumentList } from './document-list';
+import { ContentColumn } from './content-column';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
+import { ContentColumnList } from './content-column-list';
 
 describe('ContentColumn', () => {
 
@@ -44,8 +33,8 @@ describe('ContentColumn', () => {
     let columnList: ContentColumnList;
 
     beforeEach(() => {
-        let alfrescoServiceMock = new AlfrescoServiceMock();
-        documentList = new DocumentList(alfrescoServiceMock, null);
+        let service = new DocumentListServiceMock();
+        documentList = new DocumentList(service, null);
         columnList = new ContentColumnList(documentList);
     });
 
@@ -56,52 +45,19 @@ describe('ContentColumn', () => {
         column.ngOnInit();
 
         expect(columnList.registerColumn).toHaveBeenCalled();
-    });
 
-    it('should setup model properties during registration', () => {
-
-        let column = new ContentColumn(columnList);
-        column.title = '<title>';
-        column.srTitle = '<sr-title>';
-        column.source = '<source>';
-        column.cssClass = '<css-class>';
-        column.ngOnInit();
-
-        expect(documentList.columns.length).toBe(1);
-
-        let model = documentList.columns[0];
-        expect(model.title).toBe(column.title);
-        expect(model.srTitle).toBe(column.srTitle);
-        expect(model.source).toBe(column.source);
-        expect(model.cssClass).toBe(column.cssClass);
+        let columns = documentList.data.getColumns();
+        expect(columns.length).toBe(1);
+        expect(columns[0]).toBe(column);
     });
 
     it('should setup screen reader title for thumbnail column', () => {
-
-        let column = new ContentColumn(columnList);
-        column.source = '$thumbnail';
+        let column = new ContentColumn(columnList, {
+            key: '$thumbnail'
+        });
         column.ngOnInit();
 
-        expect(documentList.columns.length).toBe(1);
-
-        let model = documentList.columns[0];
-        expect(model.srTitle).toBe('Thumbnail');
-    });
-
-    it('should sync localizable fields with model', () => {
-
-        let column = new ContentColumn(columnList);
-        column.title = 'title1';
-        column.srTitle = 'srTitle1';
-        column.ngOnInit();
-
-        expect(column.model.title).toBe(column.title);
-        expect(column.model.srTitle).toBe(column.srTitle);
-
-        column.title = 'title2';
-        column.ngOnChanges(null);
-
-        expect(column.model.title).toBe('title2');
+        expect(column.srTitle).toBe('Thumbnail');
     });
 
     it('should register on init', () => {
@@ -121,4 +77,3 @@ describe('ContentColumn', () => {
     });
 
 });
-*/

@@ -15,17 +15,6 @@
  * limitations under the License.
  */
 
-import { describe, it, expect } from '@angular/core/testing';
-
-describe('ContentColumnList', () => {
-
-    it('should be upgraded', () => {
-        expect(false).toBeTruthy();
-    });
-
-});
-
-/*
 import {
     it,
     describe,
@@ -33,10 +22,11 @@ import {
     beforeEach
 } from '@angular/core/testing';
 
-import {DocumentList} from './document-list';
-import {AlfrescoServiceMock} from '../assets/alfresco.service.mock';
-import {ContentColumnList} from './content-column-list';
-import {ContentColumnModel} from '../models/content-column.model';
+import { DataColumn } from 'ng2-alfresco-datatable';
+
+import { DocumentList } from './document-list';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
+import { ContentColumnList } from './content-column-list';
 
 describe('ContentColumnList', () => {
 
@@ -44,23 +34,26 @@ describe('ContentColumnList', () => {
     let columnList: ContentColumnList;
 
     beforeEach(() => {
-        let alfrescoServiceMock = new AlfrescoServiceMock();
-        documentList = new DocumentList(alfrescoServiceMock, null);
+        let service = new DocumentListServiceMock();
+        documentList = new DocumentList(service, null);
         columnList = new ContentColumnList(documentList);
     });
 
     it('should register column within parent document list', () => {
-        expect(documentList.columns.length).toBe(0);
+        let columns = documentList.data.getColumns();
+        expect(columns.length).toBe(0);
 
-        let result = columnList.registerColumn(new ContentColumnModel());
+        let column = <DataColumn> {};
+        let result = columnList.registerColumn(column);
 
         expect(result).toBeTruthy();
-        expect(documentList.columns.length).toBe(1);
+        expect(columns.length).toBe(1);
+        expect(columns[0]).toBe(column);
     });
 
     it('should require document list instance to register action', () => {
         columnList = new ContentColumnList(null);
-        let col = new ContentColumnModel();
+        let col = <DataColumn> {};
         expect(columnList.registerColumn(col)).toBeFalsy();
     });
 
@@ -73,4 +66,3 @@ describe('ContentColumnList', () => {
     });
 
 });
-*/

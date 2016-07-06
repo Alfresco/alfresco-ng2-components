@@ -158,7 +158,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
     }
 
-    ngOnChanges(/*change*/) {
+    ngOnChanges() {
         this.reload();
     }
 
@@ -189,22 +189,25 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
         let target = null;
 
-        if (node.entry.isFile) {
-            target = 'document';
+        if (node && node.entry) {
+            if (node.entry.isFile) {
+                target = 'document';
+            }
+
+            if (node.entry.isFolder) {
+                target = 'folder';
+            }
+
+            if (target) {
+
+                let ltarget = target.toLowerCase();
+
+                return this.actions.filter(entry => {
+                    return entry.target.toLowerCase() === ltarget;
+                });
+            }
         }
 
-        if (node.entry.isFolder) {
-            target = 'folder';
-        }
-
-        if (target) {
-
-            let ltarget = target.toLowerCase();
-
-            return this.actions.filter(entry => {
-                return entry.target.toLowerCase() === ltarget;
-            });
-        }
         return [];
     }
 
@@ -234,9 +237,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     }
 
     displayFolderContent(path: string) {
-        if (path) {
-            this.data.loadPath(path);
-        }
+        this.data.loadPath(path);
     }
 
     reload() {
@@ -282,49 +283,58 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         this.data.setColumns([colThumbnail, colName]);
     }
 
-    onRowClick(event: DataRowEvent) {
-        let item = (<ShareDataRow> event.value).node;
+    onPreviewFile(node: MinimalNodeEntity) {
+        if (node) {
+            this.preview.emit({
+                value: node
+            });
+        }
+    }
 
+    onNodeClick(node: MinimalNodeEntity) {
         this.nodeClick.emit({
-            value: item
+            value: node
         });
 
         if (this.navigate && this.navigationMode === DocumentList.SINGLE_CLICK_NAVIGATION) {
-            if (item && item.entry) {
-                if (item.entry.isFile) {
-                    this.preview.emit({
-                        value: item
-                    });
+            if (node && node.entry) {
+                if (node.entry.isFile) {
+                    this.onPreviewFile(node);
                 }
 
-                if (item.entry.isFolder) {
-                    this.performNavigation(item);
+                if (node.entry.isFolder) {
+                    this.performNavigation(node);
                 }
             }
         }
+    }
 
+    onRowClick(event: DataRowEvent) {
+        let item = (<ShareDataRow> event.value).node;
+        this.onNodeClick(item);
+    }
+
+    onNodeDblClick(node: MinimalNodeEntity) {
+        this.nodeDblClick.emit({
+            value: node
+        });
+
+        if (this.navigate && this.navigationMode === DocumentList.DOUBLE_CLICK_NAVIGATION) {
+            if (node && node.entry) {
+                if (node.entry.isFile) {
+                    this.onPreviewFile(node);
+                }
+
+                if (node.entry.isFolder) {
+                    this.performNavigation(node);
+                }
+            }
+        }
     }
 
     onRowDblClick(event?: DataRowEvent) {
         let item = (<ShareDataRow> event.value).node;
-
-        this.nodeDblClick.emit({
-            value: item
-        });
-
-        if (this.navigate && this.navigationMode === DocumentList.DOUBLE_CLICK_NAVIGATION) {
-            if (item && item.entry) {
-                if (item.entry.isFile) {
-                    this.preview.emit({
-                        value: item
-                    });
-                }
-
-                if (item.entry.isFolder) {
-                    this.performNavigation(item);
-                }
-            }
-        }
+        this.onNodeDblClick(item);
     }
 
     onShowRowContextMenu(event) {

@@ -168,19 +168,23 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 .getFolder(path)
                 .subscribe(val => {
                     let page = <NodePaging>val;
-                    let data = page.list.entries;
-                    if (data && data.length > 0) {
-                        this.rows = data.map(item => new ShareDataRow(item));
-                        // Sort by first sortable or just first column
-                        let sortable = this.columns.filter(c => c.sortable);
-                        if (sortable.length > 0) {
-                            this.sort(sortable[0].key, 'asc');
-                        } else {
-                            this.sort(this.columns[0].key, 'asc');
+                    let rows = [];
+
+                    if (page && page.list) {
+                        let data = page.list.entries;
+                        if (data && data.length > 0) {
+                            rows = data.map(item => new ShareDataRow(item));
+                            // Sort by first sortable or just first column
+                            let sortable = this.columns.filter(c => c.sortable);
+                            if (sortable.length > 0) {
+                                this.sort(sortable[0].key, 'asc');
+                            } else {
+                                this.sort(this.columns[0].key, 'asc');
+                            }
                         }
-                    } else {
-                        this.rows = [];
                     }
+
+                    this.rows = [];
                 },
                 error => console.log(error));
         }

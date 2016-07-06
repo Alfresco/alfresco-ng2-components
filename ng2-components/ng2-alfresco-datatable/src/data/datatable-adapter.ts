@@ -51,5 +51,5 @@ export class DataSorting {
 
 export interface DataRowEvent {
     value?: DataRow;
-    event: Event;
+    event?: Event;
 }

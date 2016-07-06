@@ -49,7 +49,17 @@ export class ContentColumn implements OnInit, DataColumn {
     @Input('class')
     cssClass: string;
 
-    constructor(private list: ContentColumnList) {}
+    constructor(private list: ContentColumnList, opts?: any) {
+        if (opts) {
+            this.key = opts.key;
+            this.type = opts.type || 'text';
+            this.format = opts.format;
+            this.sortable = opts.sortable ? true : false;
+            this.title = opts.title || '';
+            this.srTitle = opts.srTitle;
+            this.cssClass = opts.cssClass;
+        }
+    }
 
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {
