@@ -11,7 +11,10 @@ for PACKAGE in \
   ng2-alfresco-upload \
   ng2-alfresco-viewer
 do
-  DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-  echo "====== PUBLISHING: ${DESTDIR} ====="
-  npm publish ${DESTDIR}
+  echo "====== clean component: ${PACKAGE} ====="
+  cd "$DIR/../ng2-components/${PACKAGE}"
+  npm run clean
 done
+
+cd "$DIR/../demo-shell-ng2"
+npm run clean

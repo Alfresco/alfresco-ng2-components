@@ -13,4 +13,4 @@ then
 fi
 
 echo "====== RENAMING 0.0.0-PLACEHOLDER to N.N.N version ======"
-find ././../ng2-components/ -type f -name package.json -print0 | xargs -0 sed -i '' "s/0\\.0\\.0-PLACEHOLDER/${VERSION}/g"
+find ././../ -type f -name package.json -print0 | xargs -0 sed -i '' "s/0\\.0\\.0-PLACEHOLDER/${VERSION}/g"
