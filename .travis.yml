@@ -17,7 +17,8 @@ before_install:
   - export CHROME_BIN=/usr/bin/google-chrome
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - (cd ng2-components/ng2-alfresco-core; npm version patch; sed -i "s/0\\.0\\.0-PLACEHOLDER/^0.1.0/g" package.json; npm install; npm link)
+  - (cd ng2-components/ng2-alfresco-core; npm install; npm link)
+  - (cd ng2-components/ng2-alfresco-datatable; npm install; npm link)
 
 env:
   matrix:
@@ -30,7 +31,7 @@ env:
     - MODULE=ng2-alfresco-viewer
 
 before_script:
-  - cd ng2-components/$MODULE; npm version patch; sed -i "s/0\\.0\\.0-PLACEHOLDER/^0.1.0/g" package.json; npm install; npm link ng2-alfresco-core; npm run travis
+  - cd ng2-components/$MODULE; npm install; npm link ng2-alfresco-core; npm run travis
   - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
