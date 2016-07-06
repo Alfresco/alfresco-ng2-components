@@ -184,7 +184,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                         }
                     }
 
-                    this.rows = [];
+                    this.rows = rows;
                 },
                 error => console.log(error));
         }

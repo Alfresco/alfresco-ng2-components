@@ -52,9 +52,8 @@ describe('ContentColumn', () => {
     });
 
     it('should setup screen reader title for thumbnail column', () => {
-        let column = new ContentColumn(columnList, {
-            key: '$thumbnail'
-        });
+        let column = new ContentColumn(columnList);
+        column.key = '$thumbnail';
         column.ngOnInit();
 
         expect(column.srTitle).toBe('Thumbnail');
