@@ -34,4 +34,11 @@ feel for what's available.
 ./start.sh -update
 ```
 
+* If you want to use your local components use the following script with any of the previous option. It will npm link all the components
+in the demo shell:
+
+```sh
+./start-linked.sh
+```
+
 For development environment configuration please refer to [project docs](demo-shell-ng2/README.md).
