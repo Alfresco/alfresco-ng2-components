@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 for PACKAGE in \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
@@ -9,16 +11,15 @@ for PACKAGE in \
   ng2-alfresco-upload \
   ng2-alfresco-viewer
 do
-  cd ../ng2-components/${PACKAGE}; npm version patch ; cd ../../scripts/
+  cd "$DIR/../ng2-components/${PACKAGE}"; npm version patch
 done
 
-./update-version.sh ^0.1.0
+"$DIR/update-version.sh" ^0.1.0
 
-./npm-link-demo-shell.sh
+"$DIR/npm-link-demo-shell.sh"
 
-cd ../demo-shell-ng2
+cd "$DIR/../demo-shell-ng2"
 
-#!/bin/sh
 if  [[ $1 = "-install" ]]; then
     npm install
     npm run start

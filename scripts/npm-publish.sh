@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 for PACKAGE in \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
@@ -9,7 +11,7 @@ for PACKAGE in \
   ng2-alfresco-upload \
   ng2-alfresco-viewer
 do
-  DESTDIR=././../ng2-components/${PACKAGE}
+  DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== PUBLISHING: ${DESTDIR} ====="
   npm publish ${DESTDIR}
 done
