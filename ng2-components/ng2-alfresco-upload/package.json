@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-upload",
   "description": "Alfresco Angular2 Upload Component",
-  "version": "0.0.0-PLACEHOLDER",
+  "version": "0.2.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
@@ -78,7 +78,7 @@
     "rimraf": "2.5.2",
     "ng2-translate": "2.2.2",
     "alfresco-js-api": "^0.1.0",
-    "ng2-alfresco-core": "0.0.0-PLACEHOLDER"
+    "ng2-alfresco-core": "0.2.0"
   },
   "peerDependencies": {
     "material-design-icons": "^2.2.3",
