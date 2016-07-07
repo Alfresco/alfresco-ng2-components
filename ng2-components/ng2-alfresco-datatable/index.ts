@@ -16,14 +16,17 @@
  */
 
 import { DataTableComponent } from './src/components/datatable.component';
+import { NoContentTemplateComponent } from './src/components/no-content-template.component';
 
 // components
 export * from './src/components/datatable.component';
+export * from './src/components/no-content-template.component';
 
 // data
 export * from './src/data/datatable-adapter';
 export * from './src/data/object-datatable-adapter';
 
 export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
-    DataTableComponent
+    DataTableComponent,
+    NoContentTemplateComponent
 ];

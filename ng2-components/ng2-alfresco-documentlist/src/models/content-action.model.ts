@@ -19,7 +19,6 @@ export class ContentActionModel {
     icon: string;
     title: string;
     handler: ContentActionHandler;
-    type: string;
     target: string;
 
     constructor(obj?: any) {
@@ -27,7 +26,6 @@ export class ContentActionModel {
             this.icon = obj.icon;
             this.title = obj.title;
             this.handler = obj.handler;
-            this.type = obj.type;
             this.target = obj.target;
         }
     }

@@ -27,12 +27,11 @@ import {
     AlfrescoContentService
 } from 'ng2-alfresco-core';
 import { FileNode } from '../assets/document-library.model.mock';
-import { AlfrescoService } from './alfresco.service';
+import { DocumentListService } from './document-list.service';
 
-// TODO: rename to DocumentListService
-describe('AlfrescoService', () => {
+describe('DocumentListService', () => {
 
-    let service: AlfrescoService;
+    let service: DocumentListService;
     let settingsService: AlfrescoSettingsService;
     let authService: AlfrescoAuthenticationService;
     let contentService: AlfrescoContentService;
@@ -42,7 +41,7 @@ describe('AlfrescoService', () => {
         settingsService = new AlfrescoSettingsService();
         authService = new AlfrescoAuthenticationService(settingsService);
         contentService = new AlfrescoContentService(settingsService, authService);
-        service = new AlfrescoService(settingsService, authService, contentService);
+        service = new DocumentListService(settingsService, authService, contentService);
     });
 
     it('should require node to get thumbnail url', () => {
@@ -50,7 +49,7 @@ describe('AlfrescoService', () => {
     });
 
     it('should require content service to get thumbnail url', () => {
-        service = new AlfrescoService(settingsService, authService, null);
+        service = new DocumentListService(settingsService, authService, null);
         let file = new FileNode();
         expect(service.getDocumentThumbnailUrl(file)).toBeNull();
     });
@@ -72,9 +71,9 @@ describe('AlfrescoService', () => {
     });
 
     it('should resolve default icon for mime type', () => {
-        expect(service.getMimeTypeIcon(null)).toBe(AlfrescoService.DEFAULT_MIME_TYPE_ICON);
-        expect(service.getMimeTypeIcon('')).toBe(AlfrescoService.DEFAULT_MIME_TYPE_ICON);
-        expect(service.getMimeTypeIcon('missing/type')).toBe(AlfrescoService.DEFAULT_MIME_TYPE_ICON);
+        expect(service.getMimeTypeIcon(null)).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
+        expect(service.getMimeTypeIcon('')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
+        expect(service.getMimeTypeIcon('missing/type')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
     });
 
 });

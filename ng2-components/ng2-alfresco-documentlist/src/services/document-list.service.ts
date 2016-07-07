@@ -27,12 +27,8 @@ import {
 
 declare let AlfrescoApi: any;
 
-// TODO: consider renaming to something like 'DocumentListService'
-/**
- * Internal service used by Document List component.
- */
 @Injectable()
-export class AlfrescoService {
+export class DocumentListService {
 
     static DEFAULT_MIME_TYPE_ICON: string = 'ft_ic_miscellaneous.svg';
 
@@ -120,7 +116,7 @@ export class AlfrescoService {
 
     getMimeTypeIcon(mimeType: string): string {
         let icon = this.mimeTypeIcons[mimeType];
-        return icon || AlfrescoService.DEFAULT_MIME_TYPE_ICON;
+        return icon || DocumentListService.DEFAULT_MIME_TYPE_ICON;
     }
 
     private handleError(error: Response) {

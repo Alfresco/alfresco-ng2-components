@@ -24,7 +24,7 @@ import {
 import { EventEmitter } from '@angular/core';
 
 import { DocumentList } from './document-list';
-import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionList } from './content-action-list';
 import { ContentAction } from './content-action';
 import { DocumentActionsService } from '../services/document-actions.service';
@@ -40,11 +40,11 @@ describe('ContentAction', () => {
     let folderActions: FolderActionsService;
 
     beforeEach(() => {
-        let alfrescoServiceMock = new AlfrescoServiceMock();
+        let documentServiceMock = new DocumentListServiceMock();
         documentActions = new DocumentActionsService(null, null);
         folderActions = new FolderActionsService(null);
 
-        documentList = new DocumentList(alfrescoServiceMock, null);
+        documentList = new DocumentList(documentServiceMock, null);
         actionList = new ContentActionList(documentList);
     });
 
@@ -59,7 +59,6 @@ describe('ContentAction', () => {
 
     it('should setup and register model', () => {
         let action = new ContentAction(actionList, null, null);
-        action.type = 'button';
         action.target = 'document';
         action.title = '<title>';
         action.icon = '<icon>';
@@ -70,7 +69,6 @@ describe('ContentAction', () => {
         expect(documentList.actions.length).toBe(1);
 
         let model = documentList.actions[0];
-        expect(model.type).toBe(action.type);
         expect(model.target).toBe(action.target);
         expect(model.title).toBe(action.title);
         expect(model.icon).toBe(action.icon);
@@ -82,7 +80,6 @@ describe('ContentAction', () => {
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
 
         let action = new ContentAction(actionList, documentActions, null);
-        action.type = 'button';
         action.target = 'document';
         action.handler = '<handler>';
         action.ngOnInit();
@@ -99,7 +96,6 @@ describe('ContentAction', () => {
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
 
         let action = new ContentAction(actionList, null, folderActions);
-        action.type = 'button';
         action.target = 'folder';
         action.handler = '<handler>';
         action.ngOnInit();
@@ -116,7 +112,6 @@ describe('ContentAction', () => {
         spyOn(documentActions, 'getHandler').and.stub();
 
         let action = new ContentAction(actionList, documentActions, folderActions);
-        action.type = 'button';
         action.handler = '<handler>';
 
         action.ngOnInit();
@@ -138,7 +133,6 @@ describe('ContentAction', () => {
 
         let action = new ContentAction(actionList, documentActions, null);
         action.target = 'DoCuMeNt';
-        action.type = 'button';
         action.handler = '<handler>';
 
         action.ngOnInit();
@@ -150,7 +144,6 @@ describe('ContentAction', () => {
 
         let action = new ContentAction(actionList, null, folderActions);
         action.target = 'FoLdEr';
-        action.type = 'button';
         action.handler = '<handler>';
 
         action.ngOnInit();
@@ -167,7 +160,6 @@ describe('ContentAction', () => {
 
         let action = new ContentAction(actionList, null, null);
         action.target = 'document';
-        action.type = 'button';
         action.execute = emitter;
 
         action.ngOnInit();

@@ -16,61 +16,44 @@
  */
 
 import { DatePipe } from '@angular/common';
-
 import {
     DataTableAdapter,
-    DataRow,
-    DataColumn,
-    DataSorting
-} from './datatable-adapter';
+    DataRow, DataColumn, DataSorting
+} from 'ng2-alfresco-datatable';
 
-// Simple implementation of the DataTableAdapter interface.
-export class ObjectDataTableAdapter implements DataTableAdapter {
+import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
+import { DocumentListService } from './../services/document-list.service';
 
-    private _sorting: DataSorting;
-    private _rows: DataRow[];
-    private _columns: DataColumn[];
+export class ShareDataTableAdapter implements DataTableAdapter {
 
-    constructor(data: any[], schema: DataColumn[]) {
-        this._rows = [];
-        this._columns = [];
+    private sorting: DataSorting;
+    private rows: DataRow[];
+    private columns: DataColumn[];
 
-        if (data && data.length > 0) {
-            this._rows = data.map(item => {
-                return new ObjectDataRow(item);
-            });
-        }
+    thumbnails: boolean = false;
 
-        if (schema && schema.length > 0) {
-            this._columns = schema.map(item => {
-                return new ObjectDataColumn(item);
-            });
-
-            // Sort by first sortable or just first column
-            let sortable = this._columns.filter(c => c.sortable);
-            if (sortable.length > 0) {
-                this.sort(sortable[0].key, 'asc');
-            } else {
-                this.sort(this._columns[0].key, 'asc');
-            }
-        }
+    constructor(private documentListService: DocumentListService,
+                private basePath: string,
+                schema: DataColumn[]) {
+        this.rows = [];
+        this.columns = schema || [];
     }
 
     getRows(): Array<DataRow> {
-        return this._rows;
+        return this.rows;
     }
 
     setRows(rows: Array<DataRow>) {
-        this._rows = rows || [];
+        this.rows = rows || [];
         this.sort();
     }
 
     getColumns(): Array<DataColumn> {
-        return this._columns;
+        return this.columns;
     }
 
     setColumns(columns: Array<DataColumn>) {
-        this._columns = columns || [];
+        this.columns = columns || [];
     }
 
     getValue(row: DataRow, col: DataColumn): any {
@@ -80,7 +63,6 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         if (!col) {
             throw new Error('Column not found');
         }
-
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
@@ -93,18 +75,56 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             }
         }
 
+        if (col.type === 'image') {
+
+            if (col.key === '$thumbnail') {
+                let node = (<ShareDataRow> row).node;
+
+                if (node.entry.isFolder) {
+                    return `${this.basePath}/img/ft_ic_folder.svg`;
+                }
+
+                if (node.entry.isFile) {
+
+                    if (this.thumbnails) {
+                        if (this.documentListService) {
+                            return this.documentListService.getDocumentThumbnailUrl(node);
+                        }
+                        return null;
+                    }
+
+                    if (node.entry.content && node.entry.content.mimeType) {
+                        let mimeType = node.entry.content.mimeType;
+                        if (mimeType) {
+                            let icon = this.documentListService.getMimeTypeIcon(mimeType);
+                            if (icon) {
+                                return `${this.basePath}/img/${icon}`;
+                            }
+                        }
+                    }
+                }
+
+                return `${this.basePath}/img/ft_ic_miscellaneous.svg`;
+            }
+
+        }
+
         return value;
     }
 
     getSorting(): DataSorting {
-        return this._sorting;
+        return this.sorting;
     }
 
     setSorting(sorting: DataSorting): void {
-        this._sorting = sorting;
+        this.sorting = sorting;
 
         if (sorting && sorting.key) {
-            this._rows.sort((a: DataRow, b: DataRow) => {
+            this.rows.sort((a: ShareDataRow, b: ShareDataRow) => {
+                if (a.node.entry.isFolder !== b.node.entry.isFolder) {
+                    return a.node.entry.isFolder ? -1 : 1;
+                }
+
                 let left = a.getValue(sorting.key);
                 if (left) {
                     left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
@@ -127,21 +147,52 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     }
 
     sort(key?: string, direction?: string): void {
-        let sorting = this._sorting || new DataSorting();
+        let sorting = this.sorting || new DataSorting();
         if (key) {
             sorting.key = key;
             sorting.direction = direction || 'asc';
         }
         this.setSorting(sorting);
     }
+
+    loadPath(path: string) {
+        if (path && this.documentListService) {
+            this.documentListService
+                .getFolder(path)
+                .subscribe(val => {
+                    let page = <NodePaging>val;
+                    let rows = [];
+
+                    if (page && page.list) {
+                        let data = page.list.entries;
+                        if (data && data.length > 0) {
+                            rows = data.map(item => new ShareDataRow(item));
+                            // Sort by first sortable or just first column
+                            let sortable = this.columns.filter(c => c.sortable);
+                            if (sortable.length > 0) {
+                                this.sort(sortable[0].key, 'asc');
+                            } else {
+                                this.sort(this.columns[0].key, 'asc');
+                            }
+                        }
+                    }
+
+                    this.rows = rows;
+                },
+                error => console.log(error));
+        }
+    }
+
 }
 
-// Simple implementation of the DataRow interface.
-export class ObjectDataRow implements DataRow {
-
+export class ShareDataRow implements DataRow {
     isSelected: boolean = false;
 
-    constructor(private obj: any) {
+    get node(): MinimalNodeEntity {
+        return this.obj;
+    }
+
+    constructor(private obj: MinimalNodeEntity) {
         if (!obj) {
             throw new Error('Object source not found');
         }
@@ -180,30 +231,10 @@ export class ObjectDataRow implements DataRow {
     }
 
     getValue(key: string): any {
-        return this.getObjectValue(this.obj, key);
+        return this.getObjectValue(this.obj.entry, key);
     }
 
     hasValue(key: string): boolean {
         return this.getValue(key) ? true : false;
-    }
-}
-
-// Simple implementation of the DataColumn interface.
-export class ObjectDataColumn implements DataColumn {
-
-    key: string;
-    type: string; // text|image
-    sortable: boolean;
-    title: string;
-    srTitle: string;
-    cssClass: string;
-
-    constructor(obj: any) {
-        this.key = obj.key;
-        this.type = obj.type || 'text';
-        this.sortable = obj.sortable;
-        this.title = obj.title;
-        this.srTitle = obj.srTitle;
-        this.cssClass = obj.cssClass;
     }
 }

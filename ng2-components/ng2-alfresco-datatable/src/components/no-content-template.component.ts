@@ -15,17 +15,27 @@
  * limitations under the License.
  */
 
-export class ColumnSortingModel {
+import {
+    Directive,
+    ContentChild,
+    TemplateRef,
+    AfterContentInit
+} from '@angular/core';
+import { DataTableComponent } from './datatable.component';
 
-    static DEFAULT_DIRECTION: string = 'asc';
+@Directive({
+    selector: 'no-content-template'
+})
+export class NoContentTemplateComponent implements AfterContentInit {
 
-    key: string;
-    direction: string = ColumnSortingModel.DEFAULT_DIRECTION;
+    @ContentChild(TemplateRef)
+    template: any;
 
-    constructor(opts?: any) {
-        if (opts) {
-            this.key = opts.key;
-            this.direction = opts.direction || ColumnSortingModel.DEFAULT_DIRECTION;
-        }
+    constructor(
+        private dataTable: DataTableComponent) {
+    }
+
+    ngAfterContentInit() {
+        this.dataTable.noContentTemplate = this.template;
     }
 }

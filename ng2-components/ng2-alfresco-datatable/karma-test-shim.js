@@ -9,13 +9,15 @@ var map = {
     'app': 'base/dist',
     'rxjs': 'base/node_modules/rxjs',
     '@angular': 'base/node_modules/@angular',
-    'ng2-alfresco-core/dist': '/base/node_modules/ng2-alfresco-core/dist'
+    'ng2-alfresco-core': '/base/node_modules/ng2-alfresco-core/dist',
+    'ng2-translate' : '/base/node_modules/ng2-translate'
 };
 
 var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
     'rxjs': { defaultExtension: 'js' },
-    'ng2-alfresco-core/dist': { defaultExtension: 'js' }
+    'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js' },
+    'ng2-translate': { defaultExtension: 'js' }
 };
 
 var packageNames = [

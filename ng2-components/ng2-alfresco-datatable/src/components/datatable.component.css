@@ -14,10 +14,57 @@
 :host .data-cell {
     cursor: default;
 }
+:host .cell-value {}
 
 :host .column-header {
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    -webkit-touch-callout: none; /* iOS Safari */
 }
+
+/* Empty folder */
+
+:host .no-content-container {
+    padding: 0 !important;
+}
+
+:host .no-content-container > img {
+    width: 100%;
+}
+
+:host .ellipsis-cell > div
+{
+    position: relative;
+    overflow: hidden;
+    /*height: 1em;*/
+}
+
+
+/* visible content */
+:host .ellipsis-cell > div > span
+{
+    display: block;
+    position: absolute;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1em;		/* for vertical align of text */
+}
+
+
+/* cell stretching content */
+:host .ellipsis-cell > div:after
+{
+    content: attr(title);
+    overflow: hidden;
+    height: 0;
+    display: block;
+}
+
 
 /* Utils */
 
@@ -38,4 +85,23 @@
     overflow: hidden;
     clip: rect(0,0,0,0);
     border: 0;
+}
+
+/* small desktop */
+@media all and (max-width: 1200px) {}
+
+/* tablet */
+@media all and (max-width: 1024px) {}
+
+/* mobile phone */
+@media all and (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+@media (max-device-width: 768px){
+    .desktop-only {
+        display: none;
+    }
 }

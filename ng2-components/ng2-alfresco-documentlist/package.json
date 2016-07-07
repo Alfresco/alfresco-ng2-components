@@ -28,7 +28,7 @@
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run build",
-    "travis": "npm link ng2-alfresco-core"
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable"
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -75,6 +75,7 @@
     "rimraf": "2.5.2",
     "ng2-translate": "2.2.2",
     "ng2-alfresco-core": "0.2.0",
+	"ng2-alfresco-datatable": "0.2.0",
     "alfresco-js-api": "^0.1.0"
   },
   "peerDependencies": {
@@ -103,13 +104,7 @@
   },
   "license-check-config": {
     "src": [
-      "**/*.js",
-      "**/*.ts",
-      "!/**/coverage/**/*",
-      "!/**/demo/**/*",
-      "!/**/node_modules/**/*",
-      "!/**/typings/**/*",
-      "!*.js"
+      "./dist/**/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,

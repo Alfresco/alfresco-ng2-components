@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
-import {DocumentList} from './document-list';
-import {ContentColumnModel} from './../models/content-column.model';
+import { Component } from '@angular/core';
+import { DocumentList } from './document-list';
+import { DataColumn } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'content-columns',
@@ -33,9 +33,10 @@ export class ContentColumnList {
      * Registers column model within the parent document list component.
      * @param column Column definition model to register.
      */
-    registerColumn(column: ContentColumnModel): boolean {
+    registerColumn(column: DataColumn): boolean {
         if (this.documentList && column) {
-            this.documentList.columns.push(column);
+            let columns = this.documentList.data.getColumns();
+            columns.push(column);
             return true;
         }
         return false;

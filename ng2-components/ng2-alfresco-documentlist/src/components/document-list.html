@@ -1,103 +1,15 @@
-<table *ngIf="folder" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
-    <thead>
-    <tr>
-        <!-- Columns -->
-        <th class="mdl-data-table__cell--non-numeric non-selectable {{col.cssClass}}"
-            *ngFor="let col of columns"
-            [class.column-header]="col.title"
-            [attr.data-automation-id]="'auto_id_' + col.source"
-            [class.mdl-data-table__header--sorted-ascending]="sorting.key === col.source && sorting.direction === 'asc'"
-            [class.mdl-data-table__header--sorted-descending]="sorting.key === col.source && sorting.direction === 'desc'"
-            (click)="onColumnHeaderClick(col)">
-            <span *ngIf="col.srTitle" class="cell-value sr-only">{{col.srTitle}}</span>
-            <span *ngIf="col.title" class="cell-value">{{col.title}}</span>
-        </th>
-        <!-- Actions -->
-        <th>
-            <span class="sr-only">Actions</span>
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let content of folder.list.entries; let idx = index"
-        [attr.data-automation-id]="getObjectValue(content.entry, 'name')">
-        <!-- Columns -->
-        <td *ngFor="let col of columns" [ngSwitch]="col.type"
-            class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
-            (click)="onItemClick(content, $event)"
-            (dblclick)="onItemDblClick(content, $event)"
-            [context-menu]="getContextActions(content)"
-            [attr.data-automation-id]="col.source === '$thumbnail' ? '$thumbnail' : col.source + '_' + getObjectValue(content.entry, col.source)">
-            <div *ngSwitchCase="'image'" class="cell-value">
-                <img class="thumbnail" [src]="getCellValue(content, col)">
-            </div>
-            <div *ngSwitchCase="'date'" class="cell-value">
-                <span>{{ getCellValue(content, col) }}</span>
-            </div>
-            <div *ngSwitchDefault class="cell-value">
-                <span>{{ getCellValue(content, col) }}</span>
-            </div>
-        </td>
-
-        <!-- Actions: folder -->
-        <td *ngIf="content.entry.isFolder">
-            <!-- action buttons -->
-            <button class="mdl-button mdl-js-button mdl-button--icon"
-                    *ngFor="let action of getContentActions('folder', 'button')"
-                    (click)="executeContentAction(content, action)">
-                <i class="material-icons">{{action.icon}}</i>
-            </button>
-
-            <!-- action menu -->
-            <button [id]="'folder_action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
-                <i class="material-icons">more_vert</i>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                [attr.for]="'folder_action_menu_' + idx">
-                <li class="mdl-menu__item"
-                    [attr.data-automation-id]="action.title"
-                    *ngFor="let action of getContentActions('folder', 'menu')"
-                    (click)="executeContentAction(content, action)">
-                    {{action.title}}
-                </li>
-            </ul>
-        </td>
-        <!-- Actions: document -->
-        <td *ngIf="!content.entry.isFolder">
-            <!-- action buttons -->
-            <button class="mdl-button mdl-js-button mdl-button--icon"
-                    *ngFor="let action of getContentActions('document', 'button')"
-                    (click)="executeContentAction(content, action)">
-                <i class="material-icons">{{action.icon}}</i>
-            </button>
-
-            <!-- action menu -->
-            <button [id]="'document_action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
-                <i class="material-icons">more_vert</i>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                [attr.for]="'document_action_menu_' + idx">
-                <li class="mdl-menu__item"
-                    [attr.data-automation-id]="action.title"
-                    *ngFor="let action of getContentActions('document', 'menu')"
-                    (click)="executeContentAction(content, action)">
-                    {{action.title}}
-                </li>
-            </ul>
-        </td>
-    </tr>
-
-    <tr *ngIf="folder?.list?.entries?.length === 0">
-        <td class="mdl-data-table__cell--non-numeric empty-folder-content"
-            [attr.colspan]="1 + columns?.length">
-            <template *ngIf="emptyFolderTemplate"
-                      ngFor [ngForOf]="[folder]"
-                      [ngForTemplate]="emptyFolderTemplate">
-            </template>
-            <img *ngIf="!emptyFolderTemplate"
-                 [src]="baseComponentPath + '/img/document-list.empty-folder.png'">
-        </td>
-    </tr>
-
-    </tbody>
-</table>
+<alfresco-datatable
+    [data]="data"
+    [actions]="contentActions"
+    [multiselect]="multiselect"
+    (showRowContextMenu)="onShowRowContextMenu($event)"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)"
+    (rowClick)="onRowClick($event)"
+    (rowDblClick)="onRowDblClick($event)">
+    <no-content-template>
+        <template>
+            <img [src]="baseComponentPath + '/img/document-list.empty-folder.png'">
+        </template>
+    </no-content-template>
+</alfresco-datatable>

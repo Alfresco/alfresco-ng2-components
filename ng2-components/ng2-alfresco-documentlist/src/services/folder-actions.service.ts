@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import {ContentActionHandler} from '../models/content-action.model';
-import {AlfrescoService} from './alfresco.service';
+import { Injectable } from '@angular/core';
+import { ContentActionHandler } from '../models/content-action.model';
+import { DocumentListService } from './document-list.service';
 
 @Injectable()
 export class FolderActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(private _alfrescoService?: AlfrescoService) {
+    constructor(private documentListService?: DocumentListService) {
         this.setupActionHandlers();
     }
 
@@ -45,7 +45,7 @@ export class FolderActionsService {
     }
 
     canExecuteAction(obj: any): boolean {
-        return this._alfrescoService && obj && obj.entry.isFolder === true;
+        return this.documentListService && obj && obj.entry.isFolder === true;
     }
 
     private setupActionHandlers() {
@@ -68,7 +68,7 @@ export class FolderActionsService {
 
     private deleteNode(obj: any, target?: any) {
         if (this.canExecuteAction(obj) && obj.entry && obj.entry.id) {
-            this._alfrescoService.deleteNode(obj.entry.id).subscribe(() => {
+            this.documentListService.deleteNode(obj.entry.id).subscribe(() => {
                 if (target && typeof target.reload === 'function') {
                     target.reload();
                 }

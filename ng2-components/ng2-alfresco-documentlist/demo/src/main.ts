@@ -38,9 +38,9 @@ import {
     selector: 'alfresco-documentlist-demo',
     template: `
         <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken();doclist.reload()" [(ngModel)]="token"><br>
+               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
                <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();doclist.reload()" [(ngModel)]="host"><br><br>
+               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="host"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
                     Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
                     operations.
@@ -52,28 +52,40 @@ import {
                     [currentFolderPath]="currentPath"
                     [target]="documentList">
             </alfresco-document-list-breadcrumb>
-            <alfresco-document-list  #doclist
+            <alfresco-document-list
                     #documentList
                     [currentFolderPath]="currentPath"
+                    [contextMenuActions]="true"
+                    [contentActions]="true"
+                    [multiselect]="true"
                     (folderChange)="onFolderChanged($event)">
-
+                <!--
+                <empty-folder-content>
+                    <template>
+                        <h1>Sorry, no content here</h1>
+                    </template>
+                </empty-folder-content>
+                -->
                 <content-columns>
-                    <content-column source="$thumbnail" type="image"></content-column>
+                    <content-column key="$thumbnail" type="image"></content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                            source="name"
+                            key="name"
+                            sortable="true"
                             class="full-width ellipsis-cell">
                     </content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                            source="createdByUser.displayName"
+                            key="createdByUser.displayName"
+                            sortable="true"
                             class="desktop-only">
                     </content-column>
                     <content-column
                             title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                            source="createdAt"
+                            key="createdAt"
                             type="date"
                             format="medium"
+                            sortable="true"
                             class="desktop-only">
                     </content-column>
                 </content-columns>
@@ -81,25 +93,16 @@ import {
                     <!-- folder actions -->
                     <content-action
                             target="folder"
-                            type="button"
-                            icon="delete"
-                            handler="system1">
-                    </content-action>
-                    <content-action
-                            target="folder"
-                            type="menu"
                             title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.SYSTEM_1' | translate}}"
                             handler="system1">
                     </content-action>
                     <content-action
                             target="folder"
-                            type="menu"
                             title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
                             (execute)="myFolderAction1($event)">
                     </content-action>
                     <content-action
                             target="folder"
-                            type="menu"
                             title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
                             handler="delete">
                     </content-action>
@@ -107,37 +110,21 @@ import {
                     <!-- document actions -->
                     <content-action
                             target="document"
-                            type="button"
-                            icon="account_circle"
-                            handler="my-handler">
-                    </content-action>
-                    <content-action
-                            target="document"
-                            type="button"
-                            icon="cloud_download"
-                            handler="download">
-                    </content-action>
-                    <content-action
-                            target="document"
-                            type="menu"
                             title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
                             handler="download">
                     </content-action>
                     <content-action
                             target="document"
-                            type="menu"
                             title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.SYSTEM_2' | translate}}"
                             handler="system2">
                     </content-action>
                     <content-action
                             target="document"
-                            type="menu"
                             title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
                             (execute)="myCustomAction1($event)">
                     </content-action>
                     <content-action
                             target="document"
-                            type="menu"
                             title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                             handler="delete">
                     </content-action>
@@ -156,7 +143,8 @@ class DocumentListDemo implements OnInit {
     currentPath: string = '/';
     authenticated: boolean;
 
-    public host: string = 'http://devproducts-platform.alfresco.me';
+    // host: string = 'http://devproducts-platform.alfresco.me';
+    host: string = 'http://127.0.0.1:8080';
 
     token: string;
 
@@ -194,11 +182,13 @@ class DocumentListDemo implements OnInit {
     }
 
     myCustomAction1(event) {
-        alert('Custom document action for ' + event.value.displayName);
+        let entry = event.value.entry;
+        alert(`Custom document action for ${entry.name}`);
     }
 
     myFolderAction1(event) {
-        alert('Custom folder action for ' + event.value.displayName);
+        let entry = event.value.entry;
+        alert(`Custom folder action for ${entry.name}`);
     }
 
     login() {

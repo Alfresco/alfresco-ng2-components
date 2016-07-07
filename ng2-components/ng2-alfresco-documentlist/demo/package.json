@@ -9,7 +9,7 @@
       "typings": "typings install",
       "postinstall": "npm run typings && npm run build",
       "start": "concurrently \"npm run build:w\" \"npm run server\" ",
-      "server": "wsrv -o -s",
+      "server": "wsrv -o -s -l",
       "build": "npm run tslint && rimraf dist && tsc",
       "build:w": "npm run tslint && rimraf dist && tsc -w",
       "tslint": "npm run tslint-src && npm run tslint-root",
@@ -41,7 +41,8 @@
 
       "alfresco-js-api": "^0.1.0",
       "ng2-alfresco-core": "^0.1.36",
-      "ng2-alfresco-documentlist": "^0.1.34"
+      "ng2-alfresco-documentlist": "^0.1.34",
+      "ng2-alfresco-datatable": "^0.1.17"
     },
     "devDependencies": {
       "concurrently": "2.0.0",

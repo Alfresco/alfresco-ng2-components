@@ -16,7 +16,6 @@
  */
 
 export interface DataTableAdapter {
-
     getRows(): Array<DataRow>;
     setRows(rows: Array<DataRow>): void;
     getColumns(): Array<DataColumn>;
@@ -25,33 +24,32 @@ export interface DataTableAdapter {
     getSorting(): DataSorting;
     setSorting(sorting: DataSorting): void;
     sort(key?: string, direction?: string): void;
-
 }
 
 export interface DataRow {
-
     isSelected: boolean;
     hasValue(key: string): boolean;
     getValue(key: string): any;
-
 }
 
 export interface DataColumn {
-
     key: string;
-    type: string; // text|image
+    type: string; // text|image|date
+    format?: string;
     sortable?: boolean;
     title?: string;
     srTitle?: string;
     cssClass?: string;
-
 }
 
 export class DataSorting {
-
     constructor(
         public key?: string,
         public direction?: string) {
     }
+}
 
+export interface DataRowEvent {
+    value?: DataRow;
+    event?: Event;
 }

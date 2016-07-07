@@ -10,6 +10,8 @@
     <alfresco-document-list
             #documentList
             [currentFolderPath]="currentPath"
+            [contextMenuActions]="true"
+            [contentActions]="true"
             (preview)="showFile($event)"
             (folderChange)="onFolderChanged($event)">
         <!--
@@ -20,10 +22,11 @@
         </empty-folder-content>
         -->
         <content-columns>
-            <content-column source="$thumbnail" type="image"></content-column>
+            <content-column key="$thumbnail" type="image"></content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                    source="name"
+                    key="name"
+                    sortable="true"
                     class="full-width ellipsis-cell">
             </content-column>
             <!--
@@ -34,14 +37,16 @@
             -->
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                    source="createdByUser.displayName"
+                    key="createdByUser.displayName"
+                    sortable="true"
                     class="desktop-only">
             </content-column>
             <content-column
                     title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                    source="createdAt"
+                    key="createdAt"
                     type="date"
                     format="medium"
+                    sortable="true"
                     class="desktop-only">
             </content-column>
         </content-columns>
@@ -50,25 +55,16 @@
             <!-- folder actions -->
             <content-action
                     target="folder"
-                    type="button"
-                    icon="delete"
-                    handler="system1">
-            </content-action>
-            <content-action
-                    target="folder"
-                    type="menu"
                     title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.SYSTEM_1' | translate}}"
                     handler="system1">
             </content-action>
             <content-action
                     target="folder"
-                    type="menu"
                     title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
                     (execute)="myFolderAction1($event)">
             </content-action>
             <content-action
                     target="folder"
-                    type="menu"
                     title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
                     handler="delete">
             </content-action>
@@ -76,37 +72,21 @@
             <!-- document actions -->
             <content-action
                     target="document"
-                    type="button"
-                    icon="account_circle"
-                    handler="my-handler">
-            </content-action>
-            <content-action
-                    target="document"
-                    type="button"
-                    icon="cloud_download"
-                    handler="download">
-            </content-action>
-            <content-action
-                    target="document"
-                    type="menu"
                     title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
                     handler="download">
             </content-action>
             <content-action
                     target="document"
-                    type="menu"
                     title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.SYSTEM_2' | translate}}"
                     handler="system2">
             </content-action>
             <content-action
                     target="document"
-                    type="menu"
                     title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
                     (execute)="myCustomAction1($event)">
             </content-action>
             <content-action
                     target="document"
-                    type="menu"
                     title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                     handler="delete">
             </content-action>

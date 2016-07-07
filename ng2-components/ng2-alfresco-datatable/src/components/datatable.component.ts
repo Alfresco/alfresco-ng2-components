@@ -22,14 +22,18 @@ import {
     Input,
     Output,
     EventEmitter,
-    AfterViewChecked
+    AfterViewChecked,
+    TemplateRef
 } from '@angular/core';
+
+import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 
 import {
     DataTableAdapter,
     DataRow,
     DataColumn,
-    DataSorting
+    DataSorting,
+    DataRowEvent
 } from './../data/datatable-adapter';
 import { ObjectDataTableAdapter } from '../data/object-datatable-adapter';
 
@@ -40,7 +44,8 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
-    templateUrl: './datatable.component.html'
+    templateUrl: './datatable.component.html',
+    directives: [CONTEXT_MENU_DIRECTIVES]
 })
 export class DataTableComponent implements OnInit, AfterViewChecked {
 
@@ -54,12 +59,23 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     actions: boolean = false;
 
     @Output()
-    rowClick: EventEmitter<any> = new EventEmitter();
+    rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
     @Output()
-    rowDblClick: EventEmitter<any> = new EventEmitter();
+    rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
+
+    noContentTemplate: TemplateRef<any>;
 
     isSelectAllChecked: boolean = false;
+
+    @Output()
+    showRowContextMenu: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    showRowActionsMenu: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    executeRowAction: EventEmitter<any> = new EventEmitter();
 
     // TODO: left for reference, will be removed during future revisions
     constructor(/*private _ngZone?: NgZone*/) {
@@ -84,7 +100,8 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         }
 
         this.rowClick.emit({
-            value: row
+            value: row,
+            event: e
         });
     }
 
@@ -94,7 +111,8 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         }
 
         this.rowDblClick.emit({
-            value: row
+            value: row,
+            event: e
         });
     }
 
@@ -134,14 +152,16 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
     isIconValue(row: DataRow, col: DataColumn) {
         if (row && col) {
-            return row.getValue(col.key).startsWith('material-icons://');
+            let value = row.getValue(col.key);
+            return value && value.startsWith('material-icons://');
         }
         return false;
     }
 
     asIconValue(row: DataRow, col: DataColumn) {
         if (this.isIconValue(row, col)) {
-            return row.getValue(col.key).replace('material-icons://', '');
+            let value = row.getValue(col.key) || '';
+            return value.replace('material-icons://', '');
         }
         return null;
     }
@@ -152,5 +172,22 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
             return sorting && sorting.key === col.key && sorting.direction === direction;
         }
         return false;
+    }
+
+    getContextMenuActions(row: DataRow, col: DataColumn) {
+        let args = { row: row, col: col, actions: [] };
+        this.showRowContextMenu.emit({ args: args });
+        return args.actions;
+    }
+
+    getRowActions(row: DataRow, col: DataColumn) {
+        let args = { row: row, col: col, actions: [] };
+        this.showRowActionsMenu.emit({ args: args });
+        return args.actions;
+    }
+
+    onExecuteRowAction(row: DataRow, action: any) {
+        let args = { row: row, action: action };
+        this.executeRowAction.emit({ args: args });
     }
 }
