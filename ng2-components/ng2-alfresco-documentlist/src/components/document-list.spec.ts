@@ -75,47 +75,6 @@ describe('DocumentList', () => {
         expect(columns[0]).toBe(column);
     });
 
-    // TODO: move to data adapter
-    /*
-    it('should fetch folder', () => {
-        let folder = {
-            'nodeRef': 'workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28'
-        };
-        documentListService.folderToReturn = folder;
-        documentList.ngOnInit();
-
-        expect(documentList.folder).toBe(folder);
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should return thumbnail url for a file when thumbnails turned on', () => {
-        let url = 'URL';
-        spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        let node = new FileNode();
-        documentList.thumbnails = true;
-        let result = documentList.getThumbnailUrl(node);
-
-        expect(result).toBe(url);
-        expect(documentListService.getDocumentThumbnailUrl).toHaveBeenCalled();
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should return a null thumbnail url for a null item', () => {
-        let url = 'URL';
-        spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        let result = documentList.getThumbnailUrl(null);
-
-        expect(result).toBeNull();
-        expect(documentListService.getDocumentThumbnailUrl).not.toHaveBeenCalled();
-    });
-    */
-
     it('should execute action with node', () => {
         let node = new FileNode();
         let action = new ContentActionModel();
@@ -459,26 +418,6 @@ describe('DocumentList', () => {
 
     // TODO: move to data adapter
     /*
-    it('should generate thumbnail for unknown content', () => {
-        documentList.baseComponentPath = '/root';
-        let node = new FileNode();
-        node.entry.isFile = false;
-
-        expect(documentList.getThumbnailUrl(node)).toBe('/root/img/ft_ic_miscellaneous.svg');
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should generate folder icon path', () => {
-        documentList.baseComponentPath = '/root';
-        let folder = new FolderNode();
-        expect(documentList.getThumbnailUrl(folder)).toBe('/root/img/ft_ic_folder.svg');
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
     it('should generate file icon path based on mime type', () => {
         let fileName = 'custom-icon.svg';
         spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(fileName);
@@ -538,43 +477,6 @@ describe('DocumentList', () => {
 
         let file = new FileNode();
         expect(list.getThumbnailUrl(file)).toBeNull();
-    });
-    */
-
-    // TODO: move to DataTable
-    /*
-    it('should convert cell value to formatted date', () => {
-
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
-        let dateValue = 'Jul 15, 2015, 9:43:11 PM';
-
-        let file = new FileNode();
-        file.entry.createdAt = rawValue;
-
-        let col = new ContentColumnModel();
-        col.source = 'createdAt';
-        col.type = 'date';
-        col.format = 'medium'; // Jul 15, 2015, 9:43:11 PM
-
-        let value = documentList.getCellValue(file, col);
-        expect(value).toBe(dateValue);
-    });
-    */
-
-    // TODO: move to DataTable
-    /*
-    it('should return date value as string', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
-
-        let file = new FileNode();
-        file.entry.createdAt = rawValue;
-
-        let col = new ContentColumnModel();
-        col.source = 'createdAt';
-        col.type = 'string';
-
-        let value = documentList.getCellValue(file, col);
-        expect(value).toBe(rawValue);
     });
     */
 
@@ -661,53 +563,6 @@ describe('DocumentList', () => {
         expect(actions).toBeNull();
         expect(documentList.getNodeActions).toHaveBeenCalled();
     });
-
-    /*
-    it('should update error message when folder content display fails', () => {
-        let error = 'My Error';
-        documentListService.getFolderReject = true;
-        documentListService.getFolderRejectError = error;
-
-        documentList.displayFolderContent('/some/path');
-        expect(documentList.errorMessage).toBe(error);
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should log error when having date conversion issues', () => {
-
-        let value = '<wrong-date>';
-        let file = new FileNode();
-        file.entry.createdAt = value;
-
-        let col = new ContentColumnModel({
-            source: 'createdAt',
-            type: 'date',
-            format: 'medium'
-        });
-
-        spyOn(console, 'error').and.stub();
-
-        let result = documentList.getCellValue(file, col);
-
-        expect(result).toBe(value);
-        expect(console.error).toHaveBeenCalledWith(`DocumentList: error parsing date ${value} to format ${col.format}`);
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should convert thumbnail if column source defined', () => {
-        let file = new FileNode();
-        let col = new ContentColumnModel({
-            source: 'name',
-            type: 'image'
-        });
-
-        expect(documentList.getCellValue(file, col)).toBe(file.entry.name);
-    });
-    */
 
     it('should require current folder path to reload', () => {
 

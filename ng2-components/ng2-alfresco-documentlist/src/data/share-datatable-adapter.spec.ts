@@ -15,15 +15,22 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect
-} from '@angular/core/testing';
+import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
-import { ShareDataTableAdapter } from './share-datatable-adapter';
+
+import { DocumentListServiceMock } from './../assets/document-list.service.mock';
+import { ShareDataTableAdapter, ShareDataRow } from './share-datatable-adapter';
+import { FileNode, FolderNode, PageNode } from './../assets/document-library.model.mock';
 
 describe('ShareDataTableAdapter', () => {
+
+    let basePath: string;
+    let documentListService: DocumentListServiceMock;
+
+    beforeEach(() => {
+        basePath = '/root';
+        documentListService = new DocumentListServiceMock();
+    });
 
     it('should setup rows and columns with constructor', () => {
         let schema = [<DataColumn> {}];
@@ -83,6 +90,245 @@ describe('ShareDataTableAdapter', () => {
         adapter.setRows(rows);
 
         expect(adapter.sort).toHaveBeenCalled();
+    });
+
+    it('should fail when getting value for missing row', () => {
+        let adapter = new ShareDataTableAdapter(null, null, null);
+        let check = () => { return adapter.getValue(null, <DataColumn>{}); };
+        expect(check).toThrowError(ShareDataTableAdapter.ERR_ROW_NOT_FOUND);
+    });
+
+    it('should fail when getting value for missing column', () => {
+        let adapter = new ShareDataTableAdapter(null, null, null);
+        let check = () => { return adapter.getValue(<DataRow>{}, null); };
+        expect(check).toThrowError(ShareDataTableAdapter.ERR_COL_NOT_FOUND);
+    });
+
+    it('should require path to load data', () => {
+        spyOn(documentListService, 'getFolder').and.callThrough();
+
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        adapter.loadPath(null);
+
+        expect(documentListService.getFolder).not.toHaveBeenCalled();
+    });
+
+    it('should load data for path', () => {
+        let folder = new FolderNode();
+        let path = '/some/path';
+        let page = new PageNode([folder]);
+
+        spyOn(documentListService, 'getFolder').and.callThrough();
+        documentListService.getFolderResult = page;
+
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        adapter.loadPath(path);
+
+        expect(documentListService.getFolder).toHaveBeenCalledWith(path);
+
+        let rows = adapter.getRows();
+        expect(rows.length).toBe(1);
+        expect((<ShareDataRow>rows[0]).node).toBe(folder);
+    });
+
+    it('should covert cell value to formatted date', () => {
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let dateValue = 'Jul 15, 2015, 9:43:11 PM';
+
+        let file = new FileNode();
+        file.entry.createdAt = rawValue;
+
+        let col = <DataColumn> {
+            key: 'createdAt',
+            type: 'date',
+            format: 'medium' // Jul 15, 2015, 9:43:11 PM
+        };
+
+        let row = new ShareDataRow(file);
+        let adapter = new ShareDataTableAdapter(null, null, null);
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(dateValue);
+    });
+
+    it('should use default date format as fallback', () => {
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let dateValue = 'Jul 15, 2015, 9:43:11 PM';
+
+        let file = new FileNode();
+        file.entry.createdAt = rawValue;
+
+        let col = <DataColumn> {
+            key: 'createdAt',
+            type: 'date',
+            format: null
+        };
+
+        let row = new ShareDataRow(file);
+        let adapter = new ShareDataTableAdapter(null, null, null);
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(dateValue);
+    });
+
+    it('should return date value as string', () => {
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+
+        let file = new FileNode();
+        file.entry.createdAt = rawValue;
+
+        let col = <DataColumn> {
+            key: 'createdAt',
+            type: 'string'
+        };
+
+        let row = new ShareDataRow(file);
+        let adapter = new ShareDataTableAdapter(null, null, null);
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(rawValue);
+    });
+
+    it('should log error when having date conversion issues', () => {
+        let dateValue = '[wrong-date]';
+        let file = new FileNode();
+        file.entry.createdAt = dateValue;
+
+        let col = <DataColumn> {
+            key: 'createdAt',
+            type: 'date',
+            format: 'medium'
+        };
+
+        let row = new ShareDataRow(file);
+        let adapter = new ShareDataTableAdapter(null, null, null);
+        spyOn(console, 'error').and.stub();
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(dateValue);
+        expect(console.error).toHaveBeenCalledWith(`Error parsing date ${value} to format ${col.format}`);
+    });
+
+    it('should generate fallback icon for a file thumbnail', () => {
+        let adapter = new ShareDataTableAdapter(null, basePath, null);
+
+        let row = new ShareDataRow(new FileNode());
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(`${basePath}/img/ft_ic_miscellaneous.svg`);
+    });
+
+    it('should return image value unmodified', () => {
+        let imageUrl = 'http://<address>';
+
+        let file = new FileNode();
+        file.entry['icon'] = imageUrl;
+
+
+        let adapter = new ShareDataTableAdapter(null, basePath, null);
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: 'icon' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(imageUrl);
+    });
+
+    it('should resolve folder icon', () => {
+        let adapter = new ShareDataTableAdapter(null, basePath, null);
+
+        let row = new ShareDataRow(new FolderNode());
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(`${basePath}/img/ft_ic_folder.svg`);
+    });
+
+    it('should resolve file thumbnail', () => {
+        let imageUrl: 'http://<addresss>';
+        spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
+
+        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+        adapter.thumbnails = true;
+
+        let file = new FileNode();
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(imageUrl);
+        expect(documentListService.getDocumentThumbnailUrl).toHaveBeenCalledWith(file);
+    });
+
+    it('should resolve fallback file icon for unknown node', () => {
+        let adapter = new ShareDataTableAdapter(null, basePath, null);
+
+        let file = new FileNode();
+        file.entry.isFile = false;
+        file.entry.isFolder = false;
+
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(`${basePath}/img/ft_ic_miscellaneous.svg`);
+    });
+
+    it('should require document service to resolve thumbnail', () => {
+        let adapter = new ShareDataTableAdapter(null, basePath, null);
+        adapter.thumbnails = true;
+
+        let file = new FileNode();
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBeNull();
+    });
+
+    it('should log load error', () => {
+        let error = 'My Error';
+        documentListService.getFolderReject = true;
+        documentListService.getFolderRejectError = error;
+
+        spyOn(console, 'error').and.stub();
+        spyOn(documentListService, 'getFolder').and.callThrough();
+
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        adapter.loadPath('/some/path');
+
+        expect(documentListService.getFolder).toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalledWith(error);
+    });
+
+
+});
+
+
+describe('ShareDataRow', () => {
+
+    it('should wrap node', () => {
+        let file = new FileNode();
+        let row = new ShareDataRow(file);
+        expect(row.node).toBe(file);
+    });
+
+    it('should require object source', () => {
+        expect(() => { return new ShareDataRow(null); }).toThrowError(ShareDataRow.ERR_OBJECT_NOT_FOUND);
+    });
+
+    it('should resolve value from node entry', () => {
+        let file = new FileNode('test');
+        let row = new ShareDataRow(file);
+        expect(row.getValue('name')).toBe('test');
+    });
+
+    it('should check value', () => {
+        let file = new FileNode('test');
+        let row = new ShareDataRow(file);
+
+        expect(row.hasValue('name')).toBeTruthy();
+        expect(row.hasValue('missing')).toBeFalsy();
     });
 
 });
