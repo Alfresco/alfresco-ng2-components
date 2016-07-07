@@ -18,8 +18,7 @@
 import { DatePipe } from '@angular/common';
 import {
     DataTableAdapter,
-    DataRow, DataColumn, DataSorting,
-    ObjectDataColumn
+    DataRow, DataColumn, DataSorting
 } from 'ng2-alfresco-datatable';
 
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
@@ -37,13 +36,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 private basePath: string,
                 schema: DataColumn[]) {
         this.rows = [];
-        this.columns = [];
-
-        if (schema && schema.length > 0) {
-            this.columns = schema.map(item => {
-                return new ObjectDataColumn(item);
-            });
-        }
+        this.columns = schema || [];
     }
 
     getRows(): Array<DataRow> {
