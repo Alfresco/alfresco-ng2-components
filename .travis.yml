@@ -31,7 +31,7 @@ env:
     - MODULE=ng2-alfresco-viewer
 
 before_script:
-  - cd ng2-components/$MODULE; npm install; npm link ng2-alfresco-core; npm run travis
+  - cd ng2-components/$MODULE; npm install; npm run travis
   - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
