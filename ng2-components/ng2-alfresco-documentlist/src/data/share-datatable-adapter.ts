@@ -16,6 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
+import { ObjectUtils } from 'ng2-alfresco-core';
 import {
     DataTableAdapter,
     DataRow, DataColumn, DataSorting
@@ -198,40 +199,8 @@ export class ShareDataRow implements DataRow {
         }
     }
 
-    /**
-     * Gets a value from an object by composed key
-     * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
-     * @param target
-     * @param key
-     * @returns {string}
-     */
-    getObjectValue(target: any, key: string): any {
-
-        if (!target) {
-            return undefined;
-        }
-
-        let keys = key.split('.');
-        key = '';
-
-        do {
-            key += keys.shift();
-            let value = target[key];
-            if (value !== undefined && (typeof value === 'object' || !keys.length)) {
-                target = value;
-                key = '';
-            } else if (!keys.length) {
-                target = undefined;
-            } else {
-                key += '.';
-            }
-        } while (keys.length);
-
-        return target;
-    }
-
     getValue(key: string): any {
-        return this.getObjectValue(this.obj.entry, key);
+        return ObjectUtils.getValue(this.obj.entry, key);
     }
 
     hasValue(key: string): boolean {

@@ -347,11 +347,6 @@ describe('ObjectDataRow', () => {
         expect(row.getValue('some.missing.property')).toBeUndefined();
     });
 
-    it('should return undefined when getting value for missing target', () => {
-        let row = new ObjectDataRow({});
-        expect(row.getObjectValue(null, 'id')).toBeUndefined();
-    });
-
     it('should check top level value exists', () => {
         let row = new ObjectDataRow({ id: 1 });
 
