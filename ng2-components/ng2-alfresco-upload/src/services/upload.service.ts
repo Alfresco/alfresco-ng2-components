@@ -20,7 +20,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 declare let AlfrescoApi: any;
@@ -50,7 +50,8 @@ export class UploadService {
 
     public totalCompleted: number = 0;
 
-    constructor(private settings: AlfrescoSettingsService) {
+    constructor(private settings: AlfrescoSettingsService,
+                private authService: AlfrescoAuthenticationService) {
         console.log('UploadService constructor');
         this.filesUpload$ = new Observable<FileModel[]>(observer =>  this._filesUploadObserver = observer).share();
         this.totalCompleted$ = new Observable<number>(observer =>  this._totalCompletedObserver = observer).share();
@@ -93,19 +94,11 @@ export class UploadService {
     }
 
     /**
-     * Get the token from the local storage
-     * @returns {any}
-     */
-    private getAlfrescoTicket(): string {
-        return localStorage.getItem('token');
-    }
-
-    /**
      * Get the alfresco client
      * @returns {AlfrescoApi.ApiClient}
      */
     private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.getAlfrescoTicket());
+        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
     }
 
     /**

@@ -18,7 +18,7 @@
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { UploadService } from './upload.service';
 import { FileModel } from './../models/file.model';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
 
@@ -30,8 +30,9 @@ let errorFn = jasmine.createSpy('error');
 
 class MockUploadService extends UploadService {
 
-    constructor(settings: AlfrescoSettingsService) {
-        super(settings);
+    constructor(settings: AlfrescoSettingsService,
+                authService: AlfrescoAuthenticationService) {
+        super(settings, authService);
     }
 
     createXMLHttpRequestInstance() {
@@ -66,6 +67,7 @@ describe('AlfrescoUploadService', () => {
     beforeEachProviders(() => {
         return [
             { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
             { provide: UploadService, useClass: MockUploadService }
         ];
     });

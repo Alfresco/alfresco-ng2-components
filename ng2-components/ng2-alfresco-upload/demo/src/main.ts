@@ -83,8 +83,8 @@ export class MyDemoApp implements OnInit {
     constructor(private authService: AlfrescoAuthenticationService, private alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = this.host;
 
-        if (localStorage.getItem('token')) {
-            this.token = localStorage.getItem('token');
+        if (this.authService.getToken()) {
+            this.token = this.authService.getToken();
         }
     }
 

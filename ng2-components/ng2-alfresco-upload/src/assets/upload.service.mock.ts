@@ -18,15 +18,16 @@
 import { Observable } from 'rxjs/Observable';
 import { FileModel } from '../models/file.model';
 import { UploadService } from '../services/upload.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 export class UploadServiceMock extends UploadService {
 
     filesUpload$: Observable<any>;
     totalCompleted$: Observable<number>;
 
-    constructor(settings: AlfrescoSettingsService) {
-        super(settings);
+    constructor(settings: AlfrescoSettingsService,
+                authService: AlfrescoAuthenticationService) {
+        super(settings, authService);
     }
 
     public setOptions(options: any): void {

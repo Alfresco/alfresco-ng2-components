@@ -156,8 +156,8 @@ class DocumentListDemo implements OnInit {
 
         alfrescoSettingsService.host = this.host;
 
-        if (localStorage.getItem('token')) {
-            this.token = localStorage.getItem('token');
+        if (this.authService.getToken()) {
+            this.token = this.authService.getToken();
         }
 
         translation.addTranslationFolder();
