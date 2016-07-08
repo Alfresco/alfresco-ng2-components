@@ -39,7 +39,7 @@
       "material-design-lite": "1.1.3",
       "ng2-translate": "2.2.2",
 
-      "alfresco-js-api": "^0.1.0",
+      "alfresco-js-api": "0.1.0",
       "ng2-alfresco-core": "^0.1.36",
       "ng2-alfresco-documentlist": "^0.1.34"
     },
