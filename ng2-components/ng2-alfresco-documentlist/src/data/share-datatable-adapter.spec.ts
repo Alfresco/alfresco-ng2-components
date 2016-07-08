@@ -400,10 +400,6 @@ describe('ShareDataTableAdapter', () => {
         expect((<ShareDataRow> rows[0]).node).toBe(file2);
         expect((<ShareDataRow> rows[1]).node).toBe(file1);
     });
-
-    it('should sort folders', () => {
-        
-    });
 });
 
 describe('ShareDataRow', () => {
