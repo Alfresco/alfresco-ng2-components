@@ -416,87 +416,6 @@ describe('DocumentList', () => {
         expect(documentList.displayFolderContent).toHaveBeenCalled();
     });
 
-    // TODO: move to data adapter
-    /*
-    it('should generate file icon path based on mime type', () => {
-        let fileName = 'custom-icon.svg';
-        spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(fileName);
-        documentList.baseComponentPath = '/root';
-
-        let file = new FileNode();
-        file.entry.content.mimeType = 'text/plain';
-
-        expect(documentList.getThumbnailUrl(file)).toBe(`/root/img/${fileName}`);
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should fallback to default icon for missing mime type', () => {
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(null);
-        documentList.baseComponentPath = '/root';
-
-        let file = new FileNode();
-        file.entry.content.mimeType = null;
-
-        expect(documentList.getThumbnailUrl(file)).toBe('/root/img/ft_ic_miscellaneous.svg');
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should fallback to default icon for unknown mime type', () => {
-        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(null);
-        documentList.baseComponentPath = '/root';
-
-        let file = new FileNode();
-        file.entry.content.mimeType = 'text/plain';
-
-        expect(documentList.getThumbnailUrl(file)).toBe('/root/img/ft_ic_miscellaneous.svg');
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should resolve thumbnail url for a file', () => {
-        let url = 'http://<some url>';
-        spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        documentList.thumbnails = true;
-
-        let file = new FileNode();
-        expect(documentList.getThumbnailUrl(file)).toBe(url);
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should return no thumbnail url with missing service', () => {
-        let list = new DocumentList(null, null);
-        list.thumbnails = true;
-
-        let file = new FileNode();
-        expect(list.getThumbnailUrl(file)).toBeNull();
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should convert cell value to thumbnail', () => {
-        let url = 'http://<address>';
-        spyOn(documentList, 'getThumbnailUrl').and.returnValue(url);
-
-        let file = new FileNode();
-
-        let col = new ContentColumnModel();
-        col.source = '$thumbnail';
-        col.type = 'image';
-
-        let value = documentList.getCellValue(file, col);
-        expect(value).toBe(url);
-    });
-    */
-
     it('should require path to display folder content', () => {
         spyOn(documentListService, 'getFolder').and.callThrough();
 
@@ -578,47 +497,6 @@ describe('DocumentList', () => {
 
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
     });
-
-    // TODO: move to data adapter
-    /*
-    it('should not sort empty page', () => {
-        let page = new PageNode();
-        spyOn(page.list.entries, 'sort').and.stub();
-
-        documentList.sort(page, null);
-        expect(page.list.entries.sort).not.toHaveBeenCalled();
-    });
-    */
-
-    // TODO: move to data adapter
-    /*
-    it('should put folders to top on sort', () => {
-        let folder = new FolderNode();
-        let file1 = new FileNode('file1');
-        let file2 = new FileNode('file2');
-        let page = new PageNode([file1, file2, folder]);
-
-        // asc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'name',
-            direction: 'asc'
-        }));
-
-        expect(page.list.entries[0]).toBe(folder);
-        expect(page.list.entries[1]).toBe(file1);
-        expect(page.list.entries[2]).toBe(file2);
-
-        // desc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'name',
-            direction: 'desc'
-        }));
-
-        expect(page.list.entries[0]).toBe(folder);
-        expect(page.list.entries[1]).toBe(file2);
-        expect(page.list.entries[2]).toBe(file1);
-    });
-    */
 
     // TODO: move to data adapter
     /*

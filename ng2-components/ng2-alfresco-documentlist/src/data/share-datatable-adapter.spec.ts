@@ -16,8 +16,7 @@
  */
 
 import { it, describe, expect, beforeEach } from '@angular/core/testing';
-import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
-
+import { DataColumn, DataRow, DataSorting } from 'ng2-alfresco-datatable';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ShareDataTableAdapter, ShareDataRow } from './share-datatable-adapter';
 import { FileNode, FolderNode, PageNode } from './../assets/document-library.model.mock';
@@ -209,10 +208,49 @@ describe('ShareDataTableAdapter', () => {
         expect(console.error).toHaveBeenCalledWith(`Error parsing date ${value} to format ${col.format}`);
     });
 
-    it('should generate fallback icon for a file thumbnail', () => {
-        let adapter = new ShareDataTableAdapter(null, basePath, null);
+    it('should generate fallback icon for a file thumbnail with unknown mime type', () => {
+        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
 
-        let row = new ShareDataRow(new FileNode());
+        let file = new FileNode('file', 'wrong-mime');
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(`${basePath}/img/ft_ic_miscellaneous.svg`);
+    });
+
+    it('should generate fallback icon for a file thumbnail with missing mime type', () => {
+        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+
+        let file = new FileNode();
+        file.entry.content.mimeType = null;
+
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(`${basePath}/img/ft_ic_miscellaneous.svg`);
+    });
+
+    it('should generate fallback icon for a file with no content entry', () => {
+        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+
+        let file = new FileNode();
+        file.entry.content = null;
+
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> { type: 'image', key: '$thumbnail' };
+
+        let value = adapter.getValue(row, col);
+        expect(value).toBe(`${basePath}/img/ft_ic_miscellaneous.svg`);
+    });
+
+    it('should generate fallback icon when document service fails to find one', () => {
+        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(null);
+        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+
+        let file = new FileNode();
+        let row = new ShareDataRow(file);
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
@@ -301,9 +339,72 @@ describe('ShareDataTableAdapter', () => {
         expect(console.error).toHaveBeenCalledWith(error);
     });
 
+    it('should generate file icon path based on mime type', () => {
+        let fileName = 'custom-icon.svg';
+        spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(fileName);
 
+        let file = new FileNode('file1', 'text/plain');
+        let row = new ShareDataRow(file);
+        let col = <DataColumn> {type: 'image', key: '$thumbnail'};
+
+        let adapter = new ShareDataTableAdapter(documentListService, '/root', null);
+        let value = adapter.getValue(row, col);
+
+        expect(value).toBe(`/root/img/${fileName}`);
+        expect(documentListService.getMimeTypeIcon).toHaveBeenCalled();
+    });
+
+    it('should put folders on top upon sort', () => {
+        let file1 = new FileNode('file1');
+        let file2 = new FileNode('file2');
+        let folder = new FolderNode();
+
+        let col = <DataColumn> { key: 'name' };
+        let adapter = new ShareDataTableAdapter(null, null, [col]);
+        adapter.setSorting(new DataSorting('name', 'asc'));
+
+        adapter.setRows([
+            new ShareDataRow(file2),
+            new ShareDataRow(file1),
+            new ShareDataRow(folder)
+        ]);
+
+        let sorted = adapter.getRows();
+        expect((<ShareDataRow> sorted[0]).node).toBe(folder);
+        expect((<ShareDataRow> sorted[1]).node).toBe(file1);
+        expect((<ShareDataRow> sorted[2]).node).toBe(file2);
+    });
+
+    it('should sort by dates up to ms', () => {
+        let file1 = new FileNode('file1');
+        file1.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 1);
+
+        let file2 = new FileNode('file2');
+        file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
+
+        let col = <DataColumn> { key: 'dateProp' };
+        let adapter = new ShareDataTableAdapter(null, null, [col]);
+
+        adapter.setRows([
+            new ShareDataRow(file2),
+            new ShareDataRow(file1)
+        ]);
+
+        adapter.sort('dateProp', 'asc');
+
+        let rows = adapter.getRows();
+        expect((<ShareDataRow> rows[0]).node).toBe(file1);
+        expect((<ShareDataRow> rows[1]).node).toBe(file2);
+
+        adapter.sort('dateProp', 'desc');
+        expect((<ShareDataRow> rows[0]).node).toBe(file2);
+        expect((<ShareDataRow> rows[1]).node).toBe(file1);
+    });
+
+    it('should sort folders', () => {
+        
+    });
 });
-
 
 describe('ShareDataRow', () => {
 

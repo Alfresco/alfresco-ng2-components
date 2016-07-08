@@ -33,7 +33,7 @@ export class PageNode extends NodePaging {
 }
 
 export class FileNode extends MinimalNodeEntity {
-    constructor(name?: string) {
+    constructor(name?: string, mimeType?: string) {
         super();
         this.entry = new MinimalNodeEntryEntity();
         this.entry.id = 'file-id';
@@ -42,6 +42,7 @@ export class FileNode extends MinimalNodeEntity {
         this.entry.name = name;
         this.entry.path = new PathInfoEntity();
         this.entry.content = new ContentInfo();
+        this.entry.content.mimeType = mimeType || 'text/plain';
     }
 }
 

@@ -99,7 +99,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                         return null;
                     }
 
-                    if (node.entry.content && node.entry.content.mimeType) {
+                    if (node.entry.content) {
                         let mimeType = node.entry.content.mimeType;
                         if (mimeType) {
                             let icon = this.documentListService.getMimeTypeIcon(mimeType);
@@ -125,7 +125,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     setSorting(sorting: DataSorting): void {
         this.sorting = sorting;
 
-        if (sorting && sorting.key) {
+        if (sorting && sorting.key && this.rows && this.rows.length > 0) {
             this.rows.sort((a: ShareDataRow, b: ShareDataRow) => {
                 if (a.node.entry.isFolder !== b.node.entry.isFolder) {
                     return a.node.entry.isFolder ? -1 : 1;
