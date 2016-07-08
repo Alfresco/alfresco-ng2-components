@@ -16,6 +16,8 @@
  */
 
 import { Observable } from 'rxjs/Observable';
+import { NodePaging } from './../models/document-library.model';
+import { PageNode } from './document-library.model.mock';
 import { DocumentListService } from './../services/document-list.service';
 import {
     AlfrescoSettingsService,
@@ -25,7 +27,7 @@ import {
 
 export class DocumentListServiceMock extends DocumentListService {
 
-    folderToReturn: any = {};
+    getFolderResult: NodePaging = new PageNode();
     getFolderReject: boolean = false;
     getFolderRejectError: string = 'Error';
 
@@ -42,7 +44,7 @@ export class DocumentListServiceMock extends DocumentListService {
             return Observable.throw(this.getFolderRejectError);
         }
         return Observable.create(observer => {
-            observer.next(this.folderToReturn);
+            observer.next(this.getFolderResult);
             observer.complete();
         });
     }
