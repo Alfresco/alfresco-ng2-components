@@ -177,7 +177,7 @@ class DocumentListDemo implements OnInit {
         this.login();
     }
 
-    myDocumentActionHandler(obj: any) {
+    myDocumentActionHandler() {
         window.alert('my custom action handler');
     }
 

@@ -31,8 +31,7 @@ let errorFn = jasmine.createSpy('error');
 
 class MockUploadService extends UploadService {
 
-    constructor(settings: AlfrescoSettingsService,
-                authService: AlfrescoAuthenticationService) {
+    constructor(settings: AlfrescoSettingsService, authService: AlfrescoAuthenticationService) {
         super(settings, authService);
     }
 

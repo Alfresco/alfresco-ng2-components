@@ -20,7 +20,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 declare let AlfrescoApi: any;
@@ -35,8 +35,6 @@ declare let AlfrescoApi: any;
 export class UploadService {
     private _url: string = '/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children';
 
-    private _method: string = 'POST';
-    private _fieldName: string = 'filedata';
     private _formFields: Object = {};
 
     private _queue: FileModel[] = [];
@@ -50,12 +48,10 @@ export class UploadService {
 
     public totalCompleted: number = 0;
 
-    constructor(private settings: AlfrescoSettingsService,
-                private authService: AlfrescoAuthenticationService) {
-        console.log('UploadService constructor');
+    constructor(private settings: AlfrescoSettingsService, private authService: AlfrescoAuthenticationService) {
         this.filesUpload$ = new Observable<FileModel[]>(observer =>  this._filesUploadObserver = observer).share();
         this.totalCompleted$ = new Observable<number>(observer =>  this._totalCompletedObserver = observer).share();
-        this._alfrescoClient = this.getAlfrescoClient();
+        this._alfrescoClient = this.authService.alfrescoApi;
     }
 
     /**
@@ -94,14 +90,6 @@ export class UploadService {
     }
 
     /**
-     * Get the alfresco client
-     * @returns {AlfrescoApi.ApiClient}
-     */
-    private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
-    }
-
-    /**
      * Add files to the uploading queue to be uploaded.
      *
      * @param {File[]} - files to add to the upload queue.
@@ -133,87 +121,35 @@ export class UploadService {
         });
         filesToUpload.forEach((uploadingFileModel) => {
             uploadingFileModel.setUploading();
-            this.uploadFile(uploadingFileModel, directory, elementEmit);
-        });
-    }
+            this.authService.alfrescoApi.
+            upload.uploadFile(uploadingFileModel.file, directory)
+                .on('progress', (progress: any) => {
+                    uploadingFileModel.setProgres(progress);
+                })
+                .on('abort', () => {
+                    uploadingFileModel.setAbort();
+                })
+                .on('error', () => {
+                    uploadingFileModel.setError();
+                })
+                .on('success', (data: any) => {
+                    elementEmit.emit({
+                        value: 'File uploaded'
+                    });
+                    uploadingFileModel.onFinished(
+                        data.status,
+                        data.statusText,
+                        data.response
+                    );
 
-    /**
-     * Create an XMLHttpRequest and return it
-     * @returns {XMLHttpRequest}
-     */
-    createXMLHttpRequestInstance(uploadingFileModel: any, elementEmit: EventEmitter<any>) {
-        let xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.upload.onprogress = (e) => {
-            if (e.lengthComputable) {
-                let percent = Math.round(e.loaded / e.total * 100);
-                uploadingFileModel.setProgres({
-                    total: e.total,
-                    loaded: e.loaded,
-                    percent: percent
-                });
-                if (this._filesUploadObserver) {
                     this._filesUploadObserver.next(this._queue);
-                }
-            }
-        };
-
-        xmlHttpRequest.upload.onabort = (e) => {
-            uploadingFileModel.setAbort();
-        };
-
-        xmlHttpRequest.upload.onerror = (e) => {
-            uploadingFileModel.setError();
-        };
-
-        xmlHttpRequest.onreadystatechange = () => {
-            if (xmlHttpRequest.readyState === XMLHttpRequest.DONE) {
-                elementEmit.emit({
-                    value: 'File uploaded'
-                });
-                uploadingFileModel.onFinished(
-                    xmlHttpRequest.status,
-                    xmlHttpRequest.statusText,
-                    xmlHttpRequest.response
-                );
-                this._filesUploadObserver.next(this._queue);
-                if (!uploadingFileModel.abort && !uploadingFileModel.error) {
-                    if (this._totalCompletedObserver) {
-                        this._totalCompletedObserver.next(++this.totalCompleted);
+                    if (!uploadingFileModel.abort && !uploadingFileModel.error) {
+                        if (this._totalCompletedObserver) {
+                            this._totalCompletedObserver.next(++this.totalCompleted);
+                        }
                     }
-                }
-            }
-        };
-        return xmlHttpRequest;
-    }
-
-    /**
-     * Upload a file into the directory folder, and enrich it with the xhr.
-     *
-     * @param {FileModel} - files to be uploaded.
-     *
-     */
-    uploadFile(uploadingFileModel: FileModel, directory: string, elementEmit: EventEmitter<any>): void {
-        // Configure HTTP basic authorization: basicAuth
-        let basicAuth = this._alfrescoClient.authentications['basicAuth'];
-
-        let form = new FormData();
-        form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
-        Object.keys(this._formFields).forEach((key: any) => {
-           form.append(key, this._formFields[key]);
+                });
         });
-
-        form.append('relativePath', directory);
-
-        let xmlHttpRequest = this.createXMLHttpRequestInstance(uploadingFileModel, elementEmit);
-        uploadingFileModel._xmlHttpRequest = xmlHttpRequest;
-
-        xmlHttpRequest.open(this._method, this.getHost() + this.getUrl(), true);
-        let authToken = btoa(basicAuth.username + ':' + basicAuth.password);
-        if (authToken) {
-            xmlHttpRequest.setRequestHeader('Authorization', `${basicAuth.type} ${authToken}`);
-        }
-
-        xmlHttpRequest.send(form);
     }
 
     /**

@@ -109,6 +109,7 @@ export class MyDemoApp implements OnInit {
         this.authService.login('admin', 'admin').subscribe(
             token => {
                 console.log(token);
+                this.token = token;
                 this.authenticated = true;
             },
             error => {
