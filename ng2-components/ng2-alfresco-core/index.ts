@@ -37,6 +37,8 @@ export * from './src/services/context-menu.service';
 export * from './src/components/context-menu-holder.component';
 export * from './src/components/context-menu.directive';
 
+export * from './src/utils/object-utils';
+
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
     AlfrescoAuthenticationService,
     AlfrescoContentService,

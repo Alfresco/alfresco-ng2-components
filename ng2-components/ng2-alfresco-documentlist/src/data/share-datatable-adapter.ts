@@ -16,6 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
+import { ObjectUtils } from 'ng2-alfresco-core';
 import {
     DataTableAdapter,
     DataRow, DataColumn, DataSorting
@@ -25,6 +26,11 @@ import { NodePaging, MinimalNodeEntity } from './../models/document-library.mode
 import { DocumentListService } from './../services/document-list.service';
 
 export class ShareDataTableAdapter implements DataTableAdapter {
+
+    static ERR_ROW_NOT_FOUND: string = 'Row not found';
+    static ERR_COL_NOT_FOUND: string = 'Column not found';
+
+    static DEFAULT_DATE_FORMAT: string = 'medium';
 
     private sorting: DataSorting;
     private rows: DataRow[];
@@ -58,20 +64,20 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     getValue(row: DataRow, col: DataColumn): any {
         if (!row) {
-            throw new Error('Row not found');
+            throw new Error(ShareDataTableAdapter.ERR_ROW_NOT_FOUND);
         }
         if (!col) {
-            throw new Error('Column not found');
+            throw new Error(ShareDataTableAdapter.ERR_COL_NOT_FOUND);
         }
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
             let datePipe = new DatePipe();
-            let format = col.format || 'medium';
+            let format = col.format || ShareDataTableAdapter.DEFAULT_DATE_FORMAT;
             try {
                 return datePipe.transform(value, format);
             } catch (err) {
-                console.error(`DocumentList: error parsing date ${value} to format ${format}`);
+                console.error(`Error parsing date ${value} to format ${format}`);
             }
         }
 
@@ -93,7 +99,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                         return null;
                     }
 
-                    if (node.entry.content && node.entry.content.mimeType) {
+                    if (node.entry.content) {
                         let mimeType = node.entry.content.mimeType;
                         if (mimeType) {
                             let icon = this.documentListService.getMimeTypeIcon(mimeType);
@@ -119,7 +125,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     setSorting(sorting: DataSorting): void {
         this.sorting = sorting;
 
-        if (sorting && sorting.key) {
+        if (sorting && sorting.key && this.rows && this.rows.length > 0) {
             this.rows.sort((a: ShareDataRow, b: ShareDataRow) => {
                 if (a.node.entry.isFolder !== b.node.entry.isFolder) {
                     return a.node.entry.isFolder ? -1 : 1;
@@ -167,25 +173,31 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                         let data = page.list.entries;
                         if (data && data.length > 0) {
                             rows = data.map(item => new ShareDataRow(item));
+
                             // Sort by first sortable or just first column
-                            let sortable = this.columns.filter(c => c.sortable);
-                            if (sortable.length > 0) {
-                                this.sort(sortable[0].key, 'asc');
-                            } else {
-                                this.sort(this.columns[0].key, 'asc');
+                            if (this.columns && this.columns.length > 0) {
+                                let sortable = this.columns.filter(c => c.sortable);
+                                if (sortable.length > 0) {
+                                    this.sort(sortable[0].key, 'asc');
+                                } else {
+                                    this.sort(this.columns[0].key, 'asc');
+                                }
                             }
                         }
                     }
 
                     this.rows = rows;
                 },
-                error => console.log(error));
+                error => console.error(error));
         }
     }
 
 }
 
 export class ShareDataRow implements DataRow {
+
+    static ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
+
     isSelected: boolean = false;
 
     get node(): MinimalNodeEntity {
@@ -194,44 +206,12 @@ export class ShareDataRow implements DataRow {
 
     constructor(private obj: MinimalNodeEntity) {
         if (!obj) {
-            throw new Error('Object source not found');
+            throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
-    }
-
-    /**
-     * Gets a value from an object by composed key
-     * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
-     * @param target
-     * @param key
-     * @returns {string}
-     */
-    getObjectValue(target: any, key: string): any {
-
-        if (!target) {
-            return undefined;
-        }
-
-        let keys = key.split('.');
-        key = '';
-
-        do {
-            key += keys.shift();
-            let value = target[key];
-            if (value !== undefined && (typeof value === 'object' || !keys.length)) {
-                target = value;
-                key = '';
-            } else if (!keys.length) {
-                target = undefined;
-            } else {
-                key += '.';
-            }
-        } while (keys.length);
-
-        return target;
     }
 
     getValue(key: string): any {
-        return this.getObjectValue(this.obj.entry, key);
+        return ObjectUtils.getValue(this.obj.entry, key);
     }
 
     hasValue(key: string): boolean {
