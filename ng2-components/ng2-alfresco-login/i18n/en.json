@@ -1,5 +1,6 @@
 {
   "LOGIN": {
+    "LOGO": "Alfresco",
     "LABEL": {
       "LOGIN": "Login",
       "USERNAME": "Username",
