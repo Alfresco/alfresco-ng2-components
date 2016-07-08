@@ -30,6 +30,20 @@ import {
     selector: 'my-app',
     template: `<label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+               <div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 120px; z-index: 1;">
+                <p style="width:120px;margin: 20px;">
+                    <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                        <input type="checkbox" id="switch1" class="mdl-switch__input" checked (click)="toggleECM(ecm.checked)" #ecm>
+                        <span class="mdl-switch__label">ECM</span>
+                    </label>
+                </p>
+                <p style="width:120px;margin: 20px;">
+                    <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                        <input type="checkbox" id="switch2" class="mdl-switch__input"  (click)="toggleBPM(bpm.checked)" #bpm>
+                        <span class="mdl-switch__label">BPM</span>
+                    </label>
+                </p>
+                </div>
                {{ status }}
                <hr>
 
@@ -64,6 +78,22 @@ export class AppComponent {
     myErrorMethod($event) {
         console.log('Error Login EventEmitt called with: ' + $event.value);
         this.status = $event.value;
+    }
+
+    toggleECM(checked) {
+        if (checked) {
+            this.providers[0] = 'ECM';
+        } else {
+            this.providers[0] = '';
+        }
+    }
+
+    toggleBPM(checked) {
+        if (checked) {
+            this.providers[1] = 'BPM';
+        } else {
+            this.providers[1] = '';
+        }
     }
 }
 
