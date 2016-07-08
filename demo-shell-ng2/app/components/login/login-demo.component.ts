@@ -44,16 +44,16 @@ export class LoginDemoComponent {
         console.log($event);
     }
 
-    toggleECM(value) {
-        if (value === '10') {
+    toggleECM(checked) {
+        if (checked) {
             this.providers[0] = 'ECM';
         } else {
             this.providers[0] = '';
         }
     }
 
-    toggleBPM(value) {
-        if (value === '10') {
+    toggleBPM(checked) {
+        if (checked) {
             this.providers[1] = 'BPM';
         } else {
             this.providers[1] = '';

@@ -1,11 +1,15 @@
-<div style="position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 10px; z-index: 1;">
-<p style="width:120px;margin: 10px;">
-    <small style="float: left;">ECM</small>
-    <input class="mdl-slider mdl-js-slider" type="range" (click)="toggleECM(ecm.value)" #ecm id="s1" min="0" max="10" value="10" step="10">
-</p>
-<p style="width:120px;margin: 10px;">
-    <small style="float: left;">BPM</small>
-    <input class="mdl-slider mdl-js-slider" type="range" (click)="toggleBPM(bpm.value)" #bpm id="s2" min="0" max="10" value="0" step="10">
-</p>
+<div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 10px; z-index: 1;">
+    <p style="width:120px;margin: 20px;">
+        <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" id="switch1" class="mdl-switch__input" checked (click)="toggleECM(ecm.checked)" #ecm>
+            <span class="mdl-switch__label">ECM</span>
+        </label>
+    </p>
+    <p style="width:120px;margin: 20px;">
+        <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" id="switch2" class="mdl-switch__input"  (click)="toggleBPM(bpm.checked)" #bpm>
+            <span class="mdl-switch__label">BPM</span>
+        </label>
+    </p>
 </div>
 <alfresco-login [providers]="providers" (onSuccess)="onLogin($event)" (onError)="onError($event)"></alfresco-login>
