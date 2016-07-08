@@ -83,6 +83,12 @@
     opacity: 1.0;
 }
 
+.minimize-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 :host .file-dialog .header .minimize-button {
     cursor: pointer;
     float: left;
