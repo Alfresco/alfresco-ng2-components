@@ -35,4 +35,4 @@ before_script:
 script: npm run test
 # Send coverage data to Coveralls
 after_success:
-  - "cat ./coverage/report/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose"
+  - bash <(curl -s https://codecov.io/bash)
