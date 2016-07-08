@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ContextMenuService } from './../services/context-menu.service';
 
 @Component({
@@ -52,10 +52,6 @@ import { ContextMenuService } from './../services/context-menu.service';
         }
         `
     ],
-    host:{
-        '(document:click)':'clickedOutside()'
-        // '(click)':'clickInside()'
-    },
     template: `
         <div [ngStyle]="locationCss" class="menu-container">
             <ul class="context-menu">
@@ -85,6 +81,7 @@ export class ContextMenuHolderComponent {
         };
     }
 
+    @HostListener('document:click')
     clickedOutside() {
         this.isShown = false;
     }
@@ -98,6 +95,13 @@ export class ContextMenuHolderComponent {
                 left: e.clientX,
                 top: e.clientY
             };
+        }
+    }
+
+    @HostListener('contextmenu', ['$event'])
+    onShowContextMenu(event?: MouseEvent) {
+        if (event) {
+            event.preventDefault();
         }
     }
 }
