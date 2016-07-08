@@ -32,7 +32,9 @@ import {
                <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
                {{ status }}
                <hr>
-               <alfresco-login (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>`,
+
+               <alfresco-login [providers]="providers" (onSuccess)="mySuccessMethod($event)"
+               (onError)="myErrorMethod($event)"></alfresco-login>`,
     directives: [AlfrescoLoginComponent]
 })
 export class AppComponent {
@@ -42,6 +44,8 @@ export class AppComponent {
     public token: string;
 
     public status: string = '';
+
+    public providers: string [] = ['ECM'];
 
     constructor(public auth: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
