@@ -27,19 +27,27 @@ import {
     AlfrescoContentService
 } from 'ng2-alfresco-core';
 import { FileNode } from '../assets/document-library.model.mock';
+import { ReflectiveInjector } from '@angular/core';
 import { DocumentListService } from './document-list.service';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 describe('DocumentListService', () => {
 
+    let injector;
     let service: DocumentListService;
     let settingsService: AlfrescoSettingsService;
     let authService: AlfrescoAuthenticationService;
     let contentService: AlfrescoContentService;
 
     beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
+            HTTP_PROVIDERS,
+            AlfrescoAuthenticationService,
+            AlfrescoSettingsService
+        ]);
 
-        settingsService = new AlfrescoSettingsService();
-        authService = new AlfrescoAuthenticationService(settingsService);
+        settingsService = injector.get(AlfrescoSettingsService);
+        authService = injector.get(AlfrescoAuthenticationService);
         contentService = new AlfrescoContentService(settingsService, authService);
         service = new DocumentListService(settingsService, authService, contentService);
     });
