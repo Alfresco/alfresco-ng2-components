@@ -137,12 +137,11 @@ export class MyView {
 
 | Name | Description
 | --- | --- |
-| rowClick | Emitted when user clicks the row |
-| rowDblClick | Emitted when user double-clicks the row |
-| showRowContextMenu | Emitted before context menu is displayed for a row |
-| showRowActionsMenu | Emitted before actions menu is displayed for a row |
-| executeRowAction | Emitted when row action is executed by user |
-
+| [rowClick](#rowClick-event) | Emitted when user clicks the row |
+| [rowDblClick](#rowDblClick-event) | Emitted when user double-clicks the row |
+| [showRowContextMenu](#showRowContextMenu-event) | Emitted before context menu is displayed for a row |
+| [showRowActionsMenu](#showRowActionsMenu-event) | Emitted before actions menu is displayed for a row |
+| [executeRowAction](#executeRowAction-event) | Emitted when row action is executed by user |
 
 **Advanced usage example**
 
