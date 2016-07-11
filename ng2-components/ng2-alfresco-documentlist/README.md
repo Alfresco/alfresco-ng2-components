@@ -88,6 +88,27 @@ Also make sure you include these dependencies in your `index.html` file:
 </alfresco-document-list>
 ```
 
+### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| navigate | boolean | true | Toggle navigation to folder content or file preview |
+| navigationMode | string (click\|dblclick) | User interaction for folder navigation or file preview |
+| thumbnails | boolean | false | Show document thumbnails rather than icons |
+| multiselect | boolean | false | Toggle multiselect mode |
+| contentActions | boolean | false | Toggle content actions for each row |
+| contextMenuActions | boolean | false | Toggle context menus for each row |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| nodeClick | Triggered when user clicks the node |
+| nodeDblClick | Triggered when user double-clicks the node |
+| folderChange | Triggered upon display folder changed |
+| preview | Triggered when document preview is requested either with single or double click |
+
+
 _For a complete example source code please refer to 
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
 repository._
