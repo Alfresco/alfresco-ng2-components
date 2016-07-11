@@ -156,10 +156,6 @@ class DocumentListDemo implements OnInit {
 
         alfrescoSettingsService.host = this.host;
 
-        if (this.authService.getToken()) {
-            this.token = this.authService.getToken();
-        }
-
         translation.addTranslationFolder();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
