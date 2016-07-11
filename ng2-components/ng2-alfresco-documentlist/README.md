@@ -93,7 +93,7 @@ Also make sure you include these dependencies in your `index.html` file:
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | navigate | boolean | true | Toggle navigation to folder content or file preview |
-| navigationMode | string (click\|dblclick) | User interaction for folder navigation or file preview |
+| navigationMode | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | thumbnails | boolean | false | Show document thumbnails rather than icons |
 | multiselect | boolean | false | Toggle multiselect mode |
 | contentActions | boolean | false | Toggle content actions for each row |
