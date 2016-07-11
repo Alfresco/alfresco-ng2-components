@@ -35,7 +35,7 @@ describe('AlfrescoContentService', () => {
             AlfrescoSettingsService
         ]);
         spyOn(localStorage, 'getItem').and.callFake(function (key) {
-            return 'myToken';
+            return 'myTicket';
         });
         service = injector.get(AlfrescoContentService);
         authService = injector.get(AlfrescoAuthenticationService);
@@ -49,7 +49,7 @@ describe('AlfrescoContentService', () => {
         })).toBe(
             AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + AlfrescoSettingsService.DEFAULT_CONTEXT_PATH +
                 AlfrescoSettingsService.DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/content' +
-                '?attachment=false&alf_ticket=' + authService.getToken()
+                '?attachment=false&alf_ticket=' + authService.getTicket()
         );
     });
 
@@ -61,7 +61,7 @@ describe('AlfrescoContentService', () => {
         })).toBe(
             AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + AlfrescoSettingsService.DEFAULT_CONTEXT_PATH +
             AlfrescoSettingsService.DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/renditions/doclib/content' +
-            '?attachment=false&alf_ticket=' + authService.getToken()
+            '?attachment=false&alf_ticket=' + authService.getTicket()
         );
     });
 });

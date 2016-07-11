@@ -26,8 +26,7 @@ export interface AbstractAuthentication {
 
     isLoggedIn(): boolean ;
 
-    getToken(): string;
+    getTicket(): string;
 
-    saveToken(): void;
-
+    saveTicket(ticket: any): void;
 }
