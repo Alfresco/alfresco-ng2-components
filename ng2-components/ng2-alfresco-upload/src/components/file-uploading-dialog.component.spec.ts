@@ -24,6 +24,7 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
 import { Observable } from 'rxjs/Observable';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 describe('FileUploadDialog', () => {
 
@@ -32,6 +33,7 @@ describe('FileUploadDialog', () => {
 
     beforeEachProviders(() => {
         return [
+            HTTP_PROVIDERS,
             { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsService },
             { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
             { provide: AlfrescoTranslationService, useClass: TranslationMock },

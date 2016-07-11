@@ -24,6 +24,7 @@ import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 declare var AlfrescoApi: any;
 
@@ -37,6 +38,7 @@ describe('AlfrescoUploadDragArea', () => {
 
     beforeEachProviders(() => {
         return [
+            HTTP_PROVIDERS,
             { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
             { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
             { provide: AlfrescoTranslationService, useClass: TranslationMock },

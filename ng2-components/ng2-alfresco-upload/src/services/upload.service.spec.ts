@@ -21,6 +21,7 @@ import { FileModel } from './../models/file.model';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 declare var AlfrescoApi: any;
 declare let jasmine: any;
@@ -66,6 +67,7 @@ describe('AlfrescoUploadService', () => {
 
     beforeEachProviders(() => {
         return [
+            HTTP_PROVIDERS,
             { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
             { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
             { provide: UploadService, useClass: MockUploadService }
