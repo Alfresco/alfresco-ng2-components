@@ -39,12 +39,6 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 npm install --save ng2-alfresco-documentlist
 ```
 
-To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
-
-```sh
-node -v
-```
-
 ### Dependencies
 
 Add the following dependency to your index.html:
@@ -97,21 +91,21 @@ Also make sure you include these dependencies in your `index.html` file:
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| navigate | boolean | true | Toggle navigation to folder content or file preview |
+| navigate | boolean | true | Toggles navigation to folder content or file preview |
 | navigationMode | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | thumbnails | boolean | false | Show document thumbnails rather than icons |
-| multiselect | boolean | false | Toggle multiselect mode |
-| contentActions | boolean | false | Toggle content actions for each row |
-| contextMenuActions | boolean | false | Toggle context menus for each row |
+| multiselect | boolean | false | Toggles multiselect mode |
+| contentActions | boolean | false | Toggles content actions for each row |
+| contextMenuActions | boolean | false | Toggles context menus for each row |
 
 ### Events
 
 | Name | Description |
 | --- | --- |
-| nodeClick | Triggered when user clicks the node |
-| nodeDblClick | Triggered when user double-clicks the node |
-| folderChange | Triggered upon display folder changed |
-| preview | Triggered when document preview is requested either with single or double click |
+| nodeClick | Emitted when user clicks the node |
+| nodeDblClick | Emitted when user double-clicks the node |
+| folderChange | Emitted upon display folder changed |
+| preview | Emitted when document preview is requested either with single or double click |
 
 
 _For a complete example source code please refer to 
