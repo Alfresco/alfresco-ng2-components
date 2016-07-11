@@ -83,8 +83,8 @@ export class MyDemoApp implements OnInit {
     constructor(private authService: AlfrescoAuthenticationService, private alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.host = this.host;
 
-        if (this.authService.getToken()) {
-            this.token = this.authService.getToken();
+        if (this.authService.getTicket()) {
+            this.token = this.authService.getTicket();
         }
     }
 
@@ -106,7 +106,7 @@ export class MyDemoApp implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin').subscribe(
+        this.authService.login('admin', 'admin', ['ECM']).subscribe(
             token => {
                 console.log(token);
                 this.token = token;

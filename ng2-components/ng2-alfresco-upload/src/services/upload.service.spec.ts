@@ -87,13 +87,13 @@ describe('AlfrescoUploadService', () => {
         service.setOptions(empty);
         expect(service.getUrl()).toEqual('/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
         let formFields: Object = {};
-        expect(service.getFormFileds()).toEqual(formFields);
+        expect(service.getFormFields()).toEqual(formFields);
     });
 
     it('should show the option passed as input', () => {
         service.setOptions(options);
         expect(service.getUrl()).toEqual('/some/cool/url');
-        expect(service.getFormFileds()).toEqual({
+        expect(service.getFormFields()).toEqual({
             siteid: 'fakeSite',
             containerid: 'fakeFolder'
         });

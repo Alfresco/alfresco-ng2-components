@@ -155,7 +155,9 @@ class DocumentListDemo implements OnInit {
         private documentActions: DocumentActionsService) {
 
         alfrescoSettingsService.host = this.host;
-
+        if (this.authService.getTicket()) {
+            this.token = this.authService.getTicket();
+        }
         translation.addTranslationFolder();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }

@@ -14,8 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -33,8 +31,6 @@ declare let AlfrescoApi: any;
  */
 @Injectable()
 export class UploadService {
-    private _url: string = '/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children';
-
     private _formFields: Object = {};
 
     private _queue: FileModel[] = [];
@@ -61,31 +57,15 @@ export class UploadService {
      *
      */
     public setOptions(options: any): void {
-        this._url = options.url || this._url;
         this._formFields = options.formFields != null ? options.formFields : this._formFields;
     }
 
-    /**
-     * Get the host
-     * @returns {string}
-     */
-    public getHost(): string {
-        return this.settings.host;
-    }
-
-    /**
-     * Get the url
-     * @returns {string}
-     */
-    public getUrl(): string {
-        return this._url;
-    }
 
     /**
      * Get the form fields
      * @returns {Object}
      */
-    public getFormFileds(): Object {
+    public getFormFields(): Object {
         return this._formFields;
     }
 
@@ -121,7 +101,7 @@ export class UploadService {
         });
         filesToUpload.forEach((uploadingFileModel) => {
             uploadingFileModel.setUploading();
-            this.authService.alfrescoApi.
+            this.authService.getAlfrescoApi().
             upload.uploadFile(uploadingFileModel.file, directory)
                 .on('progress', (progress: any) => {
                     uploadingFileModel.setProgres(progress);
@@ -175,15 +155,7 @@ export class UploadService {
      * @param name - the folder name
      */
     createFolder(relativePath: string, name: string) {
-        console.log('Directory created' + name);
-        let apiInstance = new AlfrescoApi.NodesApi(this._alfrescoClient);
-        let nodeId = '-root-';
-        let nodeBody = {
-            'name': name,
-            'nodeType': 'cm:folder',
-            'relativePath': relativePath
-        };
-        return Observable.fromPromise(apiInstance.addNode(nodeId, nodeBody))
+        return Observable.fromPromise(this.authService.getAlfrescoApi().node.createFolder(name, relativePath))
             .map(res => {
                 return res;
             })
