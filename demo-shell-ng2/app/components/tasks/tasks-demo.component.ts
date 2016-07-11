@@ -22,6 +22,10 @@ import {
     ObjectDataTableAdapter
 } from 'ng2-alfresco-datatable';
 
+import {
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
+
 @Component({
     selector: 'tasks-demo',
     template: `
@@ -38,20 +42,22 @@ export class TasksDemoComponent implements OnInit {
     tasks: ObjectDataTableAdapter;
 
     constructor(
-        private activitiService: ActivitiService) {}
+        private activitiService: ActivitiService,
+        private auth: AlfrescoAuthenticationService) {}
 
     ngOnInit() {
-        this.activitiService
-            .login('denys.vuika@alfresco.com', 'test')
-            .then(() => {
-                this.activitiService
-                    .getTasks()
-                    .then((data) => {
-                        let tasks = data || [];
-                        console.log(tasks);
-                        this.loadTasks(tasks);
-                    });
-            });
+        if (this.auth.isLoggedIn('BPM')) {
+            this.activitiService
+                .getTasks()
+                .then((data) => {
+                    let tasks = data || [];
+                    console.log(tasks);
+                    this.loadTasks(tasks);
+                });
+        } else {
+            console.error('User unauthorized');
+        }
+
     }
 
     private loadTasks(tasks: any[]) {

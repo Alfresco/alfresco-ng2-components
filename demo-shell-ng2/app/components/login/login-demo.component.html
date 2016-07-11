@@ -1,1 +1,15 @@
-<alfresco-login (onSuccess)="onLogin($event)" (onError)="onError($event)"></alfresco-login>
+<div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 10px; z-index: 1;">
+    <p style="width:120px;margin: 20px;">
+        <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" id="switch1" class="mdl-switch__input" checked (click)="toggleECM(ecm.checked)" #ecm>
+            <span class="mdl-switch__label">ECM</span>
+        </label>
+    </p>
+    <p style="width:120px;margin: 20px;">
+        <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" id="switch2" class="mdl-switch__input"  (click)="toggleBPM(bpm.checked)" #bpm>
+            <span class="mdl-switch__label">BPM</span>
+        </label>
+    </p>
+</div>
+<alfresco-login [providers]="providers" (onSuccess)="onLogin($event)" (onError)="onError($event)"></alfresco-login>

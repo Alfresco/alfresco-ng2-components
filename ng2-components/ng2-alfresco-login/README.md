@@ -80,7 +80,7 @@ Also make sure you include these dependencies in your .html page:
 
 
 ```html
-<alfresco-login></alfresco-login>
+<alfresco-login providers=['ECM','BPM']></alfresco-login>
 ```
 
 Example of an App that use Alfresco login component :
@@ -100,7 +100,12 @@ import {
 
 @Component({
     selector: 'my-app',
-    template: '<alfresco-login (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
+    template: '
+    <alfresco-login 
+        providers=['ECM'] 
+        (onSuccess)="mySuccessMethod($event)" 
+        (onError)="myErrorMethod($event)">
+    </alfresco-login>',
     directives: [AlfrescoLoginComponent]
 })
 export class AppComponent {
@@ -133,8 +138,14 @@ bootstrap(AppComponent, [
 
 #### Options
 
-**method**: {string} optional) default POST. The method attribute specifies how to send form-data
-The form-data can be sent as URL variables (with method="get") or as HTTP post transaction (with method="post").<br />
+**providers**: { string[] } optional) default ECM. 
+Using the providers attribute, you can specify in which system 
+(ECM or BPM) you want to be logged in.
+By selecting one of the options only the relative components  will be
+ accesible. For instance if you activate the ECM login then only the
+   ECM component will be visible,same behaviour for BPM selection.
+You can also specify ECM and BPM, in this case both system components
+ are accessible.<br />
 
 ## Build from sources
 Alternatively you can build component from sources with the following commands:

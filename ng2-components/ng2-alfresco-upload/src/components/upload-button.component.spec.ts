@@ -18,12 +18,13 @@
 import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { UploadButtonComponent } from './upload-button.component';
-import { AlfrescoTranslationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
 import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
 import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 declare var AlfrescoApi: any;
 
@@ -38,7 +39,9 @@ describe('AlfrescoUploadButton', () => {
 
     beforeEachProviders(() => {
         return [
+            HTTP_PROVIDERS,
             { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
             { provide: UploadService, useClass: UploadServiceMock }
         ];

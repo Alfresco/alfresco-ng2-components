@@ -33,6 +33,8 @@ export class LoginDemoComponent {
     constructor(public router: Router) {
     }
 
+    providers: string [] = ['ECM'];
+
     onLogin($event) {
         console.log($event);
         this.router.navigate(['Home']);
@@ -40,6 +42,22 @@ export class LoginDemoComponent {
 
     onError($event) {
         console.log($event);
+    }
+
+    toggleECM(checked) {
+        if (checked) {
+            this.providers[0] = 'ECM';
+        } else {
+            this.providers[0] = '';
+        }
+    }
+
+    toggleBPM(checked) {
+        if (checked) {
+            this.providers[1] = 'BPM';
+        } else {
+            this.providers[1] = '';
+        }
     }
 
 }

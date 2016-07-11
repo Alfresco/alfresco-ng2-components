@@ -20,6 +20,7 @@ import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
 import { AlfrescoContentService } from './AlfrescoContentService.service';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 describe('AlfrescoContentService', () => {
 
@@ -28,6 +29,7 @@ describe('AlfrescoContentService', () => {
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
+            HTTP_PROVIDERS,
             AlfrescoContentService,
             AlfrescoAuthenticationService,
             AlfrescoSettingsService
