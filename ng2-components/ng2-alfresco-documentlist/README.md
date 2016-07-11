@@ -28,6 +28,11 @@
   </a>
 </p>
 
+## Prerequisites
+
+Before you start using this development framework, make sure you have installed all required software and done all the 
+necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
+
 ## Install
 
 ```sh
@@ -40,7 +45,7 @@ To correctly use this component check that on your machine is running Node versi
 node -v
 ```
 
-#### Dependencies
+### Dependencies
 
 Add the following dependency to your index.html:
 
