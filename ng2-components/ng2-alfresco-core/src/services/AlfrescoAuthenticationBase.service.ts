@@ -23,6 +23,8 @@ declare let AlfrescoApi: any;
 
 export class AlfrescoAuthenticationBase {
 
+    alfrescoApi: any;
+
     private _authUrl: string = '/alfresco/api/-default-/public/authentication/versions/1';
     private alfrescoSetting: AlfrescoSettingsService;
     /**

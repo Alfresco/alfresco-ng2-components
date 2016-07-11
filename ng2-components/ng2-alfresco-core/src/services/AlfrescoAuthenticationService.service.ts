@@ -99,7 +99,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
     }
 
     /**
-     * The method return tru if the user is logged in
+     * The method return true if the user is logged in
      * @returns {boolean}
      */
     isLoggedIn(type: string = 'ECM'): boolean {
@@ -108,6 +108,10 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
             return auth.isLoggedIn();
         }
         return false;
+    }
+
+    getAlfrescoApi(): any {
+        return  this.findProviderInstance('ECM').alfrescoApi;
     }
 
     /**
@@ -198,7 +202,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         let auth: AbstractAuthentication = null;
         if (this.providersInstance && this.providersInstance.length !== 0) {
             this.providersInstance.forEach((provider) => {
-                if (provider.TYPE === type) {
+                if (provider.TYPE === type.toUpperCase()) {
                     auth = provider;
                 }
             });

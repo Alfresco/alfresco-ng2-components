@@ -40,7 +40,7 @@ export class AlfrescoSearchService {
             rootNodeId: nodeId,
             nodeType: 'cm:content'
         };
-        return this.authService.alfrescoApi.search.liveSearchNodes(term, opts);
+        return this.authService.getAlfrescoApi().search.liveSearchNodes(term, opts);
     }
 
     /**
