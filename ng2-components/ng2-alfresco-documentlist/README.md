@@ -368,13 +368,13 @@ other modes, like single-click navigation for example.
  
 The following navigation modes are supported:
 
-- click
-- dblclick
+- **click**
+- **dblclick**
 
 The following example switches navigation to single clicks:
 
 ```html
-<alfresco-document-list navigation-mode="click">
+<alfresco-document-list [navigationMode]="'click'">
 </alfresco-document-list>
 ```
 
