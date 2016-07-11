@@ -143,8 +143,8 @@ class DocumentListDemo implements OnInit {
     currentPath: string = '/';
     authenticated: boolean;
 
-    // host: string = 'http://devproducts-platform.alfresco.me';
-    host: string = 'http://127.0.0.1:8080';
+    host: string = 'http://devproducts-platform.alfresco.me';
+    // host: string = 'http://127.0.0.1:8080';
 
     token: string;
 

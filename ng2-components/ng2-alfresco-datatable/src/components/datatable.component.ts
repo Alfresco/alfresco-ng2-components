@@ -94,7 +94,7 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         }
     }
 
-    onRowClick(row: DataRow, e?) {
+    onRowClick(row: DataRow, e?: Event) {
         if (e) {
             e.preventDefault();
         }
