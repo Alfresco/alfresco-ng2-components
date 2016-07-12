@@ -1,0 +1,110 @@
+{
+  "name": "ng2-alfresco-activiti-tasklist",
+  "description": "Activiti Angular2 Task List Component",
+  "version": "0.2.0",
+  "author": "Alfresco Software, Ltd.",
+  "scripts": {
+    "clean": "rimraf dist node_modules typings",
+    "typings": "typings install",
+    "build": "npm run tslint && typings install && rimraf dist && tsc && npm run copytemplates && license-check",
+    "build:w": "npm run tslint && typings install && rimraf dist && npm run watch-task",
+    "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copytemplates:w\"  \"license-check\"",
+    "tslint": "npm run tslint-src && npm run tslint-root",
+    "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
+    "tslint-root": "tslint -c tslint.json *.ts",
+    "copytemplates": "npm run copy-html-css && npm run copy-i18n && npm run copy-images",
+    "copytemplates:w": "concurrently \"npm run copy-html-css:w\" \"npm run copy-images:w\" \"npm run copy-i18n:w\"",
+    "copy-html-css": "cpx \"./src/**/*.{html,css}\" ./dist/src",
+    "copy-html-css:w": "cpx \"./src/**/*.{html,css}\" ./dist/src -w",
+    "copy-i18n": "cpx \"./i18n/**/*.json\" ./dist/i18n",
+    "copy-i18n:w": "cpx \"./i18n/**/*.json\" ./dist/i18n -w",
+    "copy-images": "cpx \"./src/**/*.{png,jpg,gif,svg}\" ./dist/src",
+    "copy-images:w": "cpx \"./src/**/*.{png,jpg,gif,svg}\" ./dist/src -w",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "pretest": "npm run build",
+    "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
+    "test-browser": "concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
+    "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
+    "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
+    "prepublish": "npm run build",
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable"
+  },
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Maurizio Vitale",
+      "email": "maurizio.vitale84@gmail.com"
+    }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "alfresco"
+  ],
+  "dependencies": {
+    "@angular/common": "2.0.0-rc.3",
+    "@angular/compiler": "2.0.0-rc.3",
+    "@angular/core": "2.0.0-rc.3",
+    "@angular/forms": "0.1.1",
+    "@angular/http": "2.0.0-rc.3",
+    "@angular/platform-browser": "2.0.0-rc.3",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.3",
+    "@angular/router": "3.0.0-alpha.7",
+    "@angular/router-deprecated": "2.0.0-rc.2",
+    "@angular/upgrade": "2.0.0-rc.3",
+    "systemjs": "0.19.27",
+    "core-js": "2.4.0",
+    "reflect-metadata": "0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "0.6.12",
+    "rimraf": "2.5.2",
+    "ng2-translate": "2.2.2",
+    "ng2-alfresco-core": "0.2.0",
+	"ng2-alfresco-datatable": "0.2.0",
+    "alfresco-js-api": "^0.1.0"
+  },
+  "peerDependencies": {
+    "material-design-icons": "^2.2.3",
+    "material-design-lite": "^1.1.3"
+  },
+  "devDependencies": {
+    "concurrently": "2.1.0",
+    "coveralls": "2.11.9",
+    "cpx": "1.3.1",
+    "jasmine-core": "2.4.1",
+    "karma": "0.13.22",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-coverage": "1.0.0",
+    "karma-coveralls": "1.1.2",
+    "karma-jasmine": "1.0.2",
+    "karma-mocha-reporter": "2.0.3",
+    "karma-jasmine-html-reporter": "0.2.0",
+    "license-check": "1.1.5",
+    "remap-istanbul": "0.6.3",
+    "traceur": "0.0.91",
+    "tslint": "3.8.1",
+    "typescript": "1.8.10",
+    "typings": "1.0.4",
+    "wsrv": "0.1.3"
+  },
+  "license-check-config": {
+    "src": [
+      "./dist/**/*.js"
+    ],
+    "path": "assets/license_header.txt",
+    "blocking": true,
+    "logInfo": false,
+    "logError": true
+  }
+}

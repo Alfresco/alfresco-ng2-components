@@ -16,65 +16,36 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { ActivitiService } from './activiti.service';
-import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable';
-
-import {
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+import { ActivitiTaskList } from 'ng2-alfresco-activiti-tasklist';
+import { DataColumn, ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'tasks-demo',
     template: `
         <div class="container">
-            <alfresco-datatable [data]="tasks"></alfresco-datatable>
+            <activiti-tasklist [data]="data"></activiti-tasklist>
         </div>
     `,
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES],
-    providers: [ActivitiService],
+    directives: [ActivitiTaskList],
     styles: [':host > .container { padding: 10px; }']
 })
 export class TasksDemoComponent implements OnInit {
 
-    tasks: ObjectDataTableAdapter;
-
-    constructor(
-        private activitiService: ActivitiService,
-        private auth: AlfrescoAuthenticationService) {}
-
-    ngOnInit() {
-        if (this.auth.isLoggedIn('BPM')) {
-            this.activitiService
-                .getTasks()
-                .then((data) => {
-                    let tasks = data || [];
-                    console.log(tasks);
-                    this.loadTasks(tasks);
-                });
-        } else {
-            console.error('User unauthorized');
-        }
-
+    data: ObjectDataTableAdapter;
+    constructor() {
+        this.data = new ObjectDataTableAdapter([], []);
     }
 
-    private loadTasks(tasks: any[]) {
-        tasks = tasks.map(t => {
-            t.name = t.name || 'Nameless task';
-            if (t.name.length > 50) {
-                t.name = t.name.substring(0, 50) + '...';
-            }
-            return t;
-        });
+    ngOnInit() {
+        let schema = [
+            {type: 'text', key: 'id', title: 'Id'},
+            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+            {type: 'text', key: 'formKey', title: 'Form Key', sortable: true},
+            {type: 'text', key: 'created', title: 'Created', sortable: true}
+        ];
 
-        this.tasks = new ObjectDataTableAdapter(tasks, [
-            { type: 'text', key: 'id', title: 'Id'},
-            { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-            { type: 'text', key: 'formKey', title: 'Form Key', sortable: true },
-            { type: 'text', key: 'created', title: 'Created', sortable: true }
-        ]);
+        let columns = schema.map(col => new ObjectDataColumn(col));
+        this.data.setColumns(columns);
     }
 
 }

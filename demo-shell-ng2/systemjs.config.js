@@ -19,7 +19,8 @@
         'ng2-alfresco-upload': 'node_modules/ng2-alfresco-upload/dist',
         'ng2-activiti-form': 'node_modules/ng2-activiti-form/dist',
         'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer/dist',
-        'ng2-alfresco-webscript': 'node_modules/ng2-alfresco-webscript/dist'
+        'ng2-alfresco-webscript': 'node_modules/ng2-alfresco-webscript/dist',
+        'ng2-alfresco-activiti-tasklist': 'node_modules/ng2-alfresco-activiti-tasklist/dist'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -37,6 +38,7 @@
         'ng2-alfresco-upload': { main: 'index.js', defaultExtension: 'js'},
         'ng2-alfresco-viewer': { main: 'index.js', defaultExtension: 'js'},
         'ng2-activiti-form': { main: 'index.js', defaultExtension: 'js'},
+        'ng2-alfresco-activiti-tasklist': { main: 'index.js', defaultExtension: 'js'}
         'ng2-alfresco-webscript': { main: 'index.js', defaultExtension: 'js'}
     };
     var ngPackageNames = [
