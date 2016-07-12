@@ -10,7 +10,7 @@
     Status' />
   </a>
   <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
-    <img src='https://img.shields.io/codecov/c/github/codecov/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
   </a>
   <a href='https://www.npmjs.com/package/ng2-alfresco-datatable'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-datatable.svg' alt='npm downloads' />
