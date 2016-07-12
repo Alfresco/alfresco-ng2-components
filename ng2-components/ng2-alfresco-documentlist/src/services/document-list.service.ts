@@ -20,7 +20,6 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 import {
-    AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService
 } from 'ng2-alfresco-core';
@@ -62,7 +61,6 @@ export class DocumentListService {
     };
 
     constructor(
-        private settings: AlfrescoSettingsService,
         private authService: AlfrescoAuthenticationService,
         private contentService: AlfrescoContentService
     ) {
