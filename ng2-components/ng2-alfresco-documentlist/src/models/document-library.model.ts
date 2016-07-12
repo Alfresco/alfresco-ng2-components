@@ -22,11 +22,20 @@ export class NodePaging {
 }
 
 export class NodePagingList {
+    pagination: Pagination;
     entries: MinimalNodeEntity[];
 }
 
 export class MinimalNodeEntity {
     entry: MinimalNodeEntryEntity;
+}
+
+export class Pagination {
+    count: number;
+    hasMoreItems: boolean;
+    totalItems: number;
+    skipCount: number;
+    maxItems: number;
 }
 
 export class MinimalNodeEntryEntity {
