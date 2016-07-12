@@ -26,7 +26,7 @@ import { AlfrescoAuthenticationBase } from './AlfrescoAuthenticationBase.service
 declare let AlfrescoApi: any;
 
 /**
- * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
+ * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
  */
 @Injectable()
 export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
@@ -78,24 +78,12 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         return Observable.create(observer => {
             Observable.forkJoin(observableBatch).subscribe(
                 (response: any[]) => {
-                    this.performeSaveToken();
-                    /*response.forEach((res) => {
-                        this.performeSaveToken(res.name, res.token);
-                    });*/
                     observer.next(response);
                 },
                 (err: any) => {
                     observer.error(new Error(err));
                 });
         });
-    }
-
-    getAlfrescoApi(): any {
-        return this.alfrescoApi;
-    }
-
-    getToken(): any {
-        return this.alfrescoApi.getToeken();
     }
 
     /**
@@ -115,35 +103,19 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
     }
 
     /**
-     * Return the token stored in the localStorage of the specific provider type
-     * @param token
+     * Return the ticket stored in the localStorage of the specific provider type
+     * @param ticket
      */
-    public getToken(type: string = 'ECM'): string {
+    public getTicket(type: string = 'ECM'): string {
         let auth: AbstractAuthentication = this.findProviderInstance(type);
         if (auth) {
-            return auth.getToken();
+            return auth.getTicket();
         }
         return '';
     }
 
     /**
-     * Save the token calling the method of the specific provider type
-     * @param providerName
-     * @param token
-     */
-    private performeSaveToken() {
-        /* let auth: AbstractAuthentication = this.findProviderInstance(type);
-        if (auth) {
-            auth.saveToken();
-        }
-        */
-        this.providersInstance.forEach((authInstance) => {
-            authInstance.saveToken();
-        });
-    }
-
-    /**
-     * The method remove the token from the local storage
+     * The method remove the ticket from the local storage
      * @returns {Observable<T>}
      */
     public logout(): Observable<string> {
