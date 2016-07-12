@@ -192,7 +192,7 @@ class DocumentListDemo implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin').subscribe(
+        this.authService.login('admin', 'admin', ['ECM']).subscribe(
             token => {
                 console.log(token);
                 this.authenticated = true;
