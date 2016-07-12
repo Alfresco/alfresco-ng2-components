@@ -26,7 +26,10 @@ import {
     TemplateRef
 } from '@angular/core';
 
-import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
+import {
+    CONTEXT_MENU_DIRECTIVES,
+    AlfrescoPipeTranslate
+} from 'ng2-alfresco-core';
 
 import {
     DataTableAdapter,
@@ -45,7 +48,8 @@ declare let __moduleName: string;
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html',
-    directives: [CONTEXT_MENU_DIRECTIVES]
+    directives: [CONTEXT_MENU_DIRECTIVES],
+    pipes: [AlfrescoPipeTranslate]
 })
 export class DataTableComponent implements OnInit, AfterViewChecked {
 
@@ -164,6 +168,10 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
             return value.replace('material-icons://', '');
         }
         return null;
+    }
+
+    iconAltTextKey(value: string) {
+        return 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '');
     }
 
     isColumnSorted(col: DataColumn, direction: string) {

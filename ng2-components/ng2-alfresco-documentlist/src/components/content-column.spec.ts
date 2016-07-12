@@ -34,7 +34,7 @@ describe('ContentColumn', () => {
 
     beforeEach(() => {
         let service = new DocumentListServiceMock();
-        documentList = new DocumentList(service, null);
+        documentList = new DocumentList(service, null, null);
         columnList = new ContentColumnList(documentList);
     });
 

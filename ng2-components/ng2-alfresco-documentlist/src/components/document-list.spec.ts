@@ -34,7 +34,7 @@ describe('DocumentList', () => {
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         let zone = new NgZone(false);
-        documentList = new DocumentList(documentListService, zone);
+        documentList = new DocumentList(documentListService, zone, null);
 
         eventMock = {
             preventDefault: function () {
