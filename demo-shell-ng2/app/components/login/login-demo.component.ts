@@ -46,17 +46,26 @@ export class LoginDemoComponent {
 
     toggleECM(checked) {
         if (checked) {
-            this.providers[0] = 'ECM';
+            this.providers.push('ECM');
         } else {
-            this.providers[0] = '';
+            this.removeElement('ECM');
         }
     }
 
     toggleBPM(checked) {
         if (checked) {
-            this.providers[1] = 'BPM';
+            this.providers.push('BPM');
         } else {
-            this.providers[1] = '';
+            this.removeElement('BPM');
+        }
+    }
+
+    removeElement(el: string) {
+        for (let i = 0; i < this.providers.length; i++) {
+            if (this.providers[i] === el) {
+                this.providers.splice(i, 1);
+                return false;
+            }
         }
     }
 
