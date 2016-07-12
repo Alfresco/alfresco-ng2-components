@@ -21,15 +21,15 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { DocumentList } from './document-list';
+import { DocumentList } from '../document-list';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-document-list-breadcrumb',
-    templateUrl: './document-list-breadcrumb.component.html',
-    styleUrls: ['./document-list-breadcrumb.component.css']
+    templateUrl: './breadcrumb.component.html',
+    styleUrls: ['./breadcrumb.component.css']
 })
 export class DocumentListBreadcrumb {
 

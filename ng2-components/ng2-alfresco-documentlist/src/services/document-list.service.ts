@@ -82,7 +82,6 @@ export class DocumentListService {
         };
         return apiInstance.getNodeChildren(nodeId, opts);
     }
-
     deleteNode(nodeId: string) {
         let client = this.getAlfrescoClient();
         let nodesApi = new AlfrescoApi.Core.NodesApi(client);
@@ -95,7 +94,7 @@ export class DocumentListService {
      * @param folder Path to folder.
      * @returns {Observable<NodePaging>} Folder entity.
      */
-    getFolder(folder: string) {
+    getFolder(folder: string): Observable<NodePaging> {
         return Observable.fromPromise(this.getNodesPromise(folder))
             .map(res => <NodePaging> res)
             // .do(data => console.log('Node data', data)) // eyeball results in the console
@@ -107,7 +106,7 @@ export class DocumentListService {
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(node: MinimalNodeEntity) {
+    getDocumentThumbnailUrl(node: MinimalNodeEntity): string {
         if (node && this.contentService) {
             return this.contentService.getDocumentThumbnailUrl(node);
         }

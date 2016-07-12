@@ -26,6 +26,7 @@ export class NodePagingList {
     entries: MinimalNodeEntity[];
 }
 
+// TODO: rename to NodeMinimalEntry
 export class MinimalNodeEntity {
     entry: MinimalNodeEntryEntity;
 }
@@ -38,6 +39,7 @@ export class Pagination {
     maxItems: number;
 }
 
+// TODO: rename to NodeMinimal
 export class MinimalNodeEntryEntity {
     id: string;
     parentId: string;
