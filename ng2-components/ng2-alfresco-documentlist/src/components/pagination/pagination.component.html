@@ -1,0 +1,23 @@
+<div *ngIf="provider" class="mdl-paging">
+    <span class="mdl-paging__per-page">
+        <span class="mdl-paging__per-page-label">Rows per page:</span>
+        <span class="mdl-paging__per-page-value">{{pageSize}}</span>
+        <button alfresco-mdl-button id="pageSizePicker" class="mdl-button--icon mdl-paging__per-page-dropdown">
+            <i class="material-icons">arrow_drop_down</i>
+        </button>
+        <ul alfresco-mdl-menu for="pageSizePicker" class="mdl-menu--bottom-right">
+            <li *ngFor="let size of supportedPageSizes"
+                tabindex="-1" [attr.data-value]="size" class="mdl-menu__item"
+                (click)="setPageSize(size)">
+                <span>{{size}}</span>
+            </li>
+        </ul>
+    </span>
+    <span class="mdl-paging__count">1-10 of 25</span>
+    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-paging__prev">
+        <i class="material-icons">keyboard_arrow_left</i>
+    </button>
+    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-paging__next">
+        <i class="material-icons">keyboard_arrow_right</i>
+    </button>
+</div>

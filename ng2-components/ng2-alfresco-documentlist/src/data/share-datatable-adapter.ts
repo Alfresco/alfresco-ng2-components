@@ -16,7 +16,7 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { ObjectUtils } from 'ng2-alfresco-core';
+import { PaginationProvider, ObjectUtils } from 'ng2-alfresco-core';
 import {
     DataTableAdapter,
     DataRow, DataColumn, DataSorting
@@ -25,16 +25,24 @@ import {
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 import { DocumentListService } from './../services/document-list.service';
 
-export class ShareDataTableAdapter implements DataTableAdapter {
+export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvider {
 
     static ERR_ROW_NOT_FOUND: string = 'Row not found';
     static ERR_COL_NOT_FOUND: string = 'Column not found';
 
     static DEFAULT_DATE_FORMAT: string = 'medium';
+    static DEFAULT_PAGE_SIZE: number = 100;
 
     private sorting: DataSorting;
     private rows: DataRow[];
     private columns: DataColumn[];
+    private page: NodePaging;
+
+    private _count: number = 0;
+    private _hasMoreItems: boolean = false;
+    private _totalItems: number = 0;
+    private _skipCount: number = 0;
+    private _maxItems: number = ShareDataTableAdapter.DEFAULT_PAGE_SIZE;
 
     thumbnails: boolean = false;
 
@@ -43,12 +51,34 @@ export class ShareDataTableAdapter implements DataTableAdapter {
                 schema: DataColumn[]) {
         this.rows = [];
         this.columns = schema || [];
+        this.resetPagination();
+    }
+
+    get count(): number {
+        return this._count;
+    }
+
+    get hasMoreItems(): boolean {
+        return this._hasMoreItems;
+    }
+
+    get totalItems(): number {
+        return this._totalItems;
+    }
+
+    get skipCount(): number {
+        return this._skipCount;
+    }
+
+    get maxItems(): number {
+        return this._maxItems;
     }
 
     getRows(): Array<DataRow> {
         return this.rows;
     }
 
+    // TODO: disable this api
     setRows(rows: Array<DataRow>) {
         this.rows = rows || [];
         this.sort();
@@ -165,33 +195,53 @@ export class ShareDataTableAdapter implements DataTableAdapter {
         if (path && this.documentListService) {
             this.documentListService
                 .getFolder(path)
-                .subscribe(val => {
-                    let page = <NodePaging>val;
-                    let rows = [];
-
-                    if (page && page.list) {
-                        let data = page.list.entries;
-                        if (data && data.length > 0) {
-                            rows = data.map(item => new ShareDataRow(item));
-
-                            // Sort by first sortable or just first column
-                            if (this.columns && this.columns.length > 0) {
-                                let sortable = this.columns.filter(c => c.sortable);
-                                if (sortable.length > 0) {
-                                    this.sort(sortable[0].key, 'asc');
-                                } else {
-                                    this.sort(this.columns[0].key, 'asc');
-                                }
-                            }
-                        }
-                    }
-
-                    this.rows = rows;
-                },
+                .subscribe(val => this.loadPage(<NodePaging>val),
                 error => console.error(error));
         }
     }
 
+    private loadPage(page: NodePaging) {
+        this.page = page;
+        this.resetPagination();
+
+        let rows = [];
+
+        if (page && page.list) {
+            let data = page.list.entries;
+            if (data && data.length > 0) {
+                rows = data.map(item => new ShareDataRow(item));
+
+                // Sort by first sortable or just first column
+                if (this.columns && this.columns.length > 0) {
+                    let sortable = this.columns.filter(c => c.sortable);
+                    if (sortable.length > 0) {
+                        this.sort(sortable[0].key, 'asc');
+                    } else {
+                        this.sort(this.columns[0].key, 'asc');
+                    }
+                }
+            }
+
+            let pagination = page.list.pagination;
+            if (pagination) {
+                this._count = pagination.count;
+                this._hasMoreItems = pagination.hasMoreItems;
+                this._maxItems = pagination.maxItems;
+                this._skipCount = pagination.skipCount;
+                this._totalItems = pagination.totalItems;
+            }
+        }
+
+        this.rows = rows;
+    }
+
+    private resetPagination() {
+        this._count = 0;
+        this._hasMoreItems = false;
+        this._totalItems = 0;
+        this._skipCount = 0;
+        this._maxItems = ShareDataTableAdapter.DEFAULT_PAGE_SIZE;
+    }
 }
 
 export class ShareDataRow implements DataRow {

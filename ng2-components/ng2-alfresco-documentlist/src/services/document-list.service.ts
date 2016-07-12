@@ -89,6 +89,7 @@ export class DocumentListService {
         return Observable.fromPromise(nodesApi.deleteNode(nodeId, opts));
     }
 
+    // TODO: rename to 'getFolderContent'
     /**
      * Gets the folder node with the content.
      * @param folder Path to folder.
