@@ -40,6 +40,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
     constructor(private alfrescoSettingsService: AlfrescoSettingsService,
                 private http: Http) {
         super(alfrescoSettingsService, http);
+        this.createProviderInstance(this.alfrescoSettingsService.getProviders());
     }
 
     /**
@@ -53,8 +54,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         if (providers.length === 0) {
             return Observable.throw('No providers defined');
         } else {
-            this.createProviderInstance(providers);
-            return this.performeLogin(username, password);
+            return this.performeLogin(username, password, providers);
         }
     }
 
@@ -65,28 +65,29 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    private performeLogin(username: string, password: string): Observable<any> {
+    private performeLogin(username: string, password: string, providers: string []): Observable<any> {
         let observableBatch = [];
-        if (this.providersInstance.length !== 0) {
-            this.providersInstance.forEach((authInstance) => {
-                observableBatch.push(authInstance.login(username, password));
-            });
-            return Observable.create(observer => {
-                Observable.forkJoin(observableBatch).subscribe(
-                    (response: any[]) => {
-                        this.performeSaveToken();
-                        /*response.forEach((res) => {
-                            this.performeSaveToken(res.name, res.token);
-                        });*/
-                        observer.next(response);
-                    },
-                    (err: any) => {
-                        observer.error(new Error(err));
-                    });
-            });
-        } else {
-            return Observable.throw('No providers defined');
-        }
+        providers.forEach((provider) => {
+            let auth: AbstractAuthentication = this.findProviderInstance(provider);
+            if (auth) {
+                observableBatch.push(auth.login(username, password));
+            } else {
+                observableBatch.push(Observable.throw('Wrong provider defined'));
+            }
+        });
+        return Observable.create(observer => {
+            Observable.forkJoin(observableBatch).subscribe(
+                (response: any[]) => {
+                    this.performeSaveToken();
+                    /*response.forEach((res) => {
+                        this.performeSaveToken(res.name, res.token);
+                    });*/
+                    observer.next(response);
+                },
+                (err: any) => {
+                    observer.error(new Error(err));
+                });
+        });
     }
 
     /**

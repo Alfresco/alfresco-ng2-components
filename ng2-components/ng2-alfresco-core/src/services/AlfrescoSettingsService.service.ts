@@ -28,6 +28,8 @@ export class AlfrescoSettingsService {
     private _contextPath = AlfrescoSettingsService.DEFAULT_CONTEXT_PATH;
     private _apiBasePath: string = AlfrescoSettingsService.DEFAULT_BASE_API_PATH;
 
+    private providers: string[] = ['ECM', 'BPM'];
+
     public get host(): string {
         return this._host;
     }
@@ -38,5 +40,9 @@ export class AlfrescoSettingsService {
 
     getApiBaseUrl(): string {
         return this._host + this._contextPath + this._apiBasePath;
+    }
+
+    getProviders(): string [] {
+        return this.providers;
     }
 }
