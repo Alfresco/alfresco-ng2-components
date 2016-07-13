@@ -94,13 +94,13 @@ describe('ShareDataTableAdapter', () => {
     it('should fail when getting value for missing row', () => {
         let adapter = new ShareDataTableAdapter(null, null, null);
         let check = () => { return adapter.getValue(null, <DataColumn>{}); };
-        expect(check).toThrowError(ShareDataTableAdapter.ERR_ROW_NOT_FOUND);
+        expect(check).toThrowError(adapter.ERR_ROW_NOT_FOUND);
     });
 
     it('should fail when getting value for missing column', () => {
         let adapter = new ShareDataTableAdapter(null, null, null);
         let check = () => { return adapter.getValue(<DataRow>{}, null); };
-        expect(check).toThrowError(ShareDataTableAdapter.ERR_COL_NOT_FOUND);
+        expect(check).toThrowError(adapter.ERR_COL_NOT_FOUND);
     });
 
     it('should require path to load data', () => {
@@ -123,7 +123,7 @@ describe('ShareDataTableAdapter', () => {
         let adapter = new ShareDataTableAdapter(documentListService, null, null);
         adapter.loadPath(path);
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(path);
+        expect(documentListService.getFolder).toHaveBeenCalledWith(path, jasmine.anything());
 
         let rows = adapter.getRows();
         expect(rows.length).toBe(1);
@@ -283,7 +283,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve file thumbnail', () => {
-        let imageUrl: 'http://<addresss>';
+        let imageUrl: string = 'http://<addresss>';
         spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
 
         let adapter = new ShareDataTableAdapter(documentListService, basePath, null);

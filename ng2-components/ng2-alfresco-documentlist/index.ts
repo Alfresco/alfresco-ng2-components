@@ -21,7 +21,8 @@ import { ContentColumnList } from './src/components/content-column-list';
 import { ContentAction } from './src/components/content-action';
 import { ContentActionList } from './src/components/content-action-list';
 import { EmptyFolderContent } from './src/components/empty-folder-content';
-import { DocumentListBreadcrumb } from './src/components/document-list-breadcrumb.component';
+import { DocumentListBreadcrumb } from './src/components/breadcrumb/breadcrumb.component';
+import { DocumentListPagination } from './src/components/pagination/pagination.component';
 
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
@@ -34,7 +35,8 @@ export * from './src/components/content-column-list';
 export * from './src/components/content-action';
 export * from './src/components/content-action-list';
 export * from './src/components/empty-folder-content';
-export * from './src/components/document-list-breadcrumb.component';
+export * from './src/components/breadcrumb/breadcrumb.component';
+export * from './src/components/pagination/pagination.component';
 
 // services
 export * from './src/services/folder-actions.service';
@@ -48,7 +50,8 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     ContentAction,
     ContentActionList,
     EmptyFolderContent,
-    DocumentListBreadcrumb
+    DocumentListBreadcrumb,
+    DocumentListPagination
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: [any] = [

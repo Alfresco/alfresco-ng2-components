@@ -70,13 +70,23 @@ export class DocumentListService {
         return this.authService.getAlfrescoApi();
     }
 
-    private getNodesPromise(folder: string) {
+    private getNodesPromise(folder: string, opts?: any) {
         let nodeId = '-root-';
-        let opts = {
+        let params: any = {
             relativePath: folder,
             include: ['path']
         };
-        return this.getAlfrescoApi().node.getNodeChildren(nodeId, opts);
+
+        if (opts) {
+            if (opts.maxItems) {
+                params.maxItems = opts.maxItems;
+            }
+            if (opts.skipCount) {
+                params.skipCount = opts.skipCount;
+            }
+        }
+
+        return this.getAlfrescoApi().node.getNodeChildren(nodeId, params);
     }
 
     deleteNode(nodeId: string) {
@@ -86,10 +96,11 @@ export class DocumentListService {
     /**
      * Gets the folder node with the content.
      * @param folder Path to folder.
+     * @param opts Options.
      * @returns {Observable<NodePaging>} Folder entity.
      */
-    getFolder(folder: string) {
-        return Observable.fromPromise(this.getNodesPromise(folder))
+    getFolder(folder: string, opts?: any) {
+        return Observable.fromPromise(this.getNodesPromise(folder, opts))
             .map(res => <NodePaging> res)
             // .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);

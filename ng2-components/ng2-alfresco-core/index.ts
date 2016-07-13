@@ -24,19 +24,27 @@ import { AlfrescoContentService } from './src/services/AlfrescoContentService.se
 import { ContextMenuService } from './src/services/context-menu.service';
 import { ContextMenuHolderComponent } from './src/components/context-menu-holder.component';
 import { ContextMenuDirective } from './src/components/context-menu.directive';
+import { MDL } from './src/material/MaterialDesignLiteUpgradeElement';
+import { AlfrescoMdlButtonDirective } from './src/material/mdl-button.directive';
+import { AlfrescoMdlMenuDirective } from './src/material/mdl-menu.directive';
 
 export * from './src/services/AlfrescoSettingsService.service';
 export * from './src/services/AlfrescoTranslationLoader.service';
 export * from './src/services/AlfrescoTranslationService.service';
 export * from './src/services/AlfrescoPipeTranslate.service';
-export * from './src/material/MaterialDesignLiteUpgradeElement';
 export * from './src/services/AlfrescoAuthenticationService.service';
 export * from './src/services/AlfrescoContentService.service';
+
+// Material Design Lite integration
+export * from './src/material/MaterialDesignLiteUpgradeElement';
+export * from './src/material/mdl-button.directive';
+export * from './src/material/mdl-menu.directive';
 
 export * from './src/services/context-menu.service';
 export * from './src/components/context-menu-holder.component';
 export * from './src/components/context-menu.directive';
 
+export * from './src/data/pagination-provider';
 export * from './src/utils/object-utils';
 
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
@@ -58,3 +66,8 @@ export const CONTEXT_MENU_DIRECTIVES: [any] = [
     ContextMenuDirective
 ];
 
+export const MATERIAL_DESIGN_DIRECTIVES: [any] = [
+    MDL,
+    AlfrescoMdlButtonDirective,
+    AlfrescoMdlMenuDirective
+];
