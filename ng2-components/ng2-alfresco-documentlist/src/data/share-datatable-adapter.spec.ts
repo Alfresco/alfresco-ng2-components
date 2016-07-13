@@ -123,7 +123,7 @@ describe('ShareDataTableAdapter', () => {
         let adapter = new ShareDataTableAdapter(documentListService, null, null);
         adapter.loadPath(path);
 
-        expect(documentListService.getFolder).toHaveBeenCalledWith(path);
+        expect(documentListService.getFolder).toHaveBeenCalledWith(path, jasmine.anything());
 
         let rows = adapter.getRows();
         expect(rows.length).toBe(1);
