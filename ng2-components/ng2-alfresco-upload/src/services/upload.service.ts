@@ -18,10 +18,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService} from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
-
-declare let AlfrescoApi: any;
 
 /**
  *
@@ -31,23 +29,21 @@ declare let AlfrescoApi: any;
  */
 @Injectable()
 export class UploadService {
-    private _formFields: Object = {};
 
-    private _queue: FileModel[] = [];
+    private formFields: Object = {};
+    private queue: FileModel[] = [];
 
-    filesUpload$: Observable<FileModel[]>;
-    totalCompleted$: Observable<any>;
-    private _filesUploadObserver: Observer<FileModel[]>;
-    private _totalCompletedObserver: Observer<number>;
-
-    private _alfrescoClient: any;
+    private filesUploadObserverProgressBar: Observer<FileModel[]>;
+    private totalCompletedObserver: Observer<number>;
 
     public totalCompleted: number = 0;
 
-    constructor(private settings: AlfrescoSettingsService, private authService: AlfrescoAuthenticationService) {
-        this.filesUpload$ = new Observable<FileModel[]>(observer =>  this._filesUploadObserver = observer).share();
-        this.totalCompleted$ = new Observable<number>(observer =>  this._totalCompletedObserver = observer).share();
-        this._alfrescoClient = this.authService.alfrescoApi;
+    filesUpload$: Observable<FileModel[]>;
+    totalCompleted$: Observable<any>;
+
+    constructor(private authService: AlfrescoAuthenticationService) {
+        this.filesUpload$ = new Observable<FileModel[]>(observer =>  this.filesUploadObserverProgressBar = observer).share();
+        this.totalCompleted$ = new Observable<number>(observer =>  this.totalCompletedObserver = observer).share();
     }
 
     /**
@@ -57,7 +53,7 @@ export class UploadService {
      *
      */
     public setOptions(options: any): void {
-        this._formFields = options.formFields != null ? options.formFields : this._formFields;
+        this.formFields = options.formFields != null ? options.formFields : this.formFields;
     }
 
 
@@ -66,7 +62,7 @@ export class UploadService {
      * @returns {Object}
      */
     public getFormFields(): Object {
-        return this._formFields;
+        return this.formFields;
     }
 
     /**
@@ -80,12 +76,12 @@ export class UploadService {
         let latestFilesAdded: FileModel[] = [];
 
         for (let file of files) {
-            if (this._isFile(file)) {
+            if (this.isFile(file)) {
                 let uploadingFileModel = new FileModel(file);
                 latestFilesAdded.push(uploadingFileModel);
-                this._queue.push(uploadingFileModel);
-                if (this._filesUploadObserver) {
-                    this._filesUploadObserver.next(this._queue);
+                this.queue.push(uploadingFileModel);
+                if (this.filesUploadObserverProgressBar) {
+                    this.filesUploadObserverProgressBar.next(this.queue);
                 }
             }
         }
@@ -96,15 +92,23 @@ export class UploadService {
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
     public uploadFilesInTheQueue(directory: string, elementEmit: EventEmitter<any>): void {
-        let filesToUpload = this._queue.filter((uploadingFileModel) => {
+        let filesToUpload = this.queue.filter((uploadingFileModel) => {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
+
         filesToUpload.forEach((uploadingFileModel) => {
             uploadingFileModel.setUploading();
+
+            let _filesUploadObserverProgressBar = this.filesUploadObserverProgressBar;
+            let _queue = this.queue;
+
             this.authService.getAlfrescoApi().
             upload.uploadFile(uploadingFileModel.file, directory)
                 .on('progress', (progress: any) => {
                     uploadingFileModel.setProgres(progress);
+                    if (_filesUploadObserverProgressBar) {
+                        _filesUploadObserverProgressBar.next(_queue);
+                    }
                 })
                 .on('abort', () => {
                     uploadingFileModel.setAbort();
@@ -122,10 +126,10 @@ export class UploadService {
                         data.response
                     );
 
-                    this._filesUploadObserver.next(this._queue);
+                    _filesUploadObserverProgressBar.next(_queue);
                     if (!uploadingFileModel.abort && !uploadingFileModel.error) {
-                        if (this._totalCompletedObserver) {
-                            this._totalCompletedObserver.next(++this.totalCompleted);
+                        if (this.totalCompletedObserver) {
+                            this.totalCompletedObserver.next(++this.totalCompleted);
                         }
                     }
                 });
@@ -138,7 +142,7 @@ export class UploadService {
      * @return {FileModel[]} - files in the upload queue.
      */
     getQueue(): FileModel[] {
-        return this._queue;
+        return this.queue;
     }
 
     /**
@@ -146,7 +150,7 @@ export class UploadService {
      *
      * @return {boolean}
      */
-    private _isFile(file: any): boolean {
+    private isFile(file: any): boolean {
         return file !== null && (file instanceof Blob || (file.name && file.size));
     }
 
