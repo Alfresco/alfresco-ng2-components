@@ -15,16 +15,11 @@
  * limitations under the License.
  */
 
-import {describe, expect, it, inject, setBaseTestProviders} from '@angular/core/testing';
+import {describe, expect, it, inject} from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import {
-  TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
-  TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
-} from '@angular/platform-browser-dynamic/testing';
 import {Ng2ActivitiProcesslistComponent} from '../../src/components/ng2-activiti-processlist.component';
 
 describe('Basic Example test ng2-activiti-processlist', () => {
-  setBaseTestProviders(TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS);
 
   it('Test hello world', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
     return tcb
