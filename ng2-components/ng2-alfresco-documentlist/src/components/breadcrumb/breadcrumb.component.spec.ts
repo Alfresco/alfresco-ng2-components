@@ -96,7 +96,7 @@ describe('DocumentListBreadcrumb', () => {
     });
 
     it('should update document list on click', () => {
-        let documentList = new DocumentList(null, null);
+        let documentList = new DocumentList(null, null, null);
         spyOn(documentList, 'displayFolderContent').and.stub();
 
         let node = <PathNode> { name: 'name', path: '/path' };

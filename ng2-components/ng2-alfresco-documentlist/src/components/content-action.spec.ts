@@ -44,7 +44,7 @@ describe('ContentAction', () => {
         documentActions = new DocumentActionsService(null, null);
         folderActions = new FolderActionsService(null);
 
-        documentList = new DocumentList(documentServiceMock, null);
+        documentList = new DocumentList(documentServiceMock, null, null);
         actionList = new ContentActionList(documentList);
     });
 

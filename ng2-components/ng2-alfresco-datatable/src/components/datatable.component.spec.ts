@@ -298,6 +298,12 @@ describe('DataTable', () => {
         expect(dataTable.asIconValue(<DataRow> row, column)).toBe(null);
     });
 
+    it('should parse icon values to a valid i18n key', () => {
+        expect(dataTable.iconAltTextKey('custom')).toBe('ICONS.custom');
+        expect(dataTable.iconAltTextKey('/path/to/custom')).toBe('ICONS.custom');
+        expect(dataTable.iconAltTextKey('/path/to/custom.svg')).toBe('ICONS.custom');
+    });
+
     it('should require column and direction to evaluate sorting state', () => {
         expect(dataTable.isColumnSorted(null, null)).toBeFalsy();
         expect(dataTable.isColumnSorted(<DataColumn> {}, null)).toBeFalsy();
