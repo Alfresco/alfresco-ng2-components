@@ -36,7 +36,7 @@ export class DocumentListServiceMock extends DocumentListService {
         authService?: AlfrescoAuthenticationService,
         contentService?: AlfrescoContentService
     ) {
-        super(settings, authService, contentService);
+        super(authService, contentService);
     }
 
     getFolder(folder: string) {

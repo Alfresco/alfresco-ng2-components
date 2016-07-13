@@ -19,6 +19,7 @@ import { Observable } from 'rxjs/Rx';
 
 export interface AbstractAuthentication {
     TYPE: string;
+    alfrescoApi: any;
 
     login(username: string, password: string): Observable<any>;
 
@@ -26,8 +27,7 @@ export interface AbstractAuthentication {
 
     isLoggedIn(): boolean ;
 
-    getToken(): string;
+    getTicket(): string;
 
-    saveToken(): void;
-
+    saveTicket(ticket: any): void;
 }

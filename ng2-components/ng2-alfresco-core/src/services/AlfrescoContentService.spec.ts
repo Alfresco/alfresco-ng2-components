@@ -26,6 +26,8 @@ describe('AlfrescoContentService', () => {
 
     let injector, service: AlfrescoContentService, authService: AlfrescoAuthenticationService;
     const nodeId = 'blah';
+    let DEFAULT_CONTEXT_PATH: string = '/alfresco';
+    let DEFAULT_BASE_API_PATH: string = '/api/-default-/public/alfresco/versions/1';
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
@@ -35,7 +37,7 @@ describe('AlfrescoContentService', () => {
             AlfrescoSettingsService
         ]);
         spyOn(localStorage, 'getItem').and.callFake(function (key) {
-            return 'myToken';
+            return 'myTicket';
         });
         service = injector.get(AlfrescoContentService);
         authService = injector.get(AlfrescoAuthenticationService);
@@ -47,9 +49,9 @@ describe('AlfrescoContentService', () => {
                 id: nodeId
             }
         })).toBe(
-            AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + AlfrescoSettingsService.DEFAULT_CONTEXT_PATH +
-                AlfrescoSettingsService.DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/content' +
-                '?attachment=false&alf_ticket=' + authService.getToken()
+            AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + DEFAULT_CONTEXT_PATH +
+                DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/content' +
+                '?attachment=false&alf_ticket=' + authService.getTicket()
         );
     });
 
@@ -59,9 +61,9 @@ describe('AlfrescoContentService', () => {
                 id: nodeId
             }
         })).toBe(
-            AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + AlfrescoSettingsService.DEFAULT_CONTEXT_PATH +
-            AlfrescoSettingsService.DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/renditions/doclib/content' +
-            '?attachment=false&alf_ticket=' + authService.getToken()
+            AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + DEFAULT_CONTEXT_PATH +
+            DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/renditions/doclib/content' +
+            '?attachment=false&alf_ticket=' + authService.getTicket()
         );
     });
 });

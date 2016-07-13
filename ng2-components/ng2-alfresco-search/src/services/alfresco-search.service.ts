@@ -19,7 +19,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import {
-    AlfrescoSettingsService,
     AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
 
@@ -31,23 +30,17 @@ declare let AlfrescoApi: any;
 @Injectable()
 export class AlfrescoSearchService {
 
-    constructor(private settings: AlfrescoSettingsService,
-                private authService: AlfrescoAuthenticationService) {
-    }
-
-    private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
+    constructor(private authService: AlfrescoAuthenticationService) {
     }
 
     private getSearchNodesPromise(term: string) {
-        let apiInstance = new AlfrescoApi.Core.SearchApi(this.getAlfrescoClient());
         let nodeId = '-root-';
         let opts = {
             include: ['path'],
             rootNodeId: nodeId,
             nodeType: 'cm:content'
         };
-        return apiInstance.liveSearchNodes(term, opts);
+        return this.authService.getAlfrescoApi().search.liveSearchNodes(term, opts);
     }
 
     /**

@@ -82,7 +82,6 @@ export class UploadButtonComponent {
     constructor(public el: ElementRef,
                 private _uploaderService: UploadService,
                 translate: AlfrescoTranslationService) {
-        console.log('UploadComponent constructor', el);
 
         let formFields = this.createFormFields();
         this._uploaderService.setOptions(formFields);

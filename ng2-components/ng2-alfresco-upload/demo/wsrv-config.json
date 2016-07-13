@@ -1,0 +1,6 @@
+{
+    "watch": [
+        "node_modules/ng2-alfresco-core/dist/**/*.{html,htm,css,js}",
+        "node_modules/ng2-alfresco-upload/dist/**/*.{html,htm,css,js}"
+    ]
+}

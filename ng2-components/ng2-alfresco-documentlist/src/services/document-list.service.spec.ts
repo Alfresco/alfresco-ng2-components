@@ -48,8 +48,8 @@ describe('DocumentListService', () => {
 
         settingsService = injector.get(AlfrescoSettingsService);
         authService = injector.get(AlfrescoAuthenticationService);
-        contentService = new AlfrescoContentService(settingsService, authService);
-        service = new DocumentListService(settingsService, authService, contentService);
+        contentService = new AlfrescoContentService(authService);
+        service = new DocumentListService(authService, contentService);
     });
 
     it('should require node to get thumbnail url', () => {
@@ -57,7 +57,7 @@ describe('DocumentListService', () => {
     });
 
     it('should require content service to get thumbnail url', () => {
-        service = new DocumentListService(settingsService, authService, null);
+        service = new DocumentListService(authService, null);
         let file = new FileNode();
         expect(service.getDocumentThumbnailUrl(file)).toBeNull();
     });

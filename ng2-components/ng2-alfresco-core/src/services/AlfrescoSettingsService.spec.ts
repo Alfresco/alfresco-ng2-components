@@ -37,11 +37,4 @@ describe('AlfrescoSettingsService', () => {
         expect(service.host).toBe(address);
     });
 
-    it('should format api url', () => {
-        let address = 'http://192.168.0.1';
-        let expectedUrl =
-            `${address}${AlfrescoSettingsService.DEFAULT_CONTEXT_PATH}${AlfrescoSettingsService.DEFAULT_BASE_API_PATH}`;
-        service.host = address;
-        expect(service.getApiBaseUrl()).toBe(expectedUrl);
-    });
 });

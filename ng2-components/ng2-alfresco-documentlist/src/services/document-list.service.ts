@@ -20,7 +20,6 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 import {
-    AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService
 } from 'ng2-alfresco-core';
@@ -62,19 +61,16 @@ export class DocumentListService {
     };
 
     constructor(
-        private settings: AlfrescoSettingsService,
         private authService: AlfrescoAuthenticationService,
         private contentService: AlfrescoContentService
     ) {
     }
 
-    private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
+    private getAlfrescoApi() {
+        return this.authService.getAlfrescoApi();
     }
 
     private getNodesPromise(folder: string, opts?: any) {
-        let alfrescoClient = this.getAlfrescoClient();
-        let apiInstance = new AlfrescoApi.Core.NodesApi(alfrescoClient);
         let nodeId = '-root-';
         let params: any = {
             relativePath: folder,
@@ -90,23 +86,20 @@ export class DocumentListService {
             }
         }
 
-        return apiInstance.getNodeChildren(nodeId, params);
-    }
-    deleteNode(nodeId: string) {
-        let client = this.getAlfrescoClient();
-        let nodesApi = new AlfrescoApi.Core.NodesApi(client);
-        let opts = {};
-        return Observable.fromPromise(nodesApi.deleteNode(nodeId, opts));
+        return this.getAlfrescoApi().node.getNodeChildren(nodeId, params);
     }
 
-    // TODO: rename to 'getFolderContent'
+    deleteNode(nodeId: string) {
+        return Observable.fromPromise(this.getAlfrescoApi().node.deleteNode(nodeId));
+    }
+
     /**
      * Gets the folder node with the content.
      * @param folder Path to folder.
-     * @param opts Options
+     * @param opts Options.
      * @returns {Observable<NodePaging>} Folder entity.
      */
-    getFolder(folder: string, opts?: any): Observable<NodePaging> {
+    getFolder(folder: string, opts?: any) {
         return Observable.fromPromise(this.getNodesPromise(folder, opts))
             .map(res => <NodePaging> res)
             // .do(data => console.log('Node data', data)) // eyeball results in the console
@@ -118,7 +111,7 @@ export class DocumentListService {
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(node: MinimalNodeEntity): string {
+    getDocumentThumbnailUrl(node: MinimalNodeEntity) {
         if (node && this.contentService) {
             return this.contentService.getDocumentThumbnailUrl(node);
         }
