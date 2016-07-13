@@ -15,4 +15,17 @@
  * limitations under the License.
  */
 
-export * from './src/components/ng2-activiti-processlist.component';
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'ng-2-activiti-processlist',
+    styles: [
+      `
+              :host h1 {
+                  font-size:22px
+              }
+          `
+    ],
+    template: `<H1>Hello World Angular 2 ng2-activiti-processlist</H1>`
+})
+export class Ng2ActivitiProcesslistComponent {}

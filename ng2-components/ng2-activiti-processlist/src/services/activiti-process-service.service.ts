@@ -15,17 +15,12 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import {
+    AlfrescoSettingsService
+} from 'ng2-alfresco-core';
 
-@Component({
-    selector: 'ng-2-activiti-processlist',
-    styles: [
-      `
-              :host h1 {
-                  font-size:22px
-              }
-          `
-    ],
-    template: `<H1>Hello World Angular 2 ng-2-activiti-processlist</H1>`
-})
-export class Ng2ActivitiProcesslistComponent {}
+export class ActivitiProcessService {
+
+    constructor(private alfrescoSettingsService: AlfrescoSettingsService) {
+    }
+}
