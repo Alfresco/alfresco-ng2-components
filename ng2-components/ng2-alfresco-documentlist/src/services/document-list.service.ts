@@ -72,15 +72,25 @@ export class DocumentListService {
         return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
     }
 
-    private getNodesPromise(folder: string) {
+    private getNodesPromise(folder: string, opts?: any) {
         let alfrescoClient = this.getAlfrescoClient();
         let apiInstance = new AlfrescoApi.Core.NodesApi(alfrescoClient);
         let nodeId = '-root-';
-        let opts = {
+        let params: any = {
             relativePath: folder,
             include: ['path']
         };
-        return apiInstance.getNodeChildren(nodeId, opts);
+
+        if (opts) {
+            if (opts.maxItems) {
+                params.maxItems = opts.maxItems;
+            }
+            if (opts.skipCount) {
+                params.skipCount = opts.skipCount;
+            }
+        }
+
+        return apiInstance.getNodeChildren(nodeId, params);
     }
     deleteNode(nodeId: string) {
         let client = this.getAlfrescoClient();
@@ -93,10 +103,11 @@ export class DocumentListService {
     /**
      * Gets the folder node with the content.
      * @param folder Path to folder.
+     * @param opts Options
      * @returns {Observable<NodePaging>} Folder entity.
      */
-    getFolder(folder: string): Observable<NodePaging> {
-        return Observable.fromPromise(this.getNodesPromise(folder))
+    getFolder(folder: string, opts?: any): Observable<NodePaging> {
+        return Observable.fromPromise(this.getNodesPromise(folder, opts))
             .map(res => <NodePaging> res)
             // .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);

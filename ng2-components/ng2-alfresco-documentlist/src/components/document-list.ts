@@ -27,7 +27,8 @@ import {
     OnChanges,
     TemplateRef,
     NgZone,
-    ViewChild
+    ViewChild,
+    HostListener
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
 import { CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
@@ -53,15 +54,13 @@ declare let __moduleName: string;
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html',
     providers: [DocumentListService],
-    directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES],
-    host: {
-        '(contextmenu)': 'onShowContextMenu($event)'
-    }
+    directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES]
 })
 export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, AfterContentInit, OnChanges {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
+    static DEFAULT_PAGE_SIZE: number = 20;
 
     DEFAULT_ROOT_FOLDER: string = '/';
 
@@ -84,6 +83,9 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     @Input()
     contextMenuActions: boolean = false;
+
+    @Input()
+    pageSize: number = DocumentList.DEFAULT_PAGE_SIZE;
 
     @Output()
     nodeClick: EventEmitter<any> = new EventEmitter();
@@ -154,6 +156,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     ngOnInit() {
         this.data.thumbnails = this.thumbnails;
+        this.data.maxItems = this.pageSize;
         this.displayFolderContent(this.currentFolderPath);
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
     }
@@ -211,6 +214,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         return [];
     }
 
+    @HostListener('contextmenu', ['$event'])
     onShowContextMenu(e?: Event) {
         if (e) {
             e.preventDefault();
@@ -365,5 +369,4 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
             this.executeContentAction(node, action);
         }
     }
-
 }

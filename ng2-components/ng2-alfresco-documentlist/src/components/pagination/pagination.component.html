@@ -13,11 +13,15 @@
             </li>
         </ul>
     </span>
-    <span class="mdl-paging__count">1-10 of 25</span>
-    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-paging__prev">
+    <span class="mdl-paging__count">{{summary}}</span>
+    <button (click)="showPrevPage()"
+            [disabled]="!prevPageAvail"
+            alfresco-mdl-button class="mdl-button--icon mdl-paging__prev">
         <i class="material-icons">keyboard_arrow_left</i>
     </button>
-    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-paging__next">
+    <button (click)="showNextPage()"
+            [disabled]="!nextPageAvail"
+            alfresco-mdl-button class="mdl-button--icon mdl-paging__next">
         <i class="material-icons">keyboard_arrow_right</i>
     </button>
 </div>

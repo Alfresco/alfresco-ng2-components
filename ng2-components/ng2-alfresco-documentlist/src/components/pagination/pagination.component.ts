@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
     MATERIAL_DESIGN_DIRECTIVES,
     PaginationProvider
@@ -30,7 +30,9 @@ declare let __moduleName: string;
     styleUrls: ['./pagination.component.css'],
     directives: [MATERIAL_DESIGN_DIRECTIVES]
 })
-export class DocumentListPagination implements OnInit {
+export class DocumentListPagination {
+
+    DEFAULT_PAGE_SIZE: number = 20;
 
     @Input()
     supportedPageSizes: number[] = [5, 10, 20, 50, 100];
@@ -38,17 +40,47 @@ export class DocumentListPagination implements OnInit {
     @Input()
     provider: PaginationProvider;
 
-    @Input()
-    pageSize: number = 10;
+    get pageSize(): number {
+        if (this.provider) {
+            return this.provider.maxItems;
+        }
+        return this.DEFAULT_PAGE_SIZE;
+    }
 
-    constructor() {}
+    set pageSize(value: number) {
+        if (this.provider) {
+            this.provider.maxItems = value;
+        }
+    }
 
     setPageSize(value: number) {
         this.pageSize = value;
     }
 
-    ngOnInit() {
-        console.info(this.provider);
+    get summary(): string {
+        let from = this.provider.skipCount;
+        if (from === 0) {
+            from = 1;
+        }
+        let to = this.provider.skipCount + this.provider.count;
+        let of = this.provider.totalItems;
+        return `${from}-${to} of ${of}`;
+    }
+
+    get nextPageAvail(): boolean {
+        return this.provider.hasMoreItems;
+    }
+
+    get prevPageAvail(): boolean {
+        return this.provider.skipCount > 0;
+    }
+
+    showNextPage() {
+        this.provider.skipCount += this.provider.maxItems;
+    }
+
+    showPrevPage() {
+        this.provider.skipCount -= this.provider.maxItems;
     }
 }
 

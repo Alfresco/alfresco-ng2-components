@@ -27,22 +27,24 @@ import { DocumentListService } from './../services/document-list.service';
 
 export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvider {
 
-    static ERR_ROW_NOT_FOUND: string = 'Row not found';
-    static ERR_COL_NOT_FOUND: string = 'Column not found';
+    ERR_ROW_NOT_FOUND: string = 'Row not found';
+    ERR_COL_NOT_FOUND: string = 'Column not found';
 
-    static DEFAULT_DATE_FORMAT: string = 'medium';
-    static DEFAULT_PAGE_SIZE: number = 100;
+    DEFAULT_DATE_FORMAT: string = 'medium';
+    DEFAULT_PAGE_SIZE: number = 20;
+    MIN_PAGE_SIZE: number = 5;
 
     private sorting: DataSorting;
     private rows: DataRow[];
     private columns: DataColumn[];
     private page: NodePaging;
+    private currentPath: string;
 
     private _count: number = 0;
     private _hasMoreItems: boolean = false;
     private _totalItems: number = 0;
     private _skipCount: number = 0;
-    private _maxItems: number = ShareDataTableAdapter.DEFAULT_PAGE_SIZE;
+    private _maxItems: number = this.DEFAULT_PAGE_SIZE;
 
     thumbnails: boolean = false;
 
@@ -70,8 +72,22 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         return this._skipCount;
     }
 
+    set skipCount(value: number) {
+        if (value !== this._skipCount) {
+            this._skipCount = value > 0 ? value : 0;
+            this.loadPath(this.currentPath);
+        }
+    }
+
     get maxItems(): number {
         return this._maxItems;
+    }
+
+    set maxItems(value: number) {
+        if (value !== this._maxItems) {
+            this._maxItems = value > this.MIN_PAGE_SIZE ? value : this.MIN_PAGE_SIZE;
+            this.loadPath(this.currentPath);
+        }
     }
 
     getRows(): Array<DataRow> {
@@ -94,16 +110,16 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     getValue(row: DataRow, col: DataColumn): any {
         if (!row) {
-            throw new Error(ShareDataTableAdapter.ERR_ROW_NOT_FOUND);
+            throw new Error(this.ERR_ROW_NOT_FOUND);
         }
         if (!col) {
-            throw new Error(ShareDataTableAdapter.ERR_COL_NOT_FOUND);
+            throw new Error(this.ERR_COL_NOT_FOUND);
         }
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
             let datePipe = new DatePipe();
-            let format = col.format || ShareDataTableAdapter.DEFAULT_DATE_FORMAT;
+            let format = col.format || this.DEFAULT_DATE_FORMAT;
             try {
                 return datePipe.transform(value, format);
             } catch (err) {
@@ -193,8 +209,12 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     loadPath(path: string) {
         if (path && this.documentListService) {
+            this.currentPath = path;
             this.documentListService
-                .getFolder(path)
+                .getFolder(path, {
+                    maxItems: this._maxItems,
+                    skipCount: this._skipCount
+                })
                 .subscribe(val => this.loadPage(<NodePaging>val),
                 error => console.error(error));
         }
@@ -240,7 +260,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         this._hasMoreItems = false;
         this._totalItems = 0;
         this._skipCount = 0;
-        this._maxItems = ShareDataTableAdapter.DEFAULT_PAGE_SIZE;
+        this._maxItems = this.DEFAULT_PAGE_SIZE;
     }
 }
 
