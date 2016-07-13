@@ -15,17 +15,21 @@
  * limitations under the License.
  */
 
-import {
-    describe,
-    beforeEach
-} from '@angular/core/testing';
-import {AlfrescoSearchService} from './alfresco-search.service';
 
-describe('AlfrescoSearchService', () => {
+export class AlfrescoApiMock {
 
-    let service: AlfrescoSearchService;
+    login(username: string, password: string) {
+        return new Promise((resolve) => {
+            resolve('TICKET_4479f4d3bb155195879bfbb8d5206f433488a1b1');
+        });
+    }
 
-    beforeEach(() => {
-        service = new AlfrescoSearchService(null);
-    });
-});
+    logout() {
+        return new Promise((resolve) => {
+            resolve('logout');
+        });
+    }
+
+    changeConfig() {
+    }
+}

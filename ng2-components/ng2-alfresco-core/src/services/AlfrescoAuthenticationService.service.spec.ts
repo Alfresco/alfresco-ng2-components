@@ -36,7 +36,7 @@ describe('AlfrescoAuthentication', () => {
         resolve({
             entry: {
                 userId: 'fake-username',
-                id: 'fake-post-token-ECM'
+                id: 'fake-post-ticket-ECM'
             }
         });
         reject({
@@ -48,7 +48,7 @@ describe('AlfrescoAuthentication', () => {
 
     fakePromiseBPM = new Promise(function (resolve, reject) {
         resolve({
-            status: 'fake-post-token-BPM'
+            status: 'fake-post-ticket-BPM'
         });
         reject({
             response: {
@@ -109,7 +109,7 @@ describe('AlfrescoAuthentication', () => {
             );
         });
 
-        it('should return an ECM token after the login done', (done) => {
+        it('should return an ECM ticket after the login done', (done) => {
             let providers = ['ECM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
@@ -120,13 +120,13 @@ describe('AlfrescoAuthentication', () => {
             service.login('fake-username', 'fake-password', providers)
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(true);
-                    expect(service.getToken(providers[0])).toEqual('fake-post-token-ECM');
+                    expect(service.getTicket(providers[0])).toEqual('fake-post-ticket-ECM');
                     done();
                 }
             );
         });
 
-        it('should return token undefined when the credentials are wrong', (done) => {
+        it('should return ticket undefined when the credentials are wrong', (done) => {
             let providers = ['ECM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
@@ -142,7 +142,7 @@ describe('AlfrescoAuthentication', () => {
                 },
                 (err: any) => {
                     expect(service.isLoggedIn(providers[0])).toBe(false);
-                    expect(service.getToken(providers[0])).toBeUndefined();
+                    expect(service.getTicket(providers[0])).toBeUndefined();
                     done();
                 }
             );
@@ -186,21 +186,21 @@ describe('AlfrescoAuthentication', () => {
             );
         });
 
-        it('should return a token undefined after logout', (done) => {
+        it('should return a ticket undefined after logout', (done) => {
             let providers = ['ECM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            localStorage.setItem('token-ECM', 'fake-post-token-ECM');
+            localStorage.setItem('ticket-ECM', 'fake-post-ticket-ECM');
             service.createProviderInstance(providers);
             spyOn(AlfrescoAuthenticationECM.prototype, 'getDeleteTicketPromise').and.returnValue(fakePromiseECM);
 
             service.logout()
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(false);
-                    expect(service.getToken(providers[0])).toBeUndefined();
-                    expect(localStorage.getItem('token-ECM')).toBeUndefined();
+                    expect(service.getTicket(providers[0])).toBeUndefined();
+                    expect(localStorage.getItem('ticket-ECM')).toBeUndefined();
                     done();
                 }
             );
@@ -252,7 +252,7 @@ describe('AlfrescoAuthentication', () => {
             );
         });
 
-        it('should return an BPM token after the login done', (done) => {
+        it('should return an BPM ticket after the login done', (done) => {
             let providers = ['BPM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
@@ -263,13 +263,13 @@ describe('AlfrescoAuthentication', () => {
             service.login('fake-username', 'fake-password', providers)
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(true);
-                    expect(service.getToken(providers[0])).toEqual('fake-post-token-BPM');
+                    expect(service.getTicket(providers[0])).toEqual('fake-post-ticket-BPM');
                     done();
                 }
             );
         });
 
-        it('should return token undefined when the credentials are wrong', (done) => {
+        it('should return ticket undefined when the credentials are wrong', (done) => {
             let providers = ['BPM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
@@ -284,27 +284,27 @@ describe('AlfrescoAuthentication', () => {
                 },
                 (err: any) => {
                     expect(service.isLoggedIn(providers[0])).toBe(false);
-                    expect(service.getToken(providers[0])).toBeUndefined();
+                    expect(service.getTicket(providers[0])).toBeUndefined();
                     done();
                 }
             );
         });
 
-        it('should return a token undefined after logout', (done) => {
+        it('should return a ticket undefined after logout', (done) => {
             let providers = ['BPM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            localStorage.setItem('token-BPM', 'fake-post-token-BPM');
+            localStorage.setItem('ticket-BPM', 'fake-post-ticket-BPM');
             service.createProviderInstance(providers);
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogout').and.returnValue(fakePromiseBPM);
 
             service.logout()
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(false);
-                    expect(service.getToken(providers[0])).toBeUndefined();
-                    expect(localStorage.getItem('token-BPM')).toBeUndefined();
+                    expect(service.getTicket(providers[0])).toBeUndefined();
+                    expect(localStorage.getItem('ticket-BPM')).toBeUndefined();
                     done();
                 }
             );
@@ -316,7 +316,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            localStorage.setItem('token-BPM', 'fake-post-token-BPM');
+            localStorage.setItem('ticket-BPM', 'fake-post-ticket-BPM');
             service.createProviderInstance(providers);
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogout').and.returnValue(Promise.reject('fake logout error'));
 
@@ -328,7 +328,7 @@ describe('AlfrescoAuthentication', () => {
                 (err: any) => {
                     expect(err).toBeDefined();
                     expect(err.message).toEqual('fake logout error');
-                    expect(localStorage.getItem('token-BPM')).toEqual('fake-post-token-BPM');
+                    expect(localStorage.getItem('ticket-BPM')).toEqual('fake-post-ticket-BPM');
                     done();
                 }
             );
@@ -361,7 +361,7 @@ describe('AlfrescoAuthentication', () => {
             );
         });
 
-        it('should return both ECM and BPM tokens after the login done', (done) => {
+        it('should return both ECM and BPM tickets after the login done', (done) => {
             let providers = ['ECM', 'BPM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
@@ -374,14 +374,14 @@ describe('AlfrescoAuthentication', () => {
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(true);
                     expect(service.isLoggedIn(providers[1])).toBe(true);
-                    expect(service.getToken(providers[0])).toEqual('fake-post-token-ECM');
-                    expect(service.getToken(providers[1])).toEqual('fake-post-token-BPM');
+                    expect(service.getTicket(providers[0])).toEqual('fake-post-ticket-ECM');
+                    expect(service.getTicket(providers[1])).toEqual('fake-post-ticket-BPM');
                     done();
                 }
             );
         });
 
-        it('should return token undefined when the credentials are correct for the ECM login but wrong for the BPM login', (done) => {
+        it('should return ticket undefined when the credentials are correct for the ECM login but wrong for the BPM login', (done) => {
             let providers = ['ECM', 'BPM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
@@ -397,15 +397,15 @@ describe('AlfrescoAuthentication', () => {
                 },
                 (err: any) => {
                     expect(service.isLoggedIn(providers[0])).toBe(false);
-                    expect(service.getToken(providers[0])).toBeUndefined();
+                    expect(service.getTicket(providers[0])).toBeUndefined();
                     expect(service.isLoggedIn(providers[1])).toBe(false);
-                    expect(service.getToken(providers[1])).toBeUndefined();
+                    expect(service.getTicket(providers[1])).toBeUndefined();
                     done();
                 }
             );
         });
 
-        it('should return token undefined when the credentials are correct for the BPM login but wrong for the ECM login', (done) => {
+        it('should return ticket undefined when the credentials are correct for the BPM login but wrong for the ECM login', (done) => {
             let providers = ['ECM', 'BPM'];
             let alfSetting = injector.get(AlfrescoSettingsService);
             alfSetting.providers = providers;
@@ -422,9 +422,9 @@ describe('AlfrescoAuthentication', () => {
                 },
                 (err: any) => {
                     expect(service.isLoggedIn(providers[0])).toBe(false);
-                    expect(service.getToken(providers[0])).toBeUndefined();
+                    expect(service.getTicket(providers[0])).toBeUndefined();
                     expect(service.isLoggedIn(providers[1])).toBe(false);
-                    expect(service.getToken(providers[1])).toBeUndefined();
+                    expect(service.getTicket(providers[1])).toBeUndefined();
                     done();
                 }
             );

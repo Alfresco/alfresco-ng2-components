@@ -14,16 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
-
-declare let AlfrescoApi: any;
 
 /**
  *
@@ -33,29 +29,21 @@ declare let AlfrescoApi: any;
  */
 @Injectable()
 export class UploadService {
-    private _url: string = '/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children';
 
-    private _method: string = 'POST';
-    private _fieldName: string = 'filedata';
-    private _formFields: Object = {};
+    private formFields: Object = {};
+    private queue: FileModel[] = [];
 
-    private _queue: FileModel[] = [];
-
-    filesUpload$: Observable<FileModel[]>;
-    totalCompleted$: Observable<any>;
-    private _filesUploadObserver: Observer<FileModel[]>;
-    private _totalCompletedObserver: Observer<number>;
-
-    private _alfrescoClient: any;
+    private filesUploadObserverProgressBar: Observer<FileModel[]>;
+    private totalCompletedObserver: Observer<number>;
 
     public totalCompleted: number = 0;
 
-    constructor(private settings: AlfrescoSettingsService,
-                private authService: AlfrescoAuthenticationService) {
-        console.log('UploadService constructor');
-        this.filesUpload$ = new Observable<FileModel[]>(observer =>  this._filesUploadObserver = observer).share();
-        this.totalCompleted$ = new Observable<number>(observer =>  this._totalCompletedObserver = observer).share();
-        this._alfrescoClient = this.getAlfrescoClient();
+    filesUpload$: Observable<FileModel[]>;
+    totalCompleted$: Observable<any>;
+
+    constructor(private authService: AlfrescoAuthenticationService) {
+        this.filesUpload$ = new Observable<FileModel[]>(observer =>  this.filesUploadObserverProgressBar = observer).share();
+        this.totalCompleted$ = new Observable<number>(observer =>  this.totalCompletedObserver = observer).share();
     }
 
     /**
@@ -65,40 +53,16 @@ export class UploadService {
      *
      */
     public setOptions(options: any): void {
-        this._url = options.url || this._url;
-        this._formFields = options.formFields != null ? options.formFields : this._formFields;
+        this.formFields = options.formFields != null ? options.formFields : this.formFields;
     }
 
-    /**
-     * Get the host
-     * @returns {string}
-     */
-    public getHost(): string {
-        return this.settings.host;
-    }
-
-    /**
-     * Get the url
-     * @returns {string}
-     */
-    public getUrl(): string {
-        return this._url;
-    }
 
     /**
      * Get the form fields
      * @returns {Object}
      */
-    public getFormFileds(): Object {
-        return this._formFields;
-    }
-
-    /**
-     * Get the alfresco client
-     * @returns {AlfrescoApi.ApiClient}
-     */
-    private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
+    public getFormFields(): Object {
+        return this.formFields;
     }
 
     /**
@@ -112,12 +76,12 @@ export class UploadService {
         let latestFilesAdded: FileModel[] = [];
 
         for (let file of files) {
-            if (this._isFile(file)) {
+            if (this.isFile(file)) {
                 let uploadingFileModel = new FileModel(file);
                 latestFilesAdded.push(uploadingFileModel);
-                this._queue.push(uploadingFileModel);
-                if (this._filesUploadObserver) {
-                    this._filesUploadObserver.next(this._queue);
+                this.queue.push(uploadingFileModel);
+                if (this.filesUploadObserverProgressBar) {
+                    this.filesUploadObserverProgressBar.next(this.queue);
                 }
             }
         }
@@ -128,92 +92,48 @@ export class UploadService {
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
     public uploadFilesInTheQueue(directory: string, elementEmit: EventEmitter<any>): void {
-        let filesToUpload = this._queue.filter((uploadingFileModel) => {
+        let filesToUpload = this.queue.filter((uploadingFileModel) => {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
+
         filesToUpload.forEach((uploadingFileModel) => {
             uploadingFileModel.setUploading();
-            this.uploadFile(uploadingFileModel, directory, elementEmit);
-        });
-    }
 
-    /**
-     * Create an XMLHttpRequest and return it
-     * @returns {XMLHttpRequest}
-     */
-    createXMLHttpRequestInstance(uploadingFileModel: any, elementEmit: EventEmitter<any>) {
-        let xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.upload.onprogress = (e) => {
-            if (e.lengthComputable) {
-                let percent = Math.round(e.loaded / e.total * 100);
-                uploadingFileModel.setProgres({
-                    total: e.total,
-                    loaded: e.loaded,
-                    percent: percent
-                });
-                if (this._filesUploadObserver) {
-                    this._filesUploadObserver.next(this._queue);
-                }
-            }
-        };
+            let _filesUploadObserverProgressBar = this.filesUploadObserverProgressBar;
+            let _queue = this.queue;
 
-        xmlHttpRequest.upload.onabort = (e) => {
-            uploadingFileModel.setAbort();
-        };
-
-        xmlHttpRequest.upload.onerror = (e) => {
-            uploadingFileModel.setError();
-        };
-
-        xmlHttpRequest.onreadystatechange = () => {
-            if (xmlHttpRequest.readyState === XMLHttpRequest.DONE) {
-                elementEmit.emit({
-                    value: 'File uploaded'
-                });
-                uploadingFileModel.onFinished(
-                    xmlHttpRequest.status,
-                    xmlHttpRequest.statusText,
-                    xmlHttpRequest.response
-                );
-                this._filesUploadObserver.next(this._queue);
-                if (!uploadingFileModel.abort && !uploadingFileModel.error) {
-                    if (this._totalCompletedObserver) {
-                        this._totalCompletedObserver.next(++this.totalCompleted);
+            this.authService.getAlfrescoApi().
+            upload.uploadFile(uploadingFileModel.file, directory)
+                .on('progress', (progress: any) => {
+                    uploadingFileModel.setProgres(progress);
+                    if (_filesUploadObserverProgressBar) {
+                        _filesUploadObserverProgressBar.next(_queue);
                     }
-                }
-            }
-        };
-        return xmlHttpRequest;
-    }
+                })
+                .on('abort', () => {
+                    uploadingFileModel.setAbort();
+                })
+                .on('error', () => {
+                    uploadingFileModel.setError();
+                })
+                .on('success', (data: any) => {
+                    elementEmit.emit({
+                        value: 'File uploaded'
+                    });
+                    uploadingFileModel.onFinished(
+                        data.status,
+                        data.statusText,
+                        data.response
+                    );
 
-    /**
-     * Upload a file into the directory folder, and enrich it with the xhr.
-     *
-     * @param {FileModel} - files to be uploaded.
-     *
-     */
-    uploadFile(uploadingFileModel: FileModel, directory: string, elementEmit: EventEmitter<any>): void {
-        // Configure HTTP basic authorization: basicAuth
-        let basicAuth = this._alfrescoClient.authentications['basicAuth'];
-
-        let form = new FormData();
-        form.append(this._fieldName, uploadingFileModel.file, uploadingFileModel.name);
-        Object.keys(this._formFields).forEach((key: any) => {
-           form.append(key, this._formFields[key]);
+                    _filesUploadObserverProgressBar.next(_queue);
+                    if (!uploadingFileModel.abort && !uploadingFileModel.error) {
+                        if (this.totalCompletedObserver) {
+                            this.totalCompletedObserver.next(++this.totalCompleted);
+                        }
+                    }
+                });
         });
-
-        form.append('relativePath', directory);
-
-        let xmlHttpRequest = this.createXMLHttpRequestInstance(uploadingFileModel, elementEmit);
-        uploadingFileModel._xmlHttpRequest = xmlHttpRequest;
-
-        xmlHttpRequest.open(this._method, this.getHost() + this.getUrl(), true);
-        let authToken = btoa(basicAuth.username + ':' + basicAuth.password);
-        if (authToken) {
-            xmlHttpRequest.setRequestHeader('Authorization', `${basicAuth.type} ${authToken}`);
-        }
-
-        xmlHttpRequest.send(form);
     }
 
     /**
@@ -222,7 +142,7 @@ export class UploadService {
      * @return {FileModel[]} - files in the upload queue.
      */
     getQueue(): FileModel[] {
-        return this._queue;
+        return this.queue;
     }
 
     /**
@@ -230,7 +150,7 @@ export class UploadService {
      *
      * @return {boolean}
      */
-    private _isFile(file: any): boolean {
+    private isFile(file: any): boolean {
         return file !== null && (file instanceof Blob || (file.name && file.size));
     }
 
@@ -239,15 +159,7 @@ export class UploadService {
      * @param name - the folder name
      */
     createFolder(relativePath: string, name: string) {
-        console.log('Directory created' + name);
-        let apiInstance = new AlfrescoApi.NodesApi(this._alfrescoClient);
-        let nodeId = '-root-';
-        let nodeBody = {
-            'name': name,
-            'nodeType': 'cm:folder',
-            'relativePath': relativePath
-        };
-        return Observable.fromPromise(apiInstance.addNode(nodeId, nodeBody))
+        return Observable.fromPromise(this.authService.getAlfrescoApi().node.createFolder(name, relativePath))
             .map(res => {
                 return res;
             })

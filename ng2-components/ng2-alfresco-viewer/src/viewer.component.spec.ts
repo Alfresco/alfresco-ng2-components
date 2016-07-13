@@ -107,8 +107,6 @@ import { EventMock } from './assets/event.mock';
                      let component = fixture.componentInstance;
                      component.urlFile = 'fake-url-file';
 
-
-
                      fixture.detectChanges();
                      EventMock.keyDown(27);
                      fixture.detectChanges();

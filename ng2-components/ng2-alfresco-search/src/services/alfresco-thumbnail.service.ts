@@ -20,8 +20,6 @@ import {
     AlfrescoContentService
 } from 'ng2-alfresco-core';
 
-declare let AlfrescoApi: any;
-
 @Injectable()
 export class AlfrescoThumbnailService {
 

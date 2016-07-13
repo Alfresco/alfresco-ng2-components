@@ -26,84 +26,97 @@ declare let AlfrescoApi: any;
 export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implements AbstractAuthentication {
 
     TYPE: string = 'ECM';
-    private token: string;
 
+    alfrescoApi: any;
+    /**
+     * Constructor
+     * @param alfrescoSettingsService
+     */
     constructor(private alfrescoSettingsService: AlfrescoSettingsService,
                 private http: Http) {
         super(alfrescoSettingsService, http);
+
+        if (!this.isLoggedIn) {
+            this.alfrescoApi = new AlfrescoApi({
+                host: this.getBaseUrl()
+            });
+        } else {
+            this.alfrescoApi = new AlfrescoApi({
+                ticket: this.getTicket(),
+                host: this.getBaseUrl()
+            });
+        }
+    }
+
+    getBaseUrl(): string {
+        return this.alfrescoSettingsService.host;
+    }
+
+    getAlfrescoApi(): any {
+        return this.alfrescoApi;
     }
 
     /**
-     * Perform a login on behalf of the user and store the ticket returned
-     *
+     * The method return tru if the user is logged in
+     * @returns {boolean}
+     */
+    isLoggedIn(): boolean {
+        return !!this.getTicket();
+    }
+
+    /**
+     * Method to delegate to POST login
      * @param username
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(username: string, password: string): Observable<any> {
-        return Observable.fromPromise(this.getCreateTicketPromise(username, password))
-            .map((response: any) => {
-                this.token = response.entry.id;
-                return this.token;
-                // return {name: this.TYPE, token: response.entry.id};
+    login(username: string, password: string) {
+        this.alfrescoApi = new AlfrescoApi({
+            username: username,
+            password: password,
+            host: this.getBaseUrl()
+        });
+
+        return Observable.fromPromise(this.alfrescoApi.login())
+            .map(res => <any> res)
+            .do(response => {
+                this.saveTicket(response);
+                return response;
             })
             .catch(this.handleError);
     }
 
     /**
-     * Delete the current login ticket from the server
+     * The method remove the ticket from the local storage
      *
      * @returns {Observable<R>|Observable<T>}
      */
-    logout() {
-        return Observable.fromPromise(this.getDeleteTicketPromise())
+    public logout() {
+        return Observable.fromPromise(this.alfrescoApi.logout())
             .map(res => <any> res)
             .do(response => {
-                this.removeToken(this.TYPE);
+                this.removeTicket(this.TYPE);
+                return response;
             })
             .catch(this.handleError);
     }
 
+
     /**
-     * The method return true if the user is logged in
-     * @returns {boolean}
+     * The method return the ticket stored in the localStorage
+     * @returns ticket
      */
-    isLoggedIn(): boolean {
-        return !!this.getToken();
-    }
-
-    private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.getBaseUrl(), this.getToken());
-    }
-
-    private getCreateTicketPromise(username: string, password: string) {
-        let apiInstance = new AlfrescoApi.Auth.AuthenticationApi(this.getAlfrescoClient());
-        let loginRequest = new AlfrescoApi.Auth.LoginRequest();
-        loginRequest.userId = username;
-        loginRequest.password = password;
-        return apiInstance.createTicket(loginRequest);
-    }
-
-    private getDeleteTicketPromise() {
-        let apiInstance = new AlfrescoApi.Auth.AuthenticationApi(this.getAlfrescoClient());
-        return apiInstance.deleteTicket();
+    public getTicket(): string {
+        return localStorage.getItem(`ticket-${this.TYPE}`);
     }
 
     /**
-     * The method return the token stored in the localStorage
-     * @param token
+     * The method save the ticket in the localStorage
+     * @param ticket
      */
-    public getToken (): string {
-        return localStorage.getItem(`token-${this.TYPE}`);
-    }
-
-    /**
-     * The method save the toke in the localStorage
-     * @param token
-     */
-    public saveToken(): void {
-        if (this.token) {
-            super.saveToken(this.TYPE, this.token);
+    public saveTicket(ticket): void {
+        if (ticket) {
+            super.saveTicket(this.TYPE, ticket);
         }
     }
 

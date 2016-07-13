@@ -19,6 +19,7 @@ module.exports = function (config) {
       {pattern: 'node_modules/material-design-lite/material.min.js', included: true, watched: false},
       {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
+      {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
 
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
@@ -73,7 +74,7 @@ module.exports = function (config) {
 
     // Coverage reporter generates the coverage
     reporters: ['mocha', 'coverage', 'coveralls', 'kjhtml'],
-    
+
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {

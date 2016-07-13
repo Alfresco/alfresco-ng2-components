@@ -18,15 +18,11 @@
 import { Injectable } from '@angular/core';
 
 import { AlfrescoAuthenticationService } from './AlfrescoAuthenticationService.service';
-import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 
 @Injectable()
 export class AlfrescoContentService {
 
-    constructor(
-        private settings: AlfrescoSettingsService,
-        private authService: AlfrescoAuthenticationService
-    ) {
+    constructor(private authService: AlfrescoAuthenticationService) {
     }
 
     /**
@@ -34,9 +30,8 @@ export class AlfrescoContentService {
      * @param document Node to get URL for.
      * @returns {string} URL address.
      */
-    getDocumentThumbnailUrl(document: any) {
-        return this.settings.getApiBaseUrl() + '/nodes/' + document.entry.id +
-            '/renditions/doclib/content' + '?attachment=false&alf_ticket=' + this.authService.getToken();
+    getDocumentThumbnailUrl(document: any): string {
+        return this.authService.alfrescoApi.content.getDocumentThumbnailUrl(document.entry.id);
     }
 
     /**
@@ -44,8 +39,7 @@ export class AlfrescoContentService {
      * @param document Node to get URL for.
      * @returns {string} URL address.
      */
-    getContentUrl(document: any) {
-        return this.settings.getApiBaseUrl() + '/nodes/' + document.entry.id +
-            '/content' + '?attachment=false&alf_ticket=' + this.authService.getToken();
+    getContentUrl(document: any): string {
+        return this.authService.alfrescoApi.content.getContentUrl(document.entry.id);
     }
 }

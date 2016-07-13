@@ -25,8 +25,7 @@ export class UploadServiceMock extends UploadService {
     filesUpload$: Observable<any>;
     totalCompleted$: Observable<number>;
 
-    constructor(settings: AlfrescoSettingsService,
-                authService: AlfrescoAuthenticationService) {
+    constructor(settings: AlfrescoSettingsService, authService: AlfrescoAuthenticationService) {
         super(settings, authService);
     }
 

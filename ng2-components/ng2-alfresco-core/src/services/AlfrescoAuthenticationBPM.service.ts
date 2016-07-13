@@ -24,7 +24,6 @@ import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
 export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implements AbstractAuthentication {
 
     TYPE: string = 'BPM';
-    private token: string;
 
     constructor(private alfrescoSettingsService: AlfrescoSettingsService,
                 private http: Http) {
@@ -41,9 +40,8 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     login(username: string, password: string): Observable<any> {
         return Observable.fromPromise(this.apiActivitiLogin(username, password))
             .map((response: any) => {
-                this.token = response.status;
-                return this.token;
-                // return {name: this.TYPE, token: response.status};
+                this.saveTicket(response.status);
+                return response.status;
             })
             .catch(this.handleError);
     }
@@ -57,7 +55,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
         return Observable.fromPromise(this.apiActivitiLogout())
             .map(res => <any> res)
             .do(response => {
-                this.removeToken(this.TYPE);
+                this.removeTicket(this.TYPE);
             })
             .catch(this.handleError);
     }
@@ -67,7 +65,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
      * @returns {boolean}
      */
     isLoggedIn(): boolean {
-        return !!this.getToken();
+        return !!this.getTicket();
     }
 
     private apiActivitiLogin(username: string, password: string) {
@@ -91,17 +89,17 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
         return this.http.get(url).toPromise();
     }
 
-    public getToken (): string {
-        return localStorage.getItem(`token-${this.TYPE}`);
+    public getTicket(): string {
+        return localStorage.getItem(`ticket-${this.TYPE}`);
     }
 
     /**
-     * The method save the toke in the localStorage
-     * @param token
+     * The method save the ticket in the localStorage
+     * @param ticket
      */
-    public saveToken(): void {
-        if (this.token) {
-            super.saveToken(this.TYPE, this.token);
+    public saveTicket(ticket): void {
+        if (ticket) {
+            super.saveTicket(this.TYPE, ticket);
         }
     }
 

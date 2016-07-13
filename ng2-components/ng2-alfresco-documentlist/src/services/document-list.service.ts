@@ -20,7 +20,6 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
 import {
-    AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService
 } from 'ng2-alfresco-core';
@@ -62,32 +61,26 @@ export class DocumentListService {
     };
 
     constructor(
-        private settings: AlfrescoSettingsService,
         private authService: AlfrescoAuthenticationService,
         private contentService: AlfrescoContentService
     ) {
     }
 
-    private getAlfrescoClient() {
-        return AlfrescoApi.getClientWithTicket(this.settings.getApiBaseUrl(), this.authService.getToken());
+    private getAlfrescoApi() {
+        return this.authService.getAlfrescoApi();
     }
 
     private getNodesPromise(folder: string) {
-        let alfrescoClient = this.getAlfrescoClient();
-        let apiInstance = new AlfrescoApi.Core.NodesApi(alfrescoClient);
         let nodeId = '-root-';
         let opts = {
             relativePath: folder,
             include: ['path']
         };
-        return apiInstance.getNodeChildren(nodeId, opts);
+        return this.getAlfrescoApi().node.getNodeChildren(nodeId, opts);
     }
 
     deleteNode(nodeId: string) {
-        let client = this.getAlfrescoClient();
-        let nodesApi = new AlfrescoApi.Core.NodesApi(client);
-        let opts = {};
-        return Observable.fromPromise(nodesApi.deleteNode(nodeId, opts));
+        return Observable.fromPromise(this.getAlfrescoApi().node.deleteNode(nodeId));
     }
 
     /**

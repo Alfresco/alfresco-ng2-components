@@ -26,7 +26,7 @@ import { AlfrescoAuthenticationBase } from './AlfrescoAuthenticationBase.service
 declare let AlfrescoApi: any;
 
 /**
- * The AlfrescoAuthenticationService provide the login service and store the token in the localStorage
+ * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
  */
 @Injectable()
 export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
@@ -78,10 +78,6 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         return Observable.create(observer => {
             Observable.forkJoin(observableBatch).subscribe(
                 (response: any[]) => {
-                    this.performeSaveToken();
-                    /*response.forEach((res) => {
-                        this.performeSaveToken(res.name, res.token);
-                    });*/
                     observer.next(response);
                 },
                 (err: any) => {
@@ -91,7 +87,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
     }
 
     /**
-     * The method return tru if the user is logged in
+     * The method return true if the user is logged in
      * @returns {boolean}
      */
     isLoggedIn(type: string = 'ECM'): boolean {
@@ -102,36 +98,24 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         return false;
     }
 
+    getAlfrescoApi(): any {
+        return  this.findProviderInstance('ECM').alfrescoApi;
+    }
+
     /**
-     * Return the token stored in the localStorage of the specific provider type
-     * @param token
+     * Return the ticket stored in the localStorage of the specific provider type
+     * @param ticket
      */
-    public getToken(type: string = 'ECM'): string {
+    public getTicket(type: string = 'ECM'): string {
         let auth: AbstractAuthentication = this.findProviderInstance(type);
         if (auth) {
-            return auth.getToken();
+            return auth.getTicket();
         }
         return '';
     }
 
     /**
-     * Save the token calling the method of the specific provider type
-     * @param providerName
-     * @param token
-     */
-    private performeSaveToken() {
-        /* let auth: AbstractAuthentication = this.findProviderInstance(type);
-        if (auth) {
-            auth.saveToken();
-        }
-        */
-        this.providersInstance.forEach((authInstance) => {
-            authInstance.saveToken();
-        });
-    }
-
-    /**
-     * The method remove the token from the local storage
+     * The method remove the ticket from the local storage
      * @returns {Observable<T>}
      */
     public logout(): Observable<string> {
@@ -190,7 +174,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         let auth: AbstractAuthentication = null;
         if (this.providersInstance && this.providersInstance.length !== 0) {
             this.providersInstance.forEach((provider) => {
-                if (provider.TYPE === type) {
+                if (provider.TYPE === type.toUpperCase()) {
                     auth = provider;
                 }
             });

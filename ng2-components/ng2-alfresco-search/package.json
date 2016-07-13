@@ -48,6 +48,10 @@
     {
       "name": "Denys Vuika",
       "email": "denys.vuika@alfresco.com"
+    },
+    {
+      "name": "Eugenio Romano",
+      "email": "eugenio.romano@alfresco.com"
     }
   ],
   "keywords": [
@@ -72,10 +76,9 @@
     "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.6",
     "zone.js": "0.6.12",
-    "rimraf": "2.5.2",
     "ng2-translate": "2.2.2",
     "material-design-lite": "1.1.3",
-    "alfresco-js-api": "^0.1.0",
+    "alfresco-js-api": "^0.2.0",
     "ng2-alfresco-core": "0.2.0"
   },
   "peerDependencies": {
@@ -95,6 +98,7 @@
     "karma-mocha-reporter": "2.0.3",
     "karma-jasmine-html-reporter": "0.2.0",
     "license-check": "1.1.5",
+    "rimraf": "2.5.2",
     "remap-istanbul": "0.6.3",
     "traceur": "0.0.91",
     "tslint": "3.8.1",
