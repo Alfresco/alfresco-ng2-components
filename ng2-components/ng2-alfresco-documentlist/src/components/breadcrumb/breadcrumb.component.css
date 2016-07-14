@@ -4,8 +4,7 @@
     text-align: left;
     padding: 8px 15px;
     list-style: none;
-    background-color: #f5f5f5;
-    border-radius: 4px;
+    background-color: #fafafa;
     margin: 0 0 4px;
 }
 
@@ -15,11 +14,29 @@
 }
 
 :host .breadcrumb > li+li:before {
-    content: "/\00a0";
+    content: ">\00a0";
     padding: 0 0 0 5px;
-    color: #ccc;
+    opacity: 0.54;
+    color: #000000;
 }
 
+:host .breadcrumb > li > a {
+    text-decoration: none;
+    opacity: 0.54;
+    font-family: 'Muli', "Helvetica", "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.43;
+    letter-spacing: -0.2px;
+    color: #000000;
+}
+
+:host .breadcrumb > li:hover > a,
 :host .breadcrumb > .active {
-    color: #777;
+    opacity: 0.87;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.43;
+    letter-spacing: -0.2px;
+    color: #000000;
 }

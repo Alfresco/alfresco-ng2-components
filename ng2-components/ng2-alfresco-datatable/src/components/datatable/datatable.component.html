@@ -1,6 +1,6 @@
 <table
     *ngIf="data"
-    class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    class="mdl-data-table mdl-js-data-table full-width">
     <thead>
     <tr>
         <!-- Columns -->
@@ -63,10 +63,10 @@
 
         <td *ngIf="actions">
             <!-- action menu -->
-            <button [id]="'action_menu_' + idx" class="mdl-button mdl-js-button mdl-button--icon">
+            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon">
                 <i class="material-icons">more_vert</i>
             </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+            <ul alfresco-mdl-menu class="mdl-menu--bottom-right"
                 [attr.for]="'action_menu_' + idx">
                 <li class="mdl-menu__item"
                     [attr.data-automation-id]="action.title"
