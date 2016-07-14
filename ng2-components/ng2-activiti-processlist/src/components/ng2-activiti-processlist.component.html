@@ -1,0 +1,20 @@
+<h1>My Activiti Processes</h1>
+
+<p *ngIf="processInstances && processInstances.length == 0">{{ 'PROCESSLIST.NONE' | translate }}</p>
+<table *ngIf="processInstances && processInstances.length" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <caption>{{ 'PROCESSLIST.SUMMARY' | translate:{total: processInstances.length} }}</caption>
+    <thead>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric">{{ 'PROCESSLIST.COLUMN.NAME' | translate }}</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let instance of processInstances; let idx = index" (click)="onItemClick(instance, $event)">
+        <td class="mdl-data-table__cell--non-numeric">{{instance.name}}</td>
+    </tr>
+
+    </tbody>
+</table>
+<p *ngIf="errorMessage">{{ 'PROCESSLIST.ERROR' | translate:{errorMessage: errorMessage} }}</p>
+

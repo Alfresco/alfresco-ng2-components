@@ -15,19 +15,49 @@
  * limitations under the License.
  */
 
-import {describe, expect, it, inject} from '@angular/core/testing';
+import { HTTP_PROVIDERS } from '@angular/http';
+import {describe, expect, it, inject, beforeEachProviders} from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import {Ng2ActivitiProcesslistComponent} from '../../src/components/ng2-activiti-processlist.component';
+import {
+    AlfrescoSettingsService,
+    AlfrescoTranslationService
+} from 'ng2-alfresco-core';
+import { Ng2ActivitiProcesslistComponent } from '../../src/components/ng2-activiti-processlist.component';
+import { ActivitiProcessServiceMock } from '../assets/activiti-process-service.mock';
+import { TranslationMock } from './../assets/translation.service.mock';
+import { ActivitiProcessService } from '../services/activiti-process-service.service';
 
-describe('Basic Example test ng2-activiti-processlist', () => {
+describe('ActivitiProcesslistComponent', () => {
 
-  it('Test hello world', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-    return tcb
-      .createAsync(Ng2ActivitiProcesslistComponent)
-      .then((fixture) => {
-        let element = fixture.nativeElement;
-        expect(element.querySelector('h1')).toBeDefined();
-        expect(element.getElementsByTagName('h1')[0].innerHTML).toEqual('Hello World Angular 2 ng2-activiti-processlist');
-      });
-  }));
+    beforeEachProviders(() => {
+
+        return [
+            { provide: AlfrescoSettingsService },
+            { provide: AlfrescoTranslationService, useClass: TranslationMock },
+            { provide: ActivitiProcessService, useClass: ActivitiProcessServiceMock },
+            HTTP_PROVIDERS
+        ];
+    });
+
+    it('should have a valid title', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(Ng2ActivitiProcesslistComponent)
+            .then((fixture) => {
+                let element = fixture.nativeElement;
+                expect(element.querySelector('h1')).toBeDefined();
+                expect(element.getElementsByTagName('h1')[0].innerHTML).toEqual('My Activiti Processes');
+            });
+    }));
+
+    it('should contain a list of processes', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(Ng2ActivitiProcesslistComponent)
+            .then((fixture) => {
+                let element = fixture.nativeElement, component = fixture.componentInstance;
+                component.ngOnInit();
+                fixture.detectChanges();
+                expect(element.querySelector('table')).toBeDefined();
+                expect(element.querySelectorAll('table tbody tr').length).toEqual(1);
+            });
+    }));
 });

@@ -15,10 +15,19 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiProcessService } from '../services/activiti-process-service.service';
+import { ProcessInstance } from '../models/process-instance';
+
+declare let __moduleName: string;
 
 @Component({
-    selector: 'ng-2-activiti-processlist',
+    moduleId: __moduleName,
+    selector: 'ng2-activiti-processlist',
     styles: [
       `
               :host h1 {
@@ -26,6 +35,36 @@ import { Component } from '@angular/core';
               }
           `
     ],
-    template: `<H1>Hello World Angular 2 ng2-activiti-processlist</H1>`
+    templateUrl: './ng2-activiti-processlist.component.html',
+    pipes: [ AlfrescoPipeTranslate ]
 })
-export class Ng2ActivitiProcesslistComponent {}
+export class Ng2ActivitiProcesslistComponent implements OnInit {
+
+    errorMessage: string;
+    processInstances: ProcessInstance[];
+
+    constructor (
+        private processService: ActivitiProcessService,
+        private translate: AlfrescoTranslationService
+    ) {
+        if (translate !== null) {
+            translate.addTranslationFolder('node_modules/ng2-activiti-processlist');
+        }
+    }
+
+    ngOnInit() {
+        this.getProcesses();
+    }
+
+    getProcesses() {
+        this.processService.getProcesses()
+            .subscribe(
+                processInstances => this.processInstances = processInstances,
+                error =>  this.errorMessage = <any>error);
+    }
+
+    onItemClick(processInstance: ProcessInstance, event: any) {
+        console.log(processInstance, event);
+    }
+
+}

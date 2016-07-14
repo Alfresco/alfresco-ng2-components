@@ -15,37 +15,60 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
 import {
     it,
     describe,
     expect,
-    beforeEach
+    beforeEachProviders,
+    inject
 } from '@angular/core/testing';
 import {
-    AlfrescoSettingsService
-} from 'ng2-alfresco-core';
+    Response,
+    ResponseOptions,
+    HTTP_PROVIDERS,
+    XHRBackend
+} from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './activiti-process-service.service';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { ProcessInstance } from '../models/process-instance';
 
 describe('ActivitiProcessService', () => {
 
-    let injector;
-    let service: ActivitiProcessService;
-    let settingsService: AlfrescoSettingsService;
-
-    beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
+    beforeEachProviders(() => {
+        return [
             HTTP_PROVIDERS,
+            { provide: XHRBackend, useClass: MockBackend },
+            ActivitiProcessService,
             AlfrescoSettingsService
-        ]);
-
-        settingsService = injector.get(AlfrescoSettingsService);
-        service = new ActivitiProcessService(settingsService);
+        ];
     });
 
-    it('should require node to get thumbnail url', () => {
-        expect(null).toBeNull();
-    });
+    it('should be there', inject([ActivitiProcessService], (processService: ActivitiProcessService) => {
+        expect(typeof processService.getProcesses).toBe('function');
+    }));
+
+    it('should get process instances',
+        inject([ActivitiProcessService, XHRBackend], (processService: ActivitiProcessService, mockBackend: MockBackend) => {
+            mockBackend.connections.subscribe(
+                (connection: MockConnection) => {
+                    connection.mockRespond(new Response(
+                        new ResponseOptions({
+                            body: {
+                                data: [{
+                                    id: 'myprocess:1',
+                                    name: 'my process'
+                                }]
+                            }
+                        })));
+                });
+
+            processService.getProcesses().subscribe((instances: ProcessInstance[]) => {
+                expect(instances.length).toBe(1);
+                expect(instances[0].id).toBe('myprocess:1');
+                expect(instances[0].name).toBe('my process');
+            });
+
+        }));
 
 });
