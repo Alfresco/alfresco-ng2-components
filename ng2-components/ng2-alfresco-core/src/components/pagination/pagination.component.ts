@@ -16,21 +16,20 @@
  */
 
 import { Component, Input } from '@angular/core';
-import {
-    MATERIAL_DESIGN_DIRECTIVES,
-    PaginationProvider
-} from 'ng2-alfresco-core';
+
+import { MATERIAL_DESIGN_DIRECTIVES } from './../material/index';
+import { PaginationProvider } from './pagination-provider';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
-    selector: 'alfresco-document-list-pagination',
+    selector: 'alfresco-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.css'],
     directives: [MATERIAL_DESIGN_DIRECTIVES]
 })
-export class DocumentListPagination {
+export class PaginationComponent {
 
     DEFAULT_PAGE_SIZE: number = 20;
 

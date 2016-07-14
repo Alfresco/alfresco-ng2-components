@@ -25,8 +25,10 @@ import {
     MDL,
     AlfrescoContentService,
     CONTEXT_MENU_DIRECTIVES,
-    AlfrescoPipeTranslate
+    AlfrescoPipeTranslate/*,
+    PaginationComponent*/
 } from 'ng2-alfresco-core';
+import { PaginationComponent } from 'ng2-alfresco-core';
 import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 
@@ -42,7 +44,8 @@ declare let __moduleName: string;
         MDL,
         ALFRESCO_ULPOAD_COMPONENTS,
         VIEWERCOMPONENT,
-        CONTEXT_MENU_DIRECTIVES
+        CONTEXT_MENU_DIRECTIVES,
+        PaginationComponent
     ],
     providers: [DOCUMENT_LIST_PROVIDERS],
     pipes: [AlfrescoPipeTranslate]

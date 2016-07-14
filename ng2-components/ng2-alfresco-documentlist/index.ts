@@ -22,7 +22,6 @@ import { ContentAction } from './src/components/content-action';
 import { ContentActionList } from './src/components/content-action-list';
 import { EmptyFolderContent } from './src/components/empty-folder-content';
 import { DocumentListBreadcrumb } from './src/components/breadcrumb/breadcrumb.component';
-import { DocumentListPagination } from './src/components/pagination/pagination.component';
 
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
@@ -36,7 +35,6 @@ export * from './src/components/content-action';
 export * from './src/components/content-action-list';
 export * from './src/components/empty-folder-content';
 export * from './src/components/breadcrumb/breadcrumb.component';
-export * from './src/components/pagination/pagination.component';
 
 // services
 export * from './src/services/folder-actions.service';
@@ -50,8 +48,7 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     ContentAction,
     ContentActionList,
     EmptyFolderContent,
-    DocumentListBreadcrumb,
-    DocumentListPagination
+    DocumentListBreadcrumb
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: [any] = [

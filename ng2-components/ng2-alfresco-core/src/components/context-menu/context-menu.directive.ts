@@ -16,7 +16,7 @@
  */
 
 import { Directive, Input, HostListener } from '@angular/core';
-import { ContextMenuService } from './../services/context-menu.service';
+import { ContextMenuService } from './context-menu.service';
 
 @Directive({
     selector:'[context-menu]'

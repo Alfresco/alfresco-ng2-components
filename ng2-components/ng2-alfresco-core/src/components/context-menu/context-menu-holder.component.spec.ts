@@ -16,7 +16,7 @@
  */
 
 import { describe, it, beforeEach } from '@angular/core/testing';
-import { ContextMenuService } from './../services/context-menu.service';
+import { ContextMenuService } from './context-menu.service';
 import { ContextMenuHolderComponent } from './context-menu-holder.component';
 
 describe('ContextMenuHolderComponent', () => {

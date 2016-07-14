@@ -17,7 +17,7 @@
 
 import { describe, it, beforeEach } from '@angular/core/testing';
 import { ContextMenuDirective } from './context-menu.directive';
-import { ContextMenuService } from './../services/context-menu.service';
+import { ContextMenuService } from './context-menu.service';
 
 describe('ContextMenuDirective', () => {
 
