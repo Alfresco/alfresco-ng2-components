@@ -36,7 +36,7 @@ var server = http.createServer(function (req, res) {
         });
     } else {
         var filename = pathname.substr(1);
-        if(filename === ''){
+        if(filename === '' || filename.indexOf('.') === -1){
             filename = 'index.html';
         }
         // Read the requested file content from file system
