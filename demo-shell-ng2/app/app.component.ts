@@ -61,6 +61,7 @@ declare var document: any;
 export class AppComponent {
     translate: AlfrescoTranslationService;
     searchTerm: string = '';
+    hostecm: string = 'http://localhost:8080';
 
     ecmHost: string = 'http://localhost:8080';
     bpmHost: string = 'http://localhost:9999';
