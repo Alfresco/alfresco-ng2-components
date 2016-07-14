@@ -19,11 +19,13 @@
 
   // map tells the System loader where to look for things
   var map = {
-    'ng2-activiti-processlist': 'node_modules/ng2-activiti-processlist',
+    'app': 'dist',
     '@angular': 'node_modules/@angular',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs': 'node_modules/rxjs',
-    'app': 'dist/'
+    'ng2-translate': 'node_modules/ng2-translate',
+    'ng2-activiti-processlist': 'node_modules/ng2-activiti-processlist',
+    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -31,7 +33,9 @@
     'app': { main: 'main.js',  defaultExtension: 'js' },
     'rxjs': { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
-    'ng2-activiti-processlist': { main: 'index.js', defaultExtension: 'js' }
+    'ng2-translate': { defaultExtension: 'js' },
+    'ng2-activiti-processlist': { main: 'index.js', defaultExtension: 'js' },
+    'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js' }
   };
 
   var ngPackageNames = [

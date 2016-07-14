@@ -16,12 +16,18 @@
  */
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Ng2ActivitiProcesslistComponent } from 'ng2-activiti-processlist/dist/ng2-activiti-processlist';
+import {
+    ACTIVITI_PROCESSLIST_PROVIDERS,
+    ACTIVITI_PROCESSLIST_DIRECTIVES
+} from 'ng2-activiti-processlist/dist/ng2-activiti-processlist';
+import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 @Component({
   selector: 'my-app',
-  template: `<ng2-activiti-processlist></ng2-activiti-processlist>`,
-  directives: [Ng2ActivitiProcesslistComponent]
+  template: `<activiti-processlist></activiti-processlist>`,
+  providers: [ACTIVITI_PROCESSLIST_PROVIDERS],
+  directives: [ACTIVITI_PROCESSLIST_DIRECTIVES]
 })
 class MyDemoApp {
   constructor() {
@@ -29,5 +35,6 @@ class MyDemoApp {
   }
 }
 bootstrap(MyDemoApp, [
-  Ng2ActivitiProcesslistComponent
+    ALFRESCO_CORE_PROVIDERS,
+    HTTP_PROVIDERS
 ]);

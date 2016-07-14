@@ -42,10 +42,7 @@
 
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.1.3",
-    "ng2-translate": "2.2.2",
-
-    "ng2-alfresco-datatable": "^0.1.12",
-    "ng2-alfresco-core": "^0.1.36"
+    "ng2-activiti-processlist": "^0.1.0"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",

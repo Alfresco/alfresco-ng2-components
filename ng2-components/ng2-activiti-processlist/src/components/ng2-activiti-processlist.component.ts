@@ -27,7 +27,7 @@ declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
-    selector: 'ng2-activiti-processlist',
+    selector: 'activiti-processlist',
     styles: [
       `
               :host h1 {
