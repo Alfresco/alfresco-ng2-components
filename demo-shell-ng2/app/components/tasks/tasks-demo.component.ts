@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivitiTaskList } from 'ng2-alfresco-activiti-tasklist';
-import { DataColumn, ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'tasks-demo',

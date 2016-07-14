@@ -29,7 +29,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-tasklist.component.html',
     directives: [ALFRESCO_DATATABLE_DIRECTIVES],
-    providers: [ ActivitiTaskListService ]
+    providers: [ActivitiTaskListService]
 
 })
 export class ActivitiTaskList {
@@ -37,7 +37,10 @@ export class ActivitiTaskList {
     tasks: ObjectDataTableAdapter;
 
     @Input()
-    data: DataTableAdapter;
+        data: DataTableAdapter;
+
+    @Input()
+        assignment: string;
 
     /**
      * Constructor
@@ -51,10 +54,18 @@ export class ActivitiTaskList {
         translate.addTranslationFolder('node_modules/ng2-alfresco-activiti-tasklist');
 
         if (auth.isLoggedIn('BPM')) {
-            activiti.getTasks().subscribe((res) => {
-                let tasks = res.data || [];
-                console.log(tasks);
-                this.loadTasks(tasks);
+            activiti.getTaskListFilters().subscribe((resFilter) => {
+                let tasksListFilter = resFilter.data || [];
+                if (tasksListFilter.length === 0) {
+                    activiti.createMyTaskFilter().subscribe(() => {
+                        console.log('Default filters created');
+                    });
+                    activiti.getTasks(this.assignment).subscribe((res) => {
+                        let tasks = res.data || [];
+                        console.log(tasks);
+                        this.loadTasks(tasks);
+                    });
+                }
             });
         } else {
             console.error('User unauthorized');

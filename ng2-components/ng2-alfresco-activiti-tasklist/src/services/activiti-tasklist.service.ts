@@ -24,23 +24,86 @@ export class ActivitiTaskListService {
 
     constructor(private http: Http) {}
 
+    getTaskListFilters() {
+        let url = 'http://localhost:9999/activiti-app/app/rest/filters/tasks';
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+        });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .get(url, options)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    createMyTaskFilter() {
+        let data = JSON.stringify({
+            'name': 'My Tasks',
+            'index': 1,
+            'icon': 'glyphicon-inbox',
+            'filter': {
+                'name': '',
+                'sort': 'created-desc',
+                'state': 'open',
+                'assignment': 'assignee'
+            },
+            'appId': null
+        });
+        return this.callApiCreateFilter(data);
+    }
+
     /**
      * Retrive all the tasks created in activiti
      * @returns {any}
      */
-    getTasks(): Observable<any> {
-        // emulate filter value
+    getTasks(assignment: string = 'assignee'): Observable<any> {
+        let data = JSON.stringify({
+            'page': 0,
+            'filterId': 1,
+            'filter': {
+                'name': '',
+                'sort': 'created-desc',
+                'state': 'open',
+                'assignment': assignment
+            },
+            'appDefinitionId': null
+        });
+        return this.callApiFilterTasks(data);
+    }
+
+    getInvolvedTasks(): Observable<any> {
         let data = JSON.stringify({
             'page': 0,
             'filterId': 3,
             'filter': {
-                'sort': 'created-desc',
                 'name': '',
+                'sort': 'created-desc',
                 'state': 'open',
                 'assignment': 'involved'
             },
             'appDefinitionId': null
         });
+        return this.callApiFilterTasks(data);
+    }
+
+    private callApiCreateFilter(data: Object): Observable<any> {
+
+        let url = 'http://localhost:9999/activiti-app/app/rest/filters/tasks';
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+        });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http
+            .post(url, data, options)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    private callApiFilterTasks(data: Object): Observable<any> {
 
         let url = 'http://localhost:9999/activiti-app/app/rest/filter/tasks';
         let headers = new Headers({
