@@ -92,6 +92,10 @@
                 </content-action>
             </content-actions>
         </alfresco-document-list>
+        <alfresco-pagination
+            [provider]="documentList.data"
+            [supportedPageSizes]="[5, 10, 15, 20]">
+        </alfresco-pagination>
     </alfresco-upload-drag-area>
 </div>
 

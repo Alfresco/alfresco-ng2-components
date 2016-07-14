@@ -25,8 +25,8 @@ import {
 import {
     DocumentListBreadcrumb,
     PathNode
-} from './document-list-breadcrumb.component';
-import { DocumentList } from './document-list';
+} from './breadcrumb.component';
+import { DocumentList } from '../document-list';
 
 describe('DocumentListBreadcrumb', () => {
 
