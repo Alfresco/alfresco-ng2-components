@@ -51,6 +51,11 @@
             <a class="mdl-navigation__link" href="" [routerLink]="['Webscript']" (click)="hideDrawer()">Webscript</a>
             <a class="mdl-navigation__link" href="" [routerLink]="['About']" (click)="hideDrawer()">About</a>
         </nav>
+        <span class="mdl-layout-title">Configurations</span>
+        <nav class="mdl-navigation">
+            <input  type="text" class="mdl-textfield__input" id="hostecm" data-automation-id="hostecm"
+                    tabindex="1"    (change)="onChangeHost($event)" value="{{hostecm}}"/>
+        </nav>
     </div>
     <main class="mdl-layout__content">
         <div class="page-content">
