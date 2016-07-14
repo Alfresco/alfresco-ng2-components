@@ -36,9 +36,9 @@ import {
     DataRow,
     DataColumn,
     DataSorting,
-    DataRowEvent
-} from './../data/datatable-adapter';
-import { ObjectDataTableAdapter } from '../data/object-datatable-adapter';
+    DataRowEvent,
+    ObjectDataTableAdapter
+} from '../../data/index';
 
 declare var componentHandler;
 declare let __moduleName: string;
