@@ -25,10 +25,9 @@ import {
     MDL,
     AlfrescoContentService,
     CONTEXT_MENU_DIRECTIVES,
-    AlfrescoPipeTranslate/*,
-    PaginationComponent*/
+    AlfrescoPipeTranslate
 } from 'ng2-alfresco-core';
-import { PaginationComponent } from 'ng2-alfresco-core';
+import { PaginationComponent } from 'ng2-alfresco-datatable';
 import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 

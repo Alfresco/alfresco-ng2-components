@@ -26,12 +26,10 @@ import { DataTableComponent } from './datatable.component';
 import {
     DataRow,
     DataColumn,
-    DataSorting
-} from './../data/datatable-adapter';
-import {
+    DataSorting,
     ObjectDataTableAdapter,
     ObjectDataColumn
-} from './../data/object-datatable-adapter';
+} from './../../data/index';
 
 describe('DataTable', () => {
 

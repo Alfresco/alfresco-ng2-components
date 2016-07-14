@@ -17,7 +17,7 @@
 
 import { Component, Input } from '@angular/core';
 
-import { MATERIAL_DESIGN_DIRECTIVES } from './../material/index';
+import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { PaginationProvider } from './pagination-provider';
 
 declare let __moduleName: string;

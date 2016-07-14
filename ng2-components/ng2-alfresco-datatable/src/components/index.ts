@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
-export * from './src/data/index';
-export * from './src/components/index';
+export * from './datatable/index';
+export * from './pagination/index';
