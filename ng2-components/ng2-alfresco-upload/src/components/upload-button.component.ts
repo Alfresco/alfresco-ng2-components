@@ -76,6 +76,12 @@ export class UploadButtonComponent {
     @Output()
     onSuccess = new EventEmitter();
 
+    @Output()
+    onError = new EventEmitter();
+
+    @Output()
+    createFolder = new EventEmitter();
+
     translate: AlfrescoTranslationService;
 
 
@@ -125,6 +131,7 @@ export class UploadButtonComponent {
                     error => {
                     let errorMessagePlaceholder = this.getErrorMessage(error.response);
                     if (errorMessagePlaceholder) {
+                        this.onError.emit({value: errorMessagePlaceholder});
                         let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
                         if (errorMessage) {
                             this._showErrorNotificationBar(errorMessage);

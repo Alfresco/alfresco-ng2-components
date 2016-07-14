@@ -21,21 +21,13 @@ import { Injectable } from '@angular/core';
 export class AlfrescoSettingsServiceMock {
 
     static DEFAULT_HOST_ADDRESS: string = 'fakehost';
-    static DEFAULT_CONTEXT_PATH: string = '/fake-path-alfresco';
-    static DEFAULT_BASE_API_PATH: string = '/fake-api/fake-public/fake-alfresco/fake-versions/1';
 
     private providers: string[] = ['ECM', 'BPM'];
 
     private _host: string = AlfrescoSettingsServiceMock.DEFAULT_HOST_ADDRESS;
-    private _contextPath = AlfrescoSettingsServiceMock.DEFAULT_CONTEXT_PATH;
-    private _apiBasePath: string = AlfrescoSettingsServiceMock.DEFAULT_BASE_API_PATH;
 
     public get host(): string {
         return this._host;
-    }
-
-    getApiBaseUrl(): string {
-        return this._host + this._contextPath + this._apiBasePath;
     }
 
     getProviders(): string [] {

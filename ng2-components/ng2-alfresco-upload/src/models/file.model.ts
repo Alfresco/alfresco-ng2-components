@@ -35,7 +35,7 @@ export class FileModel {
     abort: boolean = false;
     uploading: boolean = false;
     file: any;
-    _xmlHttpRequest: XMLHttpRequest;
+    promiseUpload: any;
 
     constructor(file: any) {
         this.file = file;
@@ -53,16 +53,32 @@ export class FileModel {
         this.progress = progress;
     }
 
+    /**
+     * Emit an event progress on the promise
+     */
+    emitProgres(progress: any): void {
+        this.setProgres(progress);
+        this.promiseUpload.emit('progress', progress);
+    }
+
     setError(): void {
         this.error = true;
+    }
+
+    /**
+     * Emit an event progress on the promise
+     */
+    emitError(): void {
+        this.setError();
+        this.promiseUpload.emit('error');
     }
 
     setUploading() {
         this.uploading = true;
     }
 
-    setXMLHttpRequest(xmlHttpRequest: XMLHttpRequest) {
-        this._xmlHttpRequest = xmlHttpRequest;
+    setPromiseUpload(promiseUpload: any) {
+        this.promiseUpload = promiseUpload;
     }
 
     /**
@@ -72,8 +88,15 @@ export class FileModel {
         if (!this.done && !this.error) {
             this.abort = true;
             this.uploading = false;
-            this._xmlHttpRequest.abort();
         }
+    }
+
+    /**
+     * Emit an event abort on the promise
+     */
+    emitAbort(): void {
+        this.setAbort();
+        this.promiseUpload.abort();
     }
 
     /**

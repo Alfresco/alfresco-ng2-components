@@ -21,7 +21,6 @@ import { FileUploadingDialogComponent } from './file-uploading-dialog.component'
 import { FileModel } from '../models/file.model';
 import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
 import { Observable } from 'rxjs/Observable';
 import { HTTP_PROVIDERS } from '@angular/http';
@@ -34,10 +33,10 @@ describe('FileUploadDialog', () => {
     beforeEachProviders(() => {
         return [
             HTTP_PROVIDERS,
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsService },
-            { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
-            { provide: UploadService, useClass: UploadServiceMock }
+            UploadService
         ];
     });
 
@@ -86,11 +85,9 @@ describe('FileUploadDialog', () => {
         let file = new FileModel(fileFake);
         file.progress = {'percent': 50};
 
-        uploadService.addToQueue([file]);
-
-
         let component = componentFixture.componentInstance;
         componentFixture.detectChanges();
+        uploadService.addToQueue([file]);
         component.filesUploadingList = [file];
 
         let compiled = componentFixture.debugElement.nativeElement;

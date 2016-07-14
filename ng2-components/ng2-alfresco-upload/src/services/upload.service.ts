@@ -56,15 +56,6 @@ export class UploadService {
         this.formFields = options.formFields != null ? options.formFields : this.formFields;
     }
 
-
-    /**
-     * Get the form fields
-     * @returns {Object}
-     */
-    public getFormFields(): Object {
-        return this.formFields;
-    }
-
     /**
      * Add files to the uploading queue to be uploaded.
      *
@@ -96,14 +87,14 @@ export class UploadService {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
 
-        filesToUpload.forEach((uploadingFileModel) => {
+        filesToUpload.forEach((uploadingFileModel: FileModel) => {
             uploadingFileModel.setUploading();
 
             let _filesUploadObserverProgressBar = this.filesUploadObserverProgressBar;
             let _queue = this.queue;
 
-            this.authService.getAlfrescoApi().
-            upload.uploadFile(uploadingFileModel.file, directory)
+            let promiseUpload = this.authService.getAlfrescoApi().
+                upload.uploadFile(uploadingFileModel.file, directory)
                 .on('progress', (progress: any) => {
                     uploadingFileModel.setProgres(progress);
                     if (_filesUploadObserverProgressBar) {
@@ -112,9 +103,15 @@ export class UploadService {
                 })
                 .on('abort', () => {
                     uploadingFileModel.setAbort();
+                    elementEmit.emit({
+                        value: 'File aborted'
+                    });
                 })
                 .on('error', () => {
                     uploadingFileModel.setError();
+                    elementEmit.emit({
+                        value: 'Error file uploaded'
+                    });
                 })
                 .on('success', (data: any) => {
                     elementEmit.emit({
@@ -133,6 +130,8 @@ export class UploadService {
                         }
                     }
                 });
+
+            uploadingFileModel.setPromiseUpload(promiseUpload);
         });
     }
 
@@ -159,12 +158,16 @@ export class UploadService {
      * @param name - the folder name
      */
     createFolder(relativePath: string, name: string) {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().node.createFolder(name, relativePath))
+        return Observable.fromPromise(this.callApiCreateFolder(relativePath, name))
             .map(res => {
                 return res;
             })
             .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
+    }
+
+    private callApiCreateFolder(relativePath: string, name: string) {
+        return this.authService.getAlfrescoApi().node.createFolder(name, relativePath);
     }
 
     /**
