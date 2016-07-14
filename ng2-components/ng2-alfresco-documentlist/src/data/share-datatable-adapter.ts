@@ -16,8 +16,9 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { PaginationProvider, ObjectUtils } from 'ng2-alfresco-core';
+import { ObjectUtils } from 'ng2-alfresco-core';
 import {
+    PaginationProvider,
     DataTableAdapter,
     DataRow, DataColumn, DataSorting
 } from 'ng2-alfresco-datatable';
