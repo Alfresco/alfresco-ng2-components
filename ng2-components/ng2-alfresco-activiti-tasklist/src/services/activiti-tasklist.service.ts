@@ -18,19 +18,55 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { FilterModel } from '../models/filter.model';
 
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(private http: Http) {}
+    constructor(private http: Http) {
+    }
 
+    /**
+     * Retrive all the Tasks filters
+     * @returns {Observable<any>}
+     */
     getTaskListFilters() {
+        return this.callApiTaskFilters();
+    }
+
+    /**
+     * Retrive all the tasks created in activiti
+     * @returns {any}
+     */
+    getTasks(filter: FilterModel): Observable<any> {
+        let data: any = {};
+        data.filterId = filter.id;
+        data.filter = filter.filter;
+        data = JSON.stringify(data);
+        return this.callApiTasksFiltered(data);
+    }
+
+    private callApiTasksFiltered(data: Object): Observable<any> {
+        let url = 'http://localhost:9999/activiti-app/app/rest/filter/tasks';
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+        });
+        let options = new RequestOptions({headers: headers});
+
+        return this.http
+            .post(url, data, options)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    private callApiTaskFilters(): Observable<any> {
         let url = 'http://localhost:9999/activiti-app/app/rest/filters/tasks';
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
         });
-        let options = new RequestOptions({ headers: headers });
+        let options = new RequestOptions({headers: headers});
 
         return this.http
             .get(url, options)
@@ -38,85 +74,6 @@ export class ActivitiTaskListService {
             .catch(this.handleError);
     }
 
-    createMyTaskFilter() {
-        let data = JSON.stringify({
-            'name': 'My Tasks',
-            'index': 1,
-            'icon': 'glyphicon-inbox',
-            'filter': {
-                'name': '',
-                'sort': 'created-desc',
-                'state': 'open',
-                'assignment': 'assignee'
-            },
-            'appId': null
-        });
-        return this.callApiCreateFilter(data);
-    }
-
-    /**
-     * Retrive all the tasks created in activiti
-     * @returns {any}
-     */
-    getTasks(assignment: string = 'assignee'): Observable<any> {
-        let data = JSON.stringify({
-            'page': 0,
-            'filterId': 1,
-            'filter': {
-                'name': '',
-                'sort': 'created-desc',
-                'state': 'open',
-                'assignment': assignment
-            },
-            'appDefinitionId': null
-        });
-        return this.callApiFilterTasks(data);
-    }
-
-    getInvolvedTasks(): Observable<any> {
-        let data = JSON.stringify({
-            'page': 0,
-            'filterId': 3,
-            'filter': {
-                'name': '',
-                'sort': 'created-desc',
-                'state': 'open',
-                'assignment': 'involved'
-            },
-            'appDefinitionId': null
-        });
-        return this.callApiFilterTasks(data);
-    }
-
-    private callApiCreateFilter(data: Object): Observable<any> {
-
-        let url = 'http://localhost:9999/activiti-app/app/rest/filters/tasks';
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http
-            .post(url, data, options)
-            .map((res: Response) => res.json())
-            .catch(this.handleError);
-    }
-
-    private callApiFilterTasks(data: Object): Observable<any> {
-
-        let url = 'http://localhost:9999/activiti-app/app/rest/filter/tasks';
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http
-            .post(url, data, options)
-            .map((res: Response) => res.json())
-            .catch(this.handleError);
-    }
 
     /**
      * The method write the error in the console browser

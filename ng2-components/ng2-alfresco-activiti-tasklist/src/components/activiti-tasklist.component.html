@@ -1,1 +1,9 @@
+<div [ngStyle]="locationCss" class="menu-container">
+    <ul class="context-menu">
+        <li (click)="selectFilter(filter)" *ngFor="#filter of filtersList | async">
+            {{filter.name}}
+        </li>
+    </ul>
+</div>
+
 <alfresco-datatable [data]="tasks"></alfresco-datatable>

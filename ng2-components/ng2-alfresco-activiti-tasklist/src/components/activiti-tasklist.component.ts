@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-
+import { FilterModel } from '../models/filter.model';
+import { Observer } from 'rxjs/Observer';
+import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -32,16 +34,18 @@ declare let __moduleName: string;
     providers: [ActivitiTaskListService]
 
 })
-export class ActivitiTaskList {
+export class ActivitiTaskList implements OnInit {
+
+    @Input()
+    data: DataTableAdapter;
+
+    private filterObserver: Observer<FilterModel>;
+
+    filter$: Observable<FilterModel>;
 
     tasks: ObjectDataTableAdapter;
 
-    @Input()
-        data: DataTableAdapter;
-
-    @Input()
-        assignment: string;
-
+    filtersList: Observable<FilterModel>;
     /**
      * Constructor
      * @param auth
@@ -50,26 +54,20 @@ export class ActivitiTaskList {
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
                 private activiti: ActivitiTaskListService) {
+        this.filter$ = new Observable<FilterModel>(observer =>  this.filterObserver = observer).share();
 
         translate.addTranslationFolder('node_modules/ng2-alfresco-activiti-tasklist');
+    }
 
-        if (auth.isLoggedIn('BPM')) {
-            activiti.getTaskListFilters().subscribe((resFilter) => {
-                let tasksListFilter = resFilter.data || [];
-                if (tasksListFilter.length === 0) {
-                    activiti.createMyTaskFilter().subscribe(() => {
-                        console.log('Default filters created');
-                    });
-                    activiti.getTasks(this.assignment).subscribe((res) => {
-                        let tasks = res.data || [];
-                        console.log(tasks);
-                        this.loadTasks(tasks);
-                    });
-                }
+    ngOnInit() {
+        this.filtersList = this.activiti.getTaskListFilters().map(res => (res.data));
+
+        this.filter$.subscribe( (filter: FilterModel) => {
+            this.activiti.getTasks(filter).subscribe((res) => {
+                let tasks = res.data;
+                this.loadTasks(tasks);
             });
-        } else {
-            console.error('User unauthorized');
-        }
+        });
     }
 
     /**
@@ -81,6 +79,19 @@ export class ActivitiTaskList {
         this.tasks = new ObjectDataTableAdapter(tasks, this.data.getColumns());
     }
 
+    /**
+     * Pass the selected filter as next
+     * @param filter
+     */
+    public selectFilter(filter: FilterModel) {
+        this.filterObserver.next(filter);
+    }
+
+    /**
+     * Optimize task name field
+     * @param tasks
+     * @returns {any[]}
+     */
     private optimizeTaskName(tasks: any[]) {
         tasks = tasks.map(t => {
             t.name = t.name || 'Nameless task';
