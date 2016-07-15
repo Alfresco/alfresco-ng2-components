@@ -67,7 +67,7 @@ describe('AlfrescoSearchComponent', () => {
 
         let search = new AlfrescoSearchComponent(null, translation, null, null);
         expect(search).toBeDefined();
-        expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search');
+        expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
     });
 
     describe('Rendering search results', () => {
