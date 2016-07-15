@@ -30,10 +30,10 @@ declare let __moduleName: string;
 })
 export class LoginDemoComponent {
 
+    providers: string [] = ['ECM'];
+
     constructor(public router: Router) {
     }
-
-    providers: string [] = ['ECM'];
 
     onLogin($event) {
         console.log($event);
