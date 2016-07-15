@@ -14,14 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component } from '@angular/core';
+import { Component, OnInit, Injectable, provide } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import {
     ACTIVITI_PROCESSLIST_PROVIDERS,
     ACTIVITI_PROCESSLIST_DIRECTIVES
 } from 'ng2-activiti-processlist/dist/ng2-activiti-processlist';
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
-import { HTTP_PROVIDERS } from '@angular/http';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    ALFRESCO_CORE_PROVIDERS
+} from 'ng2-alfresco-core';
+import { HTTP_PROVIDERS, BrowserXhr } from '@angular/http';
 
 @Component({
   selector: 'my-app',
@@ -29,12 +33,63 @@ import { HTTP_PROVIDERS } from '@angular/http';
   providers: [ACTIVITI_PROCESSLIST_PROVIDERS],
   directives: [ACTIVITI_PROCESSLIST_DIRECTIVES]
 })
-class MyDemoApp {
-  constructor() {
-    console.log('constructor');
-  }
+class MyDemoApp implements OnInit {
+
+    authenticated: boolean;
+    host: string = 'http://127.0.0.1:9999';
+    token: string;
+
+    constructor(
+        private authService: AlfrescoAuthenticationService,
+        private alfrescoSettingsService: AlfrescoSettingsService
+    ) {
+        console.log('constructor');
+
+        alfrescoSettingsService.host = this.host;
+        if (this.authService.getTicket()) {
+            this.token = this.authService.getTicket();
+        }
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    public updateToken(): void {
+        localStorage.setItem('token', this.token);
+    }
+
+    public updateHost(): void {
+        this.alfrescoSettingsService.host = this.host;
+        this.login();
+    }
+
+    login() {
+        this.authService.login('admin@app.activiti.com', 'admin', ['BPM']).subscribe(
+            token => {
+                console.log(token);
+                this.token = token;
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
+    }
 }
+
+@Injectable()
+export class CustomBrowserXhr extends BrowserXhr {
+    constructor() {}
+    build(): any {
+        let xhr = super.build();
+        xhr.withCredentials = true;
+        return <any>(xhr);
+    }
+}
+
 bootstrap(MyDemoApp, [
     ALFRESCO_CORE_PROVIDERS,
-    HTTP_PROVIDERS
+    HTTP_PROVIDERS,
+    provide(BrowserXhr, { useClass: CustomBrowserXhr })
 ]);

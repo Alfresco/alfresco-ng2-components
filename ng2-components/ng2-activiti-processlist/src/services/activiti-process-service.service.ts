@@ -20,7 +20,7 @@ import {
 } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance';
 import { Injectable }     from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -34,7 +34,14 @@ export class ActivitiProcessService {
     }
 
     getProcesses(): Observable<ProcessInstance[]> {
-        return this.http.get(this.processesUrl)
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post(
+            this.processesUrl,
+            '{"page":0,"filterId":6,"filter":{"sort":"created-desc","name":"","state":"all"},"appDefinitionId":null}',
+            new RequestOptions({
+                headers: headers
+            }))
             .map(this.extractData)
             .catch(this.handleError);
     }
