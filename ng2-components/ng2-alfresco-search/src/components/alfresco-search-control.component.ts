@@ -83,7 +83,7 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
                 }
             );
 
-        translate.addTranslationFolder('node_modules/ng2-alfresco-search');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
     }
 
     ngAfterViewInit(): void {
