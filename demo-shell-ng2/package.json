@@ -4,15 +4,14 @@
   "version": "0.2.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
+    "postinstall": "typings install",
     "clean": "rimraf node_modules typings",
-    "start": "npm run tslint && typings install && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
+    "start": "npm run tslint && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "serve": "node browser-sync-config.js",
     "typings": "typings install",
-    "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json app/{,**/}**.ts",
-    "tslint-root": "tslint -c tslint.json *.ts",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json app/{,**/}**.ts",
     "licensecheck": "license-check"
   },
   "repository": {
@@ -95,14 +94,7 @@
   },
   "license-check-config": {
     "src": [
-      "**/*.js",
-      "**/*.ts",
-      "!/**/coverage/**/*",
-      "!/**/demo/**/*",
-      "!/**/node_modules/**/*",
-      "!/**/typings/**/*",
-      "!*.js",
-      "!app/js/xml2json.js"
+      "./dist/**/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,
