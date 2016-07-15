@@ -48,7 +48,7 @@ npm install --save ng2-alfresco-documentlist
 Add the following dependency to your index.html:
 
 ```html
-<script src="node_modules/alfresco-js-api/bundle.js"></script>
+<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
 ```
 
 The following component needs to be added to your `systemjs.config.js` file: 
