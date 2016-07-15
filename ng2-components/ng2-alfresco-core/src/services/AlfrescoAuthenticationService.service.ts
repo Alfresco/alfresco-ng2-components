@@ -36,6 +36,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
     /**
      * Constructor
      * @param alfrescoSettingsService
+     * @param http
      */
     constructor(private alfrescoSettingsService: AlfrescoSettingsService,
                 private http: Http) {
@@ -47,6 +48,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
      * Method to delegate to POST login
      * @param username
      * @param password
+     * @param providers
      * @returns {Observable<R>|Observable<T>}
      */
     login(username: string, password: string, providers: string []): Observable<string> {
@@ -63,6 +65,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
      *
      * @param username
      * @param password
+     * @param providers
      * @returns {Observable<R>|Observable<T>}
      */
     private performeLogin(username: string, password: string, providers: string []): Observable<any> {
@@ -104,7 +107,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
 
     /**
      * Return the ticket stored in the localStorage of the specific provider type
-     * @param ticket
+     * @param type
      */
     public getTicket(type: string = 'ECM'): string {
         let auth: AbstractAuthentication = this.findProviderInstance(type);
@@ -122,18 +125,16 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         if (this.providersInstance.length === 0) {
             return Observable.throw('No providers defined');
         } else {
-            return this.performeLogout();
+            return this.performLogout();
         }
     }
 
     /**
      * Perform a logout on behalf of the user for the different provider instance
      *
-     * @param username
-     * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    private performeLogout(): Observable<any> {
+    private performLogout(): Observable<any> {
         let observableBatch = [];
         this.providersInstance.forEach((authInstance) => {
             observableBatch.push(authInstance.logout());
