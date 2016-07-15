@@ -49,10 +49,10 @@
                 <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                 <img *ngIf="!isIconValue(row, col)" class="image-cell" alt="{{iconAltTextKey(data.getValue(row, col))|translate}}" src="{{data.getValue(row, col)}}">
             </div>
-            <div *ngSwitchCase="'date'" class="cell-value">
+            <div *ngSwitchCase="'date'" class="cell-value" [attr.data-automation-id]="'date_' + data.getValue(row, col)">
                 {{data.getValue(row, col)}}
             </div>
-            <div *ngSwitchCase="'text'" class="cell-value">
+            <div *ngSwitchCase="'text'" class="cell-value" [attr.data-automation-id]="'text_' + data.getValue(row, col)">
                 {{data.getValue(row, col)}}
             </div>
             <span *ngSwitchDefault class="cell-value">
