@@ -94,7 +94,7 @@
   },
   "license-check-config": {
     "src": [
-      "./dist/**/*.js"
+      "./app/**/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,
