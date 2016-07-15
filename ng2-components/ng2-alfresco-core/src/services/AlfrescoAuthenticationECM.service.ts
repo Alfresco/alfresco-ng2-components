@@ -28,9 +28,11 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
     TYPE: string = 'ECM';
 
     alfrescoApi: any;
+
     /**
      * Constructor
      * @param alfrescoSettingsService
+     * @param http
      */
     constructor(private alfrescoSettingsService: AlfrescoSettingsService,
                 private http: Http) {
