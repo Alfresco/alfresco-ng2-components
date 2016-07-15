@@ -74,13 +74,6 @@ Also make sure you include these dependencies in your `index.html` file:
 
 ## Basic usage example
 
-**my.component.html**
-
-```html
-<alfresco-datatable 
-    [data]="data">
-</alfresco-datatable>
-```
 
 **my.component.ts**
 
@@ -93,7 +86,8 @@ import {
 
 @Component({
     selector: 'my-view',
-    templateUrl: './my.component.html',
+    template: `<alfresco-datatable [data]="data">
+        </alfresco-datatable>`,
     directives: [ALFRESCO_DATATABLE_DIRECTIVES]
 })
 export class MyView {
