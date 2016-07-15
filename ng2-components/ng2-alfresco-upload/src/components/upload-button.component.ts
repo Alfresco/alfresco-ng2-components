@@ -92,7 +92,7 @@ export class UploadButtonComponent {
         let formFields = this.createFormFields();
         this._uploaderService.setOptions(formFields);
         this.translate = translate;
-        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
+        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
     }
 
     /**
