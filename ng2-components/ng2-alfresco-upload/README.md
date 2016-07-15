@@ -220,9 +220,9 @@ npm run build
 
 ##Build the files and keep watching for changes
 
-    ```sh
-    $ npm run build:w
-    ```
+```sh
+$ npm run build:w
+```
     
 ## Running unit tests
 
