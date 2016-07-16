@@ -32,6 +32,25 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _rows: DataRow[];
     private _columns: DataColumn[];
 
+    static generationSchema(rowToExaminate: any) {
+        let schema = [];
+
+        if (typeof rowToExaminate === 'object') {
+            for (let key in rowToExaminate) {
+                if (rowToExaminate.hasOwnProperty(key)) {
+                    schema.push({
+                        type: 'text',
+                        key: key,
+                        title: key,
+                        sortable: false
+                    });
+                }
+            }
+        }
+
+        return schema;
+    }
+
     constructor(data: any[], schema: DataColumn[]) {
         this._rows = [];
         this._columns = [];
