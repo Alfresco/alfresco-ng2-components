@@ -56,12 +56,14 @@ export class FilesComponent {
     fileName: string;
     mimeType: string;
     fileShowed: boolean = false;
+    multipleFileUpload: boolean = false;
+    folderUpload: boolean = false;
+    acceptedFilesTypeShow: boolean = false;
 
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
-    constructor(
-        private contentService: AlfrescoContentService,
-        documentActions: DocumentActionsService) {
+    constructor(private contentService: AlfrescoContentService,
+                documentActions: DocumentActionsService) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 
@@ -92,5 +94,21 @@ export class FilesComponent {
         if (event) {
             this.currentPath = event.path;
         }
+    }
+
+    toggleMultipleFileUpload() {
+        this.multipleFileUpload = !this.multipleFileUpload;
+        return this.multipleFileUpload;
+    }
+
+    toggleFolder() {
+        this.multipleFileUpload = false;
+        this.folderUpload = !this.folderUpload;
+        return this.folderUpload;
+    }
+
+    toggleAcceptedFilesType() {
+        this.acceptedFilesTypeShow = !this.acceptedFilesTypeShow;
+        return this.acceptedFilesTypeShow;
     }
 }
