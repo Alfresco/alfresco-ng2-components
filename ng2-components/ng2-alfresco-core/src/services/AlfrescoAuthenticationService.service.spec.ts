@@ -33,12 +33,9 @@ describe('AlfrescoAuthentication', () => {
         service;
 
     fakePromiseECM = new Promise(function (resolve, reject) {
-        resolve({
-            entry: {
-                userId: 'fake-username',
-                id: 'fake-post-ticket-ECM'
-            }
-        });
+        resolve(
+            'fake-post-ticket-ECM'
+        );
         reject({
             response: {
                 error: 'fake-error'

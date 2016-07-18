@@ -72,7 +72,7 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
 
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
-                return {type: this.TYPE, ticket: response.entry.id};
+                return {type: this.TYPE, ticket: response};
             })
             .catch(this.handleError);
     }
