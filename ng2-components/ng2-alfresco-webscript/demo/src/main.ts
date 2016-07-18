@@ -53,7 +53,7 @@ import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
                            [servicePath]="servicePath"
                            [contentType]="'HTML'"
                            (onSuccess)= "logData($event)"></alfresco-webscript-get>
-        </div>{{prova}}
+        </div>
     `,
     directives: [WEBSCRIPTCOMPONENT, CONTEXT_MENU_DIRECTIVES]
 })
@@ -74,8 +74,6 @@ class WebscriptDemo implements OnInit {
     scriptArgs: string = '';
 
     token: string;
-
-    prova: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
