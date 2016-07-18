@@ -43,7 +43,10 @@ export class ActivitiTaskListService {
         data.filterId = filter.id;
         data.filter = filter.filter;
         data = JSON.stringify(data);
-        return this.callApiTasksFiltered(data);
+
+        return Observable.fromPromise(this.callApiTasksFiltered(data))
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
     }
 
     private callApiTasksFiltered(data: Object): Observable<any> {
@@ -55,9 +58,7 @@ export class ActivitiTaskListService {
         let options = new RequestOptions({headers: headers});
 
         return this.http
-            .post(url, data, options)
-            .map((res: Response) => res.json())
-            .catch(this.handleError);
+            .post(url, data, options);
     }
 
     private callApiTaskFilters(): Observable<any> {
