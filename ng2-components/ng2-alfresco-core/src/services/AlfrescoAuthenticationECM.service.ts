@@ -54,10 +54,6 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
         return this.alfrescoSettingsService.host;
     }
 
-    getAlfrescoApi(): any {
-        return this.alfrescoApi;
-    }
-
     /**
      * The method return tru if the user is logged in
      * @returns {boolean}
@@ -73,19 +69,27 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
      * @returns {Observable<R>|Observable<T>}
      */
     login(username: string, password: string) {
+
+        return Observable.fromPromise(this.callApiLogin(username, password))
+            .map((response: any) => {
+                return {type: this.TYPE, ticket: response.entry.id};
+            })
+            .catch(this.handleError);
+    }
+
+    /**
+     * Initialize the alfresco Api with user and password end call the login method
+     * @param username
+     * @param password
+     * @returns {*|Observable<any>}
+     */
+    private callApiLogin(username: string, password: string) {
         this.alfrescoApi = new AlfrescoApi({
             username: username,
             password: password,
             host: this.getBaseUrl()
         });
-
-        return Observable.fromPromise(this.alfrescoApi.login())
-            .map(res => <any> res)
-            .do(response => {
-                this.saveTicket(response);
-                return response;
-            })
-            .catch(this.handleError);
+        return this.alfrescoApi.login();
     }
 
     /**
@@ -94,13 +98,21 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
      * @returns {Observable<R>|Observable<T>}
      */
     public logout() {
-        return Observable.fromPromise(this.alfrescoApi.logout())
+        return Observable.fromPromise(this.callApiLogout())
             .map(res => <any> res)
             .do(response => {
                 this.removeTicket(this.TYPE);
                 return response;
             })
             .catch(this.handleError);
+    }
+
+    /**
+     *
+     * @returns {*|Observable<string>|Observable<any>|Promise<T>}
+     */
+    private callApiLogout():Promise<any> {
+        return this.alfrescoApi.logout();
     }
 
 

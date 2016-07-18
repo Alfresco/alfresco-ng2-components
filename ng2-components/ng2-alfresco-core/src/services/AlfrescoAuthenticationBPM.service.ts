@@ -40,8 +40,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     login(username: string, password: string): Observable<any> {
         return Observable.fromPromise(this.apiActivitiLogin(username, password))
             .map((response: any) => {
-                this.saveTicket(response.status);
-                return response.status;
+                return {type: this.TYPE, ticket: response.status};
             })
             .catch(this.handleError);
     }
@@ -97,7 +96,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
      * The method save the ticket in the localStorage
      * @param ticket
      */
-    public saveTicket(ticket): void {
+    public saveTicket(ticket: string): void {
         if (ticket) {
             super.saveTicket(this.TYPE, ticket);
         }
