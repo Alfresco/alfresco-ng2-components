@@ -32,14 +32,14 @@ before_script:
   - if ([ "$MODULE" != "ng2-alfresco-core" ] && [ "$MODULE" != "ng2-alfresco-viewer" ]); then
         (cd ng2-components/ng2-alfresco-core; npm install; npm link);
     fi
-  - if [[ "$MODULE" == "ng2-alfresco-documentlist" ]]; then
+  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ]); then
         (cd ng2-components/ng2-alfresco-datatable;npm link ng2-alfresco-core; npm install; npm link);
     fi
   - cd ng2-components/$MODULE;
   - if ([ "$MODULE" != "ng2-alfresco-core" ] && [ "$MODULE" != "ng2-alfresco-viewer" ]); then
         npm link ng2-alfresco-core;
     fi
-  - if [[ "$MODULE" == "ng2-alfresco-documentlist" ]]; then
+  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ]); then
         npm link ng2-alfresco-datatable;
     fi
   - npm install;

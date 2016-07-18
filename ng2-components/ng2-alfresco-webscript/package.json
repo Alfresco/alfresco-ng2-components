@@ -1,6 +1,6 @@
 {
   "name": "ng2-alfresco-webscript",
-  "description": "webscript executor",
+  "description": "Alfresco webscript executor",
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "main": "./dist/index.js",
