@@ -33,12 +33,9 @@ describe('AlfrescoAuthentication', () => {
         service;
 
     fakePromiseECM = new Promise(function (resolve, reject) {
-        resolve({
-            entry: {
-                userId: 'fake-username',
-                id: 'fake-post-ticket-ECM'
-            }
-        });
+        resolve(
+            'fake-post-ticket-ECM'
+        );
         reject({
             response: {
                 error: 'fake-error'
@@ -96,7 +93,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getCreateTicketPromise').and.returnValue(fakePromiseECM);
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
 
             service.login('fake-username', 'fake-password', providers)
                 .subscribe(() => {
@@ -115,7 +112,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getCreateTicketPromise').and.returnValue(fakePromiseECM);
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
 
             service.login('fake-username', 'fake-password', providers)
                 .subscribe(() => {
@@ -132,7 +129,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getCreateTicketPromise')
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin')
                 .and.returnValue(Promise.reject('fake invalid credentials'));
 
             service.login('fake-wrong-username', 'fake-wrong-password', providers)
@@ -194,7 +191,7 @@ describe('AlfrescoAuthentication', () => {
             service = injector.get(AlfrescoAuthenticationService);
             localStorage.setItem('ticket-ECM', 'fake-post-ticket-ECM');
             service.createProviderInstance(providers);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getDeleteTicketPromise').and.returnValue(fakePromiseECM);
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogout').and.returnValue(fakePromiseECM);
 
             service.logout()
                 .subscribe(() => {
@@ -345,7 +342,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getCreateTicketPromise').and.returnValue(fakePromiseECM);
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogin').and.returnValue(fakePromiseBPM);
 
             service.login('fake-username', 'fake-password', providers)
@@ -367,7 +364,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getCreateTicketPromise').and.returnValue(fakePromiseECM);
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogin').and.returnValue(fakePromiseBPM);
 
             service.login('fake-username', 'fake-password', providers)
@@ -387,7 +384,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getCreateTicketPromise').and.returnValue(fakePromiseECM);
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogin').and.returnValue(Promise.reject('fake invalid credentials'));
 
             service.login('fake-username', 'fake-password', providers)
@@ -411,7 +408,7 @@ describe('AlfrescoAuthentication', () => {
             alfSetting.providers = providers;
 
             service = injector.get(AlfrescoAuthenticationService);
-            spyOn(AlfrescoAuthenticationECM.prototype, 'getCreateTicketPromise')
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin')
                 .and.returnValue(Promise.reject('fake invalid credentials'));
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogin').and.returnValue(fakePromiseBPM);
 

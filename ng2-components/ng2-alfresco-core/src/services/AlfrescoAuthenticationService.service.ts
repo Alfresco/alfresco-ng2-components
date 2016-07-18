@@ -81,6 +81,9 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         return Observable.create(observer => {
             Observable.forkJoin(observableBatch).subscribe(
                 (response: any[]) => {
+                    response.forEach((res) => {
+                        this.performeSaveToken(res.type, res.ticket);
+                    });
                     observer.next(response);
                 },
                 (err: any) => {
@@ -115,6 +118,18 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
             return auth.getTicket();
         }
         return '';
+    }
+
+    /**
+     * Save the token calling the method of the specific provider type
+     * @param type - providerName
+     * @param ticket
+     */
+   private performeSaveToken(type: string, ticket: string) {
+        let auth: AbstractAuthentication = this.findProviderInstance(type);
+        if (auth) {
+            auth.saveTicket(ticket);
+        }
     }
 
     /**
