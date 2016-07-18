@@ -15,15 +15,38 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
+import { FormService } from './../services/form.service';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'activiti-form',
-    template: '<h3>Activiti Form Content</h3>'
+    templateUrl: './activiti-form.component.html',
+    providers: [
+        FormService
+    ]
 })
-export class ActivitiForm {
+export class ActivitiForm implements OnInit {
+
+    debugTask: any;
+    debugForm: any;
+
+    constructor(private formService: FormService) {
+
+    }
+
+    ngOnInit() {
+        this.formService.getTask('1').subscribe(task => {
+            console.log(task);
+            this.debugTask = task;
+
+            this.formService.getTaskForm('1').subscribe(form => {
+                console.log(form);
+                this.debugForm = form;
+            })
+        });
+    }
 
 }
