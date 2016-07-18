@@ -16,14 +16,15 @@
  */
 
 import { Component } from '@angular/core';
-
-declare let __moduleName: string;
+import { ActivitiForm } from 'ng2-alfresco-activiti-form';
 
 @Component({
-    moduleId: __moduleName,
-    selector: 'activiti-form',
-    template: '<h3>Activiti Form Content</h3>'
+    selector: 'activiti-demo',
+    template: `
+        <activiti-form></activiti-form>
+    `,
+    directives: [ActivitiForm]
 })
-export class ActivitiForm {
+export class ActivitiDemoComponent {
 
 }

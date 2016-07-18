@@ -81,7 +81,8 @@
     "ng2-alfresco-login": "0.2.0",
     "ng2-alfresco-search": "0.2.0",
     "ng2-alfresco-upload": "0.2.0",
-    "ng2-alfresco-viewer": "0.2.0"
+    "ng2-alfresco-viewer": "0.2.0",
+    "ng2-alfresco-activiti-form": "0.2.0"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",
@@ -94,7 +95,8 @@
   },
   "license-check-config": {
     "src": [
-      "./app/**/*.js"
+      "./app/**/*.js",
+      "!./app/js/xml2json.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,
