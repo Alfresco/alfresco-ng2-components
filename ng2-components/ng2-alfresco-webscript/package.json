@@ -67,6 +67,7 @@
     "karma-jasmine-html-reporter": "^0.2.0",
     "karma-mocha-reporter": "^2.0.3",
     "license-check": "^1.0.4",
+    "material-design-lite": "^1.1.3",
     "remap-istanbul": "^0.6.3",
     "rimraf": "2.5.2",
     "traceur": "^0.0.91",
@@ -74,10 +75,6 @@
     "typescript": "^1.8.10",
     "typings": "^1.0.4",
     "wsrv": "0.1.3"
-  },
-  "peerDependencies": {
-    "material-design-icons": "^2.2.3",
-    "material-design-lite": "^1.1.3"
   },
   "keywords": [
     "webscript",

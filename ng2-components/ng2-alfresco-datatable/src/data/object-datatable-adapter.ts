@@ -32,7 +32,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _rows: DataRow[];
     private _columns: DataColumn[];
 
-    static generatechema(rowToExaminate: any) {
+    static generateSchema(rowToExaminate: any) {
         let schema = [];
 
         if (typeof rowToExaminate === 'object') {

@@ -163,7 +163,7 @@ export class WebscriptComponent {
         let datatableShow = true;
         try {
             if (!data.schema) {
-                data.schema = ObjectDataTableAdapter.generatechema(data.data[0]);
+                data.schema = ObjectDataTableAdapter.generateSchema(data.data[0]);
             }
             if (data.schema && data.schema.length > 0) {
                 this.data = new ObjectDataTableAdapter(data.data, data.schema);
