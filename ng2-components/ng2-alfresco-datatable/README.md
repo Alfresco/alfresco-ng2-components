@@ -79,6 +79,10 @@ Also make sure you include these dependencies in your `index.html` file:
 
 ```ts
 import { Component } from '@angular/core';
+import { 
+    CONTEXT_MENU_DIRECTIVES, 
+    CONTEXT_MENU_PROVIDERS 
+} from 'ng2-alfresco-core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter
@@ -88,7 +92,8 @@ import {
     selector: 'my-view',
     template: `<alfresco-datatable [data]="data">
         </alfresco-datatable>`,
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES]
+    directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
+    providers: [CONTEXT_MENU_PROVIDERS]
 })
 export class MyView {
     data: ObjectDataTableAdapter;
