@@ -26,6 +26,7 @@ env:
     - MODULE=ng2-alfresco-search
     - MODULE=ng2-alfresco-upload
     - MODULE=ng2-alfresco-viewer
+    - MODULE=ng2-alfresco-webscript
 
 before_script:
   - if ([ "$MODULE" != "ng2-alfresco-core" ] && [ "$MODULE" != "ng2-alfresco-viewer" ]); then
