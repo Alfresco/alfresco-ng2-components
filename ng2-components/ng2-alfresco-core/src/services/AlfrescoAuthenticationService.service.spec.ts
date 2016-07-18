@@ -203,6 +203,28 @@ describe('AlfrescoAuthentication', () => {
             );
         });
 
+        it('should logout only for if the provider is loggedin', (done) => {
+            let providers = ['BPM', 'ECM'];
+            let alfSetting = injector.get(AlfrescoSettingsService);
+            alfSetting.providers = providers;
+
+            service = injector.get(AlfrescoAuthenticationService);
+            localStorage.setItem('ticket-ECM', 'fake-post-ticket-ECM');
+            service.createProviderInstance(providers);
+            spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogout').and.returnValue(fakePromiseECM);
+            service.performeSaveToken('ECM', 'fake-ticket-ECM');
+            service.logout()
+                .subscribe(() => {
+                    expect(service.isLoggedIn(providers[0])).toBe(false);
+                    expect(service.getTicket(providers[0])).toBeUndefined();
+                    expect(localStorage.getItem('ticket-ECM')).toBeUndefined();
+                    done();
+                }
+            );
+        });
+
+
+
         it('should return an error if no provider are defined calling the logout', (done) => {
             let providers = [];
             let alfSetting = injector.get(AlfrescoSettingsService);

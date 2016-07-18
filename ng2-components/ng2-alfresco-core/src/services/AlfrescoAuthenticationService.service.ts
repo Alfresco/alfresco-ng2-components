@@ -152,7 +152,9 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
     private performLogout(): Observable<any> {
         let observableBatch = [];
         this.providersInstance.forEach((authInstance) => {
-            observableBatch.push(authInstance.logout());
+            if (authInstance.isLoggedIn()) {
+                observableBatch.push(authInstance.logout());
+            }
         });
         return Observable.create(observer => {
             Observable.forkJoin(observableBatch).subscribe(
