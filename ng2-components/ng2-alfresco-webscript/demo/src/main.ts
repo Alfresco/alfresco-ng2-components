@@ -22,7 +22,8 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
-    AlfrescoAuthenticationService
+    AlfrescoAuthenticationService,
+    CONTEXT_MENU_DIRECTIVES
 } from 'ng2-alfresco-core';
 
 import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
@@ -50,10 +51,11 @@ import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
                            [scriptArgs]="scriptArgs"
                            [contextRoot]="contextRoot"
                            [servicePath]="servicePath"
-                           [contentType]="'HTM'"></alfresco-webscript-get>
-        </div>
+                           [contentType]="'HTML'"
+                           (onSuccess)= "logData($event)"></alfresco-webscript-get>
+        </div>{{prova}}
     `,
-    directives: [WEBSCRIPTCOMPONENT]
+    directives: [WEBSCRIPTCOMPONENT, CONTEXT_MENU_DIRECTIVES]
 })
 class WebscriptDemo implements OnInit {
 
@@ -72,6 +74,8 @@ class WebscriptDemo implements OnInit {
     scriptArgs: string = '';
 
     token: string;
+
+    prova: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
@@ -106,6 +110,10 @@ class WebscriptDemo implements OnInit {
                 console.log(error);
                 this.authenticated = false;
             });
+    }
+
+    logData(data) {
+        console.log(data);
     }
 }
 

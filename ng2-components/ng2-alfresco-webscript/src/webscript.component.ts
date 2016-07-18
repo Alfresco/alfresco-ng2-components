@@ -15,22 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    CONTEXT_MENU_DIRECTIVES,
+    CONTEXT_MENU_PROVIDERS
+} from 'ng2-alfresco-core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter
 } from 'ng2-alfresco-datatable';
-
-import {
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
 
 /**
  * <alfresco-webscript-get [scriptPath]="string"
  *                         [scriptArgs]="Object"
  *                         [contextRoot]="string"
  *                         [servicePath]="string"
- *                         [contentType]="JSON|HTML|DATATABLE">
+ *                         [contentType]="JSON|HTML|DATATABLE"
+ *                         (onSuccess)="customMethod($event)>
  * </alfresco-webscript-get>
  *
  * This component, provide a get webscript viewer
@@ -41,15 +43,18 @@ import {
  * @InputParam {string} servicePath path where Web Script service is mapped default value 'service'
  * @InputParam {string} contentType JSON | HTML | DATATABLE | TEXT
  *
+ * @Output - onSuccess - The event is emitted when the data are recived
+ *
  * @returns {WebscriptComponent} .
  */
 @Component({
     selector: 'alfresco-webscript-get',
     template: `
     <div id="webscript-data" ></div>
-    <div *ngIf="isDataTableCOntent()" ><alfresco-datatable id="webscript-datatable-wrapper" [data]="data" ></alfresco-datatable><div>
+    <div *ngIf="isDataTableContent()" ><alfresco-datatable id="webscript-datatable-wrapper" [data]="data" ></alfresco-datatable><div>
     <div *ngIf="!show" id="error">Error during the deserialization of {{data}} as {{contentType}}</div>`,
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES]
+    directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
+    providers: [CONTEXT_MENU_PROVIDERS]
 })
 export class WebscriptComponent {
 
@@ -67,6 +72,9 @@ export class WebscriptComponent {
 
     @Input()
     contentType: string = 'TEXT';
+
+    @Output()
+    onSuccess = new EventEmitter();
 
     data: any = undefined;
 
@@ -92,6 +100,9 @@ export class WebscriptComponent {
                 } else {
                     this.show = this.showDataAsHTML(data);
                 }
+
+                this.onSuccess.emit(data);
+
                 resolve();
             }, function (error) {
                 console.log('Error' + error);
@@ -152,7 +163,7 @@ export class WebscriptComponent {
         let datatableShow = true;
         try {
             if (!data.schema) {
-                data.schema = ObjectDataTableAdapter.generationSchema(data[0]);
+                data.schema = ObjectDataTableAdapter.generationSchema(data.data[0]);
             }
             if (data.schema && data.schema.length > 0) {
                 this.data = new ObjectDataTableAdapter(data.data, data.schema);
@@ -172,7 +183,7 @@ export class WebscriptComponent {
         this.data = undefined;
     }
 
-    isDataTableCOntent() {
+    isDataTableContent() {
         return this.contentType === 'DATATABLE' && this.show;
     }
 }

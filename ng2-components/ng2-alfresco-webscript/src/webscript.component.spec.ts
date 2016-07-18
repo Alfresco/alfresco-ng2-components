@@ -161,8 +161,7 @@ describe('Test ng2-alfresco-webscript', () => {
 
             component.ngOnChanges().then(() => {
                 webscriptComponentFixture.detectChanges();
-                expect(element.querySelector('#webscript-datatable-wrapper').innerHTML)
-                    .toBe('<test-element-id><test-elemt-id></test-elemt-id></test-element-id>');
+                expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).not.toBe.undefined;
                 done();
             });
 
@@ -182,6 +181,33 @@ describe('Test ng2-alfresco-webscript', () => {
                     title: 'Name',
                     sortable: true
                 }]
+            };
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: dataTable
+            });
+        });
+
+        it('webscript Datatable response should be displayed also if no schema is provided', (done) => {
+            let component = webscriptComponentFixture.componentInstance;
+            let element = webscriptComponentFixture.nativeElement;
+
+            component.scriptPath = 'sample/folder/Company%20Home';
+            component.contentType = 'DATATABLE';
+
+            component.ngOnChanges().then(() => {
+                webscriptComponentFixture.detectChanges();
+                expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).not.toBe.undefined;
+                done();
+            });
+
+            let dataTable = {
+                data: [
+                    {id: 1, name: 'Name 1'},
+                    {id: 2, name: 'Name 2'}
+                ]
             };
 
             jasmine.Ajax.requests.mostRecent().respondWith({

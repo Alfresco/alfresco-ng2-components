@@ -87,7 +87,8 @@ Also make sure you include these dependencies in your .html page:
                          [scriptArgs]="Object"
                          [contextRoot]="string"
                          [servicePath]="string"
-                         [contentType]="JSON | HTML | DATATABLE | TEXT">
+                         [contentType]="JSON | HTML | DATATABLE | TEXT"
+                         (onSuccess)= "logData($event)">
  </alfresco-webscript-get>
  ```
 
@@ -147,12 +148,111 @@ bootstrap(AppComponent, [
 **contextRoot** {string}  path where application is deployed default value 'alfresco'
 **servicePath** {string}  path where Web Script service is mapped default value 'service'
 **contentType** {string}  how to handle the data received from te web script JSON | HTML | DATATABLE | TEXT
+***data***      {string}  data contain the plain value get from the webscipt is an output parameter
+
+## Webscript View HTML example
+This sample demonstrates how to implement a Webscript component that renders the HTML contents that come from a webscript
+This sample Web Scripts  reside in your Alfresco Server AND  you can access the folder webscript here:
+
+http://localhost:8080/alfresco/service/sample/folder/Company%20Home 
 
 
+```html
+ <alfresco-webscript-get [scriptPath]="scriptPath"
+                           [contextRoot]= "'alfresco'"
+                           [servicePath]= "'service'";
+                           [scriptPath]=  "'Sample/folder/Company%20Home'"
+                           [contentType]= "'HTML'">
+ </alfresco-webscript-get>
+```                          
+
+![Custom columns](docs/assets/HTML.png)                         
+
+## Webscript View DATATABLE example
+This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
+
+http://localhost:8080/alfresco/service/sample/folder/DATATABLE
+
+```html
+ <alfresco-webscript-get [scriptPath]="scriptPath"
+                           [contextRoot]= "'alfresco'"
+                           [servicePath]= "'service'";
+                           [scriptPath]=  "'Sample/folder/DATATABLE'"
+                           [contentType]= "'DATATABLE'">
+ </alfresco-webscript-get>
+```  
+
+If you want show the result from a webscript inside a ng2-alfresco-datatable you have to return from the GET of the webscript the datatructure below:
+subdivide in data and schema
+
+```ts
+data: [],
+schema: []
+```
+
+this is an example: 
+
+```ts
+data: [
+    {id: 1, name: 'Name 1'},
+    {id: 2, name: 'Name 2'}
+],
+schema: [{
+    type: 'text',
+    key: 'id',
+    title: 'Id',
+    sortable: true
+}, {
+    type: 'text',
+    key: 'name',
+    title: 'Name',
+    sortable: true
+}]
+```
+
+or you can send just the array data and the component will create a schema for you: 
+
+```ts
+data: [
+    {id: 1, name: 'Name 1'},
+    {id: 2, name: 'Name 2'}
+]]
+```
+
+that will render the follow table
+
+![Custom columns](docs/assets/datatable.png)
+
+
+## Webscript View JSON example
+This sample demonstrates how to implement a Webscript component that renders the JSON contents that come from a webscript
+This sample Web Scripts  reside in your Alfresco Server AND  you can access the folder webscript here:
+
+http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE 
+
+```html
+ <alfresco-webscript-get [scriptPath]="scriptPath"
+                           [contextRoot]= "'alfresco'"
+                           [servicePath]= "'service'";
+                           [scriptPath]=  "'Sample/folder/JSON_EXAMPLE'"
+                           [contentType]= "'HTML'"
+                           (onSuccess)= "logDataExample($event)">
+ </alfresco-webscript-get>
+``` 
+
+You can get the plain data from the webscript through the **onSuccess** event parameter and use it as you need in your application
+
+```ts
+    logDataExample(data) {
+        console.log('You webscript data are here' + data);
+    }
+```
+
+        
 ## Build from sources
 Alternatively you can build component from sources with the following commands:
-
-
+     
+     
 ```sh
 npm install
 npm run build

@@ -23,6 +23,7 @@ module.exports = function (config) {
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
       {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
 
+      {pattern: 'node_modules/material-design-lite/material.min.js', included: true, watched: false},
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
       // paths loaded via module imports
