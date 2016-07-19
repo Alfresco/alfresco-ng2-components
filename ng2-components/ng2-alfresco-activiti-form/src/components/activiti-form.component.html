@@ -1,9 +1,23 @@
+<div *ngIf="hasForm()" style="padding: 10px;">
+    <div *ngIf="form.hasTabs()">
+        <tabs-widget [tabs]="form.tabs"></tabs-widget>
+    </div>
+    <div *ngIf="!form.hasTabs() && form.hasFields()">
+        <container-widget [content]="form.fields[0]"></container-widget>
+    </div>
+
+</div>
+
+<!--
 <div style="padding: 10px">
+
     <h2>Task form content</h2>
 
-    <h3>Task</h3>
-    <pre>{{debugTask | json}}</pre>
-
     <h3>Form</h3>
-    <pre>{{debugForm | json}}</pre>
+    <pre *ngIf="form">{{form.json | json}}</pre>
+
+    <h3>Task</h3>
+    <pre *ngIf="task">{{task | json}}</pre>
+
 </div>
+-->

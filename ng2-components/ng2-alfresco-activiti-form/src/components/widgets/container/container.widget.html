@@ -1,0 +1,18 @@
+<div class="mdl-grid">
+    <div *ngFor="let field of content.fields" class="mdl-cell mdl-cell--{{field.metadata.size}}-col">
+        <div [ngSwitch]="field.type">
+            <div *ngSwitchCase="'integer'">
+                <number-widget [field]="field"></number-widget>
+            </div>
+            <div *ngSwitchCase="'text'">
+                <text-widget [field]="field"></text-widget>
+            </div>
+            <div *ngSwitchCase="'boolean'">
+                <checkbox-widget [field]="field"></checkbox-widget>
+            </div>
+            <div *ngSwitchDefault>
+                <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+            </div>
+        </div>
+    </div>
+</div>
