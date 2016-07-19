@@ -35,6 +35,7 @@
 - [Viewer](ng2-alfresco-viewer/README.md)
 - [Login](ng2-alfresco-login/README.md)
 - [Upload](ng2-alfresco-upload/README.md)
+- [Webscript viewer](ng2-components/ng2-alfresco-webscript/README.md)
 
 You can browse all the components at the following address:
 
