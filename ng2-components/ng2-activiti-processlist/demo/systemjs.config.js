@@ -25,7 +25,8 @@
     'rxjs': 'node_modules/rxjs',
     'ng2-translate': 'node_modules/ng2-translate',
     'ng2-activiti-processlist': 'node_modules/ng2-activiti-processlist',
-    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist'
+    'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist',
+    'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable/dist'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -35,7 +36,8 @@
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
     'ng2-activiti-processlist': { main: 'index.js', defaultExtension: 'js' },
-    'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js' }
+    'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js' },
+    'ng2-alfresco-datatable': { main: 'index.js', defaultExtension: 'js' }
   };
 
   var ngPackageNames = [

@@ -20,6 +20,10 @@ import {
     OnInit
 } from '@angular/core';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import {
+    ALFRESCO_DATATABLE_DIRECTIVES,
+    ObjectDataTableAdapter
+} from 'ng2-alfresco-datatable';
 import { ActivitiProcessService } from '../services/activiti-process-service.service';
 import { ProcessInstance } from '../models/process-instance';
 
@@ -36,12 +40,14 @@ declare let __moduleName: string;
           `
     ],
     templateUrl: './ng2-activiti-processlist.component.html',
+    directives: [ ALFRESCO_DATATABLE_DIRECTIVES ],
     pipes: [ AlfrescoPipeTranslate ]
 })
 export class Ng2ActivitiProcesslistComponent implements OnInit {
 
     errorMessage: string;
     processInstances: ProcessInstance[];
+    data: ObjectDataTableAdapter;
 
     constructor (
         private processService: ActivitiProcessService,
@@ -59,7 +65,18 @@ export class Ng2ActivitiProcesslistComponent implements OnInit {
     getProcesses() {
         this.processService.getProcesses()
             .subscribe(
-                processInstances => this.processInstances = processInstances,
+                (processInstances) => {
+                    // this.processInstances = processInstances;
+                    this.data = new ObjectDataTableAdapter(
+                        processInstances,
+                        [
+                            {type: 'text', key: 'id', title: 'Id', sortable: true},
+                            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                            {type: 'text', key: 'started', title: 'Started', sortable: true},
+                            {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
+                        ]
+                    );
+                },
                 error =>  this.errorMessage = <any>error);
     }
 
