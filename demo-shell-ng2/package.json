@@ -74,7 +74,7 @@
     "pdfjs-dist": "1.5.258",
     "flag-icon-css": "2.3.0",
 
-    "alfresco-js-api": "0.2.0",
+    "alfresco-js-api": "0.2.1",
     "ng2-alfresco-core": "0.2.0",
     "ng2-alfresco-datatable": "0.2.0",
     "ng2-alfresco-documentlist": "0.2.0",
