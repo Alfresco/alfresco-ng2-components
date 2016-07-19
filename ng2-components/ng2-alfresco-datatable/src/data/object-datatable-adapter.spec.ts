@@ -367,4 +367,17 @@ describe('ObjectDataRow', () => {
         expect(row.hasValue('some.other.prop')).toBeFalsy();
     });
 
+    it('should generateSchema generate a schema from data', () => {
+        let data =  [
+            { id: 2, name: 'abs' },
+            { id: 1, name: 'xyz' }
+        ];
+
+        let schema = ObjectDataTableAdapter.generateSchema(data);
+
+        expect(schema.length).toBe(2);
+        expect(schema[0].title).toBe('id');
+        expect(schema[1].title).toBe('name');
+    });
+
 });
