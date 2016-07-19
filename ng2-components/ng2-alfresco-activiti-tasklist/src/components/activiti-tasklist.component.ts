@@ -53,20 +53,25 @@ export class ActivitiTaskList implements OnInit {
      */
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
-                private activiti: ActivitiTaskListService) {
+                public activiti: ActivitiTaskListService) {
         this.filter$ = new Observable<FilterModel>(observer =>  this.filterObserver = observer).share();
 
-        translate.addTranslationFolder('node_modules/ng2-alfresco-activiti-tasklist');
+        if (translate) {
+            translate.addTranslationFolder('node_modules/ng2-alfresco-activiti-tasklist');
+        }
     }
 
     ngOnInit() {
-        this.filtersList = this.activiti.getTaskListFilters().map(res => (res.data));
+        this.filtersList = this.activiti.getTaskListFilters();
 
-        this.filter$.subscribe( (filter: FilterModel) => {
-            this.activiti.getTasks(filter).subscribe((res) => {
-                let tasks = res.data;
-                this.loadTasks(tasks);
-            });
+        this.filter$.subscribe((filter: FilterModel) => {
+            this.activiti.getTasks(filter).subscribe(
+                (res) => {
+                    let tasks = res.data;
+                    this.loadTasks(tasks);
+                }, (err) => {
+                    console.error(err);
+                });
         });
     }
 

@@ -30,8 +30,10 @@ export class ActivitiTaskListService {
      * Retrive all the Tasks filters
      * @returns {Observable<any>}
      */
-    getTaskListFilters() {
-        return this.callApiTaskFilters();
+    getTaskListFilters(): Observable<any> {
+        return Observable.fromPromise(this.callApiTaskFilters())
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
     }
 
     /**
@@ -49,7 +51,7 @@ export class ActivitiTaskListService {
             .catch(this.handleError);
     }
 
-    private callApiTasksFiltered(data: Object): Observable<any> {
+    private callApiTasksFiltered(data: Object) {
         let url = 'http://localhost:9999/activiti-app/app/rest/filter/tasks';
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -58,10 +60,10 @@ export class ActivitiTaskListService {
         let options = new RequestOptions({headers: headers});
 
         return this.http
-            .post(url, data, options);
+            .post(url, data, options).toPromise();
     }
 
-    private callApiTaskFilters(): Observable<any> {
+    private callApiTaskFilters() {
         let url = 'http://localhost:9999/activiti-app/app/rest/filters/tasks';
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -70,9 +72,7 @@ export class ActivitiTaskListService {
         let options = new RequestOptions({headers: headers});
 
         return this.http
-            .get(url, options)
-            .map((res: Response) => res.json())
-            .catch(this.handleError);
+            .get(url, options).toPromise();
     }
 
 

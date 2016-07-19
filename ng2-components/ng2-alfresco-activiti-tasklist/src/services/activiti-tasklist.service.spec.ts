@@ -18,7 +18,6 @@
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 import { HTTP_PROVIDERS } from '@angular/http';
 
 declare let AlfrescoApi: any;
@@ -40,8 +39,8 @@ describe('AlfrescoUploadService', () => {
     beforeEachProviders(() => {
         return [
             HTTP_PROVIDERS,
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
-            { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService,
             ActivitiTaskListService
         ];
     });
@@ -157,8 +156,6 @@ describe('AlfrescoUploadService', () => {
                 expect(err.error).toEqual('wrong request');
                 done();
             });
-
-
     });
 
 });
