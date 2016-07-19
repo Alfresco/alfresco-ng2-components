@@ -61,6 +61,16 @@ export class FormFieldModel extends FormWidgetModel {
     }
 }
 
+export class ContainerColumnModel {
+
+    size: number = 12;
+    fields: FormFieldModel[] = [];
+
+    hasFields(): boolean {
+        return this.fields && this.fields.length > 0;
+    }
+}
+
 export class ContainerModel extends FormWidgetModel {
 
     fieldType: string;
@@ -70,7 +80,7 @@ export class ContainerModel extends FormWidgetModel {
     tab: string;
     numberOfColumns: number = 1;
 
-    fields: FormFieldModel[] = [];
+    columns: ContainerColumnModel[] = [];
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
@@ -88,17 +98,16 @@ export class ContainerModel extends FormWidgetModel {
                 columnSize = 12 / this.numberOfColumns;
             }
 
-            let fields = [];
+            for (let i = 0; i < this.numberOfColumns; i++) {
+                let col = new ContainerColumnModel();
+                col.size = columnSize;
+                this.columns.push(col);
+            }
 
             Object.keys(json.fields).map(key => {
-                fields = fields.concat(json.fields[key] || []);
-            });
-
-            // this.fields = fields.map(f => new FormFieldModel(form, f));
-            this.fields = fields.map(f => {
-                let field = new FormFieldModel(form, f);
-                field.metadata['size'] = columnSize;
-                return field;
+                let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
+                let col = this.columns[parseInt(key) - 1];
+                col.fields = fields;
             });
         }
     }

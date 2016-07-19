@@ -16,26 +16,25 @@
  */
 
 import { Component, Input, AfterViewInit } from '@angular/core';
-import { ContainerModel } from './../widget.model';
-
-import { TextWidget } from './../text/text.widget';
-import { NumberWidget } from './../number/number.widget';
-import { CheckboxWidget } from './../checkbox/checkbox.widget';
-import { MultilineTextWidget } from './../multiline-text/multiline-text.widget';
+import { FormFieldModel } from './../widget.model';
 
 declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
     moduleId: __moduleName,
-    selector: 'container-widget',
-    templateUrl: './container.widget.html',
-    directives: [TextWidget, NumberWidget, CheckboxWidget, MultilineTextWidget]
+    selector: 'multiline-text-widget',
+    templateUrl: './multiline-text.widget.html',
+    styleUrls: ['./multiline-text.widget.css']
 })
-export class ContainerWidget implements AfterViewInit {
+export class MultilineTextWidget implements AfterViewInit {
 
     @Input()
-    content: ContainerModel;
+    field: FormFieldModel;
+
+    hasField() {
+        return this.field ? true : false;
+    }
 
     ngAfterViewInit() {
         // workaround for MDL issues with dynamic components
