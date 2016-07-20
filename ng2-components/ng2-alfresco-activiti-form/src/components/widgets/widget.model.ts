@@ -43,6 +43,7 @@ export class FormFieldModel extends FormWidgetModel {
     id: string;
     name: string;
     type: string;
+    value: any;
     tab: string;
     colspan: number = 1;
 
@@ -55,6 +56,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.id = json.id;
             this.name = json.name;
             this.type = json.type;
+            this.value = json.value;
             this.tab = json.tab;
             this.colspan = <number> json.colspan;
         }
