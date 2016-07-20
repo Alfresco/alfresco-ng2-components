@@ -142,10 +142,36 @@ export interface WidgetModelCache<T extends FormWidgetModel> {
     [key: string]: T;
 }
 
+export class FormOutcomeModel extends FormWidgetModel {
+
+    private _id: string;
+    private _name: string;
+
+    isSystem: boolean = false;
+
+    get id() {
+        return this._id;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    constructor(form: FormModel, json?: any) {
+        super(form, json);
+
+        if (json) {
+            this._id = json.id;
+            this._name = json.name;
+        }
+    }
+}
+
 export class FormModel {
 
     tabs: TabModel[] = [];
     fields: ContainerModel[] = [];
+    outcomes: FormOutcomeModel[] = [];
 
     private _json: any;
 
@@ -161,6 +187,10 @@ export class FormModel {
         return this.fields && this.fields.length > 0;
     }
 
+    hasOutcomes(): boolean {
+        return this.outcomes && this.outcomes.length > 0;
+    }
+
     constructor(json?: any) {
         if (json) {
             this._json = json;
@@ -172,19 +202,26 @@ export class FormModel {
                 tabCache[model.id] = model;
                 return model;
             });
-            this.fields = (json.fields || []).map(f => new ContainerModel(this, f));
 
+            this.fields = (json.fields || []).map(obj => new ContainerModel(this, obj));
             for (let i = 0; i < this.fields.length; i++) {
                 let field = this.fields[i];
                 if (field.tab) {
                     let tab = tabCache[field.tab];
                     if (tab) {
-                        // tab.content = new ContainerModel(this, field.json);
-                        // tab.fields.push(field);
                         tab.fields.push(new ContainerModel(this, field.json));
                     }
                 }
             }
+
+            let saveOutcome = new FormOutcomeModel(this, { id: '$save', name: 'Save' });
+            saveOutcome.isSystem = true;
+
+            let systemOutcomes = [saveOutcome];
+
+            this.outcomes = systemOutcomes.concat(
+                (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj))
+            );
         }
     }
 }

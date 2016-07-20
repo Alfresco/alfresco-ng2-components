@@ -1,3 +1,12 @@
+.activiti-form-container {
+    width: 100%;
+    min-height: 100px;
+}
+
+.activiti-form-container > .mdl-card__media {
+    background-color: #fff;
+}
+
 .activiti-task-list__item:hover {
     cursor: pointer;
     font-weight: bold;

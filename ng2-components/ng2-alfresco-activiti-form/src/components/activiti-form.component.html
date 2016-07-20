@@ -20,13 +20,30 @@
             <h3 style="text-align: center">Please select a Task</h3>
         </div>
         <div *ngIf="hasForm()">
-            <div *ngIf="form.hasTabs()">
-                <tabs-widget [tabs]="form.tabs"></tabs-widget>
-            </div>
-            <div *ngIf="!form.hasTabs() && form.hasFields()">
-                <container-widget [content]="form.fields[0]"></container-widget>
+
+            <div class="mdl-card mdl-shadow--2dp activiti-form-container">
+                <div *ngIf="task" class="mdl-card__title">
+                    <h2 class="mdl-card__title-text">{{task.name}}</h2>
+                </div>
+                <div class="mdl-card__media">
+                    <div *ngIf="form.hasTabs()">
+                        <tabs-widget [tabs]="form.tabs"></tabs-widget>
+                    </div>
+
+                    <div *ngIf="!form.hasTabs() && form.hasFields()">
+                        <container-widget [content]="form.fields[0]"></container-widget>
+                    </div>
+                </div>
+                <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect activiti-form-outcomes__item"
+                            [class.mdl-button--colored]="!action.isSystem"
+                            *ngFor="let action of form.outcomes">
+                        {{action.name}}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
 </div>
+

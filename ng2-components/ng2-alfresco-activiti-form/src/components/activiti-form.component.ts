@@ -66,6 +66,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked {
 
     onTaskClicked(task, e) {
         // alert(`Task: ${task.name} clicked.`);
+        this.task = task;
         this.formService
             .getTaskForm(task.id)
             .subscribe(form => this.form = new FormModel(form));
