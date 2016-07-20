@@ -212,7 +212,7 @@ describe('AlfrescoAuthentication', () => {
             localStorage.setItem('ticket-ECM', 'fake-post-ticket-ECM');
             service.createProviderInstance(providers);
             spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogout').and.returnValue(fakePromiseECM);
-            service.performeSaveToken('ECM', 'fake-ticket-ECM');
+            service.performeSaveTicket('ECM', 'fake-ticket-ECM');
             service.logout()
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(false);
