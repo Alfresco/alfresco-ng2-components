@@ -138,6 +138,9 @@ export class UploadDragAreaComponent {
                 .subscribe(
                     message => {
                         let self = this;
+                        this.onSuccess.emit({
+                            value: 'Created folder'
+                        });
                         let dirReader = folder.createReader();
                         dirReader.readEntries(function (entries: any) {
                             for (let i = 0; i < entries.length; i++) {
