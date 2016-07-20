@@ -195,7 +195,7 @@ export class UploadDragAreaComponent {
             timeout: 3000,
             actionHandler: function () {
                 latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                    uploadingFileModel.setAbort();
+                    uploadingFileModel.emitAbort();
                 });
             },
             actionText: actionTranslate.value
