@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-import { TabsWidget } from './tabs/tabs.widget';
-import { ContainerWidget } from './container/container.widget';
-import { TextWidget } from './text/text.widget';
-import { NumberWidget } from './number/number.widget';
-import { CheckboxWidget } from './checkbox/checkbox.widget';
-import { MultilineTextWidget } from './multiline-text/multiline-text.widget';
-
 export * from './widget.model';
 
 export * from './tabs/tabs.widget';
@@ -30,12 +23,3 @@ export * from './text/text.widget';
 export * from './number/number.widget';
 export * from './checkbox/checkbox.widget';
 export * from './multiline-text/multiline-text.widget';
-
-export const WIDGET_DIRECTIVES: [any] = [
-    TabsWidget,
-    ContainerWidget,
-    TextWidget,
-    NumberWidget,
-    CheckboxWidget,
-    MultilineTextWidget
-];

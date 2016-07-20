@@ -21,8 +21,10 @@ import {
     AfterViewChecked
 } from '@angular/core';
 import { FormService } from './../services/form.service';
-import { WIDGET_DIRECTIVES } from './widgets/index';
 import { FormModel } from './widgets/widget.model';
+
+import { TabsWidget } from './widgets/tabs/tabs.widget';
+import { ContainerWidget } from './widgets/container/container.widget';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -32,7 +34,7 @@ declare var componentHandler;
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css'],
-    directives: [WIDGET_DIRECTIVES],
+    directives: [ContainerWidget, TabsWidget],
     providers: [
         FormService
     ]
