@@ -28,17 +28,10 @@ declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
-    selector: 'child-component',
-    template: 'Hello {{name}}'
-})
-class ChildComponent {
-    name: string;
-}
-
-@Component({
     moduleId: __moduleName,
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
+    styleUrls: ['./activiti-form.component.css'],
     directives: [WIDGET_DIRECTIVES],
     providers: [
         FormService
@@ -48,23 +41,20 @@ export class ActivitiForm implements OnInit, AfterViewChecked {
 
     task: any;
     form: FormModel;
+    tasks: any[] = [];
 
     hasForm(): boolean {
         return this.form ? true : false;
     }
 
+    hasTasks(): boolean {
+        return this.tasks && this.tasks.length > 0;
+    }
+
     constructor(private formService: FormService) {}
 
     ngOnInit() {
-        this.formService.getTask('1').subscribe(task => {
-            // console.log(task);
-            this.task = task;
-
-            this.formService.getTaskForm('1').subscribe(form => {
-                // console.log(form);
-                this.form = new FormModel(form);
-            });
-        });
+        this.formService.getTasks().subscribe(val => this.tasks = val || []);
     }
 
     ngAfterViewChecked() {
@@ -72,6 +62,13 @@ export class ActivitiForm implements OnInit, AfterViewChecked {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
+    }
+
+    onTaskClicked(task, e) {
+        // alert(`Task: ${task.name} clicked.`);
+        this.formService
+            .getTaskForm(task.id)
+            .subscribe(form => this.form = new FormModel(form));
     }
 
 }

@@ -27,6 +27,16 @@ export class FormService {
     constructor(private http: Http) {
     }
 
+    getTasks(): Observable<any> {
+        let url = `${this.basePath}/api/enterprise/tasks/query`;
+        let body = JSON.stringify({});
+        let options = this.getRequestOptions();
+
+        return this.http.post(url, body, options)
+            .map(this.toJsonArray)
+            .catch(this.handleError);
+    }
+
     getTask(id: string): Observable<any> {
         let url = `${this.basePath}/api/enterprise/tasks/${id}`;
         let options = this.getRequestOptions();
@@ -61,6 +71,11 @@ export class FormService {
     private toJson(res: Response) {
         let body = res.json();
         return body || {};
+    }
+
+    private toJsonArray(res: Response) {
+        let body = res.json();
+        return body.data || [];
     }
 
     private handleError (error: any) {

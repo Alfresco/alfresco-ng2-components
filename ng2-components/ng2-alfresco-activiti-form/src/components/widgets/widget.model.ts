@@ -106,7 +106,7 @@ export class ContainerModel extends FormWidgetModel {
 
             Object.keys(json.fields).map(key => {
                 let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
-                let col = this.columns[parseInt(key) - 1];
+                let col = this.columns[parseInt(key, 10) - 1];
                 col.fields = fields;
             });
         }
