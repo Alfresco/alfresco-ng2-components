@@ -1,6 +1,6 @@
 <div [ngStyle]="locationCss" class="menu-container">
     <ul class="context-menu">
-        <li (click)="selectFilter(filter)" *ngFor="#filter of filtersList | async">
+        <li (click)="selectFilter(filter)" *ngFor="let filter of filtersList | async">
             {{filter.name}}
         </li>
     </ul>

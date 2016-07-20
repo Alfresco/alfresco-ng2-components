@@ -32,7 +32,9 @@ export class ActivitiTaskListService {
      */
     getTaskListFilters(): Observable<any> {
         return Observable.fromPromise(this.callApiTaskFilters())
-            .map((res: Response) => res.json())
+            .map((res: Response) => {
+                return res.json();
+            })
             .catch(this.handleError);
     }
 
@@ -47,7 +49,9 @@ export class ActivitiTaskListService {
         data = JSON.stringify(data);
 
         return Observable.fromPromise(this.callApiTasksFiltered(data))
-            .map((res: Response) => res.json())
+            .map((res: Response) => {
+                return res.json();
+            })
             .catch(this.handleError);
     }
 

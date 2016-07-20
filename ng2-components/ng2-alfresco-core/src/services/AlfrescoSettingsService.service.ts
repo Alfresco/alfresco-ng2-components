@@ -45,4 +45,8 @@ export class AlfrescoSettingsService {
     getProviders(): string [] {
         return this.providers;
     }
+
+    setProviders(providers: string []) {
+        this.providers = providers;
+    }
 }
