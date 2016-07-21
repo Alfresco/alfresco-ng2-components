@@ -20,8 +20,10 @@ import {
     OnInit,
     AfterViewChecked
 } from '@angular/core';
+import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
+
 import { FormService } from './../services/form.service';
-import { FormModel } from './widgets/widget.model';
+import { FormModel, FormOutcomeModel } from './widgets/widget.model';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
 import { ContainerWidget } from './widgets/container/container.widget';
@@ -34,16 +36,16 @@ declare var componentHandler;
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css'],
-    directives: [ContainerWidget, TabsWidget],
-    providers: [
-        FormService
-    ]
+    directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
+    providers: [FormService]
 })
 export class ActivitiForm implements OnInit, AfterViewChecked {
 
     task: any;
     form: FormModel;
     tasks: any[] = [];
+
+    debugMode: boolean = false;
 
     hasForm(): boolean {
         return this.form ? true : false;
@@ -72,6 +74,30 @@ export class ActivitiForm implements OnInit, AfterViewChecked {
         this.formService
             .getTaskForm(task.id)
             .subscribe(form => this.form = new FormModel(form));
+    }
+
+    onOutcomeClicked(outcome: FormOutcomeModel, event?: Event) {
+        if (outcome) {
+            if (outcome.isSystem) {
+                if (outcome.id === '$save') {
+                    return this.saveTaskForm();
+                }
+            }
+            alert(`Outcome clicked: ${outcome.name}`);
+        }
+    }
+
+    private saveTaskForm() {
+        let form = {
+            values: this.form.values
+        };
+        this.formService.saveTaskForm(this.form.taskId, form).subscribe(
+            (response) => {
+                console.log(response);
+                alert('Saved');
+            },
+            (err) => window.alert(err)
+        );
     }
 
 }

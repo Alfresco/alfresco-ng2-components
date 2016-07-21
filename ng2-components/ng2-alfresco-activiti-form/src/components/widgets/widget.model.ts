@@ -19,6 +19,10 @@ export interface FormFieldMetadata {
     [key: string]: any;
 }
 
+export interface FormValues {
+    [key: string]: any;
+}
+
 export class FormWidgetModel {
 
     private _form: FormModel;
@@ -40,12 +44,40 @@ export class FormWidgetModel {
 
 export class FormFieldModel extends FormWidgetModel {
 
-    id: string;
-    name: string;
-    type: string;
-    value: any;
-    tab: string;
+    private _id: string;
+    private _name: string;
+    private _type: string;
+    private _value: string;
+    private _tab: string;
+
+    get id(): string {
+        return this._id;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get type(): string {
+        return this._type;
+    }
+
+    get value(): any {
+        return this._value;
+    }
+
+    set value(v: any) {
+        this._value = v;
+        this.form.values[this._id] = v;
+    }
+
+    get tab(): string {
+        return this._tab;
+    }
+
     colspan: number = 1;
+
+
 
     metadata: FormFieldMetadata = {};
 
@@ -53,12 +85,15 @@ export class FormFieldModel extends FormWidgetModel {
         super(form, json);
 
         if (json) {
-            this.id = json.id;
-            this.name = json.name;
-            this.type = json.type;
-            this.value = json.value;
-            this.tab = json.tab;
+            this._id = json.id;
+            this._name = json.name;
+            this._type = json.type;
+            this._value = json.value;
+            this._tab = json.tab;
             this.colspan = <number> json.colspan;
+
+            // update form values
+            form.values[json.id] = json.value;
         }
     }
 }
@@ -169,9 +204,32 @@ export class FormOutcomeModel extends FormWidgetModel {
 
 export class FormModel {
 
+    private _id: string;
+    private _name: string;
+    private _taskId: string;
+    private _taskName: string;
+
+    get id(): string {
+        return this._id;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get taskId(): string {
+        return this._taskId;
+    }
+
+    get taskName(): string{
+        return this._taskName;
+    }
+
     tabs: TabModel[] = [];
     fields: ContainerModel[] = [];
     outcomes: FormOutcomeModel[] = [];
+
+    values: FormValues = {};
 
     private _json: any;
 
@@ -194,6 +252,12 @@ export class FormModel {
     constructor(json?: any) {
         if (json) {
             this._json = json;
+
+            this._id = json.id;
+            this._name = json.name;
+            this._taskId = json.taskId;
+            this._taskName = json.taskName;
+
             let tabCache: WidgetModelCache<TabModel> = {};
 
             // this.tabs = (json.tabs || []).map(t => new TabModel(this, t));

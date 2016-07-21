@@ -32,7 +32,8 @@ export class FormService {
         let body = JSON.stringify({});
         let options = this.getRequestOptions();
 
-        return this.http.post(url, body, options)
+        return this.http
+            .post(url, body, options)
             .map(this.toJsonArray)
             .catch(this.handleError);
     }
@@ -41,8 +42,19 @@ export class FormService {
         let url = `${this.basePath}/api/enterprise/tasks/${id}`;
         let options = this.getRequestOptions();
 
-        return this.http.get(url, options)
+        return this.http
+            .get(url, options)
             .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    saveTaskForm(id: string, form: { values: { [key: string]: any }}): Observable<Response> {
+        let url = `${this.basePath}/api/enterprise/task-forms/${id}/save-form`;
+        let body = JSON.stringify(form);
+        let options = this.getRequestOptions();
+
+        return this.http
+            .post(url, body, options)
             .catch(this.handleError);
     }
 
@@ -50,7 +62,8 @@ export class FormService {
         let url = `${this.basePath}/api/enterprise/task-forms/${id}`;
         let options = this.getRequestOptions();
 
-        return this.http.get(url, options)
+        return this.http
+            .get(url, options)
             .map(this.toJson)
             .catch(this.handleError);
     }

@@ -11,3 +11,17 @@
     cursor: pointer;
     font-weight: bold;
 }
+
+
+.activiti-form-debug-container {
+    padding: 10px;
+}
+
+.activiti-form-debug-container .debug-toggle-text {
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+.activiti-form-debug-container .debug-toggle-text:hover {
+    font-weight: bold;
+}

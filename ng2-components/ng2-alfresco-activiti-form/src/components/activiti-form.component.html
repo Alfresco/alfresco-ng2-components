@@ -35,10 +35,11 @@
                     </div>
                 </div>
                 <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">
-                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect activiti-form-outcomes__item"
-                            [class.mdl-button--colored]="!action.isSystem"
-                            *ngFor="let action of form.outcomes">
-                        {{action.name}}
+                    <button *ngFor="let outcome of form.outcomes"
+                            alfresco-mdl-button
+                            [class.mdl-button--colored]="!outcome.isSystem"
+                            (click)="onOutcomeClicked(outcome, $event)">
+                        {{outcome.name}}
                     </button>
                 </div>
             </div>
@@ -47,3 +48,22 @@
 
 </div>
 
+<div class="activiti-form-debug-container">
+
+    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [class.is-checked]="debugMode">
+        <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="debugMode">
+        <span class="mdl-switch__label"></span>
+        <span class="debug-toggle-text">Debug mode</span>
+    </label>
+
+    <div *ngIf="debugMode && hasForm()">
+        <h4>Values</h4>
+        <pre>{{form.values | json}}</pre>
+
+        <h4>Form</h4>
+        <pre>{{form.json | json}}</pre>
+
+        <h4>Task</h4>
+        <pre>{{task | json}}</pre>
+    </div>
+</div>
