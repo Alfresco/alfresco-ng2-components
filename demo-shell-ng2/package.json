@@ -82,7 +82,7 @@
     "ng2-alfresco-search": "0.2.0",
     "ng2-alfresco-upload": "0.2.0",
     "ng2-alfresco-viewer": "0.2.0",
-    "ng2-alfresco-activiti-form": "0.2.0"
+    "ng2-activiti-form": "0.2.0"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",

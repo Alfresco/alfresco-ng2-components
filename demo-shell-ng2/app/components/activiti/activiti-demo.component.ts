@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { ActivitiForm, FormService } from 'ng2-alfresco-activiti-form';
+import { ActivitiForm, FormService } from 'ng2-activiti-form';
 
 
 declare let __moduleName: string;
