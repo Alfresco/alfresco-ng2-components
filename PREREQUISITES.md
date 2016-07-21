@@ -30,7 +30,8 @@ To enable CORS in the Alfresco Platform do the following:
 Modify *tomcat/webapps/alfresco/WEB-INF/web.xml* and uncomment the following section and update 
 `cors.allowOrigin` to `http://localhost:3000`:
 
-```<filter>
+```
+   <filter>
       <filter-name>CORS</filter-name>
       <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
       <init-param>
@@ -67,7 +68,8 @@ When specifying the `cors.allowOrigin` URL make sure to use the URL that will be
 
 Then uncomment filter mappings:
 
-``` <filter-mapping>
+```
+   <filter-mapping>
       <filter-name>CORS</filter-name>
       <url-pattern>/api/*</url-pattern>
       <url-pattern>/service/*</url-pattern>
