@@ -81,8 +81,14 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 if (outcome.id === '$save') {
                     return this.saveTaskForm();
                 }
+
+                if (outcome.id === '$complete') {
+                    return this.completeTaskForm();
+                }
+
+            } else {
+                alert(`Outcome clicked: ${outcome.name}`);
             }
-            alert(`Outcome clicked: ${outcome.name}`);
         }
     }
 
@@ -100,6 +106,19 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             values: this.form.values
         };
         this.formService.saveTaskForm(this.form.taskId, form).subscribe(
+            (response) => {
+                console.log(response);
+                alert('Saved');
+            },
+            (err) => window.alert(err)
+        );
+    }
+
+    private completeTaskForm() {
+        let form = {
+            values: this.form.values
+        };
+        this.formService.completeTaskForm(this.form.taskId, form).subscribe(
             (response) => {
                 console.log(response);
                 alert('Saved');

@@ -58,6 +58,16 @@ export class FormService {
             .catch(this.handleError);
     }
 
+    completeTaskForm(id: string, form: { values: { [key: string]: any }}): Observable<Response> {
+        let url = `${this.basePath}/api/enterprise/task-forms/${id}`;
+        let body = JSON.stringify(form);
+        let options = this.getRequestOptions();
+
+        return this.http
+            .post(url, body, options)
+            .catch(this.handleError);
+    }
+
     getTaskForm(id: string): Observable<any> {
         let url = `${this.basePath}/api/enterprise/task-forms/${id}`;
         let options = this.getRequestOptions();

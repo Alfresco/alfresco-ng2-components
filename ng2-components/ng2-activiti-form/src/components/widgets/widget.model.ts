@@ -281,10 +281,13 @@ export class FormModel {
             let saveOutcome = new FormOutcomeModel(this, { id: '$save', name: 'Save' });
             saveOutcome.isSystem = true;
 
-            let systemOutcomes = [saveOutcome];
+            let completeOutcome = new FormOutcomeModel(this, { id: '$complete', name: 'Complete' });
+            completeOutcome.isSystem = true;
 
-            this.outcomes = systemOutcomes.concat(
-                (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj))
+            let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
+
+            this.outcomes = [saveOutcome].concat(
+                customOutcomes.length > 0 ? customOutcomes : [completeOutcome]
             );
         }
     }
