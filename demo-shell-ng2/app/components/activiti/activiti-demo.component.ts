@@ -15,16 +15,45 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { ActivitiForm } from 'ng2-alfresco-activiti-form';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { ActivitiForm, FormService } from 'ng2-alfresco-activiti-form';
+
+
+declare let __moduleName: string;
+declare var componentHandler;
 
 @Component({
+    moduleId: __moduleName,
     selector: 'activiti-demo',
-    template: `
-        <activiti-form></activiti-form>
-    `,
-    directives: [ActivitiForm]
+    templateUrl: './activiti-demo.component.html',
+    styleUrls: ['./activiti-demo.component.css'],
+    directives: [ActivitiForm],
+    providers: [FormService]
 })
-export class ActivitiDemoComponent {
+export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
+
+    tasks: any[] = [];
+    selectedTask: any;
+
+    hasTasks(): boolean {
+        return this.tasks && this.tasks.length > 0;
+    }
+
+    constructor(private formService: FormService) {}
+
+    ngOnInit() {
+        this.formService.getTasks().subscribe(val => this.tasks = val || []);
+    }
+
+    ngAfterViewChecked() {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+    }
+
+    onTaskClicked(task, e) {
+        this.selectedTask = task;
+    }
 
 }

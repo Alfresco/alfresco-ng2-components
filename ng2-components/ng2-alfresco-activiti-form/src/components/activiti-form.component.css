@@ -7,12 +7,6 @@
     background-color: #fff;
 }
 
-.activiti-task-list__item:hover {
-    cursor: pointer;
-    font-weight: bold;
-}
-
-
 .activiti-form-debug-container {
     padding: 10px;
 }

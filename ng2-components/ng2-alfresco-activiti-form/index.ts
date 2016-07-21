@@ -16,3 +16,5 @@
  */
 
 export * from './src/components/activiti-form.component';
+export * from './src/services/form.service';
+export * from './src/components/widgets/index';

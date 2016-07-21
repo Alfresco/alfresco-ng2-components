@@ -17,8 +17,9 @@
 
 import {
     Component,
-    OnInit,
-    AfterViewChecked
+    OnInit, AfterViewChecked, OnChanges,
+    SimpleChange,
+    Input
 } from '@angular/core';
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 
@@ -39,26 +40,24 @@ declare var componentHandler;
     directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
     providers: [FormService]
 })
-export class ActivitiForm implements OnInit, AfterViewChecked {
+export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
-    task: any;
+    @Input()
+    taskId: string;
+
     form: FormModel;
-    tasks: any[] = [];
-
     debugMode: boolean = false;
 
     hasForm(): boolean {
         return this.form ? true : false;
     }
 
-    hasTasks(): boolean {
-        return this.tasks && this.tasks.length > 0;
-    }
-
     constructor(private formService: FormService) {}
 
     ngOnInit() {
-        this.formService.getTasks().subscribe(val => this.tasks = val || []);
+        if (this.taskId) {
+            this.loadForm(this.taskId);
+        }
     }
 
     ngAfterViewChecked() {
@@ -68,13 +67,13 @@ export class ActivitiForm implements OnInit, AfterViewChecked {
         }
     }
 
-    onTaskClicked(task, e) {
-        // alert(`Task: ${task.name} clicked.`);
-        this.task = task;
-        this.formService
-            .getTaskForm(task.id)
-            .subscribe(form => this.form = new FormModel(form));
+    ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+        let taskId = changes['taskId'];
+        if (taskId && taskId.currentValue) {
+            this.loadForm(taskId.currentValue);
+        }
     }
+
 
     onOutcomeClicked(outcome: FormOutcomeModel, event?: Event) {
         if (outcome) {
@@ -85,6 +84,15 @@ export class ActivitiForm implements OnInit, AfterViewChecked {
             }
             alert(`Outcome clicked: ${outcome.name}`);
         }
+    }
+
+    private loadForm(taskId: string) {
+        this.formService
+            .getTaskForm(taskId)
+            .subscribe(
+                form => this.form = new FormModel(form),
+                err => console.log(err)
+            );
     }
 
     private saveTaskForm() {

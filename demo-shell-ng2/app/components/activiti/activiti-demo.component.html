@@ -1,0 +1,22 @@
+<div class="mdl-grid">
+
+    <div class="mdl-cell mdl-cell--2-col">
+        <div *ngIf="!hasTasks()">No tasks found</div>
+        <div *ngIf="hasTasks()">
+            <ul class="mdl-list">
+                <li *ngFor="let task of tasks"
+                    class="mdl-list__item activiti-task-list__item"
+                    (click)="onTaskClicked(task, $event)">
+                    <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">launch</i>
+                    {{task.name}}
+                </span>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--10-col">
+        <activiti-form [taskId]="selectedTask?.id"></activiti-form>
+    </div>
+
+</div>
