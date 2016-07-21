@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-export interface FormFieldMetadata {
-    [key: string]: any;
-}
 
 export interface FormValues {
     [key: string]: any;
@@ -76,10 +73,6 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     colspan: number = 1;
-
-
-
-    metadata: FormFieldMetadata = {};
 
     constructor(form: FormModel, json?: any) {
         super(form, json);

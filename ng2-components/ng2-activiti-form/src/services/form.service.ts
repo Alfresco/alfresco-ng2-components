@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { FormValues } from './../components/widgets/widget.model';
 
 @Injectable()
 export class FormService {
@@ -48,9 +49,11 @@ export class FormService {
             .catch(this.handleError);
     }
 
-    saveTaskForm(id: string, form: { values: { [key: string]: any }}): Observable<Response> {
+    saveTaskForm(id: string, formValues: FormValues): Observable<Response> {
         let url = `${this.basePath}/api/enterprise/task-forms/${id}/save-form`;
-        let body = JSON.stringify(form);
+        let body = JSON.stringify({
+            values: formValues
+        });
         let options = this.getRequestOptions();
 
         return this.http
@@ -58,9 +61,13 @@ export class FormService {
             .catch(this.handleError);
     }
 
-    completeTaskForm(id: string, form: { values: { [key: string]: any }}): Observable<Response> {
+    completeTaskForm(id: string, formValues: FormValues, outcome?: string): Observable<Response> {
         let url = `${this.basePath}/api/enterprise/task-forms/${id}`;
-        let body = JSON.stringify(form);
+        let data: any = { values: formValues };
+        if (outcome) {
+            data.outcome = outcome;
+        }
+        let body = JSON.stringify(data);
         let options = this.getRequestOptions();
 
         return this.http

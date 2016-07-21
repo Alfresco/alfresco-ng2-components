@@ -87,7 +87,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 }
 
             } else {
-                alert(`Outcome clicked: ${outcome.name}`);
+                // Note: Activiti is using NAME field rather than ID for outcomes
+                if (outcome.name) {
+                    return this.completeTaskForm(outcome.name);
+                }
             }
         }
     }
@@ -102,10 +105,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     private saveTaskForm() {
-        let form = {
-            values: this.form.values
-        };
-        this.formService.saveTaskForm(this.form.taskId, form).subscribe(
+        this.formService.saveTaskForm(this.form.taskId, this.form.values).subscribe(
             (response) => {
                 console.log(response);
                 alert('Saved');
@@ -114,17 +114,16 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         );
     }
 
-    private completeTaskForm() {
-        let form = {
-            values: this.form.values
-        };
-        this.formService.completeTaskForm(this.form.taskId, form).subscribe(
-            (response) => {
-                console.log(response);
-                alert('Saved');
-            },
-            (err) => window.alert(err)
-        );
+    private completeTaskForm(outcome?: string) {
+        this.formService
+            .completeTaskForm(this.form.taskId, this.form.values, outcome)
+            .subscribe(
+                (response) => {
+                    console.log(response);
+                    alert('Saved');
+                },
+                (err) => window.alert(err)
+            );
     }
 
 }
