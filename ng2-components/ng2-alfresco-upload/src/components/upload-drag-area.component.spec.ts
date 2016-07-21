@@ -23,6 +23,7 @@ import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.s
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 import { HTTP_PROVIDERS } from '@angular/http';
+import { EventEmitter } from '@angular/core';
 
 declare var AlfrescoApi: any;
 
@@ -171,7 +172,7 @@ describe('AlfrescoUploadDragArea', () => {
     it('should create a folder and call onFilesEntityDropped with the file inside the folder', done => {
         let component = componentFixture.componentInstance;
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.onSuccess = null;
+        component.onSuccess = new EventEmitter();
 
         componentFixture.detectChanges();
 
