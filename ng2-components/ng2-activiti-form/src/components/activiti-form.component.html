@@ -1,0 +1,51 @@
+<div>
+    <div *ngIf="!hasForm()">
+        <h3 style="text-align: center">Please select a Task</h3>
+    </div>
+    <div *ngIf="hasForm()">
+
+        <div class="mdl-card mdl-shadow--2dp activiti-form-container">
+            <div *ngIf="form.taskName" class="mdl-card__title">
+                <h2 class="mdl-card__title-text">{{form.taskName}}</h2>
+            </div>
+            <div class="mdl-card__media">
+                <div *ngIf="form.hasTabs()">
+                    <tabs-widget [tabs]="form.tabs"></tabs-widget>
+                </div>
+
+                <div *ngIf="!form.hasTabs() && form.hasFields()">
+                    <container-widget [content]="form.fields[0]"></container-widget>
+                </div>
+            </div>
+            <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">
+                <button *ngFor="let outcome of form.outcomes"
+                        alfresco-mdl-button
+                        [class.mdl-button--colored]="!outcome.isSystem"
+                        (click)="onOutcomeClicked(outcome, $event)">
+                    {{outcome.name}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+For debugging and data visualisation purposes,
+will be removed during future revisions
+-->
+<div class="activiti-form-debug-container">
+
+    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [class.is-checked]="debugMode">
+        <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="debugMode">
+        <span class="mdl-switch__label"></span>
+        <span class="debug-toggle-text">Debug mode</span>
+    </label>
+
+    <div *ngIf="debugMode && hasForm()">
+        <h4>Values</h4>
+        <pre>{{form.values | json}}</pre>
+
+        <h4>Form</h4>
+        <pre>{{form.json | json}}</pre>
+    </div>
+</div>

@@ -82,6 +82,7 @@
     "ng2-alfresco-search": "0.2.0",
     "ng2-alfresco-upload": "0.2.0",
     "ng2-alfresco-viewer": "0.2.0",
+    "ng2-activiti-form": "0.2.0",
     "ng2-alfresco-webscript": "file:../ng2-components/ng2-alfresco-webscript"
   },
   "devDependencies": {
@@ -95,7 +96,8 @@
   },
   "license-check-config": {
     "src": [
-      "./app/**/*.js"
+      "./app/**/*.js",
+      "!./app/js/xml2json.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,

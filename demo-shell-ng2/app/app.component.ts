@@ -32,6 +32,7 @@ import { SearchComponent } from './components/search/search.component';
 import { SearchBarComponent } from './components/search/search-bar.component';
 import { LoginDemoComponent } from './components/login/login-demo.component';
 import { TasksDemoComponent } from './components/tasks/tasks-demo.component';
+import { ActivitiDemoComponent } from './components/activiti/activiti-demo.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
 
 declare var document: any;
@@ -52,6 +53,7 @@ declare var document: any;
     {path: '/login', name: 'Login', component: LoginDemoComponent},
     {path: '/search', name: 'Search', component: SearchComponent},
     {path: '/tasks', name: 'Tasks', component: TasksDemoComponent},
+    {path: '/activiti', name: 'Activiti', component: ActivitiDemoComponent},
     {path: '/webscript', name: 'Webscript', component: WebscriptComponent}
 ])
 export class AppComponent {

@@ -1,0 +1,16 @@
+npm-debug.log
+.idea
+
+assets/
+coverage/
+node_modules
+typings/
+fonts/
+
+/.editorconfig
+/.travis.yml
+/*.js
+/*.json
+/*.ts
+/*.js.map
+/.npmignore

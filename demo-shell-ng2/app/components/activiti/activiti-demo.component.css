@@ -1,0 +1,4 @@
+.activiti-task-list__item:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
