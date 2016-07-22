@@ -50,6 +50,10 @@ describe('ActivitiProcesslistComponent', () => {
     }));
 
     it('should contain a list of processes', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        let componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
         return tcb
             .createAsync(Ng2ActivitiProcesslistComponent)
             .then((fixture) => {
