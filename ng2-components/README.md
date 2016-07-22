@@ -29,13 +29,25 @@
   </a>
 </p>
 
+## Base components
+
 - [Core library](ng2-alfresco-core/README.md)
+ * Material Design elements
+ * Context Menu component
+
+## ECM components
+
 - [DataTable](ng2-alfresco-datatable/README.md)
-- [Document List](ng2-alfresco-documentlist/README.md)
+- [DocumentList](ng2-alfresco-documentlist/README.md)
 - [Viewer](ng2-alfresco-viewer/README.md)
 - [Login](ng2-alfresco-login/README.md)
 - [Upload](ng2-alfresco-upload/README.md)
-- [Webscript viewer](ng2-components/ng2-alfresco-webscript/README.md)
+- [Webscript Viewer](ng2-components/ng2-alfresco-webscript/README.md)
+
+## BPM components
+
+- [ProcessList](ng2-activiti-processlist/README.md)
+- [Form](ng2-activiti-form/README.md)
 
 You can browse all the components at the following address:
 
