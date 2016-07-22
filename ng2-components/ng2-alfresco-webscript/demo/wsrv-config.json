@@ -1,0 +1,5 @@
+{
+    "watch": [
+        "node_modules/ng2-alfresco-datatable/dist/**/*.{html,htm,css,js}"
+    ]
+}

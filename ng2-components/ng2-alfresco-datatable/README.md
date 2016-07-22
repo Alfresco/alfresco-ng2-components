@@ -307,6 +307,7 @@ a custom `DataTableAdapter` using the following interfaces:
 
 ```ts
 interface DataTableAdapter {
+    generateSchema(row: DataRow): col: DataColumn;
     getRows(): Array<DataRow>;
     setRows(rows: Array<DataRow>): void;
     getColumns(): Array<DataColumn>;
@@ -362,6 +363,39 @@ let data = new ObjectDataTableAdapter(
     ]
 );
 ```
+
+## Generate schema 
+Is possible to auto generate your schema if you have only the data row  
+
+```ts
+let data =  [
+    { id: 2, name: 'abs' },
+    { id: 1, name: 'xyz' }
+];
+
+let schema = ObjectDataTableAdapter.generateSchema(data);
+
+/*Auto generated schema value:
+
+    [
+        { 
+            type: 'text', 
+            key: 'id', 
+            title: 'Id', 
+            sortable: false 
+        },
+        {
+            type: 'text', 
+            key: 'name', 
+            title: 'Name', 
+            sortable: false
+        }
+    ] 
+    
+ */
+
+```
+
 
 ## Build from sources
 

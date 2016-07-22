@@ -18,7 +18,7 @@
     "tsc:w": "tsc -w",
     "pretest": "npm run build",
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
-    "test-browser": "karma start karma.conf.js --reporters kjhtml ",
+    "test-browser": "npm run build && karma start karma.conf.js --reporters kjhtml ",
     "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run build",

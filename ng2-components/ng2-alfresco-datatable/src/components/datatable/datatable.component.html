@@ -63,7 +63,7 @@
 
         <td *ngIf="actions">
             <!-- action menu -->
-            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon">
+            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>
             <ul alfresco-mdl-menu class="mdl-menu--bottom-right"

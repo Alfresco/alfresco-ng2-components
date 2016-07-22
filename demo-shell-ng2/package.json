@@ -74,7 +74,7 @@
     "pdfjs-dist": "1.5.258",
     "flag-icon-css": "2.3.0",
 
-    "alfresco-js-api": "0.2.0",
+    "alfresco-js-api": "0.2.1",
     "ng2-alfresco-core": "0.2.0",
     "ng2-alfresco-datatable": "0.2.0",
     "ng2-alfresco-documentlist": "0.2.0",
@@ -82,7 +82,8 @@
     "ng2-alfresco-search": "0.2.0",
     "ng2-alfresco-upload": "0.2.0",
     "ng2-alfresco-viewer": "0.2.0",
-    "ng2-activiti-form": "0.2.0"
+    "ng2-activiti-form": "0.2.0",
+    "ng2-alfresco-webscript": "file:../ng2-components/ng2-alfresco-webscript"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",

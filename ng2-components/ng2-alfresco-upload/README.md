@@ -53,7 +53,7 @@ This component, provide a buttons to upload files to alfresco.
 Add the following dependency to your index.html:
 
 ```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
+<script src="node_modules/alfresco-js-api/bundle.js"></script>
 ```
 
 The following component needs to be added to your systemjs.config: 
@@ -221,7 +221,7 @@ npm run build
 ##Build the files and keep watching for changes
 
 ```sh
-$ npm run build:w
+npm run build:w
 ```
     
 ## Running unit tests

@@ -55,6 +55,7 @@ The following is a list of some of the components that you can use when building
 - [Viewer](ng2-components/ng2-alfresco-viewer/README.md)
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
+- [Webscript viewer](ng2-components/ng2-alfresco-webscript/README.md)
 
 You can browse all the components at the following [page](http://devproducts.alfresco.com/).
 

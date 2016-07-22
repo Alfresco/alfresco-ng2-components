@@ -18,7 +18,8 @@ browserSync.init({
         'node_modules/ng2-alfresco-login/dist/**/*.{html,htm,css,js}',
         'node_modules/ng2-alfresco-search/dist/**/*.{html,htm,css,js}',
         'node_modules/ng2-alfresco-upload/dist/**/*.{html,htm,css,js}',
-        'node_modules/ng2-alfresco-viewer/dist/**/*.{html,htm,css,js}'],
+        'node_modules/ng2-alfresco-viewer/dist/**/*.{html,htm,css,js}',
+        'node_modules/ng2-alfresco-webscript/dist/**/*.{html,htm,css,js}'],
 
-    reloadDelay: 1000
+reloadDelay: 1000
 });

@@ -82,7 +82,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
             Observable.forkJoin(observableBatch).subscribe(
                 (response: any[]) => {
                     response.forEach((res) => {
-                        this.performeSaveToken(res.type, res.ticket);
+                        this.performeSaveTicket(res.type, res.ticket);
                     });
                     observer.next(response);
                 },
@@ -125,7 +125,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
      * @param type - providerName
      * @param ticket
      */
-   private performeSaveToken(type: string, ticket: string) {
+   private performeSaveTicket(type: string, ticket: string) {
         let auth: AbstractAuthentication = this.findProviderInstance(type);
         if (auth) {
             auth.saveTicket(ticket);
@@ -152,7 +152,9 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
     private performLogout(): Observable<any> {
         let observableBatch = [];
         this.providersInstance.forEach((authInstance) => {
-            observableBatch.push(authInstance.logout());
+            if (authInstance.isLoggedIn()) {
+                observableBatch.push(authInstance.logout());
+            }
         });
         return Observable.create(observer => {
             Observable.forkJoin(observableBatch).subscribe(
