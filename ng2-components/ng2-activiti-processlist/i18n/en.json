@@ -1,0 +1,10 @@
+{
+    "PROCESSLIST": {
+        "NONE": "No active processes were found",
+        "SUMMARY": "Found {{total}} active process instances",
+        "ERROR": "An error occurred while loading the processes: {{errorMessage}}",
+        "COLUMN": {
+            "NAME": "Name"
+        }
+    }
+}

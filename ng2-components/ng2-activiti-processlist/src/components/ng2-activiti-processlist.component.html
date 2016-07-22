@@ -1,0 +1,6 @@
+<h1>My Activiti Processes</h1>
+
+<p *ngIf="processInstances && processInstances.length == 0">{{ 'PROCESSLIST.NONE' | translate }}</p>
+<alfresco-datatable
+    [data]="data">
+</alfresco-datatable>
