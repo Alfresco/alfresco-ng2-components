@@ -19,7 +19,12 @@ import {
     Component,
     OnInit
 } from '@angular/core';
-import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import {
+    AlfrescoPipeTranslate,
+    AlfrescoTranslationService,
+    CONTEXT_MENU_DIRECTIVES,
+    CONTEXT_MENU_PROVIDERS
+} from 'ng2-alfresco-core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter
@@ -40,8 +45,9 @@ declare let __moduleName: string;
           `
     ],
     templateUrl: './ng2-activiti-processlist.component.html',
-    directives: [ ALFRESCO_DATATABLE_DIRECTIVES ],
-    pipes: [ AlfrescoPipeTranslate ]
+    directives: [ ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES ],
+    pipes: [ AlfrescoPipeTranslate ],
+    providers: [ CONTEXT_MENU_PROVIDERS ]
 })
 export class Ng2ActivitiProcesslistComponent implements OnInit {
 
