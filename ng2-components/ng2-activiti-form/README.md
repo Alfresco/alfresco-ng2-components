@@ -1,4 +1,4 @@
-# Alfresco Activiti Form component for Angular 2
+# Alfresco Bpm Form component for Angular 2
 
 ## Prerequisites
 
@@ -8,7 +8,7 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 ## Install
 
 ```sh
-npm install --save ng2-alfresco-datatable
+npm install --save ng2-activiti-form
 ```
 
 ### Dependencies
