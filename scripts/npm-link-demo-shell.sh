@@ -29,6 +29,8 @@ npm link
 
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
+  ng2-activiti-form \
+  ng2-activiti-processlist \
   ng2-alfresco-login \
   ng2-alfresco-search \
   ng2-alfresco-upload \
@@ -46,6 +48,8 @@ done
 #LINK ALL THE COMPONENTS INSIDE THE DEMOSHELL
 cd "$DIR/../demo-shell-ng2"
 for PACKAGE in \
+  ng2-activiti-form \
+  ng2-activiti-processlist \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
   ng2-alfresco-documentlist \

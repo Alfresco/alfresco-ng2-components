@@ -5,6 +5,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 "$DIR/npm-clean.sh"
 
 for PACKAGE in \
+  ng2-activiti-form \
+  ng2-activiti-processlist \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
   ng2-alfresco-documentlist \
