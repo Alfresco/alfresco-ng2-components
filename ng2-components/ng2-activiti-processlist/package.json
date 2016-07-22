@@ -1,14 +1,15 @@
 {
   "keywords": [
-    "alfresco",
-    "activiti",
+    "ng2",
+    "angular",
     "angular2",
-    "alfresco-component"
+    "alfresco",
+    "activiti"
   ],
   "name": "ng2-activiti-processlist",
   "description": "Show active processes from the Activiti BPM suite",
   "version": "0.1.0",
-  "author": "Will Abson",
+  "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
     "typings": "typings install",
@@ -34,7 +35,8 @@
     "test-browser": "npm run build && concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
     "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
     "coverage": "npm run test && http-server -c-1 -o -p 9875 ./coverage/report",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable"
   },
   "repository": {
     "type": "git",
@@ -101,5 +103,11 @@
     "logInfo": false,
     "logError": true
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Will Abson",
+      "email": "will.abson@alfresco.com"
+    }
+  ]
 }
