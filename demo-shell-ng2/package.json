@@ -9,7 +9,7 @@
     "start": "npm run tslint && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "serve": "node browser-sync-config.js",
+    "serve": "wsrv -o -s -l -p 3000 -x ./server/versions.js",
     "typings": "typings install",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json app/{,**/}**.ts",
     "licensecheck": "license-check"
@@ -86,13 +86,12 @@
     "ng2-alfresco-webscript": "file:../ng2-components/ng2-alfresco-webscript"
   },
   "devDependencies": {
-    "browser-sync": "2.10.0",
     "concurrently": "2.0.0",
-    "connect-history-api-fallback": "1.2.0",
     "license-check": "1.1.5",
     "tslint": "3.8.1",
     "typescript": "1.8.10",
-    "typings": "1.0.4"
+    "typings": "1.0.4",
+    "wsrv": "0.1.4"
   },
   "license-check-config": {
     "src": [

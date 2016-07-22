@@ -34,6 +34,7 @@ import { LoginDemoComponent } from './components/login/login-demo.component';
 import { TasksDemoComponent } from './components/tasks/tasks-demo.component';
 import { ActivitiDemoComponent } from './components/activiti/activiti-demo.component';
 import { WebscriptComponent } from './components/webscript/webscript.component';
+import { AboutComponent } from './components/about/about.component';
 
 declare var document: any;
 
@@ -45,16 +46,17 @@ declare var document: any;
     pipes: [AlfrescoPipeTranslate]
 })
 @RouteConfig([
-    {path: '/home', name: 'Home', component: FilesComponent},
-    {path: '/files', name: 'Files', component: FilesComponent},
-    {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
-    {path: '/', name: 'Login', component: LoginDemoComponent, useAsDefault: true},
-    {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
-    {path: '/login', name: 'Login', component: LoginDemoComponent},
-    {path: '/search', name: 'Search', component: SearchComponent},
-    {path: '/tasks', name: 'Tasks', component: TasksDemoComponent},
-    {path: '/activiti', name: 'Activiti', component: ActivitiDemoComponent},
-    {path: '/webscript', name: 'Webscript', component: WebscriptComponent}
+    { path: '/home', name: 'Home', component: FilesComponent },
+    { path: '/files', name: 'Files', component: FilesComponent },
+    { path: '/datatable', name: 'DataTable', component: DataTableDemoComponent },
+    { path: '/', name: 'Login', component: LoginDemoComponent, useAsDefault: true },
+    { path: '/uploader', name: 'Uploader', component: UploadButtonComponent },
+    { path: '/login', name: 'Login', component: LoginDemoComponent },
+    { path: '/search', name: 'Search', component: SearchComponent },
+    { path: '/tasks', name: 'Tasks', component: TasksDemoComponent },
+    { path: '/activiti', name: 'Activiti', component: ActivitiDemoComponent },
+    { path: '/webscript', name: 'Webscript', component: WebscriptComponent },
+    { path: '/about', name: 'About', component: AboutComponent }
 ])
 export class AppComponent {
     translate: AlfrescoTranslationService;
