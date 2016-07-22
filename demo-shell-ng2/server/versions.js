@@ -20,13 +20,16 @@ exports.register = function (server, options, next) {
         method: 'GET',
         path: '/versions',
         handler: function (request, reply) {
+            var result = {
+                packages: packages.map(function (packageName) {
+                    return {
+                        name: packageName,
+                        version: require('./../node_modules/' + packageName + '/package.json').version
+                    }
+                })
+            };
 
-            var result = {};
-            packages.map(function (packageName) {
-                result[packageName] = require('./../node_modules/' + packageName + '/package.json').version
-            });
-
-            reply(result);
+            return reply(result).type('application/json');
         }
     });
 
