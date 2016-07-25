@@ -23,9 +23,9 @@ declare var componentHandler;
 
 @Component({
     moduleId: __moduleName,
-    selector: 'checkbox-widget',
-    templateUrl: './checkbox.widget.html'
+    selector: 'dropdown-widget',
+    templateUrl: './dropdown.widget.html'
 })
-export class CheckboxWidget extends WidgetComponent {
+export class DropdownWidget extends WidgetComponent {
 
 }

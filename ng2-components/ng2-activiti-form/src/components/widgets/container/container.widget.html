@@ -15,6 +15,9 @@
                     <div *ngSwitchCase="'boolean'">
                         <checkbox-widget [field]="field"></checkbox-widget>
                     </div>
+                    <div *ngSwitchCase="'dropdown'">
+                        <dropdown-widget [field]="field"></dropdown-widget>
+                    </div>
                     <div *ngSwitchDefault>
                         <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                     </div>
