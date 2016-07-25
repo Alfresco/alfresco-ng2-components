@@ -61,24 +61,31 @@ declare var document: any;
 export class AppComponent {
     translate: AlfrescoTranslationService;
     searchTerm: string = '';
-    hostecm: string = 'http://localhost:8080';
+
+    ecmHost: string = 'http://localhost:8080';
+    bpmHost: string = 'http://localhost:9999';
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
                 translate: AlfrescoTranslationService,
                 alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.ecmHost = 'http://localhost:8080';
-        alfrescoSettingsService.bpmHost = 'http://localhost:9999';
-        alfrescoSettingsService.host = this.hostecm;
+        alfrescoSettingsService.bpmHost = this.bpmHost;
+        alfrescoSettingsService.ecmHost = this.ecmHost;
 
         this.translate = translate;
         this.translate.addTranslationFolder();
     }
 
-    public onChangeHost(event: KeyboardEvent): void {
+    public onChangeECMHost(event: KeyboardEvent): void {
         console.log( (<HTMLInputElement>event.target).value);
-        this.hostecm = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.host = this.hostecm;
+        this.ecmHost = (<HTMLInputElement>event.target).value;
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+    }
+
+    public onChangeBPMHost(event: KeyboardEvent): void {
+        console.log((<HTMLInputElement>event.target).value);
+        this.bpmHost = (<HTMLInputElement>event.target).value;
+        this.alfrescoSettingsService.bpmHost = this.bpmHost;
     }
 
     isActive(instruction: any[]): boolean {
