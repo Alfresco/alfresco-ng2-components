@@ -6,4 +6,7 @@
     </ul>
 </div>
 
-<alfresco-datatable [data]="tasks"></alfresco-datatable>
+<alfresco-datatable
+        [data]="tasks"
+        (rowClick)="onRowClick($event)">
+</alfresco-datatable>
