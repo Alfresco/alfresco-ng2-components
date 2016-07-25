@@ -17,7 +17,7 @@
 
 import { Component, Input, OnInit} from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter } from 'ng2-alfresco-datatable';
+import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterModel } from '../models/filter.model';
 import { Observer } from 'rxjs/Observer';
@@ -44,6 +44,7 @@ export class ActivitiTaskList implements OnInit {
     filter$: Observable<FilterModel>;
 
     tasks: ObjectDataTableAdapter;
+    currentTaskId: string;
 
     filtersList: Observable<FilterModel>;
     /**
@@ -89,6 +90,11 @@ export class ActivitiTaskList implements OnInit {
      */
     public selectFilter(filter: FilterModel) {
         this.filterObserver.next(filter);
+    }
+
+    onRowClick(event: DataRowEvent) {
+        let item = event;
+        this.currentTaskId = item.value.getValue('id');
     }
 
     /**
