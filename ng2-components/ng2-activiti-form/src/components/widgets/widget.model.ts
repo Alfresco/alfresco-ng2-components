@@ -45,28 +45,25 @@ export interface FormFieldOption {
 
 export class FormFieldModel extends FormWidgetModel {
 
-    private _fieldType: string;
-    private _id: string;
-    private _name: string;
-    private _type: string;
     private _value: string;
-    private _tab: string;
 
-    get fieldType(): string {
-        return this._fieldType;
-    }
-
-    get id(): string {
-        return this._id;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-
-    get type(): string {
-        return this._type;
-    }
+    fieldType: string;
+    id: string;
+    name: string;
+    type: string;
+    required: boolean;
+    readOnly: boolean;
+    overrideId: boolean;
+    tab: string;
+    colspan: number = 1;
+    options: FormFieldOption[] = [];
+    restUrl: string;
+    restResponsePath: string;
+    restIdProperty: string;
+    restLabelProperty: string;
+    hasEmptyValue: boolean;
+    className: string;
+    optionType: string;
 
     get value(): any {
         return this._value;
@@ -77,24 +74,27 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
-    get tab(): string {
-        return this._tab;
-    }
-
-    colspan: number = 1;
-    options: FormFieldOption[] = [];
-
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
         if (json) {
-            this._fieldType = json.fieldType;
-            this._id = json.id;
-            this._name = json.name;
-            this._type = json.type;
-            this._tab = json.tab;
+            this.fieldType = json.fieldType;
+            this.id = json.id;
+            this.name = json.name;
+            this.type = json.type;
+            this.required = <boolean> json.required;
+            this.readOnly = <boolean> json.readOnly;
+            this.overrideId = <boolean> json.overrideId;
+            this.tab = json.tab;
+            this.restUrl = json.restUrl;
+            this.restResponsePath = json.restResponsePath;
+            this.restIdProperty = json.restIdProperty;
+            this.restLabelProperty = json.restLabelProperty;
             this.colspan = <number> json.colspan;
             this.options = <FormFieldOption[]> json.options || [];
+            this.hasEmptyValue = <boolean> json.hasEmptyValue;
+            this.className = json.className;
+            this.optionType = json.optionType;
 
             this._value = this.parseValue(json);
             this.updateForm();
@@ -118,7 +118,7 @@ export class FormFieldModel extends FormWidgetModel {
         return value;
     }
 
-    private updateForm() {
+    updateForm() {
         /*
             This is needed due to Activiti reading dropdown values as string
             but saving back as object: { id: <id>, name: <name> }
