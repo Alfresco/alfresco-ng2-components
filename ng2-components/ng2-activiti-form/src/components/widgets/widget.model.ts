@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 export interface FormValues {
     [key: string]: any;
 }
@@ -39,13 +38,23 @@ export class FormWidgetModel {
     }
 }
 
+export interface FormFieldOption {
+    id: string;
+    name: string;
+}
+
 export class FormFieldModel extends FormWidgetModel {
 
+    private _fieldType: string;
     private _id: string;
     private _name: string;
     private _type: string;
     private _value: string;
     private _tab: string;
+
+    get fieldType(): string {
+        return this._fieldType;
+    }
 
     get id(): string {
         return this._id;
@@ -65,7 +74,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     set value(v: any) {
         this._value = v;
-        this.form.values[this._id] = v;
+        this.updateForm();
     }
 
     get tab(): string {
@@ -73,20 +82,58 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     colspan: number = 1;
+    options: FormFieldOption[] = [];
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
         if (json) {
+            this._fieldType = json.fieldType;
             this._id = json.id;
             this._name = json.name;
             this._type = json.type;
-            this._value = json.value;
             this._tab = json.tab;
             this.colspan = <number> json.colspan;
+            this.options = <FormFieldOption[]> json.options || [];
 
-            // update form values
-            form.values[json.id] = json.value;
+            this._value = this.parseValue(json);
+            this.updateForm();
+        }
+    }
+
+    private parseValue(json: any): any {
+        let value = json.value;
+
+        /*
+         This is needed due to Activiti reading dropdown values as string
+         but saving back as object: { id: <id>, name: <name> }
+         */
+        // TODO: needs review
+        if (json.fieldType === 'RestFieldRepresentation') {
+           if (value === '') {
+               value = 'empty';
+           }
+        }
+
+        return value;
+    }
+
+    private updateForm() {
+        /*
+            This is needed due to Activiti reading dropdown values as string
+            but saving back as object: { id: <id>, name: <name> }
+         */
+        if (this.fieldType === 'RestFieldRepresentation') {
+            if (this.value === 'empty' || this.value === '') {
+                this.form.values[this.id] = {};
+            } else {
+                let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                if (entry.length > 0) {
+                    this.form.values[this.id] = entry[0];
+                }
+            }
+        } else {
+            this.form.values[this.id] = this.value;
         }
     }
 }

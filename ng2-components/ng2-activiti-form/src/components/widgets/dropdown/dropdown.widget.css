@@ -1,0 +1,7 @@
+.dropdown-widget {
+    width: 100%;
+}
+
+.dropdown-widget > select {
+    width: 100%;
+}

@@ -24,7 +24,8 @@ declare var componentHandler;
 @Component({
     moduleId: __moduleName,
     selector: 'dropdown-widget',
-    templateUrl: './dropdown.widget.html'
+    templateUrl: './dropdown.widget.html',
+    styleUrls: ['./dropdown.widget.css']
 })
 export class DropdownWidget extends WidgetComponent {
 
