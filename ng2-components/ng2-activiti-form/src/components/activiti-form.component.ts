@@ -95,6 +95,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
+    onRefreshClicked() {
+        if (this.taskId) {
+            this.loadForm(this.taskId);
+        }
+    }
+
     private loadForm(taskId: string) {
         this.formService
             .getTaskForm(taskId)
