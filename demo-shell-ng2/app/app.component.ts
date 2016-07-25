@@ -68,7 +68,7 @@ export class AppComponent {
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
                 translate: AlfrescoTranslationService,
-                alfrescoSettingsService: AlfrescoSettingsService) {
+                public alfrescoSettingsService: AlfrescoSettingsService) {
         alfrescoSettingsService.bpmHost = this.bpmHost;
         alfrescoSettingsService.ecmHost = this.ecmHost;
 

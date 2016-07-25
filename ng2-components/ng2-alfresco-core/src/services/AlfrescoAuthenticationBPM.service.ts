@@ -72,7 +72,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     }
 
     private apiActivitiLogin(username: string, password: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl + '/authentication';
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/authentication';
         let headers = new Headers({
             'Content-Type': 'application/x-www-form-urlencoded'
         });
@@ -88,7 +88,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     }
 
     private apiActivitiLogout() {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl + '/logout';
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/logout';
         return this.http.get(url).toPromise();
     }
 

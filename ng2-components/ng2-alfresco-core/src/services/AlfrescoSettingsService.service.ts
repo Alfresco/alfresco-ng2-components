@@ -56,19 +56,19 @@ export class AlfrescoSettingsService {
         this._bpmHost = value;
     }
 
-    getBPMApiBaseUrl(): string {
+    public getBPMApiBaseUrl(): string {
         return this._bpmHost + this._bpmContextPath + this._apiBPMBasePath;
     }
 
-    getECMApiBaseUrl(): string {
+    public getECMApiBaseUrl(): string {
         return this._ecmHost + this._ecmContextPath + this._apiECMBasePath;
     }
 
-    getProviders(): string [] {
+    public getProviders(): string [] {
         return this.providers;
     }
 
-    setProviders(providers: string []) {
+    public setProviders(providers: string []) {
         this.providers = providers;
     }
 }

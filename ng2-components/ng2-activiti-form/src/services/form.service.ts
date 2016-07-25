@@ -19,17 +19,16 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { FormValues } from './../components/widgets/widget.model';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class FormService {
 
-    private basePath: string = 'http://localhost:9999/activiti-app';
-
-    constructor(private http: Http) {
+    constructor(private http: Http, private alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
     getTasks(): Observable<any> {
-        let url = `${this.basePath}/api/enterprise/tasks/query`;
+        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/tasks/query`;
         let body = JSON.stringify({});
         let options = this.getRequestOptions();
 
@@ -40,7 +39,7 @@ export class FormService {
     }
 
     getTask(id: string): Observable<any> {
-        let url = `${this.basePath}/api/enterprise/tasks/${id}`;
+        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/tasks/${id}`;
         let options = this.getRequestOptions();
 
         return this.http
@@ -50,7 +49,7 @@ export class FormService {
     }
 
     saveTaskForm(id: string, formValues: FormValues): Observable<Response> {
-        let url = `${this.basePath}/api/enterprise/task-forms/${id}/save-form`;
+        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/task-forms/${id}/save-form`;
         let body = JSON.stringify({
             values: formValues
         });
@@ -62,8 +61,8 @@ export class FormService {
     }
 
     completeTaskForm(id: string, formValues: FormValues, outcome?: string): Observable<Response> {
-        let url = `${this.basePath}/api/enterprise/task-forms/${id}`;
-        let data: any = { values: formValues };
+        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/task-forms/${id}`;
+        let data: any = {values: formValues};
         if (outcome) {
             data.outcome = outcome;
         }
@@ -76,7 +75,7 @@ export class FormService {
     }
 
     getTaskForm(id: string): Observable<any> {
-        let url = `${this.basePath}/api/enterprise/task-forms/${id}`;
+        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/task-forms/${id}`;
         let options = this.getRequestOptions();
 
         return this.http
@@ -95,7 +94,7 @@ export class FormService {
 
     private getRequestOptions(): RequestOptions {
         let headers = this.getHeaders();
-        return new RequestOptions({ headers: headers });
+        return new RequestOptions({headers: headers});
     }
 
     private toJson(res: Response) {
@@ -108,7 +107,7 @@ export class FormService {
         return body.data || [];
     }
 
-    private handleError (error: any) {
+    private handleError(error: any) {
         // In a real world app, we might use a remote logging infrastructure
         // We'd also dig deeper into the error to get a better message
         let errMsg = (error.message) ? error.message :

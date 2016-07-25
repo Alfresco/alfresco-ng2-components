@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    AlfrescoSettingsService
-} from 'ng2-alfresco-core';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance';
 import { Injectable }     from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
@@ -28,7 +26,6 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ActivitiProcessService {
 
-    private processesUrl = 'http://localhost:9999/activiti-app/api/enterprise/process-instances/query';
 
     constructor(private alfrescoSettingsService: AlfrescoSettingsService, private http: Http) {
     }
@@ -38,7 +35,7 @@ export class ActivitiProcessService {
         headers.append('Content-Type', 'application/json');
         // headers.append('Authorization', 'Basic ' + btoa('admin@app.activiti.com:admin'));
         return this.http.post(
-            this.processesUrl,
+            this.alfrescoSettingsService.bpmHost + '/activiti-app/api/enterprise/process-instances/query',
             '{"page":0,"sort":"created-desc","state":"all"}',
             new RequestOptions({
                 headers: headers
