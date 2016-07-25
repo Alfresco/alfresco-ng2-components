@@ -58,7 +58,7 @@ class SearchDemo implements OnInit {
 
     public searchTerm: string = 'test';
 
-    public host: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
     token: string;
 
@@ -66,13 +66,13 @@ class SearchDemo implements OnInit {
                 private alfrescoSettingsService: AlfrescoSettingsService,
                 translation: AlfrescoTranslationService) {
 
-        alfrescoSettingsService.host = this.host;
+        alfrescoSettingsService.ecmHost = this.ecmHost;
 
         translation.addTranslationFolder();
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.host = this.host;
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
         this.login();
     }
 

@@ -56,7 +56,7 @@ import {
 })
 export class AppComponent {
 
-    public host: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
     public token: string;
 
@@ -66,11 +66,11 @@ export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = this.host;
+        alfrescoSettingsService.ecmHost = this.ecmHost;
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.host = this.host;
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
     }
 
     mySuccessMethod($event) {

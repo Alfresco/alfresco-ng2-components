@@ -30,6 +30,10 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
         super(alfrescoSettingsService, http);
     }
 
+    getHost(): string {
+        return this.alfrescoSettingsService.bpmHost;
+    }
+
     /**
      * Perform a login on behalf of the user and store the ticket returned
      *
@@ -68,7 +72,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     }
 
     private apiActivitiLogin(username: string, password: string) {
-        let url = 'http://localhost:9999/activiti-app/app/authentication';
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl + '/authentication';
         let headers = new Headers({
             'Content-Type': 'application/x-www-form-urlencoded'
         });
@@ -84,10 +88,14 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     }
 
     private apiActivitiLogout() {
-        let url = 'http://localhost:9999/activiti-app/app/logout';
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl + '/logout';
         return this.http.get(url).toPromise();
     }
 
+    /**
+     * The method return the ticket stored in the localStorage
+     * @returns ticket
+     */
     public getTicket(): string {
         return localStorage.getItem(`ticket-${this.TYPE}`);
     }

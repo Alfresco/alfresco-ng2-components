@@ -49,7 +49,7 @@ describe('AlfrescoContentService', () => {
                 id: nodeId
             }
         })).toBe(
-            AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + DEFAULT_CONTEXT_PATH +
+            AlfrescoSettingsService.DEFAULT_ECM_ADDRESS + DEFAULT_CONTEXT_PATH +
                 DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/content' +
                 '?attachment=false&alf_ticket=' + authService.getTicket()
         );
@@ -61,7 +61,7 @@ describe('AlfrescoContentService', () => {
                 id: nodeId
             }
         })).toBe(
-            AlfrescoSettingsService.DEFAULT_HOST_ADDRESS + DEFAULT_CONTEXT_PATH +
+            AlfrescoSettingsService.DEFAULT_ECM_ADDRESS + DEFAULT_CONTEXT_PATH +
             DEFAULT_BASE_API_PATH + '/nodes/' + nodeId + '/renditions/doclib/content' +
             '?attachment=false&alf_ticket=' + authService.getTicket()
         );

@@ -26,15 +26,27 @@ describe('AlfrescoSettingsService', () => {
         service = new AlfrescoSettingsService();
     });
 
-    it('should have default host', () => {
-        expect(service.host).toBe(AlfrescoSettingsService.DEFAULT_HOST_ADDRESS);
+    it('should have default ECM host', () => {
+        expect(service.ecmHost).toBe(AlfrescoSettingsService.DEFAULT_ECM_ADDRESS);
     });
 
-    it('should change host', () => {
+    it('should change host ECM', () => {
         // this test ensures 'host' getter/setter working properly
         let address = 'http://192.168.0.1';
-        service.host = address;
-        expect(service.host).toBe(address);
+        service.ecmHost = address;
+        expect(service.ecmHost).toBe(address);
     });
+
+    it('should have default BPM host', () => {
+        expect(service.ecmHost).toBe(AlfrescoSettingsService.DEFAULT_BPM_ADDRESS);
+    });
+
+    it('should change host BPM', () => {
+        // this test ensures 'host' getter/setter working properly
+        let address = 'http://192.168.0.1';
+        service.bpmHost = address;
+        expect(service.bpmHost).toBe(address);
+    });
+
 
 });
