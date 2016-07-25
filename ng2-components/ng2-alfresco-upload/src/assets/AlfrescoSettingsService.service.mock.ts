@@ -26,7 +26,7 @@ export class AlfrescoSettingsServiceMock {
 
     private _host: string = AlfrescoSettingsServiceMock.DEFAULT_HOST_ADDRESS;
 
-    public get host(): string {
+    public get ecmHost(): string {
         return this._host;
     }
 
