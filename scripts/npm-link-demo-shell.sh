@@ -27,10 +27,23 @@ npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link
 
+#LINK TASKLIST
+echo "====== linking component: ng2-activiti-tasklist ====="
+cd "$DIR/../ng2-components/ng2-activiti-tasklist"
+npm link ng2-alfresco-core
+npm link ng2-alfresco-datatable
+npm link
+
+#LINK PROCESSLIST
+echo "====== linking component: ng2-activiti-processlist ====="
+cd "$DIR/../ng2-components/ng2-activiti-processlist"
+npm link ng2-alfresco-core
+npm link ng2-alfresco-datatable
+npm link
+
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
   ng2-activiti-form \
-  ng2-activiti-processlist \
   ng2-alfresco-login \
   ng2-alfresco-search \
   ng2-alfresco-upload \
@@ -50,6 +63,7 @@ cd "$DIR/../demo-shell-ng2"
 for PACKAGE in \
   ng2-activiti-form \
   ng2-activiti-processlist \
+  ng2-activiti-tasklist \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
   ng2-alfresco-documentlist \

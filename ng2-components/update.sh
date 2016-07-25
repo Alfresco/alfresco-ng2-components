@@ -2,6 +2,15 @@
 
 (cd ng2-alfresco-core; npm update;)
 
+(cd ng2-activiti-form; npm update;)
+(cd ng2-activiti-form/demo; npm update;)
+
+(cd ng2-activiti-processlist; npm update;)
+(cd ng2-activiti-processlist/demo; npm update;)
+
+(cd ng2-activiti-tasklist; npm update;)
+(cd ng2-activiti-tasklist/demo; npm update;)
+
 (cd ng2-alfresco-datatable; npm update;)
 (cd ng2-alfresco-datatable/demo; npm update;)
 
@@ -19,3 +28,6 @@
 
 (cd ng2-alfresco-viewer; npm update;)
 (cd ng2-alfresco-viewer/demo; npm update;)
+
+(cd ng2-alfresco-webscript; npm update;)
+(cd ng2-alfresco-webscript/demo; npm update;)

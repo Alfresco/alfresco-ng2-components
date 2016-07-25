@@ -17,6 +17,7 @@ fi
 for PACKAGE in \
   ng2-activiti-form \
   ng2-activiti-processlist \
+  ng2-activiti-tasklist \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
   ng2-alfresco-documentlist \
@@ -34,6 +35,7 @@ done
 for PACKAGE in \
   ng2-activiti-form \
   ng2-activiti-processlist \
+  ng2-activiti-tasklist \
   ng2-alfresco-core \
   ng2-alfresco-datatable \
   ng2-alfresco-documentlist \
