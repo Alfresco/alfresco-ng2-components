@@ -16,23 +16,31 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { ALFRESCO_CORE_PROVIDERS, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
 import { ActivitiTaskList } from 'ng2-activiti-tasklist';
 import { ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
 
-@Component({
-    selector: 'tasks-demo',
-    template: `
-        <div class="container">
-            <activiti-tasklist [data]="data"></activiti-tasklist>
-        </div>
-    `,
-    directives: [ActivitiTaskList],
-    styles: [':host > .container { padding: 10px; }']
-})
-export class TasksDemoComponent implements OnInit {
+declare let AlfrescoApi: any;
 
+@Component({
+    selector: 'activiti-tasklist-demo',
+    template: `
+        <activiti-tasklist [data]="data"></activiti-tasklist>
+    `,
+    styles: [
+        ':host > .container {padding: 10px}',
+        '.p-10 { padding: 10px; }'
+    ],
+    directives: [ActivitiTaskList],
+    providers: [AlfrescoAuthenticationService]
+})
+class ActivitiTaskListDemo implements OnInit {
     data: ObjectDataTableAdapter;
-    constructor() {
+
+    constructor(private setting: AlfrescoSettingsService) {
+        this.setting.setProviders(['BPM']);
         this.data = new ObjectDataTableAdapter([], []);
     }
 
@@ -49,3 +57,8 @@ export class TasksDemoComponent implements OnInit {
     }
 
 }
+
+bootstrap(ActivitiTaskListDemo, [
+        HTTP_PROVIDERS,
+        ALFRESCO_CORE_PROVIDERS]
+);
