@@ -151,11 +151,11 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     updateForm() {
-        /*
-         This is needed due to Activiti reading dropdown values as string
-         but saving back as object: { id: <id>, name: <name> }
-         */
         if (this.type === FormFieldTypes.DROPDOWN) {
+            /*
+             This is needed due to Activiti reading dropdown values as string
+             but saving back as object: { id: <id>, name: <name> }
+             */
             if (this.value === 'empty' || this.value === '') {
                 this.form.values[this.id] = {};
             } else {
@@ -164,21 +164,18 @@ export class FormFieldModel extends FormWidgetModel {
                     this.form.values[this.id] = entry[0];
                 }
             }
-        }
-        /*
-         This is needed due to Activiti issue related to reading radio button values as value string
-         but saving back as object: { id: <id>, name: <name> }
-         */
-        else if (this.type === FormFieldTypes.RADIO_BUTTONS) {
+        } else if (this.type === FormFieldTypes.RADIO_BUTTONS) {
+            /*
+             This is needed due to Activiti issue related to reading radio button values as value string
+             but saving back as object: { id: <id>, name: <name> }
+             */
             let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
             if (entry.length > 0) {
                 this.form.values[this.id] = entry[0];
             } else if (this.options.length > 0) {
                 this.form.values[this.id] = this.options[0].id;
             }
-        }
-        // default value resolver
-        else {
+        } else {
             this.form.values[this.id] = this.value;
         }
     }
@@ -206,12 +203,11 @@ export class ContainerModel extends FormWidgetModel {
     params: FormFieldMetadata = {};
 
     columns: ContainerColumnModel[] = [];
+    isExpanded: boolean = true;
 
     isGroup(): boolean {
-        return this.type == FormFieldTypes.GROUP;
+        return this.type === FormFieldTypes.GROUP;
     }
-
-    isExpanded: boolean = true;
 
     isCollapsible(): boolean {
         let allowCollapse = false;
