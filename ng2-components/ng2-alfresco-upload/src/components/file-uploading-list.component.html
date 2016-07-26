@@ -15,18 +15,18 @@
         <td _ngcontent-hvq-3="">
             <div _ngcontent-hvq-3="" class="mdl-progress mdl-js-progress is-upgraded" id="{{file.id}}"
                  data-upgraded=",MaterialProgress">
-                <div class="progressbar bar bar1" [style.width.%]="file.progress.percent"></div>
+                <div class="progressbar bar bar1" attr.data-automation-id="dialog_progress_{{file.name}}" [style.width.%]="file.progress.percent"></div>
                 <div class="bufferbar bar bar2" style="width: 100%;"></div>
                 <div class="auxbar bar bar3" style="width: 0%;"></div>
             </div>
         </td>
-        <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone size-column">{{file.size}}</td>
+        <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone size-column" attr.data-automation-id="{{file.name}}_filesize">{{file.size}}</td>
         <td>
             <span *ngIf="file.done && !file.abort" ><i data-automation-id="done_icon" class="material-icons action-icons">done</i></span>
             <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" ><i data-automation-id="abort_cancel_upload"
                                                                                      class="material-icons action-icons">
                 remove_circle_outline</i></span>
-            <span *ngIf="file.abort"><i class="material-icons action-icons">remove_circle</i></span>
+            <span *ngIf="file.abort"><i class="material-icons action-icons" data-automation-id="upload_stopped">remove_circle</i></span>
         </td>
     </tr>
 </table>
