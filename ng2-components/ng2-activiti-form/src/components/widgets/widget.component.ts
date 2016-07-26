@@ -15,17 +15,29 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { Input, AfterViewInit } from '@angular/core';
+import { FormFieldModel } from './widget.model';
 
 declare let __moduleName: string;
 declare var componentHandler;
 
-@Component({
-    moduleId: __moduleName,
-    selector: 'checkbox-widget',
-    templateUrl: './checkbox.widget.html'
-})
-export class CheckboxWidget extends WidgetComponent {
+/**
+ * Base widget component.
+ */
+export class WidgetComponent implements AfterViewInit {
+
+    @Input()
+    field: FormFieldModel;
+
+    hasField() {
+        return this.field ? true : false;
+    }
+
+    ngAfterViewInit() {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+    }
 
 }

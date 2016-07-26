@@ -15,9 +15,19 @@
  * limitations under the License.
  */
 
-
-export interface FormValues {
+export interface FormFieldMetadata {
     [key: string]: any;
+}
+
+export interface FormValues extends FormFieldMetadata {
+}
+
+export class FormFieldTypes {
+    static CONTAINER: string = 'container';
+    static GROUP: string = 'group';
+    static DROPDOWN: string = 'dropdown';
+    static HYPERLINK: string = 'hyperlink';
+    static RADIO_BUTTONS: string = 'radio-buttons';
 }
 
 export class FormWidgetModel {
@@ -39,25 +49,35 @@ export class FormWidgetModel {
     }
 }
 
+export interface FormFieldOption {
+    id: string;
+    name: string;
+}
+
 export class FormFieldModel extends FormWidgetModel {
 
-    private _id: string;
-    private _name: string;
-    private _type: string;
     private _value: string;
-    private _tab: string;
 
-    get id(): string {
-        return this._id;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-
-    get type(): string {
-        return this._type;
-    }
+    fieldType: string;
+    id: string;
+    name: string;
+    type: string;
+    required: boolean;
+    readOnly: boolean;
+    overrideId: boolean;
+    tab: string;
+    colspan: number = 1;
+    options: FormFieldOption[] = [];
+    restUrl: string;
+    restResponsePath: string;
+    restIdProperty: string;
+    restLabelProperty: string;
+    hasEmptyValue: boolean;
+    className: string;
+    optionType: string;
+    params: FormFieldMetadata = {};
+    hyperlinkUrl: string;
+    displayText: string;
 
     get value(): any {
         return this._value;
@@ -65,28 +85,98 @@ export class FormFieldModel extends FormWidgetModel {
 
     set value(v: any) {
         this._value = v;
-        this.form.values[this._id] = v;
+        this.updateForm();
     }
-
-    get tab(): string {
-        return this._tab;
-    }
-
-    colspan: number = 1;
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
         if (json) {
-            this._id = json.id;
-            this._name = json.name;
-            this._type = json.type;
-            this._value = json.value;
-            this._tab = json.tab;
+            this.fieldType = json.fieldType;
+            this.id = json.id;
+            this.name = json.name;
+            this.type = json.type;
+            this.required = <boolean> json.required;
+            this.readOnly = <boolean> json.readOnly;
+            this.overrideId = <boolean> json.overrideId;
+            this.tab = json.tab;
+            this.restUrl = json.restUrl;
+            this.restResponsePath = json.restResponsePath;
+            this.restIdProperty = json.restIdProperty;
+            this.restLabelProperty = json.restLabelProperty;
             this.colspan = <number> json.colspan;
+            this.options = <FormFieldOption[]> json.options || [];
+            this.hasEmptyValue = <boolean> json.hasEmptyValue;
+            this.className = json.className;
+            this.optionType = json.optionType;
+            this.params = <FormFieldMetadata> json.params || {};
+            this.hyperlinkUrl = json.hyperlinkUrl;
+            this.displayText = json.displayText;
 
-            // update form values
-            form.values[json.id] = json.value;
+            this._value = this.parseValue(json);
+            this.updateForm();
+        }
+    }
+
+    private parseValue(json: any): any {
+        let value = json.value;
+
+        /*
+         This is needed due to Activiti issue related to reading dropdown values as value string
+         but saving back as object: { id: <id>, name: <name> }
+         */
+        // TODO: needs review
+        if (json.type === FormFieldTypes.DROPDOWN) {
+           if (value === '') {
+               value = 'empty';
+           }
+        }
+
+        /*
+         This is needed due to Activiti issue related to reading radio button values as value string
+         but saving back as object: { id: <id>, name: <name> }
+         */
+        if (json.type === FormFieldTypes.RADIO_BUTTONS) {
+            // Activiti has a bug with default radio button value,
+            // so try resolving current one with a fallback to first entry
+            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === value);
+            if (entry.length > 0) {
+                value = entry[0].id;
+            } else if (this.options.length > 0) {
+                value = this.options[0].id;
+            }
+        }
+
+        return value;
+    }
+
+    updateForm() {
+        if (this.type === FormFieldTypes.DROPDOWN) {
+            /*
+             This is needed due to Activiti reading dropdown values as string
+             but saving back as object: { id: <id>, name: <name> }
+             */
+            if (this.value === 'empty' || this.value === '') {
+                this.form.values[this.id] = {};
+            } else {
+                let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                if (entry.length > 0) {
+                    this.form.values[this.id] = entry[0];
+                }
+            }
+        } else if (this.type === FormFieldTypes.RADIO_BUTTONS) {
+            /*
+             This is needed due to Activiti issue related to reading radio button values as value string
+             but saving back as object: { id: <id>, name: <name> }
+             */
+            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+            if (entry.length > 0) {
+                this.form.values[this.id] = entry[0];
+            } else if (this.options.length > 0) {
+                this.form.values[this.id] = this.options[0].id;
+            }
+        } else {
+            this.form.values[this.id] = this.value;
         }
     }
 }
@@ -101,6 +191,7 @@ export class ContainerColumnModel {
     }
 }
 
+// TODO: inherit FormFieldModel
 export class ContainerModel extends FormWidgetModel {
 
     fieldType: string;
@@ -109,8 +200,34 @@ export class ContainerModel extends FormWidgetModel {
     type: string;
     tab: string;
     numberOfColumns: number = 1;
+    params: FormFieldMetadata = {};
 
     columns: ContainerColumnModel[] = [];
+    isExpanded: boolean = true;
+
+    isGroup(): boolean {
+        return this.type === FormFieldTypes.GROUP;
+    }
+
+    isCollapsible(): boolean {
+        let allowCollapse = false;
+
+        if (this.isGroup() && this.params['allowCollapse']) {
+            allowCollapse = <boolean> this.params['allowCollapse'];
+        }
+
+        return allowCollapse;
+    }
+
+    isCollapsedByDefault(): boolean {
+        let collapseByDefault = false;
+
+        if (this.isCollapsible() && this.params['collapseByDefault']) {
+            collapseByDefault = <boolean> this.params['collapseByDefault'];
+        }
+
+        return collapseByDefault;
+    }
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
@@ -122,6 +239,7 @@ export class ContainerModel extends FormWidgetModel {
             this.type = json.type;
             this.tab = json.tab;
             this.numberOfColumns = <number> json.numberOfColumns;
+            this.params = <FormFieldMetadata> json.params || {};
 
             let columnSize: number = 12;
             if (this.numberOfColumns > 1) {
@@ -139,6 +257,8 @@ export class ContainerModel extends FormWidgetModel {
                 let col = this.columns[parseInt(key, 10) - 1];
                 col.fields = fields;
             });
+
+            this.isExpanded = !this.isCollapsedByDefault();
         }
     }
 }

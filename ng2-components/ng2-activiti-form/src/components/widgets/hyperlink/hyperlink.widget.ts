@@ -23,9 +23,27 @@ declare var componentHandler;
 
 @Component({
     moduleId: __moduleName,
-    selector: 'checkbox-widget',
-    templateUrl: './checkbox.widget.html'
+    selector: 'hyperlink-widget',
+    templateUrl: './hyperlink.widget.html',
+    styleUrls: ['./hyperlink.widget.css']
 })
-export class CheckboxWidget extends WidgetComponent {
+export class HyperlinkWidget extends WidgetComponent {
+
+    get linkUrl(): string {
+        let url = '#';
+
+        if (this.field && this.field.hyperlinkUrl) {
+            url = this.field.hyperlinkUrl;
+            if (!/^https?:\/\//i.test(url)) {
+                url = 'http://' + url;
+            }
+        }
+
+        return url;
+    }
+
+    get linkText() {
+        return this.field.displayText || this.field.hyperlinkUrl;
+    }
 
 }

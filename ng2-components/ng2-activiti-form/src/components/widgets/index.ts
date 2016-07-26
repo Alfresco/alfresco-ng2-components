@@ -23,3 +23,6 @@ export * from './text/text.widget';
 export * from './number/number.widget';
 export * from './checkbox/checkbox.widget';
 export * from './multiline-text/multiline-text.widget';
+export * from './dropdown/dropdown.widget';
+export * from './hyperlink/hyperlink.widget';
+export * from './radio-buttons/radio-buttons.widget';

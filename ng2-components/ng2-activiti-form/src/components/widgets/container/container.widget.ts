@@ -18,10 +18,14 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { ContainerModel } from './../widget.model';
 
+import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { TextWidget } from './../text/text.widget';
 import { NumberWidget } from './../number/number.widget';
 import { CheckboxWidget } from './../checkbox/checkbox.widget';
 import { MultilineTextWidget } from './../multiline-text/multiline-text.widget';
+import { DropdownWidget } from './../dropdown/dropdown.widget';
+import { HyperlinkWidget } from './../hyperlink/hyperlink.widget';
+import { RadioButtonsWidget } from './../radio-buttons/radio-buttons.widget';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -30,12 +34,28 @@ declare var componentHandler;
     moduleId: __moduleName,
     selector: 'container-widget',
     templateUrl: './container.widget.html',
-    directives: [TextWidget, NumberWidget, CheckboxWidget, MultilineTextWidget]
+    styleUrls: ['./container.widget.css'],
+    directives: [
+        MATERIAL_DESIGN_DIRECTIVES,
+        TextWidget,
+        NumberWidget,
+        CheckboxWidget,
+        MultilineTextWidget,
+        DropdownWidget,
+        HyperlinkWidget,
+        RadioButtonsWidget
+    ]
 })
 export class ContainerWidget implements AfterViewInit {
 
     @Input()
     content: ContainerModel;
+
+    onExpanderClicked() {
+        if (this.content && this.content.isCollapsible()) {
+            this.content.isExpanded = !this.content.isExpanded;
+        }
+    }
 
     ngAfterViewInit() {
         // workaround for MDL issues with dynamic components

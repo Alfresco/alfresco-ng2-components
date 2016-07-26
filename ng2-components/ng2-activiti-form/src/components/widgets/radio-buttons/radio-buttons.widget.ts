@@ -23,9 +23,10 @@ declare var componentHandler;
 
 @Component({
     moduleId: __moduleName,
-    selector: 'checkbox-widget',
-    templateUrl: './checkbox.widget.html'
+    selector: 'radio-buttons-widget',
+    templateUrl: './radio-buttons.widget.html',
+    styleUrls: ['./radio-buttons.widget.css']
 })
-export class CheckboxWidget extends WidgetComponent {
+export class RadioButtonsWidget extends WidgetComponent {
 
 }

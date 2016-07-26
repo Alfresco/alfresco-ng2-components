@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit } from '@angular/core';
-import { FormFieldModel } from './../widget.model';
+import { Component } from '@angular/core';
+import { WidgetComponent } from './../widget.component';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -27,20 +27,6 @@ declare var componentHandler;
     templateUrl: './multiline-text.widget.html',
     styleUrls: ['./multiline-text.widget.css']
 })
-export class MultilineTextWidget implements AfterViewInit {
-
-    @Input()
-    field: FormFieldModel;
-
-    hasField() {
-        return this.field ? true : false;
-    }
-
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
+export class MultilineTextWidget extends WidgetComponent {
 
 }
