@@ -85,7 +85,7 @@ To generate your Alfresco Angular 2 application you can use the following Yeoman
 ## Amazon AWS Elastic Beanstalk fast deploy
 
 <p align="center">
-    <img alt="AmazonWebservices Logo.svg" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/250px-AmazonWebservices_Logo.svg.png" width="250" height="94" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/375px-AmazonWebservices_Logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png 2x" data-file-width="580" data-file-height="218">
+    <img alt="AmazonWebservices Logo.svg" src="https://upload.wikimedia.org/wikipedia/commons/1/1d/AmazonWebservices_Logo.svg" width="250" height="94">
 </p>
 
 To deploy directly on your AWS instance our demo shell click the button below:
