@@ -1,0 +1,9 @@
+.container-widget {}
+
+.container-widget__header {}
+
+.container-widget__header-text {
+    border-bottom: 1px solid rgba(0,0,0,.87);
+    margin-left: 10px;
+    margin-right: 10px;
+}

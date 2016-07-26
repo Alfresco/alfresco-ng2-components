@@ -15,8 +15,17 @@
  * limitations under the License.
  */
 
-export interface FormValues {
+export interface FormFieldMetadata {
     [key: string]: any;
+}
+
+export interface FormValues extends FormFieldMetadata {
+}
+
+export class FormFieldTypes {
+    static CONTAINER: string = 'container';
+    static GROUP: string = 'group';
+    static DROPDOWN: string = 'dropdown';
 }
 
 export class FormWidgetModel {
@@ -64,6 +73,7 @@ export class FormFieldModel extends FormWidgetModel {
     hasEmptyValue: boolean;
     className: string;
     optionType: string;
+    params: FormFieldMetadata = {};
 
     get value(): any {
         return this._value;
@@ -95,6 +105,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.hasEmptyValue = <boolean> json.hasEmptyValue;
             this.className = json.className;
             this.optionType = json.optionType;
+            this.params = <FormFieldMetadata> json.params || {};
 
             this._value = this.parseValue(json);
             this.updateForm();
@@ -109,7 +120,7 @@ export class FormFieldModel extends FormWidgetModel {
          but saving back as object: { id: <id>, name: <name> }
          */
         // TODO: needs review
-        if (json.fieldType === 'RestFieldRepresentation') {
+        if (json.type === FormFieldTypes.DROPDOWN) {
            if (value === '') {
                value = 'empty';
            }
@@ -123,7 +134,7 @@ export class FormFieldModel extends FormWidgetModel {
             This is needed due to Activiti reading dropdown values as string
             but saving back as object: { id: <id>, name: <name> }
          */
-        if (this.fieldType === 'RestFieldRepresentation') {
+        if (this.type === FormFieldTypes.DROPDOWN) {
             if (this.value === 'empty' || this.value === '') {
                 this.form.values[this.id] = {};
             } else {
@@ -158,6 +169,10 @@ export class ContainerModel extends FormWidgetModel {
     numberOfColumns: number = 1;
 
     columns: ContainerColumnModel[] = [];
+
+    isGroup(): boolean {
+        return this.type == FormFieldTypes.GROUP;
+    }
 
     constructor(form: FormModel, json?: any) {
         super(form, json);

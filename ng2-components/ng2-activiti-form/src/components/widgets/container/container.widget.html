@@ -1,25 +1,30 @@
-<div class="mdl-grid">
-    <div *ngFor="let col of content.columns" class="mdl-cell mdl-cell--{{col.size}}-col">
-        <div class="mdl-grid" *ngIf="col.hasFields()">
-            <div *ngFor="let field of col.fields" class="mdl-cell mdl-cell--12-col">
-                <div [ngSwitch]="field.type">
-                    <div *ngSwitchCase="'integer'">
-                        <number-widget [field]="field"></number-widget>
-                    </div>
-                    <div *ngSwitchCase="'text'">
-                        <text-widget [field]="field"></text-widget>
-                    </div>
-                    <div *ngSwitchCase="'multi-line-text'">
-                        <multiline-text-widget [field]="field"></multiline-text-widget>
-                    </div>
-                    <div *ngSwitchCase="'boolean'">
-                        <checkbox-widget [field]="field"></checkbox-widget>
-                    </div>
-                    <div *ngSwitchCase="'dropdown'">
-                        <dropdown-widget [field]="field"></dropdown-widget>
-                    </div>
-                    <div *ngSwitchDefault>
-                        <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+<div class="container-widget">
+    <div *ngIf="content?.isGroup()" class="container-widget__header">
+        <h3 class="container-widget__header-text">{{content.name}}</h3>
+    </div>
+    <div class="mdl-grid">
+        <div *ngFor="let col of content.columns" class="mdl-cell mdl-cell--{{col.size}}-col">
+            <div class="mdl-grid" *ngIf="col.hasFields()">
+                <div *ngFor="let field of col.fields" class="mdl-cell mdl-cell--12-col">
+                    <div [ngSwitch]="field.type">
+                        <div *ngSwitchCase="'integer'">
+                            <number-widget [field]="field"></number-widget>
+                        </div>
+                        <div *ngSwitchCase="'text'">
+                            <text-widget [field]="field"></text-widget>
+                        </div>
+                        <div *ngSwitchCase="'multi-line-text'">
+                            <multiline-text-widget [field]="field"></multiline-text-widget>
+                        </div>
+                        <div *ngSwitchCase="'boolean'">
+                            <checkbox-widget [field]="field"></checkbox-widget>
+                        </div>
+                        <div *ngSwitchCase="'dropdown'">
+                            <dropdown-widget [field]="field"></dropdown-widget>
+                        </div>
+                        <div *ngSwitchDefault>
+                            <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { ObjectUtils } from 'ng2-alfresco-core';
@@ -32,8 +32,7 @@ declare var componentHandler;
 })
 export class DropdownWidget extends WidgetComponent implements OnInit {
 
-    constructor(private http: Http,
-                private zone: NgZone) {
+    constructor(private http: Http) {
         super();
     }
 

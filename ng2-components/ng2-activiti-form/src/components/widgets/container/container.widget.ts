@@ -31,6 +31,7 @@ declare var componentHandler;
     moduleId: __moduleName,
     selector: 'container-widget',
     templateUrl: './container.widget.html',
+    styleUrls: ['./container.widget.css'],
     directives: [
         TextWidget,
         NumberWidget,
