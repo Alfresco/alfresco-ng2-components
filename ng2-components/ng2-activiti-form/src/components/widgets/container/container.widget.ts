@@ -18,6 +18,7 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { ContainerModel } from './../widget.model';
 
+import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { TextWidget } from './../text/text.widget';
 import { NumberWidget } from './../number/number.widget';
 import { CheckboxWidget } from './../checkbox/checkbox.widget';
@@ -33,6 +34,7 @@ declare var componentHandler;
     templateUrl: './container.widget.html',
     styleUrls: ['./container.widget.css'],
     directives: [
+        MATERIAL_DESIGN_DIRECTIVES,
         TextWidget,
         NumberWidget,
         CheckboxWidget,
@@ -44,6 +46,12 @@ export class ContainerWidget implements AfterViewInit {
 
     @Input()
     content: ContainerModel;
+
+    onExpanderClicked() {
+        if (this.content && this.content.isCollapsible()) {
+            this.content.isExpanded = !this.content.isExpanded;
+        }
+    }
 
     ngAfterViewInit() {
         // workaround for MDL issues with dynamic components

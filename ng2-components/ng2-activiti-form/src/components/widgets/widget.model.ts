@@ -159,6 +159,7 @@ export class ContainerColumnModel {
     }
 }
 
+// TODO: inherit FormFieldModel
 export class ContainerModel extends FormWidgetModel {
 
     fieldType: string;
@@ -167,11 +168,34 @@ export class ContainerModel extends FormWidgetModel {
     type: string;
     tab: string;
     numberOfColumns: number = 1;
+    params: FormFieldMetadata = {};
 
     columns: ContainerColumnModel[] = [];
 
     isGroup(): boolean {
         return this.type == FormFieldTypes.GROUP;
+    }
+
+    isExpanded: boolean = true;
+
+    isCollapsible(): boolean {
+        let allowCollapse = false;
+
+        if (this.isGroup() && this.params['allowCollapse']) {
+            allowCollapse = <boolean> this.params['allowCollapse'];
+        }
+
+        return allowCollapse;
+    }
+
+    isCollapsedByDefault(): boolean {
+        let collapseByDefault = false;
+
+        if (this.isCollapsible() && this.params['collapseByDefault']) {
+            collapseByDefault = <boolean> this.params['collapseByDefault'];
+        }
+
+        return collapseByDefault;
     }
 
     constructor(form: FormModel, json?: any) {
@@ -184,6 +208,7 @@ export class ContainerModel extends FormWidgetModel {
             this.type = json.type;
             this.tab = json.tab;
             this.numberOfColumns = <number> json.numberOfColumns;
+            this.params = <FormFieldMetadata> json.params || {};
 
             let columnSize: number = 12;
             if (this.numberOfColumns > 1) {
@@ -201,6 +226,8 @@ export class ContainerModel extends FormWidgetModel {
                 let col = this.columns[parseInt(key, 10) - 1];
                 col.fields = fields;
             });
+
+            this.isExpanded = !this.isCollapsedByDefault();
         }
     }
 }
