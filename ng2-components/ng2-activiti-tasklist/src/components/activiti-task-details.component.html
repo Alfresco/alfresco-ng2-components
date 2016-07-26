@@ -4,10 +4,11 @@
 <div *ngIf="taskDetails">
     <h2 class="mdl-card__title-text">{{taskDetails.name}}</h2>
     <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col">Email: {{taskDetails.assignee.email}}</div>
-        <div class="mdl-cell mdl-cell--4-col">FirstName: {{taskDetails.assignee.firstName}}</div>
-        <div class="mdl-cell mdl-cell--4-col">LastName: {{taskDetails.assignee.lastName}}</div>
+        <div class="mdl-cell mdl-cell--4-col">Assignee: {{taskDetails.assignee.lastName}}</div>
+        <div *ngIf="taskDetails.dueDate" class="mdl-cell mdl-cell--4-col">Due: {{taskDetails.dueDate}}</div>
+        <div *ngIf="!taskDetails.dueDate" class="mdl-cell mdl-cell--4-col">Due: No due date</div>
+        <div class="mdl-cell mdl-cell--4-col">Form: {{taskForm?.name}}</div>
     </div>
 
-    <activiti-form *ngIf="taskDetails.formKey" [taskId]="taskDetails.id" ></activiti-form>
+    <activiti-form *ngIf="taskDetails.formKey" [taskId]="taskDetails.id" #activitiForm ></activiti-form>
 </div>

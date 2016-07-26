@@ -19,7 +19,7 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { ActivitiForm } from 'ng2-activiti-form';
+import { ActivitiForm, FormModel, FormService } from 'ng2-activiti-form';
 
 
 declare let componentHandler: any;
@@ -30,7 +30,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css'],
-    providers: [ActivitiTaskListService],
+    providers: [ActivitiTaskListService, FormService],
     directives: [ActivitiForm],
     pipes: [ AlfrescoPipeTranslate ]
 
@@ -42,6 +42,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     taskDetails: TaskDetailsModel;
 
+    taskForm: FormModel;
+
     /**
      * Constructor
      * @param auth
@@ -49,7 +51,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      */
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
-                public activiti: ActivitiTaskListService) {
+                private activitiForm: FormService,
+                private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
@@ -58,7 +61,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     ngOnInit() {
         if (this.taskId) {
-            this.activiti.getTaskDetails(this.taskId).subscribe(
+            this.activitiTaskList.getTaskDetails(this.taskId).subscribe(
                 (res: TaskDetailsModel) => {
                     this.taskDetails = res;
                     console.log(this.taskDetails);
@@ -72,10 +75,18 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     }
 
     loadDetails(id: string) {
+        this.taskForm = null;
         if (id) {
-            this.activiti.getTaskDetails(id).subscribe(
+            this.activitiTaskList.getTaskDetails(id).subscribe(
                 (res: TaskDetailsModel) => {
                     this.taskDetails = res;
+                    if (this.taskDetails && this.taskDetails.formKey) {
+                        this.activitiForm.getTaskForm(this.taskDetails.id).subscribe(
+                            (response) => {
+                                this.taskForm = response;
+                            }
+                        );
+                    }
                     console.log(this.taskDetails);
                 }
             );
@@ -83,7 +94,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     }
 
     onComplete() {
-        this.activiti.completeTask(this.taskId).subscribe(
+        this.activitiTaskList.completeTask(this.taskId).subscribe(
             (res) => {
                 console.log(res);
             }
