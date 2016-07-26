@@ -1,7 +1,7 @@
 <div *ngIf="provider" class="mdl-paging">
     <span class="mdl-paging__per-page">
-        <span class="mdl-paging__per-page-label">Rows per page:</span>
-        <span class="mdl-paging__per-page-value">{{pageSize}}</span>
+        <span class="mdl-paging__per-page-label" >Rows per page:</span>
+        <span class="mdl-paging__per-page-value" [attr.data-automation-id]="'rows_per_page_' + pageSize">{{pageSize}}</span>
         <button alfresco-mdl-button id="pageSizePicker" class="mdl-button--icon mdl-paging__per-page-dropdown">
             <i class="material-icons">arrow_drop_down</i>
         </button>
@@ -16,12 +16,12 @@
     <span class="mdl-paging__count">{{summary}}</span>
     <button (click)="showPrevPage()"
             [disabled]="!prevPageAvail"
-            alfresco-mdl-button class="mdl-button--icon mdl-paging__prev">
+            alfresco-mdl-button class="mdl-button--icon mdl-paging__prev" [attr.data-automation-id]="prev_page">
         <i class="material-icons">keyboard_arrow_left</i>
     </button>
     <button (click)="showNextPage()"
             [disabled]="!nextPageAvail"
-            alfresco-mdl-button class="mdl-button--icon mdl-paging__next">
+            alfresco-mdl-button class="mdl-button--icon mdl-paging__next" [attr.data-automation-id]="next_page">
         <i class="material-icons">keyboard_arrow_right</i>
     </button>
 </div>
