@@ -38,7 +38,7 @@ describe('AlfrescoSettingsService', () => {
     });
 
     it('should have default BPM host', () => {
-        expect(service.ecmHost).toBe(AlfrescoSettingsService.DEFAULT_BPM_ADDRESS);
+        expect(service.bpmHost).toBe(AlfrescoSettingsService.DEFAULT_BPM_ADDRESS);
     });
 
     it('should change host BPM', () => {
