@@ -73,12 +73,7 @@
     "ng2-translate": "2.2.0",
     "pdfjs-dist": "1.5.258",
     "flag-icon-css": "2.3.0",
-<<<<<<< HEAD
-
     "alfresco-js-api": "0.2.1",
-=======
-    "alfresco-js-api": "0.1.0",
->>>>>>> fast deploy on aws
     "ng2-alfresco-core": "0.2.0",
     "ng2-alfresco-datatable": "0.2.0",
     "ng2-alfresco-documentlist": "0.2.0",
