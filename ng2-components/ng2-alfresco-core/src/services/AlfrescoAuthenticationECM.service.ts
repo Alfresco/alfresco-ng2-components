@@ -40,18 +40,18 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
 
         if (!this.isLoggedIn) {
             this.alfrescoApi = new AlfrescoApi({
-                host: this.getBaseUrl()
+                host: this.getHost()
             });
         } else {
             this.alfrescoApi = new AlfrescoApi({
                 ticket: this.getTicket(),
-                host: this.getBaseUrl()
+                host: this.getHost()
             });
         }
     }
 
-    getBaseUrl(): string {
-        return this.alfrescoSettingsService.host;
+    getHost(): string {
+        return this.alfrescoSettingsService.ecmHost;
     }
 
     /**
@@ -87,7 +87,7 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
         this.alfrescoApi = new AlfrescoApi({
             username: username,
             password: password,
-            host: this.getBaseUrl()
+            host: this.getHost()
         });
         return this.alfrescoApi.login();
     }
@@ -111,7 +111,7 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
      *
      * @returns {*|Observable<string>|Observable<any>|Promise<T>}
      */
-    private callApiLogout():Promise<any> {
+    private callApiLogout(): Promise<any> {
         return this.alfrescoApi.logout();
     }
 

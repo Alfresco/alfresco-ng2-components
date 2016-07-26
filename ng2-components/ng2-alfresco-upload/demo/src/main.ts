@@ -76,12 +76,12 @@ export class MyDemoApp implements OnInit {
 
     authenticated: boolean;
 
-    public host: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
     token: string;
 
     constructor(private authService: AlfrescoAuthenticationService, private alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = this.host;
+        alfrescoSettingsService.ecmHost = this.ecmHost;
 
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
@@ -93,7 +93,7 @@ export class MyDemoApp implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.host = this.host;
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
         this.login();
     }
 

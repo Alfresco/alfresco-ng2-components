@@ -25,8 +25,8 @@ export class AlfrescoAuthenticationBase {
 
     alfrescoApi: any;
 
-    private _authUrl: string = '/alfresco/api/-default-/public/authentication/versions/1';
     private alfrescoSetting: AlfrescoSettingsService;
+
     /**
      * Constructor
      * @param alfrescoSettingsService
@@ -36,15 +36,11 @@ export class AlfrescoAuthenticationBase {
         this.alfrescoSetting = alfrescoSettingsService;
     }
 
-    getBaseUrl(): string {
-        return this.alfrescoSetting.host + this._authUrl;
-    }
-
     /**
      * The method save the toke in the localStorage
      * @param ticket
      */
-    public saveTicket(provider:string, ticket: string): void {
+    public saveTicket(provider: string, ticket: string): void {
         if (ticket) {
             localStorage.setItem(`ticket-${provider}`, ticket);
         }
@@ -53,7 +49,7 @@ export class AlfrescoAuthenticationBase {
     /**
      * Remove the login ticket from localStorage
      */
-    public removeTicket(provider:string): void {
+    public removeTicket(provider: string): void {
         localStorage.removeItem(`ticket-${provider}`);
     }
 
