@@ -27,6 +27,7 @@ export class FormFieldTypes {
     static GROUP: string = 'group';
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';
+    static RADIO_BUTTONS: string = 'radio-buttons';
 }
 
 export class FormWidgetModel {
@@ -121,7 +122,7 @@ export class FormFieldModel extends FormWidgetModel {
         let value = json.value;
 
         /*
-         This is needed due to Activiti reading dropdown values as string
+         This is needed due to Activiti issue related to reading dropdown values as value string
          but saving back as object: { id: <id>, name: <name> }
          */
         // TODO: needs review
@@ -131,13 +132,28 @@ export class FormFieldModel extends FormWidgetModel {
            }
         }
 
+        /*
+         This is needed due to Activiti issue related to reading radio button values as value string
+         but saving back as object: { id: <id>, name: <name> }
+         */
+        if (json.type === FormFieldTypes.RADIO_BUTTONS) {
+            // Activiti has a bug with default radio button value,
+            // so try resolving current one with a fallback to first entry
+            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === value);
+            if (entry.length > 0) {
+                value = entry[0].id;
+            } else if (this.options.length > 0) {
+                value = this.options[0].id;
+            }
+        }
+
         return value;
     }
 
     updateForm() {
         /*
-            This is needed due to Activiti reading dropdown values as string
-            but saving back as object: { id: <id>, name: <name> }
+         This is needed due to Activiti reading dropdown values as string
+         but saving back as object: { id: <id>, name: <name> }
          */
         if (this.type === FormFieldTypes.DROPDOWN) {
             if (this.value === 'empty' || this.value === '') {
@@ -148,7 +164,21 @@ export class FormFieldModel extends FormWidgetModel {
                     this.form.values[this.id] = entry[0];
                 }
             }
-        } else {
+        }
+        /*
+         This is needed due to Activiti issue related to reading radio button values as value string
+         but saving back as object: { id: <id>, name: <name> }
+         */
+        else if (this.type === FormFieldTypes.RADIO_BUTTONS) {
+            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+            if (entry.length > 0) {
+                this.form.values[this.id] = entry[0];
+            } else if (this.options.length > 0) {
+                this.form.values[this.id] = this.options[0].id;
+            }
+        }
+        // default value resolver
+        else {
             this.form.values[this.id] = this.value;
         }
     }

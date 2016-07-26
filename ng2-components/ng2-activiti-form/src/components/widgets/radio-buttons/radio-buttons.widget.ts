@@ -15,14 +15,18 @@
  * limitations under the License.
  */
 
-export * from './widget.model';
+import { Component } from '@angular/core';
+import { WidgetComponent } from './../widget.component';
 
-export * from './tabs/tabs.widget';
-export * from './container/container.widget';
-export * from './text/text.widget';
-export * from './number/number.widget';
-export * from './checkbox/checkbox.widget';
-export * from './multiline-text/multiline-text.widget';
-export * from './dropdown/dropdown.widget';
-export * from './hyperlink/hyperlink.widget';
-export * from './radio-buttons/radio-buttons.widget';
+declare let __moduleName: string;
+declare var componentHandler;
+
+@Component({
+    moduleId: __moduleName,
+    selector: 'radio-buttons-widget',
+    templateUrl: './radio-buttons.widget.html',
+    styleUrls: ['./radio-buttons.widget.css']
+})
+export class RadioButtonsWidget extends WidgetComponent {
+
+}

@@ -25,6 +25,7 @@ import { CheckboxWidget } from './../checkbox/checkbox.widget';
 import { MultilineTextWidget } from './../multiline-text/multiline-text.widget';
 import { DropdownWidget } from './../dropdown/dropdown.widget';
 import { HyperlinkWidget } from './../hyperlink/hyperlink.widget';
+import { RadioButtonsWidget } from './../radio-buttons/radio-buttons.widget';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -41,7 +42,8 @@ declare var componentHandler;
         CheckboxWidget,
         MultilineTextWidget,
         DropdownWidget,
-        HyperlinkWidget
+        HyperlinkWidget,
+        RadioButtonsWidget
     ]
 })
 export class ContainerWidget implements AfterViewInit {
