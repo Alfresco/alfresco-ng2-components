@@ -26,6 +26,7 @@ export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';
     static DROPDOWN: string = 'dropdown';
+    static HYPERLINK: string = 'hyperlink';
 }
 
 export class FormWidgetModel {
@@ -74,6 +75,8 @@ export class FormFieldModel extends FormWidgetModel {
     className: string;
     optionType: string;
     params: FormFieldMetadata = {};
+    hyperlinkUrl: string;
+    displayText: string;
 
     get value(): any {
         return this._value;
@@ -106,6 +109,8 @@ export class FormFieldModel extends FormWidgetModel {
             this.className = json.className;
             this.optionType = json.optionType;
             this.params = <FormFieldMetadata> json.params || {};
+            this.hyperlinkUrl = json.hyperlinkUrl;
+            this.displayText = json.displayText;
 
             this._value = this.parseValue(json);
             this.updateForm();

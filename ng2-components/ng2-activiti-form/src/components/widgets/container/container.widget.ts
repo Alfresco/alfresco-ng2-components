@@ -24,6 +24,7 @@ import { NumberWidget } from './../number/number.widget';
 import { CheckboxWidget } from './../checkbox/checkbox.widget';
 import { MultilineTextWidget } from './../multiline-text/multiline-text.widget';
 import { DropdownWidget } from './../dropdown/dropdown.widget';
+import { HyperlinkWidget } from './../hyperlink/hyperlink.widget';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -39,7 +40,8 @@ declare var componentHandler;
         NumberWidget,
         CheckboxWidget,
         MultilineTextWidget,
-        DropdownWidget
+        DropdownWidget,
+        HyperlinkWidget
     ]
 })
 export class ContainerWidget implements AfterViewInit {

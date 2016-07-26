@@ -31,6 +31,9 @@
                         <div *ngSwitchCase="'dropdown'">
                             <dropdown-widget [field]="field"></dropdown-widget>
                         </div>
+                        <div *ngSwitchCase="'hyperlink'">
+                            <hyperlink-widget [field]="field"></hyperlink-widget>
+                        </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                         </div>
