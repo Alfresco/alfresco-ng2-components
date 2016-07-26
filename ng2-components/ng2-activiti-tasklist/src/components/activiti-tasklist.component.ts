@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit} from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterModel } from '../models/filter.model';
@@ -31,7 +31,8 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-tasklist.component.html',
     directives: [ALFRESCO_DATATABLE_DIRECTIVES],
-    providers: [ActivitiTaskListService]
+    providers: [ActivitiTaskListService],
+    pipes: [ AlfrescoPipeTranslate ]
 
 })
 export class ActivitiTaskList implements OnInit {
@@ -39,11 +40,15 @@ export class ActivitiTaskList implements OnInit {
     @Input()
     data: DataTableAdapter;
 
+    @Output()
+    rowClick: EventEmitter<string> = new EventEmitter<string>();
+
     private filterObserver: Observer<FilterModel>;
 
     filter$: Observable<FilterModel>;
 
     tasks: ObjectDataTableAdapter;
+    currentFilter: FilterModel;
     currentTaskId: string;
 
     filtersList: Observable<FilterModel>;
@@ -89,12 +94,18 @@ export class ActivitiTaskList implements OnInit {
      * @param filter
      */
     public selectFilter(filter: FilterModel) {
+        this.currentFilter = filter;
         this.filterObserver.next(filter);
+    }
+
+    isTaskListEmpty(): boolean {
+        return this.tasks && this.tasks.getRows().length === 0;
     }
 
     onRowClick(event: DataRowEvent) {
         let item = event;
         this.currentTaskId = item.value.getValue('id');
+        this.rowClick.emit(this.currentTaskId);
     }
 
     /**

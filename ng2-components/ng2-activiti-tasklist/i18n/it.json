@@ -1,0 +1,17 @@
+{
+  "TASK_LIST": {
+    "MESSAGES": {
+      "NONE": "Nessuna lista tasks trovata."
+    }
+  },
+  "TASK_DETAILS": {
+    "MESSAGES": {
+      "NONE": "Nessun dettaglio task trovato."
+    }
+  },
+  "TASK_FILTERS": {
+    "MESSAGES": {
+      "NONE": "Nessun filtro task selezionato."
+    }
+  }
+}

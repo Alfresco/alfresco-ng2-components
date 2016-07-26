@@ -16,7 +16,9 @@
  */
 
 import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
+import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
+
 
 export * from './src/components/activiti-tasklist.component';
 
-export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [ActivitiTaskList];
+export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [ActivitiTaskList, ActivitiTaskDetails];

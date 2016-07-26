@@ -1,0 +1,13 @@
+<div *ngIf="!taskDetails">
+    <h3 style="text-align: center">{{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}</h3>
+</div>
+<div *ngIf="taskDetails">
+    <h2 class="mdl-card__title-text">{{taskDetails.name}}</h2>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col">Email: {{taskDetails.assignee.email}}</div>
+        <div class="mdl-cell mdl-cell--4-col">FirstName: {{taskDetails.assignee.firstName}}</div>
+        <div class="mdl-cell mdl-cell--4-col">LastName: {{taskDetails.assignee.lastName}}</div>
+    </div>
+
+    <activiti-form *ngIf="taskDetails.formKey" [taskId]="taskDetails.id" ></activiti-form>
+</div>

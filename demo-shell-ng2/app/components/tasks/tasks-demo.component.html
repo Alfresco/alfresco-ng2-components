@@ -1,0 +1,24 @@
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col">
+        <ul class="demo-list-item mdl-list">
+            <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                  <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                      <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
+                      <span class="mdl-radio__label">Task List</span>
+                  </label>
+            </span>
+            </li>
+            <li class="mdl-list__item">
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                    <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">
+                    <span class="mdl-radio__label">Process List</span>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="mdl-cell mdl-cell--2-col">
+        <activiti-tasklist [data]="data"></activiti-tasklist>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">Task Details</div>
+</div>
