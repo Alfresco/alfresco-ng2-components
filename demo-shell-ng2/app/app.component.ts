@@ -46,17 +46,17 @@ declare var document: any;
     pipes: [AlfrescoPipeTranslate]
 })
 @RouteConfig([
-    { path: '/home', name: 'Home', component: FilesComponent },
-    { path: '/files', name: 'Files', component: FilesComponent },
-    { path: '/datatable', name: 'DataTable', component: DataTableDemoComponent },
-    { path: '/', name: 'Login', component: LoginDemoComponent, useAsDefault: true },
-    { path: '/uploader', name: 'Uploader', component: UploadButtonComponent },
-    { path: '/login', name: 'Login', component: LoginDemoComponent },
-    { path: '/search', name: 'Search', component: SearchComponent },
-    { path: '/tasks', name: 'Tasks', component: TasksDemoComponent },
-    { path: '/activiti', name: 'Activiti', component: ActivitiDemoComponent },
-    { path: '/webscript', name: 'Webscript', component: WebscriptComponent },
-    { path: '/about', name: 'About', component: AboutComponent }
+    {path: '/home', name: 'Home', component: FilesComponent},
+    {path: '/files', name: 'Files', component: FilesComponent},
+    {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
+    {path: '/', name: 'Login', component: LoginDemoComponent, useAsDefault: true},
+    {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
+    {path: '/login', name: 'Login', component: LoginDemoComponent},
+    {path: '/search', name: 'Search', component: SearchComponent},
+    {path: '/tasks', name: 'Tasks', component: TasksDemoComponent},
+    {path: '/activiti', name: 'Activiti', component: ActivitiDemoComponent},
+    {path: '/webscript', name: 'Webscript', component: WebscriptComponent},
+    {path: '/about', name: 'About', component: AboutComponent}
 ])
 export class AppComponent {
     translate: AlfrescoTranslationService;
@@ -76,26 +76,8 @@ export class AppComponent {
         this.translate.addTranslationFolder();
     }
 
-    private setEcmHost(){
-        if(localStorage.getItem(`ecmHost`)){
-            this.alfrescoSettingsService.ecmHost = localStorage.getItem(`ecmHost`);
-            this.ecmHost = localStorage.getItem(`ecmHost`);
-        }else{
-            this.alfrescoSettingsService.ecmHost = this.ecmHost;
-        }
-    }
-
-    private setBpmHost(){
-        if(localStorage.getItem(`bpmHost`)){
-            this.alfrescoSettingsService.bpmHost = localStorage.getItem(`bpmHost`);
-            this.bpmHost = localStorage.getItem(`bpmHost`);
-        }else{
-            this.alfrescoSettingsService.bpmHost = this.bpmHost;
-        }
-    }
-
     public onChangeECMHost(event: KeyboardEvent): void {
-        console.log( (<HTMLInputElement>event.target).value);
+        console.log((<HTMLInputElement>event.target).value);
         this.ecmHost = (<HTMLInputElement>event.target).value;
         this.alfrescoSettingsService.ecmHost = this.ecmHost;
         localStorage.setItem(`ecmHost`, this.ecmHost);
@@ -141,5 +123,23 @@ export class AppComponent {
     hideDrawer() {
         // todo: workaround for drawer closing
         document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+    }
+
+    private setEcmHost() {
+        if (localStorage.getItem(`ecmHost`)) {
+            this.alfrescoSettingsService.ecmHost = localStorage.getItem(`ecmHost`);
+            this.ecmHost = localStorage.getItem(`ecmHost`);
+        } else {
+            this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        }
+    }
+
+    private setBpmHost() {
+        if (localStorage.getItem(`bpmHost`)) {
+            this.alfrescoSettingsService.bpmHost = localStorage.getItem(`bpmHost`);
+            this.bpmHost = localStorage.getItem(`bpmHost`);
+        } else {
+            this.alfrescoSettingsService.bpmHost = this.bpmHost;
+        }
     }
 }
