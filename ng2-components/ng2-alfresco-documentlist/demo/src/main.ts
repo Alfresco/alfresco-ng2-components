@@ -143,8 +143,8 @@ class DocumentListDemo implements OnInit {
     currentPath: string = '/';
     authenticated: boolean;
 
-    host: string = 'http://devproducts-platform.alfresco.me';
-    // host: string = 'http://127.0.0.1:8080';
+    ecmHost: string = 'http://devproducts-platform.alfresco.me';
+    // ecmHost: string = 'http://127.0.0.1:8080';
 
     token: string;
 
@@ -154,7 +154,7 @@ class DocumentListDemo implements OnInit {
         translation: AlfrescoTranslationService,
         private documentActions: DocumentActionsService) {
 
-        alfrescoSettingsService.host = this.host;
+        alfrescoSettingsService.ecmHost = this.ecmHost;
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -167,7 +167,7 @@ class DocumentListDemo implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.host = this.host;
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
         this.login();
     }
 

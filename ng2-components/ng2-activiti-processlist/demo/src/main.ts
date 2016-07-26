@@ -36,7 +36,7 @@ import { HTTP_PROVIDERS, BrowserXhr } from '@angular/http';
 class MyDemoApp implements OnInit {
 
     authenticated: boolean;
-    host: string = 'http://127.0.0.1:9999';
+    ecmHost: string = 'http://127.0.0.1:9999';
     token: string;
 
     constructor(
@@ -45,7 +45,7 @@ class MyDemoApp implements OnInit {
     ) {
         console.log('constructor');
 
-        alfrescoSettingsService.host = this.host;
+        alfrescoSettingsService.ecmHost = this.ecmHost;
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -60,7 +60,7 @@ class MyDemoApp implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.host = this.host;
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
         this.login();
     }
 

@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { FilterModel } from '../models/filter.model';
@@ -23,7 +24,7 @@ import { FilterModel } from '../models/filter.model';
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(private http: Http) {
+    constructor(private http: Http, public alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
     /**
@@ -56,7 +57,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiTasksFiltered(data: Object) {
-        let url = 'http://localhost:9999/activiti-app/app/rest/filter/tasks';
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/rest/filter/tasks';
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
@@ -68,7 +69,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiTaskFilters() {
-        let url = 'http://localhost:9999/activiti-app/app/rest/filters/tasks';
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/rest/filters/tasks';
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'

@@ -63,7 +63,7 @@ class WebscriptDemo implements OnInit {
 
     authenticated: boolean;
 
-    host: string = 'http://127.0.0.1:8080';
+    ecmHost: string = 'http://127.0.0.1:8080';
 
     scriptPath: string = 'sample/folder/Company%20Home';
 
@@ -78,7 +78,7 @@ class WebscriptDemo implements OnInit {
     constructor(private authService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
 
-        alfrescoSettingsService.host = this.host;
+        alfrescoSettingsService.ecmHost = this.ecmHost;
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -89,7 +89,7 @@ class WebscriptDemo implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.host = this.host;
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
         this.login();
     }
 
