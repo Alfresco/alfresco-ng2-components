@@ -71,7 +71,7 @@
     "rimraf": "2.5.2",
     "ng2-translate": "2.2.2",
     "ng2-alfresco-core": "0.2.0",
-	"ng2-alfresco-datatable": "0.2.0",
+	  "ng2-alfresco-datatable": "0.2.0",
     "alfresco-js-api": "^0.1.0"
   },
   "peerDependencies": {

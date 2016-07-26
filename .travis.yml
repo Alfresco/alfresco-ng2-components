@@ -26,23 +26,30 @@ env:
     - MODULE=ng2-alfresco-search
     - MODULE=ng2-alfresco-upload
     - MODULE=ng2-alfresco-viewer
-    - MODULE=ng2-activiti-form
     - MODULE=ng2-alfresco-webscript
+    - MODULE=ng2-activiti-form
     - MODULE=ng2-activiti-processlist
+    - MODULE=ng2-activiti-tasklist
 
 before_script:
   - if ([ "$MODULE" != "ng2-alfresco-core" ] && [ "$MODULE" != "ng2-alfresco-viewer" ]); then
         (cd ng2-components/ng2-alfresco-core; npm install; npm link);
     fi
-  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ]); then
+  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
         (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; npm install; npm link);
+    fi
+  - if ([ "$MODULE" == "ng2-activiti-tasklist" ]); then
+        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; npm install; npm link);
     fi
   - cd ng2-components/$MODULE;
   - if ([ "$MODULE" != "ng2-alfresco-core" ] && [ "$MODULE" != "ng2-alfresco-viewer" ]); then
         npm link ng2-alfresco-core;
     fi
-  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ]); then
+  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
         npm link ng2-alfresco-datatable;
+    fi
+  - if ([ "$MODULE" == "ng2-activiti-tasklist" ]); then
+        npm link ng2-activiti-form;
     fi
   - npm install;
   - npm run travis
