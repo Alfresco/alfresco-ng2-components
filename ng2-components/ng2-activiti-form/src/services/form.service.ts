@@ -24,7 +24,17 @@ import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 @Injectable()
 export class FormService {
 
-    constructor(private http: Http, private alfrescoSettingsService: AlfrescoSettingsService) {
+    constructor(private http: Http,
+                private alfrescoSettingsService: AlfrescoSettingsService) {
+    }
+
+    getProcessDefinitions(): Observable<any> {
+        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/process-definitions`;
+        let options = this.getRequestOptions();
+        return this.http
+            .get(url, options)
+            .map(this.toJsonArray)
+            .catch(this.handleError);
     }
 
     getTasks(): Observable<any> {
