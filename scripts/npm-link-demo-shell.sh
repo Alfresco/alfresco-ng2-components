@@ -6,18 +6,24 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "====== linking component: ng2-alfresco-core ====="
 cd "$DIR/../ng2-components/ng2-alfresco-core"
 npm link
+npm run typings
+npm run build
 
 #LINK FORM
 echo "====== linking component: ng2-activiti-form ====="
 cd "$DIR/../ng2-components/ng2-activiti-form"
 npm link ng2-alfresco-core
 npm link
+npm run typings
+npm run build
 
 #LINK DATATABLE
 echo "====== linking component: ng2-alfresco-datatable ====="
 cd "$DIR/../ng2-components/ng2-alfresco-datatable"
 npm link ng2-alfresco-core
 npm link
+npm run typings
+npm run build
 
 #LINK DOCUMENTLIST
 echo "====== linking component: ng2-alfresco-documentlist ====="
@@ -25,6 +31,8 @@ cd "$DIR/../ng2-components/ng2-alfresco-documentlist"
 npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link
+npm run typings
+npm run build
 
 #LINK WEBSCRIPT
 echo "====== linking component: ng2-alfresco-webscript ====="
@@ -32,6 +40,8 @@ cd "$DIR/../ng2-components/ng2-alfresco-webscript"
 npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link
+npm run typings
+npm run build
 
 #LINK TASKLIST
 echo "====== linking component: ng2-activiti-tasklist ====="
@@ -40,6 +50,8 @@ npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link ng2-activiti-form
 npm link
+npm run typings
+npm run build
 
 #LINK PROCESSLIST
 echo "====== linking component: ng2-activiti-processlist ====="
@@ -47,6 +59,8 @@ cd "$DIR/../ng2-components/ng2-activiti-processlist"
 npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link
+npm run typings
+npm run build
 
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
@@ -61,6 +75,8 @@ do
   cd "$DESTDIR"
   npm link ng2-alfresco-core
   npm link
+  npm run typings
+  npm run build
 done
 
 
