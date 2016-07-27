@@ -1,0 +1,19 @@
+<span class="activiti-label mdl-badge"
+      [attr.data-badge]="people?.length">{{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }}</span>
+<div id="addPeople" class="icon material-icons">add</div>
+<div class="mdl-tooltip" for="addPeople">
+    Add a people
+</div>
+<div class="menu-container" *ngIf="people?.length > 0">
+    <ul class='mdl-list'>
+        <li class="mdl-list__item" *ngFor="let user of people">
+            <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">face</i>
+            {{user.firstName}}
+            </span>
+        </li>
+    </ul>
+</div>
+<div *ngIf="people?.length === 0">
+    {{ 'TASK_DETAILS.PEOPLE.NONE' | translate }}
+</div>

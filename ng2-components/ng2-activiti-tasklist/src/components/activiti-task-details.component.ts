@@ -18,7 +18,12 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiTaskHeader } from './activiti-task-header.component';
+import { ActivitiComments } from './activiti-comments.component';
+import { ActivitiChecklist } from './activiti-checklist.component';
+import { ActivitiPeople } from './activiti-people.component';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { User } from '../models/user.model';
 import { ActivitiForm, FormModel, FormService } from 'ng2-activiti-form';
 
 
@@ -30,8 +35,8 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css'],
-    providers: [ActivitiTaskListService, FormService],
-    directives: [ActivitiForm],
+    providers: [ ActivitiTaskListService, FormService ],
+    directives: [ ActivitiTaskHeader, ActivitiPeople, ActivitiComments, ActivitiChecklist, ActivitiForm ],
     pipes: [ AlfrescoPipeTranslate ]
 
 })
@@ -43,6 +48,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     taskDetails: TaskDetailsModel;
 
     taskForm: FormModel;
+
+    taskPeople: User[] = [];
 
     /**
      * Constructor
@@ -76,16 +83,15 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     loadDetails(id: string) {
         this.taskForm = null;
+        this.taskPeople = [];
         if (id) {
             this.activitiTaskList.getTaskDetails(id).subscribe(
                 (res: TaskDetailsModel) => {
                     this.taskDetails = res;
-                    if (this.taskDetails && this.taskDetails.formKey) {
-                        this.activitiForm.getTaskForm(this.taskDetails.id).subscribe(
-                            (response) => {
-                                this.taskForm = response;
-                            }
-                        );
+                    if (this.taskDetails && this.taskDetails.involvedPeople) {
+                        this.taskDetails.involvedPeople.forEach((user) => {
+                            this.taskPeople.push(new User(user.id, user.email, user.firstName, user.lastName));
+                        });
                     }
                     console.log(this.taskDetails);
                 }

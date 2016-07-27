@@ -5,8 +5,31 @@
     }
   },
   "TASK_DETAILS": {
+    "LABELS": {
+      "ASSIGNEE": "Assignee",
+      "DUE": "Due",
+      "FORM": "Form",
+      "PEOPLE": "People",
+      "COMMENTS": "Comments",
+      "CHECKLIST": "Checklist"
+    },
     "MESSAGES": {
       "NONE": "No task details found."
+    },
+    "FORM": {
+      "NONE": "No form."
+    },
+    "DUE": {
+      "NONE": "No due date."
+    },
+    "PEOPLE": {
+      "NONE": "No people involved."
+    },
+    "COMMENTS": {
+      "NONE": "No comments."
+    },
+    "CHECKLIST": {
+      "NONE": "No checklist."
     }
   },
   "TASK_FILTERS": {

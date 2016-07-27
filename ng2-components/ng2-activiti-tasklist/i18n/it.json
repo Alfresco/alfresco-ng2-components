@@ -5,8 +5,19 @@
     }
   },
   "TASK_DETAILS": {
+    "LABELS": {
+      "ASSIGNEE": "Assegnatario",
+      "DUE": "Scadenza",
+      "FORM": "Form"
+    },
     "MESSAGES": {
       "NONE": "Nessun dettaglio task trovato."
+    },
+    "FORM": {
+      "NONE": "Nessuna form."
+    },
+    "DUE": {
+      "NONE": "Nessuna data di scadenza."
     }
   },
   "TASK_FILTERS": {

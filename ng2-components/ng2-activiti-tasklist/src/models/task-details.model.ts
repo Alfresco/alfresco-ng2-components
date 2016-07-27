@@ -22,6 +22,8 @@
  *
  * @returns {TaskDetailsModel} .
  */
+import { User } from './user.model';
+
 export class TaskDetailsModel {
     id: string;
     name: string;
@@ -87,19 +89,5 @@ export class TaskDetailsModel {
         this.processInstanceName = obj.processInstanceName;
         this.processInstanceStartUserId = obj.processInstanceStartUserId;
         this.taskDefinitionKey = obj.taskDefinitionKey;
-    }
-}
-
-export class User {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-
-    constructor(id: number, email: string, firstName: string, lastName: string) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 }
