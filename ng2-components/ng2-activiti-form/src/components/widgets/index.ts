@@ -15,10 +15,29 @@
  * limitations under the License.
  */
 
+import { TabsWidget } from './tabs/tabs.widget';
+import { ContainerWidget } from './container/container.widget';
+
+import { TextWidget } from './text/text.widget';
+import { NumberWidget } from './number/number.widget';
+import { CheckboxWidget } from './checkbox/checkbox.widget';
+import { MultilineTextWidget } from './multiline-text/multiline-text.widget';
+import { DropdownWidget } from './dropdown/dropdown.widget';
+import { HyperlinkWidget } from './hyperlink/hyperlink.widget';
+import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
+import { DisplayValueWidget } from './display-value/display-value.widget';
+
+// core
+export * from './widget.component';
+
+// model
 export * from './widget.model';
 
+// containers
 export * from './tabs/tabs.widget';
 export * from './container/container.widget';
+
+// primitives
 export * from './text/text.widget';
 export * from './number/number.widget';
 export * from './checkbox/checkbox.widget';
@@ -26,3 +45,22 @@ export * from './multiline-text/multiline-text.widget';
 export * from './dropdown/dropdown.widget';
 export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
+export * from './display-value/display-value.widget';
+
+export const CONTAINER_WIDGET_DIRECTIVES: [any] = [
+    TabsWidget,
+    ContainerWidget
+];
+
+export const PRIMITIVE_WIDGET_DIRECTIVES: [any] = [
+    TextWidget,
+    NumberWidget,
+    CheckboxWidget,
+    MultilineTextWidget,
+    DropdownWidget,
+    HyperlinkWidget,
+    RadioButtonsWidget,
+    DisplayValueWidget
+];
+
+
