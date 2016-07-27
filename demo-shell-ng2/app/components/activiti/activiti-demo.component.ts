@@ -16,7 +16,10 @@
  */
 
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { ActivitiForm, FormService } from 'ng2-activiti-form';
+import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
+import { ActivitiForm } from 'ng2-activiti-form';
+
+import { ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
 
 
 declare let __moduleName: string;
@@ -27,22 +30,42 @@ declare var componentHandler;
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.css'],
-    directives: [ActivitiForm],
-    providers: [FormService]
+    directives: [ALFRESCO_TASKLIST_DIRECTIVES, ActivitiForm]
 })
 export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
 
-    tasks: any[] = [];
-    selectedTask: any;
+    currentChoice: string = 'task-list';
 
-    hasTasks(): boolean {
-        return this.tasks && this.tasks.length > 0;
+    currentTaskId: string;
+
+    data: ObjectDataTableAdapter;
+    constructor() {
+        this.data = new ObjectDataTableAdapter([], []);
     }
 
-    constructor(private formService: FormService) {}
+    setChoice($event) {
+        this.currentChoice = $event.target.value;
+    }
+
+    isProcessListSelected() {
+        return this.currentChoice === 'process-list';
+    }
+
+    isTaskListSelected() {
+        return this.currentChoice === 'task-list';
+    }
 
     ngOnInit() {
-        this.formService.getTasks().subscribe(val => this.tasks = val || []);
+        let schema = [
+            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
+        ];
+
+        let columns = schema.map(col => new ObjectDataColumn(col));
+        this.data.setColumns(columns);
+    }
+
+    onRowClick(taskId) {
+        this.currentTaskId = taskId;
     }
 
     ngAfterViewChecked() {
@@ -50,10 +73,6 @@ export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
-    }
-
-    onTaskClicked(task, e) {
-        this.selectedTask = task;
     }
 
 }
