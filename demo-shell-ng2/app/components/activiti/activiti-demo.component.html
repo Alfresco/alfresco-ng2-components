@@ -9,7 +9,7 @@
                     (click)="onTaskClicked(task, $event)">
                     <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">launch</i>
-                    {{task.name}}
+                    {{task.name || 'Nameless task'}}
                 </span>
             </ul>
         </div>
