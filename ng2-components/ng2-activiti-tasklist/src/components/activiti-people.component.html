@@ -1,6 +1,6 @@
 <span class="activiti-label mdl-badge"
       [attr.data-badge]="people?.length">{{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }}</span>
-<div id="addPeople" class="icon material-icons">add</div>
+<div id="addPeople" (click)="showDialog()" class="icon material-icons">add</div>
 <div class="mdl-tooltip" for="addPeople">
     Add a people
 </div>
@@ -17,3 +17,17 @@
 <div *ngIf="people?.length === 0">
     {{ 'TASK_DETAILS.PEOPLE.NONE' | translate }}
 </div>
+
+<dialog class="mdl-dialog" #dialog>
+    <h4 class="mdl-dialog__title">New User</h4>
+    <div class="mdl-dialog__content">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="people" />
+            <label class="mdl-textfield__label" for="people">Name</label>
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="add()" class="mdl-button">Add User</button>
+        <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
+    </div>
+</dialog>

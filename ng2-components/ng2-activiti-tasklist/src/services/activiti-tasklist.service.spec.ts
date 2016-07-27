@@ -23,7 +23,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 declare let AlfrescoApi: any;
 declare let jasmine: any;
 
-describe('AlfrescoUploadService', () => {
+describe('ActivitiTaskListService', () => {
     let service, options: any;
 
     options = {
@@ -72,11 +72,9 @@ describe('AlfrescoUploadService', () => {
         let filters = service.getTaskListFilters();
         filters.subscribe(res => {
             expect(res).toBeDefined();
-            expect(res.size).toEqual(2);
-            expect(res.total).toEqual(2);
-            expect(res.data.length).toEqual(2);
-            expect(res.data[0].name).toEqual('FakeInvolvedTasks');
-            expect(res.data[1].name).toEqual('FakeMyTasks');
+            expect(res.length).toEqual(2);
+            expect(res[0].name).toEqual('FakeInvolvedTasks');
+            expect(res[1].name).toEqual('FakeMyTasks');
             done();
         });
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiTaskHeader } from './activiti-task-header.component';
@@ -35,15 +35,21 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css'],
-    providers: [ ActivitiTaskListService, FormService ],
-    directives: [ ActivitiTaskHeader, ActivitiPeople, ActivitiComments, ActivitiChecklist, ActivitiForm ],
-    pipes: [ AlfrescoPipeTranslate ]
+    providers: [ActivitiTaskListService, FormService],
+    directives: [ActivitiTaskHeader, ActivitiPeople, ActivitiComments, ActivitiChecklist, ActivitiForm],
+    pipes: [AlfrescoPipeTranslate]
 
 })
-export class ActivitiTaskDetails implements OnInit, OnChanges {
+export class ActivitiTaskDetails implements OnInit {
 
     @Input()
     taskId: string;
+
+    @ViewChild('activiticomments')
+    activiticomments: any;
+
+    @ViewChild('activitichecklist')
+    activitichecklist: any;
 
     taskDetails: TaskDetailsModel;
 
@@ -68,30 +74,29 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     ngOnInit() {
         if (this.taskId) {
-            this.activitiTaskList.getTaskDetails(this.taskId).subscribe(
-                (res: TaskDetailsModel) => {
-                    this.taskDetails = res;
-                    console.log(this.taskDetails);
-                }
-            );
+            this.loadDetails(this.taskId);
         }
     }
 
-    ngOnChanges(change) {
-        this.loadDetails(this.taskId);
-    }
-
-    loadDetails(id: string) {
+    loadDetails(taskId: string) {
         this.taskForm = null;
         this.taskPeople = [];
-        if (id) {
-            this.activitiTaskList.getTaskDetails(id).subscribe(
+        if (taskId) {
+            this.activitiTaskList.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
                     this.taskDetails = res;
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
                             this.taskPeople.push(new User(user.id, user.email, user.firstName, user.lastName));
                         });
+
+                        if (this.activiticomments) {
+                            this.activiticomments.load(this.taskDetails.id);
+                        }
+
+                        if (this.activitichecklist) {
+                            this.activitichecklist.load(this.taskDetails.id);
+                        }
                     }
                     console.log(this.taskDetails);
                 }

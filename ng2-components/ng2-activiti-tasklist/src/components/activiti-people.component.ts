@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
+import { Observer } from 'rxjs/Observer';
+import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -35,6 +37,12 @@ export class ActivitiPeople implements OnInit {
     @Input()
     people: User [] = [];
 
+    @ViewChild('dialog')
+    dialog: any;
+
+    private peopleObserver: Observer<User>;
+    people$: Observable<User>;
+
     /**
      * Constructor
      * @param auth
@@ -46,10 +54,31 @@ export class ActivitiPeople implements OnInit {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
         }
+        this.people$ = new Observable<User>(observer =>  this.peopleObserver = observer).share();
     }
 
     ngOnInit() {
+        this.people$.subscribe((user: User) => {
+            this.people.push(user);
+        });
+    }
 
+    public showDialog() {
+        if (this.dialog) {
+            this.dialog.nativeElement.showModal();
+        }
+    }
+
+    public add() {
+        alert('add people');
+
+        this.cancel();
+    }
+
+    public cancel() {
+        if (this.dialog) {
+            this.dialog.nativeElement.close();
+        }
     }
 
 }

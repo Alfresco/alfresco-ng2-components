@@ -37,8 +37,15 @@ export class ActivitiTaskListService {
      */
     getTaskListFilters(): Observable<any> {
         return Observable.fromPromise(this.callApiTaskFilters())
-            .map((res: Response) => {
-                return res.json();
+            .map(res => res.json())
+            .map((response: any) => {
+                let filters: FilterModel[] = [];
+                response.data.forEach((filter) => {
+                    let filterModel = new FilterModel(filter.name, filter.recent, filter.icon,
+                        filter.filter.name, filter.filter.state, filter.filter.assignment);
+                    filters.push(filterModel);
+                });
+                return filters;
             })
             .catch(this.handleError);
     }
@@ -52,7 +59,7 @@ export class ActivitiTaskListService {
         // data.filterId = filter.id;
         // data.filter = filter.filter;
         data = filter.filter;
-        data.text = filter.filter.name;
+        // data.text = filter.filter.name;
         data = JSON.stringify(data);
 
 
@@ -87,17 +94,20 @@ export class ActivitiTaskListService {
             .catch(this.handleError);
     }
 
-    addTaskComment(id: string, message: string): Observable<Comment[]> {
+    addTaskComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(this.callApiAddTaskComment(id, message))
             .map(res => res.json())
-            .map((response: any) => {
-                let comments: Comment[] = [];
-                response.data.forEach((comment) => {
-                    let user = new User(
-                        comment.createdBy.id, comment.createdBy.email, comment.createdBy.firstName, comment.createdBy.lastName);
-                    comments.push(new Comment(comment.id, comment.message, comment.created, user));
-                });
-                return comments;
+            .map((response: Comment) => {
+                return new Comment(response.id, response.message, response.created, response.createdBy);
+            })
+            .catch(this.handleError);
+    }
+
+    addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.callApiAddTask(task))
+            .map(res => res.json())
+            .map((response: TaskDetailsModel) => {
+                return new TaskDetailsModel(response);
             })
             .catch(this.handleError);
     }
@@ -179,6 +189,19 @@ export class ActivitiTaskListService {
             'Cache-Control': 'no-cache'
         });
         let body = JSON.stringify({message: message});
+        let options = new RequestOptions({headers: headers});
+
+        return this.http
+            .post(url, body, options).toPromise();
+    }
+
+    private callApiAddTask(task: TaskDetailsModel) {
+        let url = `${this.basePath}/api/enterprise/tasks/${task.parentTaskId}/checklist`;
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+        });
+        let body = JSON.stringify(task);
         let options = new RequestOptions({headers: headers});
 
         return this.http

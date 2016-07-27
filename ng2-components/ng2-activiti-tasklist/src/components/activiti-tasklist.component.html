@@ -1,15 +1,5 @@
-<div class="menu-container">
-    <ul class='mdl-list'>
-        <li class="mdl-list__item"(click)="selectFilter(filter)" *ngFor="let filter of filtersList | async">
-            <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon">assignment</i>
-            {{filter.name}}
-            </span>
-        </li>
-    </ul>
-</div>
-
-<div *ngIf="currentFilter">
+<div *ngIf="!taskFilter">{{ 'TASK_FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="taskFilter">
     <div *ngIf="!isTaskListEmpty()">
         <alfresco-datatable
                 [data]="tasks"
@@ -20,4 +10,3 @@
         {{ 'TASK_LIST.MESSAGES.NONE' | translate }}
     </div>
 </div>
-<div *ngIf="!currentFilter">{{ 'TASK_FILTERS.MESSAGES.NONE' | translate }}</div>

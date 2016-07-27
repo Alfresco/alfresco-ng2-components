@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ActivitiForm } from 'ng2-activiti-form';
 
@@ -36,11 +36,19 @@ export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
 
     currentChoice: string = 'task-list';
 
+    @ViewChild('activitidetails')
+    activitidetails: any;
+
+    @ViewChild('activititasklist')
+    activititasklist: any;
+
     currentTaskId: string;
 
-    data: ObjectDataTableAdapter;
+    schemaColumn: any [] = [];
+
+    taskFilter: any;
+
     constructor() {
-        this.data = new ObjectDataTableAdapter([], []);
     }
 
     setChoice($event) {
@@ -56,16 +64,20 @@ export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        let schema = [
+        this.schemaColumn = [
             {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
+            // {type: 'text', key: 'created', title: 'Created', sortable: true}
         ];
+    }
 
-        let columns = schema.map(col => new ObjectDataColumn(col));
-        this.data.setColumns(columns);
+    onFilterClick(event: any) {
+        this.taskFilter = event;
+        this.activititasklist.load(this.taskFilter);
     }
 
     onRowClick(taskId) {
         this.currentTaskId = taskId;
+        this.activitidetails.loadDetails(this.currentTaskId);
     }
 
     ngAfterViewChecked() {

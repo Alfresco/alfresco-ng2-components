@@ -20,8 +20,6 @@ import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipe
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterModel } from '../models/filter.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -38,20 +36,28 @@ declare let __moduleName: string;
 export class ActivitiTaskList implements OnInit {
 
     @Input()
-    data: DataTableAdapter;
+    taskFilter: FilterModel;
+
+    @Input()
+    schemaColumn: any[] = [
+        {type: 'text', key: 'id', title: 'Id'},
+        {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+        {type: 'text', key: 'formKey', title: 'Form Key', sortable: true},
+        {type: 'text', key: 'created', title: 'Created', sortable: true}
+    ];
 
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
-    private filterObserver: Observer<FilterModel>;
+    @Output()
+    onSuccess: EventEmitter<string> = new EventEmitter<string>();
 
-    filter$: Observable<FilterModel>;
+    data: DataTableAdapter;
 
     tasks: ObjectDataTableAdapter;
-    currentFilter: FilterModel;
+
     currentTaskId: string;
 
-    filtersList: Observable<FilterModel>;
     /**
      * Constructor
      * @param auth
@@ -60,7 +66,6 @@ export class ActivitiTaskList implements OnInit {
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
                 public activiti: ActivitiTaskListService) {
-        this.filter$ = new Observable<FilterModel>(observer =>  this.filterObserver = observer).share();
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
@@ -68,40 +73,47 @@ export class ActivitiTaskList implements OnInit {
     }
 
     ngOnInit() {
-        this.filtersList = this.activiti.getTaskListFilters().map(res => (res.data));
+        this.data = new ObjectDataTableAdapter(
+            [],
+            this.schemaColumn
+        );
 
-        this.filter$.subscribe((filter: FilterModel) => {
-            this.activiti.getTasks(filter).subscribe(
-                (res) => {
-                    this.loadTasks(res.data);
-                }, (err) => {
-                    console.error(err);
-                });
-        });
+        if (this.taskFilter) {
+            this.load(this.taskFilter);
+        }
+    }
+
+    public load(filter: FilterModel) {
+        this.activiti.getTasks(filter).subscribe(
+            (res) => {
+                this.renderTasks(res.data);
+                this.onSuccess.emit('Task List loaded');
+            }, (err) => {
+                console.error(err);
+            });
     }
 
     /**
      * The method call the adapter data table component for render the task list
      * @param tasks
      */
-    private loadTasks(tasks: any[]) {
+    private renderTasks(tasks: any[]) {
         tasks = this.optimizeTaskName(tasks);
         this.tasks = new ObjectDataTableAdapter(tasks, this.data.getColumns());
     }
 
     /**
-     * Pass the selected filter as next
-     * @param filter
+     * Check if the tasks list is empty
+     * @returns {ObjectDataTableAdapter|boolean}
      */
-    public selectFilter(filter: FilterModel) {
-        this.currentFilter = filter;
-        this.filterObserver.next(filter);
-    }
-
     isTaskListEmpty(): boolean {
         return this.tasks && this.tasks.getRows().length === 0;
     }
 
+    /**
+     * Emit the event rowClick passing the current task id when the row is clicked
+     * @param event
+     */
     onRowClick(event: DataRowEvent) {
         let item = event;
         this.currentTaskId = item.value.getValue('id');

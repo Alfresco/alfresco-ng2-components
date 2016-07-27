@@ -1,30 +1,60 @@
-<div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--2-col task-column"
-         style="">
-        <ul class="demo-list-item mdl-list">
-            <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                  <input type="radio" value="task-list"
-                         (change)="setChoice($event)" name="options" id="option-1" checked class="mdl-radio__button">
-                  <span class="mdl-radio__label">Task List</span>
-              </label>
-            </span>
-            </li>
-            <li class="mdl-list__item">
-                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                    <input type="radio" value="process-list"
-                           (change)="setChoice($event)" name="options" id="option-2" class="mdl-radio__button">
-                    <span class="mdl-radio__label">Process List</span>
-                </label>
-            </li>
-        </ul>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col task-column"
-         style="">
-        <activiti-tasklist *ngIf="isTaskListSelected()" [data]="data" (rowClick)="onRowClick($event)"></activiti-tasklist>
-    </div>
-    <div class="mdl-cell mdl-cell--7-col task-column">
-        <activiti-task-details [taskId]="currentTaskId"></activiti-task-details>
-    </div>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">TASK LIST</a>
+            <a href="#scroll-tab-2" class="mdl-layout__tab">PROCESS LIST</a>
+            <a href="#scroll-tab-3" class="mdl-layout__tab">REPORT</a>
+        </div>
+    </header>
+    <main class="mdl-layout__content activiti">
+        <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+            <div class="page-content">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--2-col task-column">
+                        <span>Task Filters</span>
+                        <activiti-filters (filterClick)="onFilterClick($event)"></activiti-filters>
+                    </div>
+                    <div class="mdl-cell mdl-cell--3-col task-column">
+                        <span>Task List</span>
+                        <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [schemaColumn]="schemaColumn"
+                                           (rowClick)="onRowClick($event)" #activititasklist></activiti-tasklist>
+                    </div>
+                    <div class="mdl-cell mdl-cell--7-col task-column">
+                        <span>Task Details</span>
+                        <activiti-task-details [taskId]="currentTaskId" #activitidetails></activiti-task-details>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-2">
+            <div class="page-content">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col task-column">
+                            <span>Process Filters</span>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column">
+                            <span>Process List</span>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column">
+                            <span>Process Details</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-3">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-4">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-5">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-6">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+    </main>
 </div>

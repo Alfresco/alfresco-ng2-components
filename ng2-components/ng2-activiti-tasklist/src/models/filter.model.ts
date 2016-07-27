@@ -29,11 +29,11 @@ export class FilterModel {
     icon: string;
     filter: FilterParamsModel;
 
-    constructor(name: string, recent: boolean, icon: string, state: string, assignment: string) {
+    constructor(name: string, recent: boolean, icon: string, query: string, state: string, assignment: string) {
         this.name = name;
         this.recent = recent;
         this.icon = icon;
-        this.filter = new FilterParamsModel(name, state, assignment);
+        this.filter = new FilterParamsModel(query, state, assignment);
     }
 }
 
@@ -49,8 +49,8 @@ export class FilterParamsModel {
     state: string;
     assignment: string;
 
-    constructor(name: string, state: string, assignment: string) {
-        this.name = name;
+    constructor(query: string, state: string, assignment: string) {
+        this.name = query;
         this.state = state;
         this.assignment = assignment;
     }

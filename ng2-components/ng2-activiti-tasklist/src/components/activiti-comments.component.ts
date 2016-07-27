@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
+import { Observer } from 'rxjs/Observer';
+import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -32,7 +34,7 @@ declare let __moduleName: string;
     pipes: [ AlfrescoPipeTranslate ]
 
 })
-export class ActivitiComments implements OnInit, OnChanges {
+export class ActivitiComments implements OnInit {
 
     @Input()
     taskId: string;
@@ -41,6 +43,11 @@ export class ActivitiComments implements OnInit, OnChanges {
     dialog: any;
 
     comments: Comment [] = [];
+
+    private commentObserver: Observer<Comment>;
+    comment$: Observable<Comment>;
+
+    message: string;
 
     /**
      * Constructor
@@ -54,23 +61,32 @@ export class ActivitiComments implements OnInit, OnChanges {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
         }
+
+        this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
+
     }
 
     ngOnInit() {
+        this.comment$.subscribe((comment: Comment) => {
+            this.comments.push(comment);
+        });
+
         if (this.taskId) {
             this.load(this.taskId);
         }
     }
 
-    ngOnChanges(change) {
-        this.load(this.taskId);
-    }
-
     public load(taskId: string) {
+        this.comments = [];
         if (this.taskId) {
             this.activitiTaskList.getTaskComments(this.taskId).subscribe(
                 (res: Comment[]) => {
-                    this.comments = res;
+                    res.forEach((comment) => {
+                        this.commentObserver.next(comment);
+                    });
+                },
+                (err) => {
+                    console.log(err);
                 }
             );
         } else {
@@ -85,14 +101,15 @@ export class ActivitiComments implements OnInit, OnChanges {
     }
 
     public add() {
-        alert('add comment');
-        if (this.taskId) {
-            this.activitiTaskList.addTaskComment(this.taskId, 'test comment').subscribe(
-                (res: Comment[]) => {
-                    this.comments = res;
-                }
-            );
-        }
+        this.activitiTaskList.addTaskComment(this.taskId, this.message).subscribe(
+            (res: Comment) => {
+                this.comments.push(res);
+                this.message = '';
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
         this.cancel();
     }
 

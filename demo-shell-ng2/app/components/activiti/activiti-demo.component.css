@@ -3,9 +3,12 @@
     font-weight: bold;
 }
 
+.activiti {
+    background-color: #f5f5f5;
+}
+
 .task-column {
     background-color: #f5f5f5;
     padding: 10px 10px 10px 10px;
-    border-left: solid 2px rgb(31,188,210);
-    border-right : solid 2px rgb(31,188,210);
+    border: solid 2px rgb(31,188,210);
 }

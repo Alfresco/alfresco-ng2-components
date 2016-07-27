@@ -32,6 +32,7 @@ describe('ActivitiTaskList', () => {
 
     let taskList: ActivitiTaskList;
 
+    /*
     let fakeGlobalFilter = {
         size: 2, total: 2, start: 0,
         data: [
@@ -45,6 +46,7 @@ describe('ActivitiTaskList', () => {
             }
         ]
     };
+    */
 
     let fakeGlobalTask = {
         size: 1, total: 12, start: 0,
@@ -64,27 +66,49 @@ describe('ActivitiTaskList', () => {
         ]
     };
 
+    /*
+
     let fakeErrorTaskList = {
         error: 'wrong request'
     };
-
-    let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
-        resolve(fakeGlobalFilter);
-    });
+    */
 
     let fakeGlobalTaskPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalTask);
     });
 
+    /*
+
+     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
+     resolve(fakeGlobalFilter);
+     });
+
     let fakeErrorTaskPromise = new Promise(function (resolve, reject) {
         reject(fakeErrorTaskList);
-    });
+    });*/
 
     beforeEach(() => {
         let activitiSerevice = new ActivitiTaskListService(null, null);
         taskList = new ActivitiTaskList(null, null, activitiSerevice);
     });
 
+    it('should return the task list when the taskFilter is passed', (done) => {
+        spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        // spyOn(taskList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        taskList.taskFilter = new FilterModel('name', false, 'icon', '', 'open', 'fake-assignee');
+
+        taskList.onSuccess.subscribe( () => {
+            expect(taskList.tasks).toBeDefined();
+            expect(taskList.tasks.getRows().length).toEqual(2);
+            expect(taskList.tasks.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+            expect(taskList.tasks.getRows()[1].getValue('name')).toEqual('Nameless task');
+            done();
+        });
+
+        taskList.ngOnInit();
+    });
+
+    /*
     it('should return the default filters', (done) => {
         spyOn(taskList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         taskList.ngOnInit();
@@ -156,5 +180,6 @@ describe('ActivitiTaskList', () => {
                 done();
             });
     });
+    */
 
 });
