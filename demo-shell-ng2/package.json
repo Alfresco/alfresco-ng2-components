@@ -84,7 +84,7 @@
     "ng2-alfresco-viewer": "0.2.0",
     "ng2-activiti-form": "0.2.0",
     "ng2-activiti-tasklist": "0.2.0",
-    "ng2-alfresco-webscript": "file:../ng2-components/ng2-alfresco-webscript"
+    "ng2-alfresco-webscript": "0.2.0"
   },
   "devDependencies": {
     "concurrently": "2.0.0",
