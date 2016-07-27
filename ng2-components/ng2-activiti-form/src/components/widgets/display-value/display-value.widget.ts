@@ -28,5 +28,5 @@ declare var componentHandler;
     styleUrls: ['./display-value.widget.css']
 })
 export class DisplayValueWidget extends WidgetComponent {
-    
+
 }
