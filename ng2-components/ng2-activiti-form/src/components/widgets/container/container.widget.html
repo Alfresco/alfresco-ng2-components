@@ -37,6 +37,9 @@
                         <div *ngSwitchCase="'radio-buttons'">
                             <radio-buttons-widget [field]="field"></radio-buttons-widget>
                         </div>
+                        <div *ngSwitchCase="'readonly'">
+                            <display-value-widget [field]="field"></display-value-widget>
+                        </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                         </div>

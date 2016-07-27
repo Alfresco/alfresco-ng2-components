@@ -28,6 +28,7 @@ export class FormFieldTypes {
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';
     static RADIO_BUTTONS: string = 'radio-buttons';
+    static DISPLAY_VALUE: string = 'readonly';
 }
 
 export class FormWidgetModel {

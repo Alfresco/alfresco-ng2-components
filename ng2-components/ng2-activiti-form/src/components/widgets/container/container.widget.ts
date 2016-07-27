@@ -26,6 +26,7 @@ import { MultilineTextWidget } from './../multiline-text/multiline-text.widget';
 import { DropdownWidget } from './../dropdown/dropdown.widget';
 import { HyperlinkWidget } from './../hyperlink/hyperlink.widget';
 import { RadioButtonsWidget } from './../radio-buttons/radio-buttons.widget';
+import { DisplayValueWidget } from './../display-value/display-value.widget';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -43,7 +44,8 @@ declare var componentHandler;
         MultilineTextWidget,
         DropdownWidget,
         HyperlinkWidget,
-        RadioButtonsWidget
+        RadioButtonsWidget,
+        DisplayValueWidget
     ]
 })
 export class ContainerWidget implements AfterViewInit {
