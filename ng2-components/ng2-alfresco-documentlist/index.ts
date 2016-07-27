@@ -41,6 +41,10 @@ export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
 export * from './src/services/document-list.service';
 
+// models
+export * from './src/models/content-action.model';
+export * from './src/models/document-library.model';
+
 export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     DocumentList,
     ContentColumn,
