@@ -33,7 +33,7 @@
 </p>
 
 <p align="center">
-  <img title="browser stack" alt='browser stack' src='assets/browserstack.png'  width="350px" height="225px" hspace="40" vspace="50" ></img>
+  <img title="browser stack" alt='browser stack' src='assets/browserstack.png'  width="350px" height="225px" hspace="40"></img>
 </p>
 
 ## Introduction
