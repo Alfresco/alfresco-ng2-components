@@ -2,6 +2,8 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+npm install -g typings
+
 #LINK CORE
 echo "====== linking component: ng2-alfresco-core ====="
 cd "$DIR/../ng2-components/ng2-alfresco-core"
