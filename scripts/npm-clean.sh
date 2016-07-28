@@ -5,8 +5,8 @@ components_dir="$DIR/../ng2-components"
 
 for comp_dir in $( ls "$components_dir" ); do
   test -f "$components_dir/$comp_dir/package.json" && \
-    cd "$components_dir/$comp_dir" \
-    && echo "====== clean component: ${PACKAGE} =====" && \
+    cd "$components_dir/$comp_dir" && \
+    echo "====== clean component: ${$comp_dir} =====" && \
     npm run clean
 done
 

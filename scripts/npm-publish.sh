@@ -8,7 +8,7 @@ components_dir="$DIR/../ng2-components"
 for comp_dir in $( ls "$components_dir" ); do
   test -f "$components_dir/$comp_dir/package.json" && \
     cd "$components_dir/$comp_dir" && \
-    echo "====== PUBLISHING: ${DESTDIR} =====" && \
+    echo "====== PUBLISHING: ${$comp_dir} =====" && \
     npm install && \
     npm publish
 done
