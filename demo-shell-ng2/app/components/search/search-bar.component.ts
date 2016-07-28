@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 import {
