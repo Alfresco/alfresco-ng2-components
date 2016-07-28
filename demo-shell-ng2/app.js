@@ -56,7 +56,7 @@ var server = http.createServer(function (req, res) {
                     var charset = mime.charsets.lookup(type);
                     res.setHeader('Content-Type', type + (charset ? '; charset=' + charset : ''));
                 }
-                if(type.indexOf('image') > -1){
+                if(type.indexOf('image') > -1 || type.indexOf('font') > -1){
                     var img = fs.readFileSync(pathname.substr(1));
                     res.end(img, 'binary');
                 }else{
