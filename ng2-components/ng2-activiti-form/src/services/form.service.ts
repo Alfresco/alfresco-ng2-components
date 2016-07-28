@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { FormValues } from './../components/widgets/widget.model';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
@@ -25,6 +26,7 @@ import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 export class FormService {
 
     constructor(private http: Http,
+                private authService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
@@ -98,7 +100,7 @@ export class FormService {
         return new Headers({
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa('admin' + ':' + 'admin')
+            'Authorization': this.authService.getTicket('BPM')
         });
     }
 

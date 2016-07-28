@@ -44,7 +44,10 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     login(username: string, password: string): Observable<any> {
         return Observable.fromPromise(this.apiActivitiLogin(username, password))
             .map((response: any) => {
-                return {type: this.TYPE, ticket: response.status};
+                return {
+                    type: this.TYPE,
+                    ticket: 'Basic ' + btoa(`${username}:${password}`)
+                };
             })
             .catch(this.handleError);
     }
