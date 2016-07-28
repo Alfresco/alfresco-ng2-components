@@ -19,13 +19,7 @@ import { Component, Input, AfterViewInit } from '@angular/core';
 import { ContainerModel } from './../widget.model';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
-import { TextWidget } from './../text/text.widget';
-import { NumberWidget } from './../number/number.widget';
-import { CheckboxWidget } from './../checkbox/checkbox.widget';
-import { MultilineTextWidget } from './../multiline-text/multiline-text.widget';
-import { DropdownWidget } from './../dropdown/dropdown.widget';
-import { HyperlinkWidget } from './../hyperlink/hyperlink.widget';
-import { RadioButtonsWidget } from './../radio-buttons/radio-buttons.widget';
+import { PRIMITIVE_WIDGET_DIRECTIVES } from './../index';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -37,13 +31,7 @@ declare var componentHandler;
     styleUrls: ['./container.widget.css'],
     directives: [
         MATERIAL_DESIGN_DIRECTIVES,
-        TextWidget,
-        NumberWidget,
-        CheckboxWidget,
-        MultilineTextWidget,
-        DropdownWidget,
-        HyperlinkWidget,
-        RadioButtonsWidget
+        PRIMITIVE_WIDGET_DIRECTIVES
     ]
 })
 export class ContainerWidget implements AfterViewInit {

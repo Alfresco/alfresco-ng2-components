@@ -28,6 +28,7 @@ export class FormFieldTypes {
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';
     static RADIO_BUTTONS: string = 'radio-buttons';
+    static DISPLAY_VALUE: string = 'readonly';
 }
 
 export class FormWidgetModel {
@@ -317,10 +318,12 @@ export class FormOutcomeModel extends FormWidgetModel {
 
 export class FormModel {
 
+    private UNSET_TASK_NAME: string = 'Nameless task';
+
     private _id: string;
     private _name: string;
     private _taskId: string;
-    private _taskName: string;
+    private _taskName: string = this.UNSET_TASK_NAME;
 
     get id(): string {
         return this._id;
@@ -369,7 +372,7 @@ export class FormModel {
             this._id = json.id;
             this._name = json.name;
             this._taskId = json.taskId;
-            this._taskName = json.taskName;
+            this._taskName = json.taskName || this.UNSET_TASK_NAME;
 
             let tabCache: WidgetModelCache<TabModel> = {};
 

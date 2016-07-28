@@ -34,3 +34,17 @@ export class ContentActionModel {
 export interface ContentActionHandler {
     (obj: any, target?: any): any;
 }
+
+export class DocumentActionModel extends ContentActionModel {
+    constructor(json?: any)  {
+        super(json);
+        this.target = 'document';
+    }
+}
+
+export class FolderActionModel extends  ContentActionModel {
+    constructor(json?: any)  {
+        super(json);
+        this.target = 'folder';
+    }
+}

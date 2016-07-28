@@ -21,7 +21,9 @@ import {
     DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService,
     DocumentList,
-    ContentActionModel, ContentActionHandler
+    ContentActionHandler,
+    DocumentActionModel,
+    FolderActionModel
 } from 'ng2-alfresco-documentlist';
 import {
     MDL,
@@ -129,14 +131,16 @@ export class FilesComponent implements OnInit {
 
     private setupBpmActions(actions: any[]) {
         actions.map(def => {
-            let action = new ContentActionModel();
-            action.target = 'document';
-            action.title = 'Activiti: ' + (def.name || 'Unknown process');
-            action.handler = this.getBpmActionHandler(def);
-            this.documentList.actions.push(action);
-        });
+            let documentAction = new DocumentActionModel();
+            documentAction.title = 'Activiti: ' + (def.name || 'Unknown process');
+            documentAction.handler = this.getBpmActionHandler(def);
+            this.documentList.actions.push(documentAction);
 
-        console.log(this.documentList.actions);
+            let folderAction = new FolderActionModel();
+            folderAction.title = 'Activiti: ' + (def.name || 'Unknown process');
+            folderAction.handler = this.getBpmActionHandler(def);
+            this.documentList.actions.push(folderAction);
+        });
     }
 
     private getBpmActionHandler(processDefinition: any): ContentActionHandler {
