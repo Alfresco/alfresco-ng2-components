@@ -40,6 +40,9 @@
                         <div *ngSwitchCase="'readonly'">
                             <display-value-widget [field]="field"></display-value-widget>
                         </div>
+                        <div *ngSwitchCase="'readonly-text'">
+                            <display-text-widget [field]="field"></display-text-widget>
+                        </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                         </div>
