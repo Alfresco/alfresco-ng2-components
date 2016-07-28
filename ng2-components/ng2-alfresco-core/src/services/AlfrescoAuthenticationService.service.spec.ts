@@ -279,10 +279,14 @@ describe('AlfrescoAuthentication', () => {
             service = injector.get(AlfrescoAuthenticationService);
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogin').and.returnValue(fakePromiseBPM);
 
-            service.login('fake-username', 'fake-password', providers)
+            let username = 'fake-username';
+            let password = 'fake-password';
+            let token = 'Basic ' + btoa(`${username}:${password}`);
+
+            service.login(username, password, providers)
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(true);
-                    expect(service.getTicket(providers[0])).toEqual('fake-post-ticket-BPM');
+                    expect(service.getTicket(providers[0])).toEqual(token);
                     done();
                 }
             );
@@ -389,12 +393,16 @@ describe('AlfrescoAuthentication', () => {
             spyOn(AlfrescoAuthenticationECM.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
             spyOn(AlfrescoAuthenticationBPM.prototype, 'apiActivitiLogin').and.returnValue(fakePromiseBPM);
 
-            service.login('fake-username', 'fake-password', providers)
+            let username = 'fake-username';
+            let password = 'fake-password';
+            let bpmToken = 'Basic ' + btoa(`${username}:${password}`);
+
+            service.login(username, password, providers)
                 .subscribe(() => {
                     expect(service.isLoggedIn(providers[0])).toBe(true);
                     expect(service.isLoggedIn(providers[1])).toBe(true);
                     expect(service.getTicket(providers[0])).toEqual('fake-post-ticket-ECM');
-                    expect(service.getTicket(providers[1])).toEqual('fake-post-ticket-BPM');
+                    expect(service.getTicket(providers[1])).toEqual(bpmToken);
                     done();
                 }
             );
