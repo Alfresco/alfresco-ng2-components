@@ -3,7 +3,7 @@
 The Alfresco application development framework comes with a demo project that you can run to get a
 feel for what's available.
 
-* Start by navigating into the app development framework source folder, and then the script folder:
+Start by navigating into the app development framework source folder, and then the script folder:
 
 ```ssh
  cd alfresco-ng2-components
@@ -46,11 +46,21 @@ Start using linked components
 
 This is recommended if you are using the `development` branch or a feature branch off `development`
 
-* If you want to use your local components use the following script with any of the previous option. It will npm link all the components
-in the demo shell:
+If you want to use your local components use the following script with any of the previous options. It will npm link all the components
+in the demo shell before starting up the demo-shell.
+
+For a new environment, use `-install`
+
+```sh
+./start-linked.sh -install
+```
+
+When you are restarting, you can skip `-install`
 
 ```sh
 ./start-linked.sh
 ```
+
+The parameters `-update` and `-cleanInstall` work as described above for `start.sh`
 
 For development environment configuration please refer to [project docs](demo-shell-ng2/README.md).
