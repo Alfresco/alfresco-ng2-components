@@ -19,9 +19,6 @@ import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ActivitiForm } from 'ng2-activiti-form';
 
-import { ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
-
-
 declare let __moduleName: string;
 declare var componentHandler;
 
@@ -47,9 +44,6 @@ export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
     schemaColumn: any [] = [];
 
     taskFilter: any;
-
-    constructor() {
-    }
 
     setChoice($event) {
         this.currentChoice = $event.target.value;
