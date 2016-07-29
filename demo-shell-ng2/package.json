@@ -9,7 +9,7 @@
     "start": "npm run tslint && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "serve": "wsrv -o -s -l -p 3000 -x ./server/versions.js",
+    "serve": "wsrv -o -s -l -p 3000 -a 0.0.0.0 -x ./server/versions.js",
     "typings": "typings install",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json app/{,**/}**.ts",
     "licensecheck": "license-check"
