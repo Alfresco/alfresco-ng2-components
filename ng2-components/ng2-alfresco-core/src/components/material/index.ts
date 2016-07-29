@@ -18,13 +18,16 @@
 import { MDL } from './MaterialDesignLiteUpgradeElement';
 import { AlfrescoMdlButtonDirective } from './mdl-button.directive';
 import { AlfrescoMdlMenuDirective } from './mdl-menu.directive';
+import { AlfrescoMdlTabsDirective } from './mdl-tabs.directive';
 
 export * from './MaterialDesignLiteUpgradeElement';
 export * from './mdl-button.directive';
 export * from './mdl-menu.directive';
+export * from './mdl-tabs.directive';
 
 export const MATERIAL_DESIGN_DIRECTIVES: [any] = [
     MDL,
     AlfrescoMdlButtonDirective,
-    AlfrescoMdlMenuDirective
+    AlfrescoMdlMenuDirective,
+    AlfrescoMdlTabsDirective
 ];

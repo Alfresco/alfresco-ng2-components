@@ -16,6 +16,7 @@
  */
 
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import {
     DOCUMENT_LIST_DIRECTIVES,
     DOCUMENT_LIST_PROVIDERS,
@@ -72,7 +73,8 @@ export class FilesComponent implements OnInit {
 
     constructor(private contentService: AlfrescoContentService,
                 private documentActions: DocumentActionsService,
-                private formService: FormService) {
+                private formService: FormService,
+                private router: Router) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 
@@ -122,11 +124,14 @@ export class FilesComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.documentList);
         this.formService.getProcessDefinitions().subscribe(
             defs => this.setupBpmActions(defs || []),
             err => console.log(err)
         );
+    }
+
+    viewActivitiForm(event?: any) {
+        this.router.navigate(['/activiti/tasks', '1']);
     }
 
     private setupBpmActions(actions: any[]) {

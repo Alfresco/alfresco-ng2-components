@@ -25,7 +25,8 @@ import {
     LoginDemoComponent,
     ActivitiDemoComponent,
     WebscriptComponent,
-    AboutComponent
+    AboutComponent,
+    FormViewer
 } from './components/index';
 
 export const routes: RouterConfig = [
@@ -37,6 +38,7 @@ export const routes: RouterConfig = [
     { path: 'login', component: LoginDemoComponent },
     { path: 'search', component: SearchComponent },
     { path: 'activiti', component: ActivitiDemoComponent },
+    { path: 'activiti/tasks/:id', component: FormViewer },
     { path: 'webscript', component: WebscriptComponent },
     { path: 'about', component: AboutComponent }
 ];

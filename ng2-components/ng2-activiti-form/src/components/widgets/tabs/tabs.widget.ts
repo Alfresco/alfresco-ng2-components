@@ -16,6 +16,7 @@
  */
 
 import { Component, Input, AfterViewInit } from '@angular/core';
+import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { TabModel } from './../widget.model';
 import { ContainerWidget } from './../container/container.widget';
 
@@ -26,7 +27,7 @@ declare var componentHandler;
     moduleId: __moduleName,
     selector: 'tabs-widget',
     templateUrl: './tabs.widget.html',
-    directives: [ContainerWidget]
+    directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget]
 })
 export class TabsWidget implements AfterViewInit {
 
@@ -43,5 +44,4 @@ export class TabsWidget implements AfterViewInit {
             componentHandler.upgradeAllRegistered();
         }
     }
-
 }
