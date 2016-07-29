@@ -38,6 +38,12 @@ export class ActivitiFilters implements OnInit {
     @Output()
     filterClick: EventEmitter<FilterModel> = new EventEmitter<FilterModel>();
 
+    @Output()
+    onSuccess: EventEmitter<string> = new EventEmitter<string>();
+
+    @Output()
+    onError: EventEmitter<string> = new EventEmitter<string>();
+
     private filterObserver: Observer<FilterModel>;
     filter$: Observable<FilterModel>;
 
@@ -77,9 +83,11 @@ export class ActivitiFilters implements OnInit {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                 });
+                this.onSuccess.emit('Filter task list loaded');
             },
             (err) => {
                 console.log(err);
+                this.onError.emit('Error to load a task filter list');
             }
         );
     }
@@ -89,6 +97,7 @@ export class ActivitiFilters implements OnInit {
      * @param filter
      */
     public selectFilter(filter: FilterModel) {
+        this.currentFilter = filter;
         this.filterClick.emit(filter);
     }
 }
