@@ -52,6 +52,9 @@ export class ActivitiTaskList implements OnInit {
     @Output()
     onSuccess: EventEmitter<string> = new EventEmitter<string>();
 
+    @Output()
+    onError: EventEmitter<string> = new EventEmitter<string>();
+
     data: DataTableAdapter;
 
     tasks: ObjectDataTableAdapter;
@@ -90,6 +93,7 @@ export class ActivitiTaskList implements OnInit {
                 this.onSuccess.emit('Task List loaded');
             }, (err) => {
                 console.error(err);
+                this.onError.emit('Error to load a tasks list');
             });
     }
 
@@ -107,7 +111,7 @@ export class ActivitiTaskList implements OnInit {
      * @returns {ObjectDataTableAdapter|boolean}
      */
     isTaskListEmpty(): boolean {
-        return this.tasks && this.tasks.getRows().length === 0;
+        return this.tasks === undefined || (this.tasks && this.tasks.getRows() && this.tasks.getRows().length === 0);
     }
 
     /**
