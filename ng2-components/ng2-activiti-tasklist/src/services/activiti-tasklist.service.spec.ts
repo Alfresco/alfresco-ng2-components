@@ -158,7 +158,7 @@ describe('ActivitiTaskListService', () => {
             },
             (err: any) => {
                 expect(err).toBeDefined();
-                expect(err._body).toEqual('{"error":"wrong request"}');
+                expect(err.json().error).toEqual('wrong request');
             }
         );
 
@@ -284,6 +284,23 @@ describe('ActivitiTaskListService', () => {
                 createdBy: fakeUser,
                 created: '2016-07-15T11:19:17.440+0000'
             })
+        });
+    });
+
+
+    it('should complete the task ', (done) => {
+
+        service.completeTask(999).subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({})
         });
     });
 

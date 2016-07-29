@@ -153,6 +153,7 @@ export class ActivitiTaskListService {
      */
     completeTask(id: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiCompleteTask(id))
+            .map(res => res.json())
             .catch(this.handleError);
     }
 
