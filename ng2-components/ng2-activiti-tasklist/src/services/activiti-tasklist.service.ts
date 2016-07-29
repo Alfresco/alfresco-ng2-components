@@ -20,6 +20,7 @@ import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { FilterModel } from '../models/filter.model';
+import { FilterParamsModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 import { User } from '../models/user.model';
 
@@ -51,25 +52,24 @@ export class ActivitiTaskListService {
     }
 
     /**
-     * Retrive all the tasks created in activiti
+     * Retrive all the tasks filtered by filterModel
+     * @param filter - FilterModel
      * @returns {any}
      */
     getTasks(filter: FilterModel): Observable<any> {
-        let data: any = {};
-        // data.filterId = filter.id;
-        // data.filter = filter.filter;
-        data = filter.filter;
-        // data.text = filter.filter.name;
-        data = JSON.stringify(data);
 
-
-        return Observable.fromPromise(this.callApiTasksFiltered(data))
+        return Observable.fromPromise(this.callApiTasksFiltered(filter.filter))
             .map((res: Response) => {
                 return res.json();
             })
             .catch(this.handleError);
     }
 
+    /**
+     * Retrive all the task details
+     * @param id - taskId
+     * @returns {<TaskDetailsModel>}
+     */
     getTaskDetails(id: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiTaskDetails(id))
             .map(res => res.json())
@@ -79,6 +79,11 @@ export class ActivitiTaskListService {
             .catch(this.handleError);
     }
 
+    /**
+     * Retrive all the task's comments
+     * @param id - taskId
+     * @returns {<Comment[]>}
+     */
     getTaskComments(id: string): Observable<Comment[]> {
         return Observable.fromPromise(this.callApiTaskComments(id))
             .map(res => res.json())
@@ -94,24 +99,11 @@ export class ActivitiTaskListService {
             .catch(this.handleError);
     }
 
-    addTaskComment(id: string, message: string): Observable<Comment> {
-        return Observable.fromPromise(this.callApiAddTaskComment(id, message))
-            .map(res => res.json())
-            .map((response: Comment) => {
-                return new Comment(response.id, response.message, response.created, response.createdBy);
-            })
-            .catch(this.handleError);
-    }
-
-    addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
-        return Observable.fromPromise(this.callApiAddTask(task))
-            .map(res => res.json())
-            .map((response: TaskDetailsModel) => {
-                return new TaskDetailsModel(response);
-            })
-            .catch(this.handleError);
-    }
-
+    /**
+     * Retrive all the task's checklist
+     * @param id - taskId
+     * @returns {TaskDetailsModel}
+     */
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTaskChecklist(id))
             .map(res => res.json())
@@ -125,19 +117,52 @@ export class ActivitiTaskListService {
             .catch(this.handleError);
     }
 
+    /**
+     * Add a task
+     * @param task - TaskDetailsModel
+     * @returns {TaskDetailsModel}
+     */
+    addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.callApiAddTask(task))
+            .map(res => res.json())
+            .map((response: TaskDetailsModel) => {
+                return new TaskDetailsModel(response);
+            })
+            .catch(this.handleError);
+    }
+
+    /**
+     * Add a comment to a task
+     * @param id - taskId
+     * @param message - content of the comment
+     * @returns {Comment}
+     */
+    addTaskComment(id: string, message: string): Observable<Comment> {
+        return Observable.fromPromise(this.callApiAddTaskComment(id, message))
+            .map(res => res.json())
+            .map((response: Comment) => {
+                return new Comment(response.id, response.message, response.created, response.createdBy);
+            })
+            .catch(this.handleError);
+    }
+
+    /**
+     * Make the task completed
+     * @param id - taskId
+     * @returns {TaskDetailsModel}
+     */
     completeTask(id: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiCompleteTask(id))
             .catch(this.handleError);
     }
 
-    private callApiTasksFiltered(data: Object) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/api/enterprise/tasks/query';
-        // let url = 'http://localhost:9999/activiti-app/app/rest/filter/tasks';
+    private callApiTasksFiltered(filter: FilterParamsModel) {
+        let data = JSON.stringify(filter);
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/query`;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
         });
-        // let body = JSON.stringify(data);
         let options = new RequestOptions({headers: headers});
 
         return this.http
@@ -145,8 +170,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiTaskFilters() {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/api/enterprise/filters/tasks';
-        // let url = 'http://localhost:9999/activiti-app/app/rest/filters/tasks';
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/filters/tasks`;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
@@ -159,7 +183,6 @@ export class ActivitiTaskListService {
 
     private callApiTaskDetails(id: string) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}`;
-        // let url = 'http://localhost:9999/activiti-app/app/rest/tasks/' + id;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
@@ -222,7 +245,6 @@ export class ActivitiTaskListService {
 
     private callApiCompleteTask(id: string) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/action/complete`;
-        // let url = `http://localhost:9999/activiti-app/app/rest/tasks/${id}/action/complete`;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
