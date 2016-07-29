@@ -15,10 +15,25 @@
  * limitations under the License.
  */
 
-import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
-import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
-import { ActivitiFilters } from './src/components/activiti-filters.component';
+/**
+ *
+ * This object represent the comment of a task.
+ *
+ *
+ * @returns {Comment} .
+ */
+import { User } from './user.model';
 
-export * from './src/components/activiti-tasklist.component';
+export class Comment {
+    id: number;
+    message: string;
+    created: string;
+    createdBy: User;
 
-export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [ActivitiFilters, ActivitiTaskList, ActivitiTaskDetails];
+    constructor(id: number, message: string, created: string, createdBy: User) {
+        this.id = id;
+        this.message = message;
+        this.created = created;
+        this.createdBy = createdBy;
+    }
+}

@@ -1,0 +1,17 @@
+<div *ngIf="!taskDetails">{{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="taskDetails">
+    <h2 class="mdl-card__title-text">{{taskDetails.name}}</h2>
+    <activiti-task-header [taskDetails]="taskDetails" #activitiheader></activiti-task-header>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col">
+            <activiti-people [people]="taskPeople"></activiti-people>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <activiti-comments [taskId]="taskId" #activiticomments></activiti-comments>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <activiti-checklist [taskId]="taskId" #activitichecklist></activiti-checklist>
+        </div>
+    </div>
+    <activiti-form *ngIf="taskDetails.formKey" [taskId]="taskId" #activitiForm ></activiti-form>
+</div>

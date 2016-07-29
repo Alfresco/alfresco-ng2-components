@@ -15,10 +15,24 @@
  * limitations under the License.
  */
 
-import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
-import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
-import { ActivitiFilters } from './src/components/activiti-filters.component';
+/**
+ *
+ * This object represent the user.
+ *
+ *
+ * @returns {User} .
+ */
 
-export * from './src/components/activiti-tasklist.component';
+export class User {
+    id: number;
+    email: string;
+    firstName: string;
+    lastName: string;
 
-export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [ActivitiFilters, ActivitiTaskList, ActivitiTaskDetails];
+    constructor(id: number, email: string, firstName: string, lastName: string) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+}

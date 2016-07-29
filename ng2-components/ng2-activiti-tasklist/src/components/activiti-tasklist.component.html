@@ -1,12 +1,12 @@
-<div [ngStyle]="locationCss" class="menu-container">
-    <ul class="context-menu">
-        <li (click)="selectFilter(filter)" *ngFor="let filter of filtersList | async">
-            {{filter.name}}
-        </li>
-    </ul>
+<div *ngIf="!taskFilter">{{ 'TASK_FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="taskFilter">
+    <div *ngIf="!isTaskListEmpty()">
+        <alfresco-datatable
+                [data]="tasks"
+                (rowClick)="onRowClick($event)">
+        </alfresco-datatable>
+    </div>
+    <div *ngIf="isTaskListEmpty()">
+        {{ 'TASK_LIST.MESSAGES.NONE' | translate }}
+    </div>
 </div>
-
-<alfresco-datatable
-        [data]="tasks"
-        (rowClick)="onRowClick($event)">
-</alfresco-datatable>

@@ -26,25 +26,12 @@ import { ActivitiTaskList } from './activiti-tasklist.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { FilterModel } from '../models/filter.model';
 import { Observable } from 'rxjs/Rx';
+import { ObjectDataRow, DataRowEvent } from 'ng2-alfresco-datatable';
 
 
 describe('ActivitiTaskList', () => {
 
     let taskList: ActivitiTaskList;
-
-    let fakeGlobalFilter = {
-        size: 2, total: 2, start: 0,
-        data: [
-            {
-                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
-                filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved'}
-            },
-            {
-                id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
-                filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee'}
-            }
-        ]
-    };
 
     let fakeGlobalTask = {
         size: 1, total: 12, start: 0,
@@ -64,17 +51,13 @@ describe('ActivitiTaskList', () => {
         ]
     };
 
-    let fakeErrorTaskList = {
-        error: 'wrong request'
-    };
-
-    let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
-        resolve(fakeGlobalFilter);
-    });
-
     let fakeGlobalTaskPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalTask);
     });
+
+    let fakeErrorTaskList = {
+        error: 'wrong request'
+    };
 
     let fakeErrorTaskPromise = new Promise(function (resolve, reject) {
         reject(fakeErrorTaskList);
@@ -85,76 +68,71 @@ describe('ActivitiTaskList', () => {
         taskList = new ActivitiTaskList(null, null, activitiSerevice);
     });
 
-    it('should return the default filters', (done) => {
-        spyOn(taskList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+    it('should use the default schemaColumn as default', () => {
         taskList.ngOnInit();
-
-        taskList.filtersList.subscribe((res: any) => {
-            expect(res).toBeDefined();
-            expect(res.length).toEqual(2);
-            expect(res[0].name).toEqual('FakeInvolvedTasks');
-            expect(res[1].name).toEqual('FakeMyTasks');
-            done();
-        });
+        expect(taskList.schemaColumn).toBeDefined();
+        expect(taskList.schemaColumn.length).toEqual(4);
     });
 
-    it('should subscribe to Filter when a filter is selected', (done) => {
-        let filterModel: FilterModel = new FilterModel('name', false, 'icon', 'open', 'fake-assignee');
-        taskList.filter$.subscribe((filter: FilterModel) => {
-            expect(filter).toBe(filterModel);
-            done();
-        });
-        taskList.selectFilter(filterModel);
+    it('should use the schemaColumn passed in input', () => {
+        taskList.schemaColumn = [
+            {type: 'text', key: 'fake-id', title: 'Name'}
+        ];
+
+        taskList.ngOnInit();
+        expect(taskList.schemaColumn).toBeDefined();
+        expect(taskList.schemaColumn.length).toEqual(1);
     });
 
-    it('should return the tasks when a filter is selected', (done) => {
+    it('should return an empty task list when the taskFilter is not passed', () => {
+        taskList.ngOnInit();
+        expect(taskList.tasks).toBeUndefined();
+        expect(taskList.isTaskListEmpty()).toBeTruthy();
+    });
+
+    it('should return the filtered task list when the taskFilter is passed', (done) => {
         spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
-        spyOn(taskList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        taskList.taskFilter = new FilterModel('name', false, 'icon', '', 'open', 'fake-assignee');
+
+        taskList.onSuccess.subscribe( (res) => {
+            expect(res).toBeDefined();
+            expect(res).toEqual('Task List loaded');
+            expect(taskList.tasks).toBeDefined();
+            expect(taskList.isTaskListEmpty()).not.toBeTruthy();
+            expect(taskList.tasks.getRows().length).toEqual(2);
+            expect(taskList.tasks.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+            expect(taskList.tasks.getRows()[1].getValue('name')).toEqual('Nameless task');
+            done();
+        });
+
         taskList.ngOnInit();
-
-        let filterModel: FilterModel = new FilterModel('name', false, 'icon', 'open', 'fake-assignee');
-        taskList.selectFilter(filterModel);
-
-        taskList.activiti.getTasks(filterModel).subscribe(
-            (res) => {
-                expect(res).toBeDefined();
-                done();
-            });
     });
 
     it('should throw an exception when the response is wrong', (done) => {
         spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeErrorTaskPromise));
-        spyOn(taskList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        taskList.taskFilter = new FilterModel('name', false, 'icon', '', 'open', 'fake-assignee');
+
+        taskList.onError.subscribe( (err) => {
+            expect(err).toBeDefined();
+            expect(err).toEqual('Error to load a tasks list');
+            done();
+        });
+
         taskList.ngOnInit();
-
-        let filterModel: FilterModel = new FilterModel('name', false, 'icon', 'open', 'fake-assignee');
-        taskList.selectFilter(filterModel);
-
-        taskList.activiti.getTasks(filterModel).subscribe(
-            (res) => {
-                expect(res).toBeUndefined();
-            },
-            (err: any) => {
-                expect(err).toBeDefined();
-                expect(err.error).toEqual('wrong request');
-                done();
-            });
     });
 
-    it('should optimize the task name when are empty or exceed 50 characters', (done) => {
-        spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
-        spyOn(taskList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
-        taskList.ngOnInit();
+    it('should emit row click event', (done) => {
+        let row = new ObjectDataRow({
+            id: 999
+        });
+        let rowEvent = <DataRowEvent> {value: row};
 
-        let filterModel: FilterModel = new FilterModel('name', false, 'icon', 'open', 'fake-assignee');
-        taskList.selectFilter(filterModel);
+        taskList.rowClick.subscribe(taskId => {
+            expect(taskId).toEqual(999);
+            done();
+        });
 
-        taskList.activiti.getTasks(filterModel).subscribe(
-            (res) => {
-                expect(res.data[0].name).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(res.data[1].name).toEqual('Nameless task');
-                done();
-            });
+        taskList.onRowClick(rowEvent);
     });
 
 });

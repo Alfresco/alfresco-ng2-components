@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
-import { ActivitiForm, FormService } from 'ng2-activiti-form';
-
+import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
+import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
+import { ActivitiForm } from 'ng2-activiti-form';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -27,22 +27,52 @@ declare var componentHandler;
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.css'],
-    directives: [ActivitiForm],
-    providers: [FormService]
+    directives: [ALFRESCO_TASKLIST_DIRECTIVES, ActivitiForm]
 })
 export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
 
-    tasks: any[] = [];
-    selectedTask: any;
+    currentChoice: string = 'task-list';
 
-    hasTasks(): boolean {
-        return this.tasks && this.tasks.length > 0;
+    @ViewChild('activitidetails')
+    activitidetails: any;
+
+    @ViewChild('activititasklist')
+    activititasklist: any;
+
+    currentTaskId: string;
+
+    schemaColumn: any [] = [];
+
+    taskFilter: any;
+
+    setChoice($event) {
+        this.currentChoice = $event.target.value;
     }
 
-    constructor(private formService: FormService) {}
+    isProcessListSelected() {
+        return this.currentChoice === 'process-list';
+    }
 
-    ngOnInit() {
-        this.formService.getTasks().subscribe(val => this.tasks = val || []);
+    isTaskListSelected() {
+        return this.currentChoice === 'task-list';
+    }
+
+    constructor() {
+        console.log('Activiti demo component');
+        this.schemaColumn = [
+            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
+            // {type: 'text', key: 'created', title: 'Created', sortable: true}
+        ];
+    }
+
+    onFilterClick(event: any) {
+        this.taskFilter = event;
+        this.activititasklist.load(this.taskFilter);
+    }
+
+    onRowClick(taskId) {
+        this.currentTaskId = taskId;
+        this.activitidetails.loadDetails(this.currentTaskId);
     }
 
     ngAfterViewChecked() {
@@ -50,10 +80,6 @@ export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
-    }
-
-    onTaskClicked(task, e) {
-        this.selectedTask = task;
     }
 
 }
