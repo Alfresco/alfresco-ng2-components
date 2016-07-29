@@ -195,7 +195,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiTaskComments(id: string) {
-        let url = `${this.basePath}/api/enterprise/tasks/${id}/comments`;
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/comments`;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
@@ -207,7 +207,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiAddTaskComment(id: string, message: string) {
-        let url = `${this.basePath}/api/enterprise/tasks/${id}/comments`;
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/comments`;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
@@ -220,7 +220,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiAddTask(task: TaskDetailsModel) {
-        let url = `${this.basePath}/api/enterprise/tasks/${task.parentTaskId}/checklist`;
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${task.parentTaskId}/checklist`;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
@@ -233,7 +233,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiTaskChecklist(id: string) {
-        let url = `${this.basePath}/api/enterprise/tasks/${id}/checklist`;
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/checklist`;
         let headers = new Headers({
             'Content-Type': 'application/json',
             'Cache-Control': 'no-cache'
