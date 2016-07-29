@@ -11,6 +11,7 @@
   "version": "0.2.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
+    "postinstall": "typings install",
     "clean": "rimraf dist node_modules typings",
     "typings": "typings install",
     "server": "http-server -c-1 -o -p 8875 .",
