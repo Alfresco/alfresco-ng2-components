@@ -15,19 +15,12 @@
  * limitations under the License.
  */
 
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ALFRESCO_SEARCH_PROVIDERS } from 'ng2-alfresco-search';
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
-import { UploadService } from 'ng2-alfresco-upload';
-import { AppComponent } from './app.component';
-
-import { appRouterProviders } from './app.routes';
-
-bootstrap(AppComponent, [
-    appRouterProviders,
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS,
-    ALFRESCO_SEARCH_PROVIDERS,
-    UploadService
-]).catch(err => console.error(err));
+export { UploadButtonComponent } from 'ng2-alfresco-upload';
+export { DataTableDemoComponent } from './datatable/datatable-demo.component';
+export { SearchComponent } from './search/search.component';
+export { SearchBarComponent } from './search/search-bar.component';
+export { LoginDemoComponent } from './login/login-demo.component';
+export { ActivitiDemoComponent } from './activiti/activiti-demo.component';
+export { WebscriptComponent } from './webscript/webscript.component';
+export { AboutComponent } from './about/about.component';
+export { FilesComponent } from './files/files.component';

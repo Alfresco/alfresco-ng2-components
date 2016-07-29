@@ -16,8 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
-import { FilesComponent } from './components/files/files.component';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 
 import {
     MDL,
@@ -26,15 +25,8 @@ import {
     AlfrescoPipeTranslate,
     AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
-import { UploadButtonComponent } from 'ng2-alfresco-upload';
-import { DataTableDemoComponent } from './components/datatable/datatable-demo.component';
-import { SearchComponent } from './components/search/search.component';
-import { SearchBarComponent } from './components/search/search-bar.component';
-import { LoginDemoComponent } from './components/login/login-demo.component';
-import { TasksDemoComponent } from './components/tasks/tasks-demo.component';
-import { ActivitiDemoComponent } from './components/activiti/activiti-demo.component';
-import { WebscriptComponent } from './components/webscript/webscript.component';
-import { AboutComponent } from './components/about/about.component';
+
+import { SearchBarComponent } from './components/index';
 
 declare var document: any;
 
@@ -45,19 +37,6 @@ declare var document: any;
     directives: [SearchBarComponent, ROUTER_DIRECTIVES, MDL],
     pipes: [AlfrescoPipeTranslate]
 })
-@RouteConfig([
-    {path: '/home', name: 'Home', component: FilesComponent},
-    {path: '/files', name: 'Files', component: FilesComponent},
-    {path: '/datatable', name: 'DataTable', component: DataTableDemoComponent},
-    {path: '/', name: 'Login', component: LoginDemoComponent, useAsDefault: true},
-    {path: '/uploader', name: 'Uploader', component: UploadButtonComponent},
-    {path: '/login', name: 'Login', component: LoginDemoComponent},
-    {path: '/search', name: 'Search', component: SearchComponent},
-    {path: '/tasks', name: 'Tasks', component: TasksDemoComponent},
-    {path: '/activiti', name: 'Activiti', component: ActivitiDemoComponent},
-    {path: '/webscript', name: 'Webscript', component: WebscriptComponent},
-    {path: '/about', name: 'About', component: AboutComponent}
-])
 export class AppComponent {
     translate: AlfrescoTranslationService;
     searchTerm: string = '';
@@ -90,10 +69,6 @@ export class AppComponent {
         localStorage.setItem(`bpmHost`, this.bpmHost);
     }
 
-    isActive(instruction: any[]): boolean {
-        return this.router.isRouteActive(this.router.generate(instruction));
-    }
-
     isLoggedIn(): boolean {
         return this.auth.isLoggedIn();
     }
@@ -102,7 +77,7 @@ export class AppComponent {
         event.preventDefault();
         this.auth.logout()
             .subscribe(
-                () => this.router.navigate(['Login'])
+                () => this.router.navigate(['/login'])
             );
     }
 

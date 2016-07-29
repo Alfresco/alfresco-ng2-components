@@ -1,6 +1,6 @@
 <div class="container-widget">
     <div *ngIf="content?.isGroup()" class="container-widget__header">
-        <h3 class="container-widget__header-text"
+        <h4 class="container-widget__header-text"
             [class.collapsible]="content?.isCollapsible()">
             <button *ngIf="content?.isCollapsible()"
                     alfresco-mdl-button
@@ -9,7 +9,7 @@
                 <i class="material-icons">{{ content?.isExpanded ? 'expand_less' : 'expand_more' }}</i>
             </button>
             <span (click)="onExpanderClicked()">{{content.name}}</span>
-        </h3>
+        </h4>
     </div>
     <div class="mdl-grid" *ngIf="content?.isExpanded">
         <div *ngFor="let col of content.columns" class="mdl-cell mdl-cell--{{col.size}}-col">
