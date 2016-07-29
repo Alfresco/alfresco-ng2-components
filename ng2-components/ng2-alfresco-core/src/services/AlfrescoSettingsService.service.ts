@@ -27,7 +27,6 @@ export class AlfrescoSettingsService {
     static DEFAULT_BPM_CONTEXT_PATH: string = '/activiti-app';
 
     static DEFAULT_ECM_BASE_API_PATH: string = '/api/-default-/public/alfresco/versions/1';
-    static DEFAULT_BPM_BASE_API_PATH: string = '/app';
 
     private _ecmHost: string = AlfrescoSettingsService.DEFAULT_ECM_ADDRESS;
     private _bpmHost: string = AlfrescoSettingsService.DEFAULT_BPM_ADDRESS;
@@ -36,7 +35,6 @@ export class AlfrescoSettingsService {
     private _bpmContextPath = AlfrescoSettingsService.DEFAULT_BPM_CONTEXT_PATH;
 
     private _apiECMBasePath: string = AlfrescoSettingsService.DEFAULT_ECM_BASE_API_PATH;
-    private _apiBPMBasePath: string = AlfrescoSettingsService.DEFAULT_BPM_BASE_API_PATH;
 
     private providers: string[] = ['ECM', 'BPM'];
 
@@ -57,7 +55,7 @@ export class AlfrescoSettingsService {
     }
 
     public getBPMApiBaseUrl(): string {
-        return this._bpmHost + this._bpmContextPath + this._apiBPMBasePath;
+        return this._bpmHost + this._bpmContextPath;
     }
 
     public getECMApiBaseUrl(): string {
