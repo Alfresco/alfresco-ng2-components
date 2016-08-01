@@ -1,5 +1,5 @@
-<div *ngIf="hasTabs()">
-    <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+<div *ngIf="hasTabs()" class="alfresco-tabs-widget">
+    <div alfresco-mdl-tabs>
         <div class="mdl-tabs__tab-bar">
             <a *ngFor="let tab of tabs; let isFirst = first"
                [href]="'#' + tab.id"

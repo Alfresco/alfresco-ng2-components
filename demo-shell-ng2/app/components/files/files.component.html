@@ -90,6 +90,11 @@
                         title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
                         handler="delete">
                 </content-action>
+                <content-action
+                        target="document"
+                        title="Activiti: View Form"
+                        (execute)="viewActivitiForm($event)">
+                </content-action>
             </content-actions>
         </alfresco-document-list>
         <alfresco-pagination
