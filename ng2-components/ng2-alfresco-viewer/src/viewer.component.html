@@ -20,7 +20,7 @@
                     <!-- Start Navigation -->
                     <nav class="mdl-navigation">
                         <div id="viewer-toolbar-view-options">
-                            <button
+                            <button *ngIf="overlayMode"
                                 class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
                                 <i id="viewer-close-button" class="icon material-icons">close</i>
                             </button>

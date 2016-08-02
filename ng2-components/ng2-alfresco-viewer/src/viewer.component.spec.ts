@@ -70,19 +70,36 @@ import { EventMock } from './assets/event.mock';
                  });
          }));
 
-         it('Close button should be present', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+         it('Close button should be present if overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
              return tcb
                  .createAsync(ViewerComponent)
                  .then((fixture) => {
                      let element = fixture.nativeElement;
                      let component = fixture.componentInstance;
                      component.urlFile = 'fake-url-file';
+                     component.overlayMode = true;
 
                      fixture.detectChanges();
 
                      expect(element.querySelector('#viewer-close-button')).not.toBeNull();
                  });
          }));
+
+         it('Close button should be not present if is not overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+             return tcb
+                 .createAsync(ViewerComponent)
+                 .then((fixture) => {
+                     let element = fixture.nativeElement;
+                     let component = fixture.componentInstance;
+                     component.urlFile = 'fake-url-file';
+                     component.overlayMode = false;
+
+                     fixture.detectChanges();
+
+                     expect(element.querySelector('#viewer-close-button')).toBeNull();
+                 });
+         }));
+
 
          it('Click on close button should hide the viewer', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
              return tcb
@@ -91,6 +108,7 @@ import { EventMock } from './assets/event.mock';
                      let element = fixture.nativeElement;
                      let component = fixture.componentInstance;
                      component.urlFile = 'fake-url-file';
+                     component.overlayMode = true;
 
                      fixture.detectChanges();
                      element.querySelector('#viewer-close-button').click();
