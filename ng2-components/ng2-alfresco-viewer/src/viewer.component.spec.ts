@@ -117,6 +117,23 @@ import { EventMock } from './assets/event.mock';
                  });
          }));
 
+         it('Esc button should not  hide the viewer if is not overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+             return tcb
+                 .createAsync(ViewerComponent)
+                 .then((fixture) => {
+                     let element = fixture.nativeElement;
+                     let component = fixture.componentInstance;
+                     component.overlayMode = false;
+
+                     component.urlFile = 'fake-url-file';
+
+                     fixture.detectChanges();
+                     EventMock.keyDown(27);
+                     fixture.detectChanges();
+                     expect(element.querySelector('#viewer-main-container')).not.toBeNull();
+                 });
+         }));
+
          it('Esc button should hide the viewer', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
              return tcb
                  .createAsync(ViewerComponent)
@@ -124,6 +141,7 @@ import { EventMock } from './assets/event.mock';
                      let element = fixture.nativeElement;
                      let component = fixture.componentInstance;
                      component.urlFile = 'fake-url-file';
+                     component.overlayMode = true;
 
                      fixture.detectChanges();
                      EventMock.keyDown(27);

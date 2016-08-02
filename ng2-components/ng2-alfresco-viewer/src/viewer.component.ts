@@ -166,7 +166,7 @@ export class ViewerComponent {
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         let key = event.keyCode;
-        if (key === 27) { // esc
+        if (key === 27 && this.overlayMode) { // esc
             this.close();
         }
     }
