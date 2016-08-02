@@ -1,23 +1,13 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+components_dir="$DIR/../ng2-components"
 
-for PACKAGE in \
-  ng2-activiti-form \
-  ng2-activiti-processlist \
-  ng2-activiti-tasklist \
-  ng2-alfresco-core \
-  ng2-alfresco-datatable \
-  ng2-alfresco-documentlist \
-  ng2-alfresco-login \
-  ng2-alfresco-search \
-  ng2-alfresco-upload \
-  ng2-alfresco-viewer \
-  ng2-alfresco-webscript
-do
-  echo "====== clean component: ${PACKAGE} ====="
-  cd "$DIR/../ng2-components/${PACKAGE}"
-  npm run clean
+for comp_dir in $( ls "$components_dir" ); do
+  test -f "$components_dir/$comp_dir/package.json" && \
+    cd "$components_dir/$comp_dir" && \
+    echo "====== clean component: ${$comp_dir} =====" && \
+    npm run clean
 done
 
 cd "$DIR/../demo-shell-ng2"
