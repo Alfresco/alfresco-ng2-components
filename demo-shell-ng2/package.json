@@ -7,6 +7,7 @@
     "postinstall": "typings install",
     "clean": "rimraf node_modules typings",
     "start": "npm run tslint && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
+    "aws": "node app.js",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "serve": "wsrv -o -s -l -p 3000 -a 0.0.0.0 -x ./server/versions.js",
@@ -66,14 +67,12 @@
     "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.6",
     "zone.js": "0.6.12",
-
     "rimraf": "2.5.2",
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.1.3",
     "ng2-translate": "2.2.0",
     "pdfjs-dist": "1.5.258",
     "flag-icon-css": "2.3.0",
-
     "alfresco-js-api": "0.2.1",
     "ng2-alfresco-core": "0.2.0",
     "ng2-alfresco-datatable": "0.2.0",
@@ -89,6 +88,7 @@
   "devDependencies": {
     "concurrently": "2.0.0",
     "license-check": "1.1.5",
+    "mime": "^1.3.4",
     "tslint": "3.8.1",
     "typescript": "1.8.10",
     "typings": "1.0.4",
