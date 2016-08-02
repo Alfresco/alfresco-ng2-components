@@ -1,14 +1,26 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-components_dir="$DIR/../ng2-components"
 
 "$DIR/npm-clean.sh"
 
-for comp_dir in $( ls "$components_dir" ); do
-  test -f "$components_dir/$comp_dir/package.json" && \
-    cd "$components_dir/$comp_dir" && \
-    echo "====== PUBLISHING: ${$comp_dir} =====" && \
-    npm install && \
-    npm publish
+for PACKAGE in \
+  ng2-activiti-form \
+  ng2-activiti-processlist \
+  ng2-activiti-tasklist \
+  ng2-alfresco-core \
+  ng2-alfresco-datatable \
+  ng2-alfresco-documentlist \
+  ng2-alfresco-login \
+  ng2-alfresco-search \
+  ng2-alfresco-upload \
+  ng2-alfresco-viewer \
+  ng2-alfresco-webscript
+do
+  DESTDIR="$DIR/../ng2-components/${PACKAGE}"
+  echo "====== PUBLISHING: ${DESTDIR} ====="
+  cd ${DESTDIR}
+  npm install
+  npm publish
+  cd ${DIR}
 done
