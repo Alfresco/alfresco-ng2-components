@@ -14,7 +14,7 @@
                 </div>
 
                 <div *ngIf="!form.hasTabs() && form.hasFields()">
-                    <container-widget [content]="form.fields[0]"></container-widget>
+                    <container-widget *ngFor="let field of form.fields" [content]="field"></container-widget>
                 </div>
             </div>
             <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">
