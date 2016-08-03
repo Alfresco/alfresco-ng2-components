@@ -65,6 +65,8 @@ export class PdfViewerComponent {
 
                     this.currentPdfDocument.getPage(1).then(() => {
                         this.scalePage('auto');
+                    }, (error) => {
+                        reject(error);
                     });
 
                 }, (error) => {
@@ -120,7 +122,7 @@ export class PdfViewerComponent {
             let widthContainer;
             let heigthContainer;
 
-            if (viewerContainer.clientWidth <= documentContainer.clientWidth) {
+            if (viewerContainer && viewerContainer.clientWidth <= documentContainer.clientWidth) {
                 widthContainer = viewerContainer.clientWidth;
                 heigthContainer = viewerContainer.clientHeight;
             } else {
