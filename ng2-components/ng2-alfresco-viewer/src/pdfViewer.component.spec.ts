@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject } from '@angular/core/testing';
+import { describe, expect, it, inject, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 
 import { PdfViewerComponent } from './pdfViewer.component';
@@ -23,7 +23,19 @@ import { PDFJSmock } from './assets/PDFJS.mock';
 import { PDFViewermock } from './assets/PDFViewer.mock';
 import { EventMock } from './assets/event.mock';
 
+import { HTTP_PROVIDERS } from '@angular/http';
+import { AlfrescoSettingsServiceMock } from '../src/assets/AlfrescoSettingsService.service.mock';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+
 describe('PdfViewer', () => {
+
+    beforeEachProviders(() => {
+        return [
+            HTTP_PROVIDERS,
+            {provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock},
+            {provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService}
+        ];
+    });
 
     describe('View', () => {
         it('Canvas should be present', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {

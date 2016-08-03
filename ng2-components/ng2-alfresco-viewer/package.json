@@ -58,6 +58,11 @@
     "@angular/router": "3.0.0-alpha.7",
     "@angular/router-deprecated": "2.0.0-rc.2",
     "@angular/upgrade": "2.0.0-rc.3",
+
+    "ng2-alfresco-core": "0.2.0",
+    "ng2-translate": "2.2.2",
+    "alfresco-js-api": "^0.2.0",
+
     "systemjs": "0.19.27",
     "core-js": "2.4.0",
     "reflect-metadata": "0.1.3",

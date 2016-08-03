@@ -20,6 +20,7 @@ import { PdfViewerComponent } from './pdfViewer.component';
 import { ImgViewerComponent } from './imgViewer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DOCUMENT } from '@angular/platform-browser';
+import { AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -39,6 +40,9 @@ export class ViewerComponent {
     fileName: string = null;
 
     @Input()
+    fileNodeId: string = null;
+
+    @Input()
     mimeType: string = null;
 
     @Input()
@@ -56,7 +60,7 @@ export class ViewerComponent {
 
     extension: string;
 
-    constructor(private element: ElementRef, @Inject(DOCUMENT) private document) {
+    constructor(private authService: AlfrescoAuthenticationService, private element: ElementRef, @Inject(DOCUMENT) private document) {
     }
 
     ngOnChanges(changes) {
@@ -71,7 +75,11 @@ export class ViewerComponent {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = this.fileName !== null ? this.fileName : filenameFromUrl;
                     this.extension = this.getFileExtension(filenameFromUrl);
+                } else if (this.fileNodeId) {
+                    console.log('call api');
                 }
+
+
                 resolve();
             });
         }
