@@ -50,9 +50,14 @@ import {
 @Component({
     selector: 'alfresco-webscript-get',
     template: `
-    <div id="webscript-data" ></div>
-    <div *ngIf="isDataTableContent()" ><alfresco-datatable id="webscript-datatable-wrapper" [data]="data" ></alfresco-datatable><div>
-    <div *ngIf="!show" id="error">Error during the deserialization of {{data}} as {{contentType}}</div>`,
+
+    <div *ngIf="showData" >
+        <div *ngIf="contentType === 'JSON'" id="webscript-data-JSON" >{{data | json}}</div>
+        <div *ngIf="contentType === 'HTML'" id="webscript-data-HTML" [innerHTML]="data" ></div>
+        <div *ngIf="contentType === 'TEXT'" id="webscript-data-TEXT" >{{data}}</div>
+        <div *ngIf="isDataTableContent()" ><alfresco-datatable id="webscript-datatable-wrapper" [data]="data" ></alfresco-datatable><div>
+        <div *ngIf="showError" id="error">Error during the deserialization of {{data}} as {{contentType}}</div>
+    </div>`,
     directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
     providers: [CONTEXT_MENU_PROVIDERS]
 })
@@ -63,6 +68,9 @@ export class WebscriptComponent {
 
     @Input()
     scriptArgs: any;
+
+    @Input()
+    showData: boolean = true;
 
     @Input()
     contextRoot: string = 'alfresco';
@@ -78,7 +86,7 @@ export class WebscriptComponent {
 
     data: any = undefined;
 
-    show: boolean = false;
+    showError: boolean = false;
 
     /**
      * Constructor
@@ -89,19 +97,22 @@ export class WebscriptComponent {
     }
 
     ngOnChanges(changes) {
-        this.clean();
+        if (this.showData) {
+            this.clean();
+        }
 
         return new Promise((resolve, reject) => {
-            this.authService.getAlfrescoApi().webScript.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((data) => {
-                if (this.contentType === 'JSON') {
-                    this.show = this.showDataAsJSON(data);
-                } else if (this.contentType === 'DATATABLE') {
-                    this.show = this.showDataAsDataTable(data);
-                } else {
-                    this.show = this.showDataAsHTML(data);
+            this.authService.getAlfrescoApi().webScript.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((webScriptdata) => {
+
+                this.data = webScriptdata;
+
+                if (this.showData) {
+                    if (this.contentType === 'DATATABLE') {
+                        this.data = this.showDataAsDataTable(webScriptdata);
+                    }
                 }
 
-                this.onSuccess.emit(data);
+                this.onSuccess.emit(this.data);
 
                 resolve();
             }, function (error) {
@@ -112,78 +123,36 @@ export class WebscriptComponent {
     }
 
     /**
-     * Parserize and show the data id data is a  JSON
-     *
-     * @param data
-     *
-     * @retutns boolean true if the component is able to Show the data as JSON
-     */
-    showDataAsJSON(data: any) {
-        let jsonShow = true;
-        try {
-            this.data = JSON.stringify(data);
-            let wrapper = document.getElementById('webscript-data');
-            wrapper.innerHTML = this.data;
-        } catch (e) {
-            jsonShow = false;
-        }
-
-        return jsonShow;
-    }
-
-    /**
-     * Parserize and show the data id data is a  html/xml
-     *
-     * @param data
-     *
-     * @retutns boolean true if the component is able to Show the data as html/xml
-     */
-    showDataAsHTML(data: any) {
-        let htmlShow = false;
-        let domParser = new DOMParser();
-
-        if (domParser.parseFromString(data, 'text/xml')) {
-            let wrapper = document.getElementById('webscript-data');
-            wrapper.innerHTML = data;
-            this.data = data;
-            htmlShow = true;
-        }
-
-        return htmlShow;
-    }
-
-    /**
      * show the data in a ng2-alfresco-datatable
      *
      * @param data
      *
-     * @retutns boolean true if the component is able to Show the data as datatable
+     * @retutns the data as datatable
      */
     showDataAsDataTable(data: any) {
-        let datatableShow = true;
+        let datatableData: any = null;
         try {
+
             if (!data.schema) {
                 data.schema = ObjectDataTableAdapter.generateSchema(data.data);
             }
+
             if (data.schema && data.schema.length > 0) {
                 this.data = new ObjectDataTableAdapter(data.data, data.schema);
-            } else {
-                datatableShow = false;
             }
+
         } catch (e) {
-            datatableShow = false;
+            console.log('error during the cast as datatable');
         }
 
-        return datatableShow;
+        return datatableData;
     }
 
     clean() {
-        let wrapper = document.getElementById('webscript-data');
-        wrapper.innerHTML = '';
         this.data = undefined;
     }
 
     isDataTableContent() {
-        return this.contentType === 'DATATABLE' && this.show;
+        return this.contentType === 'DATATABLE';
     }
 }
