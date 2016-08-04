@@ -47,9 +47,9 @@ import {
                 <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
         <div class="container" *ngIf="authenticated">
             <alfresco-viewer
-                    [fileNodeId]="'09469a81-1ed9-4caa-a5df-8362fc3d096f'"
                     [showViewer]="true"
-                    [overlayMode]="true">
+                    [overlayMode]="true"
+                    [urlFile]="'localTestFile.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                    </alfresco-viewer>
                    </div>`,
