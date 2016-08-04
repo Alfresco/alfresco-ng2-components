@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
+import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach, xit } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { WebscriptComponent } from '../src/webscript.component';
 import { AlfrescoSettingsServiceMock } from '../src/assets/AlfrescoSettingsService.service.mock';
@@ -138,7 +138,7 @@ describe('Test ng2-alfresco-webscript', () => {
             });
         });
 
-        it.skip('webscript HTML response should be displayed', (done) => {
+        xit('webscript HTML response should be displayed', (done) => {
 
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'HTML';
