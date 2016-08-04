@@ -56,15 +56,14 @@ export class SearchComponent {
     previewName: string;
     previewMimeType: string;
     previewActive: boolean = false;
+    fileNodeId: string;
 
     constructor(public contentService: AlfrescoContentService) {
     }
 
     onFileClicked(event) {
         if (event.value.entry.isFile) {
-            this.previewName = event.value.entry.name;
-            this.previewMimeType = event.value.entry.content.mimeType;
-            this.previewContentUrl = this.contentService.getContentUrl(event.value);
+            this.fileNodeId = event.value.entry.id;
             this.previewActive = true;
         }
     }

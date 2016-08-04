@@ -58,9 +58,7 @@ declare let __moduleName: string;
 export class FilesComponent implements OnInit {
     currentPath: string = '/Sites/swsdp/documentLibrary';
 
-    urlFile: string;
-    fileName: string;
-    mimeType: string;
+    fileNodeId: any;
     fileShowed: boolean = false;
     multipleFileUpload: boolean = false;
     folderUpload: boolean = false;
@@ -92,9 +90,7 @@ export class FilesComponent implements OnInit {
 
     showFile(event) {
         if (event.value.entry.isFile) {
-            this.fileName = event.value.entry.name;
-            this.mimeType = event.value.entry.content.mimeType;
-            this.urlFile = this.contentService.getContentUrl(event.value);
+            this.fileNodeId = event.value.entry.id;
             this.fileShowed = true;
         } else {
             this.fileShowed = false;

@@ -37,13 +37,7 @@ export class ViewerComponent {
     urlFile: string;
 
     @Input()
-    fileName: string = null;
-
-    @Input()
     fileNodeId: string = null;
-
-    @Input()
-    mimeType: string = null;
 
     @Input()
     overlayMode: boolean = false;
@@ -60,6 +54,10 @@ export class ViewerComponent {
 
     extension: string;
 
+    mimeType: string;
+
+    loaded: boolean = false;
+
     constructor(private authService: AlfrescoAuthenticationService, private element: ElementRef, @Inject(DOCUMENT) private document) {
     }
 
@@ -67,18 +65,20 @@ export class ViewerComponent {
         if (this.showViewer) {
             this.hideOtherHeaderBar();
             this.blockOtherScrollBar();
-            if (!this.urlFile) {
-                throw new Error('Attribute urlFile is required');
+            if (!this.urlFile && !this.fileNodeId) {
+                throw new Error('Attribute urlFile or fileNodeId is required');
             }
             return new Promise((resolve) => {
                 if (this.urlFile) {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-                    this.displayName = this.fileName !== null ? this.fileName : filenameFromUrl;
+                    this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);
                 } else if (this.fileNodeId) {
-                    console.log('call api');
-                    this.authService.getAlfrescoApi().getNodeInfo(this.fileNodeId).then(function (data) {
-                        console.log('This is the name' + JSON.stringify(data) );
+                    this.authService.getAlfrescoApi().nodes.getNodeInfo(this.fileNodeId).then((data) => {
+                        this.mimeType = data.content.mimeType;
+                        this.displayName = data.name;
+                        this.urlFile = this.authService.getAlfrescoApi().content.getContentUrl(data.id);
+                        this.loaded = true;
                     }, function (error) {
                         console.log('This node does not exist');
                     });
@@ -248,5 +248,12 @@ export class ViewerComponent {
                 this.otherMenu.hidden = true;
             }
         }
+    }
+
+    /**
+     * return true if the data about the node in the ecm are loaded
+     */
+    isLoaded() {
+        return this.fileNodeId ? this.loaded : true;
     }
 }

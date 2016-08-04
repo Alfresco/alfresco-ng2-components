@@ -49,15 +49,13 @@ import {
             <alfresco-viewer
                     [fileNodeId]="'09469a81-1ed9-4caa-a5df-8362fc3d096f'"
                     [showViewer]="true"
-                    [overlayMode]="true"
-                    [urlFile]="'localTestFile.pdf'">
+                    [overlayMode]="true">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                    </alfresco-viewer>
                    </div>`,
     directives: [VIEWERCOMPONENT]
 })
 class MyDemoApp {
-
     authenticated: boolean;
 
     ecmHost: string = 'http://127.0.0.1:8080';
