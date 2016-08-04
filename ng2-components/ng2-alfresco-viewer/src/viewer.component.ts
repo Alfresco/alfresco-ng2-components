@@ -77,6 +77,11 @@ export class ViewerComponent {
                     this.extension = this.getFileExtension(filenameFromUrl);
                 } else if (this.fileNodeId) {
                     console.log('call api');
+                    this.authService.getAlfrescoApi().getNodeInfo(this.fileNodeId).then(function (data) {
+                        console.log('This is the name' + JSON.stringify(data) );
+                    }, function (error) {
+                        console.log('This node does not exist');
+                    });
                 }
 
 
