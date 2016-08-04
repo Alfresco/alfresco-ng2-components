@@ -87,6 +87,7 @@ Also make sure you include these dependencies in your .html page:
                          [scriptArgs]="Object"
                          [contextRoot]="string"
                          [servicePath]="string"
+                         [showData]="boolean"
                          [contentType]="JSON | HTML | DATATABLE | TEXT"
                          (onSuccess)= "logData($event)">
  </alfresco-webscript-get>
@@ -143,11 +144,20 @@ bootstrap(AppComponent, [
 
 #### Options
 
-**scriptPath**  {string}  path to Web Script (as defined by Web Script)
-**scriptArgs**  {Object}  arguments to pass to Web Script
-**contextRoot** {string}  path where application is deployed default value 'alfresco'
-**servicePath** {string}  path where Web Script service is mapped default value 'service'
-**contentType** {string}  how to handle the data received from te web script JSON | HTML | DATATABLE | TEXT
+
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`scriptPath`         | *string*    |        |  path to Web Script (as defined by Web Script) | mandatory
+`scriptArgs`         | *Object*    |        |  arguments to pass to Web Script | 
+`contextRoot`         | *string*    |        |  path where application is deployed | 
+`scriptPath`         | *string*    |        |  path to Web Script (as defined by Web Script) | alfresco
+`contentType`         | *string*    |        |  path where Web Script service is mapped default value | service
+`contentType`         | *string*    |        |  how to handle the data received from te web script JSON , HTML , DATATABLE or TEXT | TEXT
+`onSuccess`         | *event*   |        |  You can get the plain data from the webscript through the **onSuccess** event parameter and use it as you need in your application |
+`showData`         | *booleann*   |        |  render the webscript data |true
+
+
+**contentType** {string}  
 ***data***      {string}  data contain the plain value get from the webscipt is an output parameter
 
 ## Webscript View HTML example
@@ -236,6 +246,7 @@ http://localhost:8080/alfresco/service/sample/folder/JSON%EXAMPLE
                            [servicePath]= "'service'";
                            [scriptPath]=  "'Sample/folder/JSON_EXAMPLE'"
                            [contentType]= "'HTML'"
+                           [showData] = "false"
                            (onSuccess)= "logDataExample($event)">
  </alfresco-webscript-get>
 ``` 
