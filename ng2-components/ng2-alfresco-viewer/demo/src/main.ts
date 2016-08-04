@@ -39,12 +39,6 @@ import {
                     operations.
                </div>
                <hr>
-                <label for="token"><b>Insert a scriptPath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="scriptPath"><br>
-                <label for="token"><b>Insert a contextRoot</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="contextRoot"><br>
-                <label for="token"><b>Insert a servicePath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
         <div class="container" *ngIf="authenticated">
             <alfresco-viewer
                     [showViewer]="true"
