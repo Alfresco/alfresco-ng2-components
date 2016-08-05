@@ -84,7 +84,7 @@ Also make sure you include these dependencies in your .html page:
 
 
 ```html
-<alfresco-login providers=['ECM','BPM']></alfresco-login>
+<alfresco-login [providers]="['ECM','BPM']"></alfresco-login>
 ```
 
 Example of an App that use Alfresco login component :
