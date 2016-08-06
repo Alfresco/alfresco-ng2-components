@@ -151,7 +151,7 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     private isImageMimeType() {
-        return this.mimeType !== null && this.mimeType.indexOf('image/') === 0;
+        return this.mimeType && this.mimeType.indexOf('image/') === 0;
     }
 
     /**
