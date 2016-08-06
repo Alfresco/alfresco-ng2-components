@@ -144,6 +144,8 @@ Attribute     | Options     | Default      | Description | Mandatory
 `urlFile`         | *string*    |        |  If you want laod an external file that not comes from the ECM you can use this Url where to load the file | 
 `overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content otherwise will fit the parent div  |
 `showViewer`         | *boolean*    | `true`        | Hide or show the viewer |
+`showToolbar`         | *boolean*    | `true`        | Hide or show the toolbars |
+
 
 ## Build from sources
 Alternatively you can build component from sources with the following commands:

@@ -34,6 +34,9 @@ export class PdfViewerComponent {
     @Input()
     nameFile: string;
 
+    @Input()
+    showToolbar: boolean = true;
+
     currentPdfDocument: any;
     page: number;
     displayPage: number;
