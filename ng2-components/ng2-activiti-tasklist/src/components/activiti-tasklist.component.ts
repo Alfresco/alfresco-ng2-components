@@ -71,7 +71,7 @@ export class ActivitiTaskList implements OnInit {
                 public activiti: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
+            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
     }
 

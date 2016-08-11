@@ -60,7 +60,7 @@ export class Ng2ActivitiProcesslistComponent implements OnInit {
         private translate: AlfrescoTranslationService
     ) {
         if (translate !== null) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-processlist');
+            translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
     }
 

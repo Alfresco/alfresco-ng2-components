@@ -11,7 +11,7 @@
     "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist && license-check",
     "build:w": "npm run tslint && rimraf dist && npm run watch-task",
     "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copy-dist:w\"  \"license-check\"",
-    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'src/{,**/}**.ts'",
     "copy-dist": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src",
     "copy-dist:w": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src -w",
     "tsc": "tsc",

@@ -33,9 +33,9 @@ declare var componentHandler;
 })
 export class FormViewer implements OnInit, OnDestroy, AfterViewChecked {
 
-    private sub: Subscription;
-
     taskId: string;
+
+    private sub: Subscription;
 
     constructor(private formService: FormService,
                 private route: ActivatedRoute,
