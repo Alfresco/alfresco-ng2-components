@@ -25,13 +25,13 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
 
     TYPE: string = 'BPM';
 
-    constructor(private alfrescoSettingsService: AlfrescoSettingsService,
-                private http: Http) {
-        super(alfrescoSettingsService, http);
+    constructor(alfrescoSetting: AlfrescoSettingsService,
+                http: Http) {
+        super(alfrescoSetting, http);
     }
 
     getHost(): string {
-        return this.alfrescoSettingsService.bpmHost;
+        return this.alfrescoSetting.bpmHost;
     }
 
     /**
@@ -75,7 +75,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     }
 
     private apiActivitiLogin(username: string, password: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/app/authentication';
+        let url = this.alfrescoSetting.getBPMApiBaseUrl() + '/app/authentication';
         let headers = new Headers({
             'Content-Type': 'application/x-www-form-urlencoded'
         });
@@ -91,7 +91,7 @@ export class AlfrescoAuthenticationBPM extends AlfrescoAuthenticationBase implem
     }
 
     private apiActivitiLogout() {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + '/app/logout';
+        let url = this.alfrescoSetting.getBPMApiBaseUrl() + '/app/logout';
         return this.http.get(url).toPromise();
     }
 

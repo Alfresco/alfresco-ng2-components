@@ -35,13 +35,13 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
 
     /**
      * Constructor
-     * @param alfrescoSettingsService
+     * @param alfrescoSetting
      * @param http
      */
-    constructor(private alfrescoSettingsService: AlfrescoSettingsService,
-                private http: Http) {
-        super(alfrescoSettingsService, http);
-        this.createProviderInstance(this.alfrescoSettingsService.getProviders());
+    constructor(alfrescoSetting: AlfrescoSettingsService,
+                http: Http) {
+        super(alfrescoSetting, http);
+        this.createProviderInstance(alfrescoSetting.getProviders());
     }
 
     /**
@@ -175,7 +175,7 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
         if (this.providersInstance.length === 0) {
             providers.forEach((provider) => {
                 let authInstance: AbstractAuthentication = AuthenticationFactory.createAuth(
-                    this.alfrescoSettingsService, this.http, provider);
+                    this.alfrescoSetting, this.http, provider);
                 if (authInstance) {
                     this.providersInstance.push(authInstance);
                 }
