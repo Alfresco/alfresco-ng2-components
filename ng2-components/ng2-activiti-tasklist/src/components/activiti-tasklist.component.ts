@@ -51,10 +51,10 @@ export class ActivitiTaskList implements OnInit {
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    onSuccess: EventEmitter<string> = new EventEmitter<string>();
+    onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    onError: EventEmitter<string> = new EventEmitter<string>();
+    onError: EventEmitter<any> = new EventEmitter<any>();
 
     data: DataTableAdapter;
 
@@ -91,10 +91,10 @@ export class ActivitiTaskList implements OnInit {
         this.activiti.getTasks(filter).subscribe(
             (res) => {
                 this.renderTasks(res.data);
-                this.onSuccess.emit('Task List loaded');
+                this.onSuccess.emit(res);
             }, (err) => {
                 console.error(err);
-                this.onError.emit('Error to load a tasks list');
+                this.onError.emit(err);
             });
     }
 

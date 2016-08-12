@@ -11,16 +11,16 @@
         <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
             <div class="page-content">
                 <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--2-col task-column">
+                    <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
                         <span>Task Filters</span>
-                        <activiti-filters (filterClick)="onFilterClick($event)"></activiti-filters>
+                        <activiti-filters (filterClick)="onFilterClick($event)" appName='Visit'></activiti-filters>
                     </div>
-                    <div class="mdl-cell mdl-cell--3-col task-column">
+                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                         <span>Task List</span>
                         <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [schemaColumn]="schemaColumn"
                                            (rowClick)="onRowClick($event)" #activititasklist></activiti-tasklist>
                     </div>
-                    <div class="mdl-cell mdl-cell--7-col task-column">
+                    <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
                         <span>Task Details</span>
                         <activiti-task-details [taskId]="currentTaskId" #activitidetails></activiti-task-details>
                     </div>

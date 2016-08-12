@@ -96,7 +96,6 @@ describe('ActivitiTaskList', () => {
 
         taskList.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
-            expect(res).toEqual('Task List loaded');
             expect(taskList.tasks).toBeDefined();
             expect(taskList.isTaskListEmpty()).not.toBeTruthy();
             expect(taskList.tasks.getRows().length).toEqual(2);
@@ -114,7 +113,6 @@ describe('ActivitiTaskList', () => {
 
         taskList.onError.subscribe( (err) => {
             expect(err).toBeDefined();
-            expect(err).toEqual('Error to load a tasks list');
             done();
         });
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterModel } from '../models/filter.model';
@@ -40,10 +40,16 @@ export class ActivitiFilters implements OnInit {
     filterClick: EventEmitter<FilterModel> = new EventEmitter<FilterModel>();
 
     @Output()
-    onSuccess: EventEmitter<string> = new EventEmitter<string>();
+    onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    onError: EventEmitter<string> = new EventEmitter<string>();
+    onError: EventEmitter<any> = new EventEmitter<any>();
+
+    @Input()
+    appId: string;
+
+    @Input()
+    appName: string;
 
     private filterObserver: Observer<FilterModel>;
     filter$: Observable<FilterModel>;
@@ -80,18 +86,48 @@ export class ActivitiFilters implements OnInit {
      * @param tasks
      */
     private load() {
-        this.activiti.getTaskListFilters().subscribe(
+        if (this.appName) {
+            this.filterByAppName();
+        } else {
+            this.filterByAppId();
+        }
+    }
+
+    private filterByAppId() {
+        this.activiti.getTaskListFilters(this.appId).subscribe(
             (res: FilterModel[]) => {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                 });
-                this.onSuccess.emit('Filter task list loaded');
+                this.onSuccess.emit(res);
             },
             (err) => {
                 console.log(err);
-                this.onError.emit('Error to load a task filter list');
+                this.onError.emit(err);
             }
         );
+    }
+
+    private filterByAppName() {
+        this.activiti.getDeployedApplications(this.appName).subscribe(
+            application => {
+                this.activiti.getTaskListFilters(application.id).subscribe(
+                    (res: FilterModel[]) => {
+                        res.forEach((filter) => {
+                            this.filterObserver.next(filter);
+                        });
+                        this.onSuccess.emit(res);
+                    },
+                    (err) => {
+                        console.log(err);
+                        this.onError.emit(err);
+                    }
+                );
+            },
+            (err) => {
+                console.log(err);
+                this.onError.emit(err);
+            });
     }
 
     /**

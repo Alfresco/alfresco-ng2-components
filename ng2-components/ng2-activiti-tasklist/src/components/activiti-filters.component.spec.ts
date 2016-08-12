@@ -57,7 +57,6 @@ describe('ActivitiFilters', () => {
 
         filterList.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
-            expect(res).toEqual('Filter task list loaded');
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(2);
             expect(filterList.filters[0].name).toEqual('FakeInvolvedTasks');
@@ -73,7 +72,6 @@ describe('ActivitiFilters', () => {
 
         filterList.onError.subscribe( (err) => {
             expect(err).toBeDefined();
-            expect(err).toEqual('Error to load a task filter list');
             done();
         });
 
