@@ -25,15 +25,13 @@ export class AlfrescoAuthenticationBase {
 
     alfrescoApi: any;
 
-    private alfrescoSetting: AlfrescoSettingsService;
 
     /**
      * Constructor
      * @param alfrescoSettingsService
      */
-    constructor(alfrescoSettingsService: AlfrescoSettingsService,
-                http: Http) {
-        this.alfrescoSetting = alfrescoSettingsService;
+    constructor(public alfrescoSetting: AlfrescoSettingsService,
+                public http: Http) {
     }
 
     /**

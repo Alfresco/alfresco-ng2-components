@@ -31,12 +31,12 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
 
     /**
      * Constructor
-     * @param alfrescoSettingsService
+     * @param alfrescoSetting
      * @param http
      */
-    constructor(private alfrescoSettingsService: AlfrescoSettingsService,
-                private http: Http) {
-        super(alfrescoSettingsService, http);
+    constructor(alfrescoSetting: AlfrescoSettingsService,
+                http: Http) {
+        super(alfrescoSetting, http);
 
         if (!this.isLoggedIn()) {
             this.alfrescoApi = new AlfrescoApi({
@@ -51,7 +51,7 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
     }
 
     getHost(): string {
-        return this.alfrescoSettingsService.ecmHost;
+        return this.alfrescoSetting.ecmHost;
     }
 
     /**
