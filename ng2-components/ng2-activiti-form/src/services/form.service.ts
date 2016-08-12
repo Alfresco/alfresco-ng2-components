@@ -96,6 +96,27 @@ export class FormService {
             .catch(this.handleError);
     }
 
+    getFormDefinitionById(id: string): Observable<any> {
+        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/app/rest/form-models/${id}`;
+        let options = this.getRequestOptions();
+
+        return this.http
+            .get(url, options)
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    getFormDefinitionByName(name: string): Observable<any> {
+        let url = `${this.alfrescoSettingsService.bpmHost}` +
+            `/activiti-app/app/rest/models?filter=myReusableForms&filterText=${name}&modelType=2`;
+        let options = this.getRequestOptions();
+
+        return this.http
+            .get(url, options)
+            .map(this.getFormId)
+            .catch(this.handleError);
+    }
+
     private getHeaders(): Headers {
         return new Headers({
             'Accept': 'application/json',
@@ -107,6 +128,11 @@ export class FormService {
     private getRequestOptions(): RequestOptions {
         let headers = this.getHeaders();
         return new RequestOptions({headers: headers});
+    }
+
+    private getFormId(res: Response) {
+        let body = res.json();
+        return body.data[0].id || {};
     }
 
     private toJson(res: Response) {
