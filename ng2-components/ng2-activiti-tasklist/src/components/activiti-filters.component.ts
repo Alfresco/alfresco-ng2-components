@@ -89,12 +89,12 @@ export class ActivitiFilters implements OnInit {
         if (this.appName) {
             this.filterByAppName();
         } else {
-            this.filterByAppId();
+            this.filterByAppId(this.appId);
         }
     }
 
-    private filterByAppId() {
-        this.activiti.getTaskListFilters(this.appId).subscribe(
+    private filterByAppId(appId) {
+        this.activiti.getTaskListFilters(appId).subscribe(
             (res: FilterModel[]) => {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
@@ -111,18 +111,7 @@ export class ActivitiFilters implements OnInit {
     private filterByAppName() {
         this.activiti.getDeployedApplications(this.appName).subscribe(
             application => {
-                this.activiti.getTaskListFilters(application.id).subscribe(
-                    (res: FilterModel[]) => {
-                        res.forEach((filter) => {
-                            this.filterObserver.next(filter);
-                        });
-                        this.onSuccess.emit(res);
-                    },
-                    (err) => {
-                        console.log(err);
-                        this.onError.emit(err);
-                    }
-                );
+                this.filterByAppId(application.id);
             },
             (err) => {
                 console.log(err);
