@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiTaskHeader } from './activiti-task-header.component';
@@ -50,6 +50,30 @@ export class ActivitiTaskDetails implements OnInit {
 
     @ViewChild('activitichecklist')
     activitichecklist: any;
+
+    @Input()
+    showTitle: boolean = true;
+
+    @Input()
+    showCompleteButton: boolean = true;
+
+    @Input()
+    showSaveButton: boolean = true;
+
+    @Input()
+    readOnly: boolean = false;
+
+    @Input()
+    showRefreshButton: boolean = true;
+
+    @Output()
+    formSaved = new EventEmitter();
+
+    @Output()
+    formCompleted = new EventEmitter();
+
+    @Output()
+    formLoaded = new EventEmitter();
 
     taskDetails: TaskDetailsModel;
 
@@ -110,5 +134,17 @@ export class ActivitiTaskDetails implements OnInit {
                 console.log(res);
             }
         );
+    }
+
+    formSavedEmitter(data: any) {
+        this.formSaved.emit(data);
+    }
+
+    formCompletedEmitter(data: any) {
+        this.formCompleted.emit(data);
+    }
+
+    formLoadedEmitter(data: any) {
+        this.formLoaded.emit(data);
     }
 }

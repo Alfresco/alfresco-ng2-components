@@ -59,7 +59,7 @@ declare var componentHandler;
  *
  *   @Output
  *   {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
- *   {formsaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
+ *   {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
  *   {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
  *
  * @returns {ActivitiForm} .
@@ -102,7 +102,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     showRefreshButton: boolean = true;
 
     @Output()
-    formsaved = new EventEmitter();
+    formSaved = new EventEmitter();
 
     @Output()
     formCompleted = new EventEmitter();
@@ -184,12 +184,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 }
 
                 if (outcome.id === '$custom') {
-                    this.formsaved.emit(this.form.values);
+                    this.formSaved.emit(this.form.values);
                 }
             } else {
                 // Note: Activiti is using NAME field rather than ID for outcomes
                 if (outcome.name) {
-                    this.formsaved.emit(this.form.values);
+                    this.formSaved.emit(this.form.values);
                     return this.completeTaskForm(outcome.name);
                 }
             }
@@ -227,7 +227,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .subscribe(
                 form => {
                     console.log('Get Form By definition Id', form);
-                    this.form = new FormModel(form, this.data, this.formsaved, this.readOnly);
+                    this.form = new FormModel(form, this.data, this.formSaved, this.readOnly);
                     this.formLoaded.emit(this.form.values);
                 },
                 err => console.log(err)
@@ -242,7 +242,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.formService.getFormDefinitionById(id).subscribe(
                         form => {
                             console.log('Get Form By Form definition Name', form);
-                            this.form = new FormModel(form, this.data, this.formsaved, this.readOnly);
+                            this.form = new FormModel(form, this.data, this.formSaved, this.readOnly);
                             this.formLoaded.emit(this.form.values);
                         },
                         err => console.log(err)
@@ -256,7 +256,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         this.formService.saveTaskForm(this.form.taskId, this.form.values).subscribe(
             (response) => {
                 console.log('Saved task', response);
-                this.formsaved.emit(this.form.values);
+                this.formSaved.emit(this.form.values);
             },
             (err) => console.log(err)
         );
