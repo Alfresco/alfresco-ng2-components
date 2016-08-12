@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter, OnInit} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterModel } from '../models/filter.model';
@@ -29,8 +29,9 @@ declare let __moduleName: string;
     selector: 'activiti-filters',
     moduleId: __moduleName,
     templateUrl: './activiti-filters.component.html',
+    styleUrls: ['activiti-filters.component.css'],
     providers: [ActivitiTaskListService],
-    pipes: [ AlfrescoPipeTranslate ]
+    pipes: [AlfrescoPipeTranslate]
 
 })
 export class ActivitiFilters implements OnInit {
@@ -50,6 +51,7 @@ export class ActivitiFilters implements OnInit {
     currentFilter: FilterModel;
 
     filters: FilterModel [] = [];
+
     /**
      * Constructor
      * @param auth
@@ -58,7 +60,7 @@ export class ActivitiFilters implements OnInit {
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
                 public activiti: ActivitiTaskListService) {
-        this.filter$ = new Observable<FilterModel>(observer =>  this.filterObserver = observer).share();
+        this.filter$ = new Observable<FilterModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');

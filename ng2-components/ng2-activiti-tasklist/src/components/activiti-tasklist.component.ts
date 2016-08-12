@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
@@ -28,9 +28,10 @@ declare let __moduleName: string;
     selector: 'activiti-tasklist',
     moduleId: __moduleName,
     templateUrl: './activiti-tasklist.component.html',
+    styleUrls: ['./activiti-tasklist.component.css'],
     directives: [ALFRESCO_DATATABLE_DIRECTIVES],
     providers: [ActivitiTaskListService],
-    pipes: [ AlfrescoPipeTranslate ]
+    pipes: [AlfrescoPipeTranslate]
 
 })
 export class ActivitiTaskList implements OnInit {
