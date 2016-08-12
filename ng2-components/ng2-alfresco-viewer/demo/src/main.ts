@@ -19,18 +19,80 @@ import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 
+import { HTTP_PROVIDERS } from '@angular/http';
+
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
+
 @Component({
     selector: 'my-app',
-    template: `   <alfresco-viewer [showViewer]="true" [overlayMode]="true" [urlFile]="'localTestFile.pdf'">
+    template: `
+               <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
+               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="host"><br><br>
+               <div *ngIf="!authenticated" style="color:#FF2323">
+                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    operations.
+               </div>
+               <hr>
+        <div class="container" *ngIf="authenticated">
+            <alfresco-viewer
+                    [showViewer]="true"
+                    [overlayMode]="true"
+                    [urlFile]="'localTestFile.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                   </alfresco-viewer>`,
+                   </alfresco-viewer>
+                   </div>`,
     directives: [VIEWERCOMPONENT]
 })
 class MyDemoApp {
-    constructor() {
-        console.log('constructor');
+    authenticated: boolean;
+
+    ecmHost: string = 'http://127.0.0.1:8080';
+
+    token: string;
+
+    constructor(private authService: AlfrescoAuthenticationService,
+                private alfrescoSettingsService: AlfrescoSettingsService) {
+
+        alfrescoSettingsService.ecmHost = this.ecmHost;
+        if (this.authService.getTicket()) {
+            this.token = this.authService.getTicket();
+        }
+    }
+
+    public updateToken(): void {
+        localStorage.setItem('token', this.token);
+    }
+
+    public updateHost(): void {
+        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.login();
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.authService.login('admin', 'admin', ['ECM']).subscribe(
+            token => {
+                console.log(token);
+                this.token = token;
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
     }
 }
 bootstrap(MyDemoApp, [
-    VIEWERCOMPONENT
+    VIEWERCOMPONENT,
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS
 ]);

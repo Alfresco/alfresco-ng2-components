@@ -64,13 +64,19 @@ npm link
 npm run typings
 npm run build
 
+#LINK VIEWER
+echo "====== linking component: ng2-activiti-processlist ====="
+cd "$DIR/../ng2-components/ng2-activiti-viewer"
+npm link ng2-alfresco-core
+npm link
+npm run typings
+npm run build
+
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
   ng2-alfresco-login \
   ng2-alfresco-search \
-  ng2-alfresco-upload \
-  ng2-alfresco-viewer \
-  ng2-alfresco-webscript
+  ng2-alfresco-upload
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== linking component: ${PACKAGE} ====="
