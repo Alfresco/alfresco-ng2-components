@@ -38,7 +38,7 @@ export class AlfrescoAuthenticationECM extends AlfrescoAuthenticationBase implem
                 private http: Http) {
         super(alfrescoSettingsService, http);
 
-        if (!this.isLoggedIn) {
+        if (!this.isLoggedIn()) {
             this.alfrescoApi = new AlfrescoApi({
                 host: this.getHost()
             });
