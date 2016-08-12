@@ -66,10 +66,14 @@ Example:
 	"recent": false,
 	"icon": "glyphicon-align-left",
 	"filter": {
+		"appDefinitionId": "1",
+		"processDefinitionId": "1533",
 		"sort": "created-desc",
 		"name": "",
 		"state": "open",
-		"assignment": "involved"
+		"assignment": "involved",
+		"page": "0",
+		"size": "25"
 	}
 }
 ```
