@@ -29,6 +29,7 @@ export class FormFieldTypes {
     static HYPERLINK: string = 'hyperlink';
     static RADIO_BUTTONS: string = 'radio-buttons';
     static DISPLAY_VALUE: string = 'readonly';
+    static READONLY_TEXT: string = 'readonly-text';
 }
 
 export class FormWidgetModel {
@@ -128,9 +129,9 @@ export class FormFieldModel extends FormWidgetModel {
          */
         // TODO: needs review
         if (json.type === FormFieldTypes.DROPDOWN) {
-           if (value === '') {
-               value = 'empty';
-           }
+            if (value === '') {
+                value = 'empty';
+            }
         }
 
         /*
@@ -177,7 +178,17 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.options[0].id;
             }
         } else {
-            this.form.values[this.id] = this.value;
+            if (!this.isIngonreType()) {
+                this.form.values[this.id] = this.value;
+            }
+        }
+    }
+
+    private isIngonreType(): boolean {
+        if (this.type === FormFieldTypes.READONLY_TEXT) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
@@ -337,7 +348,7 @@ export class FormModel {
         return this._taskId;
     }
 
-    get taskName(): string{
+    get taskName(): string {
         return this._taskName;
     }
 
@@ -394,10 +405,10 @@ export class FormModel {
                 }
             }
 
-            let saveOutcome = new FormOutcomeModel(this, { id: '$save', name: 'Save' });
+            let saveOutcome = new FormOutcomeModel(this, {id: '$save', name: 'Save'});
             saveOutcome.isSystem = true;
 
-            let completeOutcome = new FormOutcomeModel(this, { id: '$complete', name: 'Complete' });
+            let completeOutcome = new FormOutcomeModel(this, {id: '$complete', name: 'Complete'});
             completeOutcome.isSystem = true;
 
             let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
