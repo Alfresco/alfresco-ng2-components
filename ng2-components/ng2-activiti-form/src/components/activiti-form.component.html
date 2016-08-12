@@ -20,6 +20,7 @@
                 <button *ngFor="let outcome of form.outcomes"
                         alfresco-mdl-button
                         [class.mdl-button--colored]="!outcome.isSystem"
+                        [class.activiti-form-hide-button]="!isOutcomeButtonEnabled(outcome)"
                         (click)="onOutcomeClicked(outcome, $event)">
                     {{outcome.name}}
                 </button>

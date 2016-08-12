@@ -53,6 +53,10 @@ declare var componentHandler;
  *
  *   {showRefreshButton} boolean - to hide the refresh button of the form pass false, default true;
  *
+ *   {showCompleteButton} boolean - to hide the complete button of the form pass false, default true;
+ *
+ *   {showSaveButton} boolean - to hide the save button of the form pass false, default true;
+ *
  *   @Output
  *   {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
  *   {formsaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
@@ -86,6 +90,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     showTitle: boolean = true;
 
     @Input()
+    showCompleteButton: boolean = true;
+
+    @Input()
+    showSaveButton: boolean = true;
+
+    @Input()
     readOnly: boolean = false;
 
     @Input()
@@ -104,6 +114,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     debugMode: boolean = false;
 
+    constructor(private formService: FormService) {
+    }
+
     hasForm(): boolean {
         return this.form ? true : false;
     }
@@ -112,7 +125,15 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         return this.form.taskName && this.showTitle;
     }
 
-    constructor(private formService: FormService) {}
+    isOutcomeButtonEnabled(outcome: any): boolean {
+        if (outcome.name === 'Complete') {
+            return this.showCompleteButton;
+        }
+        if (outcome.name === 'Save') {
+            return this.showSaveButton;
+        }
+        return true;
+    }
 
     ngOnInit() {
         if (this.taskId) {
