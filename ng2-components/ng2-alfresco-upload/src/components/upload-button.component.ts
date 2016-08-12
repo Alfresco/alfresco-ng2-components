@@ -102,7 +102,6 @@ export class UploadButtonComponent {
      */
     onFilesAdded($event: any): void {
         let files = $event.currentTarget.files;
-        this.printFileInfo(files);
         this.uploadFiles(this.currentFolderPath, files);
         // reset the value of the input file
         $event.target.value = '';
@@ -115,7 +114,6 @@ export class UploadButtonComponent {
      */
     onDirectoryAdded($event: any): void {
         let files = $event.currentTarget.files;
-        this.printFileInfo(files);
         let hashMapDir = this.convertIntoHashMap(files);
 
         hashMapDir.forEach((filesDir, directoryPath) => {
@@ -262,18 +260,6 @@ export class UploadButtonComponent {
                 message: errorMessage,
                 timeout: 3000
             });
-        }
-    }
-
-    /**
-     * Prints the basic information of a file
-     * @param files
-     */
-    printFileInfo(files: any) {
-        for (let file of files) {
-            console.log('Name: ' + file.name);
-            console.log('Size: ' + file.size);
-            console.log('Path: ' + file.webkitRelativePath);
         }
     }
 
