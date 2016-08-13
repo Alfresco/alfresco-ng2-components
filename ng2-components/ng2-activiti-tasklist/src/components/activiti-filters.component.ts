@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter, OnInit} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterModel } from '../models/filter.model';
@@ -29,8 +29,9 @@ declare let __moduleName: string;
     selector: 'activiti-filters',
     moduleId: __moduleName,
     templateUrl: './activiti-filters.component.html',
+    styleUrls: ['activiti-filters.component.css'],
     providers: [ActivitiTaskListService],
-    pipes: [ AlfrescoPipeTranslate ]
+    pipes: [AlfrescoPipeTranslate]
 
 })
 export class ActivitiFilters implements OnInit {
@@ -39,10 +40,16 @@ export class ActivitiFilters implements OnInit {
     filterClick: EventEmitter<FilterModel> = new EventEmitter<FilterModel>();
 
     @Output()
-    onSuccess: EventEmitter<string> = new EventEmitter<string>();
+    onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    onError: EventEmitter<string> = new EventEmitter<string>();
+    onError: EventEmitter<any> = new EventEmitter<any>();
+
+    @Input()
+    appId: string;
+
+    @Input()
+    appName: string;
 
     private filterObserver: Observer<FilterModel>;
     filter$: Observable<FilterModel>;
@@ -50,6 +57,7 @@ export class ActivitiFilters implements OnInit {
     currentFilter: FilterModel;
 
     filters: FilterModel [] = [];
+
     /**
      * Constructor
      * @param auth
@@ -58,7 +66,7 @@ export class ActivitiFilters implements OnInit {
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
                 public activiti: ActivitiTaskListService) {
-        this.filter$ = new Observable<FilterModel>(observer =>  this.filterObserver = observer).share();
+        this.filter$ = new Observable<FilterModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
@@ -78,18 +86,37 @@ export class ActivitiFilters implements OnInit {
      * @param tasks
      */
     private load() {
-        this.activiti.getTaskListFilters().subscribe(
+        if (this.appName) {
+            this.filterByAppName();
+        } else {
+            this.filterByAppId(this.appId);
+        }
+    }
+
+    private filterByAppId(appId) {
+        this.activiti.getTaskListFilters(appId).subscribe(
             (res: FilterModel[]) => {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                 });
-                this.onSuccess.emit('Filter task list loaded');
+                this.onSuccess.emit(res);
             },
             (err) => {
                 console.log(err);
-                this.onError.emit('Error to load a task filter list');
+                this.onError.emit(err);
             }
         );
+    }
+
+    private filterByAppName() {
+        this.activiti.getDeployedApplications(this.appName).subscribe(
+            application => {
+                this.filterByAppId(application.id);
+            },
+            (err) => {
+                console.log(err);
+                this.onError.emit(err);
+            });
     }
 
     /**

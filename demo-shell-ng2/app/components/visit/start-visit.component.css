@@ -1,0 +1,39 @@
+.image-cell{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    margin-left: -50px;
+    border: 3px #1c597f solid;
+    z-index: 99;
+    margin-top: 45px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.container-title-details{
+    background-color: #1c597f;
+    color: #ffffff;
+}
+
+.title-details {
+    margin: auto;
+    text-align: center;
+}
+
+.user-image-wrap{
+    background-color: #1c597f;
+    text-align: center;
+    height: 60px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.upload-photo-button{
+    text-align: center;
+    height: 50px;
+    margin-top: 35px;
+}
+.wrap-form{
+    margin-top: 35px;
+}

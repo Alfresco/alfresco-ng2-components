@@ -108,15 +108,11 @@ export class AlfrescoLoginComponent {
             .subscribe(
                 (token: any) => {
                     this.success = true;
-                    this.onSuccess.emit({
-                        value: 'Login OK'
-                    });
+                    this.onSuccess.emit(token);
                 },
                 (err: any) => {
                     this.error = true;
-                    this.onError.emit({
-                        value: 'Login KO'
-                    });
+                    this.onError.emit(err);
                     console.log(err);
                     this.success = false;
                 },

@@ -1,0 +1,20 @@
+<div class="mdl-card__title title container-title-details">
+    <h2 class="mdl-card__title-text title-details">Create Patient</h2>
+</div>
+<div class="user-image-wrap">
+    <img class="image-cell"
+         src="{{imgSrc}}">
+</div>
+<div class="upload-photo-button">
+    <alfresco-upload-button [showUdoNotificationBar]="true"
+                            [uploaddirectory]="'Shared'"
+                            [currentFolderPath]="'Shared'"
+                            [uploadFolders]="false"
+                            [multipleFiles]="false"
+                            [acceptedFilesType]="'.jpg,.gif,.png,.svg'"
+                            [staticTitle]="'Upload Picture'"
+                            (onSuccess)="fileUploaded($event)">
+    </alfresco-upload-button>
+</div>
+<activiti-form [formName]="'Health_User_Form'" (saveOption)='saveMetadata($event)' [data]="metadata" [showTitle]="false"
+               [showRefreshButton]="false" ></activiti-form>

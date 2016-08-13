@@ -32,18 +32,32 @@ export class ActivitiTaskListService {
     constructor(private http: Http, public alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
+
+    /**
+     * Retrive all the Deployed app
+     * @returns {Observable<any>}
+     */
+    getDeployedApplications(name: string): Observable<any> {
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/runtime-app-definitions`;
+        return this.http
+            .get(url, this.getRequestOptions())
+            .map((response: Response) => response.json().data.find(p => p.name === name))
+            .do(data => console.log('Application: ' + JSON.stringify(data)))
+            .catch(this.handleError);
+    }
+
     /**
      * Retrive all the Tasks filters
      * @returns {Observable<any>}
      */
-    getTaskListFilters(): Observable<any> {
-        return Observable.fromPromise(this.callApiTaskFilters())
+    getTaskListFilters(appId?: string): Observable<any> {
+        return Observable.fromPromise(this.callApiTaskFilters(appId))
             .map(res => res.json())
             .map((response: any) => {
                 let filters: FilterModel[] = [];
                 response.data.forEach((filter) => {
                     let filterModel = new FilterModel(filter.name, filter.recent, filter.icon,
-                        filter.filter.name, filter.filter.state, filter.filter.assignment);
+                        filter.filter.name, filter.filter.state, filter.filter.assignment, appId);
                     filters.push(filterModel);
                 });
                 return filters;
@@ -160,100 +174,65 @@ export class ActivitiTaskListService {
     private callApiTasksFiltered(filter: FilterParamsModel) {
         let data = JSON.stringify(filter);
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/query`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({headers: headers});
 
         return this.http
-            .post(url, data, options).toPromise();
+            .post(url, data, this.getRequestOptions()).toPromise();
     }
 
-    private callApiTaskFilters() {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/filters/tasks`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({headers: headers});
+    private callApiTaskFilters(appId?: string) {
+        let url = this.alfrescoSettingsService.getBPMApiBaseUrl();
+        if (appId) {
+            url = url + `/api/enterprise/filters/tasks?appId=${appId}`;
+        } else {
+            url = url + `/api/enterprise/filters/tasks`;
+        }
 
         return this.http
-            .get(url, options).toPromise();
+            .get(url, this.getRequestOptions()).toPromise();
     }
 
     private callApiTaskDetails(id: string) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({headers: headers});
 
         return this.http
-            .get(url, options).toPromise();
+            .get(url, this.getRequestOptions()).toPromise();
     }
 
     private callApiTaskComments(id: string) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/comments`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({headers: headers});
 
         return this.http
-            .get(url, options).toPromise();
+            .get(url, this.getRequestOptions()).toPromise();
     }
 
     private callApiAddTaskComment(id: string, message: string) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/comments`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
         let body = JSON.stringify({message: message});
-        let options = new RequestOptions({headers: headers});
 
         return this.http
-            .post(url, body, options).toPromise();
+            .post(url, body, this.getRequestOptions()).toPromise();
     }
 
     private callApiAddTask(task: TaskDetailsModel) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${task.parentTaskId}/checklist`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
         let body = JSON.stringify(task);
-        let options = new RequestOptions({headers: headers});
 
         return this.http
-            .post(url, body, options).toPromise();
+            .post(url, body, this.getRequestOptions()).toPromise();
     }
 
     private callApiTaskChecklist(id: string) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/checklist`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({headers: headers});
 
         return this.http
-            .get(url, options).toPromise();
+            .get(url, this.getRequestOptions()).toPromise();
     }
 
     private callApiCompleteTask(id: string) {
         let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/action/complete`;
-        let headers = new Headers({
-            'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache'
-        });
-        let options = new RequestOptions({headers: headers});
 
         return this.http
-            .put(url, options).toPromise();
+            .put(url, this.getRequestOptions()).toPromise();
     }
 
 
@@ -267,4 +246,15 @@ export class ActivitiTaskListService {
         return Observable.throw(error || 'Server error');
     }
 
+    private getHeaders(): Headers {
+        return new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+    }
+
+    private getRequestOptions(): RequestOptions {
+        let headers = this.getHeaders();
+        return new RequestOptions({headers: headers});
+    }
 }

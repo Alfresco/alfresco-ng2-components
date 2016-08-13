@@ -19,3 +19,7 @@
 .activiti-form-debug-container .debug-toggle-text:hover {
     font-weight: bold;
 }
+
+.activiti-form-hide-button {
+    display: none;
+}

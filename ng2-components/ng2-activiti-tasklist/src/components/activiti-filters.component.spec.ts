@@ -32,8 +32,8 @@ describe('ActivitiFilters', () => {
     let filterList: ActivitiFilters;
 
     let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterModel('FakeInvolvedTasks', false, 'glyphicon-align-left', '', 'open',  'fake-involved'));
-    fakeGlobalFilter.push(new FilterModel('FakeMyTasks', false, 'glyphicon-align-left', '', 'open',  'fake-assignee'));
+    fakeGlobalFilter.push(new FilterModel('FakeInvolvedTasks', false, 'glyphicon-align-left', '', 'open', 'fake-involved'));
+    fakeGlobalFilter.push(new FilterModel('FakeMyTasks', false, 'glyphicon-align-left', '', 'open', 'fake-assignee'));
 
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
@@ -55,9 +55,8 @@ describe('ActivitiFilters', () => {
     it('should return the filter task list', (done) => {
         spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        filterList.onSuccess.subscribe( (res) => {
+        filterList.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
-            expect(res).toEqual('Filter task list loaded');
             expect(filterList.filters).toBeDefined();
             expect(filterList.filters.length).toEqual(2);
             expect(filterList.filters[0].name).toEqual('FakeInvolvedTasks');
@@ -68,12 +67,32 @@ describe('ActivitiFilters', () => {
         filterList.ngOnInit();
     });
 
+    it('should return the filter task list, filtered By Name', (done) => {
+
+        let fakeDeployedApplicationsPromise = new Promise(function (resolve, reject) {
+            resolve({});
+        });
+
+        spyOn(filterList.activiti, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
+        spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+
+        filterList.appName = 'test';
+
+        filterList.onSuccess.subscribe((res) => {
+            let deployApp: any = filterList.activiti.getDeployedApplications;
+            expect(deployApp.calls.count()).toEqual(1);
+            expect(res).toBeDefined();
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
     it('should emit an error with a bad response', (done) => {
         spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
-        filterList.onError.subscribe( (err) => {
+        filterList.onError.subscribe((err) => {
             expect(err).toBeDefined();
-            expect(err).toEqual('Error to load a task filter list');
             done();
         });
 

@@ -1,0 +1,218 @@
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--2-col mdl-shadow--2dp" id="tags">
+        <div class="mdl-card__title title container-title-details">
+            <h2 class="mdl-card__title-text title-details">Tags</h2>
+        </div>
+        <ul class="mdl-list">
+            <li *ngFor="let filter of tagFilters" class="mdl-list__item">
+                <span class="mdl-list__item-primary-content">
+                    <label [attr.for]="'chk-' + filter.id"
+                           class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+                           [class.is-checked]="filter.isSelected">
+                        <input type="checkbox"
+                               [attr.id]="'chk-' + filter.id"
+                               class="mdl-checkbox__input"
+                               [(ngModel)]="filter.isSelected"
+                               (change)="onFilterChanged($event)">
+                        <span class="mdl-checkbox__label">{{filter.tag}}</span>
+                    </label>
+                </span>
+                <!--<span class="mdl-list__item-secondary-action">(0)</span>-->
+            </li>
+        </ul>
+    </div>
+    <div class="mdl-cell mdl-shadow--2dp"
+         [class.mdl-cell--10-col]="!selectedNodeProperties"
+         [class.mdl-cell--8-col]="selectedNodeProperties">
+        <div style="padding-bottom: 4px;">
+            <button
+                class="mdl-button mdl-js-button mdl-button--icon"
+                (click)="documentList.currentFolderPath = '/Sites/swsdp/documentLibrary';">
+                <i class="material-icons">home</i>
+            </button>
+        </div>
+        <div class="container">
+            <alfresco-upload-drag-area
+                [showUploadDialog]="true"
+                [currentFolderPath]="currentPath"
+                [uploaddirectory]=""
+                (onSuccess)="documentList.reload()">
+                <alfresco-document-list
+                    #documentList
+                    [currentFolderPath]="currentPath"
+                    [contextMenuActions]="true"
+                    [contentActions]="true"
+                    [rowFilter]="tagFilter"
+                    [imageResolver]="folderImageResolver"
+                    (preview)="showFile($event)"
+                    (folderChange)="onFolderChanged($event)"
+                    (nodeClick)="onNodeClicked($event)">
+                    <empty-folder-content>
+                        <template>
+                            <div style="text-align: center">
+                                <h2>No patient data available.</h2>
+                                <p>
+                                    <img src="/app/img/users.png" style="width: 200px;">
+                                </p>
+                            </div>
+                        </template>
+                    </empty-folder-content>
+                    <!--
+                    <content-columns>
+                        <content-column key="name" type="image"></content-column>
+                        <content-column
+                            title="First Name"
+                            key="properties.hc:firstName"
+                            sortable="true"
+                            class="desktop-only">
+                        </content-column>
+                        <content-column
+                            title="Last Name"
+                            key="properties.hc:lastName"
+                            sortable="true"
+                            class="desktop-only">
+                        </content-column>
+                        <content-column
+                            title="Doctor"
+                            key="properties.hc:doctor"
+                            sortable="true"
+                            class="desktop-only">
+                        </content-column>
+                        <content-column
+                            title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                            key="createdAt"
+                            type="date"
+                            format="shortDate"
+                            sortable="true"
+                            class="desktop-only">
+                        </content-column>
+                    </content-columns>
+                    -->
+                    <content-actions>
+                        <!-- folder actions -->
+                        <content-action
+                            target="folder"
+                            title="View details"
+                            (execute)="patientDetails($event)">
+                        </content-action>
+                        <content-action *ngIf="isAdmin()"
+                            target="folder"
+                            title="Schedule an appointment"
+                            (execute)="scheduleAppointment($event)">
+                        </content-action>
+                        <content-action target="folder"
+                                        title="Add tag"
+                                        (execute)="addTag($event)">
+                        </content-action>
+                        <content-action *ngIf="isAdmin()"
+                            target="folder"
+                            title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                            handler="delete">
+                        </content-action>
+                        <!-- document actions -->
+                        <content-action
+                            target="document"
+                            title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                            handler="download">
+                        </content-action>
+                        <content-action *ngIf="isAdmin()"
+                            target="document"
+                            title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                            handler="delete">
+                        </content-action>
+                    </content-actions>
+                </alfresco-document-list>
+                <alfresco-pagination
+                    [provider]="documentList.data"
+                    [supportedPageSizes]="[5, 10, 15, 20]">
+                </alfresco-pagination>
+            </alfresco-upload-drag-area>
+        </div>
+    </div>
+    <div *ngIf="selectedNodeProperties" class="mdl-cell mdl-cell--2-col mdl-shadow--2dp">
+        <div class="user-image-wrap">
+            <img _ngcontent-ksd-12="" class="image-cell" onerror="this.onerror=null;this.src='app/img/anonymous.gif';"
+                 [src]="detailsAvatarImage">
+        </div>
+        <ul class="mdl-list">
+            <li *ngFor="let prop of selectedNodeProperties" class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content">
+                    <span [title]="prop.fullName">{{prop.name}}</span>
+                    <span class="mdl-list__item-sub-title">{{prop.value}}</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Example for creating a custom folder type with properties -->
+<!--
+<div class="mdl-grid">
+    <div class="md-cell mdl-cell--12-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="patient-folderName" [(ngModel)]="newPatient.folderName">
+            <label class="mdl-textfield__label" for="patient-folderName">Folder Name</label>
+        </div>
+    </div>
+    <div class="md-cell mdl-cell--12-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="patient-firstName" [(ngModel)]="newPatient.firstName">
+            <label class="mdl-textfield__label" for="patient-firstName">First Name</label>
+        </div>
+    </div>
+    <div class="md-cell mdl-cell--12-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="patient-lastName" [(ngModel)]="newPatient.lastName">
+            <label class="mdl-textfield__label" for="patient-lastName">Last Name</label>
+        </div>
+    </div>
+    <div class="md-cell mdl-cell--12-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="patient-doctor" [(ngModel)]="newPatient.doctor">
+            <label class="mdl-textfield__label" for="patient-doctor">Doctor</label>
+        </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+        <button
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+            (click)="onCreateNewPatientClick()">
+            Create Patient
+        </button>
+    </div>
+</div>
+-->
+
+<dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Set Tags</h4>
+    <div class="mdl-dialog__content">
+        <div class="md-cell mdl-cell--12-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="node-tags" >
+                <label class="mdl-textfield__label" for="node-tags">Tags</label>
+            </div>
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button save">Save</button>
+        <button type="button" class="mdl-button close">Close</button>
+    </div>
+</dialog>
+
+<!--
+For debugging and data visualisation purposes,
+will be removed during future revisions
+-->
+
+
+<context-menu-holder></context-menu-holder>
+
+<alfresco-viewer [(showViewer)]="fileShowed"
+                 [urlFile]="urlFile"
+                 [fileName]="fileName"
+                 [mimeType]="mimeType"
+                 [overlayMode]="true">
+    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+</alfresco-viewer>
+
+<file-uploading-dialog #fileDialog></file-uploading-dialog>
