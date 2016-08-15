@@ -53,6 +53,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     private _isDialogMinimized: boolean = false;
 
+    private listSubscription: any;
+    private counterSubscription: any;
+
     constructor(private cd: ChangeDetectorRef,
                 translate: AlfrescoTranslationService,
                 private _uploaderService: UploadService) {
@@ -61,7 +64,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this._uploaderService.filesUpload$) {
-            this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
+            this.listSubscription = this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
                 this.filesUploadingList = fileList;
                 if (this.filesUploadingList.length > 0) {
                     this.isDialogActive = true;
@@ -70,7 +73,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
             });
         }
         if (this._uploaderService.totalCompleted$) {
-            this._uploaderService.totalCompleted$.subscribe((total: number) => {
+            this.counterSubscription = this._uploaderService.totalCompleted$.subscribe((total: number) => {
                 this.totalCompleted = total;
                 this.cd.detectChanges();
             });
@@ -92,6 +95,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.listSubscription.unsubscribe();
+        this.counterSubscription.unsubscribe();
         this.cd.detach();
     }
 }
