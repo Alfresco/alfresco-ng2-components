@@ -92,11 +92,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
     }
 
-    static isReadOnlyType(type: string) {
-        return FormFieldTypes.READONLY_TYPES.indexOf(type) > -1;
-    }
-
-    private parseValue(json: any): any {
+    parseValue(json: any): any {
         let value = json.value;
 
         /*
@@ -151,10 +147,10 @@ export class FormFieldModel extends FormWidgetModel {
             if (entry.length > 0) {
                 this.form.values[this.id] = entry[0];
             } else if (this.options.length > 0) {
-                this.form.values[this.id] = this.options[0].id;
+                this.form.values[this.id] = this.options[0];
             }
         } else {
-            if (!FormFieldModel.isReadOnlyType(this.type)) {
+            if (!FormFieldTypes.isReadOnlyType(this.type)) {
                 this.form.values[this.id] = this.value;
             }
         }

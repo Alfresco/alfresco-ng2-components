@@ -23,12 +23,12 @@ import { FormOutcomeModel } from './form-outcome.model';
 
 export class FormModel {
 
-    private UNSET_TASK_NAME: string = 'Nameless task';
+    static UNSET_TASK_NAME: string = 'Nameless task';
 
     private _id: string;
     private _name: string;
     private _taskId: string;
-    private _taskName: string = this.UNSET_TASK_NAME;
+    private _taskName: string = FormModel.UNSET_TASK_NAME;
 
     get id(): string {
         return this._id;
@@ -79,7 +79,7 @@ export class FormModel {
             this._id = json.id;
             this._name = json.name;
             this._taskId = json.taskId;
-            this._taskName = json.taskName || json.name || this.UNSET_TASK_NAME;
+            this._taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
@@ -89,7 +89,7 @@ export class FormModel {
                 return model;
             });
 
-            this.fields = (json.fields || json.formDefinition.fields || []).map(obj => new ContainerModel(this, obj));
+            this.fields = this.parseContainerFields(json);
 
             if (data) {
                 this.loadData(data);
@@ -125,6 +125,20 @@ export class FormModel {
                 }
             }
         }
+    }
+
+    private parseContainerFields(json: any): ContainerModel[] {
+        let fields = [];
+
+        if (json) {
+            if (json.fields) {
+                fields = json.fields;
+            } else if (json.formDefinition && json.formDefinition.fields) {
+                fields = json.formDefinition.fields;
+            }
+        }
+
+        return fields.map(obj => new ContainerModel(this, obj));
     }
 
     // Loads external data and overrides field values

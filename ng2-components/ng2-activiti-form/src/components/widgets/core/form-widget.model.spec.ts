@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-export class FormFieldTypes {
-    static CONTAINER: string = 'container';
-    static GROUP: string = 'group';
-    static DROPDOWN: string = 'dropdown';
-    static HYPERLINK: string = 'hyperlink';
-    static RADIO_BUTTONS: string = 'radio-buttons';
-    static DISPLAY_VALUE: string = 'readonly';
-    static READONLY_TEXT: string = 'readonly-text';
+import { it, describe, expect } from '@angular/core/testing';
+import { FormModel } from './form.model';
+import { FormWidgetModel } from './form-widget.model';
 
-    static READONLY_TYPES: string[] = [
-        FormFieldTypes.HYPERLINK,
-        FormFieldTypes.DISPLAY_VALUE,
-        FormFieldTypes.READONLY_TEXT
-    ];
+describe('FormWidgetModel', () => {
 
-    static isReadOnlyType(type: string) {
-        return FormFieldTypes.READONLY_TYPES.indexOf(type) > -1;
-    }
-}
+    it('should store the form reference', () => {
+        let form = new FormModel();
+        let model = new FormWidgetModel(form, null);
+        expect(model.form).toBe(form);
+    });
+
+    it('should store original json', () => {
+        let json = {};
+        let model = new FormWidgetModel(null, json);
+        expect(model.json).toBe(json);
+    });
+
+});

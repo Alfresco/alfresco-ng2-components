@@ -83,11 +83,13 @@ export class ContainerModel extends FormWidgetModel {
                 this.columns.push(col);
             }
 
-            Object.keys(json.fields).map(key => {
-                let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
-                let col = this.columns[parseInt(key, 10) - 1];
-                col.fields = fields;
-            });
+            if (json.fields) {
+                Object.keys(json.fields).map(key => {
+                    let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
+                    let col = this.columns[parseInt(key, 10) - 1];
+                    col.fields = fields;
+                });
+            }
 
             this.isExpanded = !this.isCollapsedByDefault();
         }
