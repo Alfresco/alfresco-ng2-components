@@ -30,9 +30,7 @@ import { DisplayTextWidget } from './display-text/display-text.widget';
 
 // core
 export * from './widget.component';
-
-// model
-export * from './widget.model';
+export * from './core/index';
 
 // containers
 export * from './tabs/tabs.widget';

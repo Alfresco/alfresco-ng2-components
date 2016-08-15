@@ -15,29 +15,18 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit } from '@angular/core';
-import { FormFieldModel } from './core/index';
+export class FormFieldTypes {
+    static CONTAINER: string = 'container';
+    static GROUP: string = 'group';
+    static DROPDOWN: string = 'dropdown';
+    static HYPERLINK: string = 'hyperlink';
+    static RADIO_BUTTONS: string = 'radio-buttons';
+    static DISPLAY_VALUE: string = 'readonly';
+    static READONLY_TEXT: string = 'readonly-text';
 
-declare let __moduleName: string;
-declare var componentHandler;
-
-/**
- * Base widget component.
- */
-export class WidgetComponent implements AfterViewInit {
-
-    @Input()
-    field: FormFieldModel;
-
-    hasField() {
-        return this.field ? true : false;
-    }
-
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
-
+    static READONLY_TYPES: string[] = [
+        FormFieldTypes.HYPERLINK,
+        FormFieldTypes.DISPLAY_VALUE,
+        FormFieldTypes.READONLY_TEXT
+    ];
 }

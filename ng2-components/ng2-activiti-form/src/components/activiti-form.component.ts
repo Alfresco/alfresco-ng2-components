@@ -26,7 +26,7 @@ import {
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 
 import { FormService } from './../services/form.service';
-import { FormModel, FormOutcomeModel } from './widgets/widget.model';
+import { FormModel, FormOutcomeModel } from './widgets/core/index';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
 import { ContainerWidget } from './widgets/container/container.widget';

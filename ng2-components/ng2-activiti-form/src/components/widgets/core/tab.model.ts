@@ -15,29 +15,29 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit } from '@angular/core';
-import { FormFieldModel } from './core/index';
+import { FormWidgetModel } from './form-widget.model';
+import { ContainerModel } from './container.model';
+import { FormModel } from './form.model';
 
-declare let __moduleName: string;
-declare var componentHandler;
+export class TabModel extends FormWidgetModel {
 
-/**
- * Base widget component.
- */
-export class WidgetComponent implements AfterViewInit {
+    id: string;
+    title: string;
+    visibilityCondition: any;
 
-    @Input()
-    field: FormFieldModel;
+    fields: ContainerModel[] = [];
 
-    hasField() {
-        return this.field ? true : false;
+    hasContent(): boolean {
+        return this.fields && this.fields.length > 0;
     }
 
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
+    constructor(form: FormModel, json?: any) {
+        super(form, json);
+
+        if (json) {
+            this.id = json.id;
+            this.title = json.title;
+            this.visibilityCondition = json.visibilityCondition;
         }
     }
-
 }

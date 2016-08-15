@@ -15,29 +15,14 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit } from '@angular/core';
-import { FormFieldModel } from './core/index';
+import { FormFieldModel } from './form-field.model';
 
-declare let __moduleName: string;
-declare var componentHandler;
+export class ContainerColumnModel {
 
-/**
- * Base widget component.
- */
-export class WidgetComponent implements AfterViewInit {
+    size: number = 12;
+    fields: FormFieldModel[] = [];
 
-    @Input()
-    field: FormFieldModel;
-
-    hasField() {
-        return this.field ? true : false;
+    hasFields(): boolean {
+        return this.fields && this.fields.length > 0;
     }
-
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
-
 }

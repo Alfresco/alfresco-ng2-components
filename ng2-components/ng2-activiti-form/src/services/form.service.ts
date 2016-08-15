@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { FormValues } from './../components/widgets/widget.model';
+import { FormValues } from './../components/widgets/core/index';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Injectable()

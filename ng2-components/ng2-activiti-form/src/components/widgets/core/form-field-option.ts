@@ -15,29 +15,7 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit } from '@angular/core';
-import { FormFieldModel } from './core/index';
-
-declare let __moduleName: string;
-declare var componentHandler;
-
-/**
- * Base widget component.
- */
-export class WidgetComponent implements AfterViewInit {
-
-    @Input()
-    field: FormFieldModel;
-
-    hasField() {
-        return this.field ? true : false;
-    }
-
-    ngAfterViewInit() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
-
+export interface FormFieldOption {
+    id: string;
+    name: string;
 }
