@@ -45,6 +45,9 @@ export class ViewerComponent {
     @Input()
     showViewer: boolean = true;
 
+    @Input()
+    showToolbar: boolean = true;
+
     @Output()
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

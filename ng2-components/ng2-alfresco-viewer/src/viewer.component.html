@@ -48,7 +48,7 @@
                         <div id="viewer-content-container" class="viewer-content-container mdl-cell" >
                         <!-- Start View Switch-->
                             <div *ngIf="isPdf()">
-                                <pdf-viewer [urlFile]="urlFile" [nameFile]="displayName" ></pdf-viewer>
+                                <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFile" [nameFile]="displayName" ></pdf-viewer>
                             </div>
                             <div class="center-element" *ngIf="isImage()" >
                                 <img-viewer [urlFile]="urlFile" [nameFile]="displayName"></img-viewer>
