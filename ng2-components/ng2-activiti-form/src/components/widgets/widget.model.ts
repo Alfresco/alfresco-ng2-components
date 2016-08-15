@@ -32,6 +32,8 @@ export class FormFieldTypes {
     static READONLY_TEXT: string = 'readonly-text';
 
     static READONLY_TYPES: string[] = [
+        FormFieldTypes.HYPERLINK,
+        FormFieldTypes.DISPLAY_VALUE,
         FormFieldTypes.READONLY_TEXT
     ];
 }
@@ -63,13 +65,13 @@ export interface FormFieldOption {
 export class FormFieldModel extends FormWidgetModel {
 
     private _value: string;
+    private _readOnly: boolean = false;
 
     fieldType: string;
     id: string;
     name: string;
     type: string;
     required: boolean;
-    readOnly: boolean;
     overrideId: boolean;
     tab: string;
     colspan: number = 1;
@@ -94,6 +96,13 @@ export class FormFieldModel extends FormWidgetModel {
         this.updateForm();
     }
 
+    get readOnly(): boolean {
+        if (this.form && this.form.readOnly) {
+            return true;
+        }
+        return this._readOnly;
+    }
+
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
@@ -103,7 +112,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.name = json.name;
             this.type = json.type;
             this.required = <boolean> json.required;
-            this.readOnly = <boolean> json.readOnly;
+            this._readOnly = <boolean> json.readOnly;
             this.overrideId = <boolean> json.overrideId;
             this.tab = json.tab;
             this.restUrl = json.restUrl;
@@ -122,6 +131,10 @@ export class FormFieldModel extends FormWidgetModel {
             this._value = this.parseValue(json);
             this.updateForm();
         }
+    }
+
+    static isReadOnlyType(type: string) {
+        return FormFieldTypes.READONLY_TYPES.indexOf(type) > -1;
     }
 
     private parseValue(json: any): any {
@@ -186,10 +199,6 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.value;
             }
         }
-    }
-
-    static isReadOnlyType(type: string) {
-        return FormFieldTypes.READONLY_TYPES.indexOf(type) > -1;
     }
 }
 
@@ -352,6 +361,7 @@ export class FormModel {
         return this._taskName;
     }
 
+    readOnly: boolean = false;
     tabs: TabModel[] = [];
     fields: ContainerModel[] = [];
     outcomes: FormOutcomeModel[] = [];
@@ -377,6 +387,7 @@ export class FormModel {
     }
 
     constructor(json?: any, data?: any, saveOption?: any, readOnly: boolean = false) {
+        this.readOnly = readOnly;
         if (json) {
             this._json = json;
 
