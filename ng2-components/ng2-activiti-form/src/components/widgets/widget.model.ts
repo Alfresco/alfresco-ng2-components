@@ -30,6 +30,10 @@ export class FormFieldTypes {
     static RADIO_BUTTONS: string = 'radio-buttons';
     static DISPLAY_VALUE: string = 'readonly';
     static READONLY_TEXT: string = 'readonly-text';
+
+    static READONLY_TYPES: string[] = [
+        FormFieldTypes.READONLY_TEXT
+    ];
 }
 
 export class FormWidgetModel {
@@ -178,18 +182,14 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.options[0].id;
             }
         } else {
-            if (!this.isIngonreType()) {
+            if (!FormFieldModel.isReadOnlyType(this.type)) {
                 this.form.values[this.id] = this.value;
             }
         }
     }
 
-    private isIngonreType(): boolean {
-        if (this.type === FormFieldTypes.READONLY_TEXT) {
-            return true;
-        } else {
-            return false;
-        }
+    static isReadOnlyType(type: string) {
+        return FormFieldTypes.READONLY_TYPES.indexOf(type) > -1;
     }
 }
 
@@ -387,7 +387,6 @@ export class FormModel {
 
             let tabCache: WidgetModelCache<TabModel> = {};
 
-            // this.tabs = (json.tabs || []).map(t => new TabModel(this, t));
             this.tabs = (json.tabs || []).map(t => {
                 let model = new TabModel(this, t);
                 tabCache[model.id] = model;
@@ -397,7 +396,7 @@ export class FormModel {
             this.fields = (json.fields || json.formDefinition.fields || []).map(obj => new ContainerModel(this, obj));
 
             if (data) {
-                this.updateFormValueWithProvaidedDataModel(data);
+                this.loadData(data);
             }
 
             for (let i = 0; i < this.fields.length; i++) {
@@ -432,7 +431,9 @@ export class FormModel {
         }
     }
 
-    private updateFormValueWithProvaidedDataModel(data: any) {
+    // Loads external data and overrides field values
+    // Typically used when form definition and form data coming from different sources
+    private loadData(data: any) {
         for (let i = 0; i < this.fields.length; i++) {
             let containerModel = this.fields[i];
             if (containerModel) {
