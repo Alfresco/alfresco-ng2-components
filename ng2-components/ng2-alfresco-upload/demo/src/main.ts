@@ -106,7 +106,7 @@ export class MyDemoApp implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin', ['ECM']).subscribe(
+        this.authService.login('admin', 'admin', 'ECM').subscribe(
             token => {
                 console.log(token);
                 this.token = token;

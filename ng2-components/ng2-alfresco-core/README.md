@@ -92,6 +92,66 @@ export class MyComponent implements OnInit {
 - Translation Service
 - Context Menu Service
 
+#### Authentication Service
+
+The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
+
+```javascript
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
+
+@Component({
+    selector: 'my-app',
+    template: `
+               <div *ngIf="!authenticated" >
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin
+               </div>
+               <div *ngIf="authenticated">
+                    Authentication successfull to ip {{ ecmHost }} with user: admin, admin, your token is {{ token }}
+               </div>`
+})
+class MyDemoApp {
+    authenticated: boolean = false;
+
+    ecmHost: string = 'http://127.0.0.1:8080';
+
+    token: string;
+
+    constructor(public alfrescoAuthenticationService: AlfrescoAuthenticationService,
+                private alfrescoSettingsService: AlfrescoSettingsService) {
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.alfrescoAuthenticationService.login('admin', 'admin', 'ECM').subscribe(
+            token => {
+                this.token = token.ticket;
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
+    }
+}
+bootstrap(MyDemoApp, [
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS
+]);
+
+```
+
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:

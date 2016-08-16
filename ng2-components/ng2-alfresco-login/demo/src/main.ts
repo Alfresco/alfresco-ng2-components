@@ -62,7 +62,7 @@ export class AppComponent {
 
     public status: string = '';
 
-    public providers: string [] = ['ECM'];
+    public providers: string = 'ECM';
 
     constructor(public auth: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
@@ -84,18 +84,22 @@ export class AppComponent {
     }
 
     toggleECM(checked) {
-        if (checked) {
-            this.providers[0] = 'ECM';
+        if (checked && this.providers === 'BPM') {
+            this.providers = 'ALL';
+        } else if (checked) {
+            this.providers = 'ECM';
         } else {
-            this.providers[0] = '';
+            this.providers = undefined;
         }
     }
 
     toggleBPM(checked) {
-        if (checked) {
-            this.providers[1] = 'BPM';
+        if (checked && this.providers === 'ECM') {
+            this.providers = 'ALL';
+        } else if (checked) {
+            this.providers = 'BPM';
         } else {
-            this.providers[1] = '';
+            this.providers = undefined;
         }
     }
 }

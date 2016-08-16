@@ -144,7 +144,6 @@ class DocumentListDemo implements OnInit {
     authenticated: boolean;
 
     ecmHost: string = 'http://devproducts-platform.alfresco.me';
-    // ecmHost: string = 'http://127.0.0.1:8080';
 
     token: string;
 
@@ -190,7 +189,7 @@ class DocumentListDemo implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin', ['ECM']).subscribe(
+        this.authService.login('admin', 'admin', 'ECM').subscribe(
             token => {
                 console.log(token);
                 this.token = token;
