@@ -20,6 +20,9 @@ import { FormModel } from './form.model';
 
 export class FormOutcomeModel extends FormWidgetModel {
 
+    static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
+    static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
+
     private _id: string;
     private _name: string;
 
