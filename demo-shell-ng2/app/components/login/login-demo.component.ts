@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {AlfrescoLoginComponent} from 'ng2-alfresco-login';
+import {ROUTER_DIRECTIVES, Router} from '@angular/router';
 
 declare let __moduleName: string;
 
@@ -30,7 +30,7 @@ declare let __moduleName: string;
 })
 export class LoginDemoComponent {
 
-    providers: string [] = ['ECM'];
+    providers: string = 'ECM';
 
     constructor(public router: Router) {
     }
@@ -45,28 +45,22 @@ export class LoginDemoComponent {
     }
 
     toggleECM(checked) {
-        if (checked) {
-            this.providers.push('ECM');
+        if (checked && this.providers === 'BPM') {
+            this.providers = 'ALL';
+        } else if (checked) {
+            this.providers = 'ECM';
         } else {
-            this.removeElement('ECM');
+            this.providers = undefined;
         }
     }
 
     toggleBPM(checked) {
-        if (checked) {
-            this.providers.push('BPM');
+        if (checked && this.providers === 'ECM') {
+            this.providers = 'ALL';
+        } else if (checked) {
+            this.providers = 'BPM';
         } else {
-            this.removeElement('BPM');
+            this.providers = undefined;
         }
     }
-
-    removeElement(el: string) {
-        for (let i = 0; i < this.providers.length; i++) {
-            if (this.providers[i] === el) {
-                this.providers.splice(i, 1);
-                return false;
-            }
-        }
-    }
-
 }

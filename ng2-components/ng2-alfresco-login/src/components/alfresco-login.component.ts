@@ -48,7 +48,7 @@ export class AlfrescoLoginComponent {
     backgroundImageUrl: string;
 
     @Input()
-    providers: string [] ;
+    providers: string ;
 
     @Output()
     onSuccess = new EventEmitter();

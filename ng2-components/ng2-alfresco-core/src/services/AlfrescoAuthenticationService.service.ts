@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { Http } from '@angular/http';
-import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
-import { AuthenticationFactory } from '../factory/AuthenticationFactory';
-import { AbstractAuthentication } from '../interface/authentication.interface';
-import { AlfrescoAuthenticationBase } from './AlfrescoAuthenticationBase.service';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
+import {AlfrescoSettingsService} from './AlfrescoSettingsService.service';
 
 declare let AlfrescoApi: any;
 
@@ -29,177 +25,136 @@ declare let AlfrescoApi: any;
  * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
  */
 @Injectable()
-export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
+export class AlfrescoAuthenticationService {
 
-    private providersInstance: AbstractAuthentication[] = [];
+    alfrescoApi: any;
+
+    TYPE: string = 'ECM';
+
+    /**A
+     * Constructor
+     * @param alfrescoSetting
+     */
+    constructor(public alfrescoSetting: AlfrescoSettingsService) {
+
+        if (!this.isLoggedIn()) {
+            this.alfrescoApi = new AlfrescoApi({
+                host: alfrescoSetting.ecmHost,
+                hostActiviti: alfrescoSetting.bpmHost
+            });
+        } else {
+            this.alfrescoApi = new AlfrescoApi({
+                ticket: this.getTicket(),
+                host: alfrescoSetting.ecmHost,
+                hostActiviti: alfrescoSetting.bpmHost
+            });
+        }
+    }
 
     /**
-     * Constructor
-     * @param settingsService
-     * @param http
+     * The method return tru if the user is logged in
+     * @returns {boolean}
      */
-    constructor(settingsService: AlfrescoSettingsService,
-                http: Http) {
-        super(settingsService, http);
-        if (settingsService) {
-            this.createProviderInstance(settingsService.getProviders());
-        }
+    isLoggedIn(): boolean {
+        return !!this.getTicket();
     }
 
     /**
      * Method to delegate to POST login
      * @param username
      * @param password
-     * @param providers
+     * @param provider
      * @returns {Observable<R>|Observable<T>}
      */
-    login(username: string, password: string, providers: string []): Observable<string> {
-        localStorage.clear();
-        if (providers.length === 0) {
-            return Observable.throw('No providers defined');
-        } else {
-            return this.performeLogin(username, password, providers);
-        }
+    login(username: string, password: string, provider: string) {
+
+        this.TYPE =  provider || this.TYPE;
+        return Observable.fromPromise(this.callApiLogin(username, password, provider))
+            .map((response: any) => {
+                this.saveTicket(response);
+                return {type: provider, ticket: response};
+            })
+            .catch(this.handleError);
     }
 
     /**
-     * Perform a login on behalf of the user for the different provider instance
-     *
+     * Initialize the alfresco Api with user and password end call the login method
      * @param username
      * @param password
-     * @param providers
-     * @returns {Observable<R>|Observable<T>}
+     * @param provider
+     * @returns {*|Observable<any>}
      */
-    private performeLogin(username: string, password: string, providers: string []): Observable<any> {
-        let observableBatch = [];
-        providers.forEach((provider) => {
-            let auth: AbstractAuthentication = this.findProviderInstance(provider);
-            if (auth) {
-                observableBatch.push(auth.login(username, password));
-            } else {
-                observableBatch.push(Observable.throw('Wrong provider defined'));
-            }
+    private callApiLogin(username: string, password: string, provider: string) {
+        this.alfrescoApi = new AlfrescoApi({
+            username: username,
+            password: password,
+            host: this.alfrescoSetting.ecmHost,
+            hostActiviti: this.alfrescoSetting.bpmHost
         });
-        return Observable.create(observer => {
-            Observable.forkJoin(observableBatch).subscribe(
-                (response: any[]) => {
-                    response.forEach((res) => {
-                        this.performeSaveTicket(res.type, res.ticket);
-                    });
-                    observer.next(response);
-                },
-                (err: any) => {
-                    observer.error(new Error(err));
-                });
-        });
-    }
 
-    /**
-     * The method return true if the user is logged in
-     * @returns {boolean}
-     */
-    isLoggedIn(type: string = 'ECM'): boolean {
-        let auth: AbstractAuthentication = this.findProviderInstance(type);
-        if (auth) {
-            return auth.isLoggedIn();
-        }
-        return false;
-    }
-
-    getAlfrescoApi(): any {
-        return  this.findProviderInstance('ECM').alfrescoApi;
-    }
-
-    /**
-     * Return the ticket stored in the localStorage of the specific provider type
-     * @param type
-     */
-    public getTicket(type: string = 'ECM'): string {
-        let auth: AbstractAuthentication = this.findProviderInstance(type);
-        if (auth) {
-            return auth.getTicket();
-        }
-        return '';
-    }
-
-    /**
-     * Save the token calling the method of the specific provider type
-     * @param type - providerName
-     * @param ticket
-     */
-   private performeSaveTicket(type: string, ticket: string) {
-        let auth: AbstractAuthentication = this.findProviderInstance(type);
-        if (auth) {
-            auth.saveTicket(ticket);
-        }
+        return this.alfrescoApi.login();
     }
 
     /**
      * The method remove the ticket from the local storage
-     * @returns {Observable<T>}
-     */
-    public logout(): Observable<string> {
-        if (this.providersInstance.length === 0) {
-            return Observable.throw('No providers defined');
-        } else {
-            return this.performLogout();
-        }
-    }
-
-    /**
-     * Perform a logout on behalf of the user for the different provider instance
      *
      * @returns {Observable<R>|Observable<T>}
      */
-    private performLogout(): Observable<any> {
-        let observableBatch = [];
-        this.providersInstance.forEach((authInstance) => {
-            if (authInstance.isLoggedIn()) {
-                observableBatch.push(authInstance.logout());
-            }
-        });
-        return Observable.create(observer => {
-            Observable.forkJoin(observableBatch).subscribe(
-                (response: any[]) => {
-                    observer.next(response);
-                },
-                (err: any) => {
-                    observer.error(new Error(err));
-                });
-        });
+    public logout() {
+        return Observable.fromPromise(this.callApiLogout())
+            .map(res => <any> res)
+            .do(response => {
+                this.removeTicket();
+                return response;
+            })
+            .catch(this.handleError);
     }
 
     /**
-     * Create the provider instance using a Factory
-     * @param providers - list of the providers like ECM BPM
+     * Remove the login ticket from localStorage
      */
-    public createProviderInstance(providers: string []): void {
-        if (this.providersInstance.length === 0) {
-            providers.forEach((provider) => {
-                let authInstance: AbstractAuthentication = AuthenticationFactory.createAuth(
-                    this.alfrescoSetting, this.http, provider);
-                if (authInstance) {
-                    this.providersInstance.push(authInstance);
-                }
-            });
+    public removeTicket(): void {
+        localStorage.removeItem(`ticket-${this.TYPE}`);
+    }
+
+    /**
+     *
+     * @returns {*|Observable<string>|Observable<any>|Promise<T>}
+     */
+    private callApiLogout(): Promise<any> {
+        return this.alfrescoApi.logout();
+    }
+
+
+    /**
+     * The method return the ticket stored in the localStorage
+     * @returns ticket
+     */
+    public getTicket(): string {
+        return localStorage.getItem(`ticket-${this.TYPE}`);
+    }
+
+    /**
+     * The method save the ticket in the localStorage
+     * @param ticket
+     */
+    public saveTicket(ticket): void {
+        if (ticket) {
+            localStorage.setItem(`ticket-${this.TYPE}`, ticket);
         }
     }
 
     /**
-     * Find the provider by type and return it
-     * @param type
-     * @returns {AbstractAuthentication}
+     * The method write the error in the console browser
+     * @param error
+     * @returns {ErrorObservable}
      */
-    private findProviderInstance(type: string): AbstractAuthentication {
-        let auth: AbstractAuthentication = null;
-        if (this.providersInstance && this.providersInstance.length !== 0) {
-            this.providersInstance.forEach((provider) => {
-                if (provider.TYPE === type.toUpperCase()) {
-                    auth = provider;
-                }
-            });
-        }
-        return auth;
+    public handleError(error: any): Observable<any> {
+        console.error('Error when logging in', error);
+        return Observable.throw(error || 'Server error');
     }
 
+    getAlfrescoApi(): any {
+        return  this.alfrescoApi;
+    }
 }
