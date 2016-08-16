@@ -126,6 +126,9 @@ class MyDemoApp {
 
     constructor(public alfrescoAuthenticationService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
+
+        alfrescoSettingsService.ecmHost = this.ecmHost;
+        alfrescoSettingsService.setProviders('ECM');
     }
 
     ngOnInit() {
@@ -133,7 +136,7 @@ class MyDemoApp {
     }
 
     login() {
-        this.alfrescoAuthenticationService.login('admin', 'admin', 'ECM').subscribe(
+        this.alfrescoAuthenticationService.login('admin', 'admin').subscribe(
             token => {
                 this.token = token.ticket;
                 this.authenticated = true;

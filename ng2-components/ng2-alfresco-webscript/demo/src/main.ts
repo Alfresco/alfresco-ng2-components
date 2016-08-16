@@ -79,6 +79,8 @@ class WebscriptDemo implements OnInit {
                 private alfrescoSettingsService: AlfrescoSettingsService) {
 
         alfrescoSettingsService.ecmHost = this.ecmHost;
+        alfrescoSettingsService.setProviders('ECM');
+
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -98,7 +100,7 @@ class WebscriptDemo implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin', ['ECM']).subscribe(
+        this.authService.login('admin', 'admin').subscribe(
             token => {
                 console.log(token);
                 this.token = token;

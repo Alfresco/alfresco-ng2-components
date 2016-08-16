@@ -17,15 +17,15 @@
 
 import {it, describe} from '@angular/core/testing';
 import {ReflectiveInjector, provide} from '@angular/core';
-import {AlfrescoSettingsService} from './AlfrescoSettingsService.service';
-import {AlfrescoAuthenticationService} from './AlfrescoAuthenticationService.service';
+import {AlfrescoSettingsService} from './AlfrescoSettings.service';
+import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';
 import {XHRBackend, HTTP_PROVIDERS} from '@angular/http';
 import {MockBackend} from '@angular/http/testing';
 
 declare var AlfrescoApi: any;
 
 describe('AlfrescoAuthentication', () => {
-    let injector, fakePromiseECM, fakePromiseBPM, service, fakePromiseBPMECM;
+    let injector, fakePromiseECM, fakePromiseBPM, authService, fakePromiseBPMECM;
 
     fakePromiseECM = new Promise(function (resolve, reject) {
         resolve(
@@ -90,16 +90,15 @@ describe('AlfrescoAuthentication', () => {
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
-            this.providers = 'ECM';
-            service = injector.get(AlfrescoAuthenticationService);
+            authService = injector.get(AlfrescoAuthenticationService);
         });
 
         it('should return an ECM ticket after the login done', (done) => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
 
-            service.login('fake-username', 'fake-password', this.providers).subscribe(() => {
-                expect(service.isLoggedIn()).toBe(true);
-                expect(service.getTicket()).toEqual('fake-post-ticket-ECM');
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicket()).toEqual('fake-post-ticket-ECM');
                 done();
             });
         });
@@ -108,12 +107,12 @@ describe('AlfrescoAuthentication', () => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin')
                 .and.returnValue(Promise.reject('fake invalid credentials'));
 
-            service.login('fake-wrong-username', 'fake-wrong-password', this.providers).subscribe(
+            authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
-                    expect(service.isLoggedIn()).toBe(false);
-                    expect(service.getTicket()).toBeUndefined();
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.getTicket()).toBeUndefined();
                     done();
                 });
         });
@@ -121,8 +120,7 @@ describe('AlfrescoAuthentication', () => {
         it('should login in the ECM if no provider are defined calling the login', (done) => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseECM);
 
-            service.login('fake-username', 'fake-password').subscribe(() => {
-                service.TYPE = 'ECM';
+            authService.login('fake-username', 'fake-password').subscribe(() => {
                 done();
             });
         });
@@ -131,9 +129,9 @@ describe('AlfrescoAuthentication', () => {
             localStorage.setItem('ticket-ECM', 'fake-post-ticket-ECM');
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(fakePromiseECM);
 
-            service.logout().subscribe(() => {
-                expect(service.isLoggedIn()).toBe(false);
-                expect(service.getTicket()).toBeUndefined();
+            authService.logout().subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(false);
+                expect(authService.getTicket()).toBeUndefined();
                 expect(localStorage.getItem('ticket-ECM')).toBeUndefined();
                 done();
             });
@@ -141,35 +139,38 @@ describe('AlfrescoAuthentication', () => {
 
         it('should logout only if the provider is already logged in', (done) => {
             localStorage.setItem('ticket-ECM', 'fake-post-ticket-ECM');
+
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(fakePromiseECM);
-            service.saveTicket('fake-ticket-ECM');
-            service.logout().subscribe(() => {
-                expect(service.isLoggedIn()).toBe(false);
-                expect(service.getTicket()).toBeUndefined();
+
+            authService.saveTicket('fake-ticket-ECM');
+
+            authService.logout().subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(false);
+                expect(authService.getTicket()).toBeUndefined();
                 expect(localStorage.getItem('ticket-ECM')).toBeUndefined();
                 done();
             });
         });
 
         it('should return false if the user is not logged in', () => {
-            expect(service.isLoggedIn()).toBe(false);
+            expect(authService.isLoggedIn()).toBe(false);
         });
     });
 
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
-            this.providers = 'BPM';
-            service = injector.get(AlfrescoAuthenticationService);
+            authService = injector.get(AlfrescoAuthenticationService);
+            authService.providers = 'BPM';
         });
 
 
         it('should return an BPM ticket after the login done', (done) => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseBPM);
 
-            service.login('fake-username', 'fake-password', this.providers).subscribe(() => {
-                expect(service.isLoggedIn()).toBe(true);
-                expect(service.getTicket()).toEqual('fake-post-ticket-BPM');
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicket()).toEqual('fake-post-ticket-BPM');
                 done();
             });
         });
@@ -177,12 +178,12 @@ describe('AlfrescoAuthentication', () => {
         it('should return ticket undefined when the credentials are wrong', (done) => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(Promise.reject('fake invalid credentials'));
 
-            service.login('fake-wrong-username', 'fake-wrong-password', this.providers).subscribe(
+            authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
-                    expect(service.isLoggedIn()).toBe(false);
-                    expect(service.getTicket()).toBeUndefined();
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.getTicket()).toBeUndefined();
                     done();
                 });
         });
@@ -190,12 +191,12 @@ describe('AlfrescoAuthentication', () => {
         it('should return a ticket undefined after logout', (done) => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseBPM);
 
-            service.login('fake-username', 'fake-password', this.providers).subscribe(() => {
+            authService.login('fake-username', 'fake-password').subscribe(() => {
                 spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(fakePromiseBPM);
 
-                service.logout().subscribe(() => {
-                    expect(service.isLoggedIn()).toBe(false);
-                    expect(service.getTicket()).toBeUndefined();
+                authService.logout().subscribe(() => {
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.getTicket()).toBeUndefined();
                     expect(localStorage.getItem('ticket-BPM')).toBeUndefined();
                     done();
                 });
@@ -206,7 +207,7 @@ describe('AlfrescoAuthentication', () => {
             localStorage.setItem('ticket-BPM', 'fake-post-ticket-BPM');
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(Promise.reject('fake logout error'));
 
-            service.logout().subscribe(
+            authService.logout().subscribe(
                 (res) => {
                 },
                 (err: any) => {
@@ -220,26 +221,16 @@ describe('AlfrescoAuthentication', () => {
     describe('when the setting is both ECM and BPM ', () => {
 
         beforeEach(() => {
-            this.providers = 'ALL';
-            service = injector.get(AlfrescoAuthenticationService);
-        });
-
-        it('should create both instances', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseBPMECM);
-
-            service.login('fake-username', 'fake-password', this.providers).subscribe(() => {
-                expect(service.isLoggedIn()).toBe(true);
-                expect(service.TYPE).toEqual(this.providers);
-                done();
-            });
+            authService = injector.get(AlfrescoAuthenticationService);
+            authService.providers = 'ALL';
         });
 
         it('should return both ECM and BPM tickets after the login done', (done) => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseBPMECM);
 
-            service.login('fake-username', 'fake-password', this.providers).subscribe(() => {
-                expect(service.isLoggedIn()).toBe(true);
-                expect(service.getTicket()).toEqual('fake-post-ticket-ECM,fake-post-ticket-BPM');
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicket()).toEqual('fake-post-ticket-ECM,fake-post-ticket-BPM');
                 done();
             });
         });
@@ -247,12 +238,12 @@ describe('AlfrescoAuthentication', () => {
         it('should return ticket undefined when the credentials are wrong', (done) => {
             spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(Promise.reject('fake invalid credentials'));
 
-            service.login('fake-username', 'fake-password', this.providers).subscribe(
+            authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
-                    expect(service.isLoggedIn()).toBe(false);
-                    expect(service.getTicket()).toBeUndefined();
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.getTicket()).toBeUndefined();
                     done();
                 });
         });

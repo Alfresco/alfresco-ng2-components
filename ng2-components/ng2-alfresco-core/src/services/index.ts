@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-export * from './AlfrescoSettingsService.service';
+export * from './AlfrescoSettings.service';
 export * from './AlfrescoTranslationLoader.service';
-export * from './AlfrescoTranslationService.service';
+export * from './AlfrescoTranslation.service';
 export * from './AlfrescoPipeTranslate.service';
-export * from './AlfrescoAuthenticationService.service';
-export * from './AlfrescoContentService.service';
+export * from './AlfrescoAuthentication.service';
+export * from './AlfrescoContent.service';

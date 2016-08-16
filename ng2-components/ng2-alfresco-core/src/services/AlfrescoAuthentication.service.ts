@@ -17,7 +17,7 @@
 
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Rx';
-import {AlfrescoSettingsService} from './AlfrescoSettingsService.service';
+import {AlfrescoSettingsService} from './AlfrescoSettings.service';
 
 declare let AlfrescoApi: any;
 
@@ -29,26 +29,11 @@ export class AlfrescoAuthenticationService {
 
     alfrescoApi: any;
 
-    TYPE: string = 'ECM';
-
     /**A
      * Constructor
      * @param alfrescoSetting
      */
     constructor(public alfrescoSetting: AlfrescoSettingsService) {
-
-        if (!this.isLoggedIn()) {
-            this.alfrescoApi = new AlfrescoApi({
-                host: alfrescoSetting.ecmHost,
-                hostActiviti: alfrescoSetting.bpmHost
-            });
-        } else {
-            this.alfrescoApi = new AlfrescoApi({
-                ticket: this.getTicket(),
-                host: alfrescoSetting.ecmHost,
-                hostActiviti: alfrescoSetting.bpmHost
-            });
-        }
     }
 
     /**
@@ -63,29 +48,43 @@ export class AlfrescoAuthenticationService {
      * Method to delegate to POST login
      * @param username
      * @param password
-     * @param provider
      * @returns {Observable<R>|Observable<T>}
      */
-    login(username: string, password: string, provider: string) {
+    login(username: string, password: string) {
 
-        this.TYPE =  provider || this.TYPE;
-        return Observable.fromPromise(this.callApiLogin(username, password, provider))
-            .map((response: any) => {
-                this.saveTicket(response);
-                return {type: provider, ticket: response};
-            })
-            .catch(this.handleError);
+        if (this.isLoggedIn()) {
+            this.alfrescoApi = new AlfrescoApi({
+                provider: this.alfrescoSetting.getProviders(),
+                ticket: this.getTicket(),
+                host: this.alfrescoSetting.ecmHost,
+                hostActiviti: this.alfrescoSetting.bpmHost
+            });
+
+            return Observable.create((observer) => {
+                observer.next({type: this.alfrescoSetting.getProviders(), ticket: this.getTicket()});
+                observer.complete();
+            }).catch(this.handleError);
+
+        } else {
+            return Observable.fromPromise(this.callApiLogin(username, password))
+                .map((response: any) => {
+                    this.saveTicket(response);
+                    return {type: this.alfrescoSetting.getProviders(), ticket: response};
+                })
+                .catch(this.handleError);
+        }
     }
 
     /**
      * Initialize the alfresco Api with user and password end call the login method
      * @param username
      * @param password
-     * @param provider
      * @returns {*|Observable<any>}
      */
-    private callApiLogin(username: string, password: string, provider: string) {
+    private callApiLogin(username: string, password: string) {
+
         this.alfrescoApi = new AlfrescoApi({
+            provider: this.alfrescoSetting.getProviders(),
             username: username,
             password: password,
             host: this.alfrescoSetting.ecmHost,
@@ -114,7 +113,7 @@ export class AlfrescoAuthenticationService {
      * Remove the login ticket from localStorage
      */
     public removeTicket(): void {
-        localStorage.removeItem(`ticket-${this.TYPE}`);
+        localStorage.removeItem(`ticket-${this.alfrescoSetting.getProviders()}`);
     }
 
     /**
@@ -122,16 +121,17 @@ export class AlfrescoAuthenticationService {
      * @returns {*|Observable<string>|Observable<any>|Promise<T>}
      */
     private callApiLogout(): Promise<any> {
-        return this.alfrescoApi.logout();
+        if (this.alfrescoApi) {
+            return this.alfrescoApi.logout();
+        }
     }
-
 
     /**
      * The method return the ticket stored in the localStorage
      * @returns ticket
      */
     public getTicket(): string {
-        return localStorage.getItem(`ticket-${this.TYPE}`);
+        return localStorage.getItem(`ticket-${this.alfrescoSetting.getProviders()}`);
     }
 
     /**
@@ -140,7 +140,7 @@ export class AlfrescoAuthenticationService {
      */
     public saveTicket(ticket): void {
         if (ticket) {
-            localStorage.setItem(`ticket-${this.TYPE}`, ticket);
+            localStorage.setItem(`ticket-${this.alfrescoSetting.getProviders()}`, ticket);
         }
     }
 
@@ -155,6 +155,6 @@ export class AlfrescoAuthenticationService {
     }
 
     getAlfrescoApi(): any {
-        return  this.alfrescoApi;
+        return this.alfrescoApi;
     }
 }
