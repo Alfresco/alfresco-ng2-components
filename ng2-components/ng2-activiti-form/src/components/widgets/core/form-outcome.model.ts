@@ -39,6 +39,7 @@ export class FormOutcomeModel extends FormWidgetModel {
         if (json) {
             this._id = json.id;
             this._name = json.name;
+            this.isSystem = json.isSystem ? true : false;
         }
     }
 }

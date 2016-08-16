@@ -214,7 +214,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .getTaskForm(taskId)
             .subscribe(
                 form => {
-                    this.form = new FormModel(form, data, null, this.readOnly);
+                    this.form = new FormModel(form, data, this.readOnly);
                     this.formLoaded.emit(this.form.values);
                 },
                 err => console.log(err)
@@ -227,7 +227,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .subscribe(
                 form => {
                     console.log('Get Form By definition Id', form);
-                    this.form = new FormModel(form, this.data, this.formSaved, this.readOnly);
+                    this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form.values);
                 },
                 err => console.log(err)
@@ -242,7 +242,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.formService.getFormDefinitionById(id).subscribe(
                         form => {
                             console.log('Get Form By Form definition Name', form);
-                            this.form = new FormModel(form, this.data, this.formSaved, this.readOnly);
+                            this.form = this.parseForm(form);
                             this.formLoaded.emit(this.form.values);
                         },
                         err => console.log(err)
@@ -272,5 +272,19 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 },
                 (err) => console.log(err)
             );
+    }
+
+    private parseForm(json: any): FormModel {
+        let form = new FormModel(json, this.data, this.readOnly);
+        if (!json.fields) {
+            form.outcomes = this.getFormDefinitionOutcomes(form);
+        }
+        return form;
+    }
+
+    private getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
+        return [
+            new FormOutcomeModel(form, { id: '$custom', name: 'Save', isSystem: true })
+        ];
     }
 }

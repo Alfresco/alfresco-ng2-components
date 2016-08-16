@@ -24,6 +24,8 @@ import { FormOutcomeModel } from './form-outcome.model';
 export class FormModel {
 
     static UNSET_TASK_NAME: string = 'Nameless task';
+    static SAVE_OUTCOME: string = '$save';
+    static COMPLETE_OUTCOME: string = '$complete';
 
     private _id: string;
     private _name: string;
@@ -71,7 +73,7 @@ export class FormModel {
         return this.outcomes && this.outcomes.length > 0;
     }
 
-    constructor(json?: any, data?: any, saveOption?: any, readOnly: boolean = false) {
+    constructor(json?: any, data?: FormValues, readOnly: boolean = false) {
         this.readOnly = readOnly;
         if (json) {
             this._json = json;
@@ -104,25 +106,15 @@ export class FormModel {
                     }
                 }
             }
-            if (this.isATaskForm()) {
-                let saveOutcome = new FormOutcomeModel(this, {id: '$save', name: 'Save'});
-                saveOutcome.isSystem = true;
-
-                let completeOutcome = new FormOutcomeModel(this, {id: '$complete', name: 'Complete'});
-                completeOutcome.isSystem = true;
+            if (json.fields) {
+                let saveOutcome = new FormOutcomeModel(this, { id: FormModel.SAVE_OUTCOME, name: 'Save', isSystem: true });
+                let completeOutcome = new FormOutcomeModel(this, {id: FormModel.COMPLETE_OUTCOME, name: 'Complete', isSystem: true });
 
                 let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
 
                 this.outcomes = [saveOutcome].concat(
                     customOutcomes.length > 0 ? customOutcomes : [completeOutcome]
                 );
-            } else {
-                if (saveOption && saveOption.observers.length > 0) {
-                    let saveOutcome = new FormOutcomeModel(this, {id: '$custom', name: 'Save'});
-                    saveOutcome.isSystem = true;
-
-                    this.outcomes = [saveOutcome];
-                }
             }
         }
     }
@@ -130,12 +122,10 @@ export class FormModel {
     private parseContainerFields(json: any): ContainerModel[] {
         let fields = [];
 
-        if (json) {
-            if (json.fields) {
-                fields = json.fields;
-            } else if (json.formDefinition && json.formDefinition.fields) {
-                fields = json.formDefinition.fields;
-            }
+        if (json.fields) {
+            fields = json.fields;
+        } else if (json.formDefinition && json.formDefinition.fields) {
+            fields = json.formDefinition.fields;
         }
 
         return fields.map(obj => new ContainerModel(this, obj));
@@ -143,32 +133,19 @@ export class FormModel {
 
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
-    private loadData(data: any) {
+    private loadData(data: FormValues) {
         for (let i = 0; i < this.fields.length; i++) {
-            let containerModel = this.fields[i];
-            if (containerModel) {
-                for (let i = 0; i < containerModel.columns.length; i++) {
-                    let containerModelColumn = containerModel.columns[i];
-                    if (containerModelColumn) {
-                        for (let i = 0; i < containerModelColumn.fields.length; i++) {
-                            let formField = containerModelColumn.fields[i];
-                            if (data[formField.id]) {
-                                formField.value = data[formField.id];
-                                formField.json.value = data[formField.id];
-                            }
-                        }
+            let container = this.fields[i];
+            for (let i = 0; i < container.columns.length; i++) {
+                let column = container.columns[i];
+                for (let i = 0; i < column.fields.length; i++) {
+                    let field = column.fields[i];
+                    if (data[field.id]) {
+                        field.json.value = data[field.id];
+                        field.value = data[field.id];
                     }
                 }
             }
-
         }
-    }
-
-    /**
-     * Check if the form is associated to a task or if is only the form definition
-     * @returns {boolean}
-     */
-    private isATaskForm(): boolean {
-        return this._json.fields ? true : false;
     }
 }

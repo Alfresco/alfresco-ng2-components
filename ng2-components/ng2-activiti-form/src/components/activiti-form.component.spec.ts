@@ -16,11 +16,13 @@
  */
 
 import { it, describe, expect } from '@angular/core/testing';
+import { ActivitiForm } from './activiti-form.component';
 
 describe('ActivitiForm', () => {
 
     it('test placeholder', () => {
-        expect(true).toBeTruthy();
+        let form = new ActivitiForm(null);
+        expect(form).toBeDefined();
     });
 
 });
