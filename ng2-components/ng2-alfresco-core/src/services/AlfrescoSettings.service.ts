@@ -30,7 +30,7 @@ export class AlfrescoSettingsService {
 
     private _bpmContextPath = AlfrescoSettingsService.DEFAULT_BPM_CONTEXT_PATH;
 
-    private providers: string = 'ECM'; // ECM, BPM , ALL
+    private providers: string = 'ALL'; // ECM, BPM , ALL
 
     public get ecmHost(): string {
         return this._ecmHost;

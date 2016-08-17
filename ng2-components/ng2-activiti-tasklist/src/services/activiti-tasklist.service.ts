@@ -15,24 +15,19 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { FilterModel } from '../models/filter.model';
-import { FilterParamsModel } from '../models/filter.model';
-import { Comment } from '../models/comment.model';
-import { User } from '../models/user.model';
-
-import { TaskDetailsModel } from '../models/task-details.model';
+import {Injectable} from '@angular/core';
+import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
+import {Observable} from 'rxjs/Rx';
+import {FilterModel} from '../models/filter.model';
+import {FilterParamsModel} from '../models/filter.model';
+import {Comment} from '../models/comment.model';
+import {User} from '../models/user.model';
+import {TaskDetailsModel} from '../models/task-details.model';
 
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(private http: Http,
-                public alfrescoSettingsService: AlfrescoSettingsService,
-                private authService: AlfrescoAuthenticationService) {
+    constructor(public authService: AlfrescoAuthenticationService) {
     }
 
 
@@ -41,12 +36,9 @@ export class ActivitiTaskListService {
      * @returns {Observable<any>}
      */
     getDeployedApplications(name: string): Observable<any> {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/runtime-app-definitions`;
-        return this.http
-            .get(url, this.getRequestOptions())
-            .map((response: Response) => response.json().data.find(p => p.name === name))
-            .do(data => console.log('Application: ' + JSON.stringify(data)))
-            .catch(this.handleError);
+        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.appsApi.getAppDefinitions())
+            .map((response: any) => response.data.find(p => p.name === name))
+            .do(data => console.log('Application: ' + JSON.stringify(data)));
     }
 
     /**
@@ -55,7 +47,6 @@ export class ActivitiTaskListService {
      */
     getTaskListFilters(appId?: string): Observable<any> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
-            .map(res => res.json())
             .map((response: any) => {
                 let filters: FilterModel[] = [];
                 response.data.forEach((filter) => {
@@ -64,8 +55,7 @@ export class ActivitiTaskListService {
                     filters.push(filterModel);
                 });
                 return filters;
-            })
-            .catch(this.handleError);
+            });
     }
 
     /**
@@ -74,12 +64,10 @@ export class ActivitiTaskListService {
      * @returns {any}
      */
     getTasks(filter: FilterModel): Observable<any> {
-
         return Observable.fromPromise(this.callApiTasksFiltered(filter.filter))
-            .map((res: Response) => {
-                return res.json();
-            })
-            .catch(this.handleError);
+            .map((res: any) => {
+                return res;
+            });
     }
 
     /**
@@ -89,11 +77,10 @@ export class ActivitiTaskListService {
      */
     getTaskDetails(id: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiTaskDetails(id))
-            .map(res => res.json())
+            .map(res => res)
             .map((details: any) => {
                 return new TaskDetailsModel(details);
-            })
-            .catch(this.handleError);
+            });
     }
 
     /**
@@ -103,7 +90,7 @@ export class ActivitiTaskListService {
      */
     getTaskComments(id: string): Observable<Comment[]> {
         return Observable.fromPromise(this.callApiTaskComments(id))
-            .map(res => res.json())
+            .map(res => res)
             .map((response: any) => {
                 let comments: Comment[] = [];
                 response.data.forEach((comment) => {
@@ -112,8 +99,7 @@ export class ActivitiTaskListService {
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;
-            })
-            .catch(this.handleError);
+            });
     }
 
     /**
@@ -123,15 +109,14 @@ export class ActivitiTaskListService {
      */
     getTaskChecklist(id: string): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTaskChecklist(id))
-            .map(res => res.json())
+            .map(res => res)
             .map((response: any) => {
                 let checklists: TaskDetailsModel[] = [];
                 response.data.forEach((checklist) => {
                     checklists.push(new TaskDetailsModel(checklist));
                 });
                 return checklists;
-            })
-            .catch(this.handleError);
+            });
     }
 
     /**
@@ -141,11 +126,10 @@ export class ActivitiTaskListService {
      */
     addTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.callApiAddTask(task))
-            .map(res => res.json())
+            .map(res => res)
             .map((response: TaskDetailsModel) => {
                 return new TaskDetailsModel(response);
-            })
-            .catch(this.handleError);
+            });
     }
 
     /**
@@ -156,11 +140,10 @@ export class ActivitiTaskListService {
      */
     addTaskComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(this.callApiAddTaskComment(id, message))
-            .map(res => res.json())
+            .map(res => res)
             .map((response: Comment) => {
                 return new Comment(response.id, response.message, response.created, response.createdBy);
-            })
-            .catch(this.handleError);
+            });
     }
 
     /**
@@ -168,97 +151,45 @@ export class ActivitiTaskListService {
      * @param id - taskId
      * @returns {TaskDetailsModel}
      */
-    completeTask(id: string): Observable<TaskDetailsModel> {
+    completeTask(id: string) {
         return Observable.fromPromise(this.callApiCompleteTask(id))
-            .map(res => res.json())
-            .catch(this.handleError);
+            .map(res => res);
     }
 
     private callApiTasksFiltered(filter: FilterParamsModel) {
-        let data = JSON.stringify(filter);
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/query`;
-
-        return this.http
-            .post(url, data, this.getRequestOptions()).toPromise();
+        return this.authService.getAlfrescoApi().activiti.taskApi.listTasks(filter);
     }
 
     private callApiTaskFilters(appId?: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl();
         if (appId) {
-            url = url + `/api/enterprise/filters/tasks?appId=${appId}`;
+            return this.authService.getAlfrescoApi().activiti.taskApi.filterTasks({appDefinitionId: appId});
         } else {
-            url = url + `/api/enterprise/filters/tasks`;
+            return this.authService.getAlfrescoApi().activiti.taskApi.filterTasks({});
         }
-
-        return this.http
-            .get(url, this.getRequestOptions()).toPromise();
     }
 
     private callApiTaskDetails(id: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}`;
-
-        return this.http
-            .get(url, this.getRequestOptions()).toPromise();
+        return this.authService.getAlfrescoApi().activiti.taskApi.getTask(id);
     }
 
     private callApiTaskComments(id: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/comments`;
-
-        return this.http
-            .get(url, this.getRequestOptions()).toPromise();
+        return this.authService.getAlfrescoApi().activiti.taskApi.getTaskComments(id);
     }
 
     private callApiAddTaskComment(id: string, message: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/comments`;
-        let body = JSON.stringify({message: message});
-
-        return this.http
-            .post(url, body, this.getRequestOptions()).toPromise();
+        return this.authService.getAlfrescoApi().activiti.taskApi.addTaskComment({message: message}, id);
     }
 
     private callApiAddTask(task: TaskDetailsModel) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${task.parentTaskId}/checklist`;
-        let body = JSON.stringify(task);
-
-        return this.http
-            .post(url, body, this.getRequestOptions()).toPromise();
+        return this.authService.getAlfrescoApi().activiti.taskApi.addSubtask(task.parentTaskId, task);
     }
 
     private callApiTaskChecklist(id: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/checklist`;
-
-        return this.http
-            .get(url, this.getRequestOptions()).toPromise();
+        return this.authService.getAlfrescoApi().activiti.taskApi.getChecklist(id);
     }
 
     private callApiCompleteTask(id: string) {
-        let url = this.alfrescoSettingsService.getBPMApiBaseUrl() + `/api/enterprise/tasks/${id}/action/complete`;
-
-        return this.http
-            .put(url, this.getRequestOptions()).toPromise();
+        return this.authService.getAlfrescoApi().activiti.taskApi.completeTask(id);
     }
 
-
-    /**
-     * The method write the error in the console browser
-     * @param error
-     * @returns {ErrorObservable}
-     */
-    public handleError(error: Response): Observable<any> {
-        console.error('Error when logging in', error);
-        return Observable.throw(error || 'Server error');
-    }
-
-    private getHeaders(): Headers {
-        return new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': this.authService.getTicket('BPM')
-        });
-    }
-
-    private getRequestOptions(): RequestOptions {
-        let headers = this.getHeaders();
-        return new RequestOptions({headers: headers});
-    }
 }

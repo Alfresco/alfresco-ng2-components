@@ -21,6 +21,7 @@ module.exports = function (config) {
       {pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.html', included: false, served: true, watched: false},
       {pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.css', included: false, served: true, watched: false},
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
+      {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
 
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 

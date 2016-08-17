@@ -3,12 +3,6 @@
   "description": "Alfresco Angular2 DataTable Component - Demo",
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
-  "contributors": [
-    {
-      "name": "Maurizio Vitale",
-      "email": "maurizio.vitale84@gmail.com"
-    }
-  ],
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist node_modules typings",
@@ -69,6 +63,16 @@
       "!/**/node_modules/**/*",
       "!/**/typings/**/*",
       "!*.js"
+    ],
+    "contributors": [
+      {
+        "name": "Maurizio Vitale",
+        "email": "maurizio.vitale84@gmail.com"
+      },
+      {
+        "name": "Eugenio Romano",
+        "email": "eugenio.romano@alfresco.com"
+      }
     ],
     "path": "assets/license_header.txt",
     "blocking": true,

@@ -16,11 +16,10 @@
  */
 
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
+import { EventEmitter } from '@angular/core';
 import { UploadService } from './upload.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { EventEmitter } from '@angular/core';
 
 declare let AlfrescoApi: any;
 declare let jasmine: any;
@@ -40,9 +39,8 @@ describe('AlfrescoUploadService', () => {
 
     beforeEachProviders(() => {
         return [
-            HTTP_PROVIDERS,
             { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
-            { provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService },
+            AlfrescoAuthenticationService,
             UploadService
         ];
     });

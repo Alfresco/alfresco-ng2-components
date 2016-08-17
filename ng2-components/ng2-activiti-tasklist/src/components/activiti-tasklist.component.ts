@@ -66,6 +66,7 @@ export class ActivitiTaskList implements OnInit {
      * Constructor
      * @param auth
      * @param translate
+     * @param translate
      */
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,

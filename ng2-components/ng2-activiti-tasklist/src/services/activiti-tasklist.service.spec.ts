@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
-import { ActivitiTaskListService } from './activiti-tasklist.service';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { TaskDetailsModel } from '../models/task-details.model';
-import { Comment } from '../models/comment.model';
+import {it, describe, inject, beforeEach, beforeEachProviders} from '@angular/core/testing';
+import {ActivitiTaskListService} from './activiti-tasklist.service';
+import {AlfrescoSettingsService, AlfrescoAuthenticationService} from 'ng2-alfresco-core';
+import {TaskDetailsModel} from '../models/task-details.model';
+import {Comment} from '../models/comment.model';
 
 declare let AlfrescoApi: any;
 declare let jasmine: any;
@@ -44,10 +43,10 @@ describe('ActivitiTaskListService', () => {
 
     let fakeFilter = {
         page: 2, filterId: 2, appDefinitionId: null,
-        filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee' }
+        filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee'}
     };
 
-    let fakeUser = { id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName' };
+    let fakeUser = {id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName'};
 
     let fakeTaskList = {
         size: 1, total: 1, start: 0,
@@ -64,7 +63,7 @@ describe('ActivitiTaskListService', () => {
         error: 'wrong request'
     };
 
-    let fakeTaskDetails = {id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser };
+    let fakeTaskDetails = {id: '999', name: 'fake-task-name', formKey: '99', assignee: fakeUser};
 
     let fakeTasksComment = {
         size: 2, total: 2, start: 0,
@@ -96,16 +95,16 @@ describe('ActivitiTaskListService', () => {
 
     beforeEachProviders(() => {
         return [
-            HTTP_PROVIDERS,
+            ActivitiTaskListService,
             AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            ActivitiTaskListService
+            AlfrescoAuthenticationService
         ];
     });
 
-    beforeEach( inject([ActivitiTaskListService], (activitiService: ActivitiTaskListService) => {
+
+    beforeEach(inject([ActivitiTaskListService], (activitiTaskListService: ActivitiTaskListService) => {
         jasmine.Ajax.install();
-        service = activitiService;
+        service = activitiTaskListService;
     }));
 
     afterEach(() => {
@@ -132,7 +131,7 @@ describe('ActivitiTaskListService', () => {
 
     it('should return the task list filtered', (done) => {
         service.getTasks(fakeFilter).subscribe(
-                res => {
+            res => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.total).toEqual(1);
@@ -235,7 +234,11 @@ describe('ActivitiTaskListService', () => {
 
     it('should add a task ', (done) => {
         let taskFake = new TaskDetailsModel({
-            id: '', name: 'FakeNameTask', description: null, category: null,
+            id: 123,
+            parentTaskId: 456,
+            name: 'FakeNameTask',
+            description: null,
+            category: null,
             assignee: fakeUser,
             created: ''
         });
@@ -305,6 +308,5 @@ describe('ActivitiTaskListService', () => {
         });
     });
     */
-
 
 });
