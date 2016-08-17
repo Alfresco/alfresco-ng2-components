@@ -34,6 +34,12 @@ export class AlfrescoAuthenticationService {
      * @param alfrescoSetting
      */
     constructor(public alfrescoSetting: AlfrescoSettingsService) {
+        this.alfrescoApi = new AlfrescoApi({
+            provider: this.alfrescoSetting.getProviders(),
+            ticket: this.isLoggedIn() ? this.getTicket() : null,
+            host: this.alfrescoSetting.ecmHost,
+            hostActiviti: this.alfrescoSetting.bpmHost
+        });
     }
 
     /**
@@ -53,18 +59,10 @@ export class AlfrescoAuthenticationService {
     login(username: string, password: string) {
 
         if (this.isLoggedIn()) {
-            this.alfrescoApi = new AlfrescoApi({
-                provider: this.alfrescoSetting.getProviders(),
-                ticket: this.getTicket(),
-                host: this.alfrescoSetting.ecmHost,
-                hostActiviti: this.alfrescoSetting.bpmHost
-            });
-
             return Observable.create((observer) => {
                 observer.next({type: this.alfrescoSetting.getProviders(), ticket: this.getTicket()});
                 observer.complete();
             }).catch(this.handleError);
-
         } else {
             return Observable.fromPromise(this.callApiLogin(username, password))
                 .map((response: any) => {
@@ -82,16 +80,7 @@ export class AlfrescoAuthenticationService {
      * @returns {*|Observable<any>}
      */
     private callApiLogin(username: string, password: string) {
-
-        this.alfrescoApi = new AlfrescoApi({
-            provider: this.alfrescoSetting.getProviders(),
-            username: username,
-            password: password,
-            host: this.alfrescoSetting.ecmHost,
-            hostActiviti: this.alfrescoSetting.bpmHost
-        });
-
-        return this.alfrescoApi.login();
+        return this.alfrescoApi.login(username, password);
     }
 
     /**
