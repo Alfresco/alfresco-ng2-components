@@ -25,11 +25,27 @@ import {
     AlfrescoSettingsService,
     ALFRESCO_CORE_PROVIDERS
 } from 'ng2-alfresco-core';
-import { HTTP_PROVIDERS, BrowserXhr } from '@angular/http';
 
 @Component({
   selector: 'my-app',
-  template: `<activiti-processlist></activiti-processlist>`,
+  template: `label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
+               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="bpmHost"><br><br>
+               <div *ngIf="!authenticated" style="color:#FF2323">
+                    Authentication failed to ip {{ bpmHost }} with user: admin, admin, you can still try to add a valid token to perform
+                    operations.
+               </div>
+               <hr>
+                <label for="token"><b>Insert a scriptPath</b></label><br>
+                <input id="token" type="text" size="48"  [(ngModel)]="scriptPath"><br>
+                <label for="token"><b>Insert a contextRoot</b></label><br>
+                <input id="token" type="text" size="48"  [(ngModel)]="contextRoot"><br>
+                <label for="token"><b>Insert a servicePath</b></label><br>
+                <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
+        <div class="container" *ngIf="authenticated">
+            <activiti-processlist></activiti-processlist>
+        </div>`,
   providers: [ACTIVITI_PROCESSLIST_PROVIDERS],
   directives: [ACTIVITI_PROCESSLIST_DIRECTIVES]
 })
@@ -41,11 +57,13 @@ class MyDemoApp implements OnInit {
 
     constructor(
         private authService: AlfrescoAuthenticationService,
-        private alfrescoSettingsService: AlfrescoSettingsService
+        private settingsService: AlfrescoSettingsService
     ) {
         console.log('constructor');
 
-        alfrescoSettingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('BPM');
+        settingsService.bpmHost = this.bpmHost;
+
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -60,12 +78,12 @@ class MyDemoApp implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
 
     login() {
-        this.authService.login('admin@app.activiti.com', 'admin', ['BPM']).subscribe(
+        this.authService.login('admin', 'admin').subscribe(
             token => {
                 console.log(token);
                 this.token = token;
@@ -78,18 +96,6 @@ class MyDemoApp implements OnInit {
     }
 }
 
-@Injectable()
-export class CustomBrowserXhr extends BrowserXhr {
-    constructor() {}
-    build(): any {
-        let xhr = super.build();
-        xhr.withCredentials = true;
-        return <any>(xhr);
-    }
-}
-
 bootstrap(MyDemoApp, [
-    ALFRESCO_CORE_PROVIDERS,
-    HTTP_PROVIDERS,
-    provide(BrowserXhr, { useClass: CustomBrowserXhr })
+    ALFRESCO_CORE_PROVIDERS
 ]);

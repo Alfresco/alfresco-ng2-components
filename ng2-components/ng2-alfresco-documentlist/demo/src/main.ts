@@ -149,11 +149,11 @@ class DocumentListDemo implements OnInit {
 
     constructor(
         private authService: AlfrescoAuthenticationService,
-        private alfrescoSettingsService: AlfrescoSettingsService,
+        private settingsService: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
         private documentActions: DocumentActionsService) {
 
-        alfrescoSettingsService.ecmHost = this.ecmHost;
+        settingsService.ecmHost = this.ecmHost;
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -166,7 +166,7 @@ class DocumentListDemo implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
 

@@ -27,7 +27,7 @@ import 'rxjs/add/operator/catch';
 export class ActivitiProcessService {
 
 
-    constructor(private alfrescoSettingsService: AlfrescoSettingsService, private http: Http) {
+    constructor(private settingsService: AlfrescoSettingsService, private http: Http) {
     }
 
     getProcesses(): Observable<ProcessInstance[]> {
@@ -35,7 +35,7 @@ export class ActivitiProcessService {
         headers.append('Content-Type', 'application/json');
         // headers.append('Authorization', 'Basic ' + btoa('admin@app.activiti.com:admin'));
         return this.http.post(
-            this.alfrescoSettingsService.bpmHost + '/activiti-app/api/enterprise/process-instances/query',
+            this.settingsService.bpmHost + '/activiti-app/api/enterprise/process-instances/query',
             '{"page":0,"sort":"created-desc","state":"all"}',
             new RequestOptions({
                 headers: headers

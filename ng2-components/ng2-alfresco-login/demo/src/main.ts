@@ -65,12 +65,12 @@ export class AppComponent {
     public providers: string = 'ECM';
 
     constructor(public auth: AlfrescoAuthenticationService,
-                private alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.ecmHost = this.ecmHost;
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = this.ecmHost;
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.settingsService.ecmHost = this.ecmHost;
     }
 
     mySuccessMethod($event) {

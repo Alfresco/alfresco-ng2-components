@@ -69,12 +69,12 @@ export class AlfrescoLoginComponent {
      * Constructor
      * @param _fb
      * @param authService
-     * @param settingService
+     * @param settingsService
      * @param translate
      */
     constructor(private _fb: FormBuilder,
                 public authService: AlfrescoAuthenticationService,
-                public settingService: AlfrescoSettingsService,
+                public settingsService: AlfrescoSettingsService,
                 private translate: AlfrescoTranslationService) {
 
         this.formError = {
@@ -113,7 +113,7 @@ export class AlfrescoLoginComponent {
             event.preventDefault();
         }
 
-        this.settingService.setProviders(this.providers);
+        this.settingsService.setProviders(this.providers);
 
         this.authService.login(value.username, value.password)
             .subscribe(

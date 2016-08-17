@@ -15,36 +15,60 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ALFRESCO_CORE_PROVIDERS, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { ActivitiTaskList } from 'ng2-activiti-tasklist';
-import { ObjectDataTableAdapter, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import {Component, OnInit} from '@angular/core';
+import {ALFRESCO_CORE_PROVIDERS, AlfrescoAuthenticationService, AlfrescoSettingsService} from 'ng2-alfresco-core';
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {ActivitiTaskList} from 'ng2-activiti-tasklist';
+import {ObjectDataTableAdapter, ObjectDataColumn} from 'ng2-alfresco-datatable';
+import {HTTP_PROVIDERS} from '@angular/http';
 
 declare let AlfrescoApi: any;
 
 @Component({
     selector: 'activiti-tasklist-demo',
-    template: `
-        <activiti-tasklist [data]="data"></activiti-tasklist>
-    `,
+    template: `label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
+               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="bpmHost"><br><br>
+               <div *ngIf="!authenticated" style="color:#FF2323">
+                    Authentication failed to ip {{ bpmHost }} with user: admin, admin, you can still try to add a valid token to perform
+                    operations.
+               </div>
+               <hr>
+                <label for="token"><b>Insert a scriptPath</b></label><br>
+                <input id="token" type="text" size="48"  [(ngModel)]="scriptPath"><br>
+                <label for="token"><b>Insert a contextRoot</b></label><br>
+                <input id="token" type="text" size="48"  [(ngModel)]="contextRoot"><br>
+                <label for="token"><b>Insert a servicePath</b></label><br>
+                <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
+        <div class="container" *ngIf="authenticated">
+            <activiti-tasklist></activiti-tasklist>
+        </div>`,
     styles: [
         ':host > .container {padding: 10px}',
         '.p-10 { padding: 10px; }'
     ],
-    directives: [ActivitiTaskList],
-    providers: [AlfrescoAuthenticationService]
+    directives: [ActivitiTaskList]
 })
 class ActivitiTaskListDemo implements OnInit {
+
+    bpmHost: string = 'http://127.0.0.1:9999';
+
+    token: string;
+
     data: ObjectDataTableAdapter;
 
-    constructor(private setting: AlfrescoSettingsService) {
-        this.setting.setProviders(['BPM']);
+    authenticated: boolean;
+
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService) {
+        this.settingsService.setProviders('BPM');
         this.data = new ObjectDataTableAdapter([], []);
     }
 
     ngOnInit() {
+        this.login();
+
         let schema = [
             {type: 'text', key: 'id', title: 'Id'},
             {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
@@ -56,9 +80,21 @@ class ActivitiTaskListDemo implements OnInit {
         this.data.setColumns(columns);
     }
 
+    login() {
+        this.authService.login('admin', 'admin').subscribe(
+            token => {
+                console.log(token);
+                this.token = token;
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
+    }
 }
 
 bootstrap(ActivitiTaskListDemo, [
-        HTTP_PROVIDERS,
-        ALFRESCO_CORE_PROVIDERS]
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS]
 );

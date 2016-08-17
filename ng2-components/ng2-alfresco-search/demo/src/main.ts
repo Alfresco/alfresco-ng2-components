@@ -63,16 +63,16 @@ class SearchDemo implements OnInit {
     token: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private alfrescoSettingsService: AlfrescoSettingsService,
+                private settingsService: AlfrescoSettingsService,
                 translation: AlfrescoTranslationService) {
 
-        alfrescoSettingsService.ecmHost = this.ecmHost;
+        settingsService.ecmHost = this.ecmHost;
 
         translation.addTranslationFolder();
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
 
