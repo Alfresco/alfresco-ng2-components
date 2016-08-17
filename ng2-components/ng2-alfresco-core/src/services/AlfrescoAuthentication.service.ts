@@ -80,6 +80,7 @@ export class AlfrescoAuthenticationService {
      * @returns {*|Observable<any>}
      */
     private callApiLogin(username: string, password: string) {
+        this.alfrescoApi.config.provider = this.alfrescoSetting.getProviders();
         return this.alfrescoApi.login(username, password);
     }
 
