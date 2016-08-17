@@ -72,6 +72,13 @@ export class FormService {
             .catch(this.handleError);
     }
 
+    /**
+     * Complete Task Form
+     * @param id Task Id
+     * @param formValues Form Values
+     * @param outcome Form Outcome
+     * @returns {any}
+     */
     completeTaskForm(id: string, formValues: FormValues, outcome?: string): Observable<Response> {
         let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/task-forms/${id}`;
         let data: any = {values: formValues};

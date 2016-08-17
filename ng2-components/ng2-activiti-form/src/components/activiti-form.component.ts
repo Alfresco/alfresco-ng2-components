@@ -18,7 +18,7 @@
 import {
     Component,
     OnInit, AfterViewChecked, OnChanges,
-    SimpleChange,
+    SimpleChanges,
     Input,
     Output,
     EventEmitter
@@ -73,6 +73,10 @@ declare var componentHandler;
     providers: [FormService]
 })
 export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
+
+    static SAVE_OUTCOME_ID: string = '$save';
+    static COMPLETE_OUTCOME_ID: string = '$complete';
+    static CUSTOM_OUTCOME_ID: string = '$custom';
 
     @Input()
     taskId: string;
@@ -151,7 +155,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         this.setupMaterialComponents();
     }
 
-    ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+    ngOnChanges(changes: SimpleChanges) {
         let taskId = changes['taskId'];
         if (taskId && taskId.currentValue) {
             this.getFormByTaskId(taskId.currentValue);
@@ -171,30 +175,44 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    onOutcomeClicked(outcome: FormOutcomeModel, event?: Event) {
-        if (!this.readOnly && outcome) {
+    /**
+     * Invoked when user clicks outcome button.
+     * @param outcome Form outcome model
+     * @returns {boolean} True if outcome action was executed, otherwise false.
+     */
+    onOutcomeClicked(outcome: FormOutcomeModel): boolean {
+        if (!this.readOnly && outcome && this.form) {
             if (outcome.isSystem) {
-                if (outcome.id === '$save') {
-                    return this.saveTaskForm();
+                if (outcome.id === ActivitiForm.SAVE_OUTCOME_ID) {
+                    this.saveTaskForm();
+                    return true;
                 }
 
-                if (outcome.id === '$complete') {
-                    return this.completeTaskForm();
+                if (outcome.id === ActivitiForm.COMPLETE_OUTCOME_ID) {
+                    this.completeTaskForm();
+                    return true;
                 }
 
-                if (outcome.id === '$custom') {
+                if (outcome.id === ActivitiForm.CUSTOM_OUTCOME_ID) {
                     this.formSaved.emit(this.form.values);
+                    return true;
                 }
             } else {
                 // Note: Activiti is using NAME field rather than ID for outcomes
                 if (outcome.name) {
                     this.formSaved.emit(this.form.values);
-                    return this.completeTaskForm(outcome.name);
+                    this.completeTaskForm(outcome.name);
+                    return true;
                 }
             }
         }
+
+        return false;
     }
 
+    /**
+     * Invoked when user clicks form refresh button.
+     */
     onRefreshClicked() {
         this.loadForm();
     }
@@ -225,7 +243,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         return false;
     }
 
-    private getFormByTaskId(taskId: string) {
+    getFormByTaskId(taskId: string) {
         let data = this.data;
         this.formService
             .getTaskForm(taskId)
@@ -234,11 +252,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.form = new FormModel(form, data, this.readOnly);
                     this.formLoaded.emit(this.form.values);
                 },
-                err => console.log(err)
+                this.handleError
             );
     }
 
-    private getFormDefinitionByFormId(formId: string) {
+    getFormDefinitionByFormId(formId: string) {
         this.formService
             .getFormDefinitionById(formId)
             .subscribe(
@@ -247,11 +265,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form.values);
                 },
-                err => console.log(err)
+                this.handleError
             );
     }
 
-    private getFormDefinitionByFormName(formName: string) {
+    getFormDefinitionByFormName(formName: string) {
         this.formService
             .getFormDefinitionByName(formName)
             .subscribe(
@@ -262,44 +280,56 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                             this.form = this.parseForm(form);
                             this.formLoaded.emit(this.form.values);
                         },
-                        err => console.log(err)
+                        this.handleError
                     );
                 },
-                err => console.log(err)
+                this.handleError
             );
     }
 
-    private saveTaskForm() {
-        this.formService.saveTaskForm(this.form.taskId, this.form.values).subscribe(
-            (response) => {
-                // console.log('Saved task', response);
-                this.formSaved.emit(this.form.values);
-            },
-            (err) => console.log(err)
-        );
-    }
-
-    private completeTaskForm(outcome?: string) {
-        this.formService
-            .completeTaskForm(this.form.taskId, this.form.values, outcome)
-            .subscribe(
-                (response) => {
-                    // console.log('Completed task', response);
-                    this.formCompleted.emit(this.form.values);
-                },
-                (err) => console.log(err)
-            );
-    }
-
-    private parseForm(json: any): FormModel {
-        let form = new FormModel(json, this.data, this.readOnly);
-        if (!json.fields) {
-            form.outcomes = this.getFormDefinitionOutcomes(form);
+    saveTaskForm() {
+        if (this.form && this.form.taskId) {
+            this.formService
+                .saveTaskForm(this.form.taskId, this.form.values)
+                .subscribe(
+                    () => this.formSaved.emit(this.form.values),
+                    this.handleError
+                );
         }
-        return form;
     }
 
-    private getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
+    completeTaskForm(outcome?: string) {
+        if (this.form && this.form.taskId) {
+            this.formService
+                .completeTaskForm(this.form.taskId, this.form.values, outcome)
+                .subscribe(
+                    () => this.formCompleted.emit(this.form.values),
+                    this.handleError
+                );
+        }
+    }
+
+    handleError(err: any) {
+        console.log(err);
+    }
+
+    parseForm(json: any): FormModel {
+        if (json) {
+            let form = new FormModel(json, this.data, this.readOnly);
+            if (!json.fields) {
+                form.outcomes = this.getFormDefinitionOutcomes(form);
+            }
+            return form;
+        }
+        return null;
+    }
+
+    /**
+     * Get custom set of outcomes for a Form Definition.
+     * @param form Form definition model.
+     * @returns {FormOutcomeModel[]} Outcomes for a given form definition.
+     */
+    getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
             new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
