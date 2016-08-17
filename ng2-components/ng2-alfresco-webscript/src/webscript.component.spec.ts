@@ -19,7 +19,6 @@ import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEac
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { WebscriptComponent } from '../src/webscript.component';
 import { AlfrescoSettingsServiceMock } from '../src/assets/AlfrescoSettingsService.service.mock';
-import { HTTP_PROVIDERS } from '@angular/http';
 
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
@@ -31,9 +30,8 @@ describe('Test ng2-alfresco-webscript', () => {
 
     beforeEachProviders(() => {
         return [
-            HTTP_PROVIDERS,
             {provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock},
-            {provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService}
+            AlfrescoAuthenticationService
         ];
     });
 

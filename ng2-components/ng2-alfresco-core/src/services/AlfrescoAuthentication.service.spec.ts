@@ -19,8 +19,6 @@ import {it, describe} from '@angular/core/testing';
 import {ReflectiveInjector, provide} from '@angular/core';
 import {AlfrescoSettingsService} from './AlfrescoSettings.service';
 import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';
-import {XHRBackend, HTTP_PROVIDERS} from '@angular/http';
-import {MockBackend} from '@angular/http/testing';
 
 declare var AlfrescoApi: any;
 
@@ -60,8 +58,6 @@ describe('AlfrescoAuthentication', () => {
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
-            HTTP_PROVIDERS,
-            provide(XHRBackend, {useClass: MockBackend}),
             provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsService}),
             AlfrescoAuthenticationService
         ]);
