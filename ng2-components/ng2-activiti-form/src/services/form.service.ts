@@ -25,13 +25,20 @@ import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 @Injectable()
 export class FormService {
 
+    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
+    static GENERIC_ERROR_MESSAGE: string = 'Server error';
+
     constructor(private http: Http,
                 private authService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
+    getHostAddress(): string {
+        return this.alfrescoSettingsService.bpmHost;
+    }
+
     getProcessDefinitions(): Observable<any> {
-        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/process-definitions`;
+        let url = `${this.getHostAddress()}/activiti-app/api/enterprise/process-definitions`;
         let options = this.getRequestOptions();
         return this.http
             .get(url, options)
@@ -40,7 +47,7 @@ export class FormService {
     }
 
     getTasks(): Observable<any> {
-        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/tasks/query`;
+        let url = `${this.getHostAddress()}/activiti-app/api/enterprise/tasks/query`;
         let body = JSON.stringify({});
         let options = this.getRequestOptions();
 
@@ -51,7 +58,7 @@ export class FormService {
     }
 
     getTask(id: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/tasks/${id}`;
+        let url = `${this.getHostAddress()}/activiti-app/api/enterprise/tasks/${id}`;
         let options = this.getRequestOptions();
 
         return this.http
@@ -61,10 +68,8 @@ export class FormService {
     }
 
     saveTaskForm(id: string, formValues: FormValues): Observable<Response> {
-        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/task-forms/${id}/save-form`;
-        let body = JSON.stringify({
-            values: formValues
-        });
+        let url = `${this.getHostAddress()}/activiti-app/api/enterprise/task-forms/${id}/save-form`;
+        let body = JSON.stringify({ values: formValues });
         let options = this.getRequestOptions();
 
         return this.http
@@ -80,8 +85,8 @@ export class FormService {
      * @returns {any}
      */
     completeTaskForm(id: string, formValues: FormValues, outcome?: string): Observable<Response> {
-        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/task-forms/${id}`;
-        let data: any = {values: formValues};
+        let url = `${this.getHostAddress()}/activiti-app/api/enterprise/task-forms/${id}`;
+        let data: any = { values: formValues };
         if (outcome) {
             data.outcome = outcome;
         }
@@ -94,7 +99,7 @@ export class FormService {
     }
 
     getTaskForm(id: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/api/enterprise/task-forms/${id}`;
+        let url = `${this.getHostAddress()}/activiti-app/api/enterprise/task-forms/${id}`;
         let options = this.getRequestOptions();
 
         return this.http
@@ -104,7 +109,7 @@ export class FormService {
     }
 
     getFormDefinitionById(id: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.bpmHost}/activiti-app/app/rest/form-models/${id}`;
+        let url = `${this.getHostAddress()}/activiti-app/app/rest/form-models/${id}`;
         let options = this.getRequestOptions();
 
         return this.http
@@ -113,9 +118,13 @@ export class FormService {
             .catch(this.handleError);
     }
 
+    /**
+     * Returns form definition ID by a given name.
+     * @param name
+     * @returns {Promise<T>|Promise<ErrorObservable>}
+     */
     getFormDefinitionByName(name: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.bpmHost}` +
-            `/activiti-app/app/rest/models?filter=myReusableForms&filterText=${name}&modelType=2`;
+        let url = `${this.getHostAddress()}/activiti-app/app/rest/models?filter=myReusableForms&filterText=${name}&modelType=2`;
         let options = this.getRequestOptions();
 
         return this.http
@@ -137,27 +146,42 @@ export class FormService {
         return new RequestOptions({headers: headers});
     }
 
-    private getFormId(res: Response) {
-        let body = res.json();
-        return body.data[0].id || {};
+    getFormId(res: Response) {
+        let result = null;
+
+        if (res) {
+            let body = res.json();
+            if (body && body.data && body.data.length > 0) {
+                result = body.data[0].id;
+            }
+        }
+
+        return result;
     }
 
-    private toJson(res: Response) {
-        let body = res.json();
-        return body || {};
+    toJson(res: Response) {
+        if (res) {
+            let body = res.json();
+            return body || {};
+        }
+        return {};
     }
 
-    private toJsonArray(res: Response) {
-        let body = res.json();
-        return body.data || [];
+    toJsonArray(res: Response) {
+        if (res) {
+            let body = res.json();
+            return body.data || [];
+        }
+        return [];
     }
 
-    private handleError(error: any) {
-        // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
+    handleError(error: any): Observable<any> {
+        let errMsg = FormService.UNKNOWN_ERROR_MESSAGE;
+        if (error) {
+            errMsg = (error.message) ? error.message :
+                error.status ? `${error.status} - ${error.statusText}` : FormService.GENERIC_ERROR_MESSAGE;
+        }
+        console.error(errMsg);
         return Observable.throw(errMsg);
     }
 
