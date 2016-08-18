@@ -69,20 +69,12 @@ export class AlfrescoAuthenticationService {
      * @returns {Observable<R>|Observable<T>}
      */
     login(username: string, password: string) {
-
-        if (this.isLoggedIn()) {
-            return Observable.create((observer) => {
-                observer.next({type: this.alfrescoSetting.getProviders(), ticket: this.getTicket()});
-                observer.complete();
-            }).catch(this.handleError);
-        } else {
-            return Observable.fromPromise(this.callApiLogin(username, password))
-                .map((response: any) => {
-                    this.saveTicket(response);
-                    return {type: this.alfrescoSetting.getProviders(), ticket: response};
-                })
-                .catch(this.handleError);
-        }
+        return Observable.fromPromise(this.callApiLogin(username, password))
+            .map((response: any) => {
+                this.saveTicket(response);
+                return {type: this.alfrescoSetting.getProviders(), ticket: response};
+            })
+            .catch(this.handleError);
     }
 
     /**
@@ -111,13 +103,6 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
-     * Remove the login ticket from localStorage
-     */
-    public removeTicket(): void {
-        localStorage.removeItem(`ticket-${this.alfrescoSetting.getProviders()}`);
-    }
-
-    /**
      *
      * @returns {*|Observable<string>|Observable<any>|Promise<T>}
      */
@@ -128,11 +113,18 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
+     * Remove the login ticket from localStorage
+     */
+    public removeTicket(): void {
+        localStorage.removeItem('ticket');
+    }
+
+    /**
      * The method return the ticket stored in the localStorage
      * @returns ticket
      */
     public getTicket(): string {
-        return localStorage.getItem(`ticket-${this.alfrescoSetting.getProviders()}`);
+        return localStorage.getItem('ticket');
     }
 
     /**
@@ -141,7 +133,7 @@ export class AlfrescoAuthenticationService {
      */
     public saveTicket(ticket): void {
         if (ticket) {
-            localStorage.setItem(`ticket-${this.alfrescoSetting.getProviders()}`, ticket);
+            localStorage.setItem('ticket', ticket);
         }
     }
 

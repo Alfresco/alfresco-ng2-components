@@ -49,13 +49,13 @@ describe('AlfrescoContentService', () => {
     });
 
     it('should return a valid content URL', () => {
-        expect(contentService.getContentUrl(node)).toBe('http://127.0.0.1:8080/alfresco/api/' +
+        expect(contentService.getContentUrl(node)).toBe('http://localhost:8080/alfresco/api/' +
             '-default-/public/alfresco/versions/1/nodes/fake-node-id/content?attachment=false&alf_ticket=myTicket');
     });
 
     it('should return a valid thumbnail URL', () => {
         expect(contentService.getDocumentThumbnailUrl(node))
-            .toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco' +
+            .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco' +
                 '/versions/1/nodes/fake-node-id/renditions/doclib/content?attachment=false&alf_ticket=myTicket');
     });
 });
