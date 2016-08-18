@@ -87,6 +87,7 @@ describe('AlfrescoAuthentication', () => {
 
         beforeEach(() => {
             authService = injector.get(AlfrescoAuthenticationService);
+            authService.alfrescoSetting.setProviders('ECM');
         });
 
         it('should return an ECM ticket after the login done', (done) => {
@@ -157,7 +158,7 @@ describe('AlfrescoAuthentication', () => {
 
         beforeEach(() => {
             authService = injector.get(AlfrescoAuthenticationService);
-            authService.providers = 'BPM';
+            authService.alfrescoSetting.setProviders('BPM');
         });
 
 
@@ -212,6 +213,44 @@ describe('AlfrescoAuthentication', () => {
                     done();
                 });
         });
+    });
+
+    describe('Setting service change should reflect in the api', () => {
+
+        beforeEach(() => {
+            authService = injector.get(AlfrescoAuthenticationService);
+            authService.alfrescoSetting.setProviders('ALL');
+            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseBPMECM);
+        });
+
+        it('should host ecm url change be reflected in the api configuration', (done) => {
+            authService.alfrescoSetting.ecmHost = '127.99.99.99';
+
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.getAlfrescoApi().config.host).toBe('127.99.99.99');
+                done();
+            });
+        });
+
+        it('should host bpm url change be reflected in the api configuration', (done) => {
+            authService.alfrescoSetting.bpmHost = '127.99.99.99';
+
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.getAlfrescoApi().config.hostActiviti).toBe('127.99.99.99');
+                done();
+            });
+        });
+
+
+        it('should host bpm provider change be reflected in the api configuration', (done) => {
+            authService.alfrescoSetting.setProviders('ECM');
+
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.getAlfrescoApi().config.provider).toBe('ECM');
+                done();
+            });
+        });
+
     });
 
     describe('when the setting is both ECM and BPM ', () => {

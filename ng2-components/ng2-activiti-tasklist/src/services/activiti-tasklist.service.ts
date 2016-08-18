@@ -30,7 +30,6 @@ export class ActivitiTaskListService {
     constructor(public authService: AlfrescoAuthenticationService) {
     }
 
-
     /**
      * Retrive all the Deployed app
      * @returns {Observable<any>}
@@ -55,7 +54,7 @@ export class ActivitiTaskListService {
                     filters.push(filterModel);
                 });
                 return filters;
-            });
+            }).catch(this.handleError);
     }
 
     /**
@@ -67,7 +66,7 @@ export class ActivitiTaskListService {
         return Observable.fromPromise(this.callApiTasksFiltered(filter.filter))
             .map((res: any) => {
                 return res;
-            });
+            }).catch(this.handleError);
     }
 
     /**
@@ -80,7 +79,7 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((details: any) => {
                 return new TaskDetailsModel(details);
-            });
+            }).catch(this.handleError);
     }
 
     /**
@@ -99,7 +98,7 @@ export class ActivitiTaskListService {
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;
-            });
+            }).catch(this.handleError);
     }
 
     /**
@@ -116,7 +115,7 @@ export class ActivitiTaskListService {
                     checklists.push(new TaskDetailsModel(checklist));
                 });
                 return checklists;
-            });
+            }).catch(this.handleError);
     }
 
     /**
@@ -129,7 +128,7 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((response: TaskDetailsModel) => {
                 return new TaskDetailsModel(response);
-            });
+            }).catch(this.handleError);
     }
 
     /**
@@ -143,7 +142,8 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((response: Comment) => {
                 return new Comment(response.id, response.message, response.created, response.createdBy);
-            });
+            }).catch(this.handleError);
+
     }
 
     /**
@@ -192,4 +192,8 @@ export class ActivitiTaskListService {
         return this.authService.getAlfrescoApi().activiti.taskApi.completeTask(id);
     }
 
+    private handleError(error: any) {
+        console.error(error);
+        return Observable.throw(error || 'Server error');
+    }
 }

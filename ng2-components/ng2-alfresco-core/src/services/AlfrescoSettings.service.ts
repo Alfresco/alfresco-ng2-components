@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AlfrescoSettingsService {
@@ -32,20 +33,26 @@ export class AlfrescoSettingsService {
 
     private providers: string = 'ALL'; // ECM, BPM , ALL
 
+    bpmHostSubject: Subject<string> = new Subject<string>();
+    ecmHostSubject: Subject<string> = new Subject<string>();
+    providerSubject: Subject<string> = new Subject<string>();
+
     public get ecmHost(): string {
         return this._ecmHost;
     }
 
-    public set ecmHost(value: string) {
-        this._ecmHost = value;
+    public set ecmHost(ecmHostUrl: string) {
+        this.ecmHostSubject.next(ecmHostUrl);
+        this._ecmHost = ecmHostUrl;
     }
 
     public get bpmHost(): string {
         return this._bpmHost;
     }
 
-    public set bpmHost(value: string) {
-        this._bpmHost = value;
+    public set bpmHost(bpmHostUrl: string) {
+        this.bpmHostSubject.next(bpmHostUrl);
+        this._bpmHost = bpmHostUrl;
     }
 
     public getBPMApiBaseUrl(): string {
@@ -57,7 +64,7 @@ export class AlfrescoSettingsService {
     }
 
     public setProviders(providers: string) {
+        this.providerSubject.next(providers);
         this.providers = providers;
     }
-
 }
