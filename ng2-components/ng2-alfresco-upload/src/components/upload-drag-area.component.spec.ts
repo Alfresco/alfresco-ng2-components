@@ -19,7 +19,6 @@ import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 import { HTTP_PROVIDERS } from '@angular/http';
@@ -38,7 +37,7 @@ describe('AlfrescoUploadDragArea', () => {
     beforeEachProviders(() => {
         return [
             HTTP_PROVIDERS,
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            AlfrescoSettingsService,
             AlfrescoAuthenticationService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
             UploadService

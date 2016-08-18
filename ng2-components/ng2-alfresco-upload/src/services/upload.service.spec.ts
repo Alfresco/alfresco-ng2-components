@@ -19,7 +19,6 @@ import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/
 import { EventEmitter } from '@angular/core';
 import { UploadService } from './upload.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 
 declare let AlfrescoApi: any;
 declare let jasmine: any;
@@ -39,7 +38,7 @@ describe('AlfrescoUploadService', () => {
 
     beforeEachProviders(() => {
         return [
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            AlfrescoSettingsService,
             AlfrescoAuthenticationService,
             UploadService
         ];
@@ -86,7 +85,7 @@ describe('AlfrescoUploadService', () => {
         service.uploadFilesInTheQueue('fake-dir', emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('fakehost/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
+        expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -108,7 +107,7 @@ describe('AlfrescoUploadService', () => {
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('fakehost/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
+            .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
             contentType: 'text/plain',
