@@ -29,21 +29,27 @@ declare var componentHandler;
 })
 export class HyperlinkWidget extends WidgetComponent {
 
+    static DEFAULT_URL: string = '#';
+    static DEFAULT_URL_SCHEME: string = 'http://';
+
     get linkUrl(): string {
-        let url = '#';
+        let url = HyperlinkWidget.DEFAULT_URL;
 
         if (this.field && this.field.hyperlinkUrl) {
             url = this.field.hyperlinkUrl;
             if (!/^https?:\/\//i.test(url)) {
-                url = 'http://' + url;
+                url = HyperlinkWidget.DEFAULT_URL_SCHEME + url;
             }
         }
 
         return url;
     }
 
-    get linkText() {
-        return this.field.displayText || this.field.hyperlinkUrl;
+    get linkText(): string {
+        if (this.field) {
+            return this.field.displayText || this.field.hyperlinkUrl;
+        }
+        return null;
     }
 
 }

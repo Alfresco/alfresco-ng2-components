@@ -39,9 +39,15 @@ export class TabsWidget implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.setupMaterialComponents();
+    }
+
+    setupMaterialComponents(): boolean {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
+            return true;
         }
+        return false;
     }
 }

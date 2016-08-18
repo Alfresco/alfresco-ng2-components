@@ -16,7 +16,6 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { ObjectUtils } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
@@ -31,6 +30,9 @@ declare var componentHandler;
     styleUrls: ['./dropdown.widget.css']
 })
 export class DropdownWidget extends WidgetComponent implements OnInit {
+
+    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
+    static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     constructor(private http: Http) {
         super();
@@ -51,13 +53,12 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
                 },
                 this.handleError
             );
-
         }
     }
 
     // TODO: support 'restResponsePath'
-    private loadFromJson(json: any) {
-        if (json instanceof Array) {
+    loadFromJson(json: any): boolean {
+        if (this.field && json && json instanceof Array) {
             let options = json.map(obj => {
                 return {
                     id: ObjectUtils.getValue(obj, this.field.restIdProperty).toString(),
@@ -66,16 +67,19 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
             });
             this.field.options = options;
             this.field.updateForm();
+            return true;
         }
+        return false;
     }
 
-    private handleError (error: any) {
-        // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
+
+    handleError(error: any) {
+        let errMsg = DropdownWidget.UNKNOWN_ERROR_MESSAGE;
+        if (error) {
+            errMsg = (error.message) ? error.message :
+                error.status ? `${error.status} - ${error.statusText}` : DropdownWidget.GENERIC_ERROR_MESSAGE;
+        }
+        console.error(errMsg);
     }
 
 }
