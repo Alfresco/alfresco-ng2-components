@@ -40,10 +40,88 @@ Also make sure you include these dependencies in your `index.html` file:
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
-## Basic usage example
+## Basic usage examples
+
+### Display form instance by task id
 
 ```html
-<activiti-form [taskId]="selectedTask?.id"></activiti-form>
+<activiti-form 
+    [taskId]="selectedTask?.id">
+</activiti-form>
+```
+
+For an existing Task both form and values will be fetched and displayed.
+
+### Display form definition by form id
+
+```html
+<activiti-form 
+    [formId]="selectedFormDefinition?.id"
+    [data]="customData">
+</activiti-form>
+```
+
+Only form definition will be fetched
+
+### Display form definition by form name
+
+```html
+<activiti-form 
+    [formName]="selectedFormDefinition?.name"
+    [data]="customData">
+</activiti-form>
+```
+
+## Configuration
+
+### Properties
+
+The recommended set of properties can be found in the following table:
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| taskId | string |  | Task id to fetch corresponding form and values. |
+| formId | string | | The id of the form definition to load and display with custom values. |
+| formName | string | | Name of hte form definition to load and display with custom values. |
+| data | `FormValues` | | Custom form values map to be used with the rendered form. |
+| showTitle | boolean | true | Toggle rendering of the form title. |
+| showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
+| showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
+| readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
+| showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
+
+#### Advanced properties
+ 
+ The following properties are for complex customisation purposes:
+ 
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| form | `FormModel` | | Underlying form model instance. |
+| debugMode | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
+
+### Events
+
+| Name | Description |
+| --- | --- |
+| formLoaded | Invoked when form is loaded or reloaded. |
+| formSaved | Invoked when form is submitted with `Save` or custom outcomes.  |
+| formCompleted | Invoked when form is submitted with `Complete` outcome.  |
+
+All `form*` events recieve an instance of the `FormModel` as event argument for ease of development:
+
+**MyView.component.html**
+```html
+<activiti-form 
+    [taskId]="selectedTask?.id"
+    formSaved="onFormSaved($event)">
+</activiti-form>
+```
+
+**MyView.component.ts**
+```ts
+onFormSaved(form: FormModel) {
+    console.log(form);
+}
 ```
 
 ## Build from sources

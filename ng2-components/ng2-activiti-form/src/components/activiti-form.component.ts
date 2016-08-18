@@ -26,7 +26,7 @@ import {
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 
 import { FormService } from './../services/form.service';
-import { FormModel, FormOutcomeModel } from './widgets/core/index';
+import { FormModel, FormOutcomeModel, FormValues } from './widgets/core/index';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
 import { ContainerWidget } from './widgets/container/container.widget';
@@ -88,7 +88,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     formName: string;
 
     @Input()
-    data: any;
+    data: FormValues;
 
     @Input()
     showTitle: boolean = true;
@@ -106,13 +106,13 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     showRefreshButton: boolean = true;
 
     @Output()
-    formSaved = new EventEmitter();
+    formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
-    formCompleted = new EventEmitter();
+    formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
-    formLoaded = new EventEmitter();
+    formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     form: FormModel;
 
@@ -194,13 +194,13 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 }
 
                 if (outcome.id === ActivitiForm.CUSTOM_OUTCOME_ID) {
-                    this.formSaved.emit(this.form.values);
+                    this.formSaved.emit(this.form);
                     return true;
                 }
             } else {
                 // Note: Activiti is using NAME field rather than ID for outcomes
                 if (outcome.name) {
-                    this.formSaved.emit(this.form.values);
+                    this.formSaved.emit(this.form);
                     this.completeTaskForm(outcome.name);
                     return true;
                 }
@@ -250,7 +250,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .subscribe(
                 form => {
                     this.form = new FormModel(form, data, this.readOnly);
-                    this.formLoaded.emit(this.form.values);
+                    this.formLoaded.emit(this.form);
                 },
                 this.handleError
             );
@@ -263,7 +263,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 form => {
                     // console.log('Get Form By definition Id', form);
                     this.form = this.parseForm(form);
-                    this.formLoaded.emit(this.form.values);
+                    this.formLoaded.emit(this.form);
                 },
                 this.handleError
             );
@@ -278,7 +278,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                         form => {
                             // console.log('Get Form By Form definition Name', form);
                             this.form = this.parseForm(form);
-                            this.formLoaded.emit(this.form.values);
+                            this.formLoaded.emit(this.form);
                         },
                         this.handleError
                     );
@@ -292,7 +292,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.formService
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
-                    () => this.formSaved.emit(this.form.values),
+                    () => this.formSaved.emit(this.form),
                     this.handleError
                 );
         }
@@ -303,7 +303,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.formService
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
-                    () => this.formCompleted.emit(this.form.values),
+                    () => this.formCompleted.emit(this.form),
                     this.handleError
                 );
         }

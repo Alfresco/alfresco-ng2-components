@@ -449,10 +449,10 @@ describe('ActivitiForm', () => {
         });
 
         let saved = false;
-        let eventValues = null;
-        formComponent.formSaved.subscribe((values) => {
+        let savedForm = null;
+        formComponent.formSaved.subscribe(form => {
             saved = true;
-            eventValues = values;
+            savedForm = form;
         });
 
         let formModel = new FormModel({
@@ -467,7 +467,7 @@ describe('ActivitiForm', () => {
 
         expect(formService.saveTaskForm).toHaveBeenCalledWith(formModel.taskId, formModel.values);
         expect(saved).toBeTruthy();
-        expect(eventValues).toEqual(formModel.values);
+        expect(savedForm).toEqual(formModel);
     });
 
     it('should handle error during form save', () => {
