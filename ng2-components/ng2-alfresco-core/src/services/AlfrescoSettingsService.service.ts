@@ -20,8 +20,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AlfrescoSettingsService {
 
-    static DEFAULT_ECM_ADDRESS: string = 'http://127.0.0.1:8080';
-    static DEFAULT_BPM_ADDRESS: string = 'http://127.0.0.1:9999';
+    static DEFAULT_ECM_ADDRESS: string = 'http://' + window.location.hostname + ':8080';
+    static DEFAULT_BPM_ADDRESS: string = 'http://' + window.location.hostname + ':9999';
 
     static DEFAULT_ECM_CONTEXT_PATH: string = '/alfresco';
     static DEFAULT_BPM_CONTEXT_PATH: string = '/activiti-app';

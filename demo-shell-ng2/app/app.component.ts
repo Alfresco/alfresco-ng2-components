@@ -41,8 +41,8 @@ export class AppComponent {
     translate: AlfrescoTranslationService;
     searchTerm: string = '';
 
-    ecmHost: string = 'http://127.0.0.1:8080';
-    bpmHost: string = 'http://127.0.0.1:9999';
+    ecmHost: string = 'http://' + window.location.hostname + ':8080';
+    bpmHost: string = 'http://' + window.location.hostname + ':9999';
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
