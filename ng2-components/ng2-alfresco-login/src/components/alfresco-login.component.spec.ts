@@ -38,7 +38,7 @@ describe('AlfrescoLogin', () => {
     beforeEachProviders(() => {
         return [
             { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsService },
+            AlfrescoSettingsService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock }
         ];
     });

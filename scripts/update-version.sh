@@ -29,7 +29,7 @@ for PACKAGE in \
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== UPDATE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
-  find ././../ -type f -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"0\\.2\\.0\"/\"${PACKAGE}\": \"${VERSION}\"/g"
+  find ././../ -type f -name package.json -prinnpm lit0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"0\\.2\\.0\"/\"${PACKAGE}\": \"${VERSION}\"/g"
 done
 
 for PACKAGE in \

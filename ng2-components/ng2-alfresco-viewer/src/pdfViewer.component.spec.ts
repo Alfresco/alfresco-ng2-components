@@ -23,7 +23,6 @@ import {PDFJSmock} from './assets/PDFJS.mock';
 import {PDFViewermock} from './assets/PDFViewer.mock';
 import {EventMock} from './assets/event.mock';
 
-import { AlfrescoSettingsServiceMock } from '../src/assets/AlfrescoSettingsService.service.mock';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('PdfViewer', () => {
@@ -33,7 +32,7 @@ describe('PdfViewer', () => {
 
     beforeEachProviders(() => {
         return [
-            {provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock},
+            AlfrescoSettingsService,
             AlfrescoAuthenticationService
         ];
     });

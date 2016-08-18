@@ -19,14 +19,13 @@ import { describe, expect, it, inject, beforeEachProviders } from '@angular/core
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { ViewerComponent } from './viewer.component';
 import { EventMock } from './assets/event.mock';
-import { AlfrescoSettingsServiceMock } from '../src/assets/AlfrescoSettingsService.service.mock';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
  describe('ViewerComponent', () => {
 
      beforeEachProviders(() => {
          return [
-             {provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock},
+             AlfrescoSettingsService,
              AlfrescoAuthenticationService
          ];
      });
