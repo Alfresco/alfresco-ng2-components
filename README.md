@@ -81,5 +81,4 @@ To generate your Alfresco Angular 2 application you can use the following Yeoman
 
 - [Yeoman Generator Angular 2 Alfresco application](https://github.com/Alfresco/generator-ng2-alfresco-app)
 
-test jira
 
