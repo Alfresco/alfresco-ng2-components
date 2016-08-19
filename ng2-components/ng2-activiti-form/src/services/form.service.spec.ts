@@ -19,7 +19,6 @@ import { it, inject, describe, expect, beforeEach, beforeEachProviders, afterEac
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Response, ResponseOptions } from '@angular/http';
 import { FormService } from './form.service';
-import { FormValues } from './../components/widgets/core/index';
 
 declare let jasmine: any;
 
@@ -105,7 +104,7 @@ describe('FormService', () => {
     });
 
     it('should save task form', (done) => {
-        let values = <FormValues> {
+        let values = {
             field1: 'one',
             field2: 'two'
         };
@@ -125,7 +124,7 @@ describe('FormService', () => {
     });
 
     it('should complete task form', (done) => {
-        let values = <FormValues> {
+        let values = {
             field1: 'one',
             field2: 'two'
         };
@@ -145,7 +144,7 @@ describe('FormService', () => {
     });
 
     it('should complete task form with a specific outcome', (done) => {
-        let values = <FormValues> {
+        let values = {
             field1: 'one',
             field2: 'two'
         };
