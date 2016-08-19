@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import { Ng2ActivitiProcesslistComponent } from './src/components/ng2-activiti-processlist.component';
-import { ActivitiProcessService } from './src/services/activiti-process-service.service';
+import { ActivitiProcesslistComponent } from './src/components/activiti-processlist.component';
+import { ActivitiProcessService } from './src/services/activiti-process.service';
 
 // components
-export * from './src/components/ng2-activiti-processlist.component';
+export * from './src/components/activiti-processlist.component';
 
 // services
-export * from './src/services/activiti-process-service.service';
+export * from './src/services/activiti-process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
-    Ng2ActivitiProcesslistComponent
+    ActivitiProcesslistComponent
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [

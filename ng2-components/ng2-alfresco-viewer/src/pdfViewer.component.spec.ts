@@ -29,7 +29,6 @@ describe('PdfViewer', () => {
 
     let pdfComponentFixture, element, component;
 
-
     beforeEachProviders(() => {
         return [
             AlfrescoSettingsService,
