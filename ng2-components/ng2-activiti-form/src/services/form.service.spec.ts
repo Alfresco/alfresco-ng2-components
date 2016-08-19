@@ -211,7 +211,7 @@ describe('FormService', () => {
             expect(result).toEqual(formId);
             done();
         });
-        http://localhost:9999/activiti-app/api/enterprise/models?filter=myReusableForms&modelType=2"
+
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'application/json',
