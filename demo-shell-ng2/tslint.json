@@ -26,7 +26,7 @@
     "label-undefined": true,
     "max-line-length": [
       true,
-      140
+      180
     ],
     "member-ordering": [
       true,

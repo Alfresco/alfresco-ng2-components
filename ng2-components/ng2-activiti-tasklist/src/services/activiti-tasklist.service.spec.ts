@@ -101,7 +101,6 @@ describe('ActivitiTaskListService', () => {
         ];
     });
 
-
     beforeEach(inject([ActivitiTaskListService], (activitiTaskListService: ActivitiTaskListService) => {
         jasmine.Ajax.install();
         service = activitiTaskListService;

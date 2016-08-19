@@ -15,81 +15,57 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
-import { Http, RequestOptionsArgs, Response, ResponseOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { it, inject, describe, expect, beforeEach, beforeEachProviders, afterEach } from '@angular/core/testing';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-
+import { Response, ResponseOptions } from '@angular/http';
 import { FormService } from './form.service';
 import { FormValues } from './../components/widgets/core/index';
 
+declare let jasmine: any;
+
 describe('FormService', () => {
 
-    let http: Http;
-    let responseBody: any;
-    let formService: FormService;
-    let authService: AlfrescoAuthenticationService;
-    let settingsService: AlfrescoSettingsService;
+    let responseBody: any, formService: FormService;
 
-    let createResponse = (url, body): Observable<Response> => {
-        return Observable.create(observer => {
-            let response = new Response(new ResponseOptions({
-                url: url,
-                body: body
-            }));
-            observer.next(response);
-            observer.complete();
-        });
-    };
-
-    beforeEach(() => {
-
-        http = <Http> {
-            get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-                return createResponse(url, responseBody);
-            },
-            post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-                return createResponse(url, responseBody);
-            }
-        };
-
-        settingsService = new AlfrescoSettingsService();
-        settingsService.setProviders([]);
-
-        authService = new AlfrescoAuthenticationService(settingsService, null);
-        formService = new FormService(http, authService, settingsService);
+    beforeEachProviders(() => {
+        return [
+            FormService,
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService
+        ];
     });
 
-    it('should resolve host address via settings service', () => {
-        const url = '<url>';
-        settingsService.bpmHost = url;
-        expect(formService.getHostAddress()).toBe(url);
+    beforeEach(inject([FormService], (service: FormService) => {
+        jasmine.Ajax.install();
+        formService = service;
+    }));
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     it('should fetch and parse process definitions', (done) => {
-        spyOn(http, 'get').and.callThrough();
-
         responseBody = {
             data: [
-                { id: '1' },
-                { id: '2' }
+                {id: '1'},
+                {id: '2'}
             ]
         };
 
         formService.getProcessDefinitions().subscribe(result => {
-            expect(http.get).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).get.calls.argsFor(0);
-            expect(args[0].endsWith('/process-definitions')).toBeTruthy();
-
-            expect(result).toEqual(responseBody.data);
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions')).toBeTruthy();
+            expect(result).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should fetch and parse tasks', (done) => {
-        spyOn(http, 'post').and.callThrough();
-
         responseBody = {
             data: [
                 { id: '1' },
@@ -98,126 +74,130 @@ describe('FormService', () => {
         };
 
         formService.getTasks().subscribe(result => {
-            expect(http.post).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).post.calls.argsFor(0);
-            expect(args[0].endsWith('/tasks/query')).toBeTruthy();
-
-            expect(result).toEqual(responseBody.data);
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/query')).toBeTruthy();
+            expect(result).toEqual(JSON.parse(jasmine.Ajax.requests.mostRecent().response).data);
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should fetch and parse the task by id', (done) => {
-        spyOn(http, 'get').and.callThrough();
-
         responseBody = {
             id: '1'
         };
 
         formService.getTask('1').subscribe(result => {
-            expect(http.get).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).get.calls.argsFor(0);
-            expect(args[0].endsWith('/tasks/1')).toBeTruthy();
-
-            expect(result).toEqual(responseBody);
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/tasks/1')).toBeTruthy();
+            expect(result.id).toEqual(responseBody.id);
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should save task form', (done) => {
-        spyOn(http, 'post').and.callThrough();
-
         let values = <FormValues> {
             field1: 'one',
             field2: 'two'
         };
 
         formService.saveTaskForm('1', values).subscribe(() => {
-            expect(http.post).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).post.calls.argsFor(0);
-            expect(args[0].endsWith('/task-forms/1/save-form')).toBeTruthy();
-            expect(args[1]).toEqual(JSON.stringify({ values: values }));
-
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1/save-form')).toBeTruthy();
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field1).toEqual(values.field1);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field2).toEqual(values.field2);
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should complete task form', (done) => {
-        spyOn(http, 'post').and.callThrough();
-
         let values = <FormValues> {
             field1: 'one',
             field2: 'two'
         };
 
         formService.completeTaskForm('1', values).subscribe(() => {
-            expect(http.post).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).post.calls.argsFor(0);
-            expect(args[0].endsWith('/task-forms/1')).toBeTruthy();
-            expect(args[1]).toEqual(JSON.stringify({ values: values }));
-
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field1).toEqual(values.field1);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field2).toEqual(values.field2);
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should complete task form with a specific outcome', (done) => {
-        spyOn(http, 'post').and.callThrough();
-
         let values = <FormValues> {
             field1: 'one',
             field2: 'two'
         };
 
         formService.completeTaskForm('1', values, 'custom').subscribe(() => {
-            expect(http.post).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).post.calls.argsFor(0);
-            expect(args[0].endsWith('/task-forms/1')).toBeTruthy();
-            expect(args[1]).toEqual(JSON.stringify({ values: values, outcome: 'custom' }));
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field2).toEqual(values.field2);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).outcome).toEqual('custom' );
 
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should get task form by id', (done) => {
-        spyOn(http, 'get').and.callThrough();
-
-        responseBody = { id: '1' };
+        responseBody = { id: 1 };
 
         formService.getTaskForm('1').subscribe(result => {
-            expect(http.get).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).get.calls.argsFor(0);
-            expect(args[0].endsWith('/task-forms/1')).toBeTruthy();
-
-            expect(result).toEqual(responseBody);
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
+            expect(result.id).toEqual(responseBody.id);
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should get form definition by id', (done) => {
-        spyOn(http, 'get').and.callThrough();
-
-        responseBody = { id: '1' };
+        responseBody = { id: 1 };
 
         formService.getFormDefinitionById('1').subscribe(result => {
-            expect(http.get).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).get.calls.argsFor(0);
-            expect(args[0].endsWith('/form-models/1')).toBeTruthy();
-
-            expect(result).toEqual(responseBody);
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/1')).toBeTruthy();
+            expect(result.id).toEqual(responseBody.id);
             done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
     it('should get form definition id by name', (done) => {
-        spyOn(http, 'get').and.callThrough();
-
         const formName = 'form1';
         const formId = 1;
         responseBody = {
@@ -227,13 +207,15 @@ describe('FormService', () => {
         };
 
         formService.getFormDefinitionByName(formName).subscribe(result => {
-            expect(http.get).toHaveBeenCalled();
-
-            let args: any[] = (<any>http).get.calls.argsFor(0);
-            expect(args[0].endsWith(`models?filter=myReusableForms&filterText=${formName}&modelType=2`)).toBeTruthy();
-
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith(`models?filter=myReusableForms&filterText=${formName}&modelType=2`)).toBeTruthy();
             expect(result).toEqual(formId);
             done();
+        });
+        http://localhost:9999/activiti-app/api/enterprise/models?filter=myReusableForms&modelType=2"
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
         });
     });
 
@@ -251,30 +233,6 @@ describe('FormService', () => {
         expect(formService.getFormId(response)).toBeNull();
 
         expect(formService.getFormId(null)).toBeNull();
-    });
-
-    it('should convert response to json object', () => {
-        let data = { id: 1 };
-        let response = new Response(new ResponseOptions({ body: data }));
-        expect(formService.toJson(response)).toEqual(data);
-    });
-
-    it('should fallback to empty json object', () => {
-        let response = new Response(new ResponseOptions({ body: null }));
-        expect(formService.toJson(response)).toEqual({});
-
-        expect(formService.toJson(null)).toEqual({});
-    });
-
-    it('should convert response to json array', () => {
-        let payload = {
-            data: [
-                { id: 1 }
-            ]
-        };
-
-        let response = new Response(new ResponseOptions({ body: JSON.stringify(payload) }));
-        expect(formService.toJsonArray(response)).toEqual(payload.data);
     });
 
     it('should fallback to empty json array', () => {
