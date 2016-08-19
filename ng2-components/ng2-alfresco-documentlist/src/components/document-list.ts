@@ -24,7 +24,6 @@ import {
     AfterContentInit,
     AfterViewInit,
     AfterViewChecked,
-    OnChanges,
     TemplateRef,
     NgZone,
     ViewChild,
@@ -59,7 +58,7 @@ declare let __moduleName: string;
     providers: [DocumentListService],
     directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES]
 })
-export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, AfterContentInit, OnChanges {
+export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, AfterContentInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -165,12 +164,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     ngOnInit() {
         this.data.thumbnails = this.thumbnails;
         this.data.maxItems = this.pageSize;
-        this.displayFolderContent(this.currentFolderPath);
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
-    }
-
-    ngOnChanges() {
-        this.reload();
     }
 
     ngAfterContentInit() {
@@ -185,7 +179,6 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
             if (this.emptyFolderTemplate) {
                 this.dataTable.noContentTemplate = this.emptyFolderTemplate;
             }
-
         }
     }
 

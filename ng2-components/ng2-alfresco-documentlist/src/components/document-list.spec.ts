@@ -257,12 +257,6 @@ describe('DocumentList', () => {
         expect(calls).toBe(1);
     });
 
-    it('should reload on binding changes', () => {
-        spyOn(documentList, 'reload').and.stub();
-        documentList.ngOnChanges();
-        expect(documentList.reload).toHaveBeenCalled();
-    });
-
     it('should execute context action on callback', () => {
         let action = {
             node: {},
