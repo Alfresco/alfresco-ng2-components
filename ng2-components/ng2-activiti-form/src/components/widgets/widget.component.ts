@@ -16,7 +16,7 @@
  */
 
 import { Input, AfterViewInit } from '@angular/core';
-import { FormFieldModel } from './widget.model';
+import { FormFieldModel } from './core/index';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -34,10 +34,16 @@ export class WidgetComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.setupMaterialComponents();
+    }
+
+    setupMaterialComponents(): boolean {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
+            return true;
         }
+        return false;
     }
 
 }

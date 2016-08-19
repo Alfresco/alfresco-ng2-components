@@ -2,11 +2,12 @@
     <div *ngFor="let opt of field.options">
         <label [attr.for]="opt.id" class="mdl-radio mdl-js-radio">
             <input type="radio"
+                   class="mdl-radio__button"
                    [checked]="field.value === opt.id"
                    [attr.id]="opt.id"
                    [attr.name]="field.id"
                    [attr.value]="opt.id"
-                   class="mdl-radio__button"
+                   [disabled]="field.readOnly"
                    (click)="field.value = opt.id">
             <span class="mdl-radio__label">{{opt.name}}</span>
         </label>

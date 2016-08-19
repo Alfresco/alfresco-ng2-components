@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, AfterViewInit } from '@angular/core';
-import { ContainerModel } from './../widget.model';
+import { ContainerModel } from './../core/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { PRIMITIVE_WIDGET_DIRECTIVES } from './../index';
@@ -46,10 +46,16 @@ export class ContainerWidget implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.setupMaterialComponents();
+    }
+
+    setupMaterialComponents(): boolean {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
+            return true;
         }
+        return false;
     }
 
 }

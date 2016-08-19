@@ -1,4 +1,8 @@
 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label text-widget">
-    <input class="mdl-textfield__input" type="text" [attr.id]="field.id" [(ngModel)]="field.value">
+    <input class="mdl-textfield__input"
+           type="text"
+           [attr.id]="field.id"
+           [(ngModel)]="field.value"
+           [disabled]="field.readOnly">
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
 </div>

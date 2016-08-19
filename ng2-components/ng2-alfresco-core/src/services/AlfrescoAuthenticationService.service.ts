@@ -35,13 +35,15 @@ export class AlfrescoAuthenticationService extends AlfrescoAuthenticationBase {
 
     /**
      * Constructor
-     * @param alfrescoSetting
+     * @param settingsService
      * @param http
      */
-    constructor(alfrescoSetting: AlfrescoSettingsService,
+    constructor(settingsService: AlfrescoSettingsService,
                 http: Http) {
-        super(alfrescoSetting, http);
-        this.createProviderInstance(alfrescoSetting.getProviders());
+        super(settingsService, http);
+        if (settingsService) {
+            this.createProviderInstance(settingsService.getProviders());
+        }
     }
 
     /**

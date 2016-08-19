@@ -17,7 +17,7 @@
 
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
-import { TabModel } from './../widget.model';
+import { TabModel } from './../core/index';
 import { ContainerWidget } from './../container/container.widget';
 
 declare let __moduleName: string;
@@ -39,9 +39,15 @@ export class TabsWidget implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+        this.setupMaterialComponents();
+    }
+
+    setupMaterialComponents(): boolean {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
+            return true;
         }
+        return false;
     }
 }

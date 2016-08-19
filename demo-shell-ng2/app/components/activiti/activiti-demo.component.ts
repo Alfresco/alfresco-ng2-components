@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, AfterViewChecked, ViewChild } from '@angular/core';
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ActivitiForm } from 'ng2-activiti-form';
 
@@ -29,7 +29,7 @@ declare var componentHandler;
     styleUrls: ['./activiti-demo.component.css'],
     directives: [ALFRESCO_TASKLIST_DIRECTIVES, ActivitiForm]
 })
-export class ActivitiDemoComponent implements OnInit, AfterViewChecked {
+export class ActivitiDemoComponent implements AfterViewChecked {
 
     currentChoice: string = 'task-list';
 
