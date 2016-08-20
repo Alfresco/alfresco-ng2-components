@@ -19,23 +19,29 @@ import { it, describe, expect } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
 import { ActivitiForm } from './activiti-form.component';
-import { FormModel, FormOutcomeModel } from './widgets/index';
+import { FormModel, FormOutcomeModel, FormFieldModel } from './widgets/index';
 import { FormService } from './../services/form.service';
+import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { ContainerWidget } from './widgets/container/container.widget';
 
 describe('ActivitiForm', () => {
 
     let componentHandler: any;
     let formService: FormService;
     let formComponent: ActivitiForm;
+    let visibilityService:  WidgetVisibilityService;
 
     beforeEach(() => {
         componentHandler =  jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
+        visibilityService =  jasmine.createSpyObj('WidgetVisibilityService', [
+            'updateVisibilityForForm', 'getTaskProcessVariableModelsForTask'
+        ]);
         window['componentHandler'] = componentHandler;
 
         formService = new FormService(null, null, null);
-        formComponent = new ActivitiForm(formService, null);
+        formComponent = new ActivitiForm(formService, visibilityService);
     });
 
     it('should upgrade MDL content on view checked', () => {
@@ -139,6 +145,7 @@ describe('ActivitiForm', () => {
         formComponent.loadForm();
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
+        expect(visibilityService.getTaskProcessVariableModelsForTask).toHaveBeenCalledWith(taskId);
     });
 
     it('should get form definition by form id on load', () => {
@@ -563,4 +570,16 @@ describe('ActivitiForm', () => {
         let form = formComponent.parseForm({ id: '<id>' });
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
+
+    it('should update the visibility when the container raise the change event', (done) => {
+        spyOn(formComponent, 'checkVisibility').and.callThrough();
+        let widget = new ContainerWidget();
+        let fakeForm = new FormModel();
+        let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        widget.formValueChanged.subscribe(field => { console.log('called'); done(); });
+        widget.fieldChanged(fakeField);
+
+        expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
+    });
+
 });
