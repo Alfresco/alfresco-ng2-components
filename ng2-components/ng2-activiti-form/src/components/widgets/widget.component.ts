@@ -38,6 +38,7 @@ export class WidgetComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.setupMaterialComponents();
+        this.fieldChanged.emit(this.field);
     }
 
     setupMaterialComponents(): boolean {
