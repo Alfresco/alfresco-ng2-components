@@ -19,13 +19,14 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { FormModel, FormFieldModel  } from './../components/widgets/widget.model';
-import { VisibilityFormWidget, IProcessVariable } from './../components/widgets/widget-visibility.model';
+import { FormModel, FormFieldModel } from '../components/widgets/core/index';
+import { WidgetVisibilityModel } from '../models/widget-visibility.model';
+import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 
 @Injectable()
 export class WidgetVisibilityService {
 
-    private processVarList: IProcessVariable[];
+    private processVarList: TaskProcessVariableModel[];
 
     constructor(private http: Http,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
@@ -54,7 +55,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    public getVisiblityForField(form: FormModel, visibilityObj: VisibilityFormWidget): boolean {
+    public getVisiblityForField(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
         let isLeftFieldPresent = visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId;
         if ( !isLeftFieldPresent ) {
             return true;
@@ -63,7 +64,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    private evaluateVisibilityForField(form: FormModel, visibilityObj: VisibilityFormWidget): boolean {
+    private evaluateVisibilityForField(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
        let leftValue = this.getLeftValue(form, visibilityObj);
        let rightValue = this.getRightValue(form, visibilityObj);
        let actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
@@ -78,14 +79,14 @@ export class WidgetVisibilityService {
        }
     }
 
-    private getLeftValue(form: FormModel, visibilityObj: VisibilityFormWidget) {
+    private getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         if ( visibilityObj.leftRestResponseId ) {
             return this.getValueFromVariable(form, visibilityObj.leftRestResponseId);
         }
         return this.getValueOField(form, visibilityObj.leftFormFieldId);
     }
 
-    private getRightValue(form: FormModel, visibilityObj: VisibilityFormWidget) {
+    private getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         let valueFound = null;
         if ( visibilityObj.rightRestResponseId ) {
             valueFound = this.getValueFromVariable(form, visibilityObj.rightRestResponseId);
@@ -170,19 +171,19 @@ export class WidgetVisibilityService {
         return null;
     }
 
-    getProcessVariablesForTask(taskId: string): Observable<IProcessVariable[]> {
+    getTaskProcessVariableModelsForTask(taskId: string): Observable<TaskProcessVariableModel[]> {
         let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/task-forms/${taskId}/variables`;
         let options = this.getRequestOptions();
         return this.http
             .get(url, options)
-            .map( (response: Response) => this.processVarList = <IProcessVariable[]> response.json())
+            .map( (response: Response) => this.processVarList = <TaskProcessVariableModel[]> response.json())
             .catch(this.handleError);
     }
 
-    getProcessVariableForTaskByName(taskId: string, processVarName: string): Observable<IProcessVariable> {
-        return this.getProcessVariablesForTask(taskId)
+    getTaskProcessVariableModelForTaskByName(taskId: string, processVarName: string): Observable<TaskProcessVariableModel> {
+        return this.getTaskProcessVariableModelsForTask(taskId)
                         .map(
-                        (variables: IProcessVariable[]) =>
+                        (variables: TaskProcessVariableModel[]) =>
                                         variables.find(variable => variable.id === processVarName));
     }
 

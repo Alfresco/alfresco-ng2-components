@@ -15,33 +15,33 @@
         <div *ngFor="let col of content.columns" class="mdl-cell mdl-cell--{{col.size}}-col">
             <div class="mdl-grid" *ngIf="col.hasFields()">
                 <div *ngFor="let field of col.fields" class="mdl-cell mdl-cell--12-col">
-                    <div [ngSwitch]="field.type">
+                    <div [ngSwitch]="field.type" [hidden]="!field.isVisible">
                         <div *ngSwitchCase="'integer'">
-                            <number-widget [field]="field"></number-widget>
+                            <number-widget [field]="field" (fieldChanged)="fieldChanged($event);"></number-widget>
                         </div>
                         <div *ngSwitchCase="'text'">
-                            <text-widget [field]="field"></text-widget>
+                            <text-widget [field]="field" (fieldChanged)="fieldChanged($event);"></text-widget>
                         </div>
                         <div *ngSwitchCase="'multi-line-text'">
-                            <multiline-text-widget [field]="field"></multiline-text-widget>
+                            <multiline-text-widget [field]="field" (fieldChanged)="fieldChanged($event);"></multiline-text-widget>
                         </div>
                         <div *ngSwitchCase="'boolean'">
-                            <checkbox-widget [field]="field"></checkbox-widget>
+                            <checkbox-widget [field]="field" (fieldChanged)="fieldChanged($event);"></checkbox-widget>
                         </div>
                         <div *ngSwitchCase="'dropdown'">
-                            <dropdown-widget [field]="field"></dropdown-widget>
+                            <dropdown-widget [field]="field" (fieldChanged)="fieldChanged($event);"></dropdown-widget>
                         </div>
                         <div *ngSwitchCase="'hyperlink'">
-                            <hyperlink-widget [field]="field"></hyperlink-widget>
+                            <hyperlink-widget [field]="field" (fieldChanged)="fieldChanged($event);"></hyperlink-widget>
                         </div>
                         <div *ngSwitchCase="'radio-buttons'">
-                            <radio-buttons-widget [field]="field"></radio-buttons-widget>
+                            <radio-buttons-widget [field]="field" (fieldChanged)="fieldChanged($event);"></radio-buttons-widget>
                         </div>
                         <div *ngSwitchCase="'readonly'">
-                            <display-value-widget [field]="field"></display-value-widget>
+                            <display-value-widget [field]="field" (fieldChanged)="fieldChanged($event);"></display-value-widget>
                         </div>
                         <div *ngSwitchCase="'readonly-text'">
-                            <display-text-widget [field]="field"></display-text-widget>
+                            <display-text-widget [field]="field" (fieldChanged)="fieldChanged($event);"></display-text-widget>
                         </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>

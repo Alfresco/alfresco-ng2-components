@@ -1,5 +1,5 @@
 <div class="dropdown-widget">
-    <select [(ngModel)]="field.value">
+    <select [(ngModel)]="field.value" (ngModelChange)="checkVisibility(field)">
         <option *ngFor="let opt of field.options" [value]="opt.id">{{opt.name}}</option>
     </select>
 </div>

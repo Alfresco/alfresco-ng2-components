@@ -19,8 +19,9 @@ import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/
 import { WidgetVisibilityService } from './widget-visibility.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { HTTP_PROVIDERS } from '@angular/http';
-import { VisibilityFormWidget, IProcessVariable } from '../components/widgets/widget-visibility.model';
-import { FormModel, FormValues, FormFieldModel } from './../components/widgets/widget.model';
+import { WidgetVisibilityModel } from '../models/widget-visibility.model';
+import { TaskProcessVariableModel } from '../models/task-process-variable.model';
+import { FormModel, FormFieldModel, FormValues } from '../components/widgets/core/index';
 
 declare let AlfrescoApi: any;
 declare let jasmine: any;
@@ -28,7 +29,7 @@ declare let jasmine: any;
 describe('WidgetVisibilityService', () => {
     let service;
 
-    let fakeProcessVariables = [
+    let fakeTaskProcessVariableModels = [
                                 {id: 'TEST_VAR_1', type: 'string', value: 'test_value_1'},
                                 {id: 'TEST_VAR_2', type: 'string', value: 'test_value_2'},
                                 {id: 'TEST_VAR_3', type: 'string', value: 'test_value_3'}
@@ -122,7 +123,7 @@ describe('WidgetVisibilityService', () => {
 
     let formValues: FormValues = { 'test_1': 'value_1', 'test_2': 'value_2', 'test_3': 'value_1' };
 
-    let visibilityObjTest: VisibilityFormWidget = {
+    let visibilityObjTest: WidgetVisibilityModel = {
                                                     leftFormFieldId : '',
                                                     leftRestResponseId : '',
                                                     nextCondition : null,
@@ -134,7 +135,7 @@ describe('WidgetVisibilityService', () => {
                                                     rightValue : null
                                                };
 
-    let chainedVisibilityObj: VisibilityFormWidget = {
+    let chainedVisibilityObj: WidgetVisibilityModel = {
                                                     leftFormFieldId : '',
                                                     leftRestResponseId : '',
                                                     nextCondition : null,
@@ -167,8 +168,8 @@ describe('WidgetVisibilityService', () => {
     });
 
     it('should return the process variables for task', (done) => {
-        service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+        service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(3);
                 expect(res[0].id).toEqual('TEST_VAR_1');
@@ -181,7 +182,7 @@ describe('WidgetVisibilityService', () => {
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 200,
             contentType: 'application/json',
-            responseText: JSON.stringify(fakeProcessVariables)
+            responseText: JSON.stringify(fakeTaskProcessVariableModels)
         });
     });
 
@@ -266,15 +267,15 @@ describe('WidgetVisibilityService', () => {
     });
 
     it('should be able to retrieve the value of a process variable', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
 
@@ -285,15 +286,15 @@ describe('WidgetVisibilityService', () => {
    });
 
     it('should be able to retrieve the value of a form variable', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
 
@@ -304,15 +305,15 @@ describe('WidgetVisibilityService', () => {
    });
 
     it('should return null if the variable does not exist', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
 
@@ -385,15 +386,15 @@ describe('WidgetVisibilityService', () => {
    });
 
     it('should retrieve the value for the right field when it is a process variable', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
        visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
@@ -463,15 +464,15 @@ describe('WidgetVisibilityService', () => {
    });
 
     it('should retrieve the value for the left field when it is a process variable', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
        visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
@@ -589,15 +590,15 @@ describe('WidgetVisibilityService', () => {
    });
 
     it('should evaluate the visibility for the field with single visibility condition between form value and process var', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
        visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
@@ -612,15 +613,15 @@ describe('WidgetVisibilityService', () => {
    });
 
     it('should evaluate visibility with multiple conditions', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
        visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
@@ -639,15 +640,15 @@ describe('WidgetVisibilityService', () => {
    });
 
     it('should return true evaluating a proper condition for a field', (done) => {
-       service.getProcessVariablesForTask(9999).subscribe(
-            (res: IProcessVariable[]) => {
+       service.getTaskProcessVariableModelsForTask(9999).subscribe(
+            (res: TaskProcessVariableModel[]) => {
                 done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
            'status': 200,
            contentType: 'application/json',
-           responseText: JSON.stringify(fakeProcessVariables)
+           responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
        let formTest = new FormModel(fakeFormJson);
        visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';

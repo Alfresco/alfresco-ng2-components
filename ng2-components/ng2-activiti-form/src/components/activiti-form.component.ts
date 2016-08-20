@@ -26,13 +26,15 @@ import {
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 
 import { FormService } from './../services/form.service';
-import { FormModel, FormOutcomeModel, FormValues } from './widgets/core/index';
+import { FormModel, FormOutcomeModel, FormValues, FormFieldModel } from './widgets/core/index';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
 import { ContainerWidget } from './widgets/container/container.widget';
 
 declare let __moduleName: string;
 declare var componentHandler;
+
+import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
 /**
  * @Input
@@ -70,7 +72,7 @@ declare var componentHandler;
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css'],
     directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
-    providers: [FormService]
+    providers: [FormService, WidgetVisibilityService]
 })
 export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
@@ -118,7 +120,8 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     debugMode: boolean = false;
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService,
+                private visibilityService: WidgetVisibilityService) {
     }
 
     hasForm(): boolean {
@@ -220,6 +223,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     loadForm() {
         if (this.taskId) {
             this.getFormByTaskId(this.taskId);
+            this.visibilityService.getTaskProcessVariableModelsForTask(this.taskId);
             return;
         }
 
@@ -333,5 +337,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         return [
             new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
+    }
+
+    checkVisibility(field: FormFieldModel) {
+        this.visibilityService.updateVisibilityForForm(field.form);
     }
 }

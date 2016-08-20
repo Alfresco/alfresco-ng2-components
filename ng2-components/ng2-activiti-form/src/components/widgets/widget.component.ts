@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit } from '@angular/core';
+import { Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { FormFieldModel } from './core/index';
 
 declare let __moduleName: string;
@@ -28,6 +28,9 @@ export class WidgetComponent implements AfterViewInit {
 
     @Input()
     field: FormFieldModel;
+
+    @Output()
+    fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
     hasField() {
         return this.field ? true : false;
@@ -44,6 +47,10 @@ export class WidgetComponent implements AfterViewInit {
             return true;
         }
         return false;
+    }
+
+    checkVisibility(field: FormFieldModel) {
+        this.fieldChanged.emit(field);
     }
 
 }
