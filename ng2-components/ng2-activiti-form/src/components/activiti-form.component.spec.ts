@@ -571,12 +571,12 @@ describe('ActivitiForm', () => {
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
-    it('should update the visibility when the container raise the change event', (done) => {
+    it('should update the visibility when the container raise the change event', (valueChanged) => {
         spyOn(formComponent, 'checkVisibility').and.callThrough();
         let widget = new ContainerWidget();
         let fakeForm = new FormModel();
         let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-        widget.formValueChanged.subscribe(field => { console.log('called'); done(); });
+        widget.formValueChanged.subscribe(field => { valueChanged(); });
         widget.fieldChanged(fakeField);
 
         expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
