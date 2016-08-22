@@ -216,7 +216,7 @@ describe('AlfrescoAuthentication', () => {
             authService.alfrescoSetting.ecmHost = '127.99.99.99';
 
             authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.getAlfrescoApi().config.host).toBe('127.99.99.99');
+                expect(authService.getAlfrescoApi().config.hostEcm).toBe('127.99.99.99');
                 done();
             });
         });
@@ -225,7 +225,7 @@ describe('AlfrescoAuthentication', () => {
             authService.alfrescoSetting.bpmHost = '127.99.99.99';
 
             authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.getAlfrescoApi().config.hostActiviti).toBe('127.99.99.99');
+                expect(authService.getAlfrescoApi().config.hostBpm).toBe('127.99.99.99');
                 done();
             });
         });
