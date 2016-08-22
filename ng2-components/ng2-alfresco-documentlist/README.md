@@ -101,6 +101,8 @@ Also make sure you include these dependencies in your `index.html` file:
 | multiselect | boolean | false | Toggles multiselect mode |
 | contentActions | boolean | false | Toggles content actions for each row |
 | contextMenuActions | boolean | false | Toggles context menus for each row |
+| rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
+| imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
 ### Events
 
@@ -393,6 +395,117 @@ DocumentList emits the following events:
 | preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 
 ## Advanced usage and customization
+
+### Custom row filter
+
+You can create a custom row filter implementation that returns `true` if row should be displayed or `false` to hide it.
+Typical row filter implementation is a function that receives `ShareDataRow` as parameter:
+
+```ts
+myFilter(row: ShareDataRow): boolean {
+    return true;
+}
+```
+
+_Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
+
+**View1.component.html**
+```html
+<alfresco-document-list 
+    [rowFilter]="folderFilter">
+</alfresco-document-list>
+```
+
+**View1.component.ts**
+```ts
+
+import { RowFilter, ShareDataRow } from 'ng2-alfresco-documentlist';
+
+export class View1 {
+
+    folderFilter: RowFilter;
+
+    constructor() {
+    
+        // This filter will make document list show only folders
+        
+        this.folderFilter = (row: ShareDataRow) => {
+            let node = row.node.entry;
+            
+            if (node && node.isFolder) {
+                return true;
+            }
+            
+            return false;
+        };
+    }
+}
+```
+
+### Custom image resolver
+
+You can create a custom image resolver implementation and take full control over how folder/file icons and thumbnails 
+are resolved and what document list should display. 
+
+**Image resolvers are executed only for columns of the `image` type.**
+
+Typical image resolver implementation is a function that receives `DataRow` and `DataColumn` as parameters:
+
+```ts
+myImageResolver(row: DataRow, col: DataColumn): string {
+    return '/path/to/image';
+}
+```
+
+Your function can return `null` or `false` values to fallback to default image resolving behavior.
+
+_Note that for the sake of simplicity the example code below was reduced to the main points of interest only._
+
+**View1.component.html**
+```html
+<alfresco-document-list 
+    [imageResolver]="folderImageResolver">
+    
+    <content-columns>
+        <content-column key="name" type="image"></content-column>
+    </content-columns>
+    
+    
+</alfresco-document-list>
+```
+
+**View1.component.ts**
+```ts
+import { DataColumn, DataRow } from 'ng2-alfresco-datatable';
+import { ImageResolver } from 'ng2-alfresco-documentlist';
+
+export class View1 {
+
+    folderImageResolver: ImageResolver;
+    
+    constructor() {
+        
+        // Customize folder icons, leave file icons untouched
+        
+        this.folderImageResolver = (row: DataRow, col: DataColumn) => {
+            let isFolder = <boolean> row.getValue('isFolder');
+            if (isFolder) {
+                
+                // (optional) You may want dynamically getting the column value
+                let name = row.getValue(col.key);
+                
+                // Format image url
+                return `http://<my custom path to folder icon>/${name}`;
+            }
+            
+            // For the rest of the cases just fallback to default behaviour.
+            return null;
+        };
+        
+    }
+
+}
+```
 
 ### Hiding columns on small screens
 

@@ -41,6 +41,9 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     private page: NodePaging;
     private currentPath: string;
 
+    private filter: RowFilter;
+    private imageResolver: ImageResolver;
+
     private _count: number = 0;
     private _hasMoreItems: boolean = false;
     private _totalItems: number = 0;
@@ -129,6 +132,13 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         }
 
         if (col.type === 'image') {
+
+            if (this.imageResolver) {
+                let resolved = this.imageResolver(row, col);
+                if (resolved) {
+                    return resolved;
+                }
+            }
 
             if (col.key === '$thumbnail') {
                 let node = (<ShareDataRow> row).node;
@@ -221,6 +231,18 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         }
     }
 
+    setFilter(filter: RowFilter) {
+        this.filter = filter;
+
+        if (this.filter && this.currentPath) {
+            this.loadPath(this.currentPath);
+        }
+    }
+
+    setImageResolver(resolver: ImageResolver) {
+        this.imageResolver = resolver;
+    }
+
     private loadPage(page: NodePaging) {
         this.page = page;
         this.resetPagination();
@@ -231,6 +253,10 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
             let data = page.list.entries;
             if (data && data.length > 0) {
                 rows = data.map(item => new ShareDataRow(item));
+
+                if (this.filter) {
+                    rows = rows.filter(this.filter);
+                }
 
                 // Sort by first sortable or just first column
                 if (this.columns && this.columns.length > 0) {
@@ -288,4 +314,12 @@ export class ShareDataRow implements DataRow {
     hasValue(key: string): boolean {
         return this.getValue(key) ? true : false;
     }
+}
+
+export interface RowFilter {
+    (value: ShareDataRow, index: number, array: ShareDataRow[]): boolean;
+}
+
+export interface ImageResolver {
+    (row: DataRow, column: DataColumn): string;
 }

@@ -45,7 +45,12 @@ import {
 import { DocumentListService } from './../services/document-list.service';
 import { MinimalNodeEntity } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
-import { ShareDataTableAdapter, ShareDataRow } from './../data/share-datatable-adapter';
+import {
+    ShareDataTableAdapter,
+    ShareDataRow,
+    RowFilter,
+    ImageResolver
+} from './../data/share-datatable-adapter';
 
 declare var componentHandler;
 declare let __moduleName: string;
@@ -88,6 +93,20 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     @Input()
     pageSize: number = DocumentList.DEFAULT_PAGE_SIZE;
+
+    @Input()
+    set rowFilter(value: RowFilter) {
+        if (this.data) {
+            this.data.setFilter(value);
+        }
+    };
+
+    @Input()
+    set imageResolver(value: ImageResolver) {
+        if (this.data) {
+            this.data.setImageResolver(value);
+        }
+    }
 
     @Output()
     nodeClick: EventEmitter<any> = new EventEmitter();

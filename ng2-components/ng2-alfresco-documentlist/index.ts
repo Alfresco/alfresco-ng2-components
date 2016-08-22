@@ -36,6 +36,9 @@ export * from './src/components/content-action-list';
 export * from './src/components/empty-folder-content';
 export * from './src/components/breadcrumb/breadcrumb.component';
 
+// data
+export * from './src/data/share-datatable-adapter';
+
 // services
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
