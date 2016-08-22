@@ -64,7 +64,7 @@ describe('ActivitiTaskList', () => {
     });
 
     beforeEach(() => {
-        let activitiSerevice = new ActivitiTaskListService(null, null);
+        let activitiSerevice = new ActivitiTaskListService(null, null, null);
         taskList = new ActivitiTaskList(null, null, activitiSerevice);
     });
 

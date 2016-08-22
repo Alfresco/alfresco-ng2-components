@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { FilterModel } from '../models/filter.model';
 import { FilterParamsModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
@@ -29,7 +30,9 @@ import { TaskDetailsModel } from '../models/task-details.model';
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(private http: Http, public alfrescoSettingsService: AlfrescoSettingsService) {
+    constructor(private http: Http,
+                public alfrescoSettingsService: AlfrescoSettingsService,
+                private authService: AlfrescoAuthenticationService) {
     }
 
 
@@ -249,7 +252,8 @@ export class ActivitiTaskListService {
     private getHeaders(): Headers {
         return new Headers({
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': this.authService.getTicket('BPM')
         });
     }
 
