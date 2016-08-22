@@ -40,7 +40,7 @@
 
     "ng2-alfresco-core": "^0.2.0",
     "ng2-translate": "2.2.2",
-    "alfresco-js-api": "^0.2.0",
+    "alfresco-js-api": "^0.3.0",
     "ng2-alfresco-viewer" : "file:../"
   },
   "devDependencies": {
