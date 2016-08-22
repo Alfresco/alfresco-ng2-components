@@ -37,16 +37,16 @@ export class AlfrescoAuthenticationService {
         this.alfrescoApi = new AlfrescoApi({
             provider: this.alfrescoSetting.getProviders(),
             ticket: this.isLoggedIn() ? this.getTicket().split(',')[0] : null,
-            host: this.alfrescoSetting.ecmHost,
-            hostActiviti: this.alfrescoSetting.bpmHost
+            hostEcm: this.alfrescoSetting.ecmHost,
+            hostBpm: this.alfrescoSetting.bpmHost
         });
 
         alfrescoSetting.bpmHostSubject.subscribe((value) => {
-            this.alfrescoApi.config.hostActiviti = value;
+            this.alfrescoApi.config.hostBpm = value;
         });
 
         alfrescoSetting.ecmHostSubject.subscribe((value) => {
-            this.alfrescoApi.config.host = value;
+            this.alfrescoApi.config.hostEcm = value;
         });
 
         alfrescoSetting.providerSubject.subscribe((value) => {
