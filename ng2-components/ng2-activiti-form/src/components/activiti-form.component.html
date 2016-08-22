@@ -13,7 +13,7 @@
                 </div>
 
                 <div *ngIf="!form.hasTabs() && form.hasFields()">
-                    <container-widget *ngFor="let field of form.fields" [content]="field"></container-widget>
+                    <container-widget *ngFor="let field of form.fields" [content]="field" (formValueChanged)="checkVisibility($event);"></container-widget>
                 </div>
             </div>
             <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">

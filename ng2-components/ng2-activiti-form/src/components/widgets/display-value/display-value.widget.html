@@ -3,6 +3,7 @@
            type="text"
            [attr.id]="field.id"
            [(ngModel)]="field.value"
+           (ngModelChange)="checkVisibility(field)"
            disabled>
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
 </div>

@@ -20,6 +20,7 @@ import { ContainerWidget } from './container.widget';
 import { FormModel } from './../core/form.model';
 import { ContainerModel } from './../core/container.model';
 import { FormFieldTypes } from './../core/form-field-types';
+import { FormFieldModel } from './../core/form-field.model';
 
 describe('ContainerWidget', () => {
 
@@ -92,6 +93,20 @@ describe('ContainerWidget', () => {
         expect(container.isExpanded).toBeTruthy();
         widget.onExpanderClicked();
         expect(container.isExpanded).toBeTruthy();
+    });
+
+    it('should send an event when a value is changed in the form', (done) => {
+        let widget = new ContainerWidget();
+        let fakeForm = new FormModel();
+        let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        widget.formValueChanged.subscribe(field => {
+            expect(field).not.toBe(null);
+            expect(field.id).toBe('fakeField');
+            expect(field.value).toBe('fakeValue');
+            done();
+        });
+
+        widget.fieldChanged(fakeField);
     });
 
 });

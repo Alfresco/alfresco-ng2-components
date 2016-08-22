@@ -18,6 +18,7 @@
 import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { WidgetComponent } from './widget.component';
 import { FormFieldModel } from './core/form-field.model';
+import { FormModel } from './core/form.model';
 
 describe('WidgetComponent', () => {
 
@@ -51,5 +52,35 @@ describe('WidgetComponent', () => {
         expect(component.hasField()).toBeFalsy();
         component.field = new FormFieldModel(null);
         expect(component.hasField()).toBeTruthy();
+    });
+
+    it('should send an event after view init', (done) => {
+        let component = new WidgetComponent();
+        let fakeForm = new FormModel();
+        let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        component.field = fakeField;
+
+        component.fieldChanged.subscribe(field => {
+            expect(field).not.toBe(null);
+            expect(field.id).toBe('fakeField');
+            expect(field.value).toBe('fakeValue');
+            done();
+        });
+
+        component.ngAfterViewInit();
+    });
+
+    it('should send an event when a field is changed', (done) => {
+        let component = new WidgetComponent();
+        let fakeForm = new FormModel();
+        let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+        component.fieldChanged.subscribe(field => {
+            expect(field).not.toBe(null);
+            expect(field.id).toBe('fakeField');
+            expect(field.value).toBe('fakeValue');
+            done();
+        });
+
+        component.checkVisibility(fakeField);
     });
 });

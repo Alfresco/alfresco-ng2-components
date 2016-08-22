@@ -20,6 +20,7 @@ import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormModel } from './form.model';
+import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 export class FormFieldModel extends FormWidgetModel {
 
@@ -45,6 +46,8 @@ export class FormFieldModel extends FormWidgetModel {
     params: FormFieldMetadata = {};
     hyperlinkUrl: string;
     displayText: string;
+    isVisible: boolean = true;
+    visibilityCondition: WidgetVisibilityModel = null;
 
     get value(): any {
         return this._value;
@@ -86,6 +89,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.params = <FormFieldMetadata> json.params || {};
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
+            this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
 
             this._value = this.parseValue(json);
             this.updateForm();

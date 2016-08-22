@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { ContainerModel } from './../core/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { PRIMITIVE_WIDGET_DIRECTIVES } from './../index';
+import { FormFieldModel } from '../core/index';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -39,6 +40,9 @@ export class ContainerWidget implements AfterViewInit {
     @Input()
     content: ContainerModel;
 
+    @Output()
+    formValueChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
+
     onExpanderClicked() {
         if (this.content && this.content.isCollapsible()) {
             this.content.isExpanded = !this.content.isExpanded;
@@ -56,6 +60,10 @@ export class ContainerWidget implements AfterViewInit {
             return true;
         }
         return false;
+    }
+
+    fieldChanged(field: FormFieldModel) {
+        this.formValueChanged.emit(field);
     }
 
 }
