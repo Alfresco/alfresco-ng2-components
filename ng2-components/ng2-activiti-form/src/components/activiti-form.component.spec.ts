@@ -19,7 +19,7 @@ import { it, describe, expect } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
 import { ActivitiForm } from './activiti-form.component';
-import { FormModel, FormOutcomeModel, FormFieldModel } from './widgets/index';
+import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { ContainerWidget } from './widgets/container/container.widget';
@@ -580,6 +580,58 @@ describe('ActivitiForm', () => {
         widget.fieldChanged(fakeField);
 
         expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
+    });
+
+    it('should prevent default outcome execution', () => {
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
+            name: 'Custom'
+        });
+
+        formComponent.form = new FormModel();
+        formComponent.executeOutcome.subscribe((event: FormOutcomeEvent) => {
+            expect(event.outcome).toBe(outcome);
+            event.preventDefault();
+            expect(event.defaultPrevented).toBeTruthy();
+        });
+
+        let result = formComponent.onOutcomeClicked(outcome);
+        expect(result).toBeFalsy();
+    });
+
+    it('should not prevent default outcome execution', () => {
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
+            name: 'Custom'
+        });
+
+        formComponent.form = new FormModel();
+        formComponent.executeOutcome.subscribe((event: FormOutcomeEvent) => {
+            expect(event.outcome).toBe(outcome);
+            expect(event.defaultPrevented).toBeFalsy();
+        });
+
+        spyOn(formComponent, 'completeTaskForm').and.callThrough();
+
+        let result = formComponent.onOutcomeClicked(outcome);
+        expect(result).toBeTruthy();
+
+        expect(formComponent.completeTaskForm).toHaveBeenCalledWith(outcome.name);
+    });
+
+    it('should check visibility only if field with form provided', () => {
+
+        formComponent.checkVisibility(null);
+        expect(visibilityService.updateVisibilityForForm).not.toHaveBeenCalled();
+
+        let field = new FormFieldModel(null);
+        formComponent.checkVisibility(field);
+        expect(visibilityService.updateVisibilityForForm).not.toHaveBeenCalled();
+
+        field = new FormFieldModel(new FormModel());
+        formComponent.checkVisibility(field);
+        expect(visibilityService.updateVisibilityForForm).toHaveBeenCalledWith(field.form);
     });
 
 });

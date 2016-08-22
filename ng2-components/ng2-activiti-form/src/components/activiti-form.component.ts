@@ -26,7 +26,7 @@ import {
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 
 import { FormService } from './../services/form.service';
-import { FormModel, FormOutcomeModel, FormValues, FormFieldModel } from './widgets/core/index';
+import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
 import { ContainerWidget } from './widgets/container/container.widget';
@@ -116,6 +116,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     @Output()
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
+    @Output()
+    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
+
     form: FormModel;
 
     debugMode: boolean = false;
@@ -185,6 +188,13 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
      */
     onOutcomeClicked(outcome: FormOutcomeModel): boolean {
         if (!this.readOnly && outcome && this.form) {
+
+            let args = new FormOutcomeEvent(outcome);
+            this.executeOutcome.emit(args);
+            if (args.defaultPrevented) {
+                return false;
+            }
+
             if (outcome.isSystem) {
                 if (outcome.id === ActivitiForm.SAVE_OUTCOME_ID) {
                     this.saveTaskForm();
@@ -340,6 +350,8 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     checkVisibility(field: FormFieldModel) {
-        this.visibilityService.updateVisibilityForForm(field.form);
+        if (field && field.form) {
+            this.visibilityService.updateVisibilityForForm(field.form);
+        }
     }
 }

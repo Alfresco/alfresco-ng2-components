@@ -106,8 +106,9 @@ The recommended set of properties can be found in the following table:
 | formLoaded | Invoked when form is loaded or reloaded. |
 | formSaved | Invoked when form is submitted with `Save` or custom outcomes.  |
 | formCompleted | Invoked when form is submitted with `Complete` outcome.  |
+| executeOutcome | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 
-All `form*` events recieve an instance of the `FormModel` as event argument for ease of development:
+All `form*` events receive an instance of the `FormModel` as event argument for ease of development:
 
 **MyView.component.html**
 ```html
@@ -123,6 +124,56 @@ onFormSaved(form: FormModel) {
     console.log(form);
 }
 ```
+
+#### Controlling outcome execution behaviour
+
+If absolutely needed it is possible taking full control over form outcome execution by means of `executeOutcome` event. 
+This event is fired upon each outcome execution, both system and custom ones.
+
+You can prevent default behaviour by calling `event.preventDefault()`. 
+This allows for example having custom form validation scenarios and/or additional validation summary presentation.
+
+Alternatively you may want just running additional code on outcome execution without suppressing default one.
+
+**MyView.component.html**
+```html
+<activiti-form 
+    [taskId]="selectedTask?.id"
+    executeOutcome="validateForm($event)">
+</activiti-form>
+```
+
+**MyView.component.ts**
+```ts
+import { FormOutcomeEvent } from 'ng2-activiti-form';
+
+export class MyView {
+
+    validateForm(event: FormOutcomeEvent) {
+        let outcome = event.outcome;
+        
+        // you can also get additional properties of outcomes 
+        // if you defined them within outcome definition
+        
+        if (outcome) {
+            let form = outcome.form;
+            if (form) {
+                // check/update the form here
+                event.preventDefault();
+            }
+        }
+    }
+    
+}
+```
+
+There are two additional functions that can be of a great value when controlling outcomes:
+
+- `saveTaskForm()` - saves current form
+- `completeTaskForm(outcome?: string)` - save and complete form with a given outcome name
+
+**Please note that if `event.preventDefault()` is not called then default outcome behaviour 
+will also be executed after your custom code.**
 
 ## Build from sources
 
