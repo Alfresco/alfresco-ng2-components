@@ -41,12 +41,12 @@ export class AlfrescoAuthenticationService {
             hostBpm: this.alfrescoSetting.bpmHost
         });
 
-        alfrescoSetting.bpmHostSubject.subscribe((value) => {
-            this.alfrescoApi.config.hostBpm = value;
+        alfrescoSetting.bpmHostSubject.subscribe((ecmHost) => {
+            this.alfrescoApi.config.changeEcmHost(ecmHost);
         });
 
-        alfrescoSetting.ecmHostSubject.subscribe((value) => {
-            this.alfrescoApi.config.hostEcm = value;
+        alfrescoSetting.ecmHostSubject.subscribe((bpmHost) => {
+            this.alfrescoApi.config.changeBpmHost(bpmHost);
         });
 
         alfrescoSetting.providerSubject.subscribe((value) => {
