@@ -15,15 +15,27 @@
  * limitations under the License.
  */
 
-export * from './form-field-metadata';
-export * from './form-values';
-export * from './form-field-types';
-export * from './form-field-option';
-export * from './form-widget.model';
-export * from './form-field.model';
-export * from './form.model';
-export * from './container-column.model';
-export * from './container.model';
-export * from './tab.model';
-export * from './form-outcome.model';
-export * from './form-outcome-event.model';
+import { FormOutcomeModel } from './form-outcome.model';
+
+export class FormOutcomeEvent {
+
+    private _outcome: FormOutcomeModel;
+    private _defaultPrevented: boolean = false;
+
+    get outcome(): FormOutcomeModel {
+        return this._outcome;
+    }
+
+    get defaultPrevented() {
+        return this._defaultPrevented;
+    }
+
+    constructor(outcome: FormOutcomeModel) {
+        this._outcome = outcome;
+    }
+
+    preventDefault() {
+        this._defaultPrevented = true;
+    }
+
+}
