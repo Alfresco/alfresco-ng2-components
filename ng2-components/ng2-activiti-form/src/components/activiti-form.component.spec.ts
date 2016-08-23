@@ -32,7 +32,7 @@ describe('ActivitiForm', () => {
     let visibilityService:  WidgetVisibilityService;
 
     beforeEach(() => {
-        componentHandler =  jasmine.createSpyObj('componentHandler', [
+        componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
         visibilityService =  jasmine.createSpyObj('WidgetVisibilityService', [
@@ -41,7 +41,7 @@ describe('ActivitiForm', () => {
         window['componentHandler'] = componentHandler;
 
         formService = new FormService(null);
-        formComponent = new ActivitiForm(formService, visibilityService);
+        formComponent = new ActivitiForm(formService, visibilityService, null, null, null);
     });
 
     it('should upgrade MDL content on view checked', () => {

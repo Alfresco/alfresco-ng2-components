@@ -23,7 +23,9 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
+import { MATERIAL_DESIGN_DIRECTIVES, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { Response, Http, Headers, RequestOptions } from '@angular/http';
 
 import { FormService } from './../services/form.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
@@ -84,6 +86,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     taskId: string;
 
     @Input()
+    nodeId: string;
+
+    @Input()
     formId: string;
 
     @Input()
@@ -124,7 +129,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     debugMode: boolean = false;
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private authService: AlfrescoAuthenticationService,
+                private http: Http,
+                public alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
     hasForm(): boolean {
@@ -154,7 +162,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     ngOnInit() {
-        this.loadForm();
+        if (this.nodeId) {
+            this.retriveNodeMetadataFromEcm();
+        } else {
+            this.loadForm();
+        }
     }
 
     ngAfterViewChecked() {
@@ -265,6 +277,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 form => {
                     this.form = new FormModel(form, data, this.readOnly);
                     this.formLoaded.emit(this.form);
+                    this.isActivitiModelExisting();
                 },
                 this.handleError
             );
@@ -278,6 +291,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     // console.log('Get Form By definition Id', form);
                     this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form);
+                    this.isActivitiModelExisting();
                 },
                 this.handleError
             );
@@ -293,6 +307,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                             // console.log('Get Form By Form definition Name', form);
                             this.form = this.parseForm(form);
                             this.formLoaded.emit(this.form);
+                            this.isActivitiModelExisting();
                         },
                         this.handleError
                     );
@@ -323,7 +338,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    handleError(err: any) {
+    handleError(err: any): any {
         console.log(err);
     }
 
@@ -345,7 +360,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, {id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
         ];
     }
 
@@ -353,5 +368,309 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         if (field && field.form) {
             this.visibilityService.updateVisibilityForForm(field.form);
         }
+    }
+
+    private retriveNodeMetadataFromEcm(): void {
+        let metadata = {};
+        let self = this;
+        this.authService.getAlfrescoApi().nodes.getNodeInfo(this.nodeId).then(function (data) {
+            if (data && data.properties) {
+                for (let key in data.properties) {
+                    if (key) {
+                        console.log(key + ' => ' + data.properties[key]);
+                        metadata [key.split(':')[1]] = data.properties[key];
+                    }
+                }
+            }
+
+            self.data = metadata;
+
+            self.isFormDefinedInActiviti(data.nodeType, self, metadata);
+        }, function (error) {
+            console.log('This node does not exist');
+        });
+    }
+
+    public isFormDefinedInActiviti(nodeType: string, ctx: any, metadata: any): Observable<any> {
+        let opts = {
+            'modelType': 2
+        };
+
+        return ctx.authService.getAlfrescoApi().activiti.modelsApi.getModels(opts).then(function (forms) {
+            let form = forms.data.find(formdata => formdata.name === nodeType);
+
+            if (!form) {
+
+                let dataModel = {
+                    name: nodeType,
+                    description: '',
+                    modelType: 2,
+                    stencilSet: 0
+                };
+                ctx.authService.getAlfrescoApi().activiti.modelsApi.createModel(dataModel).then(function (representation) {
+                    console.log('created', representation.id);
+                    ctx.formId = representation.id;
+
+                    let formRepresentation = {
+                        id: representation.id,
+                        name: representation.name,
+                        description: '',
+                        version: 1,
+                        lastUpdatedBy: 1,
+                        lastUpdatedByFullName: representation.lastUpdatedByFullName,
+                        lastUpdated: representation.lastUpdated,
+                        stencilSetId: 0,
+                        referenceId: null,
+                        formDefinition: {}
+                    };
+
+                    let fields = [];
+                    for (let key in metadata) {
+                        if (key) {
+                            let field = {
+                                type: 'text',
+                                id: key,
+                                name: key,
+                                required: false,
+                                readOnly: false,
+                                sizeX: 1,
+                                sizeY: 1,
+                                row: -1,
+                                col: -1,
+                                colspan: 1,
+                                params: {
+                                    existingColspan: 1,
+                                    maxColspan: 2
+                                },
+                                layout: {
+                                    colspan: 1,
+                                    row: -1,
+                                    column: -1
+                                }
+                            };
+                            fields.push(field);
+                        }
+                    }
+
+                    formRepresentation.formDefinition = {
+                        fields: [{
+                            name: 'Label',
+                            type: 'container',
+                            fieldType: 'ContainerRepresentation',
+                            numberOfColumns: 2,
+                            required: false,
+                            readOnly: false,
+                            sizeX: 2,
+                            sizeY: 1,
+                            row: -1,
+                            col: -1,
+                            fields: {'1': fields}
+                        }],
+                        gridsterForm: false,
+                        javascriptEvents: [],
+                        metadata: {},
+                        outcomes: [],
+                        className: '',
+                        style: '',
+                        tabs: [],
+                        variables: []
+                    };
+
+                    let data = {
+                        reusable: false,
+                        newVersion: false,
+                        formRepresentation: formRepresentation,
+                        formImageBase64: ''
+                    };
+
+                    ctx.authService.getAlfrescoApi().activiti.editorApi.saveForm(formRepresentation.id, data).then(function (response) {
+                        console.log(response);
+                        ctx.loadForm();
+                    }, function (error) {
+                        console.log('Form not created');
+                    });
+
+                }, function (error) {
+                    console.log('Form not created');
+                });
+            } else {
+                ctx.formId = form.id;
+                ctx.loadForm();
+            }
+        }, function (error) {
+            console.log('This node does not exist');
+        });
+    }
+
+    private isActivitiModelExisting() {
+        let modelName = 'activitiForms';
+        this.getEcmModels().subscribe(
+            models => {
+                console.log('models', models);
+                let formEcmModel =
+                    models.list.entries.find(model => model.entry.name === modelName);
+                if (!formEcmModel) {
+                    let namespace = 'activitiFormsModel';
+                    this.createEcmModel(modelName, namespace).subscribe(
+                        model => {
+                            console.log('model created', model);
+
+                            this.activeEcmModel(modelName).subscribe(
+                                modelActive => {
+                                    console.log('model active', modelActive);
+
+                                    this.getCustomTypes(modelName).subscribe(
+                                        customTypes => {
+                                            console.log('custom types', modelActive);
+
+                                            let customType = customTypes.list.entries.find(type => type.entry.name === this.formName);
+                                            if (!customType) {
+                                                let typeName = this.formName;
+                                                this.createEcmType(this.formName, modelName, 'cm:folder').subscribe(
+                                                    typeCreated => {
+                                                        console.log('type Created', typeCreated);
+
+                                                        this.addPropertyToAType(modelName, typeName, this.form).subscribe(
+                                                            properyAdded => {
+                                                                console.log('property Added', properyAdded);
+                                                            },
+                                                            this.handleError);
+                                                    },
+                                                    this.handleError);
+                                            }
+                                        },
+                                        this.handleError
+                                    );
+
+
+                                },
+                                this.handleError
+                            );
+                        },
+                        this.handleError
+                    );
+                }
+            },
+            this.handleError
+        );
+    }
+
+    private activeEcmModel(modelName: string): Observable<any> {
+        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}?select=status`;
+        let options = this.getRequestOptions();
+
+
+        let body = {status: 'ACTIVE'};
+
+        return this.http
+            .put(url, body, options)
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    private createEcmModel(modelName: string, nameSpace: string): Observable<any> {
+        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
+        let options = this.getRequestOptions();
+
+
+        let body = {
+            status: 'DRAFT', namespaceUri: modelName, namespacePrefix: nameSpace, name: modelName, description: '', author: ''
+        };
+
+        return this.http
+            .post(url, body, options)
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    private getEcmModels(): Observable<any> {
+        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
+        let options = this.getRequestOptions();
+
+        return this.http
+            .get(url, options)
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+
+    private getCustomTypes(modelName: string): Observable<any> {
+        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
+        let options = this.getRequestOptions();
+
+        return this.http
+            .get(url, options)
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    private createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
+        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
+        let options = this.getRequestOptions();
+
+
+        let body = {
+            name: typeName,
+            parentName: parentType,
+            title: typeName,
+            description: ''
+        };
+
+        return this.http
+            .post(url, body, options)
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    private addPropertyToAType(modelName: string, typeName: string, formFields: any) {
+        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types/${typeName}?select=props`;
+        let options = this.getRequestOptions();
+
+        if (formFields) {
+            for (let key in formFields) {
+                if (key) {
+                    console.log(key + ' => ' + formFields[key]);
+                }
+            }
+        }
+
+        let body = {
+            name: 'myAspect1',
+            properties: [{
+                name: 'InvoiceNumber',
+                title: 'Invoice Number',
+                description: 'MyProperty desc',
+                dataType: 'd:text',
+                multiValued: false,
+                mandatory: false,
+                mandatoryEnforced: false
+            }]
+        };
+
+        return this.http
+            .put(url, body, options)
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    private getHeaders(): Headers {
+        return new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': this.authService.getTicketEcm()
+        });
+    }
+
+    private getRequestOptions(): RequestOptions {
+        let headers = this.getHeaders();
+        return new RequestOptions({headers: headers});
+    }
+
+    toJson(res: Response) {
+        if (res) {
+            let body = res.json();
+            return body || {};
+        }
+        return {};
     }
 }
