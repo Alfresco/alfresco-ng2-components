@@ -92,7 +92,7 @@ export class UploadService {
             uploadingFileModel.setUploading();
 
             let promiseUpload = this.authService.getAlfrescoApi().
-                upload.uploadFile(uploadingFileModel.file, directory)
+                upload.uploadFile(uploadingFileModel.file, directory, null, null, {renditions: 'doclib'})
                 .on('progress', (progress: any) => {
                     uploadingFileModel.setProgres(progress);
                     this.updateFileListStream(this.queue);
