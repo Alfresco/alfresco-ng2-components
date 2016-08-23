@@ -175,6 +175,32 @@ There are two additional functions that can be of a great value when controlling
 **Please note that if `event.preventDefault()` is not called then default outcome behaviour 
 will also be executed after your custom code.**
 
+## Supported form widgets
+
+- [x] Tabs
+- [x] Text
+- [x] Multiline Text
+- [x] Number
+- [x] Checkbox
+- [ ] Date
+- Dropdown
+  * [x] Manual
+  * [x] REST service
+  * [ ] Data source
+- [ ] Typeahead
+- [ ] Amount
+- [x] Radio buttons
+- [ ] People
+- [ ] Group of People
+- [ ] Dynamic Table
+- [x] Hyperlink
+- Header
+  * [x] Plain header
+  * [x] Collapsible header
+- [ ] Attach
+- [x] Display value
+- [x] Display text
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
