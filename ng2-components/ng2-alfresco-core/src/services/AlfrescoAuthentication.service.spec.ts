@@ -15,35 +15,16 @@
  * limitations under the License.
  */
 
-import {it, describe} from '@angular/core/testing';
+import {it, describe, beforeEach, afterEach} from '@angular/core/testing';
 import {ReflectiveInjector, provide} from '@angular/core';
 import {AlfrescoSettingsService} from './AlfrescoSettings.service';
 import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';
 
 declare var AlfrescoApi: any;
+declare let jasmine: any;
 
 describe('AlfrescoAuthentication', () => {
-    let injector, fakePromise, fakePromiseBPMECM, authService;
-
-    fakePromise = new Promise(function (resolve, reject) {
-        resolve(
-            'fake-post-ticket'
-        );
-        reject({
-            response: {
-                error: 'fake-error'
-            }
-        });
-    });
-
-    fakePromiseBPMECM = new Promise(function (resolve, reject) {
-        resolve(['fake-post-ticket-ECM', 'fake-post-ticket-BPM']);
-        reject({
-            response: {
-                error: 'fake-error'
-            }
-        });
-    });
+    let injector, authService;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
@@ -70,6 +51,11 @@ describe('AlfrescoAuthentication', () => {
             return keys[i] || null;
         });
 
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     describe('when the setting is ECM', () => {
@@ -80,61 +66,73 @@ describe('AlfrescoAuthentication', () => {
         });
 
         it('should return an ECM ticket after the login done', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromise);
-
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicket()).toEqual('fake-post-ticket');
+                expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
                 done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
             });
         });
 
         it('should return ticket undefined when the credentials are wrong', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin')
-                .and.returnValue(Promise.reject('fake invalid credentials'));
-
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicket()).toBeUndefined();
+                    expect(authService.getTicketEcm()).toBe(null);
                     done();
                 });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 403,
+                contentType: 'application/json',
+                responseText: JSON.stringify({
+                    'error': {
+                        'errorKey': 'Login failed',
+                        'statusCode': 403,
+                        'briefSummary': '05150009 Login failed',
+                        'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+                        'descriptionURL': 'https://api-explorer.alfresco.com'
+                    }
+                })
+            });
         });
 
         it('should login in the ECM if no provider are defined calling the login', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromise);
-
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
             });
         });
 
         it('should return a ticket undefined after logout', (done) => {
-            localStorage.setItem('ticket', 'fake-post-ticket');
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(fakePromise);
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                authService.logout().subscribe(() => {
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.getTicketEcm()).toBe(null);
+                    done();
+                });
 
-            authService.logout().subscribe(() => {
-                expect(authService.isLoggedIn()).toBe(false);
-                expect(authService.getTicket()).toBeUndefined();
-                expect(localStorage.getItem('ticket')).toBeUndefined();
-                done();
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    'status': 204
+                });
             });
-        });
 
-        it('should logout only if the provider is already logged in', (done) => {
-            localStorage.setItem('ticket', 'fake-post-ticket');
-
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(fakePromise);
-
-            authService.saveTicket('fake-ticket');
-
-            authService.logout().subscribe(() => {
-                expect(authService.isLoggedIn()).toBe(false);
-                expect(authService.getTicket()).toBeUndefined();
-                expect(localStorage.getItem('ticket')).toBeUndefined();
-                done();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
             });
         });
 
@@ -150,57 +148,64 @@ describe('AlfrescoAuthentication', () => {
             authService.alfrescoSetting.setProviders('BPM');
         });
 
-
         it('should return an BPM ticket after the login done', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromise);
-
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicket()).toEqual('fake-post-ticket');
+                expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200
             });
         });
 
         it('should return ticket undefined when the credentials are wrong', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(Promise.reject('fake invalid credentials'));
-
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicket()).toBeUndefined();
+                    expect(authService.getTicketBpm()).toBe(null);
                     done();
                 });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 403
+            });
         });
 
         it('should return a ticket undefined after logout', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromise);
-
             authService.login('fake-username', 'fake-password').subscribe(() => {
-                spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(fakePromise);
-
                 authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicket()).toBeUndefined();
-                    expect(localStorage.getItem('ticket')).toBeUndefined();
+                    expect(authService.getTicketBpm()).toBe(null);
                     done();
                 });
+
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    'status': 200
+                });
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200
             });
         });
 
         it('should return an error when the logout return error', (done) => {
-            localStorage.setItem('ticket', 'fake-post-ticket');
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogout').and.returnValue(Promise.reject('fake logout error'));
-
             authService.logout().subscribe(
                 (res) => {
                 },
                 (err: any) => {
                     expect(err).toBeDefined();
-                    expect(localStorage.getItem('ticket')).toEqual('fake-post-ticket');
+                    expect(authService.getTicketBpm()).toBe(null);
                     done();
                 });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 403
+            });
         });
     });
 
@@ -209,35 +214,24 @@ describe('AlfrescoAuthentication', () => {
         beforeEach(() => {
             authService = injector.get(AlfrescoAuthenticationService);
             authService.alfrescoSetting.setProviders('ALL');
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromise);
         });
 
-        it('should host ecm url change be reflected in the api configuration', (done) => {
+        it('should host ecm url change be reflected in the api configuration', () => {
             authService.alfrescoSetting.ecmHost = '127.99.99.99';
 
-            authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.getAlfrescoApi().config.hostEcm).toBe('127.99.99.99');
-                done();
-            });
+            expect(authService.getAlfrescoApi().config.hostEcm).toBe('127.99.99.99');
         });
 
-        it('should host bpm url change be reflected in the api configuration', (done) => {
+        it('should host bpm url change be reflected in the api configuration', () => {
             authService.alfrescoSetting.bpmHost = '127.99.99.99';
 
-            authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.getAlfrescoApi().config.hostBpm).toBe('127.99.99.99');
-                done();
-            });
+            expect(authService.getAlfrescoApi().config.hostBpm).toBe('127.99.99.99');
         });
 
-
-        it('should host bpm provider change be reflected in the api configuration', (done) => {
+        it('should host bpm provider change be reflected in the api configuration', () => {
             authService.alfrescoSetting.setProviders('ECM');
 
-            authService.login('fake-username', 'fake-password').subscribe(() => {
-                expect(authService.getAlfrescoApi().config.provider).toBe('ECM');
-                done();
-            });
+            expect(authService.getAlfrescoApi().config.provider).toBe('ECM');
         });
 
     });
@@ -250,26 +244,80 @@ describe('AlfrescoAuthentication', () => {
         });
 
         it('should return both ECM and BPM tickets after the login done', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(fakePromiseBPMECM);
-
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicket()).toEqual('fake-post-ticket-ECM,fake-post-ticket-BPM');
+                expect(authService.getTicket()).toEqual(['fake-post-ticket', 'Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk']);
                 done();
+            });
+
+            jasmine.Ajax.requests.at(0).respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+
+            jasmine.Ajax.requests.at(1).respondWith({
+                'status': 200
             });
         });
 
-        it('should return ticket undefined when the credentials are wrong', (done) => {
-            spyOn(AlfrescoAuthenticationService.prototype, 'callApiLogin').and.returnValue(Promise.reject('fake invalid credentials'));
-
+        it('should return login fail if only ECM call fail', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(
                 (res) => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicket()).toBeUndefined();
+                    expect(authService.getTicket()).toBe(null);
                     done();
                 });
+
+            jasmine.Ajax.requests.at(0).respondWith({
+                'status': 403
+            });
+
+            jasmine.Ajax.requests.at(1).respondWith({
+                'status': 200
+            });
+        });
+
+        it('should return login fail if only BPM call fail', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(
+                (res) => {
+                },
+                (err: any) => {
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.getTicket()).toBe(null);
+                    done();
+                });
+
+            jasmine.Ajax.requests.at(0).respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+
+            jasmine.Ajax.requests.at(1).respondWith({
+                'status': 403
+            });
+        });
+
+        it('should return ticket undefined when the credentials are wrong', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(
+                (res) => {
+                },
+                (err: any) => {
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.getTicket()).toBe(null);
+                    done();
+                });
+
+            jasmine.Ajax.requests.at(0).respondWith({
+                'status': 403
+            });
+
+            jasmine.Ajax.requests.at(1).respondWith({
+                'status': 403
+            });
         });
     });
 });

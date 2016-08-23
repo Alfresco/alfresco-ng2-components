@@ -36,7 +36,8 @@ export class AlfrescoAuthenticationService {
     constructor(public alfrescoSetting: AlfrescoSettingsService) {
         this.alfrescoApi = new AlfrescoApi({
             provider: this.alfrescoSetting.getProviders(),
-            ticket: this.isLoggedIn() ? this.getTicket().split(',')[0] : null,
+            ticketEcm: this.getTicketEcm(),
+            ticketBpm: this.getTicketBpm(),
             hostEcm: this.alfrescoSetting.ecmHost,
             hostBpm: this.alfrescoSetting.bpmHost
         });
@@ -45,7 +46,7 @@ export class AlfrescoAuthenticationService {
             this.alfrescoApi.changeBpmHost(bpmHost);
         });
 
-        alfrescoSetting.ecmHostSubject.subscribe((ecmHost ) => {
+        alfrescoSetting.ecmHostSubject.subscribe((ecmHost) => {
             this.alfrescoApi.changeEcmHost(ecmHost);
         });
 
@@ -59,7 +60,7 @@ export class AlfrescoAuthenticationService {
      * @returns {boolean}
      */
     isLoggedIn(): boolean {
-        return !!this.getTicket();
+        return !!this.alfrescoApi.isLoggedIn();
     }
 
     /**
@@ -71,7 +72,7 @@ export class AlfrescoAuthenticationService {
     login(username: string, password: string) {
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
-                this.saveTicket(response);
+                this.saveTickets();
                 return {type: this.alfrescoSetting.getProviders(), ticket: response};
             })
             .catch(this.handleError);
@@ -116,24 +117,69 @@ export class AlfrescoAuthenticationService {
      * Remove the login ticket from localStorage
      */
     public removeTicket(): void {
-        localStorage.removeItem('ticket');
+        localStorage.removeItem('ticket-ECM');
+        localStorage.removeItem('ticket-BPM');
     }
 
     /**
-     * The method return the ticket stored in the localStorage
+     * The method return the ECM ticket stored in the localStorage
      * @returns ticket
      */
-    public getTicket(): string {
-        return localStorage.getItem('ticket');
+    public getTicketEcm(): string {
+        if (localStorage.getItem('ticket-ECM')) {
+            return localStorage.getItem('ticket-ECM');
+        } else {
+            return null;
+        }
     }
 
     /**
-     * The method save the ticket in the localStorage
-     * @param ticket
+     * The method return the ECM and Bpm in an Array ticket stored in the localStorage
+     * @returns ticket
      */
-    public saveTicket(ticket): void {
-        if (ticket) {
-            localStorage.setItem('ticket', ticket);
+    public getTicket(): any {
+        if (localStorage.getItem('ticket-ECM') || localStorage.getItem('ticket-BPM')) {
+            return [localStorage.getItem('ticket-ECM'), localStorage.getItem('ticket-BPM')];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * The method return the BPM ticket stored in the localStorage
+     * @returns ticket
+     */
+    public getTicketBpm(): string {
+        if (localStorage.getItem('ticket-BPM')) {
+            return localStorage.getItem('ticket-BPM');
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * The method save the ECM and BPM ticket in the localStorage
+     */
+    public saveTickets() {
+        this.saveTicketEcm();
+        this.saveTicketBpm();
+    }
+
+    /**
+     * The method save the ECM ticket in the localStorage
+     */
+    public saveTicketEcm(): void {
+        if (this.alfrescoApi) {
+            localStorage.setItem('ticket-ECM', this.alfrescoApi.getTicketEcm());
+        }
+    }
+
+    /**
+     * The method save the BPM ticket in the localStorage
+     */
+    public saveTicketBpm(): void {
+        if (this.alfrescoApi) {
+            localStorage.setItem('ticket-BPM', this.alfrescoApi.getTicketBpm());
         }
     }
 
