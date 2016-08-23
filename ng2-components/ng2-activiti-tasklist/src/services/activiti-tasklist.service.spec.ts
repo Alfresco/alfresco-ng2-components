@@ -288,6 +288,7 @@ describe('ActivitiTaskListService', () => {
     });
 
 
+    /*
     it('should complete the task ', (done) => {
 
         service.completeTask(999).subscribe(
@@ -303,7 +304,7 @@ describe('ActivitiTaskListService', () => {
             responseText: JSON.stringify({})
         });
     });
-
+    */
 
 
 });
