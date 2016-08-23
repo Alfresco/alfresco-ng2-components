@@ -64,9 +64,9 @@
     "zone.js": "0.6.12",
     "ng2-translate": "2.2.2",
     "ng2-alfresco-core": "0.2.0",
-	"ng2-alfresco-datatable": "0.2.0",
+	  "ng2-alfresco-datatable": "0.2.0",
     "ng2-activiti-form": "0.2.0",
-    "alfresco-js-api": "^0.1.0"
+    "alfresco-js-api": "0.2.0"
   },
   "peerDependencies": {
     "material-design-icons": "^2.2.3",
