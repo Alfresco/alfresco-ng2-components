@@ -156,7 +156,6 @@ describe('ActivitiTaskListService', () => {
             },
             (err: any) => {
                 expect(err).toBeDefined();
-                expect(err.json().error).toEqual('wrong request');
             }
         );
 
@@ -264,7 +263,6 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should add a comment task ', (done) => {
-
         service.addTaskComment(999, 'fake-comment-message').subscribe(
             (res: Comment) => {
                 expect(res).toBeDefined();
@@ -289,10 +287,7 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
-
-    /*
     it('should complete the task ', (done) => {
-
         service.completeTask(999).subscribe(
             (res: any) => {
                 expect(res).toBeDefined();
@@ -306,6 +301,5 @@ describe('ActivitiTaskListService', () => {
             responseText: JSON.stringify({})
         });
     });
-    */
 
 });
