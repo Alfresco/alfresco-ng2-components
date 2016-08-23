@@ -36,8 +36,8 @@ export class AlfrescoAuthenticationService {
     constructor(public alfrescoSetting: AlfrescoSettingsService) {
         this.alfrescoApi = new AlfrescoApi({
             provider: this.alfrescoSetting.getProviders(),
-            ticketEcm: this.getTicketEcm(),
-            ticketBpm: this.getTicketBpm(),
+            ticketEcm: localStorage.getItem('ticket-ECM'),
+            ticketBpm: localStorage.getItem('ticket-BPM'),
             hostEcm: this.alfrescoSetting.ecmHost,
             hostBpm: this.alfrescoSetting.bpmHost
         });
@@ -127,7 +127,7 @@ export class AlfrescoAuthenticationService {
      */
     public getTicketEcm(): string {
         if (localStorage.getItem('ticket-ECM')) {
-            return localStorage.getItem('ticket-ECM');
+            return 'Basic ' + btoa(localStorage.getItem('ticket-ECM'));
         } else {
             return null;
         }
