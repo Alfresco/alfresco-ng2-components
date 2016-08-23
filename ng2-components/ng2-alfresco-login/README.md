@@ -45,7 +45,7 @@ Components included:
 * Alfresco Login Component
 * Alfresco Authentication Service
 
-#### Dependencies
+## Dependencies
 
 Add the following dependency to your index.html:
 
@@ -63,7 +63,7 @@ Please refer to the following example to have an idea of how your systemjs.confi
 
 https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-login/demo/systemjs.config.js
 
-#### Style
+## Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
 design dependency to your project:
 
@@ -80,8 +80,7 @@ Also make sure you include these dependencies in your .html page:
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
-#### Basic usage
-
+## Basic usage
 
 ```html
 <alfresco-login [providers]="['ECM','BPM']"></alfresco-login>
@@ -89,7 +88,7 @@ Also make sure you include these dependencies in your .html page:
 
 Example of an App that use Alfresco login component :
 
-main.ts
+**main.ts**
 ```ts
 
 import { Component } from '@angular/core';
@@ -136,13 +135,16 @@ bootstrap(AppComponent, [
 
 ```
 #### Events
-**onSuccess**: The event is emitted when the login is done
-**onError**: The event is emitted when the login fails<br />
 
+| Name | Description |
+| --- | --- |
+| onSuccess | The event is emitted when the login is done |
+| onError | The event is emitted when the login fails |
 
 #### Options
 
 **providers**: { string[] } optional) default ECM. 
+
 Using the providers attribute, you can specify in which system 
 (ECM or BPM) you want to be logged in.
 By selecting one of the options only the relative components  will be
@@ -150,8 +152,30 @@ By selecting one of the options only the relative components  will be
    ECM component will be visible,same behaviour for BPM selection.
 You can also specify ECM and BPM, in this case both system components
  are accessible.<br />
+ 
+ 
+## Custom logo and background
+
+It is possible changing logo and background images to custom values.
+
+```html
+<style>     
+alfresco-login >>> .login-content { 
+    background-image: url(http://images.freeimages.com/images/previews/638/wood-wall-for-background-1634466.jpg) !important;     
+}
+ </style>
+
+<alfresco-login 
+    [logoImageUrl]="'http://images.freeimages.com/images/previews/eac/honeybee-with-a-house-1633609.jpg'" >
+</alfresco-login>
+```
+
+Should give you something like the following:
+
+![custom login](assets/custom-login.png)
 
 ## Build from sources
+
 Alternatively you can build component from sources with the following commands:
 
 
@@ -160,11 +184,11 @@ npm install
 npm run build
 ```
 
-##Build the files and keep watching for changes
+### Build the files and keep watching for changes
 
-    ```sh
-    $ npm run build:w
-    ```
+```sh
+$ npm run build:w
+```
     
 ## Running unit tests
 
@@ -172,7 +196,7 @@ npm run build
 npm test
 ```
 
-## Running unit tests in browser
+### Running unit tests in browser
 
 ```sh
 npm test-browser
@@ -181,7 +205,7 @@ npm test-browser
 This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
 
-## Code coverage
+### Code coverage
 
 ```sh
 npm run coverage
@@ -197,3 +221,6 @@ npm install
 npm start
 ```
 
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

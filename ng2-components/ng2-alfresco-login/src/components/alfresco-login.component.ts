@@ -42,10 +42,14 @@ export class AlfrescoLoginComponent {
     isPasswordShow: boolean = false;
 
     @Input()
+    logoImageUrl: string;
+
+    @Input()
     providers: string [] ;
 
     @Output()
     onSuccess = new EventEmitter();
+
     @Output()
     onError = new EventEmitter();
 
@@ -55,8 +59,7 @@ export class AlfrescoLoginComponent {
 
     formError: { [id: string]: string };
 
-    private _message: { [id: string]: { [id: string]: string }
-    };
+    private _message: { [id: string]: { [id: string]: string } };
 
     /**
      * Constructor
@@ -91,7 +94,6 @@ export class AlfrescoLoginComponent {
         translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
-
     }
 
     /**

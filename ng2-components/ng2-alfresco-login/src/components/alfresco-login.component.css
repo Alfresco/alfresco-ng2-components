@@ -51,6 +51,10 @@
     margin-top: 5px;
 }
 
+:host .alfresco-logo > img {
+    max-height: 43px;
+}
+
 :host .mdl-button--raised.mdl-button--colored {
     width: 98%;
     height: 36px;
