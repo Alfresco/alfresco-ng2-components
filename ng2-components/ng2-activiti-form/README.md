@@ -13,6 +13,12 @@ npm install --save ng2-activiti-form
 
 ### Dependencies
 
+Add the following dependency to your index.html:
+
+```html
+<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
+```
+
 You must separately install the following libraries for your application:
  
 - [ng2-translate](https://github.com/ocombe/ng2-translate)

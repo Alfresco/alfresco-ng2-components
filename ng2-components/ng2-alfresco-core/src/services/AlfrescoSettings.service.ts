@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AlfrescoSettingsService {
@@ -23,50 +24,47 @@ export class AlfrescoSettingsService {
     static DEFAULT_ECM_ADDRESS: string = 'http://' + window.location.hostname + ':8080';
     static DEFAULT_BPM_ADDRESS: string = 'http://' + window.location.hostname + ':9999';
 
-    static DEFAULT_ECM_CONTEXT_PATH: string = '/alfresco';
     static DEFAULT_BPM_CONTEXT_PATH: string = '/activiti-app';
-
-    static DEFAULT_ECM_BASE_API_PATH: string = '/api/-default-/public/alfresco/versions/1';
 
     private _ecmHost: string = AlfrescoSettingsService.DEFAULT_ECM_ADDRESS;
     private _bpmHost: string = AlfrescoSettingsService.DEFAULT_BPM_ADDRESS;
 
-    private _ecmContextPath = AlfrescoSettingsService.DEFAULT_ECM_CONTEXT_PATH;
     private _bpmContextPath = AlfrescoSettingsService.DEFAULT_BPM_CONTEXT_PATH;
 
-    private _apiECMBasePath: string = AlfrescoSettingsService.DEFAULT_ECM_BASE_API_PATH;
+    private providers: string = 'ALL'; // ECM, BPM , ALL
 
-    private providers: string[] = ['ECM', 'BPM'];
+    bpmHostSubject: Subject<string> = new Subject<string>();
+    ecmHostSubject: Subject<string> = new Subject<string>();
+    providerSubject: Subject<string> = new Subject<string>();
 
     public get ecmHost(): string {
         return this._ecmHost;
     }
 
-    public set ecmHost(value: string) {
-        this._ecmHost = value;
+    public set ecmHost(ecmHostUrl: string) {
+        this.ecmHostSubject.next(ecmHostUrl);
+        this._ecmHost = ecmHostUrl;
     }
 
     public get bpmHost(): string {
         return this._bpmHost;
     }
 
-    public set bpmHost(value: string) {
-        this._bpmHost = value;
+    public set bpmHost(bpmHostUrl: string) {
+        this.bpmHostSubject.next(bpmHostUrl);
+        this._bpmHost = bpmHostUrl;
     }
 
     public getBPMApiBaseUrl(): string {
         return this._bpmHost + this._bpmContextPath;
     }
 
-    public getECMApiBaseUrl(): string {
-        return this._ecmHost + this._ecmContextPath + this._apiECMBasePath;
-    }
-
-    public getProviders(): string [] {
+    public getProviders(): string {
         return this.providers;
     }
 
-    public setProviders(providers: string []) {
+    public setProviders(providers: string) {
+        this.providerSubject.next(providers);
         this.providers = providers;
     }
 }

@@ -21,8 +21,8 @@ import { UploadButtonComponent } from './upload-button.component';
 import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
-import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
 import { HTTP_PROVIDERS } from '@angular/http';
+
 declare var AlfrescoApi: any;
 
 describe('AlfrescoUploadButton', () => {
@@ -69,7 +69,7 @@ describe('AlfrescoUploadButton', () => {
     beforeEachProviders(() => {
         return [
             HTTP_PROVIDERS,
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            AlfrescoSettingsService,
             AlfrescoAuthenticationService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
             UploadService

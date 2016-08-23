@@ -23,20 +23,16 @@ import {PDFJSmock} from './assets/PDFJS.mock';
 import {PDFViewermock} from './assets/PDFViewer.mock';
 import {EventMock} from './assets/event.mock';
 
-import {HTTP_PROVIDERS} from '@angular/http';
-import {AlfrescoSettingsServiceMock} from '../src/assets/AlfrescoSettingsService.service.mock';
-import {AlfrescoAuthenticationService, AlfrescoSettingsService} from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('PdfViewer', () => {
 
     let pdfComponentFixture, element, component;
 
-
     beforeEachProviders(() => {
         return [
-            HTTP_PROVIDERS,
-            {provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock},
-            {provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService}
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService
         ];
     });
 

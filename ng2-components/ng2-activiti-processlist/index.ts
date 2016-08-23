@@ -15,22 +15,19 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { ActivitiProcesslistComponent } from './src/components/activiti-processlist.component';
+import { ActivitiProcessService } from './src/services/activiti-process.service';
 
-@Injectable()
-export class AlfrescoSettingsServiceMock {
+// components
+export * from './src/components/activiti-processlist.component';
 
-    static DEFAULT_HOST_ADDRESS: string = 'fakehost';
+// services
+export * from './src/services/activiti-process.service';
 
-    private providers: string[] = ['ECM', 'BPM'];
+export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
+    ActivitiProcesslistComponent
+];
 
-    private _host: string = AlfrescoSettingsServiceMock.DEFAULT_HOST_ADDRESS;
-
-    public get ecmHost(): string {
-        return this._host;
-    }
-
-    getProviders(): string [] {
-        return this.providers;
-    }
-}
+export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
+    ActivitiProcessService
+];

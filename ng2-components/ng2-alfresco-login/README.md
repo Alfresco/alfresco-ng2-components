@@ -83,7 +83,7 @@ Also make sure you include these dependencies in your .html page:
 ## Basic usage
 
 ```html
-<alfresco-login [providers]="['ECM','BPM']"></alfresco-login>
+<alfresco-login [providers]="'ALL'"></alfresco-login>
 ```
 
 Example of an App that use Alfresco login component :
@@ -105,7 +105,7 @@ import {
     selector: 'my-app',
     template: '
     <alfresco-login 
-        providers=['ECM'] 
+        providers="'ALL'" 
         (onSuccess)="mySuccessMethod($event)" 
         (onError)="myErrorMethod($event)">
     </alfresco-login>',
@@ -141,18 +141,17 @@ bootstrap(AppComponent, [
 | onSuccess | The event is emitted when the login is done |
 | onError | The event is emitted when the login fails |
 
+Attribute     |   Description | 
+---           | ---         |
+`onSuccess`         | The event is emitted when the login is done         |
+`onError`         | The event is emitted when the login fails      |
+
 #### Options
 
-**providers**: { string[] } optional) default ECM. 
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL | 
 
-Using the providers attribute, you can specify in which system 
-(ECM or BPM) you want to be logged in.
-By selecting one of the options only the relative components  will be
- accesible. For instance if you activate the ECM login then only the
-   ECM component will be visible,same behaviour for BPM selection.
-You can also specify ECM and BPM, in this case both system components
- are accessible.<br />
- 
  
 ## Custom logo and background
 

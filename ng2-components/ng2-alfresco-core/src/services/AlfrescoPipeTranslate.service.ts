@@ -17,7 +17,7 @@
 
 import { Injectable, ChangeDetectorRef, Pipe } from '@angular/core';
 import { TranslatePipe } from 'ng2-translate/ng2-translate';
-import { AlfrescoTranslationService } from './AlfrescoTranslationService.service';
+import { AlfrescoTranslationService } from './AlfrescoTranslation.service';
 
 @Injectable()
 @Pipe({

@@ -16,7 +16,7 @@
  */
 
 import { describe, it, beforeEach } from '@angular/core/testing';
-import { AlfrescoSettingsService } from './AlfrescoSettingsService.service';
+import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 
 describe('AlfrescoSettingsService', () => {
 

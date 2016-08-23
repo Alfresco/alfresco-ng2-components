@@ -62,6 +62,7 @@ export class ActivitiFilters implements OnInit {
      * Constructor
      * @param auth
      * @param translate
+     * @param activiti
      */
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,

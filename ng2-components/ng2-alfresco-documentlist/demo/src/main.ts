@@ -144,17 +144,16 @@ class DocumentListDemo implements OnInit {
     authenticated: boolean;
 
     ecmHost: string = 'http://devproducts-platform.alfresco.me';
-    // ecmHost: string = 'http://127.0.0.1:8080';
 
     token: string;
 
     constructor(
         private authService: AlfrescoAuthenticationService,
-        private alfrescoSettingsService: AlfrescoSettingsService,
+        private settingsService: AlfrescoSettingsService,
         translation: AlfrescoTranslationService,
         private documentActions: DocumentActionsService) {
 
-        alfrescoSettingsService.ecmHost = this.ecmHost;
+        settingsService.ecmHost = this.ecmHost;
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -167,7 +166,7 @@ class DocumentListDemo implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
 
@@ -190,7 +189,7 @@ class DocumentListDemo implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin', ['ECM']).subscribe(
+        this.authService.login('admin', 'admin').subscribe(
             token => {
                 console.log(token);
                 this.token = token;

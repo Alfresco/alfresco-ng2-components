@@ -55,7 +55,7 @@
     "alfresco"
   ],
   "dependencies": {
-    "alfresco-js-api": "^0.2.0",
+    "alfresco-js-api": "^0.3.0",
     "@angular/common": "2.0.0-rc.3",
     "@angular/compiler": "2.0.0-rc.3",
     "@angular/core": "2.0.0-rc.3",
@@ -87,6 +87,7 @@
     "karma-coverage": "1.0.0",
     "karma-coveralls": "1.1.2",
     "karma-jasmine": "1.0.2",
+    "karma-jasmine-ajax": "^0.1.13",
     "karma-jasmine-html-reporter": "0.2.0",
     "karma-mocha-reporter": "2.0.3",
     "license-check": "1.1.5",

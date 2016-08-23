@@ -18,8 +18,6 @@
 import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach, xit } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { WebscriptComponent } from '../src/webscript.component';
-import { AlfrescoSettingsServiceMock } from '../src/assets/AlfrescoSettingsService.service.mock';
-import { HTTP_PROVIDERS } from '@angular/http';
 
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
@@ -31,9 +29,8 @@ describe('Test ng2-alfresco-webscript', () => {
 
     beforeEachProviders(() => {
         return [
-            HTTP_PROVIDERS,
-            {provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock},
-            {provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService}
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService
         ];
     });
 
@@ -88,7 +85,7 @@ describe('Test ng2-alfresco-webscript', () => {
             component.ngOnChanges().then(() => {
                 webscriptComponentFixture.detectChanges();
                 let request = jasmine.Ajax.requests.mostRecent();
-                expect(request.url).toBe('fakehost/alfresco/service/sample/folder/Company%20Home');
+                expect(request.url).toBe('http://localhost:8080/alfresco/service/sample/folder/Company%20Home');
                 done();
             });
 

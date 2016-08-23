@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from '@angular/common';
 import {
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
-    AlfrescoAuthenticationService
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService
 } from 'ng2-alfresco-core';
 
 declare let componentHandler: any;
@@ -48,7 +49,7 @@ export class AlfrescoLoginComponent {
     backgroundImageUrl: string;
 
     @Input()
-    providers: string [] ;
+    providers: string ;
 
     @Output()
     onSuccess = new EventEmitter();
@@ -67,11 +68,13 @@ export class AlfrescoLoginComponent {
     /**
      * Constructor
      * @param _fb
-     * @param auth
+     * @param authService
+     * @param settingsService
      * @param translate
      */
     constructor(private _fb: FormBuilder,
-                public auth: AlfrescoAuthenticationService,
+                public authService: AlfrescoAuthenticationService,
+                public settingsService: AlfrescoSettingsService,
                 private translate: AlfrescoTranslationService) {
 
         this.formError = {
@@ -79,7 +82,7 @@ export class AlfrescoLoginComponent {
             'password': ''
         };
 
-        this.form =  this._fb.group({
+        this.form = this._fb.group({
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
         });
@@ -104,12 +107,15 @@ export class AlfrescoLoginComponent {
      * @param value
      * @param event
      */
-    onSubmit(value: any, event) {
+    onSubmit(value: any, event: any) {
         this.error = false;
         if (event) {
             event.preventDefault();
         }
-        this.auth.login(value.username, value.password, this.providers)
+
+        this.settingsService.setProviders(this.providers);
+
+        this.authService.login(value.username, value.password)
             .subscribe(
                 (token: any) => {
                     this.success = true;

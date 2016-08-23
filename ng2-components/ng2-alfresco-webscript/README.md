@@ -56,7 +56,7 @@ The following component needs to be added to your systemjs.config:
 
 - ng2-translate
 - ng2-alfresco-core
-- ng2-alfresco-datatable
+- ng2-alfresco-dataœtable
 
 Please refer to the following example to have an idea of how your systemjs.config should look like :
 

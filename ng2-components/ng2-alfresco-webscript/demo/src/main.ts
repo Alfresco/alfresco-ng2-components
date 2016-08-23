@@ -34,9 +34,9 @@ import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
                <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
                <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="host"><br><br>
+               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid token to perform
                     operations.
                </div>
                <hr>
@@ -76,9 +76,11 @@ class WebscriptDemo implements OnInit {
     token: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private alfrescoSettingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService) {
 
-        alfrescoSettingsService.ecmHost = this.ecmHost;
+        settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
+
         if (this.authService.getTicket()) {
             this.token = this.authService.getTicket();
         }
@@ -89,7 +91,7 @@ class WebscriptDemo implements OnInit {
     }
 
     public updateHost(): void {
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
 
@@ -98,7 +100,7 @@ class WebscriptDemo implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin', ['ECM']).subscribe(
+        this.authService.login('admin', 'admin').subscribe(
             token => {
                 console.log(token);
                 this.token = token;

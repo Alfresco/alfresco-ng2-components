@@ -23,7 +23,7 @@ import {
     beforeEach,
     beforeEachProviders
 } from '@angular/core/testing';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
@@ -38,6 +38,7 @@ describe('AlfrescoLogin', () => {
     beforeEachProviders(() => {
         return [
             { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
+            AlfrescoSettingsService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock }
         ];
     });

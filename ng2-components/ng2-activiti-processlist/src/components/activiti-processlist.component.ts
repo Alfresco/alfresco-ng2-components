@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit
-} from '@angular/core';
-import {
-    AlfrescoPipeTranslate,
-    AlfrescoTranslationService,
-    CONTEXT_MENU_DIRECTIVES,
-    CONTEXT_MENU_PROVIDERS
-} from 'ng2-alfresco-core';
-import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable';
-import { ActivitiProcessService } from '../services/activiti-process-service.service';
+import {Component, OnInit } from '@angular/core';
+import { AlfrescoPipeTranslate, AlfrescoTranslationService, CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
+import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { ActivitiProcessService } from '../services/activiti-process.service';
 import { ProcessInstance } from '../models/process-instance';
 
 declare let __moduleName: string;
@@ -44,21 +33,18 @@ declare let __moduleName: string;
               }
           `
     ],
-    templateUrl: './ng2-activiti-processlist.component.html',
+    templateUrl: './activiti-processlist.component.html',
     directives: [ ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES ],
     pipes: [ AlfrescoPipeTranslate ],
     providers: [ CONTEXT_MENU_PROVIDERS ]
 })
-export class Ng2ActivitiProcesslistComponent implements OnInit {
+export class ActivitiProcesslistComponent implements OnInit {
 
     errorMessage: string;
     processInstances: ProcessInstance[];
     data: ObjectDataTableAdapter;
 
-    constructor (
-        private processService: ActivitiProcessService,
-        private translate: AlfrescoTranslationService
-    ) {
+    constructor (private processService: ActivitiProcessService, private translate: AlfrescoTranslationService) {
         if (translate !== null) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
@@ -72,8 +58,7 @@ export class Ng2ActivitiProcesslistComponent implements OnInit {
         this.processService.getProcesses()
             .subscribe(
                 (processInstances) => {
-                    // this.processInstances = processInstances;
-                    this.data = new ObjectDataTableAdapter(
+                     this.data = new ObjectDataTableAdapter(
                         processInstances,
                         [
                             {type: 'text', key: 'id', title: 'Id', sortable: true},
@@ -89,5 +74,4 @@ export class Ng2ActivitiProcesslistComponent implements OnInit {
     onItemClick(processInstance: ProcessInstance, event: any) {
         console.log(processInstance, event);
     }
-
 }

@@ -15,338 +15,216 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject, beforeEachProviders } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
-import { ViewerComponent } from './viewer.component';
-import { EventMock } from './assets/event.mock';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { AlfrescoSettingsServiceMock } from '../src/assets/AlfrescoSettingsService.service.mock';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import {describe, expect, it, inject, beforeEachProviders, beforeEach} from '@angular/core/testing';
+import {TestComponentBuilder} from '@angular/compiler/testing';
+import {ViewerComponent} from './viewer.component';
+import {EventMock} from './assets/event.mock';
+import {AlfrescoAuthenticationService, AlfrescoSettingsService} from 'ng2-alfresco-core';
 
- describe('ViewerComponent', () => {
+describe('ViewerComponent', () => {
 
-     beforeEachProviders(() => {
-         return [
-             HTTP_PROVIDERS,
-             {provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock},
-             {provide: AlfrescoAuthenticationService, useClass: AlfrescoAuthenticationService}
-         ];
-     });
+    let viewerComponentFixture, element, component;
 
-     describe('View', () => {
-         it('shadow overlay should be present if is overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'fake-url-file';
-                     component.overlayMode = true;
+    beforeEachProviders(() => {
+        return [
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService
+        ];
+    });
 
-                     fixture.detectChanges();
+    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(ViewerComponent)
+            .then(fixture => {
+                viewerComponentFixture = fixture;
+                element = viewerComponentFixture.nativeElement;
+                component = viewerComponentFixture.componentInstance;
 
-                     expect(element.querySelector('#viewer-shadow-transparent')).not.toBeNull();
-                 });
-         }));
+                component.urlFile = 'fake-url-file';
+                component.overlayMode = true;
 
-         it('header should be present if is overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'fake-url-file';
-                     component.overlayMode = true;
+                viewerComponentFixture.detectChanges();
+            });
+    }));
 
-                     fixture.detectChanges();
+    describe('View', () => {
+        it('shadow overlay should be present if is overlay mode', () => {
+            expect(element.querySelector('#viewer-shadow-transparent')).not.toBeNull();
+        });
 
-                     expect(element.querySelector('header')).not.toBeNull();
-                 });
-         }));
+        it('header should be present if is overlay mode', () => {
+            expect(element.querySelector('header')).not.toBeNull();
+        });
 
+        it('header should be NOT be present if is not overlay mode', () => {
+            component.overlayMode = false;
 
-         it('header should be NOT be present if is not overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'fake-url-file';
-                     component.overlayMode = false;
+            viewerComponentFixture.detectChanges();
 
-                     fixture.detectChanges();
+            expect(element.querySelector('header')).toBeNull();
+        });
 
-                     expect(element.querySelector('header')).toBeNull();
-                 });
-         }));
+        it('Name File should be present if is overlay mode ', () => {
+            component.urlFile = 'http://localhost:9876/fake-url-file.pdf';
+            component.overlayMode = true;
 
-         it('Name File should be present if is overlay mode ', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'http://localhost:9876/fake-url-file.pdf';
-                     component.overlayMode = true;
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-url-file.pdf');
+            });
+        });
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-url-file.pdf');
-                     });
-                 });
-         }));
+        it('Close button should be present if overlay mode', () => {
+            component.urlFile = 'fake-url-file';
+            component.overlayMode = true;
 
-         /* tslint:disable:max-line-length */
-         it('should pick up filename from the fileName property when specified', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'http://localhost:9876/fake-url-file.pdf';
-                     component.fileName = 'My Example.pdf';
+            viewerComponentFixture.detectChanges();
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('My Example.pdf');
-                     });
-                 });
-         }));
+            expect(element.querySelector('#viewer-close-button')).not.toBeNull();
+        });
 
-         it('Close button should be present if overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'fake-url-file';
-                     component.overlayMode = true;
+        it('Close button should be not present if is not overlay mode', () => {
+            component.urlFile = 'fake-url-file';
+            component.overlayMode = false;
 
-                     fixture.detectChanges();
+            viewerComponentFixture.detectChanges();
 
-                     expect(element.querySelector('#viewer-close-button')).not.toBeNull();
-                 });
-         }));
+            expect(element.querySelector('#viewer-close-button')).toBeNull();
+        });
 
-         it('Close button should be not present if is not overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'fake-url-file';
-                     component.overlayMode = false;
+        it('Click on close button should hide the viewer', () => {
+            component.urlFile = 'fake-url-file';
+            component.overlayMode = true;
 
-                     fixture.detectChanges();
+            viewerComponentFixture.detectChanges();
+            element.querySelector('#viewer-close-button').click();
+            viewerComponentFixture.detectChanges();
+            expect(element.querySelector('#viewer-main-container')).toBeNull();
 
-                     expect(element.querySelector('#viewer-close-button')).toBeNull();
-                 });
-         }));
+        });
 
+        it('Esc button should not  hide the viewerls if is not overlay mode', () => {
+            component.overlayMode = false;
 
-         it('Click on close button should hide the viewer', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'fake-url-file';
-                     component.overlayMode = true;
+            component.urlFile = 'fake-url-file';
 
-                     fixture.detectChanges();
-                     element.querySelector('#viewer-close-button').click();
-                     fixture.detectChanges();
-                     expect(element.querySelector('#viewer-main-container')).toBeNull();
-                 });
-         }));
+            viewerComponentFixture.detectChanges();
+            EventMock.keyDown(27);
+            viewerComponentFixture.detectChanges();
+            expect(element.querySelector('#viewer-main-container')).not.toBeNull();
+        });
 
-         it('Esc button should not  hide the viewerls if is not overlay mode', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.overlayMode = false;
+        it('Esc button should hide the viewer', () => {
+            component.urlFile = 'fake-url-file';
+            component.overlayMode = true;
 
-                     component.urlFile = 'fake-url-file';
+            viewerComponentFixture.detectChanges();
+            EventMock.keyDown(27);
+            viewerComponentFixture.detectChanges();
+            expect(element.querySelector('#viewer-main-container')).toBeNull();
+        });
 
-                     fixture.detectChanges();
-                     EventMock.keyDown(27);
-                     fixture.detectChanges();
-                     expect(element.querySelector('#viewer-main-container')).not.toBeNull();
-                 });
-         }));
+    });
 
-         it('Esc button should hide the viewer', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let element = fixture.nativeElement;
-                     let component = fixture.componentInstance;
-                     component.urlFile = 'fake-url-file';
-                     component.overlayMode = true;
+    describe('Attribute', () => {
+        it('Url File should be mandatory', () => {
+            component.showViewer = true;
+            component.urlFile = undefined;
 
-                     fixture.detectChanges();
-                     EventMock.keyDown(27);
-                     fixture.detectChanges();
-                     expect(element.querySelector('#viewer-main-container')).toBeNull();
-                 });
-         }));
-     });
+            expect(() => {
+                component.ngOnChanges();
+            }).toThrow();
+        });
 
-     describe('Attribute', () => {
-         it('Url File should be mandatory', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     component.showViewer = true;
+        it('showViewer default value should be true', () => {
+            expect(component.showViewer).toBe(true);
+        });
 
-                     expect(() => {
-                         component.ngOnChanges();
-                     }).toThrow();
-                 });
-         }));
+        it('if showViewer value is false the viewer should be hide', () => {
+            component.urlFile = 'fake-url-file';
+            component.showViewer = false;
 
-         it('showViewer default value should be true', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
+            viewerComponentFixture.detectChanges();
+            expect(element.querySelector('#viewer-main-container')).toBeNull();
+        });
+    });
 
-                     expect(component.showViewer).toBe(true);
-                 });
-         }));
+    describe('Extension Type Test', () => {
+        it('if extension file is a pdf the pdf viewer should be loaded', (done) => {
+            component.urlFile = 'fake-url-file.pdf';
 
-         it('if showViewer value is false the viewer should be hide', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'fake-url-file';
-                     component.showViewer = false;
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                done();
+            });
+        });
 
-                     fixture.detectChanges();
-                     expect(element.querySelector('#viewer-main-container')).toBeNull();
-                 });
-         }));
-     });
+        it('if extension file is a image the img viewer should be loaded', (done) => {
+            component.urlFile = 'fake-url-file.png';
 
-     /* tslint:disable:max-line-length */
-     describe('Extension Type Test', () => {
-         it('if extension file is a pdf the pdf viewer should be loaded', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'fake-url-file.pdf';
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('#viewer-image')).not.toBeNull();
+                done();
+            });
+        });
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('pdf-viewer')).not.toBeNull();
-                     });
-                 });
-         }));
+        it('if extension file is a not supported the not supported div should be loaded', (done) => {
+            component.urlFile = 'fake-url-file.unsupported';
 
-         /* tslint:disable:max-line-length */
-         it('if extension file is a image the img viewer should be loaded', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'fake-url-file.png';
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('not-supported-format')).not.toBeNull();
+                done();
+            });
+        });
+    });
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('#viewer-image')).not.toBeNull();
-                     });
-                 });
-         }));
+    describe('MimeType handling', () => {
+        it('should display a PDF file identified by mimetype when the filename has no extension', (done) => {
+            component.urlFile = 'content';
+            component.mimeType = 'application/pdf';
 
-         /* tslint:disable:max-line-length */
-         it('if extension file is a not supported the not supported div should be loaded', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'fake-url-file.unsupported';
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                done();
+            });
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('not-supported-format')).not.toBeNull();
-                     });
-                 });
-         }));
-     });
+        });
 
-     /* tslint:disable:max-line-length */
-     describe('MimeType handling', () => {
-         it('should display a PDF file identified by mimetype when the filename has no extension', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'content';
-                     component.mimeType = 'application/pdf';
+        it('should display a PDF file identified by mimetype when the file extension is wrong', (done) => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'application/pdf';
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('pdf-viewer')).not.toBeNull();
-                     });
-                 });
-         }));
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('pdf-viewer')).not.toBeNull();
+                done();
+            });
+        });
 
-         it('should display a PDF file identified by mimetype when the file extension is wrong', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'content.bin';
-                     component.mimeType = 'application/pdf';
+        it('should display an image file identified by mimetype when the filename has no extension', (done) => {
+            component.urlFile = 'content';
+            component.mimeType = 'image/png';
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('pdf-viewer')).not.toBeNull();
-                     });
-                 });
-         }));
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('#viewer-image')).not.toBeNull();
+                done();
+            });
+        });
 
-         it('should display an image file identified by mimetype when the filename has no extension', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'content';
-                     component.mimeType = 'image/png';
+        it('should display a image file identified by mimetype when the file extension is wrong', (done) => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'image/png';
 
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('#viewer-image')).not.toBeNull();
-                     });
-                 });
-         }));
-
-         it('should display a image file identified by mimetype when the file extension is wrong', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-             return tcb
-                 .createAsync(ViewerComponent)
-                 .then((fixture) => {
-                     let component = fixture.componentInstance;
-                     let element = fixture.nativeElement;
-                     component.urlFile = 'content.bin';
-                     component.mimeType = 'image/png';
-
-                     component.ngOnChanges().then(() => {
-                         fixture.detectChanges();
-                         expect(element.querySelector('#viewer-image')).not.toBeNull();
-                     });
-                 });
-         }));
-     });
- });
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('#viewer-image')).not.toBeNull();
+                done();
+            });
+        });
+    });
+});
