@@ -162,9 +162,9 @@ export class ActivitiTaskListService {
 
     private callApiTaskFilters(appId?: string) {
         if (appId) {
-            return this.authService.getAlfrescoApi().activiti.taskApi.filterTasks({appDefinitionId: appId});
+            return this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
         } else {
-            return this.authService.getAlfrescoApi().activiti.taskApi.filterTasks();
+            return this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserTaskFilters();
         }
     }
 
