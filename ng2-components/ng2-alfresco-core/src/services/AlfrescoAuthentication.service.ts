@@ -134,18 +134,6 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
-     * The method return the ECM and Bpm in an Array ticket stored in the localStorage
-     * @returns ticket
-     */
-    public getTicket(): any {
-        if (localStorage.getItem('ticket-ECM') || localStorage.getItem('ticket-BPM')) {
-            return [localStorage.getItem('ticket-ECM'), localStorage.getItem('ticket-BPM')];
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * The method return the BPM ticket stored in the localStorage
      * @returns ticket
      */

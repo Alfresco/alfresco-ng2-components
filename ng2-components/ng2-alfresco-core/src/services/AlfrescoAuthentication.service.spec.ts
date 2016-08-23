@@ -246,7 +246,8 @@ describe('AlfrescoAuthentication', () => {
         it('should return both ECM and BPM tickets after the login done', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
-                expect(authService.getTicket()).toEqual(['fake-post-ticket', 'Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk']);
+                expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
+                expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
                 done();
             });
 
@@ -267,7 +268,8 @@ describe('AlfrescoAuthentication', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicket()).toBe(null);
+                    expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.getTicketBpm()).toBe(null);
                     done();
                 });
 
@@ -286,7 +288,8 @@ describe('AlfrescoAuthentication', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicket()).toBe(null);
+                    expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.getTicketBpm()).toBe(null);
                     done();
                 });
 
@@ -307,7 +310,8 @@ describe('AlfrescoAuthentication', () => {
                 },
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
-                    expect(authService.getTicket()).toBe(null);
+                    expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.getTicketBpm()).toBe(null);
                     done();
                 });
 
