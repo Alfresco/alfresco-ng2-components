@@ -14,12 +14,12 @@
     "clean": "rimraf dist node_modules typings",
     "postinstall": "npm run typings && npm run build",
     "typings": "typings install",
-    "start": "rimraf dist && npm install && npm run server",
-    "server": "wsrv -o",
-    "build": "npm run tslint && rimraf dist && tsc",
-    "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
-    "tslint-root": "tslint -c tslint.json *.ts"
+    "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run server\" ",
+    "server": "wsrv -o -s -l",
+    "build": "npm run tslint && rimraf dist && npm run tsc",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts"
   },
   "license": "Apache-2.0",
   "dependencies": {

@@ -8,13 +8,13 @@
     "clean": "rimraf dist node_modules typings",
     "typings": "typings install",
     "postinstall": "npm run typings && npm run build",
-    "start": "concurrently \"npm run build:w\" \"npm run server\" ",
+    "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run server\" ",
     "server": "wsrv -o -s -l",
-    "build": "npm run tslint && rimraf dist && tsc",
-    "build:w": "npm run tslint && rimraf dist && tsc -w",
-    "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
-    "tslint-root": "tslint -c tslint.json *.ts"
+    "build": "npm run tslint && rimraf dist && npm run tsc",
+    "build:w": "npm run tslint && rimraf dist && npm run tsc:w",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts"
   },
   "license": "Apache-2.0",
   "contributors": [

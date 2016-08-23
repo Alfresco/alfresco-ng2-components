@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "typings install",
     "clean": "rimraf node_modules typings",
-    "start": "npm run tslint && concurrently \"npm run tsc:w\" \"license-check\"  \"npm run serve\" ",
+    "build": "npm run tslint && npm run tsc && npm run licensecheck",
+    "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run serve\" ",
     "aws": "node app.js",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
