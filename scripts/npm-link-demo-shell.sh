@@ -65,8 +65,8 @@ npm run typings
 npm run build
 
 #LINK VIEWER
-echo "====== linking component: ng2-activiti-processlist ====="
-cd "$DIR/../ng2-components/ng2-activiti-viewer"
+echo "====== linking component: ng2-alfresco-viewer ====="
+cd "$DIR/../ng2-components/ng2-alfresco-viewer"
 npm link ng2-alfresco-core
 npm link
 npm run typings
