@@ -45,6 +45,9 @@ export class AlfrescoLoginComponent {
     logoImageUrl: string;
 
     @Input()
+    backgroundImageUrl: string;
+
+    @Input()
     providers: string [] ;
 
     @Output()

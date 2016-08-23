@@ -1,4 +1,5 @@
-<div class="content-grid mdl-grid content-layout login-content">
+<div class="content-grid mdl-grid content-layout login-content"
+    [style.background-image]="'url(' + (backgroundImageUrl || baseComponentPath + '/../assets/images/background.svg') + ')'">
     <div class="login-card-wide mdl-card mdl-shadow--4dp">
         <form [ngFormModel]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">

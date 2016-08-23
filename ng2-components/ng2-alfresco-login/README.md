@@ -159,13 +159,8 @@ You can also specify ECM and BPM, in this case both system components
 It is possible changing logo and background images to custom values.
 
 ```html
-<style>     
-alfresco-login >>> .login-content { 
-    background-image: url(http://images.freeimages.com/images/previews/638/wood-wall-for-background-1634466.jpg) !important;     
-}
- </style>
-
 <alfresco-login 
+    [backgroundImageUrl]="'http://images.freeimages.com/images/previews/638/wood-wall-for-background-1634466.jpg'"
     [logoImageUrl]="'http://images.freeimages.com/images/previews/eac/honeybee-with-a-house-1633609.jpg'" >
 </alfresco-login>
 ```
@@ -173,6 +168,15 @@ alfresco-login >>> .login-content { 
 Should give you something like the following:
 
 ![custom login](assets/custom-login.png)
+
+Alternatively you can bind to your component properties and provide values dynamically if needed:
+
+```html
+<alfresco-login 
+    [backgroundImageUrl]="myCustomBackground"
+    [logoImageUrl]="myCustomLogo" >
+</alfresco-login>
+```
 
 ## Build from sources
 
