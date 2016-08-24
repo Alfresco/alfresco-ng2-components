@@ -95,6 +95,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     formName: string;
 
     @Input()
+    saveMetadata: boolean = false;
+
+    @Input()
     data: FormValues;
 
     @Input()
@@ -163,7 +166,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     ngOnInit() {
         if (this.nodeId) {
-            this.retriveNodeMetadataFromEcm();
+            this.loadFormForEcmMetadata();
         } else {
             this.loadForm();
         }
@@ -220,6 +223,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
                 if (outcome.id === ActivitiForm.CUSTOM_OUTCOME_ID) {
                     this.formSaved.emit(this.form);
+                    this.storeFormAsMetadata();
                     return true;
                 }
             } else {
@@ -277,7 +281,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 form => {
                     this.form = new FormModel(form, data, this.readOnly);
                     this.formLoaded.emit(this.form);
-                    this.isActivitiModelExisting();
                 },
                 this.handleError
             );
@@ -291,7 +294,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     // console.log('Get Form By definition Id', form);
                     this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form);
-                    this.isActivitiModelExisting();
                 },
                 this.handleError
             );
@@ -307,7 +309,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                             // console.log('Get Form By Form definition Name', form);
                             this.form = this.parseForm(form);
                             this.formLoaded.emit(this.form);
-                            this.isActivitiModelExisting();
                         },
                         this.handleError
                     );
@@ -321,7 +322,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.formService
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
-                    () => this.formSaved.emit(this.form),
+                    () => {
+                        this.formSaved.emit(this.form);
+                        this.storeFormAsMetadata();
+                    },
                     this.handleError
                 );
         }
@@ -332,7 +336,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.formService
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
-                    () => this.formCompleted.emit(this.form),
+                    () => {
+                        this.formCompleted.emit(this.form);
+                        this.storeFormAsMetadata();
+                    },
                     this.handleError
                 );
         }
@@ -370,7 +377,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    private retriveNodeMetadataFromEcm(): void {
+    private loadFormForEcmMetadata(): void {
         let metadata = {};
         let self = this;
         this.authService.getAlfrescoApi().nodes.getNodeInfo(this.nodeId).then(function (data) {
@@ -502,57 +509,75 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         });
     }
 
-    private isActivitiModelExisting() {
-        let modelName = 'activitiForms';
-        this.getEcmModels().subscribe(
-            models => {
-                console.log('models', models);
-                let formEcmModel =
-                    models.list.entries.find(model => model.entry.name === modelName);
-                if (!formEcmModel) {
-                    let namespace = 'activitiFormsModel';
-                    this.createEcmModel(modelName, namespace).subscribe(
-                        model => {
-                            console.log('model created', model);
-
-                            this.activeEcmModel(modelName).subscribe(
-                                modelActive => {
-                                    console.log('model active', modelActive);
-
-                                    this.getCustomTypes(modelName).subscribe(
-                                        customTypes => {
-                                            console.log('custom types', modelActive);
-
-                                            let customType = customTypes.list.entries.find(type => type.entry.name === this.formName);
-                                            if (!customType) {
-                                                let typeName = this.formName;
-                                                this.createEcmType(this.formName, modelName, 'cm:folder').subscribe(
-                                                    typeCreated => {
-                                                        console.log('type Created', typeCreated);
-
-                                                        this.addPropertyToAType(modelName, typeName, this.form).subscribe(
-                                                            properyAdded => {
-                                                                console.log('property Added', properyAdded);
-                                                            },
-                                                            this.handleError);
-                                                    },
-                                                    this.handleError);
-                                            }
-                                        },
-                                        this.handleError
-                                    );
+    private storeFormAsMetadata() {
+        if (this.saveMetadata) {
+            let modelName = 'activitiForms';
 
 
+            this.getEcmModels().subscribe(
+                models => {
+                    if (!this.isAnEcmModelExistingForThisForm(models, modelName)) {
+                        let modelNamespace = 'activitiFormsModel';
+                        this.createAndActiveEcmModel(modelName, modelNamespace);
+                    } else {
+                        this.createModelType(modelName);
+                    }
+                },
+                this.handleError
+            );
+        }
+    }
+
+
+    private createAndActiveEcmModel(modelName: string, modelNamespace: string) {
+        this.createEcmModel(modelName, modelNamespace).subscribe(
+            model => {
+                console.log('model created', model);
+
+                this.activeEcmModel(modelName).subscribe(
+                    modelActive => {
+                        console.log('model active', modelActive);
+                        this.createModelType(modelName);
+                    },
+                    this.handleError
+                );
+            },
+            this.handleError
+        );
+    }
+
+    private createModelType(modelName: string) {
+        this.getEcmTypes(modelName).subscribe(
+            customTypes => {
+                console.log('custom types', customTypes);
+
+                let customType = customTypes.list.entries.find(type => type.entry.name === this.formName);
+                if (!customType) {
+                    let typeName = this.formName;
+                    this.createEcmType(this.formName, modelName, 'cm:folder').subscribe(
+                        typeCreated => {
+                            console.log('type Created', typeCreated);
+
+                            this.addPropertyToAType(modelName, typeName, this.form).subscribe(
+                                properyAdded => {
+                                    console.log('property Added', properyAdded);
                                 },
-                                this.handleError
-                            );
+                                this.handleError);
                         },
-                        this.handleError
-                    );
+                        this.handleError);
                 }
             },
             this.handleError
         );
+    }
+
+    private isAnEcmModelExistingForThisForm(ecmModels: any, modelName: string) {
+        let formEcmModel = ecmModels.list.entries.find(model => model.entry.name === modelName);
+        if (!formEcmModel) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private activeEcmModel(modelName: string): Observable<any> {
@@ -594,7 +619,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
 
-    private getCustomTypes(modelName: string): Observable<any> {
+    private getEcmTypes(modelName: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
         let options = this.getRequestOptions();
 
@@ -626,25 +651,26 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types/${typeName}?select=props`;
         let options = this.getRequestOptions();
 
-        if (formFields) {
-            for (let key in formFields) {
+        let properties = [];
+        if (formFields && formFields.values) {
+            for (let key in formFields.values) {
                 if (key) {
-                    console.log(key + ' => ' + formFields[key]);
+                    properties.push({
+                        name: key,
+                        title: key,
+                        description: key,
+                        dataType: 'd:text',
+                        multiValued: false,
+                        mandatory: false,
+                        mandatoryEnforced: false
+                    });
                 }
             }
         }
 
         let body = {
-            name: 'myAspect1',
-            properties: [{
-                name: 'InvoiceNumber',
-                title: 'Invoice Number',
-                description: 'MyProperty desc',
-                dataType: 'd:text',
-                multiValued: false,
-                mandatory: false,
-                mandatoryEnforced: false
-            }]
+            name: typeName,
+            properties: properties
         };
 
         return this.http
@@ -657,7 +683,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         return new Headers({
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': this.authService.getTicketEcm()
+            'Authorization': this.authService.getTicketEcmBase64()
         });
     }
 
