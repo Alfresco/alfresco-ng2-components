@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
-import {AlfrescoSettingsService} from './AlfrescoSettings.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { AlfrescoApiService } from './AlfrescoApi.service';
+import { AlfrescoJsApi } from 'alfresco-js-api';
 
-declare let AlfrescoApi: any;
+declare var AlfrescoApi: AlfrescoJsApi;
 
 /**
  * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
@@ -27,32 +29,37 @@ declare let AlfrescoApi: any;
 @Injectable()
 export class AlfrescoAuthenticationService {
 
-    alfrescoApi: any;
+    alfrescoApi: AlfrescoJsApi;
 
-    /**A
+    /**
      * Constructor
-     * @param alfrescoSetting
+     * @param settingsService
+     * @param apiService
      */
-    constructor(public alfrescoSetting: AlfrescoSettingsService) {
+    constructor(private settingsService: AlfrescoSettingsService,
+                private apiService: AlfrescoApiService) {
         this.alfrescoApi = new AlfrescoApi({
-            provider: this.alfrescoSetting.getProviders(),
+            provider: this.settingsService.getProviders(),
             ticketEcm: this.getTicketEcm(),
             ticketBpm: this.getTicketBpm(),
-            hostEcm: this.alfrescoSetting.ecmHost,
-            hostBpm: this.alfrescoSetting.bpmHost
+            hostEcm: this.settingsService.ecmHost,
+            hostBpm: this.settingsService.bpmHost,
+            contextRoot: 'alfresco'
         });
 
-        alfrescoSetting.bpmHostSubject.subscribe((bpmHost) => {
+        settingsService.bpmHostSubject.subscribe((bpmHost) => {
             this.alfrescoApi.changeBpmHost(bpmHost);
         });
 
-        alfrescoSetting.ecmHostSubject.subscribe((ecmHost) => {
+        settingsService.ecmHostSubject.subscribe((ecmHost) => {
             this.alfrescoApi.changeEcmHost(ecmHost);
         });
 
-        alfrescoSetting.providerSubject.subscribe((value) => {
+        settingsService.providerSubject.subscribe((value) => {
             this.alfrescoApi.config.provider = value;
         });
+
+        this.apiService.setInstance(this.alfrescoApi);
     }
 
     /**
@@ -73,7 +80,7 @@ export class AlfrescoAuthenticationService {
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
                 this.saveTickets();
-                return {type: this.alfrescoSetting.getProviders(), ticket: response};
+                return {type: this.settingsService.getProviders(), ticket: response};
             })
             .catch(this.handleError);
     }

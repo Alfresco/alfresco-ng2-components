@@ -15,10 +15,20 @@
  * limitations under the License.
  */
 
-export * from './AlfrescoApi.service';
-export * from './AlfrescoSettings.service';
-export * from './AlfrescoTranslationLoader.service';
-export * from './AlfrescoTranslation.service';
-export * from './AlfrescoPipeTranslate.service';
-export * from './AlfrescoAuthentication.service';
-export * from './AlfrescoContent.service';
+import { Injectable } from '@angular/core';
+import { AlfrescoJsApi } from 'alfresco-js-api';
+
+@Injectable()
+export class AlfrescoApiService {
+
+    private _instance: AlfrescoJsApi;
+
+    public getInstance(): AlfrescoJsApi {
+        return this._instance;
+    }
+
+    public setInstance(value: AlfrescoJsApi) {
+        this._instance = value;
+    }
+
+}
