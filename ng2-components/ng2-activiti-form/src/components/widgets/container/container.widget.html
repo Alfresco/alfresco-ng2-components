@@ -43,6 +43,9 @@
                         <div *ngSwitchCase="'readonly-text'">
                             <display-text-widget [field]="field" (fieldChanged)="fieldChanged($event);"></display-text-widget>
                         </div>
+                        <div *ngSwitchCase="'upload'">
+                            <upload-widget [field]="field" (fieldChanged)="fieldChanged($event);"></upload-widget>
+                        </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                         </div>

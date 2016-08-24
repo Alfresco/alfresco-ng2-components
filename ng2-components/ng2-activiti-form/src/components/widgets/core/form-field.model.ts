@@ -129,33 +129,48 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     updateForm() {
-        if (this.type === FormFieldTypes.DROPDOWN) {
-            /*
-             This is needed due to Activiti reading dropdown values as string
-             but saving back as object: { id: <id>, name: <name> }
-             */
-            if (this.value === 'empty' || this.value === '') {
-                this.form.values[this.id] = {};
-            } else {
+
+        switch (this.type) {
+            case FormFieldTypes.DROPDOWN: {
+                /*
+                 This is needed due to Activiti reading dropdown values as string
+                 but saving back as object: { id: <id>, name: <name> }
+                 */
+                if (this.value === 'empty' || this.value === '') {
+                    this.form.values[this.id] = {};
+                } else {
+                    let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                    if (entry.length > 0) {
+                        this.form.values[this.id] = entry[0];
+                    }
+                }
+                break;
+            }
+            case FormFieldTypes.RADIO_BUTTONS: {
+                /*
+                 This is needed due to Activiti issue related to reading radio button values as value string
+                 but saving back as object: { id: <id>, name: <name> }
+                 */
                 let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
                 if (entry.length > 0) {
                     this.form.values[this.id] = entry[0];
+                } else if (this.options.length > 0) {
+                    this.form.values[this.id] = this.options[0];
                 }
+                break;
             }
-        } else if (this.type === FormFieldTypes.RADIO_BUTTONS) {
-            /*
-             This is needed due to Activiti issue related to reading radio button values as value string
-             but saving back as object: { id: <id>, name: <name> }
-             */
-            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
-            if (entry.length > 0) {
-                this.form.values[this.id] = entry[0];
-            } else if (this.options.length > 0) {
-                this.form.values[this.id] = this.options[0];
+            case FormFieldTypes.UPLOAD: {
+                if (this.value && this.value.length > 0) {
+                    this.form.values[this.id] = `${this.value[0].id}`;
+                } else {
+                    this.form.values[this.id] = null;
+                }
+                break;
             }
-        } else {
-            if (!FormFieldTypes.isReadOnlyType(this.type)) {
-                this.form.values[this.id] = this.value;
+            default: {
+                if (!FormFieldTypes.isReadOnlyType(this.type)) {
+                    this.form.values[this.id] = this.value;
+                }
             }
         }
     }

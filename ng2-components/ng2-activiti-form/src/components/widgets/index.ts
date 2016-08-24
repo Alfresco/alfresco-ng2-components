@@ -27,6 +27,7 @@ import { HyperlinkWidget } from './hyperlink/hyperlink.widget';
 import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
 import { DisplayValueWidget } from './display-value/display-value.widget';
 import { DisplayTextWidget } from './display-text/display-text.widget';
+import { UploadWidget } from './upload/upload.widget';
 
 // core
 export * from './widget.component';
@@ -46,6 +47,7 @@ export * from './hyperlink/hyperlink.widget';
 export * from './radio-buttons/radio-buttons.widget';
 export * from './display-value/display-value.widget';
 export * from './display-text/display-text.widget';
+export * from './upload/upload.widget';
 
 export const CONTAINER_WIDGET_DIRECTIVES: [any] = [
     TabsWidget,
@@ -61,7 +63,8 @@ export const PRIMITIVE_WIDGET_DIRECTIVES: [any] = [
     HyperlinkWidget,
     RadioButtonsWidget,
     DisplayValueWidget,
-    DisplayTextWidget
+    DisplayTextWidget,
+    UploadWidget
 ];
 
 
