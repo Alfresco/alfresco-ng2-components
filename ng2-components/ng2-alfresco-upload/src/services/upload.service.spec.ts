@@ -218,17 +218,6 @@ describe('AlfrescoUploadService', () => {
         );
     });
 
-    it('Default upload behaviour should be autorename', () => {
-        let emitter = new EventEmitter();
-
-        service.setOptions(options);
-        let filesFake = [{name: 'fake-name', size: 10}];
-        service.addToQueue(filesFake);
-        service.uploadFilesInTheQueue('', emitter);
-
-        expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(true);
-    });
-
     it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
         let emitter = new EventEmitter();
 
