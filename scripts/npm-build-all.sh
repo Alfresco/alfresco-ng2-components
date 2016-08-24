@@ -18,6 +18,6 @@ do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== build components : ${PACKAGE} ====="
   cd "$DESTDIR"
-  npm install
+  npm install --cache-min 9999999
   npm run build
 done
