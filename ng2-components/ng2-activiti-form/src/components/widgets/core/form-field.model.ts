@@ -131,7 +131,7 @@ export class FormFieldModel extends FormWidgetModel {
     updateForm() {
 
         switch (this.type) {
-            case FormFieldTypes.DROPDOWN: {
+            case FormFieldTypes.DROPDOWN:
                 /*
                  This is needed due to Activiti reading dropdown values as string
                  but saving back as object: { id: <id>, name: <name> }
@@ -144,8 +144,8 @@ export class FormFieldModel extends FormWidgetModel {
                         this.form.values[this.id] = entry[0];
                     }
                 }
-            } break;
-            case FormFieldTypes.RADIO_BUTTONS: {
+                break;
+            case FormFieldTypes.RADIO_BUTTONS:
                 /*
                  This is needed due to Activiti issue related to reading radio button values as value string
                  but saving back as object: { id: <id>, name: <name> }
@@ -156,19 +156,18 @@ export class FormFieldModel extends FormWidgetModel {
                 } else if (this.options.length > 0) {
                     this.form.values[this.id] = this.options[0];
                 }
-            } break;
-            case FormFieldTypes.UPLOAD: {
+                break;
+            case FormFieldTypes.UPLOAD:
                 if (this.value && this.value.length > 0) {
                     this.form.values[this.id] = `${this.value[0].id}`;
                 } else {
                     this.form.values[this.id] = null;
                 }
-            } break;
-            default: {
+                break;
+            default:
                 if (!FormFieldTypes.isReadOnlyType(this.type)) {
                     this.form.values[this.id] = this.value;
                 }
-            }
         }
     }
 }
