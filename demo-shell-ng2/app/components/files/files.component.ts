@@ -63,6 +63,7 @@ export class FilesComponent implements OnInit {
     multipleFileUpload: boolean = false;
     folderUpload: boolean = false;
     acceptedFilesTypeShow: boolean = false;
+    versioning: boolean = false;
 
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
@@ -117,6 +118,11 @@ export class FilesComponent implements OnInit {
     toggleAcceptedFilesType() {
         this.acceptedFilesTypeShow = !this.acceptedFilesTypeShow;
         return this.acceptedFilesTypeShow;
+    }
+
+    toggleVersioning(){
+        this.versioning = !this.versioning;
+        return this.versioning;
     }
 
     ngOnInit() {

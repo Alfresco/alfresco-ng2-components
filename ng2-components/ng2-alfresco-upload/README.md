@@ -137,14 +137,21 @@ bootstrap(MyDemoApp, [
 
 ```
 #### Events
-**onSuccess**: The event is emitted when the file is uploaded<br />
+Attribute     | Description 
+---           | ---         
+`onSuccess`   |  The event is emitted when the file is uploaded 
 
 #### Options
 
-**showUdoNotificationBar**: {boolean} (optional) default true. Hide/show notification bar.<br />
-**uploadFolders**: {boolean} (optional) default false. Allow/disallow upload folders (only for chrome).<br />
-**multipleFiles**: {boolean} (optional) default false. Allow/disallow multiple files.<br />
-**acceptedFilesType**: {string} (optional) default "*". array of allowed file extensions , example: ".jpg,.gif,.png,.svg" .<br />
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`showUdoNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
+`uploadFolders`         | *boolean*    |     false   |  Allow/disallow upload folders (only for chrome) | 
+`multipleFiles`         | *boolean*    |     false   |  Allow/disallow multiple files | 
+`acceptedFilesType`         | *string*    |     *   |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" | 
+`versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+
+
 
 ### Drag and drop
 This component, provide a drag and drop are to upload files to alfresco.
@@ -195,8 +202,11 @@ bootstrap(MyDemoApp, [
 ]);
 
 ```
+
 #### Events
-**onSuccess**: The event is emitted when the file is uploaded<br />
+Attribute     | Description 
+---           | ---         
+`onSuccess`   |  The event is emitted when the file is uploaded 
 
 ### Files Dialog
 This component provides a dialog that shows all the files uploaded 

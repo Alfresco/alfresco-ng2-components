@@ -19,7 +19,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { AlfrescoAuthenticationService} from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 /**
@@ -34,6 +34,8 @@ export class UploadService {
     private formFields: Object = {};
     private queue: FileModel[] = [];
 
+    private versioning: boolean = false;
+
     private filesUploadObserverProgressBar: Observer<FileModel[]>;
     private totalCompletedObserver: Observer<number>;
 
@@ -43,18 +45,20 @@ export class UploadService {
     totalCompleted$: Observable<any>;
 
     constructor(private authService: AlfrescoAuthenticationService) {
-        this.filesUpload$ = new Observable<FileModel[]>(observer =>  this.filesUploadObserverProgressBar = observer).share();
-        this.totalCompleted$ = new Observable<number>(observer =>  this.totalCompletedObserver = observer).share();
+        this.filesUpload$ = new Observable<FileModel[]>(observer => this.filesUploadObserverProgressBar = observer).share();
+        this.totalCompleted$ = new Observable<number>(observer => this.totalCompletedObserver = observer).share();
     }
 
     /**
      * Configure the service
      *
-     * @param {Object} - options to init the object
+     * @param {Object} - options formFields to init the object
+     * @param {boolean} - versioning true to indicate that a major version should be created
      *
      */
-    public setOptions(options: any): void {
+    public setOptions(options: any, versioning: boolean): void {
         this.formFields = options.formFields != null ? options.formFields : this.formFields;
+        this.versioning = versioning != null ? versioning : this.versioning;
     }
 
     /**
@@ -88,11 +92,20 @@ export class UploadService {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
 
+        let opts: any = {};
+        opts.renditions = 'doclib';
+
+        if (this.versioning) {
+            opts.overwrite = true;
+            opts.majorVersion = true;
+        } else {
+            opts.autoRename = true;
+        }
+
         filesToUpload.forEach((uploadingFileModel: FileModel) => {
             uploadingFileModel.setUploading();
 
-            let promiseUpload = this.authService.getAlfrescoApi().
-                upload.uploadFile(uploadingFileModel.file, directory, null, null, {renditions: 'doclib'})
+            let promiseUpload = this.authService.getAlfrescoApi().upload.uploadFile(uploadingFileModel.file, directory, null, null, opts)
                 .on('progress', (progress: any) => {
                     uploadingFileModel.setProgres(progress);
                     this.updateFileListStream(this.queue);
