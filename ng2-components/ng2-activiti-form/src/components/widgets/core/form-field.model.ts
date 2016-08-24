@@ -144,8 +144,7 @@ export class FormFieldModel extends FormWidgetModel {
                         this.form.values[this.id] = entry[0];
                     }
                 }
-                break;
-            }
+            } break;
             case FormFieldTypes.RADIO_BUTTONS: {
                 /*
                  This is needed due to Activiti issue related to reading radio button values as value string
@@ -157,16 +156,14 @@ export class FormFieldModel extends FormWidgetModel {
                 } else if (this.options.length > 0) {
                     this.form.values[this.id] = this.options[0];
                 }
-                break;
-            }
+            } break;
             case FormFieldTypes.UPLOAD: {
                 if (this.value && this.value.length > 0) {
                     this.form.values[this.id] = `${this.value[0].id}`;
                 } else {
                     this.form.values[this.id] = null;
                 }
-                break;
-            }
+            } break;
             default: {
                 if (!FormFieldTypes.isReadOnlyType(this.type)) {
                     this.form.values[this.id] = this.value;

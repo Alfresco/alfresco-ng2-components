@@ -75,7 +75,7 @@ export class UploadWidget extends WidgetComponent implements OnInit {
             this.fileName = file.name;
 
             let formData: FormData = new FormData();
-            formData.append("file", file, file.name);
+            formData.append('file', file, file.name);
 
             let xhr: XMLHttpRequest = new XMLHttpRequest();
 
