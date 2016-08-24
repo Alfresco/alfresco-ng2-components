@@ -23,11 +23,10 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { MATERIAL_DESIGN_DIRECTIVES, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { Observable } from 'rxjs/Rx';
-import { EcmModelService } from './../services/ecm-model.service'
+import { MATERIAL_DESIGN_DIRECTIVES, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
-import { NodeService } from './../services/node.service'
+import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
@@ -379,121 +378,29 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     private loadFormForEcmMetadata(): void {
         this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
-                this.isFormDefinedInActiviti(data.nodeType, data.metadata);
+                this.loadFormFromActiviti(data.nodeType, data.metadata);
             },
             this.handleError);
     }
 
-    public isFormDefinedInActiviti(nodeType: string, metadata: any): Observable<any> {
-        let opts = {
-            'modelType': 2
-        };
-
-        let ctx = this;
-        return this.authService.getAlfrescoApi().activiti.modelsApi.getModels(opts).then(function (forms) {
-            let form = forms.data.find(formdata => formdata.name === nodeType);
-
-            if (!form) {
-
-                let dataModel = {
-                    name: nodeType,
-                    description: '',
-                    modelType: 2,
-                    stencilSet: 0
-                };
-                ctx.authService.getAlfrescoApi().activiti.modelsApi.createModel(dataModel).then(function (representation) {
-                    console.log('created', representation.id);
-                    ctx.formId = representation.id;
-
-                    let formRepresentation = {
-                        id: representation.id,
-                        name: representation.name,
-                        description: '',
-                        version: 1,
-                        lastUpdatedBy: 1,
-                        lastUpdatedByFullName: representation.lastUpdatedByFullName,
-                        lastUpdated: representation.lastUpdated,
-                        stencilSetId: 0,
-                        referenceId: null,
-                        formDefinition: {}
-                    };
-
-                    let fields = [];
-                    for (let key in metadata) {
-                        if (key) {
-                            let field = {
-                                type: 'text',
-                                id: key,
-                                name: key,
-                                required: false,
-                                readOnly: false,
-                                sizeX: 1,
-                                sizeY: 1,
-                                row: -1,
-                                col: -1,
-                                colspan: 1,
-                                params: {
-                                    existingColspan: 1,
-                                    maxColspan: 2
-                                },
-                                layout: {
-                                    colspan: 1,
-                                    row: -1,
-                                    column: -1
-                                }
-                            };
-                            fields.push(field);
-                        }
-                    }
-
-                    formRepresentation.formDefinition = {
-                        fields: [{
-                            name: 'Label',
-                            type: 'container',
-                            fieldType: 'ContainerRepresentation',
-                            numberOfColumns: 2,
-                            required: false,
-                            readOnly: false,
-                            sizeX: 2,
-                            sizeY: 1,
-                            row: -1,
-                            col: -1,
-                            fields: {'1': fields}
-                        }],
-                        gridsterForm: false,
-                        javascriptEvents: [],
-                        metadata: {},
-                        outcomes: [],
-                        className: '',
-                        style: '',
-                        tabs: [],
-                        variables: []
-                    };
-
-                    let data = {
-                        reusable: false,
-                        newVersion: false,
-                        formRepresentation: formRepresentation,
-                        formImageBase64: ''
-                    };
-
-                    ctx.authService.getAlfrescoApi().activiti.editorApi.saveForm(formRepresentation.id, data).then(function (response) {
-                        console.log(response);
-                        ctx.loadForm();
-                    }, function (error) {
-                        console.log('Form not created');
+    public loadFormFromActiviti(nodeType: string, metadata: any): any {
+        this.formService.searchFrom(nodeType).subscribe(
+            form => {
+                if (!form) {
+                    this.formService.createFormFromMetadaProperties(nodeType, metadata).subscribe(formMetadata => {
+                        this.loadFormFromFormId(formMetadata.id);
                     });
+                } else {
+                    this.loadFormFromFormId(form.id);
+                }
+            },
+            this.handleError
+        );
+    }
 
-                }, function (error) {
-                    console.log('Form not created');
-                });
-            } else {
-                ctx.formId = form.id;
-                ctx.loadForm();
-            }
-        }, function (error) {
-            console.log('This node does not exist');
-        });
+    private loadFormFromFormId(formId: string) {
+        this.formId = formId;
+        this.loadForm();
     }
 
     private storeFormAsMetadata() {

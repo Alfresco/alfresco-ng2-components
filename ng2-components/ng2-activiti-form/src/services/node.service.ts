@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { NodeMetadata } from '../models/node-metadata.model';
 
 @Injectable()
 export class NodeService {
@@ -25,11 +26,16 @@ export class NodeService {
     constructor(private authService: AlfrescoAuthenticationService) {
     }
 
-    public getNodeMetadata(nodeId: string): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().nodes.getNodeInfo(nodeId).map(this.cleanMetadataFromSemicolon));
+    /**
+     * Get All the metadata and the nodeType for a nodeId cleaned by the prefix
+     * @param nodeId Node Id
+     * @returns NodeMetadata
+     */
+    public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
+        return Observable.fromPromise(this.authService.getAlfrescoApi().nodes.getNodeInfo(nodeId)).map(this.cleanMetadataFromSemicolon);
     }
 
-    private cleanMetadataFromSemicolon(data: any): any {
+    private cleanMetadataFromSemicolon(data: any): NodeMetadata {
         let metadata = {};
 
         if (data && data.properties) {
@@ -40,9 +46,6 @@ export class NodeService {
             }
         }
 
-        return {
-            metadata: metadata,
-            nodeType: data.nodeType
-        };
+        return new NodeMetadata(metadata, data.nodeType);
     }
 }

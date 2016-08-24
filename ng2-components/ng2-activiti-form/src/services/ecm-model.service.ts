@@ -87,12 +87,12 @@ export class EcmModelService {
     }
 
     public createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
+        let name = this.cleanNameType(typeName);
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
         let options = this.getRequestOptions();
 
-
         let body = {
-            name: typeName,
+            name: name,
             parentName: parentType,
             title: typeName,
             description: ''
@@ -105,7 +105,8 @@ export class EcmModelService {
     }
 
     public addPropertyToAType(modelName: string, typeName: string, formFields: any) {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types/${typeName}?select=props`;
+        let name = this.cleanNameType(typeName);
+        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types/${name}?select=props`;
         let options = this.getRequestOptions();
 
         let properties = [];
@@ -126,7 +127,7 @@ export class EcmModelService {
         }
 
         let body = {
-            name: typeName,
+            name: name,
             properties: properties
         };
 
@@ -134,6 +135,14 @@ export class EcmModelService {
             .put(url, body, options)
             .map(this.toJson)
             .catch(this.handleError);
+    }
+
+    public cleanNameType(name: string): string {
+        let cleanName = name;
+        if (name.indexOf(':') !== -1) {
+            cleanName = name.split(':')[1];
+        }
+        return cleanName.replace(/[^a-zA-Z ]/g, '');
     }
 
     public getHeaders(): Headers {

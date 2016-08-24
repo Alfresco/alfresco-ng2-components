@@ -14,3 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+export class NodeMetadata {
+    metadata: any;
+    nodeType: string;
+
+    constructor(metadata: any, nodeType: string) {
+        this.metadata = metadata;
+        this.nodeType = nodeType;
+    }
+}
