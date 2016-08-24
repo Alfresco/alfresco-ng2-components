@@ -3,6 +3,7 @@
             [showUploadDialog]="true"
             [currentFolderPath]="currentPath"
             [uploaddirectory]=""
+            [versioning] = "versioning"
             (onSuccess)="documentList.reload()">
         <alfresco-document-list-breadcrumb
             [currentFolderPath]="currentPath"
@@ -147,6 +148,13 @@
     </label>
 </p>
 
+<p style="width:250px;margin: 20px;">
+    <label for="switch-versioning" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+        <input type="checkbox" id="switch-versioning" class="mdl-switch__input" (change)="toggleVersioning()">
+        <span class="mdl-switch__label">Versioning</span>
+    </label>
+</p>
+
 <h5>Upload</h5>
 <br>
 <div *ngIf="acceptedFilesTypeShow">
@@ -160,6 +168,7 @@
                             [currentFolderPath]="currentPath"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
+                            [versioning] = "versioning"
                             (onSuccess)="documentList.reload()">
         <div class="mdl-spinner mdl-js-spinner is-active"></div>
     </alfresco-upload-button>
@@ -171,6 +180,7 @@
                             acceptedFilesType="{{acceptedFilesType}}"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
+                            [versioning] = "versioning"
                             (onSuccess)="documentList.reload()">
         <div class="mdl-spinner mdl-js-spinner is-active"></div>
     </alfresco-upload-button>
