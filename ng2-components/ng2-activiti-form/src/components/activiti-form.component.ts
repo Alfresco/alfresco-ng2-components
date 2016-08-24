@@ -25,9 +25,9 @@ import {
 } from '@angular/core';
 import { MATERIAL_DESIGN_DIRECTIVES, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { Response, Http, Headers, RequestOptions } from '@angular/http';
-
+import { EcmModelService } from './../services/ecm-model.service'
 import { FormService } from './../services/form.service';
+import { NodeService } from './../services/node.service'
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
@@ -74,7 +74,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css'],
     directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
-    providers: [FormService, WidgetVisibilityService]
+    providers: [FormService, WidgetVisibilityService, EcmModelService, NodeService]
 })
 export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
@@ -134,8 +134,8 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     constructor(private formService: FormService,
                 private visibilityService: WidgetVisibilityService,
                 private authService: AlfrescoAuthenticationService,
-                private http: Http,
-                public alfrescoSettingsService: AlfrescoSettingsService) {
+                private ecmModelService: EcmModelService,
+                private nodeService: NodeService) {
     }
 
     hasForm(): boolean {
@@ -378,32 +378,19 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     private loadFormForEcmMetadata(): void {
-        let metadata = {};
-        let self = this;
-        this.authService.getAlfrescoApi().nodes.getNodeInfo(this.nodeId).then(function (data) {
-            if (data && data.properties) {
-                for (let key in data.properties) {
-                    if (key) {
-                        console.log(key + ' => ' + data.properties[key]);
-                        metadata [key.split(':')[1]] = data.properties[key];
-                    }
-                }
-            }
-
-            self.data = metadata;
-
-            self.isFormDefinedInActiviti(data.nodeType, self, metadata);
-        }, function (error) {
-            console.log('This node does not exist');
-        });
+        this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
+                this.isFormDefinedInActiviti(data.nodeType, data.metadata);
+            },
+            this.handleError);
     }
 
-    public isFormDefinedInActiviti(nodeType: string, ctx: any, metadata: any): Observable<any> {
+    public isFormDefinedInActiviti(nodeType: string, metadata: any): Observable<any> {
         let opts = {
             'modelType': 2
         };
 
-        return ctx.authService.getAlfrescoApi().activiti.modelsApi.getModels(opts).then(function (forms) {
+        let ctx = this;
+        return this.authService.getAlfrescoApi().activiti.modelsApi.getModels(opts).then(function (forms) {
             let form = forms.data.find(formdata => formdata.name === nodeType);
 
             if (!form) {
@@ -514,9 +501,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             let modelName = 'activitiForms';
 
 
-            this.getEcmModels().subscribe(
+            this.ecmModelService.getEcmModels().subscribe(
                 models => {
-                    if (!this.isAnEcmModelExistingForThisForm(models, modelName)) {
+                    if (!this.ecmModelService.isAnEcmModelExistingForThisForm(models, modelName)) {
                         let modelNamespace = 'activitiFormsModel';
                         this.createAndActiveEcmModel(modelName, modelNamespace);
                     } else {
@@ -530,11 +517,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
 
     private createAndActiveEcmModel(modelName: string, modelNamespace: string) {
-        this.createEcmModel(modelName, modelNamespace).subscribe(
+        this.ecmModelService.createEcmModel(modelName, modelNamespace).subscribe(
             model => {
                 console.log('model created', model);
 
-                this.activeEcmModel(modelName).subscribe(
+                this.ecmModelService.activeEcmModel(modelName).subscribe(
                     modelActive => {
                         console.log('model active', modelActive);
                         this.createModelType(modelName);
@@ -547,18 +534,18 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     private createModelType(modelName: string) {
-        this.getEcmTypes(modelName).subscribe(
+        this.ecmModelService.getEcmTypes(modelName).subscribe(
             customTypes => {
                 console.log('custom types', customTypes);
 
                 let customType = customTypes.list.entries.find(type => type.entry.name === this.formName);
                 if (!customType) {
                     let typeName = this.formName;
-                    this.createEcmType(this.formName, modelName, 'cm:folder').subscribe(
+                    this.ecmModelService.createEcmType(this.formName, modelName, 'cm:folder').subscribe(
                         typeCreated => {
                             console.log('type Created', typeCreated);
 
-                            this.addPropertyToAType(modelName, typeName, this.form).subscribe(
+                            this.ecmModelService.addPropertyToAType(modelName, typeName, this.form).subscribe(
                                 properyAdded => {
                                     console.log('property Added', properyAdded);
                                 },
@@ -569,134 +556,5 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             },
             this.handleError
         );
-    }
-
-    private isAnEcmModelExistingForThisForm(ecmModels: any, modelName: string) {
-        let formEcmModel = ecmModels.list.entries.find(model => model.entry.name === modelName);
-        if (!formEcmModel) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private activeEcmModel(modelName: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}?select=status`;
-        let options = this.getRequestOptions();
-
-
-        let body = {status: 'ACTIVE'};
-
-        return this.http
-            .put(url, body, options)
-            .map(this.toJson)
-            .catch(this.handleError);
-    }
-
-    private createEcmModel(modelName: string, nameSpace: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
-        let options = this.getRequestOptions();
-
-
-        let body = {
-            status: 'DRAFT', namespaceUri: modelName, namespacePrefix: nameSpace, name: modelName, description: '', author: ''
-        };
-
-        return this.http
-            .post(url, body, options)
-            .map(this.toJson)
-            .catch(this.handleError);
-    }
-
-    private getEcmModels(): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
-        let options = this.getRequestOptions();
-
-        return this.http
-            .get(url, options)
-            .map(this.toJson)
-            .catch(this.handleError);
-    }
-
-
-    private getEcmTypes(modelName: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
-        let options = this.getRequestOptions();
-
-        return this.http
-            .get(url, options)
-            .map(this.toJson)
-            .catch(this.handleError);
-    }
-
-    private createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
-        let options = this.getRequestOptions();
-
-
-        let body = {
-            name: typeName,
-            parentName: parentType,
-            title: typeName,
-            description: ''
-        };
-
-        return this.http
-            .post(url, body, options)
-            .map(this.toJson)
-            .catch(this.handleError);
-    }
-
-    private addPropertyToAType(modelName: string, typeName: string, formFields: any) {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types/${typeName}?select=props`;
-        let options = this.getRequestOptions();
-
-        let properties = [];
-        if (formFields && formFields.values) {
-            for (let key in formFields.values) {
-                if (key) {
-                    properties.push({
-                        name: key,
-                        title: key,
-                        description: key,
-                        dataType: 'd:text',
-                        multiValued: false,
-                        mandatory: false,
-                        mandatoryEnforced: false
-                    });
-                }
-            }
-        }
-
-        let body = {
-            name: typeName,
-            properties: properties
-        };
-
-        return this.http
-            .put(url, body, options)
-            .map(this.toJson)
-            .catch(this.handleError);
-    }
-
-    private getHeaders(): Headers {
-        return new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': this.authService.getTicketEcmBase64()
-        });
-    }
-
-    private getRequestOptions(): RequestOptions {
-        let headers = this.getHeaders();
-        return new RequestOptions({headers: headers});
-    }
-
-    toJson(res: Response) {
-        if (res) {
-            let body = res.json();
-            return body || {};
-        }
-        return {};
     }
 }

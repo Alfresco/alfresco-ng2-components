@@ -29,24 +29,12 @@ export class FormService {
     constructor(private authService: AlfrescoAuthenticationService) {
     }
 
-    getProcessDefinitions(): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.processApi.getProcessDefinitions({}))
-            .map(this.toJsonArray)
-            .catch(this.handleError);
-    }
-
-    getTasks(): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.listTasks({}))
-            .map(this.toJsonArray)
-            .catch(this.handleError);
-    }
-
-    getTask(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.getTask(taskId))
-            .map(this.toJson)
-            .catch(this.handleError);
-    }
-
+    /**
+     * Save Task Form
+     * @param taskId Task Id
+     * @param formValues Form Values
+     * @returns {any}
+     */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
         let body = JSON.stringify({values: formValues});
 
@@ -72,12 +60,22 @@ export class FormService {
             .catch(this.handleError);
     }
 
+    /**
+     * Get Form related to a taskId
+     * @param taskId Task Id
+     * @returns {any}
+     */
     getTaskForm(taskId: string): Observable<any> {
         return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.getTaskForm(taskId))
             .map(this.toJson)
             .catch(this.handleError);
     }
 
+    /**
+     * Get Form Definition
+     * @param formId Form Id
+     * @returns {any}
+     */
     getFormDefinitionById(formId: string): Observable<any> {
         return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.editorApi.getForm(formId))
             .map(this.toJson)
