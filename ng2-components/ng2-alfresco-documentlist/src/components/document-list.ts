@@ -30,6 +30,7 @@ import {
     HostListener
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 import {
     CONTEXT_MENU_DIRECTIVES,
     AlfrescoTranslationService
@@ -43,7 +44,6 @@ import {
 } from 'ng2-alfresco-datatable';
 
 import { DocumentListService } from './../services/document-list.service';
-import { MinimalNodeEntity } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import {
     ShareDataTableAdapter,

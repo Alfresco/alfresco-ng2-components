@@ -76,7 +76,7 @@ export class AlfrescoAuthenticationService {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(username: string, password: string) {
+    login(username: string, password: string): Observable<{ type: string, ticket: any }> {
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
                 this.saveTickets();
@@ -196,7 +196,7 @@ export class AlfrescoAuthenticationService {
         return Observable.throw(error || 'Server error');
     }
 
-    getAlfrescoApi(): any {
+    getAlfrescoApi(): AlfrescoJsApi {
         return this.alfrescoApi;
     }
 }

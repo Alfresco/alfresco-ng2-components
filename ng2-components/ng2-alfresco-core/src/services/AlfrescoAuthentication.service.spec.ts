@@ -19,18 +19,25 @@ import {it, describe, beforeEach, afterEach} from '@angular/core/testing';
 import {ReflectiveInjector, provide} from '@angular/core';
 import {AlfrescoSettingsService} from './AlfrescoSettings.service';
 import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';
+import { AlfrescoApiService } from './AlfrescoApi.service';
 
 declare var AlfrescoApi: any;
 declare let jasmine: any;
 
 describe('AlfrescoAuthentication', () => {
-    let injector, authService;
+    let injector;
+    let authService: AlfrescoAuthenticationService;
+    let settingsService: AlfrescoSettingsService;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
-            provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsService}),
+            AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService
         ]);
+
+        authService = injector.get(AlfrescoAuthenticationService);
+        settingsService = injector.get(AlfrescoSettingsService);
 
         let store = {};
 
@@ -61,8 +68,7 @@ describe('AlfrescoAuthentication', () => {
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.alfrescoSetting.setProviders('ECM');
+            settingsService.setProviders('ECM');
         });
 
         it('should return an ECM ticket after the login done', (done) => {
@@ -144,8 +150,7 @@ describe('AlfrescoAuthentication', () => {
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.alfrescoSetting.setProviders('BPM');
+            settingsService.setProviders('BPM');
         });
 
         it('should return an BPM ticket after the login done', (done) => {
@@ -212,24 +217,23 @@ describe('AlfrescoAuthentication', () => {
     describe('Setting service change should reflect in the api', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.alfrescoSetting.setProviders('ALL');
+            settingsService.setProviders('ALL');
         });
 
         it('should host ecm url change be reflected in the api configuration', () => {
-            authService.alfrescoSetting.ecmHost = '127.99.99.99';
+            settingsService.ecmHost = '127.99.99.99';
 
             expect(authService.getAlfrescoApi().config.hostEcm).toBe('127.99.99.99');
         });
 
         it('should host bpm url change be reflected in the api configuration', () => {
-            authService.alfrescoSetting.bpmHost = '127.99.99.99';
+            settingsService.bpmHost = '127.99.99.99';
 
             expect(authService.getAlfrescoApi().config.hostBpm).toBe('127.99.99.99');
         });
 
         it('should host bpm provider change be reflected in the api configuration', () => {
-            authService.alfrescoSetting.setProviders('ECM');
+            settingsService.setProviders('ECM');
 
             expect(authService.getAlfrescoApi().config.provider).toBe('ECM');
         });
@@ -239,8 +243,7 @@ describe('AlfrescoAuthentication', () => {
     describe('when the setting is both ECM and BPM ', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.providers = 'ALL';
+            settingsService.setProviders('ALL');
         });
 
         it('should return both ECM and BPM tickets after the login done', (done) => {
