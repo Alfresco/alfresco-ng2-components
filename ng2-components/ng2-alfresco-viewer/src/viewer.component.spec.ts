@@ -19,7 +19,7 @@ import {describe, expect, it, inject, beforeEachProviders, beforeEach} from '@an
 import {TestComponentBuilder} from '@angular/compiler/testing';
 import {ViewerComponent} from './viewer.component';
 import {EventMock} from './assets/event.mock';
-import {AlfrescoAuthenticationService, AlfrescoSettingsService} from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('ViewerComponent', () => {
 
@@ -27,6 +27,7 @@ describe('ViewerComponent', () => {
 
     beforeEachProviders(() => {
         return [
+            AlfrescoApiService,
             AlfrescoSettingsService,
             AlfrescoAuthenticationService
         ];

@@ -20,7 +20,8 @@ import { PdfViewerComponent } from './pdfViewer.component';
 import { ImgViewerComponent } from './imgViewer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DOCUMENT } from '@angular/platform-browser';
-import { AlfrescoAuthenticationService} from 'ng2-alfresco-core';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -61,7 +62,9 @@ export class ViewerComponent {
 
     loaded: boolean = false;
 
-    constructor(private authService: AlfrescoAuthenticationService, private element: ElementRef, @Inject(DOCUMENT) private document) {
+    constructor(private apiService: AlfrescoApiService,
+                private element: ElementRef,
+                @Inject(DOCUMENT) private document) {
     }
 
     ngOnChanges(changes) {
@@ -72,15 +75,16 @@ export class ViewerComponent {
                 throw new Error('Attribute urlFile or fileNodeId is required');
             }
             return new Promise((resolve) => {
+                let alfrescoApi = this.apiService.getInstance();
                 if (this.urlFile) {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);
                 } else if (this.fileNodeId) {
-                    this.authService.getAlfrescoApi().nodes.getNodeInfo(this.fileNodeId).then((data) => {
+                    alfrescoApi.nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
                         this.mimeType = data.content.mimeType;
                         this.displayName = data.name;
-                        this.urlFile = this.authService.getAlfrescoApi().content.getContentUrl(data.id);
+                        this.urlFile = alfrescoApi.content.getContentUrl(data.id);
                         this.loaded = true;
                     }, function (error) {
                         console.log('This node does not exist');
