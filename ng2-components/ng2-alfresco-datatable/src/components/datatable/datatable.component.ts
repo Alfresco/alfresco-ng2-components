@@ -63,6 +63,9 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
     @Input()
     actions: boolean = false;
 
+    @Input()
+    fallbackThumbnail: string;
+
     @Output()
     rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
@@ -152,6 +155,12 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
                  });
                  */
             }
+        }
+    }
+
+    onImageLoadingError(event: Event) {
+        if (event && this.fallbackThumbnail) {
+            event.srcElement.src = this.fallbackThumbnail;
         }
     }
 
