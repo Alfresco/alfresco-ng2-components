@@ -23,9 +23,10 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
-
+import { MATERIAL_DESIGN_DIRECTIVES, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
+import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 
 import { TabsWidget } from './widgets/tabs/tabs.widget';
@@ -72,7 +73,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css'],
     directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
-    providers: [FormService, WidgetVisibilityService]
+    providers: [EcmModelService, FormService, WidgetVisibilityService, NodeService]
 })
 export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
@@ -84,13 +85,25 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     taskId: string;
 
     @Input()
+    nodeId: string;
+
+    @Input()
     formId: string;
 
     @Input()
     formName: string;
 
     @Input()
+    saveMetadata: boolean = false;
+
+    @Input()
     data: FormValues;
+
+    @Input()
+    path: string;
+
+    @Input()
+    nameNode: string;
 
     @Input()
     showTitle: boolean = true;
@@ -124,7 +137,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     debugMode: boolean = false;
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private authService: AlfrescoAuthenticationService,
+                private ecmModelService: EcmModelService,
+                private nodeService: NodeService) {
     }
 
     hasForm(): boolean {
@@ -154,7 +170,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     ngOnInit() {
-        this.loadForm();
+        if (this.nodeId) {
+            this.loadActivitiFormForEcmNode();
+        } else {
+            this.loadForm();
+        }
     }
 
     ngAfterViewChecked() {
@@ -208,6 +228,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
                 if (outcome.id === ActivitiForm.CUSTOM_OUTCOME_ID) {
                     this.formSaved.emit(this.form);
+                    this.storeFormAsMetadata();
                     return true;
                 }
             } else {
@@ -275,7 +296,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .getFormDefinitionById(formId)
             .subscribe(
                 form => {
-                    // console.log('Get Form By definition Id', form);
+                    this.formName = form.name;
                     this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form);
                 },
@@ -306,7 +327,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.formService
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
-                    () => this.formSaved.emit(this.form),
+                    () => {
+                        this.formSaved.emit(this.form);
+                        this.storeFormAsMetadata();
+                    },
                     this.handleError
                 );
         }
@@ -317,13 +341,16 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.formService
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
-                    () => this.formCompleted.emit(this.form),
+                    () => {
+                        this.formCompleted.emit(this.form);
+                        this.storeFormAsMetadata();
+                    },
                     this.handleError
                 );
         }
     }
 
-    handleError(err: any) {
+    handleError(err: any): any {
         console.log(err);
     }
 
@@ -345,7 +372,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, {id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
         ];
     }
 
@@ -353,5 +380,42 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         if (field && field.form) {
             this.visibilityService.updateVisibilityForForm(field.form);
         }
+    }
+
+    private loadActivitiFormForEcmNode(): void {
+        this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
+                this.data = data.metadata;
+                this.loadFormFromActiviti(data.nodeType);
+            },
+            this.handleError);
+    }
+
+    public loadFormFromActiviti(nodeType: string): any {
+        this.formService.searchFrom(nodeType).subscribe(
+            form => {
+                if (!form) {
+                    this.formService.createFormFromNodeType(nodeType).subscribe(formMetadata => {
+                        this.loadFormFromFormId(formMetadata.id);
+                    });
+                } else {
+                    this.loadFormFromFormId(form.id);
+                }
+            },
+            this.handleError
+        );
+    }
+
+    private loadFormFromFormId(formId: string) {
+        this.formId = formId;
+        this.loadForm();
+    }
+
+    private storeFormAsMetadata() {
+        this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
+                if (this.saveMetadata) {
+                    this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
+                }
+            }, this.handleError
+        );
     }
 }
