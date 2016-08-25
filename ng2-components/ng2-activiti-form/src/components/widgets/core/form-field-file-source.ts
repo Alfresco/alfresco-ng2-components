@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import {FormFieldFileSource} from './form-field-file-source';
+import {FormFieldSelectedFolder} from './form-field-selected-folder';
 
-export interface FormFieldMetadata {
-    [key: string]: any;
-    fileSource?: FormFieldFileSource;
-    link?: boolean;
+export interface FormFieldFileSource {
+    metadataAllowed: boolean;
+    name: string;
+    selectedFolder: FormFieldSelectedFolder;
+    serviceId: string;
 }

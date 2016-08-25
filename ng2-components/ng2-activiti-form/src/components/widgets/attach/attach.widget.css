@@ -1,0 +1,17 @@
+.attach-widget {
+    width:100%
+}
+
+.attach-widget__icon {
+    float: left;
+}
+
+.attach-widget__file {
+    /*float: left;*/
+    margin-top: 4px;
+}
+
+.attach-widget__reset {
+    /*float: left;*/
+    margin-top: 4px;
+}

@@ -28,6 +28,7 @@ import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
 import { DisplayValueWidget } from './display-value/display-value.widget';
 import { DisplayTextWidget } from './display-text/display-text.widget';
 import { UploadWidget } from './upload/upload.widget';
+import { AttachWidget } from './attach/attach.widget';
 import { TypeaheadWidget } from './typeahead/typeahead.widget';
 import { FunctionalGroupWidget } from './functional-group/functional-group.widget';
 import { PeopleWidget } from './people/people.widget';
@@ -51,6 +52,7 @@ export * from './radio-buttons/radio-buttons.widget';
 export * from './display-value/display-value.widget';
 export * from './display-text/display-text.widget';
 export * from './upload/upload.widget';
+export * from './attach/attach.widget';
 export * from './typeahead/typeahead.widget';
 export * from './functional-group/functional-group.widget';
 export * from './people/people.widget';
@@ -71,6 +73,7 @@ export const PRIMITIVE_WIDGET_DIRECTIVES: [any] = [
     DisplayValueWidget,
     DisplayTextWidget,
     UploadWidget,
+    AttachWidget,
     TypeaheadWidget,
     FunctionalGroupWidget,
     PeopleWidget

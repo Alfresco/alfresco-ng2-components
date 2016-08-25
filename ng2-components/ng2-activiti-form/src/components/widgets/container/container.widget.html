@@ -44,7 +44,8 @@
                             <display-text-widget [field]="field" (fieldChanged)="fieldChanged($event);"></display-text-widget>
                         </div>
                         <div *ngSwitchCase="'upload'">
-                            <upload-widget [field]="field" (fieldChanged)="fieldChanged($event);"></upload-widget>
+                            <upload-widget *ngIf="!field.params.link" [field]="field" (fieldChanged)="fieldChanged($event);"></upload-widget>
+                            <attach-widget *ngIf="field.params.link" [field]="field" (fieldChanged)="fieldChanged($event);"></attach-widget>
                         </div>
                         <div *ngSwitchCase="'typeahead'">
                             <typeahead-widget [field]="field" (fieldChanged)="fieldChanged($event);"></typeahead-widget>

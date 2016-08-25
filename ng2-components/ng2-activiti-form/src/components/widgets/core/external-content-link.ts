@@ -15,10 +15,18 @@
  * limitations under the License.
  */
 
-import {FormFieldFileSource} from './form-field-file-source';
-
-export interface FormFieldMetadata {
-    [key: string]: any;
-    fileSource?: FormFieldFileSource;
-    link?: boolean;
+export interface ExternalContentLink {
+    contentAvailable: boolean;
+    created: string;
+    createdBy: any;
+    id: number;
+    link: boolean;
+    mimeType: string;
+    name: string;
+    previewStatus: string;
+    relatedContent: boolean;
+    simpleType: string;
+    source: string;
+    sourceId: string;
+    thumbnailStatus: string;
 }

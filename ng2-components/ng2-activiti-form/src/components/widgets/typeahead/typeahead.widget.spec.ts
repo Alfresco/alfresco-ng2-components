@@ -29,7 +29,7 @@ describe('TypeaheadWidget', () => {
     let widget: TypeaheadWidget;
 
     beforeEach(() => {
-        formService = new FormService(null, null);
+        formService = new FormService(null, null, null, null);
         widget = new TypeaheadWidget(formService);
         widget.field = new FormFieldModel(new FormModel());
     });
