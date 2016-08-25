@@ -120,7 +120,7 @@ export class FilesComponent implements OnInit {
         return this.acceptedFilesTypeShow;
     }
 
-    toggleVersioning(){
+    toggleVersioning() {
         this.versioning = !this.versioning;
         return this.versioning;
     }

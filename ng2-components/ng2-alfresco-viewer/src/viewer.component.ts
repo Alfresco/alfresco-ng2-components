@@ -51,6 +51,8 @@ export class ViewerComponent {
     @Output()
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    urlFileContent: string;
+
     otherMenu: any;
 
     displayName: string;
@@ -76,11 +78,12 @@ export class ViewerComponent {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);
+                    this.urlFileContent = this.urlFile;
                 } else if (this.fileNodeId) {
                     this.authService.getAlfrescoApi().nodes.getNodeInfo(this.fileNodeId).then((data) => {
                         this.mimeType = data.content.mimeType;
                         this.displayName = data.name;
-                        this.urlFile = this.authService.getAlfrescoApi().content.getContentUrl(data.id);
+                        this.urlFileContent = this.authService.getAlfrescoApi().content.getContentUrl(data.id);
                         this.loaded = true;
                     }, function (error) {
                         console.log('This node does not exist');

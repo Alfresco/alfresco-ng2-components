@@ -48,13 +48,13 @@
                         <div id="viewer-content-container" class="viewer-content-container mdl-cell" >
                         <!-- Start View Switch-->
                             <div *ngIf="isPdf()">
-                                <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFile" [nameFile]="displayName" ></pdf-viewer>
+                                <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFileContent" [nameFile]="displayName" ></pdf-viewer>
                             </div>
                             <div class="center-element" *ngIf="isImage()" >
-                                <img-viewer [urlFile]="urlFile" [nameFile]="displayName"></img-viewer>
+                                <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName"></img-viewer>
                             </div>
                             <div *ngIf="!supportedExtension()">
-                                <not-supported-format [urlFile]="urlFile" [nameFile]="displayName" ></not-supported-format>
+                                <not-supported-format [urlFile]="urlFileContent" [nameFile]="displayName" ></not-supported-format>
                             </div>
                         <!-- End View Switch -->
                         </div>
