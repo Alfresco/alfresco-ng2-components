@@ -79,6 +79,8 @@ export class UploadWidget extends WidgetComponent implements OnInit {
 
             let xhr: XMLHttpRequest = new XMLHttpRequest();
 
+            xhr.withCredentials = true;
+
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
