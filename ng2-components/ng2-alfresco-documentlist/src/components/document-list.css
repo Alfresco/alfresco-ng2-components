@@ -1,0 +1,44 @@
+.document-list_empty_template {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.document-list__this-space-is-empty {
+    height: 32px;
+    opacity: 0.26;
+    font-family: Muli, Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    line-height: 1.33;
+    letter-spacing: -1px;
+    color: #000000;
+}
+
+.document-list__drag-drop {
+    height: 56px;
+    opacity: 0.54;
+    font-family: Muli, Helvetica, Arial, sans-serif;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -2px;
+    color: #000000;
+    margin-top: 40px;
+}
+
+.document-list__any-files-here-to-add {
+    height: 24px;
+    opacity: 0.54;
+    font-family: Muli, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.4px;
+    color: #000000;
+    margin-top: 17px;
+}
+
+.document-list__empty_doc_lib {
+    width: 565px;
+    height: 161px;
+    object-fit: contain;
+    margin-top: 17px;
+}
