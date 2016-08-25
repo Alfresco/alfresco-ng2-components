@@ -28,12 +28,12 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'my-app',
-    template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+    template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
                <hr>
@@ -78,18 +78,19 @@ export class MyDemoApp implements OnInit {
 
     public ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
-    token: string;
+    ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
 
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        if (this.authService.getTicketEcm()) {
+            this.ticket = this.authService.getTicketEcm();
         }
     }
 
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
+    public updateTicket(): void {
+        localStorage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {
@@ -107,9 +108,9 @@ export class MyDemoApp implements OnInit {
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
