@@ -19,22 +19,112 @@ import { Injectable } from '@angular/core';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
+import { FormModel } from '../components/widgets/core/form.model';
+import { NodeService } from './node.service';
 
 @Injectable()
 export class EcmModelService {
 
+    public static MODEL_NAMESPACE: string = 'activitiForms';
+    public static MODEL_NAME: string = 'activitiFormsModel';
+    public static TYPE_MODEL: string = 'cm:folder';
+
     constructor(private authService: AlfrescoAuthenticationService,
                 private http: Http,
-                public alfrescoSettingsService: AlfrescoSettingsService) {
+                public alfrescoSettingsService: AlfrescoSettingsService,
+                private nodeService: NodeService) {
     }
 
-    public isAnEcmModelExistingForThisForm(ecmModels: any, modelName: string) {
-        let formEcmModel = ecmModels.list.entries.find(model => model.entry.name === modelName);
-        if (!formEcmModel) {
-            return false;
-        } else {
-            return true;
-        }
+    public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
+        return Observable.create(observer => {
+            this.seachActivitiEcmModel().subscribe(
+                model => {
+                    if (!model) {
+                        this.createActivitiEcmModel(formName, form).subscribe(typeForm => {
+                            observer.next(typeForm);
+                            observer.complete();
+                        });
+                    } else {
+                        this.createFomType(formName, form).subscribe(typeForm => {
+                            observer.next(typeForm);
+                            observer.complete();
+                        });
+                    }
+                },
+                this.handleError
+            );
+        });
+
+    }
+
+    private seachActivitiEcmModel() {
+        return this.getEcmModels().map(function (ecmModels: any) {
+            return ecmModels.list.entries.find(model => model.entry.name === EcmModelService.MODEL_NAME);
+        });
+    }
+
+    private createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
+        return Observable.create(observer => {
+            this.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(
+                model => {
+                    console.log('model created', model);
+                    this.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(
+                        modelActive => {
+                            console.log('model active', modelActive);
+                            this.createEcmTypeWithProperties(formName, form).subscribe(typeCreated => {
+                                observer.next(typeCreated);
+                                observer.complete();
+                            });
+                        },
+                        this.handleError
+                    );
+                },
+                this.handleError
+            );
+        });
+    }
+
+    private createFomType(formName: string, form: FormModel): Observable<any> {
+        return Observable.create(observer => {
+            this.searchFormType(formName).subscribe(
+                ecmType => {
+                    console.log('custom types', ecmType);
+                    if (!ecmType) {
+                        this.createEcmTypeWithProperties(formName, form).subscribe(typeCreated => {
+                            observer.next(typeCreated);
+                            observer.complete();
+                        });
+                    } else {
+                        observer.next(ecmType);
+                        observer.complete();
+                    }
+                },
+                this.handleError
+            );
+        });
+    }
+
+    public createEcmTypeWithProperties(formName: string, form: FormModel): Observable<any> {
+        return Observable.create(observer => {
+            this.createEcmType(formName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(
+                typeCreated => {
+                    console.log('type Created', typeCreated);
+                    this.addPropertyToAType(EcmModelService.MODEL_NAME, formName, form).subscribe(
+                        properyAdded => {
+                            console.log('property Added', properyAdded);
+                            observer.next(typeCreated);
+                            observer.complete();
+                        },
+                        this.handleError);
+                },
+                this.handleError);
+        });
+    }
+
+    public searchFormType(formName: string): Observable<any> {
+        return this.getEcmType(EcmModelService.MODEL_NAME).map(function (customTypes: any) {
+            return customTypes.list.entries.find(type => type.entry.prefixedName === formName);
+        });
     }
 
     public activeEcmModel(modelName: string): Observable<any> {
@@ -76,7 +166,7 @@ export class EcmModelService {
     }
 
 
-    public getEcmTypes(modelName: string): Observable<any> {
+    public getEcmType(modelName: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
         let options = this.getRequestOptions();
 

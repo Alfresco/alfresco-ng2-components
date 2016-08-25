@@ -62,12 +62,12 @@ export class FormDefinitionModel {
     private metadataToFields(metadata: any): any[] {
         let fields = [];
         if (metadata) {
-            for (let key in metadata) {
-                if (key) {
+            metadata.forEach(function(property) {
+                if (property) {
                     let field = {
                         type: 'text',
-                        id: key,
-                        name: key,
+                        id: property.name,
+                        name: property.name,
                         required: false,
                         readOnly: false,
                         sizeX: 1,
@@ -87,7 +87,7 @@ export class FormDefinitionModel {
                     };
                     fields.push(field);
                 }
-            }
+            });
         }
 
         return fields;

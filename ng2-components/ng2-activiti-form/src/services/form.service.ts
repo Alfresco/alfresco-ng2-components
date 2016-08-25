@@ -20,6 +20,7 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { FormValues } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
+import { EcmModelService } from './ecm-model.service';
 
 @Injectable()
 export class FormService {
@@ -27,23 +28,27 @@ export class FormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private ecmModelService: EcmModelService) {
     }
 
     /**
      * Create a Form with a fields for each metadata properties
      * @returns {Observable<any>}
      */
-    public createFormFromMetadaProperties(formName: string, metadata: any): Observable<any> {
+    public createFormFromNodeType(formName: string): Observable<any> {
         return Observable.create(observer => {
-            this.createFormModel(formName).subscribe(
+            this.createForm(formName).subscribe(
                 form => {
-                    let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, metadata);
-
-                    this.addFieldsToAFormFromMetadata(form.id, formDefinitionModel).subscribe(formData => {
-                        observer.next(formData);
-                        observer.complete();
-                    }, this.handleError);
+                    this.ecmModelService.searchFormType(formName).subscribe(
+                        customType => {
+                            let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
+                            this.addFieldsNodeTypePropertiesToTheForm(form.id, formDefinitionModel).subscribe(formData => {
+                                observer.next(formData);
+                                observer.complete();
+                            }, this.handleError);
+                        },
+                        this.handleError);
                 }, this.handleError);
         });
     }
@@ -52,8 +57,7 @@ export class FormService {
      * Create a Form
      * @returns {Observable<any>}
      */
-    public createFormModel(formName: string): Observable<any> {
-
+    public createForm(formName: string): Observable<any> {
         let dataModel = {
             name: formName,
             description: '',
@@ -68,7 +72,7 @@ export class FormService {
      * Add Fields to A form from a metadata properties
      * @returns {Observable<any>}
      */
-    public addFieldsToAFormFromMetadata(formId: string, formDefinitionModel: FormDefinitionModel): Observable<any> {
+    public addFieldsNodeTypePropertiesToTheForm(formId: string, formDefinitionModel: FormDefinitionModel): Observable<any> {
         return this.addFieldsToAForm(formId, formDefinitionModel);
     }
 

@@ -1,4 +1,11 @@
 <div class="activiti-form-viewer" *ngIf="taskId">
-    <activiti-form [formName]="'hc:patientFolder'" [saveMetadata]="true"></activiti-form>
-    <!--<activiti-form [nodeId]="'35c6dc13-810d-4264-b5a2-9a391a225010'"></activiti-form>-->
+    <!--<activiti-form [formName]="'activitiForms:patientFolder'"
+                       [saveMetadata]="true"
+                       [path]="'/Sites/swsdp/documentLibrary'"
+                       [nameNode]="'test'"></activiti-form>-->
+    <activiti-form [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'"
+                   [saveMetadata]="true"
+                   [path]="'/Sites/swsdp/documentLibrary'"
+                   <!--[nameNode]="'test2'"-->
+    ></activiti-form>
 </div>

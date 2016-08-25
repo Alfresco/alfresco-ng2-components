@@ -40,7 +40,7 @@ describe('ActivitiForm', () => {
         ]);
         window['componentHandler'] = componentHandler;
 
-        formService = new FormService(null);
+        formService = new FormService(null, null);
         formComponent = new ActivitiForm(formService, visibilityService, null, null, null);
     });
 

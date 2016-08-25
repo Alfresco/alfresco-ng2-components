@@ -35,6 +35,51 @@ export class NodeService {
         return Observable.fromPromise(this.authService.getAlfrescoApi().nodes.getNodeInfo(nodeId)).map(this.cleanMetadataFromSemicolon);
     }
 
+    /**
+     * Create a new Node from form metadata
+     * @param path path
+     * @param nodeType node type
+     * @param nameSpace namespace node
+     * @param data data to store
+     * @returns NodeMetadata
+     */
+    public createNodeMetadata(nodeType: string, nameSpace: any, data: any, path: string, name?: string): Observable<any> {
+        let properties = {};
+        for (let key in data) {
+            if (data[key]) {
+                properties[nameSpace + ':' + key] = data[key];
+            }
+        }
+
+        return this.createNode(name || this.generateUuid(), nodeType, properties, path);
+    }
+
+    /**
+     * Create a new Node from form metadata
+     * @param name path
+     * @param nodeType node type
+     * @param properties namespace node
+     * @param path path
+     * @returns NodeMetadata
+     */
+    public createNode(name: string, nodeType: string, properties: any, path: string): Observable<any> {
+        let body = {
+            name: name,
+            nodeType: nodeType,
+            properties: properties,
+            relativePath: path
+        };
+
+        return Observable.fromPromise(this.authService.getAlfrescoApi().nodes.addNode('-root-', body, {}));
+    }
+
+    private generateUuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
     private cleanMetadataFromSemicolon(data: any): NodeMetadata {
         let metadata = {};
 

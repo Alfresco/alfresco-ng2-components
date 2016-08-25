@@ -73,7 +73,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css'],
     directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
-    providers: [FormService, WidgetVisibilityService, EcmModelService, NodeService]
+    providers: [EcmModelService, FormService, WidgetVisibilityService, NodeService]
 })
 export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
@@ -98,6 +98,12 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     @Input()
     data: FormValues;
+
+    @Input()
+    path: string;
+
+    @Input()
+    nameNode: string;
 
     @Input()
     showTitle: boolean = true;
@@ -165,7 +171,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     ngOnInit() {
         if (this.nodeId) {
-            this.loadFormForEcmMetadata();
+            this.loadActivitiFormForEcmNode();
         } else {
             this.loadForm();
         }
@@ -290,7 +296,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .getFormDefinitionById(formId)
             .subscribe(
                 form => {
-                    // console.log('Get Form By definition Id', form);
+                    this.formName = form.name;
                     this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form);
                 },
@@ -376,18 +382,19 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    private loadFormForEcmMetadata(): void {
+    private loadActivitiFormForEcmNode(): void {
         this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
-                this.loadFormFromActiviti(data.nodeType, data.metadata);
+                this.data = data.metadata;
+                this.loadFormFromActiviti(data.nodeType);
             },
             this.handleError);
     }
 
-    public loadFormFromActiviti(nodeType: string, metadata: any): any {
+    public loadFormFromActiviti(nodeType: string): any {
         this.formService.searchFrom(nodeType).subscribe(
             form => {
                 if (!form) {
-                    this.formService.createFormFromMetadaProperties(nodeType, metadata).subscribe(formMetadata => {
+                    this.formService.createFormFromNodeType(nodeType).subscribe(formMetadata => {
                         this.loadFormFromFormId(formMetadata.id);
                     });
                 } else {
@@ -404,64 +411,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     private storeFormAsMetadata() {
-        if (this.saveMetadata) {
-            let modelName = 'activitiForms';
-
-
-            this.ecmModelService.getEcmModels().subscribe(
-                models => {
-                    if (!this.ecmModelService.isAnEcmModelExistingForThisForm(models, modelName)) {
-                        let modelNamespace = 'activitiFormsModel';
-                        this.createAndActiveEcmModel(modelName, modelNamespace);
-                    } else {
-                        this.createModelType(modelName);
-                    }
-                },
-                this.handleError
-            );
-        }
-    }
-
-
-    private createAndActiveEcmModel(modelName: string, modelNamespace: string) {
-        this.ecmModelService.createEcmModel(modelName, modelNamespace).subscribe(
-            model => {
-                console.log('model created', model);
-
-                this.ecmModelService.activeEcmModel(modelName).subscribe(
-                    modelActive => {
-                        console.log('model active', modelActive);
-                        this.createModelType(modelName);
-                    },
-                    this.handleError
-                );
-            },
-            this.handleError
-        );
-    }
-
-    private createModelType(modelName: string) {
-        this.ecmModelService.getEcmTypes(modelName).subscribe(
-            customTypes => {
-                console.log('custom types', customTypes);
-
-                let customType = customTypes.list.entries.find(type => type.entry.name === this.formName);
-                if (!customType) {
-                    let typeName = this.formName;
-                    this.ecmModelService.createEcmType(this.formName, modelName, 'cm:folder').subscribe(
-                        typeCreated => {
-                            console.log('type Created', typeCreated);
-
-                            this.ecmModelService.addPropertyToAType(modelName, typeName, this.form).subscribe(
-                                properyAdded => {
-                                    console.log('property Added', properyAdded);
-                                },
-                                this.handleError);
-                        },
-                        this.handleError);
+        this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
+                if (this.saveMetadata) {
+                    this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
                 }
-            },
-            this.handleError
+            }, this.handleError
         );
     }
 }
