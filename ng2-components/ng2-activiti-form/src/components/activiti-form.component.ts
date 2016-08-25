@@ -39,18 +39,22 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
 
 /**
  * @Input
- * ActivitiForm can show 3 forms searching by 3 type of params:
+ * ActivitiForm can show 4 types of forms searching by 4 type of params:
  *   1) Form attached to a task passing the {taskId}.
+ *
  *   2) Form that are only defined with the {formId} (in this case you receive only the form definition and the form will not be
  *   attached to any process, useful in case you want to use ActivitiForm as form designer), in this case you can pass also other 2
  *   parameters:
  *      - {saveOption} as parameter to tell what is the function to call on the save action.
  *      - {data} to fill the form field with some data, the id of the form must to match the name of the field of the provided data object.
+ *
  *   3) Form that are only defined with the {formName} (in this case you receive only the form definition and the form will not be
  *   attached to any process, useful in case you want to use ActivitiForm as form designer),
  *   in this case you can pass also other 2 parameters:
  *      - {saveOption} as parameter to tell what is the function to call on the save action.
  *      - {data} to fill the form field with some data, the id of the form must to match the name of the field of the provided data object.
+ *
+ *   4) Form that show the metadata of a {nodeId}
  *
  *   {showTitle} boolean - to hide the title of the form pass false, default true;
  *
@@ -59,6 +63,12 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  *   {showCompleteButton} boolean - to hide the complete button of the form pass false, default true;
  *
  *   {showSaveButton} boolean - to hide the save button of the form pass false, default true;
+ *
+ *   {saveMetadata} boolean - store the value of the form as metadata, default false;
+ *
+ *   {path} string - path of the folder where to store the metadata;
+ *
+ *   {nameNode} string (optional) - Name to assign to the new node where the metadata are stored;
  *
  *   @Output
  *   {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
@@ -411,11 +421,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     private storeFormAsMetadata() {
-        this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
-                if (this.saveMetadata) {
+        if (this.saveMetadata) {
+            this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
                     this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
-                }
-            }, this.handleError
-        );
+                }, this.handleError
+            );
+        }
     }
 }
