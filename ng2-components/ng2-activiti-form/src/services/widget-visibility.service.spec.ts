@@ -362,6 +362,7 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).toBe(null);
    });
 
+    /*
     it('should retrieve the value for the left field when it is a process variable', (variableUpdated) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
@@ -381,6 +382,7 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).not.toBe(null);
        expect(rightValue).toBe('test_value_2');
    });
+   */
 
     it('should retrieve the value for the left field when it is a form variable', () => {
        let fakeForm = new FormModel({variables: [
