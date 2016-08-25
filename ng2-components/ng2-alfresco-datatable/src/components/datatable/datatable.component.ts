@@ -160,7 +160,8 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
     onImageLoadingError(event: Event) {
         if (event && this.fallbackThumbnail) {
-            event.srcElement.src = this.fallbackThumbnail;
+            let element = <any> event.srcElement;
+            element.src = this.fallbackThumbnail;
         }
     }
 
