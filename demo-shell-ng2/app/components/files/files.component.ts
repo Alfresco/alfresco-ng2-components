@@ -133,7 +133,7 @@ export class FilesComponent implements OnInit {
     }
 
     viewActivitiForm(event?: any) {
-        this.router.navigate(['/activiti/tasks', '1']);
+        this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
     }
 
     private setupBpmActions(actions: any[]) {
