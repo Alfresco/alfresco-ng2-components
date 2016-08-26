@@ -40,7 +40,7 @@ export class FormService {
         return Observable.create(observer => {
             this.createForm(formName).subscribe(
                 form => {
-                    this.ecmModelService.searchFormType(formName).subscribe(
+                    this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         customType => {
                             let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
                             this.addFieldsNodeTypePropertiesToTheForm(form.id, formDefinitionModel).subscribe(formData => {

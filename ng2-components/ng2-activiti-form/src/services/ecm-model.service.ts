@@ -86,7 +86,7 @@ export class EcmModelService {
 
     private createFomType(formName: string, form: FormModel): Observable<any> {
         return Observable.create(observer => {
-            this.searchFormType(formName).subscribe(
+            this.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                 ecmType => {
                     console.log('custom types', ecmType);
                     if (!ecmType) {
@@ -121,9 +121,9 @@ export class EcmModelService {
         });
     }
 
-    public searchFormType(formName: string): Observable<any> {
-        return this.getEcmType(EcmModelService.MODEL_NAME).map(function (customTypes: any) {
-            return customTypes.list.entries.find(type => type.entry.prefixedName === formName);
+    public searchEcmType(typeName: string, modelName: string): Observable<any> {
+        return this.getEcmType(modelName).map(function (customTypes: any) {
+            return customTypes.list.entries.find(type => type.entry.prefixedName === typeName || type.entry.title === typeName);
         });
     }
 
