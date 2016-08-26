@@ -33,9 +33,9 @@ export class AlfrescoSettingsService {
 
     private providers: string = 'ALL'; // ECM, BPM , ALL
 
-    bpmHostSubject: Subject<string> = new Subject<string>();
-    ecmHostSubject: Subject<string> = new Subject<string>();
-    providerSubject: Subject<string> = new Subject<string>();
+    public bpmHostSubject: Subject<string> = new Subject<string>();
+    public ecmHostSubject: Subject<string> = new Subject<string>();
+    public providerSubject: Subject<string> = new Subject<string>();
 
     public get ecmHost(): string {
         return this._ecmHost;
