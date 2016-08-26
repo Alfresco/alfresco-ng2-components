@@ -124,7 +124,7 @@ export class UploadService {
                 })
                 .on('success', (data: any) => {
                     elementEmit.emit({
-                        value: 'File uploaded'
+                        value: data
                     });
                     uploadingFileModel.onFinished(
                         data.status,
