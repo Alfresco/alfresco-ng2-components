@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm } from 'ng2-activiti-form';
@@ -54,6 +54,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     taskFilter: any;
     processFilter: any;
+
+    @Input()
+    appId: string;
 
     setChoice($event) {
         this.currentChoice = $event.target.value;

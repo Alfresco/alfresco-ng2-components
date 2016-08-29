@@ -1,0 +1,11 @@
+:host {
+    width: 100%;
+}
+
+.activiti-label {
+    font-weight: bolder;
+}
+
+.material-icons:hover {
+    color: rgb(255, 152, 0);
+}

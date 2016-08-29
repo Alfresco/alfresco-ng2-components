@@ -135,6 +135,16 @@ export class ActivitiProcessService {
             .catch(this.handleError);
     }
 
+    startProcess(processDefinitionId: string, name: string) {
+        let startRequest: any = {};
+        startRequest.name = name;
+        startRequest.processDefinitionId = processDefinitionId;
+        return Observable.fromPromise(
+            this.authService.getAlfrescoApi().activiti.processApi.startNewProcessInstance(startRequest)
+            )
+            .catch(this.handleError);
+    }
+
     cancelProcess(processInstanceId: string) {
         return Observable.fromPromise(
             this.authService.getAlfrescoApi().activiti.processApi.deleteProcessInstance(processInstanceId)
