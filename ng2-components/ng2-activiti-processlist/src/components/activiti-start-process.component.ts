@@ -84,7 +84,6 @@ export class ActivitiStartProcessButton implements OnInit {
         if (this.processDefinition && this.name) {
             this.activitiProcess.startProcess(this.processDefinition, this.name).subscribe(
                 (res: any) => {
-                    console.log('Created process', res);
                     this.cancel();
                 },
                 (err) => {

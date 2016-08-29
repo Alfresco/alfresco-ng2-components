@@ -149,7 +149,6 @@ export class ActivitiProcessInstanceTasks implements OnInit {
     }
 
     public clickTask($event: any, task: TaskDetailsModel) {
-        console.log('selected task', task);
         this.selectedTaskId = task.id;
         this.taskdetails.loadDetails(task.id);
         this.showDialog();

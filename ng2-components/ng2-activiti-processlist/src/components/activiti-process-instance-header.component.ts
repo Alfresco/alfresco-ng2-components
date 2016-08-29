@@ -68,7 +68,6 @@ export class ActivitiProcessInstanceHeader {
     }
 
     cancelProcess() {
-        console.log('Cancel process', this.processInstance);
         this.processCancelled.emit(this.activitiProcess.cancelProcess(this.processInstance.id));
     }
 }

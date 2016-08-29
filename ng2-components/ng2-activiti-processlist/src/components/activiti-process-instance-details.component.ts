@@ -93,7 +93,6 @@ export class ActivitiProcessInstanceDetails {
                             this.tasksList.load(this.processInstanceDetails.id);
                         }
                     }
-                    console.log('Loaded process instance', this.processInstanceDetails);
                 }
             );
         }
