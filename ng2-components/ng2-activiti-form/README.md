@@ -132,7 +132,6 @@ The recommended set of properties can be found in the following table:
 | nameNode (optional) | string | true | Name to assign to the new node where the metadata are stored. |
 
 
- *
  *   {path} string - path of the folder where the to store the metadata
  *
  *   {nameNode} string (optional) - name of the node stored, if not defined the node will be sotred with an uuid as name
@@ -160,7 +159,7 @@ All `form*` events receive an instance of the `FormModel` as event argument for 
 ```html
 <activiti-form 
     [taskId]="selectedTask?.id"
-    formSaved="onFormSaved($event)">
+    (formSaved)="onFormSaved($event)">
 </activiti-form>
 ```
 
