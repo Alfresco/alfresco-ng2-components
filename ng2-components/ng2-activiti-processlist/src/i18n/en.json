@@ -1,10 +1,34 @@
 {
     "PROCESSLIST": {
-        "NONE": "No active processes were found",
-        "SUMMARY": "Found {{total}} active process instances",
-        "ERROR": "An error occurred while loading the processes: {{errorMessage}}",
+        "NONE": "No process instances were found",
+        "SUMMARY": "Found {{total}} process instances",
+        "ERROR": "An error occurred while loading the processes instances: {{errorMessage}}",
         "COLUMN": {
             "NAME": "Name"
+        }
+    },
+    "FILTERS": {
+        "MESSAGES": {
+            "NONE": "No process instance filter selected."
+        }
+    },
+    "DETAILS": {
+        "LABELS": {
+            "STARTED_BY": "Started by",
+            "STARTED": "Started",
+            "COMMENTS": "Comments",
+            "TASKS_ACTIVE": "Active Tasks",
+            "TASKS_COMPLETED": "Completed Tasks"
+        },
+        "MESSAGES": {
+            "NONE": "No process details found."
+        },
+        "TASKS": {
+            "NO_ACTIVE": "No tasks are currently active",
+            "NO_COMPLETED": "No tasks have been completed yet"
+        },
+        "COMMENTS": {
+            "NONE": "No comments."
         }
     }
 }

@@ -15,17 +15,30 @@
  * limitations under the License.
  */
 
-import { ActivitiProcesslistComponent } from './src/components/activiti-processlist.component';
+import { ActivitiProcessInstanceListComponent } from './src/components/activiti-processlist.component';
+import { ActivitiProcessFilters } from './src/components/activiti-filters.component';
+import { ActivitiProcessInstanceHeader } from './src/components/activiti-process-instance-header.component';
+import { ActivitiProcessInstanceTasks } from './src/components/activiti-process-instance-tasks.component';
+import { ActivitiComments } from './src/components/activiti-comments.component';
+import { ActivitiProcessInstanceDetails } from './src/components/activiti-process-instance-details.component';
+import { ActivitiStartProcessButton } from './src/components/activiti-start-process.component';
 import { ActivitiProcessService } from './src/services/activiti-process.service';
 
 // components
 export * from './src/components/activiti-processlist.component';
+export * from './src/components/activiti-process-instance-details.component';
 
 // services
 export * from './src/services/activiti-process.service';
 
 export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
-    ActivitiProcesslistComponent
+    ActivitiProcessInstanceListComponent,
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
+    ActivitiProcessInstanceHeader,
+    ActivitiProcessInstanceTasks,
+    ActivitiComments,
+    ActivitiStartProcessButton
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [

@@ -18,7 +18,7 @@
 import {describe, expect, it, inject, beforeEachProviders, beforeEach} from '@angular/core/testing';
 import {TestComponentBuilder} from '@angular/compiler/testing';
 import {AlfrescoSettingsService, AlfrescoTranslationService, AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {ActivitiProcesslistComponent} from '../../src/components/activiti-processlist.component';
+import {ActivitiProcessInstanceListComponent} from '../../src/components/activiti-processlist.component';
 import {TranslationMock} from './../assets/translation.service.mock';
 import {ActivitiProcessService} from '../services/activiti-process.service';
 
@@ -38,7 +38,7 @@ describe('ActivitiProcesslistComponent', () => {
 
     beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
         return tcb
-            .createAsync(ActivitiProcesslistComponent)
+            .createAsync(ActivitiProcessInstanceListComponent)
             .then(fixture => {
                 processlistComponentFixture = fixture;
                 element = processlistComponentFixture.nativeElement;

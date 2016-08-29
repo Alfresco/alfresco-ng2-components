@@ -44,7 +44,7 @@ import {
                 <label for="token"><b>Insert a servicePath</b></label><br>
                 <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
         <div class="container" *ngIf="authenticated">
-            <activiti-processlist></activiti-processlist>
+            <activiti-process-instance-list></activiti-process-instance-list>
         </div>`,
   providers: [ACTIVITI_PROCESSLIST_PROVIDERS],
   directives: [ACTIVITI_PROCESSLIST_DIRECTIVES]

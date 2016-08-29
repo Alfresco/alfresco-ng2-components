@@ -15,17 +15,17 @@
  * limitations under the License.
  */
 
-import {Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService, CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
-import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiProcessService } from '../services/activiti-process.service';
-import { ProcessInstance } from '../models/process-instance';
+import { FilterModel } from '../models/filter.model';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
-    selector: 'activiti-processlist',
+    selector: 'activiti-process-instance-list',
     styles: [
       `
               :host h1 {
@@ -36,13 +36,33 @@ declare let __moduleName: string;
     templateUrl: './activiti-processlist.component.html',
     directives: [ ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES ],
     pipes: [ AlfrescoPipeTranslate ],
-    providers: [ CONTEXT_MENU_PROVIDERS ]
+    providers: [ CONTEXT_MENU_PROVIDERS, ActivitiProcessService ]
 })
-export class ActivitiProcesslistComponent implements OnInit {
+export class ActivitiProcessInstanceListComponent implements OnInit {
 
     errorMessage: string;
-    processInstances: ProcessInstance[];
     data: ObjectDataTableAdapter;
+    currentProcessInstanceId: string;
+
+    @Input()
+    filter: FilterModel;
+
+    @Input()
+    schemaColumn: any[] = [
+        {type: 'text', key: 'id', title: 'Id', sortable: true},
+        {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+        {type: 'text', key: 'started', title: 'Started', sortable: true},
+        {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
+    ];
+
+    @Output()
+    rowClick: EventEmitter<string> = new EventEmitter<string>();
+
+    @Output()
+    onSuccess: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    onError: EventEmitter<any> = new EventEmitter<any>();
 
     constructor (private processService: ActivitiProcessService, private translate: AlfrescoTranslationService) {
         if (translate !== null) {
@@ -51,27 +71,77 @@ export class ActivitiProcesslistComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getProcesses();
+        this.data = new ObjectDataTableAdapter(
+            [],
+            this.schemaColumn
+        );
+        if (this.filter) {
+            this.load(this.filter);
+        }
     }
 
-    getProcesses() {
-        this.processService.getProcesses()
+    load(filter: FilterModel) {
+        this.processService.getProcessInstances(filter)
             .subscribe(
                 (processInstances) => {
-                     this.data = new ObjectDataTableAdapter(
-                        processInstances,
-                        [
-                            {type: 'text', key: 'id', title: 'Id', sortable: true},
-                            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                            {type: 'text', key: 'started', title: 'Started', sortable: true},
-                            {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
-                        ]
-                    );
+                    this.renderProcessInstances(processInstances);
+                    this.onSuccess.emit(processInstances);
                 },
-                error =>  this.errorMessage = <any>error);
+                error => {
+                    this.errorMessage = <any>error;
+                    this.onError.emit(error);
+                });
     }
 
-    onItemClick(processInstance: ProcessInstance, event: any) {
-        console.log(processInstance, event);
+    reload() {
+        this.load(this.filter);
+    }
+
+    /**
+     * Render the process list
+     *
+     * @param processInstances
+     */
+    private renderProcessInstances(processInstances: any[]) {
+        processInstances = this.optimizeProcessNames(processInstances);
+        this.data = new ObjectDataTableAdapter(
+            processInstances,
+            this.schemaColumn
+        );
+    }
+
+    /**
+     * Check if the list is empty
+     * @returns {ObjectDataTableAdapter|boolean}
+     */
+    isListEmpty(): boolean {
+        return this.data === undefined ||
+            (this.data && this.data.getRows() && this.data.getRows().length === 0);
+    }
+
+    /**
+     * Emit the event rowClick passing the current task id when the row is clicked
+     * @param event
+     */
+    onRowClick(event: DataRowEvent) {
+        let item = event;
+        this.currentProcessInstanceId = item.value.getValue('id');
+        this.rowClick.emit(this.currentProcessInstanceId);
+    }
+
+    /**
+     * Optimize process name field
+     * @param tasks
+     * @returns {any[]}
+     */
+    private optimizeProcessNames(tasks: any[]) {
+        tasks = tasks.map(t => {
+            t.name = t.name || 'No name';
+            if (t.name.length > 50) {
+                t.name = t.name.substring(0, 50) + '...';
+            }
+            return t;
+        });
+        return tasks;
     }
 }
