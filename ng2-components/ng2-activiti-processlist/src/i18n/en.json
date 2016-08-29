@@ -18,17 +18,37 @@
             "STARTED": "Started",
             "COMMENTS": "Comments",
             "TASKS_ACTIVE": "Active Tasks",
-            "TASKS_COMPLETED": "Completed Tasks"
+            "TASKS_COMPLETED": "Completed Tasks",
+            "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
+        },
+        "BUTTON": {
+            "CANCEL": "Cancel Process"
         },
         "MESSAGES": {
             "NONE": "No process details found."
         },
         "TASKS": {
             "NO_ACTIVE": "No tasks are currently active",
-            "NO_COMPLETED": "No tasks have been completed yet"
+            "NO_COMPLETED": "No tasks have been completed yet",
+            "TASK_DETAILS": "Task details",
+            "TASK_CLOSE": "Close"
         },
         "COMMENTS": {
             "NONE": "No comments."
+        }
+    },
+    "START_PROCESS": {
+        "BUTTON": "Start Process",
+        "DIALOG": {
+            "TITLE": "Start Process",
+            "LABEL": {
+                "TYPE": "Type",
+                "NAME": "Name"
+            },
+            "ACTION": {
+                "START": "Start",
+                "CANCEL": "Cancel"
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
             <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
                 <i class="material-icons mdl-list__item-icon">assignment</i>
                 <span>{{task.name}}</span>
-                <span class="mdl-list__item-sub-title">Assigned to {{getUserFullName(task.assignee)}}, created {{task.created | date:'mediumDate'}}</span>
+                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: task.created | date:'mediumDate' } }}</span>
             </span>
         </li>
     </ul>
@@ -32,7 +32,7 @@
             <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
                 <i class="material-icons mdl-list__item-icon">assignment</i>
                 <span>{{task.name}}</span>
-                <span class="mdl-list__item-sub-title">Assigned to {{getUserFullName(task.assignee)}}, created {{task.created | date:'mediumDate'}}</span>
+                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: task.created | date:'mediumDate' } }}</span>
             </span>
         </li>
     </ul>
@@ -42,11 +42,11 @@
 </div>
 
 <dialog class="mdl-dialog task-details-dialog" #dialog>
-    <h4 class="mdl-dialog__title">Task details</h4>
+    <h4 class="mdl-dialog__title">{{ 'DETAILS.TASKS.TASK_DETAILS' | translate }}</h4>
     <div class="mdl-dialog__content">
         <activiti-task-details [taskId]="selectedTaskId" (formCompleted)="taskFormCompleted()" #taskdetails></activiti-task-details>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="cancelDialog()" class="mdl-button close">Close</button>
+        <button type="button" (click)="cancelDialog()" class="mdl-button close">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
     </div>
 </dialog>
