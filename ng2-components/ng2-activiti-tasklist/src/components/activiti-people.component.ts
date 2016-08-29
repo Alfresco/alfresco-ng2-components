@@ -52,7 +52,7 @@ export class ActivitiPeople implements OnInit {
                 private translate: AlfrescoTranslationService) {
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
+            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
         this.people$ = new Observable<User>(observer =>  this.peopleObserver = observer).share();
     }

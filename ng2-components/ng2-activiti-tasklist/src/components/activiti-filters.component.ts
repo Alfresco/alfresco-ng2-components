@@ -70,7 +70,7 @@ export class ActivitiFilters implements OnInit {
         this.filter$ = new Observable<FilterModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
+            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
     }
 
