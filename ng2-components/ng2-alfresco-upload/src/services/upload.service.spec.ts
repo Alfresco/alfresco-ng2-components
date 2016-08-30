@@ -18,7 +18,7 @@
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
 import { UploadService } from './upload.service';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 declare let AlfrescoApi: any;
 declare let jasmine: any;
@@ -39,14 +39,16 @@ describe('AlfrescoUploadService', () => {
     beforeEachProviders(() => {
         return [
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService,
             UploadService
         ];
     });
 
-    beforeEach( inject([UploadService], (uploadService: UploadService) => {
+    beforeEach( inject([UploadService, AlfrescoApiService], (uploadService: UploadService, apiService: AlfrescoApiService) => {
         jasmine.Ajax.install();
         service = uploadService;
+        apiService.setInstance(new AlfrescoApi({}));
     }));
 
     afterEach(() => {
@@ -85,7 +87,7 @@ describe('AlfrescoUploadService', () => {
         service.uploadFilesInTheQueue('fake-dir', emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
+        expect(request.url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -107,7 +109,7 @@ describe('AlfrescoUploadService', () => {
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
+            .toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
             contentType: 'text/plain',
