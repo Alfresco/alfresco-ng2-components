@@ -5,7 +5,7 @@ module.exports = function (config) {
 
     basePath: '.',
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
       // paths loaded by Karma
@@ -19,7 +19,9 @@ module.exports = function (config) {
       {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
       {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
-
+      {pattern: 'node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false},
+      {pattern: 'node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false},
+      {pattern: 'node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false},
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
       // paths loaded via module imports
@@ -29,7 +31,9 @@ module.exports = function (config) {
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
-      {pattern: 'dist/**/*.js.map', included: false, watched: false}
+      {pattern: 'dist/**/*.js.map', included: false, watched: false},
+
+      {pattern: 'src/assets/fake-test-file.pdf', included: false, watched: true, served: true}
     ],
 
     exclude: [
@@ -58,6 +62,7 @@ module.exports = function (config) {
     plugins: [
       'karma-jasmine',
       'karma-coverage',
+      'karma-jasmine-ajax',
       'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-jasmine-html-reporter'
@@ -75,7 +80,7 @@ module.exports = function (config) {
     coverageReporter: {
       dir: 'coverage/',
       subdir: 'report',
-        reporters: [
+      reporters: [
         {type: 'text'},
         {type: 'json', file: 'coverage-final.json'},
         {type: 'html'},

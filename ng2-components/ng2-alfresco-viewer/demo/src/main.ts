@@ -17,9 +17,7 @@
 
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
-
-import { HTTP_PROVIDERS } from '@angular/http';
+import { VIEWERCOMPONENT, RenderingQueueServices } from 'ng2-alfresco-viewer';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
@@ -58,8 +56,9 @@ class MyDemoApp {
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService) {
-
         settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
+
         if (this.authService.getTicketEcm()) {
             this.ticket = this.authService.getTicketEcm();
         }
@@ -93,6 +92,6 @@ class MyDemoApp {
 }
 bootstrap(MyDemoApp, [
     VIEWERCOMPONENT,
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
+    ALFRESCO_CORE_PROVIDERS,
+    RenderingQueueServices
 ]);

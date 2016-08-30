@@ -22,7 +22,6 @@ import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
 import { ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
 import { UploadService } from 'ng2-alfresco-upload';
 import { AppComponent } from './app.component';
-
 import { appRouterProviders } from './app.routes';
 
 bootstrap(AppComponent, [
