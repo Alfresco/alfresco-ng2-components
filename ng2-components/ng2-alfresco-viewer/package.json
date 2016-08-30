@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-viewer",
   "description": "Alfresco documents viewer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "postinstall": "typings install",
@@ -59,7 +59,7 @@
     "@angular/router-deprecated": "2.0.0-rc.2",
     "@angular/upgrade": "2.0.0-rc.3",
 
-    "ng2-alfresco-core": "0.2.0",
+    "ng2-alfresco-core": "0.3.0",
     "ng2-translate": "2.2.2",
     "alfresco-js-api": "^0.3.0",
 

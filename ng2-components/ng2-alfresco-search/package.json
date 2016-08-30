@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-search",
   "description": "Alfresco Angular2 Search Component",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "postinstall": "typings install",
@@ -72,7 +72,7 @@
     "ng2-translate": "2.2.2",
     "material-design-lite": "1.1.3",
     "alfresco-js-api": "^0.3.0",
-    "ng2-alfresco-core": "0.2.0"
+    "ng2-alfresco-core": "0.3.0"
   },
   "peerDependencies": {
     "material-design-icons": "^2.2.3",

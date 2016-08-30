@@ -1,7 +1,7 @@
 {
   "name": "Alfresco-Angular2-Demo",
   "description": "Demo shell for Alfresco Angular2 components",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "postinstall": "typings install",
@@ -78,13 +78,13 @@
     "ng2-alfresco-core": "0.2.0",
     "ng2-alfresco-datatable": "0.2.0",
     "ng2-alfresco-documentlist": "0.2.0",
-    "ng2-alfresco-login": "0.2.0",
-    "ng2-alfresco-search": "0.2.0",
-    "ng2-alfresco-upload": "0.2.0",
-    "ng2-alfresco-viewer": "0.2.0",
-    "ng2-activiti-form": "0.2.0",
-    "ng2-activiti-tasklist": "0.2.0",
-    "ng2-alfresco-webscript": "0.2.0"
+    "ng2-alfresco-login": "0.3.0",
+    "ng2-alfresco-search": "0.3.0",
+    "ng2-alfresco-upload": "0.3.0",
+    "ng2-alfresco-viewer": "0.3.0",
+    "ng2-activiti-form": "0.3.0",
+    "ng2-activiti-tasklist": "0.3.0",
+    "ng2-alfresco-webscript": "0.3.0"
   },
   "devDependencies": {
     "concurrently": "2.0.0",
