@@ -1,0 +1,19 @@
+:host {
+    width: 100%;
+}
+
+.activiti-label {
+    font-weight: bolder;
+}
+
+.material-icons:hover {
+    color: rgb(255, 152, 0);
+}
+
+.task-details-dialog {
+    width: 600px;
+}
+
+.process-tasks-refresh {
+    float: right;
+}

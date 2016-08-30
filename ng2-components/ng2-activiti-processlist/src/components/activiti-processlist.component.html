@@ -1,6 +1,12 @@
-<h1>My Activiti Processes</h1>
-
-<p *ngIf="processInstances && processInstances.length == 0">{{ 'PROCESSLIST.NONE' | translate }}</p>
-<alfresco-datatable
-    [data]="data">
-</alfresco-datatable>
+<div *ngIf="!filter">{{ 'FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="filter">
+    <div *ngIf="!isListEmpty()">
+        <alfresco-datatable
+            [data]="data"
+            (rowClick)="onRowClick($event)">
+        </alfresco-datatable>
+    </div>
+    <div *ngIf="isListEmpty()">
+        {{ 'PROCESSLIST.NONE' | translate }}
+    </div>
+</div>

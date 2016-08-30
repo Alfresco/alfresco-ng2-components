@@ -17,7 +17,7 @@
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 import { Comment } from '../models/comment.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
@@ -30,14 +30,14 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],
-    providers: [ActivitiTaskListService],
+    providers: [ActivitiProcessService],
     pipes: [ AlfrescoPipeTranslate ]
 
 })
 export class ActivitiComments implements OnInit {
 
     @Input()
-    taskId: string;
+    processId: string;
 
     @ViewChild('dialog')
     dialog: any;
@@ -56,10 +56,10 @@ export class ActivitiComments implements OnInit {
      */
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
-                private activitiTaskList: ActivitiTaskListService) {
+                private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
+            translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
 
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
@@ -71,15 +71,15 @@ export class ActivitiComments implements OnInit {
             this.comments.push(comment);
         });
 
-        if (this.taskId) {
-            this.load(this.taskId);
+        if (this.processId) {
+            this.load(this.processId);
         }
     }
 
     public load(taskId: string) {
         this.comments = [];
-        if (this.taskId) {
-            this.activitiTaskList.getTaskComments(this.taskId).subscribe(
+        if (this.processId) {
+            this.activitiProcess.getProcessInstanceComments(this.processId).subscribe(
                 (res: Comment[]) => {
                     res.forEach((comment) => {
                         this.commentObserver.next(comment);
@@ -101,7 +101,7 @@ export class ActivitiComments implements OnInit {
     }
 
     public add() {
-        this.activitiTaskList.addTaskComment(this.taskId, this.message).subscribe(
+        this.activitiProcess.addProcessInstanceComment(this.processId, this.message).subscribe(
             (res: Comment) => {
                 this.comments.push(res);
                 this.message = '';

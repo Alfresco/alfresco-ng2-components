@@ -17,7 +17,7 @@
 
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 import { FilterModel } from '../models/filter.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
@@ -26,15 +26,15 @@ declare let componentHandler: any;
 declare let __moduleName: string;
 
 @Component({
-    selector: 'activiti-filters',
+    selector: 'activiti-process-filters',
     moduleId: __moduleName,
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css'],
-    providers: [ActivitiTaskListService],
+    providers: [ActivitiProcessService],
     pipes: [AlfrescoPipeTranslate]
 
 })
-export class ActivitiFilters implements OnInit {
+export class ActivitiProcessFilters implements OnInit {
 
     @Output()
     filterClick: EventEmitter<FilterModel> = new EventEmitter<FilterModel>();
@@ -66,11 +66,11 @@ export class ActivitiFilters implements OnInit {
      */
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
-                public activiti: ActivitiTaskListService) {
+                public activiti: ActivitiProcessService) {
         this.filter$ = new Observable<FilterModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
+            translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
     }
 
@@ -95,7 +95,7 @@ export class ActivitiFilters implements OnInit {
     }
 
     private filterByAppId(appId) {
-        this.activiti.getTaskListFilters(appId).subscribe(
+        this.activiti.getProcessFilters(appId).subscribe(
             (res: FilterModel[]) => {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);

@@ -1,0 +1,15 @@
+<div *ngIf="processInstance">
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col">
+            <span class="activiti-label">{{ 'DETAILS.LABELS.STARTED_BY' | translate }}</span>:
+            {{getStartedByFullName()}}
+        </div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <span class="activiti-label">{{ 'DETAILS.LABELS.STARTED' | translate }}</span>:
+            {{getStartedDate() | date:'medium'}}
+        </div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <button type="button" (click)="cancelProcess()" class="mdl-button">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
+        </div>
+    </div>
+</div>

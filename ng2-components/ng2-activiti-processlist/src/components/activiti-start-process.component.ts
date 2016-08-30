@@ -17,50 +17,61 @@
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
-import { User } from '../models/user.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
 
 @Component({
-    selector: 'activiti-people',
+    selector: 'activiti-start-process',
     moduleId: __moduleName,
-    templateUrl: './activiti-people.component.html',
-    styleUrls: ['./activiti-people.component.css'],
+    templateUrl: './activiti-start-process.component.html',
+    styleUrls: ['./activiti-start-process.component.css'],
+    providers: [ActivitiProcessService],
     pipes: [ AlfrescoPipeTranslate ]
 
 })
-export class ActivitiPeople implements OnInit {
+export class ActivitiStartProcessButton implements OnInit {
 
     @Input()
-    people: User [] = [];
+    appId: string;
 
     @ViewChild('dialog')
     dialog: any;
 
-    private peopleObserver: Observer<User>;
-    people$: Observable<User>;
+    processDefinitions: any[] = [];
+
+    name: string;
+    processDefinition: string;
 
     /**
      * Constructor
      * @param auth
      * @param translate
+     * @param activitiProcess
      */
     constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService) {
+                private translate: AlfrescoTranslationService,
+                private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
+            translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
-        this.people$ = new Observable<User>(observer =>  this.peopleObserver = observer).share();
     }
 
     ngOnInit() {
-        this.people$.subscribe((user: User) => {
-            this.people.push(user);
-        });
+        this.load(this.appId);
+    }
+
+    public load(appId: string) {
+        this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
+            (res: any[]) => {
+                this.processDefinitions = res;
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
     }
 
     public showDialog() {
@@ -69,10 +80,17 @@ export class ActivitiPeople implements OnInit {
         }
     }
 
-    public add() {
-        alert('add people');
-
-        this.cancel();
+    public startProcess() {
+        if (this.processDefinition && this.name) {
+            this.activitiProcess.startProcess(this.processDefinition, this.name).subscribe(
+                (res: any) => {
+                    this.cancel();
+                },
+                (err) => {
+                    console.log(err);
+                }
+            );
+        }
     }
 
     public cancel() {
@@ -80,5 +98,4 @@ export class ActivitiPeople implements OnInit {
             this.dialog.nativeElement.close();
         }
     }
-
 }
