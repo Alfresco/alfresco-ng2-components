@@ -1,12 +1,16 @@
 # Alfresco Angular2 Components core
 
 <p>
-  <a title='Build Status' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
     Status' />
   </a>
-  <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
-    <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
   </a>
   <a href='https://www.npmjs.com/package/ng2-alfresco-core'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-core.svg' alt='npm downloads' />
@@ -87,6 +91,69 @@ export class MyComponent implements OnInit {
 - Authentication Service
 - Translation Service
 - Context Menu Service
+
+#### Authentication Service
+
+The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
+
+```javascript
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
+
+@Component({
+    selector: 'my-app',
+    template: `
+               <div *ngIf="!authenticated" >
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin
+               </div>
+               <div *ngIf="authenticated">
+                    Authentication successfull to ip {{ ecmHost }} with user: admin, admin, your token is {{ token }}
+               </div>`
+})
+class MyDemoApp {
+    authenticated: boolean = false;
+
+    ecmHost: string = 'http://127.0.0.1:8080';
+
+    token: string;
+
+    constructor(public alfrescoAuthenticationService: AlfrescoAuthenticationService,
+                private alfrescoSettingsService: AlfrescoSettingsService) {
+
+        alfrescoSettingsService.ecmHost = this.ecmHost;
+        alfrescoSettingsService.setProviders('ECM');
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.alfrescoAuthenticationService.login('admin', 'admin').subscribe(
+            token => {
+                this.token = token.ticket;
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
+    }
+}
+bootstrap(MyDemoApp, [
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS
+]);
+
+```
+
 
 ## Build from sources
 

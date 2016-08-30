@@ -1,11 +1,15 @@
 # Alfresco File Viewer Component for Angular 2
 <p>
-  <a title='Build Status' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
     Status' />
   </a>
-  <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
-    <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
   </a>
   <a href='https://www.npmjs.com/package/ng2-alfresco-viewer'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-viewer.svg' alt='npm downloads' />
@@ -44,11 +48,13 @@ Add the following dependency to your index.html:
 <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
 <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
 <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
+<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
 ```
 
-Make sure your systemjs.config has the following configuration:
+The following component needs to be added to your systemjs.config: 
 
-https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-viewer/demo/systemjs.config.js
+- ng2-translate
+- ng2-alfresco-core
 
 #### Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
@@ -67,7 +73,40 @@ Also make sure you include these dependencies in your .html page:
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
-#### Basic usage
+#### Basic usage with node id
+
+```html
+<ng2-alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
+```
+
+Example of an App that declares the file viewer component :
+
+```ts
+import { Component } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
+
+@Component({
+    selector: 'my-app',
+    template: `   <alfresco-viewer [showViewer]="true" [overlayMode]="true" [fileNodeId]="fileNodeId">
+                    <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                   </alfresco-viewer>`,
+    directives: [VIEWERCOMPONENT]
+})
+class MyDemoApp {
+
+    fileNodeId: any;
+    
+    constructor() {
+        this.fileNodeId = '09469a81-1ed9-4caa-a5df-8362fc3d096f';    
+    }
+}
+bootstrap(MyDemoApp, [
+    VIEWERCOMPONENT
+]);
+```
+
+#### Basic usage with urlFile
 
 ```html
 <ng2-alfresco-viewer [overlayMode]="true" [urlFile]="'filename.pdf'"></ng2-alfresco-viewer>
@@ -101,11 +140,12 @@ bootstrap(MyDemoApp, [
 
 Attribute     | Options     | Default      | Description | Mandatory
 ---           | ---         | ---          | ---         | ---
-`urlFile`         | *string*    |        |  Url where to load the file | mandatory
-`fileName`         | *string*    | Parsed from `urlFile` |  Name of the file to display in the title bar. If not specified will take the last part of the URL |
-`overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content |
+`fileNodeId`         | *string*    |        |  node Id of the file to load the file | 
+`urlFile`         | *string*    |        |  If you want laod an external file that not comes from the ECM you can use this Url where to load the file | 
+`overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content otherwise will fit the parent div  |
 `showViewer`         | *boolean*    | `true`        | Hide or show the viewer |
-`mimeType`         | *string*    | `true`        | MimeType of the file, used to detect if the browser can display the content. If not supplied the component will attempt to guess based on file extension of the `urlFile` |
+`showToolbar`         | *boolean*    | `true`        | Hide or show the toolbars |
+
 
 ## Build from sources
 Alternatively you can build component from sources with the following commands:

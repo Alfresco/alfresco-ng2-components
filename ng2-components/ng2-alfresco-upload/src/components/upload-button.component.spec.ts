@@ -18,12 +18,10 @@
 import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { UploadButtonComponent } from './upload-button.component';
-import { AlfrescoTranslationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
-import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
-import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 declare var AlfrescoApi: any;
 
@@ -31,16 +29,50 @@ describe('AlfrescoUploadButton', () => {
 
     let uploadButtonFixture;
 
+    let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+    let fakeEvent = {
+        currentTarget: {
+            files: [file]
+        },
+        target: {value: 'fake-name-1'}
+    };
+
+    let fakeResolveRest = {
+        entry: {
+            isFile: false,
+            isFolder: true,
+            name: 'fake-folder1'
+        }
+    };
+    let fakeResolvePromise = new Promise(function (resolve, reject) {
+        resolve(fakeResolveRest);
+    });
+
+    let fakeRejectRest = {
+        response: {
+            body: {
+                error: {
+                    statusCode: 409
+                }
+            }
+        }
+    };
+
+    let fakeRejectPromise = new Promise(function (resolve, reject) {
+        reject(fakeRejectRest);
+    });
+
     beforeEach( () => {
-        window['AlfrescoApi'] = AlfrescoApiMock;
         window['componentHandler'] = null;
     });
 
     beforeEachProviders(() => {
         return [
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            HTTP_PROVIDERS,
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
-            { provide: UploadService, useClass: UploadServiceMock }
+            UploadService
         ];
     });
 
@@ -81,55 +113,42 @@ describe('AlfrescoUploadButton', () => {
         component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         uploadButtonFixture.detectChanges();
-        let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
-
-        let fakeEvent = {
-            currentTarget: {
-                files: [file]
-            },
-            target: {value: 'fake-value'}
-        };
 
         component.onFilesAdded(fakeEvent);
         expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('/root-fake-/sites-fake/folder-fake', null);
     });
 
-    it('should create a folder and call upload file', () => {
+    it('should create a folder and emit an File uploaded event', (done) => {
         let component = uploadButtonFixture.componentInstance;
-
-        component.uploadFiles = jasmine.createSpy('uploadFiles');
-        let doneFn = jasmine.createSpy('success');
-
+        component.currentFolderPath = '/fake-root-path';
         uploadButtonFixture.detectChanges();
 
-        let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakeResolvePromise);
 
-        let fakeEvent = {
-            currentTarget: {
-                files: [file]
-            },
-            target: {value: 'fake-value'}
-        };
+        component.onSuccess.subscribe(e => {
+            expect(e.value).toEqual('File uploaded');
+            done();
+        });
+
+        spyOn(component, 'uploadFiles').and.callFake(() => {
+            component.onSuccess.emit({
+                    value: 'File uploaded'
+                }
+            );
+        });
         component.onDirectoryAdded(fakeEvent);
-        expect(doneFn).not.toHaveBeenCalledWith(fakeEvent);
     });
 
-    it('should throws an exception when the folder already exist', () => {
+    it('should emit an onError event when the folder already exist', (done) => {
         let component = uploadButtonFixture.componentInstance;
-
-        component.uploadFiles = jasmine.createSpy('uploadFiles');
-
         uploadButtonFixture.detectChanges();
 
-        let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'folder-duplicate-fake/fake-name-1.json'};
+        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakeRejectPromise);
+        component.onError.subscribe(e => {
+            expect(e.value).toEqual('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            done();
+        });
 
-        let fakeEvent = {
-            currentTarget: {
-                files: [file]
-            },
-            target: {value: 'fake-value'}
-        };
         component.onDirectoryAdded(fakeEvent);
-        expect(component.uploadFiles).not.toHaveBeenCalledWith(fakeEvent);
     });
 });

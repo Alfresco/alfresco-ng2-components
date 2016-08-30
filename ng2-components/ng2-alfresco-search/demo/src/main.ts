@@ -32,16 +32,16 @@ import {
 
 @Component({
     selector: 'alfresco-search-demo',
-    template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+    template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateticket()" [(ngModel)]="ticket"><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
                <hr>
-                <div class="container" >
+                <div class="container" *ngIf="authenticated">
                     <alfresco-search-control [searchTerm]="searchTerm"
                         (searchChange)="searchTermChange($event);"></alfresco-search-control>
                     <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
@@ -58,28 +58,22 @@ class SearchDemo implements OnInit {
 
     public searchTerm: string = 'test';
 
-    public host: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
-    token: string;
+    ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private alfrescoSettingsService: AlfrescoSettingsService,
+                private settingsService: AlfrescoSettingsService,
                 translation: AlfrescoTranslationService) {
 
-        alfrescoSettingsService.host = this.host;
-        if (localStorage.getItem('token')) {
-            this.token = localStorage.getItem('token');
-        }
+        settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
 
         translation.addTranslationFolder();
     }
 
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
-    }
-
     public updateHost(): void {
-        this.alfrescoSettingsService.host = this.host;
+        this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
 
@@ -89,8 +83,9 @@ class SearchDemo implements OnInit {
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {

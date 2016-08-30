@@ -4,7 +4,7 @@
     "DOCUMENT_LIST": {
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
-            "CREATED_BY": "Created by",
+            "CREATED_BY": "mario",
             "CREATED_ON": "Created on"
         },
         "ACTIONS": {
@@ -38,6 +38,30 @@
                 "SYSTEM_2": "System document action 2",
                 "CUSTOM": "Custom action"
             }
+        }
+    },
+
+    "LOGIN": {
+        "LOGO": "Alfresco",
+        "LABEL": {
+            "LOGIN": "Login",
+            "USERNAME": "Username",
+            "PASSWORD": "Password",
+            "REMEMBER": "Remember"
+        },
+        "MESSAGES": {
+            "USERNAME-REQUIRED": "Required",
+            "USERNAME-MIN": "Your username needs to be at least 4 characters.",
+            "PASSWORD-REQUIRED": "Enter your password to sign in",
+            "LOGIN-ERROR": "You have entered an invalid username or password",
+            "LOGIN-SUCCESS": "Login successful"
+        },
+        "BUTTON": {
+            "LOGIN": "MARIO"
+        },
+        "ACTION": {
+            "HELP": "NEED HELP?",
+            "REGISTER": "REGISTER"
         }
     }
 }

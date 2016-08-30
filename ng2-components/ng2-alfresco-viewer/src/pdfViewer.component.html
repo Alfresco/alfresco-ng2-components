@@ -13,7 +13,7 @@
 
 
 <!-- Pagination toolbar start -->
-<div id="viewer-toolbar-pagination" class="viewer-toolbar-pagination mdl-cell--hide-tablet mdl-cell--hide-phone">
+<div *ngIf="showToolbar" id="viewer-toolbar-pagination" class="viewer-toolbar-pagination mdl-cell--hide-tablet mdl-cell--hide-phone">
     <div id="viewer-previous-page-button" class="button-page left" (click)="previousPage()">
         <i class="icon material-icons">keyboard_arrow_left</i>
     </div>
@@ -31,7 +31,7 @@
 <!-- Pagination toolbar end -->
 
 <!-- Command toolbar start -->
-<div id="viewer-toolbar-command" class="viewer-toolbar-command mdl-cell--hide-tablet mdl-cell--hide-phone">
+<div *ngIf="showToolbar"  id="viewer-toolbar-command" class="viewer-toolbar-command">
     <div id="viewer-scale-page-button" class="button-page left" (click)="pageFit()">
         <i class="icon material-icons">zoom_out_map</i>
     </div>

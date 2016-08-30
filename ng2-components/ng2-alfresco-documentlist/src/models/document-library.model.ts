@@ -22,13 +22,24 @@ export class NodePaging {
 }
 
 export class NodePagingList {
+    pagination: Pagination;
     entries: MinimalNodeEntity[];
 }
 
+// TODO: rename to NodeMinimalEntry
 export class MinimalNodeEntity {
     entry: MinimalNodeEntryEntity;
 }
 
+export class Pagination {
+    count: number;
+    hasMoreItems: boolean;
+    totalItems: number;
+    skipCount: number;
+    maxItems: number;
+}
+
+// TODO: rename to NodeMinimal
 export class MinimalNodeEntryEntity {
     id: string;
     parentId: string;
@@ -42,6 +53,7 @@ export class MinimalNodeEntryEntity {
     createdByUser: UserInfo;
     content: ContentInfo;
     path: PathInfoEntity;
+    properties: NodeProperties = {};
 }
 
 export class UserInfo {
@@ -65,4 +77,8 @@ export class PathInfoEntity {
 export class PathElementEntity {
     id: string;
     name: string;
+}
+
+export interface NodeProperties {
+    [key: string]: any;
 }

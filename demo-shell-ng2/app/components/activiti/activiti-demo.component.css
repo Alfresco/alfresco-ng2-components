@@ -1,0 +1,14 @@
+.activiti-task-list__item:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.activiti {
+    background-color: #f5f5f5;
+}
+
+.task-column {
+    background-color: #f5f5f5;
+    padding: 10px 10px 10px 10px;
+    border: solid 2px rgb(31,188,210);
+}

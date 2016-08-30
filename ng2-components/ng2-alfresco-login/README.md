@@ -1,11 +1,15 @@
 # Alfresco Login Component for Angular 2
 <p>
-  <a title='Build Status' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
     Status' />
   </a>
-  <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
-    <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
   </a>
   <a href='https://www.npmjs.com/package/ng2-alfresco-login'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-login.svg' alt='npm downloads' />
@@ -41,12 +45,12 @@ Components included:
 * Alfresco Login Component
 * Alfresco Authentication Service
 
-#### Dependencies
+## Dependencies
 
 Add the following dependency to your index.html:
 
 ```html
-<script src="node_modules/alfresco-js-api/bundle.js"></script>
+<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
 ```
 
 The following component needs to be added to your systemjs.config: 
@@ -59,7 +63,7 @@ Please refer to the following example to have an idea of how your systemjs.confi
 
 https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-login/demo/systemjs.config.js
 
-#### Style
+## Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
 design dependency to your project:
 
@@ -76,16 +80,15 @@ Also make sure you include these dependencies in your .html page:
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
-#### Basic usage
-
+## Basic usage
 
 ```html
-<alfresco-login></alfresco-login>
+<alfresco-login [providers]="'ALL'"></alfresco-login>
 ```
 
 Example of an App that use Alfresco login component :
 
-main.ts
+**main.ts**
 ```ts
 
 import { Component } from '@angular/core';
@@ -100,7 +103,12 @@ import {
 
 @Component({
     selector: 'my-app',
-    template: '<alfresco-login (onSuccess)="mySuccessMethod($event)" (onError)="myErrorMethod($event)"></alfresco-login>',
+    template: '
+    <alfresco-login 
+        providers="'ALL'" 
+        (onSuccess)="mySuccessMethod($event)" 
+        (onError)="myErrorMethod($event)">
+    </alfresco-login>',
     directives: [AlfrescoLoginComponent]
 })
 export class AppComponent {
@@ -127,16 +135,50 @@ bootstrap(AppComponent, [
 
 ```
 #### Events
-**onSuccess**: The event is emitted when the login is done
-**onError**: The event is emitted when the login fails<br />
 
+| Name | Description |
+| --- | --- |
+| onSuccess | The event is emitted when the login is done |
+| onError | The event is emitted when the login fails |
+
+Attribute     |   Description | 
+---           | ---         |
+`onSuccess`         | The event is emitted when the login is done         |
+`onError`         | The event is emitted when the login fails      |
 
 #### Options
 
-**method**: {string} optional) default POST. The method attribute specifies how to send form-data
-The form-data can be sent as URL variables (with method="get") or as HTTP post transaction (with method="post").<br />
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL | 
+
+ 
+## Custom logo and background
+
+It is possible changing logo and background images to custom values.
+
+```html
+<alfresco-login 
+    [backgroundImageUrl]="'http://images.freeimages.com/images/previews/638/wood-wall-for-background-1634466.jpg'"
+    [logoImageUrl]="'http://images.freeimages.com/images/previews/eac/honeybee-with-a-house-1633609.jpg'" >
+</alfresco-login>
+```
+
+Should give you something like the following:
+
+![custom login](assets/custom-login.png)
+
+Alternatively you can bind to your component properties and provide values dynamically if needed:
+
+```html
+<alfresco-login 
+    [backgroundImageUrl]="myCustomBackground"
+    [logoImageUrl]="myCustomLogo" >
+</alfresco-login>
+```
 
 ## Build from sources
+
 Alternatively you can build component from sources with the following commands:
 
 
@@ -145,11 +187,11 @@ npm install
 npm run build
 ```
 
-##Build the files and keep watching for changes
+### Build the files and keep watching for changes
 
-    ```sh
-    $ npm run build:w
-    ```
+```sh
+$ npm run build:w
+```
     
 ## Running unit tests
 
@@ -157,7 +199,7 @@ npm run build
 npm test
 ```
 
-## Running unit tests in browser
+### Running unit tests in browser
 
 ```sh
 npm test-browser
@@ -166,7 +208,7 @@ npm test-browser
 This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
 
-## Code coverage
+### Code coverage
 
 ```sh
 npm run coverage
@@ -182,3 +224,6 @@ npm install
 npm start
 ```
 
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

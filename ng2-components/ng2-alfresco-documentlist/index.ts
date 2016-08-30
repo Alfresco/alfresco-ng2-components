@@ -21,11 +21,11 @@ import { ContentColumnList } from './src/components/content-column-list';
 import { ContentAction } from './src/components/content-action';
 import { ContentActionList } from './src/components/content-action-list';
 import { EmptyFolderContent } from './src/components/empty-folder-content';
-import { DocumentListBreadcrumb } from './src/components/document-list-breadcrumb.component';
+import { DocumentListBreadcrumb } from './src/components/breadcrumb/breadcrumb.component';
 
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
-import { AlfrescoService } from './src/services/alfresco.service';
+import { DocumentListService } from './src/services/document-list.service';
 
 // components
 export * from './src/components/document-list';
@@ -34,15 +34,19 @@ export * from './src/components/content-column-list';
 export * from './src/components/content-action';
 export * from './src/components/content-action-list';
 export * from './src/components/empty-folder-content';
-export * from './src/components/document-list-breadcrumb.component';
+export * from './src/components/breadcrumb/breadcrumb.component';
 
-// models
-export * from './src/models/column-sorting.model';
+// data
+export * from './src/data/share-datatable-adapter';
 
 // services
 export * from './src/services/folder-actions.service';
 export * from './src/services/document-actions.service';
-export * from './src/services/alfresco.service';
+export * from './src/services/document-list.service';
+
+// models
+export * from './src/models/content-action.model';
+export * from './src/models/document-library.model';
 
 export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     DocumentList,
@@ -55,7 +59,7 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: [any] = [
-    AlfrescoService,
+    DocumentListService,
     FolderActionsService,
     DocumentActionsService
 ];

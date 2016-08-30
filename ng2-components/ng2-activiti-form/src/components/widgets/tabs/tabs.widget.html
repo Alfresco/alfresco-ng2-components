@@ -1,0 +1,20 @@
+<div *ngIf="hasTabs()" class="alfresco-tabs-widget">
+    <div alfresco-mdl-tabs>
+        <div class="mdl-tabs__tab-bar">
+            <a *ngFor="let tab of tabs; let isFirst = first"
+               [href]="'#' + tab.id"
+               class="mdl-tabs__tab" [class.is-active]="isFirst">
+                {{tab.title}}
+            </a>
+        </div>
+        <div *ngFor="let tab of tabs; let isFirst = first"
+             class="mdl-tabs__panel"
+             [class.is-active]="isFirst"
+             [attr.id]="tab.id">
+            <container-widget
+                *ngFor="let field of tab.fields"
+                [content]="field">
+            </container-widget>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div *ngIf="!processInstanceDetails">{{ 'DETAILS.MESSAGES.NONE'|translate }}</div>
+<div *ngIf="processInstanceDetails">
+    <h2 class="mdl-card__title-text">{{processInstanceDetails.name}}</h2>
+    <activiti-process-instance-header [processInstance]="processInstanceDetails" (processCancelled)="processCancelled()" #activitiprocessheader></activiti-process-instance-header>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--8-col">
+            <activiti-process-instance-tasks [processId]="processInstanceDetails.id" (taskFormCompleted)="taskFormCompleted()" #activitiprocesstasks></activiti-process-instance-tasks>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <activiti-comments [processId]="processInstanceDetails.id" #activitiprocesscomments></activiti-comments>
+        </div>
+    </div>
+</div>

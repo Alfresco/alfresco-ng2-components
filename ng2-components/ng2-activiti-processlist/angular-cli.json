@@ -1,0 +1,27 @@
+{
+  "project": {
+    "version": "ng2-activiti-processlist",
+    "name": "0.1.0"
+  },
+  "apps": [
+    {
+      "main": "src/ng2-activiti-processlist.component.ts",
+      "tsconfig": "tsconfig.json",
+      "mobile": false
+    }
+  ],
+  "addons": [],
+  "packages": [],
+  "test": {
+    "karma": {
+      "config": "karma.conf.js"
+    }
+  },
+  "defaults": {
+    "prefix": "",
+    "sourceDir": "src",
+    "styleExt": "css",
+    "prefixInterfaces": false,
+    "lazyRoutePrefix": "+"
+  }
+}

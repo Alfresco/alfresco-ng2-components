@@ -347,11 +347,6 @@ describe('ObjectDataRow', () => {
         expect(row.getValue('some.missing.property')).toBeUndefined();
     });
 
-    it('should return undefined when getting value for missing target', () => {
-        let row = new ObjectDataRow({});
-        expect(row.getObjectValue(null, 'id')).toBeUndefined();
-    });
-
     it('should check top level value exists', () => {
         let row = new ObjectDataRow({ id: 1 });
 
@@ -370,6 +365,19 @@ describe('ObjectDataRow', () => {
         expect(row.hasValue('name')).toBeTruthy();
         expect(row.hasValue('name.firstName')).toBeTruthy();
         expect(row.hasValue('some.other.prop')).toBeFalsy();
+    });
+
+    it('should generateSchema generate a schema from data', () => {
+        let data =  [
+            { id: 2, name: 'abs' },
+            { id: 1, name: 'xyz' }
+        ];
+
+        let schema = ObjectDataTableAdapter.generateSchema(data);
+
+        expect(schema.length).toBe(2);
+        expect(schema[0].title).toBe('id');
+        expect(schema[1].title).toBe('name');
     });
 
 });

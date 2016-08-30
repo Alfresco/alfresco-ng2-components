@@ -23,7 +23,7 @@ import {
     beforeEach,
     beforeEachProviders
 } from '@angular/core/testing';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
@@ -38,6 +38,7 @@ describe('AlfrescoLogin', () => {
     beforeEachProviders(() => {
         return [
             { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
+            AlfrescoSettingsService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock }
         ];
     });
@@ -348,7 +349,7 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(true);
         expect(compiled.querySelector('#login-success')).toBeDefined();
         expect(compiled.querySelector('#login-success').innerHTML).toEqual('LOGIN.MESSAGES.LOGIN-SUCCESS');
-        expect(component.onSuccess.emit).toHaveBeenCalledWith({value: 'Login OK'});
+        expect(component.onSuccess.emit).toHaveBeenCalledWith(true);
     });
 
     it('should emit onError event after the login has failed', () => {
@@ -379,7 +380,7 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(compiled.querySelector('#login-error')).toBeDefined();
         expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
-        expect(component.onError.emit).toHaveBeenCalledWith({value: 'Login KO'});
+        expect(component.onError.emit).toHaveBeenCalledWith('Fake server error');
     });
 
     it('should render the password in clear when the toggleShowPassword is call', () => {

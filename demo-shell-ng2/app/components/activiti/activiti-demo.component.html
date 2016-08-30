@@ -1,0 +1,65 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">TASK LIST</a>
+            <a href="#scroll-tab-2" class="mdl-layout__tab">PROCESS LIST</a>
+            <a href="#scroll-tab-3" class="mdl-layout__tab">REPORT</a>
+        </div>
+    </header>
+    <main class="mdl-layout__content activiti">
+        <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+            <div class="page-content">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
+                        <span>Task Filters</span>
+                        <activiti-filters (filterClick)="onTaskFilterClick($event)"></activiti-filters>
+                    </div>
+                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
+                        <span>Task List</span>
+                        <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [schemaColumn]="taskSchemaColumns"
+                                           (rowClick)="onTaskRowClick($event)" #activititasklist></activiti-tasklist>
+                    </div>
+                    <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
+                        <span>Task Details</span>
+                        <activiti-task-details [taskId]="currentTaskId" #activitidetails></activiti-task-details>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-2">
+            <div class="page-content">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col task-column">
+                            <span>Process Filters</span>
+                            <activiti-start-process [appId]="appId"></activiti-start-process>
+                            <activiti-process-filters (filterClick)="onProcessFilterClick($event)"></activiti-process-filters>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column">
+                            <span>Process List</span>
+                            <activiti-process-instance-list [filter]="processFilter" [schemaColumn]="processSchemaColumns"
+                                               (rowClick)="onProcessRowClick($event)" #activitiprocesslist></activiti-process-instance-list>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column">
+                            <span>Process Details</span>
+                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (taskFormCompleted)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-3">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-4">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-5">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-6">
+            <div class="page-content"><!-- Your content goes here --></div>
+        </section>
+    </main>
+</div>

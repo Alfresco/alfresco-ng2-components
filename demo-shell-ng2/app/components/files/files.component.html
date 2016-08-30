@@ -1,118 +1,109 @@
-<alfresco-upload-drag-area
-        [showUploadDialog]="true"
-        [currentFolderPath]="currentPath"
-        [uploaddirectory]=""
-        (onSuccess)="documentList.reload()">
-    <alfresco-document-list-breadcrumb
-        [currentFolderPath]="currentPath"
-        [target]="documentList">
-    </alfresco-document-list-breadcrumb>
-    <alfresco-document-list
-            #documentList
+<div class="container">
+    <alfresco-upload-drag-area
+            [showUploadDialog]="true"
             [currentFolderPath]="currentPath"
-            (preview)="showFile($event)"
-            (folderChange)="onFolderChanged($event)">
-        <!--
-        <empty-folder-content>
-            <template>
-                <h1>Sorry, no content here</h1>
-            </template>
-        </empty-folder-content>
-        -->
-        <content-columns>
-            <content-column source="$thumbnail" type="image"></content-column>
-            <content-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                    source="name"
-                    class="full-width ellipsis-cell">
-            </content-column>
+            [uploaddirectory]=""
+            [versioning] = "versioning"
+            (onSuccess)="documentList.reload()">
+        <alfresco-document-list-breadcrumb
+            [currentFolderPath]="currentPath"
+            [target]="documentList">
+        </alfresco-document-list-breadcrumb>
+        <alfresco-document-list
+                #documentList
+                [currentFolderPath]="currentPath"
+                [contextMenuActions]="true"
+                [contentActions]="true"
+                (preview)="showFile($event)"
+                (folderChange)="onFolderChanged($event)">
             <!--
-            <content-column
-                    title="Type"
-                    source="content.mimeType">
-            </content-column>
+            <empty-folder-content>
+                <template>
+                    <h1>Sorry, no content here</h1>
+                </template>
+            </empty-folder-content>
             -->
-            <content-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                    source="createdByUser.displayName"
-                    class="desktop-only">
-            </content-column>
-            <content-column
-                    title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                    source="createdAt"
-                    type="date"
-                    format="medium"
-                    class="desktop-only">
-            </content-column>
-        </content-columns>
+            <content-columns>
+                <content-column key="$thumbnail" type="image"></content-column>
+                <content-column
+                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                        key="name"
+                        sortable="true"
+                        class="full-width ellipsis-cell">
+                </content-column>
+                <!--
+                <content-column
+                        title="Type"
+                        source="content.mimeType">
+                </content-column>
+                -->
+                <content-column
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                        key="createdByUser.displayName"
+                        sortable="true"
+                        class="desktop-only">
+                </content-column>
+                <content-column
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                        key="createdAt"
+                        type="date"
+                        format="medium"
+                        sortable="true"
+                        class="desktop-only">
+                </content-column>
+            </content-columns>
 
-        <content-actions>
-            <!-- folder actions -->
-            <content-action
-                    target="folder"
-                    type="button"
-                    icon="delete"
-                    handler="system1">
-            </content-action>
-            <content-action
-                    target="folder"
-                    type="menu"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.SYSTEM_1' | translate}}"
-                    handler="system1">
-            </content-action>
-            <content-action
-                    target="folder"
-                    type="menu"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
-                    (execute)="myFolderAction1($event)">
-            </content-action>
-            <content-action
-                    target="folder"
-                    type="menu"
-                    title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
-                    handler="delete">
-            </content-action>
-
-            <!-- document actions -->
-            <content-action
-                    target="document"
-                    type="button"
-                    icon="account_circle"
-                    handler="my-handler">
-            </content-action>
-            <content-action
-                    target="document"
-                    type="button"
-                    icon="cloud_download"
-                    handler="download">
-            </content-action>
-            <content-action
-                    target="document"
-                    type="menu"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
-                    handler="download">
-            </content-action>
-            <content-action
-                    target="document"
-                    type="menu"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.SYSTEM_2' | translate}}"
-                    handler="system2">
-            </content-action>
-            <content-action
-                    target="document"
-                    type="menu"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
-                    (execute)="myCustomAction1($event)">
-            </content-action>
-            <content-action
-                    target="document"
-                    type="menu"
-                    title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
-                    handler="delete">
-            </content-action>
-        </content-actions>
-    </alfresco-document-list>
-</alfresco-upload-drag-area>
+            <content-actions>
+                <!-- folder actions -->
+                <content-action
+                        target="folder"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.SYSTEM_1' | translate}}"
+                        handler="system1">
+                </content-action>
+                <content-action
+                        target="folder"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
+                        (execute)="myFolderAction1($event)">
+                </content-action>
+                <content-action
+                        target="folder"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        handler="delete">
+                </content-action>
+                <!-- document actions -->
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                        handler="download">
+                </content-action>
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.SYSTEM_2' | translate}}"
+                        handler="system2">
+                </content-action>
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
+                        (execute)="myCustomAction1($event)">
+                </content-action>
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                        handler="delete">
+                </content-action>
+                <content-action
+                        target="folder"
+                        title="Activiti: View Form"
+                        (execute)="viewActivitiForm($event)">
+                </content-action>
+            </content-actions>
+        </alfresco-document-list>
+        <alfresco-pagination
+            [provider]="documentList.data"
+            [supportedPageSizes]="[5, 10, 15, 20]">
+        </alfresco-pagination>
+    </alfresco-upload-drag-area>
+</div>
 
 <context-menu-holder></context-menu-holder>
 
@@ -135,37 +126,70 @@
 </div>
 
 
+<p style="width:250px;margin: 20px;">
+    <label for="switch-multiple-file" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+        <input type="checkbox" id="switch-multiple-file" class="mdl-switch__input" (change)="toggleMultipleFileUpload()" >
+        <span class="mdl-switch__label">Multiple File Upload</span>
+    </label>
+</p>
 
-<h5>Single file upload</h5>
-<alfresco-upload-button data-automation-id="single-file-upload"
-                        [uploaddirectory]="currentPath"
-                        [currentFolderPath]="currentPath"
-                        (onSuccess)="documentList.reload()">
-</alfresco-upload-button>
 
-<h5>Folder upload</h5>
-<alfresco-upload-button data-automation-id="folder-upload"
-                        [uploaddirectory]="currentPath"
-                        [currentFolderPath]="currentPath"
-                        [uploadFolders]="true"
-                        (onSuccess)="documentList.reload()">
-</alfresco-upload-button>
+<p style="width:250px;margin: 20px;">
+    <label for="switch-folder-upload" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+        <input type="checkbox" id="switch-folder-upload" class="mdl-switch__input" (change)="toggleFolder()">
+        <span class="mdl-switch__label">Folder Upload</span>
+    </label>
+</p>
 
-<h5>Multiple file upload</h5>
-<input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
-<alfresco-upload-button data-automation-id="multiple-file-upload"
-                        [uploaddirectory]="currentPath"
-                        [currentFolderPath]="currentPath"
-                        acceptedFilesType="{{acceptedFilesType}}"
-                        [multipleFiles]="true"
-                        (onSuccess)="documentList.reload()">
-</alfresco-upload-button>
+<p style="width:250px;margin: 20px;">
+    <label for="switch-accepted-file-type" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+        <input type="checkbox" id="switch-accepted-file-type" class="mdl-switch__input" (change)="toggleAcceptedFilesType()">
+        <span class="mdl-switch__label">Filter extension</span>
+    </label>
+</p>
+
+<p style="width:250px;margin: 20px;">
+    <label for="switch-versioning" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+        <input type="checkbox" id="switch-versioning" class="mdl-switch__input" (change)="toggleVersioning()">
+        <span class="mdl-switch__label">Versioning</span>
+    </label>
+</p>
+
+<h5>Upload</h5>
+<br>
+<div *ngIf="acceptedFilesTypeShow">
+    <span class="mdl-input__label">Extension accepted</span>
+    <input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
+    <br/>
+</div>
+<div *ngIf="!acceptedFilesTypeShow">
+    <alfresco-upload-button data-automation-id="multiple-file-upload"
+                            [uploaddirectory]="currentPath"
+                            [currentFolderPath]="currentPath"
+                            [multipleFiles]="multipleFileUpload"
+                            [uploadFolders]="folderUpload"
+                            [versioning] = "versioning"
+                            (onSuccess)="documentList.reload()">
+        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+    </alfresco-upload-button>
+</div>
+<div *ngIf="acceptedFilesTypeShow">
+    <alfresco-upload-button data-automation-id="multiple-file-upload"
+                            [uploaddirectory]="currentPath"
+                            [currentFolderPath]="currentPath"
+                            acceptedFilesType="{{acceptedFilesType}}"
+                            [multipleFiles]="multipleFileUpload"
+                            [uploadFolders]="folderUpload"
+                            [versioning] = "versioning"
+                            (onSuccess)="documentList.reload()">
+        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+    </alfresco-upload-button>
+</div>
 
 <alfresco-viewer [(showViewer)]="fileShowed"
-                 [urlFile]="urlFile"
-                 [fileName]="fileName"
-                 [mimeType]="mimeType"
+                 [fileNodeId]="fileNodeId"
                  [overlayMode]="true">
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
 </alfresco-viewer>
+
 <file-uploading-dialog #fileDialog></file-uploading-dialog>

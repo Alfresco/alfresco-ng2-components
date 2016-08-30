@@ -41,4 +41,10 @@ in the demo shell:
 ./start-linked.sh
 ```
 
-For development environment configuration please refer to [project docs](demo-shell-ng2/README.md).
+* If you want to build all your local component:
+
+```sh
+./npm-buid-alll.sh
+```
+
+For development environment configuration please refer to [project docs](../demo-shell-ng2/README.md).

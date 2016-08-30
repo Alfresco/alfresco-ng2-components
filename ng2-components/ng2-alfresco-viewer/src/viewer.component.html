@@ -6,8 +6,8 @@
     <div id="viewer-main-container" class="viewer-main-container" [ngClass]="{'viewer-overlay-view': overlayMode }" >
 
         <!-- Start Layout -->
-        <div mdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <header class="mdl-layout__header">
+        <div  mdl [ngClass]="{'mdl-layout mdl-js-layout mdl-layout--fixed-header': overlayMode }" >
+            <header  *ngIf="overlayMode" class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
 
                     <!-- File Title -->
@@ -20,7 +20,7 @@
                     <!-- Start Navigation -->
                     <nav class="mdl-navigation">
                         <div id="viewer-toolbar-view-options">
-                            <button
+                            <button *ngIf="overlayMode"
                                 class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
                                 <i id="viewer-close-button" class="icon material-icons">close</i>
                             </button>
@@ -43,18 +43,18 @@
                         <!--</button>-->
                     <!--</div>-->
 
-                    <div class="center-element mdl-cell mdl-cell--12-col" >
+                    <div *ngIf="isLoaded()" class="center-element mdl-cell mdl-cell--12-col" >
 
                         <div id="viewer-content-container" class="viewer-content-container mdl-cell" >
                         <!-- Start View Switch-->
                             <div *ngIf="isPdf()">
-                                <pdf-viewer [urlFile]="urlFile" [nameFile]="displayName" ></pdf-viewer>
+                                <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFileContent" [nameFile]="displayName" ></pdf-viewer>
                             </div>
                             <div class="center-element" *ngIf="isImage()" >
-                                <img-viewer [urlFile]="urlFile" [nameFile]="displayName"></img-viewer>
+                                <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName"></img-viewer>
                             </div>
                             <div *ngIf="!supportedExtension()">
-                                <not-supported-format [urlFile]="urlFile" [nameFile]="displayName" ></not-supported-format>
+                                <not-supported-format [urlFile]="urlFileContent" [nameFile]="displayName" ></not-supported-format>
                             </div>
                         <!-- End View Switch -->
                         </div>

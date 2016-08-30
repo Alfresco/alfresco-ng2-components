@@ -27,17 +27,17 @@ import {
     FileNode,
     FolderNode
 } from '../assets/document-library.model.mock';
-import { AlfrescoService } from './alfresco.service';
-import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
+import { DocumentListService } from './document-list.service';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 
 describe('FolderActionsService', () => {
 
     let service: FolderActionsService;
-    let alfrescoService: AlfrescoService;
+    let documentListService: DocumentListService;
 
     beforeEach(() => {
-        alfrescoService = new AlfrescoServiceMock();
-        service = new FolderActionsService(alfrescoService);
+        documentListService = new DocumentListServiceMock();
+        service = new FolderActionsService(documentListService);
     });
 
     it('should register custom action handler', () => {
@@ -105,44 +105,44 @@ describe('FolderActionsService', () => {
     });
 
     it('should delete folder node', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let folder = new FolderNode();
         service.getHandler('delete')(folder);
 
-        expect(alfrescoService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
+        expect(documentListService.deleteNode).toHaveBeenCalledWith(folder.entry.id);
     });
 
     it('should support deletion only folder node', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let file = new FileNode();
         service.getHandler('delete')(file);
-        expect(alfrescoService.deleteNode).not.toHaveBeenCalled();
+        expect(documentListService.deleteNode).not.toHaveBeenCalled();
 
         let folder = new FolderNode();
         service.getHandler('delete')(folder);
-        expect(alfrescoService.deleteNode).toHaveBeenCalled();
+        expect(documentListService.deleteNode).toHaveBeenCalled();
     });
 
     it('should require node id to delete', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let folder = new FolderNode();
         folder.entry.id = null;
         service.getHandler('delete')(folder);
 
-        expect(alfrescoService.deleteNode).not.toHaveBeenCalled();
+        expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
     it('should reload target upon node deletion', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let folder = new FolderNode();
         service.getHandler('delete')(folder, target);
 
-        expect(alfrescoService.deleteNode).toHaveBeenCalled();
+        expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();
     });
 

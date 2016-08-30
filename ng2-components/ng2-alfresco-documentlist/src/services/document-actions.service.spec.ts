@@ -24,8 +24,8 @@ import {
 import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
-import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
-import { AlfrescoService } from './alfresco.service';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
+import { DocumentListService } from './document-list.service';
 import {
     FileNode,
     FolderNode
@@ -34,13 +34,13 @@ import {
 describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
-    let alfrescoService: AlfrescoService;
+    let documentListService: DocumentListService;
     let contentService: AlfrescoContentService;
 
     beforeEach(() => {
-        alfrescoService = new AlfrescoServiceMock();
-        contentService = new AlfrescoContentService(null, null);
-        service = new DocumentActionsService(alfrescoService, contentService);
+        documentListService = new DocumentListServiceMock();
+        contentService = new AlfrescoContentService(null);
+        service = new DocumentActionsService(documentListService, contentService);
     });
 
     it('should register default download action', () => {
@@ -147,7 +147,7 @@ describe('DocumentActionsService', () => {
     });
 
     it('should require content service for download action', () => {
-        let actionService = new DocumentActionsService(alfrescoService, null);
+        let actionService = new DocumentActionsService(documentListService, null);
         let file = new FileNode();
         let result = actionService.getHandler('download')(file);
         expect(result).toBeFalsy();
@@ -159,44 +159,44 @@ describe('DocumentActionsService', () => {
     });
 
     it('should delete file node', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let file = new FileNode();
         service.getHandler('delete')(file);
 
-        expect(alfrescoService.deleteNode).toHaveBeenCalledWith(file.entry.id);
+        expect(documentListService.deleteNode).toHaveBeenCalledWith(file.entry.id);
     });
 
     it('should support deletion only file node', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let folder = new FolderNode();
         service.getHandler('delete')(folder);
-        expect(alfrescoService.deleteNode).not.toHaveBeenCalled();
+        expect(documentListService.deleteNode).not.toHaveBeenCalled();
 
         let file = new FileNode();
         service.getHandler('delete')(file);
-        expect(alfrescoService.deleteNode).toHaveBeenCalled();
+        expect(documentListService.deleteNode).toHaveBeenCalled();
     });
 
     it('should require node id to delete', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let file = new FileNode();
         file.entry.id = null;
         service.getHandler('delete')(file);
 
-        expect(alfrescoService.deleteNode).not.toHaveBeenCalled();
+        expect(documentListService.deleteNode).not.toHaveBeenCalled();
     });
 
     it('should reload target upon node deletion', () => {
-        spyOn(alfrescoService, 'deleteNode').and.callThrough();
+        spyOn(documentListService, 'deleteNode').and.callThrough();
 
         let target = jasmine.createSpyObj('obj', ['reload']);
         let file = new FileNode();
         service.getHandler('delete')(file, target);
 
-        expect(alfrescoService.deleteNode).toHaveBeenCalled();
+        expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();
     });
 });

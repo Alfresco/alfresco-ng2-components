@@ -1,0 +1,106 @@
+{
+  "name": "ng2-activiti-form",
+  "description": "Alfresco Activiti Form Component for Angular 2",
+  "version": "0.3.0",
+  "author": "Alfresco Software, Ltd.",
+  "scripts": {
+    "postinstall": "typings install",
+    "clean": "rimraf dist node_modules typings",
+    "typings": "typings install",
+    "server": "wsrv -o -p 9875",
+    "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist && license-check",
+    "build:w": "npm run tslint && rimraf dist && npm run watch-task",
+    "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copy-dist:w\"  \"license-check\"",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'src/{,**/}**.ts'",
+    "copy-dist": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src",
+    "copy-dist:w": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src -w",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "pretest": "npm run build",
+    "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
+    "test-browser": "concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
+    "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
+    "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
+    "prepublish": "npm run build",
+    "travis": "npm link ng2-alfresco-core"
+  },
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
+  },
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Denys Vuika",
+      "email": "denys.vuika@gmail.com"
+    }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "alfresco",
+    "activiti"
+  ],
+  "dependencies": {
+    "@angular/common": "2.0.0-rc.3",
+    "@angular/compiler": "2.0.0-rc.3",
+    "@angular/core": "2.0.0-rc.3",
+    "@angular/forms": "0.1.1",
+    "@angular/http": "2.0.0-rc.3",
+    "@angular/platform-browser": "2.0.0-rc.3",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.3",
+    "@angular/router": "3.0.0-alpha.7",
+    "@angular/router-deprecated": "2.0.0-rc.2",
+    "@angular/upgrade": "2.0.0-rc.3",
+    "alfresco-js-api": "^0.3.0",
+    "systemjs": "0.19.27",
+    "core-js": "2.4.0",
+    "reflect-metadata": "0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "0.6.12",
+    "ng2-translate": "2.2.2",
+    "ng2-alfresco-core": "0.3.0"
+  },
+  "peerDependencies": {
+    "material-design-icons": "^2.2.3",
+    "material-design-lite": "^1.1.3"
+  },
+  "devDependencies": {
+    "concurrently": "2.1.0",
+    "coveralls": "2.11.9",
+    "cpx": "1.3.1",
+    "jasmine-core": "2.4.1",
+    "karma": "0.13.22",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-coverage": "1.0.0",
+    "karma-coveralls": "1.1.2",
+    "karma-jasmine": "1.0.2",
+    "karma-jasmine-ajax": "0.1.13",
+    "karma-jasmine-html-reporter": "0.2.0",
+    "karma-jasmine-ajax": "0.1.13",
+    "karma-mocha-reporter": "2.0.3",
+    "license-check": "1.1.5",
+    "remap-istanbul": "0.6.3",
+    "rimraf": "2.5.2",
+    "traceur": "0.0.91",
+    "tslint": "3.8.1",
+    "typescript": "1.8.10",
+    "typings": "1.0.4",
+    "wsrv": "0.1.3"
+  },
+  "license-check-config": {
+    "src": [
+      "./dist/**/*.js"
+    ],
+    "path": "assets/license_header.txt",
+    "blocking": true,
+    "logInfo": false,
+    "logError": true
+  }
+}

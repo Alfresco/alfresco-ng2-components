@@ -1,8 +1,9 @@
-<div class="content-grid mdl-grid content-layout">
+<div class="content-grid mdl-grid content-layout login-content"
+    [style.background-image]="'url(' + (backgroundImageUrl || baseComponentPath + '/../assets/images/background.svg') + ')'">
     <div class="login-card-wide mdl-card mdl-shadow--4dp">
         <form [ngFormModel]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
-                <img class="center" [src]="baseComponentPath + '/../assets/images/logo_for_light_bg_28.png'">
+                <img class="center" [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'" alt="{{'LOGIN.LOGO' | translate }}">
             </div>
             <div class="mdl-card__supporting-text">
                 <div>
@@ -39,7 +40,7 @@
                     </span>
                 </div>
                 <br>
-                <button type="submit" id="login-button"
+                <button type="submit" id="login-button" tabindex="3"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                         data-automation-id="login-button" [disabled]="!form.valid">{{'LOGIN.BUTTON.LOGIN' | translate }}</button>
                 <br>

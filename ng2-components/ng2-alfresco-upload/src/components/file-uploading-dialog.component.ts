@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
 import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
@@ -43,7 +43,7 @@ declare let __moduleName: string;
     host: {'[class.dialog-show]': 'toggleShowDialog'},
     pipes: [AlfrescoPipeTranslate]
 })
-export class FileUploadingDialogComponent implements OnInit {
+export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     isDialogActive: boolean = false;
 
@@ -53,15 +53,18 @@ export class FileUploadingDialogComponent implements OnInit {
 
     private _isDialogMinimized: boolean = false;
 
+    private listSubscription: any;
+    private counterSubscription: any;
+
     constructor(private cd: ChangeDetectorRef,
                 translate: AlfrescoTranslationService,
                 private _uploaderService: UploadService) {
-        translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
     }
 
     ngOnInit() {
         if (this._uploaderService.filesUpload$) {
-            this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
+            this.listSubscription = this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
                 this.filesUploadingList = fileList;
                 if (this.filesUploadingList.length > 0) {
                     this.isDialogActive = true;
@@ -70,7 +73,7 @@ export class FileUploadingDialogComponent implements OnInit {
             });
         }
         if (this._uploaderService.totalCompleted$) {
-            this._uploaderService.totalCompleted$.subscribe((total: number) => {
+            this.counterSubscription = this._uploaderService.totalCompleted$.subscribe((total: number) => {
                 this.totalCompleted = total;
                 this.cd.detectChanges();
             });
@@ -89,5 +92,11 @@ export class FileUploadingDialogComponent implements OnInit {
      */
     toggleDialogMinimize() {
         this._isDialogMinimized = !this._isDialogMinimized;
+    }
+
+    ngOnDestroy() {
+        this.listSubscription.unsubscribe();
+        this.counterSubscription.unsubscribe();
+        this.cd.detach();
     }
 }

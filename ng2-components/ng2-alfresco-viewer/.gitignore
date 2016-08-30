@@ -11,4 +11,6 @@ src/**/*.d.ts
 demo/**/*.js
 demo/**/*.js.map
 demo/**/*.d.ts
+index.js
+index.js.map
 !systemjs.config.js

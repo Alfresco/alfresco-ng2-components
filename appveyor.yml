@@ -1,0 +1,53 @@
+# Test against this version of Node.js
+branches:
+  only:
+    - master
+
+environment:
+  nodejs_version: "5"
+
+  matrix:
+  - COMPONENT_NAME: ng2-alfresco-core
+  - COMPONENT_NAME: ng2-alfresco-datatable
+  - COMPONENT_NAME: ng2-alfresco-documentlist
+  - COMPONENT_NAME: ng2-alfresco-login
+  - COMPONENT_NAME: ng2-alfresco-search
+  - COMPONENT_NAME: ng2-alfresco-upload
+  - COMPONENT_NAME: ng2-alfresco-viewer
+  - COMPONENT_NAME: ng2-alfresco-webscript
+  - COMPONENT_NAME: ng2-activiti-form
+  - COMPONENT_NAME: ng2-activiti-tasklist
+  - COMPONENT_NAME: ng2-activiti-processlist
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  # install module
+  - IF %COMPONENT_NAME% NEQ ng2-alfresco-core (cd ng2-components/ng2-alfresco-core && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-documentlist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-form && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-tasklist && npm link ng2-alfresco-core && npm link ng2-alfresco-datatable && npm link ng2-activiti-form && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-activiti-form && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-webscript (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
+  - cd ng2-components/%COMPONENT_NAME%
+  - IF %COMPONENT_NAME% NEQ ng2-alfresco-core (npm link ng2-alfresco-core)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-documentlist (npm link ng2-alfresco-datatable)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (npm link ng2-alfresco-datatable)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (npm link ng2-activiti-tasklist)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (npm link ng2-alfresco-datatable && npm link ng2-activiti-form)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-webscript (npm link ng2-alfresco-datatable)
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - npm test
+
+# Don't actually build.
+build: off

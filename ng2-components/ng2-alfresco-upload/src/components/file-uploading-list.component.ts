@@ -57,7 +57,7 @@ export class FileUploadingListComponent {
         let file = this.filesUploadingList.filter((uploadingFileModel) => {
             return uploadingFileModel.id === id;
         });
-        file[0].setAbort();
+        file[0].emitAbort();
     }
 
     /**
@@ -68,7 +68,7 @@ export class FileUploadingListComponent {
             $event.preventDefault();
         }
         this.filesUploadingList.forEach((uploadingFileModel: FileModel) => {
-            uploadingFileModel.setAbort();
+            uploadingFileModel.emitAbort();
         });
     }
 

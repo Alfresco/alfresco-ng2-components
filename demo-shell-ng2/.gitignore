@@ -5,3 +5,7 @@ app/**/*.js
 app/**/*.js.map
 .idea
 dist/
+
+# docker files
+docker-compose.yml
+Dockerfile

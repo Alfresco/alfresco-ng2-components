@@ -52,6 +52,9 @@ export class UploadDragAreaComponent {
     showUdoNotificationBar: boolean = true;
 
     @Input()
+    versioning: boolean = false;
+
+    @Input()
     currentFolderPath: string = '/Sites/swsdp/documentLibrary';
 
     @Output()
@@ -59,14 +62,14 @@ export class UploadDragAreaComponent {
 
     translate: AlfrescoTranslationService;
 
-    constructor(private _uploaderService: UploadService,
-                translate: AlfrescoTranslationService) {
-
-        let formFields = this.createFormFields();
-        this._uploaderService.setOptions(formFields);
-
+    constructor(private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload');
+        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
+    }
+
+    ngOnChanges(changes) {
+        let formFields = this.createFormFields();
+        this._uploaderService.setOptions(formFields, this.versioning);
     }
 
     /**
@@ -138,6 +141,9 @@ export class UploadDragAreaComponent {
                 .subscribe(
                     message => {
                         let self = this;
+                        this.onSuccess.emit({
+                            value: 'Created folder'
+                        });
                         let dirReader = folder.createReader();
                         dirReader.readEntries(function (entries: any) {
                             for (let i = 0; i < entries.length; i++) {
@@ -195,7 +201,7 @@ export class UploadDragAreaComponent {
             timeout: 3000,
             actionHandler: function () {
                 latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                    uploadingFileModel.setAbort();
+                    uploadingFileModel.emitAbort();
                 });
             },
             actionText: actionTranslate.value
@@ -224,7 +230,7 @@ export class UploadDragAreaComponent {
      * @returns {string}
      */
     private getErrorMessage(response: any): string {
-        if (response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST ) {
+        if (response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
             let errorMessage: any;
             errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;

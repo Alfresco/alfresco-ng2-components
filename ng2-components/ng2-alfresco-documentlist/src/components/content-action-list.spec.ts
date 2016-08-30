@@ -23,7 +23,7 @@ import {
 } from '@angular/core/testing';
 
 import { DocumentList } from './document-list';
-import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
+import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionModel } from './../models/content-action.model';
 import { ContentActionList } from './content-action-list';
 
@@ -33,8 +33,8 @@ describe('ContentColumnList', () => {
     let actionList: ContentActionList;
 
     beforeEach(() => {
-        let alfrescoServiceMock = new AlfrescoServiceMock();
-        documentList = new DocumentList(alfrescoServiceMock, null);
+        let documentListService = new DocumentListServiceMock();
+        documentList = new DocumentList(documentListService, null, null);
         actionList = new ContentActionList(documentList);
     });
 

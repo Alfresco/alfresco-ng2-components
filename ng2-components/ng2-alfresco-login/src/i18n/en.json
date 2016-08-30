@@ -1,0 +1,25 @@
+{
+  "LOGIN": {
+    "LOGO": "Alfresco",
+    "LABEL": {
+      "LOGIN": "Login",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
+      "REMEMBER": "Remember"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Required",
+      "USERNAME-MIN": "Your username needs to be at least 4 characters.",
+      "PASSWORD-REQUIRED": "Enter your password to sign in",
+      "LOGIN-ERROR": "You have entered an invalid username or password",
+      "LOGIN-SUCCESS": "Login successful"
+    },
+    "BUTTON": {
+      "LOGIN": "SIGN IN"
+    },
+    "ACTION": {
+      "HELP": "NEED HELP?",
+      "REGISTER": "REGISTER"
+    }
+  }
+}

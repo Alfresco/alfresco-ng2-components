@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter } from '@angular/core';
-import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from '@angular/common';
 import {
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
-    AlfrescoAuthenticationService
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService
 } from 'ng2-alfresco-core';
 
 declare let componentHandler: any;
@@ -41,8 +42,18 @@ export class AlfrescoLoginComponent {
 
     isPasswordShow: boolean = false;
 
+    @Input()
+    logoImageUrl: string;
+
+    @Input()
+    backgroundImageUrl: string;
+
+    @Input()
+    providers: string ;
+
     @Output()
     onSuccess = new EventEmitter();
+
     @Output()
     onError = new EventEmitter();
 
@@ -52,17 +63,18 @@ export class AlfrescoLoginComponent {
 
     formError: { [id: string]: string };
 
-    private _message: { [id: string]: { [id: string]: string }
-    };
+    private _message: { [id: string]: { [id: string]: string } };
 
     /**
      * Constructor
      * @param _fb
-     * @param auth
+     * @param authService
+     * @param settingsService
      * @param translate
      */
     constructor(private _fb: FormBuilder,
-                public auth: AlfrescoAuthenticationService,
+                public authService: AlfrescoAuthenticationService,
+                public settingsService: AlfrescoSettingsService,
                 private translate: AlfrescoTranslationService) {
 
         this.formError = {
@@ -70,7 +82,7 @@ export class AlfrescoLoginComponent {
             'password': ''
         };
 
-        this.form =  this._fb.group({
+        this.form = this._fb.group({
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
         });
@@ -85,11 +97,9 @@ export class AlfrescoLoginComponent {
             }
         };
 
-        translate.addTranslationFolder('node_modules/ng2-alfresco-login');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
 
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
-
-        // this.onValueChanged(null);
     }
 
     /**
@@ -97,24 +107,23 @@ export class AlfrescoLoginComponent {
      * @param value
      * @param event
      */
-    onSubmit(value: any, event) {
+    onSubmit(value: any, event: any) {
         this.error = false;
         if (event) {
             event.preventDefault();
         }
-        this.auth.login(value.username, value.password)
+
+        this.settingsService.setProviders(this.providers);
+
+        this.authService.login(value.username, value.password)
             .subscribe(
                 (token: any) => {
                     this.success = true;
-                    this.onSuccess.emit({
-                        value: 'Login OK'
-                    });
+                    this.onSuccess.emit(token);
                 },
                 (err: any) => {
                     this.error = true;
-                    this.onError.emit({
-                        value: 'Login KO'
-                    });
+                    this.onError.emit(err);
                     console.log(err);
                     this.success = false;
                 },

@@ -15,15 +15,5 @@
  * limitations under the License.
  */
 
-import { DataTableComponent } from './src/components/datatable.component';
-
-// components
-export * from './src/components/datatable.component';
-
-// data
-export * from './src/data/datatable-adapter';
-export * from './src/data/object-datatable-adapter';
-
-export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
-    DataTableComponent
-];
+export * from './src/data/index';
+export * from './src/components/index';

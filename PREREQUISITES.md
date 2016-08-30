@@ -2,9 +2,13 @@
 
 The [Angular 2](https://angular.io/) based application development framework requires the following:
 
-- An Alfresco Platform Repository to talk to, which has [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) enabled. 
+- An Alfresco Platform Repository (version [5.2.a-EA](https://wiki.alfresco.com/wiki/Community_file_list_201606-EA) or newer) to talk to, which has [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) enabled. 
 - [Node.js](https://nodejs.org/en/) JavaScript runtime.
 - [npm](https://www.npmjs.com/) package manager for JavaScript.
+ 
+**Verify that you are running at least node `v5.x.x` and npm `3.x.x`**
+by running `node -v` and `npm -v` in a terminal/console window.
+Older versions produce errors.
 
 ## Installing Alfresco
  
@@ -25,9 +29,18 @@ The web client that we are building with the application development framework w
 So we need to tell the Alfresco server that any request that comes in from this custom web client should be allowed access 
 to the Content Repository. This is done by enabling CORS.
 
-To enable CORS in the Alfresco Platform do the following:
+To enable CORS in the Alfresco Platform do one of the following:
 
-Modify *tomcat/webapps/alfresco/WEB-INF/web.xml* and uncomment the following section and update 
+**Download and install the enable CORS module**
+
+This is the easiest way, add the [enablecors](https://artifacts.alfresco.com/nexus/service/local/repositories/releases/content/org/alfresco/enablecors/1.0/enablecors-1.0.jar) 
+platform module JAR to the *$ALF_INSTALL_DIR/modules/platform* directory and restart the server.
+
+Note. by default the CORS filter that is enabled will allow any orgin.
+ 
+**Manually update the web.xml file**
+
+Modify *$ALF_INSTALL_DIR/tomcat/webapps/alfresco/WEB-INF/web.xml* and uncomment the following section and update 
 `cors.allowOrigin` to `http://localhost:3000`:
 
 ```

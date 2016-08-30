@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+import { DatePipe } from '@angular/common';
+import { ObjectUtils } from 'ng2-alfresco-core';
+
 import {
     DataTableAdapter,
     DataRow,
@@ -28,6 +31,29 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _sorting: DataSorting;
     private _rows: DataRow[];
     private _columns: DataColumn[];
+
+    static generateSchema(data: any[]) {
+        let schema = [];
+
+        if (data && data.length) {
+            let rowToExaminate = data[0];
+
+            if (typeof rowToExaminate === 'object') {
+                for (let key in rowToExaminate) {
+                    if (rowToExaminate.hasOwnProperty(key)) {
+                        schema.push({
+                            type: 'text',
+                            key: key,
+                            title: key,
+                            sortable: false
+                        });
+                    }
+                }
+            }
+
+        }
+        return schema;
+    }
 
     constructor(data: any[], schema: DataColumn[]) {
         this._rows = [];
@@ -78,7 +104,20 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         if (!col) {
             throw new Error('Column not found');
         }
-        return row.getValue(col.key);
+
+        let value = row.getValue(col.key);
+
+        if (col.type === 'date') {
+            let datePipe = new DatePipe();
+            let format = col.format || 'medium';
+            try {
+                return datePipe.transform(value, format);
+            } catch (err) {
+                console.error(`DocumentList: error parsing date ${value} to format ${format}`);
+            }
+        }
+
+        return value;
     }
 
     getSorting(): DataSorting {
@@ -132,40 +171,8 @@ export class ObjectDataRow implements DataRow {
         }
     }
 
-    /**
-     * Gets a value from an object by composed key
-     * documentList.getObjectValue({ item: { nodeType: 'cm:folder' }}, 'item.nodeType') ==> 'cm:folder'
-     * @param target
-     * @param key
-     * @returns {string}
-     */
-    getObjectValue(target: any, key: string): any {
-
-        if (!target) {
-            return undefined;
-        }
-
-        let keys = key.split('.');
-        key = '';
-
-        do {
-            key += keys.shift();
-            let value = target[key];
-            if (value !== undefined && (typeof value === 'object' || !keys.length)) {
-                target = value;
-                key = '';
-            } else if (!keys.length) {
-                target = undefined;
-            } else {
-                key += '.';
-            }
-        } while (keys.length);
-
-        return target;
-    }
-
     getValue(key: string): any {
-        return this.getObjectValue(this.obj, key);
+        return ObjectUtils.getValue(this.obj, key);
     }
 
     hasValue(key: string): boolean {

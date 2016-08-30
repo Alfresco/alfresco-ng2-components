@@ -17,6 +17,7 @@
 
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
+import { CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
 import {
     ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter,
@@ -66,7 +67,7 @@ import {
         ':host > .container {padding: 10px}',
         '.p-10 { padding: 10px; }'
     ],
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES]
+    directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES]
 })
 class DataTableDemo {
 
@@ -135,4 +136,6 @@ class DataTableDemo {
     }
 }
 
-bootstrap(DataTableDemo, []);
+bootstrap(DataTableDemo, [
+    CONTEXT_MENU_PROVIDERS
+]);

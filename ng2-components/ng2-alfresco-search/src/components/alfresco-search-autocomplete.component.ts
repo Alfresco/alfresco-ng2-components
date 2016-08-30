@@ -57,7 +57,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
                 private translate: AlfrescoTranslationService,
                 private alfrescoThumbnailService: AlfrescoThumbnailService) {
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-alfresco-search');
+            translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
         }
         this.results = null;
     }

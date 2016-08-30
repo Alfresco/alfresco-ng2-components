@@ -1,0 +1,23 @@
+<button type="button" (click)="showDialog()" class="mdl-button">{{'START_PROCESS.BUTTON'|translate}}</button>
+
+<dialog class="mdl-dialog" #dialog>
+    <h4 class="mdl-dialog__title">{{'START_PROCESS.DIALOG.TITLE'|translate}}</h4>
+    <div class="mdl-dialog__content">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <select name="processDefinition" [(ngModel)]="processDefinition" id="processDefinition">
+                <option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
+                    {{processDef.name}}
+                </option>
+            </select>
+            <label class="mdl-textfield__label" for="processDefinition">{{'START_PROCESS.DIALOG.LABEL.TYPE'|translate}}</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="name" rows="1" id="processName" />
+            <label class="mdl-textfield__label" for="processName">{{'START_PROCESS.DIALOG.LABEL.NAME'|translate}}</label>
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="startProcess()" class="mdl-button">{{'START_PROCESS.DIALOG.ACTION.START'|translate}}</button>
+        <button type="button" (click)="cancel()" class="mdl-button close">{{'START_PROCESS.DIALOG.ACTION.CANCEL'|translate}}</button>
+    </div>
+</dialog>

@@ -1,28 +1,25 @@
 {
   "name": "ng2-alfresco-core",
   "description": "Alfresco Angular 2 Components core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
+    "postinstall": "typings install",
     "clean": "rimraf dist node_modules typings",
     "typings": "typings install",
-    "build": "npm run tslint && typings install && rimraf dist && tsc && npm run copytemplates && license-check",
-    "tslint": "npm run tslint-src && npm run tslint-root",
-    "tslint-src": "tslint -c tslint.json src/{,**/}**.ts",
-    "tslint-root": "tslint -c tslint.json *.ts",
-    "copytemplates": "npm run copy-html-css && npm run copy-i18n",
-    "copy-html-css": "cpx \"./src/**/*.{html,css}\" ./dist/src",
-    "copy-html-css:w": "cpx \"./src/**/*.{html,css}\" ./dist/src -w",
-    "copy-i18n": "cpx \"./i18n/**/*.json\" ./dist/i18n",
-    "copy-i18n:w": "cpx \"./i18n/**/*.json\" ./dist/i18n -w",
-    "copy-images": "cpx \"./src/**/*.{png,jpg,gif,svg}\" ./dist/src",
-    "copy-images:w": "cpx \"./src/**/*.{png,jpg,gif,svg}\" ./dist/src -w",
+    "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist && license-check",
+    "build:w": "npm run tslint && rimraf dist && tsc && npm run copy-dist:w && npm run watch-task",
+    "watch-task": "concurrently \"npm run tsc:w\" \"license-check\"",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'src/{,**/}**.ts'",
     "licensecheck": "license-check",
+    "copy-dist": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src",
+    "copy-dist:w": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src -w",
     "tsc": "tsc",
+    "tsc:w": "tsc -w",
     "pretest": "npm run build",
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
-    "test-browser": "karma start karma.conf.js --reporters kjhtml ",
-    "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html",
+    "test-browser": "npm run build && karma start karma.conf.js --reporters kjhtml ",
+    "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run build",
     "travis": "echo 'placeholder'"
@@ -45,6 +42,10 @@
     {
       "name": "Mario Romano",
       "email": "mario.romano83@gmail.com"
+    },
+    {
+      "name": "Eugenio Romano",
+      "email": "eugenio.romano@alfresco.com"
     }
   ],
   "keywords": [
@@ -54,6 +55,7 @@
     "alfresco"
   ],
   "dependencies": {
+    "alfresco-js-api": "^0.3.0",
     "@angular/common": "2.0.0-rc.3",
     "@angular/compiler": "2.0.0-rc.3",
     "@angular/core": "2.0.0-rc.3",
@@ -69,8 +71,7 @@
     "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.6",
     "zone.js": "0.6.12",
-    "ng2-translate": "2.2.2",
-    "rimraf": "2.5.2"
+    "ng2-translate": "2.2.2"
   },
   "peerDependencies": {
     "material-design-icons": "^2.2.3",
@@ -86,10 +87,12 @@
     "karma-coverage": "1.0.0",
     "karma-coveralls": "1.1.2",
     "karma-jasmine": "1.0.2",
+    "karma-jasmine-ajax": "^0.1.13",
     "karma-jasmine-html-reporter": "0.2.0",
     "karma-mocha-reporter": "2.0.3",
     "license-check": "1.1.5",
     "remap-istanbul": "0.6.3",
+    "rimraf": "2.5.2",
     "traceur": "0.0.91",
     "tslint": "3.8.1",
     "typescript": "1.8.10",
@@ -98,13 +101,7 @@
   },
   "license-check-config": {
     "src": [
-      "**/*.js",
-      "**/*.ts",
-      "!/**/coverage/**/*",
-      "!/**/demo/**/*",
-      "!/**/node_modules/**/*",
-      "!/**/typings/**/*",
-      "!*.js"
+      "./dist/**/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,

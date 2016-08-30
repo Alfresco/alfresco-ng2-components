@@ -14,7 +14,8 @@ var map = {
 
 var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
-    'rxjs': { defaultExtension: 'js' },
+    'rxjs': {  defaultExtension: 'js' },
+    'alfresco-js-api' : {  main: 'alfresco-js-api.js', defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' }
 };
 

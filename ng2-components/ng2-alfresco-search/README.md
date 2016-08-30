@@ -1,12 +1,16 @@
 # Search Component for Angular 2
 
 <p>
-  <a title='Build Status' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
     Status' />
   </a>
-  <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
-    <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
   </a>
   <a href='https://www.npmjs.com/package/ng2-alfresco-search'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-search.svg' alt='npm downloads' />
@@ -52,7 +56,7 @@ the related [search results](#search-results) component which performs a query a
 Add the following dependency to your index.html:
 
 ```html
-<script src="node_modules/alfresco-js-api/bundle.js"></script>
+<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
 ```
 
 The following component needs to be added to your systemjs.config: 

@@ -1,11 +1,15 @@
 # Alfresco Upload Component for Angular 2
 <p>
-  <a title='Build Status' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
     Status' />
   </a>
-  <a href='https://coveralls.io/github/Alfresco/alfresco-ng2-components'>
-    <img src='https://coveralls.io/repos/github/Alfresco/alfresco-ng2-components/badge.svg?t=NzxWxh' alt='Coverage Status' />
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
   </a>
   <a href='https://www.npmjs.com/package/ng2-alfresco-upload'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-upload.svg' alt='npm downloads' />
@@ -87,6 +91,8 @@ Also make sure you include these dependencies in your .html page:
                         [uploadFolders]="true"
                         [multipleFiles]="false"
                         [acceptedFilesType]=".jpg,.gif,.png,.svg"
+                        [currentFolderPath]="/Sites/swsdp/documentLibrary"
+                        [versioning]="false"
                         (onSuccess)="customMethod($event)">
 </alfresco-upload-button>
 <file-uploading-dialog></file-uploading-dialog>
@@ -133,14 +139,22 @@ bootstrap(MyDemoApp, [
 
 ```
 #### Events
-**onSuccess**: The event is emitted when the file is uploaded<br />
+Attribute     | Description 
+---           | ---         
+`onSuccess`   |  The event is emitted when the file is uploaded 
 
 #### Options
 
-**showUdoNotificationBar**: {boolean} (optional) default true. Hide/show notification bar.<br />
-**uploadFolders**: {boolean} (optional) default false. Allow/disallow upload folders (only for chrome).<br />
-**multipleFiles**: {boolean} (optional) default false. Allow/disallow multiple files.<br />
-**acceptedFilesType**: {string} (optional) default "*". array of allowed file extensions , example: ".jpg,.gif,.png,.svg" .<br />
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`showUdoNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
+`uploadFolders`         | *boolean*    |     false   |  Allow/disallow upload folders (only for chrome) | 
+`multipleFiles`         | *boolean*    |     false   |  Allow/disallow multiple files | 
+`acceptedFilesType`         | *string*    |     *   |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" | 
+`currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
+`versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+
+
 
 ### Drag and drop
 This component, provide a drag and drop are to upload files to alfresco.
@@ -191,8 +205,20 @@ bootstrap(MyDemoApp, [
 ]);
 
 ```
+
 #### Events
-**onSuccess**: The event is emitted when the file is uploaded<br />
+Attribute     | Description 
+---           | ---         
+`onSuccess`   |  The event is emitted when the file is uploaded 
+
+#### Options
+
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`showUdoNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
+`currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
+`versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+
 
 ### Files Dialog
 This component provides a dialog that shows all the files uploaded 
@@ -216,9 +242,9 @@ npm run build
 
 ##Build the files and keep watching for changes
 
-    ```sh
-    $ npm run build:w
-    ```
+```sh
+npm run build:w
+```
     
 ## Running unit tests
 

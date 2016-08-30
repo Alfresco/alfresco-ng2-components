@@ -4,17 +4,20 @@ module.exports = function (config) {
   var configuration = {
     basePath: '.',
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
       // paths loaded by Karma
       {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
       {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
       {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
+      {pattern: 'node_modules/zone.js/dist/async-test.js', included: true, watched: true},
+
       {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/rxjs/**/*.map', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
+      {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
 
       {pattern: 'karma-test-shim.js', included: true, watched: true},
 
@@ -61,6 +64,7 @@ module.exports = function (config) {
     plugins: [
       'karma-jasmine',
       'karma-coverage',
+      'karma-jasmine-ajax',
       'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-jasmine-html-reporter'

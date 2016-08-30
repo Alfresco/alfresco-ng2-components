@@ -18,12 +18,11 @@
 import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { AlfrescoTranslationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { AlfrescoSettingsServiceMock } from '../assets/AlfrescoSettingsService.service.mock';
+import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { UploadServiceMock } from '../assets/upload.service.mock';
 import { UploadService } from '../services/upload.service';
-import { AlfrescoApiMock } from '../assets/AlfrescoApi.mock';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { EventEmitter } from '@angular/core';
 
 declare var AlfrescoApi: any;
 
@@ -32,14 +31,16 @@ describe('AlfrescoUploadDragArea', () => {
     let componentFixture;
 
     beforeEach( () => {
-        window['AlfrescoApi'] = AlfrescoApiMock;
+
     });
 
     beforeEachProviders(() => {
         return [
-            { provide: AlfrescoSettingsService, useClass: AlfrescoSettingsServiceMock },
+            HTTP_PROVIDERS,
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
-            { provide: UploadService, useClass: UploadServiceMock }
+            UploadService
         ];
     });
 
@@ -139,6 +140,19 @@ describe('AlfrescoUploadDragArea', () => {
         component.showUdoNotificationBar = true;
 
         componentFixture.detectChanges();
+        let fakeRest = {
+            response: {
+                body: {
+                    error: {
+                        statusCode: 409
+                    }
+                }
+            }
+        };
+        let fakePromise = new Promise(function (resolve, reject) {
+            reject(fakeRest);
+        });
+        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakePromise);
         spyOn(component, '_showErrorNotificationBar').and.callFake( () => {
             expect(component._showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             done();
@@ -157,7 +171,7 @@ describe('AlfrescoUploadDragArea', () => {
     it('should create a folder and call onFilesEntityDropped with the file inside the folder', done => {
         let component = componentFixture.componentInstance;
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
-        component.onSuccess = null;
+        component.onSuccess = new EventEmitter();
 
         componentFixture.detectChanges();
 
@@ -172,6 +186,17 @@ describe('AlfrescoUploadDragArea', () => {
             }
         };
 
+        let fakeRest = {
+            entry: {
+                isFile: false,
+                isFolder: true,
+                name: 'folder-fake'
+            }
+        };
+        let fakePromise = new Promise(function (resolve, reject) {
+            resolve(fakeRest);
+        });
+        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakePromise);
         spyOn(component, 'onFilesEntityDropped').and.callFake( () => {
             expect(component.onFilesEntityDropped).toHaveBeenCalledWith(itemEntity);
             done();

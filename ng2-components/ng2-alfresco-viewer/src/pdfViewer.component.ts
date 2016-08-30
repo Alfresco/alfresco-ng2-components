@@ -34,6 +34,9 @@ export class PdfViewerComponent {
     @Input()
     nameFile: string;
 
+    @Input()
+    showToolbar: boolean = true;
+
     currentPdfDocument: any;
     page: number;
     displayPage: number;
@@ -65,6 +68,8 @@ export class PdfViewerComponent {
 
                     this.currentPdfDocument.getPage(1).then(() => {
                         this.scalePage('auto');
+                    }, (error) => {
+                        reject(error);
                     });
 
                 }, (error) => {
@@ -113,12 +118,26 @@ export class PdfViewerComponent {
         this.currentScaleMode = scaleMode;
 
         if (this.pdfViewer) {
+
+            let viewerContainer = document.getElementById('viewer-main-container');
             let documentContainer = document.getElementById('viewer-pdf-container');
+
+            let widthContainer;
+            let heigthContainer;
+
+            if (viewerContainer && viewerContainer.clientWidth <= documentContainer.clientWidth) {
+                widthContainer = viewerContainer.clientWidth;
+                heigthContainer = viewerContainer.clientHeight;
+            } else {
+                widthContainer = documentContainer.clientWidth;
+                heigthContainer = documentContainer.clientHeight;
+            }
+
             let currentPage = this.pdfViewer._pages[this.pdfViewer._currentPageNumber];
 
             let padding = 20;
-            let pageWidthScale = (documentContainer.clientWidth - padding) / currentPage.width * currentPage.scale;
-            let pageHeightScale = (documentContainer.clientHeight - padding) / currentPage.width * currentPage.scale;
+            let pageWidthScale = (widthContainer - padding) / currentPage.width * currentPage.scale;
+            let pageHeightScale = (heigthContainer - padding) / currentPage.width * currentPage.scale;
 
             let scale;
 
@@ -193,7 +212,6 @@ export class PdfViewerComponent {
      * @returns {boolean}
      */
     isLandscape(width: number, height: number) {
-        console.log('width  ' + width + 'height  ' + height);
         return (width > height);
     }
 

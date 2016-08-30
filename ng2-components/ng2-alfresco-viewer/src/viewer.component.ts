@@ -20,6 +20,7 @@ import { PdfViewerComponent } from './pdfViewer.component';
 import { ImgViewerComponent } from './imgViewer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DOCUMENT } from '@angular/platform-browser';
+import { AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -36,10 +37,7 @@ export class ViewerComponent {
     urlFile: string;
 
     @Input()
-    fileName: string = null;
-
-    @Input()
-    mimeType: string = null;
+    fileNodeId: string = null;
 
     @Input()
     overlayMode: boolean = false;
@@ -47,8 +45,13 @@ export class ViewerComponent {
     @Input()
     showViewer: boolean = true;
 
+    @Input()
+    showToolbar: boolean = true;
+
     @Output()
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    urlFileContent: string;
 
     otherMenu: any;
 
@@ -56,22 +59,38 @@ export class ViewerComponent {
 
     extension: string;
 
-    constructor(private element: ElementRef, @Inject(DOCUMENT) private document) {
+    mimeType: string;
+
+    loaded: boolean = false;
+
+    constructor(private authService: AlfrescoAuthenticationService, private element: ElementRef, @Inject(DOCUMENT) private document) {
     }
 
     ngOnChanges(changes) {
         if (this.showViewer) {
             this.hideOtherHeaderBar();
             this.blockOtherScrollBar();
-            if (!this.urlFile) {
-                throw new Error('Attribute urlFile is required');
+            if (!this.urlFile && !this.fileNodeId) {
+                throw new Error('Attribute urlFile or fileNodeId is required');
             }
             return new Promise((resolve) => {
                 if (this.urlFile) {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
-                    this.displayName = this.fileName !== null ? this.fileName : filenameFromUrl;
+                    this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);
+                    this.urlFileContent = this.urlFile;
+                } else if (this.fileNodeId) {
+                    this.authService.getAlfrescoApi().nodes.getNodeInfo(this.fileNodeId).then((data) => {
+                        this.mimeType = data.content.mimeType;
+                        this.displayName = data.name;
+                        this.urlFileContent = this.authService.getAlfrescoApi().content.getContentUrl(data.id);
+                        this.loaded = true;
+                    }, function (error) {
+                        console.log('This node does not exist');
+                    });
                 }
+
+
                 resolve();
             });
         }
@@ -138,7 +157,7 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     private isImageMimeType() {
-        return this.mimeType !== null && this.mimeType.indexOf('image/') === 0;
+        return this.mimeType && this.mimeType.indexOf('image/') === 0;
     }
 
     /**
@@ -166,7 +185,7 @@ export class ViewerComponent {
     @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         let key = event.keyCode;
-        if (key === 27) { // esc
+        if (key === 27 && this.overlayMode) { // esc
             this.close();
         }
     }
@@ -235,5 +254,12 @@ export class ViewerComponent {
                 this.otherMenu.hidden = true;
             }
         }
+    }
+
+    /**
+     * return true if the data about the node in the ecm are loaded
+     */
+    isLoaded() {
+        return this.fileNodeId ? this.loaded : true;
     }
 }

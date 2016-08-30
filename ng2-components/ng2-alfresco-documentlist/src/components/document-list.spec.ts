@@ -15,35 +15,26 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
+import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { NgZone } from '@angular/core';
+import { DataColumn } from 'ng2-alfresco-datatable';
 import { DocumentList } from './document-list';
-import { ContentColumnModel } from '../models/content-column.model';
-import { AlfrescoServiceMock } from '../assets/alfresco.service.mock';
+import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ContentActionModel } from '../models/content-action.model';
-import {
-    PageNode,
-    FileNode,
-    FolderNode
-} from '../assets/document-library.model.mock';
-import { ColumnSortingModel } from '../models/column-sorting.model';
+import { FileNode, FolderNode } from '../assets/document-library.model.mock';
+import { MinimalNodeEntity } from '../models/document-library.model';
 
 describe('DocumentList', () => {
 
-    let alfrescoServiceMock: AlfrescoServiceMock;
+    let documentListService: DocumentListServiceMock;
     let documentList: DocumentList;
     let eventMock: any;
     let componentHandler;
 
     beforeEach(() => {
-        alfrescoServiceMock = new AlfrescoServiceMock();
+        documentListService = new DocumentListServiceMock();
         let zone = new NgZone(false);
-        documentList = new DocumentList(alfrescoServiceMock, zone);
+        documentList = new DocumentList(documentListService, zone, null);
 
         eventMock = {
             preventDefault: function () {
@@ -63,55 +54,25 @@ describe('DocumentList', () => {
         documentList.ngAfterContentInit();
 
         expect(documentList.setupDefaultColumns).toHaveBeenCalled();
-        expect(documentList.columns.length).not.toBe(0);
+        expect(documentList.data.getColumns().length).not.toBe(0);
     });
 
     it('should use custom columns instead of default ones', () => {
-        let column: ContentColumnModel = {
+        let column = <DataColumn> {
             title: 'title',
-            source: 'source',
+            key: 'source',
             cssClass: 'css',
             srTitle: '',
             type: 'text',
             format: ''
         };
-        documentList.columns.push(column);
+
+        let columns = documentList.data.getColumns();
+        columns.push(column);
 
         documentList.ngAfterContentInit();
-        expect(documentList.columns.length).toBe(1);
-        expect(documentList.columns[0]).toBe(column);
-    });
-
-    it('should fetch folder', () => {
-        let folder = {
-            'nodeRef': 'workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28'
-        };
-        alfrescoServiceMock.folderToReturn = folder;
-        documentList.ngOnInit();
-
-        expect(documentList.folder).toBe(folder);
-    });
-
-    it('should return thumbnail url for a file when thumbnails turned on', () => {
-        let url = 'URL';
-        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        let node = new FileNode();
-        documentList.thumbnails = true;
-        let result = documentList.getThumbnailUrl(node);
-
-        expect(result).toBe(url);
-        expect(alfrescoServiceMock.getDocumentThumbnailUrl).toHaveBeenCalled();
-    });
-
-    it('should return a null thumbnail url for a null item', () => {
-        let url = 'URL';
-        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        let result = documentList.getThumbnailUrl(null);
-
-        expect(result).toBeNull();
-        expect(alfrescoServiceMock.getDocumentThumbnailUrl).not.toHaveBeenCalled();
+        expect(columns.length).toBe(1);
+        expect(columns[0]).toBe(column);
     });
 
     it('should execute action with node', () => {
@@ -139,100 +100,54 @@ describe('DocumentList', () => {
         expect(action.handler).not.toHaveBeenCalled();
     });
 
-    it('should give no content actions for empty target', () => {
-        let actions = documentList.getContentActions(null, 'button');
+    it('should not give node actions for empty target', () => {
+        let actions = documentList.getNodeActions(null);
         expect(actions.length).toBe(0);
     });
 
-    it('should give no content actions for empty type', () => {
-        let actions = documentList.getContentActions('folder', null);
-        expect(actions.length).toBe(0);
-    });
-
-    it('should filter content actions for various types and targets', () => {
-        let folderButton = new ContentActionModel();
-        folderButton.target = 'folder';
-        folderButton.type = 'button';
-
+    it('should filter content actions for various targets', () => {
         let folderMenu = new ContentActionModel();
         folderMenu.target = 'folder';
-        folderMenu.type = 'menu';
-
-        let documentButton = new ContentActionModel();
-        documentButton.target = 'document';
-        documentButton.type = 'button';
 
         let documentMenu = new ContentActionModel();
         documentMenu.target = 'document';
-        documentMenu.type = 'menu';
 
         documentList.actions = [
-            folderButton,
             folderMenu,
-            documentButton,
             documentMenu
         ];
 
-        let actions = documentList.getContentActions('folder', 'button');
-        expect(actions.length).toBe(1);
-        expect(actions[0]).toBe(folderButton);
 
-        actions = documentList.getContentActions('folder', 'menu');
+        let actions = documentList.getNodeActions(new FolderNode());
         expect(actions.length).toBe(1);
         expect(actions[0]).toBe(folderMenu);
 
-        actions = documentList.getContentActions('document', 'button');
-        expect(actions.length).toBe(1);
-        expect(actions[0]).toBe(documentButton);
-
-        actions = documentList.getContentActions('document', 'menu');
+        actions = documentList.getNodeActions(new FileNode());
         expect(actions.length).toBe(1);
         expect(actions[0]).toBe(documentMenu);
-    });
-
-    it('should be case insensitive when filtering content actions', () => {
-        let documentButton = new ContentActionModel();
-        documentButton.target = 'document';
-        documentButton.type = 'button';
-
-        documentList.actions = [documentButton];
-
-        let actions = documentList.getContentActions('DoCuMeNt', 'BUTTON');
-        expect(actions.length).toBe(1);
-        expect(actions[0]).toBe(documentButton);
     });
 
     it('should find no content actions', () => {
         let documentButton = new ContentActionModel();
         documentButton.target = 'document';
-        documentButton.type = 'button';
-
         documentList.actions = [documentButton];
 
-        let actions = documentList.getContentActions('unknown', 'value');
-        expect(actions.length).toBe(0);
+        let node = new MinimalNodeEntity();
+        expect(documentList.getNodeActions(node)).toEqual([]);
+
+        node = new FileNode();
+        node.entry.isFile = false;
+        node.entry.isFolder = false;
+        expect(documentList.getNodeActions(node)).toEqual([]);
     });
 
-    it('should emit itemClick event', (done) => {
+    it('should emit nodeClick event', (done) => {
         let node = new FileNode();
-        documentList.itemClick.subscribe(e => {
+        documentList.nodeClick.subscribe(e => {
             expect(e.value).toBe(node);
             done();
         });
-        documentList.onItemClick(node);
-    });
-
-    it('should prevent default item single click event', () => {
-        spyOn(eventMock, 'preventDefault').and.stub();
-
-        documentList.onItemClick(null, eventMock);
-        expect(eventMock.preventDefault).toHaveBeenCalled();
-    });
-
-    it('should prevent default item double click event', () => {
-        spyOn(eventMock, 'preventDefault').and.stub();
-        documentList.onItemDblClick(null, eventMock);
-        expect(eventMock.preventDefault).toHaveBeenCalled();
+        documentList.onNodeClick(node);
     });
 
     it('should display folder content on click', () => {
@@ -244,7 +159,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'displayFolderContent').and.stub();
 
         documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
-        documentList.onItemClick(node);
+        documentList.onNodeClick(node);
 
         expect(documentList.currentFolderPath).toBe(path);
     });
@@ -253,7 +168,7 @@ describe('DocumentList', () => {
         expect(documentList.navigate).toBe(true);
         spyOn(documentList, 'displayFolderContent').and.stub();
 
-        documentList.onItemClick(null);
+        documentList.onNodeClick(null);
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
 
     });
@@ -263,7 +178,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'displayFolderContent').and.stub();
 
         let node = new FileNode();
-        documentList.onItemClick(node);
+        documentList.onNodeClick(node);
 
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
     });
@@ -273,40 +188,13 @@ describe('DocumentList', () => {
 
         let node = new FolderNode('<display name>');
         documentList.navigate = false;
-        documentList.onItemClick(node);
+        documentList.onNodeClick(node);
 
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
     });
 
     it('should require node to get path', () => {
         expect(documentList.getNodePath(null)).toBe(null);
-    });
-
-    it('should return root object value', () => {
-        let target = {
-            key1: 'value1'
-        };
-
-        expect(documentList.getObjectValue(target, 'key1')).toBe('value1');
-    });
-
-    it('should return no object value when key is missing', () => {
-        let target = {
-            key1: 'value1'
-        };
-        expect(documentList.getObjectValue(target, 'missing')).toBeUndefined();
-    });
-
-    it('should return nested object value', () => {
-        let target = {
-            key1: {
-                key2: {
-                    key3: 'value1'
-                }
-            }
-        };
-
-        expect(documentList.getObjectValue(target, 'key1.key2.key3')).toBe('value1');
     });
 
     it('should display folder content for new folder path', () => {
@@ -334,43 +222,39 @@ describe('DocumentList', () => {
     });
 
     it('should emit folder changed event', (done) => {
+        spyOn(documentList, 'displayFolderContent').and.stub();
         documentList.folderChange.subscribe(e => {
             done();
         });
-        documentList.folder = new PageNode();
+
+        documentList.currentFolderPath = '/some/new/path';
     });
 
     it('should emit folder changed event with folder details', (done) => {
-        let folder = new PageNode();
+        spyOn(documentList, 'displayFolderContent').and.stub();
+
         let path = '/path';
 
         documentList.folderChange.subscribe(e => {
-            expect(e.value).toBe(folder);
             expect(e.path).toBe(path);
             done();
         });
 
-        spyOn(documentList, 'displayFolderContent').and.stub();
         documentList.currentFolderPath = path;
-        documentList.folder = folder;
     });
 
-    it('should not emit folder changed event', () => {
-        let folder = new PageNode();
+    it('should emit folder changed event only once', () => {
+        spyOn(documentList, 'displayFolderContent').and.stub();
+        let path = '/new/path';
         let calls = 0;
         documentList.folderChange.subscribe(e => {
             calls++;
         });
 
-        documentList.folder = folder;
-        documentList.folder = folder;
+        documentList.currentFolderPath = path;
+        documentList.currentFolderPath = path;
+        documentList.currentFolderPath = path;
         expect(calls).toBe(1);
-    });
-
-    it('should reload on binding changes', () => {
-        spyOn(documentList, 'reload').and.stub();
-        documentList.ngOnChanges(null);
-        expect(documentList.reload).toHaveBeenCalled();
     });
 
     it('should execute context action on callback', () => {
@@ -396,8 +280,9 @@ describe('DocumentList', () => {
     });
 
     it('should subscribe to context action handler', () => {
-        let value = {};
+        spyOn(documentList, 'displayFolderContent').and.stub();
         spyOn(documentList, 'contextActionCallback').and.stub();
+        let value = {};
         documentList.ngOnInit();
         documentList.contextActionHandler.next(value);
         expect(documentList.contextActionCallback).toHaveBeenCalledWith(value);
@@ -416,7 +301,7 @@ describe('DocumentList', () => {
             done();
         });
         documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
-        documentList.onItemClick(file, null);
+        documentList.onNodeClick(file);
     });
 
     it('should emit file preview event on double click', (done) => {
@@ -426,7 +311,7 @@ describe('DocumentList', () => {
             done();
         });
         documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
-        documentList.onItemDblClick(file, null);
+        documentList.onNodeDblClick(file);
     });
 
     it('should perform folder navigation on single click', () => {
@@ -434,7 +319,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'performNavigation').and.stub();
 
         documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
-        documentList.onItemClick(folder, null);
+        documentList.onNodeClick(folder);
         expect(documentList.performNavigation).toHaveBeenCalled();
     });
 
@@ -443,7 +328,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'performNavigation').and.stub();
 
         documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
-        documentList.onItemDblClick(folder, null);
+        documentList.onNodeDblClick(folder);
         expect(documentList.performNavigation).toHaveBeenCalled();
     });
 
@@ -452,7 +337,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'performNavigation').and.stub();
 
         documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
-        documentList.onItemDblClick(folder, null);
+        documentList.onNodeDblClick(folder);
 
         expect(documentList.performNavigation).not.toHaveBeenCalled();
     });
@@ -463,15 +348,16 @@ describe('DocumentList', () => {
 
         documentList.navigate = false;
         documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
-        documentList.onItemDblClick(folder, null);
+        documentList.onNodeDblClick(folder);
 
         expect(documentList.performNavigation).not.toHaveBeenCalled();
     });
 
     it('should perform navigation for folder node only', () => {
+        spyOn(documentList, 'getNodePath').and.returnValue('/path');
+
         let folder = new FolderNode();
         let file = new FileNode();
-        spyOn(documentList, 'getNodePath').and.returnValue('/path');
 
         expect(documentList.performNavigation(folder)).toBeTruthy();
         expect(documentList.performNavigation(file)).toBeFalsy();
@@ -488,7 +374,6 @@ describe('DocumentList', () => {
         expect(documentList.getNodePath(file)).toBe('/folder1/file.txt');
     });
 
-
     it('should require valid node for file preview', () => {
         let file = new FileNode();
         file.entry = null;
@@ -497,11 +382,11 @@ describe('DocumentList', () => {
         documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
         documentList.preview.subscribe(val => called = true);
 
-        documentList.onItemClick(file, null);
+        documentList.onNodeClick(file);
         expect(called).toBeFalsy();
 
         documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
-        documentList.onItemDblClick(file, null);
+        documentList.onNodeDblClick(file);
         expect(called).toBeFalsy();
     });
 
@@ -511,10 +396,10 @@ describe('DocumentList', () => {
         spyOn(documentList, 'performNavigation').and.stub();
 
         documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
-        documentList.onItemClick(folder, null);
+        documentList.onNodeClick(folder);
 
         documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
-        documentList.onItemDblClick(folder, null);
+        documentList.onNodeDblClick(folder);
 
         expect(documentList.performNavigation).not.toHaveBeenCalled();
     });
@@ -525,190 +410,13 @@ describe('DocumentList', () => {
         expect(documentList.displayFolderContent).toHaveBeenCalled();
     });
 
-    it('should generate thumbnail for unknown content', () => {
-        documentList.baseComponentPath = '/root';
-        let node = new FileNode();
-        node.entry.isFile = false;
-
-        expect(documentList.getThumbnailUrl(node)).toBe('/root/img/ft_ic_miscellaneous.svg');
-    });
-
-    it('should generate folder icon path', () => {
-        documentList.baseComponentPath = '/root';
-        let folder = new FolderNode();
-        expect(documentList.getThumbnailUrl(folder)).toBe('/root/img/ft_ic_folder.svg');
-    });
-
-    it('should generate file icon path based on mime type', () => {
-        let fileName = 'custom-icon.svg';
-        spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(fileName);
-        documentList.baseComponentPath = '/root';
-
-        let file = new FileNode();
-        file.entry.content.mimeType = 'text/plain';
-
-        expect(documentList.getThumbnailUrl(file)).toBe(`/root/img/${fileName}`);
-    });
-
-    it('should fallback to default icon for missing mime type', () => {
-        spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(null);
-        documentList.baseComponentPath = '/root';
-
-        let file = new FileNode();
-        file.entry.content.mimeType = null;
-
-        expect(documentList.getThumbnailUrl(file)).toBe('/root/img/ft_ic_miscellaneous.svg');
-    });
-
-    it('should fallback to default icon for unknown mime type', () => {
-        spyOn(alfrescoServiceMock, 'getMimeTypeIcon').and.returnValue(null);
-        documentList.baseComponentPath = '/root';
-
-        let file = new FileNode();
-        file.entry.content.mimeType = 'text/plain';
-
-        expect(documentList.getThumbnailUrl(file)).toBe('/root/img/ft_ic_miscellaneous.svg');
-    });
-
-    it('should resolve thumbnail url for a file', () => {
-        let url = 'http://<some url>';
-        spyOn(alfrescoServiceMock, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        documentList.thumbnails = true;
-
-        let file = new FileNode();
-        expect(documentList.getThumbnailUrl(file)).toBe(url);
-    });
-
-    it('should return no thumbnail url with missing service', () => {
-        let list = new DocumentList(null, null);
-        list.thumbnails = true;
-
-        let file = new FileNode();
-        expect(list.getThumbnailUrl(file)).toBeNull();
-    });
-
-    it('should sort on column header click', () => {
-        let col = new ContentColumnModel();
-        col.source = 'id';
-
-        spyOn(documentList, 'sort').and.callThrough();
-
-        documentList.onColumnHeaderClick(col);
-
-        expect(documentList.sorting).toEqual(
-            jasmine.objectContaining({
-                key: 'id',
-                direction: 'asc'
-            })
-        );
-        expect(documentList.sort).toHaveBeenCalled();
-    });
-
-    it('should invert sorting on column header click', () => {
-        let col = new ContentColumnModel();
-        col.source = 'id';
-
-        spyOn(documentList, 'sort').and.callThrough();
-
-        documentList.sorting = <ColumnSortingModel> { key: 'id', direction: 'asc' };
-        documentList.onColumnHeaderClick(col);
-
-        expect(documentList.sorting).toEqual(
-            jasmine.objectContaining({
-                key: 'id',
-                direction: 'desc'
-            })
-        );
-
-        documentList.onColumnHeaderClick(col);
-        expect(documentList.sorting).toEqual(
-            jasmine.objectContaining({
-                key: 'id',
-                direction: 'asc'
-            })
-        );
-
-        expect(documentList.sort).toHaveBeenCalledTimes(2);
-    });
-
-    it('should use ascending direction for different column header click', () => {
-        let col = new ContentColumnModel();
-        col.source = 'id';
-
-        spyOn(documentList, 'sort').and.callThrough();
-
-        documentList.sorting = <ColumnSortingModel> { key: 'col1', direction: 'desc' };
-        documentList.onColumnHeaderClick(col);
-
-        expect(documentList.sorting).toEqual(
-            jasmine.objectContaining({
-                key: 'id',
-                direction: 'asc'
-            })
-        );
-
-        expect(documentList.sort).toHaveBeenCalled();
-    });
-
-    it('should not sort by column header when instance is missing', () => {
-        spyOn(documentList, 'sort').and.callThrough();
-        documentList.onColumnHeaderClick(null);
-        expect(documentList.sort).not.toHaveBeenCalled();
-    });
-
-    it('should convert cell value to formatted date', () => {
-
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
-        let dateValue = 'Jul 15, 2015, 9:43:11 PM';
-
-        let file = new FileNode();
-        file.entry.createdAt = rawValue;
-
-        let col = new ContentColumnModel();
-        col.source = 'createdAt';
-        col.type = 'date';
-        col.format = 'medium'; // Jul 15, 2015, 9:43:11 PM
-
-        let value = documentList.getCellValue(file, col);
-        expect(value).toBe(dateValue);
-    });
-
-    it('should return date value as string', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
-
-        let file = new FileNode();
-        file.entry.createdAt = rawValue;
-
-        let col = new ContentColumnModel();
-        col.source = 'createdAt';
-        col.type = 'string';
-
-        let value = documentList.getCellValue(file, col);
-        expect(value).toBe(rawValue);
-    });
-
-    it('should convert cell value to thumbnail', () => {
-        let url = 'http://<address>';
-        spyOn(documentList, 'getThumbnailUrl').and.returnValue(url);
-
-        let file = new FileNode();
-
-        let col = new ContentColumnModel();
-        col.source = '$thumbnail';
-        col.type = 'image';
-
-        let value = documentList.getCellValue(file, col);
-        expect(value).toBe(url);
-    });
-
     it('should require path to display folder content', () => {
-        spyOn(alfrescoServiceMock, 'getFolder').and.callThrough();
+        spyOn(documentListService, 'getFolder').and.callThrough();
 
         documentList.displayFolderContent(null);
         documentList.displayFolderContent('');
 
-        expect(alfrescoServiceMock.getFolder).not.toHaveBeenCalled();
+        expect(documentListService.getFolder).not.toHaveBeenCalled();
     });
 
     it('should require node to resolve context menu actions', () => {
@@ -722,12 +430,12 @@ describe('DocumentList', () => {
 
     it('should fetch context menu actions for a file node', () => {
         let actionModel = {};
-        spyOn(documentList, 'getContentActions').and.returnValue([actionModel]);
+        spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
         let file = new FileNode();
         let actions = documentList.getContextActions(file);
 
-        expect(documentList.getContentActions).toHaveBeenCalledWith('document', 'menu');
+        expect(documentList.getNodeActions).toHaveBeenCalledWith(file);
         expect(actions.length).toBe(1);
         expect(actions[0].model).toBe(actionModel);
         expect(actions[0].node).toBe(file);
@@ -736,12 +444,12 @@ describe('DocumentList', () => {
 
     it('should fetch context menu actions for a folder node', () => {
         let actionModel = {};
-        spyOn(documentList, 'getContentActions').and.returnValue([actionModel]);
+        spyOn(documentList, 'getNodeActions').and.returnValue([actionModel]);
 
         let folder = new FolderNode();
         let actions = documentList.getContextActions(folder);
 
-        expect(documentList.getContentActions).toHaveBeenCalledWith('folder', 'menu');
+        expect(documentList.getNodeActions).toHaveBeenCalledWith(folder);
         expect(actions.length).toBe(1);
         expect(actions[0].model).toBe(actionModel);
         expect(actions[0].node).toBe(folder);
@@ -749,79 +457,24 @@ describe('DocumentList', () => {
     });
 
     it('should fetch no context menu actions for unknown type', () => {
-        spyOn(documentList, 'getContentActions').and.stub();
+        spyOn(documentList, 'getNodeActions').and.stub();
 
         let node = new FileNode();
         node.entry.isFile = false;
         node.entry.isFolder = false;
 
         let actions = documentList.getContextActions(node);
-
-        expect(documentList.getContentActions).not.toHaveBeenCalled();
         expect(actions).toBeNull();
     });
 
     it('should return null value when no content actions found', () => {
-        spyOn(documentList, 'getContentActions').and.returnValue([]);
+        spyOn(documentList, 'getNodeActions').and.returnValue([]);
 
         let file = new FileNode();
         let actions = documentList.getContextActions(file);
 
         expect(actions).toBeNull();
-        expect(documentList.getContentActions).toHaveBeenCalled();
-    });
-
-    it('should update error message when folder content display fails', () => {
-        let error = 'My Error';
-        alfrescoServiceMock.getFolderReject = true;
-        alfrescoServiceMock.getFolderRejectError = error;
-
-        documentList.displayFolderContent('/some/path');
-        expect(documentList.errorMessage).toBe(error);
-    });
-
-    it('should get object value via property path', () => {
-        let obj = {
-            name: {
-                firstName: '<name>'
-            }
-        };
-
-        expect(documentList.getObjectValue(obj, 'name.firstName')).toBe('<name>');
-    });
-
-    it('should not get object value via invalid path', () => {
-        expect(documentList.getObjectValue({}, 'some.missing.path')).toBeUndefined();
-    });
-
-    it('should log error when having date conversion issues', () => {
-
-        let value = '<wrong-date>';
-        let file = new FileNode();
-        file.entry.createdAt = value;
-
-        let col = new ContentColumnModel({
-            source: 'createdAt',
-            type: 'date',
-            format: 'medium'
-        });
-
-        spyOn(console, 'error').and.stub();
-
-        let result = documentList.getCellValue(file, col);
-
-        expect(result).toBe(value);
-        expect(console.error).toHaveBeenCalledWith(`DocumentList: error parsing date ${value} to format ${col.format}`);
-    });
-
-    it('should convert thumbnail if column source defined', () => {
-        let file = new FileNode();
-        let col = new ContentColumnModel({
-            source: 'name',
-            type: 'image'
-        });
-
-        expect(documentList.getCellValue(file, col)).toBe(file.entry.name);
+        expect(documentList.getNodeActions).toHaveBeenCalled();
     });
 
     it('should require current folder path to reload', () => {
@@ -839,41 +492,8 @@ describe('DocumentList', () => {
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
     });
 
-    it('should not sort empty page', () => {
-        let page = new PageNode();
-        spyOn(page.list.entries, 'sort').and.stub();
-
-        documentList.sort(page, null);
-        expect(page.list.entries.sort).not.toHaveBeenCalled();
-    });
-
-    it('should put folders to top on sort', () => {
-        let folder = new FolderNode();
-        let file1 = new FileNode('file1');
-        let file2 = new FileNode('file2');
-        let page = new PageNode([file1, file2, folder]);
-
-        // asc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'name',
-            direction: 'asc'
-        }));
-
-        expect(page.list.entries[0]).toBe(folder);
-        expect(page.list.entries[1]).toBe(file1);
-        expect(page.list.entries[2]).toBe(file2);
-
-        // desc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'name',
-            direction: 'desc'
-        }));
-
-        expect(page.list.entries[0]).toBe(folder);
-        expect(page.list.entries[1]).toBe(file2);
-        expect(page.list.entries[2]).toBe(file1);
-    });
-
+    // TODO: move to data adapter
+    /*
     it('should sort by dates up to ms', () => {
         let file1 = new FileNode();
         file1.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 1);
@@ -901,5 +521,6 @@ describe('DocumentList', () => {
         expect(page.list.entries[0]).toBe(file1);
         expect(page.list.entries[1]).toBe(file2);
     });
+    */
 
 });
