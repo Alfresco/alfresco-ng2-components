@@ -33,7 +33,7 @@ import {
 @Component({
     selector: 'alfresco-search-demo',
     template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
-               <input id="ticket" type="text" size="48" (change)="updateticket()" [(ngModel)]="ticket"><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
                <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">

@@ -16,9 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import {
-    AlfrescoContentService
-} from 'ng2-alfresco-core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class AlfrescoThumbnailService {
