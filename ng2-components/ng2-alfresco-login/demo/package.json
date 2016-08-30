@@ -67,7 +67,7 @@
       "ng2-translate": "2.2.2",
 
       "alfresco-js-api": "^0.3.0",
-      "ng2-alfresco-core": "^0.1.36",
+      "ng2-alfresco-core": "^0.3.0",
       "ng2-alfresco-login": "file:../"
     },
     "devDependencies": {
