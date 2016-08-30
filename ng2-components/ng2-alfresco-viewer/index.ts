@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { ViewerComponent } from './src/viewer.component';
+import { ViewerComponent } from './src/componets/viewer.component';
+import { RenderingQueueServices } from './src/services/rendering-queue.services';
 
 /**
  * ng2-alfresco-viewer, provide components to view files.
@@ -26,12 +27,18 @@ import { ViewerComponent } from './src/viewer.component';
  *          </alfresco-viewer>
  */
 
-export * from './src/viewer.component';
+export * from './src/componets/viewer.component';
+export * from './src/services/rendering-queue.services';
 
 export default {
-    components: [ViewerComponent]
+    components: [ViewerComponent],
+    directives: [RenderingQueueServices]
 };
 
 export const VIEWERCOMPONENT: [any] = [
     ViewerComponent
+];
+
+export const ALFRESCO_VIEWER_SERVICES: [any] = [
+    RenderingQueueServices
 ];

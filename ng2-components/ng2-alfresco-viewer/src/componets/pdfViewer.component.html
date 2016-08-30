@@ -1,0 +1,45 @@
+<!-- Start Pdf Canvas -->
+<div id="viewer-pdf-container" class="viewer-pdf-container" (keypress)=eventHandler() (window:resize)="onResize($event)">
+    <div id="viewer-viewerPdf" class="pdfViewer">
+        <div id="loader-container" class="loader-container">
+            <div class="loader-item">
+                <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                <div id="loader-text" class="loader-text">Loading <span>{{nameFile}}</span> {{laodingPercent}}%</div>
+            </div >
+        </div>
+    </div>
+</div>
+<!-- End Pdf Canvas -->
+
+
+<!-- Pagination toolbar start -->
+<div *ngIf="showToolbar" id="viewer-toolbar-pagination" class="viewer-toolbar-pagination mdl-cell--hide-tablet mdl-cell--hide-phone">
+    <div id="viewer-previous-page-button" class="button-page left" (click)="previousPage()">
+        <i class="icon material-icons">keyboard_arrow_left</i>
+    </div>
+
+    <div class="viewer-page-counter left" >
+        <input id="viewer-pagenumber-input"  #page
+               (keyup.enter)="inputPage(page.value)" class="viewer-pagenumber-input left" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="{{displayPage}}">
+        <div id="viewer-total-pages"  class="left viewer-total-pages">/ {{totalPages}}</div>
+    </div>
+
+    <div id="viewer-next-page-button" class="button-page left"  (click)="nextPage()" >
+        <i class="icon material-icons" >keyboard_arrow_right</i>
+    </div>
+</div>
+<!-- Pagination toolbar end -->
+
+<!-- Command toolbar start -->
+<div *ngIf="showToolbar"  id="viewer-toolbar-command" class="viewer-toolbar-command">
+    <div id="viewer-scale-page-button" class="button-page left" (click)="pageFit()">
+        <i class="icon material-icons">zoom_out_map</i>
+    </div>
+    <div id="viewer-zoom-in-button" class="button-page left" (click)="zoomIn()">
+        <i class="icon material-icons">zoom_in</i>
+    </div>
+    <div id="viewer-zoom-out-button" class="button-page left" (click)="zoomOut()">
+        <i class="icon material-icons">zoom_out</i>
+    </div>
+</div>
+<!-- Command toolbar end -->
