@@ -16,25 +16,22 @@
  */
 
 import { Control, Validators } from '@angular/common';
-import { Component, Input, Output, ElementRef, EventEmitter, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Input, Output, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchTermValidator } from './../forms/search-term-validator';
 
 declare let __moduleName: string;
-declare var componentHandler: any;
 
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-search-control',
-    styles: [
-    ],
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css'],
     directives: [AlfrescoSearchAutocompleteComponent],
     pipes: [AlfrescoPipeTranslate]
 })
-export class AlfrescoSearchControlComponent implements AfterViewInit {
+export class AlfrescoSearchControlComponent {
 
     @Input()
     searchTerm = '';
@@ -77,19 +74,13 @@ export class AlfrescoSearchControlComponent implements AfterViewInit {
 
         this.searchControl.valueChanges.map(value => this.searchControl.valid ? value : '')
             .debounceTime(400).distinctUntilChanged().subscribe(
-                (value: string) => {
-                    this.autocompleteSearchTerm = value;
-                    this.searchValid = this.searchControl.valid;
-                }
-            );
+            (value: string) => {
+                this.autocompleteSearchTerm = value;
+                this.searchValid = this.searchControl.valid;
+            }
+        );
 
         translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
-    }
-
-    ngAfterViewInit(): void {
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
     }
 
     getTextFieldClassName(): string {
