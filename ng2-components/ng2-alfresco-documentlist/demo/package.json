@@ -38,9 +38,9 @@
     "ng2-translate": "2.2.2",
     "intl": "1.2.4",
     "alfresco-js-api": "^0.3.0",
-    "ng2-alfresco-core": "^0.2.0",
-    "ng2-alfresco-documentlist": "^0.2.0",
-    "ng2-alfresco-datatable": "^0.2.0"
+    "ng2-alfresco-core": "^0.3.0",
+    "ng2-alfresco-documentlist": "^0.3.0",
+    "ng2-alfresco-datatable": "^0.3.0"
   },
   "devDependencies": {
     "concurrently": "2.0.0",

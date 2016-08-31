@@ -41,8 +41,7 @@
     "license-check": "1.1.5",
 
     "material-design-icons": "2.2.3",
-    "material-design-lite": "1.1.3",
-    "ng2-activiti-processlist": "^0.1.0"
+    "material-design-lite": "1.1.3"
   },
   "devDependencies": {
     "browser-sync": "2.10.0",
