@@ -29,9 +29,9 @@ import {
     selector: 'my-app',
     template: `
                <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
-               <input id="ticket" type="text" size="48" (change)="updateTicket();documentList.reload()" [(ngModel)]="ticket"><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="host" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
                     Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
