@@ -216,6 +216,16 @@ describe('ViewerComponent', () => {
             });
         });
 
+        it('if extension file is a video the the media player should be loaded', (done) => {
+            component.urlFile = 'fake-url-file.mp4';
+
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('media-player')).not.toBeNull();
+                done();
+            });
+        });
+
         it('if extension file is a not supported the not supported div should be loaded', (done) => {
             component.urlFile = 'fake-url-file.unsupported';
 
@@ -269,6 +279,28 @@ describe('ViewerComponent', () => {
             component.ngOnChanges().then(() => {
                 viewerComponentFixture.detectChanges();
                 expect(element.querySelector('#viewer-image')).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should display the media player if the file identified by mimetype is a media when the filename has wrong extension', (done) => {
+            component.urlFile = 'content.bin';
+            component.mimeType = 'video/mp4';
+
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('media-player')).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should display the media player if the file identified by mimetype is a media when the filename has no extension', (done) => {
+            component.urlFile = 'content';
+            component.mimeType = 'video/mp4';
+
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('media-player')).not.toBeNull();
                 done();
             });
         });
