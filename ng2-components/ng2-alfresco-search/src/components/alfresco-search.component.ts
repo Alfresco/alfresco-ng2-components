@@ -64,7 +64,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     route: any[] = [];
 
-    constructor(private _alfrescoSearchService: AlfrescoSearchService,
+    constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService,
                 @Optional() params: RouteParams) {
@@ -118,7 +118,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      */
     public displaySearchResults(searchTerm): void {
         if (searchTerm !== null) {
-            this._alfrescoSearchService
+            this.alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
                     results => {

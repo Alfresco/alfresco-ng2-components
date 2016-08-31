@@ -52,10 +52,7 @@ declare let __moduleName: string;
 })
 export class SearchComponent {
 
-    previewContentUrl: string;
-    previewName: string;
-    previewMimeType: string;
-    previewActive: boolean = false;
+    fileShowed: boolean = false;
     fileNodeId: string;
 
     constructor(public contentService: AlfrescoContentService) {
@@ -64,7 +61,7 @@ export class SearchComponent {
     onFileClicked(event) {
         if (event.value.entry.isFile) {
             this.fileNodeId = event.value.entry.id;
-            this.previewActive = true;
+            this.fileShowed = true;
         }
     }
 }

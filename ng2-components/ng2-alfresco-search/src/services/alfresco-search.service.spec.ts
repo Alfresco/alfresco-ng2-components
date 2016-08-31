@@ -15,17 +15,76 @@
  * limitations under the License.
  */
 
-import {
-    describe,
-    beforeEach
-} from '@angular/core/testing';
-import {AlfrescoSearchService} from './alfresco-search.service';
+import { it, describe, beforeEach, inject, beforeEachProviders } from '@angular/core/testing';
+import { AlfrescoSearchService } from './alfresco-search.service';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+
+declare let jasmine: any;
 
 describe('AlfrescoSearchService', () => {
 
-    let service: AlfrescoSearchService;
+    let service: any;
 
-    beforeEach(() => {
-        service = new AlfrescoSearchService(null);
+    let fakeSearch = {
+        list: {
+            pagination: {
+                count: 1,
+                hasMoreItems: false,
+                totalItems: 1,
+                skipCount: 0,
+                maxItems: 100
+            },
+            entries: [
+                {
+                    entry: {
+                        id: '123',
+                        name: 'MyDoc',
+                        content: {
+                            mimetype: 'text/plain'
+                        },
+                        createdByUser: {
+                            displayName: 'John Doe'
+                        },
+                        modifiedByUser: {
+                            displayName: 'John Doe'
+                        }
+                    }
+                }
+            ]
+        }
+    };
+
+    beforeEachProviders(() => {
+        return [
+            AlfrescoSearchService,
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService
+        ];
     });
+
+    beforeEach(inject([AlfrescoSearchService], (alfrescoSearchService: AlfrescoSearchService) => {
+        jasmine.Ajax.install();
+        service = alfrescoSearchService;
+    }));
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
+    });
+
+    it('should return search list', (done) => {
+        service.getSearchNodesPromise('MyDoc').then(
+            (res) => {
+                expect(res).toBeDefined();
+                expect(res.list.entries[0].entry.name).toEqual('MyDoc');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeSearch)
+        });
+    });
+
 });

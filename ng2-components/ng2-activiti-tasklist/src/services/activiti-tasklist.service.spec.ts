@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import {it, describe, inject, beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {ActivitiTaskListService} from './activiti-tasklist.service';
-import {AlfrescoSettingsService, AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {TaskDetailsModel} from '../models/task-details.model';
-import {Comment} from '../models/comment.model';
+import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
+import { ActivitiTaskListService } from './activiti-tasklist.service';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { Comment } from '../models/comment.model';
 
 declare let AlfrescoApi: any;
 declare let jasmine: any;
