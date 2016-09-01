@@ -492,35 +492,11 @@ describe('DocumentList', () => {
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
     });
 
-    // TODO: move to data adapter
-    /*
-    it('should sort by dates up to ms', () => {
-        let file1 = new FileNode();
-        file1.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 1);
-
-        let file2 = new FileNode();
-        file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
-
-        let page = new PageNode([file1, file2]);
-
-        // desc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'dateProp',
-            direction: 'desc'
-        }));
-
-        expect(page.list.entries[0]).toBe(file2);
-        expect(page.list.entries[1]).toBe(file1);
-
-        // asc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'dateProp',
-            direction: 'asc'
-        }));
-
-        expect(page.list.entries[0]).toBe(file1);
-        expect(page.list.entries[1]).toBe(file2);
+    it('should enforce single-click on mobile browser', () => {
+        spyOn(documentList, 'isMobile').and.returnValue(true);
+        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.ngOnInit();
+        expect(documentList.isMobile).toHaveBeenCalled();
+        expect(documentList.navigationMode).toBe(DocumentList.SINGLE_CLICK_NAVIGATION);
     });
-    */
-
 });

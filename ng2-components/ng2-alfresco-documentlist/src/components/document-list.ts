@@ -186,7 +186,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
         // Automatically enforce single-click navigation for mobile browsers
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        if (this.isMobile()) {
             this.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
         }
     }
@@ -211,6 +211,10 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
+    }
+
+    isMobile(): boolean {
+        return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     }
 
