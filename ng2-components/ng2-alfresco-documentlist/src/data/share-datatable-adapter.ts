@@ -181,32 +181,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     setSorting(sorting: DataSorting): void {
         this.sorting = sorting;
-
-        if (sorting && sorting.key && this.rows && this.rows.length > 0) {
-            this.rows.sort((a: ShareDataRow, b: ShareDataRow) => {
-                if (a.node.entry.isFolder !== b.node.entry.isFolder) {
-                    return a.node.entry.isFolder ? -1 : 1;
-                }
-
-                let left = a.getValue(sorting.key);
-                if (left) {
-                    left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
-                } else {
-                    left = '';
-                }
-
-                let right = b.getValue(sorting.key);
-                if (right) {
-                    right = (right instanceof Date) ? right.valueOf().toString() : right.toString();
-                } else {
-                    right = '';
-                }
-
-                return sorting.direction === 'asc'
-                    ? left.localeCompare(right)
-                    : right.localeCompare(left);
-            });
-        }
+        this.sortRows(this.rows, this.sorting);
     }
 
     sort(key?: string, direction?: string): void {
@@ -243,6 +218,34 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         this.imageResolver = resolver;
     }
 
+    private sortRows(rows: DataRow[], sorting: DataSorting) {
+        if (sorting && sorting.key && rows && rows.length > 0) {
+            rows.sort((a: ShareDataRow, b: ShareDataRow) => {
+                if (a.node.entry.isFolder !== b.node.entry.isFolder) {
+                    return a.node.entry.isFolder ? -1 : 1;
+                }
+
+                let left = a.getValue(sorting.key);
+                if (left) {
+                    left = (left instanceof Date) ? left.valueOf().toString() : left.toString();
+                } else {
+                    left = '';
+                }
+
+                let right = b.getValue(sorting.key);
+                if (right) {
+                    right = (right instanceof Date) ? right.valueOf().toString() : right.toString();
+                } else {
+                    right = '';
+                }
+
+                return sorting.direction === 'asc'
+                    ? left.localeCompare(right)
+                    : right.localeCompare(left);
+            });
+        }
+    }
+
     private loadPage(page: NodePaging) {
         this.page = page;
         this.resetPagination();
@@ -260,11 +263,16 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
                 // Sort by first sortable or just first column
                 if (this.columns && this.columns.length > 0) {
-                    let sortable = this.columns.filter(c => c.sortable);
-                    if (sortable.length > 0) {
-                        this.sort(sortable[0].key, 'asc');
+                    let sorting = this.getSorting();
+                    if (sorting) {
+                        this.sortRows(rows, sorting);
                     } else {
-                        this.sort(this.columns[0].key, 'asc');
+                        let sortable = this.columns.filter(c => c.sortable);
+                        if (sortable.length > 0) {
+                            this.sort(sortable[0].key, 'asc');
+                        } else {
+                            this.sort(this.columns[0].key, 'asc');
+                        }
                     }
                 }
             }
