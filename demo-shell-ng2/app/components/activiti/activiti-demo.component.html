@@ -22,7 +22,8 @@
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
                         <span>Task Details</span>
-                        <activiti-task-details [taskId]="currentTaskId" #activitidetails></activiti-task-details>
+                        <activiti-task-details [taskId]="currentTaskId" (formCompleted)="onFormCompleted($event)"
+                                               #activitidetails></activiti-task-details>
                     </div>
                 </div>
             </div>

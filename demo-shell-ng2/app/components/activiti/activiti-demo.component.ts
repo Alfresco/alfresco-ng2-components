@@ -109,6 +109,12 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.activitiprocesslist.reload();
     }
 
+    onFormCompleted(form) {
+        this.activititasklist.load(this.taskFilter);
+        this.currentTaskId = null;
+        this.activitidetails.loadDetails(this.currentTaskId);
+    }
+
     ngAfterViewChecked() {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
