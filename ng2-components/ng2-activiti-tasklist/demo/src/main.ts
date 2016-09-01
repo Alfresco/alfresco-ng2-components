@@ -15,69 +15,70 @@
  * limitations under the License.
  */
 
-import {Component, OnInit} from '@angular/core';
-import {ALFRESCO_CORE_PROVIDERS, AlfrescoAuthenticationService, AlfrescoSettingsService} from 'ng2-alfresco-core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {ActivitiTaskList} from 'ng2-activiti-tasklist';
-import {ObjectDataTableAdapter, ObjectDataColumn} from 'ng2-alfresco-datatable';
-import {HTTP_PROVIDERS} from '@angular/http';
-
-declare let AlfrescoApi: any;
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ALFRESCO_CORE_PROVIDERS, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
 
 @Component({
     selector: 'activiti-tasklist-demo',
-    template: `label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+    template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <label for="token"><b>Insert the ip of your Activiti instance:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="bpmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
                     Authentication failed to ip {{ bpmHost }} with user: admin, admin, you can still try to add a valid token to perform
                     operations.
                </div>
                <hr>
-                <label for="token"><b>Insert a scriptPath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="scriptPath"><br>
-                <label for="token"><b>Insert a contextRoot</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="contextRoot"><br>
-                <label for="token"><b>Insert a servicePath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
         <div class="container" *ngIf="authenticated">
-            <activiti-tasklist></activiti-tasklist>
+            <span>Task Filters</span>
+            <activiti-filters (filterClick)="onFilterClick($event)"></activiti-filters>
+            <span>Tasks</span>
+            <activiti-tasklist [taskFilter]="taskFilter" [schemaColumn]="schemaColumn"
+                                               (rowClick)="onRowClick($event)" #activititasklist></activiti-tasklist>
+            <span>Task Details</span>
+            <activiti-task-details [taskId]="currentTaskId" #activitidetails></activiti-task-details>
         </div>`,
     styles: [
         ':host > .container {padding: 10px}',
         '.p-10 { padding: 10px; }'
     ],
-    directives: [ActivitiTaskList]
+    directives: [ALFRESCO_TASKLIST_DIRECTIVES]
 })
 class ActivitiTaskListDemo implements OnInit {
+
+    @ViewChild('activititasklist')
+    activititasklist: any;
+
+    @ViewChild('activitidetails')
+    activitidetails: any;
 
     bpmHost: string = 'http://127.0.0.1:9999';
 
     token: string;
 
-    data: ObjectDataTableAdapter;
-
     authenticated: boolean;
+
+    schemaColumn: any [] = [];
+
+    currentTaskId: string;
+
+    taskFilter: any;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService) {
         this.settingsService.setProviders('BPM');
-        this.data = new ObjectDataTableAdapter([], []);
     }
 
     ngOnInit() {
         this.login();
 
-        let schema = [
-            {type: 'text', key: 'id', title: 'Id'},
-            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-            {type: 'text', key: 'formKey', title: 'Form Key', sortable: true},
-            {type: 'text', key: 'created', title: 'Created', sortable: true}
+        this.schemaColumn = [
+            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
         ];
-
-        let columns = schema.map(col => new ObjectDataColumn(col));
-        this.data.setColumns(columns);
     }
 
     login() {
@@ -92,9 +93,20 @@ class ActivitiTaskListDemo implements OnInit {
                 this.authenticated = false;
             });
     }
+
+    onFilterClick(event: any) {
+        this.taskFilter = event;
+        this.activititasklist.load(this.taskFilter);
+    }
+
+    onRowClick(taskId) {
+        this.currentTaskId = taskId;
+        this.activitidetails.loadDetails(this.currentTaskId);
+    }
 }
 
 bootstrap(ActivitiTaskListDemo, [
     HTTP_PROVIDERS,
+    ATIVITI_FORM_PROVIDERS,
     ALFRESCO_CORE_PROVIDERS]
 );
