@@ -18,6 +18,7 @@
 import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject } from '@angular/core';
 import { PdfViewerComponent } from './pdfViewer.component';
 import { ImgViewerComponent } from './imgViewer.component';
+import { MediaPlayerComponent } from './mediaPlayer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DOCUMENT } from '@angular/platform-browser';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
@@ -27,7 +28,7 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-viewer',
-    directives: [PdfViewerComponent, ImgViewerComponent, NotSupportedFormat],
+    directives: [PdfViewerComponent, ImgViewerComponent, NotSupportedFormat, MediaPlayerComponent],
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })
@@ -147,12 +148,22 @@ export class ViewerComponent {
     }
 
     /**
-     * Check if the content is an image thorugh the extension or mime type
+     * Check if the content is an image through the extension or mime type
      *
      * @returns {boolean}
      */
     private isImage() {
         return this.isImageExtension() || this.isImageMimeType();
+    }
+
+
+    /**
+     * Check if the content is a media through the extension or mime type
+     *
+     * @returns {boolean}
+     */
+    private isMedia() {
+        return this.isMediaExtension() || this.isMediaMimeType();
     }
 
     /**
@@ -163,6 +174,24 @@ export class ViewerComponent {
     private isImageExtension() {
         return this.extension === 'png' || this.extension === 'jpg' ||
             this.extension === 'jpeg' || this.extension === 'gif' || this.extension === 'bmp';
+    }
+
+    /**
+     * check if the current file has an image-based mimetype
+     *
+     * @returns {boolean}
+     */
+    private isMediaMimeType() {
+        return this.mimeType && this.mimeType.indexOf('video/') === 0;
+    }
+
+    /**
+     * check if the current file is a supported media extension
+     *
+     * @returns {boolean}
+     */
+    private isMediaExtension() {
+        return this.extension === 'mp4' || this.extension === 'WebM' || this.extension === 'Ogg';
     }
 
     /**
@@ -189,7 +218,7 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     supportedExtension() {
-        return this.isImage() || this.isPdf();
+        return this.isImage() || this.isPdf() || this.isMedia();
     }
 
     /**
