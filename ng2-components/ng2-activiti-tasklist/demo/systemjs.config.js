@@ -13,6 +13,7 @@
         'ng2-translate': 'node_modules/ng2-translate',
         'ng2-alfresco-core': 'node_modules/ng2-alfresco-core/dist',
         'ng2-alfresco-datatable': 'node_modules/ng2-alfresco-datatable/dist',
+        'ng2-activiti-form': 'node_modules/ng2-activiti-form/dist',
         'ng2-activiti-tasklist': 'node_modules/ng2-activiti-tasklist/dist'
     };
     // packages tells the System loader how to load when no filename and/or no extension
@@ -24,6 +25,7 @@
         'ng2-translate': { defaultExtension: 'js' },
         'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js' },
         'ng2-alfresco-datatable': { main: 'index.js', defaultExtension: 'js' },
+        'ng2-activiti-form': { main: 'index.js', defaultExtension: 'js' },
         'ng2-activiti-tasklist': { main: 'index.js', defaultExtension: 'js' }
     };
     var ngPackageNames = [
