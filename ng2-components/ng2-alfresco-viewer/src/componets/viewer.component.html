@@ -43,9 +43,8 @@
                         <!--</button>-->
                     <!--</div>-->
 
-                    <div *ngIf="isLoaded()" class="center-element mdl-cell mdl-cell--12-col" >
+                    <div  id="viewer-content-container" *ngIf="isLoaded()" class="center-element mdl-cell mdl-cell--12-col" >
 
-                        <div id="viewer-content-container" class="viewer-content-container mdl-cell" >
                         <!-- Start View Switch-->
                             <div *ngIf="isPdf()">
                                 <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFileContent" [nameFile]="displayName" ></pdf-viewer>
@@ -60,7 +59,6 @@
                                 <not-supported-format [urlFile]="urlFileContent" [nameFile]="displayName" ></not-supported-format>
                             </div>
                         <!-- End View Switch -->
-                        </div>
 
                     </div>
 
