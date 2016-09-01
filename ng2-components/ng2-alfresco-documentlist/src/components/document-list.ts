@@ -77,7 +77,7 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     navigate: boolean = true;
 
     @Input()
-    navigationMode: string = 'dblclick'; // click|dblclick
+    navigationMode: string = DocumentList.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
     @Input()
     thumbnails: boolean = false;
@@ -184,6 +184,11 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         this.data.thumbnails = this.thumbnails;
         this.data.maxItems = this.pageSize;
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
+
+        // Automatically enforce single-click navigation for mobile browsers
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            this.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        }
     }
 
     ngAfterContentInit() {
