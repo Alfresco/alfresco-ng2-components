@@ -125,6 +125,8 @@ export class ActivitiTaskDetails implements OnInit {
                     console.log(this.taskDetails);
                 }
             );
+        } else {
+            this.taskDetails = null;
         }
     }
 
