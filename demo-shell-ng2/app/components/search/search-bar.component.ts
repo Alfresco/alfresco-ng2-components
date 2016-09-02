@@ -32,6 +32,7 @@ export class SearchBarComponent {
 
     fileNodeId: string;
     fileShowed: boolean = false;
+    searchTerm: string = '';
 
     @Output()
     expand = new EventEmitter();
@@ -48,6 +49,11 @@ export class SearchBarComponent {
             this.fileNodeId = event.value.entry.id;
             this.fileShowed = true;
         }
+    }
+
+    searchTermChange(event) {
+        console.log('Search term changed', event);
+        this.searchTerm = event.value;
     }
 
     onExpandToggle(event) {

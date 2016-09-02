@@ -26,24 +26,7 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-search',
-    styles: [`
-        :host .mdl-data-table caption {
-            margin: 0 0 16px 0;
-            text-align: left;
-        }
-        :host .mdl-data-table td {
-            max-width: 0;
-            white-space: nowrap;
-        }
-        :host .mdl-data-table td.col-mimetype-icon {
-            width: 24px;
-        }
-        :host .col-display-name {
-            min-width: 250px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    `],
+    styleUrls: ['./alfresco-search.component.css'],
     templateUrl: './alfresco-search.component.html',
     providers: [AlfrescoSearchService],
     pipes: [AlfrescoPipeTranslate]
@@ -57,6 +40,9 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    resultsEmitter = new EventEmitter();
 
     results: any;
 
@@ -84,7 +70,9 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes): void {
-        this.displaySearchResults(this.searchTerm);
+        if (changes.searchTerm) {
+            this.displaySearchResults(changes.searchTerm);
+        }
     }
 
     /**
@@ -123,6 +111,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                 .subscribe(
                     results => {
                         this.results = results.list.entries;
+                        this.resultsEmitter.emit(this.results);
                         this.errorMessage = null;
                     },
                     error => {
