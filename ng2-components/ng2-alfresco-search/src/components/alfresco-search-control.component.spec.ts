@@ -16,133 +16,97 @@
  */
 
 import { provide } from '@angular/core';
-import { it, describe, expect, inject, beforeEachProviders } from '@angular/core/testing';
+import { it, describe, expect, inject, beforeEachProviders, beforeEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
-import { SearchServiceMock } from './../assets/alfresco-search.service.mock';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
-import {
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoTranslationService
+} from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
 
 describe('AlfrescoSearchControlComponent', () => {
 
+    let alfrescoSearchControlComponentFixture, element, component;
+
     beforeEachProviders(() => {
         return [
-            provide(AlfrescoSearchService, {useClass: SearchServiceMock}),
-            provide(AlfrescoThumbnailService, {}),
+            AlfrescoSearchService,
             provide(AlfrescoTranslationService, {useClass: TranslationMock}),
-            provide(AlfrescoSettingsService, {}),
-            provide(AlfrescoAuthenticationService, {}),
-            provide(AlfrescoContentService, {})
+            AlfrescoThumbnailService,
+            AlfrescoSettingsService,
+            AlfrescoAuthenticationService,
+            AlfrescoContentService
         ];
     });
 
-    it('should setup i18n folder', () => {
+    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(AlfrescoSearchControlComponent)
+            .then(fixture => {
+                alfrescoSearchControlComponentFixture = fixture;
+                element = alfrescoSearchControlComponentFixture.nativeElement;
+                component = alfrescoSearchControlComponentFixture.componentInstance;
+            });
+    }));
 
+    it('should setup i18n folder', () => {
         let translation = jasmine.createSpyObj('AlfrescoTranslationService', [
             'addTranslationFolder'
         ]);
 
         let alfrescoSearchControlComponent = new AlfrescoSearchControlComponent(translation);
         expect(alfrescoSearchControlComponent).toBeDefined();
-
     });
 
-    it('should emit searchChange when search term changed',
-        inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(AlfrescoSearchControlComponent)
-                .then((componentFixture) => {
-                    componentFixture.componentInstance.searchTerm = 'customSearchTerm';
-                    componentFixture.detectChanges();
-                    componentFixture.componentInstance.searchChange.subscribe(e => {
-                        expect(e.value).toBe('customSearchTerm');
-                    });
-                });
-        }));
+    it('should emit searchChange when search term changed', () => {
+        alfrescoSearchControlComponentFixture.componentInstance.searchTerm = 'customSearchTerm';
+        alfrescoSearchControlComponentFixture.detectChanges();
+        alfrescoSearchControlComponentFixture.componentInstance.searchChange.subscribe(e => {
+            expect(e.value).toBe('customSearchTerm');
+        });
+    });
 
     describe('Component rendering', () => {
 
-        it('should display a text input field by default',
-            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-                return tcb
-                    .createAsync(AlfrescoSearchControlComponent)
-                    .then((componentFixture) => {
-                        const element = componentFixture.nativeElement;
-                        componentFixture.detectChanges();
-                        expect(element.querySelectorAll('input[type="text"]').length).toBe(1);
-                    });
-            })
-        );
+        it('should display a text input field by default', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            expect(element.querySelectorAll('input[type="text"]').length).toBe(1);
+        });
 
-        it('should display a search input field when specified',
-            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-                return tcb.createAsync(AlfrescoSearchControlComponent).then((componentFixture) => {
-                    const element = componentFixture.nativeElement;
-                    componentFixture.componentInstance.inputType = 'search';
-                    componentFixture.detectChanges();
-                    expect(element.querySelectorAll('input[type="search"]').length).toBe(1);
-                });
-            }));
+        it('should display a search input field when specified', () => {
+            alfrescoSearchControlComponentFixture.componentInstance.inputType = 'search';
+            alfrescoSearchControlComponentFixture.detectChanges();
+            expect(element.querySelectorAll('input[type="search"]').length).toBe(1);
+        });
 
-        it('should set browser autocomplete to off by default',
-            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-                return tcb
-                    .createAsync(AlfrescoSearchControlComponent)
-                    .then((componentFixture) => {
-                        const element = componentFixture.nativeElement;
-                        componentFixture.detectChanges();
-                        let attr = element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete');
-                        expect(attr).toBe('off');
-                });
-            })
-        );
+        it('should set browser autocomplete to off by default', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let attr = element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete');
+            expect(attr).toBe('off');
+        });
 
-        it('should set browser autocomplete to on when configured',
-            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-                return tcb.createAsync(AlfrescoSearchControlComponent).then((componentFixture) => {
-                    const element = componentFixture.nativeElement;
-                    componentFixture.componentInstance.autocomplete = true;
-                    componentFixture.detectChanges();
-                    expect(element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete'))
-                        .toBe('on');
-                });
-            }));
+        it('should set browser autocomplete to on when configured', () => {
+            alfrescoSearchControlComponentFixture.componentInstance.autocomplete = true;
+            alfrescoSearchControlComponentFixture.detectChanges();
+            expect(element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete')).toBe('on');
+        });
 
-        it('should show an expanding control by default',
-            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-                return tcb
-                    .createAsync(AlfrescoSearchControlComponent)
-                    .then((componentFixture) => {
-                        const element = componentFixture.nativeElement;
-                        componentFixture.detectChanges();
-                        expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(1);
-                        expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(1);
-                        expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(1);
-                });
-            })
-        );
+        it('should show an expanding control by default', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(1);
+            expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(1);
+            expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(1);
+        });
 
-        it('should show a normal non-expanding control when configured',
-            inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-                return tcb
-                    .createAsync(AlfrescoSearchControlComponent)
-                    .then((componentFixture) => {
-                        const element = componentFixture.nativeElement;
-                        componentFixture.detectChanges();
-                        componentFixture.componentInstance.expandable = false;
-                        componentFixture.detectChanges();
-                        expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(0);
-                        expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(0);
-                        expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(0);
-                });
-            })
-        );
+        it('should show a normal non-expanding control when configured', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            alfrescoSearchControlComponentFixture.componentInstance.expandable = false;
+            alfrescoSearchControlComponentFixture.detectChanges();
+            expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(0);
+            expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(0);
+            expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(0);
+        });
     });
 });
