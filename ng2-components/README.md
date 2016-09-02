@@ -43,14 +43,12 @@
 - [Login](ng2-alfresco-login/README.md)
 - [Upload](ng2-alfresco-upload/README.md)
 - [Webscript Viewer](ng2-alfresco-webscript/README.md)
+- 
+## BPM components
+
 - [Activiti Forms](ng2-activiti-form/README.md)
 - [Activiti Process](ng2-activiti-processlist/README.md)
 - [Activiti Tasks](ng2-activiti-tasklist/README.md)
-
-## BPM components
-
-- [ProcessList](ng2-activiti-processlist/README.md)
-- [Form](ng2-activiti-form/README.md)
 
 You can browse all the components at the following address:
 
