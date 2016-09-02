@@ -59,75 +59,75 @@ describe('ViewerComponent', () => {
     });
 
     describe('View', () => {
-        it('shadow overlay should be present if is overlay mode', () => {
-            expect(element.querySelector('#viewer-shadow-transparent')).not.toBeNull();
-        });
 
-        it('header should be present if is overlay mode', () => {
-            expect(element.querySelector('header')).not.toBeNull();
-        });
+        describe('Overlay mode true', () => {
 
-        it('header should be NOT be present if is not overlay mode', () => {
-            component.overlayMode = false;
-
-            viewerComponentFixture.detectChanges();
-
-            expect(element.querySelector('header')).toBeNull();
-        });
-
-        it('Name File should be present if is overlay mode ', () => {
-            component.overlayMode = true;
-
-            component.ngOnChanges().then(() => {
+            beforeEach(() => {
+                component.overlayMode = true;
                 viewerComponentFixture.detectChanges();
-                expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-test-file.pdf');
+            });
+
+            it('shadow overlay should be present if is overlay mode', () => {
+                expect(element.querySelector('#viewer-shadow-transparent')).not.toBeNull();
+            });
+
+            it('header should be present if is overlay mode', () => {
+                expect(element.querySelector('header')).not.toBeNull();
+            });
+
+            it('Name File should be present if is overlay mode ', () => {
+                component.ngOnChanges().then(() => {
+                    viewerComponentFixture.detectChanges();
+                    expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-test-file.pdf');
+                });
+            });
+
+            it('Close button should be present if overlay mode', () => {
+                expect(element.querySelector('#viewer-close-button')).not.toBeNull();
+            });
+
+            it('Click on close button should hide the viewer', () => {
+                element.querySelector('#viewer-close-button').click();
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('#viewer-main-container')).toBeNull();
+            });
+
+            it('Esc button should hide the viewer', () => {
+                EventMock.keyDown(27);
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('#viewer-main-container')).toBeNull();
+            });
+
+            it('all-space class should not be present if is in overlay mode', () => {
+                expect(element.querySelector('#viewer').getAttribute('class')).toBeNull();
             });
         });
 
-        it('Close button should be present if overlay mode', () => {
-            component.overlayMode = true;
+        describe('Overlay mode false', () => {
 
-            viewerComponentFixture.detectChanges();
+            beforeEach(() => {
+                component.overlayMode = false;
+                viewerComponentFixture.detectChanges();
+            });
 
-            expect(element.querySelector('#viewer-close-button')).not.toBeNull();
+            it('header should be NOT be present if is not overlay mode', () => {
+                expect(element.querySelector('header')).toBeNull();
+            });
+
+            it('Close button should be not present if is not overlay mode', () => {
+                expect(element.querySelector('#viewer-close-button')).toBeNull();
+            });
+
+            it('Esc button should not  hide the viewerls if is not overlay mode', () => {
+                EventMock.keyDown(27);
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('#viewer-main-container')).not.toBeNull();
+            });
+
+            it('all-space class should be present if is not overlay mode', () => {
+                expect(element.querySelector('#viewer').getAttribute('class')).toEqual('all-space');
+            });
         });
-
-        it('Close button should be not present if is not overlay mode', () => {
-            component.overlayMode = false;
-
-            viewerComponentFixture.detectChanges();
-
-            expect(element.querySelector('#viewer-close-button')).toBeNull();
-        });
-
-        it('Click on close button should hide the viewer', () => {
-            component.overlayMode = true;
-
-            viewerComponentFixture.detectChanges();
-            element.querySelector('#viewer-close-button').click();
-            viewerComponentFixture.detectChanges();
-            expect(element.querySelector('#viewer-main-container')).toBeNull();
-
-        });
-
-        it('Esc button should not  hide the viewerls if is not overlay mode', () => {
-            component.overlayMode = false;
-
-            viewerComponentFixture.detectChanges();
-            EventMock.keyDown(27);
-            viewerComponentFixture.detectChanges();
-            expect(element.querySelector('#viewer-main-container')).not.toBeNull();
-        });
-
-        it('Esc button should hide the viewer', () => {
-            component.overlayMode = true;
-
-            viewerComponentFixture.detectChanges();
-            EventMock.keyDown(27);
-            viewerComponentFixture.detectChanges();
-            expect(element.querySelector('#viewer-main-container')).toBeNull();
-        });
-
     });
 
     describe('Attribute', () => {

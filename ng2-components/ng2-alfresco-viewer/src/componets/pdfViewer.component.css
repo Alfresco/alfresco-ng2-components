@@ -32,7 +32,7 @@
     top: 80px;
     right:35px;
     width:auto;
-    position:fixed;
+    position:absolute;
     border-radius: 10px;
     background: #3E3E3E;
     color: white;
@@ -44,7 +44,7 @@
     top: 80px;
     left:35px;
     width:auto;
-    position:fixed;
+    position:absolute;
     border-radius: 10px;
     background: #3E3E3E;
     color: white;
@@ -93,5 +93,4 @@
     cursor: pointer;
     background: grey;
     border-radius: 24px;
-
 }
