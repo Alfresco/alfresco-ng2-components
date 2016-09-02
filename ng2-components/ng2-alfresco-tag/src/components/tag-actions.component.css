@@ -1,0 +1,23 @@
+.tag-container {
+    width: 300px;
+}
+
+.tag-element {
+    padding: 0px 0px 0px 9px!important;
+}
+
+.tag-input {
+    float: left;
+    margin-left: 11px!important;
+}
+
+.tag-container-input{
+    padding-top: 11px;
+    width: 190px;
+    float: left;
+    margin-right: 15px;
+}
+
+.tag-button{
+    float:left
+}

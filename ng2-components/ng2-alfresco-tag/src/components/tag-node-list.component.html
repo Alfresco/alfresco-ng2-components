@@ -1,0 +1,8 @@
+<div class="tag-list-container">
+    <ul class="tags">
+        <li *ngFor="let currentEntry of tagsEntries">
+            <a href="#" class="tag-name">{{currentEntry.entry.tag}}</a>
+            <div  class="tag-delete" (click)="removeTag(currentEntry.entry.id)" ><i class="material-icons delete-icon">close</i></div>
+        </li>
+    </ul>
+</div>
