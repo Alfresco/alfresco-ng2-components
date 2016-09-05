@@ -33,7 +33,7 @@ export class FilterModel {
         this.name = name;
         this.recent = recent;
         this.icon = icon;
-        this.filter = new FilterParamsModel(query, state, assignment, appDefinitionId);
+        this.filter = new FilterParamsModel(assignment, state, query, appDefinitionId);
     }
 }
 
@@ -45,15 +45,25 @@ export class FilterModel {
  * @returns {FilterModel} .
  */
 export class FilterParamsModel {
-    name: string;
-    state: string;
-    assignment: string;
     appDefinitionId: string;
+    processInstanceId: string;
+    processDefinitionId: string;
+    text: string;
+    assignment: string;
+    state: string;
+    sort: string;
+    page: number = 0;
+    size: number = 25;
 
-    constructor(query: string, state: string, assignment: string, appDefinitionId?: string) {
-        this.name = query;
-        this.state = state;
-        this.assignment = assignment;
+    constructor(assignment: string, state: string, text: string, appDefinitionId?: string, processInstanceId?: string,
+                processDefinitionId?: string, page?: number, size?: number) {
         this.appDefinitionId = appDefinitionId;
+        this.processInstanceId = processInstanceId;
+        this.processDefinitionId = processDefinitionId;
+        this.text = text;
+        this.assignment = assignment;
+        this.state = state;
+        this.page = page;
+        this.size = size;
     }
 }
