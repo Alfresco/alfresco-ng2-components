@@ -21,7 +21,12 @@ import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoTranslationService
+import {
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
@@ -36,6 +41,7 @@ describe('AlfrescoSearchControlComponent', () => {
             provide(AlfrescoTranslationService, {useClass: TranslationMock}),
             AlfrescoThumbnailService,
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService,
             AlfrescoContentService
         ];

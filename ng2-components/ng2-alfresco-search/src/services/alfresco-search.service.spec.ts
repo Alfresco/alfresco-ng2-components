@@ -17,7 +17,7 @@
 
 import { it, describe, beforeEach, inject, beforeEachProviders } from '@angular/core/testing';
 import { AlfrescoSearchService } from './alfresco-search.service';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 
@@ -58,6 +58,7 @@ describe('AlfrescoSearchService', () => {
         return [
             AlfrescoSearchService,
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService
         ];
     });

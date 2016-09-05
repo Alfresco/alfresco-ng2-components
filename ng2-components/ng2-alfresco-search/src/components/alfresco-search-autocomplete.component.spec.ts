@@ -22,6 +22,7 @@ import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.servi
 import { TranslationMock } from './../assets/translation.service.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
+    AlfrescoApiService,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
@@ -68,6 +69,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             {provide: AlfrescoTranslationService, useClass: TranslationMock},
             AlfrescoThumbnailService,
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService,
             AlfrescoContentService,
             AlfrescoSearchService

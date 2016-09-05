@@ -17,7 +17,7 @@
 
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { Comment } from '../models/comment.model';
 
@@ -96,6 +96,7 @@ describe('ActivitiTaskListService', () => {
         return [
             ActivitiTaskListService,
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService
         ];
     });

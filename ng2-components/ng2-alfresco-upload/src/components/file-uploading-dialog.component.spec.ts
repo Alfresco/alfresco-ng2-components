@@ -17,13 +17,20 @@
 
 import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
-import { FileModel } from '../models/file.model';
-import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { TranslationMock } from '../assets/translation.service.mock';
-import { UploadService } from '../services/upload.service';
 import { Observable } from 'rxjs/Observable';
 import { HTTP_PROVIDERS } from '@angular/http';
+
+import {
+    AlfrescoTranslationService,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoApiService
+} from 'ng2-alfresco-core';
+
+import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
+import { FileModel } from '../models/file.model';
+import { TranslationMock } from '../assets/translation.service.mock';
+import { UploadService } from '../services/upload.service';
 
 describe('FileUploadDialog', () => {
 
@@ -33,6 +40,7 @@ describe('FileUploadDialog', () => {
     beforeEachProviders(() => {
         return [
             HTTP_PROVIDERS,
+            AlfrescoApiService,
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock },

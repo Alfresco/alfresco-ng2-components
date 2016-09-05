@@ -24,6 +24,7 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
     AlfrescoSettingsService,
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoTranslationService
@@ -70,6 +71,7 @@ describe('AlfrescoSearchComponent', () => {
             {provide: AlfrescoTranslationService, useClass: TranslationMock},
             AlfrescoThumbnailService,
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService,
             AlfrescoContentService
         ];

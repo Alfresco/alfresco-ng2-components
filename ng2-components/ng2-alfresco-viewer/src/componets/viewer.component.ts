@@ -21,7 +21,8 @@ import { ImgViewerComponent } from './imgViewer.component';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DOCUMENT } from '@angular/platform-browser';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -64,7 +65,9 @@ export class ViewerComponent {
 
     loaded: boolean = false;
 
-    constructor(private authService: AlfrescoAuthenticationService, private element: ElementRef, @Inject(DOCUMENT) private document) {
+    constructor(private apiService: AlfrescoApiService,
+                private element: ElementRef,
+                @Inject(DOCUMENT) private document) {
     }
 
     ngOnChanges(changes) {
@@ -75,6 +78,7 @@ export class ViewerComponent {
                 throw new Error('Attribute urlFile or fileNodeId is required');
             }
             return new Promise((resolve, reject) => {
+                let alfrescoApi = this.apiService.getInstance();
                 if (this.urlFile) {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = filenameFromUrl ? filenameFromUrl : '';
@@ -82,10 +86,10 @@ export class ViewerComponent {
                     this.urlFileContent = this.urlFile;
                     resolve();
                 } else if (this.fileNodeId) {
-                    this.authService.getAlfrescoApi().nodes.getNodeInfo(this.fileNodeId).then((data) => {
+                    alfrescoApi.nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
                         this.mimeType = data.content.mimeType;
                         this.displayName = data.name;
-                        this.urlFileContent = this.authService.getAlfrescoApi().content.getContentUrl(data.id);
+                        this.urlFileContent = alfrescoApi.content.getContentUrl(data.id);
                         this.loaded = true;
                         resolve();
                     }, function (error) {

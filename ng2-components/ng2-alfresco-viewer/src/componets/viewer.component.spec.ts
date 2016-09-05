@@ -19,24 +19,30 @@ import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEac
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { ViewerComponent } from './viewer.component';
 import { EventMock } from '../assets/event.mock';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
 declare let jasmine: any;
+declare let AlfrescoApi: any;
 
 describe('ViewerComponent', () => {
 
     let viewerComponentFixture, element, component;
+    let apiService: AlfrescoApiService;
 
     beforeEachProviders(() => {
         return [
+            AlfrescoApiService,
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
             RenderingQueueServices
         ];
     });
 
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+    beforeEach(inject([TestComponentBuilder, AlfrescoApiService], (tcb: TestComponentBuilder, api: AlfrescoApiService) => {
+        apiService = api;
+        apiService.setInstance(new AlfrescoApi({}));
+
         return tcb
             .createAsync(ViewerComponent)
             .then(fixture => {
@@ -160,27 +166,16 @@ describe('ViewerComponent', () => {
             }).not.toThrow();
         });
 
-        it('If FileNodeId is present the node api should be called', (done) => {
+        it('If FileNodeId is present the node api should be called', (/*done*/) => {
             component.showViewer = true;
             component.fileNodeId = 'file-node-id';
             component.urlFile = undefined;
 
-            jasmine.Ajax.stubRequest(
-                'http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/file-node-id'
-            ).andReturn({
-                status: 200,
-                responseText: '{"entry":{"isFile":true,"createdByUser":{"id":"admin","displayName":"Administrator"},' +
-                '"modifiedAt":"2016-08-05T23:08:22.730+0000","nodeType":"cm:content","content":' +
-                '{"mimeType":"application/pdf","mimeTypeName":"Adobe PDF Document","sizeInBytes":' +
-                '381778,"encoding":"UTF-8"},"parentId":"8f2105b4-daaf-4874-9e8a-2152569d109b","createdAt":"2016-08-05T23:08:22.730+0000","isFolder":false,' +
-                '"modifiedByUser":{"id":"admin","displayName":"Administrator"},"name":"content.pdf","id":' +
-                '"b8bd4c81-6f2e-4ec2-9c4d-30c97cf42bc8"}}'
-            });
+            let alfrescoApi = apiService.getInstance();
+            spyOn(alfrescoApi.nodes, 'getNodeInfo').and.stub();
 
-            component.ngOnChanges().then(() => {
-                expect(jasmine.Ajax.requests.mostRecent().url.endsWith('nodes/file-node-id')).toBe(true);
-                done();
-            });
+            component.ngOnChanges();
+            expect(alfrescoApi.nodes.getNodeInfo).toHaveBeenCalledWith(component.fileNodeId);
         });
 
         it('showViewer default value should be true', () => {

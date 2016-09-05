@@ -16,6 +16,7 @@
  */
 
 import {
+    AlfrescoApiService,
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
@@ -31,6 +32,7 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: [any] = [
+    AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,

@@ -18,13 +18,11 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
+import { AlfrescoJsApi, NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoAuthenticationService,
     AlfrescoContentService
 } from 'ng2-alfresco-core';
-
-declare let AlfrescoApi: any;
 
 @Injectable()
 export class DocumentListService {
@@ -66,11 +64,11 @@ export class DocumentListService {
     ) {
     }
 
-    private getAlfrescoApi() {
+    private getAlfrescoApi(): AlfrescoJsApi {
         return this.authService.getAlfrescoApi();
     }
 
-    private getNodesPromise(folder: string, opts?: any) {
+    private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
         let nodeId = '-root-';
         let params: any = {
             relativePath: folder,
@@ -86,11 +84,11 @@ export class DocumentListService {
             }
         }
 
-        return this.getAlfrescoApi().node.getNodeChildren(nodeId, params);
+        return this.getAlfrescoApi().nodes.getNodeChildren(nodeId, params);
     }
 
-    deleteNode(nodeId: string) {
-        return Observable.fromPromise(this.getAlfrescoApi().node.deleteNode(nodeId));
+    deleteNode(nodeId: string): Observable<any> {
+        return Observable.fromPromise(this.getAlfrescoApi().nodes.deleteNode(nodeId));
     }
 
     /**
