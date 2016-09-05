@@ -109,6 +109,14 @@ export class ActivitiTaskDetails implements OnInit {
             this.activitiTaskList.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
                     this.taskDetails = res;
+
+                    let endDate: any = res.endDate;
+                    if (endDate && !isNaN(endDate.getTime())) {
+                        this.readOnly = true;
+                    } else {
+                        this.readOnly = false;
+                    }
+
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
                             this.taskPeople.push(new User(user.id, user.email, user.firstName, user.lastName));
