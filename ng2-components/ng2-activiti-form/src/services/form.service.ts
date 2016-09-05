@@ -36,14 +36,14 @@ export class FormService {
      * Create a Form with a fields for each metadata properties
      * @returns {Observable<any>}
      */
-    public createFormFromNodeType(formName: string): Observable<any> {
+    public createFormFromANode(formName: string): Observable<any> {
         return Observable.create(observer => {
             this.createForm(formName).subscribe(
                 form => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         customType => {
                             let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
-                            this.addFieldsNodeTypePropertiesToTheForm(form.id, formDefinitionModel).subscribe(formData => {
+                            this.addFieldsToAForm(form.id, formDefinitionModel).subscribe(formData => {
                                 observer.next(formData);
                                 observer.complete();
                             }, this.handleError);
@@ -66,14 +66,6 @@ export class FormService {
         };
 
         return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.modelsApi.createModel(dataModel));
-    }
-
-    /**
-     * Add Fields to A form from a metadata properties
-     * @returns {Observable<any>}
-     */
-    public addFieldsNodeTypePropertiesToTheForm(formId: string, formDefinitionModel: FormDefinitionModel): Observable<any> {
-        return this.addFieldsToAForm(formId, formDefinitionModel);
     }
 
     /**

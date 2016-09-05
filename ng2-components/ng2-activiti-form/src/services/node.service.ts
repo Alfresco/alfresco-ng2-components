@@ -88,7 +88,11 @@ export class NodeService {
         if (data && data.properties) {
             for (let key in data.properties) {
                 if (key) {
-                    metadata [key.split(':')[1]] = data.properties[key];
+                    if (key.indexOf(':') !== -1) {
+                        metadata [key.split(':')[1]] = data.properties[key];
+                    } else {
+                        metadata [key] = data.properties[key];
+                    }
                 }
             }
         }

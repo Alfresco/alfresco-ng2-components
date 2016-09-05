@@ -45,7 +45,7 @@ export class EcmModelService {
                             observer.complete();
                         });
                     } else {
-                        this.createFomType(formName, form).subscribe(typeForm => {
+                        this.saveFomType(formName, form).subscribe(typeForm => {
                             observer.next(typeForm);
                             observer.complete();
                         });
@@ -57,13 +57,13 @@ export class EcmModelService {
 
     }
 
-    private seachActivitiEcmModel() {
+    seachActivitiEcmModel() {
         return this.getEcmModels().map(function (ecmModels: any) {
             return ecmModels.list.entries.find(model => model.entry.name === EcmModelService.MODEL_NAME);
         });
     }
 
-    private createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
+    createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
         return Observable.create(observer => {
             this.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(
                 model => {
@@ -84,7 +84,7 @@ export class EcmModelService {
         });
     }
 
-    private createFomType(formName: string, form: FormModel): Observable<any> {
+    saveFomType(formName: string, form: FormModel): Observable<any> {
         return Observable.create(observer => {
             this.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                 ecmType => {

@@ -403,7 +403,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         this.formService.searchFrom(nodeType).subscribe(
             form => {
                 if (!form) {
-                    this.formService.createFormFromNodeType(nodeType).subscribe(formMetadata => {
+                    this.formService.createFormFromANode(nodeType).subscribe(formMetadata => {
                         this.loadFormFromFormId(formMetadata.id);
                     });
                 } else {
