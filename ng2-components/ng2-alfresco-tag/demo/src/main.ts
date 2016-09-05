@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input} from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {HTTP_PROVIDERS} from '@angular/http';
+import { Component, OnInit, Input } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
@@ -26,17 +26,17 @@ import {
     CONTEXT_MENU_DIRECTIVES
 } from 'ng2-alfresco-core';
 
-import {TAGCOMPONENT, TAGSERVICES} from 'ng2-alfresco-tag';
+import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 
 @Component({
     selector: 'alfresco-tag-demo',
     template: `
-               <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
+                <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="host" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
                <hr>
@@ -73,24 +73,17 @@ class TagDemo implements OnInit {
 
     ecmHost: string = 'http://127.0.0.1:8080';
 
-    token: string;
+    ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService) {
 
         settingsService.ecmHost = this.ecmHost;
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        settingsService.setProviders('ECM');
+
+        if (this.authService.getTicketEcm()) {
+            this.ticket = this.authService.getTicketEcm();
         }
-    }
-
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
-    }
-
-    public updateHost(): void {
-        this.settingsService.ecmHost = this.ecmHost;
-        this.login();
     }
 
     ngOnInit() {
@@ -98,10 +91,10 @@ class TagDemo implements OnInit {
     }
 
     login() {
-        this.authService.login('admin', 'admin', ['ECM']).subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
@@ -110,11 +103,19 @@ class TagDemo implements OnInit {
             });
     }
 
+    public updateTicket(): void {
+        localStorage.setItem('ticket-ECM', this.ticket);
+    }
+
+    public updateHost(): void {
+        this.settingsService.ecmHost = this.ecmHost;
+        this.login();
+    }
+
     logData(data) {
         console.log(data);
     }
 }
-
 bootstrap(TagDemo, [
     HTTP_PROVIDERS,
     ALFRESCO_CORE_PROVIDERS
