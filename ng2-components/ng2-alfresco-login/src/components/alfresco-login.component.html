@@ -8,7 +8,7 @@
             <div class="mdl-card__supporting-text">
                 <div>
                     <div *ngIf="error" id="login-error" data-automation-id="login-error"
-                         class="error mdl-card__supporting-text">{{'LOGIN.MESSAGES.LOGIN-ERROR' | translate }}</div>
+                         class="error mdl-card__supporting-text">{{errorMsg | translate }}</div>
                     <div *ngIf="success" id="login-success" data-automation-id="login-success" class="mdl-card__supporting-text" style="color: blue;">{{'LOGIN.MESSAGES.LOGIN-SUCCESS' | translate }}</div>
                 </div>
                 <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}"

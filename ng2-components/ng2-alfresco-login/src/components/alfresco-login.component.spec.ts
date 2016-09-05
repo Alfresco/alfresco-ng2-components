@@ -212,6 +212,7 @@ describe('AlfrescoLogin', () => {
     });
 
     it('should return success true after the login have succeeded', () => {
+        component.providers = 'ECM';
         expect(component.error).toBe(false);
         expect(component.success).toBe(false);
 
@@ -238,6 +239,7 @@ describe('AlfrescoLogin', () => {
     });
 
     it('should return error with a wrong username', () => {
+        component.providers = 'ECM';
         expect(component.error).toBe(false);
         expect(component.success).toBe(false);
 
@@ -262,10 +264,11 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
         expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
+        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong password', () => {
+        component.providers = 'ECM';
         expect(component.success).toBe(false);
         expect(component.error).toBe(false);
 
@@ -290,10 +293,11 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
         expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
+        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong username and password', () => {
+        component.providers = 'ECM';
         expect(component.success).toBe(false);
         expect(component.error).toBe(false);
 
@@ -318,12 +322,12 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
         expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
+        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should emit onSuccess event after the login has succeeded', () => {
         spyOn(component.onSuccess, 'emit');
-
+        component.providers = 'ECM';
         expect(component.error).toBe(false);
         expect(component.success).toBe(false);
 
@@ -355,6 +359,7 @@ describe('AlfrescoLogin', () => {
     it('should emit onError event after the login has failed', () => {
         spyOn(component.onError, 'emit');
 
+        component.providers = 'ECM';
         expect(component.success).toBe(false);
         expect(component.error).toBe(false);
 
@@ -379,7 +384,7 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
         expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR');
+        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
         expect(component.onError.emit).toHaveBeenCalledWith('Fake server error');
     });
 
@@ -409,6 +414,37 @@ describe('AlfrescoLogin', () => {
 
         expect(component.isPasswordShow).toBe(false);
         expect(compiled.querySelector('#password').type).toEqual('password');
+    });
+
+    it('should emit onError event when the providers is undefined', () => {
+        spyOn(component.onError, 'emit');
+
+        expect(component.success).toBe(false);
+        expect(component.error).toBe(false);
+
+        let compiled = componentFixture.debugElement.nativeElement;
+        let usernameInput = compiled.querySelector('#username');
+        let passwordInput = compiled.querySelector('#password');
+
+        componentFixture.detectChanges();
+
+        usernameInput.value = 'fake-username';
+        passwordInput.value = 'fake-password';
+
+        usernameInput.dispatchEvent(new Event('input'));
+        passwordInput.dispatchEvent(new Event('input'));
+
+        componentFixture.detectChanges();
+
+        compiled.querySelector('button').click();
+
+        componentFixture.detectChanges();
+
+        expect(component.error).toBe(true);
+        expect(component.success).toBe(false);
+        expect(compiled.querySelector('#login-error')).toBeDefined();
+        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
+        expect(component.onError.emit).toHaveBeenCalledWith('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
     });
 });
 
