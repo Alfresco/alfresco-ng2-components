@@ -42,8 +42,7 @@ describe('ActivitiTaskListService', () => {
     };
 
     let fakeFilter = {
-        page: 2, filterId: 2, appDefinitionId: null,
-        filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee'}
+        sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee'
     };
 
     let fakeUser = {id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName'};
@@ -130,7 +129,7 @@ describe('ActivitiTaskListService', () => {
 
     it('should return the task list filtered', (done) => {
         service.getTasks(fakeFilter).subscribe(
-            res => {
+                res => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.total).toEqual(1);
@@ -302,4 +301,22 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
+    it('should return the total number of tasks', (done) => {
+        service.getTotalTasks(fakeFilter).subscribe(
+                res => {
+                expect(res).toBeDefined();
+                expect(res.size).toEqual(1);
+                expect(res.total).toEqual(1);
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeTaskList)
+        });
+    });
+
 });
+
