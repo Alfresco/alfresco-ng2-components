@@ -41,7 +41,7 @@ describe('ActivitiForm', () => {
         window['componentHandler'] = componentHandler;
 
         formService = new FormService(null, null);
-        formComponent = new ActivitiForm(formService, visibilityService, null, null, null);
+        formComponent = new ActivitiForm(formService, visibilityService, null, null);
     });
 
     it('should upgrade MDL content on view checked', () => {
