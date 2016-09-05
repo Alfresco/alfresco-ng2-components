@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { FilterModel } from '../models/filter.model';
+import { FilterModel, FilterParamsModel } from '../models/filter.model';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -84,15 +84,22 @@ export class ActivitiTaskList implements OnInit {
         );
 
         if (this.taskFilter) {
-            this.load(this.taskFilter);
+            this.load(this.taskFilter.filter);
         }
     }
 
-    public load(filter: FilterModel) {
-        this.activiti.getTasks(filter).subscribe(
+    public load(filterParam: FilterParamsModel) {
+        this.activiti.getTotalTasks(filterParam).subscribe(
             (res) => {
-                this.renderTasks(res.data);
-                this.onSuccess.emit(res);
+                filterParam.size = res.total;
+                this.activiti.getTasks(filterParam).subscribe(
+                    (response) => {
+                        this.renderTasks(response.data);
+                        this.onSuccess.emit(response);
+                    }, (error) => {
+                        console.error(error);
+                        this.onError.emit(error);
+                    });
             }, (err) => {
                 console.error(err);
                 this.onError.emit(err);

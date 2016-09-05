@@ -59,11 +59,11 @@ export class ActivitiTaskListService {
 
     /**
      * Retrive all the tasks filtered by filterModel
-     * @param filter - FilterModel
+     * @param filter - FilterParamsModel
      * @returns {any}
      */
-    getTasks(filter: FilterModel): Observable<any> {
-        return Observable.fromPromise(this.callApiTasksFiltered(filter.filter))
+    getTasks(filter: FilterParamsModel): Observable<any> {
+        return Observable.fromPromise(this.callApiTasksFiltered(filter))
             .map((res: any) => {
                 return res;
             }).catch(this.handleError);
@@ -154,6 +154,20 @@ export class ActivitiTaskListService {
     completeTask(id: string) {
         return Observable.fromPromise(this.callApiCompleteTask(id))
             .map(res => res);
+    }
+
+
+    /**
+     * Return the total number of the tasks by filter
+     * @param filter - FilterParamsModel
+     * @returns {any}
+     */
+    public getTotalTasks(filter: FilterParamsModel): Observable<any> {
+        filter.size = 0;
+        return Observable.fromPromise(this.callApiTasksFiltered(filter))
+            .map((res: any) => {
+                return res;
+            }).catch(this.handleError);
     }
 
     private callApiTasksFiltered(filter: FilterParamsModel) {

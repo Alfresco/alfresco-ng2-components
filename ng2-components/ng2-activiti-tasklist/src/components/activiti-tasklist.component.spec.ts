@@ -34,7 +34,7 @@ describe('ActivitiTaskList', () => {
     let taskList: ActivitiTaskList;
 
     let fakeGlobalTask = {
-        size: 1, total: 12, start: 0,
+        size: 2, total: 2, start: 0,
         data: [
             {
                 id: 14, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name', description: null, category: null,
@@ -51,8 +51,17 @@ describe('ActivitiTaskList', () => {
         ]
     };
 
+    let fakeGlobalTotalTasks = {
+        size: 2, total: 2, start: 0,
+        data: []
+    };
+
     let fakeGlobalTaskPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalTask);
+    });
+
+    let fakeGlobalTotalTasksPromise = new Promise(function (resolve, reject) {
+        resolve(fakeGlobalTotalTasks);
     });
 
     let fakeErrorTaskList = {
@@ -91,6 +100,7 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should return the filtered task list when the taskFilter is passed', (done) => {
+        spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
         spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
         taskList.taskFilter = new FilterModel('name', false, 'icon', '', 'open', 'fake-assignee');
 
@@ -108,7 +118,7 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should throw an exception when the response is wrong', (done) => {
-        spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeErrorTaskPromise));
+        spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeErrorTaskPromise));
         taskList.taskFilter = new FilterModel('name', false, 'icon', '', 'open', 'fake-assignee');
 
         taskList.onError.subscribe( (err) => {

@@ -82,7 +82,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     onTaskFilterClick(event: any) {
         this.taskFilter = event;
-        this.activititasklist.load(this.taskFilter);
+        this.activititasklist.load(this.taskFilter.filter);
     }
 
     onProcessFilterClick(event: any) {
