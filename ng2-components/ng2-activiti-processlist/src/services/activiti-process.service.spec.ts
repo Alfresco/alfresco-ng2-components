@@ -16,7 +16,7 @@
  */
 
 import { it, describe, expect, beforeEachProviders, beforeEach, inject } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './activiti-process.service';
 // import { ProcessInstance } from '../models/process-instance';
 
@@ -28,6 +28,7 @@ describe('ActivitiProcessService', () => {
         return [
             ActivitiProcessService,
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService
         ];
     });

@@ -19,7 +19,7 @@ import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEac
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { WebscriptComponent } from '../src/webscript.component';
 
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 
@@ -30,6 +30,7 @@ describe('Test ng2-alfresco-webscript', () => {
     beforeEachProviders(() => {
         return [
             AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService
         ];
     });

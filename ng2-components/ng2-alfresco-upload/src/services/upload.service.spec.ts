@@ -87,7 +87,7 @@ describe('AlfrescoUploadService', () => {
         service.uploadFilesInTheQueue('fake-dir', emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+        expect(request.url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -109,7 +109,7 @@ describe('AlfrescoUploadService', () => {
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+            .toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
