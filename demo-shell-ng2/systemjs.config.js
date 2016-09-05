@@ -21,7 +21,7 @@
         'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer/dist',
         'ng2-alfresco-webscript': 'node_modules/ng2-alfresco-webscript/dist',
         'ng2-activiti-tasklist': 'node_modules/ng2-activiti-tasklist/dist',
-        'alfresco-js-api': 'node_modules/alfresco-js-api/dist'
+        'alfresco-js-api': 'node_modules/alfresco-js-api/dist',
         'ng2-activiti-processlist': 'node_modules/ng2-activiti-processlist/dist'
     };
     // packages tells the System loader how to load when no filename and/or no extension
