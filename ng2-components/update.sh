@@ -31,3 +31,6 @@
 
 (cd ng2-alfresco-webscript; npm update;)
 (cd ng2-alfresco-webscript/demo; npm update;)
+
+(cd ng2-alfresco-tag; npm update;)
+(cd ng2-alfresco-tag/demo; npm update;)

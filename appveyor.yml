@@ -14,6 +14,7 @@ environment:
   - COMPONENT_NAME: ng2-alfresco-search
   - COMPONENT_NAME: ng2-alfresco-upload
   - COMPONENT_NAME: ng2-alfresco-viewer
+  - COMPONENT_NAME: ng2-alfresco-tag
   - COMPONENT_NAME: ng2-alfresco-webscript
   - COMPONENT_NAME: ng2-activiti-form
   - COMPONENT_NAME: ng2-activiti-tasklist
