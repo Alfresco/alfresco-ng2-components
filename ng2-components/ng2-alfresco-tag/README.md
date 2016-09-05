@@ -56,11 +56,10 @@ The following component needs to be added to your systemjs.config:
 
 - ng2-translate
 - ng2-alfresco-core
-- ng2-alfresco-datatable
 
 Please refer to the following example to have an idea of how your systemjs.config should look like :
 
-https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-webscript/demo/systemjs.config.js
+https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-tag/demo/systemjs.config.js
 
 #### Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material

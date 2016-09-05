@@ -22,7 +22,7 @@ import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 
-describe('Tag actions', () => {
+describe('Tag list', () => {
 
     let  service;
 

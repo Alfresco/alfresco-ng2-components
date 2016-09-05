@@ -54,8 +54,7 @@ export class TagList {
     }
 
     refreshTagEcm() {
-
-        this.tagService.getAllTheTags().then((data) => {
+        this.tagService.getAllTheTags().subscribe((data) => {
             this.tagsEntries = data;
         });
     }

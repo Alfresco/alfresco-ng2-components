@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Component, Input} from '@angular/core';
-import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {TagService} from '../services/tag.service';
+import { Component, Input } from '@angular/core';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { TagService } from '../services/tag.service';
 
 /**
  *
@@ -38,9 +38,6 @@ export class TagNodeList {
     @Input()
     nodeId: string;
 
-    @Input()
-    properties: string;
-
     tagsEntries: any;
 
     /**
@@ -48,7 +45,6 @@ export class TagNodeList {
      * @param authService
      */
     constructor(public authService: AlfrescoAuthenticationService, private tagService: TagService) {
-
     }
 
     ngOnChanges(changes) {
@@ -56,15 +52,9 @@ export class TagNodeList {
     }
 
     refreshTag() {
-        if (this.nodeId) {
-            this.tagService.getTagsByNodeId(this.nodeId).then((data) => {
-                this.tagsEntries = data;
-            });
-        } else if (this.properties) {
-            this.tagService.getTagsByProperties(this.properties).then((data) => {
-                this.tagsEntries = data;
-            });
-        }
+        this.tagService.getTagsByNodeId(this.nodeId).then((data) => {
+            this.tagsEntries = data;
+        });
     }
 
     removeTag(tag: string) {

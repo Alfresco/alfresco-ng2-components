@@ -22,7 +22,7 @@ import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 
-describe('Tag actions', () => {
+describe('Tag relative node list', () => {
 
     let  service;
 
@@ -35,10 +35,6 @@ describe('Tag actions', () => {
         ];
     });
 
-    beforeEach(inject([TagService], (tagService: TagService) => {
-        service = tagService;
-    }));
-
     describe('Content tests', () => {
 
         beforeEach(() => {
@@ -47,6 +43,17 @@ describe('Tag actions', () => {
 
         afterEach(() => {
             jasmine.Ajax.uninstall();
+        });
+
+        it('getTagsByNodeId catch errors call', (done) => {
+            service.getTagsByNodeId('fake-node-id', 'fake-tag').subscribe(() => {
+            }, () => {
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
         });
 
     });

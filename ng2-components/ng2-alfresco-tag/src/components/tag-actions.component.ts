@@ -48,7 +48,6 @@ export class TagActionsComponent {
 
     tagsEntries: any;
 
-
     /**
      * Constructor
      * @param authService

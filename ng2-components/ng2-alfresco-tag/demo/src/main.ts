@@ -33,8 +33,8 @@ import {TAGCOMPONENT, TAGSERVICES} from 'ng2-alfresco-tag';
     template: `
                <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
                     Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid token to perform
                     operations.
