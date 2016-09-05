@@ -38,8 +38,6 @@
 
 .viewer-overlay-view {
     position: fixed;
-    width: 100%;
-    height: 100%;
     top: 0px;
     left: 0px;
     z-index: 1000;
@@ -55,3 +53,8 @@ img-viewer {
     justify-content: center;
 }
 
+.all-space{
+    width: 100%;
+    height: 100%;
+    background-color: #515151;
+}

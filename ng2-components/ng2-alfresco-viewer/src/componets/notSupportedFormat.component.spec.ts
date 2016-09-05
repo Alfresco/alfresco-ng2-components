@@ -15,57 +15,47 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject } from '@angular/core/testing';
+import { describe, expect, it, inject, beforeEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 
 describe('Not Supported Format View', () => {
 
+    let notSupportedFixture, element, component;
+
+    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(NotSupportedFormat)
+            .then(fixture => {
+                notSupportedFixture = fixture;
+                element = fixture.nativeElement;
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+    }));
+
     describe('View', () => {
-        it('Download button should be present', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(NotSupportedFormat)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
 
-                    fixture.detectChanges();
+        it('Download button should be present', () => {
+            expect(element.querySelector('#viewer-download-button')).not.toBeNull();
+        });
 
-                    expect(element.querySelector('#viewer-download-button')).not.toBeNull();
-                });
-        }));
-        it('should display the name of the file', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(NotSupportedFormat)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-                    let component = fixture.componentInstance;
-                    component.nameFile = 'Example Content.xls';
-
-                    fixture.detectChanges();
-
-                    expect(element.querySelector('h4 span').innerHTML).toEqual('Example Content.xls');
-                });
-        }));
+        it('should display the name of the file', () => {
+            component.nameFile = 'Example Content.xls';
+            notSupportedFixture.detectChanges();
+            expect(element.querySelector('h4 span').innerHTML).toEqual('Example Content.xls');
+        });
     });
 
     describe('User Interaction', () => {
-        it('Click on Download button should call download method', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-            return tcb
-                .createAsync(NotSupportedFormat)
-                .then((fixture) => {
-                    let element = fixture.nativeElement;
-                    let component = fixture.componentInstance;
+        it('Click on Download button should call download method', () => {
+            spyOn(window, 'open');
 
-                    fixture.detectChanges();
+            let downloadButton = element.querySelector('#viewer-download-button');
+            downloadButton.click();
 
-                    spyOn(component, 'download');
-
-                    let downloadButton = element.querySelector('#viewer-download-button');
-                    downloadButton.click();
-
-                    expect(component.download).toHaveBeenCalled();
-                });
-        }));
+            expect(window.open).toHaveBeenCalled();
+        });
     });
 });
 

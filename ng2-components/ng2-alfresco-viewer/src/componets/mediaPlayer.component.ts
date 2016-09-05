@@ -15,20 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'media-player',
     templateUrl: './mediaPlayer.component.html',
-    styleUrls: ['./mediaPlayer.component.css'],
-    encapsulation: ViewEncapsulation.None
+    styleUrls: ['./mediaPlayer.component.css']
 })
 export class MediaPlayerComponent {
-
-    @Input()
-    nameFile: string;
 
     @Input()
     urlFile: string;

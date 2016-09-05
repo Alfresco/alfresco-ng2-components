@@ -60,7 +60,6 @@ describe('PdfViewer', () => {
             pdfComponentFixture.detectChanges();
 
             expect(element.querySelector('#loader-container')).not.toBeNull();
-
         });
 
         it('Next an Previous Buttons should be present', () => {
@@ -179,51 +178,50 @@ describe('PdfViewer', () => {
             });
         });
 
-        it('zoomIn should increment the scale value', (done) => {
-            component.currentScale = 1;
+        describe('Zoom', () => {
 
-            let zoomInButton = element.querySelector('#viewer-zoom-in-button');
-
-            component.ngOnChanges().then(() => {
+            beforeEach(() => {
+                component.currentScale = 1;
                 pdfComponentFixture.detectChanges();
-                zoomInButton.click();
-                expect(component.currentScaleMode).toBe('auto');
-                expect(component.currentScale).toBe(0.9);
-                done();
             });
+
+            it('In should increment the scale value', (done) => {
+                let zoomInButton = element.querySelector('#viewer-zoom-in-button');
+
+                component.ngOnChanges().then(() => {
+                    zoomInButton.click();
+                    expect(component.currentScaleMode).toBe('auto');
+                    expect(component.currentScale).toBe(0.9);
+                    done();
+                });
+            });
+
+            it('Out should decrement the scale value', (done) => {
+                let zoomOutButton = element.querySelector('#viewer-zoom-out-button');
+
+                component.ngOnChanges().then(() => {
+                    let zoomBefore = component.currentScale;
+                    zoomOutButton.click();
+                    expect(component.currentScaleMode).toBe('auto');
+                    let currentZoom = component.currentScale;
+                    expect(zoomBefore > currentZoom).toBe(true);
+                    done();
+                });
+            });
+
+            it('fit-in button should toggle page-fit and auto scale mode', (done) => {
+                let fitPage = element.querySelector('#viewer-scale-page-button');
+
+                component.ngOnChanges().then(() => {
+                    expect(component.currentScaleMode).toBe('auto');
+                    fitPage.click();
+                    expect(component.currentScaleMode).toBe('page-fit');
+                    fitPage.click();
+                    expect(component.currentScaleMode).toBe('auto');
+                    done();
+                });
+            }, 5000);
         });
-
-        it('zoomOut should decrement the scale value', (done) => {
-            component.currentScale = 1;
-
-            let zoomOutButton = element.querySelector('#viewer-zoom-out-button');
-
-            component.ngOnChanges().then(() => {
-                component.inputPage('1');
-                pdfComponentFixture.detectChanges();
-                zoomOutButton.click();
-                expect(component.currentScaleMode).toBe('auto');
-                expect(component.currentScale).toBe(0.7);
-                done();
-            });
-        });
-
-        it('fit-in button should toggle page-fit and auto scale mode', (done) => {
-            component.currentScale = 1;
-
-            let fitPage = element.querySelector('#viewer-scale-page-button');
-
-            component.ngOnChanges().then(() => {
-                component.inputPage('1');
-                pdfComponentFixture.detectChanges();
-                expect(component.currentScaleMode).toBe('auto');
-                fitPage.click();
-                expect(component.currentScaleMode).toBe('page-fit');
-                fitPage.click();
-                expect(component.currentScaleMode).toBe('auto');
-                done();
-            });
-        }, 5000);
     });
 
     describe('Resize interaction', () => {
