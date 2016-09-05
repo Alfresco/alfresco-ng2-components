@@ -88,13 +88,228 @@ In this component are present three different tags :
 
 ##### alfresco-tag-node-actions-list
 
+```html
+<alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list>
+```  
+
+```ts
+import { Component, OnInit, Input } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
+
+import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
+
+@Component({
+    selector: 'alfresco-tag-demo',
+    template: `
+           <div class="container" *ngIf="authenticated">
+             <alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list>
+           </div>
+    `,
+    directives: [TAGCOMPONENT, CONTEXT_MENU_DIRECTIVES],
+    providers: [TAGSERVICES]
+})
+class TagDemo implements OnInit {
+
+    @Input()
+    nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
+
+    authenticated: boolean;
+
+    ecmHost: string = 'http://127.0.0.1:8080';
+
+    ticket: string;
+
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                this.authenticated = true;
+            },
+            error => {
+                this.authenticated = false;
+            });
+    }
+
+    public updateHost(): void {
+        this.settingsService.ecmHost = this.ecmHost;
+        this.login();
+    }
+
+    logData(data) {
+        console.log(data);
+    }
+}
+bootstrap(TagDemo, [
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS
+]);
+```   
+
+
 ![Custom columns](docs/assets/tag3.png)                         
 
 ##### alfresco-tag-node-list
 
+```html
+<alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
+``` 
+
+```ts
+import { Component, OnInit, Input } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
+
+import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
+
+@Component({
+    selector: 'alfresco-tag-demo',
+    template: `
+           <div class="container" *ngIf="authenticated">
+             <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
+           </div>
+    `,
+    directives: [TAGCOMPONENT, CONTEXT_MENU_DIRECTIVES],
+    providers: [TAGSERVICES]
+})
+class TagDemo implements OnInit {
+
+    @Input()
+    nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
+
+    authenticated: boolean;
+
+    ecmHost: string = 'http://127.0.0.1:8080';
+
+    ticket: string;
+
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                this.authenticated = true;
+            },
+            error => {
+                this.authenticated = false;
+            });
+    }
+
+    public updateHost(): void {
+        this.settingsService.ecmHost = this.ecmHost;
+        this.login();
+    }
+
+    logData(data) {
+        console.log(data);
+    }
+}
+bootstrap(TagDemo, [
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS
+]);
+```  
+
 ![Custom columns](docs/assets/tag1.png)                         
 
 ##### alfresco-tag-list
+
+```html
+<alfresco-tag-list></alfresco-tag-list>
+``` 
+
+```ts
+import { Component, OnInit, Input } from '@angular/core';
+import { bootstrap } from '@angular/platform-browser-dynamic';
+import { HTTP_PROVIDERS } from '@angular/http';
+
+import {
+    ALFRESCO_CORE_PROVIDERS,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService
+} from 'ng2-alfresco-core';
+
+import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
+
+@Component({
+    selector: 'alfresco-tag-demo',
+    template: `
+           <div class="container" *ngIf="authenticated">
+             <alfresco-tag-list></alfresco-tag-list>
+           </div>
+    `,
+    directives: [TAGCOMPONENT, CONTEXT_MENU_DIRECTIVES],
+    providers: [TAGSERVICES]
+})
+class TagDemo implements OnInit {
+
+    authenticated: boolean;
+
+    ecmHost: string = 'http://127.0.0.1:8080';
+
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
+    }
+
+    ngOnInit() {
+        this.login();
+    }
+
+    login() {
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                this.authenticated = true;
+            },
+            error => {
+                this.authenticated = false;
+            });
+    }
+
+    public updateHost(): void {
+        this.settingsService.ecmHost = this.ecmHost;
+        this.login();
+    }
+
+    logData(data) {
+        console.log(data);
+    }
+}
+bootstrap(TagDemo, [
+    HTTP_PROVIDERS,
+    ALFRESCO_CORE_PROVIDERS
+]);
+```  
 
 ![Custom columns](docs/assets/tag2.png)                         
 

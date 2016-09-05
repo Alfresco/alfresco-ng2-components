@@ -22,8 +22,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    CONTEXT_MENU_DIRECTIVES
+    AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
 
 import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
@@ -60,8 +59,6 @@ class TagDemo implements OnInit {
 
     @Input()
     nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
-
-    currentPath: string = '/';
 
     authenticated: boolean;
 
