@@ -86,7 +86,7 @@ In this component are present three different tags :
 * alfresco-tag-list
 * alfresco-tag-node-list
 
-##### alfresco-tag-node-actions-list
+## alfresco-tag-node-actions-list
 
 ```html
 <alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list>
@@ -96,13 +96,11 @@ In this component are present three different tags :
 import { Component, OnInit, Input } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS } from '@angular/http';
-
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
-
 import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 
 @Component({
@@ -112,7 +110,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
              <alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list>
            </div>
     `,
-    directives: [TAGCOMPONENT, CONTEXT_MENU_DIRECTIVES],
+    directives: [TAGCOMPONENT],
     providers: [TAGSERVICES]
 })
 class TagDemo implements OnInit {
@@ -159,12 +157,17 @@ bootstrap(TagDemo, [
     HTTP_PROVIDERS,
     ALFRESCO_CORE_PROVIDERS
 ]);
-```   
+```  
+ 
+### Options
 
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`nodeId`         | *string*    |        | The identifier of a node.| 
 
 ![Custom columns](docs/assets/tag3.png)                         
 
-##### alfresco-tag-node-list
+## alfresco-tag-node-list
 
 ```html
 <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
@@ -174,7 +177,6 @@ bootstrap(TagDemo, [
 import { Component, OnInit, Input } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS } from '@angular/http';
-
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
@@ -190,7 +192,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
              <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
            </div>
     `,
-    directives: [TAGCOMPONENT, CONTEXT_MENU_DIRECTIVES],
+    directives: [TAGCOMPONENT],
     providers: [TAGSERVICES]
 })
 class TagDemo implements OnInit {
@@ -239,9 +241,15 @@ bootstrap(TagDemo, [
 ]);
 ```  
 
+### Options
+
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`nodeId`         | *string*    |        | The identifier of a node.| 
+
 ![Custom columns](docs/assets/tag1.png)                         
 
-##### alfresco-tag-list
+## alfresco-tag-list
 
 ```html
 <alfresco-tag-list></alfresco-tag-list>
@@ -251,7 +259,6 @@ bootstrap(TagDemo, [
 import { Component, OnInit, Input } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS } from '@angular/http';
-
 import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
@@ -267,7 +274,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
              <alfresco-tag-list></alfresco-tag-list>
            </div>
     `,
-    directives: [TAGCOMPONENT, CONTEXT_MENU_DIRECTIVES],
+    directives: [TAGCOMPONENT],
     providers: [TAGSERVICES]
 })
 class TagDemo implements OnInit {

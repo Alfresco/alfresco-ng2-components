@@ -52,7 +52,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
             </div>
         </div>
     `,
-    directives: [TAGCOMPONENT, CONTEXT_MENU_DIRECTIVES],
+    directives: [TAGCOMPONENT],
     providers: [TAGSERVICES]
 })
 class TagDemo implements OnInit {
