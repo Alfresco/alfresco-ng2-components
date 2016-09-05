@@ -1,39 +1,36 @@
 <!--isContextMenu-->
 <div *ngIf="isContextMenu">
-    <li class="mdl-menu__item" *ngFor="let currentEntry of tagsEntries">
-            <span class="mdl-list__item-primary-content">
+    <li class="mdl-menu__item" *ngFor="let currentEntry of tagsEntries; let idx = index">
+            <span id="tag_name_{{idx}}" class="mdl-list__item-primary-content">
                 {{currentEntry.entry.tag}}
             </span>
-        <span class="mdl-list__item-secondary-action">
-                <i class="material-icons" (click)="removeTag(currentEntry.entry.id)">delete</i>
-            </span>
+        <div id="tag_delete_{{idx}}" class="mdl-list__item-secondary-action" (click)="removeTag(currentEntry.entry.id)">
+            <i class="material-icons">delete</i>
+        </div>
     </li>
     <li>
         <div class="mdl-textfield mdl-js-textfield tag-container-input">
             <input class="mdl-textfield__input tag-input" type="tag" id="new-tag-text" [(ngModel)]="newTagName"/>
         </div>
-        <button class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
+        <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
             Add tag
         </button>
     </li>
 </div>
 
 <!--not ContextMenu-->
-
-<ul *ngIf="!isContextMenu" class="mdl-menu--bottom-right">
-    <li class="mdl-menu__item" *ngFor="let currentEntry of tagsEntries">
-            <span class="mdl-list__item-primary-content">
-                {{currentEntry.entry.tag}}
-            </span>
-        <span class="mdl-list__item-secondary-action">
-                <i class="material-icons" (click)="removeTag(currentEntry.entry.id)">delete</i>
-            </span>
+<ul *ngIf="!isContextMenu" class="tag-list-control mdl-list">
+    <li class="mdl-list__item tag-element" *ngFor="let currentEntry of tagsEntries; let idx = index">
+        <span id="tag_name_{{idx}}" class="mdl-list__item-primary-content">{{currentEntry.entry.tag}}</span>
+        <div id="tag_delete_{{idx}}" class="mdl-list__item-secondary-action" (click)="removeTag(currentEntry.entry.id)">
+            <i class="material-icons">delete</i>
+        </div>
     </li>
     <li>
         <div class="mdl-textfield mdl-js-textfield tag-container-input">
             <input class="mdl-textfield__input tag-input" type="tag" id="new-tag-text" [(ngModel)]="newTagName"/>
         </div>
-        <button class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
+        <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
             Add tag
         </button>
     </li>

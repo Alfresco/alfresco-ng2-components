@@ -16,18 +16,35 @@
  */
 
 
-import { describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
+import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
+import { TagNodeList } from './tag-node-list.component';
 
 declare let jasmine: any;
 
 describe('Tag relative node list', () => {
 
-    let  service;
+    let tagNodeListFixture, element, component;
+
+    let dataTag = {
+        'list': {
+            'pagination': {
+                'count': 3,
+                'hasMoreItems': false,
+                'totalItems': 3,
+                'skipCount': 0,
+                'maxItems': 100
+            },
+            'entries': [{
+                'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
+            }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
+                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}}]
+        }
+    };
 
     beforeEachProviders(() => {
-
         return [
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
@@ -35,7 +52,17 @@ describe('Tag relative node list', () => {
         ];
     });
 
-    describe('Content tests', () => {
+    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(TagNodeList)
+            .then(fixture => {
+                tagNodeListFixture = fixture;
+                element = tagNodeListFixture.nativeElement;
+                component = tagNodeListFixture.componentInstance;
+            });
+    }));
+
+    describe('Rendering tests', () => {
 
         beforeEach(() => {
             jasmine.Ajax.install();
@@ -45,16 +72,52 @@ describe('Tag relative node list', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('getTagsByNodeId catch errors call', (done) => {
-            service.getTagsByNodeId('fake-node-id', 'fake-tag').subscribe(() => {
-            }, () => {
+        it('Tag list relative a single node should be rendered', (done) => {
+            component.nodeId = 'fake-node-id';
+
+            component.resultsEmitter.subscribe(() => {
+                tagNodeListFixture.detectChanges();
+
+                expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
+                expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
+                expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
+
+                expect(element.querySelector('#tag_delete_0')).not.toBe(null);
+                expect(element.querySelector('#tag_delete_1')).not.toBe(null);
+                expect(element.querySelector('#tag_delete_2')).not.toBe(null);
+
                 done();
             });
 
+            component.ngOnChanges();
+
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
+                status: 200,
+                contentType: 'json',
+                responseText: dataTag
             });
         });
 
+        it('Tag list click on delete button should delete the tag', (done) => {
+            component.nodeId = 'fake-node-id';
+
+            component.resultsEmitter.subscribe(() => {
+                tagNodeListFixture.detectChanges();
+                element.querySelector('#tag_delete_0').click();
+
+                expect(jasmine.Ajax.requests.mostRecent().url).
+                toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
+                expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
+                done();
+            });
+
+            component.ngOnChanges();
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: dataTag
+            });
+        });
     });
 });

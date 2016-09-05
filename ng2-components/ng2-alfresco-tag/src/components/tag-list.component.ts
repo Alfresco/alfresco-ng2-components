@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Component, Input} from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { TagService} from '../services/tag.service';
+import { TagService } from '../services/tag.service';
 
 /**
  *
@@ -30,16 +30,14 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-tag-list',
-    templateUrl: './tag-list.component.html',
-    styleUrls: ['./tag.component.css']
-
+    templateUrl: './tag-list.component.html'
 })
 export class TagList {
 
     tagsEntries: any;
 
-    @Input()
-    tagUlId: string = 'tg-id';
+    @Output()
+    resultsEmitter = new EventEmitter();
 
     /**
      * Constructor
@@ -55,7 +53,8 @@ export class TagList {
 
     refreshTagEcm() {
         this.tagService.getAllTheTags().subscribe((data) => {
-            this.tagsEntries = data;
+            this.tagsEntries = data.list.entries;
+            this.resultsEmitter.emit(this.tagsEntries);
         });
     }
 }

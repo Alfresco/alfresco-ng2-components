@@ -31,7 +31,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 @Component({
     selector: 'alfresco-tag-demo',
     template: `
-                <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
                <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
                <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
@@ -40,7 +40,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
                     operations.
                </div>
                <hr>
-                 <label for="nodeId"><b>Insert Node Id</b></label><br>
+                <label for="nodeId"><b>Insert Node Id</b></label><br>
                 <input id="nodeId" type="text" size="48"  [(ngModel)]="nodeId"><br>
         <div class="container" *ngIf="authenticated">
             <div class="mdl-grid">
@@ -50,10 +50,6 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
                     Tag list By Node ID 
                     <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
               </div>
-            <div class="mdl-cell mdl-cell--4-col">
-                     Tag list By Node Properties
-                    <alfresco-tag-node-list [properties]="propertiesDemo"></alfresco-tag-node-list>
-              </div>
             </div>
         </div>
     `,
@@ -62,10 +58,8 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 })
 class TagDemo implements OnInit {
 
-    propertiesDemo: string = '{"cm:taggable": ["008e722c-bf2a-4426-832c-29d1a9b174a8", "0350ff75-badb-40e5-b7de-1091a855dd70"]}';
-
     @Input()
-    nodeId: string = '1a0b110f-1e09-4ca2-b367-fe25e4964a4e';
+    nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
 
     currentPath: string = '/';
 

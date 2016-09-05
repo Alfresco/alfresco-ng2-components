@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {TagService} from '../services/tag.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { TagService } from '../services/tag.service';
 
 /**
  *
@@ -42,7 +42,10 @@ export class TagActionsComponent {
     isContextMenu: boolean = false;
 
     @Output()
-    onSuccess: EventEmitter<any> = new EventEmitter();
+    addEmitter: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    resultsEmitter = new EventEmitter();
 
     newTagName: string;
 
@@ -61,20 +64,21 @@ export class TagActionsComponent {
     }
 
     refreshTag() {
-        this.tagService.getTagsByNodeId(this.nodeId).then((data) => {
-            this.tagsEntries = data;
+        this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
+            this.tagsEntries = data.list.entries;
+            this.resultsEmitter.emit(this.tagsEntries);
         });
     }
 
     addTag() {
-        this.tagService.addTag(this.nodeId, this.newTagName).then((res) => {
+        this.tagService.addTag(this.nodeId, this.newTagName).subscribe((res) => {
             this.refreshTag();
-            this.onSuccess.emit(res.entry.id);
+            this.addEmitter.emit(this.nodeId);
         });
     }
 
     removeTag(tag: string) {
-        this.tagService.removeTag(this.nodeId, tag).then(() => {
+        this.tagService.removeTag(this.nodeId, tag).subscribe(() => {
             this.refreshTag();
         });
     }

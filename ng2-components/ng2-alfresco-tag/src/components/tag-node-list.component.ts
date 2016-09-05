@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
@@ -40,6 +40,9 @@ export class TagNodeList {
 
     tagsEntries: any;
 
+    @Output()
+    resultsEmitter = new EventEmitter();
+
     /**
      * Constructor
      * @param authService
@@ -52,13 +55,14 @@ export class TagNodeList {
     }
 
     refreshTag() {
-        this.tagService.getTagsByNodeId(this.nodeId).then((data) => {
-            this.tagsEntries = data;
+        this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
+            this.tagsEntries = data.list.entries;
+            this.resultsEmitter.emit(this.tagsEntries);
         });
     }
 
     removeTag(tag: string) {
-        this.tagService.removeTag(this.nodeId, tag).then(() => {
+        this.tagService.removeTag(this.nodeId, tag).subscribe(() => {
             this.refreshTag();
         });
     }

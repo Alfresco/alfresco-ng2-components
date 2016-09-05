@@ -16,18 +16,35 @@
  */
 
 
-import { describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
+import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
+import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
+import { TagList } from './tag-list.component';
 
 declare let jasmine: any;
 
-describe('Tag list', () => {
+describe('Tag list All ECM', () => {
 
-    let  service;
+    let tagListFixture, element, component;
+
+    let dataTag = {
+        'list': {
+            'pagination': {
+                'count': 3,
+                'hasMoreItems': false,
+                'totalItems': 3,
+                'skipCount': 0,
+                'maxItems': 100
+            },
+            'entries': [{
+                'entry': {'tag': 'test1', 'id': '0ee933fa-57fc-4587-8a77-b787e814f1d2'}
+            }, {'entry': {'tag': 'test2', 'id': 'fcb92659-1f10-41b4-9b17-851b72a3b597'}}, {
+                'entry': {'tag': 'test3', 'id': 'fb4213c0-729d-466c-9a6c-ee2e937273bf'}}]
+        }
+    };
 
     beforeEachProviders(() => {
-
         return [
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
@@ -35,11 +52,17 @@ describe('Tag list', () => {
         ];
     });
 
-    beforeEach(inject([TagService], (tagService: TagService) => {
-        service = tagService;
+    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+        return tcb
+            .createAsync(TagList)
+            .then(fixture => {
+                tagListFixture = fixture;
+                element = tagListFixture.nativeElement;
+                component = tagListFixture.componentInstance;
+            });
     }));
 
-    describe('Content tests', () => {
+    describe('Rendering tests', () => {
 
         beforeEach(() => {
             jasmine.Ajax.install();
@@ -49,5 +72,26 @@ describe('Tag list', () => {
             jasmine.Ajax.uninstall();
         });
 
+        it('Tag list relative a single node should be rendered', (done) => {
+            component.nodeId = 'fake-node-id';
+
+            component.resultsEmitter.subscribe(() => {
+                tagListFixture.detectChanges();
+
+                expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
+                expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
+                expect(element.querySelector('#tag_name_2').innerHTML).toBe('test3');
+
+                done();
+            });
+
+            component.ngOnInit();
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: dataTag
+            });
+        });
     });
 });
