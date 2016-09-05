@@ -20,7 +20,6 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 /**
@@ -45,7 +44,7 @@ export class UploadService {
     filesUpload$: Observable<FileModel[]>;
     totalCompleted$: Observable<any>;
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(private apiService: AlfrescoApiService) {
         this.filesUpload$ = new Observable<FileModel[]>(observer => this.filesUploadObserverProgressBar = observer).share();
         this.totalCompleted$ = new Observable<number>(observer => this.totalCompletedObserver = observer).share();
     }
@@ -106,7 +105,7 @@ export class UploadService {
         filesToUpload.forEach((uploadingFileModel: FileModel) => {
             uploadingFileModel.setUploading();
 
-            let promiseUpload = this.authService.getAlfrescoApi().upload.uploadFile(uploadingFileModel.file, directory, null, null, opts)
+            let promiseUpload = this.apiService.getInstance().upload.uploadFile(uploadingFileModel.file, directory, null, null, opts)
                 .on('progress', (progress: any) => {
                     uploadingFileModel.setProgres(progress);
                     this.updateFileListStream(this.queue);

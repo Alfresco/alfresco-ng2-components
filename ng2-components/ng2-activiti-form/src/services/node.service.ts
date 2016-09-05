@@ -70,7 +70,9 @@ export class NodeService {
             relativePath: path
         };
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().nodes.addNode('-root-', body, {}));
+        // TODO: requires update to alfresco-js-api typings
+        let apiService: any = this.authService.getAlfrescoApi();
+        return Observable.fromPromise(apiService.nodes.addNode('-root-', body, {}));
     }
 
     private generateUuid() {
