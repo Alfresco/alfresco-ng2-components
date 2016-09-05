@@ -23,7 +23,7 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { MATERIAL_DESIGN_DIRECTIVES, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
@@ -148,7 +148,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     constructor(private formService: FormService,
                 private visibilityService: WidgetVisibilityService,
-                private authService: AlfrescoAuthenticationService,
                 private ecmModelService: EcmModelService,
                 private nodeService: NodeService) {
     }
