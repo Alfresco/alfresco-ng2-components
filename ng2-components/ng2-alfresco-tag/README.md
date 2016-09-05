@@ -80,6 +80,23 @@ Also make sure you include these dependencies in your .html page:
 
 #### Basic usage
 
+In this component are present three different tags :
+
+* alfresco-tag-node-actions-list
+* alfresco-tag-list
+* alfresco-tag-node-list
+
+##### alfresco-tag-node-actions-list
+
+![Custom columns](docs/assets/tag3.png)                         
+
+##### alfresco-tag-node-list
+
+![Custom columns](docs/assets/tag1.png)                         
+
+##### alfresco-tag-list
+
+![Custom columns](docs/assets/tag2.png)                         
 
         
 ## Build from sources
