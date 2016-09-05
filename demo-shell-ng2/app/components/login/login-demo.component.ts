@@ -49,6 +49,8 @@ export class LoginDemoComponent {
             this.providers = 'ALL';
         } else if (checked) {
             this.providers = 'ECM';
+        } else if (!checked && this.providers === 'ALL') {
+            this.providers = 'BPM';
         } else {
             this.providers = undefined;
         }
@@ -59,6 +61,8 @@ export class LoginDemoComponent {
             this.providers = 'ALL';
         } else if (checked) {
             this.providers = 'BPM';
+        } else if (!checked && this.providers === 'ALL') {
+            this.providers = 'ECM';
         } else {
             this.providers = undefined;
         }

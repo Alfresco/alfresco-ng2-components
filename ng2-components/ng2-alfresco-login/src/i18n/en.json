@@ -11,7 +11,8 @@
       "USERNAME-REQUIRED": "Required",
       "USERNAME-MIN": "Your username needs to be at least 4 characters.",
       "PASSWORD-REQUIRED": "Enter your password to sign in",
-      "LOGIN-ERROR": "You have entered an invalid username or password",
+      "LOGIN-ERROR-CREDENTIALS": "You have entered an invalid username or password",
+      "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
       "LOGIN-SUCCESS": "Login successful"
     },
     "BUTTON": {

@@ -59,6 +59,7 @@ export class AlfrescoLoginComponent {
 
     form: ControlGroup;
     error: boolean = false;
+    errorMsg: string;
     success: boolean = false;
 
     formError: { [id: string]: string };
@@ -108,10 +109,19 @@ export class AlfrescoLoginComponent {
      * @param event
      */
     onSubmit(value: any, event: any) {
-        this.error = false;
         if (event) {
             event.preventDefault();
         }
+        if (this.providers === undefined) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
+            this.error = true;
+            let messageProviders: any;
+            messageProviders = this.translate.get(this.errorMsg);
+            this.onError.emit(messageProviders.value);
+            this.success = false;
+            return false;
+        }
+        this.error = false;
 
         this.settingsService.setProviders(this.providers);
 
@@ -123,6 +133,7 @@ export class AlfrescoLoginComponent {
                 },
                 (err: any) => {
                     this.error = true;
+                    this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
                     this.onError.emit(err);
                     console.log(err);
                     this.success = false;
