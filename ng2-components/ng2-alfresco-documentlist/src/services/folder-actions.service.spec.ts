@@ -15,18 +15,10 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-import {FolderActionsService} from './folder-actions.service';
-import {ContentActionHandler} from '../models/content-action.model';
-import {
-    FileNode,
-    FolderNode
-} from '../assets/document-library.model.mock';
+import { it, describe, expect, beforeEach } from '@angular/core/testing';
+import { FolderActionsService } from './folder-actions.service';
+import { ContentActionHandler } from '../models/content-action.model';
+import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { DocumentListService } from './document-list.service';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 
@@ -41,7 +33,8 @@ describe('FolderActionsService', () => {
     });
 
     it('should register custom action handler', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<key>')).toBe(handler);
     });
@@ -51,7 +44,8 @@ describe('FolderActionsService', () => {
     });
 
     it('should be case insensitive for keys', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         service.setHandler('<key>', handler);
         expect(service.getHandler('<KEY>')).toBe(handler);
     });
@@ -76,7 +70,8 @@ describe('FolderActionsService', () => {
     });
 
     it('should set new handler only by key', () => {
-        let handler: ContentActionHandler = function (obj: any) {};
+        let handler: ContentActionHandler = function (obj: any) {
+        };
         expect(service.setHandler(null, handler)).toBeFalsy();
         expect(service.setHandler('', handler)).toBeFalsy();
         expect(service.setHandler('my-handler', handler)).toBeTruthy();
@@ -145,5 +140,4 @@ describe('FolderActionsService', () => {
         expect(documentListService.deleteNode).toHaveBeenCalled();
         expect(target.reload).toHaveBeenCalled();
     });
-
 });
