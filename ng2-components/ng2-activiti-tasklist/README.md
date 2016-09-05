@@ -50,7 +50,7 @@ Also make sure you include these dependencies in your `index.html` file:
 
 ## Basic usage example Activiti Task List
 The component shows the list of all the tasks filter by the
-FilterModel passed in input.
+FilterParamModel passed in input.
 ```html
 <activiti-tasklist [taskFilter]="taskFilterModel"></activiti-tasklist>
 ```
@@ -62,25 +62,19 @@ clicked<br />
 
 #### Options
 
-**taskFilter**: { FilterModel } required) FilterModel object that
+**taskFilter**: { FilterParamModel } required) FilterParamModel object that
 is passed to the task list API to filter the task list.
 Example:
 ```json
 {
-	"id": 4,
-	"name": "Involved Tasks",
-	"recent": false,
-	"icon": "glyphicon-align-left",
-	"filter": {
-		"appDefinitionId": "1",
-		"processDefinitionId": "1533",
-		"sort": "created-desc",
-		"name": "",
-		"state": "open",
-		"assignment": "involved",
-		"page": "0",
-		"size": "25"
-	}
+	"appDefinitionId": "1",
+	"processDefinitionId": "1533",
+	"sort": "created-desc",
+	"text": "",
+	"state": "open",
+	"assignment": "involved",
+	"page": "0",
+	"size": "25"
 }
 ```
 **schemaColumn**: { any[] } optional) JSON object that represent
