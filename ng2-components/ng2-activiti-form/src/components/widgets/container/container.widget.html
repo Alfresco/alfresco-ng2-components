@@ -46,6 +46,9 @@
                         <div *ngSwitchCase="'upload'">
                             <upload-widget [field]="field" (fieldChanged)="fieldChanged($event);"></upload-widget>
                         </div>
+                        <div *ngSwitchCase="'typeahead'">
+                            <typeahead-widget [field]="field" (fieldChanged)="fieldChanged($event);"></typeahead-widget>
+                        </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                         </div>

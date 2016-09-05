@@ -28,6 +28,7 @@ import { RadioButtonsWidget } from './radio-buttons/radio-buttons.widget';
 import { DisplayValueWidget } from './display-value/display-value.widget';
 import { DisplayTextWidget } from './display-text/display-text.widget';
 import { UploadWidget } from './upload/upload.widget';
+import { TypeaheadWidget } from './typeahead/typeahead.widget';
 
 // core
 export * from './widget.component';
@@ -48,6 +49,7 @@ export * from './radio-buttons/radio-buttons.widget';
 export * from './display-value/display-value.widget';
 export * from './display-text/display-text.widget';
 export * from './upload/upload.widget';
+export * from './typeahead/typeahead.widget';
 
 export const CONTAINER_WIDGET_DIRECTIVES: [any] = [
     TabsWidget,
@@ -64,7 +66,8 @@ export const PRIMITIVE_WIDGET_DIRECTIVES: [any] = [
     RadioButtonsWidget,
     DisplayValueWidget,
     DisplayTextWidget,
-    UploadWidget
+    UploadWidget,
+    TypeaheadWidget
 ];
 
 

@@ -212,6 +212,11 @@ export class FormService {
             .catch(this.handleError);
     }
 
+    getRestFieldValues(taskId: string, field: string): Promise<any> {
+        let alfrescoApi = this.authService.getAlfrescoApi();
+        return alfrescoApi.activiti.taskFormsApi.getRestFieldValues(taskId, field);
+    }
+
     getFormId(res: any) {
         let result = null;
 

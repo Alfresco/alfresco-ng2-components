@@ -1,6 +1,7 @@
 .activiti-form-container {
     width: 100%;
     min-height: 100px;
+    overflow: visible;
 }
 
 .activiti-form-container > .mdl-card__media {
