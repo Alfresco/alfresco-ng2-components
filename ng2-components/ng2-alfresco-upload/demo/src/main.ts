@@ -28,37 +28,74 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'my-app',
-    template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+    template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
-               <hr>
-               <alfresco-upload-button [showUdoNotificationBar]="true"
-                                       [uploadFolders]="false"
-                                       [multipleFiles]="false"
-                                       (onSuccess)="customMethod($event)">
-               </alfresco-upload-button>
 
-               <br><br>
+                <h5>Upload</h5>
+                <br>
+                <div *ngIf="acceptedFilesTypeShow">
+                    <span class="mdl-input__label">Extension accepted</span>
+                    <input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
+                    <br/>
+                </div>
+                <div *ngIf="!acceptedFilesTypeShow">
+                    <alfresco-upload-button data-automation-id="multiple-file-upload"
+                                            [uploaddirectory]="currentPath"
+                                            [currentFolderPath]="currentPath"
+                                            [multipleFiles]="multipleFileUpload"
+                                            [uploadFolders]="folderUpload"
+                                            [versioning] = "versioning"
+                                            (onSuccess)="documentList.reload()">
+                        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                    </alfresco-upload-button>
+                </div>
+                <div *ngIf="acceptedFilesTypeShow">
+                    <alfresco-upload-button data-automation-id="multiple-file-upload"
+                                            [uploaddirectory]="currentPath"
+                                            [currentFolderPath]="currentPath"
+                                            acceptedFilesType="{{acceptedFilesType}}"
+                                            [multipleFiles]="multipleFileUpload"
+                                            [uploadFolders]="folderUpload"
+                                            [versioning] = "versioning"
+                                            (onSuccess)="documentList.reload()">
+                        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                    </alfresco-upload-button>
+                </div>
 
-               <alfresco-upload-button [showUdoNotificationBar]="true"
-                                       [uploadFolders]="true"
-                                       [multipleFiles]="false"
-                                       (onSuccess)="customMethod($event)">
-               </alfresco-upload-button>
-
-               <br><br>
-
-               <alfresco-upload-button [showUdoNotificationBar]="true"
-                                       [uploadFolders]="false"
-                                       [multipleFiles]="true"
-                                       (onSuccess)="customMethod($event)">
-               </alfresco-upload-button>
-
+                <p style="width:250px;margin: 20px;">
+                    <label for="switch-multiple-file" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                        <input type="checkbox" id="switch-multiple-file" class="mdl-switch__input" (change)="toggleMultipleFileUpload()" >
+                        <span class="mdl-switch__label">Multiple File Upload</span>
+                    </label>
+                </p>
+                
+                
+                <p style="width:250px;margin: 20px;">
+                    <label for="switch-folder-upload" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                        <input type="checkbox" id="switch-folder-upload" class="mdl-switch__input" (change)="toggleFolder()">
+                        <span class="mdl-switch__label">Folder Upload</span>
+                    </label>
+                </p>
+                
+                <p style="width:250px;margin: 20px;">
+                    <label for="switch-accepted-file-type" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                        <input type="checkbox" id="switch-accepted-file-type" class="mdl-switch__input" (change)="toggleAcceptedFilesType()">
+                        <span class="mdl-switch__label">Filter extension</span>
+                    </label>
+                </p>
+                
+                <p style="width:250px;margin: 20px;">
+                    <label for="switch-versioning" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                        <input type="checkbox" id="switch-versioning" class="mdl-switch__input" (change)="toggleVersioning()">
+                        <span class="mdl-switch__label">Versioning</span>
+                    </label>
+                </p>
                <br><br>
 
                <alfresco-upload-drag-area (onSuccess)="customMethod($event)" class="upload-border">
@@ -78,18 +115,24 @@ export class MyDemoApp implements OnInit {
 
     public ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
-    token: string;
+    multipleFileUpload: boolean = false;
+    folderUpload: boolean = false;
+    acceptedFilesTypeShow: boolean = false;
+    versioning: boolean = false;
+
+    ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
 
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        if (this.authService.getTicketEcm()) {
+            this.ticket = this.authService.getTicketEcm();
         }
     }
 
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
+    public updateTicket(): void {
+        localStorage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {
@@ -107,15 +150,37 @@ export class MyDemoApp implements OnInit {
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
                 console.log(error);
                 this.authenticated = false;
             });
+    }
+
+
+    toggleMultipleFileUpload() {
+        this.multipleFileUpload = !this.multipleFileUpload;
+        return this.multipleFileUpload;
+    }
+
+    toggleFolder() {
+        this.multipleFileUpload = false;
+        this.folderUpload = !this.folderUpload;
+        return this.folderUpload;
+    }
+
+    toggleAcceptedFilesType() {
+        this.acceptedFilesTypeShow = !this.acceptedFilesTypeShow;
+        return this.acceptedFilesTypeShow;
+    }
+
+    toggleVersioning() {
+        this.versioning = !this.versioning;
+        return this.versioning;
     }
 }
 

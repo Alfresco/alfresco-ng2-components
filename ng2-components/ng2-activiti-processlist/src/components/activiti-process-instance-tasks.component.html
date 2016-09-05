@@ -1,0 +1,52 @@
+<div  *ngIf="showRefreshButton" class="process-tasks-refresh" >
+    <button (click)="onRefreshClicked()"
+            class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+        <i class="material-icons">refresh</i>
+    </button>
+</div>
+
+<span class="activiti-label mdl-badge"
+      [attr.data-badge]="activeTasks?.length">{{ 'DETAILS.LABELS.TASKS_ACTIVE'|translate }}</span>
+
+<div class="menu-container" *ngIf="activeTasks?.length > 0">
+    <ul class='mdl-list'>
+        <li class="mdl-list__item mdl-list__item--two-line" *ngFor="let task of activeTasks">
+            <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
+                <i class="material-icons mdl-list__item-icon">assignment</i>
+                <span>{{task.name}}</span>
+                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: task.created | date:'mediumDate' } }}</span>
+            </span>
+        </li>
+    </ul>
+</div>
+<div *ngIf="activeTasks?.length === 0">
+    {{ 'DETAILS.TASKS.NO_ACTIVE' | translate }}
+</div>
+
+<span class="activiti-label mdl-badge"
+      [attr.data-badge]="completedTasks?.length">{{ 'DETAILS.LABELS.TASKS_COMPLETED'|translate }}</span>
+
+<div class="menu-container" *ngIf="completedTasks?.length > 0">
+    <ul class='mdl-list'>
+        <li class="mdl-list__item mdl-list__item--two-line" *ngFor="let task of completedTasks">
+            <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
+                <i class="material-icons mdl-list__item-icon">assignment</i>
+                <span>{{task.name}}</span>
+                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: task.created | date:'mediumDate' } }}</span>
+            </span>
+        </li>
+    </ul>
+</div>
+<div *ngIf="completedTasks?.length === 0">
+    {{ 'DETAILS.TASKS.NO_COMPLETED' | translate }}
+</div>
+
+<dialog class="mdl-dialog task-details-dialog" #dialog>
+    <h4 class="mdl-dialog__title">{{ 'DETAILS.TASKS.TASK_DETAILS' | translate }}</h4>
+    <div class="mdl-dialog__content">
+        <activiti-task-details [taskId]="selectedTaskId" (formCompleted)="taskFormCompleted()" #taskdetails></activiti-task-details>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="cancelDialog()" class="mdl-button close">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
+    </div>
+</dialog>

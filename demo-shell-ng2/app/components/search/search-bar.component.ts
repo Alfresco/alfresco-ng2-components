@@ -16,13 +16,9 @@
  */
 
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoContentService
-} from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -30,50 +26,34 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'search-bar',
     templateUrl: './search-bar.component.html',
-    styles: [`
-    `],
-    directives: [ ALFRESCO_SEARCH_DIRECTIVES, VIEWERCOMPONENT ]
+    directives: [ALFRESCO_SEARCH_DIRECTIVES, VIEWERCOMPONENT]
 })
 export class SearchBarComponent {
 
-    urlFile: string;
-    fileName: string;
-    mimeType: string;
+    fileNodeId: string;
     fileShowed: boolean = false;
+    searchTerm: string = '';
 
     @Output()
     expand = new EventEmitter();
 
-    constructor(
-        public router: Router,
-        public auth: AlfrescoAuthenticationService,
-        public contentService: AlfrescoContentService
-
-    ) {
+    constructor(public auth: AlfrescoAuthenticationService) {
     }
 
     isLoggedIn(): boolean {
         return this.auth.isLoggedIn();
     }
 
-    /**
-     * Called when a new search term is submitted
-     *
-     * @param params Parameters relating to the search
-     */
-    searchTermChange(params) {
-        this.router.navigate(['Search', {
-            q: params.value
-        }]);
-    }
-
     onFileClicked(event) {
         if (event.value.entry.isFile) {
-            this.fileName = event.value.entry.name;
-            this.mimeType = event.value.entry.content.mimeType;
-            this.urlFile = this.contentService.getContentUrl(event.value);
+            this.fileNodeId = event.value.entry.id;
             this.fileShowed = true;
         }
+    }
+
+    searchTermChange(event) {
+        console.log('Search term changed', event);
+        this.searchTerm = event.value;
     }
 
     onExpandToggle(event) {

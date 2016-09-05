@@ -92,7 +92,7 @@ export class ActivitiTaskDetails implements OnInit {
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
+            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -125,6 +125,8 @@ export class ActivitiTaskDetails implements OnInit {
                     console.log(this.taskDetails);
                 }
             );
+        } else {
+            this.taskDetails = null;
         }
     }
 

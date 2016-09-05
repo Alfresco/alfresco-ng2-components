@@ -1,0 +1,15 @@
+<div class="upload-widget">
+
+    <label [attr.for]="field.id">{{field.name}}</label>
+    <div>
+        <i class="material-icons upload-widget__icon">image</i>
+        <span *ngIf="hasFile" class="upload-widget__file">{{getUploadedFileName()}}</span>
+        <input *ngIf="!hasFile"
+               #file
+               type="file"
+               [attr.id]="field.id"
+               class="upload-widget__file"
+               (change)="onFileChanged($event)">
+        <button *ngIf="hasFile" (click)="reset(file);" class="upload-widget__reset">X</button>
+    </div>
+</div>

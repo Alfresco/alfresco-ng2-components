@@ -38,10 +38,11 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  * This component, provide a set of buttons to upload files to alfresco.
  *
  * @InputParam {boolean} [true] showUdoNotificationBar - hide/show notification bar.
+ * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
  * @InputParam {boolean} [false] uploadFolders - allow/disallow upload folders (only for chrome).
  * @InputParam {boolean} [false] multipleFiles - allow/disallow multiple files.
  * @InputParam {string} [*] acceptedFilesType - array of allowed file extensions.
- *
+ * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
  * @Output - onSuccess - The event is emitted when the file is uploaded
  *
  * @returns {UploadDragAreaComponent} .
@@ -68,6 +69,9 @@ export class UploadButtonComponent {
     multipleFiles: boolean = false;
 
     @Input()
+    versioning: boolean = false;
+
+    @Input()
     acceptedFilesType: string = '*';
 
     @Input()
@@ -85,14 +89,14 @@ export class UploadButtonComponent {
     translate: AlfrescoTranslationService;
 
 
-    constructor(public el: ElementRef,
-                private _uploaderService: UploadService,
-                translate: AlfrescoTranslationService) {
-
-        let formFields = this.createFormFields();
-        this._uploaderService.setOptions(formFields);
+    constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
         this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
+    }
+
+    ngOnChanges(changes) {
+        let formFields = this.createFormFields();
+        this._uploaderService.setOptions(formFields, this.versioning);
     }
 
     /**
@@ -123,21 +127,21 @@ export class UploadButtonComponent {
             this._uploaderService.createFolder(absolutePath, directoryName)
                 .subscribe(
                     res => {
-                    let relativeDir = this.currentFolderPath + '/' + directoryPath;
-                    this.uploadFiles(relativeDir, filesDir);
-                },
+                        let relativeDir = this.currentFolderPath + '/' + directoryPath;
+                        this.uploadFiles(relativeDir, filesDir);
+                    },
                     error => {
-                    let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                    if (errorMessagePlaceholder) {
-                        this.onError.emit({value: errorMessagePlaceholder});
-                        let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
-                        if (errorMessage) {
-                            this._showErrorNotificationBar(errorMessage);
+                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
+                        if (errorMessagePlaceholder) {
+                            this.onError.emit({value: errorMessagePlaceholder});
+                            let errorMessage = this.formatString(errorMessagePlaceholder, [directoryName]);
+                            if (errorMessage) {
+                                this._showErrorNotificationBar(errorMessage);
+                            }
                         }
+                        console.log(error);
                     }
-                    console.log(error);
-                }
-            );
+                );
         });
         // reset the value of the input file
         $event.target.value = '';

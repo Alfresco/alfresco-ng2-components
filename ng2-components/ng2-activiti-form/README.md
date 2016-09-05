@@ -78,6 +78,38 @@ Only form definition will be fetched
 </activiti-form>
 ```
 
+### Display form definition by ECM nodeId, in this case the metadata of the node are showed in an activiti Form. If there are no form 
+definied in activiti for the type of the node, a new form will be automaticaly created in activiti.
+
+```html
+<activiti-form 
+    [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'">
+</activiti-form>
+```
+
+### Display form definition by form name, and store the form field as metadata. The param nameNode is optional.
+
+```html
+<activiti-form 
+    [formName]="'activitiForms:patientFolder'"
+    [saveMetadata]="true"
+    [path]="'/Sites/swsdp/documentLibrary'"
+    [nameNode]="'test'">
+</activiti-form>
+```
+
+### Display form definition by ECM nodeId, in this case the metadata of the node are showed in an activiti Form, and store the form field
+  as metadata. The param nameNode is optional.
+
+```html
+<activiti-form 
+    [nodeId]="'e280be3a-6584-45a1-8bb5-89bfe070262e'"
+    [saveMetadata]="true"
+    [path]="'/Sites/swsdp/documentLibrary'"
+    [nameNode]="'test'">
+</activiti-form>
+```
+
 ## Configuration
 
 ### Properties
@@ -95,7 +127,14 @@ The recommended set of properties can be found in the following table:
 | showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
 | readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
 | showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
+| saveMetadata | boolean | false | Store the value of the form as metadata. |
+| path | string |  |  Path of the folder where to store the metadata. |
+| nameNode (optional) | string | true | Name to assign to the new node where the metadata are stored. |
 
+
+ *   {path} string - path of the folder where the to store the metadata
+ *
+ *   {nameNode} string (optional) - name of the node stored, if not defined the node will be sotred with an uuid as name
 #### Advanced properties
  
  The following properties are for complex customisation purposes:
@@ -120,7 +159,7 @@ All `form*` events receive an instance of the `FormModel` as event argument for 
 ```html
 <activiti-form 
     [taskId]="selectedTask?.id"
-    formSaved="onFormSaved($event)">
+    (formSaved)="onFormSaved($event)">
 </activiti-form>
 ```
 

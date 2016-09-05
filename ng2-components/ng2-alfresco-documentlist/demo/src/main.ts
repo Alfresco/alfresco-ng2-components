@@ -37,101 +37,108 @@ import {
 @Component({
     selector: 'alfresco-documentlist-demo',
     template: `
-        <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="host"><br><br>
+        <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket(); documentList.reload()" [(ngModel)]="ticket"><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost(); documentList.reload()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
                <hr>
-        <div class="container" *ngIf="authenticated">
-
-            <alfresco-document-list-breadcrumb
-                    [currentFolderPath]="currentPath"
-                    [target]="documentList">
-            </alfresco-document-list-breadcrumb>
-            <alfresco-document-list
-                    #documentList
-                    [currentFolderPath]="currentPath"
-                    [contextMenuActions]="true"
-                    [contentActions]="true"
-                    [multiselect]="true"
-                    (folderChange)="onFolderChanged($event)">
+ <alfresco-document-list-breadcrumb
+            [currentFolderPath]="currentPath"
+            [target]="documentList">
+        </alfresco-document-list-breadcrumb>
+        <alfresco-document-list
+                #documentList
+                [currentFolderPath]="currentPath"
+                [contextMenuActions]="true"
+                [contentActions]="true"
+                (folderChange)="onFolderChanged($event)">
+            <!--
+            <empty-folder-content>
+                <template>
+                    <h1>Sorry, no content here</h1>
+                </template>
+            </empty-folder-content>
+            -->
+            <content-columns>
+                <content-column key="$thumbnail" type="image"></content-column>
+                <content-column
+                        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                        key="name"
+                        sortable="true"
+                        class="full-width ellipsis-cell">
+                </content-column>
                 <!--
-                <empty-folder-content>
-                    <template>
-                        <h1>Sorry, no content here</h1>
-                    </template>
-                </empty-folder-content>
+                <content-column
+                        title="Type"
+                        source="content.mimeType">
+                </content-column>
                 -->
-                <content-columns>
-                    <content-column key="$thumbnail" type="image"></content-column>
-                    <content-column
-                            title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-                            key="name"
-                            sortable="true"
-                            class="full-width ellipsis-cell">
-                    </content-column>
-                    <content-column
-                            title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
-                            key="createdByUser.displayName"
-                            sortable="true"
-                            class="desktop-only">
-                    </content-column>
-                    <content-column
-                            title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
-                            key="createdAt"
-                            type="date"
-                            format="medium"
-                            sortable="true"
-                            class="desktop-only">
-                    </content-column>
-                </content-columns>
-                <content-actions>
-                    <!-- folder actions -->
-                    <content-action
-                            target="folder"
-                            title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.SYSTEM_1' | translate}}"
-                            handler="system1">
-                    </content-action>
-                    <content-action
-                            target="folder"
-                            title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
-                            (execute)="myFolderAction1($event)">
-                    </content-action>
-                    <content-action
-                            target="folder"
-                            title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
-                            handler="delete">
-                    </content-action>
+                <content-column
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                        key="createdByUser.displayName"
+                        sortable="true"
+                        class="desktop-only">
+                </content-column>
+                <content-column
+                        title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                        key="createdAt"
+                        type="date"
+                        format="medium"
+                        sortable="true"
+                        class="desktop-only">
+                </content-column>
+            </content-columns>
 
-                    <!-- document actions -->
-                    <content-action
-                            target="document"
-                            title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
-                            handler="download">
-                    </content-action>
-                    <content-action
-                            target="document"
-                            title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.SYSTEM_2' | translate}}"
-                            handler="system2">
-                    </content-action>
-                    <content-action
-                            target="document"
-                            title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
-                            (execute)="myCustomAction1($event)">
-                    </content-action>
-                    <content-action
-                            target="document"
-                            title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
-                            handler="delete">
-                    </content-action>
-                </content-actions>
-            </alfresco-document-list>
+            <content-actions>
+                <!-- folder actions -->
+                <content-action
+                        target="folder"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.SYSTEM_1' | translate}}"
+                        handler="system1">
+                </content-action>
+                <content-action
+                        target="folder"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.CUSTOM' | translate}}"
+                        (execute)="myFolderAction1($event)">
+                </content-action>
+                <content-action
+                        target="folder"
+                        title="{{'DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                        handler="delete">
+                </content-action>
+                <!-- document actions -->
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                        handler="download">
+                </content-action>
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.SYSTEM_2' | translate}}"
+                        handler="system2">
+                </content-action>
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.CUSTOM' | translate}}"
+                        (execute)="myCustomAction1($event)">
+                </content-action>
+                <content-action
+                        target="document"
+                        title="{{'DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                        handler="delete">
+                </content-action>
+                <content-action
+                        target="folder"
+                        title="Activiti: View Form"
+                        (execute)="viewActivitiForm($event)">
+                </content-action>
+            </content-actions>
+        </alfresco-document-list>
             <context-menu-holder></context-menu-holder>
-        </div>
     `,
     styles: [':host > .container {padding: 10px}'],
     directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
@@ -141,28 +148,27 @@ import {
 class DocumentListDemo implements OnInit {
 
     currentPath: string = '/';
-    authenticated: boolean;
-
+    authenticated: boolean = false;
     ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
-    token: string;
+    ticket: string;
 
-    constructor(
-        private authService: AlfrescoAuthenticationService,
-        private settingsService: AlfrescoSettingsService,
-        translation: AlfrescoTranslationService,
-        private documentActions: DocumentActionsService) {
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService,
+                translation: AlfrescoTranslationService, private documentActions: DocumentActionsService) {
 
         settingsService.ecmHost = this.ecmHost;
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        settingsService.setProviders('ECM');
+
+        if (this.authService.getTicketEcm()) {
+            this.ticket = this.authService.getTicketEcm();
         }
+
         translation.addTranslationFolder();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
+    public updateTicket(): void {
+        localStorage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {
@@ -190,9 +196,9 @@ class DocumentListDemo implements OnInit {
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {

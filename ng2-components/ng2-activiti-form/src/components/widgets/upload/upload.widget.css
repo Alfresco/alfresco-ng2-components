@@ -1,0 +1,17 @@
+.upload-widget {
+    width:100%
+}
+
+.upload-widget__icon {
+    float: left;
+}
+
+.upload-widget__file {
+    float: left;
+    margin-top: 4px;
+}
+
+.upload-widget__reset {
+    float: left;
+    margin-top: 4px;
+}

@@ -29,8 +29,8 @@ import {
 @Component({
     selector: 'my-app',
     template: `
-    <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-       <input id="token" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+    <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+       <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
        <div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 120px; z-index: 1;">
         <p style="width:120px;margin: 20px;">
         <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
@@ -58,7 +58,7 @@ export class AppComponent {
 
     public ecmHost: string = 'http://devproducts-platform.alfresco.me';
 
-    public token: string;
+    public ticket: string;
 
     public status: string = '';
 

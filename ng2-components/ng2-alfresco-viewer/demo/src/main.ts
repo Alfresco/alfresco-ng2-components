@@ -17,9 +17,7 @@
 
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
-
-import { HTTP_PROVIDERS } from '@angular/http';
+import { VIEWERCOMPONENT, RenderingQueueServices } from 'ng2-alfresco-viewer';
 
 import {
     ALFRESCO_CORE_PROVIDERS,
@@ -30,12 +28,12 @@ import {
 @Component({
     selector: 'my-app',
     template: `
-               <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
+               <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
                <hr>
@@ -54,19 +52,20 @@ class MyDemoApp {
 
     ecmHost: string = 'http://127.0.0.1:8080';
 
-    token: string;
+    ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService) {
-
         settingsService.ecmHost = this.ecmHost;
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        settingsService.setProviders('ECM');
+
+        if (this.authService.getTicketEcm()) {
+            this.ticket = this.authService.getTicketEcm();
         }
     }
 
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
+    public updateTicket(): void {
+        localStorage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {
@@ -80,9 +79,9 @@ class MyDemoApp {
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
@@ -93,6 +92,6 @@ class MyDemoApp {
 }
 bootstrap(MyDemoApp, [
     VIEWERCOMPONENT,
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
+    ALFRESCO_CORE_PROVIDERS,
+    RenderingQueueServices
 ]);

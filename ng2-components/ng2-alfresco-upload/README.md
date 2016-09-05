@@ -91,6 +91,8 @@ Also make sure you include these dependencies in your .html page:
                         [uploadFolders]="true"
                         [multipleFiles]="false"
                         [acceptedFilesType]=".jpg,.gif,.png,.svg"
+                        [currentFolderPath]="/Sites/swsdp/documentLibrary"
+                        [versioning]="false"
                         (onSuccess)="customMethod($event)">
 </alfresco-upload-button>
 <file-uploading-dialog></file-uploading-dialog>
@@ -137,14 +139,22 @@ bootstrap(MyDemoApp, [
 
 ```
 #### Events
-**onSuccess**: The event is emitted when the file is uploaded<br />
+Attribute     | Description 
+---           | ---         
+`onSuccess`   |  The event is emitted when the file is uploaded 
 
 #### Options
 
-**showUdoNotificationBar**: {boolean} (optional) default true. Hide/show notification bar.<br />
-**uploadFolders**: {boolean} (optional) default false. Allow/disallow upload folders (only for chrome).<br />
-**multipleFiles**: {boolean} (optional) default false. Allow/disallow multiple files.<br />
-**acceptedFilesType**: {string} (optional) default "*". array of allowed file extensions , example: ".jpg,.gif,.png,.svg" .<br />
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`showUdoNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
+`uploadFolders`         | *boolean*    |     false   |  Allow/disallow upload folders (only for chrome) | 
+`multipleFiles`         | *boolean*    |     false   |  Allow/disallow multiple files | 
+`acceptedFilesType`         | *string*    |     *   |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" | 
+`currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
+`versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+
+
 
 ### Drag and drop
 This component, provide a drag and drop are to upload files to alfresco.
@@ -195,8 +205,20 @@ bootstrap(MyDemoApp, [
 ]);
 
 ```
+
 #### Events
-**onSuccess**: The event is emitted when the file is uploaded<br />
+Attribute     | Description 
+---           | ---         
+`onSuccess`   |  The event is emitted when the file is uploaded 
+
+#### Options
+
+Attribute     | Options     | Default      | Description | Mandatory
+---           | ---         | ---          | ---         | ---
+`showUdoNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
+`currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
+`versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
+
 
 ### Files Dialog
 This component provides a dialog that shows all the files uploaded 

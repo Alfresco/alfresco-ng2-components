@@ -87,7 +87,7 @@ describe('AlfrescoUploadService', () => {
         service.uploadFilesInTheQueue('fake-dir', emitter);
 
         let request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
+        expect(request.url).toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
         expect(request.method).toBe('POST');
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -109,7 +109,8 @@ describe('AlfrescoUploadService', () => {
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('', emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
-            .toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children');
+            .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
+
         jasmine.Ajax.requests.mostRecent().respondWith({
             'status': 404,
             contentType: 'text/plain',
@@ -158,7 +159,7 @@ describe('AlfrescoUploadService', () => {
         };
         let filesFake = [{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
-        service.filesUpload$.subscribe( (file) => {
+        service.filesUpload$.subscribe((file) => {
             expect(file).toBeDefined();
             expect(file[0]).toBeDefined();
             expect(file[0].progress).toEqual(fakeProgress);
@@ -171,7 +172,7 @@ describe('AlfrescoUploadService', () => {
         file[0].emitProgres(fakeProgress);
     });
 
-    it('should make XHR done request after the folder is created', (done)  => {
+    it('should make XHR done request after the folder is created', (done) => {
         let fakeRest = {
             entry: {
                 isFile: false,
@@ -192,7 +193,7 @@ describe('AlfrescoUploadService', () => {
         });
     });
 
-    it('should throws an exception when a folder already exist', (done)  => {
+    it('should throws an exception when a folder already exist', (done) => {
         let fakeRest = {
             response: {
                 body: {
@@ -210,13 +211,26 @@ describe('AlfrescoUploadService', () => {
         let defaultPath = '';
         let folderName = 'folder-duplicate-fake';
         service.createFolder(defaultPath, folderName).subscribe(
-                res => {
+            res => {
             },
-                error => {
+            error => {
                 expect(error).toEqual(fakeRest);
                 done();
             }
         );
     });
 
+    it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
+        let emitter = new EventEmitter();
+
+        let enableVersioning = true;
+        service.setOptions(options, enableVersioning);
+        let filesFake = [{name: 'fake-name', size: 10}];
+        service.addToQueue(filesFake);
+        service.uploadFilesInTheQueue('', emitter);
+
+        console.log(jasmine.Ajax.requests.mostRecent().url);
+        expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
+        expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
+    });
 });

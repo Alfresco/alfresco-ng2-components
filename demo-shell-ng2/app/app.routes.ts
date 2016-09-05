@@ -28,6 +28,7 @@ import {
     AboutComponent,
     FormViewer
 } from './components/index';
+import { FormNodeViewer } from './components/activiti/form-node-viewer.component';
 
 export const routes: RouterConfig = [
     { path: 'home', component: FilesComponent },
@@ -39,6 +40,7 @@ export const routes: RouterConfig = [
     { path: 'search', component: SearchComponent },
     { path: 'activiti', component: ActivitiDemoComponent },
     { path: 'activiti/tasks/:id', component: FormViewer },
+    { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
     { path: 'webscript', component: WebscriptComponent },
     { path: 'about', component: AboutComponent }
 ];

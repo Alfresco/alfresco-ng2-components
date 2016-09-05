@@ -23,6 +23,7 @@ export class FormFieldTypes {
     static RADIO_BUTTONS: string = 'radio-buttons';
     static DISPLAY_VALUE: string = 'readonly';
     static READONLY_TEXT: string = 'readonly-text';
+    static UPLOAD: string = 'upload';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

@@ -1,10 +1,25 @@
-<table data-automation-id="autocomplete_results" *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+<table data-automation-id="autocomplete_results" *ngIf="results && results.length && searchTerm"
+       class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
     <tbody>
-    <tr *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)"
-        attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}" >
-        <td class="img-td"><img src="{{getMimeTypeIcon(result)}}" alt="{{getMimeTypeKey(result)|translate}}" /></td>
-        <td><div class="truncate" ><b>{{result.entry.name}}</b></div><div class="truncate">{{result.entry.createdByUser.displayName}}</div></td>
+    <tr id="result_row_{{idx}}" *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)"
+        attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}">
+        <td class="img-td"><img src="{{getMimeTypeIcon(result)}}" alt="{{getMimeTypeKey(result)|translate}}"/></td>
+        <td>
+            <div id="result_name_{{idx}}"  class="truncate"><b>{{result.entry.name}}</b></div>
+            <div id="result_user_{{idx}}"  class="truncate">{{result.entry.createdByUser.displayName}}</div>
+        </td>
     </tr>
     </tbody>
 </table>
-<p data-automation-id="autocomplete_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
+<table id="search_no_result" data-automation-id="search_no_result_found" *ngIf="results && results.length === 0"
+       class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <tbody>
+    <tr>
+        <td>
+            <div class="truncate"><b> {{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</b></div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p data-automation-id="autocomplete_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' |
+    translate:{errorMessage: errorMessage} }}</p>

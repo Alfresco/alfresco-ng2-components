@@ -320,4 +320,29 @@ describe('DataTable', () => {
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_1'}, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_2'}, 'desc')).toBeFalsy();
     });
+
+    it('should replace image source with fallback thumbnail on error', () => {
+        let event = <any> {
+            srcElement: {
+                src: 'missing-image'
+            }
+        };
+
+        dataTable.fallbackThumbnail = '<fallback>';
+        dataTable.onImageLoadingError(event);
+        expect(event.srcElement.src).toBe(dataTable.fallbackThumbnail);
+    });
+
+    it('should replace image source only when fallback available', () => {
+        const originalSrc = 'missing-image';
+        let event = <any> {
+            srcElement: {
+                src: originalSrc
+            }
+        };
+
+        dataTable.fallbackThumbnail = null;
+        dataTable.onImageLoadingError(event);
+        expect(event.srcElement.src).toBe(originalSrc);
+    });
 });

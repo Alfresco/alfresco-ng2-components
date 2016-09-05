@@ -47,4 +47,4 @@ in the demo shell:
 ./npm-buid-alll.sh
 ```
 
-For development environment configuration please refer to [project docs](demo-shell-ng2/README.md).
+For development environment configuration please refer to [project docs](../demo-shell-ng2/README.md).

@@ -1,7 +1,7 @@
 {
   "name": "ng2-activiti-form",
   "description": "Alfresco Activiti Form Component for Angular 2",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "postinstall": "typings install",
@@ -65,7 +65,7 @@
     "rxjs": "5.0.0-beta.6",
     "zone.js": "0.6.12",
     "ng2-translate": "2.2.2",
-    "ng2-alfresco-core": "0.2.0"
+    "ng2-alfresco-core": "0.3.0"
   },
   "peerDependencies": {
     "material-design-icons": "^2.2.3",

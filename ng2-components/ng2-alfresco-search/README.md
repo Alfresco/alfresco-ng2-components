@@ -220,7 +220,7 @@ Also make sure you include these dependencies in your .html page:
 ```
 
 Example of an component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
-search term. If no ruter is present pon the page of if the router does not provide such a parameter then an empty 
+search term. If no router is present pon the page of if the router does not provide such a parameter then an empty 
 results page will be shown.
 
 ```ts

@@ -59,7 +59,7 @@ export class ActivitiChecklist implements OnInit {
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist');
+            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
         this.task$ = new Observable<TaskDetailsModel>(observer =>  this.taskObserver = observer).share();
     }

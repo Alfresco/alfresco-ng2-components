@@ -400,6 +400,34 @@ describe('ShareDataTableAdapter', () => {
         expect((<ShareDataRow> rows[0]).node).toBe(file2);
         expect((<ShareDataRow> rows[1]).node).toBe(file1);
     });
+
+    it('should preserve sorting on navigation', () => {
+        let file1 = new FileNode('file1');
+        let file2 = new FileNode('file2');
+        let file3 = new FileNode('file3');
+        let file4 = new FileNode('file4');
+
+        let col = <DataColumn> { key: 'name' };
+        let adapter = new ShareDataTableAdapter(documentListService, null, [col]);
+        adapter.setSorting(new DataSorting('name', 'asc'));
+
+        let page1 = new PageNode([file2, file1]);
+        let page2 = new PageNode([file4, file3]);
+
+        documentListService.getFolderResult = page1;
+        adapter.loadPath('/page1');
+
+        let sorted = adapter.getRows();
+        expect((<ShareDataRow> sorted[0]).node).toBe(file1);
+        expect((<ShareDataRow> sorted[1]).node).toBe(file2);
+
+        documentListService.getFolderResult = page2;
+        adapter.loadPath('/page2');
+
+        sorted = adapter.getRows();
+        expect((<ShareDataRow> sorted[0]).node).toBe(file3);
+        expect((<ShareDataRow> sorted[1]).node).toBe(file4);
+    });
 });
 
 describe('ShareDataRow', () => {

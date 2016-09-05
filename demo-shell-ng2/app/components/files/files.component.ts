@@ -63,6 +63,7 @@ export class FilesComponent implements OnInit {
     multipleFileUpload: boolean = false;
     folderUpload: boolean = false;
     acceptedFilesTypeShow: boolean = false;
+    versioning: boolean = false;
 
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
@@ -119,6 +120,11 @@ export class FilesComponent implements OnInit {
         return this.acceptedFilesTypeShow;
     }
 
+    toggleVersioning() {
+        this.versioning = !this.versioning;
+        return this.versioning;
+    }
+
     ngOnInit() {
         this.formService.getProcessDefinitions().subscribe(
             defs => this.setupBpmActions(defs || []),
@@ -127,7 +133,7 @@ export class FilesComponent implements OnInit {
     }
 
     viewActivitiForm(event?: any) {
-        this.router.navigate(['/activiti/tasks', '1']);
+        this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
     }
 
     private setupBpmActions(actions: any[]) {

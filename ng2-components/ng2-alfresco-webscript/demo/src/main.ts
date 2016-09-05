@@ -31,21 +31,21 @@ import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
 @Component({
     selector: 'alfresco-webscript-demo',
     template: `
-               <label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
+               <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid token to perform
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
                <hr>
-                <label for="token"><b>Insert a scriptPath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="scriptPath"><br>
-                <label for="token"><b>Insert a contextRoot</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="contextRoot"><br>
-                <label for="token"><b>Insert a servicePath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
+                <label for="scriptPath"><b>Insert a scriptPath</b></label><br>
+                <input id="scriptPath" type="text" size="48"  [(ngModel)]="scriptPath"><br>
+                <label for="contextRoot"><b>Insert a contextRoot</b></label><br>
+                <input id="contextRoot" type="text" size="48"  [(ngModel)]="contextRoot"><br>
+                <label for="servicePath"><b>Insert a servicePath</b></label><br>
+                <input id="servicePath" type="text" size="48"  [(ngModel)]="servicePath"><br>
         <div class="container" *ngIf="authenticated">
             <alfresco-webscript-get [scriptPath]="scriptPath"
                            [scriptArgs]="scriptArgs"
@@ -73,7 +73,7 @@ class WebscriptDemo implements OnInit {
 
     scriptArgs: string = '';
 
-    token: string;
+    ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService) {
@@ -81,13 +81,13 @@ class WebscriptDemo implements OnInit {
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
 
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        if (this.authService.getTicketEcm()) {
+            this.ticket = this.authService.getTicketEcm();
         }
     }
 
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
+    public updateTicket(): void {
+        localStorage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {
@@ -101,9 +101,9 @@ class WebscriptDemo implements OnInit {
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {

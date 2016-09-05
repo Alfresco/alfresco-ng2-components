@@ -1,0 +1,78 @@
+<div *ngIf="showViewer">
+    <div *ngIf="overlayMode">
+        <div id="viewer-shadow-transparent" class="viewer-shadow-transparent"></div>
+    </div>
+
+    <div id="viewer-main-container" class="viewer-main-container" [ngClass]="{'viewer-overlay-view': overlayMode }" >
+
+        <!-- Start Layout -->
+        <div  mdl [ngClass]="{'mdl-layout mdl-js-layout mdl-layout--fixed-header': overlayMode }" >
+            <header  *ngIf="overlayMode" class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+
+                    <!-- File Title -->
+                    <span  id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{displayName}}</span>
+
+                    <span class="vertical-divider"></span>
+
+                    <div class="mdl-layout-spacer"></div>
+
+                    <!-- Start Navigation -->
+                    <nav class="mdl-navigation">
+                        <div id="viewer-toolbar-view-options">
+                            <button *ngIf="overlayMode"
+                                class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" (click)="close()">
+                                <i id="viewer-close-button" class="icon material-icons">close</i>
+                            </button>
+                        </div>
+                    </nav>
+                    <!-- End Navigation -->
+                </div>
+            </header>
+            <!--<div class="mdl-layout__drawer">-->
+                <!--<span class="mdl-layout-title">Thumbnail</span>-->
+            <!--</div>-->
+            <main id="page-content" class="mdl-layout__content">
+
+                <div class="mdl-grid">
+                    <!--<div id="viewer-previous-file-button" class="center-element mdl-cell mdl-cell&#45;&#45;2-col mdl-cell&#45;&#45;hide-tablet mdl-cell&#45;&#45;hide-phone">-->
+                        <!--<button  *ngIf="false"-->
+                            <!--class="center-element mdl-color&#45;&#45;black mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-button&#45;&#45;mini-fab mdl-button&#45;&#45;colored"-->
+                            <!--(click)="previousFile()">-->
+                            <!--<i class="icon material-icons ">keyboard_arrow_left</i>-->
+                        <!--</button>-->
+                    <!--</div>-->
+
+                    <div  id="viewer-content-container" *ngIf="isLoaded()" class="center-element mdl-cell mdl-cell--12-col" >
+
+                        <!-- Start View Switch-->
+                            <div *ngIf="isPdf()">
+                                <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFileContent" [nameFile]="displayName" ></pdf-viewer>
+                            </div>
+                            <div class="center-element" *ngIf="isImage()" >
+                                <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName"></img-viewer>
+                            </div>
+                            <div class="center-element" *ngIf="isMedia()" >
+                                <media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [nameFile]="displayName"></media-player>
+                            </div>
+                            <div *ngIf="!supportedExtension()">
+                                <not-supported-format [urlFile]="urlFileContent" [nameFile]="displayName" ></not-supported-format>
+                            </div>
+                        <!-- End View Switch -->
+
+                    </div>
+
+                    <!--<div id="viewer-next-file-button" class="center-element mdl-cell mdl-cell&#45;&#45;2-col mdl-cell&#45;&#45;hide-tablet mdl-cell&#45;&#45;hide-phone">-->
+                        <!--<button *ngIf="false"-->
+                            <!--class="center-element mdl-color&#45;&#45;black mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-button&#45;&#45;mini-fab mdl-button&#45;&#45;colored"-->
+                            <!--(click)="nextFile()">-->
+                            <!--<i class="icon material-icons">keyboard_arrow_right</i>-->
+                        <!--</button>-->
+                    <!--</div>-->
+
+                </div>
+            </main>
+        </div>
+        <!-- End Layout -->
+    </div>
+</div>

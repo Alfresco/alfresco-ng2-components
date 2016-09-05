@@ -1,10 +1,10 @@
 <form (submit)="onSearch($event)">
     <div [class]="getTextFieldClassName()">
         <label *ngIf="expandable" class="mdl-button mdl-js-button mdl-button--icon" for="searchControl">
-            <i class="material-icons">search</i>
+            <i mdl-upgrade class="material-icons">search</i>
         </label>
         <div [class]="getTextFieldHolderClassName()">
-            <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" data-automation-id="search_input"
+            <input mdl-upgrade class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" data-automation-id="search_input"
                    #searchInput id="searchControl" [ngFormControl]="searchControl" [(ngModel)]="searchTerm" (focus)="onFocus($event)"
                    (blur)="onBlur($event)" aria-labelledby="searchLabel">
             <label id="searchLabel" class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>

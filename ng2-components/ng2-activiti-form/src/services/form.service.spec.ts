@@ -17,8 +17,10 @@
 
 import { it, inject, describe, expect, beforeEach, beforeEachProviders, afterEach } from '@angular/core/testing';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { Response, ResponseOptions } from '@angular/http';
+import { HTTP_PROVIDERS, Response, ResponseOptions } from '@angular/http';
 import { FormService } from './form.service';
+import { EcmModelService } from './ecm-model.service';
+import { NodeService } from './node.service';
 
 declare let jasmine: any;
 
@@ -30,7 +32,10 @@ describe('FormService', () => {
         return [
             FormService,
             AlfrescoSettingsService,
-            AlfrescoAuthenticationService
+            AlfrescoAuthenticationService,
+            EcmModelService,
+            HTTP_PROVIDERS,
+            NodeService
         ];
     });
 

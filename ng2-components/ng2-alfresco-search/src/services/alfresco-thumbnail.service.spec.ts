@@ -15,11 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    describe,
-    beforeEach
-} from '@angular/core/testing';
-import {AlfrescoThumbnailService} from './alfresco-thumbnail.service';
+import { describe, beforeEach } from '@angular/core/testing';
+import { AlfrescoThumbnailService } from './alfresco-thumbnail.service';
 
 describe('AlfrescoThumbnailService', () => {
 

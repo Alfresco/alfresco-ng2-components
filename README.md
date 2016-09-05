@@ -52,6 +52,8 @@ The following is a list of some of the components that you can use when building
 - [Core library](ng2-components/ng2-alfresco-core/README.md)
 - [DataTable](ng2-components/ng2-alfresco-datatable/README.md)
 - [DocumentList](ng2-components/ng2-alfresco-documentlist/README.md)
+- Activiti [ProcessList](ng2-components/ng2-activiti-processlist/README.md) and [TaskList](ng2-components/ng2-activiti-tasklist/README.md)
+- [Activiti Form](ng2-components/ng2-activiti-form/README.md)
 - [Viewer](ng2-components/ng2-alfresco-viewer/README.md)
 - [Login](ng2-components/ng2-alfresco-login/README.md)
 - [Upload](ng2-components/ng2-alfresco-upload/README.md)
