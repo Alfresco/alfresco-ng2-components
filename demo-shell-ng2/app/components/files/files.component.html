@@ -158,8 +158,9 @@
 <h5>Upload</h5>
 <br>
 <div *ngIf="acceptedFilesTypeShow">
-    <span class="mdl-input__label">Extension accepted</span>
-    <input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
+    <label class="mdl-input__label">Extension accepted
+        <input type="text" data-automation-id="accepted-files-type" [(ngModel)]="acceptedFilesType">
+    </label>
     <br/>
 </div>
 <div *ngIf="!acceptedFilesTypeShow">
