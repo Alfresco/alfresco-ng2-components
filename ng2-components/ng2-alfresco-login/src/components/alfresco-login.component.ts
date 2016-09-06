@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators} from '@angular/common';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
 import {
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService
 } from 'ng2-alfresco-core';
+import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -36,7 +37,7 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 
 })
-export class AlfrescoLoginComponent {
+export class AlfrescoLoginComponent implements OnInit {
 
     baseComponentPath = __moduleName.replace('/alfresco-login.component.js', '');
 
@@ -49,13 +50,16 @@ export class AlfrescoLoginComponent {
     backgroundImageUrl: string;
 
     @Input()
-    providers: string ;
+    providers: string;
 
     @Output()
     onSuccess = new EventEmitter();
 
     @Output()
     onError = new EventEmitter();
+
+    @Output()
+    executeSubmit: EventEmitter<FormSubmitEvent> = new EventEmitter<FormSubmitEvent>();
 
     form: ControlGroup;
     error: boolean = false;
@@ -78,68 +82,41 @@ export class AlfrescoLoginComponent {
                 public settingsService: AlfrescoSettingsService,
                 private translate: AlfrescoTranslationService) {
 
-        this.formError = {
-            'username': '',
-            'password': ''
-        };
+        translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
+    }
+
+    ngOnInit() {
+        this.initFormError();
+        this.initFormMessages();
 
         this.form = this._fb.group({
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
         });
-
-        this._message = {
-            'username': {
-                'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED',
-                'minlength': 'LOGIN.MESSAGES.USERNAME-MIN'
-            },
-            'password': {
-                'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
-            }
-        };
-
-        translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
-
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
     }
 
     /**
      * Method called on submit form
-     * @param value
+     * @param values
      * @param event
      */
-    onSubmit(value: any, event: any) {
-        if (event) {
-            event.preventDefault();
-        }
-        if (this.providers === undefined) {
-            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
-            this.error = true;
-            let messageProviders: any;
-            messageProviders = this.translate.get(this.errorMsg);
-            this.onError.emit(messageProviders.value);
-            this.success = false;
+    onSubmit(values: any) {
+        if (!this.checkRequiredParams()) {
             return false;
         }
-        this.error = false;
-
         this.settingsService.setProviders(this.providers);
 
-        this.authService.login(value.username, value.password)
-            .subscribe(
-                (token: any) => {
-                    this.success = true;
-                    this.onSuccess.emit(token);
-                },
-                (err: any) => {
-                    this.error = true;
-                    this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
-                    this.onError.emit(err);
-                    console.log(err);
-                    this.success = false;
-                },
-                () => console.log('Login done')
-            );
+        this.disableError();
+
+        let args = new FormSubmitEvent(this.form);
+        this.executeSubmit.emit(args);
+
+        if (args.defaultPrevented) {
+            return false;
+        } else {
+            this.performeLogin(values);
+        }
     }
 
     /**
@@ -147,7 +124,7 @@ export class AlfrescoLoginComponent {
      * @param data
      */
     onValueChanged(data: any) {
-        this.error = false;
+        this.disableError();
         for (let field in this.formError) {
             if (field) {
                 this.formError[field] = '';
@@ -162,6 +139,52 @@ export class AlfrescoLoginComponent {
                 }
             }
         }
+    }
+
+    /**
+     * Performe the login service
+     * @param values
+     */
+    private performeLogin(values: any) {
+        this.authService.login(values.username, values.password)
+            .subscribe(
+            (token: any) => {
+                this.success = true;
+                this.onSuccess.emit(token);
+            },
+            (err: any) => {
+                this.enableError();
+                this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
+                this.onError.emit(err);
+                console.log(err);
+            },
+            () => console.log('Login done')
+        );
+    }
+
+    /**
+     * Check the require parameter
+     * @returns {boolean}
+     */
+    private checkRequiredParams(): boolean {
+        if (this.providers === undefined) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
+            this.enableError();
+            let messageProviders: any;
+            messageProviders = this.translate.get(this.errorMsg);
+            this.onError.emit(messageProviders.value);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Add a new custom error for a field
+     * @param field
+     * @param msg
+     */
+    public addCustomError(field: string, msg: string) {
+        this.formError[field] += msg;
     }
 
     /**
@@ -186,5 +209,44 @@ export class AlfrescoLoginComponent {
             componentHandler.upgradeAllRegistered();
         }
         return !field.valid && field.dirty && !field.pristine;
+    }
+
+    /**
+     * Default formError values
+     */
+    private initFormError() {
+        this.formError = {
+            'username': '',
+            'password': ''
+        };
+    }
+
+    /**
+     * Default form messages values
+     */
+    private initFormMessages() {
+        this._message = {
+            'username': {
+                'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED',
+                'minlength': 'LOGIN.MESSAGES.USERNAME-MIN'
+            },
+            'password': {
+                'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
+            }
+        };
+    }
+
+    /**
+     * Disable the error flag
+     */
+    private disableError() {
+        this.error = false;
+    }
+
+    /**
+     * Enable the error flag
+     */
+    private enableError() {
+        this.error = true;
     }
 }
