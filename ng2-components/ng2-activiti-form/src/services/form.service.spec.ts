@@ -21,6 +21,7 @@ import { HTTP_PROVIDERS, Response, ResponseOptions } from '@angular/http';
 import { FormService } from './form.service';
 import { EcmModelService } from './ecm-model.service';
 import { NodeService } from './node.service';
+import { FormDefinitionModel } from '../models/form-definition.model';
 
 declare let jasmine: any;
 
@@ -73,8 +74,8 @@ describe('FormService', () => {
     it('should fetch and parse tasks', (done) => {
         responseBody = {
             data: [
-                { id: '1' },
-                { id: '2' }
+                {id: '1'},
+                {id: '2'}
             ]
         };
 
@@ -158,7 +159,7 @@ describe('FormService', () => {
         formService.completeTaskForm('1', values, 'custom').subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).values.field2).toEqual(values.field2);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).outcome).toEqual('custom' );
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).outcome).toEqual('custom');
 
             done();
         });
@@ -171,7 +172,7 @@ describe('FormService', () => {
     });
 
     it('should get task form by id', (done) => {
-        responseBody = { id: 1 };
+        responseBody = {id: 1};
 
         formService.getTaskForm('1').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/task-forms/1')).toBeTruthy();
@@ -187,7 +188,7 @@ describe('FormService', () => {
     });
 
     it('should get form definition by id', (done) => {
-        responseBody = { id: 1 };
+        responseBody = {id: 1};
 
         formService.getFormDefinitionById('1').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/1')).toBeTruthy();
@@ -207,7 +208,7 @@ describe('FormService', () => {
         const formId = 1;
         responseBody = {
             data: [
-                { id: formId }
+                {id: formId}
             ]
         };
 
@@ -225,16 +226,16 @@ describe('FormService', () => {
     });
 
     it('should not get form id from response', () => {
-        let response = new Response(new ResponseOptions({ body: null }));
+        let response = new Response(new ResponseOptions({body: null}));
         expect(formService.getFormId(response)).toBeNull();
 
-        response = new Response(new ResponseOptions({ body: {} }));
+        response = new Response(new ResponseOptions({body: {}}));
         expect(formService.getFormId(response)).toBeNull();
 
-        response = new Response(new ResponseOptions({ body: { data: null } }));
+        response = new Response(new ResponseOptions({body: {data: null}}));
         expect(formService.getFormId(response)).toBeNull();
 
-        response = new Response(new ResponseOptions({ body: { data: [] } }));
+        response = new Response(new ResponseOptions({body: {data: []}}));
         expect(formService.getFormId(response)).toBeNull();
 
         expect(formService.getFormId(null)).toBeNull();
@@ -243,10 +244,10 @@ describe('FormService', () => {
     it('should fallback to empty json array', () => {
         expect(formService.toJsonArray(null)).toEqual([]);
 
-        let response = new Response(new ResponseOptions({ body: {} }));
+        let response = new Response(new ResponseOptions({body: {}}));
         expect(formService.toJsonArray(response)).toEqual([]);
 
-        response = new Response(new ResponseOptions({ body: { data: null } }));
+        response = new Response(new ResponseOptions({body: {data: null}}));
         expect(formService.toJsonArray(response)).toEqual([]);
     });
 
@@ -261,7 +262,7 @@ describe('FormService', () => {
         spyOn(console, 'error').and.stub();
 
         const message = '<error>';
-        formService.handleError({ message: message });
+        formService.handleError({message: message});
 
         expect(console.error).toHaveBeenCalledWith(message);
     });
@@ -279,5 +280,139 @@ describe('FormService', () => {
         spyOn(console, 'error').and.stub();
         formService.handleError({});
         expect(console.error).toHaveBeenCalledWith(FormService.GENERIC_ERROR_MESSAGE);
+    });
+
+    it('should get all the forms with modelType=2', (done) => {
+        responseBody = {};
+
+        formService.getForms().subscribe(result => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
+            expect(result).toEqual(responseBody);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
+        });
+    });
+
+    it('should search for Form with modelType=2', (done) => {
+        responseBody = {data: [{id: 1, name: 'findme'}, {id: 2, name: 'testform'}]};
+
+        formService.searchFrom('findme').subscribe(result => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
+            expect(result.name).toEqual('findme');
+            expect(result.id).toEqual(1);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
+        });
+    });
+
+    it('should create a Form with modelType=2', (done) => {
+        responseBody = {id: 1, modelType: 'test'};
+
+        formService.createForm('testName').subscribe(result => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/models')).toBeTruthy();
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).modelType).toEqual(2);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual('testName');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
+        });
+    });
+
+    it('should add form fields to a form', (done) => {
+        responseBody = {id: 1, modelType: 'test'};
+
+        let formId = '100';
+        let name = 'testName';
+        let data = [{name: 'name'}, {name: 'email'}];
+        let formDefinitionModel = new FormDefinitionModel(formId, name, 'testUserName', '2016-09-05T14:41:19.049Z', data);
+
+        formService.addFieldsToAForm(formId, formDefinitionModel).subscribe(result => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/form-models/' + formId)).toBeTruthy();
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).formRepresentation.name).toEqual(name);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
+        });
+    });
+
+    it('should create a Form form a Node', (done) => {
+
+        let nameForm = 'testNode';
+
+        responseBody = {id: 1, modelType: 'test'};
+
+        let formId = 100;
+
+        stubCreateForm();
+
+        stubGetEcmModel();
+
+        stubAddFieldsToAForm();
+
+        formService.createFormFromANode(nameForm).subscribe(result => {
+            expect(result.id).toEqual(formId);
+            done();
+        });
+
+        function stubCreateForm() {
+            jasmine.Ajax.stubRequest(
+                'http://localhost:9999/activiti-app/api/enterprise/models'
+            ).andReturn({
+                status: 200,
+                statusText: 'HTTP/1.1 200 OK',
+                contentType: 'text/xml;charset=UTF-8',
+                responseText: {id: formId, name: 'test', lastUpdatedByFullName: 'uset', lastUpdated: '12-12-2016'}
+            });
+        }
+
+        function stubGetEcmModel() {
+            jasmine.Ajax.stubRequest(
+                'http://localhost:8080/alfresco/api/-default-/private/alfresco/versions/1/cmm/activitiFormsModel/types'
+            ).andReturn({
+                status: 200,
+                statusText: 'HTTP/1.1 200 OK',
+                contentType: 'text/xml;charset=UTF-8',
+                responseText: {
+                    list: {
+                        entries: [{
+                            entry: {
+                                prefixedName: nameForm,
+                                title: nameForm,
+                                properties: [{name: 'name'}, {name: 'email'}]
+                            }
+                        }, {entry: {prefixedName: 'notme', title: 'notme'}}]
+                    }
+                }
+            });
+        }
+
+        function stubAddFieldsToAForm() {
+            jasmine.Ajax.stubRequest(
+                'http://localhost:9999/activiti-app/api/enterprise/editor/form-models/' + formId
+            ).andReturn({
+                status: 200,
+                statusText: 'HTTP/1.1 200 OK',
+                contentType: 'text/xml;charset=UTF-8',
+                responseText: {id: formId, name: 'test', lastUpdatedByFullName: 'user', lastUpdated: '12-12-2016'}
+            });
+        }
     });
 });
