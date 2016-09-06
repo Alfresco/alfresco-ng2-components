@@ -23,7 +23,7 @@ declare let componentHandler: any;
 declare let __moduleName: string;
 
 @Component({
-    selector: 'activiti-start-process',
+    selector: 'activiti-start-process-instance',
     moduleId: __moduleName,
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css'],

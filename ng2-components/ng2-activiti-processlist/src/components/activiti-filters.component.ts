@@ -26,7 +26,7 @@ declare let componentHandler: any;
 declare let __moduleName: string;
 
 @Component({
-    selector: 'activiti-process-filters',
+    selector: 'activiti-process-instance-filters',
     moduleId: __moduleName,
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css'],

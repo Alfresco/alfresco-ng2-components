@@ -34,8 +34,8 @@
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
                             <span>Process Filters</span>
-                            <activiti-start-process [appId]="appId"></activiti-start-process>
-                            <activiti-process-filters (filterClick)="onProcessFilterClick($event)"></activiti-process-filters>
+                            <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
+                            <activiti-process-instance-filters (filterClick)="onProcessFilterClick($event)"></activiti-process-instance-filters>
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
                             <span>Process List</span>
