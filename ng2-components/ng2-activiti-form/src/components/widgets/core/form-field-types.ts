@@ -24,6 +24,7 @@ export class FormFieldTypes {
     static DISPLAY_VALUE: string = 'readonly';
     static READONLY_TEXT: string = 'readonly-text';
     static UPLOAD: string = 'upload';
+    static TYPEAHEAD: string = 'typeahead';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,
