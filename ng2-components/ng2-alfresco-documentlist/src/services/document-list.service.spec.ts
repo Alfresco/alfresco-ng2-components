@@ -101,7 +101,7 @@ describe('DocumentListService', () => {
         service.getFolder('fake-node-id').subscribe(e => {
             expect(jasmine.Ajax.requests.mostRecent().url)
                 .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/' +
-                    'children?include=path&relativePath=fake-node-id');
+                    'children?include=path%2Cproperties&relativePath=fake-node-id');
             expect(jasmine.Ajax.requests.mostRecent().method)
                 .toBe('GET');
             done();
@@ -116,7 +116,7 @@ describe('DocumentListService', () => {
         service.getFolder('fake-node-id', {maxItems: 10}).subscribe(e => {
             expect(jasmine.Ajax.requests.mostRecent().url)
                 .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/' +
-                    'children?maxItems=10&include=path&relativePath=fake-node-id');
+                    'children?maxItems=10&include=path%2Cproperties&relativePath=fake-node-id');
             expect(jasmine.Ajax.requests.mostRecent().method)
                 .toBe('GET');
             done();

@@ -98,6 +98,7 @@ Also make sure you include these dependencies in your `index.html` file:
 | navigate | boolean | true | Toggles navigation to folder content or file preview |
 | navigationMode | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | thumbnails | boolean | false | Show document thumbnails rather than icons |
+| fallbackThubnail | string |  | Fallback image for row ehre thubnail is missing|
 | multiselect | boolean | false | Toggles multiselect mode |
 | contentActions | boolean | false | Toggles content actions for each row |
 | contextMenuActions | boolean | false | Toggles context menus for each row |

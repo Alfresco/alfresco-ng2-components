@@ -353,7 +353,7 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(true);
         expect(compiled.querySelector('#login-success')).toBeDefined();
         expect(compiled.querySelector('#login-success').innerHTML).toEqual('LOGIN.MESSAGES.LOGIN-SUCCESS');
-        expect(component.onSuccess.emit).toHaveBeenCalledWith(true);
+        expect(component.onSuccess.emit).toHaveBeenCalledWith({ token: true, username: 'fake-username', password: 'fake-password' });
     });
 
     it('should emit onError event after the login has failed', () => {

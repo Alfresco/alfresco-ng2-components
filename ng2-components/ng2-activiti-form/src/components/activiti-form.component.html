@@ -39,7 +39,7 @@
 For debugging and data visualisation purposes,
 will be removed during future revisions
 -->
-<div class="activiti-form-debug-container">
+<div  *ngIf="showDebugButton" class="activiti-form-debug-container">
 
     <div style="float: right">
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [class.is-checked]="debugMode">
