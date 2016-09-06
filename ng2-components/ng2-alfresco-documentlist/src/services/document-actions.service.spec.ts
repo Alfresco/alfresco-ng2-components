@@ -15,21 +15,13 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
+import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { AlfrescoContentService } from 'ng2-alfresco-core';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { DocumentListService } from './document-list.service';
-import {
-    FileNode,
-    FolderNode
-} from '../assets/document-library.model.mock';
+import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 
 describe('DocumentActionsService', () => {
 

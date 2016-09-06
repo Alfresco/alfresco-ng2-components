@@ -15,22 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-import {
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoApiService
-} from 'ng2-alfresco-core';
+import { it, describe, expect, beforeEach, afterEach } from '@angular/core/testing';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoContentService , AlfrescoApiService} from 'ng2-alfresco-core';
 import { FileNode } from '../assets/document-library.model.mock';
 import { ReflectiveInjector } from '@angular/core';
 import { DocumentListService } from './document-list.service';
 import { HTTP_PROVIDERS } from '@angular/http';
+
+declare let jasmine: any;
 
 describe('DocumentListService', () => {
 
@@ -52,6 +44,11 @@ describe('DocumentListService', () => {
         authService = injector.get(AlfrescoAuthenticationService);
         contentService = new AlfrescoContentService(authService);
         service = new DocumentListService(authService, contentService);
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
     it('should require node to get thumbnail url', () => {
@@ -86,4 +83,59 @@ describe('DocumentListService', () => {
         expect(service.getMimeTypeIcon('missing/type')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
     });
 
+    it('Delete node should perform request against the server', (done) => {
+        service.deleteNode('fake-node-id').subscribe(e => {
+            expect(jasmine.Ajax.requests.mostRecent().url)
+                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id');
+            expect(jasmine.Ajax.requests.mostRecent().method)
+                .toBe('DELETE');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200
+        });
+    });
+
+    it('Get folder should perform request against the server', (done) => {
+        service.getFolder('fake-node-id').subscribe(e => {
+            expect(jasmine.Ajax.requests.mostRecent().url)
+                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/' +
+                    'children?include=path&relativePath=fake-node-id');
+            expect(jasmine.Ajax.requests.mostRecent().method)
+                .toBe('GET');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200
+        });
+    });
+
+    it('Get folder should perform request against the server with options', (done) => {
+        service.getFolder('fake-node-id', {maxItems: 10}).subscribe(e => {
+            expect(jasmine.Ajax.requests.mostRecent().url)
+                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/' +
+                    'children?maxItems=10&include=path&relativePath=fake-node-id');
+            expect(jasmine.Ajax.requests.mostRecent().method)
+                .toBe('GET');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200
+        });
+    });
+
+    it('Get folder should perform error catch', (done) => {
+        service.getFolder('fake-node-id', {maxItems: 10}).subscribe(() => {
+            },
+            () => {
+                done();
+            });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 403
+        });
+    });
 });
