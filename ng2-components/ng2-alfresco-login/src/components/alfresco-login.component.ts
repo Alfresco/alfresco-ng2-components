@@ -23,7 +23,7 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService
 } from 'ng2-alfresco-core';
-import { FormOutcomeEvent } from '../models/form-outcome-event.model';
+import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -59,7 +59,7 @@ export class AlfrescoLoginComponent implements OnInit {
     onError = new EventEmitter();
 
     @Output()
-    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
+    executeSubmit: EventEmitter<FormSubmitEvent> = new EventEmitter<FormSubmitEvent>();
 
     form: ControlGroup;
     error: boolean = false;
@@ -109,8 +109,8 @@ export class AlfrescoLoginComponent implements OnInit {
 
         this.disableError();
 
-        let args = new FormOutcomeEvent(this.form);
-        this.executeOutcome.emit(args);
+        let args = new FormSubmitEvent(this.form);
+        this.executeSubmit.emit(args);
 
         if (args.defaultPrevented) {
             return false;

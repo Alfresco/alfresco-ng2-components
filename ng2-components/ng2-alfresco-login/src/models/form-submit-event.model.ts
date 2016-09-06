@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-export class FormOutcomeEvent {
+export class FormSubmitEvent {
 
     private _values: any;
     private _defaultPrevented: boolean = false;

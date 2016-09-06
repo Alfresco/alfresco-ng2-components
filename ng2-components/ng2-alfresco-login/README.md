@@ -180,7 +180,7 @@ Alternatively you can bind to your component properties and provide values dynam
 #### Controlling form submit execution behaviour
 
 If absolutely needed it is possible taking full control over form 
-submit execution by means of `executeOutcome` event. 
+submit execution by means of `executeSubmit` event. 
 This event is fired on form submit.
 
 You can prevent default behaviour by calling `event.preventDefault()`. 
@@ -190,7 +190,8 @@ Alternatively you may want just running additional code without suppressing defa
 
 **MyCustomLogin.component.html**
 ```html
-<alfresco-login (executeOutcome)="validateForm($event)" #alfrescologin></alfresco-login>
+<alfresco-login (executeSubmit)="validateForm($event)" 
+#alfrescologin></alfresco-login>
 ```
 
 **MyCustomLogin.component.ts**
