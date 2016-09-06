@@ -16,7 +16,7 @@
  */
 
 import { it, inject, describe, expect, beforeEach, beforeEachProviders, afterEach } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { NodeService } from './node.service';
 import { EcmModelService } from './ecm-model.service';
 import { HTTP_PROVIDERS } from '@angular/http';
@@ -35,7 +35,8 @@ describe('EcmModelService', () => {
             AlfrescoSettingsService,
             NodeService,
             EcmModelService,
-            HTTP_PROVIDERS
+            HTTP_PROVIDERS,
+            AlfrescoApiService
         ];
     });
 

@@ -64,11 +64,8 @@ script: npm run test
 # Send coverage data to Coveralls
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-after_script:
-  - travis cache --delete
 
 cache:
-  timeout: 1000
   directories:
   - demo-shell-ng2/node_modules
   - ng2-components/ng2-activiti-form/node_modules
