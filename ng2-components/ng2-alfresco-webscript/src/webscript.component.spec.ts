@@ -18,7 +18,7 @@
 import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach, xit } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { WebscriptComponent } from '../src/webscript.component';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 
@@ -29,8 +29,8 @@ describe('Test ng2-alfresco-webscript', () => {
     beforeEachProviders(() => {
         return [
             AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService
+            AlfrescoAuthenticationService,
+            AlfrescoApiService
         ];
     });
 
@@ -96,7 +96,6 @@ describe('Test ng2-alfresco-webscript', () => {
         });
 
         it('webscript TEXT response should be displayed', (done) => {
-
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'TEXT';
 
@@ -115,7 +114,6 @@ describe('Test ng2-alfresco-webscript', () => {
         });
 
         it('webscript JSON response should be displayed', (done) => {
-
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'JSON';
 
@@ -135,7 +133,6 @@ describe('Test ng2-alfresco-webscript', () => {
         });
 
         xit('webscript HTML response should be displayed', (done) => {
-
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'HTML';
 
@@ -154,7 +151,6 @@ describe('Test ng2-alfresco-webscript', () => {
         });
 
         it('webscript Datatable response should be displayed', (done) => {
-
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 
@@ -190,7 +186,6 @@ describe('Test ng2-alfresco-webscript', () => {
         });
 
         it('webscript Datatable response should be displayed also if no schema is provided', (done) => {
-
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 

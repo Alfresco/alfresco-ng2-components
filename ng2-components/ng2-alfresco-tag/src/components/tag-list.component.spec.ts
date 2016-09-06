@@ -18,7 +18,7 @@
 
 import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 import { TagList } from './tag-list.component';
 
@@ -48,6 +48,7 @@ describe('Tag list All ECM', () => {
         return [
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
+            AlfrescoApiService,
             TagService
         ];
     });

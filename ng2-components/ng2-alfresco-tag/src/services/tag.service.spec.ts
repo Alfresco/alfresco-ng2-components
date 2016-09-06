@@ -16,7 +16,7 @@
  */
 
 import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TagService } from './tag.service';
 
 declare let jasmine: any;
@@ -30,6 +30,7 @@ describe('Tag service', () => {
         return [
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
+            AlfrescoApiService,
             TagService
         ];
     });

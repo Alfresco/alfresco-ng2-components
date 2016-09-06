@@ -45,7 +45,7 @@ export class TagService {
     }
 
     addTag(nodeId: string, tagName: string): any {
-        let alfrescoApi = this.authService.getAlfrescoApi();
+        let alfrescoApi: any = this.authService.getAlfrescoApi();
         let tagBody = new alfrescoApi.core.TagBody();
         tagBody.tag = tagName;
 
