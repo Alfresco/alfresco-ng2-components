@@ -130,6 +130,7 @@ export class ViewerComponent {
     /**
      * get File name from url
      *
+     * @param {string} url - url file
      * @returns {string} name file
      */
     getFilenameFromUrl(url: string) {
@@ -167,7 +168,7 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     private isMedia() {
-        return this.isMediaExtension() || this.isMediaMimeType();
+        return this.isMediaExtension(this.extension) || this.isMediaMimeType();
     }
 
     /**
@@ -186,16 +187,21 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     private isMediaMimeType() {
-        return this.mimeType && this.mimeType.indexOf('video/') === 0;
+        let mimeExtension;
+        if (this.mimeType && this.mimeType.indexOf('/')) {
+            mimeExtension = this.mimeType.substr(this.mimeType.indexOf('/') + 1, this.mimeType.length);
+        }
+        return this.mimeType && this.mimeType.indexOf('video/') === 0 && this.isMediaExtension(mimeExtension);
     }
 
     /**
      * check if the current file is a supported media extension
+     * @param {string} extension
      *
      * @returns {boolean}
      */
-    private isMediaExtension() {
-        return this.extension === 'mp4' || this.extension === 'WebM' || this.extension === 'Ogg';
+    private isMediaExtension(extension: string) {
+        return extension === 'mp4' || extension === 'WebM' || extension === 'Ogg';
     }
 
     /**

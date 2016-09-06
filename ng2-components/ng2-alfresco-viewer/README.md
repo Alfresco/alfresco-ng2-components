@@ -146,6 +146,16 @@ Attribute     | Options     | Default      | Description | Mandatory
 `showViewer`         | *boolean*    | `true`        | Hide or show the viewer |
 `showToolbar`         | *boolean*    | `true`        | Hide or show the toolbars |
 
+#### Supported file formats
+
+Type     | extensions     
+---           | ---         
+Media         | Mp4,  WebM, Ogv
+Images        | png, jpg, jpeg, gif, bmp         
+Text          | pdf         
+
+
+
 ## Build from sources
 Alternatively you can build component from sources with the following commands:
 
