@@ -69,7 +69,7 @@ export class DocumentListService {
         let nodeId = '-root-';
         let params: any = {
             relativePath: folder,
-            include: ['path']
+            include: ['path','properties']
         };
 
         if (opts) {

@@ -125,6 +125,7 @@ The recommended set of properties can be found in the following table:
 | showTitle | boolean | true | Toggle rendering of the form title. |
 | showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
 | showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
+| showDebugButton | boolean | false | Toggle debug options. |
 | readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
 | showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
 | saveMetadata | boolean | false | Store the value of the form as metadata. |

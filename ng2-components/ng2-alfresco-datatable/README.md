@@ -135,6 +135,7 @@ export class MyView {
 | data | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
 | multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | actions | boolean | false | Toggles data actions column |
+| fallbackThubnail | string |  | Fallback image for row ehre thubnail is missing|
 
 ### Events
 

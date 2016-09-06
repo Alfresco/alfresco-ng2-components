@@ -74,6 +74,9 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
     baseComponentPath = __moduleName.replace('/components/document-list.js', '');
 
     @Input()
+    fallbackThubnail: string = this.baseComponentPath + '/img/ft_ic_miscellaneous.svg';
+
+    @Input()
     navigate: boolean = true;
 
     @Input()

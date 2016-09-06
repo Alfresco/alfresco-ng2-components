@@ -60,6 +60,8 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  *
  *   {showRefreshButton} boolean - to hide the refresh button of the form pass false, default true;
  *
+ *   {showDebugButton} boolean - to show the debug options, default false;
+ *
  *   {showCompleteButton} boolean - to hide the complete button of the form pass false, default true;
  *
  *   {showSaveButton} boolean - to hide the save button of the form pass false, default true;
@@ -123,6 +125,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     @Input()
     showSaveButton: boolean = true;
+
+    @Input()
+    showDebugButton: boolean = false;
 
     @Input()
     readOnly: boolean = false;
