@@ -39,7 +39,6 @@ export class PdfViewerComponent {
     @Input()
     showToolbar: boolean = true;
 
-
     currentPdfDocument: any;
     page: number;
     displayPage: number;
@@ -105,7 +104,7 @@ export class PdfViewerComponent {
 
     initPDFViewer(pdfDocument: any) {
         PDFJS.verbosity = 1;
-        PDFJS.disableWorker = true;
+        PDFJS.disableWorker = false;
 
         let documentContainer = document.getElementById('viewer-pdf-container');
         let viewer: any = document.getElementById('viewer-viewerPdf');
