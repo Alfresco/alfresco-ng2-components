@@ -177,6 +177,43 @@ Alternatively you can bind to your component properties and provide values dynam
 </alfresco-login>
 ```
 
+#### Controlling form submit execution behaviour
+
+If absolutely needed it is possible taking full control over form 
+submit execution by means of `executeOutcome` event. 
+This event is fired on form submit.
+
+You can prevent default behaviour by calling `event.preventDefault()`. 
+This allows for example having custom form validation scenarios and/or additional validation summary presentation.
+
+Alternatively you may want just running additional code without suppressing default one.
+
+**MyCustomLogin.component.html**
+```html
+<alfresco-login (executeOutcome)="validateForm($event)" #alfrescologin></alfresco-login>
+```
+
+**MyCustomLogin.component.ts**
+```ts
+
+export class MyCustomLogin {
+
+    validateForm(event: any) {
+        let values = event.values;
+        
+        // check if the username is in the blacklist
+        if (values.controls['username'].value === 'invalidUsername') {
+            this.alfrescologin.addCustomError('username', 'the username is in blacklist');
+            event.preventDefault();
+        }
+    }
+    
+}
+```
+
+**Please note that if `event.preventDefault()` is not called then default behaviour 
+will also be executed after your custom code.**
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
