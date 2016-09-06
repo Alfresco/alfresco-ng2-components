@@ -12,4 +12,6 @@
         </label>
     </p>
 </div>
-<alfresco-login [providers]="providers" (onSuccess)="onLogin($event)" (onError)="onError($event)"></alfresco-login>
+<alfresco-login (executeOutcome)="validateForm($event)" [providers]="providers"
+                (onSuccess)="onLogin($event)"
+                (onError)="onError($event)" #alfrescologin></alfresco-login>

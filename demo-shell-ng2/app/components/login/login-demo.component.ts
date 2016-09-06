@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {AlfrescoLoginComponent} from 'ng2-alfresco-login';
 import {ROUTER_DIRECTIVES, Router} from '@angular/router';
 
@@ -29,6 +29,9 @@ declare let __moduleName: string;
     pipes: []
 })
 export class LoginDemoComponent {
+
+    @ViewChild('alfrescologin')
+    alfrescologin: any;
 
     providers: string = 'ECM';
 
@@ -67,4 +70,13 @@ export class LoginDemoComponent {
             this.providers = undefined;
         }
     }
+
+    validateForm(event: any) {
+        let values = event.values;
+        if (values.controls['username'].value === 'invalidUsername') {
+            this.alfrescologin.addCustomError('username', 'the username is in blacklist');
+            event.preventDefault();
+        }
+    }
+
 }
