@@ -47,7 +47,6 @@ describe('ViewerComponent', () => {
                 jasmine.Ajax.install();
 
                 component.urlFile = 'base/src/assets/fake-test-file.pdf';
-
                 component.overlayMode = true;
 
                 viewerComponentFixture.detectChanges();
@@ -118,7 +117,7 @@ describe('ViewerComponent', () => {
                 expect(element.querySelector('#viewer-close-button')).toBeNull();
             });
 
-            it('Esc button should not  hide the viewerls if is not overlay mode', () => {
+            it('Esc button should not  hide the viewer if is not overlay mode', () => {
                 EventMock.keyDown(27);
                 viewerComponentFixture.detectChanges();
                 expect(element.querySelector('#viewer-main-container')).not.toBeNull();
@@ -289,6 +288,7 @@ describe('ViewerComponent', () => {
 
             component.ngOnChanges().then(() => {
                 viewerComponentFixture.detectChanges();
+                console.log(element.querySelector('media-player'));
                 expect(element.querySelector('media-player')).not.toBeNull();
                 done();
             });
@@ -301,6 +301,17 @@ describe('ViewerComponent', () => {
             component.ngOnChanges().then(() => {
                 viewerComponentFixture.detectChanges();
                 expect(element.querySelector('media-player')).not.toBeNull();
+                done();
+            });
+        });
+
+        it('should not display the media player if the file identified by mimetype is a media but with not supported extension', (done) => {
+            component.urlFile = 'content';
+            component.mimeType = 'video/avi';
+
+            component.ngOnChanges().then(() => {
+                viewerComponentFixture.detectChanges();
+                expect(element.querySelector('media-player')).toBeNull();
                 done();
             });
         });
