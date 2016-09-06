@@ -45,7 +45,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                 this.field.form.taskId,
                 this.field.id
             )
-            .then(
+            .subscribe(
                 (result: FormFieldOption[]) => {
                     let options = result || [];
                     this.field.options = options;
@@ -59,7 +59,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                         }
                     }
                 },
-                error => console.log(error)
+                this.handleError
             );
     }
 
@@ -71,33 +71,44 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
         });
     }
 
-    onKey(event: KeyboardEvent) {
-        // this.values += (<HTMLInputElement>event.target).value + ' | ';
+    onKeyUp(event: KeyboardEvent) {
         this.popupVisible = !!(this.value && this.value.length >= this.minTermLength);
     }
 
     onBlur() {
         setTimeout(() => {
-            this.popupVisible = false;
-
-            let options = this.field.options || [];
-            let field = options.find(item => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
-            if (field) {
-                this.field.value = field.id;
-                this.value = field.name;
-            } else {
-                this.field.value = null;
-                this.value = null;
-            }
-
-            this.field.updateForm();
+            this.flushValue();
         }, 200);
     }
 
+    flushValue() {
+        this.popupVisible = false;
+
+        let options = this.field.options || [];
+        let field = options.find(item => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
+        if (field) {
+            this.field.value = field.id;
+            this.value = field.name;
+        } else {
+            this.field.value = null;
+            this.value = null;
+        }
+
+        this.field.updateForm();
+    }
+
     onItemClick(item: FormFieldOption, event: Event) {
-        event.preventDefault();
-        this.field.value = item.id;
-        this.value = item.name;
+        if (item) {
+            this.field.value = item.id;
+            this.value = item.name;
+        }
+        if (event) {
+            event.preventDefault();
+        }
+    }
+
+    handleError(error: any) {
+        console.error(error);
     }
 
 }

@@ -5,7 +5,7 @@
            [attr.id]="field.id"
            [(ngModel)]="value"
            (ngModelChange)="checkVisibility(field)"
-           (keyup)="onKey($event)"
+           (keyup)="onKeyUp($event)"
            (blur)="onBlur()"
            [disabled]="field.readOnly">
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
