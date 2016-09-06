@@ -16,9 +16,9 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
-import { ObjectUtils } from 'ng2-alfresco-core';
+import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
+import { FormFieldOption } from './../core/form-field-option';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -31,55 +31,27 @@ declare var componentHandler;
 })
 export class DropdownWidget extends WidgetComponent implements OnInit {
 
-    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
-    static GENERIC_ERROR_MESSAGE: string = 'Server error';
-
-    constructor(private http: Http) {
+    constructor(private formService: FormService) {
         super();
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.optionType === 'rest' &&
-            this.field.restUrl &&
-            this.field.restIdProperty &&
-            this.field.restLabelProperty) {
-
-            let url = `${this.field.restUrl}`;
-            this.http.get(url).subscribe(
-                response => {
-                    let json: any = response.json();
-                    this.loadFromJson(json);
+        this.formService
+            .getRestFieldValues(
+                this.field.form.taskId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    this.field.options = result || [];
+                    this.field.updateForm();
                 },
                 this.handleError
             );
-        }
     }
-
-    // TODO: support 'restResponsePath'
-    loadFromJson(json: any): boolean {
-        if (this.field && json && json instanceof Array) {
-            let options = json.map(obj => {
-                return {
-                    id: ObjectUtils.getValue(obj, this.field.restIdProperty).toString(),
-                    name: ObjectUtils.getValue(obj, this.field.restLabelProperty).toString()
-                };
-            });
-            this.field.options = options;
-            this.field.updateForm();
-            return true;
-        }
-        return false;
-    }
-
 
     handleError(error: any) {
-        let errMsg = DropdownWidget.UNKNOWN_ERROR_MESSAGE;
-        if (error) {
-            errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : DropdownWidget.GENERIC_ERROR_MESSAGE;
-        }
-        console.error(errMsg);
+        console.error(error);
     }
 
 }
