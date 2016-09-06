@@ -13,7 +13,8 @@ for PACKAGE in \
   ng2-alfresco-search \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
-  ng2-alfresco-webscript
+  ng2-alfresco-webscript \
+  ng2-alfresco-tag
 do
   echo "====== clean component: ${PACKAGE} ====="
   cd "$DIR/../ng2-components/${PACKAGE}"

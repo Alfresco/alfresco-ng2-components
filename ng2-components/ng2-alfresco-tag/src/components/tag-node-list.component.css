@@ -1,0 +1,65 @@
+.tags {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.tags li {
+    display: inline;
+}
+
+.tag-name {
+    cursor: default;
+    float:left;
+    max-height: 22px;
+    max-width: 100px;
+    background-color: #8EC44B;
+    -webkit-border-radius: 4px 0px 0px 4px;
+    -moz-border-radius: 4px 0px 0px 4px;
+    border-radius: 4px 0px 0px 4px;
+    position: relative;
+    color: #fff;
+    display: inline-block;
+    text-decoration: none;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 14px;
+    zoom: 1;
+    line-height: 22px;
+    padding: 0 0px 0 10px;
+    margin: 4px 0px 4px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tag-delete {
+    cursor: pointer;
+    float:left;
+    max-height: 22px;
+    max-width: 30px;
+    background-color: #8EC44B;
+    -webkit-border-radius: 0px 4px 4px 0px;
+    -moz-border-radius: 0px 4px 4px 0px;
+    border-radius: 0px 4px 4px 0px;
+    position: relative;
+    color: #fff;
+    display: inline-block;
+    text-decoration: none;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 14px;
+    zoom: 1;
+    line-height: 22px;
+    padding: 0 4px 0 6px;
+    margin: 4px 4px 4px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+.tag-delete:hover{
+    color: lightgray;
+}
+
+
+.delete-icon{
+    font-size: 22px!important;
+}

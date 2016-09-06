@@ -43,7 +43,7 @@ describe('AlfrescoSearchComponent', () => {
                     entry: {
                         id: '123',
                         name: 'MyDoc',
-                        isFile : true,
+                        isFile: true,
                         content: {
                             mimetype: 'text/plain'
                         },
@@ -128,8 +128,8 @@ describe('AlfrescoSearchComponent', () => {
 
             component.resultsEmitter.subscribe(x => {
                 alfrescoSearchComponentFixture.detectChanges();
-                expect( element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
-                expect( element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
+                expect(element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
+                expect(element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
                 done();
             });
 
@@ -144,7 +144,7 @@ describe('AlfrescoSearchComponent', () => {
         it('should display no result if no result are returned', (done) => {
             component.resultsEmitter.subscribe(x => {
                 alfrescoSearchComponentFixture.detectChanges();
-                expect( element.querySelector('#search_no_result')).not.toBe(null);
+                expect(element.querySelector('#search_no_result')).not.toBe(null);
                 done();
             });
 
