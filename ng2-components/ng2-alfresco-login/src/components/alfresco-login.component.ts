@@ -150,7 +150,7 @@ export class AlfrescoLoginComponent implements OnInit {
             .subscribe(
             (token: any) => {
                 this.success = true;
-                this.onSuccess.emit(token);
+                this.onSuccess.emit({token: token, username: value.username, password: value.password});
             },
             (err: any) => {
                 this.enableError();
