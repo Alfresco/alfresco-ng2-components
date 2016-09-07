@@ -4,6 +4,18 @@
            [attr.id]="field.id"
            [(ngModel)]="value"
            (ngModelChange)="checkVisibility(field)"
+           (keyup)="onKeyUp($event)"
+           (blur)="onBlur()"
            [disabled]="field.readOnly">
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+</div>
+
+<div class="functional-group-widget--autocomplete mdl-shadow--2dp" *ngIf="popupVisible">
+    <ul>
+        <li *ngFor="let item of groups"
+            class="mdl-menu__item"
+            (click)="onItemClick(item, $event)">
+            {{item.name}}
+        </li>
+    </ul>
 </div>

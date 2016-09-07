@@ -97,6 +97,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
         this.field.updateForm();
     }
 
+    // TODO: still causes onBlur execution
     onItemClick(item: FormFieldOption, event: Event) {
         if (item) {
             this.field.value = item.id;
