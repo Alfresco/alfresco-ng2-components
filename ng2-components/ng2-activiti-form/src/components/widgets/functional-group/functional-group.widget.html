@@ -1,5 +1,4 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label typeahead-widget"
-     [class.is-dirty]="value">
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label functional-group-widget">
     <input class="mdl-textfield__input"
            type="text"
            [attr.id]="field.id"
@@ -11,9 +10,9 @@
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
 </div>
 
-<div class="typeahead-autocomplete mdl-shadow--2dp" *ngIf="options.length > 0 && popupVisible">
+<div class="functional-group-widget--autocomplete mdl-shadow--2dp" *ngIf="popupVisible && groups.length > 0">
     <ul>
-        <li *ngFor="let item of options"
+        <li *ngFor="let item of groups"
             class="mdl-menu__item"
             (click)="onItemClick(item, $event)">
             {{item.name}}
