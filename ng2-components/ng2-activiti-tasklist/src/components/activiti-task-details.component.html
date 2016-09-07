@@ -1,4 +1,12 @@
-<div *ngIf="!taskDetails">{{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="!taskDetails">
+    <template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]"
+              [ngForTemplate]="noTaskDetailsTemplateComponent">
+        {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
+    </template>
+    <div *ngIf="!noTaskDetailsTemplateComponent">
+        {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
+    </div>
+</div>
 <div *ngIf="taskDetails">
     <h2 class="mdl-card__title-text">{{taskDetails.name}}</h2>
     <activiti-task-header [taskDetails]="taskDetails" #activitiheader></activiti-task-header>

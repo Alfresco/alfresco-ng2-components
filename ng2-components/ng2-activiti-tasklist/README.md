@@ -103,6 +103,26 @@ No events
 **taskId**: { string } required) The id of the task details that we
 are asking for.
 
+### Custom 'empty Activiti Task Details' template
+
+By default the Activiti Task Details provides the following message for the empty task details:
+
+'No Tasks'
+
+
+This can be changed by adding the following custom html template:
+
+```html
+<activiti-task-details [taskId]="taskId">
+    <no-task-details-template>
+        <template>
+             <h1>Sorry, no tasks here</h1>
+             <img src="example.jpg">
+        </template>
+    </no-task-details-template>
+</activiti-task-details>    
+```
+
 ## Basic usage example Activiti Filter
 The component shows all the available filters.
 
