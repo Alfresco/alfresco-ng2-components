@@ -177,6 +177,36 @@ Alternatively you can bind to your component properties and provide values dynam
 </alfresco-login>
 ```
 
+#### Customize Validation rules
+If needed it is possible customize the validation rules of the login
+form. You can add/modify the default rules of the login form.
+
+**MyCustomLogin.component.html**
+```html
+<alfresco-login [fieldsValidation]="customValidation"
+#alfrescologin></alfresco-login>
+```
+
+**MyCustomLogin.component.ts**
+```ts
+
+export class MyCustomLogin {
+    customValidation: any;
+
+    constructor(public router: Router) {
+        this.customValidation = {
+            username: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(10)])],
+            password: ['', Validators.required]
+        };
+    }
+
+    ngOnInit() {
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'Username must be at least 8 characters.');
+        this.alfrescologin.addCustomValidationError('username', 'maxlength', 'Username must not be longer than 11 characters.');
+    }
+}
+```
+
 #### Controlling form submit execution behaviour
 
 If absolutely needed it is possible taking full control over form 
