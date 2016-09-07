@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 /**
@@ -30,7 +31,18 @@ export class RenditionsService {
 
     }
 
-    private getRenditionsByNodeId(nodeId: string) {
+    getRenditionsByNodeId(nodeId: string) {
+        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRenditions(nodeId))
+            .catch(this.handleError);
+    }
 
+    createRendition(nodeId: string, encoding: string) {
+        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, encoding))
+            .catch(this.handleError);
+    }
+
+    private handleError(error: any): Observable<any> {
+        console.error(error);
+        return Observable.throw(error || 'Server error');
     }
 }

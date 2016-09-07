@@ -16,7 +16,6 @@
  */
 
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
-import { EventEmitter } from '@angular/core';
 import { RenditionsService } from './renditions.service';
 import { AlfrescoSettingsService, AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
@@ -35,7 +34,7 @@ describe('RenditionsService', () => {
         ];
     });
 
-    beforeEach( inject([RenditionsService, AlfrescoApiService], (renditionsService: RenditionsService, apiService: AlfrescoApiService) => {
+    beforeEach(inject([RenditionsService, AlfrescoApiService], (renditionsService: RenditionsService, apiService: AlfrescoApiService) => {
         jasmine.Ajax.install();
         service = renditionsService;
         apiService.setInstance(new AlfrescoApi({}));
@@ -45,7 +44,41 @@ describe('RenditionsService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('', (done) => {
+    it('Get redition service should call the server with the ID passed', (done) => {
+        service.getRenditionsByNodeId('fake-node-id').subscribe((res) => {
+            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+            done();
+        });
 
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json'
+        });
+    });
+
+    it('Create redition service should call the server with the ID passed and the asked encoding', (done) => {
+        service.createRendition('fake-node-id', 'pdf').subscribe((res) => {
+            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json'
+        });
+    });
+
+    it('Get redition service should catch the error', (done) => {
+
+        service.getRenditionsByNodeId('fake-node-id').subscribe((res) => {
+            }, (res) => {
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 403,
+            contentType: 'application/json'
+        });
     });
 });
