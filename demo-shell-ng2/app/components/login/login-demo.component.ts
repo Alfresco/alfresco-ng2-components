@@ -74,7 +74,7 @@ export class LoginDemoComponent {
     validateForm(event: any) {
         let values = event.values;
         if (values.controls['username'].value === 'invalidUsername') {
-            this.alfrescologin.addCustomError('username', 'the username is in blacklist');
+            this.alfrescologin.addCustomError('username', 'This particular username has been blocked');
             event.preventDefault();
         }
     }
