@@ -25,6 +25,7 @@ import {
     LoginDemoComponent,
     ActivitiDemoComponent,
     WebscriptComponent,
+    TagComponent,
     AboutComponent,
     FormViewer
 } from './components/index';
@@ -42,6 +43,7 @@ export const routes: RouterConfig = [
     { path: 'activiti/tasks/:id', component: FormViewer },
     { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
     { path: 'webscript', component: WebscriptComponent },
+    { path: 'tag', component: TagComponent },
     { path: 'about', component: AboutComponent }
 ];
 
