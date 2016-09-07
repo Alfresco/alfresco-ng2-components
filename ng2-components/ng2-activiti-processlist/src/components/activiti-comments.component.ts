@@ -26,7 +26,7 @@ declare let componentHandler: any;
 declare let __moduleName: string;
 
 @Component({
-    selector: 'activiti-comments',
+    selector: 'activiti-process-instance-comments',
     moduleId: __moduleName,
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],
@@ -37,7 +37,7 @@ declare let __moduleName: string;
 export class ActivitiComments implements OnInit {
 
     @Input()
-    processId: string;
+    processInstanceId: string;
 
     @ViewChild('dialog')
     dialog: any;
@@ -71,15 +71,15 @@ export class ActivitiComments implements OnInit {
             this.comments.push(comment);
         });
 
-        if (this.processId) {
-            this.load(this.processId);
+        if (this.processInstanceId) {
+            this.load(this.processInstanceId);
         }
     }
 
     public load(taskId: string) {
         this.comments = [];
-        if (this.processId) {
-            this.activitiProcess.getProcessInstanceComments(this.processId).subscribe(
+        if (this.processInstanceId) {
+            this.activitiProcess.getProcessInstanceComments(this.processInstanceId).subscribe(
                 (res: Comment[]) => {
                     res.forEach((comment) => {
                         this.commentObserver.next(comment);
@@ -101,7 +101,7 @@ export class ActivitiComments implements OnInit {
     }
 
     public add() {
-        this.activitiProcess.addProcessInstanceComment(this.processId, this.message).subscribe(
+        this.activitiProcess.addProcessInstanceComment(this.processInstanceId, this.message).subscribe(
             (res: Comment) => {
                 this.comments.push(res);
                 this.message = '';

@@ -39,7 +39,7 @@ declare let __moduleName: string;
 export class ActivitiProcessInstanceTasks implements OnInit {
 
     @Input()
-    processId: string;
+    processInstanceId: string;
 
     @Input()
     showRefreshButton: boolean = true;
@@ -93,8 +93,8 @@ export class ActivitiProcessInstanceTasks implements OnInit {
             this.completedTasks.push(task);
         });
 
-        if (this.processId) {
-            this.load(this.processId);
+        if (this.processInstanceId) {
+            this.load(this.processInstanceId);
         }
     }
 
@@ -172,11 +172,11 @@ export class ActivitiProcessInstanceTasks implements OnInit {
 
     public taskFormCompleted() {
         this.closeDialog();
-        this.load(this.processId);
-        this.taskFormCompletedEmitter.emit(this.processId);
+        this.load(this.processInstanceId);
+        this.taskFormCompletedEmitter.emit(this.processInstanceId);
     }
 
     public onRefreshClicked() {
-        this.load(this.processId);
+        this.load(this.processInstanceId);
     }
 }
