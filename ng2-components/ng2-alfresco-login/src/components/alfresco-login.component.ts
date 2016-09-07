@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FORM_DIRECTIVES, ControlGroup, FormBuilder } from '@angular/common';
+import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
 import {
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
@@ -88,11 +88,16 @@ export class AlfrescoLoginComponent implements OnInit {
         translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
 
         this.initFormError();
-        this.initFormMessages();
+        this.initFormFieldsMessages();
     }
 
     ngOnInit() {
-        this.form = this._fb.group(this.fieldsValidation);
+        if (this.hasCustomFiledsValidation()) {
+            this.form = this._fb.group(this.fieldsValidation);
+        } else {
+            this.initFormFieldsDefault();
+            this.initFormFieldsMessagesDefault();
+        }
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
     }
 
@@ -232,9 +237,19 @@ export class AlfrescoLoginComponent implements OnInit {
     }
 
     /**
-     * Default form messages values
+     * Init form fields messages
      */
-    private initFormMessages() {
+    private initFormFieldsMessages() {
+        this._message = {
+            'username': {},
+            'password': {}
+        };
+    }
+
+    /**
+     * Default form fields messages
+     */
+    private initFormFieldsMessagesDefault() {
         this._message = {
             'username': {
                 'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED',
@@ -244,6 +259,13 @@ export class AlfrescoLoginComponent implements OnInit {
                 'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
             }
         };
+    }
+
+    private initFormFieldsDefault() {
+        this.form = this._fb.group({
+            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            password: ['', Validators.required]
+        });
     }
 
     /**
@@ -258,5 +280,9 @@ export class AlfrescoLoginComponent implements OnInit {
      */
     private enableError() {
         this.error = true;
+    }
+
+    private hasCustomFiledsValidation(): boolean {
+        return this.fieldsValidation !== undefined;
     }
 }

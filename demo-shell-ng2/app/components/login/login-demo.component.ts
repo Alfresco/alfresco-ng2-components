@@ -39,14 +39,16 @@ export class LoginDemoComponent implements OnInit {
 
     constructor(public router: Router) {
         this.customValidation = {
-            username: ['', Validators.compose([Validators.required, Validators.minLength(8), , Validators.maxLength(10)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(15)])],
             password: ['', Validators.required]
         };
     }
 
     ngOnInit() {
-        this.alfrescologin.addCustomValidationError('username', 'minlength', 'Username must be at least 8 characters.');
+        this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
         this.alfrescologin.addCustomValidationError('username', 'maxlength', 'Username must not be longer than 11 characters.');
+        this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
     }
 
     onLogin($event) {
