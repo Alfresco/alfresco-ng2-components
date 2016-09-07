@@ -23,4 +23,14 @@ export class GroupModel {
     name: string;
     status: string;
 
+    constructor(json?: any) {
+        if (json) {
+            this.externalId = json.externalId;
+            this.groups = json.groups;
+            this.id = json.id;
+            this.name = json.name;
+            this.status = json.status;
+        }
+    }
+
 }

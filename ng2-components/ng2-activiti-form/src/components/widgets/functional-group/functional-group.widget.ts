@@ -59,7 +59,6 @@ export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
         } else {
             this.popupVisible = false;
         }
-
     }
 
     onBlur() {
