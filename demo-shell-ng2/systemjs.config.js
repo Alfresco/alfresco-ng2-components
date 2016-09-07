@@ -20,6 +20,7 @@
         'ng2-activiti-form': 'node_modules/ng2-activiti-form/dist',
         'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer/dist',
         'ng2-alfresco-webscript': 'node_modules/ng2-alfresco-webscript/dist',
+        'ng2-alfresco-tag': 'node_modules/ng2-alfresco-tag/dist',
         'ng2-activiti-tasklist': 'node_modules/ng2-activiti-tasklist/dist',
         'alfresco-js-api': 'node_modules/alfresco-js-api/dist',
         'ng2-activiti-processlist': 'node_modules/ng2-activiti-processlist/dist'
@@ -43,6 +44,7 @@
         'ng2-activiti-processlist': { main: 'index.js', defaultExtension: 'js'},
         'ng2-activiti-tasklist': { main: 'index.js', defaultExtension: 'js'},
         'ng2-alfresco-webscript': { main: 'index.js', defaultExtension: 'js'},
+        'ng2-alfresco-tag': { main: 'index.js', defaultExtension: 'js'},
         'alfresco-js-api': { main: 'alfresco-js-api.js', defaultExtension: 'js'}
     };
     var ngPackageNames = [
