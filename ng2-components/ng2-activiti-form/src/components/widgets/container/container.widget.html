@@ -49,6 +49,12 @@
                         <div *ngSwitchCase="'typeahead'">
                             <typeahead-widget [field]="field" (fieldChanged)="fieldChanged($event);"></typeahead-widget>
                         </div>
+                        <div *ngSwitchCase="'functional-group'">
+                            <functional-group-widget [field]="field" (fieldChanged)="fieldChanged($event);"></functional-group-widget>
+                        </div>
+                        <div *ngSwitchCase="'people'">
+                            <people-widget [field]="field" (fieldChanged)="fieldChanged($event);"></people-widget>
+                        </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                         </div>

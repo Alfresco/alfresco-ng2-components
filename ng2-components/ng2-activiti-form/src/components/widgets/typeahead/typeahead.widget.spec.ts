@@ -72,12 +72,24 @@ describe('TypeaheadWidget', () => {
     });
 
     it('should show popup on key up', () => {
+
+        spyOn(widget, 'getOptions').and.returnValue([{}, {}]);
+
         widget.minTermLength = 1;
         widget.value = 'some value';
 
         widget.popupVisible = false;
         widget.onKeyUp(null);
         expect(widget.popupVisible).toBeTruthy();
+    });
+
+    it('should require items to show popup', () => {
+        widget.minTermLength = 1;
+        widget.value = 'some value';
+
+        widget.popupVisible = false;
+        widget.onKeyUp(null);
+        expect(widget.popupVisible).toBeFalsy();
     });
 
     it('should require value to show popup', () => {
@@ -90,6 +102,8 @@ describe('TypeaheadWidget', () => {
     });
 
     it('should require value to be of min length to show popup', () => {
+        spyOn(widget, 'getOptions').and.returnValue([{}, {}]);
+
         widget.minTermLength = 3;
         widget.value = 'v';
 

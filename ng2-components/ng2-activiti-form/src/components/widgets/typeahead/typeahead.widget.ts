@@ -34,6 +34,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
     popupVisible: boolean = false;
     minTermLength: number = 1;
     value: string;
+    options: FormFieldOption[] = [];
 
     constructor(private formService: FormService) {
         super();
@@ -72,7 +73,12 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
     }
 
     onKeyUp(event: KeyboardEvent) {
-        this.popupVisible = !!(this.value && this.value.length >= this.minTermLength);
+        if (this.value && this.value.length >= this.minTermLength) {
+            this.options = this.getOptions();
+            this.popupVisible = this.options.length > 0;
+        } else {
+            this.popupVisible = false;
+        }
     }
 
     onBlur() {
@@ -97,6 +103,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
         this.field.updateForm();
     }
 
+    // TODO: still causes onBlur execution
     onItemClick(item: FormFieldOption, event: Event) {
         if (item) {
             this.field.value = item.id;
