@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
+import { FORM_DIRECTIVES, ControlGroup, FormBuilder } from '@angular/common';
 import {
     AlfrescoTranslationService,
     AlfrescoPipeTranslate,
@@ -52,6 +52,9 @@ export class AlfrescoLoginComponent implements OnInit {
     @Input()
     providers: string;
 
+    @Input()
+    fieldsValidation: any;
+
     @Output()
     onSuccess = new EventEmitter();
 
@@ -83,16 +86,13 @@ export class AlfrescoLoginComponent implements OnInit {
                 private translate: AlfrescoTranslationService) {
 
         translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
+
+        this.initFormError();
+        this.initFormMessages();
     }
 
     ngOnInit() {
-        this.initFormError();
-        this.initFormMessages();
-
-        this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-            password: ['', Validators.required]
-        });
+        this.form = this._fb.group(this.fieldsValidation);
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
     }
 
@@ -179,12 +179,22 @@ export class AlfrescoLoginComponent implements OnInit {
     }
 
     /**
-     * Add a new custom error for a field
+     * Add a custom form error for a field
      * @param field
      * @param msg
      */
-    public addCustomError(field: string, msg: string) {
+    public addCustomFormError(field: string, msg: string) {
         this.formError[field] += msg;
+    }
+
+    /**
+     * Add a custom validation rule error for a field
+     * @param field
+     * @param ruleId - i.e. required | minlength | maxlength
+     * @param msg
+     */
+    public addCustomValidationError(field: string, ruleId: string, msg: string) {
+        this._message[field][ruleId] = msg;
     }
 
     /**

@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {AlfrescoLoginComponent} from 'ng2-alfresco-login';
 import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import {Validators} from '@angular/common';
 
 declare let __moduleName: string;
 
@@ -28,14 +29,24 @@ declare let __moduleName: string;
     directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent],
     pipes: []
 })
-export class LoginDemoComponent {
+export class LoginDemoComponent implements OnInit {
 
     @ViewChild('alfrescologin')
     alfrescologin: any;
 
     providers: string = 'ECM';
+    customValidation: any;
 
     constructor(public router: Router) {
+        this.customValidation = {
+            username: ['', Validators.compose([Validators.required, Validators.minLength(8), , Validators.maxLength(10)])],
+            password: ['', Validators.required]
+        };
+    }
+
+    ngOnInit() {
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'Username must be at least 8 characters.');
+        this.alfrescologin.addCustomValidationError('username', 'maxlength', 'Username must not be longer than 11 characters.');
     }
 
     onLogin($event) {
@@ -74,7 +85,7 @@ export class LoginDemoComponent {
     validateForm(event: any) {
         let values = event.values;
         if (values.controls['username'].value === 'invalidUsername') {
-            this.alfrescologin.addCustomError('username', 'This particular username has been blocked');
+            this.alfrescologin.addCustomFormError('username', 'This particular username has been blocked');
             event.preventDefault();
         }
     }

@@ -12,6 +12,7 @@
         </label>
     </p>
 </div>
-<alfresco-login (executeSubmit)="validateForm($event)" [providers]="providers"
+<alfresco-login [providers]="providers" [fieldsValidation]="customValidation"
+                (executeSubmit)="validateForm($event)"
                 (onSuccess)="onLogin($event)"
                 (onError)="onError($event)" #alfrescologin></alfresco-login>
