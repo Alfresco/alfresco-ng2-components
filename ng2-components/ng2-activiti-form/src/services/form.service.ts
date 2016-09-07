@@ -22,6 +22,7 @@ import { FormValues } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
 import { GroupModel } from './../components/widgets/core/group.model';
+import { GroupUserModel } from './../components/widgets/core/group-user.model';
 
 @Injectable()
 export class FormService {
@@ -234,6 +235,38 @@ export class FormService {
 
             let host = this.apiService.getInstance().config.hostBpm;
             let url = `${host}/activiti-app/app/rest/workflow-groups?filter=${filter}`;
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
+            xhr.send();
+        });
+    }
+
+    getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
+        return Observable.create(observer => {
+
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        let json = JSON.parse(xhr.response);
+                        let data: GroupUserModel[] = (json.data || []).map(item => <GroupUserModel> item);
+                        // console.log(json);
+                        observer.next(data);
+                        observer.complete();
+                    } else {
+                        console.error(xhr.response);
+                        Observable.throw(new Error(xhr.response));
+                    }
+                }
+            };
+
+            let host = this.apiService.getInstance().config.hostBpm;
+            let url = `${host}/activiti-app/app/rest/workflow-users?filter=${filter}`;
+            if (groupId) {
+                url += `&groupId=${groupId}`;
+            }
             xhr.open('GET', url, true);
             xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
             xhr.send();

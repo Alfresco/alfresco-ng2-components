@@ -30,6 +30,7 @@ import { DisplayTextWidget } from './display-text/display-text.widget';
 import { UploadWidget } from './upload/upload.widget';
 import { TypeaheadWidget } from './typeahead/typeahead.widget';
 import { FunctionalGroupWidget } from './functional-group/functional-group.widget';
+import { PeopleWidget } from './people/people.widget';
 
 // core
 export * from './widget.component';
@@ -52,6 +53,7 @@ export * from './display-text/display-text.widget';
 export * from './upload/upload.widget';
 export * from './typeahead/typeahead.widget';
 export * from './functional-group/functional-group.widget';
+export * from './people/people.widget';
 
 export const CONTAINER_WIDGET_DIRECTIVES: [any] = [
     TabsWidget,
@@ -70,7 +72,8 @@ export const PRIMITIVE_WIDGET_DIRECTIVES: [any] = [
     DisplayTextWidget,
     UploadWidget,
     TypeaheadWidget,
-    FunctionalGroupWidget
+    FunctionalGroupWidget,
+    PeopleWidget
 ];
 
 

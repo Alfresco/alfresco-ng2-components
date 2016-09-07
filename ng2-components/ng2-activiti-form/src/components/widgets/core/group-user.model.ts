@@ -23,4 +23,13 @@ export class GroupUserModel {
     id: string;
     lastName: string;
 
+    constructor(json?: any) {
+        if (json) {
+            this.company = json.company;
+            this.email = json.email;
+            this.firstName = json.firstName;
+            this.id = json.id;
+            this.lastName = json.lastName;
+        }
+    }
 }
