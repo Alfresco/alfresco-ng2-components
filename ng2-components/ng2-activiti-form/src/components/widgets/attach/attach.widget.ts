@@ -56,7 +56,6 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('init', this.field);
         if (this.field &&
             this.field.value) {
             this.hasFile = true;
