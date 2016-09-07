@@ -15,12 +15,27 @@
  * limitations under the License.
  */
 
-import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
-import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
-import { ActivitiFilters } from './src/components/activiti-filters.component';
-import { NoTaskDetailsTemplateComponent } from './src/components/no-task-detail-template.component';
+import {
+    Directive,
+    ContentChild,
+    TemplateRef,
+    AfterContentInit
+} from '@angular/core';
+import { ActivitiTaskDetails } from './activiti-task-details.component';
 
-export * from './src/components/activiti-tasklist.component';
-export * from './src/services/activiti-tasklist.service';
+@Directive({
+    selector: 'no-task-details-template'
+})
+export class NoTaskDetailsTemplateComponent implements AfterContentInit {
 
-export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [NoTaskDetailsTemplateComponent, ActivitiFilters, ActivitiTaskList, ActivitiTaskDetails];
+    @ContentChild(TemplateRef)
+    template: any;
+
+    constructor(
+        private activitiTaskDetails: ActivitiTaskDetails) {
+    }
+
+    ngAfterContentInit() {
+        this.activitiTaskDetails.noTaskDetailsTemplateComponent = this.template;
+    }
+}

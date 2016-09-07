@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiTaskHeader } from './activiti-task-header.component';
@@ -80,6 +80,8 @@ export class ActivitiTaskDetails implements OnInit {
     taskForm: FormModel;
 
     taskPeople: User[] = [];
+
+    noTaskDetailsTemplateComponent: TemplateRef<any>;
 
     /**
      * Constructor
