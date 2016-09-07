@@ -22,3 +22,4 @@ export * from './AlfrescoTranslation.service';
 export * from './AlfrescoPipeTranslate.service';
 export * from './AlfrescoAuthentication.service';
 export * from './AlfrescoContent.service';
+export * from './renditions.service';
