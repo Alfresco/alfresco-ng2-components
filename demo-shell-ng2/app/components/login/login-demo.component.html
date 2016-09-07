@@ -11,6 +11,10 @@
             <span class="mdl-switch__label">BPM</span>
         </label>
     </p>
+    <p style="width:130px;margin: 10px;">
+        <label for="blacklistusername">Banned username</label><br>
+        <input id="blacklistusername" type="text" placeholder="banned username" [(ngModel)]="blackListUsername" />
+    </p>
 </div>
 <alfresco-login [providers]="providers" [fieldsValidation]="customValidation"
                 (executeSubmit)="validateForm($event)"

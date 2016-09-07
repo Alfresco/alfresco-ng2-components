@@ -35,6 +35,7 @@ export class LoginDemoComponent implements OnInit {
     alfrescologin: any;
 
     providers: string = 'ECM';
+    blackListUsername: string;
     customValidation: any;
 
     constructor(public router: Router) {
@@ -86,7 +87,7 @@ export class LoginDemoComponent implements OnInit {
 
     validateForm(event: any) {
         let values = event.values;
-        if (values.controls['username'].value === 'invalidUsername') {
+        if (values.controls['username'].value === this.blackListUsername ) {
             this.alfrescologin.addCustomFormError('username', 'This particular username has been blocked');
             event.preventDefault();
         }
