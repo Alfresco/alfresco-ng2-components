@@ -31,10 +31,22 @@ export class RenditionsService {
 
     }
 
-    isReditionsAvailable(nodeId: string, encoding: string) {
-        this.apiService.getInstance().core.renditionsApi.getRenditions(nodeId).then((res) => {
-            console.log('res' + res);
+    isRenditionAvailable(nodeId: string, encoding: string) {
+        return Observable.create((observer) => {
+            this.getRendition(nodeId, encoding).subscribe((res) => {
+                let isAvailable = true;
+                if (res.entry.status === 'NOT_CREATED') {
+                    isAvailable = false;
+                }
+                observer.next(isAvailable);
+                observer.complete();
+            });
         });
+    }
+
+    getRendition(nodeId: string, encoding: string) {
+        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRendition(nodeId, encoding))
+            .catch(this.handleError);
     }
 
     getRenditionsListByNodeId(nodeId: string) {
@@ -43,7 +55,7 @@ export class RenditionsService {
     }
 
     createRendition(nodeId: string, encoding: string) {
-        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, encoding))
+        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, {id: 'pdf'}))
             .catch(this.handleError);
     }
 
