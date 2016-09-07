@@ -22,7 +22,6 @@ import {
     Output,
     EventEmitter,
     AfterContentInit,
-    AfterViewInit,
     AfterViewChecked,
     TemplateRef,
     NgZone,
@@ -63,7 +62,7 @@ declare let __moduleName: string;
     providers: [DocumentListService],
     directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES]
 })
-export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, AfterContentInit {
+export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -201,12 +200,13 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         }
     }
 
-    ngAfterViewInit() {
+    isEmptyTemplateDefined() {
         if (this.dataTable) {
             if (this.emptyFolderTemplate) {
-                this.dataTable.noContentTemplate = this.emptyFolderTemplate;
+                return true;
             }
         }
+        return false;
     }
 
     ngAfterViewChecked() {
