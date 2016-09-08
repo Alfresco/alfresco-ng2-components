@@ -47,6 +47,23 @@ describe('FunctionalGroupWidget', () => {
         expect(widget.value).toBeUndefined();
     });
 
+    it('should require form field to setup values on init', () => {
+        widget.field = null;
+        widget.ngOnInit();
+
+        expect(widget.value).toBeUndefined();
+        expect(widget.groupId).toBeUndefined();
+    });
+
+    it('should setup group restriction', () => {
+        widget.ngOnInit();
+        expect(widget.groupId).toBeUndefined();
+
+        widget.field.params = { restrictWithGroup: { id: '<id>' } };
+        widget.ngOnInit();
+        expect(widget.groupId).toBe('<id>');
+    });
+
     it('should flush value on blur', (done) => {
         spyOn(widget, 'flushValue').and.stub();
         widget.onBlur();
@@ -132,7 +149,28 @@ describe('FunctionalGroupWidget', () => {
         widget.value = 'group';
         widget.onKeyUp(null);
 
-        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group');
+        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', undefined);
+        expect(widget.groups).toBe(groups);
+        expect(widget.popupVisible).toBeTruthy();
+    });
+
+    it('should fetch groups with a group filter', () => {
+        let groups: GroupModel[] = [
+            new GroupModel(),
+            new GroupModel()
+        ];
+        spyOn(formService, 'getWorkflowGroups').and.returnValue(
+            Observable.create(observer => {
+                observer.next(groups);
+                observer.complete();
+            })
+        );
+
+        widget.groupId = 'parentGroup';
+        widget.value = 'group';
+        widget.onKeyUp(null);
+
+        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', 'parentGroup');
         expect(widget.groups).toBe(groups);
         expect(widget.popupVisible).toBeTruthy();
     });
@@ -148,7 +186,7 @@ describe('FunctionalGroupWidget', () => {
         widget.value = 'group';
         widget.onKeyUp(null);
 
-        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group');
+        expect(formService.getWorkflowGroups).toHaveBeenCalledWith('group', undefined);
         expect(widget.groups.length).toBe(0);
         expect(widget.popupVisible).toBeFalsy();
     });

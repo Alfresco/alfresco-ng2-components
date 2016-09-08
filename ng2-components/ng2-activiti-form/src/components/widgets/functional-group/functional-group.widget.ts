@@ -34,6 +34,7 @@ export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
     popupVisible: boolean = false;
     groups: GroupModel[] = [];
     minTermLength: number = 1;
+    groupId: string;
 
     constructor(private formService: FormService) {
         super();
@@ -42,15 +43,23 @@ export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
     // TODO: investigate, called 2 times
     // https://github.com/angular/angular/issues/6782
     ngOnInit() {
-        let group = this.field.value;
-        if (group) {
-            this.value = group.name;
+        if (this.field) {
+            let group = this.field.value;
+            if (group) {
+                this.value = group.name;
+            }
+
+            let params = this.field.params;
+            if (params && params['restrictWithGroup']) {
+                let restrictWithGroup = <GroupModel> params['restrictWithGroup'];
+                this.groupId = restrictWithGroup.id;
+            }
         }
     }
 
     onKeyUp(event: KeyboardEvent) {
         if (this.value && this.value.length >= this.minTermLength) {
-            this.formService.getWorkflowGroups(this.value)
+            this.formService.getWorkflowGroups(this.value, this.groupId)
                 .subscribe((result: GroupModel[]) => {
                     this.groups = result || [];
                     this.popupVisible = this.groups.length > 0;
