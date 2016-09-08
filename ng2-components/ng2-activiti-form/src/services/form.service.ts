@@ -18,16 +18,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import { AlfrescoApiService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormValues } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { GroupUserModel } from './../components/widgets/core/group-user.model';
-import { ExternalContent } from '../components/widgets/core/external-content';
-import { ExternalContentLink } from '../components/widgets/core/external-content-link';
 
-import {Http, Response, RequestOptions, Headers} from '@angular/http';
 @Injectable()
 export class FormService {
 
@@ -35,8 +32,7 @@ export class FormService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     constructor(private ecmModelService: EcmModelService,
-                private apiService: AlfrescoApiService,
-                private alfrescoSettingsService: AlfrescoSettingsService, private http: Http) {
+                private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -276,67 +272,6 @@ export class FormService {
             xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
             xhr.send();
         });
-    }
-
-    /**
-     * Returns a list of child nodes below the specified folder
-     *
-     * @param accountId
-     * @param nodeId
-     * @returns {null}
-     */
-    getAlfrescoNodes(accountId: string, nodeId: string): Observable<[ExternalContent]> {
-        let accountPath = accountId.replace('-', '/');
-        let headers = new Headers();
-        headers.append('Authorization', this.authService.getTicketBpm());
-        return this.http.get(
-                `${this.alfrescoSettingsService.bpmHost}/activiti-app/` +
-                `app/rest/integration/${accountPath}/folders/${nodeId}/content`,
-            new RequestOptions({
-                headers: headers,
-                withCredentials: true
-            }))
-            .map(this.extractData)
-            .catch(this.handleError);
-    }
-
-    /**
-     * Returns a list of child nodes below the specified folder
-     *
-     * @param accountId
-     * @param node
-     * @param siteId
-     * @returns {null}
-     */
-    linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', this.authService.getTicketBpm());
-        return this.http.post(
-            `${this.alfrescoSettingsService.bpmHost}/activiti-app/app/rest/content`,
-            JSON.stringify({
-                link: true,
-                name: node.title,
-                simpleType: node.simpleType,
-                source: accountId,
-                sourceId: node.id + '@' + siteId
-            }),
-            new RequestOptions({
-                headers: headers,
-                withCredentials: true
-            }))
-            .map(this.extractBody)
-            .catch(this.handleError);
-    }
-
-    private extractBody(res: Response) {
-        let body = res.json();
-        return body || { };
-    }
-
-    private extractData(res: Response) {
-        let body = res.json();
-        return body.data || { };
     }
 
     getFormId(res: any) {

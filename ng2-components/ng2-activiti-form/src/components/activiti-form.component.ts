@@ -26,6 +26,7 @@ import {
 import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
+import { ActivitiAlfrescoContentService } from './../services/activiti-alfresco.service';
 import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 
@@ -85,7 +86,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css'],
     directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
-    providers: [EcmModelService, FormService, WidgetVisibilityService, NodeService]
+    providers: [EcmModelService, FormService, ActivitiAlfrescoContentService, WidgetVisibilityService, NodeService]
 })
 export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 

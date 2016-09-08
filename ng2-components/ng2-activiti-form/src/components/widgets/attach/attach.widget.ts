@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-import { FormService } from '../../../services/form.service';
+import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
@@ -51,7 +51,7 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     @ViewChild('dialog')
     dialog: any;
 
-    constructor(private formService: FormService) {
+    constructor(private contentService: ActivitiAlfrescoContentService) {
         super();
     }
 
@@ -94,7 +94,7 @@ export class AttachWidget extends WidgetComponent implements OnInit {
 
     private getExternalContentNodes() {
 
-        this.formService.getAlfrescoNodes(this.selectedFolderAccountId, this.selectedFolderPathId)
+        this.contentService.getAlfrescoNodes(this.selectedFolderAccountId, this.selectedFolderPathId)
             .subscribe(
                 (nodes) => {
                     this.selectedFolderNodes = nodes;
@@ -103,7 +103,7 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     }
 
     selectFile(node: ExternalContent, $event: any) {
-        this.formService.linkAlfrescoNode(this.selectedFolderAccountId, node, this.selectedFolderSiteId).subscribe(
+        this.contentService.linkAlfrescoNode(this.selectedFolderAccountId, node, this.selectedFolderSiteId).subscribe(
             (link: ExternalContentLink) => {
                 this.selectedFile = node;
                 this.field.value = [link];

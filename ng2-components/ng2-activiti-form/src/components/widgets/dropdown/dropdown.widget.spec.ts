@@ -28,7 +28,7 @@ describe('DropdownWidget', () => {
     let widget: DropdownWidget;
 
     beforeEach(() => {
-        formService = new FormService(null, null, null, null);
+        formService = new FormService(null, null);
         widget = new DropdownWidget(formService);
         widget.field = new FormFieldModel(new FormModel());
     });
