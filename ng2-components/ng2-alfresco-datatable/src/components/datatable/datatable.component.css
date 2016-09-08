@@ -105,3 +105,8 @@
         display: none;
     }
 }
+
+.mdl-data-table-fix-firefox{
+    border-collapse: unset;
+    border-spacing: 0;
+}
