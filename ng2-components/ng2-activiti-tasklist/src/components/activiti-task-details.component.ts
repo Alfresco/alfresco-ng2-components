@@ -110,6 +110,17 @@ export class ActivitiTaskDetails implements OnInit {
         }
     }
 
+    /**
+     * Reset the task detail to undefined
+     */
+    reset() {
+        this.taskDetails = null;
+    }
+
+    /**
+     * Load the activiti task details
+     * @param taskId
+     */
     loadDetails(taskId: string) {
         this.taskForm = null;
         this.taskPeople = [];
@@ -142,10 +153,13 @@ export class ActivitiTaskDetails implements OnInit {
                 }
             );
         } else {
-            this.taskDetails = null;
+            this.reset();
         }
     }
 
+    /**
+     * Complete the activiti task
+     */
     onComplete() {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
             (res) => {
@@ -154,14 +168,26 @@ export class ActivitiTaskDetails implements OnInit {
         );
     }
 
+    /**
+     * Emit the form saved event
+     * @param data
+     */
     formSavedEmitter(data: any) {
         this.formSaved.emit(data);
     }
 
+    /**
+     * Emit the form completed event
+     * @param data
+     */
     formCompletedEmitter(data: any) {
         this.formCompleted.emit(data);
     }
 
+    /**
+     * Emit the form loaded event
+     * @param data
+     */
     formLoadedEmitter(data: any) {
         this.formLoaded.emit(data);
     }

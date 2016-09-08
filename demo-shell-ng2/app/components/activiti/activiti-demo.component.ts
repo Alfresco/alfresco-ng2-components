@@ -85,6 +85,11 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.activititasklist.load(this.taskFilter.filter);
     }
 
+    onSuccessTaskList(event: any) {
+        this.currentTaskId = this.activititasklist.getCurrentTaskId();
+        this.activitidetails.loadDetails(this.currentTaskId);
+    }
+
     onProcessFilterClick(event: any) {
         this.processFilter = event.filter;
         this.activitiprocesslist.load(this.processFilter);
