@@ -1,17 +1,22 @@
-<div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 10px; z-index: 1;">
-    <p style="width:120px;margin: 20px;">
+<div class="setting">
+    <p class="toggle">
         <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
             <input type="checkbox" id="switch1" class="mdl-switch__input" checked (click)="toggleECM(ecm.checked)" #ecm>
             <span class="mdl-switch__label">ECM</span>
         </label>
     </p>
-    <p style="width:120px;margin: 20px;">
+    <p class="toggle">
         <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
             <input type="checkbox" id="switch2" class="mdl-switch__input"  (click)="toggleBPM(bpm.checked)" #bpm>
             <span class="mdl-switch__label">BPM</span>
         </label>
     </p>
+    <p class="banned">
+        <label for="blacklistusername">Banned username</label><br>
+        <input id="blacklistusername" type="text" placeholder="banned username" [(ngModel)]="blackListUsername" />
+    </p>
 </div>
-<alfresco-login (executeSubmit)="validateForm($event)" [providers]="providers"
+<alfresco-login [providers]="providers" [fieldsValidation]="customValidation"
+                (executeSubmit)="validateForm($event)"
                 (onSuccess)="onLogin($event)"
                 (onError)="onError($event)" #alfrescologin></alfresco-login>

@@ -52,6 +52,9 @@ export class AlfrescoLoginComponent implements OnInit {
     @Input()
     providers: string;
 
+    @Input()
+    fieldsValidation: any;
+
     @Output()
     onSuccess = new EventEmitter();
 
@@ -83,16 +86,18 @@ export class AlfrescoLoginComponent implements OnInit {
                 private translate: AlfrescoTranslationService) {
 
         translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
+
+        this.initFormError();
+        this.initFormFieldsMessages();
     }
 
     ngOnInit() {
-        this.initFormError();
-        this.initFormMessages();
-
-        this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-            password: ['', Validators.required]
-        });
+        if (this.hasCustomFiledsValidation()) {
+            this.form = this._fb.group(this.fieldsValidation);
+        } else {
+            this.initFormFieldsDefault();
+            this.initFormFieldsMessagesDefault();
+        }
         this.form.valueChanges.subscribe(data => this.onValueChanged(data));
     }
 
@@ -179,12 +184,22 @@ export class AlfrescoLoginComponent implements OnInit {
     }
 
     /**
-     * Add a new custom error for a field
+     * Add a custom form error for a field
      * @param field
      * @param msg
      */
-    public addCustomError(field: string, msg: string) {
+    public addCustomFormError(field: string, msg: string) {
         this.formError[field] += msg;
+    }
+
+    /**
+     * Add a custom validation rule error for a field
+     * @param field
+     * @param ruleId - i.e. required | minlength | maxlength
+     * @param msg
+     */
+    public addCustomValidationError(field: string, ruleId: string, msg: string) {
+        this._message[field][ruleId] = msg;
     }
 
     /**
@@ -222,9 +237,19 @@ export class AlfrescoLoginComponent implements OnInit {
     }
 
     /**
-     * Default form messages values
+     * Init form fields messages
      */
-    private initFormMessages() {
+    private initFormFieldsMessages() {
+        this._message = {
+            'username': {},
+            'password': {}
+        };
+    }
+
+    /**
+     * Default form fields messages
+     */
+    private initFormFieldsMessagesDefault() {
         this._message = {
             'username': {
                 'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED',
@@ -234,6 +259,13 @@ export class AlfrescoLoginComponent implements OnInit {
                 'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
             }
         };
+    }
+
+    private initFormFieldsDefault() {
+        this.form = this._fb.group({
+            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            password: ['', Validators.required]
+        });
     }
 
     /**
@@ -248,5 +280,9 @@ export class AlfrescoLoginComponent implements OnInit {
      */
     private enableError() {
         this.error = true;
+    }
+
+    private hasCustomFiledsValidation(): boolean {
+        return this.fieldsValidation !== undefined;
     }
 }

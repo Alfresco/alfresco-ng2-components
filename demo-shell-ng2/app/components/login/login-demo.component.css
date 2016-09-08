@@ -1,0 +1,10 @@
+.setting {
+    border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 10px;  z-index: 1;
+}
+.banned{
+    width:130px;margin: 10px;
+}
+
+.toggle {
+    width:120px;margin: 20px;
+}
