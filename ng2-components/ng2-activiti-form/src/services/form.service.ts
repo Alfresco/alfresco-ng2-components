@@ -212,7 +212,7 @@ export class FormService {
     }
 
     // TODO: uses private webApp api
-    getWorkflowGroups(filter: string): Observable<GroupModel[]> {
+    getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
         return Observable.create(observer => {
 
             let xhr: XMLHttpRequest = new XMLHttpRequest();
@@ -235,6 +235,9 @@ export class FormService {
 
             let host = this.apiService.getInstance().config.hostBpm;
             let url = `${host}/activiti-app/app/rest/workflow-groups?filter=${filter}`;
+            if (groupId) {
+                url += `&groupId=${groupId}`;
+            }
             xhr.open('GET', url, true);
             xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
             xhr.send();
