@@ -1,4 +1,4 @@
-# Alfresco Angular2 Components core
+# Alfresco Angular 2 Components core
 
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
@@ -15,28 +15,15 @@
   <a href='https://www.npmjs.com/package/ng2-alfresco-core'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-core.svg' alt='npm downloads' />
   </a>
-  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
-     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
-  </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
-  </a>
-  <a href='https://angular.io/'>
-     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
-  </a>
-  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
-     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
-  </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
-  </a>
 </p>
 
 Core library for other ng2-alfresco components.
 This should be added as a dependency for any project using the components.
 
-### Node
-To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
+## Prerequisites
+
+Before you start using this development framework, make sure you have installed all required software and done all the 
+necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
@@ -49,6 +36,53 @@ npm install --save ng2-alfresco-core
 ### Components
 
 - Context Menu directive
+- Material Design directives
+  - [mdl]
+  - [alfresco-mdl-button]
+  - [alfresco-mdl-menu]
+  - [alfresco-mdl-tabs]
+
+### Services
+
+- **AlfrescoApiService**, provides access to Alfresco JS API instance
+- **AlfrescoAuthenticationService**, main authentication APIs
+- **AlfrescoTranslationService**, various i18n-related APIs
+- **ContextMenuService**, global context menu APIs
+
+
+#### Alfresco Api Service
+
+Provides access to initialized **AlfrescoJSApi** instance.
+
+```ts
+import { OnInit } from '@angular/core'; 
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+
+export class MyComponent implements OnInit {
+
+    constructor(private apiService: AlfrescoApiService) {   
+    }
+
+    ngOnInit() {
+        let nodeId = 'some-node-id';
+        let params = {};
+        this.getAlfrescoApi().nodes
+            .getNodeChildren(nodeId, params)
+            .then(result => console.log(result));
+    }
+}
+```
+
+**Note for developers**: _the TypeScript declaration files for Alfresco JS API
+are still under development and some Alfresco APIs may not be accessed
+via your favourite IDE's intellisense or TypeScript compiler. 
+In case of any TypeScript type check errors you can still call any supported 
+Alfresco JS api by casting the instance to `any` type like the following:_
+
+```ts
+let apiService: any = this.authService.getAlfrescoApi();
+apiService.nodes.addNode('-root-', body, {});
+```
 
 #### Context Menu directive
 
@@ -86,17 +120,11 @@ export class MyComponent implements OnInit {
 }
 ```
 
-### Services
-
-- Authentication Service
-- Translation Service
-- Context Menu Service
-
 #### Authentication Service
 
 The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
 
-```javascript
+```ts
 import { Component } from '@angular/core';
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { HTTP_PROVIDERS } from '@angular/http';
@@ -170,29 +198,10 @@ npm install
 npm run build
 ```
 
-### Build the files and keep watching for changes
+### Additional scripts
 
-```sh
-$ npm run build:w
-```
-
-### Running unit tests
-
-```sh
-npm test
-```
-
-### Running unit tests in browser
-
-```sh
-npm test-browser
-```
-
-This task rebuilds all the code, runs tslint, license checks and other quality check tools 
+- `npm run build:w` builds the files and keep watching for changes
+- `npm test` runs unit tests
+- `npm run test-browser` runs unit tests in browser. This task rebuilds all the code, runs tslint, license checks and other quality check tools 
 before performing unit testing. 
-
-### Code coverage
-
-```sh
-npm run coverage
-```
+- `npm run coverage` runs code coverage report
