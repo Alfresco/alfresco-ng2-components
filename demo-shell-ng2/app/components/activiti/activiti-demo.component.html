@@ -18,7 +18,8 @@
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                         <span>Task List</span>
                         <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [schemaColumn]="taskSchemaColumns"
-                                           (rowClick)="onTaskRowClick($event)" #activititasklist></activiti-tasklist>
+                                           (rowClick)="onTaskRowClick($event)" (onSuccess)="onSuccessTaskList($event)"
+                                           #activititasklist></activiti-tasklist>
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
                         <span>Task Details</span>

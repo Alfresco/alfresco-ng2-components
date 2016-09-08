@@ -95,6 +95,7 @@ export class ActivitiTaskList implements OnInit {
                 this.activiti.getTasks(filterParam).subscribe(
                     (response) => {
                         this.renderTasks(response.data);
+                        this.selectFirstTask();
                         this.onSuccess.emit(response);
                     }, (error) => {
                         console.error(error);
@@ -113,6 +114,25 @@ export class ActivitiTaskList implements OnInit {
     private renderTasks(tasks: any[]) {
         tasks = this.optimizeTaskName(tasks);
         this.tasks = new ObjectDataTableAdapter(tasks, this.data.getColumns());
+    }
+
+    /**
+     * Select the first task of a tasklist if present
+     */
+    private selectFirstTask() {
+        if (!this.isTaskListEmpty()) {
+            this.currentTaskId = this.tasks.getRows()[0].getValue('id');
+        } else {
+            this.currentTaskId = null;
+        }
+    }
+
+    /**
+     * Return the current task
+     * @returns {string}
+     */
+    getCurrentTaskId(): string {
+        return this.currentTaskId;
     }
 
     /**
