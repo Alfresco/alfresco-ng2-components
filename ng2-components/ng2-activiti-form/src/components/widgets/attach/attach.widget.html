@@ -1,0 +1,33 @@
+<div class="attach-widget">
+
+    <label [attr.for]="field.id">{{field.name}}</label>
+    <div>
+        <span *ngIf="hasFile" class="attach-widget__file">{{getLinkedFileName()}}</span>
+        <button #browseFile (click)="showDialog();" class="mdl-button mdl-js-button mdl-js-ripple-effect attach-widget__browser">
+            <i class="material-icons">image</i>
+            Browse {{selectedFolderSiteName}}
+        </button>
+        <button *ngIf="hasFile" (click)="reset(file);" class="mdl-button mdl-js-button mdl-js-ripple-effect attach-widget__reset">Clear</button>
+    </div>
+</div>
+
+<dialog class="mdl-dialog" #dialog>
+    <h4 class="mdl-dialog__title">Select content</h4>
+    <div class="mdl-dialog__content">
+        <ul class='mdl-list'>
+            <li class="mdl-list__item" *ngFor="let node of selectedFolderNodes">
+            <span class="mdl-list__item-primary-content" *ngIf="node.folder">
+            <i class="material-icons mdl-list__item-icon">folder</i>
+            <a (click)="selectFolder(node, $event)">{{node.title}}</a>
+            </span>
+            <span class="mdl-list__item-primary-content" *ngIf="!node.folder">
+            <i class="material-icons mdl-list__item-icon">description</i>
+            <a (click)="selectFile(node, $event)">{{node.title}}</a>
+            </span>
+            </li>
+        </ul>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
+    </div>
+</dialog>
