@@ -243,9 +243,16 @@ will also be executed after your custom code.**
 - Header
   * [x] Plain header
   * [x] Collapsible header
-- [ ] Attach
+- [x] Attach file **
 - [x] Display value
 - [x] Display text
+
+** Files may be uploaded from a user's device if the file source selected is
+'Local file' or 'All sources' and 'link to files' is not selected. Alternatively
+you can link to files in a configured Alfresco repository by selecting this source
+explicitly from the list and making sure that 'link to files' is selected. Copying
+files from Alfresco into Activiti via the control (no linking) is not currently
+supported, nor is allowing the user to choose between more than one source.
 
 ## Build from sources
 
