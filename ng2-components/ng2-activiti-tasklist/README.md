@@ -96,7 +96,13 @@ The component shows the details of the task id passed in input
 ```
 
 #### Events
-No events
+| Name | Description |
+| --- | --- |
+| formLoaded | Invoked when form is loaded or reloaded. |
+| formSaved | Invoked when form is submitted with `Save` or custom outcomes.  |
+| formCompleted | Invoked when form is submitted with `Complete` outcome.  |
+| executeOutcome | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
+| onError | Invoked at any error |
 
 #### Options
 

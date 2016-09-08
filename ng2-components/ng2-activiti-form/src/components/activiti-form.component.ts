@@ -147,6 +147,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
+    @Output()
+    onError: EventEmitter<any> = new EventEmitter<any>();
+
     form: FormModel;
 
     debugMode: boolean = false;
@@ -301,7 +304,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.form = new FormModel(form, data, this.readOnly);
                     this.formLoaded.emit(this.form);
                 },
-                this.handleError
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -314,7 +319,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form);
                 },
-                this.handleError
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -329,10 +336,14 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                             this.form = this.parseForm(form);
                             this.formLoaded.emit(this.form);
                         },
-                        this.handleError
+                        (error) => {
+                            this.handleError(error);
+                        }
                     );
                 },
-                this.handleError
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -345,7 +356,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                         this.formSaved.emit(this.form);
                         this.storeFormAsMetadata();
                     },
-                    this.handleError
+                    (error) => {
+                        this.handleError(error);
+                    }
                 );
         }
     }
@@ -359,13 +372,16 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                         this.formCompleted.emit(this.form);
                         this.storeFormAsMetadata();
                     },
-                    this.handleError
+                    (error) => {
+                        this.handleError(error);
+                    }
                 );
         }
     }
 
     handleError(err: any): any {
         console.log(err);
+        this.onError.emit(err);
     }
 
     parseForm(json: any): FormModel {
@@ -415,7 +431,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.loadFormFromFormId(form.id);
                 }
             },
-            this.handleError
+            (error) => {
+                this.handleError(error);
+            }
         );
     }
 
@@ -428,7 +446,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         if (this.saveMetadata) {
             this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
                     this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
-                }, this.handleError
+                },
+                (error) => {
+                    this.handleError(error);
+                }
             );
         }
     }
