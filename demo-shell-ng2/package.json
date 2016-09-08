@@ -11,7 +11,7 @@
     "aws": "node app.js",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "serve": "wsrv -o -s -l -p 3000 -a 0.0.0.0 -x ./server/versions.js",
+    "serve": "wsrv -O http://localhost:3000 -s -l -p 3000 -a 0.0.0.0 -x ./server/versions.js",
     "typings": "typings install",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'app/{,**/}**.ts'",
     "licensecheck": "license-check"
@@ -96,7 +96,7 @@
     "tslint": "3.8.1",
     "typescript": "1.8.10",
     "typings": "1.0.4",
-    "wsrv": "0.1.4"
+    "wsrv": "^0.1.5"
   },
   "license-check-config": {
     "src": [
