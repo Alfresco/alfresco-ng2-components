@@ -75,6 +75,12 @@ export class ActivitiTaskDetails implements OnInit {
     @Output()
     formLoaded = new EventEmitter();
 
+    @Output()
+    onError = new EventEmitter();
+
+    @Output()
+    executeOutcome = new EventEmitter();
+
     taskDetails: TaskDetailsModel;
 
     taskForm: FormModel;
@@ -158,5 +164,13 @@ export class ActivitiTaskDetails implements OnInit {
 
     formLoadedEmitter(data: any) {
         this.formLoaded.emit(data);
+    }
+
+    onErrorEmitter(err: any) {
+        this.onError.emit(err);
+    }
+
+    executeOutcomeEmitter(data: any) {
+        this.executeOutcome.emit(data);
     }
 }

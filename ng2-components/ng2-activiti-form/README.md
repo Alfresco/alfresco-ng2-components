@@ -153,6 +153,7 @@ The recommended set of properties can be found in the following table:
 | formSaved | Invoked when form is submitted with `Save` or custom outcomes.  |
 | formCompleted | Invoked when form is submitted with `Complete` outcome.  |
 | executeOutcome | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
+| onError | Invoked at any error |
 
 All `form*` events receive an instance of the `FormModel` as event argument for ease of development:
 
