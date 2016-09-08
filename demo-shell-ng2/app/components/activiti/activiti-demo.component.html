@@ -13,7 +13,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
                         <span>Task Filters</span>
-                        <activiti-filters (filterClick)="onTaskFilterClick($event)"></activiti-filters>
+                        <activiti-filters [appId]="appId" (filterClick)="onTaskFilterClick($event)"></activiti-filters>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                         <span>Task List</span>

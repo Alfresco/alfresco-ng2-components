@@ -40,6 +40,7 @@ export const routes: RouterConfig = [
     { path: 'login', component: LoginDemoComponent },
     { path: 'search', component: SearchComponent },
     { path: 'activiti', component: ActivitiDemoComponent },
+    { path: 'activiti/appId/:appId', component: ActivitiDemoComponent },
     { path: 'activiti/tasks/:id', component: FormViewer },
     { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
     { path: 'webscript', component: WebscriptComponent },
