@@ -53,12 +53,16 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             this.value = this.field.value === 'true' ? true : false;
                             break;
                         case FormFieldTypes.FUNCTIONAL_GROUP:
-                            this.value = this.field.value.name;
+                            if (this.field.value) {
+                                this.value = this.field.value.name;
+                            }
                             break;
                         case FormFieldTypes.PEOPLE:
                             let model = this.field.value;
-                            let displayName = `${model.firstName} ${model.lastName}`;
-                            this.value = displayName.trim();
+                            if (model) {
+                                let displayName = `${model.firstName} ${model.lastName}`;
+                                this.value = displayName.trim();
+                            }
                             break;
                         case FormFieldTypes.UPLOAD:
                             let files = this.field.value || [];
