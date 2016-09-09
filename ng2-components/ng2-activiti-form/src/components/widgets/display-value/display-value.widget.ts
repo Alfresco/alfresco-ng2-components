@@ -32,9 +32,11 @@ declare var componentHandler;
 })
 export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
+    DEFAULT_URL: string = '#';
+    DEFAULT_URL_SCHEME: string = 'http://';
+
     value: any;
     fieldType: string;
-    FormFieldTypes: FormFieldTypes;
 
     constructor(private formService: FormService) {
         super();
@@ -119,10 +121,6 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     }
 
     // TODO: TAKEN FROM hyperlink WIDGET, OPTIMIZE
-
-    DEFAULT_URL: string = '#';
-    DEFAULT_URL_SCHEME: string = 'http://';
-
     get linkUrl(): string {
         let url = this.DEFAULT_URL;
 
@@ -136,6 +134,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
         return url;
     }
 
+    // TODO: TAKEN FROM hyperlink WIDGET, OPTIMIZE
     get linkText(): string {
         if (this.field) {
             return this.field.displayText || this.field.hyperlinkUrl;
