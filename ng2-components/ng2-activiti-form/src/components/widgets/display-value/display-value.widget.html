@@ -1,10 +1,52 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label display-value-widget">
-    <input class="mdl-textfield__input"
-           type="text"
-           [attr.id]="field.id"
-           [(ngModel)]="field.value"
-           (ngModelChange)="checkVisibility(field)"
-           disabled>
-    <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+<div [ngSwitch]="fieldType" class="display-value-widget">
+    <div *ngSwitchCase="'boolean'">
+        <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id">
+            <input type="checkbox"
+                   [attr.id]="field.id"
+                   [(ngModel)]="value"
+                   class="mdl-checkbox__input"
+                   disabled>
+            <span class="mdl-checkbox__label">{{field.name}}</span>
+        </label>
+    </div>
+    <div *ngSwitchCase="'text'"
+         class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label text-widget">
+        <input class="mdl-textfield__input"
+               type="text"
+               [attr.id]="field.id"
+               [value]="value"
+               disabled>
+        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+    </div>
+    <div *ngSwitchCase="'multi-line-text'"
+         class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label multiline-text-widget">
+        <textarea class="mdl-textfield__input"
+                  type="text"
+                  rows= "3"
+                  [attr.id]="field.id"
+                  [(ngModel)]="value"
+                  [disabled]="field.readOnly">
+        </textarea>
+        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+    </div>
+    <div *ngSwitchCase="'hyperlink'"
+         class="hyperlink-widget">
+        <div>
+            <span>{{field.name}}</span>
+        </div>
+        <div>
+            <a [href]="linkUrl" target="_blank" rel="nofollow">{{linkText}}</a>
+        </div>
+    </div>
+    <div *ngSwitchDefault
+         class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label text-widget">
+        <input class="mdl-textfield__input"
+               type="text"
+               [attr.id]="field.id"
+               [value]="value"
+               (ngModelChange)="checkVisibility(field)"
+               disabled>
+        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+    </div>
 </div>
 

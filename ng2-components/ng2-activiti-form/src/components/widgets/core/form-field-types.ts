@@ -18,6 +18,8 @@
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';
+    static TEXT: string = 'text';
+    static MULTILINE_TEXT: string = 'multi-line-text';
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';
     static RADIO_BUTTONS: string = 'radio-buttons';
@@ -27,6 +29,7 @@ export class FormFieldTypes {
     static TYPEAHEAD: string = 'typeahead';
     static FUNCTIONAL_GROUP: string = 'functional-group';
     static PEOPLE: string = 'people';
+    static BOOLEAN: string = 'boolean';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

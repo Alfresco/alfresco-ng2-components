@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
+import { FormFieldTypes } from '../core/form-field-types';
+import { FormService } from '../../../services/form.service';
+import { FormFieldOption } from './../core/form-field-option';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -27,6 +30,113 @@ declare var componentHandler;
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']
 })
-export class DisplayValueWidget extends WidgetComponent {
+export class DisplayValueWidget extends WidgetComponent implements OnInit {
+
+    value: any;
+    fieldType: string;
+    FormFieldTypes: FormFieldTypes;
+
+    constructor(private formService: FormService) {
+        super();
+    }
+
+    ngOnInit() {
+        if (this.field) {
+            this.value = this.field.value;
+
+            if (this.field.params) {
+                let originalField = this.field.params['field'];
+                if (originalField && originalField.type) {
+                    this.fieldType = originalField.type;
+                    switch (originalField.type) {
+                        case FormFieldTypes.BOOLEAN:
+                            this.value = this.field.value === 'true' ? true : false;
+                            break;
+                        case FormFieldTypes.FUNCTIONAL_GROUP:
+                            this.value = this.field.value.name;
+                            break;
+                        case FormFieldTypes.PEOPLE:
+                            let model = this.field.value;
+                            let displayName = `${model.firstName} ${model.lastName}`;
+                            this.value = displayName.trim();
+                            break;
+                        case FormFieldTypes.UPLOAD:
+                            let files = this.field.value || [];
+                            if (files.length > 0) {
+                                this.value = files[0].name;
+                            }
+                            break;
+                        case FormFieldTypes.TYPEAHEAD:
+                            this.loadRestFieldValue();
+                            break;
+                        case FormFieldTypes.DROPDOWN:
+                            this.loadRestFieldValue();
+                            break;
+                        case FormFieldTypes.RADIO_BUTTONS:
+                            this.loadRadioButtonValue();
+                            break;
+                        default:
+                            this.value = this.field.value;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    loadRadioButtonValue() {
+        let options = this.field.options || [];
+        let toSelect = options.find(item => item.id === this.field.value);
+        if (toSelect) {
+            this.value = toSelect.name;
+        } else {
+            this.value = this.field.value;
+        }
+    }
+
+    loadRestFieldValue() {
+        this.formService
+            .getRestFieldValues(this.field.form.taskId, this.field.id)
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    let options = result || [];
+                    let toSelect = options.find(item => item.id === this.field.value);
+                    if (toSelect) {
+                        this.value = toSelect.name;
+                    } else {
+                        this.value = this.field.value;
+                    }
+                },
+                error => {
+                    console.log(error);
+                    this.value = this.field.value;
+                }
+            );
+    }
+
+    // TODO: TAKEN FROM hyperlink WIDGET, OPTIMIZE
+
+    DEFAULT_URL: string = '#';
+    DEFAULT_URL_SCHEME: string = 'http://';
+
+    get linkUrl(): string {
+        let url = this.DEFAULT_URL;
+
+        if (this.field && this.field.hyperlinkUrl) {
+            url = this.field.hyperlinkUrl;
+            if (!/^https?:\/\//i.test(url)) {
+                url = this.DEFAULT_URL_SCHEME + url;
+            }
+        }
+
+        return url;
+    }
+
+    get linkText(): string {
+        if (this.field) {
+            return this.field.displayText || this.field.hyperlinkUrl;
+        }
+        return null;
+    }
 
 }
