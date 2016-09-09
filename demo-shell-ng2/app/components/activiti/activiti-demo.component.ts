@@ -19,6 +19,8 @@ import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm } from 'ng2-activiti-form';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -55,6 +57,8 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     taskFilter: any;
     processFilter: any;
 
+    private sub: Subscription;
+
     @Input()
     appId: string;
 
@@ -70,7 +74,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         return this.currentChoice === 'task-list';
     }
 
-    constructor() {
+    constructor(private route: ActivatedRoute) {
         this.taskSchemaColumns = [
             {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
             // {type: 'text', key: 'created', title: 'Created', sortable: true}
@@ -78,6 +82,16 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.processSchemaColumns = [
             {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
         ];
+    }
+
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            this.appId = params['appId'];
+        });
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     onTaskFilterClick(event: any) {
