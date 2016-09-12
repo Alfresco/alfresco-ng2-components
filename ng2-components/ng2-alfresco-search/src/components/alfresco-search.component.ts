@@ -71,7 +71,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     ngOnChanges(changes): void {
         if (changes.searchTerm) {
-            this.displaySearchResults(changes.searchTerm);
+            this.displaySearchResults(changes.searchTerm.currentValue);
         }
     }
 
