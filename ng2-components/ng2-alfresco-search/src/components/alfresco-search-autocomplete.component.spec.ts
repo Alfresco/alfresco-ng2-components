@@ -101,14 +101,14 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
     });
 
     it('should display search results when a search term is provided', () => {
-        let searchTerm = 'customSearchTerm';
+        let searchTerm = { currentValue: 'customSearchTerm', previousValue: ''};
         spyOn(component, 'displaySearchResults').and.stub();
         component.searchTerm = searchTerm;
         component.ngOnChanges({
             searchTerm: searchTerm
         });
         alfrescoSearchComponentFixture.detectChanges();
-        expect(component.displaySearchResults).toHaveBeenCalledWith(searchTerm);
+        expect(component.displaySearchResults).toHaveBeenCalledWith(searchTerm.currentValue);
     });
 
     it('should display the returned search results', (done) => {
@@ -119,8 +119,8 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             done();
         });
 
-        component.searchTerm = 'searchTerm';
-        component.ngOnChanges({searchTerm: component.searchTerm});
+        component.searchTerm = { currentValue: 'searchTerm', previousValue: ''};
+        component.ngOnChanges({searchTerm: component.searchTerm });
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
@@ -136,7 +136,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             done();
         });
 
-        component.searchTerm = 'searchTerm';
+        component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
         component.ngOnChanges({searchTerm: component.searchTerm});
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -152,7 +152,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             element.querySelector('#result_row_0').click();
         });
 
-        component.searchTerm = 'searchTerm';
+        component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
         component.ngOnChanges({searchTerm: component.searchTerm});
 
         jasmine.Ajax.requests.mostRecent().respondWith({
@@ -169,7 +169,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
     it('should not emit preview when non-file item is clicked', () => {
         spyOn(component, 'onItemClick').and.stub();
 
-        component.ngOnChanges({searchTerm: 'searchTerm'});
+        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''} });
 
         component.preview.subscribe(e => {
             expect(e.value).toBe(component.results[0]);
@@ -183,4 +183,5 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         expect(component.onItemClick).not.toHaveBeenCalled();
     });
+
 });
