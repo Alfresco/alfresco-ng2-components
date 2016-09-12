@@ -57,7 +57,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     taskFilter: any;
     processFilter: any;
 
-    private sub: Subscription;
+    sub: Subscription;
 
     @Input()
     appId: string;
