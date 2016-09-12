@@ -117,6 +117,12 @@ export class ActivitiTaskDetails implements OnInit {
         this.taskDetails = null;
     }
 
+    hasFormKey() {
+        return this.taskDetails
+            && this.taskDetails.formKey
+            && this.taskDetails.formKey !== 'null';
+    }
+
     /**
      * Load the activiti task details
      * @param taskId
@@ -130,26 +136,24 @@ export class ActivitiTaskDetails implements OnInit {
                     this.taskDetails = res;
 
                     let endDate: any = res.endDate;
-                    if (endDate && !isNaN(endDate.getTime())) {
-                        this.readOnly = true;
-                    } else {
-                        this.readOnly = false;
-                    }
+                    this.readOnly = !!(endDate && !isNaN(endDate.getTime()));
 
-                    if (this.taskDetails && this.taskDetails.involvedPeople) {
-                        this.taskDetails.involvedPeople.forEach((user) => {
-                            this.taskPeople.push(new User(user.id, user.email, user.firstName, user.lastName));
-                        });
+                    if (this.hasFormKey()) {
+                        if (this.taskDetails && this.taskDetails.involvedPeople) {
+                            this.taskDetails.involvedPeople.forEach((user) => {
+                                this.taskPeople.push(new User(user.id, user.email, user.firstName, user.lastName));
+                            });
 
-                        if (this.activiticomments) {
-                            this.activiticomments.load(this.taskDetails.id);
+                            if (this.activiticomments) {
+                                this.activiticomments.load(this.taskDetails.id);
+                            }
+
+                            if (this.activitichecklist) {
+                                this.activitichecklist.load(this.taskDetails.id);
+                            }
                         }
-
-                        if (this.activitichecklist) {
-                            this.activitichecklist.load(this.taskDetails.id);
-                        }
+                        console.log(this.taskDetails);
                     }
-                    console.log(this.taskDetails);
                 }
             );
         } else {
