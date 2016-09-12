@@ -3,6 +3,7 @@
               type="text"
               rows= "3"
               [attr.id]="field.id"
+              [attr.required]="isRequired()"
               [(ngModel)]="field.value"
               (ngModelChange)="checkVisibility(field)"
               [disabled]="field.readOnly">

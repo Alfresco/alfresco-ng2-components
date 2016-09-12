@@ -128,7 +128,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     showSaveButton: boolean = true;
 
     @Input()
-    showDebugButton: boolean = false;
+    showDebugButton: boolean = true;
 
     @Input()
     readOnly: boolean = false;
@@ -175,6 +175,21 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {
+        if (this.form.readOnly) {
+            return false;
+        }
+
+        if (outcome) {
+            // Make 'Save' button always available
+            if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
+                return true;
+            }
+            return this.form.isValid;
+        }
+        return false;
+    }
+
+    isOutcomeButtonVisible(outcome: FormOutcomeModel): boolean {
         if (outcome && outcome.name) {
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.showCompleteButton;

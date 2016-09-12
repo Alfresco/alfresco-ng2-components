@@ -2,6 +2,7 @@
     <input class="mdl-textfield__input"
            type="text"
            [attr.id]="field.id"
+           [attr.required]="isRequired()"
            [(ngModel)]="field.value"
            (ngModelChange)="checkVisibility(field)"
            [disabled]="field.readOnly">

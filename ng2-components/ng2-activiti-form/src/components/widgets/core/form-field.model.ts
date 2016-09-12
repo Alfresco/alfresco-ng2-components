@@ -65,6 +65,17 @@ export class FormFieldModel extends FormWidgetModel {
         return this._readOnly;
     }
 
+    isValid(): boolean {
+
+        if (this.required) {
+            if (this.type === FormFieldTypes.TEXT || this.type === FormFieldTypes.MULTILINE_TEXT) {
+                return this._value ? true : false;
+            }
+        }
+
+        return true;
+    }
+
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
@@ -129,7 +140,6 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     updateForm() {
-
         switch (this.type) {
             case FormFieldTypes.DROPDOWN:
                 /*
@@ -177,5 +187,7 @@ export class FormFieldModel extends FormWidgetModel {
                     this.form.values[this.id] = this.value;
                 }
         }
+
+        this.form.onFormFieldChanged(this);
     }
 }

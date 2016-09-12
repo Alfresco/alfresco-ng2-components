@@ -98,13 +98,13 @@ describe('ActivitiForm', () => {
     });
 
     it('should not enable outcome button when model missing', () => {
-        expect(formComponent.isOutcomeButtonEnabled(null)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(null)).toBeFalsy();
     });
 
     it('should enable custom outcome buttons', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
     });
 
 
@@ -113,10 +113,10 @@ describe('ActivitiForm', () => {
         let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
 
         formComponent.showSaveButton = false;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
     });
 
     it('should allow controlling [save] button visibility', () => {
@@ -124,10 +124,10 @@ describe('ActivitiForm', () => {
         let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
 
         formComponent.showCompleteButton = false;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
     });
 
     it('should load form on refresh', () => {
