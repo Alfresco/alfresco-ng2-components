@@ -160,7 +160,9 @@ export class FormModel {
     }
 
     private validateField(field: FormFieldModel) {
-        if (!field) return;
+        if (!field) {
+            return;
+        }
         if (!field.isValid()) {
             this._isValid = false;
             return;
