@@ -123,7 +123,7 @@ describe('AlfrescoSearchComponent', () => {
 
         it('should display search results when a search term is provided', (done) => {
 
-            component.searchTerm = 'searchTerm';
+            component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
             component.ngOnChanges({searchTerm: component.searchTerm});
 
             component.resultsEmitter.subscribe(x => {
@@ -148,7 +148,7 @@ describe('AlfrescoSearchComponent', () => {
                 done();
             });
 
-            component.searchTerm = 'searchTerm';
+            component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
             component.ngOnChanges({searchTerm: component.searchTerm});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
