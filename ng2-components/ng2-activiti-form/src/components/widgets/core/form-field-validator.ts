@@ -70,3 +70,24 @@ export class NumberFieldValidator implements FormFieldValidator {
     }
 
 }
+
+export class MinLengthFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.TEXT,
+        FormFieldTypes.MULTILINE_TEXT
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            field.minLength > 0 &&
+            this.supportedTypes.indexOf(field.type) > -1;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field)) {
+            return field.value.length >= field.minLength;
+        }
+        return true;
+    }
+}

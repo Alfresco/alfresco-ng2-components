@@ -153,7 +153,7 @@ export class FormModel {
         this._isValid = true;
         let fields = this.getFormFields();
         for (let i = 0; i < fields.length; i++) {
-            if (!fields[i].isValid()) {
+            if (!fields[i].validate()) {
                 this._isValid = false;
                 return;
             }
@@ -164,7 +164,7 @@ export class FormModel {
         if (!field) {
             return;
         }
-        if (!field.isValid()) {
+        if (!field.validate()) {
             this._isValid = false;
             return;
         }

@@ -19,14 +19,21 @@ import { FormWidgetModel } from './form-widget.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldMetadata } from './form-field-metadata';
-import { FormFieldValidator, RequiredFieldValidator, NumberFieldValidator } from './form-field-validator';
 import { FormModel } from './form.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import {
+    FormFieldValidator,
+    RequiredFieldValidator,
+    NumberFieldValidator,
+    MinLengthFieldValidator
+} from './form-field-validator';
+
 
 export class FormFieldModel extends FormWidgetModel {
 
     private _value: string;
     private _readOnly: boolean = false;
+    private _isValid: boolean = true;
 
     fieldType: string;
     id: string;
@@ -36,6 +43,11 @@ export class FormFieldModel extends FormWidgetModel {
     overrideId: boolean;
     tab: string;
     colspan: number = 1;
+    minLength: number = 0;
+    maxLength: number = 0;
+    minValue: string;
+    maxValue: string;
+    regexPattern: string;
     options: FormFieldOption[] = [];
     restUrl: string;
     restResponsePath: string;
@@ -58,6 +70,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     set value(v: any) {
         this._value = v;
+        this.validate();
         this.updateForm();
     }
 
@@ -68,17 +81,23 @@ export class FormFieldModel extends FormWidgetModel {
         return this._readOnly;
     }
 
-    isValid(): boolean {
+    get isValid(): boolean {
+        return this._isValid;
+    }
 
+    validate(): boolean {
+        // TODO: consider doing that on value setter and caching result
         if (this.validators && this.validators.length > 0) {
             for (let i = 0; i < this.validators.length; i++) {
                 if (!this.validators[i].validate(this)) {
-                    return false;
+                    this._isValid = false;
+                    return this._isValid;
                 }
             }
         }
 
-        return true;
+        this._isValid = true;
+        return this._isValid;
     }
 
     constructor(form: FormModel, json?: any) {
@@ -98,6 +117,11 @@ export class FormFieldModel extends FormWidgetModel {
             this.restIdProperty = json.restIdProperty;
             this.restLabelProperty = json.restLabelProperty;
             this.colspan = <number> json.colspan;
+            this.minLength = <number> json.minLength || 0;
+            this.maxLength = <number> json.maxLength || 0;
+            this.minValue = json.minValue;
+            this.maxValue = json.maxValue;
+            this.regexPattern = json.regexPattern;
             this.options = <FormFieldOption[]> json.options || [];
             this.hasEmptyValue = <boolean> json.hasEmptyValue;
             this.className = json.className;
@@ -113,7 +137,8 @@ export class FormFieldModel extends FormWidgetModel {
 
         this.validators = [
             new RequiredFieldValidator(),
-            new NumberFieldValidator()
+            new NumberFieldValidator(),
+            new MinLengthFieldValidator()
         ];
     }
 
