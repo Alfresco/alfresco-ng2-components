@@ -19,6 +19,7 @@ import { FormWidgetModel } from './form-widget.model';
 import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldMetadata } from './form-field-metadata';
+import { FormFieldValidator, RequiredFieldValidator, NumberFieldValidator } from './form-field-validator';
 import { FormModel } from './form.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
@@ -49,6 +50,8 @@ export class FormFieldModel extends FormWidgetModel {
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel = null;
 
+    validators: FormFieldValidator[] = [];
+
     get value(): any {
         return this._value;
     }
@@ -67,9 +70,11 @@ export class FormFieldModel extends FormWidgetModel {
 
     isValid(): boolean {
 
-        if (this.required) {
-            if (this.type === FormFieldTypes.TEXT || this.type === FormFieldTypes.MULTILINE_TEXT) {
-                return this._value ? true : false;
+        if (this.validators && this.validators.length > 0) {
+            for (let i = 0; i < this.validators.length; i++) {
+                if (!this.validators[i].validate(this)) {
+                    return false;
+                }
             }
         }
 
@@ -105,6 +110,11 @@ export class FormFieldModel extends FormWidgetModel {
             this._value = this.parseValue(json);
             this.updateForm();
         }
+
+        this.validators = [
+            new RequiredFieldValidator(),
+            new NumberFieldValidator()
+        ];
     }
 
     parseValue(json: any): any {

@@ -124,6 +124,7 @@ export class FormModel {
                 );
             }
         }
+        this.validateForm();
     }
 
     onFormFieldChanged(field: FormFieldModel) {
