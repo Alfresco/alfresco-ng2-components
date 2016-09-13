@@ -1,4 +1,5 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label multiline-text-widget">
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label multiline-text-widget"
+     [class.multiline-text-widget__invalid]="!field.isValid">
     <textarea class="mdl-textfield__input"
               type="text"
               rows= "3"
@@ -9,4 +10,6 @@
               [disabled]="field.readOnly">
     </textarea>
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>
+

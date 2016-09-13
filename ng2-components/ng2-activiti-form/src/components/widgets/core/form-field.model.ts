@@ -25,7 +25,8 @@ import {
     FormFieldValidator,
     RequiredFieldValidator,
     NumberFieldValidator,
-    MinLengthFieldValidator
+    MinLengthFieldValidator,
+    MaxLengthFieldValidator
 } from './form-field-validator';
 
 
@@ -62,6 +63,7 @@ export class FormFieldModel extends FormWidgetModel {
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel = null;
 
+    validationSummary: string;
     validators: FormFieldValidator[] = [];
 
     get value(): any {
@@ -138,7 +140,8 @@ export class FormFieldModel extends FormWidgetModel {
         this.validators = [
             new RequiredFieldValidator(),
             new NumberFieldValidator(),
-            new MinLengthFieldValidator()
+            new MinLengthFieldValidator(),
+            new MaxLengthFieldValidator()
         ];
     }
 

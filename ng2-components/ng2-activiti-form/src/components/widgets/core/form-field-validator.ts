@@ -86,7 +86,36 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field)) {
-            return field.value.length >= field.minLength;
+            let result = field.value.length >= field.minLength;
+            if (!result) {
+                field.validationSummary = `Should be at least ${field.minLength} characters long.`;
+            }
+            return result;
+        }
+        return true;
+    }
+}
+
+export class MaxLengthFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.TEXT,
+        FormFieldTypes.MULTILINE_TEXT
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            field.maxLength > 0 &&
+            this.supportedTypes.indexOf(field.type) > -1;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field)) {
+            let result = field.value.length <= field.maxLength;
+            if (!result) {
+                field.validationSummary = `Should be ${field.maxLength} characters maximum.`;
+            }
+            return result;
         }
         return true;
     }
