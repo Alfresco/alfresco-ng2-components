@@ -101,7 +101,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
             text: this.taskFilter.filter.name,
             assignment: this.taskFilter.filter.assignment,
             state: this.taskFilter.filter.state,
-            sort: this.taskFilter.filter.sort,
+            sort: this.taskFilter.filter.sort
         };
         this.activititasklist.load(new TaskQueryRequestRepresentationModel(requestNode));
     }
