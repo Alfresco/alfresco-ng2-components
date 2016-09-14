@@ -44,7 +44,6 @@ export class RadioButtonsWidget extends WidgetComponent implements OnInit {
                 )
                 .subscribe(
                     (result: FormFieldOption[]) => {
-                        let options = [];
                         this.field.options = result || [];
                         this.field.updateForm();
                     },
