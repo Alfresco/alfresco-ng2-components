@@ -1,4 +1,5 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label number-widget">
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label number-widget"
+     [class.number-widget__invalid]="!field.isValid">
     <input class="mdl-textfield__input"
            type="text"
            pattern="-?[0-9]*(\.[0-9]+)?"
@@ -8,5 +9,6 @@
            (ngModelChange)="checkVisibility(field)"
            [disabled]="field.readOnly">
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
-    <span class="mdl-textfield__error">Input is not a number!</span>
+    <!--<span class="mdl-textfield__error">Input is not a number!</span>-->
+    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>

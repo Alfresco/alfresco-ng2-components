@@ -26,7 +26,9 @@ import {
     RequiredFieldValidator,
     NumberFieldValidator,
     MinLengthFieldValidator,
-    MaxLengthFieldValidator
+    MaxLengthFieldValidator,
+    MinValueFieldValidator,
+    MaxValueFieldValidator
 } from './form-field-validator';
 
 
@@ -88,6 +90,8 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     validate(): boolean {
+        this.validationSummary = null;
+
         // TODO: consider doing that on value setter and caching result
         if (this.validators && this.validators.length > 0) {
             for (let i = 0; i < this.validators.length; i++) {
@@ -141,7 +145,9 @@ export class FormFieldModel extends FormWidgetModel {
             new RequiredFieldValidator(),
             new NumberFieldValidator(),
             new MinLengthFieldValidator(),
-            new MaxLengthFieldValidator()
+            new MaxLengthFieldValidator(),
+            new MinValueFieldValidator(),
+            new MaxValueFieldValidator()
         ];
     }
 

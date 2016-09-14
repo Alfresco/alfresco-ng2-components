@@ -35,8 +35,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            field.required &&
-            this.supportedTypes.indexOf(field.type) > -1;
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            field.required;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -56,7 +56,13 @@ export class NumberFieldValidator implements FormFieldValidator {
         FormFieldTypes.NUMBER
     ];
 
-    private pattern: string = '-?[0-9]*(\.[0-9]+)?';
+    static isNumber(value: any): boolean {
+        if (value === null || value === undefined || value === '') {
+            return false;
+        }
+
+        return !isNaN(+value);
+    }
 
     isSupported(field: FormFieldModel): boolean {
         return field && this.supportedTypes.indexOf(field.type) > -1;
@@ -64,11 +70,17 @@ export class NumberFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field)) {
-            return !(this.pattern && field.value && (field.value.length > 0) && !field.value.match(new RegExp('^' + this.pattern + '$')));
+            if (field.value === null ||
+                field.value === undefined ||
+                field.value === '' ||
+                NumberFieldValidator.isNumber(field.value)) {
+                return true;
+            }
+            field.validationSummary = 'Input must be a number';
+            return false;
         }
         return true;
     }
-
 }
 
 export class MinLengthFieldValidator implements FormFieldValidator {
@@ -80,17 +92,17 @@ export class MinLengthFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            field.minLength > 0 &&
-            this.supportedTypes.indexOf(field.type) > -1;
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            field.minLength > 0;
     }
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value) {
-            let result = field.value.length >= field.minLength;
-            if (!result) {
-                field.validationSummary = `Should be at least ${field.minLength} characters long.`;
+            if (field.value.length >= field.minLength) {
+                return true;
             }
-            return result;
+            field.validationSummary = `Should be at least ${field.minLength} characters long.`;
+            return false;
         }
         return true;
     }
@@ -105,18 +117,74 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            field.maxLength > 0 &&
-            this.supportedTypes.indexOf(field.type) > -1;
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            field.maxLength > 0;
     }
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value) {
-            let result = field.value.length <= field.maxLength;
-            if (!result) {
-                field.validationSummary = `Should be ${field.maxLength} characters maximum.`;
+            if (field.value.length <= field.maxLength) {
+                return true;
             }
-            return result;
+            field.validationSummary = `Should be ${field.maxLength} characters maximum.`;
+            return false;
         }
+        return true;
+    }
+}
+
+export class MinValueFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.NUMBER
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            NumberFieldValidator.isNumber(field.minValue);
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field) && field.value) {
+            let value: number = +field.value;
+            let minValue: number = +field.minValue;
+
+            if (value >= minValue) {
+                return true;
+            }
+            field.validationSummary = `Should not be less than ${field.minValue}`;
+            return false;
+        }
+
+        return true;
+    }
+}
+
+export class MaxValueFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.NUMBER
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            NumberFieldValidator.isNumber(field.maxValue);
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field) && field.value) {
+            let value: number = +field.value;
+            let maxValue: number = +field.maxValue;
+
+            if (value <= maxValue) {
+                return true;
+            }
+            field.validationSummary = `Should not be greater than ${field.maxValue}`;
+            return false;
+        }
+
         return true;
     }
 }
