@@ -35,7 +35,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.DROPDOWN,
         FormFieldTypes.PEOPLE,
         FormFieldTypes.FUNCTIONAL_GROUP,
-        FormFieldTypes.RADIO_BUTTONS
+        FormFieldTypes.RADIO_BUTTONS,
+        FormFieldTypes.UPLOAD
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -58,6 +59,10 @@ export class RequiredFieldValidator implements FormFieldValidator {
             if (field.type === FormFieldTypes.RADIO_BUTTONS) {
                 let option = field.options.find(opt => opt.id === field.value);
                 return !!option;
+            }
+
+            if (field.type === FormFieldTypes.UPLOAD) {
+                return field.value && field.value.length > 0;
             }
 
             if (!field.value) {
