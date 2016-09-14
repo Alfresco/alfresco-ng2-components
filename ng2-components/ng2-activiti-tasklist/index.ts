@@ -22,5 +22,6 @@ import { NoTaskDetailsTemplateComponent } from './src/components/no-task-detail-
 
 export * from './src/components/activiti-tasklist.component';
 export * from './src/services/activiti-tasklist.service';
+export * from  './src/models/filter.model';
 
 export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [NoTaskDetailsTemplateComponent, ActivitiFilters, ActivitiTaskList, ActivitiTaskDetails];

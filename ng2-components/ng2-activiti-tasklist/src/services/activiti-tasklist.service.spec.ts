@@ -19,6 +19,7 @@ import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { UserTaskFilterRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 
 declare let AlfrescoApi: any;
@@ -26,6 +27,11 @@ declare let jasmine: any;
 
 describe('ActivitiTaskListService', () => {
     let service: any;
+
+    let fakeEmptyFilters = {
+        size: 0, total: 0, start: 0,
+        data: [ ]
+    };
 
     let fakeFilters = {
         size: 2, total: 2, start: 0,
@@ -316,6 +322,56 @@ describe('ActivitiTaskListService', () => {
             'status': 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeTaskList)
+        });
+    });
+
+    it('should call the createDefaultFilter when the list is empty', (done) => {
+        spyOn(service, 'createDefaultFilter');
+
+        service.getTaskListFilters().subscribe(
+            (res) => {
+                expect(service.createDefaultFilter).toHaveBeenCalled();
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeEmptyFilters)
+        });
+    });
+
+    it('should return the default filters', () => {
+        spyOn(service, 'addFilter');
+        let filters = service.createDefaultFilter();
+        expect(service.addFilter).toHaveBeenCalledTimes(4);
+        expect(filters).toBeDefined();
+        expect(filters.length).toEqual(4);
+    });
+
+    it('should add a filter ', (done) => {
+        let filterFake = new UserTaskFilterRepresentationModel({
+            name: 'FakeNameFilter',
+            assignment: 'fake-assignement'
+        });
+
+        service.addFilter(filterFake).subscribe(
+            (res: UserTaskFilterRepresentationModel) => {
+                expect(res).toBeDefined();
+                expect(res.id).not.toEqual('');
+                expect(res.name).toEqual('FakeNameFilter');
+                expect(res.filter.assignment).toEqual('fake-assignement');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({
+                id: '2233', name: 'FakeNameFilter', filter: {assignment: 'fake-assignement'}
+            })
         });
     });
 

@@ -138,22 +138,20 @@ export class ActivitiTaskDetails implements OnInit {
                     let endDate: any = res.endDate;
                     this.readOnly = !!(endDate && !isNaN(endDate.getTime()));
 
-                    if (this.hasFormKey()) {
-                        if (this.taskDetails && this.taskDetails.involvedPeople) {
-                            this.taskDetails.involvedPeople.forEach((user) => {
-                                this.taskPeople.push(new User(user.id, user.email, user.firstName, user.lastName));
-                            });
-
-                            if (this.activiticomments) {
-                                this.activiticomments.load(this.taskDetails.id);
-                            }
-
-                            if (this.activitichecklist) {
-                                this.activitichecklist.load(this.taskDetails.id);
-                            }
-                        }
-                        console.log(this.taskDetails);
+                    if (this.taskDetails && this.taskDetails.involvedPeople) {
+                        this.taskDetails.involvedPeople.forEach((user) => {
+                            this.taskPeople.push(new User(user));
+                        });
                     }
+                    if (this.activiticomments) {
+                        this.activiticomments.load(this.taskDetails.id);
+                    }
+
+                    if (this.activitichecklist) {
+                        this.activitichecklist.load(this.taskDetails.id);
+                    }
+                    console.log(this.taskDetails);
+
                 }
             );
         } else {

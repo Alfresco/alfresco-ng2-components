@@ -24,7 +24,7 @@ import {
 
 import { ActivitiTaskList } from './activiti-tasklist.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { FilterModel } from '../models/filter.model';
+import { UserTaskFilterRepresentationModel } from '../models/filter.model';
 import { Observable } from 'rxjs/Rx';
 import { ObjectDataRow, DataRowEvent } from 'ng2-alfresco-datatable';
 
@@ -102,7 +102,7 @@ describe('ActivitiTaskList', () => {
     it('should return the filtered task list when the taskFilter is passed', (done) => {
         spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
         spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
-        taskList.taskFilter = new FilterModel('name', false, 'icon', '', 'open', 'fake-assignee');
+        taskList.taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
 
         taskList.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
@@ -119,7 +119,7 @@ describe('ActivitiTaskList', () => {
 
     it('should throw an exception when the response is wrong', (done) => {
         spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeErrorTaskPromise));
-        taskList.taskFilter = new FilterModel('name', false, 'icon', '', 'open', 'fake-assignee');
+        taskList.taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
 
         taskList.onError.subscribe( (err) => {
             expect(err).toBeDefined();

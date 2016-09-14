@@ -18,7 +18,7 @@
 import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { FilterModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
@@ -37,7 +37,7 @@ declare let __moduleName: string;
 export class ActivitiFilters implements OnInit {
 
     @Output()
-    filterClick: EventEmitter<FilterModel> = new EventEmitter<FilterModel>();
+    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
 
     @Output()
     onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -51,12 +51,12 @@ export class ActivitiFilters implements OnInit {
     @Input()
     appName: string;
 
-    private filterObserver: Observer<FilterModel>;
-    filter$: Observable<FilterModel>;
+    private filterObserver: Observer<FilterRepresentationModel>;
+    filter$: Observable<FilterRepresentationModel>;
 
-    currentFilter: FilterModel;
+    currentFilter: FilterRepresentationModel;
 
-    filters: FilterModel [] = [];
+    filters: FilterRepresentationModel [] = [];
 
     /**
      * Constructor
@@ -67,7 +67,7 @@ export class ActivitiFilters implements OnInit {
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
                 public activiti: ActivitiTaskListService) {
-        this.filter$ = new Observable<FilterModel>(observer => this.filterObserver = observer).share();
+        this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
@@ -75,7 +75,7 @@ export class ActivitiFilters implements OnInit {
     }
 
     ngOnInit() {
-        this.filter$.subscribe((filter: FilterModel) => {
+        this.filter$.subscribe((filter: FilterRepresentationModel) => {
             this.filters.push(filter);
         });
 
@@ -96,7 +96,7 @@ export class ActivitiFilters implements OnInit {
 
     private filterByAppId(appId) {
         this.activiti.getTaskListFilters(appId).subscribe(
-            (res: FilterModel[]) => {
+            (res: FilterRepresentationModel[]) => {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                 });
@@ -124,7 +124,7 @@ export class ActivitiFilters implements OnInit {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: FilterModel) {
+    public selectFilter(filter: FilterRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
     }
