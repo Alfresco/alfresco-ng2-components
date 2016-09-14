@@ -20,20 +20,24 @@
  * This object represent the filter.
  *
  *
- * @returns {FilterModel} .
+ * @returns {FilterRepresentationModel} .
  */
-export class FilterModel {
+export class FilterRepresentationModel {
     id: number;
+    appId: string;
     name: string;
-    recent: boolean = false;
+    recent: boolean;
     icon: string;
-    filter: FilterParamsModel;
+    filter: FilterParamRepresentationModel;
+    index: number;
 
-    constructor(name: string, recent: boolean, icon: string, query: string, state: string, assignment: string, appDefinitionId?: string) {
-        this.name = name;
-        this.recent = recent;
-        this.icon = icon;
-        this.filter = new FilterParamsModel(assignment, state, query, appDefinitionId);
+    constructor(obj?: any) {
+        this.appId = obj && obj.appId || null;
+        this.name = obj && obj.name || null;
+        this.recent = obj && obj.recent || false;
+        this.icon = obj && obj.icon || null;
+        this.filter = new FilterParamRepresentationModel(obj.filter);
+        this.index = obj && obj.index;
     }
 }
 
@@ -42,9 +46,60 @@ export class FilterModel {
  * This object represent the parameters of a filter.
  *
  *
- * @returns {FilterModel} .
+ * @returns {FilterParamRepresentationModel} .
  */
-export class FilterParamsModel {
+export class FilterParamRepresentationModel {
+    processDefinitionId: string;
+    processDefinitionKey: string;
+    name: string;
+    state: string;
+    sort: string;
+
+    constructor(obj?: any) {
+        this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
+        this.name = obj && obj.name || null;
+        this.state = obj && obj.state || null;
+        this.sort = obj && obj.sort || null;
+    }
+}
+
+export class UserProcessInstanceFilterRepresentationModel extends FilterRepresentationModel {
+    public filter: ProcessInstanceFilterRepresentation;
+    constructor(obj?: any) {
+        super(obj);
+        this.filter = new ProcessInstanceFilterRepresentation(obj.filter);
+    }
+}
+
+export class ProcessInstanceFilterRepresentation extends FilterParamRepresentationModel {
+    constructor(obj?: any) {
+        super(obj);
+    }
+}
+
+export class UserTaskFilterRepresentationModel extends FilterRepresentationModel {
+    public filter: TaskFilterRepresentationModel;
+    constructor(obj?: any) {
+        super(obj);
+        this.filter = new TaskFilterRepresentationModel(obj.filter);
+    }
+}
+
+export class TaskFilterRepresentationModel extends FilterParamRepresentationModel {
+    assignment: string;
+    dueAfter: Date;
+    dueBefore: Date;
+
+    constructor(obj?: any) {
+        super(obj);
+        this.assignment = obj && obj.assignment || null;
+        this.dueAfter = obj && obj.dueAfter || null;
+        this.dueBefore = obj && obj.dueBefore || null;
+    }
+}
+
+export class TaskQueryRequestRepresentationModel {
     appDefinitionId: string;
     processInstanceId: string;
     processDefinitionId: string;
@@ -52,18 +107,18 @@ export class FilterParamsModel {
     assignment: string;
     state: string;
     sort: string;
-    page: number = 0;
-    size: number = 25;
+    page: number;
+    size: number;
 
-    constructor(assignment: string, state: string, text: string, appDefinitionId?: string, processInstanceId?: string,
-                processDefinitionId?: string, page?: number, size?: number) {
-        this.appDefinitionId = appDefinitionId;
-        this.processInstanceId = processInstanceId;
-        this.processDefinitionId = processDefinitionId;
-        this.text = text;
-        this.assignment = assignment;
-        this.state = state;
-        this.page = page;
-        this.size = size;
+    constructor(obj?: any) {
+        this.appDefinitionId = obj && obj.appDefinitionId || null;
+        this.processInstanceId = obj && obj.processInstanceId || null;
+        this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.text = obj && obj.text || null;
+        this.assignment = obj && obj.assignment || null;
+        this.state = obj && obj.state || null;
+        this.sort = obj && obj.sort || null;
+        this.page = obj && obj.page || 0;
+        this.size = obj && obj.size || 25;
     }
 }

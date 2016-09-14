@@ -16,7 +16,7 @@
  */
 
 import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
-import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
+import { ALFRESCO_TASKLIST_DIRECTIVES, TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm } from 'ng2-activiti-form';
 import { ActivatedRoute } from '@angular/router';
@@ -96,7 +96,14 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     onTaskFilterClick(event: any) {
         this.taskFilter = event;
-        this.activititasklist.load(this.taskFilter.filter);
+        let requestNode = {appDefinitionId: this.taskFilter.appId,
+            processDefinitionId: this.taskFilter.filter.processDefinitionId,
+            text: this.taskFilter.filter.name,
+            assignment: this.taskFilter.filter.assignment,
+            state: this.taskFilter.filter.state,
+            sort: this.taskFilter.filter.sort,
+        };
+        this.activititasklist.load(new TaskQueryRequestRepresentationModel(requestNode));
     }
 
     onSuccessTaskList(event: any) {

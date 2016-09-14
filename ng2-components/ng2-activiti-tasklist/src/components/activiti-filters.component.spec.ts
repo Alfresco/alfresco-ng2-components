@@ -25,15 +25,15 @@ import {
 import { ActivitiFilters } from './activiti-filters.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { Observable } from 'rxjs/Rx';
-import { FilterModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 
 describe('ActivitiFilters', () => {
 
     let filterList: ActivitiFilters;
 
     let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterModel('FakeInvolvedTasks', false, 'glyphicon-align-left', '', 'open', 'fake-involved'));
-    fakeGlobalFilter.push(new FilterModel('FakeMyTasks', false, 'glyphicon-align-left', '', 'open', 'fake-assignee'));
+    fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeInvolvedTasks', filter: { state: 'open', assignment: 'fake-involved'}}));
+    fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}}));
 
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
@@ -100,9 +100,9 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterModel('FakeInvolvedTasks', false, 'glyphicon-align-left', '', 'open', 'fake-involved');
+        let currentFilter = new FilterRepresentationModel({filter: { state: 'open', assignment:  'fake-involved'}});
 
-        filterList.filterClick.subscribe((filter: FilterModel) => {
+        filterList.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(filterList.currentFilter).toEqual(currentFilter);

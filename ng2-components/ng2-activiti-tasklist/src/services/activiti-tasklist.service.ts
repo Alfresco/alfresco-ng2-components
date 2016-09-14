@@ -18,8 +18,8 @@
 import {Injectable} from '@angular/core';
 import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 import {Observable} from 'rxjs/Rx';
-import {FilterModel} from '../models/filter.model';
-import {FilterParamsModel} from '../models/filter.model';
+import {UserTaskFilterRepresentationModel} from '../models/filter.model';
+import {TaskQueryRequestRepresentationModel} from '../models/filter.model';
 import {Comment} from '../models/comment.model';
 import {User} from '../models/user.model';
 import {TaskDetailsModel} from '../models/task-details.model';
@@ -47,23 +47,25 @@ export class ActivitiTaskListService {
     getTaskListFilters(appId?: string): Observable<any> {
         return Observable.fromPromise(this.callApiTaskFilters(appId))
             .map((response: any) => {
-                let filters: FilterModel[] = [];
-                response.data.forEach((filter) => {
-                    let filterModel = new FilterModel(filter.name, filter.recent, filter.icon,
-                        filter.filter.name, filter.filter.state, filter.filter.assignment, appId);
+                let filters: UserTaskFilterRepresentationModel[] = [];
+                response.data.forEach((filter: UserTaskFilterRepresentationModel) => {
+                    let filterModel = new UserTaskFilterRepresentationModel(filter);
                     filters.push(filterModel);
                 });
+                if (response && response.data && response.data.length === 0) {
+                    return this.createDefaultFilter(appId);
+                }
                 return filters;
             }).catch(this.handleError);
     }
 
     /**
      * Retrive all the tasks filtered by filterModel
-     * @param filter - FilterParamsModel
+     * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
-    getTasks(filter: FilterParamsModel): Observable<any> {
-        return Observable.fromPromise(this.callApiTasksFiltered(filter))
+    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
+        return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
             .map((res: any) => {
                 return res;
             }).catch(this.handleError);
@@ -93,8 +95,7 @@ export class ActivitiTaskListService {
             .map((response: any) => {
                 let comments: Comment[] = [];
                 response.data.forEach((comment) => {
-                    let user = new User(
-                        comment.createdBy.id, comment.createdBy.email, comment.createdBy.firstName, comment.createdBy.lastName);
+                    let user = new User(comment.createdBy);
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;
@@ -119,6 +120,33 @@ export class ActivitiTaskListService {
     }
 
     /**
+     * Create and return the default filters
+     * @param appId
+     * @returns {UserTaskFilterRepresentationModel[]}
+     */
+    createDefaultFilter(appId: string): UserTaskFilterRepresentationModel[] {
+        let filters: UserTaskFilterRepresentationModel[] = [];
+
+        let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
+        this.addFilter(involvedTasksFilter);
+        filters.push(involvedTasksFilter);
+
+        let myTasksFilter = this.getMyTasksFilterInstance(appId);
+        this.addFilter(myTasksFilter);
+        filters.push(myTasksFilter);
+
+        let queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
+        this.addFilter(queuedTasksFilter);
+        filters.push(queuedTasksFilter);
+
+        let completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
+        this.addFilter(completedTasksFilter);
+        filters.push(completedTasksFilter);
+
+        return filters;
+    }
+
+    /**
      * Add a task
      * @param task - TaskDetailsModel
      * @returns {TaskDetailsModel}
@@ -128,6 +156,19 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((response: TaskDetailsModel) => {
                 return new TaskDetailsModel(response);
+            }).catch(this.handleError);
+    }
+
+    /**
+     * Add a filter
+     * @param filter - UserTaskFilterRepresentationModel
+     * @returns {UserTaskFilterRepresentationModel}
+     */
+    addFilter(filter: UserTaskFilterRepresentationModel): Observable<UserTaskFilterRepresentationModel> {
+        return Observable.fromPromise(this.callApiAddFilter(filter))
+            .map(res => res)
+            .map((response: UserTaskFilterRepresentationModel) => {
+                return response;
             }).catch(this.handleError);
     }
 
@@ -159,19 +200,19 @@ export class ActivitiTaskListService {
 
     /**
      * Return the total number of the tasks by filter
-     * @param filter - FilterParamsModel
+     * @param requestNode - TaskFilterRepresentationModel
      * @returns {any}
      */
-    public getTotalTasks(filter: FilterParamsModel): Observable<any> {
-        filter.size = 0;
-        return Observable.fromPromise(this.callApiTasksFiltered(filter))
+    public getTotalTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
+        requestNode.size = 0;
+        return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
             .map((res: any) => {
                 return res;
             }).catch(this.handleError);
     }
 
-    private callApiTasksFiltered(filter: FilterParamsModel) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.listTasks(filter);
+    private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
+        return this.authService.getAlfrescoApi().activiti.taskApi.listTasks(requestNode);
     }
 
     private callApiTaskFilters(appId?: string) {
@@ -198,6 +239,10 @@ export class ActivitiTaskListService {
         return this.authService.getAlfrescoApi().activiti.taskApi.addSubtask(task.parentTaskId, task);
     }
 
+    private callApiAddFilter(filter: UserTaskFilterRepresentationModel) {
+        return this.authService.getAlfrescoApi().activiti.userFiltersApi.createUserTaskFilter(filter);
+    }
+
     private callApiTaskChecklist(id: string) {
         return this.authService.getAlfrescoApi().activiti.taskApi.getChecklist(id);
     }
@@ -210,4 +255,65 @@ export class ActivitiTaskListService {
         console.error(error);
         return Observable.throw(error || 'Server error');
     }
+
+    /**
+     * Return a static Involved filter instance
+     * @param appId
+     * @returns {UserTaskFilterRepresentationModel}
+     */
+    getInvolvedTasksFilterInstance(appId: string): UserTaskFilterRepresentationModel {
+        return new UserTaskFilterRepresentationModel({
+            'name': 'Involved Tasks',
+            'appId': appId,
+            'recent': false,
+            'icon': 'glyphicon-align-left',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'}
+        });
+    }
+
+    /**
+     * Return a static My task filter instance
+     * @param appId
+     * @returns {UserTaskFilterRepresentationModel}
+     */
+    getMyTasksFilterInstance(appId: string): UserTaskFilterRepresentationModel {
+        return new UserTaskFilterRepresentationModel({
+            'name': 'My Tasks',
+            'appId': appId,
+            'recent': false,
+            'icon': 'glyphicon-inbox',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'}
+        });
+    }
+
+    /**
+     * Return a static Queued filter instance
+     * @param appId
+     * @returns {UserTaskFilterRepresentationModel}
+     */
+    getQueuedTasksFilterInstance(appId: string): UserTaskFilterRepresentationModel {
+        return new UserTaskFilterRepresentationModel({
+            'name': 'Queued Tasks',
+            'appId': appId,
+            'recent': false,
+            'icon': 'glyphicon-record',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'}
+        });
+    }
+
+    /**
+     * Return a static Completed filter instance
+     * @param appId
+     * @returns {UserTaskFilterRepresentationModel}
+     */
+    getCompletedTasksFilterInstance(appId: string): UserTaskFilterRepresentationModel {
+        return new UserTaskFilterRepresentationModel({
+            'name': 'Completed Tasks',
+            'appId': appId,
+            'recent': true,
+            'icon': 'glyphicon-ok-sign',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'}
+        });
+    }
+
 }

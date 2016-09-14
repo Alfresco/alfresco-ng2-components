@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { FilterModel, FilterParamsModel } from '../models/filter.model';
+import { UserTaskFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -37,7 +37,7 @@ declare let __moduleName: string;
 export class ActivitiTaskList implements OnInit {
 
     @Input()
-    taskFilter: FilterModel;
+    taskFilter: UserTaskFilterRepresentationModel;
 
     @Input()
     schemaColumn: any[] = [
@@ -84,15 +84,21 @@ export class ActivitiTaskList implements OnInit {
         );
 
         if (this.taskFilter) {
-            this.load(this.taskFilter.filter);
+            let requestNode = {appDefinitionId: this.taskFilter.appId,
+                processDefinitionId: this.taskFilter.filter.processDefinitionId,
+                text: this.taskFilter.filter.name,
+                assignment: this.taskFilter.filter.assignment,
+                state: this.taskFilter.filter.state,
+                sort: this.taskFilter.filter.sort};
+            this.load(new TaskQueryRequestRepresentationModel(requestNode));
         }
     }
 
-    public load(filterParam: FilterParamsModel) {
-        this.activiti.getTotalTasks(filterParam).subscribe(
+    public load(requestNode: TaskQueryRequestRepresentationModel) {
+        this.activiti.getTotalTasks(requestNode).subscribe(
             (res) => {
-                filterParam.size = res.total;
-                this.activiti.getTasks(filterParam).subscribe(
+                requestNode.size = res.total;
+                this.activiti.getTasks(requestNode).subscribe(
                     (response) => {
                         this.renderTasks(response.data);
                         this.selectFirstTask();
