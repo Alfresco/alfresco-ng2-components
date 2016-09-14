@@ -27,3 +27,19 @@
 .people-widget--autocomplete > ul > li {
     opacity: 1;
 }
+
+.people-widget__invalid .mdl-textfield__input {
+    border-color: #d50000;
+}
+
+.people-widget__invalid .mdl-textfield__label {
+    color: #d50000;
+}
+
+.people-widget__invalid .mdl-textfield__label:after {
+    background-color: #d50000;
+}
+
+.people-widget__invalid .mdl-textfield__error {
+    visibility: visible !important;
+}

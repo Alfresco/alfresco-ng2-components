@@ -32,7 +32,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.MULTILINE_TEXT,
         FormFieldTypes.NUMBER,
         FormFieldTypes.TYPEAHEAD,
-        FormFieldTypes.DROPDOWN
+        FormFieldTypes.DROPDOWN,
+        FormFieldTypes.PEOPLE
     ];
 
     isSupported(field: FormFieldModel): boolean {

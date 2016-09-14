@@ -55,6 +55,14 @@ export class PeopleWidget extends WidgetComponent implements OnInit {
                 let restrictWithGroup = <GroupModel> params['restrictWithGroup'];
                 this.groupId = restrictWithGroup.id;
             }
+
+            // Load auto-completion for previously saved value
+            if (this.value) {
+                this.formService.getWorkflowUsers(this.value, this.groupId)
+                    .subscribe((result: GroupUserModel[]) => {
+                        this.users = result || [];
+                    });
+            }
         }
     }
 
@@ -97,7 +105,7 @@ export class PeopleWidget extends WidgetComponent implements OnInit {
 
     getDisplayName(model: GroupUserModel) {
         if (model) {
-            let displayName = `${model.firstName} ${model.lastName}`;
+            let displayName = `${model.firstName || ''} ${model.lastName || ''}`;
             return displayName.trim();
         }
 
