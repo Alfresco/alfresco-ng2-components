@@ -37,7 +37,16 @@ describe('FunctionalGroupWidget', () => {
     it('should setup text from underlying field on init', () => {
         let group = new GroupModel({ name: 'group-1'});
         widget.field.value = group;
+
+        spyOn(formService, 'getWorkflowGroups').and.returnValue(
+            Observable.create(observer => {
+                observer.next([]);
+                observer.complete();
+            })
+        );
+
         widget.ngOnInit();
+        expect(formService.getWorkflowGroups).toHaveBeenCalled();
         expect(widget.value).toBe(group.name);
     });
 

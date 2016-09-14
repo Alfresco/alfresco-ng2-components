@@ -50,7 +50,7 @@ describe('WidgetComponent', () => {
         let component = new WidgetComponent();
 
         expect(component.hasField()).toBeFalsy();
-        component.field = new FormFieldModel(null);
+        component.field = new FormFieldModel(new FormModel());
         expect(component.hasField()).toBeTruthy();
     });
 

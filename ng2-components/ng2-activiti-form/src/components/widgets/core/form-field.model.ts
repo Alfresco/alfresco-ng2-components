@@ -195,6 +195,10 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     updateForm() {
+        if (!this.form) {
+            return;
+        }
+
         switch (this.type) {
             case FormFieldTypes.DROPDOWN:
                 /*

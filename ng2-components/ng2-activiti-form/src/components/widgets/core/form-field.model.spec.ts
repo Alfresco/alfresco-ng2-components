@@ -113,15 +113,6 @@ describe('FormFieldModel', () => {
         expect(field.readOnly).toBeTruthy();
     });
 
-    it('should parse and convert empty dropdown value', () => {
-        let field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.DROPDOWN,
-            value: ''
-        });
-
-        expect(field.value).toBe('empty');
-    });
-
     it('should parse and leave dropdown value as is', () => {
         let field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.DROPDOWN,
@@ -143,19 +134,6 @@ describe('FormFieldModel', () => {
         });
 
         expect(field.value).toBe('opt2');
-    });
-
-    it('should parse and fall back to first radio button value', () => {
-        let field = new FormFieldModel(new FormModel(), {
-            type: FormFieldTypes.RADIO_BUTTONS,
-            options: [
-                { id: 'opt1', value: 'Option 1' },
-                { id: 'opt2', value: 'Option 2' }
-            ],
-            value: 'opt3'
-        });
-
-        expect(field.value).toBe('opt1');
     });
 
     it('should parse and leave radio button value as is', () => {

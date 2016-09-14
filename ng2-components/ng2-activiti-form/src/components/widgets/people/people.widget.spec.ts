@@ -62,6 +62,12 @@ describe('PeopleWidget', () => {
             firstName: 'John',
             lastName: 'Doe'
         });
+
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
+            observer.next([]);
+            observer.complete();
+        }));
+
         widget.ngOnInit();
         expect(widget.value).toBe('John Doe');
     });
