@@ -188,3 +188,29 @@ export class MaxValueFieldValidator implements FormFieldValidator {
         return true;
     }
 }
+
+export class RegExFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.TEXT,
+        FormFieldTypes.MULTILINE_TEXT
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            !!field.regexPattern;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field) && field.value) {
+            if (field.value.length > 0 && field.value.match(new RegExp('^' + field.regexPattern + '$'))) {
+                return true;
+            }
+            field.validationSummary = 'Invalid value format';
+            return false;
+        }
+        return true;
+    }
+
+}

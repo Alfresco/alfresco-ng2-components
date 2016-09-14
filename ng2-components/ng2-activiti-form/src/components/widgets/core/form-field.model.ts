@@ -28,7 +28,8 @@ import {
     MinLengthFieldValidator,
     MaxLengthFieldValidator,
     MinValueFieldValidator,
-    MaxValueFieldValidator
+    MaxValueFieldValidator,
+    RegExFieldValidator
 } from './form-field-validator';
 
 
@@ -147,7 +148,8 @@ export class FormFieldModel extends FormWidgetModel {
             new MinLengthFieldValidator(),
             new MaxLengthFieldValidator(),
             new MinValueFieldValidator(),
-            new MaxValueFieldValidator()
+            new MaxValueFieldValidator(),
+            new RegExFieldValidator()
         ];
     }
 
