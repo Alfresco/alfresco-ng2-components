@@ -58,10 +58,9 @@ export class PeopleWidget extends WidgetComponent implements OnInit {
 
             // Load auto-completion for previously saved value
             if (this.value) {
-                this.formService.getWorkflowUsers(this.value, this.groupId)
-                    .subscribe((result: GroupUserModel[]) => {
-                        this.users = result || [];
-                    });
+                this.formService
+                    .getWorkflowUsers(this.value, this.groupId)
+                    .subscribe((result: GroupUserModel[]) => this.users = result || []);
             }
         }
     }
