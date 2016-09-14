@@ -36,18 +36,24 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.formService
-            .getRestFieldValues(
-                this.field.form.taskId,
-                this.field.id
-            )
-            .subscribe(
-                (result: FormFieldOption[]) => {
-                    this.field.options = result || [];
-                    this.field.updateForm();
-                },
-                this.handleError
-            );
+        if (this.field && this.field.restUrl) {
+            this.formService
+                .getRestFieldValues(
+                    this.field.form.taskId,
+                    this.field.id
+                )
+                .subscribe(
+                    (result: FormFieldOption[]) => {
+                        let options = [];
+                        if (this.field.emptyOption) {
+                            options.push(this.field.emptyOption);
+                        }
+                        this.field.options = options.concat((result || []));
+                        this.field.updateForm();
+                    },
+                    this.handleError
+                );
+        }
     }
 
     handleError(error: any) {

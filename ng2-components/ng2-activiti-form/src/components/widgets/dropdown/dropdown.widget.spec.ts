@@ -42,7 +42,8 @@ describe('DropdownWidget', () => {
         });
 
         widget.field = new FormFieldModel(form, {
-            id: fieldId
+            id: fieldId,
+            restUrl: '<url>'
         });
 
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {

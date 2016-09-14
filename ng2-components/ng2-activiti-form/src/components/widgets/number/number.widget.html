@@ -9,6 +9,5 @@
            (ngModelChange)="checkVisibility(field)"
            [disabled]="field.readOnly">
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
-    <!--<span class="mdl-textfield__error">Input is not a number!</span>-->
     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>

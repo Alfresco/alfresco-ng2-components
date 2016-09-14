@@ -27,3 +27,21 @@
 .typeahead-autocomplete > ul > li {
     opacity: 1;
 }
+
+
+
+.typeahead-widget__invalid .mdl-textfield__input {
+    border-color: #d50000;
+}
+
+.typeahead-widget__invalid .mdl-textfield__label {
+    color: #d50000;
+}
+
+.typeahead-widget__invalid .mdl-textfield__label:after {
+    background-color: #d50000;
+}
+
+.typeahead-widget__invalid .mdl-textfield__error {
+    visibility: visible !important;
+}

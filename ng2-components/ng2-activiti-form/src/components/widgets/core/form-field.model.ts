@@ -66,6 +66,7 @@ export class FormFieldModel extends FormWidgetModel {
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel = null;
 
+    emptyOption: FormFieldOption;
     validationSummary: string;
     validators: FormFieldValidator[] = [];
 
@@ -137,9 +138,11 @@ export class FormFieldModel extends FormWidgetModel {
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
-
             this._value = this.parseValue(json);
-            this.updateForm();
+        }
+
+        if (this.hasEmptyValue && this.options && this.options.length > 0) {
+            this.emptyOption = this.options[0];
         }
 
         this.validators = [
@@ -151,6 +154,8 @@ export class FormFieldModel extends FormWidgetModel {
             new MaxValueFieldValidator(),
             new RegExFieldValidator()
         ];
+
+        this.updateForm();
     }
 
     parseValue(json: any): any {
@@ -160,10 +165,15 @@ export class FormFieldModel extends FormWidgetModel {
          This is needed due to Activiti issue related to reading dropdown values as value string
          but saving back as object: { id: <id>, name: <name> }
          */
-        // TODO: needs review
         if (json.type === FormFieldTypes.DROPDOWN) {
-            if (value === '') {
-                value = 'empty';
+            if (json.hasEmptyValue && json.options) {
+                let options = <FormFieldOption[]> json.options || [];
+                if (options.length > 0) {
+                    let emptyOption = json.options[0];
+                    if (value === '' || value === emptyOption.id || value === emptyOption.name) {
+                        value = emptyOption.id;
+                    }
+                }
             }
         }
 

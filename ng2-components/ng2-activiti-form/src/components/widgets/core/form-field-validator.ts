@@ -30,7 +30,9 @@ export class RequiredFieldValidator implements FormFieldValidator {
     private supportedTypes = [
         FormFieldTypes.TEXT,
         FormFieldTypes.MULTILINE_TEXT,
-        FormFieldTypes.NUMBER
+        FormFieldTypes.NUMBER,
+        FormFieldTypes.TYPEAHEAD,
+        FormFieldTypes.DROPDOWN
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -41,6 +43,15 @@ export class RequiredFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field)) {
+
+            if (field.type === FormFieldTypes.DROPDOWN) {
+                if (field.hasEmptyValue && field.emptyOption) {
+                    if (field.value === field.emptyOption.id) {
+                        return false;
+                    }
+                }
+            }
+
             if (!field.value) {
                 return false;
             }

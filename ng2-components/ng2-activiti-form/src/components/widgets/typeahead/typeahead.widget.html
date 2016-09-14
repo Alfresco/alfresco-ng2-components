@@ -1,5 +1,6 @@
 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label typeahead-widget"
-     [class.is-dirty]="value">
+     [class.is-dirty]="value"
+     [class.typeahead-widget__invalid]="!field.isValid">
     <input class="mdl-textfield__input"
            type="text"
            [attr.id]="field.id"
@@ -9,8 +10,8 @@
            (blur)="onBlur()"
            [disabled]="field.readOnly">
     <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>
-
 <div class="typeahead-autocomplete mdl-shadow--2dp" *ngIf="options.length > 0 && popupVisible">
     <ul>
         <li *ngFor="let item of options"
