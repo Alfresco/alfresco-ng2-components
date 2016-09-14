@@ -21,7 +21,6 @@ import { WidgetComponent } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
 
 declare let __moduleName: string;
-declare var componentHandler;
 
 @Component({
     moduleId: __moduleName,

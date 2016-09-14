@@ -15,8 +15,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
+import { FormService } from '../../../services/form.service';
+import { FormFieldOption } from './../core/form-field-option';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -27,6 +29,32 @@ declare var componentHandler;
     templateUrl: './radio-buttons.widget.html',
     styleUrls: ['./radio-buttons.widget.css']
 })
-export class RadioButtonsWidget extends WidgetComponent {
+export class RadioButtonsWidget extends WidgetComponent implements OnInit {
+
+    constructor(private formService: FormService) {
+        super();
+    }
+
+    ngOnInit() {
+        if (this.field && this.field.restUrl) {
+            this.formService
+                .getRestFieldValues(
+                    this.field.form.taskId,
+                    this.field.id
+                )
+                .subscribe(
+                    (result: FormFieldOption[]) => {
+                        let options = [];
+                        this.field.options = result || [];
+                        this.field.updateForm();
+                    },
+                    this.handleError
+                );
+        }
+    }
+
+    handleError(error: any) {
+        console.error(error);
+    }
 
 }
