@@ -38,7 +38,7 @@ export class ActivitiTaskListService {
         return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
                 if (name) {
-                    response.data.find(p => p.name === name);
+                    return response.data.find(p => p.name === name);
                 }
                 return response.data;
             })

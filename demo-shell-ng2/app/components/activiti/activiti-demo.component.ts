@@ -145,7 +145,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     onFormCompleted(form) {
-        this.activititasklist.load(this.taskFilter);
+        this.activititasklist.load(this.taskFilter);npm
         this.currentTaskId = null;
         this.activitidetails.loadDetails(this.currentTaskId);
     }
