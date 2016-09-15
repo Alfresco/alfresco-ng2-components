@@ -22,7 +22,7 @@ import { ActivitiForm } from './activiti-form.component';
 import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ContainerWidget } from './widgets/container/container.widget';
+// import { ContainerWidget } from './widgets/container/container.widget';
 
 describe('ActivitiForm', () => {
 
@@ -571,6 +571,7 @@ describe('ActivitiForm', () => {
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
+    /*
     it('should update the visibility when the container raise the change event', (valueChanged) => {
         spyOn(formComponent, 'checkVisibility').and.callThrough();
         let widget = new ContainerWidget();
@@ -581,6 +582,7 @@ describe('ActivitiForm', () => {
 
         expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
     });
+    */
 
     it('should prevent default outcome execution', () => {
 
