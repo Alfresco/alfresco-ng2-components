@@ -27,3 +27,4 @@ export * from './container.model';
 export * from './tab.model';
 export * from './form-outcome.model';
 export * from './form-outcome-event.model';
+export * from './form-field-validator';

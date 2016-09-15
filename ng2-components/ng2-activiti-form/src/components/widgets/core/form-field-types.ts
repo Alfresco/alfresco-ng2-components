@@ -30,6 +30,7 @@ export class FormFieldTypes {
     static FUNCTIONAL_GROUP: string = 'functional-group';
     static PEOPLE: string = 'people';
     static BOOLEAN: string = 'boolean';
+    static NUMBER: string = 'integer';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

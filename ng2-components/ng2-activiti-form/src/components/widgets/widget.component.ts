@@ -36,6 +36,13 @@ export class WidgetComponent implements AfterViewInit {
         return this.field ? true : false;
     }
 
+    isRequired(): any {
+        if (this.field && this.field.required) {
+            return true;
+        }
+        return null;
+    }
+
     ngAfterViewInit() {
         this.setupMaterialComponents();
         this.fieldChanged.emit(this.field);

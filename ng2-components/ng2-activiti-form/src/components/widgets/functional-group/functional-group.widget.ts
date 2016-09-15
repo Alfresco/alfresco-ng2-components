@@ -54,6 +54,13 @@ export class FunctionalGroupWidget extends WidgetComponent implements OnInit {
                 let restrictWithGroup = <GroupModel> params['restrictWithGroup'];
                 this.groupId = restrictWithGroup.id;
             }
+
+            // Load auto-completion for previously saved value
+            if (this.value) {
+                this.formService
+                    .getWorkflowGroups(this.value, this.groupId)
+                    .subscribe((result: GroupModel[]) => this.groups = result || []);
+            }
         }
     }
 

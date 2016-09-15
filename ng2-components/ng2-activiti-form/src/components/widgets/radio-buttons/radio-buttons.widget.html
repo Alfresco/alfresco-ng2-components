@@ -1,4 +1,6 @@
-<div class="radio-buttons-widget">
+<div class="radio-buttons-widget"
+     [class.radio-buttons-widget__invalid]="!field.isValid">
+    <label class="radio-buttons-widget__label" [attr.for]="field.id">{{field.name}}</label>
     <div *ngFor="let opt of field.options">
         <label [attr.for]="opt.id" class="mdl-radio mdl-js-radio">
             <input type="radio"
@@ -12,4 +14,5 @@
             <span class="mdl-radio__label">{{opt.name}}</span>
         </label>
     </div>
+    <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>

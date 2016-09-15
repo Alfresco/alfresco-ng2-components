@@ -91,7 +91,9 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
         this.popupVisible = false;
 
         let options = this.field.options || [];
-        let field = options.find(item => item.name.toLocaleLowerCase() === this.value.toLocaleLowerCase());
+        let lValue = this.value ? this.value.toLocaleLowerCase() : null;
+
+        let field = options.find(item => item.name && item.name.toLocaleLowerCase() === lValue);
         if (field) {
             this.field.value = field.id;
             this.value = field.name;
@@ -100,6 +102,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
             this.value = null;
         }
 
+        // TODO: seems to be not needed as field.value setter calls it
         this.field.updateForm();
     }
 

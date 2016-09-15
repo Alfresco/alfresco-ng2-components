@@ -20,6 +20,7 @@ import { FormValues } from './form-values';
 import { ContainerModel } from './container.model';
 import { TabModel } from './tab.model';
 import { FormOutcomeModel } from './form-outcome.model';
+import { FormFieldModel } from './form-field.model';
 
 export class FormModel {
 
@@ -31,6 +32,7 @@ export class FormModel {
     private _name: string;
     private _taskId: string;
     private _taskName: string = FormModel.UNSET_TASK_NAME;
+    private _isValid: boolean = true;
 
     get id(): string {
         return this._id;
@@ -46,6 +48,10 @@ export class FormModel {
 
     get taskName(): string {
         return this._taskName;
+    }
+
+    get isValid(): boolean {
+        return this._isValid;
     }
 
     readOnly: boolean = false;
@@ -102,7 +108,8 @@ export class FormModel {
                 if (field.tab) {
                     let tab = tabCache[field.tab];
                     if (tab) {
-                        tab.fields.push(new ContainerModel(this, field.json));
+                        // tab.fields.push(new ContainerModel(this, field.json));
+                        tab.fields.push(field);
                     }
                 }
             }
@@ -117,6 +124,51 @@ export class FormModel {
                 );
             }
         }
+        this.validateForm();
+    }
+
+    onFormFieldChanged(field: FormFieldModel) {
+        this.validateField(field);
+    }
+
+    // TODO: evaluate and cache once the form is loaded
+    private getFormFields(): FormFieldModel[] {
+        let result: FormFieldModel[] = [];
+
+        for (let i = 0; i < this.fields.length; i++) {
+            let container = this.fields[i];
+            for (let j = 0; j < container.columns.length; j++) {
+                let column = container.columns[j];
+                for (let k = 0; k < column.fields.length; k++) {
+                    let field = column.fields[k];
+                    result.push(field);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private validateForm() {
+        this._isValid = true;
+        let fields = this.getFormFields();
+        for (let i = 0; i < fields.length; i++) {
+            if (!fields[i].validate()) {
+                this._isValid = false;
+                return;
+            }
+        }
+    }
+
+    private validateField(field: FormFieldModel) {
+        if (!field) {
+            return;
+        }
+        if (!field.validate()) {
+            this._isValid = false;
+            return;
+        }
+        this.validateForm();
     }
 
     private parseContainerFields(json: any): ContainerModel[] {

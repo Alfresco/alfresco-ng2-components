@@ -1,6 +1,7 @@
 <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="field.id">
     <input type="checkbox"
            [attr.id]="field.id"
+           [attr.required]="isRequired()"
            class="mdl-checkbox__input"
            [(ngModel)]="field.value"
            (ngModelChange)="checkVisibility(field)"
