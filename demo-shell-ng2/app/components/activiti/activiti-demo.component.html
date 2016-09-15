@@ -1,4 +1,5 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <activiti-apps (appClick)="onAppClick($event)"></activiti-apps>
     <header class="mdl-layout__header">
         <!-- Tabs -->
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
@@ -13,7 +14,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
                         <span>Task Filters</span>
-                        <activiti-filters [appId]="appId" (filterClick)="onTaskFilterClick($event)"></activiti-filters>
+                        <activiti-filters [appId]="appId" (filterClick)="onTaskFilterClick($event)" #activitifilter></activiti-filters>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                         <span>Task List</span>
@@ -36,12 +37,14 @@
                         <div class="mdl-cell mdl-cell--2-col task-column">
                             <span>Process Filters</span>
                             <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
-                            <activiti-process-instance-filters (filterClick)="onProcessFilterClick($event)"></activiti-process-instance-filters>
+                            <activiti-process-instance-filters [appId]="appId"
+                                    (filterClick)="onProcessFilterClick($event)"></activiti-process-instance-filters>
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
                             <span>Process List</span>
                             <activiti-process-instance-list [filter]="processFilter" [schemaColumn]="processSchemaColumns"
-                                               (rowClick)="onProcessRowClick($event)" #activitiprocesslist></activiti-process-instance-list>
+                                               (rowClick)="onProcessRowClick($event)" (onSuccess)="onSuccessProcessList($event)"
+                                                            #activitiprocesslist></activiti-process-instance-list>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column">
                             <span>Process Details</span>

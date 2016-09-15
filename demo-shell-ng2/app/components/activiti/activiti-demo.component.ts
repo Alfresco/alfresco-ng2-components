@@ -16,7 +16,12 @@
  */
 
 import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
-import { ALFRESCO_TASKLIST_DIRECTIVES, TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
+import { ALFRESCO_TASKLIST_DIRECTIVES,
+    TaskQueryRequestRepresentationModel,
+    AppDefinitionRepresentationModel,
+    FilterRepresentationModel,
+    UserTaskFilterRepresentationModel
+} from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm } from 'ng2-activiti-form';
 import { ActivatedRoute } from '@angular/router';
@@ -35,6 +40,9 @@ declare var componentHandler;
 export class ActivitiDemoComponent implements AfterViewChecked {
 
     currentChoice: string = 'task-list';
+
+    @ViewChild('activitifilter')
+    activitifilter: any;
 
     @ViewChild('activitidetails')
     activitidetails: any;
@@ -60,7 +68,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     sub: Subscription;
 
     @Input()
-    appId: string;
+    appId: number;
 
     setChoice($event) {
         this.currentChoice = $event.target.value;
@@ -94,36 +102,37 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.sub.unsubscribe();
     }
 
-    onTaskFilterClick(event: any) {
-        this.taskFilter = event;
-        let requestNode = {appDefinitionId: this.taskFilter.appId,
-            processDefinitionId: this.taskFilter.filter.processDefinitionId,
-            text: this.taskFilter.filter.name,
-            assignment: this.taskFilter.filter.assignment,
-            state: this.taskFilter.filter.state,
-            sort: this.taskFilter.filter.sort
-        };
-        this.activititasklist.load(new TaskQueryRequestRepresentationModel(requestNode));
+    onAppClick(app: AppDefinitionRepresentationModel) {
+        this.appId = app.id;
+        this.taskFilter = null;
+        this.currentTaskId = null;
+
+        this.processFilter = null;
+        this.currentProcessInstanceId = null;
     }
 
-    onSuccessTaskList(event: any) {
+    onTaskFilterClick(event: FilterRepresentationModel) {
+        this.taskFilter = event;
+    }
+
+    onSuccessTaskList(event: UserTaskFilterRepresentationModel) {
         this.currentTaskId = this.activititasklist.getCurrentTaskId();
-        this.activitidetails.loadDetails(this.currentTaskId);
     }
 
     onProcessFilterClick(event: any) {
-        this.processFilter = event.filter;
-        this.activitiprocesslist.load(this.processFilter);
+        this.processFilter = event;
+    }
+
+    onSuccessProcessList(event: any) {
+        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
     }
 
     onTaskRowClick(taskId) {
         this.currentTaskId = taskId;
-        this.activitidetails.loadDetails(this.currentTaskId);
     }
 
     onProcessRowClick(processInstanceId) {
         this.currentProcessInstanceId = processInstanceId;
-        this.activitiprocessdetails.load(this.currentProcessInstanceId);
     }
 
     processCancelled(data: any) {
