@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService, CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiProcessService } from '../services/activiti-process.service';
-import { FilterModel } from '../models/filter.model';
+import { UserProcessInstanceFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare let __moduleName: string;
 
@@ -38,14 +38,14 @@ declare let __moduleName: string;
     pipes: [ AlfrescoPipeTranslate ],
     providers: [ CONTEXT_MENU_PROVIDERS, ActivitiProcessService ]
 })
-export class ActivitiProcessInstanceListComponent implements OnInit {
+export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
     errorMessage: string;
     data: ObjectDataTableAdapter;
     currentProcessInstanceId: string;
 
     @Input()
-    filter: FilterModel;
+    filter: UserProcessInstanceFilterRepresentationModel;
 
     @Input()
     schemaColumn: any[] = [
@@ -76,25 +76,32 @@ export class ActivitiProcessInstanceListComponent implements OnInit {
             this.schemaColumn
         );
         if (this.filter) {
-            this.load(this.filter);
+            let requestNode = this.convertProcessInstanceToTaskQuery(this.filter);
+            this.load(requestNode);
         }
     }
 
-    load(filter: FilterModel) {
-        this.processService.getProcessInstances(filter)
+    ngOnChanges(changes: SimpleChanges) {
+        let filter = changes['filter'];
+        if (filter && filter.currentValue) {
+            let requestNode = this.convertProcessInstanceToTaskQuery(filter.currentValue);
+            this.load(requestNode);
+            return;
+        }
+    }
+
+    load(requestNode: TaskQueryRequestRepresentationModel) {
+        this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (processInstances) => {
                     this.renderProcessInstances(processInstances);
+                    this.selectFirstProcess();
                     this.onSuccess.emit(processInstances);
                 },
                 error => {
                     this.errorMessage = <any>error;
                     this.onError.emit(error);
                 });
-    }
-
-    reload() {
-        this.load(this.filter);
     }
 
     /**
@@ -108,6 +115,25 @@ export class ActivitiProcessInstanceListComponent implements OnInit {
             processInstances,
             this.schemaColumn
         );
+    }
+
+    /**
+     * Select the first process of a process list if present
+     */
+    private selectFirstProcess() {
+        if (!this.isListEmpty()) {
+            this.currentProcessInstanceId = this.data.getRows()[0].getValue('id');
+        } else {
+            this.currentProcessInstanceId = null;
+        }
+    }
+
+    /**
+     * Return the current process
+     * @returns {string}
+     */
+    getCurrentProcessId(): string {
+        return this.currentProcessInstanceId;
     }
 
     /**
@@ -143,5 +169,14 @@ export class ActivitiProcessInstanceListComponent implements OnInit {
             return t;
         });
         return tasks;
+    }
+
+    private convertProcessInstanceToTaskQuery(processFilter: UserProcessInstanceFilterRepresentationModel) {
+        let requestNode = {appDefinitionId: processFilter.appId,
+            processDefinitionKey: processFilter.filter.processDefinitionKey,
+            text: processFilter.filter.name,
+            state: processFilter.filter.state,
+            sort: processFilter.filter.sort};
+        return new TaskQueryRequestRepresentationModel(requestNode);
     }
 }

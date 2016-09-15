@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { FilterModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
@@ -34,10 +34,10 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 
 })
-export class ActivitiProcessFilters implements OnInit {
+export class ActivitiProcessFilters implements OnInit, OnChanges {
 
     @Output()
-    filterClick: EventEmitter<FilterModel> = new EventEmitter<FilterModel>();
+    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
 
     @Output()
     onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -51,12 +51,12 @@ export class ActivitiProcessFilters implements OnInit {
     @Input()
     appName: string;
 
-    private filterObserver: Observer<FilterModel>;
-    filter$: Observable<FilterModel>;
+    private filterObserver: Observer<FilterRepresentationModel>;
+    filter$: Observable<FilterRepresentationModel>;
 
-    currentFilter: FilterModel;
+    currentFilter: FilterRepresentationModel;
 
-    filters: FilterModel [] = [];
+    filters: FilterRepresentationModel [] = [];
 
     /**
      * Constructor
@@ -67,7 +67,7 @@ export class ActivitiProcessFilters implements OnInit {
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
                 public activiti: ActivitiProcessService) {
-        this.filter$ = new Observable<FilterModel>(observer => this.filterObserver = observer).share();
+        this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
@@ -75,11 +75,19 @@ export class ActivitiProcessFilters implements OnInit {
     }
 
     ngOnInit() {
-        this.filter$.subscribe((filter: FilterModel) => {
+        this.filter$.subscribe((filter: FilterRepresentationModel) => {
             this.filters.push(filter);
         });
 
         this.load();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let appId = changes['appId'];
+        if (appId && appId.currentValue) {
+            this.load();
+            return;
+        }
     }
 
     /**
@@ -87,6 +95,7 @@ export class ActivitiProcessFilters implements OnInit {
      * @param tasks
      */
     private load() {
+        this.resetFilter();
         if (this.appName) {
             this.filterByAppName();
         } else {
@@ -96,7 +105,7 @@ export class ActivitiProcessFilters implements OnInit {
 
     private filterByAppId(appId) {
         this.activiti.getProcessFilters(appId).subscribe(
-            (res: FilterModel[]) => {
+            (res: FilterRepresentationModel[]) => {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                 });
@@ -124,8 +133,16 @@ export class ActivitiProcessFilters implements OnInit {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: FilterModel) {
+    public selectFilter(filter: FilterRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
+    }
+
+    /**
+     * Reset the filters properties
+     */
+    private resetFilter() {
+        this.filters = [];
+        this.currentFilter = null;
     }
 }

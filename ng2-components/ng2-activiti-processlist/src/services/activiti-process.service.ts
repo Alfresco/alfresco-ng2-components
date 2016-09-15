@@ -17,7 +17,7 @@
 
 import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 import {ProcessInstance} from '../models/process-instance';
-import {FilterModel} from '../models/filter.model';
+import {TaskQueryRequestRepresentationModel} from '../models/filter.model';
 import {User} from '../models/user.model';
 import {Comment} from '../models/comment.model';
 import {Injectable}     from '@angular/core';
@@ -49,8 +49,8 @@ export class ActivitiProcessService {
             .catch(this.handleError);
     }
 
-    getProcessInstances(filter: FilterModel): Observable<ProcessInstance[]> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.processApi.getProcessInstances(filter))
+    getProcessInstances(requestNode: TaskQueryRequestRepresentationModel): Observable<ProcessInstance[]> {
+        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.processApi.getProcessInstances(requestNode))
             .map(this.extractData)
             .catch(this.handleError);
     }

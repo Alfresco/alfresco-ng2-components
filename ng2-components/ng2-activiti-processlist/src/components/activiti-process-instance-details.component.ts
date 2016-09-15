@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
@@ -37,7 +37,7 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 
 })
-export class ActivitiProcessInstanceDetails {
+export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
 
     @Input()
     processInstanceId: string;
@@ -78,6 +78,31 @@ export class ActivitiProcessInstanceDetails {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
+    }
+
+    ngOnInit() {
+        if (this.processInstanceId) {
+            this.load(this.processInstanceId);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let processInstanceId = changes['processInstanceId'];
+        if (processInstanceId && !processInstanceId.currentValue) {
+            this.reset();
+            return;
+        }
+        if (processInstanceId && processInstanceId.currentValue) {
+            this.load(processInstanceId.currentValue);
+            return;
+        }
+    }
+
+    /**
+     * Reset the task detail to undefined
+     */
+    reset() {
+        this.processInstanceDetails = null;
     }
 
     load(processId: string) {
