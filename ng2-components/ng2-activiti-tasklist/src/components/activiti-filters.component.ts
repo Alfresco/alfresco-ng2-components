@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterRepresentationModel } from '../models/filter.model';
@@ -34,7 +34,7 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 
 })
-export class ActivitiFilters implements OnInit {
+export class ActivitiFilters implements OnInit, OnChanges {
 
     @Output()
     filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
@@ -82,11 +82,20 @@ export class ActivitiFilters implements OnInit {
         this.load();
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        let appId = changes['appId'];
+        if (appId && appId.currentValue) {
+            this.load();
+            return;
+        }
+    }
+
     /**
      * The method call the adapter data table component for render the task list
      * @param tasks
      */
     private load() {
+        this.resetFilter();
         if (this.appName) {
             this.filterByAppName();
         } else {
@@ -127,5 +136,13 @@ export class ActivitiFilters implements OnInit {
     public selectFilter(filter: FilterRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
+    }
+
+    /**
+     * Reset the filters properties
+     */
+    private resetFilter() {
+        this.filters = [];
+        this.currentFilter = null;
     }
 }

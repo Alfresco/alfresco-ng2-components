@@ -19,7 +19,7 @@ import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { UserTaskFilterRepresentationModel } from '../models/filter.model';
+import { UserTaskFilterRepresentationModel, AppDefinitionRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 
 declare let AlfrescoApi: any;
@@ -36,13 +36,39 @@ describe('ActivitiTaskListService', () => {
     let fakeFilters = {
         size: 2, total: 2, start: 0,
         data: [
-            {
-                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
-                filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved'}
-            },
+            new AppDefinitionRepresentationModel(
+                {
+                    id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+                    filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved'}
+                }
+            ),
             {
                 id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
                 filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee'}
+            }
+        ]
+    };
+
+    let fakeAppFilter = {
+        size: 1, total: 1, start: 0,
+        data: [
+            {
+                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+                filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved'}
+            }
+        ]
+    };
+
+    let fakeApps = {
+        size: 2, total: 2, start: 0,
+        data: [
+            {
+                id: 1, defaultAppId: null, name: 'Sales-Fakes-App', description: 'desc-fake1', modelId: 22,
+                theme: 'theme-1-fake', icon: 'glyphicon-asterisk', 'deploymentId': '111', 'tenantId': null
+            },
+            {
+                id: 2, defaultAppId: null, name: 'health-care-Fake', description: 'desc-fake2', modelId: 33,
+                theme: 'theme-2-fake', icon: 'glyphicon-asterisk', 'deploymentId': '444', 'tenantId': null
             }
         ]
     };
@@ -98,6 +124,10 @@ describe('ActivitiTaskListService', () => {
         ]
     };
 
+    let fakeAppPromise = new Promise(function (resolve, reject) {
+        resolve(fakeAppFilter);
+    });
+
     beforeEachProviders(() => {
         return [
             ActivitiTaskListService,
@@ -131,6 +161,36 @@ describe('ActivitiTaskListService', () => {
             'status': 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeFilters)
+        });
+    });
+
+    it('should call the api withthe appId', (done) => {
+        spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
+
+        let appId = 1;
+        service.getTaskListFilters(appId).subscribe(
+            (res) => {
+                expect(service.callApiTaskFilters).toHaveBeenCalledWith(appId);
+                done();
+            }
+        );
+    });
+
+    it('should return the app filter by id', (done) => {
+        let appId = 1;
+        service.getTaskListFilters(appId).subscribe(
+            (res) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(1);
+                expect(res[0].name).toEqual('FakeInvolvedTasks');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeAppFilter)
         });
     });
 
@@ -372,6 +432,48 @@ describe('ActivitiTaskListService', () => {
             responseText: JSON.stringify({
                 id: '2233', name: 'FakeNameFilter', filter: {assignment: 'fake-assignement'}
             })
+        });
+    });
+
+
+    it('should get the deployed apps ', (done) => {
+        service.getDeployedApplications().subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(2);
+                expect(res[0].name).toEqual('Sales-Fakes-App');
+                expect(res[0].description).toEqual('desc-fake1');
+                expect(res[0].deploymentId).toEqual('111');
+                expect(res[1].name).toEqual('health-care-Fake');
+                expect(res[1].description).toEqual('desc-fake2');
+                expect(res[1].deploymentId).toEqual('444');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeApps)
+        });
+    });
+
+    it('should get the filter deployed app ', (done) => {
+        let name = 'health-care-Fake';
+        service.getDeployedApplications(name).subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res.name).toEqual('health-care-Fake');
+                expect(res.description).toEqual('desc-fake2');
+                expect(res.deploymentId).toEqual('444');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeApps)
         });
     });
 

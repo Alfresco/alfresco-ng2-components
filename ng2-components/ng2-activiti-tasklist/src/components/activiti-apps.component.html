@@ -1,0 +1,10 @@
+<div class="menu-container" *ngIf="!isEmpty()">
+    <ul class='mdl-list'>
+        <li class="mdl-list__item" (click)="selectApp(app)" *ngFor="let app of appList">
+            <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">touch_app</i>
+            {{app.name}}
+            </span>
+        </li>
+    </ul>
+</div>
