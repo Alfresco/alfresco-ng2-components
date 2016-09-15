@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiTaskHeader } from './activiti-task-header.component';
@@ -40,7 +40,7 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 
 })
-export class ActivitiTaskDetails implements OnInit {
+export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @Input()
     taskId: string;
@@ -107,6 +107,18 @@ export class ActivitiTaskDetails implements OnInit {
     ngOnInit() {
         if (this.taskId) {
             this.loadDetails(this.taskId);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let taskId = changes['taskId'];
+        if (taskId && !taskId.currentValue) {
+            this.reset();
+            return;
+        }
+        if (taskId && taskId.currentValue) {
+            this.loadDetails(taskId.currentValue);
+            return;
         }
     }
 

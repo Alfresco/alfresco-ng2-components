@@ -34,9 +34,14 @@ export class ActivitiTaskListService {
      * Retrive all the Deployed app
      * @returns {Observable<any>}
      */
-    getDeployedApplications(name: string): Observable<any> {
+    getDeployedApplications(name?: string): Observable<any> {
         return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.appsApi.getAppDefinitions())
-            .map((response: any) => response.data.find(p => p.name === name))
+            .map((response: any) => {
+                if (name) {
+                    response.data.find(p => p.name === name);
+                }
+                return response.data;
+            })
             .do(data => console.log('Application: ' + JSON.stringify(data)));
     }
 

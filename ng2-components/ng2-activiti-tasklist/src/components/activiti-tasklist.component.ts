@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
@@ -34,7 +34,7 @@ declare let __moduleName: string;
     pipes: [AlfrescoPipeTranslate]
 
 })
-export class ActivitiTaskList implements OnInit {
+export class ActivitiTaskList implements OnInit, OnChanges {
 
     @Input()
     taskFilter: UserTaskFilterRepresentationModel;
@@ -84,13 +84,17 @@ export class ActivitiTaskList implements OnInit {
         );
 
         if (this.taskFilter) {
-            let requestNode = {appDefinitionId: this.taskFilter.appId,
-                processDefinitionId: this.taskFilter.filter.processDefinitionId,
-                text: this.taskFilter.filter.name,
-                assignment: this.taskFilter.filter.assignment,
-                state: this.taskFilter.filter.state,
-                sort: this.taskFilter.filter.sort};
+            let requestNode = this.convertTaskUserToTaskQuery(this.taskFilter);
             this.load(new TaskQueryRequestRepresentationModel(requestNode));
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let taskFilter = changes['taskFilter'];
+        if (taskFilter && taskFilter.currentValue) {
+            let requestNode = this.convertTaskUserToTaskQuery(taskFilter.currentValue);
+            this.load(new TaskQueryRequestRepresentationModel(requestNode));
+            return;
         }
     }
 
@@ -173,5 +177,15 @@ export class ActivitiTaskList implements OnInit {
             return t;
         });
         return tasks;
+    }
+
+    private convertTaskUserToTaskQuery(userTask: UserTaskFilterRepresentationModel) {
+        let requestNode = {appDefinitionId: userTask.appId,
+            processDefinitionId: userTask.filter.processDefinitionId,
+            text: userTask.filter.name,
+            assignment: userTask.filter.assignment,
+            state: userTask.filter.state,
+            sort: userTask.filter.sort};
+        return new TaskQueryRequestRepresentationModel(requestNode);
     }
 }

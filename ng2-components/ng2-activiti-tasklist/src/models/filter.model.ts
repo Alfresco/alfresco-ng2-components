@@ -17,6 +17,35 @@
 
 /**
  *
+ * This object represent the app definition.
+ *
+ *
+ * @returns {AppDefinitionRepresentationModel} .
+ */
+export class AppDefinitionRepresentationModel {
+    defaultAppId: string;
+    deploymentId: string;
+    name: string;
+    description: string;
+    theme: string;
+    id: number;
+    modelId: number;
+    tenantId: number;
+
+    constructor(obj?: any) {
+        this.defaultAppId = obj && obj.defaultAppId || null;
+        this.deploymentId = obj && obj.deploymentId || false;
+        this.name = obj && obj.name || null;
+        this.description = obj && obj.description || null;
+        this.theme = obj && obj.theme || null;
+        this.id = obj && obj.id;
+        this.modelId = obj && obj.modelId;
+        this.tenantId = obj && obj.tenantId;
+    }
+}
+
+/**
+ *
  * This object represent the filter.
  *
  *
@@ -103,6 +132,7 @@ export class TaskQueryRequestRepresentationModel {
     appDefinitionId: string;
     processInstanceId: string;
     processDefinitionId: string;
+    processDefinitionKey: string;
     text: string;
     assignment: string;
     state: string;
@@ -114,6 +144,7 @@ export class TaskQueryRequestRepresentationModel {
         this.appDefinitionId = obj && obj.appDefinitionId || null;
         this.processInstanceId = obj && obj.processInstanceId || null;
         this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
         this.text = obj && obj.text || null;
         this.assignment = obj && obj.assignment || null;
         this.state = obj && obj.state || null;

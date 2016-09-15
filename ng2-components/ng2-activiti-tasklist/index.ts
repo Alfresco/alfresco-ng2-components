@@ -15,13 +15,21 @@
  * limitations under the License.
  */
 
+import { ActivitiApps } from './src/components/activiti-apps.component';
 import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
 import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
 import { ActivitiFilters } from './src/components/activiti-filters.component';
 import { NoTaskDetailsTemplateComponent } from './src/components/no-task-detail-template.component';
 
+export * from './src/components/activiti-apps.component';
 export * from './src/components/activiti-tasklist.component';
 export * from './src/services/activiti-tasklist.service';
 export * from  './src/models/filter.model';
 
-export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [NoTaskDetailsTemplateComponent, ActivitiFilters, ActivitiTaskList, ActivitiTaskDetails];
+export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [
+    NoTaskDetailsTemplateComponent,
+    ActivitiApps,
+    ActivitiFilters,
+    ActivitiTaskList,
+    ActivitiTaskDetails
+];
