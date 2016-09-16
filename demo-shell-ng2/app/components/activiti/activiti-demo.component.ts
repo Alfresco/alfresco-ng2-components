@@ -17,7 +17,6 @@
 
 import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
 import { ALFRESCO_TASKLIST_DIRECTIVES,
-    TaskQueryRequestRepresentationModel,
     AppDefinitionRepresentationModel,
     FilterRepresentationModel,
     UserTaskFilterRepresentationModel
@@ -145,9 +144,8 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     onFormCompleted(form) {
-        this.activititasklist.load(this.taskFilter);npm
+        this.activititasklist.load(this.taskFilter);
         this.currentTaskId = null;
-        this.activitidetails.loadDetails(this.currentTaskId);
     }
 
     ngAfterViewChecked() {
