@@ -42,7 +42,7 @@ export class ActivitiTaskListService {
                 }
                 return response.data;
             })
-            .do(data => console.log('Application: ' + JSON.stringify(data)));
+            .catch(this.handleError);
     }
 
     /**

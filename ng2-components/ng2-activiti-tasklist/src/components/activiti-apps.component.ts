@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
@@ -28,13 +28,19 @@ declare let __moduleName: string;
 @Component({
     selector: 'activiti-apps',
     moduleId: __moduleName,
-    templateUrl: './activiti-apps.component.html',
-    styleUrls: ['./activiti-apps.component.css'],
+    templateUrl: 'activiti-apps.component.html',
+    styleUrls: ['./activiti-apps.component.css', './activiti-apps-grid.component.css'],
     providers: [ActivitiTaskListService],
     pipes: [AlfrescoPipeTranslate]
 
 })
 export class ActivitiApps implements OnInit {
+
+    public static LAYOUT_LIST: string = 'LIST';
+    public static LAYOUT_GRID: string = 'GRID';
+
+    @Input()
+    layoutType: string = ActivitiApps.LAYOUT_GRID;
 
     @Output()
     appClick: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
@@ -63,6 +69,10 @@ export class ActivitiApps implements OnInit {
     }
 
     ngOnInit() {
+        if (!this.isValidType()) {
+            throw( new Error(`LayoutType property allowed values: ${ActivitiApps.LAYOUT_LIST} - ${ActivitiApps.LAYOUT_GRID}`));
+        }
+
         this.apps$.subscribe((app: any) => {
             this.appList.push(app);
         });
@@ -91,6 +101,42 @@ export class ActivitiApps implements OnInit {
     public selectApp(app: AppDefinitionRepresentationModel) {
         this.currentApp = app;
         this.appClick.emit(app);
+    }
+
+    /**
+     * Return true if the appId is the current app
+     * @param appId
+     * @returns {boolean}
+     */
+    isSelected(appId: number): boolean {
+        return (this.currentApp !== undefined && appId === this.currentApp.id);
+    }
+
+    /**
+     * Check if the value of the layoutType property is an allowed value
+     * @returns {boolean}
+     */
+    isValidType(): boolean {
+        if (this.layoutType && (this.layoutType === ActivitiApps.LAYOUT_LIST || this.layoutType === ActivitiApps.LAYOUT_GRID)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Return true if the layout type is LIST
+     * @returns {boolean}
+     */
+    isList(): boolean {
+        return this.layoutType === ActivitiApps.LAYOUT_LIST;
+    }
+
+    /**
+     * Return true if the layout type is GRID
+     * @returns {boolean}
+     */
+    isGrid(): boolean {
+        return this.layoutType === ActivitiApps.LAYOUT_GRID;
     }
 
     isEmpty(): boolean {

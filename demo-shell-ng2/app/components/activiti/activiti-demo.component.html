@@ -1,5 +1,5 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <activiti-apps (appClick)="onAppClick($event)"></activiti-apps>
+    <activiti-apps [layoutType]="layoutType" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
     <header class="mdl-layout__header">
         <!-- Tabs -->
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
