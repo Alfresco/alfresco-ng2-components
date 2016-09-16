@@ -1,5 +1,5 @@
 <div class="menu-container" *ngIf="!isEmpty()">
-    <ul class='mdl-list'>
+    <ul class='mdl-list' *ngIf="isList()">
         <li class="mdl-list__item" (click)="selectApp(app)" *ngFor="let app of appList">
             <span class="mdl-list__item-primary-content">
             <i class="material-icons mdl-list__item-icon">touch_app</i>
@@ -7,4 +7,22 @@
             </span>
         </li>
     </ul>
+    <div class="mdl-grid" *ngIf="isGrid()">
+        <div (click)="selectApp(app)" class="mdl-card mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-shadow--2dp" *ngFor="let app of appList">
+            <div class="mdl-card__title">
+                <h1 class="mdl-card__title-text">{{app.name}}</h1>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <p>{{app.description}}</p>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <i class="material-icons" *ngIf="isSelected(app.id)">done</i>
+                <div class="mdl-layout-spacer"></div>
+                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">delete</i></button>
+                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
+                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>
+                <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">file_download</i></button>
+            </div>
+        </div>
+    </div>
 </div>

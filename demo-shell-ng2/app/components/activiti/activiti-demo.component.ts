@@ -19,7 +19,8 @@ import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
 import { ALFRESCO_TASKLIST_DIRECTIVES,
     AppDefinitionRepresentationModel,
     FilterRepresentationModel,
-    UserTaskFilterRepresentationModel
+    UserTaskFilterRepresentationModel,
+    ActivitiApps
 } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm } from 'ng2-activiti-form';
@@ -40,6 +41,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     currentChoice: string = 'task-list';
 
+    @ViewChild('activitiapps')
+    activitiapps: ActivitiApps;
+
     @ViewChild('activitifilter')
     activitifilter: any;
 
@@ -55,6 +59,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     @ViewChild('activitiprocessdetails')
     activitiprocessdetails: any;
 
+    layoutType: string;
     currentTaskId: string;
     currentProcessInstanceId: string;
 
@@ -95,6 +100,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.sub = this.route.params.subscribe(params => {
             this.appId = params['appId'];
         });
+        this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
 
     ngOnDestroy() {
