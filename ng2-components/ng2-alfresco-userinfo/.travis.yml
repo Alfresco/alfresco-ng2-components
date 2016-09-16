@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - v5
+  - v4
+install: npm install
+sudo: false
+after_success:
+  npm run coverage
