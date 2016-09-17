@@ -16,6 +16,7 @@
  */
 
 import { it, describe, expect, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
+import { PLATFORM_PIPES } from '@angular/core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
@@ -26,7 +27,8 @@ import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    AlfrescoTranslationService
+    AlfrescoTranslationService,
+    AlfrescoPipeTranslate
 } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
@@ -66,6 +68,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
     beforeEachProviders(() => {
         return [
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
             {provide: AlfrescoTranslationService, useClass: TranslationMock},
             AlfrescoThumbnailService,
             AlfrescoSettingsService,

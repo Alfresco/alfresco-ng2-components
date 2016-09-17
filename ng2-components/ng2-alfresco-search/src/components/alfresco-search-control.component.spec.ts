@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { provide } from '@angular/core';
+import { provide, PLATFORM_PIPES } from '@angular/core';
 import { it, describe, expect, inject, beforeEachProviders, beforeEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
@@ -26,7 +26,8 @@ import {
     AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    AlfrescoTranslationService
+    AlfrescoTranslationService,
+    AlfrescoPipeTranslate
 } from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
@@ -37,6 +38,7 @@ describe('AlfrescoSearchControlComponent', () => {
 
     beforeEachProviders(() => {
         return [
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
             AlfrescoSearchService,
             provide(AlfrescoTranslationService, {useClass: TranslationMock}),
             AlfrescoThumbnailService,

@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
+import { PLATFORM_PIPES } from '@angular/core';
 import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 import { HTTP_PROVIDERS } from '@angular/http';
@@ -40,6 +41,7 @@ describe('AlfrescoUploadDragArea', () => {
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
             AlfrescoApiService,
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
             UploadService
         ];
