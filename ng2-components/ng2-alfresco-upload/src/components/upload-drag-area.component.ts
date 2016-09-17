@@ -18,7 +18,7 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
-import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 declare let __moduleName: string;
@@ -40,8 +40,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
     moduleId: __moduleName,
     directives: [FileDraggableDirective],
     templateUrl: './upload-drag-area.component.html',
-    styleUrls: ['./upload-drag-area.component.css'],
-    pipes: [AlfrescoPipeTranslate]
+    styleUrls: ['./upload-drag-area.component.css']
 })
 export class UploadDragAreaComponent {
 

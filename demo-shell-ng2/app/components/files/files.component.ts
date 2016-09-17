@@ -29,8 +29,7 @@ import {
 import {
     MDL,
     AlfrescoContentService,
-    CONTEXT_MENU_DIRECTIVES,
-    AlfrescoPipeTranslate
+    CONTEXT_MENU_DIRECTIVES
 } from 'ng2-alfresco-core';
 import { PaginationComponent } from 'ng2-alfresco-datatable';
 import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload';
@@ -52,8 +51,7 @@ declare let __moduleName: string;
         CONTEXT_MENU_DIRECTIVES,
         PaginationComponent
     ],
-    providers: [DOCUMENT_LIST_PROVIDERS, FormService],
-    pipes: [AlfrescoPipeTranslate]
+    providers: [DOCUMENT_LIST_PROVIDERS, FormService]
 })
 export class FilesComponent implements OnInit {
     currentPath: string = '/Sites/swsdp/documentLibrary';

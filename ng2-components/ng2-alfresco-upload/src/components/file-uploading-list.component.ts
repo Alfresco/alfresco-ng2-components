@@ -18,7 +18,6 @@
 
 import { Component, ElementRef, Input } from '@angular/core';
 import { FileModel } from '../models/file.model';
-import { AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -36,8 +35,7 @@ declare let __moduleName: string;
     selector: 'alfresco-file-uploading-list',
     moduleId: __moduleName,
     templateUrl: './file-uploading-list.component.html',
-    styleUrls: ['./file-uploading-list.component.css'],
-    pipes: [AlfrescoPipeTranslate]
+    styleUrls: ['./file-uploading-list.component.css']
 })
 export class FileUploadingListComponent {
 

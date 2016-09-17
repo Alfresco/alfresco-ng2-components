@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
@@ -27,9 +27,7 @@ declare let __moduleName: string;
     selector: 'activiti-process-instance-header',
     moduleId: __moduleName,
     templateUrl: './activiti-process-instance-header.component.html',
-    styleUrls: ['./activiti-process-instance-header.component.css'],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    styleUrls: ['./activiti-process-instance-header.component.css']
 })
 export class ActivitiProcessInstanceHeader {
 

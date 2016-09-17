@@ -22,7 +22,6 @@ import {
     MDL,
     AlfrescoSettingsService,
     AlfrescoTranslationService,
-    AlfrescoPipeTranslate,
     AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
 
@@ -34,8 +33,7 @@ declare var document: any;
     selector: 'alfresco-app',
     templateUrl: 'app/app.component.html',
     styleUrls: ['app/app.component.css'],
-    directives: [SearchBarComponent, ROUTER_DIRECTIVES, MDL],
-    pipes: [AlfrescoPipeTranslate]
+    directives: [SearchBarComponent, ROUTER_DIRECTIVES, MDL]
 })
 export class AppComponent {
     translate: AlfrescoTranslationService;

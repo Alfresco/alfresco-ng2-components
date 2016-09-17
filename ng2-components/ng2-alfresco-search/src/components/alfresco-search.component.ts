@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output, Optional, OnChanges, OnInit } f
 import { RouteParams } from '@angular/router-deprecated';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
-import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -28,8 +28,7 @@ declare let __moduleName: string;
     selector: 'alfresco-search',
     styleUrls: ['./alfresco-search.component.css'],
     templateUrl: './alfresco-search.component.html',
-    providers: [AlfrescoSearchService],
-    pipes: [AlfrescoPipeTranslate]
+    providers: [AlfrescoSearchService]
 })
 export class AlfrescoSearchComponent implements OnChanges, OnInit {
 

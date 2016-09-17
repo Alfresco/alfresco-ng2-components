@@ -18,7 +18,7 @@
 import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { FileModel } from '../models/file.model';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 declare let __moduleName: string;
@@ -40,8 +40,7 @@ declare let __moduleName: string;
     directives: [FileUploadingListComponent],
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.css'],
-    host: {'[class.dialog-show]': 'toggleShowDialog'},
-    pipes: [AlfrescoPipeTranslate]
+    host: {'[class.dialog-show]': 'toggleShowDialog'}
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 

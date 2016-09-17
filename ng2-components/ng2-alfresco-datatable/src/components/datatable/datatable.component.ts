@@ -28,8 +28,7 @@ import {
 
 import {
     MATERIAL_DESIGN_DIRECTIVES,
-    CONTEXT_MENU_DIRECTIVES,
-    AlfrescoPipeTranslate
+    CONTEXT_MENU_DIRECTIVES
 } from 'ng2-alfresco-core';
 
 import {
@@ -49,8 +48,7 @@ declare let __moduleName: string;
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html',
-    directives: [MATERIAL_DESIGN_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    pipes: [AlfrescoPipeTranslate]
+    directives: [MATERIAL_DESIGN_DIRECTIVES, CONTEXT_MENU_DIRECTIVES]
 })
 export class DataTableComponent implements OnInit, AfterViewChecked {
 

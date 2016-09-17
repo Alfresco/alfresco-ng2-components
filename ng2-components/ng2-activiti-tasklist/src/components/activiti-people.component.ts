@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
@@ -28,9 +28,7 @@ declare let __moduleName: string;
     selector: 'activiti-people',
     moduleId: __moduleName,
     templateUrl: './activiti-people.component.html',
-    styleUrls: ['./activiti-people.component.css'],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    styleUrls: ['./activiti-people.component.css']
 })
 export class ActivitiPeople implements OnInit {
 

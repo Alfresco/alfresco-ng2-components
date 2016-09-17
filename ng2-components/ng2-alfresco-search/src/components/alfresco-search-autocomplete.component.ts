@@ -18,7 +18,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
-import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -27,8 +27,7 @@ declare let __moduleName: string;
     selector: 'alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
     styleUrls: ['./alfresco-search-autocomplete.component.css'],
-    providers: [AlfrescoSearchService],
-    pipes: [AlfrescoPipeTranslate]
+    providers: [AlfrescoSearchService]
 })
 export class AlfrescoSearchAutocompleteComponent implements OnChanges {
 
