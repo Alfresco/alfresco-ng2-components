@@ -107,6 +107,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                 });
+                this.selectFirstFilter();
                 this.onSuccess.emit(res);
             },
             (err) => {
@@ -120,6 +121,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
         this.activiti.getDeployedApplications(this.appName).subscribe(
             application => {
                 this.filterByAppId(application.id);
+                this.selectFirstFilter();
             },
             (err) => {
                 console.log(err);
@@ -134,6 +136,33 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     public selectFilter(filter: FilterRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
+    }
+
+    /**
+     * Select the first filter of a list if present
+     */
+    private selectFirstFilter() {
+        if (!this.isFilterListEmpty()) {
+            this.currentFilter = this.filters[0];
+        } else {
+            this.currentFilter = null;
+        }
+    }
+
+    /**
+     * Return the current task
+     * @returns {FilterRepresentationModel}
+     */
+    getCurrentFilter(): FilterRepresentationModel {
+        return this.currentFilter;
+    }
+
+    /**
+     * Check if the filter list is empty
+     * @returns {boolean}
+     */
+    isFilterListEmpty(): boolean {
+        return this.filters === undefined || (this.filters && this.filters.length === 0);
     }
 
     /**
