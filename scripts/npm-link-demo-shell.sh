@@ -8,7 +8,6 @@ npm install -g typings
 echo "====== linking component: ng2-alfresco-core ====="
 cd "$DIR/../ng2-components/ng2-alfresco-core"
 npm link
-npm run typings
 npm run build
 
 #LINK FORM
@@ -16,7 +15,6 @@ echo "====== linking component: ng2-activiti-form ====="
 cd "$DIR/../ng2-components/ng2-activiti-form"
 npm link ng2-alfresco-core
 npm link
-npm run typings
 npm run build
 
 #LINK DATATABLE
@@ -24,7 +22,6 @@ echo "====== linking component: ng2-alfresco-datatable ====="
 cd "$DIR/../ng2-components/ng2-alfresco-datatable"
 npm link ng2-alfresco-core
 npm link
-npm run typings
 npm run build
 
 #LINK DOCUMENTLIST
@@ -33,7 +30,6 @@ cd "$DIR/../ng2-components/ng2-alfresco-documentlist"
 npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link
-npm run typings
 npm run build
 
 #LINK WEBSCRIPT
@@ -42,7 +38,6 @@ cd "$DIR/../ng2-components/ng2-alfresco-webscript"
 npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link
-npm run typings
 npm run build
 
 #LINK TASKLIST
@@ -52,7 +47,6 @@ npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link ng2-activiti-form
 npm link
-npm run typings
 npm run build
 
 #LINK PROCESSLIST
@@ -62,7 +56,6 @@ npm link ng2-alfresco-core
 npm link ng2-alfresco-datatable
 npm link ng2-activiti-tasklist
 npm link
-npm run typings
 npm run build
 
 #LINK VIEWER
@@ -70,7 +63,6 @@ echo "====== linking component: ng2-alfresco-viewer ====="
 cd "$DIR/../ng2-components/ng2-alfresco-viewer"
 npm link ng2-alfresco-core
 npm link
-npm run typings
 npm run build
 
 #LINK TAG
@@ -92,7 +84,6 @@ do
   cd "$DESTDIR"
   npm link ng2-alfresco-core
   npm link
-  npm run typings
   npm run build
 done
 
