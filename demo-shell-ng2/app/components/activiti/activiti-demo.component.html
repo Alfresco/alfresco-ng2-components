@@ -1,15 +1,20 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <activiti-apps [layoutType]="layoutType" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
     <header class="mdl-layout__header">
         <!-- Tabs -->
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">TASK LIST</a>
+            <a href="#scroll-tab-0" class="mdl-layout__tab is-active">APPS</a>
+            <a href="#scroll-tab-1" class="mdl-layout__tab">TASK LIST</a>
             <a href="#scroll-tab-2" class="mdl-layout__tab">PROCESS LIST</a>
             <a href="#scroll-tab-3" class="mdl-layout__tab">REPORT</a>
         </div>
     </header>
     <main class="mdl-layout__content activiti">
-        <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+        <section class="mdl-layout__tab-panel is-active" id="scroll-tab-0">
+            <div class="page-content">
+                <activiti-apps [layoutType]="layoutType" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
+            </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="scroll-tab-1">
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
@@ -57,15 +62,6 @@
             </div>
         </section>
         <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-            <div class="page-content"><!-- Your content goes here --></div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-4">
-            <div class="page-content"><!-- Your content goes here --></div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-5">
-            <div class="page-content"><!-- Your content goes here --></div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-6">
             <div class="page-content"><!-- Your content goes here --></div>
         </section>
     </main>
