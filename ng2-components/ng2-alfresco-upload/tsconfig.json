@@ -15,7 +15,8 @@
         "noImplicitReturns": false,
         "noImplicitUseStrict": false,
         "noFallthroughCasesInSwitch": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "types": ["core-js", "jasmine"]
     },
     "exclude": [
         "demo",
