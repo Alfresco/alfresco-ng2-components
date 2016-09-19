@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { PLATFORM_PIPES } from '@angular/core';
 import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { HTTP_PROVIDERS } from '@angular/http';
@@ -23,7 +24,8 @@ import {
     AlfrescoTranslationService,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    AlfrescoPipeTranslate
 } from 'ng2-alfresco-core';
 
 import { UploadButtonComponent } from './upload-button.component';
@@ -79,6 +81,7 @@ describe('AlfrescoUploadButton', () => {
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
             AlfrescoApiService,
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
             UploadService
         ];

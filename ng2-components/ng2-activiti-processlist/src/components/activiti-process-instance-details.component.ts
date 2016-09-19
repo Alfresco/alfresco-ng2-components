@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
@@ -33,9 +33,7 @@ declare let __moduleName: string;
     templateUrl: './activiti-process-instance-details.component.html',
     styleUrls: ['./activiti-process-instance-details.component.css'],
     providers: [ActivitiProcessService],
-    directives: [ActivitiProcessInstanceHeader, ActivitiComments, ActivitiProcessInstanceTasks],
-    pipes: [AlfrescoPipeTranslate]
-
+    directives: [ActivitiProcessInstanceHeader, ActivitiComments, ActivitiProcessInstanceTasks]
 })
 export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
 

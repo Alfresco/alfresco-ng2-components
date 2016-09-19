@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { PLATFORM_PIPES } from '@angular/core';
 import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { Observable } from 'rxjs/Observable';
@@ -24,7 +25,8 @@ import {
     AlfrescoTranslationService,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    AlfrescoPipeTranslate
 } from 'ng2-alfresco-core';
 
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
@@ -43,6 +45,7 @@ describe('FileUploadDialog', () => {
             AlfrescoApiService,
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
             { provide: AlfrescoTranslationService, useClass: TranslationMock },
             UploadService
         ];

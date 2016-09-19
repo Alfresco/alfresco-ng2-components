@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { FormModel, FormService } from 'ng2-activiti-form';
 
@@ -28,9 +28,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css'],
-    providers: [ FormService ],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    providers: [ FormService ]
 })
 export class ActivitiTaskHeader implements OnInit, OnChanges {
 

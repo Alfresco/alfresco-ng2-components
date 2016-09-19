@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
@@ -32,9 +32,7 @@ declare let __moduleName: string;
     templateUrl: './activiti-process-instance-tasks.component.html',
     styleUrls: ['./activiti-process-instance-tasks.component.css'],
     providers: [ActivitiProcessService],
-    directives: [ ALFRESCO_TASKLIST_DIRECTIVES ],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    directives: [ ALFRESCO_TASKLIST_DIRECTIVES ]
 })
 export class ActivitiProcessInstanceTasks implements OnInit {
 

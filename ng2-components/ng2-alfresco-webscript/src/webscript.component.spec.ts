@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
+import { PLATFORM_PIPES } from '@angular/core';
 import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach, xit } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { WebscriptComponent } from '../src/webscript.component';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
 
@@ -30,7 +31,8 @@ describe('Test ng2-alfresco-webscript', () => {
         return [
             AlfrescoSettingsService,
             AlfrescoAuthenticationService,
-            AlfrescoApiService
+            AlfrescoApiService,
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true }
         ];
     });
 

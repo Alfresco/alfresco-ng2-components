@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { PLATFORM_PIPES } from '@angular/core';
 import { it, describe, expect, inject, beforeEachProviders, beforeEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { RouteParams } from '@angular/router-deprecated';
@@ -27,7 +28,8 @@ import {
     AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    AlfrescoTranslationService
+    AlfrescoTranslationService,
+    AlfrescoPipeTranslate
 } from 'ng2-alfresco-core';
 
 declare let jasmine: any;
@@ -67,6 +69,7 @@ describe('AlfrescoSearchComponent', () => {
 
     beforeEachProviders(() => {
         return [
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
             AlfrescoSearchService,
             {provide: AlfrescoTranslationService, useClass: TranslationMock},
             AlfrescoThumbnailService,

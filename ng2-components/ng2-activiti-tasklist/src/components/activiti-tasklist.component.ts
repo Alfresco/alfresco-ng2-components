@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { UserTaskFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -30,9 +30,7 @@ declare let __moduleName: string;
     templateUrl: './activiti-tasklist.component.html',
     styleUrls: ['./activiti-tasklist.component.css'],
     directives: [ALFRESCO_DATATABLE_DIRECTIVES],
-    providers: [ActivitiTaskListService],
-    pipes: [AlfrescoPipeTranslate]
-
+    providers: [ActivitiTaskListService]
 })
 export class ActivitiTaskList implements OnInit, OnChanges {
 

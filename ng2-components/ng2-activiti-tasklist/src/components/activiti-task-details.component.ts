@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiTaskHeader } from './activiti-task-header.component';
 import { ActivitiComments } from './activiti-comments.component';
@@ -36,9 +36,7 @@ declare let __moduleName: string;
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css'],
     providers: [ActivitiTaskListService, FormService],
-    directives: [ActivitiTaskHeader, ActivitiPeople, ActivitiComments, ActivitiChecklist, ActivitiForm],
-    pipes: [AlfrescoPipeTranslate]
-
+    directives: [ActivitiTaskHeader, ActivitiPeople, ActivitiComments, ActivitiChecklist, ActivitiForm]
 })
 export class ActivitiTaskDetails implements OnInit, OnChanges {
 

@@ -16,7 +16,7 @@
  */
 
 import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { FilterRepresentationModel } from '../models/filter.model';
 import { Observer } from 'rxjs/Observer';
@@ -30,9 +30,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css'],
-    providers: [ActivitiProcessService],
-    pipes: [AlfrescoPipeTranslate]
-
+    providers: [ActivitiProcessService]
 })
 export class ActivitiProcessFilters implements OnInit, OnChanges {
 

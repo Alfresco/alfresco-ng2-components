@@ -23,7 +23,6 @@ import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoPipeTranslate,
     AlfrescoTranslationService,
     CONTEXT_MENU_DIRECTIVES
 } from 'ng2-alfresco-core';
@@ -142,8 +141,7 @@ import {
     `,
     styles: [':host > .container {padding: 10px}'],
     directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    providers: [DOCUMENT_LIST_PROVIDERS],
-    pipes: [AlfrescoPipeTranslate]
+    providers: [DOCUMENT_LIST_PROVIDERS]
 })
 class DocumentListDemo implements OnInit {
 

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
 import { Observer } from 'rxjs/Observer';
@@ -30,9 +30,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],
-    providers: [ActivitiTaskListService],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    providers: [ActivitiTaskListService]
 })
 export class ActivitiComments implements OnInit {
 

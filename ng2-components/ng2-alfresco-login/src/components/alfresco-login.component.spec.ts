@@ -23,7 +23,8 @@ import {
     beforeEach,
     beforeEachProviders
 } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { PLATFORM_PIPES } from '@angular/core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
@@ -37,6 +38,7 @@ describe('AlfrescoLogin', () => {
 
     beforeEachProviders(() => {
         return [
+            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
             { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
             AlfrescoSettingsService,
             { provide: AlfrescoTranslationService, useClass: TranslationMock }

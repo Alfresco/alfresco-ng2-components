@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
 import { Observer } from 'rxjs/Observer';
@@ -30,9 +30,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     templateUrl: 'activiti-apps.component.html',
     styleUrls: ['./activiti-apps.component.css', './activiti-apps-grid.component.css'],
-    providers: [ActivitiTaskListService],
-    pipes: [AlfrescoPipeTranslate]
-
+    providers: [ActivitiTaskListService]
 })
 export class ActivitiApps implements OnInit {
 

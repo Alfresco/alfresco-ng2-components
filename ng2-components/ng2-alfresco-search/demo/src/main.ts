@@ -22,7 +22,6 @@ import {
     ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoPipeTranslate,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 import {
@@ -49,8 +48,7 @@ import {
     `,
     styles: [':host > .container {padding: 10px}'],
     providers: [ALFRESCO_SEARCH_PROVIDERS],
-    directives: [ALFRESCO_SEARCH_DIRECTIVES],
-    pipes: [AlfrescoPipeTranslate]
+    directives: [ALFRESCO_SEARCH_DIRECTIVES]
 })
 class SearchDemo implements OnInit {
 

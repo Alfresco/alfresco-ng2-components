@@ -19,7 +19,6 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
 import {
     AlfrescoTranslationService,
-    AlfrescoPipeTranslate,
     AlfrescoAuthenticationService,
     AlfrescoSettingsService
 } from 'ng2-alfresco-core';
@@ -33,8 +32,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     directives: [FORM_DIRECTIVES],
     templateUrl: './alfresco-login.component.html',
-    styleUrls: ['./alfresco-login.component.css'],
-    pipes: [AlfrescoPipeTranslate]
+    styleUrls: ['./alfresco-login.component.css']
 
 })
 export class AlfrescoLoginComponent implements OnInit {
