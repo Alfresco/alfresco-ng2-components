@@ -6,9 +6,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "postinstall": "typings install",
-    "clean": "rimraf dist node_modules typings",
-    "typings": "typings install",
+    "clean": "rimraf dist node_modules",
     "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist && license-check",
     "build:w": "npm run tslint && rimraf dist && npm run watch-task",
     "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copy-dist:w\"  \"license-check\"",
@@ -53,8 +51,9 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
-    "concurrently": "^2.1.0",
-    "coveralls": "^2.11.9",
+    "@types/core-js": "^0.9.32",
+    "@types/jasmine": "^2.2.33",
+    "concurrently": "^2.2.0",
     "cpx": "^1.3.1",
     "jasmine-ajax": "^3.2.0",
     "jasmine-core": "2.4.1",
@@ -66,14 +65,12 @@
     "karma-jasmine-html-reporter": "^0.2.0",
     "karma-mocha-reporter": "^2.0.3",
     "license-check": "^1.0.4",
-    "material-design-lite": "^1.1.3",
     "remap-istanbul": "^0.6.3",
     "rimraf": "2.5.2",
     "traceur": "^0.0.91",
     "tslint": "^3.8.1",
-    "typescript": "^1.8.10",
-    "typings": "^1.0.4",
-    "wsrv": "0.1.3"
+    "typescript": "^2.0.2",
+    "wsrv": "^0.1.5"
   },
   "keywords": [
     "tag",
