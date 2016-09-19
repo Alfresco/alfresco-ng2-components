@@ -69,7 +69,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                         case FormFieldTypes.UPLOAD:
                             let files = this.field.value || [];
                             if (files.length > 0) {
-                                this.value = files[0].name;
+                                this.value = decodeURI(files[0].name);
                             }
                             break;
                         case FormFieldTypes.TYPEAHEAD:
