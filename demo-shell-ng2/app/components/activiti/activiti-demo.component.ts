@@ -53,6 +53,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     @ViewChild('activititasklist')
     activititasklist: any;
 
+    @ViewChild('activitiprocessfilter')
+    activitiprocessfilter: any;
+
     @ViewChild('activitiprocesslist')
     activitiprocesslist: any;
 
@@ -120,12 +123,20 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.taskFilter = event;
     }
 
+    onSuccessTaskFilterList(event: any) {
+        this.taskFilter = this.activitifilter.getCurrentFilter();
+    }
+
     onSuccessTaskList(event: UserTaskFilterRepresentationModel) {
         this.currentTaskId = this.activititasklist.getCurrentTaskId();
     }
 
     onProcessFilterClick(event: any) {
         this.processFilter = event;
+    }
+
+    onSuccessProcessFilterList(event: any) {
+        this.processFilter = this.activitiprocessfilter.getCurrentFilter();
     }
 
     onSuccessProcessList(event: any) {
