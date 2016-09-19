@@ -11,7 +11,7 @@ import {
 
 @Component({
   selector: 'my-app',
-  template: `<h4>START</h4><ng2-alfresco-userinfo></ng2-alfresco-userinfo>`,
+  template: `<h4>START</h4><ng2-alfresco-userinfo [userEmail]="'test'"></ng2-alfresco-userinfo>`,
   directives: [ UserInfoComponent ],
   providers: [AlfrescoAuthenticationService, AlfrescoSettingsService]
 })
@@ -20,35 +20,30 @@ import {
 class UserInfoDemo implements OnInit {
 
       private authenticated: boolean;
-      private ticket: string;
-      // private ecmHost: string;
+      private token: any;
 
       constructor(private authService: AlfrescoAuthenticationService,
                   private settingsService: AlfrescoSettingsService) {
-            this.settingsService.setProviders('ECM');
+            this.settingsService.setProviders('ALL');
       }
 
       public ngOnInit(): void {
           this.login();
       }
 
-      login() {
-          this.authService.login('test', 'test').subscribe(
-              ticket => {
-                  console.log(ticket);
-                  this.ticket = this.authService.getTicketEcm();
-                  this.authenticated = true;
-              },
-              error => {
-                  console.log(error);
-                  this.authenticated = false;
-              });
-      }
+    login() {
+        this.authService.login('test', 'test').subscribe(
+            token => {
+                console.log(token);
+                this.token = token;
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
+    }
 }
-
-
-
-
 
 bootstrap(UserInfoDemo, [
   UserInfoComponent,

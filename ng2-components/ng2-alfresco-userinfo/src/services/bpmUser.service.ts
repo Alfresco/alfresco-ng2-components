@@ -15,37 +15,39 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { EcmUserModel } from '../models/ecmUser.model';
+import { BpmUserModel } from '../models/bpmUser.model';
 /**
  *
- * ECMUserService retrieve all the information of an Ecm user.
+ * BPMUserService retrieve all the information of an Ecm user.
  *
- * @returns {ECMUserService} .
+ * @returns {BPMUserService} .
  */
 @Injectable()
-export class ECMUserService {
+export class BPMUserService {
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(public authService: AlfrescoAuthenticationService) {}
 
     /**
      * get User Information via ECM
      * @param userName - the user name
      */
-    getUserInfo(userName: string): Observable<EcmUserModel> {
-        return Observable.fromPromise(this.callApiGetPersonInfo(userName))
-            .map( data => <EcmUserModel> data['entry'])
+    getCurrentUserInfo(): Observable<BpmUserModel> {
+        return Observable.fromPromise(this.callApiGetProfile())
+            .map(
+                 data => <BpmUserModel> data
+                )
             .do(
-                 data => console.log('Node data', data['entry'])
+                 data => console.log('Node data', data)
                 ) // eyeball results in the console
             .catch(this.handleError);
     }
 
-    private callApiGetPersonInfo(userName: string, opts?: any) {
-        return this.apiService.getInstance().core.peopleApi.getPerson(userName, opts);
+    private callApiGetProfile() {
+        return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
     }
 
     /**

@@ -1,31 +1,46 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ECMUserService } from './services/ecmUser.service';
+import { BPMUserService } from './services/bpmUser.service';
 import { EcmUserModel } from './models/ecmUser.model';
+import { BpmUserModel } from './models/bpmUser.model';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
+
+declare let __moduleName: string;
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
+    moduleId: __moduleName,
     styles: [`:host h1 { font-size:22px }`],
-    template: `<h1>Hello World Angular 2 ng2-alfresco-userinfo</h1> <button (click)='doQueryUser()'>Do Query</button>`,
-    providers: [ ECMUserService ]
+    templateUrl: './userinfo.component.html',
+    providers: [ ECMUserService, BPMUserService, AlfrescoContentService ]
 })
 
+export class UserInfoComponent implements OnInit {
 
-export class UserInfoComponent {
+    @Input()
+    userEmail: string;
 
     private  ecmUser: EcmUserModel;
+    private  bpmUser: BpmUserModel;
 
-    constructor(private ecmUserService: ECMUserService) {
-      console.log('User info component constr');
+    constructor(private ecmUserService: ECMUserService,
+                private bpmUserService: BPMUserService,
+                private contentService: AlfrescoContentService) {
     }
 
-    doQueryUser() {
-      this.ecmUserService.getUserInfo('admin')
-                           .subscribe(
-                                    res => this.ecmUser = <EcmUserModel> res.entry
-                           );
+    ngOnInit() {
+        this.ecmUserService.getUserInfo(this.userEmail)
+                                .subscribe(
+                                      res => this.ecmUser = <EcmUserModel> res
+                                );
+        this.bpmUserService.getCurrentUserInfo()
+                                .subscribe(
+                                      res => this.bpmUser = <BpmUserModel> res
+                                );
     }
 
-
-
+    public getDocumentThumbnailUrl(avatarId: string): string {
+        return this.contentService.getDocumentThumbnailUrl(document);
+    }
 }
