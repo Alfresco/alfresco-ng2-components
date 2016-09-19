@@ -79,7 +79,11 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             this.loadRestFieldValue();
                             break;
                         case FormFieldTypes.RADIO_BUTTONS:
-                            this.loadRadioButtonValue();
+                            if (this.field.restUrl) {
+                                this.loadRestFieldValue();
+                            } else {
+                                this.loadRadioButtonValue();
+                            }
                             break;
                         default:
                             this.value = this.field.value;
