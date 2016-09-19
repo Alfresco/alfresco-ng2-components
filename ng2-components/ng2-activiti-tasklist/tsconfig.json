@@ -15,13 +15,12 @@
         "noImplicitReturns": false,
         "noImplicitUseStrict": false,
         "noFallthroughCasesInSwitch": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "types": ["core-js", "jasmine"]
     },
     "exclude": [
         "demo",
         "node_modules",
-        "typings/main",
-        "typings/main.d.ts",
         "dist"
     ]
 }

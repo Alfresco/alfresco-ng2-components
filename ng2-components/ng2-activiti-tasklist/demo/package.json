@@ -5,9 +5,8 @@
   "author": "Alfresco Software, Ltd.",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf dist node_modules typings",
-    "postinstall": "npm run typings && npm run build",
-    "typings": "typings install",
+    "clean": "rimraf dist node_modules",
+    "postinstall": "npm run build",
     "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run server\" ",
     "server": "wsrv -o -s -l",
     "build": "npm run tslint && rimraf dist && npm run tsc",
@@ -41,13 +40,13 @@
     "ng2-alfresco-core": "^0.3.0"
   },
   "devDependencies": {
-    "browser-sync": "2.10.0",
-    "concurrently": "2.0.0",
+    "@types/core-js": "^0.9.32",
+    "@types/jasmine": "^2.2.33",
+    "concurrently": "^2.2.0",
     "rimraf": "2.5.2",
     "tslint": "3.8.1",
-    "typescript": "1.8.10",
-    "typings": "1.0.4",
-    "wsrv": "0.1.3"
+    "typescript": "^2.0.2",
+    "wsrv": "^0.1.5"
   },
   "keywords": [
     "angular2",

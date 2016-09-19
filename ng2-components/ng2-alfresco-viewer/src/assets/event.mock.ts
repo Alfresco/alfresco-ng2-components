@@ -26,8 +26,11 @@ export class EventMock {
     }
 
     static resizeMobileView() {
+        // todo: no longer compiles with TS 2.0.2 as innerWidth/innerHeight are readonly fields
+        /*
         window.innerWidth = 320;
         window.innerHeight = 568;
+        */
         window.dispatchEvent(new Event('resize'));
     }
 }
