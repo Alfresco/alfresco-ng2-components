@@ -71,7 +71,7 @@ module.exports = function (config) {
     ],
 
     // Coverage reporter generates the coverage
-    reporters: ['mocha', 'coverage', 'coveralls', 'kjhtml'],
+    reporters: ['mocha', 'coverage', 'kjhtml'],
 
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
@@ -89,7 +89,7 @@ module.exports = function (config) {
         {type: 'lcov'}
       ]
     }
-  }
+  };
 
   if (process.env.TRAVIS) {
     configuration.browsers = ['Chrome_travis_ci'];
