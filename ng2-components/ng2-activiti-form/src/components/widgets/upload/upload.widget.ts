@@ -47,22 +47,14 @@ export class UploadWidget extends WidgetComponent implements OnInit {
     }
 
     getUploadedFileName(): string {
-        let result = this.fileName;
-
-        if (this.field &&
-            this.field.value &&
-            this.field.value.length > 0) {
-            let file = this.field.value[0];
-            result = file.name;
-        }
-
-        return result;
+        return decodeURI(this.fileName);
     }
 
     reset() {
         this.field.value = null;
         this.field.json.value = null;
         this.hasFile = false;
+        this.fileName = null;
     }
 
     onFileChanged(event: any) {
@@ -72,10 +64,10 @@ export class UploadWidget extends WidgetComponent implements OnInit {
             let file = files[0];
 
             this.hasFile = true;
-            this.fileName = file.name;
+            this.fileName = encodeURI(file.name);
 
             let formData: FormData = new FormData();
-            formData.append('file', file, file.name);
+            formData.append('file', file, this.fileName);
 
             let xhr: XMLHttpRequest = new XMLHttpRequest();
 
