@@ -42,11 +42,12 @@
 - [Viewer](ng2-alfresco-viewer/README.md)
 - [Login](ng2-alfresco-login/README.md)
 - [Upload](ng2-alfresco-upload/README.md)
-- [Webscript Viewer](ng2-components/ng2-alfresco-webscript/README.md)
-- [Tag list and controls](ng2-components/ng2-alfresco-tag/README.md)
+- [Webscript Viewer](ng2-alfresco-webscript/README.md)
+- [Tag list and controls](ng2-alfresco-tag/README.md)
 
 ## BPM components
 
+- [TaskList](ng2-activiti-tasklist/README.md)
 - [ProcessList](ng2-activiti-processlist/README.md)
 - [Form](ng2-activiti-form/README.md)
 
