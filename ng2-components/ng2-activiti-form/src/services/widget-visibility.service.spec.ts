@@ -209,7 +209,8 @@ describe('WidgetVisibilityService', () => {
     it('should be able to retrieve the value of a process variable', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-               let varValue = service.getValueFromVariable(formTest, 'TEST_VAR_1');
+               expect(res).toBeDefined();
+               let varValue = service.getValueFromVariable(formTest, 'TEST_VAR_1', res);
                expect(varValue).not.toBeUndefined();
                expect(varValue).toBe('test_value_1');
                done();
@@ -228,7 +229,7 @@ describe('WidgetVisibilityService', () => {
                                                   type: 'string',
                                                   value: 'form_value_test' }
                                               ]});
-       let varValue = service.getValueFromVariable(fakeForm, 'FORM_VARIABLE_TEST');
+       let varValue = service.getValueFromVariable(fakeForm, 'FORM_VARIABLE_TEST', null);
 
        expect(varValue).not.toBeUndefined();
        expect(varValue).toBe('form_value_test');
@@ -238,7 +239,7 @@ describe('WidgetVisibilityService', () => {
     it('should return null if the variable does not exist', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-               let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR');
+               let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR', res);
                expect(varValue).toBeNull();
                done();
             }
@@ -360,7 +361,7 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).toBeNull();
     });
 
-    it('should retrieve the value for the left field when it is a process variable', (variableUpdated) => {
+    it('should retrieve the value for the left field when it is a process variable', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                let visibilityObjTest = new WidgetVisibilityModel();
@@ -370,7 +371,7 @@ describe('WidgetVisibilityService', () => {
 
                expect(rightValue).not.toBeNull();
                expect(rightValue).toBe('test_value_2');
-               variableUpdated();
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -462,7 +463,7 @@ describe('WidgetVisibilityService', () => {
        expect(isVisible).toBeTruthy();
     });
 
-    it('should evaluate the visibility for the field between form value and process var', (varReady) => {
+    it('should evaluate the visibility for the field between form value and process var', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                let fakeFormWithField = new FormModel(fakeFormJson);
@@ -474,7 +475,7 @@ describe('WidgetVisibilityService', () => {
                let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
 
                expect(isVisible).toBeTruthy();
-               varReady();
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -485,7 +486,7 @@ describe('WidgetVisibilityService', () => {
     });
 
 
-    it('should evaluate visibility with multiple conditions', (ready) => {
+    it('should evaluate visibility with multiple conditions', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                let fakeFormWithField = new FormModel(fakeFormJson);
@@ -502,7 +503,7 @@ describe('WidgetVisibilityService', () => {
                let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
 
                expect(isVisible).toBeTruthy();
-               ready();
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
