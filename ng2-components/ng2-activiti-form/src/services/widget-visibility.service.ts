@@ -116,7 +116,6 @@ export class WidgetVisibilityService {
              }
           }
        }
-       return null;
     }
 
     private getValueFromVariable( form: FormModel, name: string, processVarList: TaskProcessVariableModel[] ) {
@@ -180,7 +179,7 @@ export class WidgetVisibilityService {
                 console.error( 'NO valid operation!' );
                 break;
         }
-        return null;
+        return;
     }
 
     getTaskProcessVariableModelsForTask(taskId: string): Observable<TaskProcessVariableModel[]> {

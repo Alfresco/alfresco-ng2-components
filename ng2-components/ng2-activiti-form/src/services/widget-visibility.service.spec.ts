@@ -262,12 +262,12 @@ describe('WidgetVisibilityService', () => {
        expect(formValue).toBe('field_with_condition_value');
     });
 
-    it('should return null if the field value is not in the form', () => {
+    it('should return undefined if the field value is not in the form', () => {
        let stubFormWithFields = new FormModel(fakeFormJson);
 
        let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_MYSTERY');
 
-       expect(formValue).toBeNull();
+       expect(formValue).toBeUndefined();
     });
 
     it('should take the value from form values if it is present', () => {
@@ -289,13 +289,13 @@ describe('WidgetVisibilityService', () => {
        expect(value).toBe('field_with_condition_value');
     });
 
-    it('should return null if the element is not present anywhere', () => {
+    it('should return undefined if the element is not present anywhere', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
        fakeFormWithField.values = formValues;
 
        let formValue = service.getValueOField(fakeFormWithField, 'FIELD_MYSTERY');
 
-       expect(formValue).toBeNull();
+       expect(formValue).toBeUndefined();
     });
 
     it('should retrieve the value for the right field when it is a value', () => {
@@ -350,7 +350,7 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).toBe('value_2');
     });
 
-    it('should return null for a value that is not on variable or form', () => {
+    it('should return undefined for a value that is not on variable or form', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
        fakeFormWithField.values = formValues;
        let visibilityObjTest = new WidgetVisibilityModel();
@@ -358,7 +358,7 @@ describe('WidgetVisibilityService', () => {
 
        let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
-       expect(rightValue).toBeNull();
+       expect(rightValue).toBeUndefined();
     });
 
     it('should retrieve the value for the left field when it is a process variable', (done) => {
@@ -418,13 +418,13 @@ describe('WidgetVisibilityService', () => {
        expect(leftValue).toBe('value_2');
     });
 
-    it('should return null for a value that is not on variable or form', () => {
+    it('should return undefined for a value that is not on variable or form', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
        let visibilityObjTest = new WidgetVisibilityModel();
 
        let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-       expect(leftValue).toBeNull();
+       expect(leftValue).toBeUndefined();
     });
 
     it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
