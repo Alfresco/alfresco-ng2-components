@@ -43,6 +43,8 @@ export class UploadWidget extends WidgetComponent implements OnInit {
             this.field.value &&
             this.field.value.length > 0) {
             this.hasFile = true;
+            let file = this.field.value[0];
+            this.fileName = file.name;
         }
     }
 
