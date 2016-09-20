@@ -234,11 +234,11 @@ will also be executed after your custom code.**
   * [x] Manual
   * [x] REST service
   * [ ] Data source
-- [ ] Typeahead
+- [x] Typeahead
 - [ ] Amount
 - [x] Radio buttons
-- [ ] People
-- [ ] Group of People
+- [x] People
+- [x] Group of People
 - [ ] Dynamic Table
 - [x] Hyperlink
 - Header
