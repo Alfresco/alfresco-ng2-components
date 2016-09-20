@@ -70,7 +70,6 @@ echo "====== linking component: ng2-alfresco-tag ====="
 cd "$DIR/../ng2-components/ng2-alfresco-tag"
 npm link ng2-alfresco-core
 npm link
-npm run typings
 npm run build
 
 #LINK ALL THE OTHERS COMPONENTS
