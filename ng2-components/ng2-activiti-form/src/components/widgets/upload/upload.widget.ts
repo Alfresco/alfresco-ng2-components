@@ -30,13 +30,14 @@ declare var componentHandler;
 })
 export class UploadWidget extends WidgetComponent implements OnInit {
 
+    hasFile: boolean;
+    fileName: string;
+
     constructor(private settingsService: AlfrescoSettingsService,
                 private authService: AlfrescoAuthenticationService) {
         super();
     }
 
-    hasFile: boolean;
-    fileName: string;
 
     ngOnInit() {
         if (this.field &&
