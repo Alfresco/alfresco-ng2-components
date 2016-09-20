@@ -1,0 +1,14 @@
+.profile-image {
+  text-align: center;
+  border-radius: 90%;
+  width: 40px;
+  margin-right: 0%;
+  cursor: pointer;
+  border: 2px solid #999999;
+}
+
+.button-profile {
+  display: inline-block;
+  margin-right: -10px;
+  border: 0px;
+}

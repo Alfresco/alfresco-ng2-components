@@ -18,7 +18,7 @@
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { BpmUserModel } from '../models/bpmUser.model';
 /**
  *
@@ -46,10 +46,25 @@ export class BPMUserService {
             .catch(this.handleError);
     }
 
+    /**
+     * get User Information via ECM
+     * @param userName - the user name
+     */
+    getCurrentUserProfileImage(): Observable<BpmUserModel> {
+        return Observable.fromPromise(this.callApiGetProfileImage())
+            .do(
+                 data => console.log('Node data', data)
+                ) // eyeball results in the console
+            .catch(this.handleError);
+    }
+
+    private callApiGetProfileImage() {
+        return this.authService.getAlfrescoApi().activiti.profileApi.getProfilePicture();
+    }
+
     private callApiGetProfile() {
         return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
     }
-
     /**
      * Throw the error
      * @param error
