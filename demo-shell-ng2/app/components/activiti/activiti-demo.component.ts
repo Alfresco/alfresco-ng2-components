@@ -26,6 +26,10 @@ import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm } from 'ng2-activiti-form';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
+import {
+    ObjectDataTableAdapter,
+    DataSorting
+} from 'ng2-alfresco-datatable';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -74,6 +78,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     sub: Subscription;
 
+    dataTasks: ObjectDataTableAdapter;
+    dataProcesses: ObjectDataTableAdapter;
+
     @Input()
     appId: number;
 
@@ -90,13 +97,23 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     constructor(private route: ActivatedRoute) {
-        this.taskSchemaColumns = [
-            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
-            // {type: 'text', key: 'created', title: 'Created', sortable: true}
-        ];
-        this.processSchemaColumns = [
-            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
-        ];
+        this.dataTasks = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataTasks.setSorting(new DataSorting('created', 'desc'));
+
+        this.dataProcesses = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
     }
 
     ngOnInit() {
