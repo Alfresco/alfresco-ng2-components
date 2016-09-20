@@ -17,7 +17,7 @@
 
 import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
-import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
+import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataRowEvent, DataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 import { UserProcessInstanceFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
@@ -39,20 +39,11 @@ declare let __moduleName: string;
 })
 export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
-    errorMessage: string;
-    data: ObjectDataTableAdapter;
-    currentProcessInstanceId: string;
-
     @Input()
     filter: UserProcessInstanceFilterRepresentationModel;
 
     @Input()
-    schemaColumn: any[] = [
-        {type: 'text', key: 'id', title: 'Id', sortable: true},
-        {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-        {type: 'text', key: 'started', title: 'Started', sortable: true},
-        {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
-    ];
+    data: DataTableAdapter;
 
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -63,6 +54,16 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
+    errorMessage: string;
+    currentProcessInstanceId: string;
+
+    private defaultSchemaColumn: any[] = [
+        {type: 'text', key: 'id', title: 'Id', sortable: true},
+        {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+        {type: 'text', key: 'started', title: 'Started', sortable: true},
+        {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
+    ];
+
     constructor (private processService: ActivitiProcessService, private translate: AlfrescoTranslationService) {
         if (translate !== null) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
@@ -70,10 +71,9 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.data = new ObjectDataTableAdapter(
-            [],
-            this.schemaColumn
-        );
+        if (!this.data) {
+            this.data = this.initDefaultSchemaColumns();
+        }
         if (this.filter) {
             let requestNode = this.convertProcessInstanceToTaskQuery(this.filter);
             this.load(requestNode);
@@ -89,11 +89,23 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         }
     }
 
+    /**
+     * Return an initDefaultSchemaColumns instance with the default Schema Column
+     * @returns {ObjectDataTableAdapter}
+     */
+    initDefaultSchemaColumns(): ObjectDataTableAdapter {
+        return new ObjectDataTableAdapter(
+            [],
+            this.defaultSchemaColumn
+        );
+    }
+
     load(requestNode: TaskQueryRequestRepresentationModel) {
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (processInstances) => {
-                    this.renderProcessInstances(processInstances);
+                    let processRow = this.createDataRow(processInstances);
+                    this.renderProcessInstances(processRow);
                     this.selectFirstProcess();
                     this.onSuccess.emit(processInstances);
                 },
@@ -104,16 +116,30 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     }
 
     /**
+     * Create an array of ObjectDataRow
+     * @param processes
+     * @returns {ObjectDataRow[]}
+     */
+    private createDataRow(processes: any[]): ObjectDataRow[] {
+        let processRows: ObjectDataRow[] = [];
+        processes.forEach((row) => {
+            processRows.push(new ObjectDataRow({
+                id: row.id,
+                name: row.name,
+                started: row.started
+            }));
+        });
+        return processRows;
+    }
+
+    /**
      * Render the process list
      *
      * @param processInstances
      */
     private renderProcessInstances(processInstances: any[]) {
         processInstances = this.optimizeProcessNames(processInstances);
-        this.data = new ObjectDataTableAdapter(
-            processInstances,
-            this.schemaColumn
-        );
+        this.data.setRows(processInstances);
     }
 
     /**
@@ -161,9 +187,9 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
      */
     private optimizeProcessNames(tasks: any[]) {
         tasks = tasks.map(t => {
-            t.name = t.name || 'No name';
-            if (t.name.length > 50) {
-                t.name = t.name.substring(0, 50) + '...';
+            t.obj.name = t.obj.name || 'No name';
+            if (t.obj.name.length > 50) {
+                t.obj.name = t.obj.name.substring(0, 50) + '...';
             }
             return t;
         });
