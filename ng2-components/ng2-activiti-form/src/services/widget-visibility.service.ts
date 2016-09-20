@@ -128,20 +128,18 @@ export class WidgetVisibilityService {
         if ( form.json.variables) {
           let variableFromForm = form.json.variables.find(formVar => formVar.name === name);
           if ( variableFromForm ) {
-            return variableFromForm.value;
+            return variableFromForm ? variableFromForm.value : variableFromForm;
           }
         }
-        return null;
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]) {
         if ( this.processVarList ) {
           let variableFromProcess = this.processVarList.find(variable => variable.id === name);
           if ( variableFromProcess ) {
-            return variableFromProcess.value;
+            return variableFromProcess ? variableFromProcess.value : variableFromProcess;
           }
         }
-        return null;
     }
 
     private evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {

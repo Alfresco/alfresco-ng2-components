@@ -236,11 +236,11 @@ describe('WidgetVisibilityService', () => {
     });
 
 
-    it('should return null if the variable does not exist', (done) => {
+    it('should return undefined if the variable does not exist', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR', res);
-               expect(varValue).toBeNull();
+               expect(varValue).toBeUndefined();
                done();
             }
        );
