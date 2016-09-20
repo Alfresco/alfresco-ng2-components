@@ -26,7 +26,7 @@ import { ActivitiTaskList } from './activiti-tasklist.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { UserTaskFilterRepresentationModel } from '../models/filter.model';
 import { Observable } from 'rxjs/Rx';
-import { ObjectDataRow, DataRowEvent } from 'ng2-alfresco-datatable';
+import { ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 
 describe('ActivitiTaskList', () => {
@@ -79,23 +79,26 @@ describe('ActivitiTaskList', () => {
 
     it('should use the default schemaColumn as default', () => {
         taskList.ngOnInit();
-        expect(taskList.schemaColumn).toBeDefined();
-        expect(taskList.schemaColumn.length).toEqual(4);
+        expect(taskList.data.getColumns()).toBeDefined();
+        expect(taskList.data.getColumns().length).toEqual(4);
     });
 
     it('should use the schemaColumn passed in input', () => {
-        taskList.schemaColumn = [
-            {type: 'text', key: 'fake-id', title: 'Name'}
-        ];
+        taskList.data = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'fake-id', title: 'Name'}
+            ]
+        );
 
         taskList.ngOnInit();
-        expect(taskList.schemaColumn).toBeDefined();
-        expect(taskList.schemaColumn.length).toEqual(1);
+        expect(taskList.data.getColumns()).toBeDefined();
+        expect(taskList.data.getColumns().length).toEqual(1);
     });
 
     it('should return an empty task list when the taskFilter is not passed', () => {
         taskList.ngOnInit();
-        expect(taskList.tasks).toBeUndefined();
+        expect(taskList.data).toBeDefined();
         expect(taskList.isTaskListEmpty()).toBeTruthy();
     });
 
@@ -106,11 +109,11 @@ describe('ActivitiTaskList', () => {
 
         taskList.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
-            expect(taskList.tasks).toBeDefined();
+            expect(taskList.data).toBeDefined();
             expect(taskList.isTaskListEmpty()).not.toBeTruthy();
-            expect(taskList.tasks.getRows().length).toEqual(2);
-            expect(taskList.tasks.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(taskList.tasks.getRows()[1].getValue('name')).toEqual('Nameless task');
+            expect(taskList.data.getRows().length).toEqual(2);
+            expect(taskList.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+            expect(taskList.data.getRows()[1].getValue('name')).toEqual('Nameless task');
             done();
         });
 

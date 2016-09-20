@@ -2,7 +2,7 @@
 <div *ngIf="taskFilter">
     <div *ngIf="!isTaskListEmpty()">
         <alfresco-datatable
-                [data]="tasks"
+                [data]="data"
                 (rowClick)="onRowClick($event)">
         </alfresco-datatable>
     </div>
