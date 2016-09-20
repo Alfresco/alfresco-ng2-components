@@ -120,7 +120,10 @@ export class WidgetVisibilityService {
     }
 
     private getValueFromVariable(form: FormModel, name: string) {
-       let formVariable = form.json.variables.find(formVar => formVar.name === name);
+       let formVariable;
+       if ( form.json.variables ) {
+         formVariable = form.json.variables.find(formVar => formVar.name === name);
+       }
        if ( !formVariable && this.processVarList ) {
          formVariable = this.processVarList.find(variable => variable.id === name);
        }
