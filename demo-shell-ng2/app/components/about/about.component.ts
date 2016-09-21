@@ -17,21 +17,14 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter /*,
-    DataSorting,
-    ObjectDataRow,
-    ObjectDataColumn*/
-} from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'about-page',
-    templateUrl: './about.component.html',
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES]
+    templateUrl: './about.component.html'
 })
 export class AboutComponent implements OnInit {
 

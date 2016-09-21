@@ -16,7 +16,6 @@
  */
 
 import { Component } from '@angular/core';
-import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 
 @Component({
     selector: 'alfresco-tag-demo',
@@ -31,9 +30,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
                     <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
               </div>
             </div>
-    `,
-    directives: [TAGCOMPONENT],
-    providers: [TAGSERVICES]
+    `
 })
 export class TagComponent {
 

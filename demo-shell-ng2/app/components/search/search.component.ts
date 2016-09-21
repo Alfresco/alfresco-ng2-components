@@ -16,9 +16,6 @@
  */
 
 import { Component } from '@angular/core';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 
 declare let __moduleName: string;
 
@@ -47,16 +44,12 @@ declare let __moduleName: string;
                 width: 100%;
             }
         }
-    `],
-    directives: [ ALFRESCO_SEARCH_DIRECTIVES, VIEWERCOMPONENT ]
+    `]
 })
 export class SearchComponent {
 
     fileShowed: boolean = false;
     fileNodeId: string;
-
-    constructor(public contentService: AlfrescoContentService) {
-    }
 
     onFileClicked(event) {
         if (event.value.entry.isFile) {

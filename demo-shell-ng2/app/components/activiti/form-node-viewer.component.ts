@@ -16,8 +16,7 @@
  */
 
 import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivitiForm, FormService, EcmModelService, NodeService } from 'ng2-activiti-form';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 declare let __moduleName: string;
@@ -27,9 +26,7 @@ declare var componentHandler;
     moduleId: __moduleName,
     selector: 'form-node-viewer',
     templateUrl: './form-node-viewer.component.html',
-    styleUrls: ['./form-node-viewer.component.css'],
-    directives: [ActivitiForm],
-    providers: [FormService, EcmModelService, NodeService]
+    styleUrls: ['./form-node-viewer.component.css']
 })
 export class FormNodeViewer implements OnInit, OnDestroy, AfterViewChecked {
 
@@ -37,9 +34,7 @@ export class FormNodeViewer implements OnInit, OnDestroy, AfterViewChecked {
 
     private sub: Subscription;
 
-    constructor(private formService: FormService,
-                private route: ActivatedRoute,
-                private router: Router) {
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {

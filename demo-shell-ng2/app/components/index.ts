@@ -26,3 +26,4 @@ export { WebscriptComponent } from './webscript/webscript.component';
 export { TagComponent } from './tag/tag.component';
 export { AboutComponent } from './about/about.component';
 export { FilesComponent } from './files/files.component';
+export { FormNodeViewer } from './activiti/form-node-viewer.component';

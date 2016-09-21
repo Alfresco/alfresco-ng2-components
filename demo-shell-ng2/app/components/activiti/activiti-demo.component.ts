@@ -16,14 +16,12 @@
  */
 
 import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
-import { ALFRESCO_TASKLIST_DIRECTIVES,
+import {
     AppDefinitionRepresentationModel,
     FilterRepresentationModel,
     UserTaskFilterRepresentationModel,
     ActivitiApps
 } from 'ng2-activiti-tasklist';
-import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
-import { ActivitiForm } from 'ng2-activiti-form';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
@@ -38,8 +36,7 @@ declare var componentHandler;
     moduleId: __moduleName,
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
-    styleUrls: ['./activiti-demo.component.css'],
-    directives: [ALFRESCO_TASKLIST_DIRECTIVES, ACTIVITI_PROCESSLIST_DIRECTIVES, ActivitiForm]
+    styleUrls: ['./activiti-demo.component.css']
 })
 export class ActivitiDemoComponent implements AfterViewChecked {
 
