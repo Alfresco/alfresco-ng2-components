@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { FormModel, FormService } from 'ng2-activiti-form';
 
 declare let componentHandler: any;
 declare let __moduleName: string;
@@ -27,15 +26,12 @@ declare let __moduleName: string;
     selector: 'activiti-task-header',
     moduleId: __moduleName,
     templateUrl: './activiti-task-header.component.html',
-    styleUrls: ['./activiti-task-header.component.css'],
-    providers: [ FormService ]
+    styleUrls: ['./activiti-task-header.component.css']
 })
-export class ActivitiTaskHeader implements OnInit, OnChanges {
+export class ActivitiTaskHeader implements OnInit {
 
     @Input()
     taskDetails: TaskDetailsModel;
-
-    taskForm: FormModel;
 
     /**
      * Constructor
@@ -43,7 +39,6 @@ export class ActivitiTaskHeader implements OnInit, OnChanges {
      * @param translate
      */
     constructor(private auth: AlfrescoAuthenticationService,
-                private activitiForm: FormService,
                 private translate: AlfrescoTranslationService) {
 
         if (translate) {
@@ -52,29 +47,7 @@ export class ActivitiTaskHeader implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        if (this.taskDetails && this.taskDetails.formKey) {
-            this.load(this.taskDetails.id);
-        }
+
     }
 
-    ngOnChanges(change) {
-        if (this.taskDetails && this.taskDetails.formKey) {
-            this.load(this.taskDetails.id);
-        } else {
-            this.taskForm = null;
-        }
-    }
-
-    public load(taskId: string) {
-        if (taskId) {
-            this.activitiForm.getTaskForm(taskId).subscribe(
-                (response) => {
-                    this.taskForm = response;
-                },
-                (err) => {
-                    console.error(err);
-                }
-            );
-        }
-    }
 }
