@@ -82,7 +82,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         let appId = changes['appId'];
-        if (appId && appId.currentValue) {
+        if (appId) {
             this.load();
             return;
         }

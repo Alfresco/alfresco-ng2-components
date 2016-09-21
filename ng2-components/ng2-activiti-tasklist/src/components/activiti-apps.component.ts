@@ -36,6 +36,8 @@ export class ActivitiApps implements OnInit {
 
     public static LAYOUT_LIST: string = 'LIST';
     public static LAYOUT_GRID: string = 'GRID';
+    public static DEFAULT_TASKS_APP: string = 'tasks';
+    public static DEFAULT_TASKS_APP_NAME: string = 'Task App';
 
     @Input()
     layoutType: string = ActivitiApps.LAYOUT_GRID;
@@ -80,8 +82,12 @@ export class ActivitiApps implements OnInit {
     public load(name?: string) {
         this.activitiTaskList.getDeployedApplications(name).subscribe(
             (res) => {
-                res.forEach((app) => {
-                    if (app.deploymentId) {
+                res.forEach((app: AppDefinitionRepresentationModel) => {
+                    if (app.defaultAppId === ActivitiApps.DEFAULT_TASKS_APP) {
+                        app.name = ActivitiApps.DEFAULT_TASKS_APP_NAME;
+                        this.appsObserver.next(app);
+                        this.selectApp(app);
+                    } else if (app.deploymentId) {
                         this.appsObserver.next(app);
                     }
                 });
