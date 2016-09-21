@@ -14,7 +14,7 @@
             <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
                 <i class="material-icons mdl-list__item-icon">assignment</i>
                 <span>{{task.name}}</span>
-                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: task.created | date:'mediumDate' } }}</span>
+                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: task.created} }}</span>
             </span>
         </li>
     </ul>
