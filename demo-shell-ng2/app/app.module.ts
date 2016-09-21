@@ -16,58 +16,131 @@
  */
 
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { SearchModule } from 'ng2-alfresco-search';
+import { LoginModule } from 'ng2-alfresco-login';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 
 import { SearchBarComponent } from './components/index';
-import { MDL, ALFRESCO_CORE_PROVIDERS, CONTEXT_MENU_DIRECTIVES, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
-import { ALFRESCO_LOGIN_DIRECTIVES } from 'ng2-alfresco-login';
+import { MDL, ALFRESCO_CORE_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
 import { ALFRESCO_DATATABLE_DIRECTIVES, PaginationComponent } from 'ng2-alfresco-datatable';
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
-import { ActivitiForm, ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
+import { ActivitiForm, ATIVITI_FORM_PROVIDERS, CONTAINER_WIDGET_DIRECTIVES, PRIMITIVE_WIDGET_DIRECTIVES } from 'ng2-activiti-form';
 import { DOCUMENT_LIST_DIRECTIVES, DOCUMENT_LIST_PROVIDERS } from 'ng2-alfresco-documentlist';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
+import { ALFRESCO_ULPOAD_COMPONENTS, ALFRESCO_ULPOAD_DIRECTIVES, ALFRESCO_ULPOAD_SERVICES } from 'ng2-alfresco-upload';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
-import { ALFRESCO_SEARCH_DIRECTIVES, ALFRESCO_SEARCH_PROVIDERS } from 'ng2-alfresco-search';
 import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
+
+
+import {
+    UploadButtonComponent,
+    DataTableDemoComponent,
+    SearchComponent,
+    SearchBarComponent,
+    LoginDemoComponent,
+    ActivitiDemoComponent,
+    FormViewer,
+    WebscriptComponent,
+    TagComponent,
+    AboutComponent,
+    FilesComponent,
+    FormNodeViewer
+} from './components/index';
+
+import {
+    TabsWidget, ContainerWidget,
+    TextWidget,
+    NumberWidget,
+    CheckboxWidget,
+    MultilineTextWidget,
+    DropdownWidget,
+    HyperlinkWidget,
+    RadioButtonsWidget,
+    DisplayValueWidget,
+    DisplayTextWidget,
+    UploadWidget,
+    AttachWidget,
+    TypeaheadWidget,
+    FunctionalGroupWidget,
+    PeopleWidget
+} from 'ng2-activiti-form';
+
+// todo: temp
+const ACTIVITI_FORM_DIRECTIVES: any[] = [
+    ActivitiForm,
+
+    TabsWidget,
+    ContainerWidget,
+    TextWidget,
+    NumberWidget,
+    CheckboxWidget,
+    MultilineTextWidget,
+    DropdownWidget,
+    HyperlinkWidget,
+    RadioButtonsWidget,
+    DisplayValueWidget,
+    DisplayTextWidget,
+    UploadWidget,
+    AttachWidget,
+    TypeaheadWidget,
+    FunctionalGroupWidget,
+    PeopleWidget
+];
 
 @NgModule({
     imports: [
         BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        TranslateModule.forRoot(),
         routing,
+        LoginModule,
         SearchModule.forRoot()
     ],
     declarations: [
         AppComponent,
         SearchBarComponent,
         MDL,
-        ...ALFRESCO_LOGIN_DIRECTIVES,
         ...ALFRESCO_DATATABLE_DIRECTIVES, PaginationComponent,
         ...ALFRESCO_TASKLIST_DIRECTIVES,
         ...ACTIVITI_PROCESSLIST_DIRECTIVES,
-        ActivitiForm,
+        ...ACTIVITI_FORM_DIRECTIVES,
         ...DOCUMENT_LIST_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
         ...ALFRESCO_ULPOAD_COMPONENTS,
         ...VIEWERCOMPONENT,
-        ...ALFRESCO_SEARCH_DIRECTIVES,
         ...TAGCOMPONENT,
         ...WEBSCRIPTCOMPONENT,
-        AlfrescoPipeTranslate
+        ...ALFRESCO_ULPOAD_COMPONENTS, ...ALFRESCO_ULPOAD_DIRECTIVES,
+
+        UploadButtonComponent,
+        DataTableDemoComponent,
+        SearchComponent,
+        SearchBarComponent,
+        LoginDemoComponent,
+        ActivitiDemoComponent,
+        FormViewer,
+        WebscriptComponent,
+        TagComponent,
+        AboutComponent,
+        FilesComponent,
+        FormNodeViewer
     ],
     providers: [
         ...ALFRESCO_CORE_PROVIDERS,
         ...DOCUMENT_LIST_PROVIDERS,
         ...ATIVITI_FORM_PROVIDERS,
-        ...ALFRESCO_SEARCH_PROVIDERS,
         ...TAGSERVICES,
-        UploadService
+        ...ALFRESCO_ULPOAD_SERVICES
     ],
     bootstrap: [ AppComponent ]
 })

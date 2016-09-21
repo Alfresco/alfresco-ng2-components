@@ -32,6 +32,9 @@ export class MediaPlayerComponent {
     @Input()
     mimeType: string;
 
+    @Input()
+    nameFile: string;
+
     ngOnChanges(changes) {
         if (!this.urlFile) {
             throw new Error('Attribute urlFile is required');

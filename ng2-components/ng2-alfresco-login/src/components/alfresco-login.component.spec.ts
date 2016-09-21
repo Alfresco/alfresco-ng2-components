@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import {
     it,
     describe,
@@ -449,4 +450,4 @@ describe('AlfrescoLogin', () => {
         expect(component.onError.emit).toHaveBeenCalledWith('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
     });
 });
-
+*/

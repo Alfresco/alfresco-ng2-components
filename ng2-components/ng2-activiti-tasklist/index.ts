@@ -20,16 +20,29 @@ import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
 import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
 import { ActivitiFilters } from './src/components/activiti-filters.component';
 import { NoTaskDetailsTemplateComponent } from './src/components/no-task-detail-template.component';
+import { ActivitiChecklist } from './src/components/activiti-checklist.component';
+import { ActivitiComments } from './src/components/activiti-comments.component';
+import { ActivitiPeople } from './src/components/activiti-people.component';
+import { ActivitiTaskHeader } from './src/components/activiti-task-header.component';
 
 export * from './src/components/activiti-apps.component';
 export * from './src/components/activiti-tasklist.component';
 export * from './src/services/activiti-tasklist.service';
 export * from  './src/models/filter.model';
+export * from './src/components/activiti-checklist.component';
+export * from './src/components/activiti-comments.component';
+export * from './src/components/activiti-people.component';
+export * from './src/components/activiti-task-header.component';
+export * from './src/components/no-task-detail-template.component';
 
 export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [
     NoTaskDetailsTemplateComponent,
     ActivitiApps,
     ActivitiFilters,
     ActivitiTaskList,
-    ActivitiTaskDetails
+    ActivitiTaskDetails,
+    ActivitiChecklist,
+    ActivitiComments,
+    ActivitiPeople,
+    ActivitiTaskHeader
 ];

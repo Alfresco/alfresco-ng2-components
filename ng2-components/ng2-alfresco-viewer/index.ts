@@ -15,9 +15,6 @@
  * limitations under the License.
  */
 
-import { ViewerComponent } from './src/componets/viewer.component';
-import { RenderingQueueServices } from './src/services/rendering-queue.services';
-
 /**
  * ng2-alfresco-viewer, provide components to view files.
  *
@@ -27,16 +24,26 @@ import { RenderingQueueServices } from './src/services/rendering-queue.services'
  *          </alfresco-viewer>
  */
 
+import { ViewerComponent } from './src/componets/viewer.component';
+import { RenderingQueueServices } from './src/services/rendering-queue.services';
+import { ImgViewerComponent } from './src/componets/imgViewer.component';
+import { MediaPlayerComponent } from './src/componets/mediaPlayer.component';
+import { NotSupportedFormat } from './src/componets/notSupportedFormat.component';
+import { PdfViewerComponent } from './src/componets/pdfViewer.component';
+
 export * from './src/componets/viewer.component';
 export * from './src/services/rendering-queue.services';
-
-export default {
-    components: [ViewerComponent],
-    directives: [RenderingQueueServices]
-};
+export * from './src/componets/imgViewer.component';
+export * from './src/componets/mediaPlayer.component';
+export * from './src/componets/notSupportedFormat.component';
+export * from './src/componets/pdfViewer.component';
 
 export const VIEWERCOMPONENT: [any] = [
-    ViewerComponent
+    ViewerComponent,
+    ImgViewerComponent,
+    MediaPlayerComponent,
+    NotSupportedFormat,
+    PdfViewerComponent
 ];
 
 export const ALFRESCO_VIEWER_SERVICES: [any] = [
