@@ -30,9 +30,10 @@ declare let __moduleName: string;
 })
 export class AnalyticsComponent {
 
-    constructor(){
+    constructor() {
         console.log('AnalyticsComponent');
     }
+
     // lineChart
     public lineChartData: Array<any> = [
         [65, 59, 80, 81, 56, 55, 40],
