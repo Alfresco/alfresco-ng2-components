@@ -20,7 +20,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {
     FilesComponent,
-    UploadButtonComponent,
     DataTableDemoComponent,
     SearchComponent,
     LoginDemoComponent,
@@ -31,6 +30,8 @@ import {
     FormViewer,
     FormNodeViewer
 } from './components/index';
+
+import { UploadButtonComponent } from 'ng2-alfresco-upload';
 
 export const appRoutes: Routes = [
     { path: 'home', component: FilesComponent },

@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { CoreModule } from 'ng2-alfresco-core';
+
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
 import { FileDraggableDirective } from './src/directives/file-draggable.directive';
 import { UploadButtonComponent } from './src/components/upload-button.component';
@@ -45,17 +51,42 @@ export * from './src/services/upload.service';
 export * from './src/directives/file-draggable.directive';
 export * from './src/components/file-uploading-list.component';
 
-export const ALFRESCO_ULPOAD_COMPONENTS: [any] = [
+export const UPLOAD_DIRECTIVES: any[] = [
+    FileDraggableDirective,
     UploadDragAreaComponent,
     UploadButtonComponent,
     FileUploadingDialogComponent,
     FileUploadingListComponent
 ];
 
-export const ALFRESCO_ULPOAD_DIRECTIVES: [any] = [
-    FileDraggableDirective
-];
-
-export const ALFRESCO_ULPOAD_SERVICES: [any] = [
+export const UPLOAD_PROVIDERS: any[] = [
     UploadService
 ];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        HttpModule,
+        TranslateModule,
+        CoreModule
+    ],
+    declarations: [
+        ...UPLOAD_DIRECTIVES
+    ],
+    providers: [
+        ...UPLOAD_PROVIDERS
+    ],
+    exports: [
+        ...UPLOAD_DIRECTIVES
+    ]
+})
+export class UploadModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: UploadModule,
+            providers: [
+                ...UPLOAD_PROVIDERS
+            ]
+        };
+    }
+}

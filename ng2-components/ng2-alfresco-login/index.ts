@@ -20,14 +20,13 @@ import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from 'ng2-translate/ng2-translate';
-
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 
 import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
 
 export * from './src/components/alfresco-login.component';
 
-export const ALFRESCO_LOGIN_DIRECTIVES: [any] = [AlfrescoLoginComponent];
+export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [AlfrescoLoginComponent];
 
 @NgModule({
     imports: [
@@ -35,14 +34,13 @@ export const ALFRESCO_LOGIN_DIRECTIVES: [any] = [AlfrescoLoginComponent];
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        TranslateModule
+        TranslateModule,
+        CoreModule
     ],
     declarations: [
         ...ALFRESCO_LOGIN_DIRECTIVES
     ],
-    providers: [
-        ...ALFRESCO_CORE_PROVIDERS
-    ],
+    providers: [],
     exports: [
         ...ALFRESCO_LOGIN_DIRECTIVES
     ]

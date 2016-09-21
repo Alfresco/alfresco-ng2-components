@@ -26,23 +26,14 @@ import { SearchModule } from 'ng2-alfresco-search';
 import { LoginModule } from 'ng2-alfresco-login';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
+import { UploadModule } from 'ng2-alfresco-upload'
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 
-/*
-import {
-    MDL,
-    ALFRESCO_CORE_PROVIDERS,
-    CONTEXT_MENU_DIRECTIVES,
-    CONTEXT_MENU_PROVIDERS,
-    MATERIAL_DESIGN_DIRECTIVES
-} from 'ng2-alfresco-core';
-*/
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm, ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
-import { ALFRESCO_ULPOAD_COMPONENTS, ALFRESCO_ULPOAD_DIRECTIVES, ALFRESCO_ULPOAD_SERVICES } from 'ng2-alfresco-upload';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
@@ -51,7 +42,6 @@ import { AlfrescoTranslationLoader } from 'ng2-alfresco-core';
 import { Http } from '@angular/http';
 
 import {
-    UploadButtonComponent,
     DataTableDemoComponent,
     SearchComponent,
     SearchBarComponent,
@@ -121,24 +111,19 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         LoginModule,
         SearchModule.forRoot(),
         DataTableModule,
-        DocumentListModule.forRoot()
+        DocumentListModule.forRoot(),
+        UploadModule.forRoot()
     ],
     declarations: [
         AppComponent,
         SearchBarComponent,
-        // MDL,
         ...ALFRESCO_TASKLIST_DIRECTIVES,
         ...ACTIVITI_PROCESSLIST_DIRECTIVES,
         ...ACTIVITI_FORM_DIRECTIVES,
-        // ...CONTEXT_MENU_DIRECTIVES,
-        ...ALFRESCO_ULPOAD_COMPONENTS,
         ...VIEWERCOMPONENT,
         ...TAGCOMPONENT,
         ...WEBSCRIPTCOMPONENT,
-        ...ALFRESCO_ULPOAD_COMPONENTS, ...ALFRESCO_ULPOAD_DIRECTIVES,
-        // ...MATERIAL_DESIGN_DIRECTIVES,
 
-        UploadButtonComponent,
         DataTableDemoComponent,
         SearchComponent,
         SearchBarComponent,
@@ -152,11 +137,8 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         FormNodeViewer
     ],
     providers: [
-        // ...ALFRESCO_CORE_PROVIDERS,
         ...ATIVITI_FORM_PROVIDERS,
-        ...TAGSERVICES,
-        ...ALFRESCO_ULPOAD_SERVICES// ,
-        // ...CONTEXT_MENU_PROVIDERS
+        ...TAGSERVICES
     ],
     bootstrap: [ AppComponent ]
 })

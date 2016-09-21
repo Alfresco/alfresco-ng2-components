@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-export { UploadButtonComponent } from 'ng2-alfresco-upload';
 export { DataTableDemoComponent } from './datatable/datatable-demo.component';
 export { SearchComponent } from './search/search.component';
 export { SearchBarComponent } from './search/search-bar.component';

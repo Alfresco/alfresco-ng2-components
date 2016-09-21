@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
 import { UploadService } from './upload.service';
@@ -234,3 +235,4 @@ describe('AlfrescoUploadService', () => {
         expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
     });
 });
+*/

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { describe, expect, beforeEach, it } from '@angular/core/testing';
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
 describe('AlfrescoDirectiveFileDraggable', () => {
