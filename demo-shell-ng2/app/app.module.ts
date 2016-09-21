@@ -30,13 +30,13 @@ import { UploadModule } from 'ng2-alfresco-upload';
 import { TagModule } from 'ng2-alfresco-tag';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 import { ViewerModule } from 'ng2-alfresco-viewer';
+import { ActivitiFormModule } from 'ng2-activiti-form';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
-import { ActivitiForm, ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
 
 import { AlfrescoTranslationLoader } from 'ng2-alfresco-core';
 import { Http } from '@angular/http';
@@ -54,46 +54,6 @@ import {
     FilesComponent,
     FormNodeViewer
 } from './components/index';
-
-import {
-    TabsWidget, ContainerWidget,
-    TextWidget,
-    NumberWidget,
-    CheckboxWidget,
-    MultilineTextWidget,
-    DropdownWidget,
-    HyperlinkWidget,
-    RadioButtonsWidget,
-    DisplayValueWidget,
-    DisplayTextWidget,
-    UploadWidget,
-    AttachWidget,
-    TypeaheadWidget,
-    FunctionalGroupWidget,
-    PeopleWidget
-} from 'ng2-activiti-form';
-
-// todo: temp
-const ACTIVITI_FORM_DIRECTIVES: any[] = [
-    ActivitiForm,
-
-    TabsWidget,
-    ContainerWidget,
-    TextWidget,
-    NumberWidget,
-    CheckboxWidget,
-    MultilineTextWidget,
-    DropdownWidget,
-    HyperlinkWidget,
-    RadioButtonsWidget,
-    DisplayValueWidget,
-    DisplayTextWidget,
-    UploadWidget,
-    AttachWidget,
-    TypeaheadWidget,
-    FunctionalGroupWidget,
-    PeopleWidget
-];
 
 @NgModule({
     imports: [
@@ -115,14 +75,14 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         UploadModule.forRoot(),
         TagModule.forRoot(),
         WebScriptModule,
-        ViewerModule.forRoot()
+        ViewerModule.forRoot(),
+        ActivitiFormModule.forRoot()
     ],
     declarations: [
         AppComponent,
         SearchBarComponent,
         ...ALFRESCO_TASKLIST_DIRECTIVES,
         ...ACTIVITI_PROCESSLIST_DIRECTIVES,
-        ...ACTIVITI_FORM_DIRECTIVES,
 
         DataTableDemoComponent,
         SearchComponent,
@@ -136,9 +96,7 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         FilesComponent,
         FormNodeViewer
     ],
-    providers: [
-        ...ATIVITI_FORM_PROVIDERS
-    ],
+    providers: [],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { PeopleWidget } from './people.widget';
 import { FormService } from '../../../services/form.service';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
-// import { GroupModel } from '../core/group.model';
 import { GroupUserModel } from '../core/group-user.model';
 
 describe('PeopleWidget', () => {

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { GroupUserModel } from './group-user.model';
 
 describe('GroupUserModel', () => {

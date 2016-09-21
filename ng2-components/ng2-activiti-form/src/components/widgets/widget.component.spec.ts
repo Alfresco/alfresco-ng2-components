@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { WidgetComponent } from './widget.component';
 import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';

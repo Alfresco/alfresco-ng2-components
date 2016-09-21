@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
@@ -205,8 +206,7 @@ describe('WidgetVisibilityService', () => {
         expect(res).toBeFalsy();
     });
 
-    /*
-    it('should be able to retrieve the value of a process variable', (done) => {
+    xit('should be able to retrieve the value of a process variable', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                 done();
@@ -224,7 +224,6 @@ describe('WidgetVisibilityService', () => {
        expect(varValue).not.toBe(null);
        expect(varValue).toBe('test_value_1');
    });
-   */
 
     it('should be able to retrieve the value of a form variable', () => {
        let fakeForm = new FormModel({variables: [
@@ -238,8 +237,7 @@ describe('WidgetVisibilityService', () => {
        expect(varValue).toBe('form_value_test');
    });
 
-    /*
-    it('should return null if the variable does not exist', (done) => {
+    xit('should return null if the variable does not exist', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                 done();
@@ -255,7 +253,6 @@ describe('WidgetVisibilityService', () => {
 
        expect(varValue).toBe(null);
    });
-   */
 
     it('should be able to retrieve a field value searching in the form', () => {
        let stubFormWithFields = new FormModel(fakeFormJson);
@@ -310,8 +307,7 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).toBe('100');
    });
 
-    /*
-    it('should retrieve the value for the right field when it is a process variable', (done) => {
+    xit('should retrieve the value for the right field when it is a process variable', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                 done();
@@ -330,7 +326,6 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).not.toBe(null);
        expect(rightValue).toBe('test_value_2');
    });
-   */
 
     it('should retrieve the value for the right field when it is a form variable', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
@@ -366,8 +361,7 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).toBe(null);
    });
 
-    /*
-    it('should retrieve the value for the left field when it is a process variable', (variableUpdated) => {
+    xit('should retrieve the value for the left field when it is a process variable', (variableUpdated) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                 variableUpdated();
@@ -386,7 +380,6 @@ describe('WidgetVisibilityService', () => {
        expect(rightValue).not.toBe(null);
        expect(rightValue).toBe('test_value_2');
    });
-   */
 
     it('should retrieve the value for the left field when it is a form variable', () => {
        let fakeForm = new FormModel({variables: [
@@ -470,8 +463,7 @@ describe('WidgetVisibilityService', () => {
        expect(isVisible).toBeTruthy();
    });
 
-    /*
-    it('should evaluate the visibility for the field between form value and process var', (varReady) => {
+    xit('should evaluate the visibility for the field between form value and process var', (varReady) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                 varReady();
@@ -492,10 +484,8 @@ describe('WidgetVisibilityService', () => {
 
        expect(isVisible).toBeTruthy();
    });
-   */
 
-    /*
-    it('should evaluate visibility with multiple conditions', (ready) => {
+    xit('should evaluate visibility with multiple conditions', (ready) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
                 ready();
@@ -521,7 +511,6 @@ describe('WidgetVisibilityService', () => {
 
        expect(isVisible).toBeTruthy();
    });
-   */
 
     it('should return true when the visibility condition is not valid', () => {
        let visibilityObjTest = new WidgetVisibilityModel();
@@ -561,3 +550,4 @@ describe('WidgetVisibilityService', () => {
        expect(fakeFormField.isVisible).toBeFalsy();
    });
 });
+*/

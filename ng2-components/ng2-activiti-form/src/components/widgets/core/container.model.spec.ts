@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
 import { FormFieldTypes } from './form-field-types';
