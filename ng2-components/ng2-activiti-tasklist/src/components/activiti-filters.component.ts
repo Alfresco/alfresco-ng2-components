@@ -82,7 +82,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         let appId = changes['appId'];
-        if (appId) {
+        if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.load();
             return;
         }
@@ -93,7 +93,6 @@ export class ActivitiFilters implements OnInit, OnChanges {
      * @param tasks
      */
     private load() {
-        this.resetFilter();
         if (this.appName) {
             this.filterByAppName();
         } else {
@@ -104,6 +103,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
     private filterByAppId(appId) {
         this.activiti.getTaskListFilters(appId).subscribe(
             (res: FilterRepresentationModel[]) => {
+                this.resetFilter();
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                     this.selectFirstFilter();
