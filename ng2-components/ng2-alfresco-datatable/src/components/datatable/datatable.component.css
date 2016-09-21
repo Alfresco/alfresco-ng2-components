@@ -87,6 +87,10 @@
     border: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 /* small desktop */
 @media all and (max-width: 1200px) {}
 

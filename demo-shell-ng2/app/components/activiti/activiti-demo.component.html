@@ -24,7 +24,7 @@
                     </div>
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                         <span>Task List</span>
-                        <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [schemaColumn]="taskSchemaColumns"
+                        <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [data]="dataTasks"
                                            (rowClick)="onTaskRowClick($event)" (onSuccess)="onSuccessTaskList($event)"
                                            #activititasklist></activiti-tasklist>
                     </div>
@@ -49,7 +49,7 @@
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
                             <span>Process List</span>
-                            <activiti-process-instance-list [filter]="processFilter" [schemaColumn]="processSchemaColumns"
+                            <activiti-process-instance-list [filter]="processFilter" [data]="dataProcesses"
                                                (rowClick)="onProcessRowClick($event)" (onSuccess)="onSuccessProcessList($event)"
                                                             #activitiprocesslist></activiti-process-instance-list>
                         </div>
