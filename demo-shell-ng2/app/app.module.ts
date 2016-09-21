@@ -28,6 +28,7 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 import { UploadModule } from 'ng2-alfresco-upload';
 import { TagModule } from 'ng2-alfresco-tag';
+import { WebScriptModule } from 'ng2-alfresco-webscript';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
@@ -36,7 +37,6 @@ import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm, ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
-import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
 
 import { AlfrescoTranslationLoader } from 'ng2-alfresco-core';
 import { Http } from '@angular/http';
@@ -113,7 +113,8 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         DataTableModule,
         DocumentListModule.forRoot(),
         UploadModule.forRoot(),
-        TagModule.forRoot()
+        TagModule.forRoot(),
+        WebScriptModule
     ],
     declarations: [
         AppComponent,
@@ -122,7 +123,6 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         ...ACTIVITI_PROCESSLIST_DIRECTIVES,
         ...ACTIVITI_FORM_DIRECTIVES,
         ...VIEWERCOMPONENT,
-        ...WEBSCRIPTCOMPONENT,
 
         DataTableDemoComponent,
         SearchComponent,

@@ -16,15 +16,8 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    CONTEXT_MENU_DIRECTIVES,
-    CONTEXT_MENU_PROVIDERS
-} from 'ng2-alfresco-core';
-import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 /**
  * <alfresco-webscript-get [scriptPath]="string"
@@ -57,9 +50,7 @@ import {
         <div *ngIf="contentType === 'TEXT'" id="webscript-data-TEXT" >{{data}}</div>
         <div *ngIf="isDataTableContent()" ><alfresco-datatable id="webscript-datatable-wrapper" [data]="data" ></alfresco-datatable><div>
         <div *ngIf="showError" id="error">Error during the deserialization of {{data}} as {{contentType}}</div>
-    </div>`,
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    providers: [CONTEXT_MENU_PROVIDERS]
+    </div>`
 })
 export class WebscriptComponent {
 
@@ -90,9 +81,9 @@ export class WebscriptComponent {
 
     /**
      * Constructor
-     * @param auth
+     * @param authService
      */
-    constructor(public authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService) {
 
     }
 
