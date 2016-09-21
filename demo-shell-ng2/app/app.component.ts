@@ -75,7 +75,16 @@ export class AppComponent {
         event.preventDefault();
         this.auth.logout()
             .subscribe(
-                () => this.router.navigate(['/login'])
+                () => {
+                    this.router.navigate(['/login']);
+                },
+                ($event: any) => {
+                    if ($event && $event.response && $event.response.status === 401) {
+                        this.router.navigate(['/login']);
+                    } else {
+                        console.error('An unknown error occurred while logging out', $event);
+                    }
+                }
             );
     }
 
