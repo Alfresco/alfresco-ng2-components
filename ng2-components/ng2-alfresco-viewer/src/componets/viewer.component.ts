@@ -16,10 +16,6 @@
  */
 
 import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject } from '@angular/core';
-import { PdfViewerComponent } from './pdfViewer.component';
-import { ImgViewerComponent } from './imgViewer.component';
-import { MediaPlayerComponent } from './mediaPlayer.component';
-import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
@@ -29,7 +25,6 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'alfresco-viewer',
-    directives: [PdfViewerComponent, ImgViewerComponent, NotSupportedFormat, MediaPlayerComponent],
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']
 })

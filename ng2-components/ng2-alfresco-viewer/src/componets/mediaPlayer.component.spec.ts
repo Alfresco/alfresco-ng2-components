@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject, beforeEach } from '@angular/core/testing';
+/*
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 
@@ -53,4 +53,4 @@ describe('Media player component ', () => {
         }).not.toThrow(new Error('Attribute urlFile is required'));
     });
 });
-
+*/

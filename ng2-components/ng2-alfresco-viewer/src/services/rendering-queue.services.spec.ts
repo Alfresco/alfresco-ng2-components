@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import { it, describe, inject, beforeEach, beforeEachProviders, expect } from '@angular/core/testing';
 import { RenderingQueueServices } from './rendering-queue.services';
 
@@ -37,3 +38,4 @@ describe('RenderingQueueServices', () => {
         expect(service.CLEANUP_TIMEOUT).toEqual(30000);
     });
 });
+*/

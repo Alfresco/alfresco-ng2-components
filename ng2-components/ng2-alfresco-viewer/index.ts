@@ -24,6 +24,11 @@
  *          </alfresco-viewer>
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+
 import { ViewerComponent } from './src/componets/viewer.component';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
 import { ImgViewerComponent } from './src/componets/imgViewer.component';
@@ -38,7 +43,7 @@ export * from './src/componets/mediaPlayer.component';
 export * from './src/componets/notSupportedFormat.component';
 export * from './src/componets/pdfViewer.component';
 
-export const VIEWERCOMPONENT: [any] = [
+export const VIEWER_DIRECTIVES: any[] = [
     ViewerComponent,
     ImgViewerComponent,
     MediaPlayerComponent,
@@ -46,6 +51,33 @@ export const VIEWERCOMPONENT: [any] = [
     PdfViewerComponent
 ];
 
-export const ALFRESCO_VIEWER_SERVICES: [any] = [
+export const VIEWER_PROVIDERS: any[] = [
     RenderingQueueServices
 ];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        HttpModule,
+        TranslateModule
+    ],
+    declarations: [
+        ...VIEWER_DIRECTIVES
+    ],
+    providers: [
+        ...VIEWER_PROVIDERS
+    ],
+    exports: [
+        ...VIEWER_DIRECTIVES
+    ]
+})
+export class ViewerModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ViewerModule,
+            providers: [
+                ...VIEWER_PROVIDERS
+            ]
+        };
+    }
+}

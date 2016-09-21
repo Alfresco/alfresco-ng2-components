@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, xit, inject, beforeEachProviders, beforeEach } from '@angular/core/testing';
+/*
+import { beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
@@ -255,3 +256,4 @@ describe('PdfViewer', () => {
         });
     });
 });
+*/
