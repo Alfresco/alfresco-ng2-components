@@ -15,13 +15,13 @@
             <activiti-people [people]="taskPeople"></activiti-people>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-comments [taskId]="taskId" #activiticomments></activiti-comments>
+            <activiti-comments [taskId]="taskDetails.id" #activiticomments></activiti-comments>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-checklist [taskId]="taskId" #activitichecklist></activiti-checklist>
+            <activiti-checklist [taskId]="taskDetails.id" #activitichecklist></activiti-checklist>
         </div>
     </div>
-    <activiti-form *ngIf="hasFormKey()" [taskId]="taskId"
+    <activiti-form *ngIf="hasFormKey()" [taskId]="taskDetails.id"
                    [showTitle]="showTitle"
                    [showRefreshButton]="showRefreshButton"
                    [showCompleteButton]="showCompleteButton"
