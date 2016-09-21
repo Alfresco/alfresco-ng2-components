@@ -32,11 +32,10 @@ import { WebScriptModule } from 'ng2-alfresco-webscript';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
-
-import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 
 import { AlfrescoTranslationLoader } from 'ng2-alfresco-core';
 import { Http } from '@angular/http';
@@ -77,13 +76,12 @@ import {
         WebScriptModule,
         ViewerModule.forRoot(),
         ActivitiFormModule.forRoot(),
-        ActivitiTaskListModule.forRoot()
+        ActivitiTaskListModule.forRoot(),
+        ActivitiProcessListModule.forRoot()
     ],
     declarations: [
         AppComponent,
         SearchBarComponent,
-        ...ACTIVITI_PROCESSLIST_DIRECTIVES,
-
         DataTableDemoComponent,
         SearchComponent,
         SearchBarComponent,

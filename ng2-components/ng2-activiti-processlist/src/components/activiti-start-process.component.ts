@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
@@ -26,8 +26,7 @@ declare let __moduleName: string;
     selector: 'activiti-start-process-instance',
     moduleId: __moduleName,
     templateUrl: './activiti-start-process.component.html',
-    styleUrls: ['./activiti-start-process.component.css'],
-    providers: [ActivitiProcessService]
+    styleUrls: ['./activiti-start-process.component.css']
 })
 export class ActivitiStartProcessButton implements OnInit {
 
@@ -42,14 +41,7 @@ export class ActivitiStartProcessButton implements OnInit {
     name: string;
     processDefinition: string;
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param activitiProcess
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {

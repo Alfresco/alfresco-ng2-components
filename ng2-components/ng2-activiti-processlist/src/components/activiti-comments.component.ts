@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { Comment } from '../models/comment.model';
 import { Observer } from 'rxjs/Observer';
@@ -29,8 +29,7 @@ declare let __moduleName: string;
     selector: 'activiti-process-instance-comments',
     moduleId: __moduleName,
     templateUrl: './activiti-comments.component.html',
-    styleUrls: ['./activiti-comments.component.css'],
-    providers: [ActivitiProcessService]
+    styleUrls: ['./activiti-comments.component.css']
 })
 export class ActivitiComments implements OnInit {
 
@@ -47,13 +46,7 @@ export class ActivitiComments implements OnInit {
 
     message: string;
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {

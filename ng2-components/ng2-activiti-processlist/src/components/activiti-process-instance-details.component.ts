@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
@@ -31,9 +31,7 @@ declare let __moduleName: string;
     selector: 'activiti-process-instance-details',
     moduleId: __moduleName,
     templateUrl: './activiti-process-instance-details.component.html',
-    styleUrls: ['./activiti-process-instance-details.component.css'],
-    providers: [ActivitiProcessService],
-    directives: [ActivitiProcessInstanceHeader, ActivitiComments, ActivitiProcessInstanceTasks]
+    styleUrls: ['./activiti-process-instance-details.component.css']
 })
 export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
 
@@ -69,8 +67,7 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
      * @param translate
      * @param activitiProcess
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
