@@ -20,7 +20,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { SearchModule } from 'ng2-alfresco-search';
 import { LoginModule } from 'ng2-alfresco-login';
 
@@ -39,6 +39,8 @@ import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
 import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
 
+import { AlfrescoTranslationLoader } from 'ng2-alfresco-core';
+import { Http } from '@angular/http';
 
 import {
     UploadButtonComponent,
@@ -101,7 +103,11 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        TranslateModule.forRoot(),
+        TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (http: Http) => new AlfrescoTranslationLoader(http),
+            deps: [Http]
+        }),
         routing,
         LoginModule,
         SearchModule.forRoot()

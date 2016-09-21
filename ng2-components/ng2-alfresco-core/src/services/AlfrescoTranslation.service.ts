@@ -15,26 +15,31 @@
  * limitations under the License.
  */
 
-import { Injectable, Optional } from '@angular/core';
-import { MissingTranslationHandler, TranslateService } from 'ng2-translate/ng2-translate';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AlfrescoTranslationLoader } from './AlfrescoTranslationLoader.service';
 
 @Injectable()
-export class AlfrescoTranslationService extends TranslateService {
+export class AlfrescoTranslationService {
     userLang: string = 'en' ;
 
-    constructor(public currentLoader: AlfrescoTranslationLoader, @Optional() missingTranslationHandler: MissingTranslationHandler) {
-        super(currentLoader, missingTranslationHandler);
+    constructor(private translate: TranslateService) {
         this.userLang = navigator.language.split('-')[0]; // use navigator lang if available
         this.userLang = /(fr|en)/gi.test(this.userLang) ? this.userLang : 'en';
-        this.setDefaultLang(this.userLang);
+        translate.setDefaultLang(this.userLang);
     }
 
     addTranslationFolder(name: string = '') {
-        if (!this.currentLoader.existComponent(name)) {
-            this.currentLoader.addComponentList(name);
-            this.getTranslation(this.userLang);
+        let loader = <AlfrescoTranslationLoader> this.translate.currentLoader;
+        if (!loader.existComponent(name)) {
+            loader.addComponentList(name);
+            this.translate.getTranslation(this.userLang);
         }
-        this.use(this.userLang);
+        this.translate.use(this.userLang);
+    }
+
+    use(lang: string): Observable<any> {
+        return this.translate.use(lang);
     }
 }
