@@ -18,6 +18,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { SearchModule } from 'ng2-alfresco-search';
+
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 
@@ -38,7 +40,8 @@ import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
 @NgModule({
     imports: [
         BrowserModule,
-        routing
+        routing,
+        SearchModule.forRoot()
     ],
     declarations: [
         AppComponent,

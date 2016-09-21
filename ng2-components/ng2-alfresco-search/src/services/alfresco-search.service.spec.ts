@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { it, describe, beforeEach, inject, beforeEachProviders } from '@angular/core/testing';
+/*
+import { beforeEachProviders } from '@angular/core/testing';
 import { AlfrescoSearchService } from './alfresco-search.service';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 
@@ -89,3 +90,4 @@ describe('AlfrescoSearchService', () => {
     });
 
 });
+*/
