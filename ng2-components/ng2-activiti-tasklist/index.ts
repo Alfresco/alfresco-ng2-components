@@ -15,27 +15,34 @@
  * limitations under the License.
  */
 
-import { ActivitiApps } from './src/components/activiti-apps.component';
-import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
-import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
-import { ActivitiFilters } from './src/components/activiti-filters.component';
-import { NoTaskDetailsTemplateComponent } from './src/components/no-task-detail-template.component';
-import { ActivitiChecklist } from './src/components/activiti-checklist.component';
-import { ActivitiComments } from './src/components/activiti-comments.component';
-import { ActivitiPeople } from './src/components/activiti-people.component';
-import { ActivitiTaskHeader } from './src/components/activiti-task-header.component';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { ActivitiFormModule } from 'ng2-activiti-form';
 
-export * from './src/components/activiti-apps.component';
-export * from './src/components/activiti-tasklist.component';
+import {
+    ActivitiApps,
+    ActivitiTaskList,
+    ActivitiTaskDetails,
+    ActivitiFilters,
+    NoTaskDetailsTemplateComponent,
+    ActivitiChecklist,
+    ActivitiComments,
+    ActivitiPeople,
+    ActivitiTaskHeader
+} from './src/components/index';
+
+import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
+
+export * from './src/components/index';
 export * from './src/services/activiti-tasklist.service';
 export * from  './src/models/filter.model';
-export * from './src/components/activiti-checklist.component';
-export * from './src/components/activiti-comments.component';
-export * from './src/components/activiti-people.component';
-export * from './src/components/activiti-task-header.component';
-export * from './src/components/no-task-detail-template.component';
 
-export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [
+export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     NoTaskDetailsTemplateComponent,
     ActivitiApps,
     ActivitiFilters,
@@ -46,3 +53,38 @@ export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [
     ActivitiPeople,
     ActivitiTaskHeader
 ];
+
+export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
+    ActivitiTaskListService
+];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpModule,
+        TranslateModule,
+        CoreModule,
+        DataTableModule,
+        ActivitiFormModule
+    ],
+    declarations: [
+        ...ACTIVITI_TASKLIST_DIRECTIVES
+    ],
+    providers: [
+        ...ACTIVITI_TASKLIST_PROVIDERS
+    ],
+    exports: [
+        ...ACTIVITI_TASKLIST_DIRECTIVES
+    ]
+})
+export class ActivitiTaskListModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ActivitiTaskListModule,
+            providers: [
+                ...ACTIVITI_TASKLIST_PROVIDERS
+            ]
+        };
+    }
+}

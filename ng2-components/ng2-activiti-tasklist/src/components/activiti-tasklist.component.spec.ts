@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-
 import { ActivitiTaskList } from './activiti-tasklist.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { UserTaskFilterRepresentationModel } from '../models/filter.model';
@@ -74,7 +67,7 @@ describe('ActivitiTaskList', () => {
 
     beforeEach(() => {
         let activitiSerevice = new ActivitiTaskListService(null);
-        taskList = new ActivitiTaskList(null, null, activitiSerevice);
+        taskList = new ActivitiTaskList(null, activitiSerevice);
     });
 
     it('should use the default schemaColumn as default', () => {

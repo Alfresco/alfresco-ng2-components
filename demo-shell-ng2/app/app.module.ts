@@ -31,11 +31,11 @@ import { TagModule } from 'ng2-alfresco-tag';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 import { ActivitiFormModule } from 'ng2-activiti-form';
+import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 
-import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 
 import { AlfrescoTranslationLoader } from 'ng2-alfresco-core';
@@ -76,12 +76,12 @@ import {
         TagModule.forRoot(),
         WebScriptModule,
         ViewerModule.forRoot(),
-        ActivitiFormModule.forRoot()
+        ActivitiFormModule.forRoot(),
+        ActivitiTaskListModule.forRoot()
     ],
     declarations: [
         AppComponent,
         SearchBarComponent,
-        ...ALFRESCO_TASKLIST_DIRECTIVES,
         ...ACTIVITI_PROCESSLIST_DIRECTIVES,
 
         DataTableDemoComponent,
