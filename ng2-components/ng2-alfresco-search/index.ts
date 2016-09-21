@@ -20,7 +20,7 @@ import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from 'ng2-translate/ng2-translate';
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 
 import { AlfrescoSearchService } from './src/services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './src/services/alfresco-thumbnail.service';
@@ -51,13 +51,13 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
-        TranslateModule
+        TranslateModule,
+        CoreModule
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES
     ],
     providers: [
-        ...ALFRESCO_CORE_PROVIDERS,
         ...ALFRESCO_SEARCH_PROVIDERS
     ],
     exports: [

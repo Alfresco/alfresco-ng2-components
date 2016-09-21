@@ -15,6 +15,13 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { CoreModule } from 'ng2-alfresco-core';
+
 import { TagActionsComponent } from './src/components/tag-actions.component';
 import { TagList } from './src/components/tag-list.component';
 import { TagNodeList } from './src/components/tag-node-list.component';
@@ -25,17 +32,42 @@ export * from './src/components/tag-list.component';
 export * from './src/components/tag-node-list.component';
 export * from './src/services/tag.service';
 
-export default {
-    components: [TagActionsComponent, TagList, TagNodeList]
-};
-
-export const TAGCOMPONENT: [any] = [
+export const TAG_DIRECTIVES: any[] = [
     TagActionsComponent,
     TagList,
     TagNodeList
 ];
 
-export const TAGSERVICES: [any] = [
+export const TAG_PROVIDERS: any[] = [
     TagService
 ];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpModule,
+        TranslateModule,
+        CoreModule
+    ],
+    declarations: [
+        ...TAG_DIRECTIVES
+    ],
+    providers: [
+        ...TAG_PROVIDERS
+    ],
+    exports: [
+        ...TAG_DIRECTIVES
+    ]
+})
+export class TagModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: TagModule,
+            providers: [
+                ...TAG_DIRECTIVES
+            ]
+        };
+    }
+}
 
