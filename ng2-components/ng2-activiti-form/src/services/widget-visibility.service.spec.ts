@@ -205,11 +205,15 @@ describe('WidgetVisibilityService', () => {
         expect(res).toBeFalsy();
     });
 
-    /*
+
     it('should be able to retrieve the value of a process variable', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-                done();
+               expect(res).toBeDefined();
+               let varValue = service.getValueFromVariable(formTest, 'TEST_VAR_1', res);
+               expect(varValue).not.toBeUndefined();
+               expect(varValue).toBe('test_value_1');
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -217,14 +221,7 @@ describe('WidgetVisibilityService', () => {
            contentType: 'application/json',
            responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
-
-
-       let varValue = service.getValueFromVariable(formTest, 'TEST_VAR_1');
-
-       expect(varValue).not.toBe(null);
-       expect(varValue).toBe('test_value_1');
-   });
-   */
+    });
 
     it('should be able to retrieve the value of a form variable', () => {
        let fakeForm = new FormModel({variables: [
@@ -232,17 +229,19 @@ describe('WidgetVisibilityService', () => {
                                                   type: 'string',
                                                   value: 'form_value_test' }
                                               ]});
-       let varValue = service.getValueFromVariable(fakeForm, 'FORM_VARIABLE_TEST');
+       let varValue = service.getValueFromVariable(fakeForm, 'FORM_VARIABLE_TEST', null);
 
-       expect(varValue).not.toBe(null);
+       expect(varValue).not.toBeUndefined();
        expect(varValue).toBe('form_value_test');
-   });
+    });
 
-    /*
-    it('should return null if the variable does not exist', (done) => {
+
+    it('should return undefined if the variable does not exist', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-                done();
+               let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR', res);
+               expect(varValue).toBeUndefined();
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -251,36 +250,34 @@ describe('WidgetVisibilityService', () => {
            responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
 
-       let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR');
 
-       expect(varValue).toBe(null);
-   });
-   */
+    });
+
 
     it('should be able to retrieve a field value searching in the form', () => {
        let stubFormWithFields = new FormModel(fakeFormJson);
        let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_WITH_CONDITION');
 
-       expect(formValue).not.toBe(null);
+       expect(formValue).not.toBeNull();
        expect(formValue).toBe('field_with_condition_value');
-   });
+    });
 
-    it('should return null if the field value is not in the form', () => {
+    it('should return undefined if the field value is not in the form', () => {
        let stubFormWithFields = new FormModel(fakeFormJson);
 
        let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_MYSTERY');
 
-       expect(formValue).toBe(null);
-   });
+       expect(formValue).toBeUndefined();
+    });
 
     it('should take the value from form values if it is present', () => {
        formTest.values = formValues;
 
        let formValue = service.getValueOField(formTest, 'test_1');
 
-       expect(formValue).not.toBe(null);
+       expect(formValue).not.toBeNull();
        expect(formValue).toBe('value_1');
-   });
+    });
 
     it('should search in the form if element value is not in form values', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
@@ -288,18 +285,18 @@ describe('WidgetVisibilityService', () => {
 
        let value = service.getValueOField(fakeFormWithField, 'FIELD_WITH_CONDITION');
 
-       expect(value).not.toBe(null);
+       expect(value).not.toBeNull();
        expect(value).toBe('field_with_condition_value');
-   });
+    });
 
-    it('should return null if the element is not present anywhere', () => {
+    it('should return undefined if the element is not present anywhere', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
        fakeFormWithField.values = formValues;
 
        let formValue = service.getValueOField(fakeFormWithField, 'FIELD_MYSTERY');
 
-       expect(formValue).toBe(null);
-   });
+       expect(formValue).toBeUndefined();
+    });
 
     it('should retrieve the value for the right field when it is a value', () => {
        let visibilityObjTest = new WidgetVisibilityModel();
@@ -308,13 +305,19 @@ describe('WidgetVisibilityService', () => {
        let rightValue = service.getRightValue(formTest, visibilityObjTest);
 
        expect(rightValue).toBe('100');
-   });
+    });
 
-    /*
     it('should retrieve the value for the right field when it is a process variable', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-                done();
+                   let visibilityObjTest = new WidgetVisibilityModel();
+                   visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+
+                   let rightValue = service.getRightValue(formTest, visibilityObjTest);
+
+                   expect(rightValue).not.toBeNull();
+                   expect(rightValue).toBe('test_value_2');
+                   done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -322,15 +325,7 @@ describe('WidgetVisibilityService', () => {
            contentType: 'application/json',
            responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
-
-       let rightValue = service.getRightValue(formTest, visibilityObjTest);
-
-       expect(rightValue).not.toBe(null);
-       expect(rightValue).toBe('test_value_2');
-   });
-   */
+    });
 
     it('should retrieve the value for the right field when it is a form variable', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
@@ -339,9 +334,9 @@ describe('WidgetVisibilityService', () => {
 
        let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
-       expect(rightValue).not.toBe(null);
+       expect(rightValue).not.toBeNull();
        expect(rightValue).toBe('RIGHT_FORM_FIELD_VALUE');
-   });
+    });
 
     it('should retrieve right value from form values if it is present', () => {
        formTest.values = formValues;
@@ -350,12 +345,12 @@ describe('WidgetVisibilityService', () => {
 
        let rightValue = service.getRightValue(formTest, visibilityObjTest);
 
-       expect(rightValue).not.toBe(null);
+       expect(rightValue).not.toBeNull();
        expect(formTest.values).toEqual(formValues);
        expect(rightValue).toBe('value_2');
-   });
+    });
 
-    it('should return null for a value that is not on variable or form', () => {
+    it('should return undefined for a value that is not on variable or form', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
        fakeFormWithField.values = formValues;
        let visibilityObjTest = new WidgetVisibilityModel();
@@ -363,14 +358,20 @@ describe('WidgetVisibilityService', () => {
 
        let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
-       expect(rightValue).toBe(null);
-   });
+       expect(rightValue).toBeUndefined();
+    });
 
-    /*
-    it('should retrieve the value for the left field when it is a process variable', (variableUpdated) => {
+    it('should retrieve the value for the left field when it is a process variable', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-                variableUpdated();
+               let visibilityObjTest = new WidgetVisibilityModel();
+               visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
+
+               let rightValue = service.getLeftValue(formTest, visibilityObjTest);
+
+               expect(rightValue).not.toBeNull();
+               expect(rightValue).toBe('test_value_2');
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -378,15 +379,7 @@ describe('WidgetVisibilityService', () => {
            contentType: 'application/json',
            responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
-
-       let rightValue = service.getLeftValue(formTest, visibilityObjTest);
-
-       expect(rightValue).not.toBe(null);
-       expect(rightValue).toBe('test_value_2');
-   });
-   */
+    });
 
     it('should retrieve the value for the left field when it is a form variable', () => {
        let fakeForm = new FormModel({variables: [
@@ -399,9 +392,9 @@ describe('WidgetVisibilityService', () => {
 
        let leftValue = service.getLeftValue(fakeForm, visibilityObjTest);
 
-       expect(leftValue).not.toBe(null);
+       expect(leftValue).not.toBeNull();
        expect(leftValue).toBe('form_value_test');
-   });
+    });
 
     it('should retrieve the value for the left field when it is a form value', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
@@ -410,9 +403,9 @@ describe('WidgetVisibilityService', () => {
 
        let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-       expect(leftValue).not.toBe(null);
+       expect(leftValue).not.toBeNull();
        expect(leftValue).toBe('field_with_condition_value');
-   });
+    });
 
     it('should retrieve left value from form values if it is present', () => {
        formTest.values = formValues;
@@ -421,18 +414,18 @@ describe('WidgetVisibilityService', () => {
 
        let leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
-       expect(leftValue).not.toBe(null);
+       expect(leftValue).not.toBeNull();
        expect(leftValue).toBe('value_2');
-   });
+    });
 
-    it('should return null for a value that is not on variable or form', () => {
+    it('should return undefined for a value that is not on variable or form', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
        let visibilityObjTest = new WidgetVisibilityModel();
 
        let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-       expect(leftValue).toBe(null);
-   });
+       expect(leftValue).toBeUndefined();
+    });
 
     it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
        formTest.values = formValues;
@@ -444,7 +437,7 @@ describe('WidgetVisibilityService', () => {
        let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
 
        expect(isVisible).toBeTruthy();
-   });
+    });
 
     it('should evaluate true visibility for the field with single visibility condition between a field and a value', () => {
        formTest.values = formValues;
@@ -456,7 +449,7 @@ describe('WidgetVisibilityService', () => {
        let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
 
        expect(isVisible).toBeTruthy();
-   });
+    });
 
     it('should evaluate the visibility for the field with single visibility condition between form values', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
@@ -468,13 +461,21 @@ describe('WidgetVisibilityService', () => {
        let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
 
        expect(isVisible).toBeTruthy();
-   });
+    });
 
-    /*
-    it('should evaluate the visibility for the field between form value and process var', (varReady) => {
+    it('should evaluate the visibility for the field between form value and process var', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-                varReady();
+               let fakeFormWithField = new FormModel(fakeFormJson);
+               let visibilityObjTest = new WidgetVisibilityModel();
+               visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+               visibilityObjTest.operator = '!=';
+               visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+
+               let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
+
+               expect(isVisible).toBeTruthy();
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -482,23 +483,27 @@ describe('WidgetVisibilityService', () => {
            contentType: 'application/json',
            responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
-       visibilityObjTest.operator = '!=';
-       visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+    });
 
-       let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
 
-       expect(isVisible).toBeTruthy();
-   });
-   */
-
-    /*
-    it('should evaluate visibility with multiple conditions', (ready) => {
+    it('should evaluate visibility with multiple conditions', (done) => {
        service.getTaskProcessVariableModelsForTask(9999).subscribe(
             (res: TaskProcessVariableModel[]) => {
-                ready();
+               let fakeFormWithField = new FormModel(fakeFormJson);
+               let visibilityObjTest = new WidgetVisibilityModel();
+               let chainedVisibilityObj = new WidgetVisibilityModel();
+               visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+               visibilityObjTest.operator = '!=';
+               visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+               visibilityObjTest.nextConditionOperator = 'and';
+               chainedVisibilityObj.leftRestResponseId = 'TEST_VAR_2';
+               chainedVisibilityObj.operator = '!empty';
+               visibilityObjTest.nextCondition = chainedVisibilityObj;
+
+               let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
+
+               expect(isVisible).toBeTruthy();
+               done();
             }
        );
        jasmine.Ajax.requests.mostRecent().respondWith({
@@ -506,22 +511,7 @@ describe('WidgetVisibilityService', () => {
            contentType: 'application/json',
            responseText: JSON.stringify(fakeTaskProcessVariableModels)
        });
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let visibilityObjTest = new WidgetVisibilityModel();
-       let chainedVisibilityObj = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
-       visibilityObjTest.operator = '!=';
-       visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
-       visibilityObjTest.nextConditionOperator = 'and';
-       chainedVisibilityObj.leftRestResponseId = 'TEST_VAR_2';
-       chainedVisibilityObj.operator = '!empty';
-       visibilityObjTest.nextCondition = chainedVisibilityObj;
-
-       let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
-
-       expect(isVisible).toBeTruthy();
-   });
-   */
+    });
 
     it('should return true when the visibility condition is not valid', () => {
        let visibilityObjTest = new WidgetVisibilityModel();
@@ -532,7 +522,7 @@ describe('WidgetVisibilityService', () => {
        let isVisible = service.getVisiblityForField(formTest, visibilityObjTest);
 
        expect(isVisible).toBeTruthy();
-   });
+    });
 
     it('should refresh the visibility for a form field object', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
@@ -547,7 +537,7 @@ describe('WidgetVisibilityService', () => {
        service.refreshVisibilityForField(fakeFormField);
 
        expect(fakeFormField.isVisible).toBeFalsy();
-   });
+    });
 
     it('should not change the isVisible if field does not have visibility condition', () => {
        let fakeFormWithField = new FormModel(fakeFormJson);
@@ -559,5 +549,5 @@ describe('WidgetVisibilityService', () => {
        fakeFormField.isVisible = false;
        service.refreshVisibilityForField(fakeFormField);
        expect(fakeFormField.isVisible).toBeFalsy();
-   });
+    });
 });
