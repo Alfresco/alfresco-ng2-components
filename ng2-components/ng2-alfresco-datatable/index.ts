@@ -15,5 +15,42 @@
  * limitations under the License.
  */
 
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { CoreModule } from 'ng2-alfresco-core';
+
 export * from './src/data/index';
 export * from './src/components/index';
+export * from './src/components/pagination/index';
+
+import { DataTableComponent } from './src/components/datatable/datatable.component';
+import { NoContentTemplateComponent } from './src/components/datatable/no-content-template.component';
+import { PaginationComponent } from './src/components/pagination/pagination.component';
+
+export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
+    DataTableComponent,
+    NoContentTemplateComponent,
+    PaginationComponent
+];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        FormsModule,
+        HttpModule,
+        TranslateModule,
+        CoreModule
+    ],
+    declarations: [
+        ...ALFRESCO_DATATABLE_DIRECTIVES
+    ],
+    providers: [
+    ],
+    exports: [
+        ...ALFRESCO_DATATABLE_DIRECTIVES
+    ]
+})
+export class DataTableModule {}

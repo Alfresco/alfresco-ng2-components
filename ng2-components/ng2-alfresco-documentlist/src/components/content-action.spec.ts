@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
 import { EventEmitter } from '@angular/core';
 
 import { DocumentList } from './document-list';

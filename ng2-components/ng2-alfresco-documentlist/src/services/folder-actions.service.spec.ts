@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { FolderActionsService } from './folder-actions.service';
 import { ContentActionHandler } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';

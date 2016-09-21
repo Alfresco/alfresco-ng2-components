@@ -15,22 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect
-} from '@angular/core/testing';
-
-import {
-    DataColumn,
-    DataRow, DataSorting
-} from './datatable-adapter';
-
-import {
-    ObjectDataTableAdapter,
-    ObjectDataRow,
-    ObjectDataColumn
-} from './object-datatable-adapter';
+import { DataColumn, DataRow, DataSorting } from './datatable-adapter';
+import { ObjectDataTableAdapter, ObjectDataRow, ObjectDataColumn } from './object-datatable-adapter';
 
 describe('ObjectDataTableAdapter', () => {
 

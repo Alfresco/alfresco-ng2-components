@@ -15,6 +15,16 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+
+// import { ALFRESCO_CORE_PROVIDERS/*, CONTEXT_MENU_DIRECTIVES*/ } from 'ng2-alfresco-core';
+// import { ALFRESCO_DATATABLE_DIRECTIVES } from 'ng2-alfresco-datatable';
+
 import { DocumentList } from './src/components/document-list';
 import { ContentColumn } from './src/components/content-column';
 import { ContentColumnList } from './src/components/content-column-list';
@@ -63,3 +73,33 @@ export const DOCUMENT_LIST_PROVIDERS: [any] = [
     FolderActionsService,
     DocumentActionsService
 ];
+
+@NgModule({
+    imports: [
+        CommonModule,
+        HttpModule,
+        TranslateModule,
+        CoreModule,
+        DataTableModule
+    ],
+    declarations: [
+        ...DOCUMENT_LIST_DIRECTIVES
+    ],
+    providers: [
+        // ...ALFRESCO_CORE_PROVIDERS,
+        ...DOCUMENT_LIST_PROVIDERS
+    ],
+    exports: [
+        ...DOCUMENT_LIST_DIRECTIVES
+    ]
+})
+export class DocumentListModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: DocumentListModule,
+            providers: [
+                ...DOCUMENT_LIST_PROVIDERS
+            ]
+        };
+    }
+}

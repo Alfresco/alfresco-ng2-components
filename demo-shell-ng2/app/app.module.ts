@@ -21,19 +21,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
+import { CoreModule } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
 import { LoginModule } from 'ng2-alfresco-login';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 
-import { SearchBarComponent } from './components/index';
-import { MDL, ALFRESCO_CORE_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from 'ng2-alfresco-core';
-import { ALFRESCO_DATATABLE_DIRECTIVES, PaginationComponent } from 'ng2-alfresco-datatable';
+/*
+import {
+    MDL,
+    ALFRESCO_CORE_PROVIDERS,
+    CONTEXT_MENU_DIRECTIVES,
+    CONTEXT_MENU_PROVIDERS,
+    MATERIAL_DESIGN_DIRECTIVES
+} from 'ng2-alfresco-core';
+*/
 import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
-import { ActivitiForm, ATIVITI_FORM_PROVIDERS, CONTAINER_WIDGET_DIRECTIVES, PRIMITIVE_WIDGET_DIRECTIVES } from 'ng2-activiti-form';
-import { DOCUMENT_LIST_DIRECTIVES, DOCUMENT_LIST_PROVIDERS } from 'ng2-alfresco-documentlist';
+import { ActivitiForm, ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
 import { ALFRESCO_ULPOAD_COMPONENTS, ALFRESCO_ULPOAD_DIRECTIVES, ALFRESCO_ULPOAD_SERVICES } from 'ng2-alfresco-upload';
 import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
@@ -105,28 +113,30 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         HttpModule,
         TranslateModule.forRoot({
             provide: TranslateLoader,
-            useFactory: (http: Http) => new AlfrescoTranslationLoader(http),
+            useFactory: (http) => new AlfrescoTranslationLoader(http),
             deps: [Http]
         }),
         routing,
+        CoreModule.forRoot(),
         LoginModule,
-        SearchModule.forRoot()
+        SearchModule.forRoot(),
+        DataTableModule,
+        DocumentListModule.forRoot()
     ],
     declarations: [
         AppComponent,
         SearchBarComponent,
-        MDL,
-        ...ALFRESCO_DATATABLE_DIRECTIVES, PaginationComponent,
+        // MDL,
         ...ALFRESCO_TASKLIST_DIRECTIVES,
         ...ACTIVITI_PROCESSLIST_DIRECTIVES,
         ...ACTIVITI_FORM_DIRECTIVES,
-        ...DOCUMENT_LIST_DIRECTIVES,
-        ...CONTEXT_MENU_DIRECTIVES,
+        // ...CONTEXT_MENU_DIRECTIVES,
         ...ALFRESCO_ULPOAD_COMPONENTS,
         ...VIEWERCOMPONENT,
         ...TAGCOMPONENT,
         ...WEBSCRIPTCOMPONENT,
         ...ALFRESCO_ULPOAD_COMPONENTS, ...ALFRESCO_ULPOAD_DIRECTIVES,
+        // ...MATERIAL_DESIGN_DIRECTIVES,
 
         UploadButtonComponent,
         DataTableDemoComponent,
@@ -142,11 +152,11 @@ const ACTIVITI_FORM_DIRECTIVES: any[] = [
         FormNodeViewer
     ],
     providers: [
-        ...ALFRESCO_CORE_PROVIDERS,
-        ...DOCUMENT_LIST_PROVIDERS,
+        // ...ALFRESCO_CORE_PROVIDERS,
         ...ATIVITI_FORM_PROVIDERS,
         ...TAGSERVICES,
-        ...ALFRESCO_ULPOAD_SERVICES
+        ...ALFRESCO_ULPOAD_SERVICES// ,
+        // ...CONTEXT_MENU_PROVIDERS
     ],
     bootstrap: [ AppComponent ]
 })

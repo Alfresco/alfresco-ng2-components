@@ -122,7 +122,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
-            let datePipe = new DatePipe();
+            let datePipe = new DatePipe('en-US');
             let format = col.format || this.DEFAULT_DATE_FORMAT;
             try {
                 return datePipe.transform(value, format);

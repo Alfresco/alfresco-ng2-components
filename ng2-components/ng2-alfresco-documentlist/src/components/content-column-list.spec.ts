@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-
 import { DataColumn } from 'ng2-alfresco-datatable';
 
 import { DocumentList } from './document-list';

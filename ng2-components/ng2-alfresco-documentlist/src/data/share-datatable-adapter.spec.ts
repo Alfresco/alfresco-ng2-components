@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { DataColumn, DataRow, DataSorting } from 'ng2-alfresco-datatable';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ShareDataTableAdapter, ShareDataRow } from './share-datatable-adapter';

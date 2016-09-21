@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-
 import { DocumentList } from './document-list';
 import { ContentColumn } from './content-column';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';

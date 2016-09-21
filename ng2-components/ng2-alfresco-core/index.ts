@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+
 import {
     AlfrescoApiService,
     AlfrescoSettingsService,
@@ -24,19 +29,48 @@ import {
     AlfrescoContentService
 } from './src/services/index';
 
-import { ContextMenuService } from './src/components/context-menu/context-menu.service';
+import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
+import { CONTEXT_MENU_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from './src/components/context-menu/index';
 
 export * from './src/services/index';
 export * from './src/components/index';
 export * from './src/utils/index';
 
-export const ALFRESCO_CORE_PROVIDERS: [any] = [
+export const ALFRESCO_CORE_PROVIDERS: any[] = [
     AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
-    ContextMenuService
+    ...CONTEXT_MENU_PROVIDERS
 ];
 
+@NgModule({
+    imports: [
+        CommonModule,
+        HttpModule,
+        TranslateModule
+    ],
+    declarations: [
+        ...MATERIAL_DESIGN_DIRECTIVES,
+        ...CONTEXT_MENU_DIRECTIVES
+    ],
+    providers: [
+        ...ALFRESCO_CORE_PROVIDERS
+    ],
+    exports: [
+        ...MATERIAL_DESIGN_DIRECTIVES,
+        ...CONTEXT_MENU_DIRECTIVES
+    ]
+})
+export class CoreModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: CoreModule,
+            providers: [
+                ...ALFRESCO_CORE_PROVIDERS
+            ]
+        };
+    }
+}

@@ -42,4 +42,8 @@ export class AlfrescoTranslationService {
     use(lang: string): Observable<any> {
         return this.translate.use(lang);
     }
+
+    get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+        return this.translate.get(key, interpolateParams);
+    }
 }

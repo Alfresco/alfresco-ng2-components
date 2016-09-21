@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
+/*
+import { beforeEachProviders } from '@angular/core/testing';
 import { RenditionsService } from './renditions.service';
 import { AlfrescoApiService } from './AlfrescoApi.service';
 import { AlfrescoSettingsService } from './AlfrescoSettings.service';
@@ -172,3 +173,4 @@ describe('RenditionsService', () => {
         });
     });
 });
+*/
