@@ -19,7 +19,7 @@
                         class="mdl-textfield__input"
                         id="username"
                         data-automation-id="username"
-                        ngControl="username"
+                        [formControl]="form.controls['username']"
                         tabindex="1"
                         autocapitalize="none"/>
                     <span class="mdl-tooltip--validation" for="username" *ngIf="formError.username">
@@ -41,7 +41,7 @@
                         </svg>
                     </i>
                     <label for="password" class="mdl-textfield__label">{{'LOGIN.LABEL.PASSWORD' | translate }}</label>
-                    <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" ngControl="password" tabindex="2" />
+                    <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" [formControl]="form.controls['password']" tabindex="2" />
                     <span class="mdl-tooltip--validation" for="password" *ngIf="formError.password">
                             <span id="password-required" class="mdl-textfield__error" style="visibility: visible" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
