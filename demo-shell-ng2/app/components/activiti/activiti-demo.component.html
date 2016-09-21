@@ -1,20 +1,20 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <!-- Tabs -->
-        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#scroll-tab-0" class="mdl-layout__tab is-active">APPS</a>
-            <a href="#scroll-tab-1" class="mdl-layout__tab">TASK LIST</a>
-            <a href="#scroll-tab-2" class="mdl-layout__tab">PROCESS LIST</a>
-            <a href="#scroll-tab-3" class="mdl-layout__tab">REPORT</a>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect" #tabheader>
+            <a id="apps-header" href="#apps" class="mdl-layout__tab is-active">APPS</a>
+            <a id="tasks-header" href="#tasks" class="mdl-layout__tab">TASK LIST</a>
+            <a id="processes-header" href="#processes" class="mdl-layout__tab">PROCESS LIST</a>
+            <a id="report-header" href="#report" class="mdl-layout__tab">REPORT</a>
         </div>
     </header>
-    <main class="mdl-layout__content activiti">
-        <section class="mdl-layout__tab-panel is-active" id="scroll-tab-0">
+    <main class="mdl-layout__content activiti" #tabmain>
+        <section class="mdl-layout__tab-panel is-active" id="apps">
             <div class="page-content">
                 <activiti-apps [layoutType]="layoutType" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
             </div>
         </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-1">
+        <section class="mdl-layout__tab-panel" id="tasks">
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
@@ -24,7 +24,7 @@
                     </div>
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                         <span>Task List</span>
-                        <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [data]="dataTasks"
+                        <activiti-tasklist [taskFilter]="taskFilter" [data]="dataTasks"
                                            (rowClick)="onTaskRowClick($event)" (onSuccess)="onSuccessTaskList($event)"
                                            #activititasklist></activiti-tasklist>
                     </div>
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-2">
+        <section class="mdl-layout__tab-panel" id="processes">
             <div class="page-content">
                 <div class="page-content">
                     <div class="mdl-grid">
@@ -61,7 +61,7 @@
                 </div>
             </div>
         </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-3">
+        <section class="mdl-layout__tab-panel" id="report">
             <div class="page-content"><!-- Your content goes here --></div>
         </section>
     </main>

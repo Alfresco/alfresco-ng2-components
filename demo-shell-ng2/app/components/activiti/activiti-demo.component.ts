@@ -43,8 +43,6 @@ declare var componentHandler;
 })
 export class ActivitiDemoComponent implements AfterViewChecked {
 
-    currentChoice: string = 'task-list';
-
     @ViewChild('activitiapps')
     activitiapps: ActivitiApps;
 
@@ -66,6 +64,15 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     @ViewChild('activitiprocessdetails')
     activitiprocessdetails: any;
 
+    @ViewChild('tabmain')
+    tabMain: any;
+
+    @ViewChild('tabheader')
+    tabHeader: any;
+
+    @Input()
+    appId: number;
+
     layoutType: string;
     currentTaskId: string;
     currentProcessInstanceId: string;
@@ -80,13 +87,6 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
-
-    @Input()
-    appId: number;
-
-    setChoice($event) {
-        this.currentChoice = $event.target.value;
-    }
 
     isProcessListSelected() {
         return this.currentChoice === 'process-list';
@@ -134,6 +134,16 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
         this.processFilter = null;
         this.currentProcessInstanceId = null;
+
+        this.changeTab('apps','tasks');
+    }
+
+    changeTab(origin: string, destination: string) {
+        this.tabMain.nativeElement.children[origin].classList.remove('is-active');
+        this.tabMain.nativeElement.children[destination].classList.add('is-active');
+
+        this.tabHeader.nativeElement.children[`${origin}-header`].classList.remove('is-active');
+        this.tabHeader.nativeElement.children[`${destination}-header`].classList.add('is-active');
     }
 
     onTaskFilterClick(event: FilterRepresentationModel) {
