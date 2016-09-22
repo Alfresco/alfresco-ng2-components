@@ -88,14 +88,6 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
 
-    isProcessListSelected() {
-        return this.currentChoice === 'process-list';
-    }
-
-    isTaskListSelected() {
-        return this.currentChoice === 'task-list';
-    }
-
     constructor(private route: ActivatedRoute) {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
@@ -135,7 +127,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.processFilter = null;
         this.currentProcessInstanceId = null;
 
-        this.changeTab('apps','tasks');
+        this.changeTab('apps', 'tasks');
     }
 
     changeTab(origin: string, destination: string) {
