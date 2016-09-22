@@ -21,7 +21,7 @@ import {
     expect,
     beforeEach
 } from '@angular/core/testing';
-
+import { SimpleChange } from '@angular/core';
 import { ActivitiFilters } from './activiti-filters.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { Observable } from 'rxjs/Rx';
@@ -89,7 +89,20 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
+        filterList.appId = '1';
         spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        filterList.onError.subscribe((err) => {
+            expect(err).toBeDefined();
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should emit an error with a bad response', (done) => {
+        filterList.appName = 'fake-app';
+        spyOn(filterList.activiti, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         filterList.onError.subscribe((err) => {
             expect(err).toBeDefined();
@@ -110,6 +123,43 @@ describe('ActivitiFilters', () => {
         });
 
         filterList.selectFilter(currentFilter);
+    });
+
+    it('should reload filters by appId on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+        const appId = '1';
+
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
+    });
+
+    it('should reload filters by appId null on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+        const appId = null;
+
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
+    });
+
+    it('should reload filters by app name on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppName').and.stub();
+        const appName = 'fake-app-name';
+
+        let change = new SimpleChange(null, appName);
+        filterList.ngOnChanges({ 'appName': change });
+
+        expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
+    });
+
+    it('should return the current filter after one is selected', () => {
+        let filter = new FilterRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}});
+        expect(filterList.currentFilter).toBeUndefined();
+        filterList.selectFilter(filter);
+        expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
 });
