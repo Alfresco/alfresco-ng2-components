@@ -106,8 +106,13 @@ The component shows the details of the task id passed in input
 
 #### Options
 
-**taskId**: { string } required) The id of the task details that we
-are asking for.
+**taskId**: { string } required) The id of the task details that we are asking for.
+**showNextTask**: { boolean } optional) Automatically render the next one, when the task is completed.
+**showFormTitle**: { boolean } optional) Toggle rendering of the form title. 
+**readOnlyForm**: { boolean } optional) Toggle readonly state of the form. Enforces all form widgets render readonly if enabled.
+**showFormRefreshButton**: { boolean } optional) Toggle rendering of the `Refresh` button.
+**showFormSaveButton**: { boolean } optional) Toggle rendering of the `Save` outcome button. 
+**showFormCompleteButton**: { boolean } optional) Toggle rendering of the Form `Complete` outcome button
 
 ### Custom 'empty Activiti Task Details' template
 
