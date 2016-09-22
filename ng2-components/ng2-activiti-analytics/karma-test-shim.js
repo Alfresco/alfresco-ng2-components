@@ -18,6 +18,7 @@ var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
     'rxjs': { defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
+    'ng2-charts': { defaultExtension: 'js' },
     'ng2-alfresco-core': { main: 'index.js', defaultExtension: 'js' }
 };
 
