@@ -36,10 +36,11 @@ export class UserInfoComponent implements OnInit {
 
     private  ecmUser: EcmUserModel;
     private  bpmUser: BpmUserModel;
+    private baseComponentPath = __moduleName.replace('userinfo.component.js', '');
+    private  anonymouseImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
     public   bpmUserImage: any;
     public   ecmUserImage: any;
 
-    private baseComponentPath = __moduleName.replace('userinfo.component.js', '');
 
     constructor(private ecmUserService: ECMUserService,
                 private bpmUserService: BPMUserService,
@@ -52,7 +53,7 @@ export class UserInfoComponent implements OnInit {
                 .subscribe(
                     (res) => {
                     this.ecmUser = <EcmUserModel> res;
-                    this.getUserProfileImage();
+                    this.getEcmUserProfileImage();
                 }
             );
         }
@@ -61,30 +62,22 @@ export class UserInfoComponent implements OnInit {
                 .subscribe(
                     (res) => {
                     this.bpmUser = <BpmUserModel> res;
-                    this.getUserProfileImage();
+                    this.getBpmUserProfileImage();
                 }
             );
         }
     }
 
-    private getUserProfileImage() {
-        if (this.ecmUser) {
-            this.ecmUserImage = this.ecmUserService.getCurrentUserProfileImageUrl(this.ecmUser.avatarId);
-        }
-        if (this.bpmUser) {
-            this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
-        }
+    private getBpmUserProfileImage() {
+        this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+    }
+
+    private getEcmUserProfileImage() {
+        this.ecmUserImage = this.ecmUserService.getCurrentUserProfileImageUrl(this.ecmUser.avatarId);
     }
 
     public getUserAvatar() {
-        if (this.ecmUserImage) {
-            return this.ecmUserImage;
-        }
-        if (this.bpmUserImage) {
-            return this.bpmUserImage;
-        }
-        if (!this.ecmUserImage && !this.bpmUserImage) {
-            return this.baseComponentPath + '/img/anonymous.gif';
-        }
+        return this.ecmUserImage || this.bpmUserImage ||  this.anonymouseImageUrl;
     }
+
 }

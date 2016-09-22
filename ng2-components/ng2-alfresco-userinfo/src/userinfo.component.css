@@ -4,11 +4,19 @@
   width: 40px;
   margin-right: 0%;
   cursor: pointer;
-  border: 2px solid #999999;
+  border: 1px solid #999999;
 }
 
 .button-profile {
   display: inline-block;
-  margin-right: -10px;
   border: 0px;
+}
+
+.detail-user-profile-list-mdl{
+    margin-right: 100px;
+}
+
+.user-profile-list-mdl{
+    max-height: 250px;
+    width: 400px;
 }
