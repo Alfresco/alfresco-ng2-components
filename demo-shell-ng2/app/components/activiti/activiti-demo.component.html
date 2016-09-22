@@ -19,6 +19,7 @@
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
                         <span>Task Filters</span>
+                        <activiti-start-task [appId]="appId" (onSuccess)="onStartTaskSuccess($event)"></activiti-start-task>
                         <activiti-filters [appId]="appId" (filterClick)="onTaskFilterClick($event)" (onSuccess)="onSuccessTaskFilterList($event)"
                                           #activitifilter></activiti-filters>
                     </div>
