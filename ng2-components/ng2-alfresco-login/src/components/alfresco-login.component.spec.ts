@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+describe('AlfrescoLogin', () => {
+    it('should be upgraded', () => {
+        expect(true).toBe(true);
+    });
+});
+
 /*
 import {
     it,
