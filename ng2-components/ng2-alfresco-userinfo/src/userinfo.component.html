@@ -1,9 +1,16 @@
-<div id="profile-container">
-    <div class="button-profile" id="demo-menu-lower-right" data-automation-id="right-action-menu">
-        <span *ngIf="ecmUser">{{ecmUser.firstName}} {{ecmUser.lastName}}</span>
-        <span *ngIf="bpmUser">{{bpmUser.fullname}}</span>
-        <img id="logged-user-img"
-             src="{{ getUserAvatar() }}"
-             class="profile-image"/>
-    </div>
-</div>
+<span *ngIf="ecmUser">{{ecmUser.firstName}} {{ecmUser.lastName}}</span>
+<span *ngIf="bpmUser">{{bpmUser.fullname}}</span>
+<button id="demo-menu-lower-right"
+        class="mdl-button mdl-js-button mdl-button--icon">
+            <img id="logged-user-img"
+                 src="{{ getUserAvatar() }}"
+                 class="profile-image"/>
+</button>
+
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+    for="demo-menu-lower-right">
+    <li class="mdl-menu__item">Some Action</li>
+    <li class="mdl-menu__item">Another Action</li>
+    <li disabled class="mdl-menu__item">Disabled Action</li>
+    <li class="mdl-menu__item">Yet Another Action</li>
+</ul>

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -29,23 +29,33 @@ import { EcmUserModel } from '../models/ecmUser.model';
 @Injectable()
 export class ECMUserService {
 
-    constructor(private apiService: AlfrescoApiService) {}
+    constructor(private authService: AlfrescoAuthenticationService,
+                private contentService: AlfrescoContentService) {}
 
     /**
      * get User Information via ECM
      * @param userName - the user name
      */
     getUserInfo(userName: string): Observable<EcmUserModel> {
+      if ( this.authService.getAlfrescoApi().ecmAuth.isLoggedIn() ) {
         return Observable.fromPromise(this.callApiGetPersonInfo(userName))
             .map( data => <EcmUserModel> data['entry'])
             .do(
                  data => console.log('Node data', data['entry'])
                 ) // eyeball results in the console
             .catch(this.handleError);
+      }
     }
 
     private callApiGetPersonInfo(userName: string, opts?: any) {
-        return this.apiService.getInstance().core.peopleApi.getPerson(userName, opts);
+        return this.authService.getAlfrescoApi().core.peopleApi.getPerson(userName, opts);
+    }
+
+    getCurrentUserProfileImageUrl(avatarId: string) {
+       if ( avatarId ) {
+            let nodeObj = {entry: {id: avatarId}};
+            return this.contentService.getContentUrl(nodeObj);
+       }
     }
 
     /**

@@ -21,6 +21,10 @@
                 <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
             </nav>
 
+            <div *ngIf="isLoggedIn()">
+                <ng2-alfresco-userinfo></ng2-alfresco-userinfo>
+            </div>
+
             <!-- Right aligned menu below button -->
             <button id="demo-menu-lower-right" data-automation-id="right-action-menu"
                     class="mdl-button mdl-js-button mdl-button--icon">

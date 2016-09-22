@@ -6,6 +6,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
+    MDL,
     ALFRESCO_CORE_PROVIDERS
 } from 'ng2-alfresco-core';
 
@@ -31,7 +32,7 @@ import {
   </p>
 </div>
 <div *ngIf="isLoggedIn()">
-    <ng2-alfresco-userinfo [userEmail]=userToLogin></ng2-alfresco-userinfo>
+    <ng2-alfresco-userinfo></ng2-alfresco-userinfo>
 </div>
 <p></p>
 <div>
@@ -49,7 +50,7 @@ import {
 
 <button (click)="logout()">Logout</button>`,
   directives: [ UserInfoComponent ],
-  providers: [AlfrescoAuthenticationService, AlfrescoSettingsService]
+  providers: [AlfrescoAuthenticationService, AlfrescoSettingsService, MDL]
 })
 
 

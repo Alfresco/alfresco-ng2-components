@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -29,37 +29,35 @@ import { BpmUserModel } from '../models/bpmUser.model';
 @Injectable()
 export class BPMUserService {
 
-    constructor(public authService: AlfrescoAuthenticationService) {}
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingService: AlfrescoSettingsService) {
+    }
 
     /**
      * get User Information via ECM
      * @param userName - the user name
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-        return Observable.fromPromise(this.callApiGetProfile())
-            .map(
-                 data => <BpmUserModel> data
-                )
-            .do(
-                 data => console.log('Node data', data)
-                ) // eyeball results in the console
-            .catch(this.handleError);
+       if ( this.authService.getAlfrescoApi().bpmAuth.isLoggedIn() ) {
+            return Observable.fromPromise(this.callApiGetProfile())
+                .map(
+                     data => <BpmUserModel> data
+                    )
+                .do(
+                     data => console.log('Node data', data)
+                    ) // eyeball results in the console
+                .catch(this.handleError);
+        }
     }
 
     /**
      * get User Information via ECM
      * @param userName - the user name
      */
-    getCurrentUserProfileImage(): Observable<BpmUserModel> {
-        return Observable.fromPromise(this.callApiGetProfileImage())
-            .do(
-                 data => console.log('Node data', data)
-                ) // eyeball results in the console
-            .catch(this.handleError);
-    }
-
-    private callApiGetProfileImage() {
-        return this.authService.getAlfrescoApi().activiti.profileApi.getProfilePicture();
+    getCurrentUserProfileImage(): string {
+       if ( this.authService.getAlfrescoApi().bpmAuth.isLoggedIn() ) {
+            return this.settingService.getBPMApiBaseUrl() + '/api/enterprise/profile-picture';
+       }
     }
 
     private callApiGetProfile() {

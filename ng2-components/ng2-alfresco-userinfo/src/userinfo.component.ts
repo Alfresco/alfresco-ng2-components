@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ECMUserService } from './services/ecmUser.service';
 import { BPMUserService } from './services/bpmUser.service';
 import { EcmUserModel } from './models/ecmUser.model';
 import { BpmUserModel } from './models/bpmUser.model';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -29,13 +29,10 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     styleUrls: ['./userinfo.component.css'],
     templateUrl: './userinfo.component.html',
-    providers: [ ECMUserService, BPMUserService, AlfrescoContentService ]
+    providers: [ECMUserService, BPMUserService, AlfrescoAuthenticationService]
 })
 
 export class UserInfoComponent implements OnInit {
-
-    @Input()
-    userEmail: string;
 
     private  ecmUser: EcmUserModel;
     private  bpmUser: BpmUserModel;
@@ -46,51 +43,48 @@ export class UserInfoComponent implements OnInit {
 
     constructor(private ecmUserService: ECMUserService,
                 private bpmUserService: BPMUserService,
-                private contentService: AlfrescoContentService) {
+                public authService: AlfrescoAuthenticationService) {
     }
 
     ngOnInit() {
-        this.ecmUserService.getUserInfo(this.userEmail)
-                                .subscribe(
-                                      res => {
-                                        this.ecmUser = <EcmUserModel> res;
-                                        this.getUserProfileImage();
-                                        console.log(this.ecmUserImage);
-                                      }
-                                );
-        this.bpmUserService.getCurrentUserInfo()
-                                .subscribe(
-                                      res => {
-                                        this.bpmUser = <BpmUserModel> res;
-                                      }
-                                );
-
+        if (this.authService.getAlfrescoApi().ecmAuth.isLoggedIn()) {
+            this.ecmUserService.getUserInfo('-me-')
+                .subscribe(
+                    (res) => {
+                    this.ecmUser = <EcmUserModel> res;
+                    this.getUserProfileImage();
+                }
+            );
+        }
+        if (this.authService.getAlfrescoApi().bpmAuth.isLoggedIn()) {
+            this.bpmUserService.getCurrentUserInfo()
+                .subscribe(
+                    (res) => {
+                    this.bpmUser = <BpmUserModel> res;
+                    this.getUserProfileImage();
+                }
+            );
+        }
     }
 
     private getUserProfileImage() {
-      if (this.ecmUser && this.ecmUser.avatarId) {
-          let nodeObj = { entry: { id: this.ecmUser.avatarId } };
-          this.ecmUserImage = this.contentService.getContentUrl(nodeObj);
-      }
-      if (this.bpmUser) {
-          this.bpmUserService.getCurrentUserProfileImage()
-                                .subscribe(
-                                      res => this.bpmUserImage = res
-                                );
-      }
+        if (this.ecmUser) {
+            this.ecmUserImage = this.ecmUserService.getCurrentUserProfileImageUrl(this.ecmUser.avatarId);
+        }
+        if (this.bpmUser) {
+            this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+        }
     }
 
     public getUserAvatar() {
-      if (this.ecmUserImage) {
-         return this.ecmUserImage;
-      }
-      if (this.bpmUserImage) {
-         return this.bpmUserImage;
-      }
-      if (!this.ecmUserImage && !this.bpmUserImage) {
-         return  this.baseComponentPath + '/img/anonymous.gif';
-      }
+        if (this.ecmUserImage) {
+            return this.ecmUserImage;
+        }
+        if (this.bpmUserImage) {
+            return this.bpmUserImage;
+        }
+        if (!this.ecmUserImage && !this.bpmUserImage) {
+            return this.baseComponentPath + '/img/anonymous.gif';
+        }
     }
-
-
 }
