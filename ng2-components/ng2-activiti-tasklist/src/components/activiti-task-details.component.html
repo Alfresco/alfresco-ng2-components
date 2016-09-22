@@ -33,6 +33,8 @@
                    (onError)='onErrorEmitter($event)'
                    (executeOutcome)='executeOutcomeEmitter($event)'
                    #activitiForm>
-
     </activiti-form>
+    <button type="button" class="mdl-button" *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
+        {{ 'TASK_DETAILS.BUTTON.COMPLETE' | translate }}
+    </button>
 </div>

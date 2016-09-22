@@ -133,6 +133,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
             && this.taskDetails.formKey !== 'null';
     }
 
+    isTaskActive() {
+        return this.taskDetails && this.taskDetails.duration === null;
+    }
+
     /**
      * Load the activiti task details
      * @param taskId
@@ -176,6 +180,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
             (res) => {
                 console.log(res);
+                this.formCompleted.emit(res);
             }
         );
     }

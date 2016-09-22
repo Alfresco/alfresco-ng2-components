@@ -13,6 +13,9 @@
       "COMMENTS": "Comments",
       "CHECKLIST": "Checklist"
     },
+    "BUTTON": {
+      "COMPLETE": "Complete"
+    },
     "MESSAGES": {
       "NONE": "No task details found."
     },
