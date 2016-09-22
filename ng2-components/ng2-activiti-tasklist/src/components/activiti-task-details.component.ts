@@ -164,7 +164,6 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     if (this.activitichecklist) {
                         this.activitichecklist.load(this.taskDetails.id);
                     }
-                    console.log(this.taskDetails);
 
                 }
             );
