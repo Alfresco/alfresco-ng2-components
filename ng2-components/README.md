@@ -55,7 +55,7 @@ You can browse all the components at the following address:
 
 http://devproducts.alfresco.com/
 
-### How to test a change to a generic component in its own demo
+## How to test a change to a generic component in its own demo
 
 Let's suppose that for some reason you have changed a component and you want to test this changes.
 The example is based on the ng2-alfresco-login component, but you can use the same steps for any component.
