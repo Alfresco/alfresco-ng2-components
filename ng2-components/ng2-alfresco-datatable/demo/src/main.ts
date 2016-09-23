@@ -15,11 +15,16 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule }  from 'ng2-alfresco-datatable';
+
 import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter,
     DataSorting,
     ObjectDataRow,
@@ -66,8 +71,7 @@ import {
     styles: [
         ':host > .container {padding: 10px}',
         '.p-10 { padding: 10px; }'
-    ],
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES]
+    ]
 })
 class DataTableDemo {
 
@@ -136,6 +140,17 @@ class DataTableDemo {
     }
 }
 
-bootstrap(DataTableDemo, [
-    CONTEXT_MENU_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        FormsModule,
+        CoreModule.forRoot(),
+        DataTableModule,
+        TranslateModule.forRoot()
+    ],
+    declarations: [ DataTableDemo ],
+    bootstrap:    [ DataTableDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
