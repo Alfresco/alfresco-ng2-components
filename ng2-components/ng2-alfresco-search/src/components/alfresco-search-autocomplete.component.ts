@@ -48,6 +48,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
     @Output()
     resultsEmitter = new EventEmitter();
 
+    @Output()
+    errorEmitter = new EventEmitter();
+
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private alfrescoThumbnailService: AlfrescoThumbnailService) {
@@ -80,6 +83,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
                     error => {
                         this.results = null;
                         this.errorMessage = <any>error;
+                        this.errorEmitter.emit(error);
                     }
                 );
         }

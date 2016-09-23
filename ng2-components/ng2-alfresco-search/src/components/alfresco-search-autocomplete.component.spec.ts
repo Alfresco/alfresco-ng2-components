@@ -47,8 +47,29 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                         name: 'MyDoc',
                         isFile : true,
                         content: {
-                            mimetype: 'text/plain'
+                            mimeType: 'text/plain'
                         },
+                        createdByUser: {
+                            displayName: 'John Doe'
+                        },
+                        modifiedByUser: {
+                            displayName: 'John Doe'
+                        }
+                    }
+                }
+            ]
+        }
+    };
+
+    let folderResult = {
+        list: {
+            entries: [
+                {
+                    entry: {
+                        id: '123',
+                        name: 'MyFolder',
+                        isFile : false,
+                        isFolder : true,
                         createdByUser: {
                             displayName: 'John Doe'
                         },
@@ -64,6 +85,16 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
     let noResult = {
         list: {
             entries: []
+        }
+    };
+
+    let errorJson = {
+        error: {
+            errorKey: 'Search failed',
+            statusCode: 400,
+            briefSummary: '08220082 search failed',
+            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+            descriptionURL: 'https://api-explorer.alfresco.com'
         }
     };
 
@@ -133,10 +164,35 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         });
     });
 
+    it('should display the correct thumbnail for result items', (done) => {
+
+        component.baseComponentPath = 'http://localhost';
+        spyOn(component.alfrescoThumbnailService, 'getMimeTypeIcon').and.returnValue('fake-type-icon.svg');
+        spyOn(component.alfrescoThumbnailService, 'getMimeTypeKey').and.returnValue('FAKE_TYPE');
+
+        component.resultsEmitter.subscribe(() => {
+            alfrescoSearchComponentFixture.detectChanges();
+            let imgEl = element.querySelector('#result_row_0 img');
+            expect(imgEl).not.toBeNull();
+            expect(imgEl.src).toBe('http://localhost/img/fake-type-icon.svg');
+            expect(imgEl.alt).toBe('SEARCH.ICONS.FAKE_TYPE');
+            done();
+        });
+
+        component.searchTerm = { currentValue: 'searchTerm', previousValue: ''};
+        component.ngOnChanges({searchTerm: component.searchTerm });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'json',
+            responseText: result
+        });
+    });
+
     it('should display no result if no result are returned', (done) => {
         component.resultsEmitter.subscribe(x => {
             alfrescoSearchComponentFixture.detectChanges();
-            expect( element.querySelector('#search_no_result')).not.toBe(null);
+            expect(element.querySelector('#search_no_result')).not.toBeNull();
             done();
         });
 
@@ -147,6 +203,27 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             status: 200,
             contentType: 'json',
             responseText: noResult
+        });
+    });
+
+    it('should display an error if an error is encountered running the search', (done) => {
+        component.errorEmitter.subscribe(() => {
+            alfrescoSearchComponentFixture.detectChanges();
+            let resultsEl = element.querySelector('[data-automation-id="autocomplete_results"]');
+            let errorEl = element.querySelector('[data-automation-id="autocomplete_error_message"]');
+            expect(resultsEl).toBeNull();
+            expect(errorEl).not.toBeNull();
+            expect(errorEl.innerText).toBe('SEARCH.RESULTS.ERROR');
+            done();
+        });
+
+        component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
+        component.ngOnChanges({searchTerm: component.searchTerm});
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 500,
+            contentType: 'json',
+            responseText: errorJson
         });
     });
 
@@ -170,22 +247,23 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         });
     });
 
-    it('should not emit preview when non-file item is clicked', () => {
-        spyOn(component, 'onItemClick').and.stub();
-
-        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''} });
-
-        component.preview.subscribe(e => {
-            expect(e.value).toBe(component.results[0]);
+    it('should not emit preview if a non-file item is clicked', (done) => {
+        spyOn(component.preview, 'emit');
+        component.resultsEmitter.subscribe(x => {
+            alfrescoSearchComponentFixture.detectChanges();
+            element.querySelector('#result_row_0').click();
+            expect(component.preview.emit).not.toHaveBeenCalled();
+            done();
         });
+
+        component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
+        component.ngOnChanges({searchTerm: component.searchTerm});
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
             contentType: 'json',
-            responseText: result
+            responseText: folderResult
         });
-
-        expect(component.onItemClick).not.toHaveBeenCalled();
     });
 
 });
