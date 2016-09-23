@@ -91,7 +91,8 @@ Also make sure you include these dependencies in your .html page:
 ```html
 <alfresco-search-control [searchTerm]="searchTerm"
                         inputType="search"
-                        (searchChange)="customMethod($event);">
+                        (searchChange)="onSearchChange($event);"
+                        (searchSubmit)="onSearchSubmit($event);">
 </alfresco-search-control>
 ```
 
@@ -116,7 +117,7 @@ import {
 @Component({
     selector: 'alfresco-search-demo',
     template: `
-        <alfresco-search-control *ngIf="authenticated" [searchTerm]="searchTerm" (searchChange)="searchTermChange($event);">
+        <alfresco-search-control *ngIf="authenticated" [searchTerm]="searchTerm" (searchChange)="onSearchChange($event);" (searchSubmit)="onSearchSubmit($event)">
         </alfresco-search-control>
         <div *ngIf="!authenticated">
                 Authentication failed to ip {{ host }}
@@ -141,9 +142,13 @@ class SearchDemo implements OnInit {
         translation.addTranslationFolder();
     }
 
-    searchTermChange(event) {
+    onSearchChange(event) {
         console.log('Search term changed', event);
         this.searchTerm = event.value;
+    }
+
+    onSearchSubmit(event) {
+        console.log('Search submitted', event);
     }
 
     ngOnInit() {
@@ -165,7 +170,8 @@ bootstrap(SearchDemo, [
 ```
 #### Events
 
-**searchChange**: Emitted when the search term is changed and the form submitted, provided that the term is at least three characters in length<br />
+**searchChange**: Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object. If the term is at less than three characters in length then the term is truncated to an empty string.<br />
+**searchSubmit**: Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object.<br />
 
 #### Options
 
@@ -220,7 +226,7 @@ Also make sure you include these dependencies in your .html page:
 ```
 
 Example of an component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
-search term. If no router is present pon the page of if the router does not provide such a parameter then an empty 
+search term. If no router is present on the page of if the router does not provide such a parameter then an empty 
 results page will be shown.
 
 ```ts
@@ -242,7 +248,7 @@ import {
 @Component({
     selector: 'alfresco-search-demo',
     template: `
-        <alfresco-search *ngIf="authenticated"  [searchTerm]="searchTerm"></alfresco-search>
+        <alfresco-search *ngIf="authenticated"></alfresco-search>
          <div *ngIf="!authenticated">
                 Authentication failed to ip {{ host }}
         </div>
@@ -264,11 +270,6 @@ class SearchDemo implements OnInit {
 
         settings.host = this.host;
         translation.addTranslationFolder();
-    }
-
-    searchTermChange(event) {
-        console.log('Search term changed', event);
-        this.searchTerm = event.value;
     }
 
     ngOnInit() {
