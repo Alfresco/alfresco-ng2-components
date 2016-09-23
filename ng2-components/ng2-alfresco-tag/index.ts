@@ -16,10 +16,6 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { TagActionsComponent } from './src/components/tag-actions.component';
@@ -44,10 +40,6 @@ export const TAG_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        HttpModule,
-        TranslateModule,
         CoreModule
     ],
     declarations: [

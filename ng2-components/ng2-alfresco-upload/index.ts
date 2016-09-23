@@ -16,9 +16,6 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
@@ -65,9 +62,6 @@ export const UPLOAD_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        HttpModule,
-        TranslateModule,
         CoreModule
     ],
     declarations: [

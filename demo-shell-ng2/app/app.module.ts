@@ -16,11 +16,8 @@
  */
 
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { CoreModule } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
 import { LoginModule } from 'ng2-alfresco-login';
@@ -36,9 +33,6 @@ import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
-
-import { AlfrescoTranslationLoader } from 'ng2-alfresco-core';
-import { Http } from '@angular/http';
 
 import {
     DataTableDemoComponent,
@@ -57,14 +51,6 @@ import {
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpModule,
-        TranslateModule.forRoot({
-            provide: TranslateLoader,
-            useFactory: (http) => new AlfrescoTranslationLoader(http),
-            deps: [Http]
-        }),
         routing,
         CoreModule.forRoot(),
         LoginModule,

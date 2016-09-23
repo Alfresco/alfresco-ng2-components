@@ -16,9 +16,10 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 import {
     AlfrescoApiService,
@@ -49,8 +50,14 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         HttpModule,
-        TranslateModule
+        TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (http) => new AlfrescoTranslationLoader(http),
+            deps: [Http]
+        })
     ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
@@ -60,6 +67,11 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
         ...ALFRESCO_CORE_PROVIDERS
     ],
     exports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpModule,
+        TranslateModule,
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES
     ]

@@ -16,13 +16,8 @@
  */
 
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
-
-import { DataTableModule } from 'ng2-alfresco-datatable';
 import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { WebscriptComponent } from './src/webscript.component';
 
@@ -38,10 +33,6 @@ export const WEBSCRIPT_DIRECTIVES: any[] = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        HttpModule,
-        TranslateModule,
         CoreModule,
         DataTableModule
     ],

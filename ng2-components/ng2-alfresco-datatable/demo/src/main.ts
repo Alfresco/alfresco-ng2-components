@@ -17,8 +17,6 @@
 
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { CoreModule } from 'ng2-alfresco-core';
@@ -143,10 +141,8 @@ class DataTableDemo {
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
         CoreModule.forRoot(),
-        DataTableModule,
-        TranslateModule.forRoot()
+        DataTableModule
     ],
     declarations: [ DataTableDemo ],
     bootstrap:    [ DataTableDemo ]

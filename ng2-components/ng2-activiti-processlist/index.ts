@@ -16,10 +16,6 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
@@ -56,10 +52,6 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        HttpModule,
-        TranslateModule,
         CoreModule,
         DataTableModule,
         ActivitiTaskListModule

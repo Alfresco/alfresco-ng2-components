@@ -16,10 +16,6 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { AlfrescoSearchService } from './src/services/alfresco-search.service';
@@ -47,11 +43,6 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpModule,
-        TranslateModule,
         CoreModule
     ],
     declarations: [

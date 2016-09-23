@@ -18,11 +18,8 @@
 
 import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpModule, Http } from '@angular/http';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
-import { CoreModule, AlfrescoTranslationLoader } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule }  from 'ng2-alfresco-datatable';
 import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
@@ -214,16 +211,9 @@ class DocumentListDemo implements OnInit {
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
-        HttpModule,
         CoreModule.forRoot(),
         DataTableModule,
-        DocumentListModule.forRoot(),
-        TranslateModule.forRoot({
-            provide: TranslateLoader,
-            useFactory: (http) => new AlfrescoTranslationLoader(http),
-            deps: [Http]
-        })
+        DocumentListModule.forRoot()
     ],
     declarations: [ DocumentListDemo ],
     bootstrap:    [ DocumentListDemo ]

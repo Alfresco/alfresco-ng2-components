@@ -16,10 +16,6 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { CoreModule } from 'ng2-alfresco-core';
 
 export * from './src/data/index';
@@ -38,10 +34,6 @@ export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        HttpModule,
-        TranslateModule,
         CoreModule
     ],
     declarations: [
