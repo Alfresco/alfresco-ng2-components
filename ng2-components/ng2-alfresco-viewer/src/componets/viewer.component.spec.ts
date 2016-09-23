@@ -15,6 +15,12 @@
  * limitations under the License.
  */
 
+describe('ViewerComponent', () => {
+    it('should be upgraded', () => {
+        expect(true).toBe(true);
+    });
+});
+
 /*
 import { beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
