@@ -39,10 +39,9 @@ export class ECMUserService {
     getUserInfo(userName: string): Observable<EcmUserModel> {
       if ( this.authService.getAlfrescoApi().ecmAuth.isLoggedIn() ) {
         return Observable.fromPromise(this.callApiGetPersonInfo(userName))
-            .map( data => <EcmUserModel> data['entry'])
-            .do(
-                 data => console.log('Node data', data['entry'])
-                ) // eyeball results in the console
+            .map(
+                   (data) => <EcmUserModel> data['entry']
+                )
             .catch(this.handleError);
       }
     }

@@ -41,11 +41,8 @@ export class BPMUserService {
        if ( this.authService.getAlfrescoApi().bpmAuth.isLoggedIn() ) {
             return Observable.fromPromise(this.callApiGetProfile())
                 .map(
-                     data => <BpmUserModel> data
+                     (data) => <BpmUserModel> data
                     )
-                .do(
-                     data => console.log('Node data', data)
-                    ) // eyeball results in the console
                 .catch(this.handleError);
         }
     }

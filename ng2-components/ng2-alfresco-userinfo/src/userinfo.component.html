@@ -13,44 +13,76 @@
             <ul class='detail-user-profile-list-mdl mdl-list'>
                 <div *ngIf="ecmUser">
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content"> ECM </span>
+                        <span class="mdl-list__item-primary-content" style="color: rgb(255,152,0);"> ECM </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">First Name : </span>
-                        <span  class="mdl-list__item-secondary-content"> {{ecmUser.firstName}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong> First Name : </strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i>{{ecmUser.firstName}}</i>
+                        </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">Last Name : </span>
-                        <span  class="mdl-list__item-secondary-content">{{ecmUser.lastName}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong>Last Name :</strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i>{{ecmUser.lastName}}</i>
+                        </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">Email : </span>
-                        <span  class="mdl-list__item-secondary-content"> {{ecmUser.email}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong>Email : </strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i>{{ecmUser.email}}</i>
+                        </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">Job Title : </span>
-                        <span  class="mdl-list__item-secondary-content"> {{ecmUser.jobTitle}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong> Job Title : </strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i> {{ecmUser.jobTitle}}</i>
+                        </span>
                     </li>
                 </div>
                     <div *ngIf="bpmUser">
                     <li class="mdl-list__item">
-                        <span class="mdl-list__item-primary-content"> BPM </span>
+                        <span class="mdl-list__item-primary-content" style="color: rgb(255,152,0);"> BPM </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">First Name : </span>
-                        <span  class="mdl-list__item-secondary-content"> {{bpmUser.firstName}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong>First Name : </strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i>{{bpmUser.firstName}}</i>
+                        </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">Last Name : </span>
-                        <span  class="mdl-list__item-secondary-content">{{bpmUser.lastName}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong>Last Name : </strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i>{{bpmUser.lastName}}</i>
+                        </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">Email : </span>
-                        <span  class="mdl-list__item-secondary-content"> {{bpmUser.email}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong>Email : </strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i>{{bpmUser.email}}</i>
+                        </span>
                     </li>
                     <li class="mdl-list__item mdl-list__item-two-line">
-                        <span class="mdl-list__item-secondary-content">Tenant Name : </span>
-                        <span  class="mdl-list__item-secondary-content"> {{bpmUser.tenantName}}</span>
+                        <span class="mdl-list__item-secondary-content">
+                            <strong>Tenant Name : </strong>
+                        </span>
+                        <span  class="mdl-list__item-secondary-content">
+                            <i>{{bpmUser.tenantName}}</i>
+                        </span>
                     </li>
                 </div>
             </ul>
