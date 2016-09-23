@@ -42,6 +42,9 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     @Output()
     resultsEmitter = new EventEmitter();
 
+    @Output()
+    errorEmitter = new EventEmitter();
+
     results: any;
 
     errorMessage;
@@ -119,6 +122,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                     error => {
                         this.results = null;
                         this.errorMessage = <any>error;
+                        this.errorEmitter.emit(error);
                     }
                 );
         }

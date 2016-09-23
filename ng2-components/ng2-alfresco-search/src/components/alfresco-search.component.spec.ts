@@ -48,8 +48,29 @@ describe('AlfrescoSearchComponent', () => {
                         name: 'MyDoc',
                         isFile: true,
                         content: {
-                            mimetype: 'text/plain'
+                            mimeType: 'text/plain'
                         },
+                        createdByUser: {
+                            displayName: 'John Doe'
+                        },
+                        modifiedByUser: {
+                            displayName: 'John Doe'
+                        }
+                    }
+                }
+            ]
+        }
+    };
+
+    let folderResult = {
+        list: {
+            entries: [
+                {
+                    entry: {
+                        id: '123',
+                        name: 'MyFolder',
+                        isFile : false,
+                        isFolder : true,
                         createdByUser: {
                             displayName: 'John Doe'
                         },
@@ -65,6 +86,16 @@ describe('AlfrescoSearchComponent', () => {
     let noResult = {
         list: {
             entries: []
+        }
+    };
+
+    let errorJson = {
+        error: {
+            errorKey: 'Search failed',
+            statusCode: 400,
+            briefSummary: '08220082 search failed',
+            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+            descriptionURL: 'https://api-explorer.alfresco.com'
         }
     };
 
@@ -152,11 +183,10 @@ describe('AlfrescoSearchComponent', () => {
             });
         });
 
-
         it('should display no result if no result are returned', (done) => {
             component.resultsEmitter.subscribe(x => {
                 alfrescoSearchComponentFixture.detectChanges();
-                expect(element.querySelector('#search_no_result')).not.toBe(null);
+                expect(element.querySelector('#search_no_result')).not.toBeNull();
                 done();
             });
 
@@ -169,31 +199,67 @@ describe('AlfrescoSearchComponent', () => {
                 responseText: noResult
             });
         });
+
+        it('should display an error if an error is encountered running the search', (done) => {
+            component.errorEmitter.subscribe(() => {
+                alfrescoSearchComponentFixture.detectChanges();
+                let resultsEl = element.querySelector('[data-automation-id="search_result_table"]');
+                let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
+                expect(resultsEl).toBeNull();
+                expect(errorEl).not.toBeNull();
+                expect(errorEl.innerText).toBe('SEARCH.RESULTS.ERROR');
+                done();
+            });
+
+            component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
+            component.ngOnChanges({searchTerm: component.searchTerm});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 500,
+                contentType: 'json',
+                responseText: errorJson
+            });
+        });
     });
 
     describe('search result actions', () => {
 
-        it('should emit preview when file item clicked', () => {
-            component.results = [{
-                entry: {
-                    id: '123',
-                    name: 'MyDoc',
-                    content: {
-                        mimetype: 'text/plain'
-                    },
-                    isFile: true
-                }
-            }];
-
-            alfrescoSearchComponentFixture.detectChanges(component.results[0]);
-            component.preview.subscribe(e => {
-                expect(e.value).toBe(component.results[0]);
+        it('should emit preview when file item clicked', (done) => {
+            component.resultsEmitter.subscribe(() => {
+                alfrescoSearchComponentFixture.detectChanges();
+                element.querySelector('#result_row_0').click();
             });
+
+            component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
+            component.ngOnChanges({searchTerm: component.searchTerm});
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
-                contentType: 'text/plain',
-                responseText: '<div></div>'
+                contentType: 'json',
+                responseText: result
+            });
+
+            component.preview.subscribe(e => {
+                done();
+            });
+        });
+
+        it('should not emit preview when non-file item is clicked', (done) => {
+            spyOn(component.preview, 'emit');
+            component.resultsEmitter.subscribe(x => {
+                alfrescoSearchComponentFixture.detectChanges();
+                element.querySelector('#result_row_0').click();
+                expect(component.preview.emit).not.toHaveBeenCalled();
+                done();
+            });
+
+            component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
+            component.ngOnChanges({searchTerm: component.searchTerm});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: folderResult
             });
         });
     });
