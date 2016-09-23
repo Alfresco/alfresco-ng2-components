@@ -80,4 +80,16 @@ export class UserInfoComponent implements OnInit {
         return this.ecmUserImage || this.bpmUserImage ||  this.anonymouseImageUrl;
     }
 
+    public getBpmUserDetailAvatarUrl() {
+        return this.bpmUserImage || this.anonymouseImageUrl;
+    }
+
+    public getEcmUserDetailAvatarUrl() {
+        return this.ecmUserImage || this.anonymouseImageUrl;
+    }
+
+    public formatValue(value: string) {
+        return value === 'null' ? null : value;
+    }
+
 }
