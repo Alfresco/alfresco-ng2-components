@@ -14,21 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, OnInit, Injectable, provide } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import {
-    ACTIVITI_PROCESSLIST_PROVIDERS,
-    ACTIVITI_PROCESSLIST_DIRECTIVES
-} from 'ng2-activiti-processlist/dist/ng2-activiti-processlist';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    ALFRESCO_CORE_PROVIDERS
-} from 'ng2-alfresco-core';
+
+import { NgModule, Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Component({
   selector: 'my-app',
-  template: `label for="token"><b>Insert a valid access token / ticket:</b></label><br>
+  template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
                <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="bpmHost"><br><br>
@@ -45,14 +42,12 @@ import {
                 <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
         <div class="container" *ngIf="authenticated">
             <activiti-process-instance-list></activiti-process-instance-list>
-        </div>`,
-  providers: [ACTIVITI_PROCESSLIST_PROVIDERS],
-  directives: [ACTIVITI_PROCESSLIST_DIRECTIVES]
+        </div>`
 })
 class MyDemoApp implements OnInit {
 
     authenticated: boolean;
-    ecmHost: string = 'http://127.0.0.1:9999';
+    bpmHost: string = 'http://127.0.0.1:9999';
     token: string;
 
     constructor(
@@ -64,8 +59,8 @@ class MyDemoApp implements OnInit {
         settingsService.setProviders('BPM');
         settingsService.bpmHost = this.bpmHost;
 
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        if (this.authService.getTicketBpm()) {
+            this.token = this.authService.getTicketBpm();
         }
     }
 
@@ -78,7 +73,7 @@ class MyDemoApp implements OnInit {
     }
 
     public updateHost(): void {
-        this.settingsService.ecmHost = this.ecmHost;
+        this.settingsService.bpmHost = this.bpmHost;
         this.login();
     }
 
@@ -96,6 +91,15 @@ class MyDemoApp implements OnInit {
     }
 }
 
-bootstrap(MyDemoApp, [
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ActivitiProcessListModule
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
