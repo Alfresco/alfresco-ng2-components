@@ -15,18 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { NgModule, Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    CONTEXT_MENU_DIRECTIVES
-} from 'ng2-alfresco-core';
-
-import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService  } from 'ng2-alfresco-core';
+import { DataTableModule }  from 'ng2-alfresco-datatable';
+import { WebScriptModule } from 'ng2-alfresco-webscript';
 
 @Component({
     selector: 'alfresco-webscript-demo',
@@ -54,8 +49,7 @@ import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
                            [contentType]="'HTML'"
                            (onSuccess)= "logData($event)"></alfresco-webscript-get>
         </div>
-    `,
-    directives: [WEBSCRIPTCOMPONENT, CONTEXT_MENU_DIRECTIVES]
+    `
 })
 class WebscriptDemo implements OnInit {
 
@@ -117,7 +111,16 @@ class WebscriptDemo implements OnInit {
     }
 }
 
-bootstrap(WebscriptDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DataTableModule,
+        WebScriptModule
+    ],
+    declarations: [ WebscriptDemo ],
+    bootstrap:    [ WebscriptDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
