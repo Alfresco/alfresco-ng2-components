@@ -46,6 +46,9 @@ export class AlfrescoSearchControlComponent {
     searchChange = new EventEmitter();
 
     @Output()
+    searchSubmit = new EventEmitter();
+
+    @Output()
     preview = new EventEmitter();
 
     @Output()
@@ -74,6 +77,10 @@ export class AlfrescoSearchControlComponent {
             (value: string) => {
                 this.autocompleteSearchTerm = value;
                 this.searchValid = this.searchControl.valid;
+                this.searchChange.emit({
+                    value: value,
+                    valid: this.searchValid
+                });
             }
         );
 
@@ -98,11 +105,8 @@ export class AlfrescoSearchControlComponent {
      * @param event Submit event that was fired
      */
     onSearch(event): void {
-        if (event) {
-            event.preventDefault();
-        }
         if (this.searchControl.valid) {
-            this.searchChange.emit({
+            this.searchSubmit.emit({
                 value: this.searchTerm
             });
             this.searchInput.nativeElement.blur();

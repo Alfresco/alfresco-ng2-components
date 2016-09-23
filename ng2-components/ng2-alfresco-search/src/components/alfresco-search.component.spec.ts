@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-/*
-import { PLATFORM_PIPES } from '@angular/core';
+import { PLATFORM_PIPES, ReflectiveInjector } from '@angular/core';
 import { it, describe, expect, inject, beforeEachProviders, beforeEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
-import { RouteParams } from '@angular/router-deprecated';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 import { AlfrescoSearchComponent } from './alfresco-search.component';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -103,12 +103,20 @@ describe('AlfrescoSearchComponent', () => {
     });
 
     it('should take the provided search term from query param provided via RouteParams', () => {
-        let search = new AlfrescoSearchComponent(null, null, null, new RouteParams({q: 'exampleTerm692'}));
+        let injector = ReflectiveInjector.resolveAndCreate([
+            { provide: ActivatedRoute, useValue: { params: Observable.from([{ q: 'exampleTerm692' }]) } }
+        ]);
+        let search = new AlfrescoSearchComponent(null, null, null, injector.get(ActivatedRoute));
+        search.ngOnInit();
         expect(search.searchTerm).toBe('exampleTerm692');
     });
 
     it('should have a null search term if no query param provided via RouteParams', () => {
-        let search = new AlfrescoSearchComponent(null, null, null, new RouteParams({}));
+        let injector = ReflectiveInjector.resolveAndCreate([
+            { provide: ActivatedRoute, useValue: { params: Observable.from([{}]) } }
+        ]);
+        let search = new AlfrescoSearchComponent(null, null, null, injector.get(ActivatedRoute));
+        search.ngOnInit();
         expect(search.searchTerm).toBeNull();
     });
 
@@ -191,4 +199,3 @@ describe('AlfrescoSearchComponent', () => {
     });
 
 });
-*/

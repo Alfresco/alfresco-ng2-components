@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -46,12 +46,12 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     errorMessage;
 
-    route: any[] = [];
+    queryParamName = 'q';
 
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService,
-                private activatedRoute: ActivatedRoute) {
+                @Optional() private route: ActivatedRoute) {
 
         if (translate !== null) {
             translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
@@ -61,15 +61,19 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     }
 
     ngOnInit(): void {
-        this.activatedRoute.params.subscribe(params => {
-            this.searchTerm = params['q'];
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                this.searchTerm = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                this.displaySearchResults(this.searchTerm);
+            });
+        } else {
             this.displaySearchResults(this.searchTerm);
-        });
+        }
     }
 
-    ngOnChanges(changes): void {
-        if (changes.searchTerm) {
-            this.displaySearchResults(changes.searchTerm.currentValue);
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['searchTerm']) {
+            this.displaySearchResults(changes['searchTerm'].currentValue);
         }
     }
 

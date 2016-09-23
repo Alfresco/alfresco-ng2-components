@@ -118,5 +118,39 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(0);
         });
     });
+
+    describe('search submit', () => {
+
+        it('should fire a search when a term has been entered', () => {
+            spyOn(component.searchSubmit, 'emit');
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let formEl = element.querySelector('form');
+            component.searchTerm = 'searchTerm1';
+            component.searchControl.updateValue('searchTerm1');
+            alfrescoSearchControlComponentFixture.detectChanges();
+            formEl.dispatchEvent(new Event('submit'));
+
+            alfrescoSearchControlComponentFixture.detectChanges();
+
+            expect(component.searchSubmit.emit).toHaveBeenCalledWith({
+                'value': 'searchTerm1'
+            });
+        });
+
+        it('should not fire a search when no term has been entered', () => {
+            spyOn(component.searchSubmit, 'emit');
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let inputEl = element.querySelector('input[type="text"]');
+            let formEl = element.querySelector('form');
+            inputEl.value = '';
+            formEl.dispatchEvent(new Event('submit'));
+
+            alfrescoSearchControlComponentFixture.detectChanges();
+
+            expect(component.searchSubmit.emit).not.toHaveBeenCalled();
+        });
+
+    });
+
 });
 */
