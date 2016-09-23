@@ -15,12 +15,15 @@
  * limitations under the License.
  */
 
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ALFRESCO_CORE_PROVIDERS, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
+import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule }  from 'ng2-alfresco-datatable';
+import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'activiti-tasklist-demo',
@@ -45,8 +48,7 @@ import { ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
     styles: [
         ':host > .container {padding: 10px}',
         '.p-10 { padding: 10px; }'
-    ],
-    directives: [ALFRESCO_TASKLIST_DIRECTIVES]
+    ]
 })
 class ActivitiTaskListDemo implements OnInit {
 
@@ -105,8 +107,16 @@ class ActivitiTaskListDemo implements OnInit {
     }
 }
 
-bootstrap(ActivitiTaskListDemo, [
-    HTTP_PROVIDERS,
-    ATIVITI_FORM_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS]
-);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DataTableModule,
+        ActivitiTaskListModule
+    ],
+    declarations: [ ActivitiTaskListDemo ],
+    bootstrap:    [ ActivitiTaskListDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
