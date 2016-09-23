@@ -21,7 +21,7 @@ import {
     expect,
     beforeEach
 } from '@angular/core/testing';
-
+import { SimpleChange } from '@angular/core';
 import { ActivitiTaskList } from './activiti-tasklist.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { UserTaskFilterRepresentationModel } from '../models/filter.model';
@@ -120,6 +120,11 @@ describe('ActivitiTaskList', () => {
         taskList.ngOnInit();
     });
 
+    it('should return a currentId null when the taskList is empty', () => {
+        taskList.selectFirstTask();
+        expect(taskList.getCurrentTaskId()).toBeNull();
+    });
+
     it('should throw an exception when the response is wrong', (done) => {
         spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeErrorTaskPromise));
         taskList.taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
@@ -157,10 +162,21 @@ describe('ActivitiTaskList', () => {
 
         taskList.rowClick.subscribe(taskId => {
             expect(taskId).toEqual(999);
+            expect(taskList.getCurrentTaskId()).toEqual(999);
             done();
         });
 
         taskList.onRowClick(rowEvent);
+    });
+
+    it('should reload task list by filter on binding changes', () => {
+        spyOn(taskList, 'load').and.stub();
+        const taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
+
+        let change = new SimpleChange(null, taskFilter);
+        taskList.ngOnChanges({ 'taskFilter': change });
+
+        expect(taskList.load).toHaveBeenCalled();
     });
 
 });

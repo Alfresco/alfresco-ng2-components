@@ -22,11 +22,11 @@
         </div>
     </div>
     <activiti-form *ngIf="hasFormKey()" [taskId]="taskDetails.id"
-                   [showTitle]="showTitle"
+                   [showTitle]="showFormTitle"
                    [showRefreshButton]="showRefreshButton"
-                   [showCompleteButton]="showCompleteButton"
-                   [showSaveButton]="showSaveButton"
-                   [readOnly]="readOnly"
+                   [showCompleteButton]="showFormCompleteButton"
+                   [showSaveButton]="showFormSaveButton"
+                   [readOnly]="readOnlyForm"
                    (formSaved)='formSavedEmitter($event)'
                    (formCompleted)='formCompletedEmitter($event)'
                    (formLoaded)='formLoadedEmitter($event)'

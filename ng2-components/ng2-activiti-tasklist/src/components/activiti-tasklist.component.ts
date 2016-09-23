@@ -153,7 +153,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     /**
      * Select the first task of a tasklist if present
      */
-    private selectFirstTask() {
+    selectFirstTask() {
         if (!this.isTaskListEmpty()) {
             this.currentTaskId = this.data.getRows()[0].getValue('id');
         } else {

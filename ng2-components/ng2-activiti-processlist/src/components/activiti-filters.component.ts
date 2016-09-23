@@ -77,30 +77,40 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
             this.filters.push(filter);
         });
 
-        this.load();
+        this.getFilters(this.appId, this.appName);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         let appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
-            this.load();
+            this.getFiltersByAppId(appId.currentValue);
+            return;
+        }
+        let appName = changes['appName'];
+        if (appName && appName.currentValue) {
+            this.getFiltersByAppName(appName.currentValue);
             return;
         }
     }
 
     /**
-     * The method call the adapter data table component for render the task list
-     * @param tasks
+     * Return the task list filtered by appId or by appName
+     * @param appId
+     * @param appName
      */
-    private load() {
-        if (this.appName) {
-            this.filterByAppName();
+    getFilters(appId?: string, appName?: string) {
+        if (appName) {
+            this.getFiltersByAppName(appName);
         } else {
-            this.filterByAppId(this.appId);
+            this.getFiltersByAppId(appId);
         }
     }
 
-    private filterByAppId(appId) {
+    /**
+     * Return the filter list filtered by appId
+     * @param appId - optional
+     */
+    getFiltersByAppId(appId?: string) {
         this.activiti.getProcessFilters(appId).subscribe(
             (res: FilterRepresentationModel[]) => {
                 this.resetFilter();
@@ -117,10 +127,14 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
         );
     }
 
-    private filterByAppName() {
-        this.activiti.getDeployedApplications(this.appName).subscribe(
+    /**
+     * Return the filter list filtered by appName
+     * @param appName
+     */
+    getFiltersByAppName(appName: string) {
+        this.activiti.getDeployedApplications(appName).subscribe(
             application => {
-                this.filterByAppId(application.id);
+                this.getFiltersByAppId(application.id);
                 this.selectFirstFilter();
             },
             (err) => {
