@@ -94,7 +94,7 @@
     "license-check": "1.1.5",
     "mime": "^1.3.4",
     "tslint": "3.8.1",
-    "typescript": "^2.0.2",
+    "typescript": "^2.0.3",
     "wsrv": "^0.1.5"
   },
   "license-check-config": {
