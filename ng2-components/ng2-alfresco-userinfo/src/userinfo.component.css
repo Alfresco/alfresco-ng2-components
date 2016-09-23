@@ -18,6 +18,7 @@
 
 .user-profile-list-mdl{
     max-height: 450px;
-    width: 400px;
+    max-width: 450px;
+    min-width: 410px;
     overflow: auto;
 }
