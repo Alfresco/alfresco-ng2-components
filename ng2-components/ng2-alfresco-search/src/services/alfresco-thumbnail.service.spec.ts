@@ -15,15 +15,28 @@
  * limitations under the License.
  */
 
+import { describe, beforeEach, beforeEachProviders, inject } from '@angular/core/testing';
 import { AlfrescoThumbnailService } from './alfresco-thumbnail.service';
+import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('AlfrescoThumbnailService', () => {
 
     let service: AlfrescoThumbnailService;
 
-    beforeEach(() => {
-        service = new AlfrescoThumbnailService(null);
+
+    beforeEachProviders(() => {
+        return [
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            AlfrescoContentService,
+            AlfrescoSettingsService,
+            AlfrescoThumbnailService
+        ];
     });
+
+    beforeEach(inject([AlfrescoThumbnailService], (thumbnailService: AlfrescoThumbnailService) => {
+        service = thumbnailService;
+    }));
 
     it('should return the correct icon for a plain text file', () => {
         expect(service.getMimeTypeIcon('text/plain')).toBe('ft_ic_document.svg');
@@ -39,6 +52,11 @@ describe('AlfrescoThumbnailService', () => {
 
     it('should return a generic icon for an unknown file', () => {
         expect(service.getMimeTypeIcon('x-unknown/yyy')).toBe('ft_ic_miscellaneous.svg');
+    });
+
+    it('should return the thumbnail URL for a content item', () => {
+        spyOn(service.contentService, 'getDocumentThumbnailUrl').and.returnValue('/fake-thumbnail.png');
+        expect(service.getDocumentThumbnailUrl({})).toBe('/fake-thumbnail.png');
     });
 
 });
