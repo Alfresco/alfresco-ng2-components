@@ -152,5 +152,51 @@ describe('AlfrescoSearchControlComponent', () => {
 
     });
 
+    describe('component focus', () => {
+
+        it('should fire an event when the search box receives focus', () => {
+            spyOn(component.expand, 'emit');
+            let inputEl = element.querySelector('input');
+            inputEl.dispatchEvent(new Event('focus'));
+            expect(component.expand.emit).toHaveBeenCalledWith({
+                expanded: true
+            });
+        });
+
+        it('should fire an event when the search box loses focus', () => {
+            spyOn(component.expand, 'emit');
+            let inputEl = element.querySelector('input');
+            inputEl.dispatchEvent(new Event('blur'));
+            expect(component.expand.emit).toHaveBeenCalledWith({
+                expanded: false
+            });
+        });
+
+        it('should NOT fire an event when the search box receives/loses focus but the component is not expandable',
+            () => {
+                spyOn(component.expand, 'emit');
+                component.expandable = false;
+                let inputEl = element.querySelector('input');
+                inputEl.dispatchEvent(new Event('focus'));
+                inputEl.dispatchEvent(new Event('blur'));
+                expect(component.expand.emit).not.toHaveBeenCalled();
+            });
+
+    });
+
+    describe('file preview', () => {
+
+        it('should emit a preview event when onFileClicked is called', () => {
+            spyOn(component.preview, 'emit');
+            component.onFileClicked({
+                value: 'node12345'
+            });
+            expect(component.preview.emit).toHaveBeenCalledWith({
+                'value': 'node12345'
+            });
+        });
+
+    });
+
 });
 */
