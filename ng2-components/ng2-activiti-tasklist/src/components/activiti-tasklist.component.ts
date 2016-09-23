@@ -96,6 +96,13 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         }
     }
 
+    public reload() {
+        if (this.taskFilter) {
+            let requestNode = this.convertTaskUserToTaskQuery(this.taskFilter);
+            this.load(new TaskQueryRequestRepresentationModel(requestNode));
+        }
+    }
+
     public load(requestNode: TaskQueryRequestRepresentationModel) {
         this.activiti.getTotalTasks(requestNode).subscribe(
             (res) => {

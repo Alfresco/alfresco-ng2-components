@@ -20,7 +20,8 @@ import { ALFRESCO_TASKLIST_DIRECTIVES,
     AppDefinitionRepresentationModel,
     FilterRepresentationModel,
     UserTaskFilterRepresentationModel,
-    ActivitiApps
+    ActivitiApps,
+    ActivitiTaskList
 } from 'ng2-activiti-tasklist';
 import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
 import { ActivitiForm } from 'ng2-activiti-form';
@@ -53,7 +54,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     activitidetails: any;
 
     @ViewChild('activititasklist')
-    activititasklist: any;
+    activititasklist: ActivitiTaskList;
 
     @ViewChild('activitiprocessfilter')
     activitiprocessfilter: any;
@@ -144,6 +145,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     onSuccessTaskFilterList(event: any) {
         this.taskFilter = this.activitifilter.getCurrentFilter();
+    }
+
+    onStartTaskSuccess(event: any) {
+        this.activititasklist.reload();
     }
 
     onSuccessTaskList(event: UserTaskFilterRepresentationModel) {

@@ -132,6 +132,23 @@ describe('ActivitiTaskList', () => {
         taskList.ngOnInit();
     });
 
+    it('should reload tasks when reload() is called', (done) => {
+        spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
+        spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        taskList.taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
+        taskList.ngOnInit();
+        taskList.onSuccess.subscribe( (res) => {
+            expect(res).toBeDefined();
+            expect(taskList.data).toBeDefined();
+            expect(taskList.isTaskListEmpty()).not.toBeTruthy();
+            expect(taskList.data.getRows().length).toEqual(2);
+            expect(taskList.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+            expect(taskList.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            done();
+        });
+        taskList.reload();
+    });
+
     it('should emit row click event', (done) => {
         let row = new ObjectDataRow({
             id: 999
