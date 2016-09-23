@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 
+describe('TagList', () => {
+    it('should be upgraded', () => {
+        expect(true).toBe(true);
+    });
+});
 
 /*
 import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
