@@ -28,6 +28,7 @@ export class AppDefinitionRepresentationModel {
     name: string;
     description: string;
     theme: string;
+    icon: string;
     id: number;
     modelId: number;
     tenantId: number;
@@ -38,6 +39,7 @@ export class AppDefinitionRepresentationModel {
         this.name = obj && obj.name || null;
         this.description = obj && obj.description || null;
         this.theme = obj && obj.theme || null;
+        this.icon = obj && obj.icon || null;
         this.id = obj && obj.id;
         this.modelId = obj && obj.modelId;
         this.tenantId = obj && obj.tenantId;
