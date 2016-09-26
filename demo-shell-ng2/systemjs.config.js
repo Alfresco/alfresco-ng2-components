@@ -36,7 +36,8 @@
             'ng2-alfresco-tag': 'npm:ng2-alfresco-tag/dist',
             'ng2-activiti-tasklist': 'npm:ng2-activiti-tasklist/dist',
             'alfresco-js-api': 'npm:alfresco-js-api/dist',
-            'ng2-activiti-processlist': 'npm:ng2-activiti-processlist/dist'
+            'ng2-activiti-processlist': 'npm:ng2-activiti-processlist/dist',
+            'ng2-alfresco-userinfo': 'npm:ng2-alfresco-userinfo/dist'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -61,7 +62,8 @@
             'ng2-activiti-tasklist': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-webscript': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-tag': { main: './index.js', defaultExtension: 'js'},
-            'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'}
+            'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
+            'ng2-alfresco-userinfo': { main: './index.js', defaultExtension: 'js'}
         }
     });
 })(this);
