@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
 import { WidgetVisibilityService } from './widget-visibility.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
@@ -551,3 +552,4 @@ describe('WidgetVisibilityService', () => {
        expect(fakeFormField.isVisible).toBeFalsy();
     });
 });
+*/
