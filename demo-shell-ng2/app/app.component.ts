@@ -37,6 +37,7 @@ export class AppComponent {
 
     ecmHost: string = 'http://' + window.location.hostname + ':8080';
     bpmHost: string = 'http://' + window.location.hostname + ':9999';
+    csrfDisabled: boolean = false;
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
@@ -44,6 +45,7 @@ export class AppComponent {
                 public alfrescoSettingsService: AlfrescoSettingsService) {
         this.setEcmHost();
         this.setBpmHost();
+        this.setCsrfToken();
 
         this.translate = translate;
         this.translate.addTranslationFolder();
@@ -61,6 +63,13 @@ export class AppComponent {
         this.bpmHost = (<HTMLInputElement>event.target).value;
         this.alfrescoSettingsService.bpmHost = this.bpmHost;
         localStorage.setItem(`bpmHost`, this.bpmHost);
+    }
+
+    public onChangeCsrf(event: KeyboardEvent): void {
+        console.log((<HTMLInputElement>event.target).value);
+        this.csrfDisabled = !!(<HTMLInputElement>event.target).value;
+        this.alfrescoSettingsService.csrfDisabled = this.csrfDisabled;
+        localStorage.setItem(`csrfDisabled`, this.csrfDisabled.toString());
     }
 
     isLoggedIn(): boolean {
@@ -118,6 +127,15 @@ export class AppComponent {
             this.bpmHost = localStorage.getItem(`bpmHost`);
         } else {
             this.alfrescoSettingsService.bpmHost = this.bpmHost;
+        }
+    }
+
+    private setCsrfToken() {
+        if (localStorage.getItem(`csrfDisabled`)) {
+            this.alfrescoSettingsService.bpmHost = localStorage.getItem(`csrfDisabled`);
+            this.csrfDisabled = !!localStorage.getItem(`csrfDisabled`);
+        } else {
+            this.alfrescoSettingsService.csrfDisabled = this.csrfDisabled;
         }
     }
 }

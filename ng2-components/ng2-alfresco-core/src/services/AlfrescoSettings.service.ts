@@ -23,11 +23,13 @@ export class AlfrescoSettingsService {
 
     static DEFAULT_ECM_ADDRESS: string = 'http://' + window.location.hostname + ':8080';
     static DEFAULT_BPM_ADDRESS: string = 'http://' + window.location.hostname + ':9999';
+    static DEFAULT_CSRF_CONFIG: boolean = false;
 
     static DEFAULT_BPM_CONTEXT_PATH: string = '/activiti-app';
 
     private _ecmHost: string = AlfrescoSettingsService.DEFAULT_ECM_ADDRESS;
     private _bpmHost: string = AlfrescoSettingsService.DEFAULT_BPM_ADDRESS;
+    private _csrfDisabled: boolean = AlfrescoSettingsService.DEFAULT_CSRF_CONFIG;
 
     private _bpmContextPath = AlfrescoSettingsService.DEFAULT_BPM_CONTEXT_PATH;
 
@@ -35,10 +37,16 @@ export class AlfrescoSettingsService {
 
     public bpmHostSubject: Subject<string> = new Subject<string>();
     public ecmHostSubject: Subject<string> = new Subject<string>();
+    public csrfSubject: Subject<boolean> = new Subject<boolean>();
     public providerSubject: Subject<string> = new Subject<string>();
 
     public get ecmHost(): string {
         return this._ecmHost;
+    }
+
+    public set csrfDisabled(csrfDisabled: boolean) {
+        this.csrfSubject.next(csrfDisabled);
+        this._csrfDisabled = csrfDisabled;
     }
 
     public set ecmHost(ecmHostUrl: string) {
