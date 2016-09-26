@@ -130,7 +130,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should covert cell value to formatted date', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
         let dateValue = 'Jul 15, 2015, 9:43:11 PM';
 
         let file = new FileNode();
@@ -150,7 +150,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should use default date format as fallback', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
         let dateValue = 'Jul 15, 2015, 9:43:11 PM';
 
         let file = new FileNode();
@@ -170,7 +170,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should return date value as string', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
 
         let file = new FileNode();
         file.entry.createdAt = rawValue;
@@ -188,7 +188,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should log error when having date conversion issues', () => {
-        let dateValue = '[wrong-date]';
+        let dateValue = null;
         let file = new FileNode();
         file.entry.createdAt = dateValue;
 

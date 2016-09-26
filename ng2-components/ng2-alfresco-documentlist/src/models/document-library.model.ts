@@ -47,9 +47,9 @@ export class MinimalNodeEntryEntity {
     nodeType: string;
     isFolder: boolean;
     isFile: boolean;
-    modifiedAt: string;
+    modifiedAt: Date;
     modifiedByUser: UserInfo;
-    createdAt: string;
+    createdAt: Date;
     createdByUser: UserInfo;
     content: ContentInfo;
     path: PathInfoEntity;
