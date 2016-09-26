@@ -478,5 +478,38 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
+    it('should create a new standalone task ', (done) => {
+        let taskFake = new TaskDetailsModel({
+            name: 'FakeNameTask',
+            description: 'FakeDescription',
+            category: '3'
+        });
+
+        service.createNewTask(taskFake).subscribe(
+            (res: TaskDetailsModel) => {
+                expect(res).toBeDefined();
+                expect(res.id).not.toEqual('');
+                expect(res.name).toEqual('FakeNameTask');
+                expect(res.description).toEqual('FakeDescription');
+                expect(res.category).toEqual('3');
+                expect(res.created).not.toEqual('');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({
+                id: '777',
+                name: 'FakeNameTask',
+                description: 'FakeDescription',
+                category: '3',
+                assignee: fakeUser,
+                created: '2016-07-15T11:19:17.440+0000'
+            })
+        });
+    });
+
 });
 */

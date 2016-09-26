@@ -20,7 +20,8 @@ import {
     AppDefinitionRepresentationModel,
     FilterRepresentationModel,
     UserTaskFilterRepresentationModel,
-    ActivitiApps
+    ActivitiApps,
+    ActivitiTaskList
 } from 'ng2-activiti-tasklist';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
@@ -40,8 +41,6 @@ declare var componentHandler;
 })
 export class ActivitiDemoComponent implements AfterViewChecked {
 
-    currentChoice: string = 'task-list';
-
     @ViewChild('activitiapps')
     activitiapps: ActivitiApps;
 
@@ -52,7 +51,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     activitidetails: any;
 
     @ViewChild('activititasklist')
-    activititasklist: any;
+    activititasklist: ActivitiTaskList;
 
     @ViewChild('activitiprocessfilter')
     activitiprocessfilter: any;
@@ -62,6 +61,15 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     @ViewChild('activitiprocessdetails')
     activitiprocessdetails: any;
+
+    @ViewChild('tabmain')
+    tabMain: any;
+
+    @ViewChild('tabheader')
+    tabHeader: any;
+
+    @Input()
+    appId: number;
 
     layoutType: string;
     currentTaskId: string;
@@ -77,21 +85,6 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
-
-    @Input()
-    appId: number;
-
-    setChoice($event) {
-        this.currentChoice = $event.target.value;
-    }
-
-    isProcessListSelected() {
-        return this.currentChoice === 'process-list';
-    }
-
-    isTaskListSelected() {
-        return this.currentChoice === 'task-list';
-    }
 
     constructor(private route: ActivatedRoute) {
         this.dataTasks = new ObjectDataTableAdapter(
@@ -131,6 +124,16 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
         this.processFilter = null;
         this.currentProcessInstanceId = null;
+
+        this.changeTab('apps', 'tasks');
+    }
+
+    changeTab(origin: string, destination: string) {
+        this.tabMain.nativeElement.children[origin].classList.remove('is-active');
+        this.tabMain.nativeElement.children[destination].classList.add('is-active');
+
+        this.tabHeader.nativeElement.children[`${origin}-header`].classList.remove('is-active');
+        this.tabHeader.nativeElement.children[`${destination}-header`].classList.add('is-active');
     }
 
     onTaskFilterClick(event: FilterRepresentationModel) {
@@ -139,6 +142,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     onSuccessTaskFilterList(event: any) {
         this.taskFilter = this.activitifilter.getCurrentFilter();
+    }
+
+    onStartTaskSuccess(event: any) {
+        this.activititasklist.reload();
     }
 
     onSuccessTaskList(event: UserTaskFilterRepresentationModel) {

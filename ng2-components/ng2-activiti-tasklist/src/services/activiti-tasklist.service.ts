@@ -216,6 +216,19 @@ export class ActivitiTaskListService {
             }).catch(this.handleError);
     }
 
+    /**
+     * Create a new standalone task
+     * @param task - TaskDetailsModel
+     * @returns {TaskDetailsModel}
+     */
+    createNewTask(task: TaskDetailsModel): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.callApiCreateTask(task))
+            .map(res => res)
+            .map((response: TaskDetailsModel) => {
+                return new TaskDetailsModel(response);
+            }).catch(this.handleError);
+    }
+
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
         return this.authService.getAlfrescoApi().activiti.taskApi.listTasks(requestNode);
     }
@@ -254,6 +267,10 @@ export class ActivitiTaskListService {
 
     private callApiCompleteTask(id: string) {
         return this.authService.getAlfrescoApi().activiti.taskApi.completeTask(id);
+    }
+
+    private callApiCreateTask(task: TaskDetailsModel) {
+        return this.authService.getAlfrescoApi().activiti.taskApi.createNewTask(task);
     }
 
     private handleError(error: any) {

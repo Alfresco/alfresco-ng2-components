@@ -86,6 +86,13 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         }
     }
 
+    public reload() {
+        if (this.taskFilter) {
+            let requestNode = this.convertTaskUserToTaskQuery(this.taskFilter);
+            this.load(new TaskQueryRequestRepresentationModel(requestNode));
+        }
+    }
+
     public load(requestNode: TaskQueryRequestRepresentationModel) {
         this.activiti.getTotalTasks(requestNode).subscribe(
             (res) => {
@@ -136,7 +143,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     /**
      * Select the first task of a tasklist if present
      */
-    private selectFirstTask() {
+    selectFirstTask() {
         if (!this.isTaskListEmpty()) {
             this.currentTaskId = this.data.getRows()[0].getValue('id');
         } else {

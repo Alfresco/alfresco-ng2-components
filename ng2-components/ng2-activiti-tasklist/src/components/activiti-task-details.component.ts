@@ -16,11 +16,16 @@
  */
 
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { ActivitiTaskHeader } from './activiti-task-header.component';
+import { ActivitiComments } from './activiti-comments.component';
+import { ActivitiChecklist } from './activiti-checklist.component';
+import { ActivitiPeople } from './activiti-people.component';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
-import { FormModel } from 'ng2-activiti-form';
+import { ActivitiForm, FormModel, FormService } from 'ng2-activiti-form';
+import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 
 declare let componentHandler: any;
@@ -30,12 +35,11 @@ declare let __moduleName: string;
     selector: 'activiti-task-details',
     moduleId: __moduleName,
     templateUrl: './activiti-task-details.component.html',
-    styleUrls: ['./activiti-task-details.component.css']
+    styleUrls: ['./activiti-task-details.component.css'],
+    providers: [ActivitiTaskListService, FormService],
+    directives: [ActivitiTaskHeader, ActivitiPeople, ActivitiComments, ActivitiChecklist, ActivitiForm]
 })
 export class ActivitiTaskDetails implements OnInit, OnChanges {
-
-    @Input()
-    taskId: string;
 
     @ViewChild('activiticomments')
     activiticomments: any;
@@ -44,19 +48,25 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     activitichecklist: any;
 
     @Input()
-    showTitle: boolean = true;
+    taskId: string;
 
     @Input()
-    showCompleteButton: boolean = true;
+    showNextTask: boolean = true;
 
     @Input()
-    showSaveButton: boolean = true;
+    showFormTitle: boolean = true;
 
     @Input()
-    readOnly: boolean = false;
+    showFormCompleteButton: boolean = true;
 
     @Input()
-    showRefreshButton: boolean = true;
+    showFormSaveButton: boolean = true;
+
+    @Input()
+    readOnlyForm: boolean = false;
+
+    @Input()
+    showFormRefreshButton: boolean = true;
 
     @Output()
     formSaved = new EventEmitter();
@@ -81,8 +91,16 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     noTaskDetailsTemplateComponent: TemplateRef<any>;
 
-    constructor(private translate: AlfrescoTranslationService,
+    /**
+     * Constructor
+     * @param auth
+     * @param translate
+     */
+    constructor(private auth: AlfrescoAuthenticationService,
+                private translate: AlfrescoTranslationService,
+                private activitiForm: FormService,
                 private activitiTaskList: ActivitiTaskListService) {
+
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
@@ -113,10 +131,18 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.taskDetails = null;
     }
 
+    /**
+     * Check if the task has a form
+     * @returns {TaskDetailsModel|string|boolean}
+     */
     hasFormKey() {
-        return this.taskDetails
+        return (this.taskDetails
             && this.taskDetails.formKey
-            && this.taskDetails.formKey !== 'null';
+            && this.taskDetails.formKey !== 'null');
+    }
+
+    isTaskActive() {
+        return this.taskDetails && this.taskDetails.duration === null;
     }
 
     /**
@@ -132,7 +158,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     this.taskDetails = res;
 
                     let endDate: any = res.endDate;
-                    this.readOnly = !!(endDate && !isNaN(endDate.getTime()));
+                    this.readOnlyForm = !!(endDate && !isNaN(endDate.getTime()));
 
                     if (this.taskDetails && this.taskDetails.involvedPeople) {
                         this.taskDetails.involvedPeople.forEach((user) => {
@@ -146,7 +172,6 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     if (this.activitichecklist) {
                         this.activitichecklist.load(this.taskDetails.id);
                     }
-                    console.log(this.taskDetails);
 
                 }
             );
@@ -156,12 +181,38 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     }
 
     /**
+     * Retrieve the next open task
+     * @param processInstanceId
+     * @param processDefinitionId
+     */
+    loadNextTask(processInstanceId: string, processDefinitionId: string) {
+        let requestNode = new TaskQueryRequestRepresentationModel(
+            {
+                processInstanceId: processInstanceId,
+                processDefinitionId: processDefinitionId
+            }
+        );
+        this.activitiTaskList.getTasks(requestNode).subscribe(
+            (response) => {
+                if (response.data && response.data.length > 0) {
+                    this.taskDetails = response.data[0];
+                } else {
+                    this.reset();
+                }
+            }, (error) => {
+                console.error(error);
+                this.onError.emit(error);
+            });
+    }
+
+    /**
      * Complete the activiti task
      */
     onComplete() {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
             (res) => {
                 console.log(res);
+                this.formCompleted.emit(res);
             }
         );
     }
@@ -180,6 +231,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      */
     formCompletedEmitter(data: any) {
         this.formCompleted.emit(data);
+        if (this.isShowNextTask()) {
+            this.loadNextTask(this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId);
+        }
     }
 
     /**
@@ -190,11 +244,27 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.formLoaded.emit(data);
     }
 
+    /**
+     * Emit the error event of the form
+     * @param data
+     */
     onErrorEmitter(err: any) {
         this.onError.emit(err);
     }
 
+    /**
+     * Emit the execute outcome of the form
+     * @param data
+     */
     executeOutcomeEmitter(data: any) {
         this.executeOutcome.emit(data);
+    }
+
+    /**
+     * Return the showNexTask value
+     * @returns {boolean}
+     */
+    isShowNextTask(): boolean {
+        return this.showNextTask;
     }
 }

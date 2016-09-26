@@ -13,6 +13,9 @@
       "COMMENTS": "Comments",
       "CHECKLIST": "Checklist"
     },
+    "BUTTON": {
+      "COMPLETE": "Complete"
+    },
     "MESSAGES": {
       "NONE": "No task details found."
     },
@@ -35,6 +38,20 @@
   "TASK_FILTERS": {
     "MESSAGES": {
       "NONE": "No task filter selected."
+    }
+  },
+  "START_TASK": {
+    "BUTTON": "Start Task",
+    "DIALOG": {
+      "TITLE": "Start Task",
+      "LABEL": {
+        "NAME": "Name",
+        "DESCRIPTION": "Description"
+      },
+      "ACTION": {
+        "START": "Start",
+        "CANCEL": "Cancel"
+      }
     }
   }
 }

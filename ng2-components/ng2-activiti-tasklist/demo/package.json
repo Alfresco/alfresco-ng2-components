@@ -1,6 +1,6 @@
 {
   "name": "ng2-activiti-tasklist-demo",
-  "description": "Alfresco Angular2 DataTable Component - Demo",
+  "description": "Alfresco Angular2 Task List Component - Demo",
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "main": "index.js",

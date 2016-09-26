@@ -29,7 +29,8 @@ import {
     ActivitiChecklist,
     ActivitiComments,
     ActivitiPeople,
-    ActivitiTaskHeader
+    ActivitiTaskHeader,
+    ActivitiStartProcessButton
 } from './src/components/index';
 
 import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
@@ -47,7 +48,8 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiChecklist,
     ActivitiComments,
     ActivitiPeople,
-    ActivitiTaskHeader
+    ActivitiTaskHeader,
+    ActivitiStartProcessButton
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [

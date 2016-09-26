@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { SimpleChange } from '@angular/core';
 import { ActivitiTaskList } from './activiti-tasklist.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { UserTaskFilterRepresentationModel } from '../models/filter.model';
@@ -67,7 +68,7 @@ describe('ActivitiTaskList', () => {
 
     beforeEach(() => {
         let activitiSerevice = new ActivitiTaskListService(null);
-        taskList = new ActivitiTaskList(null, activitiSerevice);
+        taskList = new ActivitiTaskList(null, null, activitiSerevice);
     });
 
     it('should use the default schemaColumn as default', () => {
@@ -113,6 +114,11 @@ describe('ActivitiTaskList', () => {
         taskList.ngOnInit();
     });
 
+    it('should return a currentId null when the taskList is empty', () => {
+        taskList.selectFirstTask();
+        expect(taskList.getCurrentTaskId()).toBeNull();
+    });
+
     it('should throw an exception when the response is wrong', (done) => {
         spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeErrorTaskPromise));
         taskList.taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
@@ -125,6 +131,23 @@ describe('ActivitiTaskList', () => {
         taskList.ngOnInit();
     });
 
+    it('should reload tasks when reload() is called', (done) => {
+        spyOn(taskList.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
+        spyOn(taskList.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        taskList.taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
+        taskList.ngOnInit();
+        taskList.onSuccess.subscribe( (res) => {
+            expect(res).toBeDefined();
+            expect(taskList.data).toBeDefined();
+            expect(taskList.isTaskListEmpty()).not.toBeTruthy();
+            expect(taskList.data.getRows().length).toEqual(2);
+            expect(taskList.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+            expect(taskList.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            done();
+        });
+        taskList.reload();
+    });
+
     it('should emit row click event', (done) => {
         let row = new ObjectDataRow({
             id: 999
@@ -133,10 +156,21 @@ describe('ActivitiTaskList', () => {
 
         taskList.rowClick.subscribe(taskId => {
             expect(taskId).toEqual(999);
+            expect(taskList.getCurrentTaskId()).toEqual(999);
             done();
         });
 
         taskList.onRowClick(rowEvent);
+    });
+
+    it('should reload task list by filter on binding changes', () => {
+        spyOn(taskList, 'load').and.stub();
+        const taskFilter = new UserTaskFilterRepresentationModel({filter: { state: 'open', assignment: 'fake-assignee'}});
+
+        let change = new SimpleChange(null, taskFilter);
+        taskList.ngOnChanges({ 'taskFilter': change });
+
+        expect(taskList.load).toHaveBeenCalled();
     });
 
 });

@@ -81,7 +81,7 @@ export class WidgetVisibilityService {
 
     private getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         if ( visibilityObj.leftRestResponseId ) {
-            return this.getValueFromVariable(form, visibilityObj.leftRestResponseId);
+            return this.getValueFromVariable(form, visibilityObj.leftRestResponseId, this.processVarList);
         }
         return this.getValueOField(form, visibilityObj.leftFormFieldId);
     }
@@ -89,7 +89,7 @@ export class WidgetVisibilityService {
     private getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         let valueFound = null;
         if ( visibilityObj.rightRestResponseId ) {
-            valueFound = this.getValueFromVariable(form, visibilityObj.rightRestResponseId);
+            valueFound = this.getValueFromVariable(form, visibilityObj.rightRestResponseId, this.processVarList);
         }else if ( visibilityObj.rightFormFieldId ) {
              valueFound = this.getValueOField(form, visibilityObj.rightFormFieldId);
         }else {
@@ -116,18 +116,29 @@ export class WidgetVisibilityService {
              }
           }
        }
-       return null;
     }
 
-    private getValueFromVariable(form: FormModel, name: string) {
-       let formVariable = form.json.variables.find(formVar => formVar.name === name);
-       if ( !formVariable && this.processVarList ) {
-         formVariable = this.processVarList.find(variable => variable.id === name);
-       }
-       if ( formVariable ) {
-         return formVariable.value;
-       }
-       return null;
+    private getValueFromVariable( form: FormModel, name: string, processVarList: TaskProcessVariableModel[] ) {
+        return this.getFormVariableValue(form, name) ||
+               this.getProcessVariableValue(name, processVarList);
+    }
+
+    private getFormVariableValue(form: FormModel, name: string ) {
+        if ( form.json.variables) {
+          let variableFromForm = form.json.variables.find(formVar => formVar.name === name);
+          if ( variableFromForm ) {
+            return variableFromForm ? variableFromForm.value : variableFromForm;
+          }
+        }
+    }
+
+    private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]) {
+        if ( this.processVarList ) {
+          let variableFromProcess = this.processVarList.find(variable => variable.id === name);
+          if ( variableFromProcess ) {
+            return variableFromProcess ? variableFromProcess.value : variableFromProcess;
+          }
+        }
     }
 
     private evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
@@ -168,7 +179,7 @@ export class WidgetVisibilityService {
                 console.error( 'NO valid operation!' );
                 break;
         }
-        return null;
+        return;
     }
 
     getTaskProcessVariableModelsForTask(taskId: string): Observable<TaskProcessVariableModel[]> {
