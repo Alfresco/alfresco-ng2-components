@@ -17,18 +17,19 @@
 
 // note: contains only limited subset of available fields
 
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+
 export class NodePaging {
     list: NodePagingList;
 }
 
 export class NodePagingList {
     pagination: Pagination;
-    entries: MinimalNodeEntity[];
+    entries: NodeMinimalEntry[];
 }
 
-// TODO: rename to NodeMinimalEntry
-export class MinimalNodeEntity {
-    entry: MinimalNodeEntryEntity;
+export class NodeMinimalEntry implements MinimalNodeEntity {
+    entry: NodeMinimal;
 }
 
 export class Pagination {
@@ -39,17 +40,16 @@ export class Pagination {
     maxItems: number;
 }
 
-// TODO: rename to NodeMinimal
-export class MinimalNodeEntryEntity {
+export class NodeMinimal implements MinimalNodeEntryEntity {
     id: string;
     parentId: string;
     name: string;
     nodeType: string;
     isFolder: boolean;
     isFile: boolean;
-    modifiedAt: string;
+    modifiedAt: Date;
     modifiedByUser: UserInfo;
-    createdAt: string;
+    createdAt: Date;
     createdByUser: UserInfo;
     content: ContentInfo;
     path: PathInfoEntity;

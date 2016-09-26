@@ -17,25 +17,25 @@
 
 import {
     NodePaging,
-    MinimalNodeEntity,
-    MinimalNodeEntryEntity,
+    NodeMinimalEntry,
+    NodeMinimal,
     PathInfoEntity,
     ContentInfo,
     NodePagingList
 } from '../models/document-library.model';
 
 export class PageNode extends NodePaging {
-    constructor(entries?: MinimalNodeEntity[]) {
+    constructor(entries?: NodeMinimalEntry[]) {
         super();
         this.list = new NodePagingList();
         this.list.entries = entries || [];
     }
 }
 
-export class FileNode extends MinimalNodeEntity {
+export class FileNode extends NodeMinimalEntry {
     constructor(name?: string, mimeType?: string) {
         super();
-        this.entry = new MinimalNodeEntryEntity();
+        this.entry = new NodeMinimal();
         this.entry.id = 'file-id';
         this.entry.isFile = true;
         this.entry.isFolder = false;
@@ -46,10 +46,10 @@ export class FileNode extends MinimalNodeEntity {
     }
 }
 
-export class FolderNode extends MinimalNodeEntity {
+export class FolderNode extends NodeMinimalEntry {
     constructor(name?: string) {
         super();
-        this.entry = new MinimalNodeEntryEntity();
+        this.entry = new NodeMinimal();
         this.entry.id = 'folder-id';
         this.entry.isFile = false;
         this.entry.isFolder = true;
