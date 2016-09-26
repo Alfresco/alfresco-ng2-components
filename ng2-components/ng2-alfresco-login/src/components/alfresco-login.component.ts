@@ -51,6 +51,9 @@ export class AlfrescoLoginComponent implements OnInit {
     @Input()
     fieldsValidation: any;
 
+    @Input()
+    disableCsrf: boolean;
+
     @Output()
     onSuccess = new EventEmitter();
 
@@ -107,6 +110,7 @@ export class AlfrescoLoginComponent implements OnInit {
             return false;
         }
         this.settingsService.setProviders(this.providers);
+        this.settingsService.csrfDisabled = this.disableCsrf;
 
         this.disableError();
 

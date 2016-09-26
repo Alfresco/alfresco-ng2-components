@@ -11,12 +11,18 @@
             <span class="mdl-switch__label">BPM</span>
         </label>
     </p>
+    <p class="toggle">
+        <label for="switch3" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" id="switch3" class="mdl-switch__input" checked  (click)="toggleCSRF()" #csrf>
+            <span class="mdl-switch__label">CSRF</span>
+        </label>
+    </p>
     <p class="banned">
         <label for="blacklistusername">Banned username</label><br>
         <input id="blacklistusername" type="text" placeholder="banned username" [(ngModel)]="blackListUsername" />
     </p>
 </div>
-<alfresco-login [providers]="providers" [fieldsValidation]="customValidation"
+<alfresco-login [providers]="providers" [fieldsValidation]="customValidation" [disableCsrf]="disableCsrf"
                 (executeSubmit)="validateForm($event)"
                 (onSuccess)="onLogin($event)"
                 (onError)="onError($event)" #alfrescologin></alfresco-login>
