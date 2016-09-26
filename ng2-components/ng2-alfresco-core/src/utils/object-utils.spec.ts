@@ -15,11 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect
-} from '@angular/core/testing';
 import { ObjectUtils } from './object-utils';
 
 describe('ObjectUtils', () => {

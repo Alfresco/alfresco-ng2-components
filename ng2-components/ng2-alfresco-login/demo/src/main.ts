@@ -15,16 +15,12 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
     selector: 'my-app',
@@ -51,8 +47,7 @@ import {
        <hr>
 
        <alfresco-login [providers]="providers" (onSuccess)="mySuccessMethod($event)"
-       (onError)="myErrorMethod($event)"></alfresco-login>`,
-    directives: [AlfrescoLoginComponent]
+       (onError)="myErrorMethod($event)"></alfresco-login>`
 })
 export class AppComponent {
 
@@ -104,7 +99,15 @@ export class AppComponent {
     }
 }
 
-bootstrap(AppComponent, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        LoginModule
+    ],
+    declarations: [ AppComponent ],
+    bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

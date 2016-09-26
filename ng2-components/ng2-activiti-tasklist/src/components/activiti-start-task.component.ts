@@ -27,8 +27,7 @@ declare let __moduleName: string;
     selector: 'activiti-start-task',
     moduleId: __moduleName,
     templateUrl: './activiti-start-task.component.html',
-    styleUrls: ['./activiti-start-task.component.css'],
-    providers: [ActivitiTaskListService]
+    styleUrls: ['./activiti-start-task.component.css']
 })
 export class ActivitiStartProcessButton implements OnInit {
 

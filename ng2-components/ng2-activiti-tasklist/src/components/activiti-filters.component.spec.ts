@@ -15,12 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
 import { SimpleChange } from '@angular/core';
 import { ActivitiFilters } from './activiti-filters.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';

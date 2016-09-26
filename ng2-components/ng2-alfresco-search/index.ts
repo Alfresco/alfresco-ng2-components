@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+
 import { AlfrescoSearchService } from './src/services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './src/services/alfresco-thumbnail.service';
 import { AlfrescoSearchComponent } from './src/components/alfresco-search.component';
 import { AlfrescoSearchControlComponent } from './src/components/alfresco-search-control.component';
+import { AlfrescoSearchAutocompleteComponent } from './src/components/alfresco-search-autocomplete.component';
 
 // services
 export * from './src/services/alfresco-search.service';
@@ -26,23 +30,38 @@ export * from './src/services/alfresco-thumbnail.service';
 export * from './src/components/alfresco-search.component';
 export * from './src/components/alfresco-search-control.component';
 
-export default {
-    directives: [
-        AlfrescoSearchComponent,
-        AlfrescoSearchControlComponent
-    ],
-    providers: [
-        AlfrescoSearchService,
-        AlfrescoThumbnailService
-    ]
-};
-
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
     AlfrescoSearchComponent,
-    AlfrescoSearchControlComponent
+    AlfrescoSearchControlComponent,
+    AlfrescoSearchAutocompleteComponent
 ];
 
 export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
     AlfrescoSearchService,
     AlfrescoThumbnailService
 ];
+
+@NgModule({
+    imports: [
+        CoreModule
+    ],
+    declarations: [
+        ...ALFRESCO_SEARCH_DIRECTIVES
+    ],
+    providers: [
+        ...ALFRESCO_SEARCH_PROVIDERS
+    ],
+    exports: [
+        ...ALFRESCO_SEARCH_DIRECTIVES
+    ]
+})
+export class SearchModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: SearchModule,
+            providers: [
+                ...ALFRESCO_SEARCH_PROVIDERS
+            ]
+        };
+    }
+}

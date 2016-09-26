@@ -18,22 +18,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-    DOCUMENT_LIST_DIRECTIVES,
-    DOCUMENT_LIST_PROVIDERS,
     DocumentActionsService,
     DocumentList,
     ContentActionHandler,
     DocumentActionModel,
     FolderActionModel
 } from 'ng2-alfresco-documentlist';
-import {
-    MDL,
-    AlfrescoContentService,
-    CONTEXT_MENU_DIRECTIVES
-} from 'ng2-alfresco-core';
-import { PaginationComponent } from 'ng2-alfresco-datatable';
-import { ALFRESCO_ULPOAD_COMPONENTS } from 'ng2-alfresco-upload';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 import { FormService } from 'ng2-activiti-form';
 
 declare let __moduleName: string;
@@ -42,16 +32,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
-    styleUrls: ['./files.component.css'],
-    directives: [
-        DOCUMENT_LIST_DIRECTIVES,
-        MDL,
-        ALFRESCO_ULPOAD_COMPONENTS,
-        VIEWERCOMPONENT,
-        CONTEXT_MENU_DIRECTIVES,
-        PaginationComponent
-    ],
-    providers: [DOCUMENT_LIST_PROVIDERS, FormService]
+    styleUrls: ['./files.component.css']
 })
 export class FilesComponent implements OnInit {
     currentPath: string = '/Sites/swsdp/documentLibrary';
@@ -68,8 +49,7 @@ export class FilesComponent implements OnInit {
     @ViewChild(DocumentList)
     documentList: DocumentList;
 
-    constructor(private contentService: AlfrescoContentService,
-                private documentActions: DocumentActionsService,
+    constructor(private documentActions: DocumentActionsService,
                 private formService: FormService,
                 private router: Router) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));

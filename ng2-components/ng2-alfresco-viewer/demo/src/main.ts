@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { VIEWERCOMPONENT, RenderingQueueServices } from 'ng2-alfresco-viewer';
-
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
     selector: 'my-app',
@@ -44,8 +40,7 @@ import {
                     [urlFile]="'localTestFile.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
                    </alfresco-viewer>
-                   </div>`,
-    directives: [VIEWERCOMPONENT]
+                   </div>`
 })
 class MyDemoApp {
     authenticated: boolean;
@@ -90,8 +85,16 @@ class MyDemoApp {
             });
     }
 }
-bootstrap(MyDemoApp, [
-    VIEWERCOMPONENT,
-    ALFRESCO_CORE_PROVIDERS,
-    RenderingQueueServices
-]);
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ViewerModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

@@ -15,14 +15,12 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-// import { ContainerWidget } from './widgets/container/container.widget';
 
 describe('ActivitiForm', () => {
 

@@ -26,8 +26,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
-    styleUrls: ['./alfresco-search-autocomplete.component.css'],
-    providers: [AlfrescoSearchService]
+    styleUrls: ['./alfresco-search-autocomplete.component.css']
 })
 export class AlfrescoSearchAutocompleteComponent implements OnChanges {
 

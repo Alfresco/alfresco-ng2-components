@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject, beforeEach } from '@angular/core/testing';
+/*
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
 
@@ -58,4 +58,4 @@ describe('Not Supported Format View', () => {
         });
     });
 });
-
+*/

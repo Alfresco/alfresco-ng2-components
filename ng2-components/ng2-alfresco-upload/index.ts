@@ -15,10 +15,14 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+
 import { UploadDragAreaComponent } from './src/components/upload-drag-area.component';
 import { FileDraggableDirective } from './src/directives/file-draggable.directive';
 import { UploadButtonComponent } from './src/components/upload-button.component';
 import { FileUploadingDialogComponent } from './src/components/file-uploading-dialog.component';
+import { FileUploadingListComponent } from './src/components/file-uploading-list.component';
 import { UploadService } from './src/services/upload.service';
 
 /**
@@ -42,23 +46,41 @@ export * from './src/components/file-uploading-dialog.component';
 export * from './src/components/upload-drag-area.component';
 export * from './src/services/upload.service';
 export * from './src/directives/file-draggable.directive';
+export * from './src/components/file-uploading-list.component';
 
-export default {
-    components: [UploadDragAreaComponent, UploadButtonComponent, FileUploadingDialogComponent],
-    providers: [FileDraggableDirective],
-    directives: [UploadService]
-};
-
-export const ALFRESCO_ULPOAD_COMPONENTS: [any] = [
+export const UPLOAD_DIRECTIVES: any[] = [
+    FileDraggableDirective,
     UploadDragAreaComponent,
     UploadButtonComponent,
-    FileUploadingDialogComponent
+    FileUploadingDialogComponent,
+    FileUploadingListComponent
 ];
 
-export const ALFRESCO_ULPOAD_DIRECTIVES: [any] = [
-    FileDraggableDirective
-];
-
-export const ALFRESCO_ULPOAD_SERVICES: [any] = [
+export const UPLOAD_PROVIDERS: any[] = [
     UploadService
 ];
+
+@NgModule({
+    imports: [
+        CoreModule
+    ],
+    declarations: [
+        ...UPLOAD_DIRECTIVES
+    ],
+    providers: [
+        ...UPLOAD_PROVIDERS
+    ],
+    exports: [
+        ...UPLOAD_DIRECTIVES
+    ]
+})
+export class UploadModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: UploadModule,
+            providers: [
+                ...UPLOAD_PROVIDERS
+            ]
+        };
+    }
+}

@@ -1,9 +1,7 @@
 <div *ngIf="!fileShowed">
     <div class="container">
         <alfresco-upload-drag-area
-                [showUploadDialog]="true"
                 [currentFolderPath]="currentPath"
-                [uploaddirectory]=""
                 [versioning] = "versioning"
                 (onSuccess)="documentList.reload()">
             <alfresco-document-list-breadcrumb
@@ -166,7 +164,6 @@
     </div>
     <div *ngIf="!acceptedFilesTypeShow">
         <alfresco-upload-button data-automation-id="multiple-file-upload"
-                                [uploaddirectory]="currentPath"
                                 [currentFolderPath]="currentPath"
                                 [multipleFiles]="multipleFileUpload"
                                 [uploadFolders]="folderUpload"
@@ -177,7 +174,6 @@
     </div>
     <div *ngIf="acceptedFilesTypeShow">
         <alfresco-upload-button data-automation-id="multiple-file-upload"
-                                [uploaddirectory]="currentPath"
                                 [currentFolderPath]="currentPath"
                                 acceptedFilesType="{{acceptedFilesType}}"
                                 [multipleFiles]="multipleFileUpload"

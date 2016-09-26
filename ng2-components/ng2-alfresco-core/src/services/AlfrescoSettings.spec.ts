@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { describe, it, beforeEach } from '@angular/core/testing';
 import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 
 describe('AlfrescoSettingsService', () => {

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-
+/*
 import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
@@ -141,3 +141,4 @@ describe('Tag actions list', () => {
         });
     });
 });
+*/

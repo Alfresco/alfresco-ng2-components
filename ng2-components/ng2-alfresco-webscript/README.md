@@ -14,21 +14,6 @@
   <a href='https://www.npmjs.com/package/ng2-alfresco-webscript'>
     <img src='https://img.shields.io/npm/dt/ng2-alfresco-webscript.svg' alt='npm downloads' />
   </a>
-  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
-     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
-  </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
-  </a>
-  <a href='https://angular.io/'>
-     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
-  </a>
-  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
-     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
-  </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
-  </a>
 </p>
 
 ### Node
@@ -56,7 +41,7 @@ The following component needs to be added to your systemjs.config:
 
 - ng2-translate
 - ng2-alfresco-core
-- ng2-alfresco-dataœtable
+- ng2-alfresco-datatable
 
 Please refer to the following example to have an idea of how your systemjs.config should look like :
 

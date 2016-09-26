@@ -16,8 +16,8 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { UserTaskFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
@@ -28,9 +28,7 @@ declare let __moduleName: string;
     selector: 'activiti-tasklist',
     moduleId: __moduleName,
     templateUrl: './activiti-tasklist.component.html',
-    styleUrls: ['./activiti-tasklist.component.css'],
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES],
-    providers: [ActivitiTaskListService]
+    styleUrls: ['./activiti-tasklist.component.css']
 })
 export class ActivitiTaskList implements OnInit, OnChanges {
 
@@ -58,16 +56,8 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         {type: 'text', key: 'created', title: 'Created', sortable: true}
     ];
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param translate
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 public activiti: ActivitiTaskListService) {
-
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }

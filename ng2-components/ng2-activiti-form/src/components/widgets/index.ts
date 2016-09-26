@@ -57,12 +57,9 @@ export * from './typeahead/typeahead.widget';
 export * from './functional-group/functional-group.widget';
 export * from './people/people.widget';
 
-export const CONTAINER_WIDGET_DIRECTIVES: [any] = [
+export const WIDGET_DIRECTIVES: any[] = [
     TabsWidget,
-    ContainerWidget
-];
-
-export const PRIMITIVE_WIDGET_DIRECTIVES: [any] = [
+    ContainerWidget,
     TextWidget,
     NumberWidget,
     CheckboxWidget,
@@ -78,5 +75,3 @@ export const PRIMITIVE_WIDGET_DIRECTIVES: [any] = [
     FunctionalGroupWidget,
     PeopleWidget
 ];
-
-

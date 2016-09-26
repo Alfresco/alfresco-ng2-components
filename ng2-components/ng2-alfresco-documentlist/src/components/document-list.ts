@@ -30,18 +30,8 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import {
-    CONTEXT_MENU_DIRECTIVES,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
-
-import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
-    DataRowEvent,
-    DataTableComponent,
-    ObjectDataColumn
-} from 'ng2-alfresco-datatable';
-
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 import {
@@ -58,9 +48,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
-    templateUrl: './document-list.html',
-    providers: [DocumentListService],
-    directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES]
+    templateUrl: './document-list.html'
 })
 export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 

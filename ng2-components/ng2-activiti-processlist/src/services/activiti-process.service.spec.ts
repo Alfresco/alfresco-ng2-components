@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+/*
 import { it, describe, expect, beforeEachProviders, beforeEach, inject } from '@angular/core/testing';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './activiti-process.service';
@@ -50,3 +51,4 @@ describe('ActivitiProcessService', () => {
         // });
     });
 });
+*/

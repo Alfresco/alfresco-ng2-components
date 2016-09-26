@@ -16,8 +16,6 @@
  */
 
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
@@ -25,8 +23,7 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'search-bar',
-    templateUrl: './search-bar.component.html',
-    directives: [ALFRESCO_SEARCH_DIRECTIVES, VIEWERCOMPONENT]
+    templateUrl: './search-bar.component.html'
 })
 export class SearchBarComponent {
 

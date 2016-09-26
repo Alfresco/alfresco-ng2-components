@@ -15,13 +15,5 @@
  * limitations under the License.
  */
 
-import { DataTableComponent } from './datatable.component';
-import { NoContentTemplateComponent } from './no-content-template.component';
-
 export * from './datatable.component';
 export * from './no-content-template.component';
-
-export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
-    DataTableComponent,
-    NoContentTemplateComponent
-];

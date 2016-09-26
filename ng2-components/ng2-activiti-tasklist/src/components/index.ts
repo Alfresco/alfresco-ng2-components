@@ -15,25 +15,13 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { CoreModule } from 'ng2-alfresco-core';
-
-import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
-
-export * from './src/components/alfresco-login.component';
-
-export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [AlfrescoLoginComponent];
-
-@NgModule({
-    imports: [
-        CoreModule
-    ],
-    declarations: [
-        ...ALFRESCO_LOGIN_DIRECTIVES
-    ],
-    providers: [],
-    exports: [
-        ...ALFRESCO_LOGIN_DIRECTIVES
-    ]
-})
-export class LoginModule { }
+export * from './activiti-apps.component';
+export * from './activiti-tasklist.component';
+export * from './activiti-checklist.component';
+export * from './activiti-comments.component';
+export * from './activiti-people.component';
+export * from './activiti-task-header.component';
+export * from './no-task-detail-template.component';
+export * from './activiti-filters.component';
+export * from './activiti-task-details.component';
+export * from './activiti-start-task.component';

@@ -15,18 +15,8 @@
  * limitations under the License.
  */
 
-import { Injectable, ChangeDetectorRef, Pipe } from '@angular/core';
-import { TranslatePipe } from 'ng2-translate/ng2-translate';
-import { AlfrescoTranslationService } from './AlfrescoTranslation.service';
-
-@Injectable()
-@Pipe({
-    name: 'translate',
-    pure: false // required to update the value when the promise is resolved
-})
-export class AlfrescoPipeTranslate extends TranslatePipe {
-
-    constructor(translate: AlfrescoTranslationService, _ref: ChangeDetectorRef) {
-        super(translate, _ref);
-    }
-}
+describe('Placeholder', () => {
+    it('test placeholder', () => {
+        expect(true).toBe(true);
+    });
+});

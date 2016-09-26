@@ -15,9 +15,17 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+
+import { ActivitiForm } from './src/components/activiti-form.component';
 import { FormService } from './src/services/form.service';
 import { EcmModelService } from './src/services/ecm-model.service';
 import { NodeService } from './src/services/node.service';
+import { WidgetVisibilityService } from './src/services/widget-visibility.service';
+import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
+
+import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 
 export * from './src/components/activiti-form.component';
 export * from './src/services/form.service';
@@ -25,9 +33,40 @@ export * from './src/components/widgets/index';
 export * from  './src/services/ecm-model.service';
 export * from  './src/services/node.service';
 
+export const ACTIVITI_FORM_DIRECTIVES: any[] = [
+    ActivitiForm,
+    ...WIDGET_DIRECTIVES
+];
 
-export const ATIVITI_FORM_PROVIDERS: [any] = [
+export const ACTIVITI_FORM_PROVIDERS: any[] = [
     FormService,
     EcmModelService,
-    NodeService
+    NodeService,
+    WidgetVisibilityService,
+    ActivitiAlfrescoContentService
 ];
+
+@NgModule({
+    imports: [
+        CoreModule
+    ],
+    declarations: [
+        ...ACTIVITI_FORM_DIRECTIVES
+    ],
+    providers: [
+        ...ACTIVITI_FORM_PROVIDERS
+    ],
+    exports: [
+        ...ACTIVITI_FORM_DIRECTIVES
+    ]
+})
+export class ActivitiFormModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ActivitiFormModule,
+            providers: [
+                ...ACTIVITI_FORM_PROVIDERS
+            ]
+        };
+    }
+}

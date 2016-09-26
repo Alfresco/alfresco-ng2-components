@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { provideRouter, RouterConfig } from '@angular/router';
+import { ModuleWithProviders }  from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 import {
     FilesComponent,
-    UploadButtonComponent,
     DataTableDemoComponent,
     SearchComponent,
     LoginDemoComponent,
@@ -27,11 +27,13 @@ import {
     WebscriptComponent,
     TagComponent,
     AboutComponent,
-    FormViewer
+    FormViewer,
+    FormNodeViewer
 } from './components/index';
-import { FormNodeViewer } from './components/activiti/form-node-viewer.component';
 
-export const routes: RouterConfig = [
+import { UploadButtonComponent } from 'ng2-alfresco-upload';
+
+export const appRoutes: Routes = [
     { path: 'home', component: FilesComponent },
     { path: 'files', component: FilesComponent },
     { path: 'datatable', component: DataTableDemoComponent },
@@ -48,6 +50,4 @@ export const routes: RouterConfig = [
     { path: 'about', component: AboutComponent }
 ];
 
-export const appRouterProviders = [
-    provideRouter(routes)
-];
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

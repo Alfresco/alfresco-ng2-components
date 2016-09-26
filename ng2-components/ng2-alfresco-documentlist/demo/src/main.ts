@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+
+import { NgModule, Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule }  from 'ng2-alfresco-datatable';
+import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
 import {
-    ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoTranslationService,
-    CONTEXT_MENU_DIRECTIVES
+    AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 
-import {
-    DOCUMENT_LIST_DIRECTIVES,
-    DOCUMENT_LIST_PROVIDERS,
-    DocumentActionsService
-} from 'ng2-alfresco-documentlist';
+import { DocumentActionsService } from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'alfresco-documentlist-demo',
@@ -139,9 +137,7 @@ import {
         </alfresco-document-list>
             <context-menu-holder></context-menu-holder>
     `,
-    styles: [':host > .container {padding: 10px}'],
-    directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    providers: [DOCUMENT_LIST_PROVIDERS]
+    styles: [':host > .container {padding: 10px}']
 })
 class DocumentListDemo implements OnInit {
 
@@ -212,7 +208,16 @@ class DocumentListDemo implements OnInit {
     }
 }
 
-bootstrap(DocumentListDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DataTableModule,
+        DocumentListModule.forRoot()
+    ],
+    declarations: [ DocumentListDemo ],
+    bootstrap:    [ DocumentListDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

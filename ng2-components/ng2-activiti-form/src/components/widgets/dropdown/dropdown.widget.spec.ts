@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { FormService } from '../../../services/form.service';
 import { DropdownWidget } from './dropdown.widget';

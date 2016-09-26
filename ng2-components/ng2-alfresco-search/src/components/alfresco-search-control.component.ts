@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Control, Validators } from '@angular/common';
+import { FormControl, Validators } from '@angular/forms';
 import { Component, Input, Output, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchTermValidator } from './../forms/search-term-validator';
 
 declare let __moduleName: string;
@@ -27,8 +26,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-search-control',
     templateUrl: './alfresco-search-control.component.html',
-    styleUrls: ['./alfresco-search-control.component.css'],
-    directives: [AlfrescoSearchAutocompleteComponent]
+    styleUrls: ['./alfresco-search-control.component.css']
 })
 export class AlfrescoSearchControlComponent {
 
@@ -53,7 +51,7 @@ export class AlfrescoSearchControlComponent {
     @Output()
     expand = new EventEmitter();
 
-    searchControl: Control;
+    searchControl: FormControl;
 
     @ViewChild('searchInput', {}) searchInput: ElementRef;
 
@@ -66,7 +64,7 @@ export class AlfrescoSearchControlComponent {
 
     constructor(private translate: AlfrescoTranslationService) {
 
-        this.searchControl = new Control(
+        this.searchControl = new FormControl(
             this.searchTerm,
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );

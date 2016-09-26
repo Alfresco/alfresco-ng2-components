@@ -15,17 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { NgModule, Component, Input, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
-
-import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { TagModule } from 'ng2-alfresco-tag';
 
 @Component({
     selector: 'alfresco-tag-demo',
@@ -51,9 +46,7 @@ import { TAGCOMPONENT, TAGSERVICES } from 'ng2-alfresco-tag';
               </div>
             </div>
         </div>
-    `,
-    directives: [TAGCOMPONENT],
-    providers: [TAGSERVICES]
+    `
 })
 class TagDemo implements OnInit {
 
@@ -107,7 +100,16 @@ class TagDemo implements OnInit {
         console.log(data);
     }
 }
-bootstrap(TagDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        TagModule
+    ],
+    declarations: [ TagDemo ],
+    bootstrap:    [ TagDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

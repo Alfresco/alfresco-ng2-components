@@ -17,7 +17,6 @@
 
 import { Component, Input } from '@angular/core';
 
-import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
 import { PaginationProvider } from './pagination-provider';
 
 declare let __moduleName: string;
@@ -26,8 +25,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'alfresco-pagination',
     templateUrl: './pagination.component.html',
-    styleUrls: ['./pagination.component.css'],
-    directives: [MATERIAL_DESIGN_DIRECTIVES]
+    styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent {
 

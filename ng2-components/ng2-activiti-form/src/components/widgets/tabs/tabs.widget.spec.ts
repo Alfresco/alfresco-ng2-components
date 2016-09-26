@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { TabsWidget } from './tabs.widget';
 import { TabModel } from './../core/tab.model';
 

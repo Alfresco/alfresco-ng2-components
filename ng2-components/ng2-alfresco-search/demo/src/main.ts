@@ -15,19 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { NgModule, Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { SearchModule } from 'ng2-alfresco-search';
+
 import {
-    ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
-import {
-    ALFRESCO_SEARCH_PROVIDERS,
-    ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search';
+
 
 @Component({
     selector: 'alfresco-search-demo',
@@ -46,9 +46,7 @@ import {
                     <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
                 </div>
     `,
-    styles: [':host > .container {padding: 10px}'],
-    providers: [ALFRESCO_SEARCH_PROVIDERS],
-    directives: [ALFRESCO_SEARCH_DIRECTIVES]
+    styles: [':host > .container {padding: 10px}']
 })
 class SearchDemo implements OnInit {
 
@@ -98,8 +96,15 @@ class SearchDemo implements OnInit {
     }
 }
 
-bootstrap(SearchDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS,
-    ALFRESCO_SEARCH_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        SearchModule
+    ],
+    declarations: [ SearchDemo ],
+    bootstrap:    [ SearchDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

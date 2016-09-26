@@ -16,24 +16,20 @@
  */
 
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import {
-    MDL,
     AlfrescoSettingsService,
     AlfrescoTranslationService,
     AlfrescoAuthenticationService
 } from 'ng2-alfresco-core';
-
-import { SearchBarComponent } from './components/index';
 
 declare var document: any;
 
 @Component({
     selector: 'alfresco-app',
     templateUrl: 'app/app.component.html',
-    styleUrls: ['app/app.component.css'],
-    directives: [SearchBarComponent, ROUTER_DIRECTIVES, MDL]
+    styleUrls: ['app/app.component.css']
 })
 export class AppComponent {
     translate: AlfrescoTranslationService;

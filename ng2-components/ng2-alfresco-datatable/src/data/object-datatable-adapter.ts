@@ -108,7 +108,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
-            let datePipe = new DatePipe();
+            let datePipe = new DatePipe('en-US');
             let format = col.format || 'medium';
             try {
                 return datePipe.transform(value, format);

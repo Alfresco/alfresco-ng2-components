@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormModel } from './form.model';
-
 
 describe('FormFieldModel', () => {
 

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import {describe, it, beforeEach} from '@angular/core/testing';
 import {ReflectiveInjector} from '@angular/core';
 import {AlfrescoSettingsService} from './AlfrescoSettings.service';
 import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';

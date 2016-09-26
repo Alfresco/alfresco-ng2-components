@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+
 import { DocumentList } from './src/components/document-list';
 import { ContentColumn } from './src/components/content-column';
 import { ContentColumnList } from './src/components/content-column-list';
@@ -48,7 +52,7 @@ export * from './src/services/document-list.service';
 export * from './src/models/content-action.model';
 export * from './src/models/document-library.model';
 
-export const DOCUMENT_LIST_DIRECTIVES: [any] = [
+export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     DocumentList,
     ContentColumn,
     ContentColumnList,
@@ -58,8 +62,34 @@ export const DOCUMENT_LIST_DIRECTIVES: [any] = [
     DocumentListBreadcrumb
 ];
 
-export const DOCUMENT_LIST_PROVIDERS: [any] = [
+export const DOCUMENT_LIST_PROVIDERS: any[] = [
     DocumentListService,
     FolderActionsService,
     DocumentActionsService
 ];
+
+@NgModule({
+    imports: [
+        CoreModule,
+        DataTableModule
+    ],
+    declarations: [
+        ...DOCUMENT_LIST_DIRECTIVES
+    ],
+    providers: [
+        ...DOCUMENT_LIST_PROVIDERS
+    ],
+    exports: [
+        ...DOCUMENT_LIST_DIRECTIVES
+    ]
+})
+export class DocumentListModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: DocumentListModule,
+            providers: [
+                ...DOCUMENT_LIST_PROVIDERS
+            ]
+        };
+    }
+}

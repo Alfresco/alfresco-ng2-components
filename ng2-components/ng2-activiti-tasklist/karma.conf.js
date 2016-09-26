@@ -7,25 +7,55 @@ module.exports = function (config) {
     frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
-      // paths loaded by Karma
-      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
-      {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
-      {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
-      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/rxjs/**/*.map', included: false, watched: false},
-      {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
-      {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
-      {pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.js', included: false, served: true, watched: false},
-      {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
-      {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
+      // System.js for module loading
+      'node_modules/systemjs/dist/system.src.js',
 
-      {pattern: 'karma-test-shim.js', included: true, watched: true},
+      // Polyfills
+      'node_modules/core-js/client/shim.js',
+      'node_modules/reflect-metadata/Reflect.js',
+
+      // zone.js
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/zone.js/dist/long-stack-trace-zone.js',
+      'node_modules/zone.js/dist/proxy.js',
+      'node_modules/zone.js/dist/sync-test.js',
+      'node_modules/zone.js/dist/jasmine-patch.js',
+      'node_modules/zone.js/dist/async-test.js',
+      'node_modules/zone.js/dist/fake-async-test.js',
+
+      // RxJs
+      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+
+      // Paths loaded via module imports:
+      // Angular itself
+      {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
+
+      'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
+      {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
+
+      'karma-test-shim.js',
 
       // paths loaded via module imports
       {pattern: 'dist/**/*.js', included: false, watched: true},
       {pattern: 'dist/**/*.html', included: true, served: true, watched: true},
       {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
+
+      // ng2-components
+      { pattern: 'node_modules/ng2-activiti-form/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-activiti-processlist/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-activiti-tasklist/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-documentlist/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-login/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-search/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-tag/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-upload/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-viewer/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-webscript/dist/**/*.js', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
@@ -77,7 +107,7 @@ module.exports = function (config) {
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'dist/**/!(*spec).js': ['coverage']
+      // 'dist/**/!(*spec).js': ['coverage']
     },
 
     coverageReporter: {

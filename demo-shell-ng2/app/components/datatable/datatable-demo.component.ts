@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
     ObjectDataTableAdapter,
     DataSorting,
     ObjectDataRow,
@@ -29,8 +28,7 @@ declare let __moduleName: string;
 @Component({
     moduleId: __moduleName,
     selector: 'datatable-demo',
-    templateUrl: './datatable-demo.component.html',
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES]
+    templateUrl: './datatable-demo.component.html'
 })
 export class DataTableDemoComponent {
 

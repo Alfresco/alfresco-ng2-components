@@ -15,6 +15,11 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+
 import { ActivitiProcessInstanceListComponent } from './src/components/activiti-processlist.component';
 import { ActivitiProcessFilters } from './src/components/activiti-filters.component';
 import { ActivitiProcessInstanceHeader } from './src/components/activiti-process-instance-header.component';
@@ -44,3 +49,30 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
     ActivitiProcessService
 ];
+
+@NgModule({
+    imports: [
+        CoreModule,
+        DataTableModule,
+        ActivitiTaskListModule
+    ],
+    declarations: [
+        ...ACTIVITI_PROCESSLIST_DIRECTIVES
+    ],
+    providers: [
+        ...ACTIVITI_PROCESSLIST_PROVIDERS
+    ],
+    exports: [
+        ...ACTIVITI_PROCESSLIST_DIRECTIVES
+    ]
+})
+export class ActivitiProcessListModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ActivitiProcessListModule,
+            providers: [
+                ...ACTIVITI_PROCESSLIST_PROVIDERS
+            ]
+        };
+    }
+}

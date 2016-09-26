@@ -15,22 +15,8 @@
  * limitations under the License.
  */
 
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { PLATFORM_PIPES } from '@angular/core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ALFRESCO_SEARCH_PROVIDERS } from 'ng2-alfresco-search';
-import { ALFRESCO_CORE_PROVIDERS, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
-import { ATIVITI_FORM_PROVIDERS } from 'ng2-activiti-form';
-import { UploadService } from 'ng2-alfresco-upload';
-import { AppComponent } from './app.component';
-import { appRouterProviders } from './app.routes';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app.module';
 
-bootstrap(AppComponent, [
-    appRouterProviders,
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS,
-    { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
-    ALFRESCO_SEARCH_PROVIDERS,
-    UploadService,
-    ATIVITI_FORM_PROVIDERS
-]).catch(err => console.error(err));
+const platform = platformBrowserDynamic();
+platform.bootstrapModule(AppModule);

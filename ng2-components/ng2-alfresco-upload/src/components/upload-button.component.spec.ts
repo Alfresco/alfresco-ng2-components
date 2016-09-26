@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+/*
 import { PLATFORM_PIPES } from '@angular/core';
-import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
+import { beforeEachProviders } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { HTTP_PROVIDERS } from '@angular/http';
 
@@ -163,3 +164,4 @@ describe('AlfrescoUploadButton', () => {
         component.onDirectoryAdded(fakeEvent);
     });
 });
+*/
