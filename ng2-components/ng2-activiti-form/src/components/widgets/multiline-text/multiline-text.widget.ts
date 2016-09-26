@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 declare let __moduleName: string;
-declare var componentHandler;
 
 @Component({
     moduleId: __moduleName,
@@ -28,5 +27,26 @@ declare var componentHandler;
     styleUrls: ['./multiline-text.widget.css']
 })
 export class MultilineTextWidget extends WidgetComponent {
+
+    constructor(private elementRef: ElementRef) {
+        super();
+    }
+
+    setupMaterialComponents(handler: any): boolean {
+        // workaround for MDL issues with dynamic components
+        if (handler) {
+            handler.upgradeAllRegistered();
+            if (this.elementRef && this.hasValue()) {
+                let el = this.elementRef.nativeElement;
+                let container = el.querySelector('.mdl-textfield');
+                if (container) {
+                    container.MaterialTextfield.change(this.field.value);
+                }
+            }
+
+            return true;
+        }
+        return false;
+    }
 
 }

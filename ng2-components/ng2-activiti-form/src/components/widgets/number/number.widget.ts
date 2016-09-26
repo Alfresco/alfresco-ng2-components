@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 declare let __moduleName: string;
-declare var componentHandler;
 
 @Component({
     moduleId: __moduleName,
@@ -29,4 +28,22 @@ declare var componentHandler;
 })
 export class NumberWidget extends WidgetComponent {
 
+    constructor(private elementRef: ElementRef) {
+        super();
+    }
+
+    setupMaterialComponents(handler: any): boolean {
+        // workaround for MDL issues with dynamic components
+        if (handler) {
+            handler.upgradeAllRegistered();
+            if (this.elementRef && this.hasValue()) {
+                let container = this.elementRef.nativeElement.querySelector('.mdl-textfield');
+                if (container) {
+                    container.MaterialTextfield.change(this.field.value.toString());
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

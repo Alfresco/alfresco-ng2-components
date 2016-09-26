@@ -43,15 +43,21 @@ export class WidgetComponent implements AfterViewInit {
         return null;
     }
 
+    hasValue(): boolean {
+        return this.field &&
+            this.field.value !== null &&
+            this.field.value !== undefined;
+    }
+
     ngAfterViewInit() {
-        this.setupMaterialComponents();
+        this.setupMaterialComponents(componentHandler);
         this.fieldChanged.emit(this.field);
     }
 
-    setupMaterialComponents(): boolean {
+    setupMaterialComponents(handler?: any): boolean {
         // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
+        if (handler) {
+            handler.upgradeAllRegistered();
             return true;
         }
         return false;

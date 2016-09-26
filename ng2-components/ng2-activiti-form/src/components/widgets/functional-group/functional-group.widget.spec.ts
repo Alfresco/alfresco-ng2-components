@@ -29,7 +29,7 @@ describe('FunctionalGroupWidget', () => {
 
     beforeEach(() => {
         formService = new FormService(null, null);
-        widget = new FunctionalGroupWidget(formService);
+        widget = new FunctionalGroupWidget(formService, null);
         widget.field = new FormFieldModel(new FormModel());
     });
 
