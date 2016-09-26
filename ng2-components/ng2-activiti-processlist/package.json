@@ -89,13 +89,7 @@
   },
   "license-check-config": {
     "src": [
-      "**/*.js",
-      "**/*.ts",
-      "!/**/coverage/**/*",
-      "!/**/demo/**/*",
-      "!/**/node_modules/**/*",
-      "!/**/typings/**/*",
-      "!*.js"
+      "./dist/**/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": false,
