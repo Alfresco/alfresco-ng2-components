@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
@@ -37,7 +37,8 @@ export class PeopleWidget extends WidgetComponent implements OnInit {
     users: GroupUserModel[] = [];
     groupId: string;
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService,
+                private elementRef: ElementRef) {
         super();
     }
 
@@ -120,5 +121,20 @@ export class PeopleWidget extends WidgetComponent implements OnInit {
         if (event) {
             event.preventDefault();
         }
+    }
+
+    setupMaterialComponents(handler: any): boolean {
+        // workaround for MDL issues with dynamic components
+        if (handler) {
+            handler.upgradeAllRegistered();
+            if (this.elementRef && this.value) {
+                let container = this.elementRef.nativeElement.querySelector('.mdl-textfield');
+                if (container) {
+                    container.MaterialTextfield.change(this.value);
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

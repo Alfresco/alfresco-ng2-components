@@ -29,7 +29,7 @@ describe('PeopleWidget', () => {
 
     beforeEach(() => {
         formService = new FormService(null, null);
-        widget = new PeopleWidget(formService);
+        widget = new PeopleWidget(formService, null);
         widget.field = new FormFieldModel(new FormModel());
     });
 

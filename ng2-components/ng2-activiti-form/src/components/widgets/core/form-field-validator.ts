@@ -65,7 +65,7 @@ export class RequiredFieldValidator implements FormFieldValidator {
                 return field.value && field.value.length > 0;
             }
 
-            if (!field.value) {
+            if (field.value === null || field.value === undefined || field.value === '') {
                 return false;
             }
         }

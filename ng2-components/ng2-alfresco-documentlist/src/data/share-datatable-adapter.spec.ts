@@ -188,7 +188,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should log error when having date conversion issues', () => {
-        let dateValue = '[wrong-date]';
+        let dateValue = <Date> {};
         let file = new FileNode();
         file.entry.createdAt = <any> dateValue;
 

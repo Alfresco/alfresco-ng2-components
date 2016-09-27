@@ -39,9 +39,7 @@ describe('WidgetComponent', () => {
 
     it('should setup MDL content only if component handler available', () => {
         let component = new WidgetComponent();
-        expect(component.setupMaterialComponents()).toBeTruthy();
-
-        window['componentHandler'] = null;
+        expect(component.setupMaterialComponents(componentHandler)).toBeTruthy();
         expect(component.setupMaterialComponents()).toBeFalsy();
     });
 
