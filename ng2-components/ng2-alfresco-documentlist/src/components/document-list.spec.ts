@@ -21,7 +21,7 @@ import { DocumentList } from './document-list';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { MinimalNodeEntity } from '../models/document-library.model';
+import { NodeMinimalEntry } from '../models/document-library.model';
 
 describe('DocumentList', () => {
 
@@ -131,7 +131,7 @@ describe('DocumentList', () => {
         documentButton.target = 'document';
         documentList.actions = [documentButton];
 
-        let node = new MinimalNodeEntity();
+        let node = new NodeMinimalEntry();
         expect(documentList.getNodeActions(node)).toEqual([]);
 
         node = new FileNode();

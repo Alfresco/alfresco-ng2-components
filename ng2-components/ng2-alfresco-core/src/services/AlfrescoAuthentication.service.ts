@@ -44,7 +44,8 @@ export class AlfrescoAuthenticationService {
             ticketBpm: this.getTicketBpm(),
             hostEcm: this.settingsService.ecmHost,
             hostBpm: this.settingsService.bpmHost,
-            contextRoot: 'alfresco'
+            contextRoot: 'alfresco',
+            disableCsrf: true
         });
 
         settingsService.bpmHostSubject.subscribe((bpmHost) => {
@@ -53,6 +54,10 @@ export class AlfrescoAuthenticationService {
 
         settingsService.ecmHostSubject.subscribe((ecmHost) => {
             this.alfrescoApi.changeEcmHost(ecmHost);
+        });
+
+        settingsService.csrfSubject.subscribe((csrf) => {
+            this.alfrescoApi.changeCsrfConfig(csrf);
         });
 
         settingsService.providerSubject.subscribe((value) => {

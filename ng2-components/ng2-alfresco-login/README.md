@@ -151,6 +151,7 @@ Attribute     |   Description |
 Attribute     | Options     | Default      | Description | Mandatory
 ---           | ---         | ---          | ---         | ---
 `providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL | 
+`disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call | 
 
  
 ## Custom logo and background

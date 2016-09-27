@@ -3,3 +3,7 @@
         display: none;
     }
 }
+
+.mdl-layout-title{
+    font-size: 17px;
+}

@@ -23,7 +23,7 @@ import {
     DataRow, DataColumn, DataSorting
 } from 'ng2-alfresco-datatable';
 
-import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
+import { NodePaging, NodeMinimalEntry } from './../models/document-library.model';
 import { DocumentListService } from './../services/document-list.service';
 
 export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvider {
@@ -305,11 +305,11 @@ export class ShareDataRow implements DataRow {
 
     isSelected: boolean = false;
 
-    get node(): MinimalNodeEntity {
+    get node(): NodeMinimalEntry {
         return this.obj;
     }
 
-    constructor(private obj: MinimalNodeEntity) {
+    constructor(private obj: NodeMinimalEntry) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }

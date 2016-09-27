@@ -33,6 +33,7 @@ export class LoginDemoComponent implements OnInit {
     alfrescologin: any;
 
     providers: string = 'ECM';
+    disableCsrf: boolean = false;
     blackListUsername: string;
     customValidation: any;
 
@@ -80,6 +81,10 @@ export class LoginDemoComponent implements OnInit {
         } else {
             this.providers = undefined;
         }
+    }
+
+    toggleCSRF() {
+        this.disableCsrf = !this.disableCsrf;
     }
 
     validateForm(event: any) {
