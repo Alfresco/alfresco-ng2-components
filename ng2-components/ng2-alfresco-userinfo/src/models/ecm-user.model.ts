@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { EcmCompanyModel } from './ecmCompany.model';
+import { EcmCompanyModel } from './ecm-company.model';
 
 export class EcmUserModel {
         id: string;

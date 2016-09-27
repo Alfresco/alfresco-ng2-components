@@ -5,11 +5,10 @@
   "author": "vito albano <vito.albano@alfresco.com>",
   "scripts": {
     "clean": "rimraf dist node_modules",
-    "license-check": "echo 'license check is disabled'",
-    "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist && npm run license-check",
+    "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist",
     "build:w": "npm run tslint && rimraf dist && npm run watch-task",
-    "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copy-dist:w\"  \"npm run license-check\"",
-    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts",
+    "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copy-dist:w\"  \"license-check\"",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'src/{,**/}**.ts'",
     "copy-dist": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src",
     "copy-dist:w": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src -w",
     "tsc": "tsc",
@@ -19,43 +18,53 @@
     "test-browser": "npm run build && concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
     "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
-    "travis": "echo 'placeholder'"
+    "travis": "npm link ng2-alfresco-core"
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alfresco/ng2-alfresco-userinfo.git"
+    "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
   },
   "bugs": {
-    "url": "https://github.com/alfresco/ng2-alfresco-userinfo/issues"
+    "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
-
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Vito Albano",
+      "email": "vito.albano@alfresco.com"
+    }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "alfresco"
+  ],
   "dependencies": {
-    "alfresco-js-api": "^0.3.0",
-    "@angular/common": "2.0.0-rc.3",
-    "@angular/compiler": "2.0.0-rc.3",
-    "@angular/core": "2.0.0-rc.3",
-    "@angular/forms": "0.1.1",
-    "@angular/http": "2.0.0-rc.3",
-    "@angular/platform-browser": "2.0.0-rc.3",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.3",
-    "@angular/router": "3.0.0-alpha.7",
-    "@angular/router-deprecated": "2.0.0-rc.2",
-    "@angular/upgrade": "2.0.0-rc.3",
+    "@angular/common": "2.0.0",
+    "@angular/compiler": "2.0.0",
+    "@angular/core": "2.0.0",
+    "@angular/forms": "2.0.0",
+    "@angular/http": "2.0.0",
+    "@angular/platform-browser": "2.0.0",
+    "@angular/platform-browser-dynamic": "2.0.0",
+    "@angular/router": "3.0.0",
+    "@angular/upgrade": "2.0.0",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.27",
-    "core-js": "2.4.0",
-    "reflect-metadata": "0.1.3",
-    "rxjs": "5.0.0-beta.6",
-    "zone.js": "0.6.12",
-    "ng2-translate": "2.2.2",
-    "ng2-alfresco-core": "0.3.2",
-    "material-design-icons": "2.2.3",
-    "material-design-lite": "1.1.3"
+    "zone.js": "^0.6.23",
+
+    "ng2-translate": "2.5.0",
+    "ng2-alfresco-core": "0.3.2"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.32",
     "@types/jasmine": "^2.2.33",
+    "concurrently": "^2.2.0",
     "cpx": "1.3.1",
     "jasmine-ajax": "3.2.0",
     "jasmine-core": "2.4.1",
@@ -74,11 +83,13 @@
     "typescript": "^2.0.2",
     "wsrv": "^0.1.5"
   },
-  "keywords": [
-    "component",
-    "userinfo",
-    "alfresco",
-    "alfresco-component"
-  ],
-  "license": "Apache-2.0"
+  "license-check-config": {
+    "src": [
+      "./dist/**/*.js"
+    ],
+    "path": "assets/license_header.txt",
+    "blocking": true,
+    "logInfo": false,
+    "logError": true
+  }
 }

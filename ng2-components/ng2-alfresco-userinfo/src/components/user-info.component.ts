@@ -16,10 +16,10 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { ECMUserService } from './services/ecmUser.service';
-import { BPMUserService } from './services/bpmUser.service';
-import { EcmUserModel } from './models/ecmUser.model';
-import { BpmUserModel } from './models/bpmUser.model';
+import { EcmUserService } from './../services/ecm-user.service';
+import { BpmUserService } from './../services/bpm-user.service';
+import { EcmUserModel } from './../models/ecm-user.model';
+import { BpmUserModel } from './../models/bpm-user.model';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
@@ -29,7 +29,7 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     styleUrls: ['./userinfo.component.css'],
     templateUrl: './userinfo.component.html',
-    providers: [ECMUserService, BPMUserService, AlfrescoAuthenticationService]
+    providers: [EcmUserService, BpmUserService, AlfrescoAuthenticationService]
 })
 
 export class UserInfoComponent implements OnInit {
@@ -42,8 +42,8 @@ export class UserInfoComponent implements OnInit {
     public   ecmUserImage: any;
 
 
-    constructor(private ecmUserService: ECMUserService,
-                private bpmUserService: BPMUserService,
+    constructor(private ecmUserService: EcmUserService,
+                private bpmUserService: BpmUserService,
                 public authService: AlfrescoAuthenticationService) {
     }
 

@@ -15,51 +15,48 @@
  * limitations under the License.
  */
 
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { BpmUserModel } from '../models/bpmUser.model';
+import { EcmUserModel } from '../models/ecm-user.model';
 /**
  *
- * BPMUserService retrieve all the information of an Ecm user.
+ * ECMUserService retrieve all the information of an Ecm user.
  *
- * @returns {BPMUserService} .
+ * @returns {ECMUserService} .
  */
 @Injectable()
-export class BPMUserService {
+export class EcmUserService {
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private settingService: AlfrescoSettingsService) {
-    }
+                private contentService: AlfrescoContentService) {}
 
     /**
      * get User Information via ECM
      * @param userName - the user name
      */
-    getCurrentUserInfo(): Observable<BpmUserModel> {
-       if ( this.authService.getAlfrescoApi().bpmAuth.isLoggedIn() ) {
-            return Observable.fromPromise(this.callApiGetProfile())
-                .map(
-                     (data) => <BpmUserModel> data
-                    )
-                .catch(this.handleError);
-        }
+    getUserInfo(userName: string): Observable<EcmUserModel> {
+      if ( this.authService.getAlfrescoApi().ecmAuth.isLoggedIn() ) {
+        return Observable.fromPromise(this.callApiGetPersonInfo(userName))
+            .map(
+                   (data) => <EcmUserModel> data['entry']
+                )
+            .catch(this.handleError);
+      }
     }
 
-    /**
-     * get User Information via ECM
-     * @param userName - the user name
-     */
-    getCurrentUserProfileImage(): string {
-       if ( this.authService.getAlfrescoApi().bpmAuth.isLoggedIn() ) {
-            return this.settingService.getBPMApiBaseUrl() + '/api/enterprise/profile-picture';
+    private callApiGetPersonInfo(userName: string, opts?: any) {
+        return this.authService.getAlfrescoApi().core.peopleApi.getPerson(userName, opts);
+    }
+
+    getCurrentUserProfileImageUrl(avatarId: string) {
+       if ( avatarId ) {
+            let nodeObj = {entry: {id: avatarId}};
+            return this.contentService.getContentUrl(nodeObj);
        }
     }
 
-    private callApiGetProfile() {
-        return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
-    }
     /**
      * Throw the error
      * @param error
