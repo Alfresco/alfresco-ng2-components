@@ -19,6 +19,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
+import { IconModel } from '../models/icon.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
@@ -38,6 +39,9 @@ export class ActivitiApps implements OnInit {
     public static LAYOUT_GRID: string = 'GRID';
     public static DEFAULT_TASKS_APP: string = 'tasks';
     public static DEFAULT_TASKS_APP_NAME: string = 'Task App';
+    public static DEFAULT_TASKS_APP_THEME: string = 'theme-2';
+    public static DEFAULT_TASKS_APP_ICON: string = 'glyphicon-asterisk';
+    public static DEFAULT_TASKS_APP_MATERIAL_ICON: string = 'favorite_border';
 
     @Input()
     layoutType: string = ActivitiApps.LAYOUT_GRID;
@@ -51,6 +55,8 @@ export class ActivitiApps implements OnInit {
     currentApp: AppDefinitionRepresentationModel;
 
     appList: AppDefinitionRepresentationModel [] = [];
+
+    private iconsMDL: IconModel;
 
     /**
      * Constructor
@@ -76,6 +82,7 @@ export class ActivitiApps implements OnInit {
         this.apps$.subscribe((app: any) => {
             this.appList.push(app);
         });
+        this.iconsMDL = new IconModel();
         this.load();
     }
 
@@ -85,6 +92,8 @@ export class ActivitiApps implements OnInit {
                 res.forEach((app: AppDefinitionRepresentationModel) => {
                     if (app.defaultAppId === ActivitiApps.DEFAULT_TASKS_APP) {
                         app.name = ActivitiApps.DEFAULT_TASKS_APP_NAME;
+                        app.theme = ActivitiApps.DEFAULT_TASKS_APP_THEME;
+                        app.icon = ActivitiApps.DEFAULT_TASKS_APP_ICON;
                         this.appsObserver.next(app);
                         this.selectApp(app);
                     } else if (app.deploymentId) {
@@ -146,4 +155,13 @@ export class ActivitiApps implements OnInit {
     isEmpty(): boolean {
         return this.appList.length === 0;
     }
+
+    getTheme(app: AppDefinitionRepresentationModel): string {
+        return app.theme ? app.theme : '';
+    }
+
+    getBackgroundIcon(app: AppDefinitionRepresentationModel): string {
+        return this.iconsMDL.mapGlyphiconToMaterialDesignIcons(app.icon);
+    }
+
 }

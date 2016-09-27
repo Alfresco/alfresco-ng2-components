@@ -8,7 +8,8 @@
         </li>
     </ul>
     <div class="mdl-grid" *ngIf="isGrid()">
-        <div (click)="selectApp(app)" class="mdl-card mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-shadow--2dp" *ngFor="let app of appList">
+        <div (click)="selectApp(app)" [ngClass]="['mdl-card mdl-cell',  getTheme(app)]" *ngFor="let app of appList">
+            <div class="logo"><i class="material-icons">{{getBackgroundIcon(app)}}</i></div>
             <div class="mdl-card__title">
                 <h1 class="mdl-card__title-text">{{app.name}}</h1>
             </div>
@@ -16,7 +17,7 @@
                 <p>{{app.description}}</p>
             </div>
             <div class="mdl-card__actions mdl-card--border">
-                <i class="material-icons" *ngIf="isSelected(app.id)">done</i>
+                <i class="material-icons selectedIcon" *ngIf="isSelected(app.id)">done</i>
                 <div class="mdl-layout-spacer"></div>
                 <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">delete</i></button>
                 <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite</i></button>
