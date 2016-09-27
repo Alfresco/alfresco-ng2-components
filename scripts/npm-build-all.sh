@@ -2,6 +2,14 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+build_project() {
+    cd $1
+    echo "====== build project: $2 ====="
+    npm update
+    npm install --cache-min 9999999
+    npm run build
+}
+
 for PACKAGE in \
   ng2-alfresco-core \
   ng2-activiti-form \
@@ -18,9 +26,7 @@ for PACKAGE in \
   ng2-activiti-analytics
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-  echo "====== build components : ${PACKAGE} ====="
-  cd "$DESTDIR"
-  npm update
-  npm install --cache-min 9999999
-  npm run build
+  build_project $DESTDIR $PACKAGE
 done
+
+build_project "$DIR/../demo-shell-ng2" "Demo Shell"
