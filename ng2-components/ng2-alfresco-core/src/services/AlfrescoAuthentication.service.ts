@@ -177,7 +177,7 @@ export class AlfrescoAuthenticationService {
      * The method save the ECM ticket in the localStorage
      */
     public saveTicketEcm(): void {
-        if (this.alfrescoApi) {
+        if (this.alfrescoApi && this.alfrescoApi.getTicketEcm()) {
             localStorage.setItem('ticket-ECM', this.alfrescoApi.getTicketEcm());
         }
     }
@@ -186,7 +186,7 @@ export class AlfrescoAuthenticationService {
      * The method save the BPM ticket in the localStorage
      */
     public saveTicketBpm(): void {
-        if (this.alfrescoApi) {
+        if (this.alfrescoApi && this.alfrescoApi.getTicketBpm()) {
             localStorage.setItem('ticket-BPM', this.alfrescoApi.getTicketBpm());
         }
     }

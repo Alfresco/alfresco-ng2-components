@@ -84,6 +84,21 @@ describe('AlfrescoAuthentication', () => {
             });
         });
 
+        it('should save only ECM ticket on localStorage', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicketBpm()).toBeNull();
+                expect(authService.getAlfrescoApi().bpmAuth.isLoggedIn()).toBeFalsy();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+        });
+
         it('should return ticket undefined when the credentials are wrong', (done) => {
             authService.login('fake-wrong-username', 'fake-wrong-password').subscribe(
                 (res) => {
@@ -161,6 +176,21 @@ describe('AlfrescoAuthentication', () => {
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200
+            });
+        });
+
+        it('should save only BPM ticket on localStorage', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicketEcm()).toBeNull();
+                expect(authService.getAlfrescoApi().ecmAuth.isLoggedIn()).toBeFalsy();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
             });
         });
 
