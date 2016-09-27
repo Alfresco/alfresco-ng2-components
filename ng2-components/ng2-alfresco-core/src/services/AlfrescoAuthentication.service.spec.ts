@@ -54,7 +54,7 @@ describe('AlfrescoAuthentication', () => {
         });
         spyOn(localStorage, 'key').and.callFake(function (i) {
             let keys = Object.keys(store);
-            return keys[i];
+            return keys[i] || null;
         });
 
         jasmine.Ajax.install();
