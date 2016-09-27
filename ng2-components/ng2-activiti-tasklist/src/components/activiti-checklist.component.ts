@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -32,7 +32,7 @@ declare let __moduleName: string;
     styleUrls: ['./activiti-checklist.component.css'],
     providers: [ActivitiTaskListService]
 })
-export class ActivitiChecklist implements OnInit {
+export class ActivitiChecklist implements OnInit, OnChanges {
 
     @Input()
     taskId: string;
@@ -66,13 +66,17 @@ export class ActivitiChecklist implements OnInit {
         this.task$.subscribe((task: TaskDetailsModel) => {
             this.checklist.push(task);
         });
+    }
 
-        if (this.taskId) {
-            this.load(this.taskId);
+    ngOnChanges(changes: SimpleChanges) {
+        let taskId = changes['taskId'];
+        if (taskId && taskId.currentValue) {
+            this.getTaskChecklist(taskId.currentValue);
+            return;
         }
     }
 
-    public load(taskId: string) {
+    public getTaskChecklist(taskId: string) {
         this.checklist = [];
         if (this.taskId) {
             this.activitiTaskList.getTaskChecklist(this.taskId).subscribe(

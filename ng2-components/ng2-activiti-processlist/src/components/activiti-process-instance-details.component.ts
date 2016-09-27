@@ -106,9 +106,6 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
                 (res: ProcessInstance) => {
                     this.processInstanceDetails = res;
                     if (this.processInstanceDetails) {
-                        if (this.commentsList) {
-                            this.commentsList.load(this.processInstanceDetails.id);
-                        }
                         if (this.tasksList) {
                             this.tasksList.load(this.processInstanceDetails.id);
                         }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
@@ -32,7 +32,7 @@ declare let __moduleName: string;
     styleUrls: ['./activiti-comments.component.css'],
     providers: [ActivitiTaskListService]
 })
-export class ActivitiComments implements OnInit {
+export class ActivitiComments implements OnInit, OnChanges {
 
     @Input()
     taskId: string;
@@ -68,16 +68,20 @@ export class ActivitiComments implements OnInit {
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
+    }
 
-        if (this.taskId) {
-            this.load(this.taskId);
+    ngOnChanges(changes: SimpleChanges) {
+        let taskId = changes['taskId'];
+        if (taskId && taskId.currentValue) {
+            this.getTaskComments(taskId.currentValue);
+            return;
         }
     }
 
-    public load(taskId: string) {
+    public getTaskComments(taskId: string) {
         this.comments = [];
-        if (this.taskId) {
-            this.activitiTaskList.getTaskComments(this.taskId).subscribe(
+        if (taskId) {
+            this.activitiTaskList.getTaskComments(taskId).subscribe(
                 (res: Comment[]) => {
                     res.forEach((comment) => {
                         this.commentObserver.next(comment);

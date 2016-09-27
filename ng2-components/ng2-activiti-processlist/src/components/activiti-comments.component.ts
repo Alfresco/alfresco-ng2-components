@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { Comment } from '../models/comment.model';
@@ -29,9 +29,10 @@ declare let __moduleName: string;
     selector: 'activiti-process-instance-comments',
     moduleId: __moduleName,
     templateUrl: './activiti-comments.component.html',
-    styleUrls: ['./activiti-comments.component.css']
+    styleUrls: ['./activiti-comments.component.css'],
+    providers: [ActivitiProcessService]
 })
-export class ActivitiComments implements OnInit {
+export class ActivitiComments implements OnInit, OnChanges {
 
     @Input()
     processInstanceId: string;
@@ -46,6 +47,11 @@ export class ActivitiComments implements OnInit {
 
     message: string;
 
+    /**
+     * Constructor
+     * @param auth
+     * @param translate
+     */
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
@@ -61,16 +67,20 @@ export class ActivitiComments implements OnInit {
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
+    }
 
-        if (this.processInstanceId) {
-            this.load(this.processInstanceId);
+    ngOnChanges(changes: SimpleChanges) {
+        let processInstanceId = changes['processInstanceId'];
+        if (processInstanceId && processInstanceId.currentValue) {
+            this.getProcessComments(processInstanceId.currentValue);
+            return;
         }
     }
 
-    public load(taskId: string) {
+    public getProcessComments(processInstanceId: string) {
         this.comments = [];
-        if (this.processInstanceId) {
-            this.activitiProcess.getProcessInstanceComments(this.processInstanceId).subscribe(
+        if (processInstanceId) {
+            this.activitiProcess.getProcessInstanceComments(processInstanceId).subscribe(
                 (res: Comment[]) => {
                     res.forEach((comment) => {
                         this.commentObserver.next(comment);

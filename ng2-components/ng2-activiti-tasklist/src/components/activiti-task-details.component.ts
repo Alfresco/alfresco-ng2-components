@@ -159,14 +159,6 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                             this.taskPeople.push(new User(user));
                         });
                     }
-                    if (this.activiticomments) {
-                        this.activiticomments.load(this.taskDetails.id);
-                    }
-
-                    if (this.activitichecklist) {
-                        this.activitichecklist.load(this.taskDetails.id);
-                    }
-
                 }
             );
         } else {
