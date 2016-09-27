@@ -54,7 +54,7 @@ describe('AlfrescoAuthentication', () => {
         });
         spyOn(localStorage, 'key').and.callFake(function (i) {
             let keys = Object.keys(store);
-            return keys[i] || null;
+            return keys[i];
         });
 
         jasmine.Ajax.install();
@@ -74,6 +74,21 @@ describe('AlfrescoAuthentication', () => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+        });
+
+        it('should save only ECM ticket on localStorage', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicketBpm()).toBeNull();
+                expect(authService.getAlfrescoApi().bpmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
@@ -161,6 +176,21 @@ describe('AlfrescoAuthentication', () => {
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200
+            });
+        });
+
+        it('should save only BPM ticket on localStorage', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicketEcm()).toBeNull();
+                expect(authService.getAlfrescoApi().ecmAuth.isLoggedIn()).toBeFalsy();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
             });
         });
 
