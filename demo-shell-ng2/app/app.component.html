@@ -19,7 +19,6 @@
                 <a class="mdl-navigation__link" data-automation-id="webscript" href="" routerLink="/webscript">Webscript</a>
                 <a class="mdl-navigation__link" data-automation-id="tag" href="" routerLink="/tag">Tag</a>
                 <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
-                <a class="mdl-navigation__link" data-automation-id="about" href="" routerLink="/about">About</a>
             </nav>
 
             <!-- Right aligned menu below button -->
@@ -33,7 +32,7 @@
                 <li class="mdl-menu__item" (click)="changeLanguage('en')"><span class="flag-icon flag-icon-gb"></span><label tabindex="0"> English</label></li>
                 <li class="mdl-menu__item" (click)="changeLanguage('gr')"><span class="flag-icon flag-icon-gr"></span><label tabindex="0"> Greek</label></li>
                 <li class="mdl-menu__item" (click)="changeLanguage('it')"><span class="flag-icon flag-icon-it"></span><label tabindex="0"> Italian</label></li>
-                <li *ngIf="!isLoggedIn()" class="mdl-menu__item"><label tabindex="0">More</label></li>
+                <a class="mdl-menu__item" routerLink="/about"><label tabindex="0">About</label></a>
                 <a *ngIf="!isLoggedIn()" class="mdl-menu__item" routerLink="/login"><label tabindex="0">Login</label></a>
                 <li *ngIf="isLoggedIn()" class="mdl-menu__item" (click)="onLogout($event)"><label tabindex="0">Logout</label></li>
             </ul>
@@ -49,7 +48,6 @@
             <a class="mdl-navigation__link" href="" routerLink="/activiti" (click)="hideDrawer()">Activiti Components Demo</a>
             <a class="mdl-navigation__link" href="" routerLink="/webscript" (click)="hideDrawer()">Webscript</a>
             <a class="mdl-navigation__link" href="" routerLink="/tag" (click)="hideDrawer()">Tag</a>
-            <a class="mdl-navigation__link" href="" routerLink="/about" (click)="hideDrawer()">About</a>
         </nav>
         <span class="mdl-layout-title">ECM host</span>
         <nav class="mdl-navigation">
