@@ -31,6 +31,7 @@ export class FormFieldTypes {
     static PEOPLE: string = 'people';
     static BOOLEAN: string = 'boolean';
     static NUMBER: string = 'integer';
+    static DATE: string = 'date';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

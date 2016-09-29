@@ -1,0 +1,19 @@
+.date-widget {
+    width: 100%;
+}
+
+.date-widget__invalid .mdl-textfield__input {
+    border-color: #d50000;
+}
+
+.date-widget__invalid .mdl-textfield__label {
+    color: #d50000;
+}
+
+.date-widget__invalid .mdl-textfield__label:after {
+    background-color: #d50000;
+}
+
+.date-widget__invalid .mdl-textfield__error {
+    visibility: visible !important;
+}

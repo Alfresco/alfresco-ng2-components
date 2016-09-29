@@ -29,9 +29,13 @@ import {
     MaxLengthFieldValidator,
     MinValueFieldValidator,
     MaxValueFieldValidator,
-    RegExFieldValidator
+    RegExFieldValidator,
+    DateFieldValidator,
+    MinDateFieldValidator,
+    MaxDateFieldValidator
 } from './form-field-validator';
 
+declare var moment: any;
 
 export class FormFieldModel extends FormWidgetModel {
 
@@ -152,7 +156,10 @@ export class FormFieldModel extends FormWidgetModel {
             new MaxLengthFieldValidator(),
             new MinValueFieldValidator(),
             new MaxValueFieldValidator(),
-            new RegExFieldValidator()
+            new RegExFieldValidator(),
+            new DateFieldValidator(),
+            new MinDateFieldValidator(),
+            new MaxDateFieldValidator()
         ];
 
         this.updateForm();
@@ -188,6 +195,19 @@ export class FormFieldModel extends FormWidgetModel {
             let entry: FormFieldOption[] = this.options.filter(opt => opt.id === value || opt.name === value);
             if (entry.length > 0) {
                 value = entry[0].id;
+            }
+        }
+
+        /*
+        This is needed due to Activiti desplaying/editing dates in d-M-YYYY format
+        but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
+         */
+        if (json.type === FormFieldTypes.DATE) {
+            if (value) {
+                let d = moment(value.split('T')[0]);
+                if (d.isValid()) {
+                    value = d.format('D-M-YYYY');
+                }
             }
         }
 
@@ -238,6 +258,14 @@ export class FormFieldModel extends FormWidgetModel {
                 if (taEntry.length > 0) {
                     this.form.values[this.id] = taEntry[0];
                 } else if (this.options.length > 0) {
+                    this.form.values[this.id] = null;
+                }
+                break;
+            case FormFieldTypes.DATE:
+                let d = moment(this.value, 'D-M-YYYY');
+                if (d.isValid()) {
+                    this.form.values[this.id] = `${d.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                } else {
                     this.form.values[this.id] = null;
                 }
                 break;
