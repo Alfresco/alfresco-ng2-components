@@ -33,12 +33,13 @@ declare let __moduleName: string;
 
 export class UserInfoComponent implements OnInit {
 
-    private  ecmUser: EcmUserModel;
-    private  bpmUser: BpmUserModel;
     private baseComponentPath = __moduleName.replace('components/user-info.component.js', '');
-    private  anonymouseImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
-    public   bpmUserImage: any;
-    public   ecmUserImage: any;
+
+    ecmUser: EcmUserModel;
+    bpmUser: BpmUserModel;
+    anonymouseImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
+    bpmUserImage: any;
+    ecmUserImage: any;
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
@@ -46,8 +47,8 @@ export class UserInfoComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.authService.getAlfrescoApi().ecmAuth.isLoggedIn()) {
-            this.ecmUserService.getUserInfo('-me-')
+        if ( this.authService.isEcmLoggedIn() ) {
+            this.ecmUserService.getCurrentUserInfo()
                 .subscribe(
                     (res) => {
                     this.ecmUser = <EcmUserModel> res;
@@ -55,7 +56,7 @@ export class UserInfoComponent implements OnInit {
                 }
             );
         }
-        if (this.authService.getAlfrescoApi().bpmAuth.isLoggedIn()) {
+        if ( this.authService.isBpmLoggedIn() ) {
             this.bpmUserService.getCurrentUserInfo()
                 .subscribe(
                     (res) => {

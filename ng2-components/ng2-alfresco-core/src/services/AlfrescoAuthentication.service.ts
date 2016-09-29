@@ -82,6 +82,7 @@ export class AlfrescoAuthenticationService {
      * @returns {Observable<R>|Observable<T>}
      */
     login(username: string, password: string): Observable<{ type: string, ticket: any }> {
+        this.removeTicket();
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
                 this.saveTickets();
@@ -189,6 +190,20 @@ export class AlfrescoAuthenticationService {
         if (this.alfrescoApi && this.alfrescoApi.getTicketBpm()) {
             localStorage.setItem('ticket-BPM', this.alfrescoApi.getTicketBpm());
         }
+    }
+
+    /**
+     * The method return true if user is logged in on ecm provider
+     */
+    public isEcmLoggedIn() {
+        return this.alfrescoApi.ecmAuth && !!this.alfrescoApi.ecmAuth.isLoggedIn();
+    }
+
+    /**
+     * The method return true if user is logged in on bpm provider
+     */
+    public isBpmLoggedIn() {
+        return this.alfrescoApi.bpmAuth && !!this.alfrescoApi.bpmAuth.isLoggedIn();
     }
 
     /**
