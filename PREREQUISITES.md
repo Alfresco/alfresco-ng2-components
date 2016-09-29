@@ -38,3 +38,5 @@ This configuration assumes few things:
 All those values can be modified at their respective `location` directive on the [nginx.conf](/nginx.conf) file.
 
 It also need to be compiled with the [Headers More](https://www.nginx.com/resources/wiki/modules/headers_more/) module , which add more control over sending headers to the backend.
+
+If you want to know more on how to install and configure NginX to work with the Application Development Framework can be found [here](https://community.alfresco.com/community/application-development-framework/blog/2016/09/28/adf-development-set-up-with-nginx-proxy)
