@@ -2,7 +2,7 @@
     <ul class='mdl-list'>
         <li class="mdl-list__item" (click)="selectFilter(filter)" *ngFor="let filter of filters">
             <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon">assignment</i>
+            <i [attr.data-automation-id]="filter.name + '_filter'" class="material-icons mdl-list__item-icon">assignment</i>
             {{filter.name}}
             </span>
         </li>
