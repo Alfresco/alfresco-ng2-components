@@ -25,16 +25,5 @@ v5.12.0
 ## Configure Nginx
 
 To correctly configure Nginx use the following file [nginx.conf](/nginx.conf).
-This will put Activiti, Alfresco and the app dev framework under the same domain.
 
-This configuration assumes few things:
-
-* Port mapping:
-  * NginX entry point: 8888
-  * Demo Shell: 3000
-  * Alfresco: 8080
-  * Activiti: 9999
-
-All those values can be modified at their respective `location` directive on the [nginx.conf](/nginx.conf) file.
-
-It also need to be compiled with the [Headers More](https://www.nginx.com/resources/wiki/modules/headers_more/) module , which add more control over sending headers to the backend.
+A comprehensive guide on how to install and configure NginX to work with the Application Development Framework can be found [here](https://community.alfresco.com/community/application-development-framework/blog/2016/09/28/adf-development-set-up-with-nginx-proxy)
