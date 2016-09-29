@@ -198,7 +198,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
 
             // remove time and timezone info
             let d = moment(field.value.split('T')[0], dateFormat);
-            var max = moment(field.maxValue, dateFormat);
+            let max = moment(field.maxValue, dateFormat);
 
             if (d.isAfter(max)) {
                 field.validationSummary = `Should not be greater than ${field.maxValue}`;
