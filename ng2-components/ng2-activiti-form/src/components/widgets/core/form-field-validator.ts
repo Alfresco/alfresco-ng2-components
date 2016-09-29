@@ -18,6 +18,8 @@
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
 
+declare var moment: any;
+
 export interface FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean;
@@ -102,6 +104,106 @@ export class NumberFieldValidator implements FormFieldValidator {
             }
             field.validationSummary = 'Input must be a number';
             return false;
+        }
+        return true;
+    }
+}
+
+export class DateFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATE
+    ];
+
+    // Validates that the input string is a valid date formatted as <dateFormat> (default D-M-YYYY)
+    static isValidDate(dateString: string, dateFormat: string = 'D-M-YYYY'): boolean {
+        if (dateString) {
+            let d = moment(dateString.split('T')[0], dateFormat, true);
+            return d.isValid();
+        }
+
+        return false;
+    }
+
+    isSupported(field: FormFieldModel): boolean {
+        return field && this.supportedTypes.indexOf(field.type) > -1;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field) && field.value) {
+            if (DateFieldValidator.isValidDate(field.value)) {
+                return true;
+            }
+            field.validationSummary = 'Invalid date format';
+            return false;
+        }
+        return true;
+    }
+}
+
+export class MinDateFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATE
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            !!field.minValue;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field) && field.value) {
+            const dateFormat = 'D-M-YYYY';
+
+            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+                field.validationSummary = 'Invalid date format';
+                return false;
+            }
+
+            // remove time and timezone info
+            let d = moment(field.value.split('T')[0], dateFormat);
+            let min = moment(field.minValue, dateFormat);
+
+            if (d.isBefore(min)) {
+                field.validationSummary = `Should not be less than ${field.minValue}`;
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+export class MaxDateFieldValidator implements FormFieldValidator {
+
+    private supportedTypes = [
+        FormFieldTypes.DATE
+    ];
+
+    isSupported(field: FormFieldModel): boolean {
+        return field &&
+            this.supportedTypes.indexOf(field.type) > -1 &&
+            !!field.maxValue;
+    }
+
+    validate(field: FormFieldModel): boolean {
+        if (this.isSupported(field) && field.value) {
+            const dateFormat = 'D-M-YYYY';
+
+            if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
+                field.validationSummary = 'Invalid date format';
+                return false;
+            }
+
+            // remove time and timezone info
+            let d = moment(field.value.split('T')[0], dateFormat);
+            var max = moment(field.maxValue, dateFormat);
+
+            if (d.isAfter(max)) {
+                field.validationSummary = `Should not be greater than ${field.maxValue}`;
+                return false;
+            }
         }
         return true;
     }

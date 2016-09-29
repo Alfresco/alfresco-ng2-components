@@ -32,6 +32,7 @@ import { AttachWidget } from './attach/attach.widget';
 import { TypeaheadWidget } from './typeahead/typeahead.widget';
 import { FunctionalGroupWidget } from './functional-group/functional-group.widget';
 import { PeopleWidget } from './people/people.widget';
+import { DateWidget } from './date/date.widget';
 
 // core
 export * from './widget.component';
@@ -56,6 +57,7 @@ export * from './attach/attach.widget';
 export * from './typeahead/typeahead.widget';
 export * from './functional-group/functional-group.widget';
 export * from './people/people.widget';
+export * from './date/date.widget';
 
 export const WIDGET_DIRECTIVES: any[] = [
     TabsWidget,
@@ -73,5 +75,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     AttachWidget,
     TypeaheadWidget,
     FunctionalGroupWidget,
-    PeopleWidget
+    PeopleWidget,
+    DateWidget
 ];
