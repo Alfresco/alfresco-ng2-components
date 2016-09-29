@@ -76,7 +76,8 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['searchTerm']) {
-            this.displaySearchResults(changes['searchTerm'].currentValue);
+            this.searchTerm = changes['searchTerm'].currentValue;
+            this.displaySearchResults(this.searchTerm);
         }
     }
 
@@ -110,7 +111,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      * @param searchTerm Search query entered by user
      */
     public displaySearchResults(searchTerm): void {
-        if (searchTerm !== null) {
+        if (searchTerm !== null && this.alfrescoSearchService !== null) {
             this.alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(

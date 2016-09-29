@@ -15,28 +15,26 @@
  * limitations under the License.
  */
 
-import { describe, beforeEach, beforeEachProviders, inject } from '@angular/core/testing';
+import { ReflectiveInjector }    from '@angular/core';
 import { AlfrescoThumbnailService } from './alfresco-thumbnail.service';
 import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('AlfrescoThumbnailService', () => {
 
+    let injector: ReflectiveInjector;
     let service: AlfrescoThumbnailService;
 
-
-    beforeEachProviders(() => {
-        return [
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoApiService,
             AlfrescoAuthenticationService,
             AlfrescoContentService,
             AlfrescoSettingsService,
             AlfrescoThumbnailService
-        ];
-    });
+        ]);
 
-    beforeEach(inject([AlfrescoThumbnailService], (thumbnailService: AlfrescoThumbnailService) => {
-        service = thumbnailService;
-    }));
+        service = injector.get(AlfrescoThumbnailService);
+    });
 
     it('should return the correct icon for a plain text file', () => {
         expect(service.getMimeTypeIcon('text/plain')).toBe('ft_ic_document.svg');
