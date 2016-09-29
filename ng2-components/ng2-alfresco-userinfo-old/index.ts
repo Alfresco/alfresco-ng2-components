@@ -17,22 +17,19 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
-
-import { UserInfoComponent } from './src/components/user-info.component';
 import { EcmUserService } from './src/services/ecm-user.service';
 import { BpmUserService } from './src/services/bpm-user.service';
+import { UserInfoComponent } from './src/components/user-info.component';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 export * from './src/components/user-info.component';
 export * from './src/services/bpm-user.service';
 export * from './src/services/ecm-user.service';
 
-export const USER_INFO_DIRECTIVES: any[] = [
-    UserInfoComponent
-];
-
-export const USER_INFO_PROVIDERS: any[] = [
+export const USER_INFO_SERVICE: any[] = [
     EcmUserService,
-    BpmUserService
+    BpmUserService,
+    AlfrescoAuthenticationService
 ];
 
 @NgModule({
@@ -40,13 +37,13 @@ export const USER_INFO_PROVIDERS: any[] = [
         CoreModule
     ],
     declarations: [
-        ...USER_INFO_DIRECTIVES
+        UserInfoComponent
     ],
     providers: [
-        ...USER_INFO_PROVIDERS
+        ...USER_INFO_SERVICE
     ],
     exports: [
-        ...USER_INFO_DIRECTIVES
+        UserInfoComponent
     ]
 })
 export class UserInfoComponentModule {
@@ -54,9 +51,8 @@ export class UserInfoComponentModule {
         return {
             ngModule: UserInfoComponentModule,
             providers: [
-                ...USER_INFO_PROVIDERS
+                ...USER_INFO_SERVICE
             ]
         };
     }
 }
-

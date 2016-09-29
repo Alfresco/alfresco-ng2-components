@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -29,11 +29,12 @@ import { BpmUserModel } from '../models/bpm-user.model';
 @Injectable()
 export class BpmUserService {
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingService: AlfrescoSettingsService) {
     }
 
     /**
-     * get Current User information for BPM
+     * get User Information via ECM
      * @param userName - the user name
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
@@ -46,31 +47,19 @@ export class BpmUserService {
         }
     }
 
-    getCurrentUserProfileImage(): any {
+    /**
+     * get User Information via ECM
+     * @param userName - the user name
+     */
+    getCurrentUserProfileImage(): string {
        if ( this.authService.getAlfrescoApi().bpmAuth.isLoggedIn() ) {
-           return Observable.fromPromise(this.callApiGetProfilePicture())
-               .map(
-                    (data) => data
-                   )
-               .catch(this.handleError);
+            return this.settingService.getBPMApiBaseUrl() + '/api/enterprise/profile-picture';
        }
     }
 
-    /**
-     * Call js api to get current user profile picture
-     */
-    private callApiGetProfilePicture() {
-        return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
-    }
-
-    /**
-     * Call js api to get current user information
-     */
     private callApiGetProfile() {
         return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
     }
-
-
     /**
      * Throw the error
      * @param error

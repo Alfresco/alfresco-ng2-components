@@ -27,15 +27,15 @@ declare let __moduleName: string;
 @Component({
     selector: 'ng2-alfresco-userinfo',
     moduleId: __moduleName,
-    styleUrls: ['./user-info.component.css'],
-    templateUrl: './user-info.component.html'
+    styleUrls: ['./userinfo.component.css'],
+    template: `<h1>HELLO</h1>`
 })
 
 export class UserInfoComponent implements OnInit {
 
     private  ecmUser: EcmUserModel;
     private  bpmUser: BpmUserModel;
-    private baseComponentPath = __moduleName.replace('components/user-info.component.js', '');
+    private baseComponentPath = __moduleName.replace('userinfo.component.js', '');
     private  anonymouseImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
     public   bpmUserImage: any;
     public   ecmUserImage: any;

@@ -1,4 +1,4 @@
-# ng2-alfresco-tag - Demo
+# ng2-alfresco-userinfo - Demo
 
 * To install dependencies
 

@@ -1,127 +1,115 @@
+/*!
+ * @license
+ * Copyright 2016 Alfresco Software, Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { UserInfoComponent } from 'ng2-alfresco-userinfo';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    MDL,
-    ALFRESCO_CORE_PROVIDERS
-} from 'ng2-alfresco-core';
+import { NgModule, Component, Input, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { TagModule } from 'ng2-alfresco-tag';
 
 @Component({
-  selector: 'my-app',
-  styles: [`:host h1 { font-size:22px }`],
-  template: `
-<h4> START DEMO USERINFO </h4>
-<div style="border-radius: 8px; position: absolute; background-color:papayawhip; color: cadetblue; left: 320px; top: 30px; z-index: 1;">
-  <p style="width:120px;margin: 20px;">
-  <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-      <input type="checkbox" id="switch1" class="mdl-switch__input"
-       (click)="toggleECM(ecm.checked)" #ecm>
-      <span class="mdl-switch__label">ECM</span>
-  </label>
-  </p>
-  <p style="width:120px;margin: 20px;">
-      <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-          <input type="checkbox" id="switch2" class="mdl-switch__input" checked
-           (click)="toggleBPM(bpm.checked)" #bpm>
-          <span class="mdl-switch__label">BPM</span>
-      </label>
-  </p>
-</div>
-<div *ngIf="isLoggedIn()">
-    <ng2-alfresco-userinfo></ng2-alfresco-userinfo>
-</div>
-<p></p>
-<div>
-    <p>
-        <span>Username</span>
-        <input id="user" type="text" [(ngModel)]="userToLogin" value="admin"/>
-    </p>
-    <p>
-        <span>Password</span>
-        <input id="passw" type="password" [(ngModel)]="password" value="admin"/>
-    </p>
-<button type="submit" (click)="attemptLogin()"> Login !</button>
-</div>
-<span>{{loginErrorMessage}}</span>
-
-<button (click)="logout()">Logout</button>`,
-  directives: [ UserInfoComponent ],
-  providers: [AlfrescoAuthenticationService, AlfrescoSettingsService, MDL]
+    selector: 'alfresco-tag-demo',
+    template: `
+               <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+               <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
+               <div *ngIf="!authenticated" style="color:#FF2323">
+                    Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
+                    operations.
+               </div>
+               <hr>
+                <label for="nodeId"><b>Insert Node Id</b></label><br>
+                <input id="nodeId" type="text" size="48"  [(ngModel)]="nodeId"><br>
+        <div class="container" *ngIf="authenticated">
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--4-col"><alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list></div>
+              <div class="mdl-cell mdl-cell--4-col">List Tags ECM <alfresco-tag-list></alfresco-tag-list></div>
+              <div class="mdl-cell mdl-cell--4-col">
+                    Tag list By Node ID 
+                    <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
+              </div>
+            </div>
+        </div>
+    `
 })
+class TagDemo implements OnInit {
 
+    @Input()
+    nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
 
-class UserInfoDemo implements OnInit {
+    authenticated: boolean;
 
-      public userToLogin: string = 'admin';
-      public password: string = 'admin';
-      public loginErrorMessage: string;
-      public providers: string = 'BPM';
-      private authenticated: boolean;
-      private token: any;
+    ecmHost: string = 'http://127.0.0.1:8080';
 
-      constructor(private authService: AlfrescoAuthenticationService,
-                  private settingsService: AlfrescoSettingsService) {
-      }
+    ticket: string;
 
-      ngOnInit() {
-        this.settingsService.setProviders(this.providers);
-      }
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService) {
 
-      attemptLogin() {
-          this.loginErrorMessage = '';
-          this.login(this.userToLogin, this.password);
-      }
+        settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
 
-      logout() {
-          this.authService.logout();
-      }
+        if (this.authService.getTicketEcm()) {
+            this.ticket = this.authService.getTicketEcm();
+        }
+    }
 
-      login(user, password) {
-          this.settingsService.setProviders(this.providers);
-          this.authService.login(user, password).subscribe(
-              token => {
-                  console.log(token);
-                  this.token = token;
-                  this.authenticated = true;
-              },
-              error => {
-                  console.log(error);
-                  this.authenticated = false;
-                  this.loginErrorMessage = error;
-              });
-      }
+    ngOnInit() {
+        this.login();
+    }
 
-      isLoggedIn(): boolean {
-          return this.authService.isLoggedIn();
-      }
+    login() {
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketEcm();
+                this.authenticated = true;
+            },
+            error => {
+                console.log(error);
+                this.authenticated = false;
+            });
+    }
 
-      toggleECM(checked) {
-          if (checked && this.providers === 'BPM') {
-              this.providers = 'ALL';
-          } else if (checked) {
-              this.providers = 'ECM';
-          } else {
-              this.providers = undefined;
-          }
-      }
+    public updateTicket(): void {
+        localStorage.setItem('ticket-ECM', this.ticket);
+    }
 
-      toggleBPM(checked) {
-          if (checked && this.providers === 'ECM') {
-              this.providers = 'ALL';
-          } else if (checked) {
-              this.providers = 'BPM';
-          } else {
-              this.providers = undefined;
-          }
-      }
+    public updateHost(): void {
+        this.settingsService.ecmHost = this.ecmHost;
+        this.login();
+    }
+
+    logData(data) {
+        console.log(data);
+    }
 }
 
-bootstrap(UserInfoDemo, [
-  UserInfoComponent,
-  HTTP_PROVIDERS,
-  ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        TagModule
+    ],
+    declarations: [ TagDemo ],
+    bootstrap:    [ TagDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

@@ -3,4 +3,3 @@ node_modules/
 .idea
 dist/
 !systemjs.config.js
-!browser-sync-config.js

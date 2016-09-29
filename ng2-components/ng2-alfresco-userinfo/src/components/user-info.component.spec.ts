@@ -14,12 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// import { UserInfoComponent } from '../src/userinfo.component';
 
-describe('Basic Example test ng2-alfresco-userinfo', () => {
+import { UserInfoComponent } from './user-info.component';
+import { EcmUserService } from '../services/ecm-user.service';
+import { BpmUserService } from '../services/bpm-user.service';
+import { AlfrescoAuthenticationService,
+         AlfrescoApiService,
+         AlfrescoSettingsService } from 'ng2-alfresco-core';
 
-  it('Test hello world', () => {
-       expect(true).toBe(true);
-  });
+describe('User info component', () => {
+
+    let userInfoComp: UserInfoComponent;
+    let ecmUserService = new EcmUserService(null, null);
+    let bpmUserService = new BpmUserService(null);
+    let authService = new AlfrescoAuthenticationService(new AlfrescoSettingsService() ,
+                                                        new AlfrescoApiService());
+
+    beforeEach(() => {
+        userInfoComp = new UserInfoComponent(ecmUserService, bpmUserService, authService);
+    });
+
+    it('should get the ecm user informations when is logged in', () => {
+       spyOn(ecmUserService, 'getUserInfo');
+       spyOn(bpmUserService, 'getCurrentUserInfo');
+       spyOn(authService, 'getAlfrescoApi').and.callThrough();
+       // spyOn(authService.getAlfrescoApi(), 'ecmAuth').and.callThrough();
+       spyOn(authService, 'getAlfrescoApi().ecmAuth.isLoggedIn').and.returnValue(true);
+       userInfoComp.ngOnInit();
+
+       expect(ecmUserService.getUserInfo).toHaveBeenCalledWith('-me-');
+       expect(bpmUserService.getCurrentUserInfo).not.toHaveBeenCalled();
+
+    });
 
 });

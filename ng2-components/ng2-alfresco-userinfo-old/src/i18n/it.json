@@ -1,0 +1,24 @@
+{
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Carica un file",
+      "UPLOAD_FOLDER": "Carica una cartella",
+      "CANCEL": "CANCELLA"
+    },
+    "MESSAGES": {
+      "COMPLETED": "caricamenti completati",
+      "PROGRESS": "caricamento in corso...",
+      "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
+      "FOLDER_NOT_SUPPORTED": "L' upload di cartelle non é supportato dal tuo browser"
+    },
+    "FILE_INFO": {
+      "NAME": "Nome file",
+      "PROGRESS": "Percentuale caricamento",
+      "SIZE": "Dimensione file",
+      "ACTION": "Azioni"
+    },
+    "ACTION": {
+      "UNDO": "Annulla"
+    }
+  }
+}

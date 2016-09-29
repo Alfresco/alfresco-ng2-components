@@ -70,7 +70,7 @@ var map = {
 };
 
 var packages = {
-    'app': { main: 'main.js',  defaultExtension: 'js' },
+    'app': { main: 'index.js',  defaultExtension: 'js', format: 'register' },
     'rxjs': {  defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
 
@@ -98,7 +98,7 @@ var config = {
 
 System.config(config);
 
-System.import('@angular/core/testing')
+System.import('app')
     .then(initTestBed)
     .then(initTesting);
 
