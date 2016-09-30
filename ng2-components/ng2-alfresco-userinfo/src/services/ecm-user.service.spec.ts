@@ -142,7 +142,7 @@ describe('Ecm User service', () => {
 
         it('should not call content service without avatar id', () => {
           spyOn(contentServiceForTest, 'getContentUrl').and.callThrough();
-          let urlRs = service.getCurrentUserProfileImageUrl();
+          let urlRs = service.getCurrentUserProfileImageUrl(undefined);
           expect(urlRs).toBeUndefined();
           expect(contentServiceForTest.getContentUrl).not.toHaveBeenCalled();
         });

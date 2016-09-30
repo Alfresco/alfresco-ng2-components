@@ -50,7 +50,7 @@ class StubAuthentication {
   setIsBpmLoggedIn(logged: boolean) { this.isBpmConnected = logged; };
   isEcmLoggedIn() { return this.isEcmConnected; };
   isBpmLoggedIn() { return this.isBpmConnected; };
-  callApiGetPersonInfo() { return Promise.resolve(fakeEcmUser); };
+  callApiGetPersonInfo() { return Promise.resolve(fakeBpmUser); };
 };
 
 describe('Bpm User service', () => {
@@ -72,7 +72,7 @@ describe('Bpm User service', () => {
     it('can instantiate service with authorization', inject([AlfrescoAuthenticationService],
                                                         (auth: AlfrescoAuthenticationService) => {
       expect(auth).not.toBeNull('authorization should be provided');
-      let service = new BpmUserService(auth, null);
+      let service = new BpmUserService(auth);
       expect(service instanceof BpmUserService).toBe(true, 'new service should be ok');
     }));
 
