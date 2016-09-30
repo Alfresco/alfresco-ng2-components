@@ -43,6 +43,7 @@ export class FormFieldModel extends FormWidgetModel {
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
 
+    // model members
     fieldType: string;
     id: string;
     name: string;
@@ -69,7 +70,10 @@ export class FormFieldModel extends FormWidgetModel {
     displayText: string;
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel = null;
+    enableFractions: boolean = false;
+    currency: string = null;
 
+    // advanced members
     emptyOption: FormFieldOption;
     validationSummary: string;
     validators: FormFieldValidator[] = [];
@@ -142,6 +146,8 @@ export class FormFieldModel extends FormWidgetModel {
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
+            this.enableFractions = <boolean>json.enableFractions;
+            this.currency = json.currency;
             this._value = this.parseValue(json);
         }
 
@@ -199,7 +205,7 @@ export class FormFieldModel extends FormWidgetModel {
         }
 
         /*
-        This is needed due to Activiti desplaying/editing dates in d-M-YYYY format
+        This is needed due to Activiti displaying/editing dates in d-M-YYYY format
         but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
          */
         if (json.type === FormFieldTypes.DATE) {
@@ -268,6 +274,12 @@ export class FormFieldModel extends FormWidgetModel {
                 } else {
                     this.form.values[this.id] = null;
                 }
+                break;
+            case FormFieldTypes.NUMBER:
+                this.form.values[this.id] = parseInt(this.value);
+                break;
+            case FormFieldTypes.AMOUNT:
+                this.form.values[this.id] = parseFloat(this.value);
                 break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type)) {
