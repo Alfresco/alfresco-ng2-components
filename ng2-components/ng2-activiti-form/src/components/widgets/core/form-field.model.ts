@@ -276,10 +276,10 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.NUMBER:
-                this.form.values[this.id] = parseInt(this.value);
+                this.form.values[this.id] = parseInt(this.value, 10);
                 break;
             case FormFieldTypes.AMOUNT:
-                this.form.values[this.id] = parseFloat(this.value);
+                this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
                 break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type)) {
