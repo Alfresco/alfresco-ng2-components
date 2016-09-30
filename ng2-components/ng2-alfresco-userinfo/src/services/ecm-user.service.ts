@@ -50,7 +50,7 @@ export class EcmUserService {
         return this.getUserInfo('-me-');
     }
 
-    private callApiGetPersonInfo(userName: string, opts?: any) {
+    callApiGetPersonInfo(userName: string, opts?: any) {
         return this.authService.getAlfrescoApi().core.peopleApi.getPerson(userName, opts);
     }
 

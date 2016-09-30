@@ -14,56 +14,166 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/*
-// import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
-import { EcmUserService } from './ecm-user.service';
-import { ReflectiveInjector } from '@angular/core';
-import { EcmUserModel } from '../models/ecm-user.model';
 
-declare var AlfrescoApi: any;
-declare let jasmine: any;
+import { EcmUserService } from '../services/ecm-user.service';
+import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { EcmUserModel } from '../models/ecm-user.model';
+import { EcmCompanyModel } from '../models/ecm-company.model';
+
+export var fakeEcmCompany: EcmCompanyModel = {
+  organization: 'company-fake-name',
+  address1: 'fake-address-1',
+  address2: 'fake-address-2',
+  address3: 'fake-address-3',
+  postcode: 'fAk1',
+  telephone: '00000000',
+  fax: '11111111',
+  email: 'fakeCompany@fake.com'
+};
+
+export var fakeEcmUser: EcmUserModel = {
+    id:  'fake-id',
+    firstName:  'fake-first-name',
+    lastName:  'fake-last-name',
+    description:  'i am a fake user for test',
+    avatarId:  'fake-avatar-id',
+    email:  'fakeEcm@ecmUser.com',
+    skypeId:  'fake-skype-id',
+    googleId:  'fake-googleId-id',
+    instantMessageId:  'fake-instantMessageId-id',
+    company: fakeEcmCompany,
+    jobTitle:  'test job',
+    location:  'fake location',
+    mobile:  '000000000',
+    telephone:  '11111111',
+    statusUpdatedAt:  'fake-date',
+    userStatus:  'active',
+    enabled: true,
+    emailNotificationsEnabled: true
+};
+
+class StubAuthentication {
+  isEcmConnected: boolean;
+  isBpmConnected: boolean;
+  setIsEcmLoggedIn(logged: boolean) { this.isEcmConnected = logged; };
+  setIsBpmLoggedIn(logged: boolean) { this.isBpmConnected = logged; };
+  isEcmLoggedIn() { return this.isEcmConnected; };
+  isBpmLoggedIn() { return this.isBpmConnected; };
+  callApiGetPersonInfo() { return Promise.resolve(fakeEcmUser); };
+};
+
+class StubAlfrescoContentService {
+    getContentUrl() { return 'fake/url/image/for/ecm/user'; } ;
+}
 
 describe('Ecm User service', () => {
 
-    let injector;
-    let ecmUserService: EcmUserService;
-    // let contentService: AlfrescoContentService;
-    // let authService: AlfrescoAuthenticationService;
+    beforeEach( async(() => {
+      TestBed.configureTestingModule({
+        providers: [ EcmUserService,
+          { provide: AlfrescoAuthenticationService, useClass: StubAuthentication },
+          { provide: AlfrescoContentService, useClass: StubAlfrescoContentService }
+        ]
+      })
+      .compileComponents();
+    }));
 
-    beforeEach(() => {
+    it('can instantiate service when inject service',
+        inject([EcmUserService], (service: EcmUserService) => {
+          expect(service instanceof EcmUserService).toBe(true);
+    }));
 
-        injector = ReflectiveInjector.resolveAndCreate([
-            EcmUserService
-        ]);
+    it('can instantiate service with authorization', inject([AlfrescoAuthenticationService],
+                                                        (auth: AlfrescoAuthenticationService) => {
+      expect(auth).not.toBeNull('authorization should be provided');
+      let service = new EcmUserService(auth, null);
+      expect(service instanceof EcmUserService).toBe(true, 'new service should be ok');
+    }));
 
-        // contentService = injector.get(AlfrescoContentService);
-        // authService = injector.get(AlfrescoAuthenticationService);
-        ecmUserService = injector.get(EcmUserService);
+    it('can instantiate service with content service', inject([AlfrescoContentService],
+                                                        (content: AlfrescoContentService) => {
+      expect(content).not.toBeNull('contentService should be provided');
+      let service = new EcmUserService(null, content);
+      expect(service instanceof EcmUserService).toBe(true, 'new service should be ok');
+    }));
 
-        jasmine.Ajax.install();
-    });
+    describe('when user is logged in', () => {
+        let service: EcmUserService;
+        let authServiceForTest: AlfrescoAuthenticationService;
+        let contentServiceForTest: AlfrescoContentService;
 
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
+        beforeEach(
+            inject(
+                [AlfrescoAuthenticationService, AlfrescoContentService],
+                (authService: AlfrescoAuthenticationService, content: AlfrescoContentService) => {
+          authServiceForTest = authService;
+          contentServiceForTest = content;
+          service = new EcmUserService(authService, content);
+          spyOn(authServiceForTest, 'isEcmLoggedIn').and.returnValue(true);
+        }));
 
-    it('should be able', (done) => {
-        let authService = new AlfrescoAuthenticationService();
-        spyOn(authService, )
-        ecmUserService.getUserInfo('fake-user').subscribe((res) => {
-            expect(res).not.toBeUndefined();
-            expect(res).toEqual(jasmine.any(EcmUserModel));
-            expect(res.firstName).toEqual('fake-user-response');
-            expect(res.email).toEqual('fake@email.com');
-            done();
+        it('should be able to retrieve current user info', (done) => {
+          let userJsApiResponse = {entry: fakeEcmUser};
+          spyOn(service, 'callApiGetPersonInfo').and.returnValue(Promise.resolve(userJsApiResponse));
+          service.getCurrentUserInfo().subscribe(
+                                        (user) => {
+                                                   expect(user).not.toBeUndefined();
+                                                   expect(user.firstName).toEqual('fake-first-name');
+                                                   expect(user.lastName).toEqual('fake-last-name');
+                                                   expect(user.email).toEqual('fakeEcm@ecmUser.com');
+                                                   done();
+                                                 });
         });
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 201,
-            contentType: 'application/json',
-            responseText: JSON.stringify({'entry': {'firstName': 'fake-user-response', 'id': 'fake@email.com'}})
+        it('should retrieve current logged user information', () => {
+          spyOn(service, 'getUserInfo');
+          spyOn(service, 'callApiGetPersonInfo').and.callThrough();
+          service.getCurrentUserInfo();
+          expect(service.getUserInfo).toHaveBeenCalledWith('-me-');
+        });
+
+        it('should retrieve avatar url for current user', () => {
+          spyOn(contentServiceForTest, 'getContentUrl').and.returnValue('fake/url/image/for/ecm/user');
+          let urlRs = service.getCurrentUserProfileImageUrl('fake-avatar-id');
+
+          expect(urlRs).toEqual('fake/url/image/for/ecm/user');
+        });
+
+        it('should not call content service without avatar id', () => {
+          spyOn(contentServiceForTest, 'getContentUrl').and.callThrough();
+          let urlRs = service.getCurrentUserProfileImageUrl();
+          expect(urlRs).toBeUndefined();
+          expect(contentServiceForTest.getContentUrl).not.toHaveBeenCalled();
+        });
+
+        it('should build the body for the content service', () => {
+          spyOn(contentServiceForTest, 'getContentUrl').and.callThrough();
+          let urlRs = service.getCurrentUserProfileImageUrl('fake-avatar-id');
+          expect(urlRs).not.toBeUndefined();
+          expect(contentServiceForTest.getContentUrl).toHaveBeenCalledWith( {entry: {id: 'fake-avatar-id'} });
         });
     });
 
+    describe('when user is not logged in', () => {
+        let service: EcmUserService;
+        let authServiceForTest: AlfrescoAuthenticationService;
+        let contentServiceForTest: AlfrescoContentService;
+
+        beforeEach(
+            inject(
+                [AlfrescoAuthenticationService, AlfrescoContentService],
+                (authService: AlfrescoAuthenticationService, content: AlfrescoContentService) => {
+          authServiceForTest = authService;
+          contentServiceForTest = content;
+          service = new EcmUserService(authService, content);
+          spyOn(authServiceForTest, 'isEcmLoggedIn').and.returnValue(false);
+        }));
+
+        it('should not retrieve the user information', () => {
+          spyOn(service, 'callApiGetPersonInfo');
+          service.getCurrentUserInfo();
+          expect(service.callApiGetPersonInfo).not.toHaveBeenCalled();
+        });
+    });
 });
-*/

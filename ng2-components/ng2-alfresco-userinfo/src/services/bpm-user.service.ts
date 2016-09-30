@@ -59,14 +59,14 @@ export class BpmUserService {
     /**
      * Call js api to get current user profile picture
      */
-    private callApiGetProfilePicture() {
+    callApiGetProfilePicture() {
         return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
     }
 
     /**
      * Call js api to get current user information
      */
-    private callApiGetProfile() {
+    callApiGetProfile() {
         return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
     }
 
