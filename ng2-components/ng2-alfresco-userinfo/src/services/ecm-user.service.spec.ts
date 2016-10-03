@@ -28,7 +28,7 @@ export var fakeEcmCompany: EcmCompanyModel = {
   address3: 'fake-address-3',
   postcode: 'fAk1',
   telephone: '00000000',
-  fax: '11111111',
+  fax: '=1111111',
   email: 'fakeCompany@fake.com'
 };
 
@@ -118,7 +118,7 @@ describe('Ecm User service', () => {
           spyOn(service, 'callApiGetPersonInfo').and.returnValue(Promise.resolve(userJsApiResponse));
           service.getCurrentUserInfo().subscribe(
                                         (user) => {
-                                                   expect(user).not.toBeUndefined();
+                                                   expect(user).toBeDefined();
                                                    expect(user.firstName).toEqual('fake-first-name');
                                                    expect(user.lastName).toEqual('fake-last-name');
                                                    expect(user.email).toEqual('fakeEcm@ecmUser.com');
@@ -150,7 +150,7 @@ describe('Ecm User service', () => {
         it('should build the body for the content service', () => {
           spyOn(contentServiceForTest, 'getContentUrl').and.callThrough();
           let urlRs = service.getCurrentUserProfileImageUrl('fake-avatar-id');
-          expect(urlRs).not.toBeUndefined();
+          expect(urlRs).toBeDefined();
           expect(contentServiceForTest.getContentUrl).toHaveBeenCalledWith( {entry: {id: 'fake-avatar-id'} });
         });
     });

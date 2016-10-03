@@ -86,4 +86,13 @@ export class FakeBpmUserService {
       return this.usersList[this.userNeeded].pictureId;
   };
 
+  respondWithTheUserWithoutImage() {
+    this.userNeeded = 1;
+  }
+
+  respondWithTheUserWithImage() {
+    this.userNeeded = 0;
+  }
+
+
 }

@@ -65,7 +65,7 @@ describe('User info component', () => {
         expect(userInfoComp.ecmUserImage).toBeUndefined();
         expect(userInfoComp.bpmUser).toBeUndefined();
         expect(userInfoComp.bpmUserImage).toBeUndefined();
-        expect(userInfoComp.anonymouseImageUrl).not.toBeUndefined();
+        expect(userInfoComp.anonymouseImageUrl).toBeDefined();
     });
 
     it('should NOT have users immediately after ngOnInit', () => {
@@ -74,7 +74,7 @@ describe('User info component', () => {
         expect(userInfoComp.ecmUserImage).toBeUndefined();
         expect(userInfoComp.bpmUser).toBeUndefined();
         expect(userInfoComp.bpmUserImage).toBeUndefined();
-        expect(userInfoComp.anonymouseImageUrl).not.toBeUndefined();
+        expect(userInfoComp.anonymouseImageUrl).toBeDefined();
     });
 
     describe('when user is logged on ecm', () => {
@@ -92,19 +92,19 @@ describe('User info component', () => {
         }));
 
         it('should get the ecm current user image from the service', () => {
-            expect(userInfoComp.ecmUser).not.toBeUndefined();
-            expect(userInfoComp.ecmUserImage).not.toBeUndefined();
+            expect(userInfoComp.ecmUser).toBeDefined();
+            expect(userInfoComp.ecmUserImage).toBeDefined();
             expect(userInfoComp.ecmUserImage).toEqual('fake/url/image/for/ecm/user');
         });
 
         it('should get the ecm user informations from the service', () => {
-            expect(userInfoComp.ecmUser).not.toBeUndefined();
+            expect(userInfoComp.ecmUser).toBeDefined();
             expect(userInfoComp.ecmUser.firstName).toEqual('fake-first-name');
             expect(userInfoComp.ecmUser.lastName).toEqual('fake-last-name');
         });
 
         it('should return the anonynous user avatar image url when user does not have avatarId', async(() => {
-            fakeEcmService.userNeeded = 1;
+            fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                       .then( () => {
@@ -131,19 +131,19 @@ describe('User info component', () => {
         }));
 
         it('should get the bpm current user image from the service', () => {
-            expect(userInfoComp.bpmUser).not.toBeUndefined();
-            expect(userInfoComp.bpmUserImage).not.toBeUndefined();
+            expect(userInfoComp.bpmUser).toBeDefined();
+            expect(userInfoComp.bpmUserImage).toBeDefined();
             expect(userInfoComp.bpmUserImage).toEqual('fake-picture-id');
         });
 
         it('should get the bpm user informations from the service', () => {
-            expect(userInfoComp.bpmUser).not.toBeUndefined();
+            expect(userInfoComp.bpmUser).toBeDefined();
             expect(userInfoComp.bpmUser.firstName).toEqual('fake-first-name');
             expect(userInfoComp.bpmUser.lastName).toEqual('fake-last-name');
         });
 
         it('should return the anonynous user avatar image url when user does not have avatarId', async(() => {
-            fakeBpmService.userNeeded = 1;
+            fakeBpmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                       .then( () => {
@@ -172,26 +172,26 @@ describe('User info component', () => {
         }));
 
         it('should get the bpm current user image from the service', () => {
-            expect(userInfoComp.bpmUser).not.toBeUndefined();
-            expect(userInfoComp.bpmUserImage).not.toBeUndefined();
+            expect(userInfoComp.bpmUser).toBeDefined();
+            expect(userInfoComp.bpmUserImage).toBeDefined();
             expect(userInfoComp.bpmUserImage).toEqual('fake-picture-id');
-            expect(userInfoComp.ecmUser).not.toBeUndefined();
-            expect(userInfoComp.ecmUserImage).not.toBeUndefined();
+            expect(userInfoComp.ecmUser).toBeDefined();
+            expect(userInfoComp.ecmUserImage).toBeDefined();
             expect(userInfoComp.ecmUserImage).toEqual('fake/url/image/for/ecm/user');
         });
 
         it('should get the bpm user informations from the service', () => {
-            expect(userInfoComp.bpmUser).not.toBeUndefined();
+            expect(userInfoComp.bpmUser).toBeDefined();
             expect(userInfoComp.bpmUser.firstName).toEqual('fake-first-name');
             expect(userInfoComp.bpmUser.lastName).toEqual('fake-last-name');
-            expect(userInfoComp.ecmUser).not.toBeUndefined();
+            expect(userInfoComp.ecmUser).toBeDefined();
             expect(userInfoComp.ecmUser.firstName).toEqual('fake-first-name');
             expect(userInfoComp.ecmUser.lastName).toEqual('fake-last-name');
         });
 
         it('should return the anonynous user avatar image url when user does not have avatarId', async(() => {
-            fakeBpmService.userNeeded = 1;
-            fakeEcmService.userNeeded = 1;
+            fakeBpmService.respondWithTheUserWithoutImage();
+            fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                       .then( () => {
@@ -206,36 +206,36 @@ describe('User info component', () => {
         }));
 
         it('should return the ecm image if exists', async(() => {
-            fakeBpmService.userNeeded = 0;
-            fakeEcmService.userNeeded = 0;
+            fakeBpmService.respondWithTheUserWithImage();
+            fakeEcmService.respondWithTheUserWithImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                       .then( () => {
                                      fixture.detectChanges();
                                      let res = userInfoComp.getUserAvatar();
-                                     expect(userInfoComp.bpmUserImage).not.toBeUndefined();
-                                     expect(userInfoComp.ecmUserImage).not.toBeUndefined();
+                                     expect(userInfoComp.bpmUserImage).toBeDefined();
+                                     expect(userInfoComp.ecmUserImage).toBeDefined();
                                      expect(res).toEqual(userInfoComp.ecmUserImage);
                                    });
         }));
 
         it('should return the bpm image if ecm does not have it', async(() => {
-            fakeBpmService.userNeeded = 0;
-            fakeEcmService.userNeeded = 1;
+            fakeBpmService.respondWithTheUserWithImage();
+            fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                       .then( () => {
                                      fixture.detectChanges();
                                      let res = userInfoComp.getUserAvatar();
-                                     expect(userInfoComp.bpmUserImage).not.toBeUndefined();
+                                     expect(userInfoComp.bpmUserImage).toBeDefined();
                                      expect(userInfoComp.ecmUserImage).toBeUndefined();
                                      expect(res).toEqual(userInfoComp.bpmUserImage);
                                    });
         }));
 
         it('should return the anonynous avatar if no user has it', async(() => {
-            fakeBpmService.userNeeded = 1;
-            fakeEcmService.userNeeded = 1;
+            fakeBpmService.respondWithTheUserWithoutImage();
+            fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                       .then( () => {

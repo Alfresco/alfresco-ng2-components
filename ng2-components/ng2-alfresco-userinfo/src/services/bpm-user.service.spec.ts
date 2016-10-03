@@ -93,7 +93,7 @@ describe('Bpm User service', () => {
           spyOn(service, 'callApiGetProfile').and.returnValue(Promise.resolve(fakeBpmUser));
           service.getCurrentUserInfo().subscribe(
                                         (user) => {
-                                                   expect(user).not.toBeUndefined();
+                                                   expect(user).toBeDefined();
                                                    expect(user.firstName).toEqual('fake-first-name');
                                                    expect(user.lastName).toEqual('fake-last-name');
                                                    expect(user.email).toEqual('fakeBpm@fake.com');
@@ -111,7 +111,7 @@ describe('Bpm User service', () => {
           spyOn(service, 'callApiGetProfilePicture').and.returnValue(Promise.resolve('fake/img/path'));
           service.getCurrentUserProfileImage().subscribe(
                                         (path) => {
-                                                   expect(path).not.toBeUndefined();
+                                                   expect(path).toBeDefined();
                                                    expect(path).toEqual('fake/img/path');
                                                    done();
                                                  });

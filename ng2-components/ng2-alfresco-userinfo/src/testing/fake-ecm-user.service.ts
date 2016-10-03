@@ -96,4 +96,12 @@ export class FakeEcmUserService {
     }
   };
 
+  respondWithTheUserWithoutImage() {
+    this.userNeeded = 1;
+  };
+
+  respondWithTheUserWithImage() {
+    this.userNeeded = 0;
+  };
+
 }
