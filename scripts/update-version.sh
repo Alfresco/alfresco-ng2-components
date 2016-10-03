@@ -27,7 +27,8 @@ for PACKAGE in \
   ng2-alfresco-tag \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
-  ng2-alfresco-webscript
+  ng2-alfresco-webscript \
+  ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== UPDATE VERSION of ${PACKAGE} to ${VERSION} version in all the package.json ======"
@@ -47,7 +48,8 @@ for PACKAGE in \
   ng2-alfresco-tag \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
-  ng2-alfresco-webscript
+  ng2-alfresco-webscript \
+  ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== UPDATE VERSION OF ${PACKAGE} to ${VERSION} version ======"
