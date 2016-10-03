@@ -1,6 +1,6 @@
 <div id="img_container">
     <span *ngIf="ecmUser">{{ecmUser.firstName || ecmUser.lastName}}</span>
-    <span *ngIf="bpmUser">
+    <span *ngIf="bpmUser && !ecmUser">
         {{ formatValue(bpmUser.firstName) ||
            formatValue(bpmUser.lastName)  ||
            formatValue(bpmUser.fullName) }}
