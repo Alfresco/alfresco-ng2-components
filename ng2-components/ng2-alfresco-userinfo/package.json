@@ -1,6 +1,6 @@
 {
-  "name": "ng2-alfresco-tag",
-  "description": "Alfresco tag component",
+  "name": "ng2-alfresco-userinfo",
+  "description": "Alfresco User Info component",
   "version": "0.3.2",
   "author": "Alfresco Software, Ltd.",
   "main": "./dist/index.js",
