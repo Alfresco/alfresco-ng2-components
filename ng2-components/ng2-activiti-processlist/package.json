@@ -1,7 +1,7 @@
 {
   "name": "ng2-activiti-processlist",
   "description": "Show active processes from the Activiti BPM suite",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "rimraf dist node_modules",
