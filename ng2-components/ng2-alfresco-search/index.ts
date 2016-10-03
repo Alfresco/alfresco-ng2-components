@@ -29,6 +29,7 @@ export * from './src/services/alfresco-search.service';
 export * from './src/services/alfresco-thumbnail.service';
 export * from './src/components/alfresco-search.component';
 export * from './src/components/alfresco-search-control.component';
+export * from './src/components/alfresco-search-autocomplete.component';
 
 export const ALFRESCO_SEARCH_DIRECTIVES: [any] = [
     AlfrescoSearchComponent,

@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-/*
-import { provide, PLATFORM_PIPES } from '@angular/core';
-import { it, describe, expect, inject, beforeEachProviders, beforeEach } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 import {
@@ -28,53 +27,67 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoTranslationService,
-    AlfrescoPipeTranslate
+    CoreModule
 } from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
 
 describe('AlfrescoSearchControlComponent', () => {
 
-    let alfrescoSearchControlComponentFixture, element, component;
+    let alfrescoSearchControlComponentFixture: ComponentFixture<AlfrescoSearchControlComponent>;
+    let component: AlfrescoSearchControlComponent, element: HTMLElement;
 
-    beforeEachProviders(() => {
-        return [
-            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
-            AlfrescoSearchService,
-            provide(AlfrescoTranslationService, {useClass: TranslationMock}),
-            AlfrescoThumbnailService,
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoContentService
-        ];
-    });
-
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoSearchControlComponent)
-            .then(fixture => {
-                alfrescoSearchControlComponentFixture = fixture;
-                element = alfrescoSearchControlComponentFixture.nativeElement;
-                component = alfrescoSearchControlComponentFixture.componentInstance;
-            });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [
+                AlfrescoSearchControlComponent,
+                AlfrescoSearchAutocompleteComponent
+            ],
+            providers: [
+                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                AlfrescoThumbnailService,
+                AlfrescoSettingsService,
+                AlfrescoApiService,
+                AlfrescoAuthenticationService,
+                AlfrescoContentService,
+                AlfrescoSearchService
+            ]
+        }).compileComponents().then(() => {
+            alfrescoSearchControlComponentFixture = TestBed.createComponent(AlfrescoSearchControlComponent);
+            component = alfrescoSearchControlComponentFixture.componentInstance;
+            element = alfrescoSearchControlComponentFixture.nativeElement;
+        });
     }));
 
     it('should setup i18n folder', () => {
-        let translation = jasmine.createSpyObj('AlfrescoTranslationService', [
-            'addTranslationFolder'
-        ]);
-
-        let alfrescoSearchControlComponent = new AlfrescoSearchControlComponent(translation);
-        expect(alfrescoSearchControlComponent).toBeDefined();
+        let translationService = alfrescoSearchControlComponentFixture.debugElement.injector.get(AlfrescoTranslationService);
+        spyOn(translationService, 'addTranslationFolder');
+        alfrescoSearchControlComponentFixture.detectChanges();
+        expect(translationService.addTranslationFolder)
+            .toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
     });
 
-    it('should emit searchChange when search term changed', () => {
-        alfrescoSearchControlComponentFixture.componentInstance.searchTerm = 'customSearchTerm';
-        alfrescoSearchControlComponentFixture.detectChanges();
+    it('should emit searchChange when search term input changed', (done) => {
         alfrescoSearchControlComponentFixture.componentInstance.searchChange.subscribe(e => {
             expect(e.value).toBe('customSearchTerm');
+            done();
         });
+        alfrescoSearchControlComponentFixture.detectChanges();
+        alfrescoSearchControlComponentFixture.componentInstance.searchTerm = 'customSearchTerm';
+        alfrescoSearchControlComponentFixture.componentInstance
+            .ngOnChanges({'searchTerm': new SimpleChange('', 'customSearchTerm')});
+    });
+
+    it('should emit searchChange when search term changed by user', (done) => {
+        alfrescoSearchControlComponentFixture.componentInstance.searchChange.subscribe(e => {
+            expect(e.value).toBe('customSearchTerm211');
+            done();
+        });
+        alfrescoSearchControlComponentFixture.detectChanges();
+        component.searchControl.setValue('customSearchTerm211', true);
     });
 
     describe('Component rendering', () => {
@@ -124,9 +137,9 @@ describe('AlfrescoSearchControlComponent', () => {
         it('should fire a search when a term has been entered', () => {
             spyOn(component.searchSubmit, 'emit');
             alfrescoSearchControlComponentFixture.detectChanges();
-            let formEl = element.querySelector('form');
+            let formEl: HTMLElement = element.querySelector('form');
             component.searchTerm = 'searchTerm1';
-            component.searchControl.updateValue('searchTerm1');
+            component.searchControl.setValue('searchTerm1', true);
             alfrescoSearchControlComponentFixture.detectChanges();
             formEl.dispatchEvent(new Event('submit'));
 
@@ -140,8 +153,8 @@ describe('AlfrescoSearchControlComponent', () => {
         it('should not fire a search when no term has been entered', () => {
             spyOn(component.searchSubmit, 'emit');
             alfrescoSearchControlComponentFixture.detectChanges();
-            let inputEl = element.querySelector('input[type="text"]');
-            let formEl = element.querySelector('form');
+            let inputEl: HTMLInputElement = <HTMLInputElement> element.querySelector('input[type="text"]');
+            let formEl: HTMLElement = element.querySelector('form');
             inputEl.value = '';
             formEl.dispatchEvent(new Event('submit'));
 
@@ -156,7 +169,7 @@ describe('AlfrescoSearchControlComponent', () => {
 
         it('should fire an event when the search box receives focus', () => {
             spyOn(component.expand, 'emit');
-            let inputEl = element.querySelector('input');
+            let inputEl: HTMLElement = element.querySelector('input');
             inputEl.dispatchEvent(new Event('focus'));
             expect(component.expand.emit).toHaveBeenCalledWith({
                 expanded: true
@@ -165,7 +178,7 @@ describe('AlfrescoSearchControlComponent', () => {
 
         it('should fire an event when the search box loses focus', () => {
             spyOn(component.expand, 'emit');
-            let inputEl = element.querySelector('input');
+            let inputEl: HTMLElement = element.querySelector('input');
             inputEl.dispatchEvent(new Event('blur'));
             expect(component.expand.emit).toHaveBeenCalledWith({
                 expanded: false
@@ -176,7 +189,7 @@ describe('AlfrescoSearchControlComponent', () => {
             () => {
                 spyOn(component.expand, 'emit');
                 component.expandable = false;
-                let inputEl = element.querySelector('input');
+                let inputEl: HTMLElement = element.querySelector('input');
                 inputEl.dispatchEvent(new Event('focus'));
                 inputEl.dispatchEvent(new Event('blur'));
                 expect(component.expand.emit).not.toHaveBeenCalled();
@@ -199,4 +212,3 @@ describe('AlfrescoSearchControlComponent', () => {
     });
 
 });
-*/

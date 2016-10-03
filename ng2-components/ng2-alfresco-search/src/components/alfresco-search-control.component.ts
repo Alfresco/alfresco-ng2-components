@@ -16,7 +16,7 @@
  */
 
 import { FormControl, Validators } from '@angular/forms';
-import { Component, Input, Output, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, SimpleChanges, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { SearchTermValidator } from './../forms/search-term-validator';
 
@@ -28,7 +28,7 @@ declare let __moduleName: string;
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css']
 })
-export class AlfrescoSearchControlComponent {
+export class AlfrescoSearchControlComponent implements OnInit, OnChanges {
 
     @Input()
     searchTerm = '';
@@ -71,20 +71,31 @@ export class AlfrescoSearchControlComponent {
             this.searchTerm,
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
+    }
 
+    ngOnInit(): void {
         this.searchControl.valueChanges.map(value => this.searchControl.valid ? value : '')
-            .debounceTime(400).distinctUntilChanged().subscribe(
-            (value: string) => {
-                this.autocompleteSearchTerm = value;
-                this.searchValid = this.searchControl.valid;
-                this.searchChange.emit({
-                    value: value,
-                    valid: this.searchValid
-                });
+            .debounceTime(400).distinctUntilChanged().subscribe((value: string) => {
+                this.onSearchTermChange(value);
             }
         );
 
-        translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+        this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.hasOwnProperty('searchTerm')) {
+            this.searchControl.setValue(changes['searchTerm'].currentValue, true);
+        }
+    }
+
+    private onSearchTermChange(value: string): void {
+        this.autocompleteSearchTerm = value;
+        this.searchValid = this.searchControl.valid;
+        this.searchChange.emit({
+            value: value,
+            valid: this.searchValid
+        });
     }
 
     getTextFieldClassName(): string {
