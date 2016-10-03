@@ -15,65 +15,67 @@
  * limitations under the License.
  */
 
-describe('WebscriptComponent', () => {
-    it('should be upgraded', () => {
-        expect(true).toBe(true);
-    });
-});
-
-/*
-import { PLATFORM_PIPES } from '@angular/core';
-import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach, xit } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { WebscriptComponent } from '../src/webscript.component';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
 
 declare let jasmine: any;
 
 describe('Test ng2-alfresco-webscript', () => {
 
-    let webscriptComponentFixture, element, component;
+    let component: any;
+    let fixture: ComponentFixture<WebscriptComponent>;
+    let debug: DebugElement;
+    let element: HTMLElement;
 
-    beforeEachProviders(() => {
-        return [
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            AlfrescoApiService,
-            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true }
-        ];
-    });
-
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(WebscriptComponent)
-            .then(fixture => {
-                webscriptComponentFixture = fixture;
-                element = webscriptComponentFixture.nativeElement;
-                component = webscriptComponentFixture.componentInstance;
-                component.scriptPath = 'fakePath';
-                component.showData = true;
-            });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule,
+                DataTableModule
+            ],
+            declarations: [WebscriptComponent],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService
+            ]
+        }).compileComponents();
     }));
 
+    beforeEach(() => {
+        fixture = TestBed.createComponent(WebscriptComponent);
+        component = fixture.componentInstance;
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        component.scriptPath = 'fakePath';
+        component.showData = true;
+        fixture.detectChanges();
+    });
+
     describe('View', () => {
-        it('webscript html wrapper should be present', () => {
+        it('html wrapper should be present', () => {
             expect(element.querySelector('#webscript-html-wrapper')).toBeDefined();
         });
 
-        it('webscript wrapper should be hide if showData is false', () => {
-            webscriptComponentFixture.detectChanges();
-            expect(element.querySelector('#webscript-html-wrapper')).toBe.undefined;
+        it('wrapper should be hide if showData is false', () => {
+            expect(element.querySelector('#webscript-html-wrapper')).toBeDefined();
         });
 
-        it('webscript JSON datatable wrapper should be present', () => {
-            webscriptComponentFixture.detectChanges();
-
+        it('JSON datatable wrapper should be present', () => {
             expect(element.querySelector('#webscript-json-wrapper')).toBeDefined();
         });
 
-        it('webscript plain text datatable wrapper should be present', () => {
-            webscriptComponentFixture.detectChanges();
-
+        it('plain text datatable wrapper should be present', () => {
             expect(element.querySelector('#webscript-plaintext-wrapper')).toBeDefined();
         });
     });
@@ -88,11 +90,11 @@ describe('Test ng2-alfresco-webscript', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('webscript url should be the one configured by the input param', (done) => {
+        it('url should be the one configured by the input param', (done) => {
             component.scriptPath = 'sample/folder/Company%20Home';
 
             component.ngOnChanges().then(() => {
-                webscriptComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:8080/alfresco/service/sample/folder/Company%20Home');
                 done();
             });
@@ -104,12 +106,12 @@ describe('Test ng2-alfresco-webscript', () => {
             });
         });
 
-        it('webscript TEXT response should be displayed', (done) => {
+        it('TEXT response should be displayed', (done) => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'TEXT';
 
             component.ngOnChanges().then(() => {
-                webscriptComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('#webscript-data-TEXT').innerHTML)
                     .toBe('text test');
                 done();
@@ -122,12 +124,12 @@ describe('Test ng2-alfresco-webscript', () => {
             });
         });
 
-        it('webscript JSON response should be displayed', (done) => {
+        it('JSON response should be displayed', (done) => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'JSON';
 
             component.ngOnChanges().then(() => {
-                webscriptComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(JSON.parse(element.querySelector('#webscript-data-JSON').innerHTML)[0].name).toBe('Name 1');
                 expect(JSON.parse(element.querySelector('#webscript-data-JSON').innerHTML)[1].name).toBe('Name 2');
                 done();
@@ -141,12 +143,12 @@ describe('Test ng2-alfresco-webscript', () => {
             });
         });
 
-        xit('webscript HTML response should be displayed', (done) => {
+        xit('HTML response should be displayed', (done) => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'HTML';
 
             component.ngOnChanges().then(() => {
-                webscriptComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('#webscript-data-HTML').innerHTML)
                     .toBe('&lt;test-element-id&gt;&lt;test-elemt-id&gt;');
                 done();
@@ -159,13 +161,16 @@ describe('Test ng2-alfresco-webscript', () => {
             });
         });
 
-        it('webscript Datatable response should be displayed', (done) => {
+        it('datatable response should be displayed', (done) => {
+            // reset MDL handler
+            window['componentHandler'] = null;
+
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 
             component.ngOnChanges().then(() => {
-                webscriptComponentFixture.detectChanges();
-                expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).not.toBe.undefined;
+                fixture.detectChanges();
+                expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).toBeDefined();
                 done();
             });
 
@@ -194,13 +199,16 @@ describe('Test ng2-alfresco-webscript', () => {
             });
         });
 
-        it('webscript Datatable response should be displayed also if no schema is provided', (done) => {
+        it('datatable response should be displayed also if no schema is provided', (done) => {
+            // reset MDL handler
+            window['componentHandler'] = null;
+
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 
             component.ngOnChanges().then(() => {
-                webscriptComponentFixture.detectChanges();
-                expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).not.toBe.undefined;
+                fixture.detectChanges();
+                expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).toBeDefined();
                 done();
             });
 
@@ -219,4 +227,3 @@ describe('Test ng2-alfresco-webscript', () => {
         });
     });
 });
-*/
