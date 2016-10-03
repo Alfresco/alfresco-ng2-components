@@ -60,7 +60,12 @@ export class BpmUserService {
      * Call js api to get current user profile picture
      */
     callApiGetProfilePicture() {
-        return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
+        try {
+            return this.authService.getAlfrescoApi().activiti.profileApi.getProfilePicture();
+        } catch (exc) {
+            console.error(exc);
+            return null;
+        }
     }
 
     /**

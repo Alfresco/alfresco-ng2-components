@@ -16,8 +16,8 @@
                 for="user-profile">
             <ul class='detail-user-profile-list-mdl mdl-list'>
                 <div *ngIf="ecmUser">
-                    <span class="header-profile"><b>ECM</b></span>
                     <hr class="title-start">
+                    <span class="header-profile"><b>ECM</b></span>
                     <li class="mdl-list__item mdl-list__item--two-line">
                         <span class="mdl-list__item-primary-content">
                           <i class="mdl-list__item-avatar">
@@ -30,14 +30,14 @@
                         </span>
                         <span class="mdl-list__item-secondary-content custom-role-style">
                             <span class="role-label-user">Job Role</span>
-                            {{ecmUser.jobTitle}}
+                            {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }}
                         </span>
                     </li>
                 </div>
-
+                <br>
                 <div *ngIf="bpmUser">
-                    <span class="header-profile"><b>BPM</b></span>
                     <hr class="title-start">
+                    <span class="header-profile"><b>BPM</b></span>
                     <li class="mdl-list__item mdl-list__item--two-line">
                         <span class="mdl-list__item-primary-content">
                           <i class="mdl-list__item-avatar">
