@@ -1,5 +1,0 @@
-{
-    "watch": [
-        "node_modules/ng2-alfresco-tag/dist/**/*.{html,htm,css,js}"
-    ]
-}
