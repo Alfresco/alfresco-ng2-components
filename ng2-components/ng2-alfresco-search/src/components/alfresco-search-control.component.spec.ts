@@ -131,6 +131,80 @@ describe('AlfrescoSearchControlComponent', () => {
         });
     });
 
+    describe('Find as you type', () => {
+
+        let inputEl: HTMLInputElement;
+
+        beforeEach(() => {
+            inputEl = element.querySelector('input');
+        });
+
+        it('should display a find-as-you-type control by default', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            expect(autocomplete).not.toBeNull();
+        });
+
+        it('should make find-as-you-type control hidden initially', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            expect(autocomplete.classList.contains('active')).toBe(false);
+        });
+
+        it('should make find-as-you-type control visible when search box has focus', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            inputEl.dispatchEvent(new Event('focus'));
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            expect(autocomplete.classList.contains('active')).toBe(true);
+        });
+
+        it('should hide find-as-you-type results when the search box loses focus', (done) => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            inputEl.dispatchEvent(new Event('focus'));
+            inputEl.dispatchEvent(new Event('blur'));
+            window.setTimeout(() => {
+                alfrescoSearchControlComponentFixture.detectChanges();
+                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+                expect(autocomplete.classList.contains('active')).toBe(false);
+                done();
+            }, 250);
+        });
+
+        it('should hide find-as-you-type results when escape key pressed', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            inputEl.dispatchEvent(new Event('focus'));
+            inputEl.dispatchEvent(new KeyboardEvent('keyup', {
+                key: 'Escape'
+            }));
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            expect(autocomplete.classList.contains('active')).toBe(false);
+        });
+
+        it('should make find-as-you-type control visible again when down arrow is pressed', () => {
+            alfrescoSearchControlComponentFixture.detectChanges();
+            inputEl.dispatchEvent(new Event('focus'));
+            inputEl.dispatchEvent(new KeyboardEvent('keyup', {
+                key: 'Escape'
+            }));
+            inputEl.dispatchEvent(new KeyboardEvent('keyup', {
+                key: 'ArrowDown'
+            }));
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            expect(autocomplete.classList.contains('active')).toBe(true);
+        });
+
+        it('should NOT display a find-as-you-type control when configured not to', () => {
+            alfrescoSearchControlComponentFixture.componentInstance.autocompleteEnabled = false;
+            alfrescoSearchControlComponentFixture.detectChanges();
+            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+            expect(autocomplete).toBeNull();
+        });
+
+    });
+
     describe('search submit', () => {
 
         it('should fire a search when a term has been entered', () => {

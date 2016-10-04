@@ -59,6 +59,9 @@ export class AlfrescoSearchControlComponent implements OnInit {
     @ViewChild('searchInput', {}) searchInput: ElementRef;
 
     @Input()
+    autocompleteEnabled = true;
+
+    @Input()
     autocompleteSearchTerm = '';
 
     searchActive = false;
@@ -144,6 +147,14 @@ export class AlfrescoSearchControlComponent implements OnInit {
                 expanded: false
             });
         }
+    }
+
+    onEscape(): void {
+        this.searchActive = false;
+    }
+
+    onArrowDown(): void {
+        this.searchActive = true;
     }
 
 }
