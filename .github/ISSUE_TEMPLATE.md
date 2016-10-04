@@ -1,8 +1,8 @@
 <!--
-PLEASE FILL OUT THE FOLLOWING INFORMATION, THIS WILL HELP US TO RESOLVE FASTER YOUR PROBLEM.
+PLEASE FILL OUT THE FOLLOWING INFORMATION, THIS WILL HELP US TO RESOLVE YOUR PROBLEM FASTER.
 
-REMEMBER FOR SUPPORT REQUEST YOU CAN ASK ALSO ON OUR GITTER CHAT: 
-Please before ask on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-components
+REMEMBER FOR SUPPORT REQUESTS YOU CAN ALSO ASK ON OUR GITTER CHAT:
+Please ask before on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-components
 -->
 
 **Type of issue:**  (check with "[x]")
@@ -11,16 +11,16 @@ Please before ask on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-
 - [ ] Support request
 
 **Current behavior:**
-<!-- Describe current behavior. -->
+<!-- Describe the current behavior. -->
 
 **Expected behavior:**
-<!-- Describe expected behavior. -->
+<!-- Describe the expected behavior. -->
 
-**Step to reproduce the issue:**
-<!-- Describe Step to reproduce the issue.-->
+**Steps to reproduce the issue:**
+<!-- Describe the steps to reproduce the issue. -->
 
 **Component name and version:** 
-<!-- Check before if this issue is still present in the most recent version -->
+<!-- Example: ng2-alfresco-login. Check before if this issue is still present in the most recent version -->
 
 **Browser and version:** 
 <!-- [all | Chrome XX | Firefox XX | IE XX | Safari XX | Mobile Chrome XX | Android X.X Web Browser | iOS XX Safari | iOS XX UIWebView | iOS XX WKWebView ] -->
@@ -29,4 +29,4 @@ Please before ask on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-
 <!-- To check the version: node --version -->
 
 **New feature request:**
-<!-- Describe the feature,motivation and the concrete use case (Only in case of new feature request) -->
+<!-- Describe the feature, motivation and the concrete use case (only in case of new feature request) -->
