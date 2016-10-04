@@ -1,4 +1,4 @@
-<form (submit)="onSearch($event)">
+<form #f="ngForm" (ngSubmit)="onSearch(f.value)">
     <div [class]="getTextFieldClassName()">
         <label *ngIf="expandable" class="mdl-button mdl-js-button mdl-button--icon" for="searchControl">
             <i mdl-upgrade class="material-icons">search</i>
@@ -11,9 +11,8 @@
                    data-automation-id="search_input"
                    #searchInput
                    id="searchControl"
-                   ngControl="searchControl"
+                   [formControl]="searchControl"
                    [(ngModel)]="searchTerm"
-                   name="searchControl"
                    (focus)="onFocus($event)"
                    (blur)="onBlur($event)"
                    aria-labelledby="searchLabel">

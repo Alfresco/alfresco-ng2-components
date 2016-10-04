@@ -16,6 +16,7 @@
  */
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { AlfrescoSearchService } from './src/services/alfresco-search.service';
@@ -44,7 +45,9 @@ export const ALFRESCO_SEARCH_PROVIDERS: [any] = [
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
         ...ALFRESCO_SEARCH_DIRECTIVES

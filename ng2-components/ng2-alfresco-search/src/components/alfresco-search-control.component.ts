@@ -16,7 +16,7 @@
  */
 
 import { FormControl, Validators } from '@angular/forms';
-import { Component, Input, Output, OnInit, OnChanges, SimpleChanges, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { SearchTermValidator } from './../forms/search-term-validator';
 
@@ -28,7 +28,7 @@ declare let __moduleName: string;
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css']
 })
-export class AlfrescoSearchControlComponent implements OnInit, OnChanges {
+export class AlfrescoSearchControlComponent implements OnInit {
 
     @Input()
     searchTerm = '';
@@ -74,23 +74,18 @@ export class AlfrescoSearchControlComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        this.searchControl.valueChanges.map(value => this.searchControl.valid ? value : '')
-            .debounceTime(400).distinctUntilChanged().subscribe((value: string) => {
+        this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
+            .subscribe((value: string) => {
                 this.onSearchTermChange(value);
             }
         );
-
         this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.hasOwnProperty('searchTerm')) {
-            this.searchControl.setValue(changes['searchTerm'].currentValue, true);
-        }
-    }
-
     private onSearchTermChange(value: string): void {
+        this.searchActive = true;
         this.autocompleteSearchTerm = value;
+        this.searchControl.setValue(value, true);
         this.searchValid = this.searchControl.valid;
         this.searchChange.emit({
             value: value,
@@ -116,6 +111,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnChanges {
      * @param event Submit event that was fired
      */
     onSearch(event): void {
+        this.searchControl.setValue(this.searchTerm, true);
         if (this.searchControl.valid) {
             this.searchSubmit.emit({
                 value: this.searchTerm

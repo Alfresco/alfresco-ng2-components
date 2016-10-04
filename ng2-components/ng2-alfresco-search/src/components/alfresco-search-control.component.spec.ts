@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AlfrescoSearchControlComponent } from './alfresco-search-control.component';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
@@ -77,17 +76,17 @@ describe('AlfrescoSearchControlComponent', () => {
         });
         alfrescoSearchControlComponentFixture.detectChanges();
         alfrescoSearchControlComponentFixture.componentInstance.searchTerm = 'customSearchTerm';
-        alfrescoSearchControlComponentFixture.componentInstance
-            .ngOnChanges({'searchTerm': new SimpleChange('', 'customSearchTerm')});
+        alfrescoSearchControlComponentFixture.detectChanges();
     });
 
     it('should emit searchChange when search term changed by user', (done) => {
+        alfrescoSearchControlComponentFixture.detectChanges();
         alfrescoSearchControlComponentFixture.componentInstance.searchChange.subscribe(e => {
             expect(e.value).toBe('customSearchTerm211');
             done();
         });
-        alfrescoSearchControlComponentFixture.detectChanges();
         component.searchControl.setValue('customSearchTerm211', true);
+        alfrescoSearchControlComponentFixture.detectChanges();
     });
 
     describe('Component rendering', () => {
