@@ -4,7 +4,7 @@
   "version": "0.3.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "clean": "rimraf node_modules",
+    "clean": "npm install rimraf && rimraf dist node_modules typings",
     "build": "npm run tslint && npm run tsc && npm run licensecheck",
     "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run serve\" ",
     "aws": "node app.js",
