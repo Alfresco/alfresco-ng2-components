@@ -206,7 +206,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             let errorEl = <any> element.querySelector('[data-automation-id="autocomplete_error_message"]');
             expect(resultsEl).toBeNull();
             expect(errorEl).not.toBeNull();
-            expect(errorEl.innerText).toBe('SEARCH.RESULTS.ERROR');
+            expect(errorEl.innerText.trim()).toBe('SEARCH.RESULTS.ERROR');
             done();
         });
 

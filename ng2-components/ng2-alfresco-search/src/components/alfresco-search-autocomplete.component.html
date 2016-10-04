@@ -21,5 +21,13 @@
     </tr>
     </tbody>
 </table>
+<table data-automation-id="autocomplete_error_message" *ngIf="errorMessage"
+       class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <tbody>
+    <tr>
+        <td>{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</td>
+    </tr>
+    </tbody>
+</table>
 <p data-automation-id="autocomplete_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' |
     translate:{errorMessage: errorMessage} }}</p>
