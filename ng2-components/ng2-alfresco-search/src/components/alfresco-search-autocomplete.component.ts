@@ -62,6 +62,8 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
 
     ngOnChanges(changes) {
         if (changes.searchTerm) {
+            this.results = null;
+            this.errorMessage = null;
             this.displaySearchResults(changes.searchTerm.currentValue);
         }
     }
