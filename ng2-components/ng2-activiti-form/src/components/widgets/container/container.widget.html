@@ -59,6 +59,9 @@
                         <div *ngSwitchCase="'date'">
                             <date-widget [field]="field" (fieldChanged)="fieldChanged($event);"></date-widget>
                         </div>
+                        <div *ngSwitchCase="'amount'">
+                            <amount-widget [field]="field" (fieldChanged)="fieldChanged($event);"></amount-widget>
+                        </div>
                         <div *ngSwitchDefault>
                             <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
                         </div>

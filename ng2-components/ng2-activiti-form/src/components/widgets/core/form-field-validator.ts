@@ -38,7 +38,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.PEOPLE,
         FormFieldTypes.FUNCTIONAL_GROUP,
         FormFieldTypes.RADIO_BUTTONS,
-        FormFieldTypes.UPLOAD
+        FormFieldTypes.UPLOAD,
+        FormFieldTypes.AMOUNT
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -79,7 +80,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
 export class NumberFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
-        FormFieldTypes.NUMBER
+        FormFieldTypes.NUMBER,
+        FormFieldTypes.AMOUNT
     ];
 
     static isNumber(value: any): boolean {
@@ -262,7 +264,8 @@ export class MaxLengthFieldValidator implements FormFieldValidator {
 export class MinValueFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
-        FormFieldTypes.NUMBER
+        FormFieldTypes.NUMBER,
+        FormFieldTypes.AMOUNT
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -290,7 +293,8 @@ export class MinValueFieldValidator implements FormFieldValidator {
 export class MaxValueFieldValidator implements FormFieldValidator {
 
     private supportedTypes = [
-        FormFieldTypes.NUMBER
+        FormFieldTypes.NUMBER,
+        FormFieldTypes.AMOUNT
     ];
 
     isSupported(field: FormFieldModel): boolean {
