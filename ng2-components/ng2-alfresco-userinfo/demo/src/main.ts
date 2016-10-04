@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
-import { CoreModule, MDL } from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
@@ -64,7 +64,7 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
         '.p-10 { padding: 10px; }'
     ]
 })
-class UserInfoDemo implements onInit{
+class UserInfoDemo implements OnInit {
 
       public userToLogin: string = 'admin';
       public password: string = 'admin';
