@@ -15,30 +15,32 @@
  * limitations under the License.
  */
 
-/*
-import { describe, expect, it, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
-import { TagService } from './tag.service';
+import { ReflectiveInjector } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService
+} from 'ng2-alfresco-core';
+import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 
 describe('Tag service', () => {
 
-    let service;
+    let service, injector;
 
-    beforeEachProviders(() => {
-
-        return [
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
             AlfrescoApiService,
+            AlfrescoAuthenticationService,
             TagService
-        ];
+        ]);
     });
 
-    beforeEach(inject([TagService], (tagService: TagService) => {
-        service = tagService;
-    }));
+    beforeEach(() => {
+        service = injector.get(TagService);
+    });
 
     describe('Content tests', () => {
 
@@ -114,4 +116,4 @@ describe('Tag service', () => {
         });
     });
 });
-*/
+

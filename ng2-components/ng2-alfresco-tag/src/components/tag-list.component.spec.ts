@@ -15,24 +15,21 @@
  * limitations under the License.
  */
 
-describe('TagList', () => {
-    it('should be upgraded', () => {
-        expect(true).toBe(true);
-    });
-});
 
-/*
-import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TagList } from '../components/tag-list.component';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
-import { TagList } from './tag-list.component';
 
 declare let jasmine: any;
 
-describe('Tag list All ECM', () => {
-
-    let tagListFixture, element, component;
+describe('Test ng2-alfresco-tag  Tag list All ECM', () => {
 
     let dataTag = {
         'list': {
@@ -50,24 +47,36 @@ describe('Tag list All ECM', () => {
         }
     };
 
-    beforeEachProviders(() => {
-        return [
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            AlfrescoApiService,
-            TagService
-        ];
+    let component: any;
+    let fixture: ComponentFixture<TagList>;
+    let debug: DebugElement;
+    let element: HTMLElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [TagList],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                TagService
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TagList);
+        component = fixture.componentInstance;
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(TagList)
-            .then(fixture => {
-                tagListFixture = fixture;
-                element = tagListFixture.nativeElement;
-                component = tagListFixture.componentInstance;
-            });
-    }));
 
     describe('Rendering tests', () => {
 
@@ -83,7 +92,7 @@ describe('Tag list All ECM', () => {
             component.nodeId = 'fake-node-id';
 
             component.resultsEmitter.subscribe(() => {
-                tagListFixture.detectChanges();
+                fixture.detectChanges();
 
                 expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
                 expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
@@ -102,4 +111,3 @@ describe('Tag list All ECM', () => {
         });
     });
 });
-*/
