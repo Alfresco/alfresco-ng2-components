@@ -1,19 +1,13 @@
-# ng2-alfresco-tag - Demo
+# User info demo
 
-* To install dependencies
+Install:
 
-```sh
-$ npm install
+```
+npm install
 ```
 
-* To provide a live demo
+Run the project:
 
-```sh
-$ npm run start
 ```
-
-* To clean npm_modules and typings folder
-
-```sh
-$ npm run clean
+npm start
 ```

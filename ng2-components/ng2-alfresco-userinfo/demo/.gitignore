@@ -1,6 +1,6 @@
-typings/
-node_modules/
+node_modules
 .idea
-dist/
+coverage
+dist
+typings
 !systemjs.config.js
-!browser-sync-config.js
