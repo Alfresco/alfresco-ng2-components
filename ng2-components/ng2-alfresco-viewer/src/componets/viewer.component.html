@@ -6,8 +6,7 @@
     <div id="viewer-main-container" class="all-space" [ngClass]="{'viewer-overlay-view': overlayMode }">
 
         <!-- Start Layout -->
-        <div mdl
-             [ngClass]="{'mdl-layout mdl-js-layout mdl-layout--fixed-header': overlayMode, 'all-space': !overlayMode}">
+        <div [ngClass]="{'mdl-layout mdl-js-layout mdl-layout--fixed-header': overlayMode, 'all-space': !overlayMode}">
 
             <header *ngIf="overlayMode" class="mdl-layout__header">
                 <div class="mdl-layout__header-row">

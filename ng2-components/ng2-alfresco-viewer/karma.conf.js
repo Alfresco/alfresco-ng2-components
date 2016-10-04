@@ -44,18 +44,14 @@ module.exports = function (config) {
       {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
 
       // ng2-components
-      { pattern: 'node_modules/ng2-activiti-form/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-activiti-processlist/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-activiti-tasklist/dist/**/*.js', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-documentlist/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-login/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-search/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-tag/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-upload/dist/**/*.js', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-alfresco-viewer/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-webscript/dist/**/*.js', included: false, served: true, watched: false },
+
+      // pdf-js
+      { pattern: 'node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false },
+      { pattern: 'node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false },
+      { pattern: 'node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false },
+      { pattern: 'src/assets/fake-test-file.pdf', included: false, watched: true, served: true },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},

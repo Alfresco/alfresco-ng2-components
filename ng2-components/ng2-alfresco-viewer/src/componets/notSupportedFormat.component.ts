@@ -17,10 +17,8 @@
 
 import { Component, Input } from '@angular/core';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'not-supported-format',
     templateUrl: './notSupportedFormat.component.html',
     styleUrls: ['./notSupportedFormat.component.css']

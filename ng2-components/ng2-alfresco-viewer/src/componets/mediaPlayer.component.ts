@@ -16,10 +16,9 @@
  */
 
 import { Component, Input } from '@angular/core';
-declare let __moduleName: string;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'media-player',
     templateUrl: './mediaPlayer.component.html',
     styleUrls: ['./mediaPlayer.component.css']
