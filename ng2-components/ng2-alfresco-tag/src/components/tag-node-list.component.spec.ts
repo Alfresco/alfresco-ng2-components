@@ -15,18 +15,21 @@
  * limitations under the License.
  */
 
-/*
-import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TagNodeList } from '../components/tag-node-list.component';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
-import { TagNodeList } from './tag-node-list.component';
 
 declare let jasmine: any;
 
 describe('Tag relative node list', () => {
 
-    let tagNodeListFixture, element, component;
 
     let dataTag = {
         'list': {
@@ -44,24 +47,35 @@ describe('Tag relative node list', () => {
         }
     };
 
-    beforeEachProviders(() => {
-        return [
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            AlfrescoApiService,
-            TagService
-        ];
-    });
+    let component: any;
+    let fixture: ComponentFixture<TagNodeList>;
+    let debug: DebugElement;
+    let element: HTMLElement;
 
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(TagNodeList)
-            .then(fixture => {
-                tagNodeListFixture = fixture;
-                element = tagNodeListFixture.nativeElement;
-                component = tagNodeListFixture.componentInstance;
-            });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [TagNodeList],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                TagService
+            ]
+        }).compileComponents();
     }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TagNodeList);
+        component = fixture.componentInstance;
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
     describe('Rendering tests', () => {
 
@@ -77,7 +91,7 @@ describe('Tag relative node list', () => {
             component.nodeId = 'fake-node-id';
 
             component.resultsEmitter.subscribe(() => {
-                tagNodeListFixture.detectChanges();
+                fixture.detectChanges();
 
                 expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
                 expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
@@ -103,8 +117,10 @@ describe('Tag relative node list', () => {
             component.nodeId = 'fake-node-id';
 
             component.resultsEmitter.subscribe(() => {
-                tagNodeListFixture.detectChanges();
-                element.querySelector('#tag_delete_0').click();
+                fixture.detectChanges();
+
+                let deleteButton: any = element.querySelector('#tag_delete_0');
+                deleteButton.click();
 
                 expect(jasmine.Ajax.requests.mostRecent().url).
                 toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
@@ -122,4 +138,4 @@ describe('Tag relative node list', () => {
         });
     });
 });
-*/
+

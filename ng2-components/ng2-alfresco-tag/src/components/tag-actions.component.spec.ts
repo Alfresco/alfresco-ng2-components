@@ -15,18 +15,50 @@
  * limitations under the License.
  */
 
-/*
-import { it, describe, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TagActionsComponent } from '../components/tag-actions.component';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
-import { TagActionsComponent } from './tag-actions.component';
 
 declare let jasmine: any;
 
-describe('Tag actions list', () => {
+describe('Test ng2-alfresco-tag Tag actions list', () => {
 
-    let tagActionsListFixture, element, component;
+    let component: any;
+    let fixture: ComponentFixture<TagActionsComponent>;
+    let debug: DebugElement;
+    let element: HTMLElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [TagActionsComponent],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                TagService
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TagActionsComponent);
+        component = fixture.componentInstance;
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
     let dataTag = {
         'list': {
@@ -45,25 +77,6 @@ describe('Tag actions list', () => {
         }
     };
 
-    beforeEachProviders(() => {
-        return [
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            AlfrescoApiService,
-            TagService
-        ];
-    });
-
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(TagActionsComponent)
-            .then(fixture => {
-                tagActionsListFixture = fixture;
-                element = tagActionsListFixture.nativeElement;
-                component = tagActionsListFixture.componentInstance;
-            });
-    }));
-
     describe('Rendering tests', () => {
 
         beforeEach(() => {
@@ -78,7 +91,7 @@ describe('Tag actions list', () => {
             component.nodeId = 'fake-node-id';
 
             component.resultsEmitter.subscribe(() => {
-                tagActionsListFixture.detectChanges();
+                fixture.detectChanges();
 
                 expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
                 expect(element.querySelector('#tag_name_1').innerHTML).toBe('test2');
@@ -104,12 +117,15 @@ describe('Tag actions list', () => {
             component.nodeId = 'fake-node-id';
 
             component.resultsEmitter.subscribe(() => {
-                tagActionsListFixture.detectChanges();
-                element.querySelector('#tag_delete_0').click();
-                tagActionsListFixture.detectChanges();
+                fixture.detectChanges();
 
-                expect(jasmine.Ajax.requests.at(1).url).
-                toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
+                let deleteButton: any = element.querySelector('#tag_delete_0');
+                deleteButton.click();
+
+                fixture.detectChanges();
+
+                expect(jasmine.Ajax.requests.at(1).url)
+                    .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
                 expect(jasmine.Ajax.requests.at(1).method).toBe('DELETE');
                 done();
             });
@@ -127,13 +143,14 @@ describe('Tag actions list', () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'fake-tag-name';
 
-            tagActionsListFixture.detectChanges();
+            fixture.detectChanges();
 
             component.addEmitter.subscribe(() => {
                 done();
             });
 
-            element.querySelector('#add-tag').click();
+            let addButton: any = element.querySelector('#add-tag');
+            addButton.click();
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
@@ -141,4 +158,4 @@ describe('Tag actions list', () => {
         });
     });
 });
-*/
+
