@@ -203,9 +203,11 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
                 let zoomInButton: any = element.querySelector('#viewer-zoom-in-button');
 
                 component.ngOnChanges().then(() => {
+                    let zoomBefore = component.currentScale;
                     zoomInButton.click();
                     expect(component.currentScaleMode).toBe('auto');
-                    expect(component.currentScale).toBe(0.9);
+                    let currentZoom = component.currentScale;
+                    expect(zoomBefore < currentZoom).toBe(true);
                     done();
                 });
             });
