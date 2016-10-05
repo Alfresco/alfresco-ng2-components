@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit } from '@angular/core';
-import { TabModel } from './../core/index';
+import { Component, Input, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { TabModel, FormFieldModel } from './../core/index';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -30,6 +30,9 @@ export class TabsWidget implements AfterViewInit {
 
     @Input()
     tabs: TabModel[] = [];
+
+    @Output()
+    formTabChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
     hasTabs() {
         return this.tabs && this.tabs.length > 0;
@@ -47,4 +50,9 @@ export class TabsWidget implements AfterViewInit {
         }
         return false;
     }
+
+    tabChanged( field: FormFieldModel ) {
+         this.formTabChanged.emit(field);
+    }
+
 }

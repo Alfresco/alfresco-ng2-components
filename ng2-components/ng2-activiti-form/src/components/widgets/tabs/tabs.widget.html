@@ -13,8 +13,9 @@
              [attr.id]="tab.id">
             <container-widget
                 *ngFor="let field of tab.fields"
-                [content]="field">
+                [content]="field" (formValueChanged)="tabChanged($event);">
             </container-widget>
         </div>
     </div>
 </div>
+-

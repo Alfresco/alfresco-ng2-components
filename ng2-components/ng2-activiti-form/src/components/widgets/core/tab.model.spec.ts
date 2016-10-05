@@ -31,6 +31,7 @@ describe('TabModel', () => {
         let model = new TabModel(null, json);
         expect(model.id).toBe(json.id);
         expect(model.title).toBe(json.title);
+        expect(model.isVisible).toBe(true);
         expect(model.visibilityCondition).toBe(json.visibilityCondition);
     });
 
@@ -38,6 +39,8 @@ describe('TabModel', () => {
         let model = new TabModel(null, null);
         expect(model.id).toBeUndefined();
         expect(model.title).toBeUndefined();
+        expect(model.isVisible).toBeDefined();
+        expect(model.isVisible).toBe(true);
         expect(model.visibilityCondition).toBeUndefined();
     });
 

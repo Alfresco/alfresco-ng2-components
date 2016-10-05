@@ -10,7 +10,7 @@
             </div>
             <div class="mdl-card__media">
                 <div *ngIf="form.hasTabs()">
-                    <tabs-widget [tabs]="form.tabs"></tabs-widget>
+                    <tabs-widget [tabs]="form.tabs" (formTabChanged)="checkVisibility($event);"></tabs-widget>
                 </div>
 
                 <div *ngIf="!form.hasTabs() && form.hasFields()">

@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { FormModel, FormFieldModel } from '../components/widgets/core/index';
+import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 
@@ -33,6 +33,9 @@ export class WidgetVisibilityService {
               }
 
     public updateVisibilityForForm(form: FormModel) {
+     if ( form && form.tabs && form.tabs.length > 0) {
+          form.tabs.map( tabModel => this.refreshVisibilityForTab(tabModel) );
+     }
      if ( form && form.fields.length > 0 ) {
            form.fields
                        .map(
@@ -55,16 +58,22 @@ export class WidgetVisibilityService {
         }
     }
 
+    public refreshVisibilityForTab(tab: TabModel) {
+        if ( tab.visibilityCondition ) {
+            tab.isVisible = this.getVisiblityForField(tab.form, tab.visibilityCondition);
+        }
+    }
+
     public getVisiblityForField(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
         let isLeftFieldPresent = visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId;
-        if ( !isLeftFieldPresent ) {
+        if ( !isLeftFieldPresent || isLeftFieldPresent === 'null' ) {
             return true;
         }else {
             return this.evaluateVisibilityForField(form, visibilityObj);
         }
     }
 
-    private evaluateVisibilityForField(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
+    evaluateVisibilityForField(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
        let leftValue = this.getLeftValue(form, visibilityObj);
        let rightValue = this.getRightValue(form, visibilityObj);
        let actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
@@ -79,14 +88,14 @@ export class WidgetVisibilityService {
        }
     }
 
-    private getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
+    getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         if ( visibilityObj.leftRestResponseId ) {
             return this.getValueFromVariable(form, visibilityObj.leftRestResponseId, this.processVarList);
         }
         return this.getValueOField(form, visibilityObj.leftFormFieldId);
     }
 
-    private getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
+    getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         let valueFound = null;
         if ( visibilityObj.rightRestResponseId ) {
             valueFound = this.getValueFromVariable(form, visibilityObj.rightRestResponseId, this.processVarList);
@@ -98,14 +107,14 @@ export class WidgetVisibilityService {
         return valueFound;
     }
 
-    private getValueOField(form: FormModel, field: string) {
+    getValueOField(form: FormModel, field: string) {
             let value = form.values[field] ?
                                     form.values[field] :
                                     this.getFormValueByName(form, field);
             return value;
     }
 
-    private getFormValueByName(form: FormModel, name: string) {
+    getFormValueByName(form: FormModel, name: string) {
        for (let columns of form.json.fields) {
           for ( let i in columns.fields ) {
              if ( columns.fields.hasOwnProperty( i ) ) {
@@ -118,7 +127,7 @@ export class WidgetVisibilityService {
        }
     }
 
-    private getValueFromVariable( form: FormModel, name: string, processVarList: TaskProcessVariableModel[] ) {
+    getValueFromVariable( form: FormModel, name: string, processVarList: TaskProcessVariableModel[] ) {
         return this.getFormVariableValue(form, name) ||
                this.getProcessVariableValue(name, processVarList);
     }
@@ -141,30 +150,30 @@ export class WidgetVisibilityService {
         }
     }
 
-    private evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
+    evaluateLogicalOperation(logicOp, previousValue, newValue): boolean {
         switch ( logicOp ) {
             case 'and':
                 return previousValue && newValue;
             case 'or' :
                 return previousValue || newValue;
-            case 'and not':
+            case 'and-not':
                 return previousValue && !newValue;
-            case 'or not':
+            case 'or-not':
                 return previousValue || !newValue;
             default:
-                console.error( 'NO valid operation!' );
+                console.error( 'NO valid operation! wrong op request : ' + logicOp );
                 break;
         }
     }
 
-    private evaluateCondition(leftValue, rightValue, operator): boolean {
+    evaluateCondition(leftValue, rightValue, operator): boolean {
         switch ( operator ) {
             case '==':
-                return leftValue + '' === rightValue;
+                return String(leftValue) === String(rightValue);
             case '<':
                 return leftValue < rightValue;
             case '!=':
-                return leftValue + '' !== rightValue;
+                return String(leftValue) !== String(rightValue);
             case '>':
                 return leftValue > rightValue;
             case '>=':
