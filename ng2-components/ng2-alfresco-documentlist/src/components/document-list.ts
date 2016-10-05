@@ -42,10 +42,9 @@ import {
 } from './../data/share-datatable-adapter';
 
 declare var componentHandler;
-declare let __moduleName: string;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html'
@@ -58,7 +57,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     DEFAULT_ROOT_FOLDER: string = '/';
 
-    baseComponentPath = __moduleName.replace('/components/document-list.js', '');
+    baseComponentPath = module.id.replace('/components/document-list.js', '');
 
     @Input()
     fallbackThubnail: string = this.baseComponentPath + '/img/ft_ic_miscellaneous.svg';

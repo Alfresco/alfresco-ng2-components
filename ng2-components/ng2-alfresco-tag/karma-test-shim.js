@@ -54,8 +54,7 @@ var map = {
     'ng2-translate': 'npm:ng2-translate',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
-    'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
-    'ng2-alfresco-tag': 'npm:ng2-alfresco-tag/dist'
+    'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist'
 };
 
 var packages = {
