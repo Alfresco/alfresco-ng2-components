@@ -147,11 +147,12 @@ describe('AlfrescoSearchComponent', () => {
         expect(search.searchTerm).toBeNull();
     });
 
-    // it('should setup i18n folder', () => {
-    //     let translationService = alfrescoSearchComponentFixture.debugElement.injector.get(AlfrescoTranslationService);
-    //     spyOn(translationService, 'addTranslationFolder');
-    //     expect(translationService.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
-    // });
+    it('should setup i18n folder', () => {
+        let translationService = alfrescoSearchComponentFixture.debugElement.injector.get(AlfrescoTranslationService);
+        spyOn(translationService, 'addTranslationFolder');
+        alfrescoSearchComponentFixture.detectChanges();
+        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
+    });
 
     describe('Rendering search results', () => {
 

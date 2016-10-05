@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnChanges, Output } from '@angular/core';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -28,14 +28,14 @@ declare let __moduleName: string;
     templateUrl: './alfresco-search-autocomplete.component.html',
     styleUrls: ['./alfresco-search-autocomplete.component.css']
 })
-export class AlfrescoSearchAutocompleteComponent implements OnChanges {
+export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     baseComponentPath = __moduleName.replace('/components/alfresco-search-autocomplete.component.js', '');
 
     @Input()
     searchTerm: string = '';
 
-    results: any;
+    results: any = null;
 
     errorMessage;
 
@@ -54,10 +54,12 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private alfrescoThumbnailService: AlfrescoThumbnailService) {
-        if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+    }
+
+    ngOnInit(): void {
+        if (this.translate) {
+            this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
         }
-        this.results = null;
     }
 
     ngOnChanges(changes) {

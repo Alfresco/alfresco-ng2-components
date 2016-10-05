@@ -116,14 +116,12 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         });
     }));
 
-    // it('should setup i18n folder', () => {
-    //     let translation = jasmine.createSpyObj('AlfrescoTranslationService', [
-    //         'addTranslationFolder'
-    //     ]);
-    //     let search = new AlfrescoSearchAutocompleteComponent(null, translation, null);
-    //     expect(search).toBeDefined();
-    //
-    // });
+    it('should setup i18n folder', () => {
+        let translationService = alfrescoSearchComponentFixture.debugElement.injector.get(AlfrescoTranslationService);
+        spyOn(translationService, 'addTranslationFolder');
+        alfrescoSearchComponentFixture.detectChanges();
+        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
+    });
 
     it('should display search results when a search term is provided', () => {
         let searchTerm = { currentValue: 'customSearchTerm', previousValue: ''};

@@ -45,7 +45,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     @Output()
     errorEmitter = new EventEmitter();
 
-    results: any;
+    results: any = null;
 
     errorMessage;
 
@@ -55,15 +55,12 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService,
                 @Optional() private route: ActivatedRoute) {
-
-        if (translate !== null) {
-            translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
-        }
-
-        this.results = null;
     }
 
     ngOnInit(): void {
+        if (this.translate !== null) {
+            this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+        }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
                 this.searchTerm = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
