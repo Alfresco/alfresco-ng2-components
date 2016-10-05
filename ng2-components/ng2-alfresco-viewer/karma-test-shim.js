@@ -54,8 +54,7 @@ var map = {
     'ng2-translate': 'npm:ng2-translate',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
-    'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
-    'ng2-alfresco-viewer': 'npm:ng2-alfresco-viewer/dist',
+    'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist'
 };
 
 var packages = {
@@ -64,8 +63,7 @@ var packages = {
     'ng2-translate': { defaultExtension: 'js' },
 
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-    'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-    'ng2-alfresco-viewer': { main: './index.js', defaultExtension: 'js'}
+    'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'}
 };
 
 var config = {
