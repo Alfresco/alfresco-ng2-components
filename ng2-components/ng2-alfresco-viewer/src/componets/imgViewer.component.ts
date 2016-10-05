@@ -17,10 +17,8 @@
 
 import { Component, Input } from '@angular/core';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'img-viewer',
     templateUrl: './imgViewer.component.html',
     styleUrls: ['./imgViewer.component.css']

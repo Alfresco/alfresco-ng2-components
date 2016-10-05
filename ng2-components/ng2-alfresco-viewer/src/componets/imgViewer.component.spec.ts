@@ -15,23 +15,45 @@
  * limitations under the License.
  */
 
-/*
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ImgViewerComponent } from './imgViewer.component';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 
-describe('Img viewer component ', () => {
+describe('Test ng2-alfresco-viewer Img viewer component ', () => {
 
-    let imgViewerComponentFixture, element, component;
+    let component: any;
+    let fixture: ComponentFixture<ImgViewerComponent>;
+    let debug: DebugElement;
+    let element: HTMLElement;
 
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(ImgViewerComponent)
-            .then(fixture => {
-                imgViewerComponentFixture = fixture;
-                element = fixture.nativeElement;
-                component = fixture.componentInstance;
-            });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [ImgViewerComponent],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService
+            ]
+        }).compileComponents();
     }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ImgViewerComponent);
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
     it('If no url is passed should thrown an error', () => {
         expect(() => {
@@ -48,8 +70,8 @@ describe('Img viewer component ', () => {
 
     it('The file Name should be present in the alt attribute', () => {
         component.nameFile = 'fake-name';
-        imgViewerComponentFixture.detectChanges();
+        fixture.detectChanges();
         expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
     });
 });
-*/
+

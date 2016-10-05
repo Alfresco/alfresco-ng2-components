@@ -15,55 +15,67 @@
  * limitations under the License.
  */
 
-describe('ViewerComponent', () => {
-    it('should be upgraded', () => {
-        expect(true).toBe(true);
-    });
-});
-
-/*
-import { beforeEachProviders } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { PdfViewerComponent } from './pdfViewer.component';
+import { NotSupportedFormat } from './notSupportedFormat.component';
+import { MediaPlayerComponent } from './mediaPlayer.component';
+import { ImgViewerComponent } from './imgViewer.component';
+import { RenderingQueueServices } from '../services/rendering-queue.services';
 import { ViewerComponent } from './viewer.component';
 import { EventMock } from '../assets/event.mock';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
-import { RenderingQueueServices } from '../services/rendering-queue.services';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 
-declare let AlfrescoApi: any;
+declare let jasmine: any;
 
-describe('ViewerComponent', () => {
+describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
-    let viewerComponentFixture, element, component;
-    let apiService: AlfrescoApiService;
+    let component: any;
+    let fixture: ComponentFixture<ViewerComponent>;
+    let debug: DebugElement;
+    let element: HTMLElement;
 
-    beforeEachProviders(() => {
-        return [
-            AlfrescoApiService,
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            RenderingQueueServices
-        ];
-    });
-
-    beforeEach(inject([TestComponentBuilder, AlfrescoApiService], (tcb: TestComponentBuilder, api: AlfrescoApiService) => {
-        apiService = api;
-        apiService.setInstance(new AlfrescoApi({}));
-
-        return tcb
-            .createAsync(ViewerComponent)
-            .then(fixture => {
-                viewerComponentFixture = fixture;
-                element = viewerComponentFixture.nativeElement;
-                component = viewerComponentFixture.componentInstance;
-
-                jasmine.Ajax.install();
-
-                component.urlFile = 'base/src/assets/fake-test-file.pdf';
-                component.overlayMode = true;
-
-                viewerComponentFixture.detectChanges();
-            });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [
+                ViewerComponent,
+                PdfViewerComponent,
+                NotSupportedFormat,
+                MediaPlayerComponent,
+                ImgViewerComponent
+            ],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                RenderingQueueServices
+            ]
+        }).compileComponents();
     }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ViewerComponent);
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+
+        jasmine.Ajax.install();
+
+        component.showToolbar = true;
+        component.urlFile = 'base/src/assets/fake-test-file.pdf';
+        fixture.detectChanges();
+
+        fixture.detectChanges();
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
@@ -75,7 +87,7 @@ describe('ViewerComponent', () => {
 
             beforeEach(() => {
                 component.overlayMode = true;
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
             });
 
             it('shadow overlay should be present if is overlay mode', () => {
@@ -88,7 +100,7 @@ describe('ViewerComponent', () => {
 
             it('Name File should be present if is overlay mode ', () => {
                 component.ngOnChanges().then(() => {
-                    viewerComponentFixture.detectChanges();
+                    fixture.detectChanges();
                     expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-test-file.pdf');
                 });
             });
@@ -98,19 +110,20 @@ describe('ViewerComponent', () => {
             });
 
             it('Click on close button should hide the viewer', () => {
-                element.querySelector('#viewer-close-button').click();
-                viewerComponentFixture.detectChanges();
+                let closebutton: any = element.querySelector('#viewer-close-button');
+                closebutton.click();
+                fixture.detectChanges();
                 expect(element.querySelector('#viewer-main-container')).toBeNull();
             });
 
             it('Esc button should hide the viewer', () => {
                 EventMock.keyDown(27);
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('#viewer-main-container')).toBeNull();
             });
 
             it('all-space class should not be present if is in overlay mode', () => {
-                expect(element.querySelector('#viewer').getAttribute('class')).toBeNull();
+                expect(element.querySelector('#viewer').getAttribute('class')).toEqual('');
             });
         });
 
@@ -118,7 +131,7 @@ describe('ViewerComponent', () => {
 
             beforeEach(() => {
                 component.overlayMode = false;
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
             });
 
             it('header should be NOT be present if is not overlay mode', () => {
@@ -131,7 +144,7 @@ describe('ViewerComponent', () => {
 
             it('Esc button should not  hide the viewer if is not overlay mode', () => {
                 EventMock.keyDown(27);
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('#viewer-main-container')).not.toBeNull();
             });
 
@@ -171,18 +184,6 @@ describe('ViewerComponent', () => {
             }).not.toThrow();
         });
 
-        it('If FileNodeId is present the node api should be called', () => {
-            component.showViewer = true;
-            component.fileNodeId = 'file-node-id';
-            component.urlFile = undefined;
-
-            let alfrescoApi = apiService.getInstance();
-            spyOn(alfrescoApi.nodes, 'getNodeInfo').and.stub();
-
-            component.ngOnChanges();
-            expect(alfrescoApi.nodes.getNodeInfo).toHaveBeenCalledWith(component.fileNodeId);
-        });
-
         it('showViewer default value should be true', () => {
             expect(component.showViewer).toBe(true);
         });
@@ -190,7 +191,7 @@ describe('ViewerComponent', () => {
         it('if showViewer value is false the viewer should be hide', () => {
             component.showViewer = false;
 
-            viewerComponentFixture.detectChanges();
+            fixture.detectChanges();
             expect(element.querySelector('#viewer-main-container')).toBeNull();
         });
     });
@@ -200,7 +201,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('pdf-viewer')).not.toBeNull();
                 done();
             });
@@ -210,7 +211,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-url-file.png';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('#viewer-image')).not.toBeNull();
                 done();
             });
@@ -220,7 +221,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-url-file.mp4';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('media-player')).not.toBeNull();
                 done();
             });
@@ -230,7 +231,7 @@ describe('ViewerComponent', () => {
             component.urlFile = 'fake-url-file.unsupported';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('not-supported-format')).not.toBeNull();
                 done();
             });
@@ -243,7 +244,7 @@ describe('ViewerComponent', () => {
             component.mimeType = 'application/pdf';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('pdf-viewer')).not.toBeNull();
                 done();
             });
@@ -255,7 +256,7 @@ describe('ViewerComponent', () => {
             component.mimeType = 'application/pdf';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('pdf-viewer')).not.toBeNull();
                 done();
             });
@@ -266,7 +267,7 @@ describe('ViewerComponent', () => {
             component.mimeType = 'image/png';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('#viewer-image')).not.toBeNull();
                 done();
             });
@@ -277,7 +278,7 @@ describe('ViewerComponent', () => {
             component.mimeType = 'image/png';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('#viewer-image')).not.toBeNull();
                 done();
             });
@@ -288,8 +289,7 @@ describe('ViewerComponent', () => {
             component.mimeType = 'video/mp4';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
-                console.log(element.querySelector('media-player'));
+                fixture.detectChanges();
                 expect(element.querySelector('media-player')).not.toBeNull();
                 done();
             });
@@ -300,7 +300,7 @@ describe('ViewerComponent', () => {
             component.mimeType = 'video/mp4';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('media-player')).not.toBeNull();
                 done();
             });
@@ -311,11 +311,10 @@ describe('ViewerComponent', () => {
             component.mimeType = 'video/avi';
 
             component.ngOnChanges().then(() => {
-                viewerComponentFixture.detectChanges();
+                fixture.detectChanges();
                 expect(element.querySelector('media-player')).toBeNull();
                 done();
             });
         });
     });
 });
-*/

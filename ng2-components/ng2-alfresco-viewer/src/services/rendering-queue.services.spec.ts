@@ -15,27 +15,27 @@
  * limitations under the License.
  */
 
-/*
-import { it, describe, inject, beforeEach, beforeEachProviders, expect } from '@angular/core/testing';
+import { ReflectiveInjector } from '@angular/core';
 import { RenderingQueueServices } from './rendering-queue.services';
 
+declare let jasmine: any;
 
 describe('RenderingQueueServices', () => {
 
-    let service;
+    let service, injector;
 
-    beforeEachProviders(() => {
-        return [
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
             RenderingQueueServices
-        ];
+        ]);
     });
 
-    beforeEach(inject([RenderingQueueServices], (renderingQueueServices: RenderingQueueServices) => {
-        service = renderingQueueServices;
-    }));
+    beforeEach(() => {
+        service = injector.get(RenderingQueueServices);
+    });
 
     it('Simple import example', () => {
         expect(service.CLEANUP_TIMEOUT).toEqual(30000);
     });
 });
-*/
+

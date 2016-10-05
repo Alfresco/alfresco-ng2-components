@@ -28,7 +28,7 @@ import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 
-describe('Tag relative node list', () => {
+describe('Test ng2-alfresco-tag Tag relative node list', () => {
 
 
     let dataTag = {

@@ -29,7 +29,7 @@ import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
 
-describe('Test ng2-alfresco-tag  Tag list All ECM', () => {
+describe('Test ng2-alfresco-tag Tag list All ECM', () => {
 
     let dataTag = {
         'list': {

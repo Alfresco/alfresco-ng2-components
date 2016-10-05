@@ -15,24 +15,45 @@
  * limitations under the License.
  */
 
-/*
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { NotSupportedFormat } from './notSupportedFormat.component';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 
-describe('Not Supported Format View', () => {
+describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
 
-    let notSupportedFixture, element, component;
+    let component: any;
+    let fixture: ComponentFixture<NotSupportedFormat>;
+    let debug: DebugElement;
+    let element: HTMLElement;
 
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(NotSupportedFormat)
-            .then(fixture => {
-                notSupportedFixture = fixture;
-                element = fixture.nativeElement;
-                component = fixture.componentInstance;
-                fixture.detectChanges();
-            });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [NotSupportedFormat],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService
+            ]
+        }).compileComponents();
     }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(NotSupportedFormat);
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
     describe('View', () => {
 
@@ -42,7 +63,7 @@ describe('Not Supported Format View', () => {
 
         it('should display the name of the file', () => {
             component.nameFile = 'Example Content.xls';
-            notSupportedFixture.detectChanges();
+            fixture.detectChanges();
             expect(element.querySelector('h4 span').innerHTML).toEqual('Example Content.xls');
         });
     });
@@ -51,11 +72,10 @@ describe('Not Supported Format View', () => {
         it('Click on Download button should call download method', () => {
             spyOn(window, 'open');
 
-            let downloadButton = element.querySelector('#viewer-download-button');
+            let downloadButton: any = element.querySelector('#viewer-download-button');
             downloadButton.click();
 
             expect(window.open).toHaveBeenCalled();
         });
     });
 });
-*/

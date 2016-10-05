@@ -20,10 +20,8 @@ import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-viewer',
     templateUrl: './viewer.component.html',
     styleUrls: ['./viewer.component.css']

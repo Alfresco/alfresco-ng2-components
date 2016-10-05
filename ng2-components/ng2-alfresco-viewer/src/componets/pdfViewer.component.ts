@@ -19,10 +19,9 @@ import { Component, Input, HostListener } from '@angular/core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
 declare let PDFJS: any;
-declare let __moduleName: string;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'pdf-viewer',
     templateUrl: './pdfViewer.component.html',
     styleUrls: ['./pdfViewer.component.css', './pdfViewerHost.component.css'],
