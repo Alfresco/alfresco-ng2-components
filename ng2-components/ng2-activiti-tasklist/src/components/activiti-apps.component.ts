@@ -24,11 +24,10 @@ import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-apps',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: 'activiti-apps.component.html',
     styleUrls: ['./activiti-apps.component.css', './activiti-apps-grid.component.css'],
     providers: [ActivitiTaskListService]

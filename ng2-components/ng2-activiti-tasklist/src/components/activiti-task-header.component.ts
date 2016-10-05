@@ -20,11 +20,10 @@ import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-a
 import { TaskDetailsModel } from '../models/task-details.model';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-task-header',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css']
 })

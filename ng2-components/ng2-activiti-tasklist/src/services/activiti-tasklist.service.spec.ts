@@ -15,10 +15,13 @@
  * limitations under the License.
  */
 
-/*
-import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
+import { ReflectiveInjector } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService
+} from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { UserTaskFilterRepresentationModel, AppDefinitionRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
@@ -27,8 +30,6 @@ declare let AlfrescoApi: any;
 declare let jasmine: any;
 
 describe('ActivitiTaskListService', () => {
-    let service: any;
-
     let fakeEmptyFilters = {
         size: 0, total: 0, start: 0,
         data: [ ]
@@ -129,19 +130,21 @@ describe('ActivitiTaskListService', () => {
         resolve(fakeAppFilter);
     });
 
-    beforeEachProviders(() => {
-        return [
+    let service, injector;
+
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
             ActivitiTaskListService,
             AlfrescoSettingsService,
             AlfrescoApiService,
             AlfrescoAuthenticationService
-        ];
+        ]);
     });
 
-    beforeEach(inject([ActivitiTaskListService], (activitiTaskListService: ActivitiTaskListService) => {
+    beforeEach(() => {
+        service = injector.get(ActivitiTaskListService);
         jasmine.Ajax.install();
-        service = activitiTaskListService;
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
@@ -512,4 +515,4 @@ describe('ActivitiTaskListService', () => {
     });
 
 });
-*/
+
