@@ -22,11 +22,10 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
 import { UserTaskFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-tasklist',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-tasklist.component.html',
     styleUrls: ['./activiti-tasklist.component.css']
 })

@@ -23,11 +23,10 @@ import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-comments',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],
     providers: [ActivitiTaskListService]

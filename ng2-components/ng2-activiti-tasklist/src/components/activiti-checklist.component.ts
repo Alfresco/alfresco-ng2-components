@@ -23,11 +23,10 @@ import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-checklist',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-checklist.component.html',
     styleUrls: ['./activiti-checklist.component.css'],
     providers: [ActivitiTaskListService]

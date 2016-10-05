@@ -21,11 +21,10 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-start-task',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-start-task.component.html',
     styleUrls: ['./activiti-start-task.component.css']
 })

@@ -22,11 +22,10 @@ import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-people',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })

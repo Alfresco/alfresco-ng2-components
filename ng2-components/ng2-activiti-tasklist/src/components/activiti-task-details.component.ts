@@ -25,11 +25,10 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-task-details',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css']
 })
