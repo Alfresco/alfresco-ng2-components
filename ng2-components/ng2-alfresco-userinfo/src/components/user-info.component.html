@@ -1,0 +1,63 @@
+<div id="img_container">
+    <span *ngIf="ecmUser">{{ecmUser.firstName || ecmUser.lastName}}</span>
+    <span *ngIf="bpmUser && !ecmUser">
+        {{ formatValue(bpmUser.firstName) ||
+           formatValue(bpmUser.lastName)  ||
+           formatValue(bpmUser.fullName) }}
+    </span>
+    <div class="button-profile" id="user-profile" data-automation-id="user-profile">
+                <img id="logged-user-img"
+                     [src]="getUserAvatar()"
+                     class="profile-image"/>
+    </div>
+    <div class="user-profile-list-mdl
+                mdl-menu mdl-menu--bottom-right
+                mdl-js-menu mdl-js-ripple-effect"
+                for="user-profile">
+            <ul class='detail-user-profile-list-mdl mdl-list'>
+                <div *ngIf="ecmUser">
+                    <hr class="title-start">
+                    <span class="header-profile"><b>ECM</b></span>
+                    <li class="mdl-list__item mdl-list__item--two-line">
+                        <span class="mdl-list__item-primary-content">
+                          <i class="mdl-list__item-avatar">
+                              <img id="logged-user-img"
+                                   [src]="getEcmUserDetailAvatarUrl()"
+                                   class="profile-image"/>
+                          </i>
+                          <span class="truncate-long-names">{{ecmUser.firstName}} {{ecmUser.lastName}}</span>
+                          <span class="mdl-list__item-sub-title">{{ecmUser.email}}</span>
+                        </span>
+                        <span class="mdl-list__item-secondary-content custom-role-style">
+                            <span class="role-label-user">Job Role</span>
+                            {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }}
+                        </span>
+                    </li>
+                </div>
+                <br>
+                <div *ngIf="bpmUser">
+                    <hr class="title-start">
+                    <span class="header-profile"><b>BPM</b></span>
+                    <li class="mdl-list__item mdl-list__item--two-line">
+                        <span class="mdl-list__item-primary-content">
+                          <i class="mdl-list__item-avatar">
+                              <img id="logged-user-img"
+                                   [src]="getBpmUserDetailAvatarUrl()"
+                                   class="profile-image"/>
+                          </i>
+                          <span class="truncate-long-names">
+                              {{formatValue(bpmUser.firstName) }} {{ formatValue(bpmUser.lastName) }}
+                          </span>
+                          <span class="mdl-list__item-sub-title">{{bpmUser.email}}</span>
+                        </span>
+                        <span class="mdl-list__item-secondary-content custom-role-style">
+                            <span class="role-label-user">Tenant</span>
+                            {{bpmUser.tenantName}}
+                        </span>
+                    </li>
+                </div>
+            </ul>
+    </div>
+</div>
+
+

@@ -22,6 +22,7 @@ for PACKAGE in \
   ng2-alfresco-search \
   ng2-alfresco-tag \
   ng2-alfresco-upload \
+  ng2-alfresco-userinfo \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript
 do

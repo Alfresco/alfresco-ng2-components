@@ -74,6 +74,7 @@ describe('AlfrescoAuthentication', () => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
+                expect(authService.isEcmLoggedIn()).toBe(true);
                 done();
             });
 
@@ -106,6 +107,7 @@ describe('AlfrescoAuthentication', () => {
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -141,6 +143,7 @@ describe('AlfrescoAuthentication', () => {
                 authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -158,6 +161,7 @@ describe('AlfrescoAuthentication', () => {
 
         it('should return false if the user is not logged in', () => {
             expect(authService.isLoggedIn()).toBe(false);
+            expect(authService.isEcmLoggedIn()).toBe(false);
         });
     });
 
@@ -171,6 +175,7 @@ describe('AlfrescoAuthentication', () => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+                expect(authService.isBpmLoggedIn()).toBe(true);
                 done();
             });
 
@@ -201,6 +206,7 @@ describe('AlfrescoAuthentication', () => {
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -214,6 +220,7 @@ describe('AlfrescoAuthentication', () => {
                 authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -280,6 +287,8 @@ describe('AlfrescoAuthentication', () => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+                expect(authService.isBpmLoggedIn()).toBe(true);
+                expect(authService.isEcmLoggedIn()).toBe(true);
                 done();
             });
 
@@ -302,6 +311,7 @@ describe('AlfrescoAuthentication', () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -322,6 +332,7 @@ describe('AlfrescoAuthentication', () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -344,6 +355,8 @@ describe('AlfrescoAuthentication', () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 

@@ -75,7 +75,8 @@ for PACKAGE in \
   ng2-alfresco-login \
   ng2-alfresco-search \
   ng2-alfresco-upload \
-  ng2-activiti-analytics
+  ng2-activiti-analytics \
+  ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== linking component: ${PACKAGE} ====="
@@ -102,6 +103,7 @@ for PACKAGE in \
   ng2-alfresco-upload \
   ng2-alfresco-viewer \
   ng2-alfresco-webscript \
+  ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== demo shell linking: ${PACKAGE} ====="

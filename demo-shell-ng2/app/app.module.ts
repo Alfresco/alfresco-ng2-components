@@ -30,6 +30,7 @@ import { ViewerModule } from 'ng2-alfresco-viewer';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
+import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
@@ -63,7 +64,8 @@ import {
         ViewerModule.forRoot(),
         ActivitiFormModule.forRoot(),
         ActivitiTaskListModule.forRoot(),
-        ActivitiProcessListModule.forRoot()
+        ActivitiProcessListModule.forRoot(),
+        UserInfoComponentModule.forRoot()
     ],
     declarations: [
         AppComponent,

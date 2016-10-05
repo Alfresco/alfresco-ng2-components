@@ -34,3 +34,6 @@
 
 (cd ng2-alfresco-tag; npm update;)
 (cd ng2-alfresco-tag/demo; npm update;)
+
+(cd ng2-alfresco-userinfo; npm update;)
+(cd ng2-alfresco-userinfo/demo; npm update;)
