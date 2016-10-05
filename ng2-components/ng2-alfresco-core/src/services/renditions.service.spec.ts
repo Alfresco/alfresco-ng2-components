@@ -15,18 +15,15 @@
  * limitations under the License.
  */
 
-/*
-import { inject, TestBed } from '@angular/core/testing';
-import { RenditionsService } from './renditions.service';
+import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoApiService } from './AlfrescoApi.service';
-import { AlfrescoSettingsService } from './AlfrescoSettings.service';
-import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
+import { RenditionsService } from './renditions.service';
 
-declare let AlfrescoApi: any;
 declare let jasmine: any;
+declare let AlfrescoApi: any;
 
 describe('RenditionsService', () => {
-    let service: any;
+    let service, injector;
 
     let fakeRedition = {
         'entry': {
@@ -84,29 +81,22 @@ describe('RenditionsService', () => {
             }]
         }
     };
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoApiService,
+            RenditionsService
+        ]);
+    });
 
     beforeEach(() => {
-
-        TestBed.configureTestingModule({
-            providers: [
-               AlfrescoSettingsService,
-               AlfrescoApiService,
-               AlfrescoAuthenticationService,
-               RenditionsService
-            ]
-        });
-
-        inject([RenditionsService, AlfrescoApiService], (renditionsService: RenditionsService, apiService: AlfrescoApiService) => {
-            jasmine.Ajax.install();
-            service = renditionsService;
-            apiService.setInstance(new AlfrescoApi({}));
-        });
+        jasmine.Ajax.install();
+        service = injector.get(RenditionsService);
+        service.apiService.setInstance(new AlfrescoApi({}));
     });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
     });
-
 
     it('Get redition list service should call the server with the ID passed', (done) => {
         service.getRenditionsListByNodeId('fake-node-id').subscribe((res) => {
@@ -176,4 +166,4 @@ describe('RenditionsService', () => {
         });
     });
 });
-*/
+
