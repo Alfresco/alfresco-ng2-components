@@ -45,6 +45,26 @@ Also make sure you include these dependencies in your `index.html` file:
 <script src="node_modules/material-design-lite/material.min.js"></script>
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
+#### Dialogs Polyfill
+
+To make the dialog working with all the browser you have to add the dialog polyfill to you project:
+
+```sh
+npm install --save dialog-polyfill
+```
+
+Also make sure you include these dependencies in your `index.html` file:
+
+```html
+<!-- Polyfill(s) for dialogs -->
+<script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+<link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+<style>
+._dialog_overlay {
+    position: static !important;
+}
+</style>
+```
 
 ## Basic usage examples
 
