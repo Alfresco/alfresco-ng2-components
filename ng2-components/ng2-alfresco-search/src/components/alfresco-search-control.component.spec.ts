@@ -33,7 +33,7 @@ import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
 describe('AlfrescoSearchControlComponent', () => {
 
-    let alfrescoSearchControlComponentFixture: ComponentFixture<AlfrescoSearchControlComponent>;
+    let fixture: ComponentFixture<AlfrescoSearchControlComponent>;
     let component: AlfrescoSearchControlComponent, element: HTMLElement;
 
     beforeEach(async(() => {
@@ -55,76 +55,76 @@ describe('AlfrescoSearchControlComponent', () => {
                 AlfrescoSearchService
             ]
         }).compileComponents().then(() => {
-            alfrescoSearchControlComponentFixture = TestBed.createComponent(AlfrescoSearchControlComponent);
-            component = alfrescoSearchControlComponentFixture.componentInstance;
-            element = alfrescoSearchControlComponentFixture.nativeElement;
+            fixture = TestBed.createComponent(AlfrescoSearchControlComponent);
+            component = fixture.componentInstance;
+            element = fixture.nativeElement;
         });
     }));
 
     it('should setup i18n folder', () => {
-        let translationService = alfrescoSearchControlComponentFixture.debugElement.injector.get(AlfrescoTranslationService);
+        let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
         spyOn(translationService, 'addTranslationFolder');
-        alfrescoSearchControlComponentFixture.detectChanges();
+        fixture.detectChanges();
         expect(translationService.addTranslationFolder)
             .toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
     });
 
     it('should emit searchChange when search term input changed', (done) => {
-        alfrescoSearchControlComponentFixture.componentInstance.searchChange.subscribe(e => {
+        fixture.componentInstance.searchChange.subscribe(e => {
             expect(e.value).toBe('customSearchTerm');
             done();
         });
-        alfrescoSearchControlComponentFixture.detectChanges();
-        alfrescoSearchControlComponentFixture.componentInstance.searchTerm = 'customSearchTerm';
-        alfrescoSearchControlComponentFixture.detectChanges();
+        fixture.detectChanges();
+        fixture.componentInstance.searchTerm = 'customSearchTerm';
+        fixture.detectChanges();
     });
 
     it('should emit searchChange when search term changed by user', (done) => {
-        alfrescoSearchControlComponentFixture.detectChanges();
-        alfrescoSearchControlComponentFixture.componentInstance.searchChange.subscribe(e => {
+        fixture.detectChanges();
+        fixture.componentInstance.searchChange.subscribe(e => {
             expect(e.value).toBe('customSearchTerm211');
             done();
         });
         component.searchControl.setValue('customSearchTerm211', true);
-        alfrescoSearchControlComponentFixture.detectChanges();
+        fixture.detectChanges();
     });
 
     describe('Component rendering', () => {
 
         it('should display a text input field by default', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             expect(element.querySelectorAll('input[type="text"]').length).toBe(1);
         });
 
         it('should display a search input field when specified', () => {
-            alfrescoSearchControlComponentFixture.componentInstance.inputType = 'search';
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.componentInstance.inputType = 'search';
+            fixture.detectChanges();
             expect(element.querySelectorAll('input[type="search"]').length).toBe(1);
         });
 
         it('should set browser autocomplete to off by default', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let attr = element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete');
             expect(attr).toBe('off');
         });
 
         it('should set browser autocomplete to on when configured', () => {
-            alfrescoSearchControlComponentFixture.componentInstance.autocomplete = true;
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.componentInstance.autocomplete = true;
+            fixture.detectChanges();
             expect(element.querySelectorAll('input[type="text"]')[0].getAttribute('autocomplete')).toBe('on');
         });
 
         it('should show an expanding control by default', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(1);
             expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(1);
             expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(1);
         });
 
         it('should show a normal non-expanding control when configured', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
-            alfrescoSearchControlComponentFixture.componentInstance.expandable = false;
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
+            fixture.componentInstance.expandable = false;
+            fixture.detectChanges();
             expect(element.querySelectorAll('div.mdl-textfield--expandable').length).toBe(0);
             expect(element.querySelectorAll('div.mdl-textfield__expandable-holder').length).toBe(0);
             expect(element.querySelectorAll('label.mdl-button--icon').length).toBe(0);
@@ -140,31 +140,31 @@ describe('AlfrescoSearchControlComponent', () => {
         });
 
         it('should display a find-as-you-type control by default', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete).not.toBeNull();
         });
 
         it('should make find-as-you-type control hidden initially', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
         it('should make find-as-you-type control visible when search box has focus', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(true);
         });
 
         it('should hide find-as-you-type results when the search box loses focus', (done) => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
             inputEl.dispatchEvent(new Event('blur'));
             window.setTimeout(() => {
-                alfrescoSearchControlComponentFixture.detectChanges();
+                fixture.detectChanges();
                 let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(false);
                 done();
@@ -172,18 +172,18 @@ describe('AlfrescoSearchControlComponent', () => {
         });
 
         it('should hide find-as-you-type results when escape key pressed', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
             inputEl.dispatchEvent(new KeyboardEvent('keyup', {
                 key: 'Escape'
             }));
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
         it('should make find-as-you-type control visible again when down arrow is pressed', () => {
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
             inputEl.dispatchEvent(new KeyboardEvent('keyup', {
                 key: 'Escape'
@@ -191,14 +191,14 @@ describe('AlfrescoSearchControlComponent', () => {
             inputEl.dispatchEvent(new KeyboardEvent('keyup', {
                 key: 'ArrowDown'
             }));
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(true);
         });
 
         it('should NOT display a find-as-you-type control when configured not to', () => {
-            alfrescoSearchControlComponentFixture.componentInstance.autocompleteEnabled = false;
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.componentInstance.autocompleteEnabled = false;
+            fixture.detectChanges();
             let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete).toBeNull();
         });
@@ -209,14 +209,14 @@ describe('AlfrescoSearchControlComponent', () => {
 
         it('should fire a search when a term has been entered', () => {
             spyOn(component.searchSubmit, 'emit');
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let formEl: HTMLElement = element.querySelector('form');
             component.searchTerm = 'searchTerm1';
             component.searchControl.setValue('searchTerm1', true);
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             formEl.dispatchEvent(new Event('submit'));
 
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
 
             expect(component.searchSubmit.emit).toHaveBeenCalledWith({
                 'value': 'searchTerm1'
@@ -225,13 +225,13 @@ describe('AlfrescoSearchControlComponent', () => {
 
         it('should not fire a search when no term has been entered', () => {
             spyOn(component.searchSubmit, 'emit');
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
             let inputEl: HTMLInputElement = <HTMLInputElement> element.querySelector('input[type="text"]');
             let formEl: HTMLElement = element.querySelector('form');
             inputEl.value = '';
             formEl.dispatchEvent(new Event('submit'));
 
-            alfrescoSearchControlComponentFixture.detectChanges();
+            fixture.detectChanges();
 
             expect(component.searchSubmit.emit).not.toHaveBeenCalled();
         });
