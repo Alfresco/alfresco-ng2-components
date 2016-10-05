@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-/*
-import { PLATFORM_PIPES } from '@angular/core';
-import { it, describe, expect, inject, beforeEachProviders, beforeEach } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
-import { RouteParams } from '@angular/router-deprecated';
+import { ReflectiveInjector, SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 import { AlfrescoSearchComponent } from './alfresco-search.component';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -30,14 +29,13 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoTranslationService,
-    AlfrescoPipeTranslate
+    CoreModule
 } from 'ng2-alfresco-core';
-
-declare let jasmine: any;
 
 describe('AlfrescoSearchComponent', () => {
 
-    let alfrescoSearchComponentFixture, element, component;
+    let fixture: ComponentFixture<AlfrescoSearchComponent>, element: HTMLElement;
+    let component: AlfrescoSearchComponent;
 
     let result = {
         list: {
@@ -48,8 +46,29 @@ describe('AlfrescoSearchComponent', () => {
                         name: 'MyDoc',
                         isFile: true,
                         content: {
-                            mimetype: 'text/plain'
+                            mimeType: 'text/plain'
                         },
+                        createdByUser: {
+                            displayName: 'John Doe'
+                        },
+                        modifiedByUser: {
+                            displayName: 'John Doe'
+                        }
+                    }
+                }
+            ]
+        }
+    };
+
+    let folderResult = {
+        list: {
+            entries: [
+                {
+                    entry: {
+                        id: '123',
+                        name: 'MyFolder',
+                        isFile : false,
+                        isFolder : true,
                         createdByUser: {
                             displayName: 'John Doe'
                         },
@@ -68,33 +87,37 @@ describe('AlfrescoSearchComponent', () => {
         }
     };
 
-    beforeEachProviders(() => {
-        return [
-            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
-            AlfrescoSearchService,
-            {provide: AlfrescoTranslationService, useClass: TranslationMock},
-            AlfrescoThumbnailService,
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoContentService
-        ];
-    });
+    let errorJson = {
+        error: {
+            errorKey: 'Search failed',
+            statusCode: 400,
+            briefSummary: '08220082 search failed',
+            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+            descriptionURL: 'https://api-explorer.alfresco.com'
+        }
+    };
 
-    beforeEach(inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AlfrescoSearchComponent)
-            .then(fixture => {
-                jasmine.Ajax.install();
-                alfrescoSearchComponentFixture = fixture;
-                element = alfrescoSearchComponentFixture.nativeElement;
-                component = alfrescoSearchComponentFixture.componentInstance;
-            });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [ AlfrescoSearchComponent ], // declare the test component
+            providers: [
+                AlfrescoSearchService,
+                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                AlfrescoThumbnailService,
+                AlfrescoSettingsService,
+                AlfrescoApiService,
+                AlfrescoAuthenticationService,
+                AlfrescoContentService
+            ]
+        }).compileComponents().then(() => {
+            fixture = TestBed.createComponent(AlfrescoSearchComponent);
+            component = fixture.componentInstance;
+            element = fixture.nativeElement;
+        });
     }));
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
 
     it('should not have a search term by default', () => {
         let search = new AlfrescoSearchComponent(null, null, null, null);
@@ -103,92 +126,148 @@ describe('AlfrescoSearchComponent', () => {
     });
 
     it('should take the provided search term from query param provided via RouteParams', () => {
-        let search = new AlfrescoSearchComponent(null, null, null, new RouteParams({q: 'exampleTerm692'}));
+        let injector = ReflectiveInjector.resolveAndCreate([
+            { provide: ActivatedRoute, useValue: { params: Observable.from([{ q: 'exampleTerm692' }]) } }
+        ]);
+        let search = new AlfrescoSearchComponent(null, null, null, injector.get(ActivatedRoute));
+        search.ngOnInit();
         expect(search.searchTerm).toBe('exampleTerm692');
     });
 
     it('should have a null search term if no query param provided via RouteParams', () => {
-        let search = new AlfrescoSearchComponent(null, null, null, new RouteParams({}));
+        let injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSearchService,
+            AlfrescoAuthenticationService,
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            { provide: ActivatedRoute, useValue: { params: Observable.from([{}]) } }
+        ]);
+        let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, null, injector.get(ActivatedRoute));
+        search.ngOnInit();
         expect(search.searchTerm).toBeNull();
     });
 
     it('should setup i18n folder', () => {
-
-        let translation = jasmine.createSpyObj('AlfrescoTranslationService', [
-            'addTranslationFolder'
-        ]);
-
-        let search = new AlfrescoSearchComponent(null, translation, null, null);
-        expect(search).toBeDefined();
-        expect(translation.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
+        let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
+        spyOn(translationService, 'addTranslationFolder');
+        fixture.detectChanges();
+        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
     });
 
     describe('Rendering search results', () => {
 
         it('should display search results when a search term is provided', (done) => {
 
-            component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
-            component.ngOnChanges({searchTerm: component.searchTerm});
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.resolve(result));
 
             component.resultsEmitter.subscribe(x => {
-                alfrescoSearchComponentFixture.detectChanges();
+                fixture.detectChanges();
+                expect(searchService.getSearchNodesPromise).toHaveBeenCalled();
+                expect(element.querySelector('#result_user_0')).not.toBeNull();
                 expect(element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
                 expect(element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: result
-            });
+            component.searchTerm = 'searchTerm';
+            component.ngOnInit();
         });
 
-
         it('should display no result if no result are returned', (done) => {
+
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.resolve(noResult));
+
             component.resultsEmitter.subscribe(x => {
-                alfrescoSearchComponentFixture.detectChanges();
-                expect(element.querySelector('#search_no_result')).not.toBe(null);
+                fixture.detectChanges();
+                expect(element.querySelector('#search_no_result')).not.toBeNull();
                 done();
             });
 
-            component.searchTerm =  { currentValue: 'searchTerm', previousValue: ''};
-            component.ngOnChanges({searchTerm: component.searchTerm});
+            component.searchTerm = 'searchTerm';
+            component.ngOnInit();
+        });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: noResult
+        it('should display an error if an error is encountered running the search', (done) => {
+
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.reject(errorJson));
+
+            component.errorEmitter.subscribe(() => {
+                fixture.detectChanges();
+                let resultsEl = element.querySelector('[data-automation-id="search_result_table"]');
+                let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
+                expect(resultsEl).toBeNull();
+                expect(errorEl).not.toBeNull();
+                expect((<any>errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
+                done();
             });
+
+            component.searchTerm = 'searchTerm';
+            component.ngOnInit();
+        });
+
+        it('should update search results when the search term input is changed', (done) => {
+
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.resolve(result));
+
+            component.resultsEmitter.subscribe(x => {
+                fixture.detectChanges();
+                expect(searchService.getSearchNodesPromise).toHaveBeenCalledWith('searchTerm2');
+                expect(element.querySelector('#result_user_0')).not.toBeNull();
+                expect(element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
+                expect(element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
+                done();
+            });
+
+            component.ngOnChanges({searchTerm: new SimpleChange('', 'searchTerm2')});
         });
     });
 
     describe('search result actions', () => {
 
-        it('should emit preview when file item clicked', () => {
-            component.results = [{
-                entry: {
-                    id: '123',
-                    name: 'MyDoc',
-                    content: {
-                        mimetype: 'text/plain'
-                    },
-                    isFile: true
-                }
-            }];
+        it('should emit preview when file item clicked', (done) => {
 
-            alfrescoSearchComponentFixture.detectChanges(component.results[0]);
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.resolve(result));
+
+            component.resultsEmitter.subscribe(() => {
+                fixture.detectChanges();
+                (<HTMLTableRowElement> element.querySelector('#result_row_0')).click();
+            });
+
+            component.searchTerm = 'searchTerm';
+            component.ngOnInit();
+
             component.preview.subscribe(e => {
-                expect(e.value).toBe(component.results[0]);
+                done();
+            });
+        });
+
+        it('should not emit preview when non-file item is clicked', (done) => {
+
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.resolve(folderResult));
+
+            spyOn(component.preview, 'emit');
+            component.resultsEmitter.subscribe(x => {
+                fixture.detectChanges();
+                (<HTMLTableRowElement> element.querySelector('#result_row_0')).click();
+                expect(component.preview.emit).not.toHaveBeenCalled();
+                done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'text/plain',
-                responseText: '<div></div>'
-            });
+            component.searchTerm = 'searchTerm';
+            component.ngOnInit();
         });
     });
 
 });
-*/

@@ -50,7 +50,7 @@ export class AlfrescoThumbnailService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet'
     };
 
-    constructor(private contentService: AlfrescoContentService) {
+    constructor(public contentService: AlfrescoContentService) {
     }
 
     /**

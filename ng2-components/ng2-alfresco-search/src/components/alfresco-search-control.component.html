@@ -1,4 +1,4 @@
-<form (submit)="onSearch($event)">
+<form #f="ngForm" (ngSubmit)="onSearch(f.value)">
     <div [class]="getTextFieldClassName()">
         <label *ngIf="expandable" class="mdl-button mdl-js-button mdl-button--icon" for="searchControl">
             <i mdl-upgrade class="material-icons">search</i>
@@ -11,15 +11,17 @@
                    data-automation-id="search_input"
                    #searchInput
                    id="searchControl"
-                   ngControl="searchControl"
+                   [formControl]="searchControl"
                    [(ngModel)]="searchTerm"
-                   name="searchControl"
                    (focus)="onFocus($event)"
                    (blur)="onBlur($event)"
+                   (keyup.escape)="onEscape($event)"
+                   (keyup.arrowdown)="onArrowDown($event)"
                    aria-labelledby="searchLabel">
             <label id="searchLabel" class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
         </div>
     </div>
 </form>
-<alfresco-search-autocomplete [searchTerm]="autocompleteSearchTerm" [ngClass]="{active: searchActive, valid: searchValid}"
+<alfresco-search-autocomplete *ngIf="autocompleteEnabled"
+                              [searchTerm]="autocompleteSearchTerm" [ngClass]="{active: searchActive, valid: searchValid}"
                               (preview)="onFileClicked($event)"></alfresco-search-autocomplete>

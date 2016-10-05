@@ -16,6 +16,7 @@
  */
 
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
@@ -34,11 +35,23 @@ export class SearchBarComponent {
     @Output()
     expand = new EventEmitter();
 
-    constructor(public auth: AlfrescoAuthenticationService) {
+    constructor(public router: Router,
+                public auth: AlfrescoAuthenticationService) {
     }
 
     isLoggedIn(): boolean {
         return this.auth.isLoggedIn();
+    }
+
+    /**
+     * Called when the user submits the search, e.g. hits enter or clicks submit
+     *
+     * @param event Parameters relating to the search
+     */
+    onSearchSubmit(event) {
+        this.router.navigate(['/search', {
+            q: event.value
+        }]);
     }
 
     onFileClicked(event) {
@@ -48,8 +61,7 @@ export class SearchBarComponent {
         }
     }
 
-    searchTermChange(event) {
-        console.log('Search term changed', event);
+    onSearchTermChange(event) {
         this.searchTerm = event.value;
     }
 

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -42,34 +42,39 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     @Output()
     resultsEmitter = new EventEmitter();
 
-    results: any;
+    @Output()
+    errorEmitter = new EventEmitter();
+
+    results: any = null;
 
     errorMessage;
 
-    route: any[] = [];
+    queryParamName = 'q';
 
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService,
-                private activatedRoute: ActivatedRoute) {
-
-        if (translate !== null) {
-            translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
-        }
-
-        this.results = null;
+                @Optional() private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
-        this.activatedRoute.params.subscribe(params => {
-            this.searchTerm = params['q'];
+        if (this.translate !== null) {
+            this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+        }
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                this.searchTerm = params.hasOwnProperty(this.queryParamName) ? params[this.queryParamName] : null;
+                this.displaySearchResults(this.searchTerm);
+            });
+        } else {
             this.displaySearchResults(this.searchTerm);
-        });
+        }
     }
 
-    ngOnChanges(changes): void {
-        if (changes.searchTerm) {
-            this.displaySearchResults(changes.searchTerm.currentValue);
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['searchTerm']) {
+            this.searchTerm = changes['searchTerm'].currentValue;
+            this.displaySearchResults(this.searchTerm);
         }
     }
 
@@ -103,7 +108,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      * @param searchTerm Search query entered by user
      */
     public displaySearchResults(searchTerm): void {
-        if (searchTerm !== null) {
+        if (searchTerm !== null && this.alfrescoSearchService !== null) {
             this.alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
@@ -115,6 +120,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                     error => {
                         this.results = null;
                         this.errorMessage = <any>error;
+                        this.errorEmitter.emit(error);
                     }
                 );
         }

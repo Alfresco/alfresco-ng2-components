@@ -16,7 +16,7 @@
  */
 
 import { FormControl, Validators } from '@angular/forms';
-import { Component, Input, Output, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { SearchTermValidator } from './../forms/search-term-validator';
 
@@ -28,7 +28,7 @@ declare let __moduleName: string;
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css']
 })
-export class AlfrescoSearchControlComponent {
+export class AlfrescoSearchControlComponent implements OnInit {
 
     @Input()
     searchTerm = '';
@@ -46,6 +46,9 @@ export class AlfrescoSearchControlComponent {
     searchChange = new EventEmitter();
 
     @Output()
+    searchSubmit = new EventEmitter();
+
+    @Output()
     preview = new EventEmitter();
 
     @Output()
@@ -54,6 +57,9 @@ export class AlfrescoSearchControlComponent {
     searchControl: FormControl;
 
     @ViewChild('searchInput', {}) searchInput: ElementRef;
+
+    @Input()
+    autocompleteEnabled = true;
 
     @Input()
     autocompleteSearchTerm = '';
@@ -68,16 +74,26 @@ export class AlfrescoSearchControlComponent {
             this.searchTerm,
             Validators.compose([Validators.required, SearchTermValidator.minAlphanumericChars(3)])
         );
+    }
 
-        this.searchControl.valueChanges.map(value => this.searchControl.valid ? value : '')
-            .debounceTime(400).distinctUntilChanged().subscribe(
-            (value: string) => {
-                this.autocompleteSearchTerm = value;
-                this.searchValid = this.searchControl.valid;
+    ngOnInit(): void {
+        this.searchControl.valueChanges.debounceTime(400).distinctUntilChanged()
+            .subscribe((value: string) => {
+                this.onSearchTermChange(value);
             }
         );
+        this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+    }
 
-        translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+    private onSearchTermChange(value: string): void {
+        this.searchActive = true;
+        this.autocompleteSearchTerm = value;
+        this.searchControl.setValue(value, true);
+        this.searchValid = this.searchControl.valid;
+        this.searchChange.emit({
+            value: value,
+            valid: this.searchValid
+        });
     }
 
     getTextFieldClassName(): string {
@@ -98,11 +114,9 @@ export class AlfrescoSearchControlComponent {
      * @param event Submit event that was fired
      */
     onSearch(event): void {
-        if (event) {
-            event.preventDefault();
-        }
+        this.searchControl.setValue(this.searchTerm, true);
         if (this.searchControl.valid) {
-            this.searchChange.emit({
+            this.searchSubmit.emit({
                 value: this.searchTerm
             });
             this.searchInput.nativeElement.blur();
@@ -133,6 +147,14 @@ export class AlfrescoSearchControlComponent {
                 expanded: false
             });
         }
+    }
+
+    onEscape(): void {
+        this.searchActive = false;
+    }
+
+    onArrowDown(): void {
+        this.searchActive = true;
     }
 
 }
