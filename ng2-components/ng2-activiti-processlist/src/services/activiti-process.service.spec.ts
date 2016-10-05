@@ -15,40 +15,35 @@
  * limitations under the License.
  */
 
-/*
-import { it, describe, expect, beforeEachProviders, beforeEach, inject } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { ReflectiveInjector } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService
+} from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './activiti-process.service';
-// import { ProcessInstance } from '../models/process-instance';
 
 describe('ActivitiProcessService', () => {
 
-    let processService;
+    let service, injector;
 
-    beforeEachProviders(() => {
-        return [
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
             ActivitiProcessService,
             AlfrescoSettingsService,
             AlfrescoApiService,
             AlfrescoAuthenticationService
-        ];
+        ]);
     });
 
-    beforeEach(inject([ActivitiProcessService], (service: ActivitiProcessService) => {
-        processService = service;
-    }));
+    beforeEach(() => {
+        service = injector.get(ActivitiProcessService);
+    });
 
     it('should get process instances', (done) => {
 
         expect(true).toBe(true);
         done();
-
-        // processService.getProcesses().subscribe((instances: ProcessInstance[]) => {
-        //     expect(instances.length).toBe(1);
-        //     expect(instances[0].id).toBe('myprocess:1');
-        //     expect(instances[0].name).toBe('my process');
-        //     done();
-        // });
     });
 });
-*/
+

@@ -20,11 +20,10 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-start-process-instance',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })

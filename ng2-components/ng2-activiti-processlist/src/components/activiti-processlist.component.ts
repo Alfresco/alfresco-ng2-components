@@ -21,10 +21,8 @@ import { ObjectDataTableAdapter, DataRowEvent, DataTableAdapter, ObjectDataRow }
 import { ActivitiProcessService } from '../services/activiti-process.service';
 import { UserProcessInstanceFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'activiti-process-instance-list',
     styles: [
       `

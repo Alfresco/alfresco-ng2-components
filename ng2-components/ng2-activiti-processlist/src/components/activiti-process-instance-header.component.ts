@@ -21,11 +21,10 @@ import { ProcessInstance } from '../models/process-instance';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-process-instance-header',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-process-instance-header.component.html',
     styleUrls: ['./activiti-process-instance-header.component.css']
 })

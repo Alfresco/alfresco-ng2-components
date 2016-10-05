@@ -22,11 +22,10 @@ import { FilterRepresentationModel } from '../models/filter.model';
 import { Observable, Observer } from 'rxjs/Rx';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-process-instance-filters',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css']
 })

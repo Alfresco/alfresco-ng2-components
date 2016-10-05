@@ -23,13 +23,11 @@ import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.
 import { ActivitiComments } from './activiti-comments.component';
 import { ProcessInstance } from '../models/process-instance';
 
-
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-process-instance-details',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-process-instance-details.component.html',
     styleUrls: ['./activiti-process-instance-details.component.css']
 })
