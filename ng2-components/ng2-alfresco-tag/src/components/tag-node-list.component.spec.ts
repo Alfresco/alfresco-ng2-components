@@ -30,7 +30,6 @@ declare let jasmine: any;
 
 describe('Test ng2-alfresco-tag Tag relative node list', () => {
 
-
     let dataTag = {
         'list': {
             'pagination': {

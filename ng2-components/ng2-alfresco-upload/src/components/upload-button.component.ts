@@ -89,7 +89,7 @@ export class UploadButtonComponent {
 
     constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
     }
 
     ngOnChanges(changes) {
