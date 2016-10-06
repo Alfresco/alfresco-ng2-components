@@ -45,6 +45,7 @@ module.exports = function (config) {
 
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/moment/**/*.js', included: false, served: true, watched: false },
 
       // ng2-components
       {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.*', included: false, served: true, watched: false},
