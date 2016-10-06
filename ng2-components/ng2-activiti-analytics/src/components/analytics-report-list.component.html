@@ -1,0 +1,10 @@
+<div class="menu-container">
+    <ul class='mdl-list'>
+        <li class="mdl-list__item" (click)="selectReport(report)" *ngFor="let report of reports">
+            <span class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon">assignment</i>
+            {{report.name}}
+            </span>
+        </li>
+    </ul>
+</div>
