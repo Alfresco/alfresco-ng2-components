@@ -18,10 +18,8 @@
 import { Component, ElementRef } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'text-widget',
     templateUrl: './text.widget.html',
     styleUrls: ['./text.widget.css']

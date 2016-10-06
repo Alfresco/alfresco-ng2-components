@@ -55,8 +55,7 @@ var map = {
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
     'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
-    'ng2-alfresco-datatable': 'npm:ng2-alfresco-datatable/dist',
-    'ng2-alfresco-webscript': 'npm:ng2-alfresco-webscript/dist'
+    'ng2-alfresco-datatable': 'npm:ng2-alfresco-datatable/dist'
 };
 
 var packages = {
@@ -66,8 +65,7 @@ var packages = {
 
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
     'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-    'ng2-alfresco-datatable': { main: './index.js', defaultExtension: 'js'},
-    'ng2-alfresco-webscript': { main: './index.js', defaultExtension: 'js'}
+    'ng2-alfresco-datatable': { main: './index.js', defaultExtension: 'js'}
 };
 
 var config = {

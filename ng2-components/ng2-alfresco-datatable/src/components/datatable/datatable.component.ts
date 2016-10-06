@@ -35,10 +35,9 @@ import {
 } from '../../data/index';
 
 declare var componentHandler;
-declare let __moduleName: string;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'

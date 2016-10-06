@@ -23,7 +23,6 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import 'rxjs/Rx';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
@@ -49,7 +48,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  */
 @Component({
     selector: 'alfresco-upload-button',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './upload-button.component.html',
     styleUrls: ['./upload-button.component.css']
 })

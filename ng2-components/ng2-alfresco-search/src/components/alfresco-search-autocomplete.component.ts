@@ -20,17 +20,16 @@ import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
     styleUrls: ['./alfresco-search-autocomplete.component.css']
 })
 export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
-    baseComponentPath = __moduleName.replace('/components/alfresco-search-autocomplete.component.js', '');
+    baseComponentPath = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
 
     @Input()
     searchTerm: string = '';

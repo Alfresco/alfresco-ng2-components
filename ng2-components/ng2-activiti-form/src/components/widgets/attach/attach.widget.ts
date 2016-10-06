@@ -22,12 +22,11 @@ import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
 
-declare let __moduleName: string;
 declare var componentHandler;
 declare let dialogPolyfill: any;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
     styleUrls: ['./attach.widget.css']

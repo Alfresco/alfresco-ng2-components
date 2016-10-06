@@ -21,10 +21,8 @@ import { FormService } from '../../../services/form.service';
 import { GroupModel } from '../core/group.model';
 import { GroupUserModel } from '../core/group-user.model';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'people-widget',
     templateUrl: './people.widget.html',
     styleUrls: ['./people.widget.css']

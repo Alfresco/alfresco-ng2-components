@@ -22,18 +22,16 @@ import { EcmUserService } from './../services/ecm-user.service';
 import { BpmUserService } from './../services/bpm-user.service';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
-
 @Component({
     selector: 'ng2-alfresco-userinfo',
-    moduleId: __moduleName,
+    moduleId: module.id,
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })
 
 export class UserInfoComponent implements OnInit {
 
-    private baseComponentPath = __moduleName.replace('components/user-info.component.js', '');
+    private baseComponentPath = module.id.replace('components/user-info.component.js', '');
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;

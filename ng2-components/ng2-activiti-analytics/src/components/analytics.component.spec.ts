@@ -15,17 +15,47 @@
  * limitations under the License.
  */
 
-import { describe, expect, it, inject } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AnalyticsComponent } from './analytics.component';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 
-describe('Show component HTML', () => {
-    it('Display component tag base-chart', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(AnalyticsComponent)
-            .then((fixture) => {
-                let element = fixture.nativeElement;
-                expect(element.getElementsByTagName('base-chart')[0].innerHTML).toBeDefined();
-            });
+describe('Test ng2-alfresco-analytics analytics component ', () => {
+
+    let component: any;
+    let fixture: ComponentFixture<AnalyticsComponent>;
+    let debug: DebugElement;
+    let element: HTMLElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [AnalyticsComponent],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService
+            ]
+        }).compileComponents();
     }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AnalyticsComponent);
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    xit('No test', () => {
+    });
 });
+

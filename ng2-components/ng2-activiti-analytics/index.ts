@@ -15,4 +15,36 @@
  * limitations under the License.
  */
 
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { AnalyticsComponent } from  './src/components/analytics.component';
+import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+
 export * from './src/components/analytics.component';
+
+export const ANALYTICS_DIRECTIVES: any[] = [
+    AnalyticsComponent
+];
+
+@NgModule({
+    imports: [
+        CoreModule
+    ],
+    declarations: [
+        ...ANALYTICS_DIRECTIVES,
+        CHART_DIRECTIVES
+    ],
+    exports: [
+        ...ANALYTICS_DIRECTIVES
+    ]
+})
+export class AnalyticsModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: AnalyticsModule,
+            providers: [
+                ...ANALYTICS_DIRECTIVES
+            ]
+        };
+    }
+}
