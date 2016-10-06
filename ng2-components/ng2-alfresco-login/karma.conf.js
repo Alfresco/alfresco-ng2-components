@@ -48,7 +48,11 @@ module.exports = function (config) {
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
-      {pattern: 'dist/**/*.js.map', included: false, watched: false}
+      {pattern: 'dist/**/*.js.map', included: false, watched: false},
+
+      //Assets
+      {pattern: 'dist/src/assets/images/background.svg', included: false, watched: false},
+      {pattern: 'dist/src/assets/images/alfresco-logo.svg', included: false, watched: false}
     ],
 
     exclude: [
