@@ -15,35 +15,158 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AnalyticsService } from '../services/analytics.service';
+import { ReportModel, ReportQuery, ParameterValueModel, ReportParameterModel } from '../models/report.model';
+import { Chart } from '../models/chart.model';
+
 
 @Component({
     moduleId: module.id,
     selector: 'activiti-analytics',
-    templateUrl: './analytics.component.html'
+    templateUrl: './analytics.component.html',
+    styleUrls: ['./analytics.component.css']
 })
-export class AnalyticsComponent {
+export class AnalyticsComponent implements  OnInit, OnChanges {
 
-    constructor() {
+    @ViewChild('processDefinition')
+    processDefinition: any;
+
+    @Input()
+    reportId: string;
+
+    @Output()
+    onSuccess = new EventEmitter();
+
+    @Output()
+    onError = new EventEmitter();
+
+    reportDetails: ReportModel;
+
+    reportParamQuery = new ReportQuery();
+
+    reports: any[];
+
+    constructor(private translate: AlfrescoTranslationService,
+                private analyticsService: AnalyticsService) {
         console.log('AnalyticsComponent');
+        if (translate) {
+            translate.addTranslationFolder('node_modules/ng2-activiti-analytics/src');
+        }
     }
 
-    // lineChart
-    public lineChartData: Array<any> = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
-    ];
-    public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    public lineChartType: string = 'line';
-    public pieChartType: string = 'pie';
+    ngOnInit() {
 
-    // Pie
-    public pieChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
-    public pieChartData: number[] = [300, 500, 100];
+    }
 
-    public randomizeType(): void {
-        this.lineChartType = this.lineChartType === 'line' ? 'bar' : 'line';
-        this.pieChartType = this.pieChartType === 'doughnut' ? 'pie' : 'doughnut';
+    ngOnChanges(changes: SimpleChanges) {
+        let reportId = changes['reportId'];
+        if (reportId && reportId.currentValue) {
+            this.getParamsReports(reportId.currentValue);
+            return;
+        }
+    }
+
+    public getParamsReports(reportId: string) {
+        this.reset();
+        this.analyticsService.getParamsReports(reportId).subscribe(
+            (res: ReportModel) => {
+                this.reportDetails = res;
+                this.retriveParameterOptions();
+                this.onSuccess.emit(res);
+            },
+            (err: any) => {
+                this.onError.emit(err);
+                console.log(err);
+            },
+            () => console.log('Login done')
+        );
+    }
+
+    private retriveParameterOptions() {
+        this.reportDetails.definition.parameters.forEach((param) => {
+            this.analyticsService.getParamValuesByType(param.type).subscribe(
+                (opts: ParameterValueModel[]) => {
+                    param.options = opts;
+                },
+                (err: any) => {
+                    console.log(err);
+                },
+                () => console.log(`${param.type} options loaded`)
+            );
+        });
+    }
+
+    public createReport() {
+        this.analyticsService.getReportsByParams(this.reportDetails.id, this.reportParamQuery).subscribe(
+            (res: Chart[]) => {
+                this.reports = res;
+                this.onSuccess.emit(res);
+            },
+            (err: any) => {
+                this.onError.emit(err);
+                console.log(err);
+            },
+            () => console.log('Login done')
+        );
+    }
+
+    onNumberChanges(field: any) {
+        this.reset();
+        this.reportParamQuery.slowProcessInstanceInteger = parseInt(field.value, 10);
+    }
+
+    onDurationChanges(field: any) {
+        this.reset();
+        if (field && field.value) {
+            this.reportParamQuery.duration = parseInt(field.value, 10);
+        }
+    }
+
+    onTypeFilteringChanges(field: any) {
+        this.reset();
+        this.reportParamQuery.typeFiltering = field.value;
+    }
+
+    onStatusChanges(field: any) {
+        this.reset();
+        this.reportParamQuery.status = field.value;
+    }
+
+    onProcessDefinitionChanges(field: any) {
+        this.reset();
+        if (field.value) {
+            this.reportParamQuery.processDefinitionId = field.value;
+            this.analyticsService.getTasksByProcessDefinitionId(this.reportId, this.reportParamQuery.processDefinitionId).subscribe(
+                (res: any) => {
+                    let paramTask: ReportParameterModel = this.reportDetails.definition.parameters.find(p => p.type === 'task');
+                    if (paramTask) {
+                        paramTask.options = res;
+                    }
+                });
+        }
+    }
+
+    onTaskChanges(field: any) {
+        this.reset();
+        this.reportParamQuery.taskName = field.value;
+    }
+
+    onDateRangeChange(dateRange: any) {
+        this.reset();
+        this.reportParamQuery.dateRange.startDate = dateRange.startDate;
+        this.reportParamQuery.dateRange.endDate = dateRange.endDate;
+    }
+
+
+    onDateRangeIntervalChange(field: any) {
+        this.reset();
+        this.reportParamQuery.dateRangeInterval = field.value;
+    }
+
+    public reset() {
+        this.reports = null;
     }
 
     public chartClicked(e: any): void {
@@ -52,5 +175,9 @@ export class AnalyticsComponent {
 
     public chartHovered(e: any): void {
         console.log(e);
+    }
+
+    public convertNumber(value: string): number {
+        return parseInt(value, 10);
     }
 }

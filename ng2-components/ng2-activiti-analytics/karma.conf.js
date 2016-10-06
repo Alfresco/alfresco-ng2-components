@@ -39,9 +39,12 @@ module.exports = function (config) {
       'karma-test-shim.js',
 
       // paths loaded via module imports
-      {pattern: 'dist/**/*.js', included: false, watched: true},
-      {pattern: 'dist/**/*.html', included: true, served: true, watched: true},
-      {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
+      {pattern: 'dist/**/*.*', included: false, watched: true},
+
+      // ng2-components
+
+      { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false },
 
       // ng2-components
       {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.*', included: false, served: true, watched: false},

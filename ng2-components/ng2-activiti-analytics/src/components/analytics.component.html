@@ -1,21 +1,104 @@
 <div class="col-md-6">
+    <div *ngIf="reportDetails">
+        <form>
+        <h1>{{reportDetails.name}}</h1>
+        <div *ngFor="let field of reportDetails.definition.parameters">
+            <div [ngSwitch]="field.type">
+                <div *ngSwitchCase="'integer'">
+                    <br>
+                    <number-widget [field]="field"
+                                   (fieldChanged)="onNumberChanges(field)"></number-widget>
+                </div>
+                <div *ngSwitchCase="'duration'">
+                    <br>
+                    <duration-widget [field]="field"
+                                     (fieldChanged)="onDurationChanges($event)"></duration-widget>
+                </div>
+                <div *ngSwitchCase="'boolean'">
+                    <br>
+                    <checkbox-widget [field]="field"
+                                     (fieldChanged)="onTypeFilteringChanges(field)"></checkbox-widget>
+                </div>
+                <div *ngSwitchCase="'status'">
+                    <br>
+                    <dropdown-widget [field]="field"
+                                     (fieldChanged)="onStatusChanges(field)"></dropdown-widget>
+                </div>
+                <div *ngSwitchCase="'processDefinition'">
+                    <br>
+                    <dropdown-widget [field]="field"
+                                     (fieldChanged)="onProcessDefinitionChanges(field)" #processDefinition></dropdown-widget>
+                </div>
+                <div *ngSwitchCase="'task'">
+                    <br>
+                    <dropdown-widget [field]="field"
+                                     (fieldChanged)="onTaskChanges(field)"></dropdown-widget>
+                </div>
+                <div *ngSwitchCase="'dateRange'">
+                    <br>
+                    <date-range-widget [field]="field"
+                                       (dateRangeChanged)="onDateRangeChange($event)"></date-range-widget>
+                </div>
+                <div *ngSwitchCase="'dateInterval'">
+                    <dropdown-widget [field]="field" [showDefaultOption]="false"
+                                     (fieldChanged)="onDateRangeIntervalChange(field)"></dropdown-widget>
+                </div>
+                <div *ngSwitchDefault>
+                    <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <button type="submit" class="btn btn-default" (click)="createReport()">CREATE REPORT</button>
+        </form>
 
-    <base-chart class="chart"
-                [data]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [chartType]="lineChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></base-chart>
-</div>
-<div class="col-md-6">
-    <base-chart class="chart"
-                [data]="pieChartData"
-                [labels]="pieChartLabels"
-                [chartType]="pieChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></base-chart>
-</div>
-<div class="col-md-12 text-center" style="margin-top: 10px;">
-    <button (click)="randomizeType()" style="display: inline-block">Toggle</button>
+        <div *ngFor="let report of reports">
+            <h2>{{report.title}}</h2>
+            <div [ngSwitch]="report.type">
+                <div *ngSwitchCase="'pie'">
+                    <div class="col-md-6">
+                        <base-chart class="chart"
+                                    [data]="report.data"
+                                    [datasets]="report.datasets"
+                                    [labels]="report.labels"
+                                    [chartType]="report.type"
+                                    (chartClick)="chartClicked($event)"></base-chart>
+                    </div>
+                </div>
+                <div *ngSwitchCase="'table'">
+                    <table class="table table-responsive table-condensed" style="width: 100%">
+                        <tr>
+                            <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                        </tr>
+                        <tr *ngFor="let rows of report.datasets" style="text-align: center;">
+                            <td *ngFor="let row of rows">{{row | translate }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div *ngSwitchCase="'masterDetailTable'">
+                    <table class="table table-responsive table-condensed" style="width: 100%">
+                        <tr>
+                            <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                        </tr>
+                        <tr *ngFor="let rows of report.datasets" style="text-align: center;">
+                            <td *ngFor="let row of rows">{{row | translate }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div *ngSwitchCase="'bar'">
+                    <div class="col-md-6">
+                        <base-chart class="chart"
+                                    [datasets]="report.datasets"
+                                    [labels]="report.labels"
+                                    [options]="report.options"
+                                    [chartType]="report.type"
+                                    (chartClick)="chartClicked($event)"></base-chart>
+                    </div>
+                </div>
+                <div *ngSwitchDefault>
+                    <span>UNKNOWN WIDGET TYPE: {{report.type}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

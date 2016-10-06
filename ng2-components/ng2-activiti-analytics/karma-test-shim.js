@@ -52,7 +52,6 @@ var map = {
     // other libraries
     'rxjs': 'npm:rxjs',
     'ng2-translate': 'npm:ng2-translate',
-
     'ng2-charts' : 'npm:ng2-charts',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
