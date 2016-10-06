@@ -23,7 +23,7 @@
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             // other libraries
             'rxjs': 'npm:rxjs',
-            'moment': 'npm:moment',
+            'moment': 'npm:moment/min/moment.min.js',
             'ng2-charts' : 'npm:ng2-charts',
             'ng2-translate': 'npm:ng2-translate',
             'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
@@ -41,11 +41,6 @@
             'ng2-activiti-processlist': 'npm:ng2-activiti-processlist/dist',
             'ng2-alfresco-userinfo': 'npm:ng2-alfresco-userinfo/dist',
             'ng2-activiti-analytics': 'npm:ng2-activiti-analytics/dist'
-        },
-        meta: {
-            moment: {
-                exports: 'moment'
-            }
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
