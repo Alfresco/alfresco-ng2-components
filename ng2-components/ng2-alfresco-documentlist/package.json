@@ -62,6 +62,7 @@
     "@angular/router": "3.0.0",
     "@angular/upgrade": "2.0.0",
     "@types/node": "^6.0.42",
+    "@types/node": "^6.0.42",
     "alfresco-js-api": "^0.3.1",
     "core-js": "^2.4.1",
     "ng2-alfresco-core": "0.3.2",

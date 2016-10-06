@@ -20,10 +20,8 @@ import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.css']

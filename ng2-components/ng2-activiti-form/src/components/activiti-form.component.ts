@@ -28,7 +28,6 @@ import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
@@ -76,7 +75,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  * @returns {ActivitiForm} .
  */
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css']

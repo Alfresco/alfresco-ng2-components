@@ -1,26 +1,26 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "removeComments": true,
-    "declaration": true,
-    "noLib": false,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "noImplicitAny": false,
-    "noImplicitReturns": false,
-    "noImplicitUseStrict": false,
-    "noFallthroughCasesInSwitch": true,
-    "outDir": "dist",
-    "types": ["core-js", "jasmine"]
-  },
-  "exclude": [
-    "demo",
-    "node_modules",
-    "dist"
-  ]
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "removeComments": true,
+        "declaration": true,
+        "noLib": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "outDir": "dist",
+        "types": ["core-js", "jasmine", "node"]
+    },
+    "exclude": [
+        "demo",
+        "node_modules",
+        "dist"
+    ]
 }

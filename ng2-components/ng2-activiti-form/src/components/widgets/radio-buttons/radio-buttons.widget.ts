@@ -20,11 +20,10 @@ import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'radio-buttons-widget',
     templateUrl: './radio-buttons.widget.html',
     styleUrls: ['./radio-buttons.widget.css']

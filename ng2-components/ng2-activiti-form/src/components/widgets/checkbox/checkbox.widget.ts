@@ -18,11 +18,10 @@
 import { Component } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'checkbox-widget',
     templateUrl: './checkbox.widget.html'
 })

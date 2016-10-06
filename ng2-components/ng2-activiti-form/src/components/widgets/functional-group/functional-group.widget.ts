@@ -20,10 +20,8 @@ import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'functional-group-widget',
     templateUrl: './functional-group.widget.html',
     styleUrls: ['./functional-group.widget.css']

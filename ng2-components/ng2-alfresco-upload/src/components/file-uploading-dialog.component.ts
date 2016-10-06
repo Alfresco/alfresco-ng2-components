@@ -20,8 +20,6 @@ import { FileModel } from '../models/file.model';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
-declare let __moduleName: string;
-
 /**
  * <file-uploading-dialog [filesUploadingList]="FileModel[]" ></file-uploading-dialog>
  *
@@ -35,7 +33,7 @@ declare let __moduleName: string;
  */
 @Component({
     selector: 'file-uploading-dialog',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.css'],
     host: {'[class.dialog-show]': 'toggleShowDialog'}

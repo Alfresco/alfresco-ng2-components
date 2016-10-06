@@ -20,7 +20,6 @@ import { UploadService } from '../services/upload.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
-declare let __moduleName: string;
 declare let componentHandler: any;
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
@@ -36,7 +35,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  */
 @Component({
     selector: 'alfresco-upload-drag-area',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css']
 })

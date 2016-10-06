@@ -18,11 +18,10 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { TabModel } from './../core/index';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'tabs-widget',
     templateUrl: './tabs.widget.html'
 })

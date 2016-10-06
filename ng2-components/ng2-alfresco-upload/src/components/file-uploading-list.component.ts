@@ -19,8 +19,6 @@
 import { Component, ElementRef, Input } from '@angular/core';
 import { FileModel } from '../models/file.model';
 
-declare let __moduleName: string;
-
 /**
  * <alfresco-file-uploading-list [filesUploadingList]="FileModel[]" ></alfresco-file-uploading-list>
  *
@@ -33,7 +31,7 @@ declare let __moduleName: string;
  */
 @Component({
     selector: 'alfresco-file-uploading-list',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './file-uploading-list.component.html',
     styleUrls: ['./file-uploading-list.component.css']
 })

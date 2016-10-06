@@ -18,10 +18,8 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'amount-widget',
     templateUrl: './amount.widget.html',
     styleUrls: ['./amount.widget.css']

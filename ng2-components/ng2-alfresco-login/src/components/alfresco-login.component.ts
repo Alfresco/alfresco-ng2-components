@@ -25,17 +25,16 @@ import {
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'alfresco-login',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './alfresco-login.component.html',
     styleUrls: ['./alfresco-login.component.css']
 })
 export class AlfrescoLoginComponent implements OnInit {
 
-    baseComponentPath = __moduleName.replace('/alfresco-login.component.js', '');
+    baseComponentPath = module.id.replace('/alfresco-login.component.js', '');
 
     isPasswordShow: boolean = false;
 

@@ -19,11 +19,10 @@ import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.css']

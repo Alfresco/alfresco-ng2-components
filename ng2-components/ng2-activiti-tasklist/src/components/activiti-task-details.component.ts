@@ -23,7 +23,6 @@ import { User } from '../models/user.model';
 import { FormModel, FormService } from 'ng2-activiti-form';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
-
 declare let componentHandler: any;
 
 @Component({

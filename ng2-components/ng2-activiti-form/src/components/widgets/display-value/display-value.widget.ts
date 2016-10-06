@@ -21,11 +21,10 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'display-value-widget',
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']

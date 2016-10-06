@@ -16,13 +16,10 @@
  */
 
 import { Component, Input } from '@angular/core';
-
 import { PaginationProvider } from './pagination-provider';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-pagination',
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.css']

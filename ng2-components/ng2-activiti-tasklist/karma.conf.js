@@ -39,7 +39,9 @@ module.exports = function (config) {
       'karma-test-shim.js',
 
       // paths loaded via module imports
-      {pattern: 'dist/**/*.*', included: false, watched: true},
+      {pattern: 'dist/**/*.js', included: false, watched: true},
+      {pattern: 'dist/**/*.html', included: true, served: true, watched: true},
+      {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
 
       // ng2-components
       {pattern: 'node_modules/ng2-activiti-form/dist/**/*.*', included: false, served: true, watched: false},
@@ -96,10 +98,11 @@ module.exports = function (config) {
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'dist/**/!(*spec).js': ['coverage']
+      'dist/**/!(*spec|index|*mock|*model).js': 'coverage'
     },
 
     coverageReporter: {
+      includeAllSources: true,
       dir: 'coverage/',
       subdir: 'report',
       reporters: [
