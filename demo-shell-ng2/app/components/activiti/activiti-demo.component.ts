@@ -79,6 +79,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     processSchemaColumns: any [] = [];
 
     taskFilter: any;
+    report: any;
     processFilter: any;
 
     sub: Subscription;
@@ -138,6 +139,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     onTaskFilterClick(event: FilterRepresentationModel) {
         this.taskFilter = event;
+    }
+
+    onReportClick(event: any) {
+        this.report = event;
     }
 
     onSuccessTaskFilterList(event: any) {

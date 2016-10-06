@@ -63,7 +63,16 @@
             </div>
         </section>
         <section class="mdl-layout__tab-panel" id="report">
-            <div class="page-content"><!-- Your content goes here --></div>
+            <div class="page-content">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
+                        <analytics-report-list (reportClick)="onReportClick($event)"></analytics-report-list>
+                    </div>
+                    <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
+                        <activiti-analytics *ngIf="report" [reportId]="report.id"></activiti-analytics>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 </div>

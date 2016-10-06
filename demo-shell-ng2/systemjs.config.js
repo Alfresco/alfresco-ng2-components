@@ -23,6 +23,8 @@
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             // other libraries
             'rxjs': 'npm:rxjs',
+            'moment': 'npm:moment',
+            'ng2-charts' : 'npm:ng2-charts',
             'ng2-translate': 'npm:ng2-translate',
             'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
             'ng2-alfresco-datatable': 'npm:ng2-alfresco-datatable/dist',
@@ -37,7 +39,13 @@
             'ng2-activiti-tasklist': 'npm:ng2-activiti-tasklist/dist',
             'alfresco-js-api': 'npm:alfresco-js-api/dist',
             'ng2-activiti-processlist': 'npm:ng2-activiti-processlist/dist',
-            'ng2-alfresco-userinfo': 'npm:ng2-alfresco-userinfo/dist'
+            'ng2-alfresco-userinfo': 'npm:ng2-alfresco-userinfo/dist',
+            'ng2-activiti-analytics': 'npm:ng2-activiti-analytics/dist'
+        },
+        meta: {
+            moment: {
+                exports: 'moment'
+            }
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -49,6 +57,7 @@
                 defaultExtension: 'js'
             },
             'ng2-translate': { defaultExtension: 'js' },
+            'ng2-charts': { defaultExtension: 'js' },
 
             'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-datatable': { main: './index.js', defaultExtension: 'js'},
@@ -63,7 +72,8 @@
             'ng2-alfresco-webscript': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-tag': { main: './index.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-            'ng2-alfresco-userinfo': { main: './index.js', defaultExtension: 'js'}
+            'ng2-alfresco-userinfo': { main: './index.js', defaultExtension: 'js'},
+            'ng2-activiti-analytics': { main: './index.js', defaultExtension: 'js'}
         }
     });
 })(this);
