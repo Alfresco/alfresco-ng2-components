@@ -15,62 +15,57 @@
  * limitations under the License.
  */
 
-describe('AlfrescoLogin', () => {
-    it('should be upgraded', () => {
-        expect(true).toBe(true);
-    });
-});
-
-/*
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { DebugElement }    from '@angular/core';
 import {
-    it,
-    describe,
-    expect,
-    inject,
-    beforeEach,
-    beforeEachProviders
-} from '@angular/core/testing';
-import { PLATFORM_PIPES } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    CoreModule
+} from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('AlfrescoLogin', () => {
+    let component: any;
+    let fixture: ComponentFixture<AlfrescoLoginComponent>;
+    let debug: DebugElement;
+    let element: any;
 
-    let componentFixture;
-    let component;
+    let usernameInput, passwordInput;
 
-    beforeEachProviders(() => {
-        return [
-            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
-            { provide: AlfrescoAuthenticationService, useClass: AuthenticationMock },
-            AlfrescoSettingsService,
-            { provide: AlfrescoTranslationService, useClass: TranslationMock }
-        ];
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [AlfrescoLoginComponent],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AlfrescoLoginComponent);
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+
+        usernameInput = element.querySelector('#username');
+        passwordInput = element.querySelector('#password');
+
+        fixture.detectChanges();
     });
 
-    beforeEach(
-        inject(
-            [TestComponentBuilder],
-            (tcb: TestComponentBuilder) => {
-                return tcb
-                    .createAsync(AlfrescoLoginComponent)
-                    .then(fixture => {
-                        componentFixture = fixture;
-                        component = fixture.componentInstance;
-                    });
-            }
-        )
-    );
-
     it('should render Login form with all the keys to be translated', () => {
-        componentFixture.detectChanges();
-
-        let element = componentFixture.nativeElement;
-
         expect(element.querySelector('[for="username"]')).toBeDefined();
         expect(element.querySelector('[for="username"]').innerText).toEqual('LOGIN.LABEL.USERNAME');
 
@@ -91,7 +86,6 @@ describe('AlfrescoLogin', () => {
     });
 
     it('should render user and password input fields with default values', () => {
-        let element = componentFixture.nativeElement;
         expect(element.querySelector('form')).toBeDefined();
         expect(element.querySelector('input[type="password"]')).toBeDefined();
         expect(element.querySelector('input[type="text"]')).toBeDefined();
@@ -100,86 +94,60 @@ describe('AlfrescoLogin', () => {
     });
 
     it('should render validation min-length error when the username is just 1 character', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = '1';
         usernameInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.formError).toBeDefined();
         expect(component.formError.username).toBeDefined();
         expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-        expect(compiled.querySelector('#username-error')).toBeDefined();
-        expect(compiled.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+        expect(element.querySelector('#username-error')).toBeDefined();
+        expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
     });
 
     it('should render validation min-length error when the username is lower than 4 characters', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = '123';
         usernameInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.formError).toBeDefined();
         expect(component.formError.username).toBeDefined();
         expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
-        expect(compiled.querySelector('#username-error')).toBeDefined();
-        expect(compiled.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
+        expect(element.querySelector('#username-error')).toBeDefined();
+        expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
     });
 
     it('should render validation required error when the username is empty and dirty', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = '';
         component.form.controls.username.markAsDirty();
         usernameInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.formError).toBeDefined();
         expect(component.formError.username).toBeDefined();
         expect(component.formError.username).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
-        expect(compiled.querySelector('#username-error')).toBeDefined();
-        expect(compiled.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
+        expect(element.querySelector('#username-error')).toBeDefined();
+        expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-REQUIRED');
     });
 
     it('should render validation required error when the password is empty and dirty', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         passwordInput.value = '';
         component.form.controls.password.markAsDirty();
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.formError).toBeDefined();
         expect(component.formError.password).toBeDefined();
         expect(component.formError.password).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
-        expect(compiled.querySelector('#password-required')).toBeDefined();
-        expect(compiled.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
+        expect(element.querySelector('#password-required')).toBeDefined();
+        expect(element.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
     });
 
     it('should render no validation errors when the username and password are filled', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';
 
@@ -189,22 +157,16 @@ describe('AlfrescoLogin', () => {
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.formError).toBeDefined();
         expect(component.formError.username).toEqual('');
         expect(component.formError.password).toEqual('');
-        expect(compiled.querySelector('#username-error')).toBeNull();
-        expect(compiled.querySelector('#password-required')).toBeNull();
+        expect(element.querySelector('#username-error')).toBeNull();
+        expect(element.querySelector('#password-required')).toBeNull();
     });
 
     it('should render the new values after user and password values are changed', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-change-username';
         passwordInput.value = 'fake-change-password';
 
@@ -214,10 +176,10 @@ describe('AlfrescoLogin', () => {
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        expect(compiled.querySelector('input[type="text"]').value).toEqual('fake-change-username');
-        expect(compiled.querySelector('input[type="password"]').value).toEqual('fake-change-password');
+        expect(element.querySelector('input[type="text"]').value).toEqual('fake-change-username');
+        expect(element.querySelector('input[type="password"]').value).toEqual('fake-change-password');
     });
 
     it('should return success true after the login have succeeded', () => {
@@ -225,23 +187,17 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(false);
         expect(component.success).toBe(false);
 
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';
 
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        compiled.querySelector('button').click();
+        element.querySelector('button').click();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.error).toBe(false);
         expect(component.success).toBe(true);
@@ -252,28 +208,22 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(false);
         expect(component.success).toBe(false);
 
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-wrong-username';
         passwordInput.value = 'fake-password';
 
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        compiled.querySelector('button').click();
+        element.querySelector('button').click();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong password', () => {
@@ -281,28 +231,22 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(component.error).toBe(false);
 
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-wrong-password';
 
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        compiled.querySelector('button').click();
+        element.querySelector('button').click();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should return error with a wrong username and password', () => {
@@ -310,41 +254,30 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(component.error).toBe(false);
 
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-wrong-username';
         passwordInput.value = 'fake-wrong-password';
 
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        compiled.querySelector('button').click();
+        element.querySelector('button').click();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
     });
 
     it('should emit onSuccess event after the login has succeeded', () => {
         spyOn(component.onSuccess, 'emit');
         component.providers = 'ECM';
+
         expect(component.error).toBe(false);
         expect(component.success).toBe(false);
-
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
 
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';
@@ -352,17 +285,21 @@ describe('AlfrescoLogin', () => {
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        compiled.querySelector('button').click();
+        element.querySelector('button').click();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.error).toBe(false);
         expect(component.success).toBe(true);
-        expect(compiled.querySelector('#login-success')).toBeDefined();
-        expect(compiled.querySelector('#login-success').innerHTML).toEqual('LOGIN.MESSAGES.LOGIN-SUCCESS');
-        expect(component.onSuccess.emit).toHaveBeenCalledWith({ token: true, username: 'fake-username', password: 'fake-password' });
+        expect(element.querySelector('#login-success')).toBeDefined();
+        expect(element.querySelector('#login-success').innerHTML).toEqual('LOGIN.MESSAGES.LOGIN-SUCCESS');
+        expect(component.onSuccess.emit).toHaveBeenCalledWith({
+            token: true,
+            username: 'fake-username',
+            password: 'fake-password'
+        });
     });
 
     it('should emit onError event after the login has failed', () => {
@@ -372,57 +309,43 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(component.error).toBe(false);
 
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-wrong-password';
 
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        compiled.querySelector('button').click();
+        element.querySelector('button').click();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
         expect(component.onError.emit).toHaveBeenCalledWith('Fake server error');
     });
 
     it('should render the password in clear when the toggleShowPassword is call', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-
-        componentFixture.detectChanges();
-
         component.isPasswordShow = false;
         component.toggleShowPassword();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.isPasswordShow).toBe(true);
-        expect(compiled.querySelector('#password').type).toEqual('text');
+        expect(element.querySelector('#password').type).toEqual('text');
     });
 
     it('should render the hide password when the password is in clear and the toggleShowPassword is call', () => {
-        let compiled = componentFixture.debugElement.nativeElement;
-
-        componentFixture.detectChanges();
-
         component.isPasswordShow = true;
         component.toggleShowPassword();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.isPasswordShow).toBe(false);
-        expect(compiled.querySelector('#password').type).toEqual('password');
+        expect(element.querySelector('#password').type).toEqual('password');
     });
 
     it('should emit onError event when the providers is undefined', () => {
@@ -431,29 +354,22 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(component.error).toBe(false);
 
-        let compiled = componentFixture.debugElement.nativeElement;
-        let usernameInput = compiled.querySelector('#username');
-        let passwordInput = compiled.querySelector('#password');
-
-        componentFixture.detectChanges();
-
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';
 
         usernameInput.dispatchEvent(new Event('input'));
         passwordInput.dispatchEvent(new Event('input'));
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
-        compiled.querySelector('button').click();
+        element.querySelector('button').click();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
-        expect(compiled.querySelector('#login-error')).toBeDefined();
-        expect(compiled.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
         expect(component.onError.emit).toHaveBeenCalledWith('LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS');
     });
 });
-*/
