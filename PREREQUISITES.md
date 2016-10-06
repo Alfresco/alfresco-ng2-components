@@ -27,10 +27,15 @@ v5.12.0
 To correctly configure Nginx use the following file [nginx.conf](/nginx.conf).
 This will put Activiti, Alfresco and the app dev framework under the same domain.
 
+* ECM : http://localhost:8888/alfresco/
+* BPM : http://localhost:8888/activiti/
+
+To make everything work, you have to change the address of the ECM and BPM. In the demo app you can do that clicking on the top left menu and changing the bottom left options: ECM host and BPM host. 
+
 This configuration assumes few things:
 
 * Port mapping:
-  * NginX entry point: 8888
+  * Nginx entry point: 8888
   * Demo Shell: 3000
   * Alfresco: 8080
   * Activiti: 9999
