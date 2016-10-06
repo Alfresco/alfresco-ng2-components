@@ -15,541 +15,567 @@
  * limitations under the License.
  */
 
-/*
-import { it, describe, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
+
+import {
+   async, inject, TestBed
+} from '@angular/core/testing';
+
+import {
+  MockBackend,
+  MockConnection
+} from '@angular/http/testing';
+
+import {
+  HttpModule,
+  Http,
+  XHRBackend,
+  Response,
+  ResponseOptions
+} from '@angular/http';
 import { WidgetVisibilityService } from './widget-visibility.service';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { WidgetVisibilityModel } from '../models/widget-visibility.model';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
+import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { FormModel, FormValues, FormFieldModel } from '../components/widgets/core/index';
 
-declare let AlfrescoApi: any;
-declare let jasmine: any;
 
-describe('WidgetVisibilityService', () => {
-    let service;
-    let formTest = new FormModel({});
-    let formValues: FormValues = { 'test_1': 'value_1', 'test_2': 'value_2', 'test_3': 'value_1' };
-    let fakeTaskProcessVariableModels = [
-                                {id: 'TEST_VAR_1', type: 'string', value: 'test_value_1'},
-                                {id: 'TEST_VAR_2', type: 'string', value: 'test_value_2'},
-                                {id: 'TEST_VAR_3', type: 'string', value: 'test_value_3'}
-                               ];
+////////  Tests  /////////////
+describe('WidgetVisibilityService (mockBackend)', () => {
+  let formTest = new FormModel({});
+  let fakeTaskProcessVariableModels = [
+                              {id: 'TEST_VAR_1', type: 'string', value: 'test_value_1'},
+                              {id: 'TEST_VAR_2', type: 'string', value: 'test_value_2'},
+                              {id: 'TEST_VAR_3', type: 'string', value: 'test_value_3'}
+                             ];
+  let formValues: FormValues = { 'test_1': 'value_1', 'test_2': 'value_2', 'test_3': 'value_1' };
+  let fakeFormJson = {
+           id: '9999',
+           name: 'FORM_VISIBILITY',
+           processDefinitionId: 'PROCESS_TEST:9:9999',
+           processDefinitionName: 'PROCESS_TEST',
+           processDefinitionKey: 'PROCESS_TEST',
+           taskId: '999',
+           taskName: 'TEST',
+           fields: [
+                    {
+                       fieldType: 'ContainerRepresentation',
+                       id: '000000000000000000',
+                       name: 'Label',
+                       type: 'container',
+                       value: null,
+                       numberOfColumns: 2,
+                       fields: {
+                                 1: [
+                                       {
+                                         fieldType: 'FormFieldRepresentation',
+                                         id: 'FIELD_WITH_CONDITION',
+                                         name: 'FIELD_WITH_CONDITION',
+                                         type: 'text',
+                                         value: 'field_with_condition_value',
+                                         visibilityCondition: null
+                                       },
+                                      {
+                                         fieldType: 'FormFieldRepresentation',
+                                         id: 'LEFT_FORM_FIELD_ID',
+                                         name: 'LEFT_FORM_FIELD_NAME',
+                                         type: 'text',
+                                         value: 'LEFT_FORM_FIELD_VALUE',
+                                         visibilityCondition: null
+                                      }
+                                    ],
+                                 2: [
+                                      {
+                                         fieldType: 'FormFieldRepresentation',
+                                         id: 'RIGHT_FORM_FIELD_ID',
+                                         name: 'RIGHT_FORM_FIELD_NAME',
+                                         type: 'text',
+                                         value: 'RIGHT_FORM_FIELD_VALUE',
+                                         visibilityCondition: null
+                                      }
+                                    ]
+                              }
+                   }
+                  ]
+  };
 
-    let fakeFormJson = {
-             id: '9999',
-             name: 'FORM_VISIBILITY',
-             processDefinitionId: 'PROCESS_TEST:9:9999',
-             processDefinitionName: 'PROCESS_TEST',
-             processDefinitionKey: 'PROCESS_TEST',
-             taskId: '999',
-             taskName: 'TEST',
-             fields: [
-                      {
-                         fieldType: 'ContainerRepresentation',
-                         id: '000000000000000000',
-                         name: 'Label',
-                         type: 'container',
-                         value: null,
-                         numberOfColumns: 2,
-                         fields: {
-                                   1: [
-                                         {
-                                           fieldType: 'FormFieldRepresentation',
-                                           id: 'FIELD_WITH_CONDITION',
-                                           name: 'FIELD_WITH_CONDITION',
-                                           type: 'text',
-                                           value: 'field_with_condition_value',
-                                           visibilityCondition: null
-                                         },
-                                        {
-                                           fieldType: 'FormFieldRepresentation',
-                                           id: 'LEFT_FORM_FIELD_ID',
-                                           name: 'LEFT_FORM_FIELD_NAME',
-                                           type: 'text',
-                                           value: 'LEFT_FORM_FIELD_VALUE',
-                                           visibilityCondition: null
-                                        }
-                                      ],
-                                   2: [
-                                        {
-                                           fieldType: 'FormFieldRepresentation',
-                                           id: 'RIGHT_FORM_FIELD_ID',
-                                           name: 'RIGHT_FORM_FIELD_NAME',
-                                           type: 'text',
-                                           value: 'RIGHT_FORM_FIELD_VALUE',
-                                           visibilityCondition: null
-                                        }
-                                      ]
-                                }
-                     }
-                    ]
-    };
+  beforeEach( async(() => {
+    TestBed.configureTestingModule({
+      imports: [ HttpModule ],
+      providers: [
+        WidgetVisibilityService,
+        AlfrescoSettingsService,
+        { provide: XHRBackend, useClass: MockBackend }
+      ]
+    })
+    .compileComponents();
+  }));
 
-    beforeEachProviders(() => {
-        return [
-            HTTP_PROVIDERS,
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            WidgetVisibilityService
-        ];
-    });
+  it('can instantiate service when inject service',
+    inject([WidgetVisibilityService], (service: WidgetVisibilityService) => {
+      expect(service instanceof WidgetVisibilityService).toBe(true);
+  }));
 
-    beforeEach(
-        inject([WidgetVisibilityService], (activitiService: WidgetVisibilityService) => {
-                jasmine.Ajax.install();
-                service = activitiService;
-                })
-    );
+  it('can instantiate service with "new"', inject([Http], (http: Http) => {
+    expect(http).not.toBeNull('http should be provided');
+    let service = new WidgetVisibilityService(http, null);
+    expect(service instanceof WidgetVisibilityService).toBe(true, 'new service should be ok');
+  }));
 
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
 
-    it('should return the process variables for task', (done) => {
-        service.getTaskProcessVariableModelsForTask(9999).subscribe(
-            (res: TaskProcessVariableModel[]) => {
-                expect(res).toBeDefined();
-                expect(res.length).toEqual(3);
-                expect(res[0].id).toEqual('TEST_VAR_1');
-                expect(res[0].type).toEqual('string');
-                expect(res[0].value).toEqual('test_value_1');
-                done();
-            }
-        );
+  it('can provide the mockBackend as XHRBackend',
+    inject([XHRBackend], (backend: MockBackend) => {
+      expect(backend).not.toBeNull('backend should be provided');
+  }));
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeTaskProcessVariableModels)
+  describe('when service is ready', () => {
+        let backend: MockBackend;
+        let service: WidgetVisibilityService;
+
+        beforeEach(inject([Http, XHRBackend, AlfrescoSettingsService],
+                            (http: Http,
+                             be: MockBackend,
+                             setting: AlfrescoSettingsService) => {
+          backend = be;
+          service = new WidgetVisibilityService(http, setting);
+        }));
+
+        it('should evaluate logic operation for two values', () => {
+              let res: boolean;
+
+              res = service.evaluateLogicalOperation( 'or', true, false);
+
+              expect(res).toBeTruthy();
+
+              res = service.evaluateLogicalOperation( 'and', true, true);
+
+              expect(res).toBeTruthy();
+
+              res = service.evaluateLogicalOperation( 'and-not', true, false);
+
+              expect(res).toBeTruthy();
+
+              res = service.evaluateLogicalOperation( 'or-not', true, true );
+
+              expect(res).toBeTruthy();
+
+              res = service.evaluateLogicalOperation( 'or', false, false );
+
+              expect(res).toBeFalsy();
+
+              res = service.evaluateLogicalOperation( 'and', true, false );
+
+              expect(res).toBeFalsy();
+
+              res = service.evaluateLogicalOperation( 'and-not', false, false );
+
+              expect(res).toBeFalsy();
+
+              res = service.evaluateLogicalOperation( 'or-not', false, true );
+
+              expect(res).toBeFalsy();
         });
-    });
 
-    it('should evaluate logic operation for two values', () => {
-        let res: boolean;
+        it('should evaluate string operation for two values', () => {
+            let res: boolean;
 
-        res = service.evaluateLogicalOperation( 'or', true, false);
+            res = service.evaluateCondition( 'test', 'test', '==');
 
-        expect(res).toBeTruthy();
+            expect(res).toBeTruthy();
 
-        res = service.evaluateLogicalOperation( 'and', true, true);
+            res = service.evaluateCondition( 1, 2, '<');
 
-        expect(res).toBeTruthy();
+            expect(res).toBeTruthy();
 
-        res = service.evaluateLogicalOperation( 'and not', true, false);
+            res = service.evaluateCondition( true, false, '!=' );
 
-        expect(res).toBeTruthy();
+            expect(res).toBeTruthy();
 
-        res = service.evaluateLogicalOperation( 'or not', true, true );
+            res = service.evaluateCondition( 2, 3, '>' );
 
-        expect(res).toBeTruthy();
+            expect(res).toBeFalsy();
 
-        res = service.evaluateLogicalOperation( 'or', false, false );
+            res = service.evaluateCondition( 2, 2, '>=' );
 
-        expect(res).toBeFalsy();
+            expect(res).toBeTruthy();
 
-        res = service.evaluateLogicalOperation( 'and', true, false );
+            res = service.evaluateCondition( 4, 2, '<=' );
 
-        expect(res).toBeFalsy();
+            expect(res).toBeFalsy();
 
-        res = service.evaluateLogicalOperation( 'and not', false, false );
+            res = service.evaluateCondition( null, null, 'empty' );
 
-        expect(res).toBeFalsy();
+            expect(res).toBeTruthy();
 
-        res = service.evaluateLogicalOperation( 'or not', false, true );
+            res = service.evaluateCondition( '', '', 'empty' );
 
-        expect(res).toBeFalsy();
-    });
+            expect(res).toBeTruthy();
 
-    it('should evaluate string operation for two values', () => {
-        let res: boolean;
+            res = service.evaluateCondition( null, null, '!empty' );
 
-        res = service.evaluateCondition( 'test', 'test', '==');
+            expect(res).toBeFalsy();
 
-        expect(res).toBeTruthy();
+            res = service.evaluateCondition( '', '', '!empty' );
 
-        res = service.evaluateCondition( 1, 2, '<');
+            expect(res).toBeFalsy();
+        });
 
-        expect(res).toBeTruthy();
+        it('should return the process variables for task', (done) => {
+            let options = new ResponseOptions({status: 200,
+                                               body: fakeTaskProcessVariableModels });
+            let response = new Response(options);
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-        res = service.evaluateCondition( true, false, '!=' );
 
-        expect(res).toBeTruthy();
+            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                    expect(res).toBeDefined();
+                    expect(res.length).toEqual(3);
+                    expect(res[0].id).toEqual('TEST_VAR_1');
+                    expect(res[0].type).toEqual('string');
+                    expect(res[0].value).toEqual('test_value_1');
+                    done();
+                }
+            );
+        });
 
-        res = service.evaluateCondition( 2, 3, '>' );
+        it('should be able to retrieve the value of a process variable', (done) => {
+           let options = new ResponseOptions({status: 200,
+                                              body: fakeTaskProcessVariableModels });
+           let response = new Response(options);
+           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-        expect(res).toBeFalsy();
+           service.getTaskProcessVariableModelsForTask('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                   expect(res).toBeDefined();
+                   let varValue = service.getValueFromVariable(formTest, 'TEST_VAR_1', res);
+                   expect(varValue).not.toBeUndefined();
+                   expect(varValue).toBe('test_value_1');
+                   done();
+                }
+           );
+        });
 
-        res = service.evaluateCondition( 2, 2, '>=' );
+        it('should be able to retrieve the value of a form variable', () => {
+           let fakeForm = new FormModel({variables: [
+                                                    { name: 'FORM_VARIABLE_TEST',
+                                                      type: 'string',
+                                                      value: 'form_value_test' }
+                                                  ]});
+           let varValue = service.getValueFromVariable(fakeForm, 'FORM_VARIABLE_TEST', null);
 
-        expect(res).toBeTruthy();
+           expect(varValue).not.toBeUndefined();
+           expect(varValue).toBe('form_value_test');
+        });
 
-        res = service.evaluateCondition( 4, 2, '<=' );
+        it('should return undefined if the variable does not exist', (done) => {
+           let options = new ResponseOptions({status: 200,
+                                              body: fakeTaskProcessVariableModels });
+           let response = new Response(options);
+           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-        expect(res).toBeFalsy();
+           service.getTaskProcessVariableModelsForTask('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                   let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR', res);
+                   expect(varValue).toBeUndefined();
+                   done();
+                }
+           );
+        });
 
-        res = service.evaluateCondition( null, null, 'empty' );
+        it('should be able to retrieve a field value searching in the form', () => {
+           let stubFormWithFields = new FormModel(fakeFormJson);
+           let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_WITH_CONDITION');
 
-        expect(res).toBeTruthy();
+           expect(formValue).not.toBeNull();
+           expect(formValue).toBe('field_with_condition_value');
+        });
 
-        res = service.evaluateCondition( '', '', 'empty' );
+        it('should return undefined if the field value is not in the form', () => {
+           let stubFormWithFields = new FormModel(fakeFormJson);
 
-        expect(res).toBeTruthy();
+           let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_MYSTERY');
 
-        res = service.evaluateCondition( null, null, '!empty' );
+           expect(formValue).toBeUndefined();
+        });
 
-        expect(res).toBeFalsy();
+        it('should take the value from form values if it is present', () => {
+           formTest.values = formValues;
 
-        res = service.evaluateCondition( '', '', '!empty' );
+           let formValue = service.getValueOField(formTest, 'test_1');
 
-        expect(res).toBeFalsy();
-    });
+           expect(formValue).not.toBeNull();
+           expect(formValue).toBe('value_1');
+        });
 
+        it('should search in the form if element value is not in form values', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           fakeFormWithField.values = formValues;
 
-    it('should be able to retrieve the value of a process variable', (done) => {
-       service.getTaskProcessVariableModelsForTask(9999).subscribe(
-            (res: TaskProcessVariableModel[]) => {
-               expect(res).toBeDefined();
-               let varValue = service.getValueFromVariable(formTest, 'TEST_VAR_1', res);
-               expect(varValue).not.toBeUndefined();
-               expect(varValue).toBe('test_value_1');
-               done();
-            }
-       );
-       jasmine.Ajax.requests.mostRecent().respondWith({
-           'status': 200,
-           contentType: 'application/json',
-           responseText: JSON.stringify(fakeTaskProcessVariableModels)
-       });
-    });
+           let value = service.getValueOField(fakeFormWithField, 'FIELD_WITH_CONDITION');
 
-    it('should be able to retrieve the value of a form variable', () => {
-       let fakeForm = new FormModel({variables: [
-                                                { name: 'FORM_VARIABLE_TEST',
-                                                  type: 'string',
-                                                  value: 'form_value_test' }
-                                              ]});
-       let varValue = service.getValueFromVariable(fakeForm, 'FORM_VARIABLE_TEST', null);
+           expect(value).not.toBeNull();
+           expect(value).toBe('field_with_condition_value');
+        });
 
-       expect(varValue).not.toBeUndefined();
-       expect(varValue).toBe('form_value_test');
-    });
+        it('should return undefined if the element is not present anywhere', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           fakeFormWithField.values = formValues;
 
+           let formValue = service.getValueOField(fakeFormWithField, 'FIELD_MYSTERY');
 
-    it('should return undefined if the variable does not exist', (done) => {
-       service.getTaskProcessVariableModelsForTask(9999).subscribe(
-            (res: TaskProcessVariableModel[]) => {
-               let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR', res);
-               expect(varValue).toBeUndefined();
-               done();
-            }
-       );
-       jasmine.Ajax.requests.mostRecent().respondWith({
-           'status': 200,
-           contentType: 'application/json',
-           responseText: JSON.stringify(fakeTaskProcessVariableModels)
-       });
+           expect(formValue).toBeUndefined();
+        });
 
+        it('should retrieve the value for the right field when it is a value', () => {
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.rightValue = '100';
 
-    });
+           let rightValue = service.getRightValue(formTest, visibilityObjTest);
 
+           expect(rightValue).toBe('100');
+        });
 
-    it('should be able to retrieve a field value searching in the form', () => {
-       let stubFormWithFields = new FormModel(fakeFormJson);
-       let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_WITH_CONDITION');
+        it('should retrieve the value for the right field when it is a process variable', (done) => {
+           let options = new ResponseOptions({status: 200,
+                                              body: fakeTaskProcessVariableModels });
+           let response = new Response(options);
+           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-       expect(formValue).not.toBeNull();
-       expect(formValue).toBe('field_with_condition_value');
-    });
+           service.getTaskProcessVariableModelsForTask('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                       let visibilityObjTest = new WidgetVisibilityModel();
+                       visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
 
-    it('should return undefined if the field value is not in the form', () => {
-       let stubFormWithFields = new FormModel(fakeFormJson);
+                       let rightValue = service.getRightValue(formTest, visibilityObjTest);
 
-       let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_MYSTERY');
+                       expect(rightValue).not.toBeNull();
+                       expect(rightValue).toBe('test_value_2');
+                       done();
+                }
+           );
+        });
 
-       expect(formValue).toBeUndefined();
-    });
+        it('should retrieve the value for the right field when it is a form variable', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
 
-    it('should take the value from form values if it is present', () => {
-       formTest.values = formValues;
+           let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
-       let formValue = service.getValueOField(formTest, 'test_1');
+           expect(rightValue).not.toBeNull();
+           expect(rightValue).toBe('RIGHT_FORM_FIELD_VALUE');
+        });
 
-       expect(formValue).not.toBeNull();
-       expect(formValue).toBe('value_1');
-    });
+        it('should retrieve right value from form values if it is present', () => {
+           formTest.values = formValues;
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.rightFormFieldId = 'test_2';
 
-    it('should search in the form if element value is not in form values', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       fakeFormWithField.values = formValues;
+           let rightValue = service.getRightValue(formTest, visibilityObjTest);
 
-       let value = service.getValueOField(fakeFormWithField, 'FIELD_WITH_CONDITION');
+           expect(rightValue).not.toBeNull();
+           expect(formTest.values).toEqual(formValues);
+           expect(rightValue).toBe('value_2');
+        });
 
-       expect(value).not.toBeNull();
-       expect(value).toBe('field_with_condition_value');
-    });
+        it('should return undefined for a value that is not on variable or form', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           fakeFormWithField.values = formValues;
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.rightFormFieldId = 'NO_FIELD_FORM';
 
-    it('should return undefined if the element is not present anywhere', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       fakeFormWithField.values = formValues;
+           let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
-       let formValue = service.getValueOField(fakeFormWithField, 'FIELD_MYSTERY');
+           expect(rightValue).toBeUndefined();
+        });
 
-       expect(formValue).toBeUndefined();
-    });
+        it('should retrieve the value for the left field when it is a process variable', (done) => {
+           let options = new ResponseOptions({status: 200,
+                                              body: fakeTaskProcessVariableModels });
+           let response = new Response(options);
+           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-    it('should retrieve the value for the right field when it is a value', () => {
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.rightValue = '100';
-
-       let rightValue = service.getRightValue(formTest, visibilityObjTest);
-
-       expect(rightValue).toBe('100');
-    });
-
-    it('should retrieve the value for the right field when it is a process variable', (done) => {
-       service.getTaskProcessVariableModelsForTask(9999).subscribe(
-            (res: TaskProcessVariableModel[]) => {
+           service.getTaskProcessVariableModelsForTask('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
                    let visibilityObjTest = new WidgetVisibilityModel();
-                   visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+                   visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
 
-                   let rightValue = service.getRightValue(formTest, visibilityObjTest);
+                   let rightValue = service.getLeftValue(formTest, visibilityObjTest);
 
                    expect(rightValue).not.toBeNull();
                    expect(rightValue).toBe('test_value_2');
                    done();
-            }
-       );
-       jasmine.Ajax.requests.mostRecent().respondWith({
-           'status': 200,
-           contentType: 'application/json',
-           responseText: JSON.stringify(fakeTaskProcessVariableModels)
-       });
-    });
+                }
+           );
+        });
 
-    it('should retrieve the value for the right field when it is a form variable', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+        it('should retrieve the value for the left field when it is a form variable', () => {
+           let fakeForm = new FormModel({variables: [
+                                                    { name: 'FORM_VARIABLE_TEST',
+                                                      type: 'string',
+                                                      value: 'form_value_test' }
+                                                  ]});
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.leftRestResponseId = 'FORM_VARIABLE_TEST';
 
-       let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
+           let leftValue = service.getLeftValue(fakeForm, visibilityObjTest);
 
-       expect(rightValue).not.toBeNull();
-       expect(rightValue).toBe('RIGHT_FORM_FIELD_VALUE');
-    });
+           expect(leftValue).not.toBeNull();
+           expect(leftValue).toBe('form_value_test');
+        });
 
-    it('should retrieve right value from form values if it is present', () => {
-       formTest.values = formValues;
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.rightFormFieldId = 'test_2';
+        it('should retrieve the value for the left field when it is a form value', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.leftFormFieldId = 'FIELD_WITH_CONDITION';
 
-       let rightValue = service.getRightValue(formTest, visibilityObjTest);
+           let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-       expect(rightValue).not.toBeNull();
-       expect(formTest.values).toEqual(formValues);
-       expect(rightValue).toBe('value_2');
-    });
+           expect(leftValue).not.toBeNull();
+           expect(leftValue).toBe('field_with_condition_value');
+        });
 
-    it('should return undefined for a value that is not on variable or form', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       fakeFormWithField.values = formValues;
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.rightFormFieldId = 'NO_FIELD_FORM';
+        it('should retrieve left value from form values if it is present', () => {
+           formTest.values = formValues;
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.leftFormFieldId = 'test_2';
 
-       let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
+           let leftValue = service.getLeftValue(formTest, visibilityObjTest);
 
-       expect(rightValue).toBeUndefined();
-    });
+           expect(leftValue).not.toBeNull();
+           expect(leftValue).toBe('value_2');
+        });
 
-    it('should retrieve the value for the left field when it is a process variable', (done) => {
-       service.getTaskProcessVariableModelsForTask(9999).subscribe(
-            (res: TaskProcessVariableModel[]) => {
-               let visibilityObjTest = new WidgetVisibilityModel();
-               visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
+        it('should return undefined for a value that is not on variable or form', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           let visibilityObjTest = new WidgetVisibilityModel();
 
-               let rightValue = service.getLeftValue(formTest, visibilityObjTest);
+           let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-               expect(rightValue).not.toBeNull();
-               expect(rightValue).toBe('test_value_2');
-               done();
-            }
-       );
-       jasmine.Ajax.requests.mostRecent().respondWith({
-           'status': 200,
-           contentType: 'application/json',
-           responseText: JSON.stringify(fakeTaskProcessVariableModels)
-       });
-    });
+           expect(leftValue).toBeUndefined();
+        });
 
-    it('should retrieve the value for the left field when it is a form variable', () => {
-       let fakeForm = new FormModel({variables: [
-                                                { name: 'FORM_VARIABLE_TEST',
-                                                  type: 'string',
-                                                  value: 'form_value_test' }
-                                              ]});
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftRestResponseId = 'FORM_VARIABLE_TEST';
+        it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
+           formTest.values = formValues;
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.leftFormFieldId = 'test_1';
+           visibilityObjTest.operator = '==';
+           visibilityObjTest.rightFormFieldId = 'test_3';
 
-       let leftValue = service.getLeftValue(fakeForm, visibilityObjTest);
+           let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
 
-       expect(leftValue).not.toBeNull();
-       expect(leftValue).toBe('form_value_test');
-    });
+           expect(isVisible).toBeTruthy();
+        });
 
-    it('should retrieve the value for the left field when it is a form value', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = 'FIELD_WITH_CONDITION';
+        it('should evaluate true visibility for the field with single visibility condition between a field and a value', () => {
+           formTest.values = formValues;
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.leftFormFieldId = 'test_1';
+           visibilityObjTest.operator = '==';
+           visibilityObjTest.rightValue = 'value_1';
 
-       let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
+           let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
 
-       expect(leftValue).not.toBeNull();
-       expect(leftValue).toBe('field_with_condition_value');
-    });
+           expect(isVisible).toBeTruthy();
+        });
 
-    it('should retrieve left value from form values if it is present', () => {
-       formTest.values = formValues;
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = 'test_2';
+        it('should evaluate the visibility for the field with single visibility condition between form values', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+           visibilityObjTest.operator = '!=';
+           visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
 
-       let leftValue = service.getLeftValue(formTest, visibilityObjTest);
+           let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
 
-       expect(leftValue).not.toBeNull();
-       expect(leftValue).toBe('value_2');
-    });
+           expect(isVisible).toBeTruthy();
+        });
 
-    it('should return undefined for a value that is not on variable or form', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let visibilityObjTest = new WidgetVisibilityModel();
+        it('should evaluate the visibility for the field between form value and process var', (done) => {
+           let options = new ResponseOptions({status: 200,
+                                              body: fakeTaskProcessVariableModels });
+           let response = new Response(options);
+           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-       let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
+           service.getTaskProcessVariableModelsForTask('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                   let fakeFormWithField = new FormModel(fakeFormJson);
+                   let visibilityObjTest = new WidgetVisibilityModel();
+                   visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+                   visibilityObjTest.operator = '!=';
+                   visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
 
-       expect(leftValue).toBeUndefined();
-    });
+                   let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
 
-    it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
-       formTest.values = formValues;
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = 'test_1';
-       visibilityObjTest.operator = '==';
-       visibilityObjTest.rightFormFieldId = 'test_3';
+                   expect(isVisible).toBeTruthy();
+                   done();
+                }
+           );
+        });
 
-       let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
+        it('should evaluate visibility with multiple conditions', (done) => {
+           let options = new ResponseOptions({status: 200,
+                                              body: fakeTaskProcessVariableModels });
+           let response = new Response(options);
+           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-       expect(isVisible).toBeTruthy();
-    });
+           service.getTaskProcessVariableModelsForTask('9999').subscribe(
+                (res: TaskProcessVariableModel[]) => {
+                   let fakeFormWithField = new FormModel(fakeFormJson);
+                   let visibilityObjTest = new WidgetVisibilityModel();
+                   let chainedVisibilityObj = new WidgetVisibilityModel();
+                   visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
+                   visibilityObjTest.operator = '!=';
+                   visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+                   visibilityObjTest.nextConditionOperator = 'and';
+                   chainedVisibilityObj.leftRestResponseId = 'TEST_VAR_2';
+                   chainedVisibilityObj.operator = '!empty';
+                   visibilityObjTest.nextCondition = chainedVisibilityObj;
 
-    it('should evaluate true visibility for the field with single visibility condition between a field and a value', () => {
-       formTest.values = formValues;
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = 'test_1';
-       visibilityObjTest.operator = '==';
-       visibilityObjTest.rightValue = 'value_1';
+                   let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
 
-       let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
+                   expect(isVisible).toBeTruthy();
+                   done();
+                }
+           );
+        });
 
-       expect(isVisible).toBeTruthy();
-    });
+        it('should return true when the visibility condition is not valid', () => {
+           let visibilityObjTest = new WidgetVisibilityModel();
+           visibilityObjTest.leftFormFieldId = '';
+           visibilityObjTest.leftRestResponseId = '';
+           visibilityObjTest.operator = '!=';
 
-    it('should evaluate the visibility for the field with single visibility condition between form values', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
-       visibilityObjTest.operator = '!=';
-       visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+           let isVisible = service.getVisiblityForField(formTest, visibilityObjTest);
 
-       let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
+           expect(isVisible).toBeTruthy();
+        });
 
-       expect(isVisible).toBeTruthy();
-    });
+        it('should refresh the visibility for a form field object', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           let visibilityObjTest = new WidgetVisibilityModel();
+           fakeFormWithField.values = formValues;
+           visibilityObjTest.leftFormFieldId = 'test_1';
+           visibilityObjTest.operator = '!=';
+           visibilityObjTest.rightFormFieldId = 'test_3';
+           let jsonFieldFake = {id: 'FAKE_FORM_FIELD_ID', value: 'FAKE_FORM_FIELD_VALUE', visibilityCondition: visibilityObjTest};
+           let fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
 
-    it('should evaluate the visibility for the field between form value and process var', (done) => {
-       service.getTaskProcessVariableModelsForTask(9999).subscribe(
-            (res: TaskProcessVariableModel[]) => {
-               let fakeFormWithField = new FormModel(fakeFormJson);
-               let visibilityObjTest = new WidgetVisibilityModel();
-               visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
-               visibilityObjTest.operator = '!=';
-               visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
+           service.refreshVisibilityForField(fakeFormField);
 
-               let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
+           expect(fakeFormField.isVisible).toBeFalsy();
+        });
 
-               expect(isVisible).toBeTruthy();
-               done();
-            }
-       );
-       jasmine.Ajax.requests.mostRecent().respondWith({
-           'status': 200,
-           contentType: 'application/json',
-           responseText: JSON.stringify(fakeTaskProcessVariableModels)
-       });
-    });
-
-
-    it('should evaluate visibility with multiple conditions', (done) => {
-       service.getTaskProcessVariableModelsForTask(9999).subscribe(
-            (res: TaskProcessVariableModel[]) => {
-               let fakeFormWithField = new FormModel(fakeFormJson);
-               let visibilityObjTest = new WidgetVisibilityModel();
-               let chainedVisibilityObj = new WidgetVisibilityModel();
-               visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
-               visibilityObjTest.operator = '!=';
-               visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
-               visibilityObjTest.nextConditionOperator = 'and';
-               chainedVisibilityObj.leftRestResponseId = 'TEST_VAR_2';
-               chainedVisibilityObj.operator = '!empty';
-               visibilityObjTest.nextCondition = chainedVisibilityObj;
-
-               let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
-
-               expect(isVisible).toBeTruthy();
-               done();
-            }
-       );
-       jasmine.Ajax.requests.mostRecent().respondWith({
-           'status': 200,
-           contentType: 'application/json',
-           responseText: JSON.stringify(fakeTaskProcessVariableModels)
-       });
-    });
-
-    it('should return true when the visibility condition is not valid', () => {
-       let visibilityObjTest = new WidgetVisibilityModel();
-       visibilityObjTest.leftFormFieldId = '';
-       visibilityObjTest.leftRestResponseId = '';
-       visibilityObjTest.operator = '!=';
-
-       let isVisible = service.getVisiblityForField(formTest, visibilityObjTest);
-
-       expect(isVisible).toBeTruthy();
-    });
-
-    it('should refresh the visibility for a form field object', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let visibilityObjTest = new WidgetVisibilityModel();
-       fakeFormWithField.values = formValues;
-       visibilityObjTest.leftFormFieldId = 'test_1';
-       visibilityObjTest.operator = '!=';
-       visibilityObjTest.rightFormFieldId = 'test_3';
-       let jsonFieldFake = {id: 'FAKE_FORM_FIELD_ID', value: 'FAKE_FORM_FIELD_VALUE', visibilityCondition: visibilityObjTest};
-       let fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
-
-       service.refreshVisibilityForField(fakeFormField);
-
-       expect(fakeFormField.isVisible).toBeFalsy();
-    });
-
-    it('should not change the isVisible if field does not have visibility condition', () => {
-       let fakeFormWithField = new FormModel(fakeFormJson);
-       let jsonFieldFake = {id: 'FAKE_FORM_FIELD_ID',
-                            value: 'FAKE_FORM_FIELD_VALUE',
-                            visibilityCondition: null
-                            };
-       let fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
-       fakeFormField.isVisible = false;
-       service.refreshVisibilityForField(fakeFormField);
-       expect(fakeFormField.isVisible).toBeFalsy();
-    });
+        it('should not change the isVisible if field does not have visibility condition', () => {
+           let fakeFormWithField = new FormModel(fakeFormJson);
+           let jsonFieldFake = {id: 'FAKE_FORM_FIELD_ID',
+                                value: 'FAKE_FORM_FIELD_VALUE',
+                                visibilityCondition: null
+                                };
+           let fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
+           fakeFormField.isVisible = false;
+           service.refreshVisibilityForField(fakeFormField);
+           expect(fakeFormField.isVisible).toBeFalsy();
+        });
+  });
 });
-*/

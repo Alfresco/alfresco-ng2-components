@@ -23,6 +23,7 @@ export class TabModel extends FormWidgetModel {
 
     id: string;
     title: string;
+    isVisible: boolean = true;
     visibilityCondition: any;
 
     fields: ContainerModel[] = [];
