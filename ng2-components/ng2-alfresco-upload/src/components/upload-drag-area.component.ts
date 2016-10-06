@@ -60,7 +60,7 @@ export class UploadDragAreaComponent {
 
     constructor(private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
     }
 
     ngOnChanges(changes) {
@@ -240,9 +240,11 @@ export class UploadDragAreaComponent {
      * @returns {string} - The message without placeholder
      */
     private formatString(message: string, keys: any []) {
-        let i = keys.length;
-        while (i--) {
-            message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
+        if (message) {
+            let i = keys.length;
+            while (i--) {
+                message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
+            }
         }
         return message;
     }

@@ -17,7 +17,7 @@
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
-describe('AlfrescoDirectiveFileDraggable', () => {
+describe('Test ng2-alfresco-upload FileDraggableDirective', () => {
 
     let component;
 
@@ -101,9 +101,4 @@ describe('AlfrescoDirectiveFileDraggable', () => {
         component._onDragEnter(mockEvent);
         expect(component.getInputFocus()).toBe(true);
     });
-
-
-
-
-
 });

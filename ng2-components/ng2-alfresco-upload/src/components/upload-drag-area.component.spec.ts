@@ -15,47 +15,53 @@
  * limitations under the License.
  */
 
-/*
-import { PLATFORM_PIPES } from '@angular/core';
-import { describe, expect, it, inject, beforeEach, beforeEachProviders } from '@angular/core/testing';
-import { TestComponentBuilder } from '@angular/compiler/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { UploadDragAreaComponent } from './upload-drag-area.component';
-import { AlfrescoTranslationService, AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { DebugElement }    from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    AlfrescoTranslationService,
+    CoreModule
+} from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
-import { HTTP_PROVIDERS } from '@angular/http';
 import { EventEmitter } from '@angular/core';
 
-declare var AlfrescoApi: any;
+describe('Test ng2-alfresco-upload UploadDragArea', () => {
 
-describe('AlfrescoUploadDragArea', () => {
+    let component: any;
+    let fixture: ComponentFixture<UploadDragAreaComponent>;
+    let debug: DebugElement;
+    let element: HTMLElement;
 
-    let componentFixture;
-
-    beforeEach( () => {
-
-    });
-
-    beforeEachProviders(() => {
-        return [
-            HTTP_PROVIDERS,
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService,
-            AlfrescoApiService,
-            { provide: PLATFORM_PIPES, useValue: AlfrescoPipeTranslate, multi: true },
-            { provide: AlfrescoTranslationService, useClass: TranslationMock },
-            UploadService
-        ];
-    });
-
-    beforeEach( inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-        return tcb
-            .createAsync(UploadDragAreaComponent)
-            .then(fixture => componentFixture = fixture);
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule
+            ],
+            declarations: [UploadDragAreaComponent],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                UploadService,
+                { provide: AlfrescoTranslationService, useClass: TranslationMock }
+            ]
+        }).compileComponents();
     }));
 
+    beforeEach(() => {
+        fixture = TestBed.createComponent(UploadDragAreaComponent);
+
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
     it('should show an folder non supported error in console when the file type is empty', () => {
-        let component = componentFixture.componentInstance;
         component.showUdoNotificationBar = false;
         spyOn(console, 'error');
 
@@ -66,7 +72,6 @@ describe('AlfrescoUploadDragArea', () => {
     });
 
     it('should show an folder non supported error in the notification bar when the file type is empty', () => {
-        let component = componentFixture.componentInstance;
         component._showErrorNotificationBar = jasmine.createSpy('_showErrorNotificationBar');
         component.showUdoNotificationBar = true;
 
@@ -77,14 +82,13 @@ describe('AlfrescoUploadDragArea', () => {
     });
 
     it('should upload the list of files dropped', () => {
-        let component = componentFixture.componentInstance;
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
         component.showUdoNotificationBar = false;
         component._uploaderService.addToQueue = jasmine.createSpy('addToQueue');
         component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
         let fileFake = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
         let filesList = [fileFake];
 
@@ -94,14 +98,13 @@ describe('AlfrescoUploadDragArea', () => {
     });
 
     it('should show the loading messages in the notification bar when the files are dropped', () => {
-        let component = componentFixture.componentInstance;
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
         component.showUdoNotificationBar = true;
         component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
         component._showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
         let fileFake = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
         let filesList = [fileFake];
 
@@ -111,11 +114,10 @@ describe('AlfrescoUploadDragArea', () => {
     });
 
     it('should upload a file when dropped', done => {
-        let component = componentFixture.componentInstance;
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.onSuccess = null;
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
         spyOn(component._uploaderService, 'uploadFilesInTheQueue');
         spyOn(component, '_showUndoNotificationBar').and.callFake( () => {
             expect(component._showUndoNotificationBar).toHaveBeenCalled();
@@ -139,11 +141,10 @@ describe('AlfrescoUploadDragArea', () => {
     });
 
     it('should throws an exception and show it in the notification bar when the folder already exist', done => {
-        let component = componentFixture.componentInstance;
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.showUdoNotificationBar = true;
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
         let fakeRest = {
             response: {
                 body: {
@@ -173,11 +174,10 @@ describe('AlfrescoUploadDragArea', () => {
     });
 
     it('should create a folder and call onFilesEntityDropped with the file inside the folder', done => {
-        let component = componentFixture.componentInstance;
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.onSuccess = new EventEmitter();
 
-        componentFixture.detectChanges();
+        fixture.detectChanges();
 
         let itemEntity = {
             fullPath: '/folder-fake/file-fake.png',
@@ -224,4 +224,4 @@ describe('AlfrescoUploadDragArea', () => {
         component.onFolderEntityDropped(folderEntry);
     });
 });
-*/
+
