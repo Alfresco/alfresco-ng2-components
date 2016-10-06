@@ -35,3 +35,7 @@ body, html {
     text-align: center;
     position: relative;
 }
+
+._dialog_overlay {
+    position: static !important;
+}

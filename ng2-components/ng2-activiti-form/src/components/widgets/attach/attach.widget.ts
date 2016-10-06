@@ -24,6 +24,7 @@ import { FormFieldModel } from '../core/form-field.model';
 
 declare let __moduleName: string;
 declare var componentHandler;
+declare let dialogPolyfill: any;
 
 @Component({
     moduleId: __moduleName,
@@ -122,6 +123,11 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     public showDialog() {
         this.setupFileBrowser();
         this.getExternalContentNodes();
+
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
+
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }

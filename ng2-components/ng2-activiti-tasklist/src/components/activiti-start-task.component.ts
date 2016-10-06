@@ -21,6 +21,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 declare let componentHandler: any;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-start-task',
@@ -85,6 +86,9 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }
