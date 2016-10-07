@@ -28,8 +28,10 @@
         "DATE-RANGE-INTERVAL": "Aggregate dates by"
       },
       "TASK-SLA": {
+        "TASK": "Task",
         "PROCESS-DEFINITION": "Process definition",
-        "DATE-RANGE": "Date range"
+        "DATE-RANGE": "Date range",
+        "SLA-DURATION": "What is the time this task needs to be completed in to be within the SLA?"
       }
     },
     "PROCESS-STATUS": "Process status",

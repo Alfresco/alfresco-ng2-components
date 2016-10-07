@@ -1,16 +1,48 @@
-
 <label>{{field.nameKey | translate}}</label><br>
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label date-widget">
-    <input class="mdl-textfield__input"
-           pattern="^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$"
-           type="text"
-           (keyup)="onDateRangeChanged(startDate, endDate)" name="startDate" #startDate required>
-    <label class="mdl-textfield__label" >StartDate (d/M/yyyy)</label>
-</div>
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label date-widget">
-    <input class="mdl-textfield__input"
-           pattern="^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$"
-           type="text"
-           (keyup)="onDateRangeChanged(startDate, endDate)" name="endDate" #endDate required>
-    <label class="mdl-textfield__label" >EndDate (d-M-yyyy)</label>
+<form [formGroup]="dataForm">
+    <fieldset formGroupName="dateRange">
+        <span *ngIf="dataForm.get('dateRange').errors && dataForm.get('dateRange').errors.greaterThan">Error: startDate is greater than
+            endDate</span>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input"
+                           formControlName="startDate"
+                           type="text"
+                           (onOk)="onOkStart(startElement)"
+                           id="startDateInput" #startElement>
+                    <label class="mdl-textfield__label" for="startDateInput">Start Date</label>
+                </div>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col">
+                <button id="startDateButton" class="mdl-button mdl-js-button mdl-button--fab date-picker-mdl">
+                    <i class="material-icons">date_range</i>
+                </button>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input"
+                           formControlName="endDate"
+                           type="text"
+                           (onOk)="onOkEnd(endElement)"
+                           id="endDateInput" #endElement>
+                    <label class="mdl-textfield__label" for="endDateInput">End Date</label>
+                </div>
+            </div>
+            <div class="mdl-cell mdl-cell--2-col">
+                <button id="endDateButton" class="mdl-button mdl-js-button mdl-button--fab date-picker-mdl">
+                    <i class="material-icons">date_range</i>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<div *ngIf="debug">
+    <p>Form : {{ dataForm.value | json }}</p>
+
+    <p>FormGroup : {{ dataForm.get('dateRange').value | json }}</p>
+
+    <p>FormGroup valid : {{ dataForm.get('dateRange').valid }}</p>
+
+    <p>FormGroup status : {{ dataForm.get('dateRange').errors | json }}</p>
 </div>
