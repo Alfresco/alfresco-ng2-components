@@ -25,18 +25,21 @@ import { ActivitiProcessService } from './activiti-process.service';
 
 describe('ActivitiProcessService', () => {
 
-    let service, injector;
+    let service: ActivitiProcessService;
+    let injector: ReflectiveInjector;
+
+    let fakeEmptyFilters = {
+        size: 0, total: 0, start: 0,
+        data: [ ]
+    };
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
             ActivitiProcessService,
-            AlfrescoSettingsService,
             AlfrescoApiService,
-            AlfrescoAuthenticationService
+            AlfrescoAuthenticationService,
+            AlfrescoSettingsService
         ]);
-    });
-
-    beforeEach(() => {
         service = injector.get(ActivitiProcessService);
     });
 
@@ -44,5 +47,26 @@ describe('ActivitiProcessService', () => {
 
         expect(true).toBe(true);
         done();
+    });
+
+    it('should call createDefaultFilters() when the returned filter list is empty', (done) => {
+        spyOn(service, 'createDefaultFilters');
+        spyOn(service, 'callApiGetUserProcessInstanceFilters').and.returnValue(Promise.resolve(fakeEmptyFilters));
+        spyOn(service, 'callApiAddFilter').and.returnValue(Promise.resolve({}));
+
+        service.getProcessFilters(null).subscribe(
+            (res) => {
+                expect(service.createDefaultFilters).toHaveBeenCalled();
+                done();
+            }
+        );
+    });
+
+    it('should return the default filters', () => {
+        spyOn(service, 'addFilter').and.returnValue(Promise.resolve({}));
+        let filters = service.createDefaultFilters(null);
+        expect(service.addFilter).toHaveBeenCalledTimes(3);
+        expect(filters).toBeDefined();
+        expect(filters.length).toEqual(3);
     });
 });

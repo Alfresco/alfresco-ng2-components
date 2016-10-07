@@ -34,7 +34,6 @@ module.exports = function (config) {
 
       'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
 
       'karma-test-shim.js',
 
@@ -47,6 +46,7 @@ module.exports = function (config) {
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.*', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.*', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-activiti-tasklist/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-activiti-form/dist/**/*.js', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},

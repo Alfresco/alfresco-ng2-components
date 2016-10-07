@@ -17,7 +17,7 @@
 
 import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
 import {ProcessInstance} from '../models/process-instance';
-import {TaskQueryRequestRepresentationModel} from '../models/filter.model';
+import {TaskQueryRequestRepresentationModel, UserProcessInstanceFilterRepresentationModel} from '../models/filter.model';
 import {User} from '../models/user.model';
 import {Comment} from '../models/comment.model';
 import {Injectable}     from '@angular/core';
@@ -59,9 +59,100 @@ export class ActivitiProcessService {
         let filterOpts = appId ? {
             appId: appId
         } : {};
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts))
-            .map(this.extractData)
+        return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(filterOpts))
+            .map((response: any) => {
+                let filters: UserProcessInstanceFilterRepresentationModel[] = [];
+                response.data.forEach((filter: UserProcessInstanceFilterRepresentationModel) => {
+                    let filterModel = new UserProcessInstanceFilterRepresentationModel(filter);
+                    filters.push(filterModel);
+                });
+                if (response && response.data && response.data.length === 0) {
+                    return this.createDefaultFilters(appId);
+                }
+                return filters;
+            })
             .catch(this.handleError);
+    }
+
+    /**
+     * Create and return the default filters
+     * @param appId
+     * @returns {UserProcessInstanceFilterRepresentationModel[]}
+     */
+    createDefaultFilters(appId: string): UserProcessInstanceFilterRepresentationModel[] {
+        let filters: UserProcessInstanceFilterRepresentationModel[] = [];
+
+        let involvedTasksFilter = this.getRunningFilterInstance(appId);
+        this.addFilter(involvedTasksFilter);
+        filters.push(involvedTasksFilter);
+
+        let myTasksFilter = this.getCompletedFilterInstance(appId);
+        this.addFilter(myTasksFilter);
+        filters.push(myTasksFilter);
+
+        let queuedTasksFilter = this.getAllFilterInstance(appId);
+        this.addFilter(queuedTasksFilter);
+        filters.push(queuedTasksFilter);
+
+        return filters;
+    }
+
+    /**
+     * Return a static Running filter instance
+     * @param appId
+     * @returns {UserProcessInstanceFilterRepresentationModel}
+     */
+    getRunningFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
+        return new UserProcessInstanceFilterRepresentationModel({
+            'name': 'Running',
+            'appId': appId,
+            'recent': true,
+            'icon': 'glyphicon-random',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'running'}
+        });
+    }
+
+    /**
+     * Return a static Completed filter instance
+     * @param appId
+     * @returns {UserProcessInstanceFilterRepresentationModel}
+     */
+    getCompletedFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
+        return new UserProcessInstanceFilterRepresentationModel({
+            'name': 'Completed',
+            'appId': appId,
+            'recent': false,
+            'icon': 'glyphicon-ok-sign',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed'}
+        });
+    }
+
+    /**
+     * Return a static All filter instance
+     * @param appId
+     * @returns {UserProcessInstanceFilterRepresentationModel}
+     */
+    getAllFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
+        return new UserProcessInstanceFilterRepresentationModel({
+            'name': 'All',
+            'appId': appId,
+            'recent': true,
+            'icon': 'glyphicon-th',
+            'filter': {'sort': 'created-desc', 'name': '', 'state': 'all'}
+        });
+    }
+
+    /**
+     * Add a filter
+     * @param filter - UserProcessInstanceFilterRepresentationModel
+     * @returns {UserProcessInstanceFilterRepresentationModel}
+     */
+    addFilter(filter: UserProcessInstanceFilterRepresentationModel): Observable<UserProcessInstanceFilterRepresentationModel> {
+        return Observable.fromPromise(this.callApiAddFilter(filter))
+            .map(res => res)
+            .map((response: UserProcessInstanceFilterRepresentationModel) => {
+                return response;
+            }).catch(this.handleError);
     }
 
     getProcess(id: string): Observable<ProcessInstance> {
@@ -150,6 +241,14 @@ export class ActivitiProcessService {
             this.authService.getAlfrescoApi().activiti.processApi.deleteProcessInstance(processInstanceId)
             )
             .catch(this.handleError);
+    }
+
+    private callApiGetUserProcessInstanceFilters(filterOpts) {
+        return this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts);
+    }
+
+    private callApiAddFilter(filter: UserProcessInstanceFilterRepresentationModel) {
+        return this.authService.getAlfrescoApi().activiti.userFiltersApi.createUserProcessInstanceFilter(filter);
     }
 
     private extractData(res: any) {
