@@ -15,32 +15,40 @@
  * limitations under the License.
  */
 
-/*
-import { it, inject, describe, expect, beforeEach, beforeEachProviders, afterEach } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { TestBed } from '@angular/core/testing';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService
+} from 'ng2-alfresco-core';
 import { NodeService } from './node.service';
 import { NodeMetadata } from '../models/node-metadata.model';
+import { HttpModule } from '@angular/http';
 import { EcmModelService } from './ecm-model.service';
 
 declare let jasmine: any;
 
 describe('NodeService', () => {
 
-    let nodeService: NodeService;
+    let service: NodeService;
 
-    beforeEachProviders(() => {
-        return [
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
-            NodeService,
-            AlfrescoApiService
-        ];
+    beforeAll(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpModule],
+            providers: [
+                AlfrescoAuthenticationService,
+                AlfrescoSettingsService,
+                NodeService,
+                AlfrescoApiService,
+                EcmModelService
+            ]
+        });
+        service = TestBed.get(NodeService);
     });
 
-    beforeEach(inject([NodeService], (service: NodeService) => {
+    beforeEach(() => {
         jasmine.Ajax.install();
-        nodeService = service;
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
@@ -58,7 +66,7 @@ describe('NodeService', () => {
             }
         };
 
-        nodeService.getNodeMetadata('-nodeid-').subscribe(result => {
+        service.getNodeMetadata('-nodeid-').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('nodes/-nodeid-')).toBeTruthy();
             let node = new NodeMetadata({
                 test: 'test',
@@ -87,7 +95,7 @@ describe('NodeService', () => {
             }
         };
 
-        nodeService.getNodeMetadata('-nodeid-').subscribe(result => {
+        service.getNodeMetadata('-nodeid-').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('nodes/-nodeid-')).toBeTruthy();
             let node = new NodeMetadata({
                 test: 'test',
@@ -116,7 +124,7 @@ describe('NodeService', () => {
             isFolder: true
         };
 
-        nodeService.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary', 'testNode').subscribe(result => {
+        service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary', 'testNode').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('-root-/children')).toBeTruthy();
             expect(result).toEqual(responseBody);
             done();
@@ -135,7 +143,7 @@ describe('NodeService', () => {
             testdata: 'testdata'
         };
 
-        nodeService.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary').subscribe(result => {
+        service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('-root-/children')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties[EcmModelService.MODEL_NAMESPACE + ':test']).toBeDefined();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties[EcmModelService.MODEL_NAMESPACE + ':testdata']).toBeDefined();
@@ -156,7 +164,7 @@ describe('NodeService', () => {
         };
 
 
-        nodeService.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary').subscribe(result => {
+        service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('-root-/children')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toBeDefined();
             done();
@@ -170,4 +178,4 @@ describe('NodeService', () => {
     });
 
 });
-*/
+
