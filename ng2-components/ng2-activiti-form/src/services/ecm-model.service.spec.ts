@@ -15,43 +15,46 @@
  * limitations under the License.
  */
 
-/*
-import { it, inject, describe, expect, beforeEach, beforeEachProviders, afterEach } from '@angular/core/testing';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
-import { NodeService } from './node.service';
+import { TestBed } from '@angular/core/testing';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService
+} from 'ng2-alfresco-core';
 import { EcmModelService } from './ecm-model.service';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { FormModel } from '../components/widgets/core/form.model';
 import { Observable } from 'rxjs/Rx';
+import { FormModel } from '../components/widgets/core/form.model';
+import { HttpModule } from '@angular/http';
 
 declare let jasmine: any;
 
 describe('EcmModelService', () => {
 
-    let ecmModelService: EcmModelService;
+    let service;
 
-    beforeEachProviders(() => {
-        return [
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
-            NodeService,
-            EcmModelService,
-            HTTP_PROVIDERS,
-            AlfrescoApiService
-        ];
+    beforeAll(() => {
+        TestBed.configureTestingModule({
+            imports: [HttpModule],
+            providers: [
+                AlfrescoSettingsService,
+                AlfrescoApiService,
+                AlfrescoAuthenticationService,
+                EcmModelService
+            ]
+        });
+        service = TestBed.get(EcmModelService);
     });
 
-    beforeEach(inject([EcmModelService], (service: EcmModelService) => {
+    beforeEach(() => {
         jasmine.Ajax.install();
-        ecmModelService = service;
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
     });
 
     it('Should fetch ECM models', (done) => {
-        ecmModelService.getEcmModels().subscribe(result => {
+        service.getEcmModels().subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm')).toBeTruthy();
             done();
         });
@@ -67,9 +70,8 @@ describe('EcmModelService', () => {
 
         let modelName = 'modelTest';
 
-        ecmModelService.getEcmType(modelName).subscribe(result => {
+        service.getEcmType(modelName).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + modelName + '/types')).toBeTruthy();
-
             done();
         });
 
@@ -84,11 +86,11 @@ describe('EcmModelService', () => {
 
         let typeName = 'typeTest';
 
-        ecmModelService.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(result => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
+        service.createEcmType(typeName, service.MODEL_NAME, service.TYPE_MODEL).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + service.MODEL_NAME + '/types')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(typeName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).title).toEqual(typeName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(EcmModelService.TYPE_MODEL);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(service.TYPE_MODEL);
             done();
         });
 
@@ -104,11 +106,11 @@ describe('EcmModelService', () => {
         let typeName = 'typeTest:testName@#$*!';
         let cleanName = 'testName';
 
-        ecmModelService.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(result => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
+        service.createEcmType(typeName, service.MODEL_NAME, service.TYPE_MODEL).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + service.MODEL_NAME + '/types')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(cleanName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).title).toEqual(typeName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(EcmModelService.TYPE_MODEL);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(service.TYPE_MODEL);
             done();
         });
 
@@ -129,8 +131,8 @@ describe('EcmModelService', () => {
             }
         };
 
-        ecmModelService.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(result => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + typeName + '?select=props')).toBeTruthy();
+        service.addPropertyToAType(service.MODEL_NAME, typeName, formFields).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + service.MODEL_NAME + '/types/' + typeName + '?select=props')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(typeName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([{
                 name: 'test',
@@ -170,8 +172,8 @@ describe('EcmModelService', () => {
             }
         };
 
-        ecmModelService.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(result => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + cleanName + '?select=props')).toBeTruthy();
+        service.addPropertyToAType(service.MODEL_NAME, typeName, formFields).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + service.MODEL_NAME + '/types/' + cleanName + '?select=props')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(cleanName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([{
                 name: 'test',
@@ -202,7 +204,7 @@ describe('EcmModelService', () => {
 
     it('Should create ECM model', (done) => {
 
-        ecmModelService.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(result => {
+        service.createEcmModel(service.MODEL_NAME, service.MODEL_NAMESPACE).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).status).toEqual('DRAFT');
             done();
@@ -217,8 +219,8 @@ describe('EcmModelService', () => {
 
     it('Should activate ECM model', (done) => {
 
-        ecmModelService.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(result => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm/' + EcmModelService.MODEL_NAME + '?select=status')).toBeTruthy();
+        service.activeEcmModel(service.MODEL_NAME).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm/' + service.MODEL_NAME + '?select=status')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).status).toEqual('ACTIVE');
             done();
         });
@@ -231,113 +233,112 @@ describe('EcmModelService', () => {
     });
 
     it('Should create an ECM type with properties', (done) => {
-        spyOn(ecmModelService, 'createEcmType').and.callFake(() => {
+        spyOn(service, 'createEcmType').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        spyOn(ecmModelService, 'addPropertyToAType').and.callFake(() => {
+        spyOn(service, 'addPropertyToAType').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        ecmModelService.createEcmTypeWithProperties('nameType', new FormModel()).subscribe(result => {
-            expect(ecmModelService.createEcmType).toHaveBeenCalled();
-            expect(ecmModelService.addPropertyToAType).toHaveBeenCalled();
+        service.createEcmTypeWithProperties('nameType', new FormModel()).subscribe(() => {
+            expect(service.createEcmType).toHaveBeenCalled();
+            expect(service.addPropertyToAType).toHaveBeenCalled();
             done();
         });
     });
 
     it('Should return the already existing type', (done) => {
-        spyOn(ecmModelService, 'searchEcmType').and.callFake(() => {
+        spyOn(service, 'searchEcmType').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next({test: 'I-EXIST'});
                 observer.complete();
             });
         });
 
-        spyOn(ecmModelService, 'createEcmTypeWithProperties').and.callFake(() => {
+        spyOn(service, 'createEcmTypeWithProperties').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        ecmModelService.saveFomType('nameType', new FormModel()).subscribe(result => {
-            expect(ecmModelService.searchEcmType).toHaveBeenCalled();
-            expect(ecmModelService.createEcmTypeWithProperties).not.toHaveBeenCalled();
+        service.saveFomType('nameType', new FormModel()).subscribe(() => {
+            expect(service.searchEcmType).toHaveBeenCalled();
+            expect(service.createEcmTypeWithProperties).not.toHaveBeenCalled();
             done();
         });
     });
 
     it('Should create an ECM type with properties if the ecm Type is not defined already', (done) => {
-        spyOn(ecmModelService, 'searchEcmType').and.callFake(() => {
+        spyOn(service, 'searchEcmType').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        spyOn(ecmModelService, 'createEcmTypeWithProperties').and.callFake(() => {
+        spyOn(service, 'createEcmTypeWithProperties').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        ecmModelService.saveFomType('nameType', new FormModel()).subscribe(result => {
-            expect(ecmModelService.searchEcmType).toHaveBeenCalled();
-            expect(ecmModelService.createEcmTypeWithProperties).toHaveBeenCalled();
+        service.saveFomType('nameType', new FormModel()).subscribe(() => {
+            expect(service.searchEcmType).toHaveBeenCalled();
+            expect(service.createEcmTypeWithProperties).toHaveBeenCalled();
             done();
         });
     });
 
     it('Should create an ECM model for the activiti if not defined already', (done) => {
-        spyOn(ecmModelService, 'seachActivitiEcmModel').and.callFake(() => {
+        spyOn(service, 'searchActivitiEcmModel').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        spyOn(ecmModelService, 'createActivitiEcmModel').and.callFake(() => {
+        spyOn(service, 'createActivitiEcmModel').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        ecmModelService.createEcmTypeForActivitiForm('nameType', new FormModel()).subscribe(result => {
-            expect(ecmModelService.seachActivitiEcmModel).toHaveBeenCalled();
-            expect(ecmModelService.createActivitiEcmModel).toHaveBeenCalled();
+        service.createEcmTypeForActivitiForm('nameType', new FormModel()).subscribe(() => {
+            expect(service.searchActivitiEcmModel).toHaveBeenCalled();
+            expect(service.createActivitiEcmModel).toHaveBeenCalled();
             done();
         });
     });
 
     it('If a model for the activiti is already define has to save the new type', (done) => {
-        spyOn(ecmModelService, 'seachActivitiEcmModel').and.callFake(() => {
+        spyOn(service, 'searchActivitiEcmModel').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next({test: 'I-EXIST'});
                 observer.complete();
             });
         });
 
-        spyOn(ecmModelService, 'saveFomType').and.callFake(() => {
+        spyOn(service, 'saveFomType').and.callFake(() => {
             return Observable.create(observer => {
                 observer.next();
                 observer.complete();
             });
         });
 
-        ecmModelService.createEcmTypeForActivitiForm('nameType', new FormModel()).subscribe(result => {
-            expect(ecmModelService.seachActivitiEcmModel).toHaveBeenCalled();
-            expect(ecmModelService.saveFomType).toHaveBeenCalled();
+        service.createEcmTypeForActivitiForm('nameType', new FormModel()).subscribe(() => {
+            expect(service.searchActivitiEcmModel).toHaveBeenCalled();
+            expect(service.saveFomType).toHaveBeenCalled();
             done();
         });
     });
 });
-*/

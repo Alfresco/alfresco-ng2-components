@@ -20,7 +20,6 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { FormModel } from '../components/widgets/core/form.model';
-import { NodeService } from './node.service';
 
 @Injectable()
 export class EcmModelService {
@@ -31,13 +30,12 @@ export class EcmModelService {
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private http: Http,
-                public alfrescoSettingsService: AlfrescoSettingsService,
-                private nodeService: NodeService) {
+                public alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
         return Observable.create(observer => {
-            this.seachActivitiEcmModel().subscribe(
+            this.searchActivitiEcmModel().subscribe(
                 model => {
                     if (!model) {
                         this.createActivitiEcmModel(formName, form).subscribe(typeForm => {
@@ -57,7 +55,7 @@ export class EcmModelService {
 
     }
 
-    seachActivitiEcmModel() {
+    searchActivitiEcmModel() {
         return this.getEcmModels().map(function (ecmModels: any) {
             return ecmModels.list.entries.find(model => model.entry.name === EcmModelService.MODEL_NAME);
         });

@@ -24,7 +24,7 @@ import { EcmModelService } from './src/services/ecm-model.service';
 import { NodeService } from './src/services/node.service';
 import { WidgetVisibilityService } from './src/services/widget-visibility.service';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
-
+import { HttpModule } from '@angular/http';
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 
 export * from './src/components/activiti-form.component';
@@ -48,7 +48,8 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        HttpModule
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES
