@@ -22,6 +22,7 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 
 declare var componentHandler;
+declare var moment: any;
 
 @Component({
     moduleId: module.id,
@@ -82,6 +83,14 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                                 this.loadRestFieldValue();
                             } else {
                                 this.loadRadioButtonValue();
+                            }
+                            break;
+                        case FormFieldTypes.DATE:
+                            if (this.value) {
+                                let d = moment(this.value.split('T')[0]);
+                                if (d.isValid()) {
+                                    this.value = d.format('D-M-YYYY');
+                                }
                             }
                             break;
                         default:
