@@ -24,7 +24,6 @@ import { UploadButtonComponent } from './src/components/upload-button.component'
 import { FileUploadingDialogComponent } from './src/components/file-uploading-dialog.component';
 import { FileUploadingListComponent } from './src/components/file-uploading-list.component';
 import { UploadService } from './src/services/upload.service';
-import { TranslateModule } from 'ng2-translate';
 
 /**
  * ng2-alfresco-upload, provide components to upload files to alfresco repository.
@@ -63,8 +62,7 @@ export const UPLOAD_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule,
-        TranslateModule.forRoot()
+        CoreModule
     ],
     declarations: [
         ...UPLOAD_DIRECTIVES
