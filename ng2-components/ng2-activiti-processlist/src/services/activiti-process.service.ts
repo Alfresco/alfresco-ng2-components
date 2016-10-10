@@ -79,7 +79,7 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {UserProcessInstanceFilterRepresentationModel[]}
      */
-    createDefaultFilters(appId: string): UserProcessInstanceFilterRepresentationModel[] {
+    private createDefaultFilters(appId: string): UserProcessInstanceFilterRepresentationModel[] {
         let filters: UserProcessInstanceFilterRepresentationModel[] = [];
 
         let involvedTasksFilter = this.getRunningFilterInstance(appId);

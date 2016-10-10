@@ -21,16 +21,27 @@ import {
     AlfrescoSettingsService,
     AlfrescoApiService
 } from 'ng2-alfresco-core';
+import { UserProcessInstanceFilterRepresentationModel } from '../models/filter.model';
 import { ActivitiProcessService } from './activiti-process.service';
 
 describe('ActivitiProcessService', () => {
 
     let service: ActivitiProcessService;
+    let authenticationService: AlfrescoAuthenticationService;
     let injector: ReflectiveInjector;
 
     let fakeEmptyFilters = {
         size: 0, total: 0, start: 0,
         data: [ ]
+    };
+
+    let fakeApi = {
+        activiti: {
+            userFiltersApi: {
+                getUserProcessInstanceFilters: (filterOpts) => Promise.resolve({}),
+                createUserProcessInstanceFilter: (filter: UserProcessInstanceFilterRepresentationModel) => Promise.resolve(filter)
+            }
+        }
     };
 
     beforeEach(() => {
@@ -41,32 +52,42 @@ describe('ActivitiProcessService', () => {
             AlfrescoSettingsService
         ]);
         service = injector.get(ActivitiProcessService);
+        authenticationService = injector.get(AlfrescoAuthenticationService);
     });
 
-    it('should get process instances', (done) => {
+    xit('should get process instances', (done) => {
 
         expect(true).toBe(true);
         done();
     });
 
-    it('should call createDefaultFilters() when the returned filter list is empty', (done) => {
-        spyOn(service, 'createDefaultFilters');
-        spyOn(service, 'callApiGetUserProcessInstanceFilters').and.returnValue(Promise.resolve(fakeEmptyFilters));
-        spyOn(service, 'callApiAddFilter').and.returnValue(Promise.resolve({}));
+    it('should return the default filters when none are returned by the API', (done) => {
+        spyOn(fakeApi.activiti.userFiltersApi, 'getUserProcessInstanceFilters').
+            and.returnValue(Promise.resolve(fakeEmptyFilters));
+        spyOn(fakeApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter').
+            and.returnValue(Promise.resolve({}));
+        spyOn(authenticationService, 'getAlfrescoApi').and.returnValue(fakeApi);
 
         service.getProcessFilters(null).subscribe(
             (res) => {
-                expect(service.createDefaultFilters).toHaveBeenCalled();
+                expect(fakeApi.activiti.userFiltersApi.createUserProcessInstanceFilter).toHaveBeenCalledTimes(3);
                 done();
             }
         );
     });
 
-    it('should return the default filters', () => {
-        spyOn(service, 'addFilter').and.returnValue(Promise.resolve({}));
-        let filters = service.createDefaultFilters(null);
-        expect(service.addFilter).toHaveBeenCalledTimes(3);
-        expect(filters).toBeDefined();
-        expect(filters.length).toEqual(3);
+    it('should create the default filters when none are returned by the API', (done) => {
+        spyOn(fakeApi.activiti.userFiltersApi, 'getUserProcessInstanceFilters').
+        and.returnValue(Promise.resolve(fakeEmptyFilters));
+        spyOn(fakeApi.activiti.userFiltersApi, 'createUserProcessInstanceFilter').
+        and.returnValue(Promise.resolve({}));
+        spyOn(authenticationService, 'getAlfrescoApi').and.returnValue(fakeApi);
+
+        service.getProcessFilters(null).subscribe(
+            (res) => {
+                expect(res.length).toBe(3);
+                done();
+            }
+        );
     });
 });
