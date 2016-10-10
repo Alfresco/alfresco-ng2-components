@@ -20,7 +20,8 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportModel, ReportQuery, ParameterValueModel, ReportParameterModel } from '../models/report.model';
 import { Chart } from '../models/chart.model';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
     moduleId: module.id,
@@ -48,8 +49,13 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
 
     reports: any[];
 
+    reportForm: FormGroup;
+
+    debug: boolean = true;
+
     constructor(private translate: AlfrescoTranslationService,
-                private analyticsService: AnalyticsService) {
+                private analyticsService: AnalyticsService,
+                private formBuilder: FormBuilder ) {
         console.log('AnalyticsComponent');
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-analytics/src');
@@ -57,7 +63,13 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
     }
 
     ngOnInit() {
-
+        let today = moment().format('YYYY-MM-DD');
+        this.reportForm = this.formBuilder.group({
+            dateRange: this.formBuilder.group({
+                startDate: [today, Validators.required],
+                endDate: [today, Validators.required]
+            })
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {

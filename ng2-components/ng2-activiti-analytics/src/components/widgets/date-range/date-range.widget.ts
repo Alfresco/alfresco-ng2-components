@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { AbstractControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 import * as moment from 'moment';
 
@@ -45,13 +45,16 @@ export class DateRangeWidget extends WidgetComponent {
     @ViewChild('endElement')
     endElement: any;
 
+    @Input('group')
+    public dateRange: FormGroup;
+
     @Input()
     field: any;
 
     @Output()
     dateRangeChanged: EventEmitter<any> = new EventEmitter<any>();
 
-    dataForm: FormGroup;
+    debug: boolean = true;
 
     dialogStart: any = new mdDateTimePicker.default({
         type: 'date',
@@ -62,8 +65,6 @@ export class DateRangeWidget extends WidgetComponent {
         type: 'date',
         future: moment().add(21, 'years')
     });
-
-    debug: boolean = false;
 
     constructor(public elementRef: ElementRef,
                 private formBuilder: FormBuilder) {
@@ -77,15 +78,8 @@ export class DateRangeWidget extends WidgetComponent {
     }
 
     initForm() {
-        let today = moment().format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
-        this.dataForm = this.formBuilder.group({
-            dateRange: this.formBuilder.group({
-                startDate: [today, Validators.required],
-                endDate: [today, Validators.required]
-            }, {validator: dateCheck})
-        });
-        this.dataForm.valueChanges.subscribe(data => this.onValueChanged(data));
-        this.dataForm.controls['dateRange'].valueChanges.subscribe(data => this.onGroupValueChanged(data));
+        this.dateRange.setValidators(dateCheck);
+        this.dateRange.valueChanges.subscribe(data => this.onGroupValueChanged(data));
     }
 
     initSartDateDialog() {
@@ -108,8 +102,7 @@ export class DateRangeWidget extends WidgetComponent {
 
     onOkStart(inputEl: HTMLInputElement) {
         let date = this.dialogStart.time.format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
-        let dateRange: any = this.dataForm.controls['dateRange'];
-        dateRange.patchValue({
+        this.dateRange.patchValue({
             startDate: date
         });
         let materialElemen: any = inputEl.parentElement;
@@ -120,8 +113,7 @@ export class DateRangeWidget extends WidgetComponent {
 
     onOkEnd(inputEl: HTMLInputElement) {
         let date = this.dialogEnd.time.format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
-        let dateRange: any = this.dataForm.controls['dateRange'];
-        dateRange.patchValue({
+        this.dateRange.patchValue({
             endDate: date
         });
 
@@ -132,19 +124,9 @@ export class DateRangeWidget extends WidgetComponent {
     }
 
     onGroupValueChanged(data: any) {
-        if (this.dataForm.controls['dateRange'].valid) {
-            let dateRange: any = this.dataForm.controls['dateRange'];
-            let dateStart = this.convertMomentDate(dateRange.controls['startDate'].value);
-            // let endStart = this.convertMomentDate(this.dataForm.controls['endDate'].value);
-            console.log(dateStart);
-        }
-    }
-
-    onValueChanged(data: any) {
-        if (this.dataForm.valid) {
-            let dateRange: any = this.dataForm.controls['dateRange'];
-            let dateStart = this.convertMomentDate(dateRange.controls['startDate'].value);
-            let endStart = this.convertMomentDate(dateRange.controls['endDate'].value);
+        if (this.dateRange.valid) {
+            let dateStart = this.convertMomentDate(this.dateRange.controls['startDate'].value);
+            let endStart = this.convertMomentDate(this.dateRange.controls['endDate'].value);
             this.dateRangeChanged.emit({startDate: dateStart, endDate: endStart});
         }
     }
@@ -152,5 +134,4 @@ export class DateRangeWidget extends WidgetComponent {
     public convertMomentDate(date: string) {
         return moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI, true).format(DateRangeWidget.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
-
 }

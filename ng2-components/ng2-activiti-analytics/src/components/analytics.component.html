@@ -1,6 +1,6 @@
 <div class="col-md-6">
     <div *ngIf="reportDetails">
-        <form>
+        <form [formGroup]="reportForm" novalidate>
         <h1>{{reportDetails.name}}</h1>
         <div *ngFor="let field of reportDetails.definition.parameters">
             <div [ngSwitch]="field.type">
@@ -36,7 +36,7 @@
                 </div>
                 <div *ngSwitchCase="'dateRange'">
                     <br>
-                    <date-range-widget [field]="field"
+                    <date-range-widget [field]="field" [group]="reportForm.controls.dateRange"
                                        (dateRangeChanged)="onDateRangeChange($event)"></date-range-widget>
                 </div>
                 <div *ngSwitchCase="'dateInterval'">
@@ -53,6 +53,12 @@
             <button type="submit" class="mdl-button mdl-js-button mdl-button--fab" (click)="createReport()" >
                 <i class="material-icons">refresh</i>
             </button>
+        <div *ngIf="debug">
+            <p>ReportForm : {{ reportForm.value | json }}</p>
+            <p>ReportForm valid : {{ reportForm.valid }}</p>
+            <p>ReportForm status : {{ reportForm.errors | json }}</p>
+            <p>ReportForm FormGroup valid : {{ reportForm.controls.dateRange.valid | json }}</p>
+        </div>
         </form>
 
         <div *ngFor="let report of reports">
