@@ -85,7 +85,9 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         this.analyticsService.getParamsReports(reportId).subscribe(
             (res: ReportModel) => {
                 this.reportDetails = res;
-                this.retriveParameterOptions();
+                if (this.reportDetails.hasParameters()) {
+                    this.retriveParameterOptions(this.reportDetails.definition.parameters);
+                }
                 this.onSuccess.emit(res);
             },
             (err: any) => {
@@ -96,8 +98,8 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         );
     }
 
-    private retriveParameterOptions() {
-        this.reportDetails.definition.parameters.forEach((param) => {
+    private retriveParameterOptions(parameters: ReportParameterModel[]) {
+        parameters.forEach((param) => {
             this.analyticsService.getParamValuesByType(param.type).subscribe(
                 (opts: ParameterValueModel[]) => {
                     param.options = opts;
