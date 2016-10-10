@@ -16,16 +16,30 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AnalyticsComponent } from './analytics.component';
-import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
 
-describe('Test ng2-alfresco-analytics analytics component ', () => {
+import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
+import { AnalyticsComponent } from '../components/analytics.component';
+import { WIDGET_DIRECTIVES } from '../components/widgets/index';
+import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+
+import { AnalyticsService } from '../services/analytics.service';
+
+import { DebugElement }    from '@angular/core';
+
+export const ANALYTICS_DIRECTIVES: any[] = [
+    AnalyticsComponent,
+    AnalyticsReportListComponent,
+    WIDGET_DIRECTIVES
+];
+export const ANALYTICS_PROVIDERS: any[] = [
+    AnalyticsService
+];
+
+
+describe('Show component HTML', () => {
 
     let component: any;
     let fixture: ComponentFixture<AnalyticsComponent>;
@@ -37,25 +51,26 @@ describe('Test ng2-alfresco-analytics analytics component ', () => {
             imports: [
                 CoreModule
             ],
-            declarations: [AnalyticsComponent],
+            declarations: [
+                ...ANALYTICS_DIRECTIVES,
+                ...CHART_DIRECTIVES
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService
+                ...ANALYTICS_PROVIDERS
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AnalyticsComponent);
-
+        component = fixture.componentInstance;
         debug = fixture.debugElement;
         element = fixture.nativeElement;
-        component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
-    xit('No test', () => {
+    it('Display component tag base-chart', () => {
+        expect(true).toBe(true);
     });
-});
 
+});
