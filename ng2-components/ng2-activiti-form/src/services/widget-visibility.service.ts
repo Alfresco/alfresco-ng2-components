@@ -92,7 +92,7 @@ export class WidgetVisibilityService {
         if (visibilityObj.leftRestResponseId) {
             return this.getValueFromVariable(form, visibilityObj.leftRestResponseId, this.processVarList);
         }
-        return this.getValueOField(form, visibilityObj.leftFormFieldId);
+        return this.getFieldValueFromForm(form, visibilityObj.leftFormFieldId);
     }
 
     getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
@@ -100,14 +100,14 @@ export class WidgetVisibilityService {
         if (visibilityObj.rightRestResponseId) {
             valueFound = this.getValueFromVariable(form, visibilityObj.rightRestResponseId, this.processVarList);
         } else if (visibilityObj.rightFormFieldId) {
-            valueFound = this.getValueOField(form, visibilityObj.rightFormFieldId);
+            valueFound = this.getFieldValueFromForm(form, visibilityObj.rightFormFieldId);
         } else {
             valueFound = visibilityObj.rightValue;
         }
         return valueFound;
     }
 
-    getValueOField(form: FormModel, field: string) {
+    getFieldValueFromForm(form: FormModel, field: string) {
         let value = this.getValueFromFormValues(form.values, field);
         value = value && value.id ? value.id : value;
         return value ? value  : this.getFormValueByName(form, field);
