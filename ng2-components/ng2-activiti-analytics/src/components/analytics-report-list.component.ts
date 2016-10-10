@@ -65,7 +65,9 @@ export class AnalyticsReportListComponent implements  OnInit {
     getReportListByAppId() {
         this.analyticsService.getReportList().subscribe(
             (res: ReportModel[]) => {
-                this.reports = res;
+                res.forEach((report) => {
+                    this.reportObserver.next(report);
+                });
                 this.onSuccess.emit(res);
             },
             (err: any) => {
