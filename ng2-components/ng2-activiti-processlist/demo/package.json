@@ -5,7 +5,7 @@
   "author": "Will Abson",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf dist node_modules",
+    "clean": "npm install rimraf && rimraf dist node_modules typings dist",
     "postinstall": "npm run typings && npm run build",
     "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run server\" ",
     "server": "wsrv -o -s -l",

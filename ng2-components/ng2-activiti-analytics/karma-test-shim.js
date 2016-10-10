@@ -52,10 +52,11 @@ var map = {
     // other libraries
     'rxjs': 'npm:rxjs',
     'ng2-translate': 'npm:ng2-translate',
-
     'ng2-charts' : 'npm:ng2-charts',
+    'moment' : 'npm:moment/min/moment.min.js',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
+    'ng2-activiti-analytics': 'npm:ng2-activiti-analytics/dist',
     'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist'
 };
 
@@ -63,9 +64,11 @@ var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
     'rxjs': {  defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
+    'ng2-charts': { defaultExtension: 'js' },
+    'moment': { defaultExtension: 'js' },
 
-    'ng2-charts' : '/base/node_modules/ng2-charts',
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
+    'ng2-activiti-analytics': { main: './index.js', defaultExtension: 'js'},
     'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'}
 };
 
@@ -83,17 +86,17 @@ System.import('@angular/core/testing')
 
 function initTestBed(){
     return Promise.all([
-            System.import('@angular/core/testing'),
-            System.import('@angular/platform-browser-dynamic/testing')
-        ])
-        .then(function (providers) {
-            var coreTesting    = providers[0];
-            var browserTesting = providers[1];
+        System.import('@angular/core/testing'),
+        System.import('@angular/platform-browser-dynamic/testing')
+    ])
+    .then(function (providers) {
+        var coreTesting    = providers[0];
+        var browserTesting = providers[1];
 
-            coreTesting.TestBed.initTestEnvironment(
-                browserTesting.BrowserDynamicTestingModule,
-                browserTesting.platformBrowserDynamicTesting());
-        })
+        coreTesting.TestBed.initTestEnvironment(
+            browserTesting.BrowserDynamicTestingModule,
+            browserTesting.platformBrowserDynamicTesting());
+    })
 }
 
 // Import all spec files and start karma
@@ -102,6 +105,6 @@ function initTesting () {
         allSpecFiles.map(function (moduleName) {
             return System.import(moduleName);
         })
-        )
-        .then(__karma__.start, __karma__.error);
+    )
+    .then(__karma__.start, __karma__.error);
 }
