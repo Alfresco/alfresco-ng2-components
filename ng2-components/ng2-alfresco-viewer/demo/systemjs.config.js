@@ -42,7 +42,7 @@
 
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
             'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-tag': { main: './index.js', defaultExtension: 'js'}
+            'ng2-alfresco-viewer': { main: './index.js', defaultExtension: 'js'}
         }
     });
 })(this);
