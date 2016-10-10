@@ -1,0 +1,48 @@
+<label>{{field.nameKey | translate}}</label><br>
+<div [formGroup]="dateRange">
+    <small *ngIf="dateRange.errors && dateRange.errors.greaterThan" [hidden]="!dateRange.errors" class="text-danger">
+        Start date must be less than End date
+    </small>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input"
+                       formControlName="startDate"
+                       type="text"
+                       (onOk)="onOkStart(startElement)"
+                       id="startDateInput" #startElement>
+                <label class="mdl-textfield__label" for="startDateInput">Start Date</label>
+                <small [hidden]="dateRange.controls.startDate.valid" class="text-danger">
+                    Start is required
+                </small>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col">
+            <button id="startDateButton" class="mdl-button mdl-js-button mdl-button--fab date-picker-mdl">
+                <i class="material-icons">date_range</i>
+            </button>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input"
+                       formControlName="endDate"
+                       type="text"
+                       (onOk)="onOkEnd(endElement)"
+                       id="endDateInput" #endElement>
+                <label class="mdl-textfield__label" for="endDateInput">End Date</label>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col">
+            <button id="endDateButton" class="mdl-button mdl-js-button mdl-button--fab date-picker-mdl">
+                <i class="material-icons">date_range</i>
+            </button>
+        </div>
+    </div>
+</div>
+<div *ngIf="debug">
+    <p>FormGroup : {{ dateRange.value | json }}</p>
+    <p>FormGroup valid : {{ dateRange.valid }}</p>
+    <p>FormGroup status : {{ dateRange.errors | json }}</p>
+    <p>FormGroup start status : {{ dateRange.controls.startDate.errors | json }}</p>
+    <p>FormGroup end status: {{ dateRange.controls.endDate.errors | json }}</p>
+</div>
