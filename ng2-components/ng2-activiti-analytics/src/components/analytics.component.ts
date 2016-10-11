@@ -20,8 +20,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportModel, ReportQuery, ParameterValueModel, ReportParameterModel } from '../models/report.model';
 import { Chart } from '../models/chart.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as moment from 'moment';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
@@ -63,12 +62,8 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
     }
 
     ngOnInit() {
-        let today = moment().format('YYYY-MM-DD');
         this.reportForm = this.formBuilder.group({
-            dateRange: this.formBuilder.group({
-                startDate: [today, Validators.required],
-                endDate: [today, Validators.required]
-            })
+            dateRange: new FormGroup({})
         });
     }
 
@@ -86,33 +81,36 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
             (res: ReportModel) => {
                 this.reportDetails = res;
                 if (this.reportDetails.hasParameters()) {
-                    this.retriveParameterOptions(this.reportDetails.definition.parameters);
+                    this.retrieveParameterOptions(this.reportDetails.definition.parameters);
+                } else {
+                    this.onSuccess.emit(res);
                 }
-                this.onSuccess.emit(res);
             },
             (err: any) => {
-                this.onError.emit(err);
                 console.log(err);
+                this.onError.emit(err);
             },
-            () => console.log('Login done')
+            () => console.log('retrive done')
         );
     }
 
-    private retriveParameterOptions(parameters: ReportParameterModel[]) {
+    private retrieveParameterOptions(parameters: ReportParameterModel[]) {
         parameters.forEach((param) => {
             this.analyticsService.getParamValuesByType(param.type).subscribe(
                 (opts: ParameterValueModel[]) => {
                     param.options = opts;
+                    this.onSuccess.emit(this.reportDetails);
                 },
                 (err: any) => {
                     console.log(err);
+                    this.onError.emit(err);
                 },
                 () => console.log(`${param.type} options loaded`)
             );
         });
     }
 
-    public createReport() {
+    public showReport() {
         this.analyticsService.getReportsByParams(this.reportDetails.id, this.reportParamQuery).subscribe(
             (res: Chart[]) => {
                 this.reports = res;
