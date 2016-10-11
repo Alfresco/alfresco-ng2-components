@@ -68,7 +68,6 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TagNodeList);
-        component = fixture.componentInstance;
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -124,6 +123,12 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
                 expect(jasmine.Ajax.requests.mostRecent().url).
                 toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags/0ee933fa-57fc-4587-8a77-b787e814f1d2');
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('DELETE');
+
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200,
+                    contentType: 'json'
+                });
+
                 done();
             });
 
