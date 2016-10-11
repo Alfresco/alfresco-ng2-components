@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { TextFieldWidgetComponent } from './../textfield-widget.component';
 
 @Component({
@@ -24,10 +24,33 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.css']
 })
-export class DateWidget extends TextFieldWidgetComponent {
+export class DateWidget extends TextFieldWidgetComponent implements OnInit {
+
+    datePicker: any = new mdDateTimePicker.default({
+        type: 'date',
+        future: moment().add(21, 'years')
+    });
 
     constructor(elementRef: ElementRef) {
         super(elementRef);
+    }
+
+    ngOnInit() {
+        if (this.field.value) {
+            this.datePicker.time = moment(this.field.value, 'D-M-YYYY');
+        }
+        this.datePicker.trigger = this.elementRef.nativeElement.querySelector('#dateInput');
+    }
+
+    onDateChanged() {
+        if (this.field.value) {
+            this.datePicker.time = moment(this.field.value, 'D-M-YYYY');
+        }
+        this.checkVisibility(this.field);
+    }
+
+    onDateSelected() {
+        this.field.value = this.datePicker.time.format('DD-MM-YYYY');
     }
 
 }
