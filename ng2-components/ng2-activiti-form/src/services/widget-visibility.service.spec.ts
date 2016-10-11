@@ -24,7 +24,7 @@ import {
     fakeFormJson
 } from './assets/widget-visibility.service.mock';
 import { WidgetVisibilityService } from './widget-visibility.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { FormModel, FormFieldModel } from '../components/widgets/core/index';
@@ -41,6 +41,8 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             imports: [HttpModule],
             providers: [
                 AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
                 WidgetVisibilityService
             ]
         });
@@ -96,6 +98,11 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             booleanResult = service.evaluateLogicalOperation('or-not', false, true);
             expect(booleanResult).toBeFalsy();
         });
+
+        it('should fail with invalid operation', () => {
+            booleanResult = service.evaluateLogicalOperation(undefined, false, true);
+            expect(booleanResult).toBeUndefined();
+        });
     });
 
     describe('should be able to evaluate next condition operations', () => {
@@ -135,6 +142,11 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             expect(booleanResult).toBeTruthy();
         });
 
+        it('using empty with empty string value and return false', () => {
+            booleanResult = service.evaluateCondition('fake_value', undefined, 'empty');
+            expect(booleanResult).toBeFalsy();
+        });
+
         it('using > and return false', () => {
             booleanResult = service.evaluateCondition(2, 3, '>');
             expect(booleanResult).toBeFalsy();
@@ -149,6 +161,26 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             booleanResult = service.evaluateCondition('', '', '!empty');
             expect(booleanResult).toBeFalsy();
         });
+
+        it('using <= and return false', () => {
+            booleanResult = service.evaluateCondition(2, 1, '<=');
+            expect(booleanResult).toBeFalsy();
+        });
+
+        it('using <= and return true for different values', () => {
+            booleanResult = service.evaluateCondition(1, 2, '<=');
+            expect(booleanResult).toBeTruthy();
+        });
+
+        it('using <= and return true for same values', () => {
+            booleanResult = service.evaluateCondition(2, 2, '<=');
+            expect(booleanResult).toBeTruthy();
+        });
+
+        it('should return undefined for invalid operation', () => {
+            booleanResult = service.evaluateCondition(null, null, undefined);
+            expect(booleanResult).toBeUndefined();
+        });
     });
 
     describe('should retrive the process variables', () => {
@@ -161,7 +193,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should return the process variables for task', (done) => {
-            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+            service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
@@ -179,10 +211,10 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should be able to retrieve the value of a process variable', (done) => {
-            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+            service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     expect(res).toBeDefined();
-                    let varValue = service.getValueFromVariable(formTest, 'TEST_VAR_1', res);
+                    let varValue = service.getVariableValue(formTest, 'TEST_VAR_1', res);
                     expect(varValue).not.toBeUndefined();
                     expect(varValue).toBe('test_value_1');
                     done();
@@ -196,9 +228,9 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should return undefined if the variable does not exist', (done) => {
-            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+            service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
-                    let varValue = service.getValueFromVariable(formTest, 'TEST_MYSTERY_VAR', res);
+                    let varValue = service.getVariableValue(formTest, 'TEST_MYSTERY_VAR', res);
                     expect(varValue).toBeUndefined();
                     done();
                 }
@@ -211,7 +243,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should retrieve the value for the right field when it is a process variable', (done) => {
-            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+            service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
                     let rightValue = service.getRightValue(formTest, visibilityObjTest);
@@ -229,7 +261,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should retrieve the value for the left field when it is a process variable', (done) => {
-            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+            service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     visibilityObjTest.leftRestResponseId = 'TEST_VAR_2';
                     let rightValue = service.getLeftValue(formTest, visibilityObjTest);
@@ -247,12 +279,12 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should evaluate the visibility for the field between form value and process var', (done) => {
-            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+            service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
                     visibilityObjTest.operator = '!=';
                     visibilityObjTest.rightRestResponseId = 'TEST_VAR_2';
-                    let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
+                    let isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
                     expect(isVisible).toBeTruthy();
                     done();
@@ -266,7 +298,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should evaluate visibility with multiple conditions', (done) => {
-            service.getTaskProcessVariableModelsForTask('9999').subscribe(
+            service.getTaskProcessVariable('9999').subscribe(
                 (res: TaskProcessVariableModel[]) => {
                     visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
                     visibilityObjTest.operator = '!=';
@@ -276,7 +308,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
                     chainedVisibilityObj.operator = '!empty';
                     visibilityObjTest.nextCondition = chainedVisibilityObj;
 
-                    let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
+                    let isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
                     expect(isVisible).toBeTruthy();
                     done();
@@ -314,27 +346,27 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should be able to retrieve a field value searching in the form', () => {
-            let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_WITH_CONDITION');
+            let formValue = service.searchForm(stubFormWithFields, 'FIELD_WITH_CONDITION');
 
             expect(formValue).not.toBeNull();
             expect(formValue).toBe('field_with_condition_value');
         });
 
         it('should return undefined if the field value is not in the form', () => {
-            let formValue = service.getFormValueByName(stubFormWithFields, 'FIELD_MYSTERY');
+            let formValue = service.searchForm(stubFormWithFields, 'FIELD_MYSTERY');
 
             expect(formValue).toBeUndefined();
         });
 
         it('should search in the form if element value is not in form values', () => {
-            let value = service.getFieldValueFromForm(fakeFormWithField, 'FIELD_WITH_CONDITION');
+            let value = service.getFormValue(fakeFormWithField, 'FIELD_WITH_CONDITION');
 
             expect(value).not.toBeNull();
             expect(value).toBe('field_with_condition_value');
         });
 
         it('should return undefined if the element is not present anywhere', () => {
-            let formValue = service.getFieldValueFromForm(fakeFormWithField, 'FIELD_MYSTERY');
+            let formValue = service.getFormValue(fakeFormWithField, 'FIELD_MYSTERY');
 
             expect(formValue).toBeUndefined();
         });
@@ -355,7 +387,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should take the value from form values if it is present', () => {
-            let formValue = service.getFieldValueFromForm(formTest, 'test_1');
+            let formValue = service.getFormValue(formTest, 'test_1');
 
             expect(formValue).not.toBeNull();
             expect(formValue).toBe('value_1');
@@ -396,7 +428,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.leftFormFieldId = 'test_1';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'test_3';
-            let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
+            let isVisible = service.isFieldVisible(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
@@ -405,7 +437,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.leftFormFieldId = 'test_1';
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightValue = 'value_1';
-            let isVisible = service.evaluateVisibilityForField(formTest, visibilityObjTest);
+            let isVisible = service.isFieldVisible(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
@@ -421,7 +453,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.leftFormFieldId = 'LEFT_FORM_FIELD_ID';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            let isVisible = service.evaluateVisibilityForField(fakeFormWithField, visibilityObjTest);
+            let isVisible = service.isFieldVisible(fakeFormWithField, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
@@ -431,7 +463,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'test_3';
             let fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshVisibilityForField(fakeFormField);
+            service.refreshFieldVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeFalsy();
         });
@@ -440,7 +472,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.leftFormFieldId = '';
             visibilityObjTest.leftRestResponseId = '';
             visibilityObjTest.operator = '!=';
-            let isVisible = service.getVisiblityForField(formTest, visibilityObjTest);
+            let isVisible = service.evaluateVisibility(formTest, visibilityObjTest);
 
             expect(isVisible).toBeTruthy();
         });
@@ -449,16 +481,22 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             jsonFieldFake.visibilityCondition = null;
             let fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
             fakeFormField.isVisible = false;
-            service.refreshVisibilityForField(fakeFormField);
+            service.refreshFieldVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeFalsy();
         });
 
         it('should be able to retrieve the value of a form variable', () => {
-            let varValue = service.getValueFromVariable(fakeForm, 'FORM_VARIABLE_TEST', null);
+            let varValue = service.getVariableValue(fakeForm, 'FORM_VARIABLE_TEST', null);
 
             expect(varValue).not.toBeUndefined();
             expect(varValue).toBe('form_value_test');
+        });
+
+        it('should return undefined for not existing form variable', () => {
+            let varValue = service.getVariableValue(fakeForm, 'MISTERY_FORM_VARIABLE', null);
+
+            expect(varValue).toBeUndefined();
         });
 
         it('should retrieve the value for the left field when it is a form variable', () => {
@@ -470,7 +508,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should determine visibility for dropdown on label condition', () => {
-            let dropdownValue = service.getDropDownValueForLabel(formTest.values, 'dropdown_LABEL');
+            let dropdownValue = service.getDropDownName(formTest.values, 'dropdown_LABEL');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
@@ -478,7 +516,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should be able to get the value for a dropdown filtered with Label', () => {
-            let dropdownValue = service.getValueFromFormValues(formTest.values, 'dropdown_LABEL');
+            let dropdownValue = service.getValue(formTest.values, 'dropdown_LABEL');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
@@ -486,7 +524,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should be able to get the value for a standard field', () => {
-            let dropdownValue = service.getValueFromFormValues(formTest.values, 'test_2');
+            let dropdownValue = service.getValue(formTest.values, 'test_2');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
@@ -494,7 +532,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should get the dropdown label value from a form', () => {
-            let dropdownValue = service.getFieldValueFromForm(formTest, 'dropdown_LABEL');
+            let dropdownValue = service.getFormValue(formTest, 'dropdown_LABEL');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
@@ -502,7 +540,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
         });
 
         it('should get the dropdown id value from a form', () => {
-            let dropdownValue = service.getFieldValueFromForm(formTest, 'dropdown');
+            let dropdownValue = service.getFormValue(formTest, 'dropdown');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
@@ -530,7 +568,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'dropdown_LABEL';
             let fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshVisibilityForField(fakeFormField);
+            service.refreshFieldVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeTruthy();
         });
@@ -540,17 +578,48 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'dropdown';
             let fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshVisibilityForField(fakeFormField);
+            service.refreshFieldVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeTruthy();
         });
 
         it('should be able to get value from form values', () => {
-            let res = service.getFieldValueFromForm(formTest, 'test_1');
+            let res = service.getFormValue(formTest, 'test_1');
 
             expect(res).not.toBeNull();
             expect(res).toBeDefined();
             expect(res).toBe('value_1');
+        });
+
+        it('should not refresh visibility if the form is undefined', () => {
+            spyOn(service, 'refreshFieldVisibility');
+            spyOn(service, 'refreshTabVisibility');
+            service.refreshVisibility(undefined);
+
+            expect(service.refreshFieldVisibility).not.toHaveBeenCalled();
+            expect(service.refreshTabVisibility).not.toHaveBeenCalled();
+        });
+
+        it('should not refresh visibility if the form does not have fields or tabs', () => {
+            spyOn(service, 'refreshFieldVisibility');
+            spyOn(service, 'refreshTabVisibility');
+            service.refreshVisibility(formTest);
+
+            expect(service.refreshFieldVisibility).not.toHaveBeenCalled();
+            expect(service.refreshTabVisibility).not.toHaveBeenCalled();
+        });
+
+        it('should refresh the visibility for field', () => {
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            fakeFormWithField.fields[0].columns[0].fields[0].visibilityCondition = visibilityObjTest;
+            service.refreshVisibility(fakeFormWithField);
+
+            expect(fakeFormWithField.fields[0].columns[0].fields[0].isVisible).toBeFalsy();
+            expect(fakeFormWithField.fields[0].columns[0].fields[1].isVisible).toBeTruthy();
+            expect(fakeFormWithField.fields[0].columns[0].fields[2].isVisible).toBeTruthy();
+            expect(fakeFormWithField.fields[0].columns[1].fields[0].isVisible).toBeTruthy();
         });
     });
 });

@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import {Response, Http, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
-import {AlfrescoSettingsService} from 'ng2-alfresco-core';
-import {FormModel, FormFieldModel, TabModel} from '../components/widgets/core/index';
-import {WidgetVisibilityModel} from '../models/widget-visibility.model';
-import {TaskProcessVariableModel} from '../models/task-process-variable.model';
+import { Injectable } from '@angular/core';
+import { Response, Http, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
+import { WidgetVisibilityModel } from '../models/widget-visibility.model';
+import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 
 @Injectable()
 export class WidgetVisibilityService {
@@ -29,59 +29,51 @@ export class WidgetVisibilityService {
     private processVarList: TaskProcessVariableModel[];
 
     constructor(private http: Http,
-                private alfrescoSettingsService: AlfrescoSettingsService) {
+                private alfrescoSettingsService: AlfrescoSettingsService,
+                private authService: AlfrescoAuthenticationService) {
     }
 
-    public updateVisibilityForForm(form: FormModel) {
+    public refreshVisibility(form: FormModel) {
         if (form && form.tabs && form.tabs.length > 0) {
-            form.tabs.map(tabModel => this.refreshVisibilityForTab(tabModel));
+            form.tabs.map(tabModel => this.refreshTabVisibility(tabModel));
         }
         if (form && form.fields.length > 0) {
-            form.fields
-                .map(
-                    contModel =>
-                        contModel.columns
-                            .map(
-                                contColModel =>
-                                    contColModel
-                                        .fields.map(
-                                        field =>
-                                            this.refreshVisibilityForField(field))
-                            )
-                );
+            form.fields.map(contModel =>
+                contModel.columns.map(contColModel =>
+                    contColModel.fields.map(field => this.refreshFieldVisibility(field))));
         }
     }
 
-    refreshVisibilityForField(field: FormFieldModel) {
+    refreshFieldVisibility(field: FormFieldModel) {
         if (field.visibilityCondition) {
-            field.isVisible = this.getVisiblityForField(field.form, field.visibilityCondition);
+            field.isVisible = this.evaluateVisibility(field.form, field.visibilityCondition);
         }
     }
 
-    refreshVisibilityForTab(tab: TabModel) {
+    refreshTabVisibility(tab: TabModel) {
         if (tab.visibilityCondition) {
-            tab.isVisible = this.getVisiblityForField(tab.form, tab.visibilityCondition);
+            tab.isVisible = this.evaluateVisibility(tab.form, tab.visibilityCondition);
         }
     }
 
-    getVisiblityForField(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
+    evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
         let isLeftFieldPresent = visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId;
         if (!isLeftFieldPresent || isLeftFieldPresent === 'null') {
             return true;
         } else {
-            return this.evaluateVisibilityForField(form, visibilityObj);
+            return this.isFieldVisible(form, visibilityObj);
         }
     }
 
-    evaluateVisibilityForField(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
+    isFieldVisible(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
         let leftValue = this.getLeftValue(form, visibilityObj);
         let rightValue = this.getRightValue(form, visibilityObj);
         let actualResult = this.evaluateCondition(leftValue, rightValue, visibilityObj.operator);
         if (visibilityObj.nextCondition) {
-            return this.evaluateLogicalOperation(visibilityObj.nextConditionOperator,
+            return this.evaluateLogicalOperation(
+                visibilityObj.nextConditionOperator,
                 actualResult,
-                this.evaluateVisibilityForField(
-                    form, visibilityObj.nextCondition)
+                this.isFieldVisible(form, visibilityObj.nextCondition)
             );
         } else {
             return actualResult;
@@ -90,39 +82,39 @@ export class WidgetVisibilityService {
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         if (visibilityObj.leftRestResponseId) {
-            return this.getValueFromVariable(form, visibilityObj.leftRestResponseId, this.processVarList);
+            return this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
         }
-        return this.getFieldValueFromForm(form, visibilityObj.leftFormFieldId);
+        return this.getFormValue(form, visibilityObj.leftFormFieldId);
     }
 
     getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
         let valueFound = null;
         if (visibilityObj.rightRestResponseId) {
-            valueFound = this.getValueFromVariable(form, visibilityObj.rightRestResponseId, this.processVarList);
+            valueFound = this.getVariableValue(form, visibilityObj.rightRestResponseId, this.processVarList);
         } else if (visibilityObj.rightFormFieldId) {
-            valueFound = this.getFieldValueFromForm(form, visibilityObj.rightFormFieldId);
+            valueFound = this.getFormValue(form, visibilityObj.rightFormFieldId);
         } else {
             valueFound = visibilityObj.rightValue;
         }
         return valueFound;
     }
 
-    getFieldValueFromForm(form: FormModel, field: string) {
-        let value = this.getValueFromFormValues(form.values, field);
+    getFormValue(form: FormModel, field: string) {
+        let value = this.getValue(form.values, field);
         value = value && value.id ? value.id : value;
-        return value ? value  : this.getFormValueByName(form, field);
+        return value ? value : this.searchForm(form, field);
     }
 
-    getValueFromFormValues(values: any, fieldName: string) {
+    getValue(values: any, fieldName: string) {
         return this.getFieldValue(values, fieldName) ||
-            this.getDropDownValueForLabel(values, fieldName);
+            this.getDropDownName(values, fieldName);
     }
 
     getFieldValue(valueList: any, fieldName: string) {
         return fieldName ? valueList[fieldName] : fieldName;
     }
 
-    getDropDownValueForLabel(valueList: any, fieldName: string) {
+    getDropDownName(valueList: any, fieldName: string) {
         let dropDownFilterByName;
         if (fieldName && fieldName.indexOf('_LABEL') > 0) {
             dropDownFilterByName = fieldName.substring(0, fieldName.length - 6);
@@ -131,7 +123,7 @@ export class WidgetVisibilityService {
             valueList[dropDownFilterByName].name : dropDownFilterByName;
     }
 
-    getFormValueByName(form: FormModel, name: string) {
+    searchForm(form: FormModel, name: string) {
         for (let columns of form.json.fields) {
             for (let i in columns.fields) {
                 if (columns.fields.hasOwnProperty(i)) {
@@ -144,26 +136,22 @@ export class WidgetVisibilityService {
         }
     }
 
-    getValueFromVariable(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
+    getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
         return this.getFormVariableValue(form, name) ||
             this.getProcessVariableValue(name, processVarList);
     }
 
     private getFormVariableValue(form: FormModel, name: string) {
         if (form.json.variables) {
-            let variableFromForm = form.json.variables.find(formVar => formVar.name === name);
-            if (variableFromForm) {
-                return variableFromForm ? variableFromForm.value : variableFromForm;
-            }
+            let formVariable = form.json.variables.find(formVar => formVar.name === name);
+            return formVariable ? formVariable.value : formVariable;
         }
     }
 
     private getProcessVariableValue(name: string, processVarList: TaskProcessVariableModel[]) {
         if (this.processVarList) {
-            let variableFromProcess = this.processVarList.find(variable => variable.id === name);
-            if (variableFromProcess) {
-                return variableFromProcess ? variableFromProcess.value : variableFromProcess;
-            }
+            let processVariable = this.processVarList.find(variable => variable.id === name);
+            return processVariable ? processVariable.value : processVariable;
         }
     }
 
@@ -186,11 +174,11 @@ export class WidgetVisibilityService {
     evaluateCondition(leftValue, rightValue, operator): boolean {
         switch (operator) {
             case '==':
-                return String(leftValue) === String(rightValue);
+                return leftValue + '' === rightValue + '';
             case '<':
                 return leftValue < rightValue;
             case '!=':
-                return String(leftValue) !== String(rightValue);
+                return leftValue + '' !== rightValue + '';
             case '>':
                 return leftValue > rightValue;
             case '>=':
@@ -208,7 +196,7 @@ export class WidgetVisibilityService {
         return;
     }
 
-    getTaskProcessVariableModelsForTask(taskId: string): Observable<TaskProcessVariableModel[]> {
+    getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
         let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/task-forms/${taskId}/variables`;
         let options = this.getRequestOptions();
         return this.http
@@ -220,7 +208,8 @@ export class WidgetVisibilityService {
     private getHeaders(): Headers {
         return new Headers({
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': this.authService.getTicketBpm()
         });
     }
 

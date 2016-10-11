@@ -34,7 +34,7 @@ describe('ActivitiForm', () => {
             'upgradeAllRegistered'
         ]);
         visibilityService =  jasmine.createSpyObj('WidgetVisibilityService', [
-            'updateVisibilityForForm', 'getTaskProcessVariableModelsForTask'
+            'refreshVisibility', 'getTaskProcessVariable'
         ]);
         window['componentHandler'] = componentHandler;
 
@@ -143,7 +143,7 @@ describe('ActivitiForm', () => {
         formComponent.loadForm();
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
-        expect(visibilityService.getTaskProcessVariableModelsForTask).toHaveBeenCalledWith(taskId);
+        expect(visibilityService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
     });
 
     it('should get form definition by form id on load', () => {
@@ -623,15 +623,15 @@ describe('ActivitiForm', () => {
     it('should check visibility only if field with form provided', () => {
 
         formComponent.checkVisibility(null);
-        expect(visibilityService.updateVisibilityForForm).not.toHaveBeenCalled();
+        expect(visibilityService.refreshVisibility).not.toHaveBeenCalled();
 
         let field = new FormFieldModel(null);
         formComponent.checkVisibility(field);
-        expect(visibilityService.updateVisibilityForForm).not.toHaveBeenCalled();
+        expect(visibilityService.refreshVisibility).not.toHaveBeenCalled();
 
         field = new FormFieldModel(new FormModel());
         formComponent.checkVisibility(field);
-        expect(visibilityService.updateVisibilityForForm).toHaveBeenCalledWith(field.form);
+        expect(visibilityService.refreshVisibility).toHaveBeenCalledWith(field.form);
     });
 
 });

@@ -54,11 +54,21 @@ export var fakeFormJson = {
                 1: [
                     {
                         fieldType: 'FormFieldRepresentation',
+                        id: 'FIELD_TEST',
+                        name: 'FIELD_TEST',
+                        type: 'text',
+                        value: 'RIGHT_FORM_FIELD_VALUE',
+                        visibilityCondition: null,
+                        isVisible: true
+                    },
+                    {
+                        fieldType: 'FormFieldRepresentation',
                         id: 'FIELD_WITH_CONDITION',
                         name: 'FIELD_WITH_CONDITION',
                         type: 'text',
                         value: 'field_with_condition_value',
-                        visibilityCondition: null
+                        visibilityCondition: null,
+                        isVisible: true
                     },
                     {
                         fieldType: 'FormFieldRepresentation',
@@ -66,7 +76,8 @@ export var fakeFormJson = {
                         name: 'LEFT_FORM_FIELD_NAME',
                         type: 'text',
                         value: 'LEFT_FORM_FIELD_VALUE',
-                        visibilityCondition: null
+                        visibilityCondition: null,
+                        isVisible: true
                     }
                 ],
                 2: [
@@ -76,7 +87,8 @@ export var fakeFormJson = {
                         name: 'RIGHT_FORM_FIELD_NAME',
                         type: 'text',
                         value: 'RIGHT_FORM_FIELD_VALUE',
-                        visibilityCondition: null
+                        visibilityCondition: null,
+                        isVisible: true
                     }
                 ]
             }
