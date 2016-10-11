@@ -93,6 +93,12 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                                 }
                             }
                             break;
+                        case FormFieldTypes.AMOUNT:
+                            if (this.value) {
+                                let currency = this.field.currency || '$';
+                                this.value = `${currency} ${this.field.value}`;
+                            }
+                            break;
                         default:
                             this.value = this.field.value;
                             break;
