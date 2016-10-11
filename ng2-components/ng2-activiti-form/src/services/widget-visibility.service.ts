@@ -124,16 +124,18 @@ export class WidgetVisibilityService {
     }
 
     searchForm(form: FormModel, name: string) {
-        for (let columns of form.json.fields) {
+        let res;
+        form.json.fields.forEach(columns => {
             for (let i in columns.fields) {
                 if (columns.fields.hasOwnProperty(i)) {
-                    let res = columns.fields[i].find(field => field.id === name);
+                    res = columns.fields[i].find(field => field.id === name);
                     if (res) {
                         return res.value;
                     }
                 }
             }
-        }
+        });
+        return res ? res.value : res;
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
