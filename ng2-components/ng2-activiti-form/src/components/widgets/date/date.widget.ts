@@ -26,31 +26,60 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
 })
 export class DateWidget extends TextFieldWidgetComponent implements OnInit {
 
-    datePicker: any = new mdDateTimePicker.default({
-        type: 'date',
-        future: moment().add(21, 'years')
-    });
+    private dateFormat: string = 'D-M-YYYY';
+
+    datePicker: any;
 
     constructor(elementRef: ElementRef) {
         super(elementRef);
     }
 
     ngOnInit() {
-        if (this.field.value) {
-            this.datePicker.time = moment(this.field.value, 'D-M-YYYY');
+
+        let settings: any = {
+            type: 'date',
+            future: moment().add(21, 'years')
+        };
+
+        if (this.field) {
+
+            if (this.field.minValue) {
+                let min = moment(this.field.minValue, this.dateFormat);
+                if (min.isValid()) {
+                    settings.past = min;
+                }
+            }
+
+            if (this.field.maxValue) {
+                let max = moment(this.field.maxValue, this.dateFormat);
+                if (max.isValid()) {
+                    settings.future = max;
+                }
+            }
+
+            if (this.field.value) {
+                settings.time = moment(this.field.value, this.dateFormat);
+            }
         }
+
+        this.datePicker = new mdDateTimePicker.default(settings);
         this.datePicker.trigger = this.elementRef.nativeElement.querySelector('#dateInput');
     }
 
     onDateChanged() {
         if (this.field.value) {
-            this.datePicker.time = moment(this.field.value, 'D-M-YYYY');
+            this.datePicker.time = moment(this.field.value, this.dateFormat);
         }
         this.checkVisibility(this.field);
     }
 
     onDateSelected() {
         this.field.value = this.datePicker.time.format('DD-MM-YYYY');
+        let el = this.elementRef.nativeElement;
+        let container = el.querySelector('.mdl-textfield');
+        if (container) {
+            container.MaterialTextfield.change(this.field.value.toString());
+        }
     }
 
 }
