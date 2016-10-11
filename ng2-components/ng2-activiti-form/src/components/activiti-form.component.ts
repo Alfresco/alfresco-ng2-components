@@ -277,7 +277,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     loadForm() {
         if (this.taskId) {
             this.getFormByTaskId(this.taskId);
-            this.visibilityService.getTaskProcessVariableModelsForTask(this.taskId);
+            this.visibilityService.getTaskProcessVariable(this.taskId);
             return;
         }
 
@@ -414,7 +414,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     checkVisibility(field: FormFieldModel) {
         if (field && field.form) {
-            this.visibilityService.updateVisibilityForForm(field.form);
+            this.visibilityService.refreshVisibility(field.form);
         }
     }
 
