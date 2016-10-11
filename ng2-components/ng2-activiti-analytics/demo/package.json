@@ -46,7 +46,7 @@
     "@types/jasmine": "^2.2.33",
     "concurrently": "^2.2.0",
     "rimraf": "2.5.2",
-    "tslint": "3.8.1",
+    "tslint": "3.15.1",
     "typescript": "^2.0.2",
     "wsrv": "^0.1.5"
   },

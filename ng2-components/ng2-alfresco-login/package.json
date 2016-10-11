@@ -93,7 +93,7 @@
     "remap-istanbul": "0.6.3",
     "rimraf": "2.5.2",
     "traceur": "0.0.91",
-    "tslint": "3.8.1",
+    "tslint": "3.15.1",
     "typescript": "^2.0.3",
     "wsrv": "^0.1.5",
     "xo": "0.14.0",
