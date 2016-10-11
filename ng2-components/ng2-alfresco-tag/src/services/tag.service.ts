@@ -16,8 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 /**
  * @returns {TagService} .
@@ -29,32 +30,32 @@ export class TagService {
 
     /**
      * Constructor
-     * @param authService
+     * @param apiService
      */
-    constructor(public authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
     }
 
     getTagsByNodeId(nodeId: string): any {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().core.tagsApi.getNodeTags(nodeId))
+        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId))
             .catch(this.handleError);
     }
 
     getAllTheTags() {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().core.tagsApi.getTags())
+        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getTags())
             .catch(this.handleError);
     }
 
     addTag(nodeId: string, tagName: string): any {
-        let alfrescoApi: any = this.authService.getAlfrescoApi();
+        let alfrescoApi: any = this.apiService.getInstance();
         let tagBody = new alfrescoApi.core.TagBody();
         tagBody.tag = tagName;
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().core.tagsApi.addTag(nodeId, tagBody))
+        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody))
             .catch(this.handleError);
     }
 
     removeTag(nodeId: string, tag: string): any {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().core.tagsApi.removeTag(nodeId, tag))
+        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag))
             .catch(this.handleError);
     }
 

@@ -43,15 +43,15 @@ describe('Tag service', () => {
         service = injector.get(TagService);
     });
 
+    beforeEach(() => {
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
+    });
+
     describe('Content tests', () => {
-
-        beforeEach(() => {
-            jasmine.Ajax.install();
-        });
-
-        afterEach(() => {
-            jasmine.Ajax.uninstall();
-        });
 
         it('removeTag should perform a call against the server', (done) => {
             service.removeTag('fake-node-id', 'fake-tag').subscribe(() => {
@@ -80,7 +80,7 @@ describe('Tag service', () => {
         });
 
         it('getAllTheTags should perform a call against the server', (done) => {
-            service.getAllTheTags('fake-node-id', 'fake-tag').subscribe(() => {
+            service.getAllTheTags().subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
                     .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/tags');
@@ -93,7 +93,7 @@ describe('Tag service', () => {
         });
 
         it('getTagsByNodeId should perform a call against the server', (done) => {
-            service.getTagsByNodeId('fake-node-id', 'fake-tag').subscribe(() => {
+            service.getTagsByNodeId('fake-node-id').subscribe(() => {
                 expect(jasmine.Ajax.requests.mostRecent().method).toBe('GET');
                 expect(jasmine.Ajax.requests.mostRecent().url)
                     .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/tags');
@@ -106,7 +106,7 @@ describe('Tag service', () => {
         });
 
         it('getTagsByNodeId catch errors call', (done) => {
-            service.getTagsByNodeId('fake-node-id', 'fake-tag').subscribe(() => {
+            service.getTagsByNodeId('fake-node-id').subscribe(() => {
             }, () => {
                 done();
             });

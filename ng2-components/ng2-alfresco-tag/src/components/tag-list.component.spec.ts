@@ -69,7 +69,6 @@ describe('Test ng2-alfresco-tag Tag list All ECM', () => {
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TagList);
-        component = fixture.componentInstance;
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
