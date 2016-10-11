@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { TextFieldWidgetComponent } from './../textfield-widget.component';
 
 @Component({
     moduleId: module.id,
@@ -24,27 +24,10 @@ import { WidgetComponent } from './../widget.component';
     templateUrl: './text.widget.html',
     styleUrls: ['./text.widget.css']
 })
-export class TextWidget extends WidgetComponent {
+export class TextWidget extends TextFieldWidgetComponent {
 
-    constructor(private elementRef: ElementRef) {
-        super();
-    }
-
-    setupMaterialComponents(componentHandler: any): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            if (this.elementRef && this.hasValue()) {
-                let el = this.elementRef.nativeElement;
-                let container = el.querySelector('.mdl-textfield');
-                if (container) {
-                    container.MaterialTextfield.change(this.field.value);
-                }
-            }
-
-            return true;
-        }
-        return false;
+    constructor(elementRef: ElementRef) {
+        super(elementRef);
     }
 
 }
