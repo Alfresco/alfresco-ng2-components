@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { SimpleChange } from '@angular/core';
 import { it, describe, expect, inject, beforeEachProviders, beforeEach, afterEach } from '@angular/core/testing';
 import { TestComponentBuilder } from '@angular/compiler/testing';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
@@ -33,7 +34,7 @@ declare let jasmine: any;
 
 describe('AlfrescoSearchAutocompleteComponent', () => {
 
-    let alfrescoSearchComponentFixture, element, component;
+    let alfrescoSearchComponentFixture, element, component: AlfrescoSearchAutocompleteComponent;
 
     let result = {
         list: {
@@ -104,9 +105,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         let searchTerm = 'customSearchTerm';
         spyOn(component, 'displaySearchResults').and.stub();
         component.searchTerm = searchTerm;
-        component.ngOnChanges({
-            searchTerm: searchTerm
-        });
+        component.ngOnChanges({searchTerm: new SimpleChange('', component.searchTerm)});
         alfrescoSearchComponentFixture.detectChanges();
         expect(component.displaySearchResults).toHaveBeenCalledWith(searchTerm);
     });
@@ -120,7 +119,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         });
 
         component.searchTerm = 'searchTerm';
-        component.ngOnChanges({searchTerm: component.searchTerm});
+        component.ngOnChanges({searchTerm: new SimpleChange('', component.searchTerm)});
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
@@ -137,7 +136,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         });
 
         component.searchTerm = 'searchTerm';
-        component.ngOnChanges({searchTerm: component.searchTerm});
+        component.ngOnChanges({searchTerm: new SimpleChange('', component.searchTerm)});
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
@@ -153,7 +152,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         });
 
         component.searchTerm = 'searchTerm';
-        component.ngOnChanges({searchTerm: component.searchTerm});
+        component.ngOnChanges({searchTerm: new SimpleChange('', component.searchTerm)});
 
         jasmine.Ajax.requests.mostRecent().respondWith({
             status: 200,
@@ -169,7 +168,8 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
     it('should not emit preview when non-file item is clicked', () => {
         spyOn(component, 'onItemClick').and.stub();
 
-        component.ngOnChanges({searchTerm: 'searchTerm'});
+        component.searchTerm = 'searchTerm';
+        component.ngOnChanges({searchTerm: new SimpleChange('', component.searchTerm)});
 
         component.preview.subscribe(e => {
             expect(e.value).toBe(component.results[0]);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -59,9 +59,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
         this.results = null;
     }
 
-    ngOnChanges(changes) {
-        if (changes.searchTerm) {
-            this.displaySearchResults(changes.searchTerm);
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['searchTerm']) {
+            this.displaySearchResults(changes['searchTerm'].currentValue);
         }
     }
 
