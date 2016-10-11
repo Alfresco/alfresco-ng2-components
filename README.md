@@ -90,6 +90,6 @@ To deploy directly on your AWS instance our demo shell click the button below:
 |**Browser**   	|**Version**   	|
 |---        	|---	        |
 |Chrome     	|Latest     	|
-|Firefox    	|Latest     	|
+|Firefox*    	|Latest     	|
 
 *Concerning Alfresco Upload Component, folder upload currently not supported [firefox known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880 ) 
