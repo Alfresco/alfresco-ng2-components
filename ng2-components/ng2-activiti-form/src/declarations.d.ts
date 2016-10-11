@@ -15,19 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef } from '@angular/core';
-import { TextFieldWidgetComponent } from './../textfield-widget.component';
+declare var module: any;
+declare var moment: any;
 
-@Component({
-    moduleId: module.id,
-    selector: 'date-widget',
-    templateUrl: './date.widget.html',
-    styleUrls: ['./date.widget.css']
-})
-export class DateWidget extends TextFieldWidgetComponent {
-
-    constructor(elementRef: ElementRef) {
-        super(elementRef);
-    }
-
-}
+// MDL
+declare var componentHandler: any;
+declare let dialogPolyfill: any;

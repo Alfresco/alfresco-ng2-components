@@ -15,10 +15,8 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-
-declare var componentHandler;
 
 @Component({
     moduleId: module.id,
@@ -26,29 +24,16 @@ declare var componentHandler;
     templateUrl: './hyperlink.widget.html',
     styleUrls: ['./hyperlink.widget.css']
 })
-export class HyperlinkWidget extends WidgetComponent {
+export class HyperlinkWidget extends WidgetComponent implements OnInit {
 
-    static DEFAULT_URL: string = '#';
-    static DEFAULT_URL_SCHEME: string = 'http://';
+    linkUrl: string = WidgetComponent.DEFAULT_HYPERLINK_URL;
+    linkText: string = null;
 
-    get linkUrl(): string {
-        let url = HyperlinkWidget.DEFAULT_URL;
-
-        if (this.field && this.field.hyperlinkUrl) {
-            url = this.field.hyperlinkUrl;
-            if (!/^https?:\/\//i.test(url)) {
-                url = HyperlinkWidget.DEFAULT_URL_SCHEME + url;
-            }
-        }
-
-        return url;
-    }
-
-    get linkText(): string {
+    ngOnInit() {
         if (this.field) {
-            return this.field.displayText || this.field.hyperlinkUrl;
+            this.linkUrl = this.getHyperlinkUrl(this.field);
+            this.linkText = this.getHyperlinkText(this.field);
         }
-        return null;
     }
 
 }

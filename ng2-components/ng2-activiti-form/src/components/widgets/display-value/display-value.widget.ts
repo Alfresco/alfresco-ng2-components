@@ -21,8 +21,6 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 
-declare var componentHandler;
-
 @Component({
     moduleId: module.id,
     selector: 'display-value-widget',
@@ -31,11 +29,10 @@ declare var componentHandler;
 })
 export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
-    DEFAULT_URL: string = '#';
-    DEFAULT_URL_SCHEME: string = 'http://';
-
     value: any;
     fieldType: string;
+    linkUrl: string;
+    linkText: string;
 
     constructor(private formService: FormService) {
         super();
@@ -84,6 +81,26 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                                 this.loadRadioButtonValue();
                             }
                             break;
+                        case FormFieldTypes.DATE:
+                            if (this.value) {
+                                let d = moment(this.value.split('T')[0]);
+                                if (d.isValid()) {
+                                    this.value = d.format('D-M-YYYY');
+                                }
+                            }
+                            break;
+                        case FormFieldTypes.AMOUNT:
+                            if (this.value) {
+                                let currency = this.field.currency || '$';
+                                this.value = `${currency} ${this.field.value}`;
+                            }
+                            break;
+                        case FormFieldTypes.HYPERLINK:
+                            if (this.value) {
+                                this.linkUrl = this.getHyperlinkUrl(this.field);
+                                this.linkText = this.getHyperlinkText(this.field);
+                            }
+                            break;
                         default:
                             this.value = this.field.value;
                             break;
@@ -122,27 +139,4 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                 }
             );
     }
-
-    // TODO: TAKEN FROM hyperlink WIDGET, OPTIMIZE
-    get linkUrl(): string {
-        let url = this.DEFAULT_URL;
-
-        if (this.field && this.field.hyperlinkUrl) {
-            url = this.field.hyperlinkUrl;
-            if (!/^https?:\/\//i.test(url)) {
-                url = this.DEFAULT_URL_SCHEME + url;
-            }
-        }
-
-        return url;
-    }
-
-    // TODO: TAKEN FROM hyperlink WIDGET, OPTIMIZE
-    get linkText(): string {
-        if (this.field) {
-            return this.field.displayText || this.field.hyperlinkUrl;
-        }
-        return null;
-    }
-
 }

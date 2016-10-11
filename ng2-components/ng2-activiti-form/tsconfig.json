@@ -8,14 +8,13 @@
         "sourceMap": true,
         "removeComments": true,
         "declaration": true,
-        "outDir": "dist"
+        "outDir": "dist",
+        "types": ["core-js", "jasmine"]
     },
     "exclude": [
         "demo",
         "dist",
         "node_modules",
-        "typings/main",
-        "typings/main.d.ts",
         "dist"
     ]
 }

@@ -18,8 +18,6 @@
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
 
-declare var moment: any;
-
 export interface FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean;

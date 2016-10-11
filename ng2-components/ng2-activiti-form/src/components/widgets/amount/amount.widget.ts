@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+import { TextFieldWidgetComponent } from './../textfield-widget.component';
 
 @Component({
     moduleId: module.id,
@@ -24,35 +24,18 @@ import { WidgetComponent } from './../widget.component';
     templateUrl: './amount.widget.html',
     styleUrls: ['./amount.widget.css']
 })
-export class AmountWidget extends WidgetComponent implements OnInit {
+export class AmountWidget extends TextFieldWidgetComponent implements OnInit {
 
     currency: string = '$';
 
-    constructor(private elementRef: ElementRef) {
-        super();
+    constructor(elementRef: ElementRef) {
+        super(elementRef);
     }
 
     ngOnInit() {
         if (this.field && this.field.currency) {
             this.currency = this.field.currency;
         }
-    }
-
-    setupMaterialComponents(componentHandler: any): boolean {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-            if (this.elementRef && this.hasValue()) {
-                let el = this.elementRef.nativeElement;
-                let container = el.querySelector('.mdl-textfield');
-                if (container) {
-                    container.MaterialTextfield.change(this.field.value);
-                }
-            }
-
-            return true;
-        }
-        return false;
     }
 
 }

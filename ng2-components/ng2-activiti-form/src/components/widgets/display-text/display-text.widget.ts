@@ -18,8 +18,6 @@
 import { Component } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
-declare var componentHandler;
-
 @Component({
     moduleId: module.id,
     selector: 'display-text-widget',

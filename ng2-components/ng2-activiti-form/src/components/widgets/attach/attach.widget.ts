@@ -22,9 +22,6 @@ import { ExternalContent } from '../core/external-content';
 import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
 
-declare var componentHandler;
-declare let dialogPolyfill: any;
-
 @Component({
     moduleId: module.id,
     selector: 'attach-widget',

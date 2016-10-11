@@ -18,6 +18,7 @@
 import { HyperlinkWidget } from './hyperlink.widget';
 import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
+import { WidgetComponent } from './../widget.component';
 
 describe('HyperlinkWidget', () => {
 
@@ -33,6 +34,7 @@ describe('HyperlinkWidget', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             displayText: text
         });
+        widget.ngOnInit();
 
         expect(widget.linkText).toBe(text);
     });
@@ -44,12 +46,15 @@ describe('HyperlinkWidget', () => {
             displayText: null,
             hyperlinkUrl: url
         });
+        widget.ngOnInit();
 
         expect(widget.linkText).toBe(url);
     });
 
     it('should require field to get link text', () => {
         widget.field = null;
+        widget.ngOnInit();
+
         expect(widget.linkText).toBeNull();
     });
 
@@ -58,21 +63,25 @@ describe('HyperlinkWidget', () => {
             displayText: null,
             hyperlinkUrl: null
         });
+        widget.ngOnInit();
 
         expect(widget.linkText).toBeNull();
     });
 
     it('should return default url for missing field', () => {
         widget.field = null;
-        expect(widget.linkUrl).toBe(HyperlinkWidget.DEFAULT_URL);
+        widget.ngOnInit();
+
+        expect(widget.linkUrl).toBe(WidgetComponent.DEFAULT_HYPERLINK_URL);
     });
 
     it('should return default url for missing field property', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             hyperlinkUrl: null
         });
+        widget.ngOnInit();
 
-        expect(widget.linkUrl).toBe(HyperlinkWidget.DEFAULT_URL);
+        expect(widget.linkUrl).toBe(WidgetComponent.DEFAULT_HYPERLINK_URL);
     });
 
     it('should prepend url with scheme', () => {
@@ -80,8 +89,9 @@ describe('HyperlinkWidget', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             hyperlinkUrl: url
         });
+        widget.ngOnInit();
 
-        expect(widget.linkUrl).toBe(`${HyperlinkWidget.DEFAULT_URL_SCHEME}${url}`);
+        expect(widget.linkUrl).toBe(`${WidgetComponent.DEFAULT_HYPERLINK_SCHEME}${url}`);
     });
 
     it('should not prepend url with scheme', () => {
@@ -89,6 +99,7 @@ describe('HyperlinkWidget', () => {
         widget.field = new FormFieldModel(new FormModel(), {
             hyperlinkUrl: url
         });
+        widget.ngOnInit();
 
         expect(widget.linkUrl).toBe(url);
     });

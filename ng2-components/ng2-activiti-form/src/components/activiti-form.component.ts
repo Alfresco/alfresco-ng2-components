@@ -28,8 +28,6 @@ import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
 
-declare var componentHandler;
-
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
 /**
