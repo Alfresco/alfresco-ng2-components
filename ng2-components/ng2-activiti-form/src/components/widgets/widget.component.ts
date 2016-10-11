@@ -18,13 +18,13 @@
 import { Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { FormFieldModel } from './core/index';
 
-declare let __moduleName: string;
-declare var componentHandler;
-
 /**
  * Base widget component.
  */
 export class WidgetComponent implements AfterViewInit {
+
+    static DEFAULT_HYPERLINK_URL: string = '#';
+    static DEFAULT_HYPERLINK_SCHEME: string = 'http://';
 
     @Input()
     field: FormFieldModel;
@@ -65,6 +65,24 @@ export class WidgetComponent implements AfterViewInit {
 
     checkVisibility(field: FormFieldModel) {
         this.fieldChanged.emit(field);
+    }
+
+    protected getHyperlinkUrl(field: FormFieldModel) {
+        let url = WidgetComponent.DEFAULT_HYPERLINK_URL;
+        if (field && field.hyperlinkUrl) {
+            url = field.hyperlinkUrl;
+            if (!/^https?:\/\//i.test(url)) {
+                url = `${WidgetComponent.DEFAULT_HYPERLINK_SCHEME}${url}`;
+            }
+        }
+        return url;
+    }
+
+    protected getHyperlinkText(field: FormFieldModel) {
+        if (field) {
+            return field.displayText || field.hyperlinkUrl;
+        }
+        return null;
     }
 
 }

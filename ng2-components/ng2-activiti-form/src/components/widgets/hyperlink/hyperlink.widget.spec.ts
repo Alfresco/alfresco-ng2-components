@@ -64,7 +64,7 @@ describe('HyperlinkWidget', () => {
 
     it('should return default url for missing field', () => {
         widget.field = null;
-        expect(widget.linkUrl).toBe(HyperlinkWidget.DEFAULT_URL);
+        expect(widget.linkUrl).toBe(HyperlinkWidget.DEFAULT_HYPERLINK_URL);
     });
 
     it('should return default url for missing field property', () => {
@@ -72,7 +72,7 @@ describe('HyperlinkWidget', () => {
             hyperlinkUrl: null
         });
 
-        expect(widget.linkUrl).toBe(HyperlinkWidget.DEFAULT_URL);
+        expect(widget.linkUrl).toBe(HyperlinkWidget.DEFAULT_HYPERLINK_URL);
     });
 
     it('should prepend url with scheme', () => {
@@ -81,7 +81,7 @@ describe('HyperlinkWidget', () => {
             hyperlinkUrl: url
         });
 
-        expect(widget.linkUrl).toBe(`${HyperlinkWidget.DEFAULT_URL_SCHEME}${url}`);
+        expect(widget.linkUrl).toBe(`${HyperlinkWidget.DEFAULT_HYPERLINK_SCHEME}${url}`);
     });
 
     it('should not prepend url with scheme', () => {

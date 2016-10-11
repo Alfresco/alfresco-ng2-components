@@ -18,8 +18,6 @@
 import { Component, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { ContainerModel, FormFieldModel } from './../core/index';
 
-declare var componentHandler;
-
 @Component({
     moduleId: module.id,
     selector: 'container-widget',

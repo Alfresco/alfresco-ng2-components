@@ -21,9 +21,6 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 
-declare var componentHandler;
-declare var moment: any;
-
 @Component({
     moduleId: module.id,
     selector: 'display-value-widget',
@@ -32,11 +29,10 @@ declare var moment: any;
 })
 export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
-    DEFAULT_URL: string = '#';
-    DEFAULT_URL_SCHEME: string = 'http://';
-
     value: any;
     fieldType: string;
+    linkUrl: string;
+    linkText: string;
 
     constructor(private formService: FormService) {
         super();
@@ -99,6 +95,12 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                                 this.value = `${currency} ${this.field.value}`;
                             }
                             break;
+                        case FormFieldTypes.HYPERLINK:
+                            if (this.value) {
+                                this.linkUrl = this.getHyperlinkUrl(this.field);
+                                this.linkText = this.getHyperlinkText(this.field);
+                            }
+                            break;
                         default:
                             this.value = this.field.value;
                             break;
@@ -137,27 +139,4 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                 }
             );
     }
-
-    // TODO: TAKEN FROM hyperlink WIDGET, OPTIMIZE
-    get linkUrl(): string {
-        let url = this.DEFAULT_URL;
-
-        if (this.field && this.field.hyperlinkUrl) {
-            url = this.field.hyperlinkUrl;
-            if (!/^https?:\/\//i.test(url)) {
-                url = this.DEFAULT_URL_SCHEME + url;
-            }
-        }
-
-        return url;
-    }
-
-    // TODO: TAKEN FROM hyperlink WIDGET, OPTIMIZE
-    get linkText(): string {
-        if (this.field) {
-            return this.field.displayText || this.field.hyperlinkUrl;
-        }
-        return null;
-    }
-
 }

@@ -15,25 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
+declare var module: any;
+declare var moment: any;
 
-@Component({
-    moduleId: module.id,
-    selector: 'hyperlink-widget',
-    templateUrl: './hyperlink.widget.html',
-    styleUrls: ['./hyperlink.widget.css']
-})
-export class HyperlinkWidget extends WidgetComponent implements OnInit {
-
-    linkUrl: string;
-    linkText: string;
-
-    ngOnInit() {
-        if (this.field) {
-            this.linkUrl = this.getHyperlinkUrl(this.field);
-            this.linkText = this.getHyperlinkText(this.field);
-        }
-    }
-
-}
+// MDL
+declare var componentHandler: any;
+declare let dialogPolyfill: any;
