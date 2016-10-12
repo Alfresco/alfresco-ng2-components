@@ -145,7 +145,6 @@ export class FileDraggableDirective {
         $event.preventDefault();
     }
 
-
     /**
      * Return the value of input focus class
      * @returns {boolean}

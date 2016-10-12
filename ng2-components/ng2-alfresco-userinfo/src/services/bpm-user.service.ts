@@ -75,7 +75,6 @@ export class BpmUserService {
         return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
     }
 
-
     /**
      * Throw the error
      * @param error

@@ -128,8 +128,6 @@ export class EcmModelService {
     public activeEcmModel(modelName: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}?select=status`;
         let options = this.getRequestOptions();
-
-
         let body = {status: 'ACTIVE'};
 
         return this.http
@@ -141,8 +139,6 @@ export class EcmModelService {
     public createEcmModel(modelName: string, nameSpace: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
         let options = this.getRequestOptions();
-
-
         let body = {
             status: 'DRAFT', namespaceUri: modelName, namespacePrefix: nameSpace, name: modelName, description: '', author: ''
         };
@@ -162,7 +158,6 @@ export class EcmModelService {
             .map(this.toJson)
             .catch(this.handleError);
     }
-
 
     public getEcmType(modelName: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;

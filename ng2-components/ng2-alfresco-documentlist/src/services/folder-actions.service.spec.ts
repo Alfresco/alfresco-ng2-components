@@ -87,7 +87,6 @@ describe('FolderActionsService', () => {
         expect(window.alert).toHaveBeenCalledWith('standard folder action 2');
     });
 
-
     // TODO: to be removed once demo handlers are removed
     it('should register demo handlers', () => {
         expect(service.getHandler('system1')).toBeDefined();

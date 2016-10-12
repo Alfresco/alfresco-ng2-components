@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TagList } from '../components/tag-list.component';
 import { DebugElement }    from '@angular/core';
@@ -75,7 +74,6 @@ describe('Test ng2-alfresco-tag Tag list All ECM', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-
 
     describe('Rendering tests', () => {
 

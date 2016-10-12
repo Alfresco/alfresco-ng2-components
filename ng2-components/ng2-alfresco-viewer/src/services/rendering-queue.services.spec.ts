@@ -38,4 +38,3 @@ describe('RenderingQueueServices', () => {
         expect(service.CLEANUP_TIMEOUT).toEqual(30000);
     });
 });
-

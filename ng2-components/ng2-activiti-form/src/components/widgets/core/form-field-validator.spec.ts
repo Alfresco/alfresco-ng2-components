@@ -59,7 +59,6 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeTruthy();
         });
 
-
         it('should fail for dropdown with empty value', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.DROPDOWN,

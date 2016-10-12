@@ -23,7 +23,6 @@ import { FakeBpmUserService } from '../testing/fake-bpm-user.service';
 import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-
 class StubAuthentication {
   isEcmConnected: boolean;
   isBpmConnected: boolean;
@@ -36,7 +35,6 @@ class StubAuthentication {
 class StubAlfrescoContentService {
     getContentUrl() { return 'fake/url/image/for/ecm/user'; } ;
 }
-
 
 describe('User info component', () => {
 

@@ -20,7 +20,6 @@ import { Component, Input, Output, OnInit, ElementRef, EventEmitter, ViewChild }
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { SearchTermValidator } from './../forms/search-term-validator';
 
-
 @Component({
     moduleId: module.id,
     selector: 'alfresco-search-control',

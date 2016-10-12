@@ -35,7 +35,6 @@ export class UploadWidget extends WidgetComponent implements OnInit {
         super();
     }
 
-
     ngOnInit() {
         if (this.field &&
             this.field.value &&

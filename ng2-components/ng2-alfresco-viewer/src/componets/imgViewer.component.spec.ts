@@ -74,4 +74,3 @@ describe('Test ng2-alfresco-viewer Img viewer component ', () => {
         expect(element.querySelector('#viewer-image').getAttribute('alt')).toEqual('fake-name');
     });
 });
-

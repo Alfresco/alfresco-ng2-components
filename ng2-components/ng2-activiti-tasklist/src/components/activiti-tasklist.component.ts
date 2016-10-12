@@ -129,7 +129,6 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         return taskRows;
     }
 
-
     /**
      * The method call the adapter data table component for render the task list
      * @param tasks

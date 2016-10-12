@@ -163,7 +163,6 @@ describe('NodeService', () => {
             testdata: 'testdata'
         };
 
-
         service.createNodeMetadata('typeTest', EcmModelService.MODEL_NAMESPACE, data, '/Sites/swsdp/documentLibrary').subscribe(result => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('-root-/children')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toBeDefined();
@@ -176,6 +175,4 @@ describe('NodeService', () => {
             responseText: JSON.stringify({})
         });
     });
-
 });
-

@@ -35,14 +35,11 @@ import { ContextMenuService } from './context-menu.service';
         .context-menu {
             list-style-type: none;
             position: static;
-
-
             height: auto;
             width: auto;
             min-width: 124px;
             padding: 8px 0;
             margin: 0;
-
             box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
             border-radius: 2px;
         }

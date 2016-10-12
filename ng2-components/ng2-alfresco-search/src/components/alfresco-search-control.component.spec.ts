@@ -30,7 +30,6 @@ import {
 } from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 
-
 describe('AlfrescoSearchControlComponent', () => {
 
     let fixture: ComponentFixture<AlfrescoSearchControlComponent>;

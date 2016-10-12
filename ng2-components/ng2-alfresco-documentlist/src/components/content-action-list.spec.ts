@@ -56,5 +56,3 @@ describe('ContentColumnList', () => {
     });
 
 });
-
-

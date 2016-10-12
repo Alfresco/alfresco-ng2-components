@@ -239,4 +239,3 @@ describe('Test ng2-alfresco-upload', () => {
         });
     });
 });
-

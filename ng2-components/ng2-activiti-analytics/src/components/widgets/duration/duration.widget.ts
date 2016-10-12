@@ -19,7 +19,6 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { NumberWidget } from './../number/number.widget';
 import { ReportParameterModel, ParameterValueModel } from './../../../models/report.model';
 
-
 @Component({
     moduleId: module.id,
     selector: 'duration-widget',

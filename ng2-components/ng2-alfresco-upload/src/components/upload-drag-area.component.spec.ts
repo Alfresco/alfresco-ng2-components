@@ -224,4 +224,3 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         component.onFolderEntityDropped(folderEntry);
     });
 });
-

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 export class EventMock {
 
     static keyDown(key: any) {
@@ -34,5 +33,3 @@ export class EventMock {
         window.dispatchEvent(new Event('resize'));
     }
 }
-
-

@@ -161,4 +161,3 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
         });
     });
 });
-

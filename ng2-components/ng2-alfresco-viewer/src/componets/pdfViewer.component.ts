@@ -123,7 +123,6 @@ export class PdfViewerComponent {
         this.pdfViewer.setDocument(pdfDocument);
     }
 
-
     /**
      * Method to scale the page current support implementation
      *
@@ -216,7 +215,6 @@ export class PdfViewerComponent {
     isSameScale(oldScale: number, newScale: number) {
         return (newScale === oldScale);
     }
-
 
     /**
      * method to check if is a land scape view

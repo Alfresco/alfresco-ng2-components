@@ -181,7 +181,6 @@ describe('DataTable', () => {
         dataTable.ngAfterViewChecked();
     });
 
-
     it('should invert "select all" status', () => {
         expect(dataTable.isSelectAllChecked).toBeFalsy();
         dataTable.onSelectAllClick(null);
@@ -189,7 +188,6 @@ describe('DataTable', () => {
         dataTable.onSelectAllClick(null);
         expect(dataTable.isSelectAllChecked).toBeFalsy();
     });
-
 
     it('should update rows on "select all" click', () => {
         let data = new ObjectDataTableAdapter([{}, {}, {}], []);

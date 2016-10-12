@@ -262,7 +262,6 @@ describe('ShareDataTableAdapter', () => {
         let file = new FileNode();
         file.entry['icon'] = imageUrl;
 
-
         let adapter = new ShareDataTableAdapter(null, basePath, null);
         let row = new ShareDataRow(file);
         let col = <DataColumn> { type: 'image', key: 'icon' };
