@@ -134,24 +134,23 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         expect(component.displaySearchResults).toHaveBeenCalledWith(searchTerm.currentValue);
     });
 
-    it('should clear results straight away when a new search term is entered', (done) => {
+    it('should clear results straight away when a new search term is entered', async(() => {
 
         let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
         spyOn(searchService, 'getSearchNodesPromise')
             .and.returnValue(Promise.resolve(result));
 
-        component.resultsEmitter.subscribe(x => {
+        component.searchTerm = 'searchTerm';
+        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''} });
+
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             component.searchTerm = 'searchTerm2';
             component.ngOnChanges({searchTerm: { currentValue: 'searchTerm2', previousValue: 'searchTerm'} });
             fixture.detectChanges();
             expect(element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr').length).toBe(0);
-            done();
         });
-
-        component.searchTerm = 'searchTerm';
-        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''} });
-    });
+    }));
 
     it('should display the returned search results', (done) => {
 
@@ -231,25 +230,24 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
         component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''}});
     });
 
-    it('should clear errors straight away when a new search is performed', (done) => {
+    it('should clear errors straight away when a new search is performed', async(() => {
 
         let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
         spyOn(searchService, 'getSearchNodesPromise')
             .and.returnValue(Promise.reject(errorJson));
 
-        component.errorEmitter.subscribe(() => {
+        component.searchTerm = 'searchTerm';
+        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''}});
+
+        fixture.whenStable().then(() => {
             fixture.detectChanges();
             component.searchTerm = 'searchTerm2';
             component.ngOnChanges({searchTerm: { currentValue: 'searchTerm2', previousValue: 'searchTerm'} });
             fixture.detectChanges();
             let errorEl = <any> element.querySelector('[data-automation-id="autocomplete_error_message"]');
             expect(errorEl).toBeNull();
-            done();
         });
-
-        component.searchTerm = 'searchTerm';
-        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''}});
-    });
+    }));
 
     it('should emit preview when file item clicked', (done) => {
 

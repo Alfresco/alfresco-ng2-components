@@ -76,8 +76,8 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     public displaySearchResults(searchTerm) {
         if (searchTerm !== null && searchTerm !== '') {
             this.alfrescoSearchService
-                .getSearchNodesPromise(searchTerm)
-                .then(
+                .getLiveSearchResults(searchTerm)
+                .subscribe(
                     results => {
                         this.results = results.list.entries;
                         this.errorMessage = null;

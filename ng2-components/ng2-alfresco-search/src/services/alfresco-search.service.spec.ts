@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-/*
-import { beforeEachProviders } from '@angular/core/testing';
+import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSearchService } from './alfresco-search.service';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 
@@ -24,7 +23,9 @@ declare let jasmine: any;
 
 describe('AlfrescoSearchService', () => {
 
-    let service: any;
+    let service: AlfrescoSearchService;
+    let authenticationService: AlfrescoAuthenticationService;
+    let injector: ReflectiveInjector;
 
     let fakeSearch = {
         list: {
@@ -55,39 +56,49 @@ describe('AlfrescoSearchService', () => {
         }
     };
 
-    beforeEachProviders(() => {
-        return [
+    let fakeApi = {
+        core: {
+            searchApi: {
+                liveSearchNodes: (term, opts) => Promise.resolve(fakeSearch)
+            }
+        }
+    };
+
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoSearchService,
             AlfrescoSettingsService,
             AlfrescoApiService,
             AlfrescoAuthenticationService
-        ];
+        ]);
+        service = injector.get(AlfrescoSearchService);
+        authenticationService = injector.get(AlfrescoAuthenticationService);
+        spyOn(authenticationService, 'getAlfrescoApi').and.returnValue(fakeApi);
     });
 
-    beforeEach(inject([AlfrescoSearchService], (alfrescoSearchService: AlfrescoSearchService) => {
-        jasmine.Ajax.install();
-        service = alfrescoSearchService;
-    }));
-
-    afterEach(() => {
-        jasmine.Ajax.uninstall();
-    });
-
-    it('should return search list', (done) => {
-        service.getSearchNodesPromise('MyDoc').then(
-            (res) => {
-                expect(res).toBeDefined();
-                expect(res.list.entries[0].entry.name).toEqual('MyDoc');
+    it('should call search API with the correct parameters', (done) => {
+        let searchTerm = 'searchTerm63688', options = {
+            include: [ 'path' ],
+            rootNodeId: '-root-',
+            nodeType: 'cm:content'
+        };
+        spyOn(fakeApi.core.searchApi, 'liveSearchNodes').and.returnValue(Promise.resolve(fakeSearch));
+        service.getLiveSearchResults(searchTerm).subscribe(
+            () => {
+                expect(fakeApi.core.searchApi.liveSearchNodes).toHaveBeenCalledWith(searchTerm, options);
                 done();
             }
         );
+    });
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeSearch)
-        });
+    it('should return search results returned from the API', (done) => {
+        service.getLiveSearchResults('').subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res).toEqual(fakeSearch);
+                done();
+            }
+        );
     });
 
 });
-*/
