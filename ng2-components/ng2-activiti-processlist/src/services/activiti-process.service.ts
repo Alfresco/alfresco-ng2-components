@@ -102,7 +102,7 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {UserProcessInstanceFilterRepresentationModel}
      */
-    getRunningFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
+    private getRunningFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
         return new UserProcessInstanceFilterRepresentationModel({
             'name': 'Running',
             'appId': appId,
@@ -117,7 +117,7 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {UserProcessInstanceFilterRepresentationModel}
      */
-    getCompletedFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
+    private getCompletedFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
         return new UserProcessInstanceFilterRepresentationModel({
             'name': 'Completed',
             'appId': appId,
@@ -132,7 +132,7 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {UserProcessInstanceFilterRepresentationModel}
      */
-    getAllFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
+    private getAllFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
         return new UserProcessInstanceFilterRepresentationModel({
             'name': 'All',
             'appId': appId,
@@ -256,7 +256,6 @@ export class ActivitiProcessService {
     }
 
     private handleError(error: any) {
-        console.error(error);
         return Observable.throw(error || 'Server error');
     }
 }
