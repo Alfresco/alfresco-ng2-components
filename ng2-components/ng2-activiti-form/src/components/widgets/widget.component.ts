@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormFieldModel } from './core/index';
 
 /**
@@ -61,6 +61,18 @@ export class WidgetComponent implements AfterViewInit {
             return true;
         }
         return false;
+    }
+
+    setupMaterialTextField(elementRef: ElementRef, handler: any, value: string) {
+        if (elementRef && handler) {
+            let el = elementRef.nativeElement;
+            if (el) {
+                let container = el.querySelector('.mdl-textfield');
+                if (container) {
+                    container.MaterialTextfield.change(value);
+                }
+            }
+        }
     }
 
     checkVisibility(field: FormFieldModel) {

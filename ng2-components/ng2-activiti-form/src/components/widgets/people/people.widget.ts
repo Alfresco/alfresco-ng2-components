@@ -122,16 +122,12 @@ export class PeopleWidget extends WidgetComponent implements OnInit {
     }
 
     setupMaterialComponents(handler: any): boolean {
-        // workaround for MDL issues with dynamic components
+        super.setupMaterialComponents(handler);
         if (handler) {
-            handler.upgradeAllRegistered();
             if (this.elementRef && this.value) {
-                let container = this.elementRef.nativeElement.querySelector('.mdl-textfield');
-                if (container) {
-                    container.MaterialTextfield.change(this.value);
-                }
+                this.setupMaterialTextField(this.elementRef, handler, this.value);
+                return true;
             }
-            return true;
         }
         return false;
     }
