@@ -27,7 +27,8 @@ import {
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
     AlfrescoAuthenticationService,
-    AlfrescoContentService
+    AlfrescoContentService,
+    RenditionsService
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -44,6 +45,7 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
+    RenditionsService,
     ...CONTEXT_MENU_PROVIDERS
 ];
 

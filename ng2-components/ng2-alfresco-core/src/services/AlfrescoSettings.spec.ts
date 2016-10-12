@@ -46,6 +46,4 @@ describe('AlfrescoSettingsService', () => {
         service.bpmHost = address;
         expect(service.bpmHost).toBe(address);
     });
-
-
 });

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 export class AlfrescoApiMock {
 
     login(username: string, password: string) {

@@ -18,6 +18,11 @@
 import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoApiService } from './AlfrescoApi.service';
 import { RenditionsService } from './renditions.service';
+import {
+    fakeRedition,
+    fakeReditionCreated,
+    fakeReditionsList
+} from '../assets/renditionsService.mock';
 
 declare let jasmine: any;
 declare let AlfrescoApi: any;
@@ -25,62 +30,6 @@ declare let AlfrescoApi: any;
 describe('RenditionsService', () => {
     let service, injector;
 
-    let fakeRedition = {
-        'entry': {
-            'id': 'pdf',
-            'content': {'mimeType': 'application/pdf', 'mimeTypeName': 'Adobe PDF Document'},
-            'status': 'NOT_CREATED'
-        }
-    };
-
-    let fakeReditionsList = {
-        'list': {
-            'pagination': {
-                'count': 6,
-                'hasMoreItems': false,
-                'totalItems': 6,
-                'skipCount': 0,
-                'maxItems': 100
-            },
-            'entries': [{
-                'entry': {
-                    'id': 'avatar',
-                    'content': {'mimeType': 'image/png', 'mimeTypeName': 'PNG Image'},
-                    'status': 'NOT_CREATED'
-                }
-            }, {
-                'entry': {
-                    'id': 'avatar32',
-                    'content': {'mimeType': 'image/png', 'mimeTypeName': 'PNG Image'},
-                    'status': 'NOT_CREATED'
-                }
-            }, {
-                'entry': {
-                    'id': 'doclib',
-                    'content': {'mimeType': 'image/png', 'mimeTypeName': 'PNG Image'},
-                    'status': 'NOT_CREATED'
-                }
-            }, {
-                'entry': {
-                    'id': 'imgpreview',
-                    'content': {'mimeType': 'image/jpeg', 'mimeTypeName': 'JPEG Image'},
-                    'status': 'NOT_CREATED'
-                }
-            }, {
-                'entry': {
-                    'id': 'medium',
-                    'content': {'mimeType': 'image/jpeg', 'mimeTypeName': 'JPEG Image'},
-                    'status': 'NOT_CREATED'
-                }
-            }, {
-                'entry': {
-                    'id': 'pdf',
-                    'content': {'mimeType': 'application/pdf', 'mimeTypeName': 'Adobe PDF Document'},
-                    'status': 'NOT_CREATED'
-                }
-            }]
-        }
-    };
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoApiService,
@@ -98,9 +47,9 @@ describe('RenditionsService', () => {
         jasmine.Ajax.uninstall();
     });
 
-    it('Get redition list service should call the server with the ID passed', (done) => {
+    it('Get redition list service should return the list', (done) => {
         service.getRenditionsListByNodeId('fake-node-id').subscribe((res) => {
-            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions');
+            expect(res.list.entries[0].entry.id).toBe('avatar');
             done();
         });
 
@@ -108,34 +57,6 @@ describe('RenditionsService', () => {
             'status': 200,
             contentType: 'application/json',
             responseText: JSON.stringify(fakeReditionsList)
-        });
-    });
-
-    it('Get redition service should call the server with the ID passed', (done) => {
-        service.getRendition('fake-node-id', 'pdf').subscribe((res) => {
-            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions/pdf');
-            expect(res.entry.status).toBe('NOT_CREATED');
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeRedition)
-        });
-    });
-
-    it('isRenditionsAvailable service should call the server with the ID passed and return false if is not created', (done) => {
-        service.isRenditionAvailable('fake-node-id', 'pdf').subscribe((res) => {
-            expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id/renditions/pdf');
-            expect(res).toBe(false);
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(fakeRedition)
         });
     });
 
@@ -165,5 +86,67 @@ describe('RenditionsService', () => {
             responseText: 'error'
         });
     });
-});
 
+    it('isConversionPossible should return true if is possible convert', (done) => {
+        service.isConversionPossible('fake-node-id', 'pdf').subscribe((res) => {
+            expect(res).toBe(true);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeRedition)
+        });
+    });
+
+    it('isConversionPossible should return false if is not possible to convert', (done) => {
+        service.isConversionPossible('fake-node-id', 'pdf').subscribe((res) => {
+            expect(res).toBe(false);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 403,
+            contentType: 'application/json'
+        });
+    });
+
+    it('isRenditionsAvailable should return true if the conversion exist', (done) => {
+        service.isRenditionAvailable('fake-node-id', 'pdf').subscribe((res) => {
+            expect(res).toBe(true);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeReditionCreated)
+        });
+    });
+
+    it('isRenditionsAvailable should return false if the conversion not exist', (done) => {
+        service.isRenditionAvailable('fake-node-id', 'pdf').subscribe((res) => {
+            expect(res).toBe(false);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeRedition)
+        });
+    });
+
+    it('isRenditionsAvailable should return false if the conversion get error', (done) => {
+        service.isRenditionAvailable('fake-node-id', 'pdf').subscribe((res) => {
+            expect(res).toBe(false);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 400,
+            contentType: 'application/json'
+        });
+    });
+});

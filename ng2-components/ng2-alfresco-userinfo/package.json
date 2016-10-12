@@ -6,7 +6,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rimraf dist node_modules",
+    "clean": "npm install rimraf && rimraf dist node_modules typings",
     "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist && license-check",
     "build:w": "npm run tslint && rimraf dist && npm run watch-task",
     "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copy-dist:w\"  \"license-check\"",

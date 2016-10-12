@@ -40,6 +40,21 @@ export class RenditionsService {
                 }
                 observer.next(isAvailable);
                 observer.complete();
+            }, () => {
+                observer.next(false);
+                observer.complete();
+            });
+        });
+    }
+
+    isConversionPossible(nodeId: string, encoding: string) {
+        return Observable.create((observer) => {
+            this.getRendition(nodeId, encoding).subscribe(() => {
+                observer.next(true);
+                observer.complete();
+            }, () => {
+                observer.next(false);
+                observer.complete();
             });
         });
     }
@@ -55,7 +70,7 @@ export class RenditionsService {
     }
 
     createRendition(nodeId: string, encoding: string) {
-        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, {id: 'pdf'}))
+        return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, {id: encoding}))
             .catch(this.handleError);
     }
 
