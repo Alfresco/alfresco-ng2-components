@@ -44,7 +44,7 @@
     "@angular/upgrade": "2.0.0-rc.3",
     "systemjs": "0.19.27",
     "core-js": "^2.4.0",
-    "alfresco-js-api": "^0.3.0",
+    "alfresco-js-api": "0.3.1",
 
     "ng2-translate": "2.2.2",
     "ng2-alfresco-core": "0.3.2",

@@ -70,7 +70,7 @@
     "ng2-alfresco-core": "0.3.2",
     "ng2-alfresco-datatable": "0.3.2",
     "ng2-activiti-form": "0.3.3",
-    "alfresco-js-api": "^0.3.0"
+    "alfresco-js-api": "0.3.1"
   },
   "peerDependencies": {
     "material-design-icons": "^2.2.3",
