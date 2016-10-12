@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileUploadingListComponent } from './file-uploading-list.component';
@@ -76,7 +75,6 @@ describe('Test ng2-alfresco-upload FileUploadDialog', () => {
         fixture.detectChanges();
     });
 
-
     it('should render completed upload 1 when an element is added to Observer', () => {
         component._uploaderService.updateFileCounterStream(1);
         fixture.detectChanges();
@@ -118,4 +116,3 @@ describe('Test ng2-alfresco-upload FileUploadDialog', () => {
         expect(element.querySelector('.minimize-button').getAttribute('class')).toEqual('minimize-button active');
     });
 });
-

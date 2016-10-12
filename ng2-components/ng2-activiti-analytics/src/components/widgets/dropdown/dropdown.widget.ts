@@ -18,7 +18,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
-
 @Component({
     moduleId: module.id,
     selector: 'dropdown-widget',

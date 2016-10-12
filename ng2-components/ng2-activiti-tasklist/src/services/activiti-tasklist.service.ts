@@ -202,7 +202,6 @@ export class ActivitiTaskListService {
             .map(res => res);
     }
 
-
     /**
      * Return the total number of the tasks by filter
      * @param requestNode - TaskFilterRepresentationModel
@@ -337,5 +336,4 @@ export class ActivitiTaskListService {
             'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'}
         });
     }
-
 }

@@ -120,7 +120,6 @@ export class TableChart extends Chart {
     }
 }
 
-
 export class HeatMapChart extends Chart {
     title: string;
     titleKey: string;

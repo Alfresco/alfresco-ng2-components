@@ -105,7 +105,6 @@ describe('ActivitiForm', () => {
         expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
     });
 
-
     it('should allow controlling [complete] button visibility', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });

@@ -38,7 +38,6 @@ export const ANALYTICS_PROVIDERS: any[] = [
     AnalyticsService
 ];
 
-
 describe('Show component HTML', () => {
 
     let component: any;

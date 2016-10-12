@@ -116,7 +116,6 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-
         let actions = documentList.getNodeActions(new FolderNode());
         expect(actions.length).toBe(1);
         expect(actions[0]).toBe(folderMenu);

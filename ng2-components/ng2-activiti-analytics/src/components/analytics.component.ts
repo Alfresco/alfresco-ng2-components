@@ -171,7 +171,6 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         this.reportParamQuery.dateRange.endDate = dateRange.endDate;
     }
 
-
     onDateRangeIntervalChange(field: any) {
         this.reset();
         this.reportParamQuery.dateRangeInterval = field.value;

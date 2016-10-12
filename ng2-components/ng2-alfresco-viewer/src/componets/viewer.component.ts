@@ -154,7 +154,6 @@ export class ViewerComponent {
         return this.isImageExtension() || this.isImageMimeType();
     }
 
-
     /**
      * Check if the content is a media through the extension or mime type
      *

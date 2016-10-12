@@ -22,7 +22,6 @@ import { ReportModel } from '../models/report.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
-
 @Component({
     moduleId: module.id,
     selector: 'analytics-report-list',
@@ -60,7 +59,6 @@ export class AnalyticsReportListComponent implements  OnInit {
 
         this.getReportListByAppId();
     }
-
 
     getReportListByAppId() {
         this.analyticsService.getReportList().subscribe(

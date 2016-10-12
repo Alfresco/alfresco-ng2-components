@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { Component, ElementRef, Input } from '@angular/core';
 import { FileModel } from '../models/file.model';
 

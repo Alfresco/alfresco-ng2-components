@@ -101,7 +101,6 @@ export class ParameterValueModel {
     }
 }
 
-
 export class ReportQuery {
     processDefinitionId: string;
     status: string;

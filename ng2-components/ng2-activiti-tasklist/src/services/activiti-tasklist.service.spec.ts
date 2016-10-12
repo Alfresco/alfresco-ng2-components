@@ -439,7 +439,6 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
-
     it('should get the deployed apps ', (done) => {
         service.getDeployedApplications().subscribe(
             (res: any) => {
@@ -515,4 +514,3 @@ describe('ActivitiTaskListService', () => {
     });
 
 });
-

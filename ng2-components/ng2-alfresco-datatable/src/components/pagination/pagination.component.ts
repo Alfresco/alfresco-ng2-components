@@ -77,5 +77,3 @@ export class PaginationComponent {
         this.provider.skipCount -= this.provider.maxItems;
     }
 }
-
-

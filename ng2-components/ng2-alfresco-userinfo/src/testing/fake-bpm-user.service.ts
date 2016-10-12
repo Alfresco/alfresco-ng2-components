@@ -93,6 +93,4 @@ export class FakeBpmUserService {
   respondWithTheUserWithImage() {
     this.userNeeded = 0;
   }
-
-
 }

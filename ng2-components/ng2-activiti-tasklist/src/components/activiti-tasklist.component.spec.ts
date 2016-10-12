@@ -22,7 +22,6 @@ import { UserTaskFilterRepresentationModel } from '../models/filter.model';
 import { Observable } from 'rxjs/Rx';
 import { ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
-
 describe('ActivitiTaskList', () => {
 
     let taskList: ActivitiTaskList;

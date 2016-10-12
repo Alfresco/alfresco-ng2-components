@@ -157,4 +157,3 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
         component.onDirectoryAdded(fakeEvent);
     });
 });
-

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
@@ -85,7 +84,6 @@ export class UploadButtonComponent {
     createFolder = new EventEmitter();
 
     translate: AlfrescoTranslationService;
-
 
     constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;

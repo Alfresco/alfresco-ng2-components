@@ -142,4 +142,3 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
         });
     });
 });
-

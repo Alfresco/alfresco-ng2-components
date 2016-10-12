@@ -20,7 +20,6 @@ import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
-
 @Component({
     moduleId: module.id,
     selector: 'alfresco-search-autocomplete',
