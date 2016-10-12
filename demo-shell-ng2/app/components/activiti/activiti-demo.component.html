@@ -69,7 +69,7 @@
                         <analytics-report-list (reportClick)="onReportClick($event)"></analytics-report-list>
                     </div>
                     <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                        <activiti-analytics *ngIf="report" [reportId]="report.id"></activiti-analytics>
+                        <activiti-analytics [appId]="appId" *ngIf="report" [reportId]="report.id"></activiti-analytics>
                     </div>
                 </div>
             </div>

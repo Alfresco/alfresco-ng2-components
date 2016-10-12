@@ -34,6 +34,9 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
     processDefinition: any;
 
     @Input()
+    appId: string;
+
+    @Input()
     reportId: string;
 
     @Output()
@@ -85,13 +88,13 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         this.dropDownSub = this.onDropdownChanged.subscribe((field) => {
             let paramDependOn: ReportParameterModel = this.reportDetails.definition.parameters.find(p => p.dependsOn === field.id);
             if (paramDependOn) {
-                this.retrieveParameterOptions(this.reportDetails.definition.parameters, this.reportId, field.value);
+                this.retrieveParameterOptions(this.reportDetails.definition.parameters, this.appId, this.reportId, field.value);
             }
         });
 
         this.paramOpts = this.onSuccessParamsReport.subscribe((report: ReportModel) => {
             if (report.hasParameters()) {
-                this.retrieveParameterOptions(report.definition.parameters);
+                this.retrieveParameterOptions(report.definition.parameters, this.appId);
             }
         });
     }
@@ -100,6 +103,12 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getParamsReports(reportId.currentValue);
+            return;
+        }
+
+        let appId = changes['appId'];
+        if (appId && (appId.currentValue || appId.currentValue === null)) {
+            this.getParamsReports(this.reportId);
             return;
         }
     }
@@ -119,9 +128,9 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         );
     }
 
-    private retrieveParameterOptions(parameters: ReportParameterModel[], reportId?: string, processDefinitionId?: string) {
+    private retrieveParameterOptions(parameters: ReportParameterModel[], appId: string, reportId?: string, processDefinitionId?: string) {
         parameters.forEach((param) => {
-            this.analyticsService.getParamValuesByType(param.type, this.reportId, processDefinitionId).subscribe(
+            this.analyticsService.getParamValuesByType(param.type, appId, reportId, processDefinitionId).subscribe(
                 (opts: ParameterValueModel[]) => {
                     param.options = opts;
                     this.onSuccessParamOpt.emit(opts);

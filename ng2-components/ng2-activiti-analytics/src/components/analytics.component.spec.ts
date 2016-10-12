@@ -33,8 +33,8 @@ import { DebugElement, SimpleChange } from '@angular/core';
 import {
     reportDefParamCheck, reportDefParamDateRange, chartProcessDefOverview, chartTaskOverview, fieldDateRange,
     fieldDateRangeInterval, fieldDuration, fieldNumber, fieldProcessDef, fieldStatus, fieldTask, fieldTypeFiltering,
-    reportDefParamDuration, reportDefParamNumber, reportDefParamTaskOptions, reportDefParamStatus,
-    reportDefParamRangeInterval, reportDefParamProcessDef, reportDefParamProcessDefOptions, reportDefParamTask
+    reportDefParamDuration, reportDefParamNumber, reportDefParamTaskOptions, reportDefParamStatus, reportDefParamRangeInterval,
+    reportDefParamProcessDef, reportDefParamProcessDefOptions, reportDefParamProcessDefOptionsApp, reportDefParamTask
 } from '../assets/analyticsComponent.mock';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
@@ -255,7 +255,9 @@ describe('Test ng2-activiti-analytics Report ', () => {
             });
         });
 
-        it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' ', (done) => {
+        it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
+            ' reportId change' +
+            ' ', (done) => {
             fixture.detectChanges();
 
             component.onSuccessParamOpt.subscribe(() => {
@@ -285,6 +287,41 @@ describe('Test ng2-activiti-analytics Report ', () => {
                 status: 200,
                 contentType: 'json',
                 responseText: reportDefParamProcessDefOptions
+            });
+
+        });
+
+        it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
+            ' appId change' +
+            ' ', (done) => {
+            fixture.detectChanges();
+
+            component.onSuccessParamOpt.subscribe(() => {
+                fixture.detectChanges();
+                let dropDown: any = element.querySelector('#select-processDefinitionId');
+                expect(dropDown).toBeDefined();
+                expect(dropDown.length).toEqual(3);
+                expect(dropDown[0].innerHTML).toEqual('Choose One');
+                expect(dropDown[1].innerHTML).toEqual('Fake Process Test 1 Name  (v 1) ');
+                expect(dropDown[2].innerHTML).toEqual('Fake Process Test 1 Name  (v 2) ');
+                done();
+            });
+
+            let appId = 1;
+            component.appId = appId;
+            let change = new SimpleChange(null, appId);
+            component.ngOnChanges({ 'appId': change });
+
+            jasmine.Ajax.requests.first().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: reportDefParamProcessDef
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: reportDefParamProcessDefOptionsApp
             });
 
         });
