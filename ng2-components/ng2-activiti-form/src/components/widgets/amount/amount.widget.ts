@@ -26,7 +26,9 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
 })
 export class AmountWidget extends TextFieldWidgetComponent implements OnInit {
 
-    currency: string = '$';
+    static DEFAULT_CURRENCY: string = '$';
+
+    currency: string = AmountWidget.DEFAULT_CURRENCY;
 
     constructor(elementRef: ElementRef) {
         super(elementRef);
