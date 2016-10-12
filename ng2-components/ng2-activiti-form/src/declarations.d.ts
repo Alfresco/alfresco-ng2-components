@@ -17,6 +17,7 @@
 
 declare var module: any;
 declare var moment: any;
+declare let mdDateTimePicker: any;
 
 // MDL
 declare var componentHandler: any;
