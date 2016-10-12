@@ -67,7 +67,7 @@ describe('DateWidget', () => {
         let dateValue = '13-03-1982';
         widget.field = new FormFieldModel(null, {
             type: 'date',
-            value: dateValue
+            value: '1982-03-13'
         });
         widget.ngOnInit();
 

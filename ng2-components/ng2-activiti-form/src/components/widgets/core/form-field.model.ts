@@ -210,7 +210,7 @@ export class FormFieldModel extends FormWidgetModel {
          */
         if (json.type === FormFieldTypes.DATE) {
             if (value) {
-                let d = moment(value.split('T')[0]);
+                let d = moment(value.split('T')[0], 'YYYY-M-D');
                 if (d.isValid()) {
                     value = d.format('D-M-YYYY');
                 }

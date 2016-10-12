@@ -194,7 +194,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     ngOnInit() {
         if (this.nodeId) {
-            this.loadActivitiFormForEcmNode();
+            this.loadFormForEcmNode();
         } else {
             this.loadForm();
         }
@@ -418,7 +418,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    private loadActivitiFormForEcmNode(): void {
+    loadFormForEcmNode(): void {
         this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
                 this.data = data.metadata;
                 this.loadFormFromActiviti(data.nodeType);
@@ -426,7 +426,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.handleError);
     }
 
-    public loadFormFromActiviti(nodeType: string): any {
+    loadFormFromActiviti(nodeType: string): any {
         this.formService.searchFrom(nodeType).subscribe(
             form => {
                 if (!form) {
