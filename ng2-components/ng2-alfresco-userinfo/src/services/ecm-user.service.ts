@@ -37,24 +37,22 @@ export class EcmUserService {
      * @param userName - the user name
      */
     getUserInfo(userName: string): Observable<EcmUserModel> {
-      if ( this.authService.isEcmLoggedIn() ) {
         return Observable.fromPromise(this.callApiGetPersonInfo(userName))
             .map(
                    (data) => <EcmUserModel> data['entry']
                 )
             .catch(this.handleError);
-      }
     }
 
     getCurrentUserInfo() {
         return this.getUserInfo('-me-');
     }
 
-    callApiGetPersonInfo(userName: string, opts?: any) {
+    private callApiGetPersonInfo(userName: string, opts?: any) {
         return this.authService.getAlfrescoApi().core.peopleApi.getPerson(userName, opts);
     }
 
-    getCurrentUserProfileImageUrl(avatarId: string) {
+    getUserProfileImage(avatarId: string) {
        if ( avatarId ) {
             let nodeObj = {entry: {id: avatarId}};
             return this.contentService.getContentUrl(nodeObj);

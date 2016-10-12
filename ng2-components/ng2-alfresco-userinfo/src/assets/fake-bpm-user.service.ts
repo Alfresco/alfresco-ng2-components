@@ -83,7 +83,7 @@ export class FakeBpmUserService {
   };
 
   getCurrentUserProfileImage() {
-      return this.usersList[this.userNeeded].pictureId;
+      return Observable.of(this.usersList[this.userNeeded].pictureId);
   };
 
   respondWithTheUserWithoutImage() {

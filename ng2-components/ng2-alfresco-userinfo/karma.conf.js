@@ -49,6 +49,8 @@ module.exports = function (config) {
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
       {pattern: 'dist/**/*.js.map', included: false, watched: false}
+      // fake file path
+      { pattern: '/base/dist/src/img/anonymous.gif', included: false, watched: true, served: true }
     ],
 
     exclude: [

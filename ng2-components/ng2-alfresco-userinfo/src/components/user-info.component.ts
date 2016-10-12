@@ -45,43 +45,46 @@ export class UserInfoComponent implements OnInit {
     }
 
     ngOnInit() {
-        if ( this.authService.isEcmLoggedIn() ) {
+
+        if (this.authService.isEcmLoggedIn()) {
             this.ecmUserService.getCurrentUserInfo()
                 .subscribe(
                     (res) => {
-                    this.ecmUser = <EcmUserModel> res;
-                    this.getEcmUserProfileImage();
-                }
-            );
+                        this.ecmUser = <EcmUserModel> res;
+                        this.getEcmAvatar();
+                    }
+                );
         }
-        if ( this.authService.isBpmLoggedIn() ) {
+
+        if (this.authService.isBpmLoggedIn()) {
             this.bpmUserService.getCurrentUserInfo()
                 .subscribe(
                     (res) => {
-                    this.bpmUser = <BpmUserModel> res;
-                    this.getBpmUserProfileImage();
-                }
-            );
+                        this.bpmUser = <BpmUserModel> res;
+                    }
+                );
+            this.bpmUserService.getCurrentUserProfileImage()
+                .subscribe(
+                    (res) => {
+                        this.bpmUserImage = res;
+                    }
+                );
         }
     }
 
-    private getBpmUserProfileImage() {
-        this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
-    }
-
-    private getEcmUserProfileImage() {
-        this.ecmUserImage = this.ecmUserService.getCurrentUserProfileImageUrl(this.ecmUser.avatarId);
+    private getEcmAvatar() {
+        this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
     }
 
     public getUserAvatar() {
-        return this.ecmUserImage || this.bpmUserImage ||  this.anonymouseImageUrl;
+        return this.ecmUserImage || this.bpmUserImage || this.anonymouseImageUrl;
     }
 
-    public getBpmUserDetailAvatarUrl() {
+    public getBpmUserAvatar() {
         return this.bpmUserImage || this.anonymouseImageUrl;
     }
 
-    public getEcmUserDetailAvatarUrl() {
+    public getEcmUserAvatar() {
         return this.ecmUserImage || this.anonymouseImageUrl;
     }
 

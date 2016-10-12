@@ -38,7 +38,7 @@ export class BpmUserService {
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
        if ( this.authService.isBpmLoggedIn() ) {
-            return Observable.fromPromise(this.callApiGetProfile())
+            return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.profileApi.getProfilePicture())
                 .map(
                      (data) => <BpmUserModel> data
                     )
@@ -46,33 +46,14 @@ export class BpmUserService {
         }
     }
 
-    getCurrentUserProfileImage(): any {
+    getCurrentUserProfileImage(): Observable<any> {
        if ( this.authService.isBpmLoggedIn() ) {
-           return Observable.fromPromise(this.callApiGetProfilePicture())
+           return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.profileApi.getProfile())
                .map(
                     (data) => data
                    )
                .catch(this.handleError);
        }
-    }
-
-    /**
-     * Call js api to get current user profile picture
-     */
-    callApiGetProfilePicture() {
-        try {
-            return this.authService.getAlfrescoApi().activiti.profileApi.getProfilePicture();
-        } catch (exc) {
-            console.error(exc);
-            return null;
-        }
-    }
-
-    /**
-     * Call js api to get current user information
-     */
-    callApiGetProfile() {
-        return this.authService.getAlfrescoApi().activiti.profileApi.getProfile();
     }
 
     /**

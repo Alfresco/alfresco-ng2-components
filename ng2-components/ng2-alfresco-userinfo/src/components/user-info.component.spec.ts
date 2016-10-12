@@ -18,8 +18,8 @@
 import { UserInfoComponent } from './user-info.component';
 import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserService } from '../services/bpm-user.service';
-import { FakeEcmUserService } from '../testing/fake-ecm-user.service';
-import { FakeBpmUserService } from '../testing/fake-bpm-user.service';
+import { FakeEcmUserService } from '../assets/fake-ecm-user.service';
+import { FakeBpmUserService } from '../assets/fake-bpm-user.service';
 import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
@@ -107,7 +107,7 @@ describe('User info component', () => {
             fixture.whenStable()
                       .then( () => {
                                      fixture.detectChanges();
-                                     let res = userInfoComp.getEcmUserDetailAvatarUrl();
+                                     let res = userInfoComp.getEcmUserAvatar();
                                      expect(userInfoComp.ecmUserImage).toBeUndefined();
                                      expect(res).toEqual(userInfoComp.anonymouseImageUrl);
                                    });
@@ -146,7 +146,7 @@ describe('User info component', () => {
             fixture.whenStable()
                       .then( () => {
                                      fixture.detectChanges();
-                                     let res = userInfoComp.getBpmUserDetailAvatarUrl();
+                                     let res = userInfoComp.getBpmUserAvatar();
                                      expect(userInfoComp.bpmUserImage).toBeUndefined();
                                      expect(res).toEqual(userInfoComp.anonymouseImageUrl);
                                    });
@@ -194,10 +194,10 @@ describe('User info component', () => {
             fixture.whenStable()
                       .then( () => {
                                      fixture.detectChanges();
-                                     let resBpm = userInfoComp.getBpmUserDetailAvatarUrl();
+                                     let resBpm = userInfoComp.getBpmUserAvatar();
                                      expect(userInfoComp.bpmUserImage).toBeUndefined();
                                      expect(resBpm).toEqual(userInfoComp.anonymouseImageUrl);
-                                     let resEcm = userInfoComp.getEcmUserDetailAvatarUrl();
+                                     let resEcm = userInfoComp.getEcmUserAvatar();
                                      expect(userInfoComp.ecmUserImage).toBeUndefined();
                                      expect(resEcm).toEqual(userInfoComp.anonymouseImageUrl);
                                    });
