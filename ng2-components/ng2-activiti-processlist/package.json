@@ -65,7 +65,7 @@
     "ng2-translate": "2.2.2",
     "ng2-alfresco-core": "0.3.2",
     "ng2-alfresco-datatable": "0.3.2",
-    "ng2-activiti-tasklist": "0.3.2"
+    "ng2-activiti-tasklist": "0.3.3"
   },
   "devDependencies": {
     "angular-cli": "1.0.0-beta.9",
