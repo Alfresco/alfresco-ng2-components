@@ -56,6 +56,16 @@ describe('AlfrescoSearchService', () => {
         }
     };
 
+    let fakeError = {
+        error: {
+            errorKey: 'Search failed',
+            statusCode: 400,
+            briefSummary: '08220082 search failed',
+            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+            descriptionURL: 'https://api-explorer.alfresco.com'
+        }
+    };
+
     let fakeApi = {
         core: {
             searchApi: {
@@ -96,6 +106,18 @@ describe('AlfrescoSearchService', () => {
             (res: any) => {
                 expect(res).toBeDefined();
                 expect(res).toEqual(fakeSearch);
+                done();
+            }
+        );
+    });
+
+    it('should notify errors returned from the API', (done) => {
+        spyOn(fakeApi.core.searchApi, 'liveSearchNodes').and.returnValue(Promise.reject(fakeError));
+        service.getLiveSearchResults('').subscribe(
+            () => {},
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res).toEqual(fakeError);
                 done();
             }
         );
