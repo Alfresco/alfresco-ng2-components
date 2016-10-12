@@ -54,7 +54,7 @@ export class DateRangeWidget extends WidgetComponent {
     @Output()
     dateRangeChanged: EventEmitter<any> = new EventEmitter<any>();
 
-    debug: boolean = true;
+    debug: boolean = false;
 
     dialogStart: any = new mdDateTimePicker.default({
         type: 'date',

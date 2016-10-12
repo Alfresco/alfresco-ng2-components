@@ -33,6 +33,9 @@ module.exports = function (config) {
       {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
       'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
+      'node_modules/moment/min/moment.min.js',
+      'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js',
+      'node_modules/chart.js/dist/Chart.bundle.min.js',
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
 
       'karma-test-shim.js',
@@ -45,6 +48,7 @@ module.exports = function (config) {
       // ng2-components
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.*', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false },
       { pattern: 'node_modules/moment/**/*.js', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools

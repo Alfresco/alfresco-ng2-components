@@ -130,7 +130,7 @@ export class AnalyticsService {
     }
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
-        if (processDefinitionId) {
+        if (reportId && processDefinitionId) {
             let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}/tasks`;
             let params: URLSearchParams;
             if (processDefinitionId) {
