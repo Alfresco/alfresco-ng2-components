@@ -295,7 +295,7 @@ describe('DisplayValueWidget', () => {
         spyOn(formService, 'getRestFieldValues').and.callFake(() => {
             return Observable.create(observer => {
                  observer.next([
-                     { id: '1', name: 'option 1' },
+                    { id: '1', name: 'option 1' },
                     { id: '2', name: 'option 2' }
                  ]);
                  observer.complete();

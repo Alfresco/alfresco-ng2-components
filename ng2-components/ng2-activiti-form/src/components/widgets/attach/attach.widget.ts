@@ -53,24 +53,30 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.value) {
-            this.hasFile = true;
-        }
-        if (this.field &&
-            this.field.params &&
-            this.field.params.fileSource &&
-            this.field.params.fileSource.selectedFolder) {
-            this.selectedFolderSiteId = this.field.params.fileSource.selectedFolder.siteId;
-            this.selectedFolderSiteName = this.field.params.fileSource.selectedFolder.site;
-            this.setupFileBrowser();
-            this.getExternalContentNodes();
+        if (this.field) {
+            if (this.field.value) {
+                this.hasFile = true;
+            }
+
+            let params = this.field.params;
+
+            if (params &&
+                params.fileSource &&
+                params.fileSource.selectedFolder) {
+                this.selectedFolderSiteId = params.fileSource.selectedFolder.siteId;
+                this.selectedFolderSiteName = params.fileSource.selectedFolder.site;
+                this.setupFileBrowser();
+                this.getExternalContentNodes();
+            }
         }
     }
 
-    private setupFileBrowser() {
-        this.selectedFolderPathId = this.field.params.fileSource.selectedFolder.pathId;
-        this.selectedFolderAccountId = this.field.params.fileSource.selectedFolder.accountId;
+    setupFileBrowser() {
+        if (this.field) {
+            let params = this.field.params;
+            this.selectedFolderPathId = params.fileSource.selectedFolder.pathId;
+            this.selectedFolderAccountId = params.fileSource.selectedFolder.accountId;
+        }
     }
 
     getLinkedFileName(): string {
@@ -80,7 +86,8 @@ export class AttachWidget extends WidgetComponent implements OnInit {
             this.selectedFile.title) {
             result = this.selectedFile.title;
         }
-        if (this.field.value &&
+        if (this.field &&
+            this.field.value &&
             this.field.value.length > 0 &&
             this.field.value[0].name) {
             result = this.field.value[0].name;
@@ -89,14 +96,12 @@ export class AttachWidget extends WidgetComponent implements OnInit {
         return result;
     }
 
-    private getExternalContentNodes() {
-
+    getExternalContentNodes() {
         this.contentService.getAlfrescoNodes(this.selectedFolderAccountId, this.selectedFolderPathId)
             .subscribe(
-                (nodes) => {
-                    this.selectedFolderNodes = nodes;
-                },
-                error =>  console.error(error));
+                nodes => this.selectedFolderNodes = nodes,
+                error => this.handleError(error)
+            );
     }
 
     selectFile(node: ExternalContent, $event: any) {
@@ -116,17 +121,19 @@ export class AttachWidget extends WidgetComponent implements OnInit {
         this.getExternalContentNodes();
     }
 
-    public showDialog() {
+    showDialog(): boolean {
         this.setupFileBrowser();
         this.getExternalContentNodes();
 
-        if (!this.dialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.dialog.nativeElement);
-        }
-
         if (this.dialog) {
+            if (!this.dialog.nativeElement.showModal) {
+                dialogPolyfill.registerDialog(this.dialog.nativeElement);
+            }
+
             this.dialog.nativeElement.showModal();
+            return true;
         }
+        return false;
     }
 
     private closeDialog() {
@@ -135,7 +142,7 @@ export class AttachWidget extends WidgetComponent implements OnInit {
         }
     }
 
-    public cancel() {
+    cancel() {
         this.closeDialog();
     }
 
