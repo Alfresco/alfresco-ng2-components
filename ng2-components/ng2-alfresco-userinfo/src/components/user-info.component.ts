@@ -51,7 +51,7 @@ export class UserInfoComponent implements OnInit {
                 .subscribe(
                     (res) => {
                         this.ecmUser = <EcmUserModel> res;
-                        this.getEcmAvatar();
+                        this._getEcmAvatar();
                     }
                 );
         }
@@ -72,23 +72,23 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    private getEcmAvatar() {
+    private _getEcmAvatar() {
         this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
     }
 
-    public getUserAvatar() {
+    getUserAvatar() {
         return this.ecmUserImage || this.bpmUserImage || this.anonymouseImageUrl;
     }
 
-    public getBpmUserAvatar() {
+    getBpmUserAvatar() {
         return this.bpmUserImage || this.anonymouseImageUrl;
     }
 
-    public getEcmUserAvatar() {
+    getEcmUserAvatar() {
         return this.ecmUserImage || this.anonymouseImageUrl;
     }
 
-    public formatValue(value: string) {
+    formatValue(value: string) {
         return value === 'null' ? null : value;
     }
 

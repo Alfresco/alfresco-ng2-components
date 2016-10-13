@@ -89,7 +89,8 @@ describe('Ecm User service', () => {
         });
 
         it('should be able to log errors on call', (done) => {
-            service.getCurrentUserInfo().subscribe(() => {}, () => {
+            service.getCurrentUserInfo().subscribe(() => {
+            }, () => {
                 done();
             });
 

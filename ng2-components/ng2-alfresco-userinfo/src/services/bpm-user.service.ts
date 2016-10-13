@@ -37,23 +37,23 @@ export class BpmUserService {
      * @param userName - the user name
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-       if ( this.authService.isBpmLoggedIn() ) {
+        if (this.authService.isBpmLoggedIn()) {
             return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.profileApi.getProfile())
                 .map(
-                     (data) => <BpmUserModel> data
-                    )
+                    (data) => <BpmUserModel> data
+                )
                 .catch(this.handleError);
         }
     }
 
     getCurrentUserProfileImage(): Observable<any> {
-       if ( this.authService.isBpmLoggedIn() ) {
-           return Observable.fromPromise(this.callGetProfilePictureApi())
-               .map(
+        if (this.authService.isBpmLoggedIn()) {
+            return Observable.fromPromise(this.callGetProfilePictureApi())
+                .map(
                     (data) => data
-                   )
-               .catch(this.handleError);
-       }
+                )
+                .catch(this.handleError);
+        }
     }
 
     callGetProfilePictureApi() {

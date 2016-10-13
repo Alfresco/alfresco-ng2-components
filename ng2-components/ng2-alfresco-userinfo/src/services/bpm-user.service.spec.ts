@@ -71,22 +71,39 @@ describe('Bpm User service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: { fakeBpmUser }
+                responseText: {fakeBpmUser}
             });
         });
 
         it('should retrieve avatar url for current user', (done) => {
+            spyOn(service, 'callGetProfilePictureApi').and.returnValue(Promise.resolve('fake/img/path'));
             service.getCurrentUserProfileImage().subscribe(
                 (path) => {
                     expect(path).toBeDefined();
                     expect(path).toEqual('fake/img/path');
                     done();
                 });
+        });
+
+        it('should be able to log errors on call for profile', (done) => {
+            service.getCurrentUserInfo().subscribe(() => {
+            }, () => {
+                done();
+            });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: 'fake/img/path'
+                status: 403
+            });
+        });
+
+        it('should be able to log errors on call for profile picture', (done) => {
+            service.getCurrentUserProfileImage().subscribe(() => {
+            }, () => {
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
             });
         });
     });

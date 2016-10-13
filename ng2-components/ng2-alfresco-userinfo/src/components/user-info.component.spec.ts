@@ -24,16 +24,30 @@ import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfre
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 class StubAuthentication {
-  isEcmConnected: boolean;
-  isBpmConnected: boolean;
-  setIsEcmLoggedIn(logged: boolean) { this.isEcmConnected = logged; };
-  setIsBpmLoggedIn(logged: boolean) { this.isBpmConnected = logged; };
-  isEcmLoggedIn() { return this.isEcmConnected; };
-  isBpmLoggedIn() { return this.isBpmConnected; };
+    isEcmConnected: boolean;
+    isBpmConnected: boolean;
+
+    setIsEcmLoggedIn(logged: boolean) {
+        this.isEcmConnected = logged;
+    };
+
+    setIsBpmLoggedIn(logged: boolean) {
+        this.isBpmConnected = logged;
+    };
+
+    isEcmLoggedIn() {
+        return this.isEcmConnected;
+    };
+
+    isBpmLoggedIn() {
+        return this.isBpmConnected;
+    };
 }
 
 class StubAlfrescoContentService {
-    getContentUrl() { return 'fake/url/image/for/ecm/user'; } ;
+    getContentUrl() {
+        return 'fake/url/image/for/ecm/user';
+    } ;
 }
 
 describe('User info component', () => {
@@ -45,17 +59,17 @@ describe('User info component', () => {
     let fakeBpmService: FakeBpmUserService;
 
     beforeEach(async(() => {
-       TestBed.configureTestingModule({
-          declarations: [ UserInfoComponent ],
-          providers: [{ provide: EcmUserService, useClass: FakeEcmUserService},
-                      { provide: BpmUserService, useClass: FakeBpmUserService},
-                      { provide: AlfrescoAuthenticationService, useClass: StubAuthentication },
-                      { provide: AlfrescoContentService, useClass: StubAlfrescoContentService }
-                     ]
-       }).compileComponents().then(() => {
-           fixture = TestBed.createComponent(UserInfoComponent);
-           userInfoComp = fixture.componentInstance;
-         });
+        TestBed.configureTestingModule({
+            declarations: [UserInfoComponent],
+            providers: [{provide: EcmUserService, useClass: FakeEcmUserService},
+                {provide: BpmUserService, useClass: FakeBpmUserService},
+                {provide: AlfrescoAuthenticationService, useClass: StubAuthentication},
+                {provide: AlfrescoContentService, useClass: StubAlfrescoContentService}
+            ]
+        }).compileComponents().then(() => {
+            fixture = TestBed.createComponent(UserInfoComponent);
+            userInfoComp = fixture.componentInstance;
+        });
     }));
 
     it('should NOT have users before ngOnInit only anonymous image', () => {
@@ -75,18 +89,33 @@ describe('User info component', () => {
         expect(userInfoComp.anonymouseImageUrl).toBeDefined();
     });
 
+    it('should format null string values in null value', () => {
+        let res = userInfoComp.formatValue('null');
+
+        expect(res).toBeDefined();
+        expect(res).toBeNull();
+    });
+
+    it('should return the value when it is not null string', () => {
+        let res = userInfoComp.formatValue('fake-value');
+
+        expect(res).toBeDefined();
+        expect(res).not.toBeNull();
+        expect(res).toEqual('fake-value');
+    });
+
     describe('when user is logged on ecm', () => {
 
-        beforeEach( async(() => {
+        beforeEach(async(() => {
             authStub = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             fakeEcmService = fixture.debugElement.injector.get(EcmUserService);
 
             authStub.setIsEcmLoggedIn(true);
             fixture.detectChanges(); // runs ngOnInit -> getUsers
             fixture.whenStable()
-              .then( () => {
-                               fixture.detectChanges();
-                            } );
+                .then(() => {
+                    fixture.detectChanges();
+                });
         }));
 
         it('should get the ecm current user image from the service', () => {
@@ -105,27 +134,27 @@ describe('User info component', () => {
             fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
-                      .then( () => {
-                                     fixture.detectChanges();
-                                     let res = userInfoComp.getEcmUserAvatar();
-                                     expect(userInfoComp.ecmUserImage).toBeUndefined();
-                                     expect(res).toEqual(userInfoComp.anonymouseImageUrl);
-                                   });
+                .then(() => {
+                    fixture.detectChanges();
+                    let res = userInfoComp.getEcmUserAvatar();
+                    expect(userInfoComp.ecmUserImage).toBeUndefined();
+                    expect(res).toEqual(userInfoComp.anonymouseImageUrl);
+                });
         }));
     });
 
     describe('when user is logged on bpm', () => {
 
-        beforeEach( async(() => {
+        beforeEach(async(() => {
             authStub = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             fakeBpmService = fixture.debugElement.injector.get(BpmUserService);
 
             authStub.setIsBpmLoggedIn(true);
             fixture.detectChanges(); // runs ngOnInit -> getUsers
             fixture.whenStable()
-              .then( () => {
-                             fixture.detectChanges();
-                           } );
+                .then(() => {
+                    fixture.detectChanges();
+                });
         }));
 
         it('should get the bpm current user image from the service', () => {
@@ -144,18 +173,18 @@ describe('User info component', () => {
             fakeBpmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
-                      .then( () => {
-                                     fixture.detectChanges();
-                                     let res = userInfoComp.getBpmUserAvatar();
-                                     expect(userInfoComp.bpmUserImage).toBeUndefined();
-                                     expect(res).toEqual(userInfoComp.anonymouseImageUrl);
-                                   });
+                .then(() => {
+                    fixture.detectChanges();
+                    let res = userInfoComp.getBpmUserAvatar();
+                    expect(userInfoComp.bpmUserImage).toBeUndefined();
+                    expect(res).toEqual(userInfoComp.anonymouseImageUrl);
+                });
         }));
     });
 
     describe('when user is logged on bpm and ecm', () => {
 
-        beforeEach( async(() => {
+        beforeEach(async(() => {
             authStub = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             fakeBpmService = fixture.debugElement.injector.get(BpmUserService);
             fakeEcmService = fixture.debugElement.injector.get(EcmUserService);
@@ -164,9 +193,9 @@ describe('User info component', () => {
             authStub.setIsEcmLoggedIn(true);
             fixture.detectChanges(); // runs ngOnInit -> getUsers
             fixture.whenStable()
-              .then( () => {
-                             fixture.detectChanges();
-                           } );
+                .then(() => {
+                    fixture.detectChanges();
+                });
         }));
 
         it('should get the bpm current user image from the service', () => {
@@ -192,15 +221,15 @@ describe('User info component', () => {
             fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
-                      .then( () => {
-                                     fixture.detectChanges();
-                                     let resBpm = userInfoComp.getBpmUserAvatar();
-                                     expect(userInfoComp.bpmUserImage).toBeUndefined();
-                                     expect(resBpm).toEqual(userInfoComp.anonymouseImageUrl);
-                                     let resEcm = userInfoComp.getEcmUserAvatar();
-                                     expect(userInfoComp.ecmUserImage).toBeUndefined();
-                                     expect(resEcm).toEqual(userInfoComp.anonymouseImageUrl);
-                                   });
+                .then(() => {
+                    fixture.detectChanges();
+                    let resBpm = userInfoComp.getBpmUserAvatar();
+                    expect(userInfoComp.bpmUserImage).toBeUndefined();
+                    expect(resBpm).toEqual(userInfoComp.anonymouseImageUrl);
+                    let resEcm = userInfoComp.getEcmUserAvatar();
+                    expect(userInfoComp.ecmUserImage).toBeUndefined();
+                    expect(resEcm).toEqual(userInfoComp.anonymouseImageUrl);
+                });
         }));
 
         it('should return the ecm image if exists', async(() => {
@@ -208,13 +237,13 @@ describe('User info component', () => {
             fakeEcmService.respondWithTheUserWithImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
-                      .then( () => {
-                                     fixture.detectChanges();
-                                     let res = userInfoComp.getUserAvatar();
-                                     expect(userInfoComp.bpmUserImage).toBeDefined();
-                                     expect(userInfoComp.ecmUserImage).toBeDefined();
-                                     expect(res).toEqual(userInfoComp.ecmUserImage);
-                                   });
+                .then(() => {
+                    fixture.detectChanges();
+                    let res = userInfoComp.getUserAvatar();
+                    expect(userInfoComp.bpmUserImage).toBeDefined();
+                    expect(userInfoComp.ecmUserImage).toBeDefined();
+                    expect(res).toEqual(userInfoComp.ecmUserImage);
+                });
         }));
 
         it('should return the bpm image if ecm does not have it', async(() => {
@@ -222,13 +251,13 @@ describe('User info component', () => {
             fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
-                      .then( () => {
-                                     fixture.detectChanges();
-                                     let res = userInfoComp.getUserAvatar();
-                                     expect(userInfoComp.bpmUserImage).toBeDefined();
-                                     expect(userInfoComp.ecmUserImage).toBeUndefined();
-                                     expect(res).toEqual(userInfoComp.bpmUserImage);
-                                   });
+                .then(() => {
+                    fixture.detectChanges();
+                    let res = userInfoComp.getUserAvatar();
+                    expect(userInfoComp.bpmUserImage).toBeDefined();
+                    expect(userInfoComp.ecmUserImage).toBeUndefined();
+                    expect(res).toEqual(userInfoComp.bpmUserImage);
+                });
         }));
 
         it('should return the anonynous avatar if no user has it', async(() => {
@@ -236,13 +265,13 @@ describe('User info component', () => {
             fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
-                      .then( () => {
-                                     fixture.detectChanges();
-                                     let res = userInfoComp.getUserAvatar();
-                                     expect(userInfoComp.bpmUserImage).toBeUndefined();
-                                     expect(userInfoComp.ecmUserImage).toBeUndefined();
-                                     expect(res).toEqual(userInfoComp.anonymouseImageUrl);
-                                   });
+                .then(() => {
+                    fixture.detectChanges();
+                    let res = userInfoComp.getUserAvatar();
+                    expect(userInfoComp.bpmUserImage).toBeUndefined();
+                    expect(userInfoComp.ecmUserImage).toBeUndefined();
+                    expect(res).toEqual(userInfoComp.anonymouseImageUrl);
+                });
         }));
     });
 });

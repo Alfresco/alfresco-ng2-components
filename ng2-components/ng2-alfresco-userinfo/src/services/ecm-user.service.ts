@@ -30,7 +30,8 @@ import { EcmUserModel } from '../models/ecm-user.model';
 export class EcmUserService {
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private contentService: AlfrescoContentService) {}
+                private contentService: AlfrescoContentService) {
+    }
 
     /**
      * get User Information via ECM
@@ -39,8 +40,8 @@ export class EcmUserService {
     getUserInfo(userName: string): Observable<EcmUserModel> {
         return Observable.fromPromise(this.callApiGetPersonInfo(userName))
             .map(
-                   (data) => <EcmUserModel> data['entry']
-                )
+                (data) => <EcmUserModel> data['entry']
+            )
             .catch(this.handleError);
     }
 
@@ -53,10 +54,10 @@ export class EcmUserService {
     }
 
     getUserProfileImage(avatarId: string) {
-       if ( avatarId ) {
+        if (avatarId) {
             let nodeObj = {entry: {id: avatarId}};
             return this.contentService.getContentUrl(nodeObj);
-       }
+        }
     }
 
     /**
