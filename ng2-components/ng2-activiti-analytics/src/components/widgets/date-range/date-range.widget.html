@@ -1,6 +1,6 @@
 <label>{{field.nameKey | translate}}</label><br>
 <div [formGroup]="dateRange">
-    <small *ngIf="dateRange.errors && dateRange.errors.greaterThan" [hidden]="!dateRange.errors" class="text-danger">
+    <small *ngIf="dateRange && dateRange.errors && dateRange.errors.greaterThan" [hidden]="!dateRange.errors" class="text-danger">
         Start date must be less than End date
     </small>
     <div class="mdl-grid">
@@ -12,7 +12,7 @@
                        (onOk)="onOkStart(startElement)"
                        id="startDateInput" #startElement>
                 <label class="mdl-textfield__label" for="startDateInput">Start Date</label>
-                <small [hidden]="dateRange.controls.startDate.valid" class="text-danger">
+                <small [hidden]="dateRange && dateRange.controls.startDate && dateRange.controls.startDate.valid" class="text-danger">
                     Start is required
                 </small>
             </div>
@@ -40,9 +40,9 @@
     </div>
 </div>
 <div *ngIf="debug">
-    <p>FormGroup : {{ dateRange.value | json }}</p>
-    <p>FormGroup valid : {{ dateRange.valid }}</p>
-    <p>FormGroup status : {{ dateRange.errors | json }}</p>
-    <p>FormGroup start status : {{ dateRange.controls.startDate.errors | json }}</p>
-    <p>FormGroup end status: {{ dateRange.controls.endDate.errors | json }}</p>
+    <p>FormGroup : {{dateRange && dateRange.value | json }}</p>
+    <p>FormGroup valid : {{dateRange && dateRange.valid }}</p>
+    <p>FormGroup status : {{dateRange && dateRange.errors | json }}</p>
+    <p>FormGroup start status : {{dateRange && dateRange.controls.startDate.errors | json }}</p>
+    <p>FormGroup end status: {{dateRange && dateRange.controls.endDate.errors | json }}</p>
 </div>

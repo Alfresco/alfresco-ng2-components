@@ -144,4 +144,8 @@ export class DateRangeWidget extends WidgetComponent {
     public convertMomentDate(date: string) {
         return moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI, true).format(DateRangeWidget.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
+
+    ngOnDestroy() {
+
+    }
 }

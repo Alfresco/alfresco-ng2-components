@@ -13,7 +13,8 @@
     </div>
     <div class="mdl-cell mdl-cell--6-col">
         <div style="margin-top: 30px">
-            <dropdown-widget [field]="duration" [showDefaultOption]="false"
+            <dropdown-widget [field]="duration" [group]="formGroup" [controllerName]="'timeType'"
+                             [showDefaultOption]="false"
                              (fieldChanged)="calculateDuration()"></dropdown-widget>
         </div>
     </div>

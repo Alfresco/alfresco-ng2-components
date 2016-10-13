@@ -18,7 +18,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
-import { ReportModel } from '../models/report.model';
+import { ReportParametersModel } from '../models/report.model';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
@@ -31,7 +31,7 @@ import { Observable } from 'rxjs/Observable';
 export class AnalyticsReportListComponent implements  OnInit {
 
     @Output()
-    reportClick: EventEmitter<ReportModel> = new EventEmitter<ReportModel>();
+    reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
 
     @Output()
     onSuccess = new EventEmitter();
@@ -44,16 +44,16 @@ export class AnalyticsReportListComponent implements  OnInit {
 
     currentReport: any;
 
-    reports: ReportModel[] = [];
+    reports: ReportParametersModel[] = [];
 
     constructor(private auth: AlfrescoAuthenticationService,
                 private analyticsService: AnalyticsService) {
 
-        this.report$ = new Observable<ReportModel>(observer => this.reportObserver = observer).share();
+        this.report$ = new Observable<ReportParametersModel>(observer => this.reportObserver = observer).share();
     }
 
     ngOnInit() {
-        this.report$.subscribe((report: ReportModel) => {
+        this.report$.subscribe((report: ReportParametersModel) => {
             this.reports.push(report);
         });
 
@@ -62,7 +62,7 @@ export class AnalyticsReportListComponent implements  OnInit {
 
     getReportListByAppId() {
         this.analyticsService.getReportList().subscribe(
-            (res: ReportModel[]) => {
+            (res: ReportParametersModel[]) => {
                 res.forEach((report) => {
                     this.reportObserver.next(report);
                 });

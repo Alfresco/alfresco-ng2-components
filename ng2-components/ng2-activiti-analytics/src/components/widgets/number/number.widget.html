@@ -1,5 +1,5 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label number-widget">
-    <input class="mdl-textfield__input"
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label number-widget" [formGroup]="formGroup">
+    <input formControlName="{{controllerName}}" class="mdl-textfield__input"
            type="text"
            pattern="-?[0-9]*(\.[0-9]+)?"
            [attr.id]="field.id"

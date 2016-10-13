@@ -16,6 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
@@ -29,6 +30,12 @@ export class DropdownWidget extends WidgetComponent {
     @Input()
     field: any;
 
+    @Input('group')
+    public formGroup: FormGroup;
+
+    @Input('controllerName')
+    public controllerName: string;
+
     @Output()
     fieldChanged: EventEmitter<any> = new EventEmitter<any>();
 
@@ -36,9 +43,18 @@ export class DropdownWidget extends WidgetComponent {
     showDefaultOption: boolean = true;
 
     @Input()
+    required: boolean = false;
+
+    @Input()
     defaultOptionText: string = 'Choose One';
 
     constructor() {
         super();
+    }
+
+    ngOnInit() {
+        if (this.required) {
+            this.formGroup.get(this.controllerName).setValidators(Validators.required);
+        }
     }
 }

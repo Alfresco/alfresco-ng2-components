@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ReportParameterModel } from '../models/report.model';
+import { ReportParameterDetailsModel } from '../models/report.model';
 
 export var reportDefParamStatus = {
     'id': 2005,
@@ -199,7 +199,7 @@ export var chartTaskOverview = {
     }]
 };
 
-export var fieldNumber = new ReportParameterModel(
+export var fieldNumber = new ReportParameterDetailsModel(
     {
         id: 'slowProcessInstanceInteger',
         type: 'integer',
@@ -207,7 +207,7 @@ export var fieldNumber = new ReportParameterModel(
     }
 );
 
-export var fieldStatus = new ReportParameterModel(
+export var fieldStatus = new ReportParameterDetailsModel(
     {
         id: 'status',
         type: 'status',
@@ -215,7 +215,7 @@ export var fieldStatus = new ReportParameterModel(
     }
 );
 
-export var fieldTypeFiltering = new ReportParameterModel(
+export var fieldTypeFiltering = new ReportParameterDetailsModel(
     {
         id: 'typeFiltering',
         type: 'boolean',
@@ -223,7 +223,7 @@ export var fieldTypeFiltering = new ReportParameterModel(
     }
 );
 
-export var fieldTask = new ReportParameterModel(
+export var fieldTask = new ReportParameterDetailsModel(
     {
         id: 'taskName',
         type: 'task',
@@ -236,7 +236,7 @@ export var fieldDateRange = {
     endDate: '2016-10-14T00:00:00.000Z'
 };
 
-export var fieldDateRangeInterval = new ReportParameterModel(
+export var fieldDateRangeInterval = new ReportParameterDetailsModel(
     {
         id: 'dateRangeInterval',
         type: 'dateInterval',
@@ -244,7 +244,7 @@ export var fieldDateRangeInterval = new ReportParameterModel(
     }
 );
 
-export var fieldProcessDef = new ReportParameterModel(
+export var fieldProcessDef = new ReportParameterDetailsModel(
     {
         id: 'processDefinitionId',
         type: 'processDefinition',

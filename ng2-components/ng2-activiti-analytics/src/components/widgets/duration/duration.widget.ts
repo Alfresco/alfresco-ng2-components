@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Input } from '@angular/core';
 import { NumberWidget } from './../number/number.widget';
-import { ReportParameterModel, ParameterValueModel } from './../../../models/report.model';
+import { ReportParameterDetailsModel, ParameterValueModel } from './../../../models/report.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
@@ -26,14 +27,35 @@ import { ReportParameterModel, ParameterValueModel } from './../../../models/rep
     styleUrls: ['./duration.widget.css']
 })
 export class DurationWidget extends NumberWidget implements OnInit {
-    duration: ReportParameterModel;
+
+    @Input()
+    field: any;
+
+    @Input('group')
+    public formGroup: FormGroup;
+
+    @Input('controllerName')
+    public controllerName: string;
+
+    @Input()
+    required: boolean = false;
+
+    duration: ReportParameterDetailsModel;
     currentValue: number;
+
+    public selectionGroup: FormGroup;
 
     constructor(public elementRef: ElementRef) {
         super(elementRef);
     }
 
     ngOnInit() {
+        let timeType = new FormControl();
+        this.formGroup.addControl('timeType', timeType);
+
+        if (this.required) {
+            this.formGroup.get(this.controllerName).setValidators(Validators.required);
+        }
         if (this.field.value === null) {
             this.field.value = 0;
         }
@@ -44,13 +66,14 @@ export class DurationWidget extends NumberWidget implements OnInit {
         paramOptions.push(new ParameterValueModel({id: '3600', name: 'Hours'}));
         paramOptions.push(new ParameterValueModel({id: '86400', name: 'Days', selected: true}));
 
-        this.duration = new ReportParameterModel({id: 'duration', name: 'duration', options: paramOptions});
+        this.duration = new ReportParameterDetailsModel({id: 'duration', name: 'duration', options: paramOptions});
         this.duration.value = paramOptions[0].id;
     }
 
     public calculateDuration() {
         if (this.field && this.duration.value ) {
             this.currentValue = parseInt(this.field.value, 10) * parseInt(this.duration.value, 10);
+            this.formGroup.get(this.controllerName).setValue(this.currentValue);
             this.fieldChanged.emit({value: this.currentValue});
         }
     }

@@ -1,65 +1,8 @@
 <div class="col-md-6">
-    <div *ngIf="reportDetails">
-        <form [formGroup]="reportForm" novalidate>
-        <h1>{{reportDetails.name}}</h1>
-        <div *ngFor="let field of reportDetails.definition.parameters">
-            <div [ngSwitch]="field.type">
-                <div *ngSwitchCase="'integer'">
-                    <br>
-                    <number-widget [field]="field"
-                                   (fieldChanged)="onNumberChanges(field)"></number-widget>
-                </div>
-                <div *ngSwitchCase="'duration'">
-                    <br>
-                    <duration-widget [field]="field"
-                                     (fieldChanged)="onDurationChanges($event)"></duration-widget>
-                </div>
-                <div *ngSwitchCase="'boolean'">
-                    <br>
-                    <checkbox-widget [field]="field"
-                                     (fieldChanged)="onTypeFilteringChanges(field)"></checkbox-widget>
-                </div>
-                <div *ngSwitchCase="'status'">
-                    <br>
-                    <dropdown-widget [field]="field"
-                                     (fieldChanged)="onStatusChanges(field)"></dropdown-widget>
-                </div>
-                <div *ngSwitchCase="'processDefinition'">
-                    <br>
-                    <dropdown-widget [field]="field"
-                                     (fieldChanged)="onProcessDefinitionChanges(field)" #processDefinition></dropdown-widget>
-                </div>
-                <div *ngSwitchCase="'task'">
-                    <br>
-                    <dropdown-widget [field]="field"
-                                     (fieldChanged)="onTaskChanges(field)"></dropdown-widget>
-                </div>
-                <div *ngSwitchCase="'dateRange'">
-                    <br>
-                    <date-range-widget [field]="field" [group]="reportForm.controls.dateRange"
-                                       (dateRangeChanged)="onDateRangeChange($event)"></date-range-widget>
-                </div>
-                <div *ngSwitchCase="'dateInterval'">
-                    <br>
-                    <dropdown-widget [field]="field" [showDefaultOption]="false"
-                                     (fieldChanged)="onDateRangeIntervalChange(field)"></dropdown-widget>
-                </div>
-                <div *ngSwitchDefault>
-                    <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
-                </div>
-            </div>
-        </div>
-        <br><br>
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--fab" (click)="showReport()" >
-                <i class="material-icons">refresh</i>
-            </button>
-        <div *ngIf="debug">
-            <p>ReportForm valid : {{ reportForm.valid }}</p>
-            <p>ReportForm status : {{ reportForm.errors | json }}</p>
-            <p>ReportForm FormGroup valid : {{ reportForm.controls.dateRange.valid | json }}</p>
-        </div>
-        </form>
+    <analytics-report-parameters [appId]="appId" [reportId]="reportId"
+                                 (onFormValueChanged)="reset()" (onSuccess)="showReport($event)"></analytics-report-parameters>
 
+    <div *ngIf="reports">
         <div *ngFor="let report of reports">
             <h2>{{report.title}}</h2>
             <div [ngSwitch]="report.type">
