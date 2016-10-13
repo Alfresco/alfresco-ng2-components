@@ -19,74 +19,65 @@ import { UserInfoComponent } from './user-info.component';
 import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserService } from '../services/bpm-user.service';
 import { FakeEcmUserService } from '../assets/fake-ecm-user.service.mock';
+import { fakeEcmEditedUser } from '../assets/fake-ecm-user.service.mock';
 import { FakeBpmUserService } from '../assets/fake-bpm-user.service.mock';
-import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
+import { fakeBpmEditedUser } from '../assets/fake-bpm-user.service.mock';
+import { AlfrescoContentService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-class StubAuthentication {
-    isEcmConnected: boolean;
-    isBpmConnected: boolean;
+class StubSetting {
+    provider: string;
 
-    setIsEcmLoggedIn(logged: boolean) {
-        this.isEcmConnected = logged;
+    setProviders(provider: string) {
+        this.provider = provider;
     };
 
-    setIsBpmLoggedIn(logged: boolean) {
-        this.isBpmConnected = logged;
-    };
-
-    isEcmLoggedIn() {
-        return this.isEcmConnected;
-    };
-
-    isBpmLoggedIn() {
-        return this.isBpmConnected;
+    getProviders() {
+        return this.provider;
     };
 }
 
 class StubAlfrescoContentService {
     getContentUrl() {
         return 'fake/url/image/for/ecm/user';
-    } ;
+    };
 }
 
 describe('User info component', () => {
 
     let userInfoComp: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
-    let authStub: StubAuthentication;
+    let stubSetting: StubSetting;
     let fakeEcmService: FakeEcmUserService;
     let fakeBpmService: FakeBpmUserService;
+    let element: HTMLElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [UserInfoComponent],
             providers: [{provide: EcmUserService, useClass: FakeEcmUserService},
                 {provide: BpmUserService, useClass: FakeBpmUserService},
-                {provide: AlfrescoAuthenticationService, useClass: StubAuthentication},
+                {provide: AlfrescoSettingsService, useClass: StubSetting},
                 {provide: AlfrescoContentService, useClass: StubAlfrescoContentService}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(UserInfoComponent);
             userInfoComp = fixture.componentInstance;
+            element = fixture.nativeElement;
         });
     }));
 
-    it('should NOT have users before ngOnInit only anonymous image', () => {
-        expect(userInfoComp.ecmUser).toBeUndefined();
-        expect(userInfoComp.ecmUserImage).toBeUndefined();
-        expect(userInfoComp.bpmUser).toBeUndefined();
-        expect(userInfoComp.bpmUserImage).toBeUndefined();
-        expect(userInfoComp.anonymouseImageUrl).toBeDefined();
+    it('should not show any image if the user is not logged in', () => {
+        expect(element.querySelector('#userinfo_container')).toBeDefined();
+        expect(element.querySelector('#logged-user-img')).toBeNull();
     });
 
     it('should NOT have users immediately after ngOnInit', () => {
         fixture.detectChanges();
-        expect(userInfoComp.ecmUser).toBeUndefined();
-        expect(userInfoComp.ecmUserImage).toBeUndefined();
-        expect(userInfoComp.bpmUser).toBeUndefined();
-        expect(userInfoComp.bpmUserImage).toBeUndefined();
-        expect(userInfoComp.anonymouseImageUrl).toBeDefined();
+        expect(element.querySelector('#userinfo_container')).toBeDefined();
+        expect(element.querySelector('#ecm_username')).toBeNull();
+        expect(element.querySelector('#bpm_username')).toBeNull();
+        expect(element.querySelector('#user-profile-lists')).toBeNull();
     });
 
     it('should format null string values in null value', () => {
@@ -107,11 +98,11 @@ describe('User info component', () => {
     describe('when user is logged on ecm', () => {
 
         beforeEach(async(() => {
-            authStub = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
+            stubSetting = fixture.debugElement.injector.get(AlfrescoSettingsService);
             fakeEcmService = fixture.debugElement.injector.get(EcmUserService);
 
-            authStub.setIsEcmLoggedIn(true);
-            fixture.detectChanges(); // runs ngOnInit -> getUsers
+            stubSetting.setProviders('ECM');
+            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
@@ -119,38 +110,56 @@ describe('User info component', () => {
         }));
 
         it('should get the ecm current user image from the service', () => {
-            expect(userInfoComp.ecmUser).toBeDefined();
-            expect(userInfoComp.ecmUserImage).toBeDefined();
-            expect(userInfoComp.ecmUserImage).toEqual('fake/url/image/for/ecm/user');
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#logged-user-img')).toBeDefined();
+            expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
         });
 
         it('should get the ecm user informations from the service', () => {
-            expect(userInfoComp.ecmUser).toBeDefined();
-            expect(userInfoComp.ecmUser.firstName).toEqual('fake-first-name');
-            expect(userInfoComp.ecmUser.lastName).toEqual('fake-last-name');
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#ecm_username')).toBeDefined();
+            expect(element.querySelector('#ecm_title')).toBeDefined();
+            expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
+            expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
+            expect(element.querySelector('#ecm-full-name').innerHTML).toContain('fake-first-name fake-last-name');
+            expect(element.querySelector('#ecm-job-title').innerHTML).toContain('test job');
         });
 
-        it('should return the anonynous user avatar image url when user does not have avatarId', async(() => {
+        it('should return the anonymous user avatar image url when user does not have avatarId', () => {
             fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
                     let res = userInfoComp.getEcmUserAvatar();
-                    expect(userInfoComp.ecmUserImage).toBeUndefined();
-                    expect(res).toEqual(userInfoComp.anonymouseImageUrl);
+                    expect(res).toBeDefined();
+                    expect(element.querySelector('#logged-user-img').getAttribute('src'))
+                        .toContain('src/img/anonymous.gif');
                 });
-        }));
+        });
+
+        it('should show N/A when the job title is null', () => {
+            fakeEcmEditedUser.jobTitle = null;
+            fakeEcmService.respondWithEditedUser();
+            userInfoComp.ngOnInit();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#ecm-job-title')).toBeDefined();
+                    expect(element.querySelector('#ecm-job-title').innerHTML).toContain('N/A');
+                });
+        });
     });
 
     describe('when user is logged on bpm', () => {
 
         beforeEach(async(() => {
-            authStub = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
+            stubSetting = fixture.debugElement.injector.get(AlfrescoSettingsService);
             fakeBpmService = fixture.debugElement.injector.get(BpmUserService);
 
-            authStub.setIsBpmLoggedIn(true);
-            fixture.detectChanges(); // runs ngOnInit -> getUsers
+            stubSetting.setProviders('BPM');
+            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
@@ -158,81 +167,143 @@ describe('User info component', () => {
         }));
 
         it('should get the bpm current user image from the service', () => {
-            expect(userInfoComp.bpmUser).toBeDefined();
-            expect(userInfoComp.bpmUserImage).toBeDefined();
-            expect(userInfoComp.bpmUserImage).toEqual('fake-picture-id');
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#logged-user-img')).toBeDefined();
+            expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('src/assets/bpmImg.gif');
+        });
+
+        it('should show last name if first name is null', () => {
+            fakeBpmEditedUser.firstName = null;
+            fakeBpmService.respondWithEditedUser();
+            userInfoComp.ngOnInit();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#bpm_username')).toBeDefined();
+                    expect(element.querySelector('#bpm_username').innerHTML).toContain('fake-last-name');
+                });
+        });
+
+        it('should show full name if first and last name are null', () => {
+            fakeBpmEditedUser.firstName = null;
+            fakeBpmEditedUser.lastName = null;
+            fakeBpmService.respondWithEditedUser();
+            userInfoComp.ngOnInit();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#bpm_username')).toBeDefined();
+                    expect(element.querySelector('#bpm_username').innerHTML).toContain('fake-full-name');
+                });
+        });
+
+        it('should not show first name if it is null string', () => {
+            fakeBpmEditedUser.firstName = 'null';
+            fakeBpmEditedUser.lastName = 'fake-last-name';
+            fakeBpmService.respondWithEditedUser();
+            userInfoComp.ngOnInit();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#bpm-full-name')).toBeDefined();
+                    expect(element.querySelector('#bpm-full-name').innerHTML).not.toContain('fake-first-name');
+                    expect(element.querySelector('#bpm-full-name').innerHTML).toContain('fake-last-name');
+                });
+        });
+
+        it('should not show last name if it is null string', () => {
+            fakeBpmEditedUser.lastName = 'null';
+            fakeBpmEditedUser.firstName = 'fake-first-name';
+            fakeBpmService.respondWithEditedUser();
+            userInfoComp.ngOnInit();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#bpm-full-name')).toBeDefined();
+                    expect(element.querySelector('#bpm-full-name').innerHTML).toContain('fake-first-name');
+                    expect(element.querySelector('#bpm-full-name').innerHTML).not.toContain('fake-last-name');
+                });
         });
 
         it('should get the bpm user informations from the service', () => {
-            expect(userInfoComp.bpmUser).toBeDefined();
-            expect(userInfoComp.bpmUser.firstName).toEqual('fake-first-name');
-            expect(userInfoComp.bpmUser.lastName).toEqual('fake-last-name');
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#bpm_username')).toBeDefined();
+            expect(element.querySelector('#bpm_title')).toBeDefined();
+            expect(element.querySelector('#bpm-user-detail-image')).toBeDefined();
+            expect(element.querySelector('#bpm-user-detail-image').getAttribute('src')).toEqual('src/assets/bpmImg.gif');
+            expect(element.querySelector('#bpm-full-name').innerHTML).toContain('fake-first-name fake-last-name');
+            expect(element.querySelector('#bpm-tenant').innerHTML).toContain('fake-tenant-name');
         });
 
-        it('should return the anonynous user avatar image url when user does not have avatarId', async(() => {
+        it('should return the anonymous user avatar image url when user does not have avatarId', () => {
             fakeBpmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
                     let res = userInfoComp.getBpmUserAvatar();
-                    expect(userInfoComp.bpmUserImage).toBeUndefined();
-                    expect(res).toEqual(userInfoComp.anonymouseImageUrl);
+                    expect(res).toBeDefined();
+                    expect(element.querySelector('#logged-user-img').getAttribute('src'))
+                        .toContain('src/img/anonymous.gif');
                 });
-        }));
+        });
     });
 
     describe('when user is logged on bpm and ecm', () => {
 
         beforeEach(async(() => {
-            authStub = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
+            stubSetting = fixture.debugElement.injector.get(AlfrescoSettingsService);
             fakeBpmService = fixture.debugElement.injector.get(BpmUserService);
             fakeEcmService = fixture.debugElement.injector.get(EcmUserService);
 
-            authStub.setIsBpmLoggedIn(true);
-            authStub.setIsEcmLoggedIn(true);
-            fixture.detectChanges(); // runs ngOnInit -> getUsers
+            stubSetting.setProviders('ALL');
+            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
                 });
         }));
 
-        it('should get the bpm current user image from the service', () => {
-            expect(userInfoComp.bpmUser).toBeDefined();
-            expect(userInfoComp.bpmUserImage).toBeDefined();
-            expect(userInfoComp.bpmUserImage).toEqual('fake-picture-id');
-            expect(userInfoComp.ecmUser).toBeDefined();
-            expect(userInfoComp.ecmUserImage).toBeDefined();
-            expect(userInfoComp.ecmUserImage).toEqual('fake/url/image/for/ecm/user');
-        });
-
         it('should get the bpm user informations from the service', () => {
-            expect(userInfoComp.bpmUser).toBeDefined();
-            expect(userInfoComp.bpmUser.firstName).toEqual('fake-first-name');
-            expect(userInfoComp.bpmUser.lastName).toEqual('fake-last-name');
-            expect(userInfoComp.ecmUser).toBeDefined();
-            expect(userInfoComp.ecmUser.firstName).toEqual('fake-first-name');
-            expect(userInfoComp.ecmUser.lastName).toEqual('fake-last-name');
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#bpm_username')).toBeDefined();
+            expect(element.querySelector('#bpm_title')).toBeDefined();
+            expect(element.querySelector('#bpm-user-detail-image')).toBeDefined();
+            expect(element.querySelector('#bpm-user-detail-image').getAttribute('src')).toEqual('src/assets/bpmImg.gif');
+            expect(element.querySelector('#bpm-full-name').innerHTML).toContain('fake-first-name fake-last-name');
+            expect(element.querySelector('#bpm-tenant').innerHTML).toContain('fake-tenant-name');
         });
 
-        it('should return the anonynous user avatar image url when user does not have avatarId', async(() => {
+        it('should get the ecm user informations from the service', () => {
+            expect(element.querySelector('#userinfo_container')).toBeDefined();
+            expect(element.querySelector('#ecm_username')).toBeDefined();
+            expect(element.querySelector('#ecm_title')).toBeDefined();
+            expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
+            expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
+            expect(element.querySelector('#ecm-full-name').innerHTML).toContain('fake-first-name fake-last-name');
+            expect(element.querySelector('#ecm-job-title').innerHTML).toContain('test job');
+        });
+
+        it('should return the anonymous avatar when users do not have images', () => {
             fakeBpmService.respondWithTheUserWithoutImage();
             fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    let resBpm = userInfoComp.getBpmUserAvatar();
-                    expect(userInfoComp.bpmUserImage).toBeUndefined();
-                    expect(resBpm).toEqual(userInfoComp.anonymouseImageUrl);
-                    let resEcm = userInfoComp.getEcmUserAvatar();
-                    expect(userInfoComp.ecmUserImage).toBeUndefined();
-                    expect(resEcm).toEqual(userInfoComp.anonymouseImageUrl);
+                    let res = userInfoComp.getUserAvatar();
+                    expect(res).toBeDefined();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img').getAttribute('src')).toContain('src/img/anonymous.gif');
                 });
-        }));
+        });
 
-        it('should return the ecm image if exists', async(() => {
+        it('should show the ecm image if exists', () => {
             fakeBpmService.respondWithTheUserWithImage();
             fakeEcmService.respondWithTheUserWithImage();
             userInfoComp.ngOnInit();
@@ -240,13 +311,14 @@ describe('User info component', () => {
                 .then(() => {
                     fixture.detectChanges();
                     let res = userInfoComp.getUserAvatar();
-                    expect(userInfoComp.bpmUserImage).toBeDefined();
-                    expect(userInfoComp.ecmUserImage).toBeDefined();
-                    expect(res).toEqual(userInfoComp.ecmUserImage);
+                    expect(res).toBeDefined();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
                 });
-        }));
+        });
 
-        it('should return the bpm image if ecm does not have it', async(() => {
+        it('should show the bpm image if ecm does not have it', () => {
             fakeBpmService.respondWithTheUserWithImage();
             fakeEcmService.respondWithTheUserWithoutImage();
             userInfoComp.ngOnInit();
@@ -254,24 +326,11 @@ describe('User info component', () => {
                 .then(() => {
                     fixture.detectChanges();
                     let res = userInfoComp.getUserAvatar();
-                    expect(userInfoComp.bpmUserImage).toBeDefined();
-                    expect(userInfoComp.ecmUserImage).toBeUndefined();
-                    expect(res).toEqual(userInfoComp.bpmUserImage);
+                    expect(res).toBeDefined();
+                    expect(element.querySelector('#userinfo_container')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img')).toBeDefined();
+                    expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('src/assets/bpmImg.gif');
                 });
-        }));
-
-        it('should return the anonynous avatar if no user has it', async(() => {
-            fakeBpmService.respondWithTheUserWithoutImage();
-            fakeEcmService.respondWithTheUserWithoutImage();
-            userInfoComp.ngOnInit();
-            fixture.whenStable()
-                .then(() => {
-                    fixture.detectChanges();
-                    let res = userInfoComp.getUserAvatar();
-                    expect(userInfoComp.bpmUserImage).toBeUndefined();
-                    expect(userInfoComp.ecmUserImage).toBeUndefined();
-                    expect(res).toEqual(userInfoComp.anonymouseImageUrl);
-                });
-        }));
+        });
     });
 });

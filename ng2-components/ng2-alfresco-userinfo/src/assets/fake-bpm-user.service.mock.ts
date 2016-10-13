@@ -60,7 +60,30 @@ export var fakeBpmUser: BpmUserModel = {
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
     password: 'fake-password',
-    pictureId: 'fake-picture-id',
+    pictureId: 'src/assets/bpmImg.gif',
+    status: 'fake-status',
+    tenantId: 'fake-tenant-id',
+    tenantName: 'fake-tenant-name',
+    tenantPictureId: 'fake-tenant-picture-id',
+    type: 'fake-type'
+};
+
+export var fakeBpmEditedUser: BpmUserModel = {
+    apps: {},
+    capabilities: 'fake-capability',
+    company: 'fake-company',
+    created: 'fake-create-date',
+    email: 'fakeBpm@fake.com',
+    externalId: 'fake-external-id',
+    firstName: 'fake-first-name',
+    lastName: 'fake-last-name',
+    fullname: 'fake-full-name',
+    groups: {},
+    id: 'fake-id',
+    lastUpdate: 'fake-update-date',
+    latestSyncTimeStamp: 'fake-timestamp',
+    password: 'fake-password',
+    pictureId: 'src/assets/bpmImg.gif',
     status: 'fake-status',
     tenantId: 'fake-tenant-id',
     tenantName: 'fake-tenant-name',
@@ -70,27 +93,31 @@ export var fakeBpmUser: BpmUserModel = {
 
 export class FakeBpmUserService {
 
-  lastPromise: Observable<BpmUserModel>;
-  public userNeeded = 0;
-  usersList = [fakeBpmUser, fakeBpmUserNoImage];
+    lastPromise: Observable<BpmUserModel>;
+    public userNeeded = 0;
+    usersList = [fakeBpmUser, fakeBpmUserNoImage, fakeBpmEditedUser];
 
-  getUserInfo(userName: string) {
-    return this.lastPromise = Observable.of(this.usersList[this.userNeeded]);
-  };
+    getUserInfo(userName: string) {
+        return this.lastPromise = Observable.of(this.usersList[this.userNeeded]);
+    };
 
-  getCurrentUserInfo() {
-    return this.getUserInfo('fake-id');
-  };
+    getCurrentUserInfo() {
+        return this.getUserInfo('fake-id');
+    };
 
-  getCurrentUserProfileImage() {
-      return Observable.of(this.usersList[this.userNeeded].pictureId);
-  };
+    getCurrentUserProfileImage() {
+        return Observable.of(this.usersList[this.userNeeded].pictureId);
+    };
 
-  respondWithTheUserWithoutImage() {
-    this.userNeeded = 1;
-  }
+    respondWithTheUserWithoutImage() {
+        this.userNeeded = 1;
+    }
 
-  respondWithTheUserWithImage() {
-    this.userNeeded = 0;
-  }
+    respondWithTheUserWithImage() {
+        this.userNeeded = 0;
+    }
+
+    respondWithEditedUser() {
+        this.userNeeded = 2;
+    }
 }

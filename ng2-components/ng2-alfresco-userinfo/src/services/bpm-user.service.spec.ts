@@ -54,10 +54,6 @@ describe('Bpm User service', () => {
 
     describe('when user is logged in', () => {
 
-        beforeEach(() => {
-            spyOn(authService, 'isBpmLoggedIn').and.returnValue(true);
-        });
-
         it('should be able to retrieve current user info', (done) => {
             service.getCurrentUserInfo().subscribe(
                 (user) => {
@@ -85,7 +81,7 @@ describe('Bpm User service', () => {
                 });
         });
 
-        it('should be able to log errors on call for profile', (done) => {
+        it('should catch errors on call for profile', (done) => {
             service.getCurrentUserInfo().subscribe(() => {
             }, () => {
                 done();
@@ -96,7 +92,7 @@ describe('Bpm User service', () => {
             });
         });
 
-        it('should be able to log errors on call for profile picture', (done) => {
+        it('should catch errors on call for profile picture', (done) => {
             service.getCurrentUserProfileImage().subscribe(() => {
             }, () => {
                 done();
@@ -105,18 +101,6 @@ describe('Bpm User service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-        });
-    });
-
-    describe('when user is not logged in', () => {
-        beforeEach(() => {
-            spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
-        });
-
-        it('should not retrieve the user avatar', () => {
-            spyOn(service, 'callGetProfilePictureApi');
-            service.getCurrentUserInfo();
-            expect(service.callGetProfilePictureApi).not.toHaveBeenCalled();
         });
     });
 });

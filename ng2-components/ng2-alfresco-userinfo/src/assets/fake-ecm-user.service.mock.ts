@@ -76,11 +76,32 @@ export var fakeEcmUser: EcmUserModel = {
     emailNotificationsEnabled: true
 };
 
+export var fakeEcmEditedUser: EcmUserModel = {
+    id: 'fake-id',
+    firstName: 'fake-first-name',
+    lastName: 'fake-last-name',
+    description: 'i am a fake user for test',
+    avatarId: 'fake-avatar-id',
+    email: 'fakeEcm@ecmUser.com',
+    skypeId: 'fake-skype-id',
+    googleId: 'fake-googleId-id',
+    instantMessageId: 'fake-instantMessageId-id',
+    company: fakeEcmCompany,
+    jobTitle: 'test job',
+    location: 'fake location',
+    mobile: '000000000',
+    telephone: '11111111',
+    statusUpdatedAt: 'fake-date',
+    userStatus: 'active',
+    enabled: true,
+    emailNotificationsEnabled: true
+};
+
 export class FakeEcmUserService {
 
     lastPromise: Observable<EcmUserModel>;
     public userNeeded = 0;
-    usersList = [fakeEcmUser, fakeEcmUserNoImage];
+    usersList = [fakeEcmUser, fakeEcmUserNoImage, fakeEcmEditedUser];
 
     getUserInfo(userName: string) {
         return this.lastPromise = Observable.of(this.usersList[this.userNeeded]);
@@ -92,7 +113,7 @@ export class FakeEcmUserService {
 
     getUserProfileImage(avatarId: string) {
         if (avatarId) {
-            return 'fake/url/image/for/ecm/user';
+            return 'src/assets/ecmImg.gif';
         }
     };
 
@@ -102,6 +123,10 @@ export class FakeEcmUserService {
 
     respondWithTheUserWithImage() {
         this.userNeeded = 0;
+    };
+
+    respondWithEditedUser() {
+        this.userNeeded = 2;
     };
 
 }

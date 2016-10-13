@@ -20,7 +20,7 @@ import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
 import { BpmUserService } from './../services/bpm-user.service';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
@@ -35,34 +35,32 @@ export class UserInfoComponent implements OnInit {
 
     ecmUser: EcmUserModel;
     bpmUser: BpmUserModel;
-    anonymouseImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
+    anonymousImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
     bpmUserImage: any;
     ecmUserImage: any;
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
-                public authService: AlfrescoAuthenticationService) {
+                public setting: AlfrescoSettingsService) {
     }
 
     ngOnInit() {
-
-        if (this.authService.isEcmLoggedIn()) {
+        if (this.setting.getProviders() === 'ECM' ||
+            this.setting.getProviders() === 'ALL') {
             this.ecmUserService.getCurrentUserInfo()
-                .subscribe(
-                    (res) => {
+                .subscribe((res) => {
                         this.ecmUser = <EcmUserModel> res;
-                        this._getEcmAvatar();
+                        this.getEcmAvatar();
                     }
                 );
         }
 
-        if (this.authService.isBpmLoggedIn()) {
+        if (this.setting.getProviders() === 'BPM' ||
+            this.setting.getProviders() === 'ALL') {
             this.bpmUserService.getCurrentUserInfo()
-                .subscribe(
-                    (res) => {
-                        this.bpmUser = <BpmUserModel> res;
-                    }
-                );
+                .subscribe((res) => {
+                    this.bpmUser = <BpmUserModel> res;
+                });
             this.bpmUserService.getCurrentUserProfileImage()
                 .subscribe(
                     (res) => {
@@ -72,24 +70,23 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    private _getEcmAvatar() {
+    private getEcmAvatar() {
         this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
     }
 
     getUserAvatar() {
-        return this.ecmUserImage || this.bpmUserImage || this.anonymouseImageUrl;
+        return this.ecmUserImage || this.bpmUserImage || this.anonymousImageUrl;
     }
 
     getBpmUserAvatar() {
-        return this.bpmUserImage || this.anonymouseImageUrl;
+        return this.bpmUserImage || this.anonymousImageUrl;
     }
 
     getEcmUserAvatar() {
-        return this.ecmUserImage || this.anonymouseImageUrl;
+        return this.ecmUserImage || this.anonymousImageUrl;
     }
 
     formatValue(value: string) {
         return value === 'null' ? null : value;
     }
-
 }
