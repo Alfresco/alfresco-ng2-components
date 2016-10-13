@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
+import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 import * as moment from 'moment';
 
@@ -54,7 +54,7 @@ export class DateRangeWidget extends WidgetComponent {
     @Output()
     dateRangeChanged: EventEmitter<any> = new EventEmitter<any>();
 
-    debug: boolean = true;
+    debug: boolean = false;
 
     dialogStart: any = new mdDateTimePicker.default({
         type: 'date',
@@ -78,6 +78,16 @@ export class DateRangeWidget extends WidgetComponent {
     }
 
     initForm() {
+        let today = moment().format('YYYY-MM-DD');
+
+        let startDateControl = new FormControl(today);
+        startDateControl.setValidators(Validators.required);
+        this.dateRange.addControl('startDate', startDateControl);
+
+        let endDateControl = new FormControl(today);
+        endDateControl.setValidators(Validators.required);
+        this.dateRange.addControl('endDate', endDateControl);
+
         this.dateRange.setValidators(dateCheck);
         this.dateRange.valueChanges.subscribe(data => this.onGroupValueChanged(data));
     }

@@ -50,11 +50,10 @@
             </div>
         </div>
         <br><br>
-            <button type="submit" class="mdl-button mdl-js-button mdl-button--fab" (click)="createReport()" >
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--fab" (click)="showReport()" >
                 <i class="material-icons">refresh</i>
             </button>
         <div *ngIf="debug">
-            <p>ReportForm : {{ reportForm.value | json }}</p>
             <p>ReportForm valid : {{ reportForm.valid }}</p>
             <p>ReportForm status : {{ reportForm.errors | json }}</p>
             <p>ReportForm FormGroup valid : {{ reportForm.controls.dateRange.valid | json }}</p>
@@ -70,11 +69,11 @@
                                     [data]="report.data"
                                     [datasets]="report.datasets"
                                     [labels]="report.labels"
-                                    [chartType]="report.type"
-                                    (chartClick)="chartClicked($event)"></base-chart>
+                                    [chartType]="report.type"></base-chart>
                     </div>
                 </div>
                 <div *ngSwitchCase="'table'">
+                    <div [attr.id]="'chart-table-' + report.id">
                     <table class="table table-responsive table-condensed" style="width: 100%">
                         <tr>
                             <th *ngFor="let label of report.labels">{{label | translate}}</th>
@@ -83,6 +82,7 @@
                             <td *ngFor="let row of rows">{{row | translate }}</td>
                         </tr>
                     </table>
+                    </div>
                 </div>
                 <div *ngSwitchCase="'masterDetailTable'">
                     <table class="table table-responsive table-condensed" style="width: 100%">
@@ -100,8 +100,7 @@
                                     [datasets]="report.datasets"
                                     [labels]="report.labels"
                                     [options]="report.options"
-                                    [chartType]="report.type"
-                                    (chartClick)="chartClicked($event)"></base-chart>
+                                    [chartType]="report.type"></base-chart>
                     </div>
                 </div>
                 <div *ngSwitchDefault>

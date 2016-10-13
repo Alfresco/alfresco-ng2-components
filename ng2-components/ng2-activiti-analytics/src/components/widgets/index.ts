@@ -19,7 +19,6 @@ import { DropdownWidget } from './dropdown/dropdown.widget';
 import { NumberWidget } from './number/number.widget';
 import { DurationWidget } from './duration/duration.widget';
 import { CheckboxWidget } from './checkbox/checkbox.widget';
-import { DateWidget } from './date/date.widget';
 import { DateRangeWidget } from './date-range/date-range.widget';
 
 // primitives
@@ -27,7 +26,6 @@ export * from './dropdown/dropdown.widget';
 export * from './number/number.widget';
 export * from './duration/duration.widget';
 export * from './checkbox/checkbox.widget';
-export * from './date/date.widget';
 export * from './date-range/date-range.widget';
 
 export const WIDGET_DIRECTIVES: any[] = [
@@ -35,6 +33,5 @@ export const WIDGET_DIRECTIVES: any[] = [
     NumberWidget,
     DurationWidget,
     CheckboxWidget,
-    DateWidget,
     DateRangeWidget
 ];

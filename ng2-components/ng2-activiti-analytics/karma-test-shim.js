@@ -53,6 +53,7 @@ var map = {
     'rxjs': 'npm:rxjs',
     'ng2-translate': 'npm:ng2-translate',
     'ng2-charts' : 'npm:ng2-charts',
+    'md-date-time-picker' : 'npm:md-date-time-picker',
     'moment' : 'npm:moment/min/moment.min.js',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
@@ -65,6 +66,7 @@ var packages = {
     'rxjs': {  defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
     'ng2-charts': { defaultExtension: 'js' },
+    'md-date-time-picker': { defaultExtension: 'js' },
     'moment': { defaultExtension: 'js' },
 
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},

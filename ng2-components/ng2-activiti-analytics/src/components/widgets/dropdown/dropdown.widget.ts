@@ -41,9 +41,4 @@ export class DropdownWidget extends WidgetComponent {
     constructor() {
         super();
     }
-
-    handleError(error: any) {
-        console.error(error);
-    }
-
 }

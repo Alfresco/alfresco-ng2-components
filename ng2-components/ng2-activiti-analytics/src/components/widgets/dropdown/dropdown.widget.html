@@ -1,6 +1,6 @@
 <div class="dropdown-widget">
     <label class="dropdown-widget__label" [attr.for]="field.id">{{field.nameKey | translate}}</label>
-    <select class="dropdown-widget__select"
+    <select [attr.id]="'select-' + field.id" class="dropdown-widget__select"
             [(ngModel)]="field.value" (ngModelChange)="changeValue($event)" required>
         <option *ngIf="showDefaultOption">{{defaultOptionText}}</option>
         <option *ngFor="let opt of field.options" [value]="opt.id">{{opt.label}}</option>

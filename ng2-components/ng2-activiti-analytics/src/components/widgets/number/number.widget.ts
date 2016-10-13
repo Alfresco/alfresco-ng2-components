@@ -36,7 +36,7 @@ export class NumberWidget extends WidgetComponent {
             handler.upgradeAllRegistered();
             if (this.elementRef && this.hasValue()) {
                 let container = this.elementRef.nativeElement.querySelector('.mdl-textfield');
-                if (container) {
+                if (container && container.MaterialTextfield) {
                     container.MaterialTextfield.change(this.field.value.toString());
                 }
             }

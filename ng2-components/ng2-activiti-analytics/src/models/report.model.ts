@@ -36,6 +36,10 @@ export class ReportModel {
         }
         this.created = obj && obj.created || null;
     }
+
+    hasParameters() {
+        return (this.definition && this.definition.parameters) ? true : false;
+    }
 }
 
 export class ReportParametersModel {

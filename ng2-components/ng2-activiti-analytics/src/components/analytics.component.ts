@@ -20,8 +20,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportModel, ReportQuery, ParameterValueModel, ReportParameterModel } from '../models/report.model';
 import { Chart } from '../models/chart.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as moment from 'moment';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
@@ -35,6 +34,9 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
     processDefinition: any;
 
     @Input()
+    appId: string;
+
+    @Input()
     reportId: string;
 
     @Output()
@@ -42,6 +44,18 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
 
     @Output()
     onError = new EventEmitter();
+
+    @Output()
+    onDropdownChanged = new EventEmitter();
+
+    @Output()
+    onShowReport = new EventEmitter();
+
+    @Output()
+    onSuccessParamsReport = new EventEmitter();
+
+    @Output()
+    onSuccessParamOpt = new EventEmitter();
 
     reportDetails: ReportModel;
 
@@ -51,7 +65,11 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
 
     reportForm: FormGroup;
 
-    debug: boolean = true;
+    debug: boolean = false;
+
+    private dropDownSub;
+    private paramsReportSub;
+    private paramOpts;
 
     constructor(private translate: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
@@ -63,12 +81,21 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
     }
 
     ngOnInit() {
-        let today = moment().format('YYYY-MM-DD');
         this.reportForm = this.formBuilder.group({
-            dateRange: this.formBuilder.group({
-                startDate: [today, Validators.required],
-                endDate: [today, Validators.required]
-            })
+            dateRange: new FormGroup({})
+        });
+
+        this.dropDownSub = this.onDropdownChanged.subscribe((field) => {
+            let paramDependOn: ReportParameterModel = this.reportDetails.definition.parameters.find(p => p.dependsOn === field.id);
+            if (paramDependOn) {
+                this.retrieveParameterOptions(this.reportDetails.definition.parameters, this.appId, this.reportId, field.value);
+            }
+        });
+
+        this.paramOpts = this.onSuccessParamsReport.subscribe((report: ReportModel) => {
+            if (report.hasParameters()) {
+                this.retrieveParameterOptions(report.definition.parameters, this.appId);
+            }
         });
     }
 
@@ -76,51 +103,53 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getParamsReports(reportId.currentValue);
-            return;
+        }
+
+        let appId = changes['appId'];
+        if (appId && (appId.currentValue || appId.currentValue === null)) {
+            this.getParamsReports(this.reportId);
         }
     }
 
     public getParamsReports(reportId: string) {
         this.reset();
-        this.analyticsService.getParamsReports(reportId).subscribe(
+        this.paramsReportSub = this.analyticsService.getParamsReports(reportId).subscribe(
             (res: ReportModel) => {
                 this.reportDetails = res;
-                this.retriveParameterOptions();
-                this.onSuccess.emit(res);
+                this.onSuccessParamsReport.emit(res);
             },
             (err: any) => {
-                this.onError.emit(err);
                 console.log(err);
-            },
-            () => console.log('Login done')
+                this.onError.emit(err);
+            }
         );
     }
 
-    private retriveParameterOptions() {
-        this.reportDetails.definition.parameters.forEach((param) => {
-            this.analyticsService.getParamValuesByType(param.type).subscribe(
+    private retrieveParameterOptions(parameters: ReportParameterModel[], appId: string, reportId?: string, processDefinitionId?: string) {
+        parameters.forEach((param) => {
+            this.analyticsService.getParamValuesByType(param.type, appId, reportId, processDefinitionId).subscribe(
                 (opts: ParameterValueModel[]) => {
                     param.options = opts;
+                    this.onSuccessParamOpt.emit(opts);
                 },
                 (err: any) => {
                     console.log(err);
-                },
-                () => console.log(`${param.type} options loaded`)
+                    this.onError.emit(err);
+                }
             );
         });
     }
 
-    public createReport() {
+    public showReport() {
         this.analyticsService.getReportsByParams(this.reportDetails.id, this.reportParamQuery).subscribe(
             (res: Chart[]) => {
                 this.reports = res;
-                this.onSuccess.emit(res);
+                this.onShowReport.emit(res);
             },
             (err: any) => {
                 this.onError.emit(err);
                 console.log(err);
-            },
-            () => console.log('Login done')
+            }
         );
     }
 
@@ -150,13 +179,7 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         this.reset();
         if (field.value) {
             this.reportParamQuery.processDefinitionId = field.value;
-            this.analyticsService.getTasksByProcessDefinitionId(this.reportId, this.reportParamQuery.processDefinitionId).subscribe(
-                (res: any) => {
-                    let paramTask: ReportParameterModel = this.reportDetails.definition.parameters.find(p => p.type === 'task');
-                    if (paramTask) {
-                        paramTask.options = res;
-                    }
-                });
+            this.onDropdownChanged.emit(field);
         }
     }
 
@@ -180,15 +203,15 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         this.reports = null;
     }
 
-    public chartClicked(e: any): void {
-        console.log(e);
-    }
-
-    public chartHovered(e: any): void {
-        console.log(e);
-    }
-
     public convertNumber(value: string): number {
         return parseInt(value, 10);
+    }
+
+    ngOnDestroy() {
+        this.dropDownSub.unsubscribe();
+        this.paramOpts.unsubscribe();
+        if (this.paramsReportSub) {
+            this.paramsReportSub.unsubscribe();
+        }
     }
 }

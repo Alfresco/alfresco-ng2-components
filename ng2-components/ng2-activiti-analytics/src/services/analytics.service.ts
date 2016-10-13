@@ -64,11 +64,11 @@ export class AnalyticsService {
             }).catch(this.handleError);
     }
 
-    getParamValuesByType(type: string, reportId?: string, processDefinitionId?: string) {
+    getParamValuesByType(type: string, appId: string, reportId?: string, processDefinitionId?: string) {
         if (type === 'status') {
             return this.getProcessStatusValues();
         } else if (type === 'processDefinition') {
-            return this.getProcessDefinitionsValues();
+            return this.getProcessDefinitionsValues(appId);
         } else if (type === 'dateInterval') {
             return this.getDateIntervalValues();
         } else if (type === 'task') {
@@ -109,8 +109,8 @@ export class AnalyticsService {
         });
     }
 
-    getProcessDefinitionsValues(appId?: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/process-definitions`;
+    getProcessDefinitionsValues(appId: string): Observable<any> {
+        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions`;
         let params: URLSearchParams;
         if (appId) {
             params = new URLSearchParams();
@@ -122,7 +122,7 @@ export class AnalyticsService {
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
                 let body = res.json();
-                body.forEach((opt) => {
+                body.data.forEach((opt) => {
                     paramOptions.push(new ParameterValueModel(opt));
                 });
                 return paramOptions;
@@ -130,7 +130,7 @@ export class AnalyticsService {
     }
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
-        if (processDefinitionId) {
+        if (reportId && processDefinitionId) {
             let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}/tasks`;
             let params: URLSearchParams;
             if (processDefinitionId) {
