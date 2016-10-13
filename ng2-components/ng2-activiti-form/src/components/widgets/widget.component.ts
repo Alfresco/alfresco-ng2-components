@@ -36,6 +36,8 @@ export class WidgetComponent implements AfterViewInit {
         return this.field ? true : false;
     }
 
+    // Note for developers:
+    // returns <any> object to be able binding it to the <element reguired="required"> attribute
     isRequired(): any {
         if (this.field && this.field.required) {
             return true;
@@ -63,16 +65,18 @@ export class WidgetComponent implements AfterViewInit {
         return false;
     }
 
-    setupMaterialTextField(elementRef: ElementRef, handler: any, value: string) {
+    setupMaterialTextField(elementRef: ElementRef, handler: any, value: string): boolean {
         if (elementRef && handler) {
             let el = elementRef.nativeElement;
             if (el) {
                 let container = el.querySelector('.mdl-textfield');
                 if (container) {
                     container.MaterialTextfield.change(value);
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     checkVisibility(field: FormFieldModel) {

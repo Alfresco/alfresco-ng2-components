@@ -32,8 +32,7 @@ export abstract class TextFieldWidgetComponent extends WidgetComponent {
         // workaround for MDL issues with dynamic components
         if (handler) {
             if (this.elementRef && this.hasValue()) {
-                this.setupMaterialTextField(this.elementRef, handler, this.field.value.toString());
-                return true;
+                return this.setupMaterialTextField(this.elementRef, handler, this.field.value.toString());
             }
         }
         return false;
