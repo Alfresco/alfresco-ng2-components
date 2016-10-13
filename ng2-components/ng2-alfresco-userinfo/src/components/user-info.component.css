@@ -2,6 +2,7 @@
   text-align: center;
   border-radius: 90%;
   width: 40px;
+  height: 40px;
   margin-right: 0%;
   cursor: pointer;
   border: 1px solid #999999;
@@ -16,6 +17,7 @@
 
 .detail-user-profile-list-mdl{
     margin-right: 10px;
+    padding: 0px 0;
 }
 
 .user-profile-list-mdl{

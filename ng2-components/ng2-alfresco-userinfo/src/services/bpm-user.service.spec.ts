@@ -15,132 +15,92 @@
  * limitations under the License.
  */
 
+import { ReflectiveInjector } from '@angular/core';
 import { BpmUserService } from '../services/bpm-user.service';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { TestBed, async, inject } from '@angular/core/testing';
-import { BpmUserModel } from '../models/bpm-user.model';
+// import { BpmUserModel } from '../models/bpm-user.model';
+import { AlfrescoAuthenticationService, AlfrescoApiService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
 
-export var fakeBpmUser: BpmUserModel = {
-    apps: {},
-    capabilities: 'fake-capability',
-    company: 'fake-company',
-    created: 'fake-create-date',
-    email: 'fakeBpm@fake.com',
-    externalId: 'fake-external-id',
-    firstName: 'fake-first-name',
-    lastName: 'fake-last-name',
-    fullname: 'fake-full-name',
-    groups: {},
-    id: 'fake-id',
-    lastUpdate: 'fake-update-date',
-    latestSyncTimeStamp: 'fake-timestamp',
-    password: 'fake-password',
-    pictureId: 'fake-picture-id',
-    status: 'fake-status',
-    tenantId: 'fake-tenant-id',
-    tenantName: 'fake-tenant-name',
-    tenantPictureId: 'fake-tenant-picture-id',
-    type: 'fake-type'
-};
-
-class StubAuthentication {
-  isEcmConnected: boolean;
-  isBpmConnected: boolean;
-  setIsEcmLoggedIn(logged: boolean) { this.isEcmConnected = logged; };
-  setIsBpmLoggedIn(logged: boolean) { this.isBpmConnected = logged; };
-  isEcmLoggedIn() { return this.isEcmConnected; };
-  isBpmLoggedIn() { return this.isBpmConnected; };
-  callApiGetPersonInfo() { return Promise.resolve(fakeBpmUser); };
-};
+declare let jasmine: any;
 
 describe('Bpm User service', () => {
 
-    beforeEach( async(() => {
-      TestBed.configureTestingModule({
-        providers: [ BpmUserService,
-          { provide: AlfrescoAuthenticationService, useClass: StubAuthentication }
-        ]
-      })
-      .compileComponents();
-    }));
+    let service, injector, authService;
 
-    it('can instantiate service when inject service',
-        inject([BpmUserService], (service: BpmUserService) => {
-          expect(service instanceof BpmUserService).toBe(true);
-    }));
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            BpmUserService
+        ]);
+    });
 
-    it('can instantiate service with authorization', inject([AlfrescoAuthenticationService],
-                                                        (auth: AlfrescoAuthenticationService) => {
-      expect(auth).not.toBeNull('authorization should be provided');
-      let service = new BpmUserService(auth);
-      expect(service instanceof BpmUserService).toBe(true, 'new service should be ok');
-    }));
+    beforeEach(() => {
+        service = injector.get(BpmUserService);
+        authService = injector.get(AlfrescoAuthenticationService);
+        jasmine.Ajax.install();
+    });
+
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
+    });
+
+    it('can instantiate service with authorization', () => {
+        let serviceTest = new BpmUserService(authService);
+
+        expect(serviceTest instanceof BpmUserService).toBe(true, 'new service should be ok');
+    });
 
     describe('when user is logged in', () => {
-        let service: BpmUserService;
-        let authServiceForTest: AlfrescoAuthenticationService;
-
-        beforeEach(
-            inject(
-                [AlfrescoAuthenticationService ],
-                ( authService: AlfrescoAuthenticationService ) => {
-          authServiceForTest = authService;
-          service = new BpmUserService(authService);
-          spyOn(authServiceForTest, 'isBpmLoggedIn').and.returnValue(true);
-        }));
 
         it('should be able to retrieve current user info', (done) => {
-          spyOn(service, 'callApiGetProfile').and.returnValue(Promise.resolve(fakeBpmUser));
-          service.getCurrentUserInfo().subscribe(
-                                        (user) => {
-                                                   expect(user).toBeDefined();
-                                                   expect(user.firstName).toEqual('fake-first-name');
-                                                   expect(user.lastName).toEqual('fake-last-name');
-                                                   expect(user.email).toEqual('fakeBpm@fake.com');
-                                                   done();
-                                                 });
-        });
+            service.getCurrentUserInfo().subscribe(
+                (user) => {
+                    expect(user.fakeBpmUser).toBeDefined();
+                    expect(user.fakeBpmUser.firstName).toEqual('fake-first-name');
+                    expect(user.fakeBpmUser.lastName).toEqual('fake-last-name');
+                    expect(user.fakeBpmUser.email).toEqual('fakeBpm@fake.com');
+                    done();
+                });
 
-        it('should retrieve current logged user information via js api', () => {
-          spyOn(service, 'callApiGetProfile');
-          service.getCurrentUserInfo();
-          expect(service.callApiGetProfile).toHaveBeenCalled();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {fakeBpmUser}
+            });
         });
 
         it('should retrieve avatar url for current user', (done) => {
-          spyOn(service, 'callApiGetProfilePicture').and.returnValue(Promise.resolve('fake/img/path'));
-          service.getCurrentUserProfileImage().subscribe(
-                                        (path) => {
-                                                   expect(path).toBeDefined();
-                                                   expect(path).toEqual('fake/img/path');
-                                                   done();
-                                                 });
-        });
-    });
-
-    describe('when user is not logged in', () => {
-        let service: BpmUserService;
-        let authServiceForTest: AlfrescoAuthenticationService;
-
-        beforeEach(
-            inject(
-                [AlfrescoAuthenticationService],
-                (authService: AlfrescoAuthenticationService) => {
-          authServiceForTest = authService;
-          service = new BpmUserService(authService);
-          spyOn(authServiceForTest, 'isBpmLoggedIn').and.returnValue(false);
-        }));
-
-        it('should not retrieve the user information', () => {
-          spyOn(service, 'callApiGetProfile');
-          service.getCurrentUserInfo();
-          expect(service.callApiGetProfile).not.toHaveBeenCalled();
+            spyOn(service, 'callGetProfilePictureApi').and.returnValue(Promise.resolve('fake/img/path'));
+            service.getCurrentUserProfileImage().subscribe(
+                (path) => {
+                    expect(path).toBeDefined();
+                    expect(path).toEqual('fake/img/path');
+                    done();
+                });
         });
 
-        it('should not retrieve the user avatar', () => {
-          spyOn(service, 'callApiGetProfilePicture');
-          service.getCurrentUserInfo();
-          expect(service.callApiGetProfilePicture).not.toHaveBeenCalled();
+        it('should catch errors on call for profile', (done) => {
+            service.getCurrentUserInfo().subscribe(() => {
+            }, () => {
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
+        });
+
+        it('should catch errors on call for profile picture', (done) => {
+            service.getCurrentUserProfileImage().subscribe(() => {
+            }, () => {
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
         });
     });
 });

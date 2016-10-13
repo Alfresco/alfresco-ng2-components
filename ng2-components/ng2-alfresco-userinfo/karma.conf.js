@@ -45,6 +45,10 @@ module.exports = function (config) {
 
       // ng2-components
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
+      // Fake files
+      { pattern: 'src/assets/ecmImg.gif', included: false, watched: true, served: true },
+      { pattern: 'src/assets/bpmImg.gif', included: false, watched: true, served: true },
+      { pattern: 'src/img/anonymous.gif', included: false, watched: true, served: true },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
