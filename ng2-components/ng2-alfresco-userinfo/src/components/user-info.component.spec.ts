@@ -18,8 +18,8 @@
 import { UserInfoComponent } from './user-info.component';
 import { EcmUserService } from '../services/ecm-user.service';
 import { BpmUserService } from '../services/bpm-user.service';
-import { FakeEcmUserService } from '../assets/fake-ecm-user.service';
-import { FakeBpmUserService } from '../assets/fake-bpm-user.service';
+import { FakeEcmUserService } from '../assets/fake-ecm-user.service.mock';
+import { FakeBpmUserService } from '../assets/fake-bpm-user.service.mock';
 import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 

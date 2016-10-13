@@ -17,8 +17,9 @@
 
 import { ReflectiveInjector } from '@angular/core';
 import { BpmUserService } from '../services/bpm-user.service';
+// import { BpmUserModel } from '../models/bpm-user.model';
 import { AlfrescoAuthenticationService, AlfrescoApiService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { fakeBpmUser } from '../assets/fake-bpm-user.service';
+import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
 
 declare let jasmine: any;
 
@@ -38,9 +39,6 @@ describe('Bpm User service', () => {
     beforeEach(() => {
         service = injector.get(BpmUserService);
         authService = injector.get(AlfrescoAuthenticationService);
-    });
-
-    beforeEach(() => {
         jasmine.Ajax.install();
     });
 
@@ -61,20 +59,19 @@ describe('Bpm User service', () => {
         });
 
         it('should be able to retrieve current user info', (done) => {
-            spyOn(service, 'getCurrentUserProfileImage').and.callThrough();
             service.getCurrentUserInfo().subscribe(
                 (user) => {
-                    expect(user).toBeDefined();
-                    expect(user.firstName).toEqual('fake-first-name');
-                    expect(user.lastName).toEqual('fake-last-name');
-                    expect(user.email).toEqual('fakeBpm@fake.com');
+                    expect(user.fakeBpmUser).toBeDefined();
+                    expect(user.fakeBpmUser.firstName).toEqual('fake-first-name');
+                    expect(user.fakeBpmUser.lastName).toEqual('fake-last-name');
+                    expect(user.fakeBpmUser.email).toEqual('fakeBpm@fake.com');
                     done();
                 });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: fakeBpmUser
+                responseText: { fakeBpmUser }
             });
         });
 
@@ -85,6 +82,7 @@ describe('Bpm User service', () => {
                     expect(path).toEqual('fake/img/path');
                     done();
                 });
+
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
@@ -92,23 +90,16 @@ describe('Bpm User service', () => {
             });
         });
     });
-/*
-    describe('when user is not logged in', () => {
 
+    describe('when user is not logged in', () => {
         beforeEach(() => {
             spyOn(authService, 'isBpmLoggedIn').and.returnValue(false);
         });
 
-        it('should not retrieve the user information', () => {
-            spyOn(service, 'callApiGetProfile');
-            service.getCurrentUserInfo();
-            expect(service.callApiGetProfile).not.toHaveBeenCalled();
-        });
-
         it('should not retrieve the user avatar', () => {
-            spyOn(service, 'callApiGetProfilePicture');
+            spyOn(service, 'callGetProfilePictureApi');
             service.getCurrentUserInfo();
-            expect(service.callApiGetProfilePicture).not.toHaveBeenCalled();
+            expect(service.callGetProfilePictureApi).not.toHaveBeenCalled();
         });
-    });*/
+    });
 });

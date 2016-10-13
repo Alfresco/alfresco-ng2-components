@@ -23,7 +23,7 @@ import {
     AlfrescoContentService
 } from 'ng2-alfresco-core';
 import { EcmUserService } from '../services/ecm-user.service';
-import { fakeEcmUser } from '../assets/fake-ecm-user.service';
+import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
 
 declare let jasmine: any;
 
@@ -85,6 +85,16 @@ describe('Ecm User service', () => {
                 status: 200,
                 contentType: 'json',
                 responseText: {entry: fakeEcmUser}
+            });
+        });
+
+        it('should be able to log errors on call', (done) => {
+            service.getCurrentUserInfo().subscribe(() => {}, () => {
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
             });
         });
 
