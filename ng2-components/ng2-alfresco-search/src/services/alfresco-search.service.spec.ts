@@ -18,6 +18,7 @@
 import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSearchService } from './alfresco-search.service';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
 
 declare let jasmine: any;
 
@@ -26,53 +27,6 @@ describe('AlfrescoSearchService', () => {
     let service: AlfrescoSearchService;
     let authenticationService: AlfrescoAuthenticationService;
     let injector: ReflectiveInjector;
-
-    let fakeSearch = {
-        list: {
-            pagination: {
-                count: 1,
-                hasMoreItems: false,
-                totalItems: 1,
-                skipCount: 0,
-                maxItems: 100
-            },
-            entries: [
-                {
-                    entry: {
-                        id: '123',
-                        name: 'MyDoc',
-                        content: {
-                            mimetype: 'text/plain'
-                        },
-                        createdByUser: {
-                            displayName: 'John Doe'
-                        },
-                        modifiedByUser: {
-                            displayName: 'John Doe'
-                        }
-                    }
-                }
-            ]
-        }
-    };
-
-    let fakeError = {
-        error: {
-            errorKey: 'Search failed',
-            statusCode: 400,
-            briefSummary: '08220082 search failed',
-            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-            descriptionURL: 'https://api-explorer.alfresco.com'
-        }
-    };
-
-    let fakeApi = {
-        core: {
-            searchApi: {
-                liveSearchNodes: (term, opts) => Promise.resolve(fakeSearch)
-            }
-        }
-    };
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
