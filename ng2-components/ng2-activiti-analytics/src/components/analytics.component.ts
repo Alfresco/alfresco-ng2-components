@@ -103,13 +103,11 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getParamsReports(reportId.currentValue);
-            return;
         }
 
         let appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
             this.getParamsReports(this.reportId);
-            return;
         }
     }
 
@@ -123,8 +121,7 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
             (err: any) => {
                 console.log(err);
                 this.onError.emit(err);
-            },
-            () => console.log('retrive done')
+            }
         );
     }
 
@@ -138,8 +135,7 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
                 (err: any) => {
                     console.log(err);
                     this.onError.emit(err);
-                },
-                () => console.log(`${param.type} options loaded`)
+                }
             );
         });
     }
@@ -153,8 +149,7 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
             (err: any) => {
                 this.onError.emit(err);
                 console.log(err);
-            },
-            () => console.log('Login done')
+            }
         );
     }
 

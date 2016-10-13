@@ -30,12 +30,7 @@ import { ReportModel, ReportQuery } from '../models/report.model';
 import { Chart } from '../models/chart.model';
 import * as moment from 'moment';
 import { DebugElement, SimpleChange } from '@angular/core';
-import {
-    reportDefParamCheck, reportDefParamDateRange, chartProcessDefOverview, chartTaskOverview, fieldDateRange,
-    fieldDateRangeInterval, fieldDuration, fieldNumber, fieldProcessDef, fieldStatus, fieldTask, fieldTypeFiltering,
-    reportDefParamDuration, reportDefParamNumber, reportDefParamTaskOptions, reportDefParamStatus, reportDefParamRangeInterval,
-    reportDefParamProcessDef, reportDefParamProcessDefOptions, reportDefParamProcessDefOptionsApp, reportDefParamTask
-} from '../assets/analyticsComponent.mock';
+import * as analyticMock from '../assets/analyticsComponent.mock';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,
@@ -86,7 +81,6 @@ describe('Test ng2-activiti-analytics Report ', () => {
     });
 
     describe('Rendering tests', () => {
-
         beforeEach(() => {
             jasmine.Ajax.install();
         });
@@ -96,16 +90,12 @@ describe('Test ng2-activiti-analytics Report ', () => {
         });
 
         it('Should initialize the Report form with a Form Group ', () => {
-            fixture.detectChanges();
-
             expect(component.reportForm.get('dateRange')).toBeDefined();
             expect(component.reportForm.get('dateRange').get('startDate')).toBeDefined();
             expect(component.reportForm.get('dateRange').get('endDate')).toBeDefined();
         });
 
         it('Should render a dropdown with all the status when the definition parameter type is \'status\' ', (done) => {
-            fixture.detectChanges();
-
             component.onSuccessParamsReport.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-status');
@@ -126,13 +116,11 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamStatus
+                responseText: analyticMock.reportDefParamStatus
             });
         });
 
         it('Should render a number with the default value when the definition parameter type is \'integer\' ', (done) => {
-            fixture.detectChanges();
-
             component.onSuccessParamsReport.subscribe(() => {
                 fixture.detectChanges();
                 let numberElement: any = element.querySelector('#slowProcessInstanceInteger');
@@ -148,13 +136,11 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamNumber
+                responseText: analyticMock.reportDefParamNumber
             });
         });
 
         it('Should render a duration component when the definition parameter type is \'duration\' ', (done) => {
-            fixture.detectChanges();
-
             component.onSuccessParamsReport.subscribe(() => {
                 fixture.detectChanges();
                 let numberElement: any = element.querySelector('#duration');
@@ -177,13 +163,11 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamDuration
+                responseText: analyticMock.reportDefParamDuration
             });
         });
 
         it('Should render a checkbox with the value true when the definition parameter type is \'boolean\' ', (done) => {
-            fixture.detectChanges();
-
             component.onSuccessParamsReport.subscribe(() => {
                 fixture.detectChanges();
                 let checkElement: any = element.querySelector('#typeFiltering');
@@ -198,13 +182,11 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamCheck
+                responseText: analyticMock.reportDefParamCheck
             });
         });
 
         it('Should render a date range components when the definition parameter type is \'dateRange\' ', (done) => {
-            fixture.detectChanges();
-
             component.onSuccessParamsReport.subscribe(() => {
                 fixture.detectChanges();
                 let today = moment().format('YYYY-MM-DD');
@@ -224,13 +206,11 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamDateRange
+                responseText: analyticMock.reportDefParamDateRange
             });
         });
 
         it('Should render a dropdown with all the RangeInterval when the definition parameter type is \'dateRangeInterval\' ', (done) => {
-            fixture.detectChanges();
-
             component.onSuccessParamsReport.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-dateRangeInterval');
@@ -251,15 +231,12 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamRangeInterval
+                responseText: analyticMock.reportDefParamRangeInterval
             });
         });
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
-            ' reportId change' +
-            ' ', (done) => {
-            fixture.detectChanges();
-
+            ' reportId change', (done) => {
             component.onSuccessParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-processDefinitionId');
@@ -280,22 +257,18 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamProcessDef
+                responseText: analyticMock.reportDefParamProcessDef
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamProcessDefOptions
+                responseText: analyticMock.reportDefParamProcessDefOptions
             });
-
         });
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
-            ' appId change' +
-            ' ', (done) => {
-            fixture.detectChanges();
-
+            ' appId change', (done) => {
             component.onSuccessParamOpt.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-processDefinitionId');
@@ -315,23 +288,18 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamProcessDef
+                responseText: analyticMock.reportDefParamProcessDef
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamProcessDefOptionsApp
+                responseText: analyticMock.reportDefParamProcessDefOptionsApp
             });
-
         });
 
         it('Should render the Process definition overview report ', (done) => {
-            fixture.detectChanges();
-
             component.onShowReport.subscribe((res) => {
-                // fixture.detectChanges();
-
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(3);
 
@@ -369,16 +337,12 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: chartProcessDefOverview
+                responseText: analyticMock.chartProcessDefOverview
             });
         });
 
         it('Should render the Task overview report ', (done) => {
-            fixture.detectChanges();
-
             component.onShowReport.subscribe((res) => {
-                // fixture.detectChanges();
-
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
 
@@ -426,13 +390,13 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: chartTaskOverview
+                responseText: analyticMock.chartTaskOverview
             });
         });
 
         it('Should reset the report and save the number value onNumberChanges method', () => {
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.onNumberChanges(fieldNumber);
+            component.onNumberChanges(analyticMock.fieldNumber);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.slowProcessInstanceInteger).toEqual(102);
@@ -440,7 +404,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
 
         it('Should reset the report and save the duration value onDurationChanges method', () => {
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.onDurationChanges(fieldDuration);
+            component.onDurationChanges(analyticMock.fieldDuration);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.duration).toEqual(30);
@@ -448,7 +412,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
 
         it('Should reset the report and save the status value onStatusChanges method', () => {
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.onStatusChanges(fieldStatus);
+            component.onStatusChanges(analyticMock.fieldStatus);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.status).toEqual('fake-value');
@@ -456,7 +420,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
 
         it('Should reset the report and save the typeFiltering value onTypeFilteringChanges method', () => {
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.onTypeFilteringChanges(fieldTypeFiltering);
+            component.onTypeFilteringChanges(analyticMock.fieldTypeFiltering);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.typeFiltering).toBeFalsy();
@@ -464,7 +428,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
 
         it('Should reset the report and save the taskName value onTaskChanges method', () => {
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.onTaskChanges(fieldTask);
+            component.onTaskChanges(analyticMock.fieldTask);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.taskName).toEqual('fake-task-name');
@@ -472,7 +436,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
 
         it('Should reset the report and save the dateRange value onDateRangeChange method', () => {
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.onDateRangeChange(fieldDateRange);
+            component.onDateRangeChange(analyticMock.fieldDateRange);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.dateRange.startDate).toEqual('2016-10-12T00:00:00.000Z');
@@ -481,7 +445,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
 
         it('Should reset the report and save the dateRangeInterval value onDateRangeIntervalChange method', () => {
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.onDateRangeIntervalChange(fieldDateRangeInterval);
+            component.onDateRangeIntervalChange(analyticMock.fieldDateRangeInterval);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.dateRangeInterval).toEqual('fake-date-interval');
@@ -494,16 +458,14 @@ describe('Test ng2-activiti-analytics Report ', () => {
                 definition:
                     '{ "parameters" :[{"id":"processDefinitionId","type":"processDefinition","value":null}]}'
             });
-            component.onProcessDefinitionChanges(fieldProcessDef);
+            component.onProcessDefinitionChanges(analyticMock.fieldProcessDef);
 
             expect(component.reports).toBeNull();
             expect(component.reportParamQuery.processDefinitionId).toEqual('fake-process-name:1:15027');
         });
 
         it('Should load the task list when a process definition is selected', () => {
-
             component.onSuccessParamsReport.subscribe((res) => {
-
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
                 expect(res[0].id).toEqual('Fake task name 1');
@@ -514,13 +476,13 @@ describe('Test ng2-activiti-analytics Report ', () => {
 
             component.reportId = 100;
             component.reports = [ new Chart({id: 'fake', type: 'fake-type'})];
-            component.reportDetails = new ReportModel(reportDefParamTask);
-            component.onProcessDefinitionChanges(fieldProcessDef);
+            component.reportDetails = new ReportModel(analyticMock.reportDefParamTask);
+            component.onProcessDefinitionChanges(analyticMock.fieldProcessDef);
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamTaskOptions
+                responseText: analyticMock.reportDefParamTaskOptions
             });
         });
 
@@ -530,8 +492,6 @@ describe('Test ng2-activiti-analytics Report ', () => {
         });
 
         it('Should emit an error with a 404 response when the options response is not found', (done) => {
-            fixture.detectChanges();
-
             component.onError.subscribe((err) => {
                 expect(err).toBeDefined();
                 done();
@@ -544,7 +504,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: reportDefParamProcessDef
+                responseText: analyticMock.reportDefParamProcessDef
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -555,8 +515,6 @@ describe('Test ng2-activiti-analytics Report ', () => {
         });
 
         it('Should emit an error with a 404 response when the  Process definition overview response is not found ', (done) => {
-            fixture.detectChanges();
-
             component.onError.subscribe((err) => {
                 expect(err).toBeDefined();
                 done();
@@ -576,12 +534,9 @@ describe('Test ng2-activiti-analytics Report ', () => {
                 contentType: 'json',
                 responseText: []
             });
-
         });
 
         it('Should emit an error with a 404 response when the report parameters response is not found', (done) => {
-            fixture.detectChanges();
-
             component.onError.subscribe((err) => {
                 expect(err).toBeDefined();
                 done();
@@ -597,7 +552,5 @@ describe('Test ng2-activiti-analytics Report ', () => {
                 responseText: []
             });
         });
-
     });
-
 });
