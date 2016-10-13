@@ -21,28 +21,97 @@ import {
     AlfrescoSettingsService,
     AlfrescoApiService
 } from 'ng2-alfresco-core';
+import { fakeApi, fakeEmptyFilters, fakeFilters, fakeError } from '../assets/activiti-process.service.mock';
 import { ActivitiProcessService } from './activiti-process.service';
 
 describe('ActivitiProcessService', () => {
 
-    let service, injector;
+    let service: ActivitiProcessService;
+    let injector: ReflectiveInjector;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
             ActivitiProcessService,
-            AlfrescoSettingsService,
             AlfrescoApiService,
-            AlfrescoAuthenticationService
+            AlfrescoAuthenticationService,
+            AlfrescoSettingsService
         ]);
-    });
-
-    beforeEach(() => {
         service = injector.get(ActivitiProcessService);
+        let authenticationService: AlfrescoAuthenticationService = injector.get(AlfrescoAuthenticationService);
+        spyOn(authenticationService, 'getAlfrescoApi').and.returnValue(fakeApi);
     });
 
-    it('should get process instances', (done) => {
+    xit('should get process instances', (done) => {
 
         expect(true).toBe(true);
         done();
+    });
+
+    describe('filters', () => {
+
+        let userFiltersApi = fakeApi.activiti.userFiltersApi;
+        let getFilters: any, createFilter: any;
+
+        beforeEach(() => {
+            getFilters = spyOn(userFiltersApi, 'getUserProcessInstanceFilters');
+            createFilter = spyOn(userFiltersApi, 'createUserProcessInstanceFilter');
+        });
+
+        it('should call the API without an appId defined by default', () => {
+            getFilters = getFilters.and.returnValue(Promise.resolve(fakeFilters));
+            service.getProcessFilters(null);
+            expect(getFilters).toHaveBeenCalledWith({});
+        });
+
+        it('should call the API with the correct appId when specified', () => {
+            getFilters = getFilters.and.returnValue(Promise.resolve(fakeFilters));
+            service.getProcessFilters('226');
+            expect(getFilters).toHaveBeenCalledWith({appId: '226'});
+        });
+
+        it('should return the non-empty filter list that is returned by the API', (done) => {
+            getFilters = getFilters.and.returnValue(Promise.resolve(fakeFilters));
+            service.getProcessFilters(null).subscribe(
+                (res) => {
+                    expect(res.length).toBe(1);
+                    done();
+                }
+            );
+        });
+
+        it('should return the default filters when none are returned by the API', (done) => {
+            getFilters = getFilters.and.returnValue(Promise.resolve(fakeEmptyFilters));
+
+            service.getProcessFilters(null).subscribe(
+                (res) => {
+                    expect(res.length).toBe(3);
+                    done();
+                }
+            );
+        });
+
+        it('should create the default filters when none are returned by the API', (done) => {
+            getFilters = getFilters.and.returnValue(Promise.resolve(fakeEmptyFilters));
+            createFilter = createFilter.and.returnValue(Promise.resolve({}));
+
+            service.getProcessFilters(null).subscribe(
+                (res) => {
+                    expect(createFilter).toHaveBeenCalledTimes(3);
+                    done();
+                }
+            );
+        });
+
+        it('should pass on any error that is returned by the API', (done) => {
+            getFilters = getFilters.and.returnValue(Promise.reject(fakeError));
+
+            service.getProcessFilters(null).subscribe(
+                () => {},
+                (res) => {
+                    expect(res).toBe(fakeError);
+                    done();
+                }
+            );
+        });
     });
 });
