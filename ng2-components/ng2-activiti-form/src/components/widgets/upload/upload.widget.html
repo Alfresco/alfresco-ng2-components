@@ -3,7 +3,7 @@
     <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
     <div>
         <i *ngIf="hasFile" class="material-icons upload-widget__icon">attachment</i>
-        <span *ngIf="hasFile" class="upload-widget__file">{{getUploadedFileName()}}</span>
+        <span *ngIf="hasFile" class="upload-widget__file">{{displayText}}</span>
         <input *ngIf="!hasFile"
                #file
                type="file"
