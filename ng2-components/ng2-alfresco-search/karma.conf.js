@@ -42,9 +42,11 @@ module.exports = function (config) {
       {pattern: 'dist/**/*.html', included: true, served: true, watched: true},
       {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
 
+      // mimetype icons
+      {pattern: 'dist/src/img/*.svg', included: false, served: true, watched: false},
+
       // ng2-components
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-alfresco-search/dist/**/*.js', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},

@@ -28,16 +28,6 @@ export class AlfrescoSearchService {
     constructor(private authService: AlfrescoAuthenticationService) {
     }
 
-    public getSearchNodesPromise(term: string) {
-        let nodeId = '-root-';
-        let opts = {
-            include: ['path'],
-            rootNodeId: nodeId,
-            nodeType: 'cm:content'
-        };
-        return this.authService.getAlfrescoApi().core.searchApi.liveSearchNodes(term, opts);
-    }
-
     /**
      * Execute a search against the repository
      *
@@ -50,10 +40,17 @@ export class AlfrescoSearchService {
             .catch(this.handleError);
     }
 
+    private getSearchNodesPromise(term: string) {
+        let nodeId = '-root-';
+        let opts = {
+            include: ['path'],
+            rootNodeId: nodeId,
+            nodeType: 'cm:content'
+        };
+        return this.authService.getAlfrescoApi().core.searchApi.liveSearchNodes(term, opts);
+    }
+
     private handleError(error: any): Observable<any> {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
         return Observable.throw(error || 'Server error');
     }
 }
