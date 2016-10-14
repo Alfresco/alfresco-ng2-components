@@ -8,38 +8,43 @@
             <div [ngSwitch]="report.type">
                 <div *ngSwitchCase="'pie'">
                     <div class="col-md-6">
-                        <base-chart class="chart"
+                        <div *ngIf="!report.hasData()">No data found</div>
+                        <base-chart *ngIf="report.hasData()" class="chart"
                                     [data]="report.data"
-                                    [datasets]="report.datasets"
                                     [labels]="report.labels"
                                     [chartType]="report.type"></base-chart>
                     </div>
                 </div>
                 <div *ngSwitchCase="'table'">
-                    <div [attr.id]="'chart-table-' + report.id">
-                    <table class="table table-responsive table-condensed" style="width: 100%">
-                        <tr>
-                            <th *ngFor="let label of report.labels">{{label | translate}}</th>
-                        </tr>
-                        <tr *ngFor="let rows of report.datasets" style="text-align: center;">
-                            <td *ngFor="let row of rows">{{row | translate }}</td>
-                        </tr>
-                    </table>
+                    <div *ngIf="!report.hasDatasets()">No data found</div>
+                    <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
+                        <table class="table table-responsive table-condensed" style="width: 100%">
+                            <tr>
+                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.datasets" style="text-align: center;">
+                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <div *ngSwitchCase="'masterDetailTable'">
-                    <table class="table table-responsive table-condensed" style="width: 100%">
-                        <tr>
-                            <th *ngFor="let label of report.labels">{{label | translate}}</th>
-                        </tr>
-                        <tr *ngFor="let rows of report.datasets" style="text-align: center;">
-                            <td *ngFor="let row of rows">{{row | translate }}</td>
-                        </tr>
-                    </table>
+                    <div *ngIf="!report.hasDatasets()">No data found</div>
+                    <div [attr.id]="'chart-master-detail-table-' + report.id" *ngIf="report.hasDatasets()">
+                        <table class="table table-responsive table-condensed" style="width: 100%">
+                            <tr>
+                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.datasets" style="text-align: center;">
+                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <div *ngSwitchCase="'bar'">
                     <div class="col-md-6">
-                        <base-chart class="chart"
+                        <div *ngIf="!report.hasDatasets()">No data found</div>
+                        <base-chart *ngIf="report.hasDatasets()" class="chart"
                                     [datasets]="report.datasets"
                                     [labels]="report.labels"
                                     [options]="report.options"
@@ -52,4 +57,6 @@
             </div>
         </div>
     </div>
+    <br><br><br>
+    <div *ngIf="!reports">Fill in the parameters to generate your report</div>
 </div>

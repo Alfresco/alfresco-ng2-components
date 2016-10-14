@@ -191,16 +191,16 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                     processDefinitionId: 'FakeProcess:1:22'
                 },
                 taskGroup: {
-                    task: 'FakeTaskName'
+                    taskName: 'FakeTaskName'
                 },
                 durationGroup: {
                     duration: 22
                 },
                 dateIntervalGroup: {
-                    dateInterval: 120
+                    dateRangeInterval: 120
                 },
                 processInstanceGroup: {
-                    processInstance: 2
+                    slowProcessInstanceInteger: 2
                 }
             };
             component.submit(values);
@@ -397,5 +397,10 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 responseText: []
             });
         });
+    });
+
+    it('Should convert a string in number', () => {
+        let numberConvert = component.convertNumber('2');
+        expect(numberConvert).toEqual(2);
     });
 });

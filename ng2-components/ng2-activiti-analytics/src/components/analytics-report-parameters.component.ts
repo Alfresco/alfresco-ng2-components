@@ -55,8 +55,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
 
     reportParameters: ReportParametersModel;
 
-    reportParamQuery = new ReportQuery();
-
     reportForm: FormGroup;
 
     debug: boolean = false;
@@ -93,7 +91,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.initForm();
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getReportParams(reportId.currentValue);
@@ -112,13 +109,13 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
                 status: new FormControl()
             }),
             processInstanceGroup: new FormGroup({
-                processInstance: new FormControl()
+                slowProcessInstanceInteger: new FormControl()
             }),
             taskGroup: new FormGroup({
-                task: new FormControl()
+                taskName: new FormControl()
             }),
             dateIntervalGroup: new FormGroup({
-                dateInterval: new FormControl()
+                dateRangeInterval: new FormControl()
             }),
             durationGroup: new FormGroup({
                 duration: new FormControl()
@@ -164,24 +161,37 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     }
 
     public submit(values: any) {
-        this.reportParamQuery.dateRange.startDate = this.convertMomentDate(values.dateRange.startDate);
-        this.reportParamQuery.dateRange.endDate = this.convertMomentDate(values.dateRange.endDate);
-        this.reportParamQuery.status = values.statusGroup.status;
-        this.reportParamQuery.processDefinitionId = values.processDefGroup.processDefinitionId;
-        this.reportParamQuery.taskName = values.taskGroup.task;
-        this.reportParamQuery.duration = values.durationGroup.duration;
-        this.reportParamQuery.dateRangeInterval = values.dateIntervalGroup.dateInterval;
-        this.reportParamQuery.slowProcessInstanceInteger = values.processInstanceGroup.processInstance;
-        this.onSuccess.emit(this.reportParamQuery);
+        let reportParamQuery = this.convertFormValuesToReportParamQuery(values);
+        this.onSuccess.emit(reportParamQuery);
     }
 
-    onValueChanged(data: any) {
-        this.onFormValueChanged.emit(data);
+    onValueChanged(values: any) {
+        this.onFormValueChanged.emit(values);
+        if (this.reportForm && this.reportForm.valid) {
+            this.submit(values);
+        }
     }
 
     public convertMomentDate(date: string) {
         return moment(date, AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI, true)
                 .format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+    }
+
+    public convertNumber(value: string): number {
+        return parseInt(value, 10);
+    }
+
+    convertFormValuesToReportParamQuery(values: any): ReportQuery {
+        let reportParamQuery: ReportQuery = new ReportQuery();
+        reportParamQuery.dateRange.startDate = this.convertMomentDate(values.dateRange.startDate);
+        reportParamQuery.dateRange.endDate = this.convertMomentDate(values.dateRange.endDate);
+        reportParamQuery.status = values.statusGroup.status;
+        reportParamQuery.processDefinitionId = values.processDefGroup.processDefinitionId;
+        reportParamQuery.taskName = values.taskGroup.taskName;
+        reportParamQuery.duration = values.durationGroup.duration;
+        reportParamQuery.dateRangeInterval = values.dateIntervalGroup.dateRangeInterval;
+        reportParamQuery.slowProcessInstanceInteger = this.convertNumber(values.processInstanceGroup.slowProcessInstanceInteger);
+        return reportParamQuery;
     }
 
     ngOnDestroy() {

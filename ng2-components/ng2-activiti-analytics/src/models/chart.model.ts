@@ -99,9 +99,14 @@ export class BarChart extends Chart {
                     }
                 });
             });
-            this.datasets.push({data: dataValue, label: params.key});
-
+            if (dataValue && dataValue.length > 0) {
+                this.datasets.push({data: dataValue, label: params.key});
+            }
         });
+    }
+
+    hasDatasets() {
+        return this.datasets && this.datasets.length > 0 ? true : false;
     }
 }
 
@@ -116,7 +121,13 @@ export class TableChart extends Chart {
         this.title = obj && obj.title || null;
         this.titleKey = obj && obj.titleKey || null;
         this.labels = obj && obj.columnNames;
-        this.datasets = obj && obj.rows;
+        if (obj.rows) {
+            this.datasets = obj && obj.rows;
+        }
+    }
+
+    hasDatasets() {
+        return this.datasets && this.datasets.length > 0 ? true : false;
     }
 }
 
@@ -131,7 +142,13 @@ export class HeatMapChart extends Chart {
         this.title = obj && obj.title || null;
         this.titleKey = obj && obj.titleKey || null;
         this.labels = obj && obj.columnNames;
-        this.datasets = obj && obj.rows;
+        if (obj.rows) {
+            this.datasets = obj && obj.rows;
+        }
+    }
+
+    hasDatasets() {
+        return this.datasets && this.datasets.length > 0 ? true : false;
     }
 }
 
@@ -155,5 +172,9 @@ export class PieChart extends Chart {
     add(label: string, data: string) {
         this.labels.push(label);
         this.data.push(data);
+    }
+
+    hasData() {
+        return this.data && this.data.length > 0 ? true : false;
     }
 }

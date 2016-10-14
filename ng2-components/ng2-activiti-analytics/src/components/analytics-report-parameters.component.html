@@ -6,7 +6,7 @@
             <div [ngSwitch]="field.type">
                 <div *ngSwitchCase="'integer'">
                     <br>
-                    <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup" [controllerName]="'processInstance'"
+                    <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup" [controllerName]="'slowProcessInstanceInteger'"
                                    [required]="true"></number-widget>
                 </div>
                 <div *ngSwitchCase="'duration'">
@@ -30,7 +30,7 @@
                 </div>
                 <div *ngSwitchCase="'task'">
                     <br>
-                    <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup" [controllerName]="'task'"
+                    <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup" [controllerName]="'taskName'"
                                      [required]="true"></dropdown-widget>
                 </div>
                 <div *ngSwitchCase="'dateRange'">
@@ -39,7 +39,7 @@
                 </div>
                 <div *ngSwitchCase="'dateInterval'">
                     <br>
-                    <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup" [controllerName]="'dateInterval'"
+                    <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup" [controllerName]="'dateRangeInterval'"
                                      [required]="true" [showDefaultOption]="false"></dropdown-widget>
                 </div>
                 <div *ngSwitchDefault>
@@ -47,14 +47,10 @@
                 </div>
             </div>
         </div>
-        <br><br>
-            <button type="submit" [disabled]="!reportForm.valid" class="mdl-button mdl-js-button mdl-button--fab" (click)="submit(reportForm.value)" >
-                <i class="material-icons">refresh</i>
-            </button>
         <div *ngIf="debug">
             <p>ReportForm valid : {{ reportForm.valid }}</p>
             <p>ReportForm status : {{ reportForm.errors | json }}</p>
-            <p>ReportForm FormGroup valid : {{reportForm.controls.dateRange.valid | json }}</p>
+            <p>ReportForm FormGroup valid : {{reportForm && reportForm.controls.dateRange.valid | json }}</p>
         </div>
         </form>
     </div>
