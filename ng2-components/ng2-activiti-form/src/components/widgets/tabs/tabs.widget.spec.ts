@@ -65,5 +65,26 @@ describe('TabsWidget', () => {
         });
         widget.tabChanged(field);
     });
+    
+    it('should remove invisible tabs', () => {
+        let fakeTab = new TabModel(null, {id: 'fake-tab-id', title: 'fake-tab-title'});
+        fakeTab.isVisible = false;
+        widget.tabs.push(fakeTab);
+        widget.ngAfterContentChecked();
+
+        expect(widget.visibleTabs.length).toBe(0);
+    });
+
+    it('should leave visible tabs', () => {
+        let fakeTab = new TabModel(null, {id: 'fake-tab-id', title: 'fake-tab-title'});
+        fakeTab.isVisible = true;
+        widget.tabs.push(fakeTab);
+        widget.ngAfterContentChecked();
+
+        expect(widget.visibleTabs.length).toBe(1);
+        expect(widget.visibleTabs[0].id).toBe('fake-tab-id');
+        expect(widget.visibleTabs[0].title).toBe('fake-tab-title');
+        expect(widget.visibleTabs[0].isVisible).toBeTruthy();
+    });
 
 });
