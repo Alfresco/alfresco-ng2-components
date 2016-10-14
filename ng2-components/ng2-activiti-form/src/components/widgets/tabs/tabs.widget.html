@@ -2,6 +2,7 @@
     <div alfresco-mdl-tabs>
         <div class="mdl-tabs__tab-bar">
             <a *ngFor="let tab of visibleTabs; let isFirst = first"
+               id="title-{{tab.id}}"
                [href]="'#' + tab.id"
                class="mdl-tabs__tab" [class.is-active]="isFirst">
                 {{tab.title}}
