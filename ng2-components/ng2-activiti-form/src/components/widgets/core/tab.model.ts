@@ -18,13 +18,14 @@
 import { FormWidgetModel } from './form-widget.model';
 import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
+import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 export class TabModel extends FormWidgetModel {
 
     id: string;
     title: string;
     isVisible: boolean = true;
-    visibilityCondition: any;
+    visibilityCondition: WidgetVisibilityModel;
 
     fields: ContainerModel[] = [];
 
@@ -38,7 +39,7 @@ export class TabModel extends FormWidgetModel {
         if (json) {
             this.id = json.id;
             this.title = json.title;
-            this.visibilityCondition = json.visibilityCondition;
+            this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
         }
     }
 }
