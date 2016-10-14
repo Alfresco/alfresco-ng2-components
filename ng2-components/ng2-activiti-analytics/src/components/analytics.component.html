@@ -8,7 +8,7 @@
             <div [ngSwitch]="report.type">
                 <div *ngSwitchCase="'pie'">
                     <div class="col-md-6">
-                        <div *ngIf="!report.hasData()">No data found</div>
+                        <div *ngIf="!report.hasData()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                         <base-chart *ngIf="report.hasData()" class="chart"
                                     [data]="report.data"
                                     [labels]="report.labels"
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'table'">
-                    <div *ngIf="!report.hasDatasets()">No data found</div>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
                         <table class="table table-responsive table-condensed" style="width: 100%">
                             <tr>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'masterDetailTable'">
-                    <div *ngIf="!report.hasDatasets()">No data found</div>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div [attr.id]="'chart-master-detail-table-' + report.id" *ngIf="report.hasDatasets()">
                         <table class="table table-responsive table-condensed" style="width: 100%">
                             <tr>
@@ -43,7 +43,7 @@
                 </div>
                 <div *ngSwitchCase="'bar'">
                     <div class="col-md-6">
-                        <div *ngIf="!report.hasDatasets()">No data found</div>
+                        <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                         <base-chart *ngIf="report.hasDatasets()" class="chart"
                                     [datasets]="report.datasets"
                                     [labels]="report.labels"
@@ -52,11 +52,11 @@
                     </div>
                 </div>
                 <div *ngSwitchDefault>
-                    <span>UNKNOWN WIDGET TYPE: {{report.type}}</span>
+                    <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{report.type}}</span>
                 </div>
             </div>
         </div>
     </div>
     <br><br><br>
-    <div *ngIf="!reports">Fill in the parameters to generate your report</div>
+    <div *ngIf="!reports">{{'ANALYTICS.MESSAGES.FILL-PARAMETER' | translate}}</div>
 </div>

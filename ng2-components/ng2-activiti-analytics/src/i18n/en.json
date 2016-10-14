@@ -1,6 +1,11 @@
 {
   "ANALYTICS": {
-    "TTILE": "ANALYTICS"
+    "TTILE": "ANALYTICS",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
+      "FILL-PARAMETER": "Fill in the parameters to generate your report",
+      "NO-DATA-FOUND": "No data found"
+    }
   },
   "__KEY_REPORTING": {
     "DEFAULT-REPORTS": {
