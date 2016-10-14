@@ -81,10 +81,8 @@ export class WidgetVisibilityService {
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
-        if (visibilityObj.leftRestResponseId) {
-            return this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
-        }
-        return this.getFormValue(form, visibilityObj.leftFormFieldId);
+        return this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList) ||
+            this.getFormValue(form, visibilityObj.leftFormFieldId);
     }
 
     getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
