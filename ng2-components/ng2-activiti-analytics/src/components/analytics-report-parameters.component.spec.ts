@@ -30,7 +30,7 @@ import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
 import * as moment from 'moment';
 import { DebugElement, SimpleChange } from '@angular/core';
-import * as analyticMock from '../assets/analyticsComponent.mock';
+import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,
@@ -117,7 +117,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamStatus
+                responseText: analyticParamsMock.reportDefParamStatus
             });
         });
 
@@ -137,7 +137,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamNumber
+                responseText: analyticParamsMock.reportDefParamNumber
             });
         });
 
@@ -164,7 +164,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamDuration
+                responseText: analyticParamsMock.reportDefParamDuration
             });
         });
 
@@ -221,7 +221,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamCheck
+                responseText: analyticParamsMock.reportDefParamCheck
             });
         });
 
@@ -245,7 +245,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamDateRange
+                responseText: analyticParamsMock.reportDefParamDateRange
             });
         });
 
@@ -270,7 +270,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamRangeInterval
+                responseText: analyticParamsMock.reportDefParamRangeInterval
             });
         });
 
@@ -296,13 +296,13 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamProcessDef
+                responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamProcessDefOptions
+                responseText: analyticParamsMock.reportDefParamProcessDefOptions
             });
         });
 
@@ -327,13 +327,13 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamProcessDef
+                responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamProcessDefOptionsApp
+                responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
             });
         });
 
@@ -348,13 +348,13 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             });
 
             component.reportId = 100;
-            component.reportParameters = new ReportParametersModel(analyticMock.reportDefParamTask);
-            component.onProcessDefinitionChanges(analyticMock.fieldProcessDef);
+            component.reportParameters = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
+            component.onProcessDefinitionChanges(analyticParamsMock.fieldProcessDef);
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamTaskOptions
+                responseText: analyticParamsMock.reportDefParamTaskOptions
             });
         });
 
@@ -371,7 +371,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.first().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticMock.reportDefParamProcessDef
+                responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
