@@ -38,6 +38,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     @Input()
     reportId: string;
 
+    @Input()
+    debug: boolean = false;
+
     @Output()
     onSuccess = new EventEmitter();
 
@@ -56,8 +59,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     reportParameters: ReportParametersModel;
 
     reportForm: FormGroup;
-
-    debug: boolean = false;
 
     private dropDownSub;
     private reportParamsSub;

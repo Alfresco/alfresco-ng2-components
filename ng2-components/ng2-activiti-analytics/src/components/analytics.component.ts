@@ -35,6 +35,9 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
     @Input()
     reportId: number;
 
+    @Input()
+    debug: boolean = false;
+
     @Output()
     onSuccess = new EventEmitter();
 
@@ -47,8 +50,6 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
     reportParamQuery = new ReportQuery();
 
     reports: any[];
-
-    debug: boolean = false;
 
     constructor(private translate: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService) {
