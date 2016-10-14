@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import { ReportModel, ParameterValueModel } from '../models/report.model';
+import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
 import { Chart, PieChart, TableChart, BarChart } from '../models/chart.model';
 
 @Injectable()
@@ -40,10 +40,10 @@ export class AnalyticsService {
         return this.http
             .get(url, options)
             .map((res: any) => {
-                let reports: ReportModel[] = [];
+                let reports: ReportParametersModel[] = [];
                 let body = res.json();
-                body.forEach((report: ReportModel) => {
-                    let reportModel = new ReportModel(report);
+                body.forEach((report: ReportParametersModel) => {
+                    let reportModel = new ReportParametersModel(report);
                     reports.push(reportModel);
                 });
                 if (body && body.length === 0) {
@@ -53,14 +53,14 @@ export class AnalyticsService {
             }).catch(this.handleError);
     }
 
-    getParamsReports(reportId: string): Observable<any> {
+    getReportParams(reportId: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}`;
         let options = this.getRequestOptions();
         return this.http
             .get(url, options)
             .map((res: any) => {
                 let body = res.json();
-                return new ReportModel(body);
+                return new ReportParametersModel(body);
             }).catch(this.handleError);
     }
 
@@ -183,8 +183,8 @@ export class AnalyticsService {
             }).catch(this.handleError);
     }
 
-    public createDefaultReports(): ReportModel[] {
-        let reports: ReportModel[] = [];
+    public createDefaultReports(): ReportParametersModel[] {
+        let reports: ReportParametersModel[] = [];
         return reports;
     }
 

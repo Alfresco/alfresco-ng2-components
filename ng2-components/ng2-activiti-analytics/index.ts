@@ -19,6 +19,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { AnalyticsReportListComponent } from './src/components/analytics-report-list.component';
+import { AnalyticsReportParametersComponent } from './src/components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './src/components/analytics.component';
 import { AnalyticsService } from './src/services/analytics.service';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
@@ -27,12 +28,14 @@ import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-report-list.component';
+export * from './src/components/analytics-report-parameters.component';
 export * from './src/services/analytics.service';
 export * from './src/components/widgets/index';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,
     AnalyticsReportListComponent,
+    AnalyticsReportParametersComponent,
     WIDGET_DIRECTIVES
 ];
 

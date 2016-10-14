@@ -20,19 +20,19 @@
  * This object represent the report definition.
  *
  *
- * @returns {ReportModel} .
+ * @returns {ReportParametersModel} .
  */
-export class ReportModel {
+export class ReportParametersModel {
     id: number;
     name: string;
-    definition: ReportParametersModel;
+    definition: ReportDefinitionModel;
     created: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id;
         this.name = obj && obj.name || null;
         if (obj && obj.definition) {
-            this.definition = new ReportParametersModel(JSON.parse(obj.definition));
+            this.definition = new ReportDefinitionModel(JSON.parse(obj.definition));
         }
         this.created = obj && obj.created || null;
     }
@@ -42,17 +42,17 @@ export class ReportModel {
     }
 }
 
-export class ReportParametersModel {
-    parameters: ReportParameterModel[] = [];
+export class ReportDefinitionModel {
+    parameters: ReportParameterDetailsModel[] = [];
 
     constructor(obj?: any) {
         obj.parameters.forEach((params: any) => {
-            let reportParamsModel = new ReportParameterModel(params);
+            let reportParamsModel = new ReportParameterDetailsModel(params);
             this.parameters.push(reportParamsModel);
         });
     }
 
-    findParam(name: string): ReportParameterModel {
+    findParam(name: string): ReportParameterDetailsModel {
         this.parameters.forEach((param) => {
             return param.type === name ? param : null;
         });
@@ -65,9 +65,9 @@ export class ReportParametersModel {
  * This object represent the report parameter definition.
  *
  *
- * @returns {ReportParameterModel} .
+ * @returns {ReportParameterDetailsModel} .
  */
-export class ReportParameterModel {
+export class ReportParameterDetailsModel {
     id: string;
     name: string;
     nameKey: string;

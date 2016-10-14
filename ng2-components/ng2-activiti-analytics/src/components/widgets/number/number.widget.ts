@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
+import { FormGroup, Validators } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
@@ -26,8 +27,26 @@ import { WidgetComponent } from './../widget.component';
 })
 export class NumberWidget extends WidgetComponent {
 
+    @Input()
+    field: any;
+
+    @Input('group')
+    public formGroup: FormGroup;
+
+    @Input('controllerName')
+    public controllerName: string;
+
+    @Input()
+    required: boolean = false;
+
     constructor(public elementRef: ElementRef) {
         super();
+    }
+
+    ngOnInit() {
+        if (this.required) {
+            this.formGroup.get(this.controllerName).setValidators(Validators.required);
+        }
     }
 
     setupMaterialComponents(handler: any): boolean {
