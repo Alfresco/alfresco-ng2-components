@@ -27,19 +27,13 @@ export abstract class TextFieldWidgetComponent extends WidgetComponent {
         this.elementRef = elementRef;
     }
 
-    // Overrides base implementation
     setupMaterialComponents(handler: any): boolean {
+        super.setupMaterialComponents(handler);
         // workaround for MDL issues with dynamic components
         if (handler) {
-            handler.upgradeAllRegistered();
             if (this.elementRef && this.hasValue()) {
-                let el = this.elementRef.nativeElement;
-                let container = el.querySelector('.mdl-textfield');
-                if (container) {
-                    container.MaterialTextfield.change(this.field.value.toString());
-                }
+                return this.setupMaterialTextField(this.elementRef, handler, this.field.value.toString());
             }
-            return true;
         }
         return false;
     }

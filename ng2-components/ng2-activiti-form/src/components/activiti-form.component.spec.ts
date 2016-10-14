@@ -21,6 +21,7 @@ import { ActivitiForm } from './activiti-form.component';
 import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { NodeService } from './../services/node.service';
 
 describe('ActivitiForm', () => {
 
@@ -28,6 +29,7 @@ describe('ActivitiForm', () => {
     let formService: FormService;
     let formComponent: ActivitiForm;
     let visibilityService:  WidgetVisibilityService;
+    let nodeService: NodeService;
 
     beforeEach(() => {
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -39,7 +41,8 @@ describe('ActivitiForm', () => {
         window['componentHandler'] = componentHandler;
 
         formService = new FormService(null, null);
-        formComponent = new ActivitiForm(formService, visibilityService, null, null);
+        nodeService = new NodeService(null);
+        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService);
     });
 
     it('should upgrade MDL content on view checked', () => {
@@ -631,6 +634,86 @@ describe('ActivitiForm', () => {
         field = new FormFieldModel(new FormModel());
         formComponent.checkVisibility(field);
         expect(visibilityService.refreshVisibility).toHaveBeenCalledWith(field.form);
+    });
+
+    it('should load form for ecm node', () => {
+        let metadata = {};
+        spyOn(nodeService, 'getNodeMetadata').and.returnValue(
+            Observable.create(observer => {
+                observer.next({ metadata: metadata });
+                observer.complete();
+            })
+        );
+        spyOn(formComponent, 'loadFormFromActiviti').and.stub();
+
+        const nodeId = '<id>';
+        formComponent.nodeId = nodeId;
+        formComponent.ngOnInit();
+
+        expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
+        expect(formComponent.loadFormFromActiviti).toHaveBeenCalled();
+        expect(formComponent.data).toBe(metadata);
+    });
+
+    it('should disable outcome buttons for readonly form', () => {
+        let formModel = new FormModel();
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
+            name: 'Custom'
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
+    });
+
+    it('should require outcome to eval button state', () => {
+        formComponent.form = new FormModel();
+        expect(formComponent.isOutcomeButtonEnabled(null)).toBeFalsy();
+    });
+
+    it('should always enable save outcome for writeable form', () => {
+        let formModel = new FormModel();
+        let field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: null,
+            required: true
+        });
+
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
+        expect(formModel.isValid).toBeFalsy();
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.SAVE_OUTCOME_ID,
+            name: FormOutcomeModel.SAVE_ACTION
+        });
+
+        formComponent.readOnly = true;
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+    });
+
+    it('should disable oucome buttons for invalid form', () => {
+        let formModel = new FormModel();
+        let field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: null,
+            required: true
+        });
+
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
+        expect(formModel.isValid).toBeFalsy();
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
+            name: 'Custom'
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
     });
 
 });

@@ -29,6 +29,7 @@ export class UploadWidget extends WidgetComponent implements OnInit {
 
     hasFile: boolean;
     fileName: string;
+    displayText: string;
 
     constructor(private settingsService: AlfrescoSettingsService,
                 private authService: AlfrescoAuthenticationService) {
@@ -42,18 +43,19 @@ export class UploadWidget extends WidgetComponent implements OnInit {
             this.hasFile = true;
             let file = this.field.value[0];
             this.fileName = file.name;
+            this.displayText = decodeURI(file.name);
         }
     }
 
-    getUploadedFileName(): string {
-        return decodeURI(this.fileName);
-    }
-
     reset() {
-        this.field.value = null;
-        this.field.json.value = null;
         this.hasFile = false;
         this.fileName = null;
+        this.displayText = null;
+
+        if (this.field) {
+            this.field.value = null;
+            this.field.json.value = null;
+        }
     }
 
     onFileChanged(event: any) {
@@ -64,6 +66,7 @@ export class UploadWidget extends WidgetComponent implements OnInit {
 
             this.hasFile = true;
             this.fileName = encodeURI(file.name);
+            this.displayText = file.name;
 
             let formData: FormData = new FormData();
             formData.append('file', file, this.fileName);

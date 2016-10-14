@@ -17,6 +17,7 @@
 
 import { TabsWidget } from './tabs.widget';
 import { TabModel } from './../core/tab.model';
+import { FormFieldModel } from './../core/form-field.model';
 
 describe('TabsWidget', () => {
 
@@ -54,6 +55,15 @@ describe('TabsWidget', () => {
 
         window['componentHandler'] = null;
         expect(widget.setupMaterialComponents()).toBeFalsy();
+    });
+
+    it('should emit tab changed event', (done) => {
+        let field = new FormFieldModel(null);
+        widget.formTabChanged.subscribe(tab => {
+            expect(tab).toBe(field);
+            done();
+        });
+        widget.tabChanged(field);
     });
 
 });

@@ -33,6 +33,9 @@ module.exports = function (config) {
       {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
       'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
+      'node_modules/moment/min/moment.min.js',
+      'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js',
+      'node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js',
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
       {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
 

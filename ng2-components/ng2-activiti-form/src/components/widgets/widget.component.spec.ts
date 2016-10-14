@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ElementRef } from '@angular/core';
 import { WidgetComponent } from './widget.component';
 import { FormFieldModel } from './core/form-field.model';
 import { FormModel } from './core/form.model';
@@ -79,5 +80,54 @@ describe('WidgetComponent', () => {
         });
 
         component.checkVisibility(fakeField);
+    });
+
+    it('should eval isRequired state of the field', () => {
+        let widget = new WidgetComponent();
+        expect(widget.isRequired()).toBeFalsy();
+
+        widget.field = new FormFieldModel(null);
+        expect(widget.isRequired()).toBeFalsy();
+
+        widget.field = new FormFieldModel(null, { required: false });
+        expect(widget.isRequired()).toBeFalsy();
+
+        widget.field = new FormFieldModel(null, { required: true });
+        expect(widget.isRequired()).toBeTruthy();
+    });
+
+    it('should require element reference to setup textfield', () => {
+        let widget = new WidgetComponent();
+        expect(widget.setupMaterialTextField(null, {}, 'value')).toBeFalsy();
+    });
+
+    it('should require component handler to setup textfield', () => {
+        let elementRef = new ElementRef(null);
+        let widget = new WidgetComponent();
+        expect(widget.setupMaterialTextField(elementRef, null, 'value')).toBeFalsy();
+    });
+
+    it('should require field value to setup textfield', () => {
+        let elementRef = new ElementRef(null);
+        let widget = new WidgetComponent();
+        expect(widget.setupMaterialTextField(elementRef, {}, null)).toBeFalsy();
+    });
+
+    it('should setup textfield', () => {
+        let changeCalled = false;
+        let elementRef = new ElementRef({
+            querySelector: function () {
+                return {
+                    MaterialTextfield: {
+                        change: function() {
+                            changeCalled = true;
+                        }
+                    }
+                };
+            }
+        });
+        let widget = new WidgetComponent();
+        expect(widget.setupMaterialTextField(elementRef, {}, 'value')).toBeTruthy();
+        expect(changeCalled).toBeTruthy();
     });
 });

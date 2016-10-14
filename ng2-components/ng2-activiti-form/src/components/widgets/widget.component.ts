@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormFieldModel } from './core/index';
 
 /**
@@ -36,6 +36,8 @@ export class WidgetComponent implements AfterViewInit {
         return this.field ? true : false;
     }
 
+    // Note for developers:
+    // returns <any> object to be able binding it to the <element reguired="required"> attribute
     isRequired(): any {
         if (this.field && this.field.required) {
             return true;
@@ -63,6 +65,20 @@ export class WidgetComponent implements AfterViewInit {
         return false;
     }
 
+    setupMaterialTextField(elementRef: ElementRef, handler: any, value: string): boolean {
+        if (elementRef && handler) {
+            let el = elementRef.nativeElement;
+            if (el) {
+                let container = el.querySelector('.mdl-textfield');
+                if (container) {
+                    container.MaterialTextfield.change(value);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     checkVisibility(field: FormFieldModel) {
         this.fieldChanged.emit(field);
     }
@@ -83,6 +99,12 @@ export class WidgetComponent implements AfterViewInit {
             return field.displayText || field.hyperlinkUrl;
         }
         return null;
+    }
+
+    protected handleError(error: any) {
+        if (error) {
+            console.log(error);
+        }
     }
 
 }

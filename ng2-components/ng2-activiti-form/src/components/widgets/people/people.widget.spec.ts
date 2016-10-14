@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { PeopleWidget } from './people.widget';
 import { FormService } from '../../../services/form.service';
@@ -24,12 +25,20 @@ import { GroupUserModel } from '../core/group-user.model';
 
 describe('PeopleWidget', () => {
 
+    let componentHandler;
+    let elementRef: ElementRef;
     let formService: FormService;
     let widget: PeopleWidget;
 
     beforeEach(() => {
+        componentHandler =  jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
+
         formService = new FormService(null, null);
-        widget = new PeopleWidget(formService, null);
+        elementRef = new ElementRef(null);
+        widget = new PeopleWidget(formService, elementRef);
         widget.field = new FormFieldModel(new FormModel());
     });
 
@@ -43,6 +52,16 @@ describe('PeopleWidget', () => {
             lastName: 'Doe'
         });
         expect(widget.getDisplayName(model)).toBe('John Doe');
+    });
+
+    it('should skip first name for display name', () => {
+        let model = new GroupUserModel({ firstName: null, lastName: 'Doe' });
+        expect(widget.getDisplayName(model)).toBe('Doe');
+    });
+
+    it('should skip last name for display name', () => {
+        let model = new GroupUserModel({ firstName: 'John', lastName: null });
+        expect(widget.getDisplayName(model)).toBe('John');
     });
 
     it('should flush value on blur', (done) => {
@@ -61,10 +80,12 @@ describe('PeopleWidget', () => {
             lastName: 'Doe'
         });
 
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next([]);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
 
         widget.ngOnInit();
         expect(widget.value).toBe('John Doe');
@@ -103,10 +124,12 @@ describe('PeopleWidget', () => {
 
     it('should fetch users by search term', () => {
         let users = [{}, {}];
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next(users);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(users);
+                observer.complete();
+            })
+        );
 
         widget.value = 'user1';
         widget.onKeyUp(null);
@@ -118,10 +141,12 @@ describe('PeopleWidget', () => {
 
     it('should fetch users by search term and group id', () => {
         let users = [{}, {}];
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next(users);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(users);
+                observer.complete();
+            })
+        );
 
         widget.value = 'user1';
         widget.groupId = '1001';
@@ -133,10 +158,12 @@ describe('PeopleWidget', () => {
     });
 
     it('should fetch users and show no popup', () => {
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next(null);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
 
         widget.value = 'user1';
         widget.onKeyUp(null);
@@ -208,5 +235,38 @@ describe('PeopleWidget', () => {
 
         expect(widget.value).toBeNull();
         expect(widget.field.value).toBeNull();
+    });
+
+    it('should setup mdl textfield on view init', () => {
+        spyOn(widget, 'setupMaterialComponents').and.callThrough();
+        spyOn(widget, 'setupMaterialTextField').and.callThrough();
+
+        widget.value = '<value>';
+        widget.ngAfterViewInit();
+
+        expect(widget.setupMaterialComponents).toHaveBeenCalledWith(componentHandler);
+        expect(widget.setupMaterialTextField).toHaveBeenCalled();
+    });
+
+    it('should require component handler to setup textfield', () => {
+        expect(widget.setupMaterialComponents(null)).toBeFalsy();
+    });
+
+    it('should require element reference to setup textfield', () => {
+        let w = new PeopleWidget(formService, null);
+        w.value = '<value>';
+        expect(w.setupMaterialComponents(componentHandler)).toBeFalsy();
+
+        w = new PeopleWidget(formService, elementRef);
+        w.value = '<value>';
+        expect(w.setupMaterialComponents(componentHandler)).toBeTruthy();
+    });
+
+    it('should require value to setup textfield', () => {
+        widget.value = '<value>';
+        expect(widget.setupMaterialComponents(componentHandler)).toBeTruthy();
+
+        widget.value = null;
+        expect(widget.setupMaterialComponents(componentHandler)).toBeFalsy();
     });
 });

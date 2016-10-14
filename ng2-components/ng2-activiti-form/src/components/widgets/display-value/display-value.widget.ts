@@ -53,6 +53,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                         case FormFieldTypes.FUNCTIONAL_GROUP:
                             if (this.field.value) {
                                 this.value = this.field.value.name;
+                            } else {
+                                this.value = null;
                             }
                             break;
                         case FormFieldTypes.PEOPLE:
@@ -66,6 +68,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             let files = this.field.value || [];
                             if (files.length > 0) {
                                 this.value = decodeURI(files[0].name);
+                            } else {
+                                this.value = null;
                             }
                             break;
                         case FormFieldTypes.TYPEAHEAD:
@@ -83,7 +87,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             break;
                         case FormFieldTypes.DATE:
                             if (this.value) {
-                                let d = moment(this.value.split('T')[0]);
+                                let d = moment(this.value.split('T')[0], 'YYYY-M-D');
                                 if (d.isValid()) {
                                     this.value = d.format('D-M-YYYY');
                                 }
@@ -96,10 +100,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             }
                             break;
                         case FormFieldTypes.HYPERLINK:
-                            if (this.value) {
-                                this.linkUrl = this.getHyperlinkUrl(this.field);
-                                this.linkText = this.getHyperlinkText(this.field);
-                            }
+                            this.linkUrl = this.getHyperlinkUrl(this.field);
+                            this.linkText = this.getHyperlinkText(this.field);
                             break;
                         default:
                             this.value = this.field.value;

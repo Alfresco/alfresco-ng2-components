@@ -26,7 +26,7 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
 })
 export class DateWidget extends TextFieldWidgetComponent implements OnInit {
 
-    private dateFormat: string = 'D-M-YYYY';
+    DATE_FORMAT: string = 'D-M-YYYY';
 
     datePicker: any;
 
@@ -44,41 +44,37 @@ export class DateWidget extends TextFieldWidgetComponent implements OnInit {
         if (this.field) {
 
             if (this.field.minValue) {
-                let min = moment(this.field.minValue, this.dateFormat);
-                if (min.isValid()) {
-                    settings.past = min;
-                }
+                settings.past = moment(this.field.minValue, this.DATE_FORMAT);
             }
 
             if (this.field.maxValue) {
-                let max = moment(this.field.maxValue, this.dateFormat);
-                if (max.isValid()) {
-                    settings.future = max;
-                }
+                settings.future = moment(this.field.maxValue, this.DATE_FORMAT);
             }
 
             if (this.field.value) {
-                settings.time = moment(this.field.value, this.dateFormat);
+                settings.init = moment(this.field.value, this.DATE_FORMAT);
             }
         }
 
         this.datePicker = new mdDateTimePicker.default(settings);
-        this.datePicker.trigger = this.elementRef.nativeElement.querySelector('#dateInput');
+        if (this.elementRef) {
+            this.datePicker.trigger = this.elementRef.nativeElement.querySelector('#dateInput');
+        }
     }
 
     onDateChanged() {
         if (this.field.value) {
-            this.datePicker.time = moment(this.field.value, this.dateFormat);
+            this.datePicker.time = moment(this.field.value, this.DATE_FORMAT);
         }
         this.checkVisibility(this.field);
     }
 
     onDateSelected() {
-        this.field.value = this.datePicker.time.format('DD-MM-YYYY');
-        let el = this.elementRef.nativeElement;
-        let container = el.querySelector('.mdl-textfield');
-        if (container) {
-            container.MaterialTextfield.change(this.field.value.toString());
+        let newValue = this.datePicker.time.format(this.DATE_FORMAT);
+        this.field.value = newValue;
+
+        if (this.elementRef) {
+            this.setupMaterialTextField(this.elementRef, componentHandler, newValue);
         }
     }
 
