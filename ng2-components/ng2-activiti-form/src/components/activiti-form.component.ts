@@ -418,7 +418,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    loadFormForEcmNode(): void {
+    private loadFormForEcmNode(): void {
         this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
                 this.data = data.metadata;
                 this.loadFormFromActiviti(data.nodeType);

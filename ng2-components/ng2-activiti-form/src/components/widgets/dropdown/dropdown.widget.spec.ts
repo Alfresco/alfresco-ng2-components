@@ -58,10 +58,12 @@ describe('DropdownWidget', () => {
             restUrl: '<url>'
         });
 
-        spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
-            observer.next(null);
-            observer.complete();
-        }));
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
         widget.ngOnInit();
         expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
     });
@@ -74,10 +76,12 @@ describe('DropdownWidget', () => {
 
     it('should preserve empty option when loading fields', () => {
         let restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
-        spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
-            observer.next([restFieldValue]);
-            observer.complete();
-        }));
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
+                observer.next([restFieldValue]);
+                observer.complete();
+            })
+        );
 
         let form = new FormModel({ taskId: '<id>' });
         let emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };

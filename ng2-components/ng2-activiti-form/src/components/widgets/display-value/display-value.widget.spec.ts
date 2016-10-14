@@ -292,15 +292,15 @@ describe('DisplayValueWidget', () => {
     });
 
     it('should setup rest field values with REST options', () => {
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
                  observer.next([
                     { id: '1', name: 'option 1' },
                     { id: '2', name: 'option 2' }
                  ]);
                  observer.complete();
-             });
-        });
+            })
+        );
 
         let form = new FormModel({ taskId: '<id>' });
 
@@ -324,15 +324,15 @@ describe('DisplayValueWidget', () => {
     });
 
     it('should not setup rest field values with missing REST option', () => {
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
                  observer.next([
                     { id: '1', name: 'option 1' },
                     { id: '2', name: 'option 2' }
                  ]);
                  observer.complete();
-             });
-        });
+             })
+        );
 
         let form = new FormModel({ taskId: '<id>' });
 
@@ -352,12 +352,12 @@ describe('DisplayValueWidget', () => {
     });
 
     it('should not setup rest field values with no REST response', () => {
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
                  observer.next(null);
                  observer.complete();
-             });
-        });
+             })
+        );
 
         let form = new FormModel({ taskId: '<id>' });
 
@@ -378,9 +378,9 @@ describe('DisplayValueWidget', () => {
 
     it('should handle rest error', () => {
         const error = 'ERROR';
-        spyOn(formService, 'getRestFieldValues').and.callFake(() => {
-            return Observable.throw(error);
-        });
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.throw(error)
+        );
 
         spyOn(console, 'log').and.stub();
 

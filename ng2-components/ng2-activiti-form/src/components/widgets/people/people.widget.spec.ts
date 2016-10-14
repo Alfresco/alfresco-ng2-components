@@ -80,10 +80,12 @@ describe('PeopleWidget', () => {
             lastName: 'Doe'
         });
 
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next(null);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
 
         widget.ngOnInit();
         expect(widget.value).toBe('John Doe');
@@ -122,10 +124,12 @@ describe('PeopleWidget', () => {
 
     it('should fetch users by search term', () => {
         let users = [{}, {}];
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next(users);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(users);
+                observer.complete();
+            })
+        );
 
         widget.value = 'user1';
         widget.onKeyUp(null);
@@ -137,10 +141,12 @@ describe('PeopleWidget', () => {
 
     it('should fetch users by search term and group id', () => {
         let users = [{}, {}];
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next(users);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(users);
+                observer.complete();
+            })
+        );
 
         widget.value = 'user1';
         widget.groupId = '1001';
@@ -152,10 +158,12 @@ describe('PeopleWidget', () => {
     });
 
     it('should fetch users and show no popup', () => {
-        spyOn(formService, 'getWorkflowUsers').and.returnValue(Observable.create(observer => {
-            observer.next(null);
-            observer.complete();
-        }));
+        spyOn(formService, 'getWorkflowUsers').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
+                observer.complete();
+            })
+        );
 
         widget.value = 'user1';
         widget.onKeyUp(null);

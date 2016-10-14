@@ -21,6 +21,7 @@ import { ActivitiForm } from './activiti-form.component';
 import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
+import { NodeService } from './../services/node.service';
 
 describe('ActivitiForm', () => {
 
@@ -28,6 +29,7 @@ describe('ActivitiForm', () => {
     let formService: FormService;
     let formComponent: ActivitiForm;
     let visibilityService:  WidgetVisibilityService;
+    let nodeService: NodeService;
 
     beforeEach(() => {
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -39,7 +41,8 @@ describe('ActivitiForm', () => {
         window['componentHandler'] = componentHandler;
 
         formService = new FormService(null, null);
-        formComponent = new ActivitiForm(formService, visibilityService, null, null);
+        nodeService = new NodeService(null);
+        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService);
     });
 
     it('should upgrade MDL content on view checked', () => {
@@ -635,12 +638,22 @@ describe('ActivitiForm', () => {
     });
 
     it('should load form for ecm node', () => {
-        spyOn(formComponent, 'loadFormForEcmNode').and.stub();
+        let metadata = {};
+        spyOn(nodeService, 'getNodeMetadata').and.returnValue(
+            Observable.create(observer => {
+                observer.next({ metadata: metadata });
+                observer.complete();
+            })
+        );
+        spyOn(formComponent, 'loadFormFromActiviti').and.stub();
 
-        formComponent.nodeId = '<id>';
+        const nodeId = '<id>';
+        formComponent.nodeId = nodeId;
         formComponent.ngOnInit();
 
-        expect(formComponent.loadFormForEcmNode).toHaveBeenCalled();
+        expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
+        expect(formComponent.loadFormFromActiviti).toHaveBeenCalled();
+        expect(formComponent.data).toBe(metadata);
     });
 
     it('should disable outcome buttons for readonly form', () => {

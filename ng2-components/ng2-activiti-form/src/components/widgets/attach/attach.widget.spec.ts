@@ -64,12 +64,12 @@ describe('AttachWidget', () => {
 
     it('should setup with form field', () => {
         let nodes = [{}];
-        spyOn(contentService, 'getAlfrescoNodes').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
+            Observable.create(observer => {
                  observer.next(nodes);
                  observer.complete();
-            });
-        });
+            })
+        );
 
         let config = {
             siteId: '<id>',
@@ -97,12 +97,12 @@ describe('AttachWidget', () => {
 
     it('should link file on select', () => {
         let link = <ExternalContentLink> {};
-        spyOn(contentService, 'linkAlfrescoNode').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(contentService, 'linkAlfrescoNode').and.returnValue(
+            Observable.create(observer => {
                 observer.next(link);
                 observer.complete();
-            });
-        });
+            })
+        );
 
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD
@@ -145,12 +145,12 @@ describe('AttachWidget', () => {
     });
 
     it('should show modal dialog', () => {
-        spyOn(contentService, 'getAlfrescoNodes').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
+            Observable.create(observer => {
                  observer.next([]);
                  observer.complete();
-            });
-        });
+            })
+        );
 
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
@@ -176,12 +176,12 @@ describe('AttachWidget', () => {
 
     it('should select folder and load nodes', () => {
         let nodes = [{}];
-        spyOn(contentService, 'getAlfrescoNodes').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
+            Observable.create(observer => {
                  observer.next(nodes);
                  observer.complete();
-            });
-        });
+            })
+        );
 
         let node = <ExternalContent> { id: '<id>' };
         widget.selectFolder(node, null);
@@ -245,12 +245,12 @@ describe('AttachWidget', () => {
 
     it('should get external content nodes', () => {
         let nodes = [{}];
-        spyOn(contentService, 'getAlfrescoNodes').and.callFake(() => {
-            return Observable.create(observer => {
+        spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
+            Observable.create(observer => {
                  observer.next(nodes);
                  observer.complete();
-            });
-        });
+            })
+        );
 
         const accountId = '<accountId>';
         const pathId = '<pathId>';
@@ -264,9 +264,9 @@ describe('AttachWidget', () => {
 
     it('should handle error', () => {
         let error = 'error';
-        spyOn(contentService, 'getAlfrescoNodes').and.callFake(() => {
-            return Observable.throw(error);
-        });
+        spyOn(contentService, 'getAlfrescoNodes').and.returnValue(
+            Observable.throw(error)
+        );
 
         spyOn(console, 'log').and.stub();
         widget.getExternalContentNodes();
