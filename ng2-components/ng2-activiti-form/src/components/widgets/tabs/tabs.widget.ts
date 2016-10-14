@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, AfterViewInit, AfterContentChecked, EventEmitter, Output } from '@angular/core';
 import { TabModel, FormFieldModel } from './../core/index';
 
 @Component({
@@ -23,7 +23,7 @@ import { TabModel, FormFieldModel } from './../core/index';
     selector: 'tabs-widget',
     templateUrl: './tabs.widget.html'
 })
-export class TabsWidget implements AfterViewInit {
+export class TabsWidget implements AfterContentChecked, AfterViewInit {
 
     @Input()
     tabs: TabModel[] = [];
@@ -31,12 +31,24 @@ export class TabsWidget implements AfterViewInit {
     @Output()
     formTabChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
+    visibleTabs: TabModel[] = [];
+
     hasTabs() {
         return this.tabs && this.tabs.length > 0;
     }
 
+    ngAfterContentChecked() {
+        this.filterVisibleTabs();
+    }
+
     ngAfterViewInit() {
         this.setupMaterialComponents();
+    }
+
+    filterVisibleTabs() {
+        this.visibleTabs = this.tabs.filter(tab => {
+            return tab.isVisible;
+        });
     }
 
     setupMaterialComponents(): boolean {
@@ -48,8 +60,8 @@ export class TabsWidget implements AfterViewInit {
         return false;
     }
 
-    tabChanged( field: FormFieldModel ) {
-         this.formTabChanged.emit(field);
+    tabChanged(field: FormFieldModel) {
+        this.formTabChanged.emit(field);
     }
 
 }
