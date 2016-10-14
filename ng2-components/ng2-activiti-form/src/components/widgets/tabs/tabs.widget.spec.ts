@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { FormModel } from '../core/form.model';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { TabsWidget } from './tabs.widget';
-import { TabModel } from './../core/tab.model';
-import { FormFieldModel } from './../core/form-field.model';
+import { TabModel } from '../core/tab.model';
+import { WIDGET_DIRECTIVES } from '../index';
+import { CoreModule } from 'ng2-alfresco-core';
 
 describe('TabsWidget', () => {
 
@@ -85,6 +89,82 @@ describe('TabsWidget', () => {
         expect(widget.visibleTabs[0].id).toBe('fake-tab-id');
         expect(widget.visibleTabs[0].title).toBe('fake-tab-title');
         expect(widget.visibleTabs[0].isVisible).toBeTruthy();
+    });
+
+    describe('when template is ready', () => {
+        let tabWidgetComponent: TabsWidget;
+        let fixture: ComponentFixture<TabsWidget>;
+        let element: HTMLElement;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [WIDGET_DIRECTIVES]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(TabsWidget);
+                tabWidgetComponent = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        let fakeTabVisible: TabModel;
+        let fakeTabInvisible: TabModel;
+
+        beforeEach(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
+                id: 'tab-id-visible',
+                title: 'tab-title-visible'
+            });
+            fakeTabVisible.isVisible = true;
+            fakeTabInvisible = new TabModel(new FormModel(fakeFormJson), {
+                id: 'tab-id-invisible',
+                title: 'tab-title-invisible'
+            });
+            fakeTabInvisible.isVisible = false;
+            tabWidgetComponent.tabs.push(fakeTabVisible);
+            tabWidgetComponent.tabs.push(fakeTabInvisible);
+        });
+
+        it('should show only visible tabs', () => {
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#tab-id-visible')).toBeDefined();
+                    expect(element.querySelector('#tab-id-visible')).not.toBeNull();
+                    expect(element.querySelector('#tab-id-invisible')).toBeNull();
+                    expect(element.querySelector('#title-tab-id-visible')).toBeDefined();
+                    expect(element.querySelector('#title-tab-id-visible').innerHTML).toContain('tab-title-visible');
+                });
+        });
+
+        it('should show tab when it became visible', () => {
+            tabWidgetComponent.tabChanged(null);
+            tabWidgetComponent.formTabChanged.subscribe((res) => {
+                tabWidgetComponent.tabs[1].isVisible = true;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#tab-id-invisible')).not.toBeNull();
+                        expect(element.querySelector('#title-tab-id-invisible').innerHTML).toContain('tab-title-invisible');
+                    });
+            });
+        });
+
+        it('should hide tab when it became not visible', () => {
+            tabWidgetComponent.tabChanged(null);
+            tabWidgetComponent.formTabChanged.subscribe((res) => {
+                tabWidgetComponent.tabs[0].isVisible = false;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#tab-id-visible')).toBeNull();
+                        expect(element.querySelector('#title-tab-id-visible')).toBeNull();
+                    });
+            });
+        });
+
     });
 
 });
