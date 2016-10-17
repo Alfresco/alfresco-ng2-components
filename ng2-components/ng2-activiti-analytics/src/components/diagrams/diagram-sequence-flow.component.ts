@@ -25,9 +25,6 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 })
 export class DiagramSequenceFlowComponent {
     @Input()
-    paper: any;
-
-    @Input()
     flow: any;
 
     @Output()

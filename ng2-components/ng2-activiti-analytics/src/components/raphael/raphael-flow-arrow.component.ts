@@ -17,6 +17,7 @@
 
 import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { RaphaelBase } from './raphael-base';
+import { RaphaelService } from './raphael.service';
 
 declare let Raphael: any;
 declare let Polyline: any;
@@ -35,8 +36,9 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     ARROW_WIDTH = 4;
     SEQUENCEFLOW_STROKE = 1.5;
 
-    constructor(public elementRef: ElementRef) {
-        super(elementRef);
+    constructor(public elementRef: ElementRef,
+                raphaelService: RaphaelService) {
+        super(elementRef, raphaelService);
     }
 
     ngOnInit() {

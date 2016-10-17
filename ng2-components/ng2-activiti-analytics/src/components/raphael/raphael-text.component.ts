@@ -17,9 +17,11 @@
 
 import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { Point } from './models/point';
+import { RaphaelBase } from './raphael-base';
+import { RaphaelService } from './raphael.service';
 
 @Directive({selector: 'raphael-text'})
-export class RaphaelTextDirective implements OnInit {
+export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
 
@@ -32,7 +34,10 @@ export class RaphaelTextDirective implements OnInit {
     @Output()
     onError = new EventEmitter();
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                raphaelService: RaphaelService) {
+        super(elementRef, raphaelService);
+    }
 
     ngOnInit() {
         console.log(this.elementRef);

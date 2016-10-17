@@ -19,8 +19,6 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../../services/analytics.service';
 
-declare let Raphael: any;
-
 @Component({
     moduleId: module.id,
     selector: 'diagram',
@@ -39,9 +37,6 @@ export class DiagramComponent {
     onError = new EventEmitter();
 
     private diagram: any;
-    private paper: any;
-    private ctx: any;
-
     private element: ElementRef;
 
     constructor(elementRef: ElementRef,
@@ -54,8 +49,6 @@ export class DiagramComponent {
     }
 
     ngOnInit() {
-        this.ctx = this.element.nativeElement;
-        this.refresh();
         this.getProcessDefinitionModel(this.processDefinitionId);
     }
 
@@ -71,28 +64,6 @@ export class DiagramComponent {
                     console.log(err);
                 }
             );
-        }
-    }
-
-    public getPaperBuilder(ctx: any): any {
-        if (typeof Raphael === 'undefined') {
-            throw new Error('ng2-charts configuration issue: Embedding Chart.js lib is mandatory');
-        }
-        let paper = new Raphael(ctx, 583, 344.08374193550003);
-        paper.setViewBox(0, 0, 583, 344.08374193550003, false);
-        paper.renderfix();
-        return paper;
-    }
-
-    private refresh(): any {
-        this.ngOnDestroy();
-        this.paper = this.getPaperBuilder(this.ctx);
-    }
-
-    public ngOnDestroy(): any {
-        if (this.paper) {
-            this.paper.clear();
-            this.paper = void 0;
         }
     }
 }

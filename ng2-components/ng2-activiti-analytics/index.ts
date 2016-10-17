@@ -22,6 +22,7 @@ import { AnalyticsReportListComponent } from './src/components/analytics-report-
 import { AnalyticsReportParametersComponent } from './src/components/analytics-report-parameters.component';
 import { AnalyticsComponent } from './src/components/analytics.component';
 import { AnalyticsService } from './src/services/analytics.service';
+import { RaphaelService } from './src/components/raphael/raphael.service';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
@@ -58,7 +59,8 @@ export const ANALYTICS_PROVIDERS: any[] = [
         ...CHART_DIRECTIVES
     ],
     providers: [
-        ...ANALYTICS_PROVIDERS
+        ...ANALYTICS_PROVIDERS,
+        RaphaelService
     ],
     exports: [
         ...ANALYTICS_DIRECTIVES

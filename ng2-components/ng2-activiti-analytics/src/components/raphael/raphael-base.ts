@@ -15,56 +15,18 @@
  * limitations under the License.
  */
 
-import {
-    OnDestroy,
-    OnInit,
-    Input,
-    ElementRef
-} from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { RaphaelService } from './raphael.service';
 
-declare let Raphael: any;
+export class RaphaelBase {
 
-export class RaphaelBase implements OnDestroy, OnInit {
-    @Input()
     paper: any;
-
-    private ctx: any;
-
-    private initFlag: boolean = false;
 
     private element: ElementRef;
 
-    public constructor(element: ElementRef) {
+    public constructor(element: ElementRef,
+                       private raphaelService: RaphaelService) {
         this.element = element;
-    }
-
-    public ngOnInit(): any {
-        if (!this.paper) {
-            this.ctx = this.element.nativeElement;
-            this.initFlag = true;
-            this.refresh();
-        }
-    }
-
-    public ngOnDestroy(): any {
-        if (this.paper) {
-            this.paper.clear();
-            this.paper = void 0;
-        }
-    }
-
-    public getPaperBuilder(ctx: any): any {
-        if (typeof Raphael === 'undefined') {
-            throw new Error('ng2-charts configuration issue: Embedding Chart.js lib is mandatory');
-        }
-        let paper = new Raphael(ctx, 583, 344.08374193550003);
-        paper.setViewBox(0, 0, 583, 344.08374193550003, false);
-        paper.renderfix();
-        return paper;
-    }
-
-    private refresh(): any {
-        this.ngOnDestroy();
-        this.paper = this.getPaperBuilder(this.ctx);
+        this.paper = this.raphaelService.getInstance(element);
     }
 }

@@ -18,6 +18,7 @@
 import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
+import { RaphaelService } from './raphael.service';
 
 @Directive({selector: 'raphael-circle'})
 export class RaphaelCircleDirective extends RaphaelBase implements OnInit {
@@ -36,8 +37,9 @@ export class RaphaelCircleDirective extends RaphaelBase implements OnInit {
     @Output()
     onError = new EventEmitter();
 
-    constructor(public elementRef: ElementRef) {
-        super(elementRef);
+    constructor(public elementRef: ElementRef,
+                raphaelService: RaphaelService) {
+        super(elementRef, raphaelService);
     }
 
     ngOnInit() {

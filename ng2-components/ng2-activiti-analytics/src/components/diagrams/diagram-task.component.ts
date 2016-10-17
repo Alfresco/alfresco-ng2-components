@@ -35,12 +35,6 @@ export class DiagramTaskComponent {
     @Input()
     data: any;
 
-    @Input()
-    type: any;
-
-    @Input()
-    paper: any;
-
     options: any = {};
 
     @Output()

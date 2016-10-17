@@ -25,9 +25,6 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 })
 export class DiagramEventComponent {
     @Input()
-    paper: any;
-
-    @Input()
     data: any;
 
     @Input()
