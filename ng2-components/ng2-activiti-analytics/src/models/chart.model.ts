@@ -41,6 +41,9 @@ export class Chart {
             case 'barChart':
                 chartType = 'bar';
                 break;
+            case 'processDefinitionHeatMap':
+                chartType = 'HeatMap';
+                break;
             default:
                 chartType = 'table';
                 break;
@@ -132,23 +135,25 @@ export class TableChart extends Chart {
 }
 
 export class HeatMapChart extends Chart {
-    title: string;
+    avgTimePercentages: string;
+    avgTimeValues: string;
+    processDefinitionId: string;
     titleKey: string;
-    labels: string[] = [];
-    datasets: any[] = [];
+    totalCountValues: string;
+    totalCountsPercentages: string;
+    totalTimePercentages: string;
+    totalTimeValues: string;
 
     constructor(obj?: any) {
         super(obj);
-        this.title = obj && obj.title || null;
+        this.avgTimePercentages = obj && obj.avgTimePercentages || null;
+        this.avgTimeValues = obj && obj.avgTimeValues || null;
+        this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.totalCountValues = obj && obj.totalCountValues || null;
         this.titleKey = obj && obj.titleKey || null;
-        this.labels = obj && obj.columnNames;
-        if (obj.rows) {
-            this.datasets = obj && obj.rows;
-        }
-    }
-
-    hasDatasets() {
-        return this.datasets && this.datasets.length > 0 ? true : false;
+        this.totalCountsPercentages = obj && obj.totalCountsPercentages || null;
+        this.totalTimePercentages = obj && obj.totalTimePercentages || null;
+        this.totalTimeValues = obj && obj.totalTimeValues || null;
     }
 }
 
