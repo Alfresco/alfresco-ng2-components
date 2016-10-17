@@ -17,6 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormModel } from '../core/form.model';
+import { FormFieldModel } from '../core/form-field.model';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 import { TabsWidget } from './tabs.widget';
 import { TabModel } from '../core/tab.model';
@@ -69,7 +70,7 @@ describe('TabsWidget', () => {
         });
         widget.tabChanged(field);
     });
-    
+
     it('should remove invisible tabs', () => {
         let fakeTab = new TabModel(null, {id: 'fake-tab-id', title: 'fake-tab-title'});
         fakeTab.isVisible = false;
@@ -95,6 +96,8 @@ describe('TabsWidget', () => {
         let tabWidgetComponent: TabsWidget;
         let fixture: ComponentFixture<TabsWidget>;
         let element: HTMLElement;
+        let fakeTabVisible: TabModel;
+        let fakeTabInvisible: TabModel;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
@@ -106,9 +109,6 @@ describe('TabsWidget', () => {
                 element = fixture.nativeElement;
             });
         }));
-
-        let fakeTabVisible: TabModel;
-        let fakeTabInvisible: TabModel;
 
         beforeEach(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
@@ -125,6 +125,11 @@ describe('TabsWidget', () => {
             fakeTabInvisible.isVisible = false;
             tabWidgetComponent.tabs.push(fakeTabVisible);
             tabWidgetComponent.tabs.push(fakeTabInvisible);
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
         });
 
         it('should show only visible tabs', () => {
@@ -166,5 +171,4 @@ describe('TabsWidget', () => {
         });
 
     });
-
 });
