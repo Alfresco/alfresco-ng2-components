@@ -1,6 +1,25 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label dynamic-table-widget"
-     [class.dynamic-table-widget__invalid]="!field.isValid">
-     <div>{{field.name}}</div>
-     <div>DYNAMIC TABLE PLACEHOLDER</div>
-     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+<div class="dynamic-table-widget"
+     [class.dynamic-table-widget__invalid]="!content.isValid">
+     <div>{{content.name}}</div>
+
+     <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
+         <thead>
+            <tr>
+                <th *ngFor="let column of content.visibleColumns"
+                    class="mdl-data-table__cell--non-numeric">
+                    {{column.name}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of content.rows">
+                <td *ngFor="let column of content.visibleColumns"
+                    class="mdl-data-table__cell--non-numeric">
+                    {{row[column.id]}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+     <span *ngIf="content.validationSummary" class="mdl-textfield__error">{{content.validationSummary}}</span>
 </div>

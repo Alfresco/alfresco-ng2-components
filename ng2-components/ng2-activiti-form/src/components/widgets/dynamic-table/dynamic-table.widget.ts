@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-// import { DynamicTableModel } from './../core/index';
+import { DynamicTableModel } from './../core/index';
 
 @Component({
     moduleId: module.id,
@@ -25,6 +25,11 @@ import { WidgetComponent } from './../widget.component';
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.css']
 })
-export class DynamicTableWidget extends WidgetComponent {
+export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
+    @Input()
+    content: DynamicTableModel;
+
+    ngOnInit() {
+    }
 }

@@ -18,16 +18,27 @@
 import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
+import { DynamicTableColumn } from './dynamic-table-column';
 
 export class DynamicTableModel extends FormWidgetModel {
 
     field: FormFieldModel;
+    columns: DynamicTableColumn[] = [];
+    visibleColumns: DynamicTableColumn[] = [];
+    rows: any[] = [];
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
         if (json) {
             this.field = new FormFieldModel(form, json);
+
+            if (json.columnDefinitions) {
+                this.columns = json.columnDefinitions.map(obj => <DynamicTableColumn> obj);
+                this.visibleColumns = this.columns.filter(col => col.visible);
+            }
+
+            this.rows = json.value || [];
         }
     }
 

@@ -20,7 +20,7 @@
                                 <container-widget [content]="field" (formValueChanged)="checkVisibility($event);"></container-widget>
                             </div>
                             <div *ngSwitchCase="'dynamic-table'">
-                                <dynamic-table-widget [field]="field"></dynamic-table-widget>
+                                <dynamic-table-widget [content]="field"></dynamic-table-widget>
                             </div>
                             <div *ngSwitchDefault>
                                 <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>

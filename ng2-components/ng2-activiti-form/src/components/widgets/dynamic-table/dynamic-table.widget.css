@@ -1,4 +1,8 @@
 .dynamic-table-widget {
+    padding: 8px;
+}
+
+.dynamic-table-widget__table {
     width: 100%;
 }
 
