@@ -36,6 +36,7 @@ module.exports = function (config) {
       'node_modules/moment/min/moment.min.js',
       'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js',
       'node_modules/chart.js/dist/Chart.bundle.min.js',
+      'node_modules/raphael/raphael.min.js',
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
 
       'karma-test-shim.js',

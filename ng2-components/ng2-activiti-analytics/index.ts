@@ -25,18 +25,24 @@ import { AnalyticsService } from './src/services/analytics.service';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
+import { RAPHAEL_DIRECTIVES } from './src/components/raphael/index';
+import { DIAGRAM_DIRECTIVES } from './src/components/diagrams/index';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-report-list.component';
 export * from './src/components/analytics-report-parameters.component';
 export * from './src/services/analytics.service';
 export * from './src/components/widgets/index';
+export * from './src/components/raphael/index';
+export * from './src/components/diagrams/index';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,
     AnalyticsReportListComponent,
     AnalyticsReportParametersComponent,
-    WIDGET_DIRECTIVES
+    WIDGET_DIRECTIVES,
+    RAPHAEL_DIRECTIVES,
+    DIAGRAM_DIRECTIVES
 ];
 
 export const ANALYTICS_PROVIDERS: any[] = [

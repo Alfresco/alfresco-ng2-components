@@ -51,6 +51,9 @@
                                     [chartType]="report.type"></base-chart>
                     </div>
                 </div>
+                <div *ngSwitchCase="'HeatMap'">
+                    <diagram [modelType]="'process-definition'" [processDefinitionId]="'Sales:24:32637'"></diagram>
+                </div>
                 <div *ngSwitchDefault>
                     <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{report.type}}</span>
                 </div>
