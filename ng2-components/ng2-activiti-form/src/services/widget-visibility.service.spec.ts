@@ -27,7 +27,7 @@ import { WidgetVisibilityService } from './widget-visibility.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
-import { FormModel, FormFieldModel } from '../components/widgets/core/index';
+import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
 
 declare let jasmine: any;
 
@@ -320,6 +320,17 @@ describe('WidgetVisibilityService (mockBackend)', () => {
                 responseText: fakeTaskProcessVariableModels
             });
         });
+
+        it('should catch error on 403 response', (done) => {
+            service.getTaskProcessVariable('9999').subscribe(() => {
+            }, () => {
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
+        });
     });
 
     describe('should return the value of the field', () => {
@@ -591,24 +602,6 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             expect(res).toBe('value_1');
         });
 
-        it('should not refresh visibility if the form is undefined', () => {
-            spyOn(service, 'refreshFieldVisibility');
-            spyOn(service, 'refreshTabVisibility');
-            service.refreshVisibility(undefined);
-
-            expect(service.refreshFieldVisibility).not.toHaveBeenCalled();
-            expect(service.refreshTabVisibility).not.toHaveBeenCalled();
-        });
-
-        it('should not refresh visibility if the form does not have fields or tabs', () => {
-            spyOn(service, 'refreshFieldVisibility');
-            spyOn(service, 'refreshTabVisibility');
-            service.refreshVisibility(formTest);
-
-            expect(service.refreshFieldVisibility).not.toHaveBeenCalled();
-            expect(service.refreshTabVisibility).not.toHaveBeenCalled();
-        });
-
         it('should refresh the visibility for field', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
@@ -620,6 +613,29 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             expect(fakeFormWithField.fields[0].columns[0].fields[1].isVisible).toBeTruthy();
             expect(fakeFormWithField.fields[0].columns[0].fields[2].isVisible).toBeTruthy();
             expect(fakeFormWithField.fields[0].columns[1].fields[0].isVisible).toBeTruthy();
+        });
+
+        it('should refresh the visibility for tab in forms', () => {
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            let tab = new TabModel(fakeFormWithField, {id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true});
+            tab.visibilityCondition = visibilityObjTest;
+            fakeFormWithField.tabs.push(tab);
+            service.refreshVisibility(fakeFormWithField);
+
+            expect(fakeFormWithField.tabs[0].isVisible).toBeFalsy();
+        });
+
+        it('should refresh the visibility for single tab', () => {
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            let tab = new TabModel(fakeFormWithField, {id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true});
+            tab.visibilityCondition = visibilityObjTest;
+            service.refreshTabVisibility(tab);
+
+            expect(tab.isVisible).toBeFalsy();
         });
     });
 });
