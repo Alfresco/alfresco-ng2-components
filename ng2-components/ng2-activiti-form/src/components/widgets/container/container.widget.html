@@ -1,7 +1,7 @@
 <div class="container-widget">
     <div *ngIf="content?.isGroup()" class="container-widget__header">
         <h4 class="container-widget__header-text"
-            [class.collapsible]="content?.isCollapsible()">
+            [class.collapsible]="content?.isCollapsible()" [hidden]="!content?.isVisible">
             <button *ngIf="content?.isCollapsible()"
                     alfresco-mdl-button
                     class="mdl-button--icon"

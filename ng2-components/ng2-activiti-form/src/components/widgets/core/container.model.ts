@@ -33,6 +33,7 @@ export class ContainerModel extends FormWidgetModel {
     tab: string;
     numberOfColumns: number = 1;
     params: FormFieldMetadata = {};
+    isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel = null;
 
     columns: ContainerColumnModel[] = [];
