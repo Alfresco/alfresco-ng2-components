@@ -16,7 +16,6 @@
  */
 
 import { FormWidgetModel } from './form-widget.model';
-import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
@@ -26,7 +25,7 @@ export class TabModel extends FormWidgetModel {
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel;
 
-    fields: ContainerModel[] = [];
+    fields: FormWidgetModel[] = [];
 
     hasContent(): boolean {
         return this.fields && this.fields.length > 0;

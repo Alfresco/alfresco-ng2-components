@@ -17,7 +17,7 @@
 
 import { FormModel } from './form.model';
 
-export class FormWidgetModel {
+export abstract class FormWidgetModel {
 
     readonly fieldType: string;
     readonly id: string;

@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { FormWidgetModelCache } from './form-widget.model';
+import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { FormValues } from './form-values';
 import { ContainerModel } from './container.model';
 import { TabModel } from './tab.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldModel } from './form-field.model';
+import { FormFieldTypes } from './form-field-types';
+import { DynamicTableModel } from './dynamic-table.model';
 
 export class FormModel {
 
@@ -41,7 +43,7 @@ export class FormModel {
 
     readOnly: boolean = false;
     tabs: TabModel[] = [];
-    fields: ContainerModel[] = [];
+    fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
 
     values: FormValues = {};
@@ -62,6 +64,7 @@ export class FormModel {
 
     constructor(json?: any, data?: FormValues, readOnly: boolean = false) {
         this.readOnly = readOnly;
+
         if (json) {
             this.json = json;
 
@@ -78,7 +81,7 @@ export class FormModel {
                 return model;
             });
 
-            this.fields = this.parseContainerFields(json);
+            this.fields = this.parseRootFields(json);
 
             if (data) {
                 this.loadData(data);
@@ -89,7 +92,6 @@ export class FormModel {
                 if (field.tab) {
                     let tab = tabCache[field.tab];
                     if (tab) {
-                        // tab.fields.push(new ContainerModel(this, field.json));
                         tab.fields.push(field);
                     }
                 }
@@ -112,18 +114,21 @@ export class FormModel {
         this.validateField(field);
     }
 
-    // TODO: evaluate and cache once the form is loaded
-    private getFormFields(): FormFieldModel[] {
+    // TODO: consider evaluating and caching once the form is loaded
+    getFormFields(): FormFieldModel[] {
         let result: FormFieldModel[] = [];
 
         for (let i = 0; i < this.fields.length; i++) {
-            let container = this.fields[i];
-            for (let j = 0; j < container.columns.length; j++) {
-                let column = container.columns[j];
-                for (let k = 0; k < column.fields.length; k++) {
-                    let field = column.fields[k];
-                    result.push(field);
-                }
+            let field = this.fields[i];
+
+            if (field.type === FormFieldTypes.CONTAINER) {
+                let container = <ContainerModel> field;
+                result.push(...container.getFormFields());
+            }
+
+            if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
+                let dynamicTable = <DynamicTableModel> field;
+                result.push(dynamicTable.field);
             }
         }
 
@@ -152,7 +157,8 @@ export class FormModel {
         this.validateForm();
     }
 
-    private parseContainerFields(json: any): ContainerModel[] {
+    // Activiti supports 2 types of root fields: 'container' and 'dynamic-table'.
+    private parseRootFields(json: any): FormWidgetModel[] {
         let fields = [];
 
         if (json.fields) {
@@ -161,23 +167,26 @@ export class FormModel {
             fields = json.formDefinition.fields;
         }
 
-        return fields.map(obj => new ContainerModel(this, obj));
+        let result: FormWidgetModel[] = [];
+
+        for (let field of fields) {
+            if (field.type === FormFieldTypes.CONTAINER) {
+                result.push(new ContainerModel(this, field));
+            } else if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
+                result.push(new DynamicTableModel(this, field));
+            }
+        }
+
+        return result;
     }
 
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
     private loadData(data: FormValues) {
-        for (let i = 0; i < this.fields.length; i++) {
-            let container = this.fields[i];
-            for (let i = 0; i < container.columns.length; i++) {
-                let column = container.columns[i];
-                for (let i = 0; i < column.fields.length; i++) {
-                    let field = column.fields[i];
-                    if (data[field.id]) {
-                        field.json.value = data[field.id];
-                        field.value = data[field.id];
-                    }
-                }
+        for (let field of this.getFormFields()) {
+            if (data[field.id]) {
+                field.json.value = data[field.id];
+                field.value = data[field.id];
             }
         }
     }

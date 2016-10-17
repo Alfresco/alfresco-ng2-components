@@ -34,6 +34,7 @@ import { FunctionalGroupWidget } from './functional-group/functional-group.widge
 import { PeopleWidget } from './people/people.widget';
 import { DateWidget } from './date/date.widget';
 import { AmountWidget } from './amount/amount.widget';
+import { DynamicTableWidget } from './dynamic-table/dynamic-table.widget';
 
 // core
 export * from './widget.component';
@@ -60,6 +61,7 @@ export * from './functional-group/functional-group.widget';
 export * from './people/people.widget';
 export * from './date/date.widget';
 export * from './amount/amount.widget';
+export * from './dynamic-table/dynamic-table.widget';
 
 export const WIDGET_DIRECTIVES: any[] = [
     TabsWidget,
@@ -79,5 +81,6 @@ export const WIDGET_DIRECTIVES: any[] = [
     FunctionalGroupWidget,
     PeopleWidget,
     DateWidget,
-    AmountWidget
+    AmountWidget,
+    DynamicTableWidget
 ];

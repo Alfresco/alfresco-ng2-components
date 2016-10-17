@@ -87,4 +87,18 @@ export class ContainerModel extends FormWidgetModel {
             this.isExpanded = !this.isCollapsedByDefault();
         }
     }
+
+    getFormFields(): FormFieldModel[] {
+        let result: FormFieldModel[] = [];
+
+        for (let j = 0; j < this.columns.length; j++) {
+            let column = this.columns[j];
+            for (let k = 0; k < column.fields.length; k++) {
+                let field = column.fields[k];
+                result.push(field);
+            }
+        }
+
+        return result;
+    }
 }

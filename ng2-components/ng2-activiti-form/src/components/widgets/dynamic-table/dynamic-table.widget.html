@@ -1,0 +1,6 @@
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label dynamic-table-widget"
+     [class.dynamic-table-widget__invalid]="!field.isValid">
+     <div>{{field.name}}</div>
+     <div>DYNAMIC TABLE PLACEHOLDER</div>
+     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
+</div>

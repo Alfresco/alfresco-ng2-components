@@ -37,12 +37,9 @@ export class WidgetVisibilityService {
         if (form && form.tabs && form.tabs.length > 0) {
             form.tabs.map(tabModel => this.refreshEntityVisibility(tabModel));
         }
-        if (form && form.fields.length > 0) {
-            form.fields.map(contModel => {
-                this.refreshEntityVisibility(contModel);
-                contModel.columns.map(contColModel =>
-                    contColModel.fields.map(field => this.refreshEntityVisibility(field)));
-            });
+
+        if (form) {
+            form.getFormFields().map(field => this.refreshEntityVisibility(field));
         }
     }
 
