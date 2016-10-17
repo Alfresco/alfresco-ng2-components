@@ -23,25 +23,12 @@ export class FormOutcomeModel extends FormWidgetModel {
     static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
     static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
 
-    private _id: string;
-    private _name: string;
-
     isSystem: boolean = false;
-
-    get id() {
-        return this._id;
-    }
-
-    get name() {
-        return this._name;
-    }
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
         if (json) {
-            this._id = json.id;
-            this._name = json.name;
             this.isSystem = json.isSystem ? true : false;
         }
     }

@@ -28,27 +28,12 @@ export class FormModel {
     static SAVE_OUTCOME: string = '$save';
     static COMPLETE_OUTCOME: string = '$complete';
 
-    private _id: string;
-    private _name: string;
-    private _taskId: string;
-    private _taskName: string = FormModel.UNSET_TASK_NAME;
+    readonly id: string;
+    readonly name: string;
+    readonly taskId: string;
+    readonly taskName: string = FormModel.UNSET_TASK_NAME;
+
     private _isValid: boolean = true;
-
-    get id(): string {
-        return this._id;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-
-    get taskId(): string {
-        return this._taskId;
-    }
-
-    get taskName(): string {
-        return this._taskName;
-    }
 
     get isValid(): boolean {
         return this._isValid;
@@ -61,11 +46,7 @@ export class FormModel {
 
     values: FormValues = {};
 
-    private _json: any;
-
-    get json() {
-        return this._json;
-    }
+    readonly json: any;
 
     hasTabs(): boolean {
         return this.tabs && this.tabs.length > 0;
@@ -82,12 +63,12 @@ export class FormModel {
     constructor(json?: any, data?: FormValues, readOnly: boolean = false) {
         this.readOnly = readOnly;
         if (json) {
-            this._json = json;
+            this.json = json;
 
-            this._id = json.id;
-            this._name = json.name;
-            this._taskId = json.taskId;
-            this._taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
+            this.id = json.id;
+            this.name = json.name;
+            this.taskId = json.taskId;
+            this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
