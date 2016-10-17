@@ -12,10 +12,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of content.rows">
+            <tr *ngFor="let row of content.rows"
+                [class.dynamic-table-widget__row-selected]="row.selected">
                 <td *ngFor="let column of content.visibleColumns"
-                    class="mdl-data-table__cell--non-numeric">
-                    {{row[column.id]}}
+                    class="mdl-data-table__cell--non-numeric"
+                    (click)="onRowClicked(row)">
+                    {{row.value[column.id]}}
                 </td>
             </tr>
         </tbody>

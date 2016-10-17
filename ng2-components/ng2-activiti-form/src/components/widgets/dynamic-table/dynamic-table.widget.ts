@@ -17,7 +17,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-import { DynamicTableModel } from './../core/index';
+import { DynamicTableModel, DynamicTableRow } from './../core/index';
 
 @Component({
     moduleId: module.id,
@@ -31,5 +31,11 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     content: DynamicTableModel;
 
     ngOnInit() {
+    }
+
+    onRowClicked(row: DynamicTableRow) {
+        if (this.content) {
+            this.content.selectedRow = row;
+        }
     }
 }

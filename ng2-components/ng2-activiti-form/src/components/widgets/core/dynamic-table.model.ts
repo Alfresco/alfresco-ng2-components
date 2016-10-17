@@ -19,13 +19,35 @@ import { FormWidgetModel } from './form-widget.model';
 import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
 import { DynamicTableColumn } from './dynamic-table-column';
+import { DynamicTableRow } from './dynamic-table-row';
 
 export class DynamicTableModel extends FormWidgetModel {
 
     field: FormFieldModel;
     columns: DynamicTableColumn[] = [];
     visibleColumns: DynamicTableColumn[] = [];
-    rows: any[] = [];
+    rows: DynamicTableRow[] = [];
+
+    private _selectedRow: DynamicTableRow;
+
+    get selectedRow(): DynamicTableRow {
+        return this._selectedRow;
+    }
+
+    set selectedRow(value: DynamicTableRow) {
+        if (this._selectedRow && this._selectedRow === value) {
+            this._selectedRow.selected = false;
+            this._selectedRow = null;
+            return;
+        }
+
+        this.rows.forEach(row => row.selected = false);
+
+        if (value) {
+            this._selectedRow = value;
+            this._selectedRow.selected = true;
+        }
+    }
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
@@ -38,8 +60,9 @@ export class DynamicTableModel extends FormWidgetModel {
                 this.visibleColumns = this.columns.filter(col => col.visible);
             }
 
-            this.rows = json.value || [];
+            if (json.value) {
+                this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
+            }
         }
     }
-
 }

@@ -2,6 +2,11 @@
     padding: 8px;
 }
 
+.dynamic-table-widget__row-selected,
+.dynamic-table-widget__row-selected:hover {
+    background-color: #eef !important;
+}
+
 .dynamic-table-widget__table {
     width: 100%;
 }

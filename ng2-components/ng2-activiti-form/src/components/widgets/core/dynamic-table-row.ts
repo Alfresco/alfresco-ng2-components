@@ -15,19 +15,9 @@
  * limitations under the License.
  */
 
-export * from './form-field-metadata';
-export * from './form-values';
-export * from './form-field-types';
-export * from './form-field-option';
-export * from './form-widget.model';
-export * from './form-field.model';
-export * from './form.model';
-export * from './container-column.model';
-export * from './container.model';
-export * from './tab.model';
-export * from './form-outcome.model';
-export * from './form-outcome-event.model';
-export * from './form-field-validator';
-export * from './dynamic-table.model';
-export * from './dynamic-table-column';
-export * from './dynamic-table-row';
+export interface DynamicTableRow {
+
+    selected: boolean;
+    value: any;
+
+}
