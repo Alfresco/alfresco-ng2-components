@@ -17,8 +17,6 @@
 
 import { Injectable } from '@angular/core';
 
-declare let Raphael: any;
-
 @Injectable()
 export class RaphaelService {
 

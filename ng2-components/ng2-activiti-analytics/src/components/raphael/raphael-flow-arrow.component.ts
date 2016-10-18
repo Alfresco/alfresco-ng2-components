@@ -19,9 +19,6 @@ import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@ang
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
 
-declare let Raphael: any;
-declare let Polyline: any;
-
 @Directive({selector: 'raphael-flow-arrow'})
 export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     @Input()
