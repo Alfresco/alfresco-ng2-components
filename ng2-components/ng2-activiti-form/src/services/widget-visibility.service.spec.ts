@@ -27,7 +27,7 @@ import { WidgetVisibilityService } from './widget-visibility.service';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
-import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
+import { FormModel, FormFieldModel, TabModel, ContainerModel } from '../components/widgets/core/index';
 
 declare let jasmine: any;
 
@@ -636,6 +636,37 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             service.refreshTabVisibility(tab);
 
             expect(tab.isVisible).toBeFalsy();
+        });
+
+        it('should refresh the visibility for container in forms', () => {
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            let contModel = new ContainerModel(fakeFormWithField, {
+                id: 'fake-container-id',
+                name: 'fake-container-name',
+                isVisible: true
+            });
+            contModel.visibilityCondition = visibilityObjTest;
+            fakeFormWithField.fields[0].visibilityCondition = visibilityObjTest;
+            service.refreshVisibility(fakeFormWithField);
+
+            expect(fakeFormWithField.fields[0].isVisible).toBeFalsy();
+        });
+
+        it('should refresh the visibility for single container', () => {
+            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+            visibilityObjTest.operator = '!=';
+            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            let contModel = new ContainerModel(fakeFormWithField, {
+                id: 'fake-container-id',
+                name: 'fake-container-name',
+                isVisible: true
+            });
+            contModel.visibilityCondition = visibilityObjTest;
+            service.refreshContainerVisibility(contModel);
+
+            expect(contModel.isVisible).toBeFalsy();
         });
     });
 });

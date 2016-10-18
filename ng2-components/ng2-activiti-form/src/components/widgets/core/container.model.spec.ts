@@ -51,7 +51,8 @@ describe('ContainerModel', () => {
             type: '<type>',
             tab: '<tab>',
             numberOfColumns: 2,
-            params: {}
+            params: {},
+            visibilityCondition: {}
         };
         let container = new ContainerModel(null, json);
         Object.keys(json).forEach(key => {
@@ -69,6 +70,7 @@ describe('ContainerModel', () => {
             tab: '<tab>',
             numberOfColumns: 3,
             params: {},
+            visibilityCondition: {},
             fields: {
                 '1': [
                     { id: 'field-1' },
