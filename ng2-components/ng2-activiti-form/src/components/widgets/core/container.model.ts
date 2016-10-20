@@ -21,6 +21,7 @@ import { ContainerColumnModel } from './container-column.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
+import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 // TODO: inherit FormFieldModel
 export class ContainerModel extends FormWidgetModel {
@@ -32,6 +33,8 @@ export class ContainerModel extends FormWidgetModel {
     tab: string;
     numberOfColumns: number = 1;
     params: FormFieldMetadata = {};
+    isVisible: boolean = true;
+    visibilityCondition: WidgetVisibilityModel = null;
 
     columns: ContainerColumnModel[] = [];
     isExpanded: boolean = true;
@@ -71,6 +74,7 @@ export class ContainerModel extends FormWidgetModel {
             this.tab = json.tab;
             this.numberOfColumns = <number> json.numberOfColumns;
             this.params = <FormFieldMetadata> json.params || {};
+            this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
 
             let columnSize: number = 12;
             if (this.numberOfColumns > 1) {

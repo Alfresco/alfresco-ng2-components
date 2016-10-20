@@ -1,6 +1,6 @@
 <div class="container-widget">
-    <div *ngIf="content?.isGroup()" class="container-widget__header">
-        <h4 class="container-widget__header-text"
+    <div *ngIf="content?.isGroup() && content?.isVisible" class="container-widget__header">
+        <h4 class="container-widget__header-text" id="container-header"
             [class.collapsible]="content?.isCollapsible()">
             <button *ngIf="content?.isCollapsible()"
                     alfresco-mdl-button
@@ -8,7 +8,7 @@
                     (click)="onExpanderClicked()">
                 <i class="material-icons">{{ content?.isExpanded ? 'expand_less' : 'expand_more' }}</i>
             </button>
-            <span (click)="onExpanderClicked()">{{content.name}}</span>
+            <span (click)="onExpanderClicked()" id="container-header-label">{{content.name}}</span>
         </h4>
     </div>
     <div class="mdl-grid" *ngIf="content?.isExpanded">

@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
+import { FormModel, FormFieldModel, TabModel, ContainerModel } from '../components/widgets/core/index';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 
@@ -38,15 +38,23 @@ export class WidgetVisibilityService {
             form.tabs.map(tabModel => this.refreshTabVisibility(tabModel));
         }
         if (form && form.fields.length > 0) {
-            form.fields.map(contModel =>
+            form.fields.map(contModel => {
+                this.refreshContainerVisibility(contModel);
                 contModel.columns.map(contColModel =>
-                    contColModel.fields.map(field => this.refreshFieldVisibility(field))));
+                    contColModel.fields.map(field => this.refreshFieldVisibility(field)));
+            });
         }
     }
 
     refreshFieldVisibility(field: FormFieldModel) {
         if (field.visibilityCondition) {
             field.isVisible = this.evaluateVisibility(field.form, field.visibilityCondition);
+        }
+    }
+
+    refreshContainerVisibility(content: ContainerModel) {
+        if (content.visibilityCondition) {
+            content.isVisible = this.evaluateVisibility(content.form, content.visibilityCondition);
         }
     }
 
@@ -81,8 +89,10 @@ export class WidgetVisibilityService {
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
-        return this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList) ||
-            this.getFormValue(form, visibilityObj.leftFormFieldId);
+        if (visibilityObj.leftRestResponseId && visibilityObj.leftRestResponseId !== 'null') {
+            return this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
+        }
+        return this.getFormValue(form, visibilityObj.leftFormFieldId);
     }
 
     getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
