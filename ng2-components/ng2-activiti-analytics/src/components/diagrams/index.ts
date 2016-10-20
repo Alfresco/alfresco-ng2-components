@@ -20,6 +20,8 @@ import { DiagramEventComponent } from './diagram-event.component';
 import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramSequenceFlowComponent } from './diagram-sequence-flow.component';
 
+import { DiagramColorService } from './services/diagram-color.service';
+
 // primitives
 export * from './diagram.component';
 export * from './diagram-event.component';
@@ -31,4 +33,8 @@ export const DIAGRAM_DIRECTIVES: any[] = [
     DiagramEventComponent,
     DiagramTaskComponent,
     DiagramSequenceFlowComponent
+];
+
+export const DIAGRAM_PROVIDERS: any[] = [
+    DiagramColorService
 ];

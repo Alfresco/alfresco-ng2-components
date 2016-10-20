@@ -16,6 +16,7 @@
  */
 
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { DiagramColorService } from './services/diagram-color.service';
 
 @Component({
     moduleId: module.id,
@@ -24,14 +25,6 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
     styleUrls: ['./diagram-task.component.css']
 })
 export class DiagramTaskComponent {
-
-    static CURRENT_COLOR = '#017501';
-    static COMPLETED_COLOR = '#2632aa';
-    static ACTIVITY_STROKE_COLOR = '#bbbbbb';
-
-    static TASK_STROKE = '1';
-    static TASK_HIGHLIGHT_STROKE = '2';
-
     @Input()
     data: any;
 
@@ -42,48 +35,26 @@ export class DiagramTaskComponent {
 
     stroke: number;
 
-    rect: any;
+    rectLeftCorner: any;
     radius: number = 4;
 
     textPosition: any;
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         console.log(this.elementRef);
 
-        this.rect = {x: this.data.x, y: this.data.y};
+        this.data.fillColors = this.diagramColorService.getFillColour(this.data.id);
+        this.data.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.ACTIVITY_STROKE_COLOR);
+        this.data.strokeWidth = this.diagramColorService.getBpmnStrokeWidth(this.data);
+        this.data.fillOpacity = this.diagramColorService.getFillOpacity();
+
+        this.rectLeftCorner = {x: this.data.x, y: this.data.y};
 
         this.textPosition =  {x: this.data.x + ( this.data.width / 2 ), y: this.data.y + ( this.data.height / 2 )};
 
         this.options['id'] = this.data.id;
-        this.options['stroke'] = this.bpmnGetColor(this.data, DiagramTaskComponent.ACTIVITY_STROKE_COLOR);
-        this.options['stroke-width'] = this.bpmnGetStrokeWidth(this.data);
-        this.options['fill'] = this.determineCustomFillColor(this.data);
-        // rectAttrs['fill-opacity'] = customActivityBackgroundOpacity;
-
-    }
-
-    private bpmnGetColor(data, defaultColor) {
-        if (data.current) {
-            return DiagramTaskComponent.CURRENT_COLOR;
-        } else if (data.completed) {
-            return DiagramTaskComponent.COMPLETED_COLOR;
-        } else {
-            return defaultColor;
-        }
-    }
-
-    private bpmnGetStrokeWidth(data) {
-        if (data.current || data.completed) {
-            return DiagramTaskComponent.TASK_STROKE;
-        } else {
-            return DiagramTaskComponent.TASK_HIGHLIGHT_STROKE;
-        }
-    }
-
-    private determineCustomFillColor(data) {
-        // TODO
-        return 'hsb(0.1966666666666667, 1, 1)';
     }
 }

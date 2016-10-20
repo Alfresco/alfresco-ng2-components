@@ -107,7 +107,7 @@
   "license-check-config": {
     "src": [
       "./app/**/*.js",
-      "!./app/js/xml2json.js"
+      "!./app/js/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,

@@ -18,6 +18,7 @@
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../../services/analytics.service';
+import { DiagramColorService } from './services/diagram-color.service';
 
 @Component({
     moduleId: module.id,
@@ -26,44 +27,39 @@ import { AnalyticsService } from '../../services/analytics.service';
     styleUrls: ['./diagram.component.css']
 })
 export class DiagramComponent {
-
     @Input()
-    modelType: string;
-
-    @Input()
-    processDefinitionId: string;
+    report: any;
 
     @Output()
     onError = new EventEmitter();
 
     private diagram: any;
-    private element: ElementRef;
+    private elementRef: ElementRef;
 
     constructor(elementRef: ElementRef,
                 private translate: AlfrescoTranslationService,
+                private diagramColorService: DiagramColorService,
                 private analyticsService: AnalyticsService) {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-analytics/src');
         }
-        this.element = elementRef;
+        this.elementRef = elementRef;
     }
 
     ngOnInit() {
-        this.getProcessDefinitionModel(this.processDefinitionId);
+        this.getProcessDefinitionModel(this.report.processDefinitionId);
+        this.diagramColorService.setTotalColors(this.report.totalCountsPercentages);
     }
 
     getProcessDefinitionModel(processDefinitionId: string) {
-        if (this.modelType === 'process-definition') {
-            this.analyticsService.getProcessDefinitionModel(processDefinitionId).subscribe(
-                (res: any) => {
-                    this.diagram = res;
-                    console.log(res);
-                },
-                (err: any) => {
-                    this.onError.emit(err);
-                    console.log(err);
-                }
-            );
-        }
+        this.analyticsService.getProcessDefinitionModel(processDefinitionId).subscribe(
+            (res: any) => {
+                this.diagram = res;
+            },
+            (err: any) => {
+                this.onError.emit(err);
+                console.log(err);
+            }
+        );
     }
 }

@@ -28,6 +28,7 @@ import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 import { RAPHAEL_DIRECTIVES } from './src/components/raphael/index';
 import { DIAGRAM_DIRECTIVES } from './src/components/diagrams/index';
+import { DIAGRAM_PROVIDERS } from './src/components/diagrams/index';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-report-list.component';
@@ -47,7 +48,8 @@ export const ANALYTICS_DIRECTIVES: any[] = [
 ];
 
 export const ANALYTICS_PROVIDERS: any[] = [
-    AnalyticsService
+    AnalyticsService,
+    DIAGRAM_PROVIDERS
 ];
 
 @NgModule({
@@ -60,6 +62,7 @@ export const ANALYTICS_PROVIDERS: any[] = [
     ],
     providers: [
         ...ANALYTICS_PROVIDERS,
+        ...DIAGRAM_PROVIDERS,
         RaphaelService
     ],
     exports: [
@@ -71,7 +74,8 @@ export class AnalyticsModule {
         return {
             ngModule: AnalyticsModule,
             providers: [
-                ...ANALYTICS_PROVIDERS
+                ...ANALYTICS_PROVIDERS,
+                ...DIAGRAM_PROVIDERS
             ]
         };
     }

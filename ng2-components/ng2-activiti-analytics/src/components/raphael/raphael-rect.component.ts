@@ -38,7 +38,16 @@ export class RaphaelRectDirective extends RaphaelBase implements OnInit {
     radius: number = 0;
 
     @Input()
-    strokeWith: number;
+    fillColors: any;
+
+    @Input()
+    stroke: any;
+
+    @Input()
+    strokeWidth: any;
+
+    @Input()
+    fillOpacity: any;
 
     @Output()
     onError = new EventEmitter();
@@ -50,7 +59,7 @@ export class RaphaelRectDirective extends RaphaelBase implements OnInit {
 
     ngOnInit() {
         console.log(this.elementRef);
-        let opts = {'stroke-width': this.strokeWith};
+        let opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
         this.draw(this.leftCorner, this.width, this.height, this.radius, opts);
     }
 
