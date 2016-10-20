@@ -21,10 +21,6 @@ import { FormService } from '../../../services/form.service';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldOption } from '../core/form-field-option';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FakeFormService } from './assets/formService.service.mock';
-import { CoreModule } from 'ng2-alfresco-core';
-// import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 
 describe('TypeaheadWidget', () => {
 
