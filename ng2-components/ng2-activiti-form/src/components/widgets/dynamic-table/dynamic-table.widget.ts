@@ -38,4 +38,34 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
             this.content.selectedRow = row;
         }
     }
+
+    hasSelection(): boolean {
+        return !!(this.content && this.content.selectedRow);
+    }
+
+    moveSelectionUp() {
+        if (this.content) {
+            this.content.moveRow(this.content.selectedRow, -1);
+        }
+    }
+
+    moveSelectionDown() {
+        if (this.content) {
+            this.content.moveRow(this.content.selectedRow, 1);
+        }
+    }
+
+    addNewRow() {
+        console.log('add new row clicked');
+    }
+
+    deleteSelection() {
+        if (this.content) {
+            this.content.deleteRow(this.content.selectedRow);
+        }
+    }
+
+    editSelection() {
+        console.log('edit selection clicked');
+    }
 }

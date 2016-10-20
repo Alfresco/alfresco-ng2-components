@@ -23,5 +23,32 @@
         </tbody>
     </table>
 
+    <div>
+        <button class="mdl-button mdl-js-button mdl-button--icon"
+                [disabled]="!hasSelection()"
+                (click)="moveSelectionUp()">
+            <i class="material-icons">arrow_upward</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon"
+                [disabled]="!hasSelection()"
+                (click)="moveSelectionDown()">
+            <i class="material-icons">arrow_downward</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon"
+                (click)="addNewRow()">
+            <i class="material-icons">add_circle_outline</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon"
+                [disabled]="!hasSelection()"
+                (click)="deleteSelection()">
+            <i class="material-icons">remove_circle_outline</i>
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--icon"
+                [disabled]="!hasSelection()"
+                (click)="editSelection()">
+            <i class="material-icons">edit</i>
+        </button>
+    </div>
+
      <span *ngIf="content.validationSummary" class="mdl-textfield__error">{{content.validationSummary}}</span>
 </div>

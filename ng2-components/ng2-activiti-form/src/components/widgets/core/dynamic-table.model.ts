@@ -43,8 +43,9 @@ export class DynamicTableModel extends FormWidgetModel {
 
         this.rows.forEach(row => row.selected = false);
 
+        this._selectedRow = value;
+
         if (value) {
-            this._selectedRow = value;
             this._selectedRow.selected = true;
         }
     }
@@ -62,6 +63,44 @@ export class DynamicTableModel extends FormWidgetModel {
 
             if (json.value) {
                 this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
+            }
+        }
+    }
+
+    flushValue() {
+        this.field.value = this.rows.map(r => r.value);
+        this.field.updateForm();
+    }
+
+    moveRow(row: DynamicTableRow, offset: number) {
+        let oldIndex = this.rows.indexOf(row);
+        if (oldIndex > -1) {
+            let newIndex = (oldIndex + offset);
+
+            if (newIndex < 0) {
+                newIndex = 0;
+            } else if (newIndex >= this.rows.length) {
+                newIndex = this.rows.length;
+            }
+
+            let arr = this.rows.slice();
+            arr.splice(oldIndex, 1);
+            arr.splice(newIndex, 0, row);
+            this.rows = arr;
+
+            this.flushValue();
+        }
+    }
+
+    deleteRow(row: DynamicTableRow) {
+        if (row) {
+            if (this.selectedRow === row) {
+                this.selectedRow = null;
+            }
+            let idx = this.rows.indexOf(row);
+            if (idx > -1) {
+                this.rows.splice(idx, 1);
+                this.flushValue();
             }
         }
     }
