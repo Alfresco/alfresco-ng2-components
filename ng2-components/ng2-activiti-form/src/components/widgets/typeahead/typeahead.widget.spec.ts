@@ -247,8 +247,8 @@ describe('TypeaheadWidget', () => {
 
     it('should flush selected value', () => {
         let options: FormFieldOption[] = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'Item Two'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'Item Two' }
         ];
 
         widget.field.options = options;
@@ -261,8 +261,8 @@ describe('TypeaheadWidget', () => {
 
     it('should be case insensitive when flushing value', () => {
         let options: FormFieldOption[] = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'iTEM TWo'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'iTEM TWo' }
         ];
 
         widget.field.options = options;
@@ -275,8 +275,8 @@ describe('TypeaheadWidget', () => {
 
     it('should reset fields when flushing missing option value', () => {
         widget.field.options = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'Item two'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'Item two' }
         ];
         widget.value = 'Missing item';
         widget.flushValue();
@@ -287,8 +287,8 @@ describe('TypeaheadWidget', () => {
 
     it('should reset fields when flushing incorrect value', () => {
         widget.field.options = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'Item two'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'Item two' }
         ];
         widget.field.value = 'Item two';
         widget.value = 'Item two!';
