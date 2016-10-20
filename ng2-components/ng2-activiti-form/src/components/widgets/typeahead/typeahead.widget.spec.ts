@@ -21,6 +21,10 @@ import { FormService } from '../../../services/form.service';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldOption } from '../core/form-field-option';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { FakeFormService } from './assets/formService.service.mock';
+import { CoreModule } from 'ng2-alfresco-core';
+// import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 
 describe('TypeaheadWidget', () => {
 
@@ -152,8 +156,8 @@ describe('TypeaheadWidget', () => {
     it('should setup initial value', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
             observer.next([
-                { id: '1', name: 'One' },
-                { id: '2', name: 'Two' }
+                {id: '1', name: 'One'},
+                {id: '2', name: 'Two'}
             ]);
             observer.complete();
         }));
@@ -168,8 +172,8 @@ describe('TypeaheadWidget', () => {
     it('should not setup initial value due to missing option', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
             observer.next([
-                { id: '1', name: 'One' },
-                { id: '2', name: 'Two' }
+                {id: '1', name: 'One'},
+                {id: '2', name: 'Two'}
             ]);
             observer.complete();
         }));
@@ -183,8 +187,8 @@ describe('TypeaheadWidget', () => {
 
     it('should setup field options on load', () => {
         let options: FormFieldOption[] = [
-            { id: '1', name: 'One' },
-            { id: '2', name: 'Two' }
+            {id: '1', name: 'One'},
+            {id: '2', name: 'Two'}
         ];
 
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
@@ -209,8 +213,8 @@ describe('TypeaheadWidget', () => {
 
     it('should get filtered options', () => {
         let options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'Item two'}
+            {id: '1', name: 'Item one'},
+            {id: '2', name: 'Item two'}
         ];
         widget.field.options = options;
         widget.value = 'tw';
@@ -222,8 +226,8 @@ describe('TypeaheadWidget', () => {
 
     it('should be case insensitive when filtering options', () => {
         let options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'iTEM TWo' }
+            {id: '1', name: 'Item one'},
+            {id: '2', name: 'iTEM TWo'}
         ];
         widget.field.options = options;
         widget.value = 'tW';
@@ -247,8 +251,8 @@ describe('TypeaheadWidget', () => {
 
     it('should flush selected value', () => {
         let options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'Item Two' }
+            {id: '1', name: 'Item one'},
+            {id: '2', name: 'Item Two'}
         ];
 
         widget.field.options = options;
@@ -261,8 +265,8 @@ describe('TypeaheadWidget', () => {
 
     it('should be case insensitive when flushing value', () => {
         let options: FormFieldOption[] = [
-            { id: '1', name: 'Item one' },
-            { id: '2', name: 'iTEM TWo' }
+            {id: '1', name: 'Item one'},
+            {id: '2', name: 'iTEM TWo'}
         ];
 
         widget.field.options = options;
@@ -308,4 +312,33 @@ describe('TypeaheadWidget', () => {
         expect(widget.field.value).toBeNull();
     });
 
+    it('should emit field change event on item click', () => {
+        let event = jasmine.createSpyObj('event', ['preventDefault']);
+        let fakeField = new FormFieldModel(new FormModel(), {id: 'fakeField', value: 'fakeValue'});
+        widget.field = fakeField;
+        let item = {id: 'fake-id-opt', name: 'fake-name-opt'};
+        widget.onItemClick(item, event);
+
+        widget.fieldChanged.subscribe((field) => {
+            expect(field).toBeDefined();
+            expect(field.id).toEqual('fakeField');
+            expect(field.value).toEqual('fake-id-opt');
+        });
+    });
+
+    it('should emit field change event on blur', (done) => {
+        spyOn(widget, 'flushValue').and.stub();
+        let fakeField = new FormFieldModel(new FormModel(), {id: 'fakeField', value: 'fakeValue'});
+        widget.field = fakeField;
+        widget.onBlur();
+
+        setTimeout(() => {
+            widget.fieldChanged.subscribe((field) => {
+                expect(field).toBeDefined();
+                expect(field.id).toEqual('field-id');
+                expect(field.value).toEqual('field-value');
+            });
+            done();
+        }, 200);
+    });
 });

@@ -81,6 +81,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
     onBlur() {
         setTimeout(() => {
             this.flushValue();
+            this.checkVisibility(this.field);
         }, 200);
     }
 
@@ -108,6 +109,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
         if (item) {
             this.field.value = item.id;
             this.value = item.name;
+            this.checkVisibility(this.field);
         }
         if (event) {
             event.preventDefault();
