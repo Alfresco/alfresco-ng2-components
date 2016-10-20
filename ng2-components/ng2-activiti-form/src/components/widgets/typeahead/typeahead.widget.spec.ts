@@ -152,8 +152,8 @@ describe('TypeaheadWidget', () => {
     it('should setup initial value', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
             observer.next([
-                {id: '1', name: 'One'},
-                {id: '2', name: 'Two'}
+                { id: '1', name: 'One' },
+                { id: '2', name: 'Two' }
             ]);
             observer.complete();
         }));
@@ -168,8 +168,8 @@ describe('TypeaheadWidget', () => {
     it('should not setup initial value due to missing option', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
             observer.next([
-                {id: '1', name: 'One'},
-                {id: '2', name: 'Two'}
+                { id: '1', name: 'One' },
+                { id: '2', name: 'Two' }
             ]);
             observer.complete();
         }));
@@ -183,8 +183,8 @@ describe('TypeaheadWidget', () => {
 
     it('should setup field options on load', () => {
         let options: FormFieldOption[] = [
-            {id: '1', name: 'One'},
-            {id: '2', name: 'Two'}
+            { id: '1', name: 'One' },
+            { id: '2', name: 'Two' }
         ];
 
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.create(observer => {
@@ -209,8 +209,8 @@ describe('TypeaheadWidget', () => {
 
     it('should get filtered options', () => {
         let options: FormFieldOption[] = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'Item two'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'Item two' }
         ];
         widget.field.options = options;
         widget.value = 'tw';
@@ -222,8 +222,8 @@ describe('TypeaheadWidget', () => {
 
     it('should be case insensitive when filtering options', () => {
         let options: FormFieldOption[] = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'iTEM TWo'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'iTEM TWo' }
         ];
         widget.field.options = options;
         widget.value = 'tW';
