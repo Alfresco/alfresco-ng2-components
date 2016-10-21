@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
+import { DiagramGatewayComponent } from './diagram-gateway.component';
 import { DiagramExclusiveGatewayComponent } from './diagram-exclusive-gateway.component';
 
 // primitives
+export * from './diagram-gateway.component';
 export * from './diagram-exclusive-gateway.component';
 
 export const DIAGRAM_GATEWAY_DIRECTIVES: any[] = [
+    DiagramGatewayComponent,
     DiagramExclusiveGatewayComponent
 ];
