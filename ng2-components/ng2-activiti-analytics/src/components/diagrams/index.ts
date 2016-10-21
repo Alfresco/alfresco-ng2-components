@@ -16,24 +16,23 @@
  */
 
 import { DiagramComponent } from './diagram.component';
-import { DiagramEventComponent } from './diagram-event.component';
-import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramSequenceFlowComponent } from './diagram-sequence-flow.component';
-
-import { DIAGRAM_GATEWAY_DIRECTIVES } from './gateway/index';
+import { DIAGRAM_ACTIVITIES_DIRECTIVES } from './activities/index';
+import { DIAGRAM_EVENTS_DIRECTIVES } from './events/index';
+import { DIAGRAM_GATEWAY_DIRECTIVES } from './gateways/index';
 
 import { DiagramColorService } from './services/diagram-color.service';
 
 // primitives
 export * from './diagram.component';
-export * from './diagram-event.component';
-export * from './diagram-task.component';
+export * from './events/index';
+export * from './activities/index';
 export * from './diagram-sequence-flow.component';
 
 export const DIAGRAM_DIRECTIVES: any[] = [
     DiagramComponent,
-    DiagramEventComponent,
-    DiagramTaskComponent,
+    DIAGRAM_EVENTS_DIRECTIVES,
+    DIAGRAM_ACTIVITIES_DIRECTIVES,
     DiagramSequenceFlowComponent,
     DIAGRAM_GATEWAY_DIRECTIVES
 ];

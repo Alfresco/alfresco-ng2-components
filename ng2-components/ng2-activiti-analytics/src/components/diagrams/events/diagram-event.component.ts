@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { DiagramColorService } from './services/diagram-color.service';
+import { DiagramColorService } from './../services/diagram-color.service';
 
 @Component({
     moduleId: module.id,
