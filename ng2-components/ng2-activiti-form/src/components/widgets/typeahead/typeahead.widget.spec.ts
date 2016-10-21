@@ -210,7 +210,7 @@ describe('TypeaheadWidget', () => {
     it('should get filtered options', () => {
         let options: FormFieldOption[] = [
             { id: '1', name: 'Item one' },
-            { id: '2', name: 'Item two'}
+            { id: '2', name: 'Item two' }
         ];
         widget.field.options = options;
         widget.value = 'tw';
@@ -275,8 +275,8 @@ describe('TypeaheadWidget', () => {
 
     it('should reset fields when flushing missing option value', () => {
         widget.field.options = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'Item two'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'Item two' }
         ];
         widget.value = 'Missing item';
         widget.flushValue();
@@ -287,8 +287,8 @@ describe('TypeaheadWidget', () => {
 
     it('should reset fields when flushing incorrect value', () => {
         widget.field.options = [
-            {id: '1', name: 'Item one'},
-            {id: '2', name: 'Item two'}
+            { id: '1', name: 'Item one' },
+            { id: '2', name: 'Item two' }
         ];
         widget.field.value = 'Item two';
         widget.value = 'Item two!';
@@ -308,4 +308,33 @@ describe('TypeaheadWidget', () => {
         expect(widget.field.value).toBeNull();
     });
 
+    it('should emit field change event on item click', () => {
+        let event = jasmine.createSpyObj('event', ['preventDefault']);
+        let fakeField = new FormFieldModel(new FormModel(), {id: 'fakeField', value: 'fakeValue'});
+        widget.field = fakeField;
+        let item = {id: 'fake-id-opt', name: 'fake-name-opt'};
+        widget.onItemClick(item, event);
+
+        widget.fieldChanged.subscribe((field) => {
+            expect(field).toBeDefined();
+            expect(field.id).toEqual('fakeField');
+            expect(field.value).toEqual('fake-id-opt');
+        });
+    });
+
+    it('should emit field change event on blur', (done) => {
+        spyOn(widget, 'flushValue').and.stub();
+        let fakeField = new FormFieldModel(new FormModel(), {id: 'fakeField', value: 'fakeValue'});
+        widget.field = fakeField;
+        widget.onBlur();
+
+        setTimeout(() => {
+            widget.fieldChanged.subscribe((field) => {
+                expect(field).toBeDefined();
+                expect(field.id).toEqual('field-id');
+                expect(field.value).toEqual('field-value');
+            });
+            done();
+        }, 200);
+    });
 });

@@ -1,11 +1,10 @@
 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label typeahead-widget"
      [class.is-dirty]="value"
-     [class.typeahead-widget__invalid]="!field.isValid">
+     [class.typeahead-widget__invalid]="!field.isValid" id="typehead-div">
     <input class="mdl-textfield__input"
            type="text"
            [attr.id]="field.id"
            [(ngModel)]="value"
-           (ngModelChange)="checkVisibility(field)"
            (keyup)="onKeyUp($event)"
            (blur)="onBlur()"
            [disabled]="field.readOnly">
