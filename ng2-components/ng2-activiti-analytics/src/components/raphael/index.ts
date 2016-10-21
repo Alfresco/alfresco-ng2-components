@@ -19,16 +19,22 @@ import { RaphaelCircleDirective } from './raphael-circle.component';
 import { RaphaelRectDirective } from './raphael-rect.component';
 import { RaphaelTextDirective } from './raphael-text.component';
 import { RaphaelFlowArrowDirective } from './raphael-flow-arrow.component';
+import { RaphaelCrossDirective } from './raphael-cross.component';
+import { RaphaelRhombusDirective } from './raphael-rhombus.component';
 
 // primitives
 export * from './raphael-circle.component';
 export * from './raphael-rect.component';
 export * from './raphael-text.component';
 export * from './raphael-flow-arrow.component';
+export * from './raphael-cross.component';
+export * from './raphael-rhombus.component';
 
 export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelCircleDirective,
     RaphaelRectDirective,
     RaphaelTextDirective,
-    RaphaelFlowArrowDirective
+    RaphaelFlowArrowDirective,
+    RaphaelCrossDirective,
+    RaphaelRhombusDirective
 ];

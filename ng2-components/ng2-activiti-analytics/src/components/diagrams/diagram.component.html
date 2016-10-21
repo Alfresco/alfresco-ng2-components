@@ -4,13 +4,12 @@
             <div *ngSwitchCase="'StartEvent'">
                 <diagram-event [data]="element" [radius]="15" [strokeWidth]="1"></diagram-event>
             </div>
-        </div>
-        <div [ngSwitch]="element.type">
+            <div *ngSwitchCase="'ExclusiveGateway'">
+                <diagram-exclusive-gateway [data]="element"></diagram-exclusive-gateway>
+            </div>
             <div *ngSwitchCase="'EndEvent'">
                 <diagram-event [data]="element" [radius]="14" [strokeWidth]="4"></diagram-event>
             </div>
-        </div>
-        <div [ngSwitch]="element.type">
             <div *ngSwitchCase="'UserTask'">
                 <diagram-task [data]="element"></diagram-task>
             </div>

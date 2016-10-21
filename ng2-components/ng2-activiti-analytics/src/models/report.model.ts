@@ -120,7 +120,7 @@ export class ReportQuery {
         this.status = obj && obj.status || null;
         this.taskName = obj && obj.taskName || null;
         this.dateRangeInterval = obj && obj.dateRangeInterval || null;
-        this.typeFiltering = obj && obj.typeFiltering || false;
+        this.typeFiltering = obj && obj.typeFiltering || true;
         this.slowProcessInstanceInteger = obj && obj.slowProcessInstanceInteger || 0;
         this.duration = obj && obj.duration || 0;
         this.dateRange = new ReportDateRange(obj);
