@@ -70,7 +70,11 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     addNewRow() {
         if (this.content) {
-            this.editRow = <DynamicTableRow> { selected: false, value: {} };
+            this.editRow = <DynamicTableRow> {
+                isNew: true,
+                selected: false,
+                value: {}
+            };
             this.editMode = true;
         }
     }
@@ -92,7 +96,10 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     onSaveChanges() {
         if (this.content) {
             if (this.editRow.isNew) {
-                // TODO: create new record
+                let row = this.copyRow(this.editRow);
+                this.content.selectedRow = null;
+                this.content.addRow(row);
+                this.editRow.isNew = false;
             } else {
                 this.content.selectedRow.value = this.copyObject(this.editRow.value);
             }

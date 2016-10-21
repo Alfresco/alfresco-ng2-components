@@ -37,9 +37,13 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
     ngOnInit() {
         let settings: any = {
             type: 'date',
-            future: moment().add(21, 'years'),
-            init: moment(this.table.getCellValue(this.row, this.column), this.DATE_FORMAT)
+            future: moment().add(21, 'years')
         };
+
+        let value = this.table.getCellValue(this.row, this.column);
+        if (value) {
+            settings.init = moment(value, this.DATE_FORMAT);
+        }
 
         this.datePicker = new mdDateTimePicker.default(settings);
         if (this.elementRef) {

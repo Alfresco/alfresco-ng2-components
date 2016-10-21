@@ -105,11 +105,20 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
+    addRow(row: DynamicTableRow) {
+        if (row) {
+            this.rows.push(row);
+            // this.selectedRow = row;
+        }
+    }
+
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
         let result = row.value[column.id];
 
         if (column.type === 'Dropdown') {
-            return result.name;
+            if (result) {
+                return result.name;
+            }
         }
 
         if (column.type === 'Boolean') {

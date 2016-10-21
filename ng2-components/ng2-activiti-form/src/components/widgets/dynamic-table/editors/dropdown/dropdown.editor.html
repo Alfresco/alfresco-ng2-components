@@ -5,6 +5,7 @@
             [value]="table.getCellValue(row, column)"
             class="dropdown-editor__select"
             (change)="onValueChanged(row, column, $event)">
+            <option></option>
             <option *ngFor="let opt of column.options" [value]="opt.name">{{opt.name}}</option>
         </select>
     </div>
