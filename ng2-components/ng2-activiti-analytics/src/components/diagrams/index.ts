@@ -19,7 +19,8 @@ import { DiagramComponent } from './diagram.component';
 import { DiagramEventComponent } from './diagram-event.component';
 import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramSequenceFlowComponent } from './diagram-sequence-flow.component';
-import { DiagramExclusiveGatwayComponent } from './diagram-exclusive-gateway.component';
+
+import { DIAGRAM_GATEWAY_DIRECTIVES } from './gateway/index';
 
 import { DiagramColorService } from './services/diagram-color.service';
 
@@ -28,14 +29,13 @@ export * from './diagram.component';
 export * from './diagram-event.component';
 export * from './diagram-task.component';
 export * from './diagram-sequence-flow.component';
-export * from './diagram-exclusive-gateway.component';
 
 export const DIAGRAM_DIRECTIVES: any[] = [
     DiagramComponent,
     DiagramEventComponent,
     DiagramTaskComponent,
     DiagramSequenceFlowComponent,
-    DiagramExclusiveGatwayComponent
+    DIAGRAM_GATEWAY_DIRECTIVES
 ];
 
 export const DIAGRAM_PROVIDERS: any[] = [

@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { DiagramColorService } from './services/diagram-color.service';
+import { DiagramColorService } from './../services/diagram-color.service';
 
 @Component({
     moduleId: module.id,
@@ -24,7 +24,7 @@ import { DiagramColorService } from './services/diagram-color.service';
     templateUrl: './diagram-exclusive-gateway.component.html',
     styleUrls: ['./diagram-exclusive-gateway.component.css']
 })
-export class DiagramExclusiveGatwayComponent {
+export class DiagramExclusiveGatewayComponent {
     @Input()
     data: any;
 
