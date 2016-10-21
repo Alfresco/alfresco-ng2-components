@@ -32,6 +32,9 @@ export class DiagramExclusiveGatewayComponent {
     onError = new EventEmitter();
 
     center: any = {};
+    width: any;
+    height: any;
+    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 3};
 
     constructor(public elementRef: ElementRef,
                 private diagramColorService: DiagramColorService) {}
@@ -39,10 +42,11 @@ export class DiagramExclusiveGatewayComponent {
     ngOnInit() {
         this.center.x = this.data.x;
         this.center.y = this.data.y;
+        this.width = this.data.width;
+        this.height = this.data.height;
 
-        this.data.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
-        this.data.fillColors = this.diagramColorService.getFillColour(this.data.id);
-        this.data.fillOpacity = this.diagramColorService.getFillOpacity();
-        this.data.strokeWidth = 3;
+        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
+        this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
+        this.options.fillOpacity = this.diagramColorService.getFillOpacity();
     }
 }

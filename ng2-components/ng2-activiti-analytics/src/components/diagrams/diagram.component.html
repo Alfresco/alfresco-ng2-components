@@ -7,6 +7,9 @@
             <div *ngSwitchCase="'ExclusiveGateway'">
                 <diagram-exclusive-gateway [data]="element"></diagram-exclusive-gateway>
             </div>
+            <div *ngSwitchCase="'ParallelGateway'">
+                <diagram-parallel-gateway [data]="element"></diagram-parallel-gateway>
+            </div>
             <div *ngSwitchCase="'EndEvent'">
                 <diagram-event [data]="element" [radius]="14" [strokeWidth]="4"></diagram-event>
             </div>

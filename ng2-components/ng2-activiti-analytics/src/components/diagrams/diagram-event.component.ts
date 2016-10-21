@@ -38,6 +38,7 @@ export class DiagramEventComponent {
     onError = new EventEmitter();
 
     center: any = {};
+    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: ''};
 
     constructor(public elementRef: ElementRef,
                 private diagramColorService: DiagramColorService) {}
@@ -47,10 +48,10 @@ export class DiagramEventComponent {
         this.center.x = this.data.x + (this.data.width / 2);
         this.center.y = this.data.y + (this.data.height / 2);
 
-        this.data.radius = this.radius;
-        this.data.strokeWidth = this.strokeWidth;
-        this.data.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
-        this.data.fillColors = this.diagramColorService.getFillColour(this.data.id);
-        this.data.fillOpacity = this.diagramColorService.getFillOpacity();
+        this.options.radius = this.radius;
+        this.options.strokeWidth = this.strokeWidth;
+        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
+        this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
+        this.options.fillOpacity = this.diagramColorService.getFillOpacity();
     }
 }

@@ -28,33 +28,23 @@ export class DiagramTaskComponent {
     @Input()
     data: any;
 
-    options: any = {};
-
     @Output()
     onError = new EventEmitter();
 
-    stroke: number;
-
     rectLeftCorner: any;
-    radius: number = 4;
-
     textPosition: any;
+    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4};
 
     constructor(public elementRef: ElementRef,
                 private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
-        console.log(this.elementRef);
-
-        this.data.fillColors = this.diagramColorService.getFillColour(this.data.id);
-        this.data.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.ACTIVITY_STROKE_COLOR);
-        this.data.strokeWidth = this.diagramColorService.getBpmnStrokeWidth(this.data);
-        this.data.fillOpacity = this.diagramColorService.getFillOpacity();
-
         this.rectLeftCorner = {x: this.data.x, y: this.data.y};
-
         this.textPosition =  {x: this.data.x + ( this.data.width / 2 ), y: this.data.y + ( this.data.height / 2 )};
 
-        this.options['id'] = this.data.id;
+        this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
+        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.ACTIVITY_STROKE_COLOR);
+        this.options.strokeWidth = this.diagramColorService.getBpmnStrokeWidth(this.data);
+        this.options.fillOpacity = this.diagramColorService.getFillOpacity();
     }
 }
