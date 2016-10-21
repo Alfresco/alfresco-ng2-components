@@ -15,10 +15,18 @@
  * limitations under the License.
  */
 
-export interface DynamicTableRow {
+import { Input } from '@angular/core';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../core/index';
 
-    isNew: boolean;
-    selected: boolean;
-    value: any;
+export abstract class CellEditorComponent {
+
+    @Input()
+    table: DynamicTableModel;
+
+    @Input()
+    row: DynamicTableRow;
+
+    @Input()
+    column: DynamicTableColumn;
 
 }

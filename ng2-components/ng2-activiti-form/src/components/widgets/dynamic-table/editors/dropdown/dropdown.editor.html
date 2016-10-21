@@ -1,0 +1,11 @@
+<div>
+    <label [attr.for]="column.id">{{column.name}}</label>
+    <div>
+        <select
+            [value]="table.getCellValue(row, column)"
+            class="dropdown-editor__select"
+            (change)="onValueChanged(row, column, $event)">
+            <option *ngFor="let opt of column.options" [value]="opt.name">{{opt.name}}</option>
+        </select>
+    </div>
+</div>

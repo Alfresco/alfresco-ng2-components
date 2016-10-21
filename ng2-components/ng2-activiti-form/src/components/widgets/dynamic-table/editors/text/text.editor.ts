@@ -15,10 +15,21 @@
  * limitations under the License.
  */
 
-export interface DynamicTableRow {
+import { Component } from '@angular/core';
+import { CellEditorComponent } from './../cell.editor';
+import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
-    isNew: boolean;
-    selected: boolean;
-    value: any;
+@Component({
+    moduleId: module.id,
+    selector: 'alf-text-editor',
+    templateUrl: './text.editor.html',
+    styleUrls: ['./text.editor.css']
+})
+export class TextEditorComponent extends CellEditorComponent {
+
+    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: Event) {
+        let value: any = (<HTMLInputElement>event.srcElement).value;
+        row.value[column.id] = value;
+    }
 
 }

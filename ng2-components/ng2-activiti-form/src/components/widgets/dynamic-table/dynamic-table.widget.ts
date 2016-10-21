@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ElementRef } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-import { DynamicTableModel, DynamicTableRow } from './../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../core/index';
 
 @Component({
     moduleId: module.id,
@@ -29,6 +29,13 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     @Input()
     content: DynamicTableModel;
+
+    editMode: boolean;
+    editRow: DynamicTableRow;
+
+    constructor(private elementRef: ElementRef) {
+        super();
+    }
 
     ngOnInit() {
     }
@@ -55,17 +62,67 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
         }
     }
 
-    addNewRow() {
-        console.log('add new row clicked');
-    }
-
     deleteSelection() {
         if (this.content) {
             this.content.deleteRow(this.content.selectedRow);
         }
     }
 
+    addNewRow() {
+        if (this.content) {
+            this.editRow = <DynamicTableRow> { selected: false, value: {} };
+            this.editMode = true;
+        }
+    }
+
     editSelection() {
-        console.log('edit selection clicked');
+        if (this.content) {
+            this.editRow = this.copyRow(this.content.selectedRow);
+            this.editMode = true;
+        }
+    }
+
+    getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
+        if (this.content) {
+            return this.content.getCellValue(row, column);
+        }
+        return null;
+    }
+
+    onSaveChanges() {
+        if (this.content) {
+            if (this.editRow.isNew) {
+                // TODO: create new record
+            } else {
+                this.content.selectedRow.value = this.copyObject(this.editRow.value);
+            }
+            this.content.flushValue();
+        }
+        this.editMode = false;
+    }
+
+    onCancelChanges() {
+        this.editMode = false;
+        this.editRow = null;
+    }
+
+    private copyRow(row: DynamicTableRow): DynamicTableRow {
+        return <DynamicTableRow> {
+            value: this.copyObject(row.value)
+        };
+    }
+
+    private copyObject(obj: any): any {
+        let result = Object.assign({}, obj);
+
+        if (typeof obj === 'object' && obj !== null && obj !== undefined) {
+            Object.keys(obj).forEach(key => {
+                if (typeof obj[key] === 'object') {
+                    result[key] = this.copyObject(obj[key]);
+                }
+            });
+        }
+
+        return result;
     }
 }

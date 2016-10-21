@@ -1,54 +1,99 @@
-<div class="dynamic-table-widget"
-     [class.dynamic-table-widget__invalid]="!content.isValid">
+<div class="dynamic-table-widget">
      <div>{{content.name}}</div>
 
-     <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
-         <thead>
-            <tr>
-                <th *ngFor="let column of content.visibleColumns"
-                    class="mdl-data-table__cell--non-numeric">
-                    {{column.name}}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let row of content.rows"
-                [class.dynamic-table-widget__row-selected]="row.selected">
-                <td *ngFor="let column of content.visibleColumns"
-                    class="mdl-data-table__cell--non-numeric"
-                    (click)="onRowClicked(row)">
-                    {{row.value[column.id]}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+     <div *ngIf="!editMode">
+        <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of content.visibleColumns"
+                        class="mdl-data-table__cell--non-numeric">
+                        {{column.name}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of content.rows"
+                    [class.dynamic-table-widget__row-selected]="row.selected">
+                    <td *ngFor="let column of content.visibleColumns"
+                        class="mdl-data-table__cell--non-numeric"
+                        (click)="onRowClicked(row)">
+                        {{ getCellValue(row, column) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-    <div>
-        <button class="mdl-button mdl-js-button mdl-button--icon"
-                [disabled]="!hasSelection()"
-                (click)="moveSelectionUp()">
-            <i class="material-icons">arrow_upward</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon"
-                [disabled]="!hasSelection()"
-                (click)="moveSelectionDown()">
-            <i class="material-icons">arrow_downward</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon"
-                (click)="addNewRow()">
-            <i class="material-icons">add_circle_outline</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon"
-                [disabled]="!hasSelection()"
-                (click)="deleteSelection()">
-            <i class="material-icons">remove_circle_outline</i>
-        </button>
-        <button class="mdl-button mdl-js-button mdl-button--icon"
-                [disabled]="!hasSelection()"
-                (click)="editSelection()">
-            <i class="material-icons">edit</i>
-        </button>
-    </div>
+        <div>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="moveSelectionUp()">
+                <i class="material-icons">arrow_upward</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="moveSelectionDown()">
+                <i class="material-icons">arrow_downward</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    (click)="addNewRow()">
+                <i class="material-icons">add_circle_outline</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="deleteSelection()">
+                <i class="material-icons">remove_circle_outline</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="editSelection()">
+                <i class="material-icons">edit</i>
+            </button>
+        </div>
+     </div>
 
-     <span *ngIf="content.validationSummary" class="mdl-textfield__error">{{content.validationSummary}}</span>
+     <div *ngIf="editMode">
+         <div class="mdl-grid" *ngFor="let column of content.columns">
+             <div class="mdl-cell mdl-cell--6-col" [ngSwitch]="column.type">
+                 <div *ngSwitchCase="'Dropdown'">
+                    <alf-dropdown-editor
+                        [table]="content"
+                        [row]="editRow"
+                        [column]="column">
+                    </alf-dropdown-editor>
+                 </div>
+                 <div *ngSwitchCase="'Date'">
+                     <alf-date-editor
+                        [table]="content"
+                        [row]="editRow"
+                        [column]="column">
+                    </alf-date-editor>
+                 </div>
+
+                 <div *ngSwitchCase="'Boolean'">
+                    <alf-boolean-editor
+                        [table]="content"
+                        [row]="editRow"
+                        [column]="column">
+                    </alf-boolean-editor>
+                 </div>
+                 <div *ngSwitchDefault>
+                    <alf-text-editor
+                        [table]="content"
+                        [row]="editRow"
+                        [column]="column">
+                    </alf-text-editor>
+                 </div>
+             </div>
+         </div>
+         <div>
+            <button
+                class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                (click)="onCancelChanges()">Cancel</button>
+            <button
+                class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                (click)="onSaveChanges()">Save</button>
+         </div>
+     </div>
+
+     <!--<span *ngIf="content.validationSummary" class="mdl-textfield__error">{{content.validationSummary}}</span>-->
 </div>

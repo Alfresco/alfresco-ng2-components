@@ -35,6 +35,10 @@ import { PeopleWidget } from './people/people.widget';
 import { DateWidget } from './date/date.widget';
 import { AmountWidget } from './amount/amount.widget';
 import { DynamicTableWidget } from './dynamic-table/dynamic-table.widget';
+import { DateEditorComponent } from './dynamic-table/editors/date/date.editor';
+import { DropdownEditorComponent } from './dynamic-table/editors/dropdown/dropdown.editor';
+import { BooleanEditorComponent } from './dynamic-table/editors/boolean/boolean.editor';
+import { TextEditorComponent } from './dynamic-table/editors/text/text.editor';
 
 // core
 export * from './widget.component';
@@ -63,6 +67,12 @@ export * from './date/date.widget';
 export * from './amount/amount.widget';
 export * from './dynamic-table/dynamic-table.widget';
 
+// editors (dynamic table)
+export * from './dynamic-table/editors/date/date.editor';
+export * from './dynamic-table/editors/dropdown/dropdown.editor';
+export * from './dynamic-table/editors/boolean/boolean.editor';
+export * from './dynamic-table/editors/text/text.editor';
+
 export const WIDGET_DIRECTIVES: any[] = [
     TabsWidget,
     ContainerWidget,
@@ -82,5 +92,10 @@ export const WIDGET_DIRECTIVES: any[] = [
     PeopleWidget,
     DateWidget,
     AmountWidget,
-    DynamicTableWidget
+
+    DynamicTableWidget,
+    DateEditorComponent,
+    DropdownEditorComponent,
+    BooleanEditorComponent,
+    TextEditorComponent
 ];

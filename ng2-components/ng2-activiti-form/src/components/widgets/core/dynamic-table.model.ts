@@ -104,4 +104,24 @@ export class DynamicTableModel extends FormWidgetModel {
             }
         }
     }
+
+    getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
+        let result = row.value[column.id];
+
+        if (column.type === 'Dropdown') {
+            return result.name;
+        }
+
+        if (column.type === 'Boolean') {
+            return result ? true : false;
+        }
+
+        if (column.type === 'Date') {
+            if (result) {
+                return moment(result.split('T')[0], 'YYYY-M-D').format('DD-MM-YYYY');
+            }
+        }
+
+        return result || '';
+    }
 }

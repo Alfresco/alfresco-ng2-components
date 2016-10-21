@@ -1,0 +1,9 @@
+ <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="column.id">
+    <input
+        class="mdl-checkbox__input"
+        type="checkbox"
+        [attr.id]="column.id"
+        [checked]="table.getCellValue(row, column)"
+        (change)="onValueChanged(row, column, $event)">
+    <span class="mdl-checkbox__label">{{column.name}}</span>
+</label>

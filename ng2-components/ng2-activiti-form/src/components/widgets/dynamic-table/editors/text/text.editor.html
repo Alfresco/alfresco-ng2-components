@@ -1,0 +1,9 @@
+<div alfresco-mdl-textfield class="dynamic-table-widget__table-editor">
+    <input
+        class="mdl-textfield__input"
+        type="text"
+        [value]="table.getCellValue(row, column)"
+        (keyup)="onValueChanged(row, column, $event)"
+        [attr.id]="column.id">
+    <label class="mdl-textfield__label" [attr.for]="column.id">{{column.name}}</label>
+</div>

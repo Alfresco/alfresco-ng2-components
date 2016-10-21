@@ -15,10 +15,21 @@
  * limitations under the License.
  */
 
-export interface DynamicTableRow {
+import { Component } from '@angular/core';
+import { CellEditorComponent } from './../cell.editor';
+import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
-    isNew: boolean;
-    selected: boolean;
-    value: any;
+@Component({
+    moduleId: module.id,
+    selector: 'alf-boolean-editor',
+    templateUrl: './boolean.editor.html',
+    styleUrls: ['./boolean.editor.css']
+})
+export class BooleanEditorComponent extends CellEditorComponent {
+
+    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: Event) {
+        let value: boolean = (<HTMLInputElement>event.srcElement).checked;
+        row.value[column.id] = value;
+    }
 
 }
