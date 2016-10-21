@@ -1,0 +1,8 @@
+<div [ngSwitch]="data.taskType">
+    <div *ngSwitchCase="'mail'">
+        <diagram-send-task [data]="data"></diagram-send-task>
+    </div>
+    <div *ngSwitchDefault>
+        <diagram-service-task [data]="data"></diagram-service-task>
+    </div>
+</div>

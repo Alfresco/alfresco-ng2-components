@@ -15,11 +15,20 @@
  * limitations under the License.
  */
 
+import { DiagramContainerServiceTaskComponent } from './diagram-container-service-task.component';
 import { DiagramTaskComponent } from './diagram-task.component';
+import { DiagramServiceTaskComponent } from './diagram-service-task.component';
+import { DiagramSendTaskComponent } from './diagram-send-task.component';
 
 // primitives
+export * from './diagram-container-service-task.component';
 export * from './diagram-task.component';
+export * from './diagram-service-task.component';
+export * from './diagram-send-task.component';
 
 export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
-    DiagramTaskComponent
+    DiagramContainerServiceTaskComponent,
+    DiagramTaskComponent,
+    DiagramServiceTaskComponent,
+    DiagramSendTaskComponent
 ];

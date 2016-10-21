@@ -20,6 +20,7 @@ import { DiagramSequenceFlowComponent } from './diagram-sequence-flow.component'
 import { DIAGRAM_ACTIVITIES_DIRECTIVES } from './activities/index';
 import { DIAGRAM_EVENTS_DIRECTIVES } from './events/index';
 import { DIAGRAM_GATEWAY_DIRECTIVES } from './gateways/index';
+import { DIAGRAM_ICONS_DIRECTIVES } from './icons/index';
 
 import { DiagramColorService } from './services/diagram-color.service';
 
@@ -27,6 +28,7 @@ import { DiagramColorService } from './services/diagram-color.service';
 export * from './diagram.component';
 export * from './events/index';
 export * from './activities/index';
+export * from './icons/index';
 export * from './diagram-sequence-flow.component';
 
 export const DIAGRAM_DIRECTIVES: any[] = [
@@ -34,7 +36,8 @@ export const DIAGRAM_DIRECTIVES: any[] = [
     DIAGRAM_EVENTS_DIRECTIVES,
     DIAGRAM_ACTIVITIES_DIRECTIVES,
     DiagramSequenceFlowComponent,
-    DIAGRAM_GATEWAY_DIRECTIVES
+    DIAGRAM_GATEWAY_DIRECTIVES,
+    DIAGRAM_ICONS_DIRECTIVES
 ];
 
 export const DIAGRAM_PROVIDERS: any[] = [

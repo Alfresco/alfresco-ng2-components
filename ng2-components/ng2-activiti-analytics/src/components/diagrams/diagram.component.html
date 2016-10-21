@@ -22,6 +22,9 @@
             <div *ngSwitchCase="'UserTask'">
                 <diagram-task [data]="element"></diagram-task>
             </div>
+            <div *ngSwitchCase="'ServiceTask'">
+                <diagram-container-service-task [data]="element"></diagram-container-service-task>
+            </div>
         </div>
     </div>
     <div *ngFor="let flow of diagram.flows">
