@@ -20,7 +20,7 @@
                 <diagram-event [data]="element" [radius]="14" [strokeWidth]="4"></diagram-event>
             </div>
             <div *ngSwitchCase="'UserTask'">
-                <diagram-task [data]="element"></diagram-task>
+                <diagram-user-task [data]="element"></diagram-user-task>
             </div>
             <div *ngSwitchCase="'ServiceTask'">
                 <diagram-container-service-task [data]="element"></diagram-container-service-task>

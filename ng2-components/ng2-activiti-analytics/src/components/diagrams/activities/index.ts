@@ -19,16 +19,19 @@ import { DiagramContainerServiceTaskComponent } from './diagram-container-servic
 import { DiagramTaskComponent } from './diagram-task.component';
 import { DiagramServiceTaskComponent } from './diagram-service-task.component';
 import { DiagramSendTaskComponent } from './diagram-send-task.component';
+import { DiagramUserTaskComponent } from './diagram-user-task.component';
 
 // primitives
 export * from './diagram-container-service-task.component';
 export * from './diagram-task.component';
 export * from './diagram-service-task.component';
 export * from './diagram-send-task.component';
+export * from './diagram-user-task.component';
 
 export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramContainerServiceTaskComponent,
     DiagramTaskComponent,
     DiagramServiceTaskComponent,
-    DiagramSendTaskComponent
+    DiagramSendTaskComponent,
+    DiagramUserTaskComponent
 ];

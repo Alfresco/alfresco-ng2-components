@@ -15,17 +15,26 @@
  * limitations under the License.
  */
 
-import { DiagramIconServiceTaskComponent } from './diagram-icon-service-task.component';
-import { DiagramIconSendTaskComponent } from './diagram-icon-send-task.component';
-import { DiagramIconUserTaskComponent } from './diagram-icon-user-task.component';
+import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { DiagramColorService } from './../services/diagram-color.service';
 
-// primitives
-export * from './diagram-icon-service-task.component';
-export * from './diagram-icon-send-task.component';
-export * from './diagram-icon-user-task.component';
+@Component({
+    moduleId: module.id,
+    selector: 'diagram-user-task',
+    templateUrl: './diagram-user-task.component.html',
+    styleUrls: ['./diagram-user-task.component.css']
+})
+export class DiagramUserTaskComponent {
+    @Input()
+    data: any;
 
-export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
-    DiagramIconServiceTaskComponent,
-    DiagramIconSendTaskComponent,
-    DiagramIconUserTaskComponent
-];
+    @Output()
+    onError = new EventEmitter();
+
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
+
+    ngOnInit() {
+
+    }
+}
