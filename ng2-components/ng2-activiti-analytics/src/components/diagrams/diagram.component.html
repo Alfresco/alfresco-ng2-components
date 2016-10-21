@@ -10,6 +10,9 @@
             <div *ngSwitchCase="'InclusiveGateway'">
                 <diagram-inclusive-gateway [data]="element"></diagram-inclusive-gateway>
             </div>
+            <div *ngSwitchCase="'EventGateway'">
+                <diagram-event-gateway [data]="element"></diagram-event-gateway>
+            </div>
             <div *ngSwitchCase="'ParallelGateway'">
                 <diagram-parallel-gateway [data]="element"></diagram-parallel-gateway>
             </div>

@@ -27,8 +27,9 @@ export class DiagramColorService {
 
     static ACTIVITY_FILL_COLOR = '#f9f9f9';
 
-    static TASK_STROKE = '1';
-    static TASK_HIGHLIGHT_STROKE = '2';
+    static TASK_STROKE = 1;
+    static TASK_HIGHLIGHT_STROKE = 2;
+    static CALL_ACTIVITY_STROKE = 2;
 
     totalColors: any;
 

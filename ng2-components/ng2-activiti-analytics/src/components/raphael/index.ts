@@ -22,6 +22,7 @@ import { RaphaelFlowArrowDirective } from './raphael-flow-arrow.component';
 import { RaphaelCrossDirective } from './raphael-cross.component';
 import { RaphaelPlusDirective } from './raphael-plus.component';
 import { RaphaelRhombusDirective } from './raphael-rhombus.component';
+import { RaphaelPentagonDirective } from './raphael-pentagon.component';
 
 // primitives
 export * from './raphael-circle.component';
@@ -31,6 +32,7 @@ export * from './raphael-flow-arrow.component';
 export * from './raphael-cross.component';
 export * from './raphael-plus.component';
 export * from './raphael-rhombus.component';
+export * from './raphael-pentagon.component';
 
 export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelCircleDirective,
@@ -39,5 +41,6 @@ export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelFlowArrowDirective,
     RaphaelCrossDirective,
     RaphaelPlusDirective,
-    RaphaelRhombusDirective
+    RaphaelRhombusDirective,
+    RaphaelPentagonDirective
 ];
