@@ -17,15 +17,18 @@
 
 import { DiagramGatewayComponent } from './diagram-gateway.component';
 import { DiagramExclusiveGatewayComponent } from './diagram-exclusive-gateway.component';
+import { DiagramInclusiveGatewayComponent } from './diagram-inclusive-gateway.component';
 import { DiagramParallelGatewayComponent } from './diagram-parallel-gateway.component';
 
 // primitives
 export * from './diagram-gateway.component';
 export * from './diagram-exclusive-gateway.component';
+export * from './diagram-inclusive-gateway.component';
 export * from './diagram-parallel-gateway.component';
 
 export const DIAGRAM_GATEWAY_DIRECTIVES: any[] = [
     DiagramGatewayComponent,
     DiagramExclusiveGatewayComponent,
+    DiagramInclusiveGatewayComponent,
     DiagramParallelGatewayComponent
 ];
