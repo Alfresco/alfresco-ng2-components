@@ -16,6 +16,7 @@
  */
 
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { DiagramColorService } from './services/diagram-color.service';
 
 @Component({
     moduleId: module.id,
@@ -38,11 +39,18 @@ export class DiagramEventComponent {
 
     center: any = {};
 
-    constructor(public elementRef: ElementRef) {}
+    constructor(public elementRef: ElementRef,
+                private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         console.log(this.elementRef);
         this.center.x = this.data.x + (this.data.width / 2);
         this.center.y = this.data.y + (this.data.height / 2);
+
+        this.data.radius = this.radius;
+        this.data.strokeWidth = this.strokeWidth;
+        this.data.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
+        this.data.fillColors = this.diagramColorService.getFillColour(this.data.id);
+        this.data.fillOpacity = this.diagramColorService.getFillOpacity();
     }
 }
