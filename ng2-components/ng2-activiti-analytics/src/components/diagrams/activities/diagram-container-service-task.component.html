@@ -5,6 +5,9 @@
     <div *ngSwitchCase="'camel'">
         <diagram-camel-task [data]="data"></diagram-camel-task>
     </div>
+    <div *ngSwitchCase="'mule'">
+        <diagram-mule-task [data]="data"></diagram-mule-task>
+    </div>
     <div *ngSwitchDefault>
         <diagram-service-task [data]="data"></diagram-service-task>
     </div>

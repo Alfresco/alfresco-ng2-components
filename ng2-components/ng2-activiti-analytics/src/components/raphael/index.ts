@@ -30,6 +30,7 @@ import { RaphaelIconSendDirective } from './raphael-icon-send.component';
 import { RaphaelIconUserDirective } from './raphael-icon-user.component';
 import { RaphaelIconManualDirective } from './raphael-icon-manual.component';
 import { RaphaelIconCamelDirective } from './raphael-icon-camel.component';
+import { RaphaelIconMuleDirective } from './raphael-icon-mule.component';
 
 // primitives
 export * from './raphael-circle.component';
@@ -46,6 +47,7 @@ export * from './raphael-icon-send.component';
 export * from './raphael-icon-user.component';
 export * from './raphael-icon-manual.component';
 export * from './raphael-icon-camel.component';
+export * from './raphael-icon-mule.component';
 
 export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelCircleDirective,
@@ -60,5 +62,6 @@ export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelIconSendDirective,
     RaphaelIconUserDirective,
     RaphaelIconManualDirective,
-    RaphaelIconCamelDirective
+    RaphaelIconCamelDirective,
+    RaphaelIconMuleDirective
 ];
