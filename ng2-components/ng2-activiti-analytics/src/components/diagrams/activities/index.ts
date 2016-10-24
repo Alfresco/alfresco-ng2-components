@@ -28,6 +28,7 @@ import { DiagramRestCallTaskComponent } from './diagram-rest-call-task.component
 import { DiagramGoogleDrivePublishTaskComponent } from './diagram-google-drive-publish-task.component';
 import { DiagramBoxPublishTaskComponent } from './diagram-box-publish-task.component';
 import { DiagramReceiveTaskComponent } from './diagram-receive-task.component';
+import { DiagramScriptTaskComponent } from './diagram-script-task.component';
 
 // primitives
 export * from './diagram-container-service-task.component';
@@ -43,6 +44,7 @@ export * from './diagram-rest-call-task.component';
 export * from './diagram-google-drive-publish-task.component';
 export * from './diagram-box-publish-task.component';
 export * from './diagram-receive-task.component';
+export * from './diagram-script-task.component';
 
 export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramContainerServiceTaskComponent,
@@ -57,5 +59,6 @@ export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramRestCallTaskComponent,
     DiagramGoogleDrivePublishTaskComponent,
     DiagramBoxPublishTaskComponent,
-    DiagramReceiveTaskComponent
+    DiagramReceiveTaskComponent,
+    DiagramScriptTaskComponent
 ];
