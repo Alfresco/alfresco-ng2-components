@@ -34,6 +34,18 @@ export class RaphaelIconServiceDirective extends RaphaelBase implements OnInit {
     @Output()
     onError = new EventEmitter();
 
+    @Input()
+    strokeWidth: number;
+
+    @Input()
+    fillColors: any;
+
+    @Input()
+    stroke: any;
+
+    @Input()
+    fillOpacity: any;
+
     constructor(public elementRef: ElementRef,
                 raphaelService: RaphaelService) {
         super(elementRef, raphaelService);
@@ -64,8 +76,8 @@ export class RaphaelIconServiceDirective extends RaphaelBase implements OnInit {
             ' 10.5,2.875 10.5,2.875 L 10,1 8,1 z m 1,5 c 1.656854,0 3,1.3431458 3,3 0,1.656854 -1.343146,3 -3,3 C 7.3431458,12' +
             ' 6,10.656854 6,9 6,7.3431458 7.3431458,6 9,6 z').attr({
             'opacity': 1,
-            'stroke': 'none',
-            'fill': '#72a7d0'
+            'stroke': this.stroke,
+            'fill': this.fillColors
         });
         return path1.transform('T' + position.x + ',' + position.y);
     }

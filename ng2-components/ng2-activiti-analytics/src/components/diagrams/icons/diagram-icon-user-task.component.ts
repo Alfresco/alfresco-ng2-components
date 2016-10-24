@@ -33,10 +33,14 @@ export class DiagramIconUserTaskComponent {
 
     position: any;
 
+    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+
     constructor(public elementRef: ElementRef,
                 private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
         this.position = {x: this.data.x + 4, y: this.data.y + 4};
+        this.options.stroke = 'none' ;
+        this.options.fillColors = '#d1b575' ;
     }
 }
