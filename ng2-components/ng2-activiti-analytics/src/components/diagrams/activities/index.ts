@@ -25,6 +25,7 @@ import { DiagramCamelTaskComponent } from './diagram-camel-task.component';
 import { DiagramMuleTaskComponent } from './diagram-mule-task.component';
 import { DiagramAlfrescoPublishTaskComponent } from './diagram-alfresco-publish-task.component';
 import { DiagramRestCallTaskComponent } from './diagram-rest-call-task.component';
+import { DiagramGoogleDrivePublishTaskComponent } from './diagram-google-drive-publish-task.component';
 
 // primitives
 export * from './diagram-container-service-task.component';
@@ -37,6 +38,7 @@ export * from './diagram-camel-task.component';
 export * from './diagram-mule-task.component';
 export * from './diagram-alfresco-publish-task.component';
 export * from './diagram-rest-call-task.component';
+export * from './diagram-google-drive-publish-task.component';
 
 export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramContainerServiceTaskComponent,
@@ -48,5 +50,6 @@ export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramCamelTaskComponent,
     DiagramMuleTaskComponent,
     DiagramAlfrescoPublishTaskComponent,
-    DiagramRestCallTaskComponent
+    DiagramRestCallTaskComponent,
+    DiagramGoogleDrivePublishTaskComponent
 ];
