@@ -16,9 +16,9 @@
  */
 
 import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { Point } from './models/point';
-import { RaphaelBase } from './raphael-base';
-import { RaphaelService } from './raphael.service';
+import { Point } from './../models/point';
+import { RaphaelBase } from './../raphael-base';
+import { RaphaelService } from './../raphael.service';
 
 @Directive({selector: 'raphael-icon-camel'})
 export class RaphaelIconCamelDirective extends RaphaelBase implements OnInit {
