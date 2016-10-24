@@ -24,4 +24,4 @@
 </form>
 <alfresco-search-autocomplete *ngIf="autocompleteEnabled"
                               [searchTerm]="autocompleteSearchTerm" [ngClass]="{active: searchActive, valid: searchValid}"
-                              (preview)="onFileClicked($event)"></alfresco-search-autocomplete>
+                              (preview)="onFileClicked($event)" (blurEmitter)="onAutoCompleteBlur($event)"></alfresco-search-autocomplete>

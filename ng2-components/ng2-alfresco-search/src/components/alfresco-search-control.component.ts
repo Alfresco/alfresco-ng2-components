@@ -138,6 +138,10 @@ export class AlfrescoSearchControlComponent implements OnInit {
 
     onBlur(): void {
         window.setTimeout(() => {
+            let focusedEl = document.activeElement;
+            if (focusedEl && focusedEl.id && focusedEl.id.indexOf('result_row_') === 0) {
+                return;
+            }
             this.searchActive = false;
         }, 200);
         if (this.expandable && (this.searchControl.value === '' || this.searchControl.value === undefined)) {
@@ -153,6 +157,10 @@ export class AlfrescoSearchControlComponent implements OnInit {
 
     onArrowDown(): void {
         this.searchActive = true;
+    }
+
+    onAutoCompleteBlur(): void {
+        this.searchActive = false;
     }
 
 }

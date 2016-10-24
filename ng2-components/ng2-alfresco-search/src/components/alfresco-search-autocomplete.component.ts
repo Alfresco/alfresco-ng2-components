@@ -44,6 +44,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     preview: EventEmitter<any> = new EventEmitter();
 
     @Output()
+    blurEmitter: EventEmitter<any> = new EventEmitter();
+
+    @Output()
     resultsEmitter = new EventEmitter();
 
     @Output()
@@ -127,6 +130,35 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
                 });
             }
         }
+    }
+
+    onRowBlur(node): void {
+        window.setTimeout(() => {
+            let focusedEl = document.activeElement;
+            if (focusedEl && focusedEl.id && focusedEl.id.indexOf('result_row_') === 0) {
+                return;
+            }
+            this.blurEmitter.emit(node);
+        }, 100);
+        console.log('row blur', node);
+    }
+
+    onRowFocus(node): void {
+        console.log('row focus', node);
+    }
+
+    onRowEnter(node): void {
+        if (node && node.entry) {
+            if (node.entry.isFile) {
+                this.preview.emit({
+                    value: node
+                });
+            }
+        }
+    }
+
+    onFocusOut(): void {
+        console.log('onfocusout');
     }
 
 }

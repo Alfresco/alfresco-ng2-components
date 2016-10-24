@@ -16,7 +16,7 @@
     </thead>
     <tbody>
 
-    <tr  id="result_row_{{idx}}" *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)">
+    <tr  id="result_row_{{idx}}" tabindex="0" *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)" (keyup.enter)="onItemClick(result, $event)">
         <td class="col-mimetype-icon"><img src="{{getMimeTypeIcon(result)}}" alt="{{getMimeTypeKey(result)|translate}}" /></td>
         <td id="result_name_{{idx}}" class="mdl-data-table__cell--non-numeric col-display-name"
             attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
