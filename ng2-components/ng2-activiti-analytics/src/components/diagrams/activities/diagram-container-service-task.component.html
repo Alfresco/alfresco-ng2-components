@@ -11,6 +11,9 @@
     <div *ngSwitchCase="'alfresco_publish'">
         <diagram-alfresco-publish-task [data]="data"></diagram-alfresco-publish-task>
     </div>
+    <div *ngSwitchCase="'rest_call'">
+        <diagram-rest-call-task [data]="data"></diagram-rest-call-task>
+    </div>
     <div *ngSwitchDefault>
         <diagram-service-task [data]="data"></diagram-service-task>
     </div>
