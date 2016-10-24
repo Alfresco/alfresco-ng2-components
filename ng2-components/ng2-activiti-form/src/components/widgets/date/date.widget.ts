@@ -72,6 +72,7 @@ export class DateWidget extends TextFieldWidgetComponent implements OnInit {
     onDateSelected() {
         let newValue = this.datePicker.time.format(this.DATE_FORMAT);
         this.field.value = newValue;
+        this.checkVisibility(this.field);
 
         if (this.elementRef) {
             this.setupMaterialTextField(this.elementRef, componentHandler, newValue);
