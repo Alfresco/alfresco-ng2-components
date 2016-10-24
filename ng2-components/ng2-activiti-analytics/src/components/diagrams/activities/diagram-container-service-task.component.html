@@ -8,6 +8,9 @@
     <div *ngSwitchCase="'mule'">
         <diagram-mule-task [data]="data"></diagram-mule-task>
     </div>
+    <div *ngSwitchCase="'alfresco_publish'">
+        <diagram-alfresco-publish-task [data]="data"></diagram-alfresco-publish-task>
+    </div>
     <div *ngSwitchDefault>
         <diagram-service-task [data]="data"></diagram-service-task>
     </div>

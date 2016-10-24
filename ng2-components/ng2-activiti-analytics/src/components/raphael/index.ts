@@ -31,6 +31,7 @@ import { RaphaelIconUserDirective } from './raphael-icon-user.component';
 import { RaphaelIconManualDirective } from './raphael-icon-manual.component';
 import { RaphaelIconCamelDirective } from './raphael-icon-camel.component';
 import { RaphaelIconMuleDirective } from './raphael-icon-mule.component';
+import { RaphaelIconAlfrescoPublishDirective } from './raphael-icon-alfresco-publish.component';
 
 // primitives
 export * from './raphael-circle.component';
@@ -48,6 +49,7 @@ export * from './raphael-icon-user.component';
 export * from './raphael-icon-manual.component';
 export * from './raphael-icon-camel.component';
 export * from './raphael-icon-mule.component';
+export * from './raphael-icon-alfresco-publish.component';
 
 export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelCircleDirective,
@@ -63,5 +65,6 @@ export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelIconUserDirective,
     RaphaelIconManualDirective,
     RaphaelIconCamelDirective,
-    RaphaelIconMuleDirective
+    RaphaelIconMuleDirective,
+    RaphaelIconAlfrescoPublishDirective
 ];
