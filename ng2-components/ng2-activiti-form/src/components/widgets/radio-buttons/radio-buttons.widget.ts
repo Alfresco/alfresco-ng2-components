@@ -49,6 +49,11 @@ export class RadioButtonsWidget extends WidgetComponent implements OnInit {
         }
     }
 
+    onOptionClick(optionSelected: any) {
+        this.field.value = optionSelected;
+        this.checkVisibility(this.field);
+    }
+
     handleError(error: any) {
         console.error(error);
     }
