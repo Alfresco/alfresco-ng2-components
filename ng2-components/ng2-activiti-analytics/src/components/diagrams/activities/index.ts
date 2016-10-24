@@ -29,6 +29,7 @@ import { DiagramGoogleDrivePublishTaskComponent } from './diagram-google-drive-p
 import { DiagramBoxPublishTaskComponent } from './diagram-box-publish-task.component';
 import { DiagramReceiveTaskComponent } from './diagram-receive-task.component';
 import { DiagramScriptTaskComponent } from './diagram-script-task.component';
+import { DiagramBusinessRuleTaskComponent } from './diagram-business-rule-task.component';
 
 // primitives
 export * from './diagram-container-service-task.component';
@@ -45,6 +46,7 @@ export * from './diagram-google-drive-publish-task.component';
 export * from './diagram-box-publish-task.component';
 export * from './diagram-receive-task.component';
 export * from './diagram-script-task.component';
+export * from './diagram-business-rule-task.component';
 
 export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramContainerServiceTaskComponent,
@@ -60,5 +62,6 @@ export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramGoogleDrivePublishTaskComponent,
     DiagramBoxPublishTaskComponent,
     DiagramReceiveTaskComponent,
-    DiagramScriptTaskComponent
+    DiagramScriptTaskComponent,
+    DiagramBusinessRuleTaskComponent
 ];

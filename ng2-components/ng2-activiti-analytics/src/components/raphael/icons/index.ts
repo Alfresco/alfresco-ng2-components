@@ -27,6 +27,7 @@ import { RaphaelIconGoogleDrivePublishDirective } from './raphael-icon-google-dr
 import { RaphaelIconBoxPublishDirective } from './raphael-icon-box-publish.component';
 import { RaphaelIconReceiveDirective } from './raphael-icon-receive.component';
 import { RaphaelIconScriptDirective } from './raphael-icon-script.component';
+import { RaphaelIconBusinessRuleDirective } from './raphael-icon-business-rule.component';
 
 // primitives
 export * from './raphael-icon-service.component';
@@ -41,6 +42,7 @@ export * from './raphael-icon-google-drive-publish.component';
 export * from './raphael-icon-box-publish.component';
 export * from './raphael-icon-receive.component';
 export * from './raphael-icon-script.component';
+export * from './raphael-icon-business-rule.component';
 
 export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconServiceDirective,
@@ -54,5 +56,6 @@ export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconGoogleDrivePublishDirective,
     RaphaelIconBoxPublishDirective,
     RaphaelIconReceiveDirective,
-    RaphaelIconScriptDirective
+    RaphaelIconScriptDirective,
+    RaphaelIconBusinessRuleDirective
 ];

@@ -34,6 +34,9 @@
             <div *ngSwitchCase="'ScriptTask'">
                 <diagram-script-task [data]="element"></diagram-script-task>
             </div>
+            <div *ngSwitchCase="'BusinessRuleTask'">
+                <diagram-business-rule-task [data]="element"></diagram-business-rule-task>
+            </div>
         </div>
     </div>
     <div *ngFor="let flow of diagram.flows">

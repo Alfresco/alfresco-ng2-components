@@ -27,6 +27,7 @@ import { DiagramIconGoogleDrivePublishTaskComponent } from './diagram-icon-googl
 import { DiagramIconBoxPublishTaskComponent } from './diagram-icon-box-publish-task.component';
 import { DiagramIconReceiveTaskComponent } from './diagram-icon-receive-task.component';
 import { DiagramIconScriptTaskComponent } from './diagram-icon-script-task.component';
+import { DiagramIconBusinessRuleTaskComponent } from './diagram-icon-business-rule-task.component';
 
 // primitives
 export * from './diagram-icon-service-task.component';
@@ -41,6 +42,7 @@ export * from './diagram-icon-google-drive-publish-task.component';
 export * from './diagram-icon-box-publish-task.component';
 export * from './diagram-icon-receive-task.component';
 export * from './diagram-icon-script-task.component';
+export * from './diagram-icon-business-rule-task.component';
 
 export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
     DiagramIconServiceTaskComponent,
@@ -54,5 +56,6 @@ export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
     DiagramIconGoogleDrivePublishTaskComponent,
     DiagramIconBoxPublishTaskComponent,
     DiagramIconReceiveTaskComponent,
-    DiagramIconScriptTaskComponent
+    DiagramIconScriptTaskComponent,
+    DiagramIconBusinessRuleTaskComponent
 ];
