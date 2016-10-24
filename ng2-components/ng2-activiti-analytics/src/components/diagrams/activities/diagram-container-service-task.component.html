@@ -2,6 +2,9 @@
     <div *ngSwitchCase="'mail'">
         <diagram-send-task [data]="data"></diagram-send-task>
     </div>
+    <div *ngSwitchCase="'camel'">
+        <diagram-camel-task [data]="data"></diagram-camel-task>
+    </div>
     <div *ngSwitchDefault>
         <diagram-service-task [data]="data"></diagram-service-task>
     </div>

@@ -21,6 +21,7 @@ import { DiagramServiceTaskComponent } from './diagram-service-task.component';
 import { DiagramSendTaskComponent } from './diagram-send-task.component';
 import { DiagramUserTaskComponent } from './diagram-user-task.component';
 import { DiagramManualTaskComponent } from './diagram-manual-task.component';
+import { DiagramCamelTaskComponent } from './diagram-camel-task.component';
 
 // primitives
 export * from './diagram-container-service-task.component';
@@ -29,6 +30,7 @@ export * from './diagram-service-task.component';
 export * from './diagram-send-task.component';
 export * from './diagram-user-task.component';
 export * from './diagram-manual-task.component';
+export * from './diagram-camel-task.component';
 
 export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramContainerServiceTaskComponent,
@@ -36,5 +38,6 @@ export const DIAGRAM_ACTIVITIES_DIRECTIVES: any[] = [
     DiagramServiceTaskComponent,
     DiagramSendTaskComponent,
     DiagramUserTaskComponent,
-    DiagramManualTaskComponent
+    DiagramManualTaskComponent,
+    DiagramCamelTaskComponent
 ];
