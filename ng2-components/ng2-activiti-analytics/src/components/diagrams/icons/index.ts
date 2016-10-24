@@ -25,6 +25,7 @@ import { DiagramIconAlfrescoPublishTaskComponent } from './diagram-icon-alfresco
 import { DiagramIconRestCallTaskComponent } from './diagram-icon-rest-call-task.component';
 import { DiagramIconGoogleDrivePublishTaskComponent } from './diagram-icon-google-drive-publish-task.component';
 import { DiagramIconBoxPublishTaskComponent } from './diagram-icon-box-publish-task.component';
+import { DiagramIconReceiveTaskComponent } from './diagram-icon-receive-task.component';
 
 // primitives
 export * from './diagram-icon-service-task.component';
@@ -37,6 +38,7 @@ export * from './diagram-icon-alfresco-publish-task.component';
 export * from './diagram-icon-rest-call-task.component';
 export * from './diagram-icon-google-drive-publish-task.component';
 export * from './diagram-icon-box-publish-task.component';
+export * from './diagram-icon-receive-task.component';
 
 export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
     DiagramIconServiceTaskComponent,
@@ -48,5 +50,6 @@ export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
     DiagramIconAlfrescoPublishTaskComponent,
     DiagramIconRestCallTaskComponent,
     DiagramIconGoogleDrivePublishTaskComponent,
-    DiagramIconBoxPublishTaskComponent
+    DiagramIconBoxPublishTaskComponent,
+    DiagramIconReceiveTaskComponent
 ];
