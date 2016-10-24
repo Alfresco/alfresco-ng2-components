@@ -18,14 +18,17 @@
 import { DiagramIconServiceTaskComponent } from './diagram-icon-service-task.component';
 import { DiagramIconSendTaskComponent } from './diagram-icon-send-task.component';
 import { DiagramIconUserTaskComponent } from './diagram-icon-user-task.component';
+import { DiagramIconManualTaskComponent } from './diagram-icon-manual-task.component';
 
 // primitives
 export * from './diagram-icon-service-task.component';
 export * from './diagram-icon-send-task.component';
 export * from './diagram-icon-user-task.component';
+export * from './diagram-icon-manual-task.component';
 
 export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
     DiagramIconServiceTaskComponent,
     DiagramIconSendTaskComponent,
-    DiagramIconUserTaskComponent
+    DiagramIconUserTaskComponent,
+    DiagramIconManualTaskComponent
 ];
