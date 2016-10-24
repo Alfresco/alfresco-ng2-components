@@ -17,6 +17,9 @@
     <div *ngSwitchCase="'google_drive_publish'">
         <diagram-google-drive-publish-task [data]="data"></diagram-google-drive-publish-task>
     </div>
+    <div *ngSwitchCase="'box_publish'">
+        <diagram-box-publish-task [data]="data"></diagram-box-publish-task>
+    </div>
     <div *ngSwitchDefault>
         <diagram-service-task [data]="data"></diagram-service-task>
     </div>

@@ -24,6 +24,7 @@ import { RaphaelIconMuleDirective } from './raphael-icon-mule.component';
 import { RaphaelIconAlfrescoPublishDirective } from './raphael-icon-alfresco-publish.component';
 import { RaphaelIconRestCallDirective } from './raphael-icon-rest-call.component';
 import { RaphaelIconGoogleDrivePublishDirective } from './raphael-icon-google-drive-publish.component';
+import { RaphaelIconBoxPublishDirective } from './raphael-icon-box-publish.component';
 
 // primitives
 export * from './raphael-icon-service.component';
@@ -35,6 +36,7 @@ export * from './raphael-icon-mule.component';
 export * from './raphael-icon-alfresco-publish.component';
 export * from './raphael-icon-rest-call.component';
 export * from './raphael-icon-google-drive-publish.component';
+export * from './raphael-icon-box-publish.component';
 
 export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconServiceDirective,
@@ -45,5 +47,6 @@ export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconMuleDirective,
     RaphaelIconAlfrescoPublishDirective,
     RaphaelIconRestCallDirective,
-    RaphaelIconGoogleDrivePublishDirective
+    RaphaelIconGoogleDrivePublishDirective,
+    RaphaelIconBoxPublishDirective
 ];
