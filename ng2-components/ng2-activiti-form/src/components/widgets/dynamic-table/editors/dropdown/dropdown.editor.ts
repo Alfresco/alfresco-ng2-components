@@ -62,6 +62,4 @@ export class DropdownEditorComponent extends CellEditorComponent implements OnIn
         value = column.options.find(opt => opt.name === value);
         row.value[column.id] = value;
     }
-
-
 }
