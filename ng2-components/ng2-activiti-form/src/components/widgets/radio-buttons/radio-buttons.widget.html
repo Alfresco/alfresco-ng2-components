@@ -1,5 +1,5 @@
 <div class="radio-buttons-widget"
-     [class.radio-buttons-widget__invalid]="!field.isValid" [id]="field.id">
+     [class.radio-buttons-widget__invalid]="!field.isValid" [id]="field.id" *ngIf="field?.isVisible">
     <label class="radio-buttons-widget__label" [attr.for]="field.id">{{field.name}}</label>
     <div *ngFor="let opt of field.options">
         <label [id]="opt.id" [attr.for]="field.id + '-' + opt.id" class="mdl-radio mdl-js-radio">
@@ -10,7 +10,7 @@
                    [attr.name]="field.id"
                    [attr.value]="opt.id"
                    [disabled]="field.readOnly"
-                   (click)="field.value = opt.id">
+                   (click)="onOptionClick(opt.id)">
             <span class="mdl-radio__label">{{opt.name}}</span>
         </label>
     </div>
