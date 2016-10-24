@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CellEditorComponent } from './../cell.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
+import { DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../../core/index';
+import { FormService } from './../../../../../services/form.service';
 
 @Component({
     moduleId: module.id,
@@ -25,12 +26,42 @@ import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
     templateUrl: './dropdown.editor.html',
     styleUrls: ['./dropdown.editor.css']
 })
-export class DropdownEditorComponent extends CellEditorComponent {
+export class DropdownEditorComponent extends CellEditorComponent implements OnInit {
+
+    value: any;
+    options: DynamicTableColumnOption[] = [];
+
+    constructor(private formService: FormService) {
+        super();
+    }
+
+    ngOnInit() {
+        this.value = this.table.getCellValue(this.row, this.column);
+        this.options = this.column.options || [];
+
+        let field = this.table.field;
+        if (field && field.restUrl) {
+            this.formService
+                .getRestFieldValuesColumn(
+                    field.form.taskId,
+                    field.id,
+                    this.column.id
+                )
+                .subscribe(
+                    (result: DynamicTableColumnOption[]) => {
+                        this.column.options = result || [];
+                        this.options = this.column.options;
+                    },
+                    err => this.handleError(err)
+                );
+        }
+    }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: Event) {
         let value: any = (<HTMLInputElement>event.srcElement).value;
         value = column.options.find(opt => opt.name === value);
         row.value[column.id] = value;
     }
+
 
 }

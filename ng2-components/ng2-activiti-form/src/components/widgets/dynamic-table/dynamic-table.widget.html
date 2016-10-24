@@ -51,7 +51,7 @@
         </div>
      </div>
 
-     <div *ngIf="editMode">
+     <div *ngIf="editMode" class="mdl-shadow--2dp">
          <div class="mdl-grid" *ngFor="let column of content.columns">
              <div class="mdl-cell mdl-cell--6-col" [ngSwitch]="column.type">
                  <div *ngSwitchCase="'Dropdown'">

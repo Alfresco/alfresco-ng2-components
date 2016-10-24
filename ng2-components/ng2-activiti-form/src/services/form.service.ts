@@ -208,7 +208,12 @@ export class FormService {
 
     getRestFieldValues(taskId: string, field: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return Observable.fromPromise(alfrescoApi.activiti.taskFormsApi.getRestFieldValues(taskId, field));
+        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field));
+    }
+
+    getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValuesColumn(taskId, field, column));
     }
 
     // TODO: uses private webApp api
