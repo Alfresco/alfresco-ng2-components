@@ -32,12 +32,14 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     editMode: boolean;
     editRow: DynamicTableRow;
+    validationSummary: string;
 
     constructor(private elementRef: ElementRef) {
         super();
     }
 
     ngOnInit() {
+        this.validationSummary = 'hello world';
     }
 
     onRowClicked(row: DynamicTableRow) {

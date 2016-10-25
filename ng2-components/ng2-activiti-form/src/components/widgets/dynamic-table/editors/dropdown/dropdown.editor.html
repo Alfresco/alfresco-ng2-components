@@ -1,9 +1,11 @@
-<div>
+<div class="dropdown-editor">
     <label [attr.for]="column.id">{{column.name}}</label>
     <div>
         <select
-            [value]="value"
             class="dropdown-editor__select"
+            [value]="value"
+            [required]="column.required"
+            [disabled]="!column.editable"
             (change)="onValueChanged(row, column, $event)">
             <option></option>
             <option *ngFor="let opt of options" [value]="opt.name">{{opt.name}}</option>

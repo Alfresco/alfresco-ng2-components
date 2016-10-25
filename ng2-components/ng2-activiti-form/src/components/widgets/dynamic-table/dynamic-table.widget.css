@@ -11,10 +11,6 @@
     width: 100%;
 }
 
-.dynamic-table-widget__table-editor {
-    width: 100%;
-}
-
 .dynamic-table-widget__invalid .mdl-textfield__input {
     border-color: #d50000;
 }

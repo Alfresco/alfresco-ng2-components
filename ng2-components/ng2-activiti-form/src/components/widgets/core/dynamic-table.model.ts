@@ -29,6 +29,7 @@ export class DynamicTableModel extends FormWidgetModel {
     rows: DynamicTableRow[] = [];
 
     private _selectedRow: DynamicTableRow;
+    private _validators: CellValidator[] = [];
 
     get selectedRow(): DynamicTableRow {
         return this._selectedRow;
@@ -65,6 +66,11 @@ export class DynamicTableModel extends FormWidgetModel {
                 this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
             }
         }
+
+        this._validators = [
+            new RequiredCellValidator(),
+            new NumberCellValidator()
+        ];
     }
 
     flushValue() {
@@ -112,6 +118,25 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
+    validateRow(row: DynamicTableRow): DynamicRowValidationSummary {
+        let summary = <DynamicRowValidationSummary> {
+            isValid: true,
+            text: null
+        };
+
+        if (row) {
+            for (let col of this.columns) {
+                for (let validator of this._validators) {
+                    if (!validator.validate(row, col, summary)) {
+                        return summary;
+                    }
+                }
+            }
+        }
+
+        return summary;
+    }
+
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
         let result = row.value[column.id];
 
@@ -132,5 +157,92 @@ export class DynamicTableModel extends FormWidgetModel {
         }
 
         return result || '';
+    }
+}
+
+export interface DynamicRowValidationSummary {
+
+    isValid: boolean;
+    text: string;
+
+}
+
+export interface CellValidator {
+
+    isSupported(column: DynamicTableColumn): boolean;
+    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean;
+
+}
+
+export class RequiredCellValidator implements CellValidator {
+
+    private supportedTypes: string[] = [
+        'String',
+        'Number',
+        'Amount',
+        'Date',
+        'Dropdown'
+    ];
+
+    isSupported(column: DynamicTableColumn): boolean {
+        return column && column.required && this.supportedTypes.indexOf(column.type) > -1;
+    }
+
+    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
+        if (this.isSupported(column)) {
+            let value = row.value[column.id];
+            if (column.required) {
+                if (value === null || value === undefined || value === '') {
+                    if (summary) {
+                        summary.isValid = false;
+                        summary.text = `Field '${column.name}' is required.`;
+                    }
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+}
+
+export class NumberCellValidator implements CellValidator {
+
+    private supportedTypes: string[] = [
+        'Number',
+        'Amount'
+    ];
+
+    isSupported(column: DynamicTableColumn): boolean {
+        return column && column.required && this.supportedTypes.indexOf(column.type) > -1;
+    }
+
+    isNumber(value: any): boolean {
+        if (value === null || value === undefined || value === '') {
+            return false;
+        }
+
+        return !isNaN(+value);
+    }
+
+    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
+
+        if (this.isSupported(column)) {
+            let value = row.value[column.id];
+            if (value === null ||
+                value === undefined ||
+                value === '' ||
+                this.isNumber(value)) {
+                return true;
+            }
+
+            if (summary) {
+                summary.isValid = false;
+                summary.text = `Field '${column.name}' must be a number.`;
+            }
+            return false;
+        }
+        return true;
     }
 }

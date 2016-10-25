@@ -36,24 +36,27 @@ export class DropdownEditorComponent extends CellEditorComponent implements OnIn
     }
 
     ngOnInit() {
-        this.value = this.table.getCellValue(this.row, this.column);
-        this.options = this.column.options || [];
-
         let field = this.table.field;
-        if (field && field.restUrl) {
-            this.formService
-                .getRestFieldValuesColumn(
-                    field.form.taskId,
-                    field.id,
-                    this.column.id
-                )
-                .subscribe(
-                    (result: DynamicTableColumnOption[]) => {
-                        this.column.options = result || [];
-                        this.options = this.column.options;
-                    },
-                    err => this.handleError(err)
-                );
+        if (field) {
+            if (this.column.optionType === 'rest') {
+                this.formService
+                    .getRestFieldValuesColumn(
+                        field.form.taskId,
+                        field.id,
+                        this.column.id
+                    )
+                    .subscribe(
+                        (result: DynamicTableColumnOption[]) => {
+                            this.column.options = result || [];
+                            this.options = this.column.options;
+                            this.value = this.table.getCellValue(this.row, this.column);
+                        },
+                        err => this.handleError(err)
+                    );
+            } else {
+                this.options = this.column.options || [];
+                this.value = this.table.getCellValue(this.row, this.column);
+            }
         }
     }
 
