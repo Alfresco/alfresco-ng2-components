@@ -77,4 +77,16 @@ describe('AlfrescoSearchService', () => {
         );
     });
 
+    it('should notify a general error if the API does not return a specific error', (done) => {
+        spyOn(fakeApi.core.searchApi, 'liveSearchNodes').and.returnValue(Promise.reject(null));
+        service.getLiveSearchResults('').subscribe(
+            () => {},
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res).toEqual('Server error');
+                done();
+            }
+        );
+    });
+
 });
