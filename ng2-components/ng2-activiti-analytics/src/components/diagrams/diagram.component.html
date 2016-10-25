@@ -37,6 +37,9 @@
             <div *ngSwitchCase="'BusinessRuleTask'">
                 <diagram-business-rule-task [data]="element"></diagram-business-rule-task>
             </div>
+            <div *ngSwitchCase="'BoundaryEvent'">
+                <diagram-boundary-event [data]="element"></diagram-boundary-event>
+            </div>
         </div>
     </div>
     <div *ngFor="let flow of diagram.flows">

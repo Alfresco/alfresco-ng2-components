@@ -28,6 +28,7 @@ import { RaphaelIconBoxPublishDirective } from './raphael-icon-box-publish.compo
 import { RaphaelIconReceiveDirective } from './raphael-icon-receive.component';
 import { RaphaelIconScriptDirective } from './raphael-icon-script.component';
 import { RaphaelIconBusinessRuleDirective } from './raphael-icon-business-rule.component';
+import { RaphaelIconTimerDirective } from './raphael-icon-timer.component';
 
 // primitives
 export * from './raphael-icon-service.component';
@@ -43,6 +44,7 @@ export * from './raphael-icon-box-publish.component';
 export * from './raphael-icon-receive.component';
 export * from './raphael-icon-script.component';
 export * from './raphael-icon-business-rule.component';
+export * from './raphael-icon-timer.component';
 
 export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconServiceDirective,
@@ -57,5 +59,6 @@ export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconBoxPublishDirective,
     RaphaelIconReceiveDirective,
     RaphaelIconScriptDirective,
-    RaphaelIconBusinessRuleDirective
+    RaphaelIconBusinessRuleDirective,
+    RaphaelIconTimerDirective
 ];
