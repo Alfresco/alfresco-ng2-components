@@ -44,7 +44,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     preview: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    blurEmitter: EventEmitter<any> = new EventEmitter();
+    focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     @Output()
     resultsEmitter = new EventEmitter();
@@ -132,19 +132,12 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
         }
     }
 
-    onRowBlur(node): void {
-        window.setTimeout(() => {
-            let focusedEl = document.activeElement;
-            if (focusedEl && focusedEl.id && focusedEl.id.indexOf('result_row_') === 0) {
-                return;
-            }
-            this.blurEmitter.emit(node);
-        }, 100);
-        console.log('row blur', node);
+    onRowFocus($event: FocusEvent): void {
+        this.focusEmitter.emit($event);
     }
 
-    onRowFocus(node): void {
-        console.log('row focus', node);
+    onRowBlur($event: FocusEvent): void {
+        this.focusEmitter.emit($event);
     }
 
     onRowEnter(node): void {
@@ -155,10 +148,6 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
                 });
             }
         }
-    }
-
-    onFocusOut(): void {
-        console.log('onfocusout');
     }
 
 }

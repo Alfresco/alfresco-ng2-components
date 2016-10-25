@@ -19,6 +19,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { result, folderResult, noResult, errorJson } from './../assets/alfresco-search.component.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
     AlfrescoApiService,
@@ -33,66 +34,6 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
     let fixture: ComponentFixture<AlfrescoSearchAutocompleteComponent>, element: HTMLElement;
     let component: AlfrescoSearchAutocompleteComponent;
-
-    let result = {
-        list: {
-            entries: [
-                {
-                    entry: {
-                        id: '123',
-                        name: 'MyDoc',
-                        isFile : true,
-                        content: {
-                            mimeType: 'text/plain'
-                        },
-                        createdByUser: {
-                            displayName: 'John Doe'
-                        },
-                        modifiedByUser: {
-                            displayName: 'John Doe'
-                        }
-                    }
-                }
-            ]
-        }
-    };
-
-    let folderResult = {
-        list: {
-            entries: [
-                {
-                    entry: {
-                        id: '123',
-                        name: 'MyFolder',
-                        isFile : false,
-                        isFolder : true,
-                        createdByUser: {
-                            displayName: 'John Doe'
-                        },
-                        modifiedByUser: {
-                            displayName: 'John Doe'
-                        }
-                    }
-                }
-            ]
-        }
-    };
-
-    let noResult = {
-        list: {
-            entries: []
-        }
-    };
-
-    let errorJson = {
-        error: {
-            errorKey: 'Search failed',
-            statusCode: 400,
-            briefSummary: '08220082 search failed',
-            stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
-            descriptionURL: 'https://api-explorer.alfresco.com'
-        }
-    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -284,6 +225,69 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         component.searchTerm = 'searchTerm';
         component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''}});
+    });
+
+    it('should emit preview when enter key pressed when a file item is in focus', (done) => {
+
+        let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+        spyOn(searchService, 'getSearchNodesPromise')
+            .and.returnValue(Promise.resolve(result));
+
+        component.resultsEmitter.subscribe(x => {
+            fixture.detectChanges();
+            (<any> element.querySelector('#result_row_0')).dispatchEvent(new KeyboardEvent('keyup', {
+                key: 'Enter'
+            }));
+        });
+
+        component.searchTerm = 'searchTerm';
+        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''}});
+
+        component.preview.subscribe(e => {
+            done();
+        });
+    });
+
+    it('should emit a focus event when a result comes into focus', (done) => {
+
+        let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+        spyOn(searchService, 'getSearchNodesPromise')
+            .and.returnValue(Promise.resolve(result));
+
+        component.resultsEmitter.subscribe(x => {
+            fixture.detectChanges();
+            (<any> element.querySelector('#result_row_0')).dispatchEvent(new FocusEvent('focus'));
+        });
+
+        component.searchTerm = 'searchTerm';
+        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''}});
+
+        component.focusEmitter.subscribe((e: FocusEvent) => {
+            expect(e).not.toBeNull();
+            expect(e.type).toBe('focus');
+            done();
+        });
+    });
+
+    it('should emit a focus event when a result loses focus', (done) => {
+
+        let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+        spyOn(searchService, 'getSearchNodesPromise')
+            .and.returnValue(Promise.resolve(result));
+
+        component.resultsEmitter.subscribe(x => {
+            fixture.detectChanges();
+            (<any> element.querySelector('#result_row_0')).dispatchEvent(new FocusEvent('blur'));
+        });
+
+        component.searchTerm = 'searchTerm';
+        component.ngOnChanges({searchTerm: { currentValue: 'searchTerm', previousValue: ''}});
+
+        component.focusEmitter.subscribe((e: FocusEvent) => {
+            expect(e).not.toBeNull();
+            expect(e.type).toBe('blur');
+            done();
+        });
     });
 
 });
