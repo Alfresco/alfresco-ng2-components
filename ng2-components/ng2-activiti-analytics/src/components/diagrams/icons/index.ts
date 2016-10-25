@@ -32,6 +32,7 @@ import { DiagramContainerIconEventTaskComponent } from './diagram-container-icon
 import { DiagramIconTimerComponent } from './diagram-icon-timer.component';
 import { DiagramIconErrorComponent } from './diagram-icon-error.component';
 import { DiagramIconSignalComponent } from './diagram-icon-signal.component';
+import { DiagramIconMessageComponent } from './diagram-icon-message.component';
 
 // primitives
 export * from './diagram-icon-service-task.component';
@@ -51,6 +52,7 @@ export * from './diagram-container-icon-event.component';
 export * from './diagram-icon-timer.component';
 export * from './diagram-icon-error.component';
 export * from './diagram-icon-signal.component';
+export * from './diagram-icon-message.component';
 
 export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
     DiagramIconServiceTaskComponent,
@@ -69,5 +71,6 @@ export const DIAGRAM_ICONS_DIRECTIVES: any[] = [
     DiagramContainerIconEventTaskComponent,
     DiagramIconTimerComponent,
     DiagramIconErrorComponent,
-    DiagramIconSignalComponent
+    DiagramIconSignalComponent,
+    DiagramIconMessageComponent
 ];

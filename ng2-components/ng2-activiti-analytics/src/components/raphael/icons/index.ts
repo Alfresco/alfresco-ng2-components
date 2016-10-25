@@ -31,6 +31,7 @@ import { RaphaelIconBusinessRuleDirective } from './raphael-icon-business-rule.c
 import { RaphaelIconTimerDirective } from './raphael-icon-timer.component';
 import { RaphaelIconErrorDirective } from './raphael-icon-error.component';
 import { RaphaelIconSignalDirective } from './raphael-icon-signal.component';
+import { RaphaelIconMessageDirective } from './raphael-icon-message.component';
 
 // primitives
 export * from './raphael-icon-service.component';
@@ -49,6 +50,7 @@ export * from './raphael-icon-business-rule.component';
 export * from './raphael-icon-timer.component';
 export * from './raphael-icon-error.component';
 export * from './raphael-icon-signal.component';
+export * from './raphael-icon-message.component';
 
 export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconServiceDirective,
@@ -66,5 +68,6 @@ export const RAPHAEL_ICONS_DIRECTIVES: any[] = [
     RaphaelIconBusinessRuleDirective,
     RaphaelIconTimerDirective,
     RaphaelIconErrorDirective,
-    RaphaelIconSignalDirective
+    RaphaelIconSignalDirective,
+    RaphaelIconMessageDirective
 ];
