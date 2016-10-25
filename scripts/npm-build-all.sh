@@ -11,11 +11,11 @@ build_project() {
 }
 
 for PACKAGE in \
+  ng2-alfresco-core \
   ng2-activiti-analytics \
   ng2-activiti-form \
-  ng2-activiti-processlist \
   ng2-activiti-tasklist \
-  ng2-alfresco-core \
+  ng2-activiti-processlist \
   ng2-alfresco-datatable \
   ng2-alfresco-documentlist \
   ng2-alfresco-login \
