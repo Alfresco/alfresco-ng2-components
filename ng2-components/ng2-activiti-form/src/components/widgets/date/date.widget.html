@@ -2,11 +2,13 @@
     <div class="mdl-cell mdl-cell--11-col">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label date-widget"
             [class.date-widget__invalid]="!field.isValid">
-            <input class="mdl-textfield__input"
+            <input id="dateInput"
+                class="mdl-textfield__input"
                 type="text"
                 [attr.id]="field.id"
                 [attr.required]="isRequired()"
                 [(ngModel)]="field.value"
+                [value]="field.value"
                 (ngModelChange)="onDateChanged()"
                 (onOk)="onDateSelected()"
                 [disabled]="field.readOnly">
