@@ -389,6 +389,20 @@ describe('WidgetVisibilityService', () => {
             expect(rightValue).toBe('100');
         });
 
+        it('should return formatted date when right value is a date', () => {
+            visibilityObjTest.rightValue = '9999-12-31';
+            let rightValue = service.getRightValue(formTest, visibilityObjTest);
+
+            expect(rightValue).toBe('9999-12-31T00:00:00.000Z');
+        });
+
+        it('should return the value when right value is not a date', () => {
+            visibilityObjTest.rightValue = '9999-99-99';
+            let rightValue = service.getRightValue(formTest, visibilityObjTest);
+
+            expect(rightValue).toBe('9999-99-99');
+        });
+
         it('should retrieve the value for the right field when it is a form variable', () => {
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
             let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
