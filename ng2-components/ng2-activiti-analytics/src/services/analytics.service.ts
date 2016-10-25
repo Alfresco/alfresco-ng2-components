@@ -109,6 +109,19 @@ export class AnalyticsService {
         });
     }
 
+    getMetricValues(): Observable<any> {
+        let paramOptions: ParameterValueModel[] = [];
+
+        paramOptions.push(new ParameterValueModel({id: 'totalCount', name: 'Number of times a step is executed'}));
+        paramOptions.push(new ParameterValueModel({id: 'totalTime', name: 'Total time spent in a process step'}));
+        paramOptions.push(new ParameterValueModel({id: 'avgTime', name: 'Average time spent in a process step'}));
+
+        return Observable.create(observer => {
+            observer.next(paramOptions);
+            observer.complete();
+        });
+    }
+
     getProcessDefinitionsValues(appId: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions`;
         let params: URLSearchParams;

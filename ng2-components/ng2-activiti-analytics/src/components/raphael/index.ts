@@ -24,6 +24,9 @@ import { RaphaelPlusDirective } from './raphael-plus.component';
 import { RaphaelRhombusDirective } from './raphael-rhombus.component';
 import { RaphaelPentagonDirective } from './raphael-pentagon.component';
 
+// services
+import { RaphaelService } from './raphael.service';
+
 // icons
 import { RAPHAEL_ICONS_DIRECTIVES } from './icons/index';
 
@@ -48,4 +51,8 @@ export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelRhombusDirective,
     RaphaelPentagonDirective,
     RAPHAEL_ICONS_DIRECTIVES
+];
+
+export const RAPHAEL_PROVIDERS: any[] = [
+    RaphaelService
 ];

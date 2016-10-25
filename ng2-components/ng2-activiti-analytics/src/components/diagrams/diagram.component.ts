@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../../services/analytics.service';
 import { DiagramColorService } from './services/diagram-color.service';
+import { RaphaelService } from './../raphael/raphael.service';
 
 @Component({
     moduleId: module.id,
@@ -28,7 +29,16 @@ import { DiagramColorService } from './services/diagram-color.service';
 })
 export class DiagramComponent {
     @Input()
-    report: any;
+    processDefinitionId: any;
+
+    @Input()
+    metricPercentages: any;
+
+    @Input()
+    width: number = 1000;
+
+    @Input()
+    height: number = 500;
 
     @Output()
     onError = new EventEmitter();
@@ -39,6 +49,7 @@ export class DiagramComponent {
     constructor(elementRef: ElementRef,
                 private translate: AlfrescoTranslationService,
                 private diagramColorService: DiagramColorService,
+                private raphaelService: RaphaelService,
                 private analyticsService: AnalyticsService) {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-analytics/src');
@@ -47,8 +58,13 @@ export class DiagramComponent {
     }
 
     ngOnInit() {
-        this.getProcessDefinitionModel(this.report.processDefinitionId);
-        this.diagramColorService.setTotalColors(this.report.totalCountsPercentages);
+        this.raphaelService.setting(this.width, this.height);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        this.reset();
+        this.diagramColorService.setTotalColors(this.metricPercentages);
+        this.getProcessDefinitionModel(this.processDefinitionId);
     }
 
     getProcessDefinitionModel(processDefinitionId: string) {
@@ -61,5 +77,9 @@ export class DiagramComponent {
                 console.log(err);
             }
         );
+    }
+
+    reset() {
+        this.raphaelService.reset();
     }
 }

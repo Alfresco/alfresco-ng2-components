@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'HeatMap'">
-                    <diagram [report]="report"></diagram>
+                    <analytics-report-heat-map [report]="report"></analytics-report-heat-map>
                 </div>
                 <div *ngSwitchDefault>
                     <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{report.type}}</span>

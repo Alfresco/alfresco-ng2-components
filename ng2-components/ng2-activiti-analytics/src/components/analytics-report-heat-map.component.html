@@ -1,0 +1,7 @@
+<h2>Process Heat map</h2>
+<form [formGroup]="metricForm" novalidate>
+    <dropdown-widget [field]="field" [group]="metricForm.controls.metricGroup" [controllerName]="'metric'"
+                     (fieldChanged)="onMetricChanges(field)"></dropdown-widget>
+</form>
+
+<diagram *ngIf="currentMetric" [processDefinitionId]="report.processDefinitionId" [metricPercentages]="currentMetric"></diagram>

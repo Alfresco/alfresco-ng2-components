@@ -21,6 +21,8 @@ import { Injectable } from '@angular/core';
 export class RaphaelService {
 
     paper: any;
+    width: number = 300;
+    height: number = 400 ;
     private ctx: any;
 
     constructor() {
@@ -43,16 +45,25 @@ export class RaphaelService {
         if (typeof Raphael === 'undefined') {
             throw new Error('ng2-charts configuration issue: Embedding Chart.js lib is mandatory');
         }
-        let paper = new Raphael(ctx, 1000, 500);
+        let paper = new Raphael(ctx, this.width, this.height);
         // paper.setViewBox(0, 0, 583, 344.08374193550003, false);
         // paper.renderfix();
         return paper;
     }
 
-    public ngOnDestroy(): any {
+    private ngOnDestroy(): any {
         if (this.paper) {
             this.paper.clear();
             this.paper = void 0;
         }
+    }
+
+    public setting(width: number, height: number): void {
+        this.width = width;
+        this.height = height;
+    }
+
+    public reset(): any {
+        this.ngOnDestroy();
     }
 }
