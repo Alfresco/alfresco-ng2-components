@@ -83,7 +83,9 @@ describe('DateWidget', () => {
     it('should setup trigger element', () => {
         let el = {};
         spyOn(nativeElement, 'querySelector').and.returnValue(el);
+        widget.field = new FormFieldModel(null, {id: 'fake-id'});
         widget.ngOnInit();
+        widget.ngAfterViewChecked();
         expect(widget.datePicker.trigger).toBe(el);
     });
 
@@ -231,7 +233,7 @@ describe('DateWidget', () => {
             fixture.whenStable()
                 .then(() => {
                     fixture.detectChanges();
-                    expect(element.querySelector('#date-field-id')).toBeNull();
+                    expect(element.querySelector('#data-widget')).toBeNull();
                 });
         }));
 
@@ -258,7 +260,7 @@ describe('DateWidget', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('#date-field-id')).toBeNull();
+                        expect(element.querySelector('#data-widget')).toBeNull();
                     });
             });
             dateWidget.checkVisibility(dateWidget.field);

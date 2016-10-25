@@ -1,17 +1,15 @@
-<div class="mdl-grid" *ngIf="field?.isVisible">
+<div class="mdl-grid" *ngIf="field?.isVisible" id="data-widget">
     <div class="mdl-cell mdl-cell--11-col">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label date-widget"
-            [class.date-widget__invalid]="!field.isValid">
-            <input id="dateInput"
-                class="mdl-textfield__input"
-                type="text"
-                [attr.id]="field.id"
-                [attr.required]="isRequired()"
-                [(ngModel)]="field.value"
-                [value]="field.value"
-                (ngModelChange)="onDateChanged()"
-                (onOk)="onDateSelected()"
-                [disabled]="field.readOnly">
+             [class.date-widget__invalid]="!field.isValid">
+            <input class="mdl-textfield__input"
+                   type="text"
+                   [attr.id]="field.id"
+                   [attr.required]="isRequired()"
+                   [(ngModel)]="field.value"
+                   (ngModelChange)="onDateChanged()"
+                   (onOk)="onDateSelected()"
+                   [disabled]="field.readOnly">
             <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}} (d-M-yyyy)</label>
             <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
         </div>
@@ -24,3 +22,4 @@
         </button>
     </div>
 </div>
+
