@@ -23,6 +23,7 @@ import { DIAGRAM_GATEWAY_DIRECTIVES } from './gateways/index';
 import { DIAGRAM_ICONS_DIRECTIVES } from './icons/index';
 import { DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES } from './boundary-events/index';
 import { DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES } from './intermediate-catching-events/index';
+import { DIAGRAM_STRUCTURAL_DIRECTIVES } from './structural/index';
 
 import { DiagramColorService } from './services/diagram-color.service';
 
@@ -34,6 +35,7 @@ export * from './icons/index';
 export * from './diagram-sequence-flow.component';
 export * from './boundary-events/index';
 export * from './intermediate-catching-events/index';
+export * from './structural/index';
 
 export const DIAGRAM_DIRECTIVES: any[] = [
     DiagramComponent,
@@ -43,7 +45,8 @@ export const DIAGRAM_DIRECTIVES: any[] = [
     DIAGRAM_GATEWAY_DIRECTIVES,
     DIAGRAM_ICONS_DIRECTIVES,
     DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES,
-    DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES
+    DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES,
+    DIAGRAM_STRUCTURAL_DIRECTIVES
 ];
 
 export const DIAGRAM_PROVIDERS: any[] = [

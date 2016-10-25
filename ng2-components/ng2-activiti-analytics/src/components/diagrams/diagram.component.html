@@ -46,6 +46,9 @@
             <div *ngSwitchCase="'IntermediateCatchEvent'">
                 <diagram-intermediate-catching-event [data]="element"></diagram-intermediate-catching-event>
             </div>
+            <div *ngSwitchCase="'SubProcess'">
+                <diagram-subprocess [data]="element"></diagram-subprocess>
+            </div>
         </div>
     </div>
     <div *ngFor="let flow of diagram.flows">
