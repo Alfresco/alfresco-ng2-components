@@ -20,32 +20,39 @@ import { DiagramColorService } from './../services/diagram-color.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'diagram-icon-signal',
-    templateUrl: './diagram-icon-signal.component.html',
-    styleUrls: ['./diagram-icon-signal.component.css']
+    selector: 'diagram-throw-event',
+    templateUrl: './diagram-throw-event.component.html',
+    styleUrls: ['./diagram-throw-event.component.css']
 })
-export class DiagramIconSignalComponent {
+export class DiagramThrowEventComponent {
     @Input()
     data: any;
-
-    @Input()
-    fillColor: string;
 
     @Output()
     onError = new EventEmitter();
 
-    position: any;
+    center: any = {};
+    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1};
 
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: ''};
+    signalFillColor: string;
+
+    circleRadiusInner: number;
+    circleRadiusOuter: number;
 
     constructor(public elementRef: ElementRef,
                 private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
-        this.position = {x: this.data.x - 1, y: this.data.y - 1};
+        this.center.x = this.data.x + (this.data.width / 2);
+        this.center.y = this.data.y + (this.data.height / 2);
 
-        this.options.stroke = 'black';
-        this.options.fillColors = this.fillColor;
-        this.options.strokeWidth = 1;
+        this.circleRadiusInner = 12;
+        this.circleRadiusOuter = 15;
+
+        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
+        this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
+        this.options.fillOpacity = this.diagramColorService.getFillOpacity();
+
+        this.signalFillColor = 'black';
     }
 }

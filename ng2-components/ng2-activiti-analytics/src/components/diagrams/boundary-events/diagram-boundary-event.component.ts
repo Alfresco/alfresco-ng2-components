@@ -34,6 +34,8 @@ export class DiagramBoundaryEventComponent {
     center: any = {};
     options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: 1};
 
+    signalFillColor: string;
+
     circleRadiusInner: number;
     circleRadiusOuter: number;
 
@@ -50,5 +52,7 @@ export class DiagramBoundaryEventComponent {
         this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
         this.options.fillColors = this.diagramColorService.getFillColour(this.data.id);
         this.options.fillOpacity = this.diagramColorService.getFillOpacity();
+
+        this.signalFillColor = 'none';
     }
 }

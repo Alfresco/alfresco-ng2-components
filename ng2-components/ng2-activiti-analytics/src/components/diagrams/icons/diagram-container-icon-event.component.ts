@@ -31,6 +31,9 @@ export class DiagramContainerIconEventTaskComponent {
     @Input()
     type: string;
 
+    @Input()
+    fillColor: string;
+
     @Output()
     onError = new EventEmitter();
 

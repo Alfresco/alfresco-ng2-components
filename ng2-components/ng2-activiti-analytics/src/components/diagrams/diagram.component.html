@@ -40,6 +40,9 @@
             <div *ngSwitchCase="'BoundaryEvent'">
                 <diagram-boundary-event [data]="element"></diagram-boundary-event>
             </div>
+            <div *ngSwitchCase="'ThrowEvent'">
+                <diagram-throw-event [data]="element"></diagram-throw-event>
+            </div>
             <div *ngSwitchCase="'IntermediateCatchEvent'">
                 <diagram-intermediate-catching-event [data]="element"></diagram-intermediate-catching-event>
             </div>

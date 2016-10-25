@@ -16,10 +16,13 @@
  */
 
 import { DiagramBoundaryEventComponent } from './diagram-boundary-event.component';
+import { DiagramThrowEventComponent } from './diagram-throw-event.component';
 
 // primitives
 export * from './diagram-boundary-event.component';
+export * from './diagram-throw-event.component';
 
 export const DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES: any[] = [
-    DiagramBoundaryEventComponent
+    DiagramBoundaryEventComponent,
+    DiagramThrowEventComponent
 ];
