@@ -20,31 +20,33 @@ import { DiagramColorService } from './../services/diagram-color.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'diagram-event',
-    templateUrl: './diagram-event.component.html',
-    styleUrls: ['./diagram-event.component.css']
+    selector: 'diagram-event-subprocess',
+    templateUrl: './diagram-event-subprocess.component.html',
+    styleUrls: ['./diagram-event-subprocess.component.css']
 })
-export class DiagramEventComponent {
+export class DiagramEventSubprocessComponent {
     @Input()
     data: any;
-
-    @Input()
-    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: ''};
-
-    @Input()
-    iconFillColor: any;
 
     @Output()
     onError = new EventEmitter();
 
-    center: any = {};
+    rectLeftCorner: any;
+    width: any;
+    height: any;
+
+    options: any = {stroke: '', fillColors: '', fillOpacity: '', strokeWidth: '', radius: 4};
 
     constructor(public elementRef: ElementRef,
                 private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
-        console.log(this.elementRef);
-        this.center.x = this.data.x + (this.data.width / 2);
-        this.center.y = this.data.y + (this.data.height / 2);
+        this.rectLeftCorner = {x: this.data.x, y: this.data.y};
+        this.width = this.data.width;
+        this.height = this.data.height;
+
+        this.options.fillColors = 'none';
+        this.options.stroke = this.diagramColorService.getBpmnColor(this.data, DiagramColorService.MAIN_STROKE_COLOR);
+        this.options.strokeWidth = 1;
     }
 }

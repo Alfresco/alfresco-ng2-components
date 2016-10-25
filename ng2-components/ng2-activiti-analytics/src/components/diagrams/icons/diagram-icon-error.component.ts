@@ -28,6 +28,9 @@ export class DiagramIconErrorComponent {
     @Input()
     data: any;
 
+    @Input()
+    fillColor: string;
+
     @Output()
     onError = new EventEmitter();
 
@@ -42,7 +45,7 @@ export class DiagramIconErrorComponent {
         this.position = {x: this.data.x - 1, y: this.data.y - 1};
 
         this.options.stroke = 'black';
-        this.options.fillColors = 'none';
+        this.options.fillColors = this.fillColor;
         this.options.strokeWidth = 1;
     }
 }

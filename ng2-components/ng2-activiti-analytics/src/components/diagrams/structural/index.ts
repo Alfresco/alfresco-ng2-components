@@ -16,10 +16,13 @@
  */
 
 import { DiagramSubprocessComponent } from './diagram-subprocess.component';
+import { DiagramEventSubprocessComponent } from './diagram-event-subprocess.component';
 
 // primitives
 export * from './diagram-subprocess.component';
+export * from './diagram-event-subprocess.component';
 
 export const DIAGRAM_STRUCTURAL_DIRECTIVES: any[] = [
-    DiagramSubprocessComponent
+    DiagramSubprocessComponent,
+    DiagramEventSubprocessComponent
 ];

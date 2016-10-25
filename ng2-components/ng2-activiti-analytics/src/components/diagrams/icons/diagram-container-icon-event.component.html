@@ -3,7 +3,7 @@
         <diagram-icon-timer [data]="data"></diagram-icon-timer>
     </div>
     <div *ngSwitchCase="'error'">
-        <diagram-icon-error [data]="data"></diagram-icon-error>
+        <diagram-icon-error [data]="data" [fillColor]="fillColor"></diagram-icon-error>
     </div>
     <div *ngSwitchCase="'signal'">
         <diagram-icon-signal [data]="data" [fillColor]="fillColor"></diagram-icon-signal>

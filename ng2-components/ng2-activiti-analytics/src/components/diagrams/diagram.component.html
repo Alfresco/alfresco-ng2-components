@@ -2,7 +2,7 @@
     <div *ngFor="let element of diagram.elements">
         <div [ngSwitch]="element.type">
             <div *ngSwitchCase="'StartEvent'">
-                <diagram-event [data]="element" [radius]="15" [strokeWidth]="1"></diagram-event>
+                <diagram-start-event [data]="element"></diagram-start-event>
             </div>
             <div *ngSwitchCase="'ExclusiveGateway'">
                 <diagram-exclusive-gateway [data]="element"></diagram-exclusive-gateway>
@@ -17,7 +17,7 @@
                 <diagram-parallel-gateway [data]="element"></diagram-parallel-gateway>
             </div>
             <div *ngSwitchCase="'EndEvent'">
-                <diagram-event [data]="element" [radius]="14" [strokeWidth]="4"></diagram-event>
+                <diagram-end-event [data]="element"></diagram-end-event>
             </div>
             <div *ngSwitchCase="'UserTask'">
                 <diagram-user-task [data]="element"></diagram-user-task>
@@ -48,6 +48,9 @@
             </div>
             <div *ngSwitchCase="'SubProcess'">
                 <diagram-subprocess [data]="element"></diagram-subprocess>
+            </div>
+            <div *ngSwitchCase="'EventSubProcess'">
+                <diagram-event-subprocess [data]="element"></diagram-event-subprocess>
             </div>
         </div>
     </div>
