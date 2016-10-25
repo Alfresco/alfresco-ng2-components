@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     moduleId: module.id,
@@ -25,8 +26,16 @@ import { WidgetComponent } from './../widget.component';
 })
 export class CheckboxWidget extends WidgetComponent {
 
-    constructor() {
+    @Input()
+    field: any;
+
+    @Input('group')
+    public formGroup: FormGroup;
+
+    @Input('controllerName')
+    public controllerName: string;
+
+    constructor(public elementRef: ElementRef) {
         super();
     }
-
 }

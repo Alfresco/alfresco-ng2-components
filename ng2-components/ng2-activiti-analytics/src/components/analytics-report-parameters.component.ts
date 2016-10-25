@@ -115,6 +115,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
             taskGroup: new FormGroup({
                 taskName: new FormControl()
             }),
+            typeFilteringGroup: new FormGroup({
+                typeFiltering: new FormControl()
+            }),
             dateIntervalGroup: new FormGroup({
                 dateRangeInterval: new FormControl()
             }),
@@ -192,6 +195,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
         reportParamQuery.duration = values.durationGroup.duration;
         reportParamQuery.dateRangeInterval = values.dateIntervalGroup.dateRangeInterval;
         reportParamQuery.slowProcessInstanceInteger = this.convertNumber(values.processInstanceGroup.slowProcessInstanceInteger);
+        reportParamQuery.typeFiltering = values.typeFilteringGroup.typeFiltering;
         return reportParamQuery;
     }
 
