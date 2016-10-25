@@ -31,7 +31,7 @@ import { FormModel, FormFieldModel, TabModel, ContainerModel } from '../componen
 
 declare let jasmine: any;
 
-describe('WidgetVisibilityService (mockBackend)', () => {
+describe('WidgetVisibilityService', () => {
     let service: WidgetVisibilityService;
     let booleanResult: boolean;
     let stubFormWithFields = new FormModel(fakeFormJson);
@@ -474,7 +474,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'test_3';
             let fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshFieldVisibility(fakeFormField);
+            service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeFalsy();
         });
@@ -488,13 +488,13 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             expect(isVisible).toBeTruthy();
         });
 
-        it('should not change the isVisible if field does not have visibility condition', () => {
+        it('should return always true when field does not have a visibility condition', () => {
             jsonFieldFake.visibilityCondition = null;
             let fakeFormField: FormFieldModel = new FormFieldModel(fakeFormWithField, jsonFieldFake);
             fakeFormField.isVisible = false;
-            service.refreshFieldVisibility(fakeFormField);
+            service.refreshEntityVisibility(fakeFormField);
 
-            expect(fakeFormField.isVisible).toBeFalsy();
+            expect(fakeFormField.isVisible).toBeTruthy();
         });
 
         it('should be able to retrieve the value of a form variable', () => {
@@ -579,7 +579,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'dropdown_LABEL';
             let fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshFieldVisibility(fakeFormField);
+            service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeTruthy();
         });
@@ -589,7 +589,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.operator = '==';
             visibilityObjTest.rightFormFieldId = 'dropdown';
             let fakeFormField: FormFieldModel = new FormFieldModel(formTest, jsonFieldFake);
-            service.refreshFieldVisibility(fakeFormField);
+            service.refreshEntityVisibility(fakeFormField);
 
             expect(fakeFormField.isVisible).toBeTruthy();
         });
@@ -633,7 +633,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
             let tab = new TabModel(fakeFormWithField, {id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true});
             tab.visibilityCondition = visibilityObjTest;
-            service.refreshTabVisibility(tab);
+            service.refreshEntityVisibility(tab);
 
             expect(tab.isVisible).toBeFalsy();
         });
@@ -664,7 +664,7 @@ describe('WidgetVisibilityService (mockBackend)', () => {
                 isVisible: true
             });
             contModel.visibilityCondition = visibilityObjTest;
-            service.refreshContainerVisibility(contModel);
+            service.refreshEntityVisibility(contModel);
 
             expect(contModel.isVisible).toBeFalsy();
         });

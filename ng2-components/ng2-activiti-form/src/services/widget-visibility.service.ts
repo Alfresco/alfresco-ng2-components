@@ -35,37 +35,23 @@ export class WidgetVisibilityService {
 
     public refreshVisibility(form: FormModel) {
         if (form && form.tabs && form.tabs.length > 0) {
-            form.tabs.map(tabModel => this.refreshTabVisibility(tabModel));
+            form.tabs.map(tabModel => this.refreshEntityVisibility(tabModel));
         }
         if (form && form.fields.length > 0) {
             form.fields.map(contModel => {
-                this.refreshContainerVisibility(contModel);
+                this.refreshEntityVisibility(contModel);
                 contModel.columns.map(contColModel =>
-                    contColModel.fields.map(field => this.refreshFieldVisibility(field)));
+                    contColModel.fields.map(field => this.refreshEntityVisibility(field)));
             });
         }
     }
 
-    refreshFieldVisibility(field: FormFieldModel) {
-        if (field.visibilityCondition) {
-            field.isVisible = this.evaluateVisibility(field.form, field.visibilityCondition);
-        }
-    }
-
-    refreshContainerVisibility(content: ContainerModel) {
-        if (content.visibilityCondition) {
-            content.isVisible = this.evaluateVisibility(content.form, content.visibilityCondition);
-        }
-    }
-
-    refreshTabVisibility(tab: TabModel) {
-        if (tab.visibilityCondition) {
-            tab.isVisible = this.evaluateVisibility(tab.form, tab.visibilityCondition);
-        }
+    refreshEntityVisibility(element: FormFieldModel | ContainerModel | TabModel) {
+        element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
-        let isLeftFieldPresent = visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId;
+        let isLeftFieldPresent = visibilityObj && ( visibilityObj.leftFormFieldId || visibilityObj.leftRestResponseId );
         if (!isLeftFieldPresent || isLeftFieldPresent === 'null') {
             return true;
         } else {
@@ -96,13 +82,17 @@ export class WidgetVisibilityService {
     }
 
     getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
-        let valueFound = null;
+        let valueFound = '';
         if (visibilityObj.rightRestResponseId) {
             valueFound = this.getVariableValue(form, visibilityObj.rightRestResponseId, this.processVarList);
         } else if (visibilityObj.rightFormFieldId) {
             valueFound = this.getFormValue(form, visibilityObj.rightFormFieldId);
         } else {
-            valueFound = visibilityObj.rightValue;
+            if (moment(visibilityObj.rightValue, 'YYYY-MM-DD', true).isValid()) {
+                valueFound = visibilityObj.rightValue + 'T00:00:00.000Z';
+            } else {
+                valueFound = visibilityObj.rightValue;
+            }
         }
         return valueFound;
     }
@@ -119,7 +109,7 @@ export class WidgetVisibilityService {
     }
 
     getFieldValue(valueList: any, fieldName: string) {
-        return fieldName ? valueList[fieldName] : fieldName;
+        return valueList[fieldName];
     }
 
     getDropDownName(valueList: any, fieldName: string) {
