@@ -58,10 +58,10 @@ export class ActivitiPeople implements OnInit {
     }
 
     public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
         if (this.dialog) {
-            if (!this.dialog.nativeElement.showModal) {
-                dialogPolyfill.registerDialog(this.dialog.nativeElement);
-            }
             this.dialog.nativeElement.showModal();
         }
     }
