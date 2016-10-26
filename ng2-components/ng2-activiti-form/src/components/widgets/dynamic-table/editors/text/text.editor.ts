@@ -27,7 +27,7 @@ import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 })
 export class TextEditorComponent extends CellEditorComponent {
 
-    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: Event) {
+    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         let value: any = (<HTMLInputElement>event.srcElement).value;
         row.value[column.id] = value;
     }

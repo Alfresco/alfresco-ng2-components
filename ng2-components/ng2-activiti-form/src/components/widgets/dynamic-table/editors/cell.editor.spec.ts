@@ -15,21 +15,28 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { CellEditorComponent } from './../cell.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
+import { CellEditorComponent } from './cell.editor';
 
-@Component({
-    moduleId: module.id,
-    selector: 'alf-boolean-editor',
-    templateUrl: './boolean.editor.html',
-    styleUrls: ['./boolean.editor.css']
-})
-export class BooleanEditorComponent extends CellEditorComponent {
+describe('CellEditorComponent', () => {
 
-    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: boolean = (<HTMLInputElement>event.srcElement).checked;
-        row.value[column.id] = value;
+    class CustomEditor extends CellEditorComponent {
+        onError(error: any) {
+            this.handleError(error);
+        }
     }
 
-}
+    let component: CustomEditor;
+
+    beforeEach(() => {
+        component = new CustomEditor();
+    });
+
+    it('should handle error', () => {
+        const error = 'error';
+        spyOn(console, 'error').and.stub();
+
+        component.onError(error);
+        expect(console.error).toHaveBeenCalledWith(error);
+    });
+
+});

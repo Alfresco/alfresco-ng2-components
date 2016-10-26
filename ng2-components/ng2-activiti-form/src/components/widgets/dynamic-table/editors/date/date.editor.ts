@@ -29,23 +29,24 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
     DATE_FORMAT: string = 'DD-MM-YYYY';
 
     datePicker: any;
+    settings: any;
 
     constructor(private elementRef: ElementRef) {
         super();
     }
 
     ngOnInit() {
-        let settings: any = {
+        this.settings = {
             type: 'date',
             future: moment().add(21, 'years')
         };
 
         let value = this.table.getCellValue(this.row, this.column);
         if (value) {
-            settings.init = moment(value, this.DATE_FORMAT);
+            this.settings.init = moment(value, this.DATE_FORMAT);
         }
 
-        this.datePicker = new mdDateTimePicker.default(settings);
+        this.datePicker = new mdDateTimePicker.default(this.settings);
         if (this.elementRef) {
             this.datePicker.trigger = this.elementRef.nativeElement.querySelector('#dateInput');
         }
@@ -57,12 +58,12 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
         this.table.flushValue();
 
         if (this.elementRef) {
-            this.setupMaterialTextField(this.elementRef, componentHandler, newValue);
+            this.updateMaterialTextField(this.elementRef, newValue);
         }
     }
 
-    setupMaterialTextField(elementRef: ElementRef, handler: any, value: string): boolean {
-        if (elementRef && handler) {
+    updateMaterialTextField(elementRef: ElementRef, value: string): boolean {
+        if (elementRef) {
             let el = elementRef.nativeElement;
             if (el) {
                 let container = el.querySelector('.mdl-textfield');

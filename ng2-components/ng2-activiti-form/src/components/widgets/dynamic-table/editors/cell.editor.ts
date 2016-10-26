@@ -29,7 +29,7 @@ export abstract class CellEditorComponent {
     @Input()
     column: DynamicTableColumn;
 
-    protected handleError(error: any) {
+    handleError(error: any) {
         console.error(error);
     }
 

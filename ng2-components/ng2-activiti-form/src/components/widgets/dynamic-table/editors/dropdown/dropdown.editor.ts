@@ -28,7 +28,7 @@ import { FormService } from './../../../../../services/form.service';
 })
 export class DropdownEditorComponent extends CellEditorComponent implements OnInit {
 
-    value: any;
+    value: any = null;
     options: DynamicTableColumnOption[] = [];
 
     constructor(private formService: FormService) {
@@ -60,7 +60,7 @@ export class DropdownEditorComponent extends CellEditorComponent implements OnIn
         }
     }
 
-    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: Event) {
+    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         let value: any = (<HTMLInputElement>event.srcElement).value;
         value = column.options.find(opt => opt.name === value);
         row.value[column.id] = value;

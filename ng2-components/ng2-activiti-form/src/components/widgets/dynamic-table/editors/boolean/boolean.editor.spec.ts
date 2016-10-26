@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { CellEditorComponent } from './../cell.editor';
+import { BooleanEditorComponent } from './boolean.editor';
 import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
-@Component({
-    moduleId: module.id,
-    selector: 'alf-boolean-editor',
-    templateUrl: './boolean.editor.html',
-    styleUrls: ['./boolean.editor.css']
-})
-export class BooleanEditorComponent extends CellEditorComponent {
+describe('BooleanEditorComponent', () => {
 
-    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: boolean = (<HTMLInputElement>event.srcElement).checked;
-        row.value[column.id] = value;
-    }
+    let component: BooleanEditorComponent;
 
-}
+    beforeEach(() => {
+        component = new BooleanEditorComponent();
+    });
+
+    it('should update row value on change', () => {
+        let row = <DynamicTableRow> { value: {} };
+        let column = <DynamicTableColumn> { id: 'key' };
+        let event = { srcElement: { checked: true } };
+
+        component.onValueChanged(row, column, event);
+        expect(row.value[column.id]).toBeTruthy();
+    });
+
+});

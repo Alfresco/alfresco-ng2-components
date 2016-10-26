@@ -74,8 +74,10 @@ export class DynamicTableModel extends FormWidgetModel {
     }
 
     flushValue() {
-        this.field.value = this.rows.map(r => r.value);
-        this.field.updateForm();
+        if (this.field) {
+            this.field.value = this.rows.map(r => r.value);
+            this.field.updateForm();
+        }
     }
 
     moveRow(row: DynamicTableRow, offset: number) {
@@ -152,7 +154,7 @@ export class DynamicTableModel extends FormWidgetModel {
 
         if (column.type === 'Date') {
             if (result) {
-                return moment(result.split('T')[0], 'YYYY-M-D').format('DD-MM-YYYY');
+                return moment(result.split('T')[0], 'YYYY-MM-DD').format('DD-MM-YYYY');
             }
         }
 

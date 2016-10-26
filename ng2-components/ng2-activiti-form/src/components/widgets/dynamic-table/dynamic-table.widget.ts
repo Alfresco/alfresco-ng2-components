@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ElementRef } from '@angular/core';
+import { Component, Input, ElementRef } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../core/index';
 
@@ -25,21 +25,18 @@ import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../cor
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.css']
 })
-export class DynamicTableWidget extends WidgetComponent implements OnInit {
+export class DynamicTableWidget extends WidgetComponent {
+
+    ERROR_MODEL_NOT_FOUND = 'Table model not found';
 
     @Input()
     content: DynamicTableModel;
 
-    editMode: boolean;
-    editRow: DynamicTableRow;
-    validationSummary: string;
+    editMode: boolean = false;
+    editRow: DynamicTableRow = null;
 
     constructor(private elementRef: ElementRef) {
         super();
-    }
-
-    ngOnInit() {
-        this.validationSummary = 'hello world';
     }
 
     onRowClicked(row: DynamicTableRow) {
@@ -52,25 +49,31 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
         return !!(this.content && this.content.selectedRow);
     }
 
-    moveSelectionUp() {
+    moveSelectionUp(): boolean {
         if (this.content) {
             this.content.moveRow(this.content.selectedRow, -1);
+            return true;
         }
+        return false;
     }
 
-    moveSelectionDown() {
+    moveSelectionDown(): boolean {
         if (this.content) {
             this.content.moveRow(this.content.selectedRow, 1);
+            return true;
         }
+        return false;
     }
 
-    deleteSelection() {
+    deleteSelection(): boolean {
         if (this.content) {
             this.content.deleteRow(this.content.selectedRow);
+            return true;
         }
+        return false;
     }
 
-    addNewRow() {
+    addNewRow(): boolean {
         if (this.content) {
             this.editRow = <DynamicTableRow> {
                 isNew: true,
@@ -78,14 +81,18 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
                 value: {}
             };
             this.editMode = true;
+            return true;
         }
+        return false;
     }
 
-    editSelection() {
+    editSelection(): boolean {
         if (this.content) {
             this.editRow = this.copyRow(this.content.selectedRow);
             this.editMode = true;
+            return true;
         }
+        return false;
     }
 
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
@@ -106,6 +113,8 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
                 this.content.selectedRow.value = this.copyObject(this.editRow.value);
             }
             this.content.flushValue();
+        } else {
+            this.handleError(this.ERROR_MODEL_NOT_FOUND);
         }
         this.editMode = false;
     }
@@ -115,16 +124,17 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
         this.editRow = null;
     }
 
-    private copyRow(row: DynamicTableRow): DynamicTableRow {
+    copyRow(row: DynamicTableRow): DynamicTableRow {
         return <DynamicTableRow> {
             value: this.copyObject(row.value)
         };
     }
 
     private copyObject(obj: any): any {
-        let result = Object.assign({}, obj);
+        let result = obj;
 
         if (typeof obj === 'object' && obj !== null && obj !== undefined) {
+            result = Object.assign({}, obj);
             Object.keys(obj).forEach(key => {
                 if (typeof obj[key] === 'object') {
                     result[key] = this.copyObject(obj[key]);
