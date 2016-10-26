@@ -37,7 +37,7 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     field: any = {};
 
     metricForm: FormGroup;
-    currentMetric: any;
+    currentMetric: string;
 
     constructor(private translate: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
@@ -50,6 +50,7 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     ngOnInit() {
         this.initForm();
         this.field.id = 'metrics';
+        this.field.value = 'totalCount';
 
         this.analyticsService.getMetricValues().subscribe(
             (opts: any[]) => {
@@ -78,6 +79,12 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
                 metric: new FormControl()
             })
         });
+    }
+
+    hasMetric() {
+        return (this.report.totalCountsPercentages ||
+        this.report.totalTimePercentages ||
+        this.report.avgTimePercentages) ? true : false;
     }
 
 }
