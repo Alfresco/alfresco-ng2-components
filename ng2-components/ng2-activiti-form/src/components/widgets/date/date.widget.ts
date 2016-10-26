@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
 import { TextFieldWidgetComponent } from './../textfield-widget.component';
 
 @Component({
@@ -24,7 +24,7 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.css']
 })
-export class DateWidget extends TextFieldWidgetComponent implements OnInit {
+export class DateWidget extends TextFieldWidgetComponent implements OnInit, AfterViewChecked {
 
     DATE_FORMAT: string = 'D-M-YYYY';
 
@@ -57,8 +57,12 @@ export class DateWidget extends TextFieldWidgetComponent implements OnInit {
         }
 
         this.datePicker = new mdDateTimePicker.default(settings);
+    }
+
+    ngAfterViewChecked() {
         if (this.elementRef) {
-            this.datePicker.trigger = this.elementRef.nativeElement.querySelector('#dateInput');
+            let dataLocator = '#' + this.field.id;
+            this.datePicker.trigger = this.elementRef.nativeElement.querySelector(dataLocator);
         }
     }
 
@@ -72,6 +76,7 @@ export class DateWidget extends TextFieldWidgetComponent implements OnInit {
     onDateSelected() {
         let newValue = this.datePicker.time.format(this.DATE_FORMAT);
         this.field.value = newValue;
+        this.checkVisibility(this.field);
 
         if (this.elementRef) {
             this.setupMaterialTextField(this.elementRef, componentHandler, newValue);

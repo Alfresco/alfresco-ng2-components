@@ -18,6 +18,9 @@
 import { ElementRef } from '@angular/core';
 import { DateWidget } from './date.widget';
 import { FormFieldModel } from './../core/form-field.model';
+import { FormModel } from './../core/form.model';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 describe('DateWidget', () => {
 
@@ -33,6 +36,8 @@ describe('DateWidget', () => {
         };
         elementRef = new ElementRef(nativeElement);
         widget = new DateWidget(elementRef);
+        let componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+        window['componentHandler'] = componentHandler;
     });
 
     it('should setup basic date picker settings on init ', () => {
@@ -78,7 +83,9 @@ describe('DateWidget', () => {
     it('should setup trigger element', () => {
         let el = {};
         spyOn(nativeElement, 'querySelector').and.returnValue(el);
+        widget.field = new FormFieldModel(null, {id: 'fake-id'});
         widget.ngOnInit();
+        widget.ngAfterViewChecked();
         expect(widget.datePicker.trigger).toBe(el);
     });
 
@@ -112,7 +119,7 @@ describe('DateWidget', () => {
     });
 
     it('should update field value on date selected', () => {
-        widget.field = new FormFieldModel(null, { type: 'date' });
+        widget.field = new FormFieldModel(null, {type: 'date'});
         widget.ngOnInit();
 
         let date = '13-3-1982';
@@ -124,7 +131,7 @@ describe('DateWidget', () => {
     it('should update material textfield on date selected', () => {
         spyOn(widget, 'setupMaterialTextField').and.callThrough();
 
-        widget.field = new FormFieldModel(null, { type: 'date' });
+        widget.field = new FormFieldModel(null, {type: 'date'});
         widget.ngOnInit();
 
         widget.datePicker.time = moment();
@@ -136,11 +143,129 @@ describe('DateWidget', () => {
         let w = new DateWidget(null);
         spyOn(w, 'setupMaterialTextField').and.callThrough();
 
-        w.field = new FormFieldModel(null, { type: 'date' });
+        w.field = new FormFieldModel(null, {type: 'date'});
         w.ngOnInit();
 
         w.datePicker.time = moment();
         w.onDateSelected();
         expect(w.setupMaterialTextField).not.toHaveBeenCalled();
+    });
+
+    it('should send field change event when a new date is picked from data picker', (done) => {
+        let w = new DateWidget(null);
+        spyOn(w, 'setupMaterialTextField').and.callThrough();
+        w.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
+        w.ngOnInit();
+        w.datePicker.time = moment('9-9-9999', w.DATE_FORMAT);
+        w.fieldChanged.subscribe((field) => {
+            expect(field).toBeDefined();
+            expect(field).not.toBeNull();
+            expect(field.value).toEqual('9-9-9999');
+            done();
+        });
+        w.onDateSelected();
+    });
+
+    it('should send field change event when date is changed in input text', (done) => {
+        let w = new DateWidget(null);
+        spyOn(w, 'setupMaterialTextField').and.callThrough();
+        w.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
+        w.ngOnInit();
+        w.datePicker.time = moment('9-9-9999', w.DATE_FORMAT);
+        w.fieldChanged.subscribe((field) => {
+            expect(field).toBeDefined();
+            expect(field).not.toBeNull();
+            expect(field.value).toEqual('9-9-9999');
+            done();
+        });
+
+        w.onDateChanged();
+    });
+
+    describe('template check', () => {
+        let dateWidget: DateWidget;
+        let fixture: ComponentFixture<DateWidget>;
+        let element: HTMLElement;
+        let componentHandler;
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [DateWidget]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(DateWidget);
+                dateWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        beforeEach(() => {
+            spyOn(dateWidget, 'setupMaterialTextField').and.stub();
+            dateWidget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '9-9-9999',
+                type: 'date',
+                readOnly: 'false'
+            });
+            dateWidget.field.isVisible = true;
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should show visible date widget', async(() => {
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#date-field-id')).toBeDefined();
+                    expect(element.querySelector('#date-field-id')).not.toBeNull();
+                    let dateElement: any = element.querySelector('#date-field-id');
+                    expect(dateElement.value).toEqual('9-9-9999');
+                });
+        }));
+
+        it('should hide not visible date widget', async(() => {
+            dateWidget.field.isVisible = false;
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    fixture.detectChanges();
+                    expect(element.querySelector('#data-widget')).toBeNull();
+                });
+        }));
+
+        it('should become visibile if the visibility change to true', async(() => {
+            dateWidget.field.isVisible = false;
+            fixture.detectChanges();
+            dateWidget.fieldChanged.subscribe((field) => {
+                field.isVisible = true;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#date-field-id')).toBeDefined();
+                        expect(element.querySelector('#date-field-id')).not.toBeNull();
+                        let dateElement: any = element.querySelector('#date-field-id');
+                        expect(dateElement.value).toEqual('9-9-9999');
+                    });
+            });
+            dateWidget.checkVisibility(dateWidget.field);
+        }));
+
+        it('should be hided if the visibility change to false', async(() => {
+            dateWidget.fieldChanged.subscribe((field) => {
+                field.isVisible = false;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#data-widget')).toBeNull();
+                    });
+            });
+            dateWidget.checkVisibility(dateWidget.field);
+        }));
     });
 });
