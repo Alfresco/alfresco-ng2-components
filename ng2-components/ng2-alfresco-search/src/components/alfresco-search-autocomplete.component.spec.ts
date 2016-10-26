@@ -110,6 +110,21 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             updateSearchTerm('searchTerm');
         });
 
+        it('should limit the number of returned search results to the configured maximum', (done) => {
+
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.resolve(results));
+
+            component.resultsEmitter.subscribe(() => {
+                fixture.detectChanges();
+                expect(element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr').length).toBe(2);
+                done();
+            });
+
+            component.maxResults = 2;
+            updateSearchTerm('searchTerm');
+        });
+
         it('should display the correct thumbnail for result items', (done) => {
 
             spyOn(searchService, 'getSearchNodesPromise')

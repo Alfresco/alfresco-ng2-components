@@ -40,6 +40,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     @Input()
     ngClass: any;
 
+    @Input()
+    maxResults: number = 5;
+
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
 
@@ -83,13 +86,13 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    public displaySearchResults(searchTerm) {
+    private displaySearchResults(searchTerm) {
         if (searchTerm !== null && searchTerm !== '') {
             this.alfrescoSearchService
                 .getLiveSearchResults(searchTerm)
                 .subscribe(
                     results => {
-                        this.results = results.list.entries;
+                        this.results = results.list.entries.slice(0, this.maxResults);
                         this.errorMessage = null;
                         this.resultsEmitter.emit(this.results);
                     },
