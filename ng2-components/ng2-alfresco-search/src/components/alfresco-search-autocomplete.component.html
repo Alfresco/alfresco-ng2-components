@@ -1,8 +1,14 @@
 <table data-automation-id="autocomplete_results" *ngIf="results && results.length && searchTerm"
        class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
-    <tbody>
-    <tr id="result_row_{{idx}}" *ngFor="let result of results; let idx = index" tabindex="0" (blur)="onRowBlur($event)" (focus)="onRowFocus($event)" (click)="onItemClick(result, $event)" (keyup.enter)="onRowEnter(result, $event)"
-        attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}">
+    <tbody #resultsTableBody>
+    <tr id="result_row_{{idx}}" *ngFor="let result of results; let idx = index" tabindex="0"
+            (blur)="onRowBlur($event)" (focus)="onRowFocus($event)"
+            (click)="onItemClick(result)"
+            (keyup.enter)="onRowEnter(result)"
+            (keyup.arrowdown)="onRowArrowDown($event)"
+            (keyup.arrowup)="onRowArrowUp($event)"
+            (keyup.escape)="onRowEscape($event)"
+            attr.data-automation-id="autocomplete_result_for_{{result.entry.name}}">
         <td class="img-td"><img src="{{getMimeTypeIcon(result)}}" alt="{{getMimeTypeKey(result)|translate}}"/></td>
         <td>
             <div id="result_name_{{idx}}"  class="truncate"><b>{{result.entry.name}}</b></div>

@@ -22,7 +22,9 @@
         </div>
     </div>
 </form>
-<alfresco-search-autocomplete *ngIf="autocompleteEnabled"
+<alfresco-search-autocomplete #autocomplete *ngIf="autocompleteEnabled"
                               [searchTerm]="autocompleteSearchTerm" [ngClass]="{active: searchActive, valid: searchValid}"
                               (preview)="onFileClicked($event)"
-                              (focusEmitter)="onAutoCompleteFocus($event)"></alfresco-search-autocomplete>
+                              (focusEmitter)="onAutoCompleteFocus($event)"
+                              (scrollBackEmitter)="onAutoCompleteReturn($event)"
+                              (cancelEmitter)="onAutoCompleteCancel($event)"></alfresco-search-autocomplete>

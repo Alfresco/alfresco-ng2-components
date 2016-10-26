@@ -15,25 +15,37 @@
  * limitations under the License.
  */
 
+const entryItem = {
+    entry: {
+        id: '123',
+        name: 'MyDoc',
+        isFile : true,
+        content: {
+            mimeType: 'text/plain'
+        },
+        createdByUser: {
+            displayName: 'John Doe'
+        },
+        modifiedByUser: {
+            displayName: 'John Doe'
+        }
+    }
+};
+
 export var result = {
     list: {
         entries: [
-            {
-                entry: {
-                    id: '123',
-                    name: 'MyDoc',
-                    isFile : true,
-                    content: {
-                        mimeType: 'text/plain'
-                    },
-                    createdByUser: {
-                        displayName: 'John Doe'
-                    },
-                    modifiedByUser: {
-                        displayName: 'John Doe'
-                    }
-                }
-            }
+            entryItem
+        ]
+    }
+};
+
+export var results = {
+    list: {
+        entries: [
+            entryItem,
+            entryItem,
+            entryItem
         ]
     }
 };

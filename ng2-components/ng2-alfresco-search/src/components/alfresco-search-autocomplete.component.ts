@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, OnChanges, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core';
 import { AlfrescoSearchService } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -47,10 +47,18 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     @Output()
+    cancelEmitter = new EventEmitter();
+
+    @Output()
     resultsEmitter = new EventEmitter();
 
     @Output()
+    scrollBackEmitter = new EventEmitter();
+
+    @Output()
     errorEmitter = new EventEmitter();
+
+    @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
@@ -119,10 +127,12 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
         }
     }
 
-    onItemClick(node, event?: Event): void {
-        if (event) {
-            event.preventDefault();
-        }
+    focusResult(): void {
+        let firstResult = this.resultsTableBody.nativeElement.querySelector('tr');
+        (<any> firstResult).focus();
+    }
+
+    onItemClick(node): void {
         if (node && node.entry) {
             if (node.entry.isFile) {
                 this.preview.emit({
@@ -148,6 +158,34 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
                 });
             }
         }
+    }
+
+    private getNextElementSibling(node: Element): Element {
+        return node.nextElementSibling;
+    }
+
+    private getPreviousElementSibling(node: Element): Element {
+        return node.previousElementSibling;
+    }
+
+    onRowArrowDown($event: KeyboardEvent): void {
+        let nextElement = this.getNextElementSibling(<Element> $event.target);
+        if (nextElement) {
+            (<any> nextElement).focus();
+        }
+    }
+
+    onRowArrowUp($event: KeyboardEvent): void {
+        let previousElement = this.getPreviousElementSibling(<Element> $event.target);
+        if (previousElement) {
+            (<any> previousElement).focus();
+        } else {
+            this.scrollBackEmitter.emit($event);
+        }
+    }
+
+    onRowEscape($event: KeyboardEvent): void {
+        this.cancelEmitter.emit($event);
     }
 
 }

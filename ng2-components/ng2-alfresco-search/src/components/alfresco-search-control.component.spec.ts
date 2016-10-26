@@ -217,6 +217,42 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(autocomplete.classList.contains('active')).toBe(true);
         });
 
+        it('should select the first result in find-as-you-type when down arrow is pressed and FAYT is visible', (done) => {
+            fixture.detectChanges();
+            spyOn(component.autocompleteComponent, 'focusResult');
+            fixture.detectChanges();
+            inputEl.dispatchEvent(new Event('focus'));
+            window.setTimeout(() => { // wait for debounce() to complete
+                fixture.detectChanges();
+                inputEl.dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'ArrowDown'
+                }));
+                fixture.detectChanges();
+                expect(component.autocompleteComponent.focusResult).toHaveBeenCalled();
+                done();
+            }, 100);
+        });
+
+        it('should focus input element when find-as-you-type returns control', () => {
+            fixture.detectChanges();
+            spyOn(inputEl, 'focus');
+            fixture.detectChanges();
+            component.onAutoCompleteReturn(new KeyboardEvent('keyup', {
+                key: 'ArrowUp'
+            }));
+            expect(inputEl.focus).toHaveBeenCalled();
+        });
+
+        it('should focus input element when find-as-you-type is cancelled', () => {
+            fixture.detectChanges();
+            spyOn(inputEl, 'focus');
+            fixture.detectChanges();
+            component.onAutoCompleteCancel(new KeyboardEvent('keyup', {
+                key: 'ArrowUp'
+            }));
+            expect(inputEl.focus).toHaveBeenCalled();
+        });
+
         it('should NOT display a find-as-you-type control when configured not to', () => {
             fixture.componentInstance.autocompleteEnabled = false;
             fixture.detectChanges();
