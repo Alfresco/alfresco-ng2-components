@@ -16,14 +16,7 @@
  */
 
 import { TextEditorComponent } from './text.editor';
-import {
-    // DynamicTableModel,
-    DynamicTableRow,
-    DynamicTableColumn// ,
-    // DynamicTableColumnOption,
-    // FormFieldModel,
-    // FormModel
-} from './../../../core/index';
+import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
 describe('TextEditorComponent', () => {
 

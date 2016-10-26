@@ -20,6 +20,8 @@ import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
+import { DynamicTableColumn } from './../core/dynamic-table-column';
+import { DynamicTableRow } from './../core/dynamic-table-row';
 
 @Component({
     moduleId: module.id,
@@ -31,8 +33,15 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
     value: any;
     fieldType: string;
+
+    // hyperlink
     linkUrl: string;
     linkText: string;
+
+    // dynamic table
+    rows: DynamicTableRow[] = [];
+    columns: DynamicTableColumn[] = [];
+    visibleColumns: DynamicTableColumn[] = [];
 
     constructor(private formService: FormService) {
         super();
@@ -103,6 +112,16 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             this.linkUrl = this.getHyperlinkUrl(this.field);
                             this.linkText = this.getHyperlinkText(this.field);
                             break;
+                        case FormFieldTypes.DYNAMIC_TABLE:
+                            let json = this.field.json;
+                            if (json.columnDefinitions) {
+                                this.columns = json.columnDefinitions.map(obj => <DynamicTableColumn> obj);
+                                this.visibleColumns = this.columns.filter(col => col.visible);
+                            }
+                            if (json.value) {
+                                this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
+                            }
+                            break;
                         default:
                             this.value = this.field.value;
                             break;
@@ -140,5 +159,27 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                     this.value = this.field.value;
                 }
             );
+    }
+
+    getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
+        let result = row.value[column.id];
+
+        if (column.type === 'Dropdown') {
+            if (result) {
+                return result.name;
+            }
+        }
+
+        if (column.type === 'Boolean') {
+            return result ? true : false;
+        }
+
+        if (column.type === 'Date') {
+            if (result) {
+                return moment(result.split('T')[0], 'YYYY-MM-DD').format('DD-MM-YYYY');
+            }
+        }
+
+        return result || '';
     }
 }

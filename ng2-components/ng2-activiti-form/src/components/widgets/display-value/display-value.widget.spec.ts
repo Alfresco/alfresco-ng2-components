@@ -21,6 +21,8 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
+import { DynamicTableRow } from './../core/dynamic-table-row';
+import { DynamicTableColumn } from './../core/dynamic-table-column';
 
 describe('DisplayValueWidget', () => {
 
@@ -537,6 +539,106 @@ describe('DisplayValueWidget', () => {
         });
         widget.ngOnInit();
         expect(widget.value).toBe(value);
+    });
+
+    it('should setup [DYNAMIC_TABLE] field', () => {
+        let columns = [{ id: '1', visible: false }, { id: '2', visible: true }];
+        let rows = [{}, {}];
+
+        widget.field = new FormFieldModel(null, {
+            type: FormFieldTypes.DISPLAY_VALUE,
+            params: {
+                field: {
+                    type: FormFieldTypes.DYNAMIC_TABLE
+                }
+            },
+            columnDefinitions: columns,
+            value: rows
+        });
+        widget.ngOnInit();
+
+        expect(widget.columns.length).toBe(2);
+        expect(widget.columns[0].id).toBe(columns[0].id);
+        expect(widget.columns[1].id).toBe(columns[1].id);
+
+        expect(widget.visibleColumns.length).toBe(1);
+        expect(widget.visibleColumns[0].id).toBe(columns[1].id);
+
+        expect(widget.rows.length).toBe(2);
+    });
+
+    it('should setup [DYNAMIC_TABLE] field with empty schema', () => {
+        widget.field = new FormFieldModel(null, {
+            type: FormFieldTypes.DISPLAY_VALUE,
+            params: {
+                field: {
+                    type: FormFieldTypes.DYNAMIC_TABLE
+                }
+            },
+            columnDefinitions: null,
+            value: null
+        });
+        widget.ngOnInit();
+
+        expect(widget.value).toBeNull();
+        expect(widget.columns).toEqual([]);
+        expect(widget.rows).toEqual([]);
+    });
+
+    it('should retrieve default cell value', () => {
+        const value = '<value>';
+        let row = <DynamicTableRow> { value: { key: value } };
+        let column = <DynamicTableColumn> { id: 'key' };
+
+        expect(widget.getCellValue(row, column)).toBe(value);
+    });
+
+    it('should retrieve dropdown cell value', () => {
+        const value = { id: '1', name: 'one' };
+        let row = <DynamicTableRow> { value: { key: value } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Dropdown' };
+
+        expect(widget.getCellValue(row, column)).toBe(value.name);
+    });
+
+    it('should fallback to empty cell value for dropdown', () => {
+        let row = <DynamicTableRow> { value: {} };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Dropdown' };
+
+        expect(widget.getCellValue(row, column)).toBe('');
+    });
+
+    it('should retrieve boolean cell value', () => {
+        let row1 = <DynamicTableRow> { value: { key: true } };
+        let row2 = <DynamicTableRow> { value: { key: 'positive' } };
+        let row3 = <DynamicTableRow> { value: { key: null } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Boolean' };
+
+        expect(widget.getCellValue(row1, column)).toBe(true);
+        expect(widget.getCellValue(row2, column)).toBe(true);
+        expect(widget.getCellValue(row3, column)).toBe(false);
+    });
+
+    it('should retrieve date cell value', () => {
+        const value = '2016-10-04T00:00:00.000Z';
+        let row = <DynamicTableRow> { value: { key: value } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Date' };
+
+        expect(widget.getCellValue(row, column)).toBe('04-10-2016');
+    });
+
+    it('should fallback to empty cell value for date', () => {
+        let row = <DynamicTableRow> { value: {} };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Date' };
+
+        expect(widget.getCellValue(row, column)).toBe('');
+    });
+
+    it('should retrieve empty text cell value', () => {
+        let row = <DynamicTableRow> { value: {} };
+        let column = <DynamicTableColumn> { id: 'key' };
+
+        expect(widget.getCellValue(row, column)).toBe('');
     });
 
 });

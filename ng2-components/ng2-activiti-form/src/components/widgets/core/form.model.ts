@@ -174,6 +174,14 @@ export class FormModel {
                 result.push(new ContainerModel(this, field));
             } else if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
                 result.push(new DynamicTableModel(this, field));
+            } else if (field.type === FormFieldTypes.DISPLAY_VALUE) {
+                // workaround for dynamic table on a completed/readonly form
+                if (field.params) {
+                    let originalField = field.params['field'];
+                    if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
+                        result.push(new DynamicTableModel(this, field));
+                    }
+                }
             }
         }
 
