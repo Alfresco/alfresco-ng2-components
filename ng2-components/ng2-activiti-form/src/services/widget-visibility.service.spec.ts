@@ -620,13 +620,18 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            fakeFormWithField.fields[0].columns[0].fields[0].visibilityCondition = visibilityObjTest;
+
+            let container = <ContainerModel> fakeFormWithField.fields[0];
+            let column0 = container.columns[0];
+            let column1 = container.columns[1];
+
+            column0.fields[0].visibilityCondition = visibilityObjTest;
             service.refreshVisibility(fakeFormWithField);
 
-            expect(fakeFormWithField.fields[0].columns[0].fields[0].isVisible).toBeFalsy();
-            expect(fakeFormWithField.fields[0].columns[0].fields[1].isVisible).toBeTruthy();
-            expect(fakeFormWithField.fields[0].columns[0].fields[2].isVisible).toBeTruthy();
-            expect(fakeFormWithField.fields[0].columns[1].fields[0].isVisible).toBeTruthy();
+            expect(column0.fields[0].isVisible).toBeFalsy();
+            expect(column0.fields[1].isVisible).toBeTruthy();
+            expect(column0.fields[2].isVisible).toBeTruthy();
+            expect(column1.fields[0].isVisible).toBeTruthy();
         });
 
         it('should refresh the visibility for tab in forms', () => {
@@ -655,17 +660,17 @@ describe('WidgetVisibilityService', () => {
         it('should refresh the visibility for container in forms', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+            visibilityObjTest.rightFormFieldId = 'LEFT_FORM_FIELD_ID';
             let contModel = new ContainerModel(fakeFormWithField, {
                 id: 'fake-container-id',
                 name: 'fake-container-name',
                 isVisible: true
             });
             contModel.visibilityCondition = visibilityObjTest;
-            fakeFormWithField.fields[0].visibilityCondition = visibilityObjTest;
+            fakeFormWithField.fields[1] = contModel;
             service.refreshVisibility(fakeFormWithField);
-
-            expect(fakeFormWithField.fields[0].isVisible).toBeFalsy();
+            let fakeCont = <ContainerModel> fakeFormWithField.fields[1];
+            expect(fakeCont.isVisible).toBeFalsy();
         });
 
         it('should refresh the visibility for single container', () => {
