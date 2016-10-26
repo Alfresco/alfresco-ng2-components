@@ -176,9 +176,9 @@ describe('ContainerWidget', () => {
                 });
         });
 
-        it('should hide header when it becomes not visible', () => {
+        it('should hide header when it becomes not visible', async(() => {
             containerWidgetComponent.content = fakeContainerVisible;
-            containerWidgetComponent.fieldChanged(null);
+            fixture.detectChanges();
             containerWidgetComponent.formValueChanged.subscribe((res) => {
                 containerWidgetComponent.content.isVisible = false;
                 fixture.detectChanges();
@@ -188,11 +188,11 @@ describe('ContainerWidget', () => {
                         expect(element.querySelector('#container-header-label')).toBeNull();
                     });
             });
-        });
-
-        it('should show header when it becomes visible', () => {
-            containerWidgetComponent.content = fakeContainerInvisible;
             containerWidgetComponent.fieldChanged(null);
+        }));
+
+        it('should show header when it becomes visible', async(() => {
+            containerWidgetComponent.content = fakeContainerInvisible;
             containerWidgetComponent.formValueChanged.subscribe((res) => {
                 containerWidgetComponent.content.isVisible = true;
                 fixture.detectChanges();
@@ -204,7 +204,8 @@ describe('ContainerWidget', () => {
                         expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-2-name');
                     });
             });
-        });
+            containerWidgetComponent.fieldChanged(null);
+        }));
 
     });
 

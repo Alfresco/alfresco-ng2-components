@@ -111,7 +111,8 @@ describe('TabsWidget', () => {
         }));
 
         beforeEach(() => {
-            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            componentHandler = jasmine.createSpyObj('componentHandler',
+                ['upgradeAllRegistered', 'upgradeElement', 'downgradeElements']);
             window['componentHandler'] = componentHandler;
             fakeTabVisible = new TabModel(new FormModel(fakeFormJson), {
                 id: 'tab-id-visible',
@@ -144,8 +145,8 @@ describe('TabsWidget', () => {
                 });
         });
 
-        it('should show tab when it became visible', () => {
-            tabWidgetComponent.tabChanged(null);
+        it('should show tab when it became visible', async(() => {
+            fixture.detectChanges();
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[1].isVisible = true;
                 fixture.detectChanges();
@@ -155,10 +156,11 @@ describe('TabsWidget', () => {
                         expect(element.querySelector('#title-tab-id-invisible').innerHTML).toContain('tab-title-invisible');
                     });
             });
-        });
-
-        it('should hide tab when it became not visible', () => {
             tabWidgetComponent.tabChanged(null);
+        }));
+
+        it('should hide tab when it became not visible', async(() => {
+            fixture.detectChanges();
             tabWidgetComponent.formTabChanged.subscribe((res) => {
                 tabWidgetComponent.tabs[0].isVisible = false;
                 fixture.detectChanges();
@@ -168,7 +170,8 @@ describe('TabsWidget', () => {
                         expect(element.querySelector('#title-tab-id-visible')).toBeNull();
                     });
             });
-        });
+            tabWidgetComponent.tabChanged(null);
+        }));
 
     });
 });
