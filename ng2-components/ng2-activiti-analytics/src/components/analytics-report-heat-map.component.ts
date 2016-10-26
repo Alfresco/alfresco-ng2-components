@@ -23,13 +23,15 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 @Component({
     moduleId: module.id,
     selector: 'analytics-report-heat-map',
-    templateUrl: './analytics-report-heat-map.component.html',
-    styleUrls: ['./analytics-report-heat-map.component.css']
+    templateUrl: './analytics-report-heat-map.component.html'
 })
 export class AnalyticsReportHeatMapComponent implements  OnInit {
 
     @Input()
     report: any;
+
+    @Output()
+    onSuccess = new EventEmitter();
 
     @Output()
     onError = new EventEmitter();
@@ -55,10 +57,7 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
         this.analyticsService.getMetricValues().subscribe(
             (opts: any[]) => {
                 this.field.options = opts;
-            },
-            (err: any) => {
-                console.log(err);
-                this.onError.emit(err);
+                this.onSuccess.emit(opts);
             }
         );
     }

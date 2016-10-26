@@ -142,17 +142,6 @@ export class AnalyticsService {
             }).catch(this.handleError);
     }
 
-    getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions/${processDefinitionId}/model-json`;
-        let options = this.getRequestOptions();
-        return this.http
-            .get(url, options)
-            .map((res: any) => {
-                let body = res.json();
-                return body;
-            }).catch(this.handleError);
-    }
-
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
         if (reportId && processDefinitionId) {
             let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}/tasks`;

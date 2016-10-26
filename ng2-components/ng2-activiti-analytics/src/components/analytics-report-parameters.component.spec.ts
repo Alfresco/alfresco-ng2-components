@@ -20,27 +20,14 @@ import {
     CoreModule
 } from 'ng2-alfresco-core';
 
-import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
-import { AnalyticsComponent } from '../components/analytics.component';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
 import * as moment from 'moment';
 import { DebugElement, SimpleChange } from '@angular/core';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
-
-export const ANALYTICS_DIRECTIVES: any[] = [
-    AnalyticsComponent,
-    AnalyticsReportParametersComponent,
-    AnalyticsReportListComponent,
-    WIDGET_DIRECTIVES
-];
-export const ANALYTICS_PROVIDERS: any[] = [
-    AnalyticsService
-];
 
 declare let jasmine: any;
 declare let mdDateTimePicker: any;
@@ -60,11 +47,11 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 CoreModule
             ],
             declarations: [
-                ...ANALYTICS_DIRECTIVES,
-                ...CHART_DIRECTIVES
+                AnalyticsReportParametersComponent,
+                ...WIDGET_DIRECTIVES
             ],
             providers: [
-                ...ANALYTICS_PROVIDERS
+                AnalyticsService
             ]
         }).compileComponents();
     }));
@@ -178,6 +165,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 expect(res.duration).toEqual(22);
                 expect(res.dateRangeInterval).toEqual(120);
                 expect(res.slowProcessInstanceInteger).toEqual(2);
+                expect(res.typeFiltering).toEqual(true);
             });
 
             let values: any = {
@@ -201,6 +189,9 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 },
                 processInstanceGroup: {
                     slowProcessInstanceInteger: 2
+                },
+                typeFilteringGroup: {
+                    typeFiltering: true
                 }
             };
             component.submit(values);
