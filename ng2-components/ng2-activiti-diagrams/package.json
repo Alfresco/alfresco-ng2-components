@@ -1,6 +1,6 @@
 {
-  "name": "ng2-activiti-analytics",
-  "description": "Activiti Angular2 Analytics Component",
+  "name": "ng2-activiti-diagrams",
+  "description": "Activiti Angular2 Diagrams Component",
   "version": "0.3.3",
   "author": "Alfresco Software, Ltd.",
   "main": "./dist/index.js",
@@ -18,16 +18,12 @@
     "pretest": "npm run build",
     "test": "karma start karma.conf.js --reporters mocha,coverage --single-run",
     "test-browser": "concurrently \"karma start karma.conf.js --reporters kjhtml\" \"npm run watch-task\"",
-    "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
+    "posttest": "node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && node_modules/.bin/remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run build",
     "travis": "echo 'placeholder'"
   },
   "contributors": [
-    {
-      "name": "Mario Romano",
-      "email": "mario.romnao@alfresco.com"
-    },
     {
       "name": "Maurizio Vitale",
       "email": "maurizio.vitale84@gmail.com"
@@ -52,13 +48,10 @@
     "@angular/upgrade": "2.0.0",
     "@types/node": "^6.0.42",
     "alfresco-js-api": "^0.3.0",
-    "chart.js": "^2.1.4",
     "core-js": "^2.4.1",
-    "md-date-time-picker": "^2.2.0",
     "ng2-alfresco-core": "0.3.2",
-    "ng2-activiti-diagrams": "0.3.3",
-    "ng2-charts": "1.1.0",
     "ng2-translate": "2.5.0",
+    "raphael": "^2.2.6",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.27",
@@ -88,7 +81,8 @@
   },
   "keywords": [
     "tag",
-    "alfresco-component"
+    "alfresco-analytics",
+    "alfresco-diagrams"
   ],
   "license-check-config": {
     "src": [

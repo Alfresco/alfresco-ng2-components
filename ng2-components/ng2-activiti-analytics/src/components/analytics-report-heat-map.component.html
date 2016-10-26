@@ -4,6 +4,6 @@
         <dropdown-widget [field]="field" [group]="metricForm.controls.metricGroup" [controllerName]="'metric'"
                          (fieldChanged)="onMetricChanges(field)" [showDefaultOption]="false"></dropdown-widget>
     </form>
-    <diagram *ngIf="currentMetric" [processDefinitionId]="report.processDefinitionId" [metricPercentages]="currentMetric"></diagram>
+    <activiti-diagram *ngIf="currentMetric" [processDefinitionId]="report.processDefinitionId" [metricPercentages]="currentMetric"></activiti-diagram>
 </div>
 <div *ngIf="!hasMetric()">No metric found</div>

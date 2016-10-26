@@ -17,6 +17,7 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
+import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 import { AnalyticsReportListComponent } from './src/components/analytics-report-list.component';
 import { AnalyticsReportParametersComponent } from './src/components/analytics-report-parameters.component';
@@ -26,27 +27,19 @@ import { AnalyticsService } from './src/services/analytics.service';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
-import { RAPHAEL_DIRECTIVES } from './src/components/raphael/index';
-import { DIAGRAM_DIRECTIVES } from './src/components/diagrams/index';
-import { DIAGRAM_PROVIDERS } from './src/components/diagrams/index';
-import { RAPHAEL_PROVIDERS } from './src/components/raphael/index';
 
 export * from './src/components/analytics.component';
 export * from './src/components/analytics-report-list.component';
 export * from './src/components/analytics-report-parameters.component';
 export * from './src/services/analytics.service';
 export * from './src/components/widgets/index';
-export * from './src/components/raphael/index';
-export * from './src/components/diagrams/index';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,
     AnalyticsReportListComponent,
     AnalyticsReportParametersComponent,
     AnalyticsReportHeatMapComponent,
-    WIDGET_DIRECTIVES,
-    RAPHAEL_DIRECTIVES,
-    DIAGRAM_DIRECTIVES
+    WIDGET_DIRECTIVES
 ];
 
 export const ANALYTICS_PROVIDERS: any[] = [
@@ -55,16 +48,15 @@ export const ANALYTICS_PROVIDERS: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        DiagramsModule
     ],
     declarations: [
         ...ANALYTICS_DIRECTIVES,
         ...CHART_DIRECTIVES
     ],
     providers: [
-        ...ANALYTICS_PROVIDERS,
-        ...DIAGRAM_PROVIDERS,
-        ...RAPHAEL_PROVIDERS
+        ...ANALYTICS_PROVIDERS
     ],
     exports: [
         ...ANALYTICS_DIRECTIVES
@@ -75,9 +67,7 @@ export class AnalyticsModule {
         return {
             ngModule: AnalyticsModule,
             providers: [
-                ...ANALYTICS_PROVIDERS,
-                ...DIAGRAM_PROVIDERS,
-                ...RAPHAEL_PROVIDERS
+                ...ANALYTICS_PROVIDERS
             ]
         };
     }
