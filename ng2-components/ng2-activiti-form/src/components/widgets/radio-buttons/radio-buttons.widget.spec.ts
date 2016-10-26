@@ -138,6 +138,7 @@ describe('RadioButtonsWidget', () => {
             });
             radioButtonWidget.field.options = [{id: 'opt-1', name: 'opt-name-1'}, {id: 'opt-2', name: 'opt-name-2'}];
             radioButtonWidget.field.isVisible = true;
+            fixture.detectChanges();
         });
 
         afterEach(() => {
@@ -145,7 +146,7 @@ describe('RadioButtonsWidget', () => {
             TestBed.resetTestingModule();
         });
 
-        it('should show visible radio buttons', () => {
+        it('should show visible radio buttons', async(() => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
@@ -155,9 +156,9 @@ describe('RadioButtonsWidget', () => {
                     expect(element.querySelector('#opt-2')).toBeDefined();
                     expect(element.querySelector('#radio-id-opt-2')).toBeDefined();
                 });
-        });
+        }));
 
-        it('should not show invisible radio buttons', () => {
+        it('should not show invisible radio buttons', async(() => {
             radioButtonWidget.field.isVisible = false;
             fixture.detectChanges();
             fixture.whenStable()
@@ -166,10 +167,9 @@ describe('RadioButtonsWidget', () => {
                     expect(element.querySelector('#opt-1')).toBeNull();
                     expect(element.querySelector('#opt-2')).toBeNull();
                 });
-        });
+        }));
 
-        it('should hide radio button when it becomes not visible', () => {
-            radioButtonWidget.checkVisibility(null);
+        it('should hide radio button when it becomes not visible', async(() => {
             radioButtonWidget.fieldChanged.subscribe((res) => {
                 radioButtonWidget.field.isVisible = false;
                 fixture.detectChanges();
@@ -180,12 +180,12 @@ describe('RadioButtonsWidget', () => {
                         expect(element.querySelector('#opt-2')).toBeNull();
                     });
             });
-        });
+            radioButtonWidget.checkVisibility(null);
+        }));
 
-        it('should show radio button when it becomes visible', () => {
+        it('should show radio button when it becomes visible', async(() => {
             radioButtonWidget.field.isVisible = false;
             fixture.detectChanges();
-            radioButtonWidget.checkVisibility(null);
             radioButtonWidget.fieldChanged.subscribe((res) => {
                 radioButtonWidget.field.isVisible = true;
                 fixture.detectChanges();
@@ -198,7 +198,8 @@ describe('RadioButtonsWidget', () => {
                         expect(element.querySelector('#radio-id-opt-2')).toBeDefined();
                     });
             });
-        });
+            radioButtonWidget.checkVisibility(null);
+        }));
     });
 
 });
