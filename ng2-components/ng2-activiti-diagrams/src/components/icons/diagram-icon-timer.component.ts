@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-icon-timer',
-    templateUrl: './diagram-icon-timer.component.html',
-    styleUrls: ['./diagram-icon-timer.component.css']
+    templateUrl: './diagram-icon-timer.component.html'
 })
 export class DiagramIconTimerComponent {
     @Input()

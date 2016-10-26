@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-start-event',
-    templateUrl: './diagram-start-event.component.html',
-    styleUrls: ['./diagram-start-event.component.css']
+    templateUrl: './diagram-start-event.component.html'
 })
 export class DiagramStartEventComponent {
     @Input()

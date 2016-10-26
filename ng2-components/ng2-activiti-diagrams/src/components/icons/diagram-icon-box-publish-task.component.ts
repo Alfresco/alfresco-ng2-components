@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-icon-box-publish-task',
-    templateUrl: './diagram-icon-box-publish-task.component.html',
-    styleUrls: ['./diagram-icon-box-publish-task.component.css']
+    templateUrl: './diagram-icon-box-publish-task.component.html'
 })
 export class DiagramIconBoxPublishTaskComponent {
     @Input()

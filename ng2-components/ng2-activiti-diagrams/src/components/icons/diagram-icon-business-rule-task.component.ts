@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-icon-business-rule-task',
-    templateUrl: './diagram-icon-business-rule-task.component.html',
-    styleUrls: ['./diagram-icon-business-rule-task.component.css']
+    templateUrl: './diagram-icon-business-rule-task.component.html'
 })
 export class DiagramIconBusinessRuleTaskComponent {
     @Input()

@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-parallel-gateway',
-    templateUrl: './diagram-parallel-gateway.component.html',
-    styleUrls: ['./diagram-parallel-gateway.component.css']
+    templateUrl: './diagram-parallel-gateway.component.html'
 })
 export class DiagramParallelGatewayComponent {
     @Input()

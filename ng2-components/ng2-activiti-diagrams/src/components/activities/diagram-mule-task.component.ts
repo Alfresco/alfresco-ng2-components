@@ -20,8 +20,7 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 @Component({
     moduleId: module.id,
     selector: 'diagram-mule-task',
-    templateUrl: './diagram-mule-task.component.html',
-    styleUrls: ['./diagram-mule-task.component.css']
+    templateUrl: './diagram-mule-task.component.html'
 })
 export class DiagramMuleTaskComponent {
     @Input()

@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-icon-alfresco-publish-task',
-    templateUrl: './diagram-icon-alfresco-publish-task.component.html',
-    styleUrls: ['./diagram-icon-alfresco-publish-task.component.css']
+    templateUrl: './diagram-icon-alfresco-publish-task.component.html'
 })
 export class DiagramIconAlfrescoPublishTaskComponent {
     @Input()

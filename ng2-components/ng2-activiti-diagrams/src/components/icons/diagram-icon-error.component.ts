@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-icon-error',
-    templateUrl: './diagram-icon-error.component.html',
-    styleUrls: ['./diagram-icon-error.component.css']
+    templateUrl: './diagram-icon-error.component.html'
 })
 export class DiagramIconErrorComponent {
     @Input()

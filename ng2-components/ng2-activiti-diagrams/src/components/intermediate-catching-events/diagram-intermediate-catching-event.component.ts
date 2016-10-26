@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-intermediate-catching-event',
-    templateUrl: './diagram-intermediate-catching-event.component.html',
-    styleUrls: ['./diagram-intermediate-catching-event.component.css']
+    templateUrl: './diagram-intermediate-catching-event.component.html'
 })
 export class DiagramIntermediateCatchingEventComponent {
     @Input()

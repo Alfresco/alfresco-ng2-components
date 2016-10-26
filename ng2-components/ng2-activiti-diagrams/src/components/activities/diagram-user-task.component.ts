@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-user-task',
-    templateUrl: './diagram-user-task.component.html',
-    styleUrls: ['./diagram-user-task.component.css']
+    templateUrl: './diagram-user-task.component.html'
 })
 export class DiagramUserTaskComponent {
     @Input()

@@ -20,8 +20,7 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 @Component({
     moduleId: module.id,
     selector: 'diagram-container-service-task',
-    templateUrl: './diagram-container-service-task.component.html',
-    styleUrls: ['./diagram-container-service-task.component.css']
+    templateUrl: './diagram-container-service-task.component.html'
 })
 export class DiagramContainerServiceTaskComponent {
     @Input()

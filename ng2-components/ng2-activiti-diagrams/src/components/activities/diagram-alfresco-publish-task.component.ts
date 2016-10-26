@@ -20,8 +20,7 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 @Component({
     moduleId: module.id,
     selector: 'diagram-alfresco-publish-task',
-    templateUrl: './diagram-alfresco-publish-task.component.html',
-    styleUrls: ['./diagram-alfresco-publish-task.component.css']
+    templateUrl: './diagram-alfresco-publish-task.component.html'
 })
 export class DiagramAlfrescoPublishTaskComponent {
     @Input()

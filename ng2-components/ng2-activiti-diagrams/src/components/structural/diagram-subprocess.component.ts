@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-subprocess',
-    templateUrl: './diagram-subprocess.component.html',
-    styleUrls: ['./diagram-subprocess.component.css']
+    templateUrl: './diagram-subprocess.component.html'
 })
 export class DiagramSubprocessComponent {
     @Input()

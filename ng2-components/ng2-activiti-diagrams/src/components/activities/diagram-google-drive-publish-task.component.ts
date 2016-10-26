@@ -20,8 +20,7 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 @Component({
     moduleId: module.id,
     selector: 'diagram-google-drive-publish-task',
-    templateUrl: './diagram-google-drive-publish-task.component.html',
-    styleUrls: ['./diagram-google-drive-publish-task.component.css']
+    templateUrl: './diagram-google-drive-publish-task.component.html'
 })
 export class DiagramGoogleDrivePublishTaskComponent {
     @Input()

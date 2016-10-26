@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-event-subprocess',
-    templateUrl: './diagram-event-subprocess.component.html',
-    styleUrls: ['./diagram-event-subprocess.component.css']
+    templateUrl: './diagram-event-subprocess.component.html'
 })
 export class DiagramEventSubprocessComponent {
     @Input()

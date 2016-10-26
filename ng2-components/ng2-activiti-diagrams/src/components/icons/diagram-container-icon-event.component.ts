@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-container-icon-event',
-    templateUrl: './diagram-container-icon-event.component.html',
-    styleUrls: ['./diagram-container-icon-event.component.css']
+    templateUrl: './diagram-container-icon-event.component.html'
 })
 export class DiagramContainerIconEventTaskComponent {
     @Input()

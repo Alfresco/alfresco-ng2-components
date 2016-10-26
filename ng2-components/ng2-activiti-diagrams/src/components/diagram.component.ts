@@ -24,8 +24,7 @@ import { RaphaelService } from './raphael/raphael.service';
 @Component({
     moduleId: module.id,
     selector: 'activiti-diagram',
-    templateUrl: './diagram.component.html',
-    styleUrls: ['./diagram.component.css']
+    templateUrl: './diagram.component.html'
 })
 export class DiagramComponent {
     @Input()

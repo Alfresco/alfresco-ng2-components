@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-icon-send-task',
-    templateUrl: './diagram-icon-send-task.component.html',
-    styleUrls: ['./diagram-icon-send-task.component.css']
+    templateUrl: './diagram-icon-send-task.component.html'
 })
 export class DiagramIconSendTaskComponent {
     @Input()

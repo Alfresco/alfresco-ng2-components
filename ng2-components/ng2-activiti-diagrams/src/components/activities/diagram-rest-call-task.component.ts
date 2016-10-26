@@ -20,8 +20,7 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 @Component({
     moduleId: module.id,
     selector: 'diagram-rest-call-task',
-    templateUrl: './diagram-rest-call-task.component.html',
-    styleUrls: ['./diagram-rest-call-task.component.css']
+    templateUrl: './diagram-rest-call-task.component.html'
 })
 export class DiagramRestCallTaskComponent {
     @Input()

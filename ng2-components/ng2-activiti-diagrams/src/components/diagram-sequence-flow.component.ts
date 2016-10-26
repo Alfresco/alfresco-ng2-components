@@ -20,8 +20,7 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 @Component({
     moduleId: module.id,
     selector: 'diagram-sequence-flow',
-    templateUrl: './diagram-sequence-flow.component.html',
-    styleUrls: ['./diagram-sequence-flow.component.css']
+    templateUrl: './diagram-sequence-flow.component.html'
 })
 export class DiagramSequenceFlowComponent {
     @Input()

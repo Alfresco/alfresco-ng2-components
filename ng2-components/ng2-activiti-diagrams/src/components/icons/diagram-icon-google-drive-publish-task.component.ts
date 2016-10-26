@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-icon-google-drive-publish-task',
-    templateUrl: './diagram-icon-google-drive-publish-task.component.html',
-    styleUrls: ['./diagram-icon-google-drive-publish-task.component.css']
+    templateUrl: './diagram-icon-google-drive-publish-task.component.html'
 })
 export class DiagramIconGoogleDrivePublishTaskComponent {
     @Input()

@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-boundary-event',
-    templateUrl: './diagram-boundary-event.component.html',
-    styleUrls: ['./diagram-boundary-event.component.css']
+    templateUrl: './diagram-boundary-event.component.html'
 })
 export class DiagramBoundaryEventComponent {
     @Input()

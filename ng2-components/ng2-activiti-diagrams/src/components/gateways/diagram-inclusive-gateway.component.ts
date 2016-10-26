@@ -21,8 +21,7 @@ import { DiagramColorService } from '../../services/diagram-color.service';
 @Component({
     moduleId: module.id,
     selector: 'diagram-inclusive-gateway',
-    templateUrl: './diagram-inclusive-gateway.component.html',
-    styleUrls: ['./diagram-inclusive-gateway.component.css']
+    templateUrl: './diagram-inclusive-gateway.component.html'
 })
 export class DiagramInclusiveGatewayComponent {
     @Input()
