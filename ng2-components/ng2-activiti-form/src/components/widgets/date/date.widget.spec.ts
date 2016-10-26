@@ -154,12 +154,13 @@ describe('DateWidget', () => {
     it('should send field change event when a new date is picked from data picker', (done) => {
         let w = new DateWidget(null);
         spyOn(w, 'setupMaterialTextField').and.callThrough();
-        w.field = new FormFieldModel(null, {type: 'date'});
+        w.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
         w.ngOnInit();
-        w.datePicker.time = moment();
+        w.datePicker.time = moment('9-9-9999', w.DATE_FORMAT);
         w.fieldChanged.subscribe((field) => {
             expect(field).toBeDefined();
             expect(field).not.toBeNull();
+            expect(field.value).toEqual('9-9-9999');
             done();
         });
         w.onDateSelected();
@@ -168,12 +169,13 @@ describe('DateWidget', () => {
     it('should send field change event when date is changed in input text', (done) => {
         let w = new DateWidget(null);
         spyOn(w, 'setupMaterialTextField').and.callThrough();
-        w.field = new FormFieldModel(null, {type: 'date'});
+        w.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
         w.ngOnInit();
-        w.datePicker.time = moment();
+        w.datePicker.time = moment('9-9-9999', w.DATE_FORMAT);
         w.fieldChanged.subscribe((field) => {
             expect(field).toBeDefined();
             expect(field).not.toBeNull();
+            expect(field.value).toEqual('9-9-9999');
             done();
         });
 
