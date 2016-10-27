@@ -23,6 +23,7 @@
         <textarea class="mdl-textfield__input"
                   type="text"
                   rows= "3"
+                  [value]="value"
                   [attr.id]="field.id"
                   [(ngModel)]="value"
                   [disabled]="field.readOnly">
