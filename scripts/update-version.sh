@@ -15,6 +15,7 @@ then
 fi
 
 for PACKAGE in \
+  ng2-activiti-diagrams \
   ng2-activiti-analytics \
   ng2-activiti-form \
   ng2-activiti-processlist \
@@ -36,6 +37,7 @@ do
 done
 
 for PACKAGE in \
+  ng2-activiti-diagrams \
   ng2-activiti-analytics \
   ng2-activiti-form \
   ng2-activiti-processlist \
