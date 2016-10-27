@@ -97,3 +97,5 @@ do
   echo "====== demo shell linking: ${PACKAGE} ====="
   npm link ${PACKAGE}
 done
+
+npm install
