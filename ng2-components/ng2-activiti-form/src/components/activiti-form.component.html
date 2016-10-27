@@ -19,6 +19,9 @@
                             <div *ngSwitchCase="'container'">
                                 <container-widget [content]="field" (formValueChanged)="checkVisibility($event)"></container-widget>
                             </div>
+                            <div *ngSwitchCase="'group'">
+                                <container-widget [content]="field" (formValueChanged)="checkVisibility($event)"></container-widget>
+                            </div>
                             <div *ngSwitchCase="'dynamic-table'">
                                 <dynamic-table-widget [content]="field"></dynamic-table-widget>
                             </div>

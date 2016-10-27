@@ -170,7 +170,7 @@ export class FormModel {
         let result: FormWidgetModel[] = [];
 
         for (let field of fields) {
-            if (field.type === FormFieldTypes.CONTAINER) {
+            if (field.type === FormFieldTypes.CONTAINER || field.type === FormFieldTypes.GROUP ) {
                 result.push(new ContainerModel(this, field));
             } else if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
                 result.push(new DynamicTableModel(this, field));
