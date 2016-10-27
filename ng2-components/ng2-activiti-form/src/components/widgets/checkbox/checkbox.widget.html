@@ -3,6 +3,7 @@
            [attr.id]="field.id"
            [attr.required]="isRequired()"
            class="mdl-checkbox__input"
+           [checked]="field.value"
            [(ngModel)]="field.value"
            (ngModelChange)="checkVisibility(field)"
            [disabled]="field.readOnly">
