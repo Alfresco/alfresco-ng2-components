@@ -19,7 +19,7 @@
     "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run build",
-    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable"
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable ng2-activiti-form"
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
