@@ -37,7 +37,7 @@ env:
 
 before_script:
   - if ([ "$MODULE" != "ng2-alfresco-core" ]); then
-        (cd ng2-components/ng2-alfresco-core; npm install; npm link; cd ng2-components/$MODULE; npm link ng2-alfresco-core;);
+        (cd ng2-components/ng2-alfresco-core; npm install; npm link);
     fi
   - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
         (cd ng2-components/ng2-alfresco-datatable; npm install; npm link);
@@ -52,20 +52,8 @@ before_script:
         (cd ng2-components/ng2-activiti-diagrams; npm install; npm link);
     fi
   - cd ng2-components/$MODULE;
-  - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
-        npm link ng2-alfresco-datatable;
-    fi
-  - if ([ "$MODULE" == "ng2-activiti-tasklist" ]); then
-        npm link ng2-activiti-form;
-    fi
-  - if ([ "$MODULE" == "ng2-activiti-processlist" ]); then
-        npm link ng2-activiti-tasklist;
-    fi
-  - if ([ "$MODULE" == "ng2-activiti-analitycs" ]); then
-        npm link ng2-activiti-diagrams;
-    fi
-  - npm install;
   - npm run travis
+  - npm install;
   - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
