@@ -121,7 +121,7 @@ export class FormModel {
         for (let i = 0; i < this.fields.length; i++) {
             let field = this.fields[i];
 
-            if (field.type === FormFieldTypes.CONTAINER) {
+            if (field.type === FormFieldTypes.CONTAINER || field.type === FormFieldTypes.GROUP) {
                 let container = <ContainerModel> field;
                 result.push(...container.getFormFields());
             }

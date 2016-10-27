@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { FormModel, FormFieldModel, TabModel, ContainerModel } from '../components/widgets/core/index';
+import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 
@@ -43,7 +43,7 @@ export class WidgetVisibilityService {
         }
     }
 
-    refreshEntityVisibility(element: FormFieldModel | ContainerModel | TabModel) {
+    refreshEntityVisibility(element: FormFieldModel | TabModel) {
         element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition);
     }
 
