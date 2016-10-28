@@ -47,7 +47,7 @@ before_script:
     fi
   - if ([ "$MODULE" == "ng2-activiti-processlist" ]); then
         (cd ng2-components/ng2-activiti-tasklist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; npm link ng2-activiti-form; npm install; npm link);
-    fiinstall
+    fi
   - if ([ "$MODULE" == "ng2-activiti-analitycs" ]); then
         (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; npm install; npm link);
     fi
