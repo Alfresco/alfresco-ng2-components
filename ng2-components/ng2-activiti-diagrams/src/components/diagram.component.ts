@@ -40,6 +40,9 @@ export class DiagramComponent {
     height: number = 500;
 
     @Output()
+    onSuccess = new EventEmitter();
+
+    @Output()
     onError = new EventEmitter();
 
     private diagram: any;
@@ -70,6 +73,7 @@ export class DiagramComponent {
         this.diagramsService.getProcessDefinitionModel(processDefinitionId).subscribe(
             (res: any) => {
                 this.diagram = res;
+                this.onSuccess.emit(res);
             },
             (err: any) => {
                 this.onError.emit(err);

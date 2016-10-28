@@ -18,9 +18,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { DIAGRAM_DIRECTIVES } from './src/components/index';
-import { DiagramColorService } from './src/services/diagram-color.service';
-import { DiagramsService } from './src/services/diagrams.service';
+import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './src/components/index';
 
 import { RAPHAEL_DIRECTIVES } from './src/components/raphael/index';
 import { RAPHAEL_PROVIDERS } from './src/components/raphael/index';
@@ -28,11 +26,6 @@ import { RAPHAEL_PROVIDERS } from './src/components/raphael/index';
 // primitives
 export * from './src/components/index';
 export * from './src/components/raphael/index';
-
-export const DIAGRAM_PROVIDERS: any[] = [
-    DiagramsService,
-    DiagramColorService
-];
 
 @NgModule({
     imports: [

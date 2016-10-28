@@ -24,6 +24,10 @@ import { DIAGRAM_ICONS_DIRECTIVES } from './icons/index';
 import { DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES } from './boundary-events/index';
 import { DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES } from './intermediate-catching-events/index';
 import { DIAGRAM_STRUCTURAL_DIRECTIVES } from './structural/index';
+import { DIAGRAM_SWIMLANES_DIRECTIVES } from './swimlanes/index';
+
+import { DiagramColorService } from '../services/diagram-color.service';
+import { DiagramsService } from '../services/diagrams.service';
 
 // primitives
 export * from './diagram.component';
@@ -34,6 +38,7 @@ export * from './diagram-sequence-flow.component';
 export * from './boundary-events/index';
 export * from './intermediate-catching-events/index';
 export * from './structural/index';
+export * from './swimlanes/index';
 
 export const DIAGRAM_DIRECTIVES: any[] = [
     DiagramComponent,
@@ -44,5 +49,11 @@ export const DIAGRAM_DIRECTIVES: any[] = [
     DIAGRAM_ICONS_DIRECTIVES,
     DIAGRAM_BOUNDARY_EVENTS_DIRECTIVES,
     DIAGRAM_INTERMEDIATE_EVENTS_DIRECTIVES,
-    DIAGRAM_STRUCTURAL_DIRECTIVES
+    DIAGRAM_STRUCTURAL_DIRECTIVES,
+    DIAGRAM_SWIMLANES_DIRECTIVES
+];
+
+export const DIAGRAM_PROVIDERS: any[] = [
+    DiagramsService,
+    DiagramColorService
 ];
