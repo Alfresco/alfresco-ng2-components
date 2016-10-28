@@ -29,6 +29,9 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     position: Point;
 
     @Input()
+    transform: string;
+
+    @Input()
     text: string;
 
     @Output()
@@ -48,11 +51,14 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     }
 
     public draw(position: Point, text: string) {
-        return this.paper.text(position.x, position.y, text).attr({
+        let textPaper = this.paper.text(position.x, position.y, text).attr({
             'text-anchor' : 'middle',
             'font-family' : 'Arial',
             'font-size' : '11',
             'fill' : '#373e48'
         });
+
+        textPaper.transform(this.transform);
+        return textPaper;
     }
 }

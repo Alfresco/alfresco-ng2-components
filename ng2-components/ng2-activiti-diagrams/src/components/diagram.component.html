@@ -61,4 +61,7 @@
             </div>
         </div>
     </div>
+    <div *ngIf="diagram.pools">
+        <diagram-pools [pools]="diagram.pools"></diagram-pools>
+    </div>
 </div>
