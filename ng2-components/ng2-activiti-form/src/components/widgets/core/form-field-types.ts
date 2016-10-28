@@ -18,6 +18,7 @@
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';
+    static DYNAMIC_TABLE: string = 'dynamic-table';
     static TEXT: string = 'text';
     static MULTILINE_TEXT: string = 'multi-line-text';
     static DROPDOWN: string = 'dropdown';

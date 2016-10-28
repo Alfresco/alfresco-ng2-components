@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
+import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 
-export class FormOutcomeModel extends FormWidgetModel {
+declare var componentHandler;
 
-    static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
+@Directive({
+    selector: '[alfresco-mdl-textfield]'
+})
+export class AlfrescoMdlTextFieldDirective implements AfterViewInit {
 
-    isSystem: boolean = false;
+    constructor(private element: ElementRef) {}
 
-    constructor(form: FormModel, json?: any) {
-        super(form, json);
-
-        if (json) {
-            this.isSystem = json.isSystem ? true : false;
+    ngAfterViewInit() {
+        if (componentHandler) {
+            let el = this.element.nativeElement;
+            el.classList.add('mdl-textfield');
+            el.classList.add('mdl-js-textfield');
+            el.classList.add('mdl-textfield--floating-label');
+            componentHandler.upgradeElement(el, 'MaterialTextfield');
         }
     }
 }

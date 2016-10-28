@@ -16,18 +16,16 @@
  */
 
 import { FormWidgetModel } from './form-widget.model';
-import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
 export class TabModel extends FormWidgetModel {
 
-    id: string;
     title: string;
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel;
 
-    fields: ContainerModel[] = [];
+    fields: FormWidgetModel[] = [];
 
     hasContent(): boolean {
         return this.fields && this.fields.length > 0;
@@ -37,7 +35,6 @@ export class TabModel extends FormWidgetModel {
         super(form, json);
 
         if (json) {
-            this.id = json.id;
             this.title = json.title;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
         }

@@ -244,22 +244,25 @@ will also be executed after your custom code.**
 
 ## Supported form widgets
 
+Form renderer provides support for all basic widgets:
+
 - [x] Tabs
 - [x] Text
 - [x] Multiline Text
 - [x] Number
 - [x] Checkbox
-- [ ] Date
+- [x] Date
 - Dropdown
   * [x] Manual
   * [x] REST service
-  * [ ] Data source
 - [x] Typeahead
-- [ ] Amount
-- [x] Radio buttons
+- [x] Amount
+- Radio buttons
+  * [x] Manual
+  * [x] REST service
 - [x] People
 - [x] Group of People
-- [ ] Dynamic Table
+- [x] Dynamic Table
 - [x] Hyperlink
 - Header
   * [x] Plain header

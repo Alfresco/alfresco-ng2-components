@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
+import { Component } from '@angular/core';
+import { CellEditorComponent } from './../cell.editor';
+import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
-export class FormOutcomeModel extends FormWidgetModel {
+@Component({
+    moduleId: module.id,
+    selector: 'alf-text-editor',
+    templateUrl: './text.editor.html',
+    styleUrls: ['./text.editor.css']
+})
+export class TextEditorComponent extends CellEditorComponent {
 
-    static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
-
-    isSystem: boolean = false;
-
-    constructor(form: FormModel, json?: any) {
-        super(form, json);
-
-        if (json) {
-            this.isSystem = json.isSystem ? true : false;
-        }
+    onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
+        let value: any = (<HTMLInputElement>event.srcElement).value;
+        row.value[column.id] = value;
     }
+
 }

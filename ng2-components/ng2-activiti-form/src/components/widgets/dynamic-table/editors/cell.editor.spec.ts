@@ -15,27 +15,28 @@
  * limitations under the License.
  */
 
-import { FormModel } from './form.model';
-import { FormWidgetModel } from './form-widget.model';
+import { CellEditorComponent } from './cell.editor';
 
-describe('FormWidgetModel', () => {
+describe('CellEditorComponent', () => {
 
-    class FormWidgetModelMock extends FormWidgetModel {
-        constructor(form: FormModel, json: any) {
-            super(form, json);
+    class CustomEditor extends CellEditorComponent {
+        onError(error: any) {
+            this.handleError(error);
         }
     }
 
-    it('should store the form reference', () => {
-        let form = new FormModel();
-        let model = new FormWidgetModelMock(form, null);
-        expect(model.form).toBe(form);
+    let component: CustomEditor;
+
+    beforeEach(() => {
+        component = new CustomEditor();
     });
 
-    it('should store original json', () => {
-        let json = {};
-        let model = new FormWidgetModelMock(null, json);
-        expect(model.json).toBe(json);
+    it('should handle error', () => {
+        const error = 'error';
+        spyOn(console, 'error').and.stub();
+
+        component.onError(error);
+        expect(console.error).toHaveBeenCalledWith(error);
     });
 
 });

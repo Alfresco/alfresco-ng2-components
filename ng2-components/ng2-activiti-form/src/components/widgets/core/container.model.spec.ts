@@ -51,8 +51,7 @@ describe('ContainerModel', () => {
             type: '<type>',
             tab: '<tab>',
             numberOfColumns: 2,
-            params: {},
-            visibilityCondition: {}
+            params: {}
         };
         let container = new ContainerModel(null, json);
         Object.keys(json).forEach(key => {
@@ -107,7 +106,12 @@ describe('ContainerModel', () => {
         });
 
         expect(container.isCollapsible()).toBeFalsy();
-        container.type = FormFieldTypes.GROUP;
+        container = new ContainerModel(new FormModel(), {
+            type:  FormFieldTypes.GROUP,
+            params: {
+                allowCollapse: true
+            }
+        });
         expect(container.isCollapsible()).toBeTruthy();
     });
 

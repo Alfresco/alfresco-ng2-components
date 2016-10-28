@@ -15,27 +15,24 @@
  * limitations under the License.
  */
 
-import { FormModel } from './form.model';
-import { FormWidgetModel } from './form-widget.model';
+import { BooleanEditorComponent } from './boolean.editor';
+import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
-describe('FormWidgetModel', () => {
+describe('BooleanEditorComponent', () => {
 
-    class FormWidgetModelMock extends FormWidgetModel {
-        constructor(form: FormModel, json: any) {
-            super(form, json);
-        }
-    }
+    let component: BooleanEditorComponent;
 
-    it('should store the form reference', () => {
-        let form = new FormModel();
-        let model = new FormWidgetModelMock(form, null);
-        expect(model.form).toBe(form);
+    beforeEach(() => {
+        component = new BooleanEditorComponent();
     });
 
-    it('should store original json', () => {
-        let json = {};
-        let model = new FormWidgetModelMock(null, json);
-        expect(model.json).toBe(json);
+    it('should update row value on change', () => {
+        let row = <DynamicTableRow> { value: {} };
+        let column = <DynamicTableColumn> { id: 'key' };
+        let event = { srcElement: { checked: true } };
+
+        component.onValueChanged(row, column, event);
+        expect(row.value[column.id]).toBeTruthy();
     });
 
 });

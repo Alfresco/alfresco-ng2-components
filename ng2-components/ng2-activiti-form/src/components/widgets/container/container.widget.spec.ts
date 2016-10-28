@@ -145,8 +145,8 @@ describe('ContainerWidget', () => {
                 name: 'fake-cont-2-name',
                 type: FormFieldTypes.GROUP
             });
-            fakeContainerVisible.isVisible = true;
-            fakeContainerInvisible.isVisible = false;
+            fakeContainerVisible.field.isVisible = true;
+            fakeContainerInvisible.field.isVisible = false;
         });
 
         afterEach(() => {
@@ -180,7 +180,7 @@ describe('ContainerWidget', () => {
             containerWidgetComponent.content = fakeContainerVisible;
             fixture.detectChanges();
             containerWidgetComponent.formValueChanged.subscribe((res) => {
-                containerWidgetComponent.content.isVisible = false;
+                containerWidgetComponent.content.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
@@ -194,7 +194,7 @@ describe('ContainerWidget', () => {
         it('should show header when it becomes visible', async(() => {
             containerWidgetComponent.content = fakeContainerInvisible;
             containerWidgetComponent.formValueChanged.subscribe((res) => {
-                containerWidgetComponent.content.isVisible = true;
+                containerWidgetComponent.content.field.isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {

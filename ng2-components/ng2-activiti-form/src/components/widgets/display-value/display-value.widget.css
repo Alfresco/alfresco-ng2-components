@@ -1,3 +1,11 @@
 .display-value-widget {
     width: 100%;
 }
+
+.display-value-widget__dynamic-table {
+    padding: 8px;
+}
+
+.display-value-widget__dynamic-table table {
+    width: 100%;
+}

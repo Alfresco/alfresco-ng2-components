@@ -1,0 +1,28 @@
+.dynamic-table-widget {
+    padding: 8px;
+}
+
+.dynamic-table-widget__row-selected,
+.dynamic-table-widget__row-selected:hover {
+    background-color: #eef !important;
+}
+
+.dynamic-table-widget__table {
+    width: 100%;
+}
+
+.dynamic-table-widget__invalid .mdl-textfield__input {
+    border-color: #d50000;
+}
+
+.dynamic-table-widget__invalid .mdl-textfield__label {
+    color: #d50000;
+}
+
+.dynamic-table-widget__invalid .mdl-textfield__label:after {
+    background-color: #d50000;
+}
+
+.dynamic-table-widget__invalid .mdl-textfield__error {
+    visibility: visible !important;
+}

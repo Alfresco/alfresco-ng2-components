@@ -23,6 +23,7 @@
         <textarea class="mdl-textfield__input"
                   type="text"
                   rows= "3"
+                  [value]="value"
                   [attr.id]="field.id"
                   [(ngModel)]="value"
                   [disabled]="field.readOnly">
@@ -36,6 +37,29 @@
         </div>
         <div>
             <a [href]="linkUrl" target="_blank" rel="nofollow">{{linkText}}</a>
+        </div>
+    </div>
+    <div *ngSwitchCase="'dynamic-table'">
+        <div class="display-value-widget__dynamic-table">
+            <div>{{field.name}}</div>
+            <table class="mdl-data-table mdl-js-data-table">
+                <thead>
+                    <tr>
+                        <th *ngFor="let column of visibleColumns"
+                            class="mdl-data-table__cell--non-numeric">
+                            {{column.name}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of rows">
+                        <td *ngFor="let column of visibleColumns"
+                            class="mdl-data-table__cell--non-numeric">
+                            {{ getCellValue(row, column) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div *ngSwitchDefault

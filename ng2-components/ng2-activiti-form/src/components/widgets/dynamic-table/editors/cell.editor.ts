@@ -15,21 +15,22 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
+import { Input } from '@angular/core';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../core/index';
 
-export class FormOutcomeModel extends FormWidgetModel {
+export abstract class CellEditorComponent {
 
-    static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
+    @Input()
+    table: DynamicTableModel;
 
-    isSystem: boolean = false;
+    @Input()
+    row: DynamicTableRow;
 
-    constructor(form: FormModel, json?: any) {
-        super(form, json);
+    @Input()
+    column: DynamicTableColumn;
 
-        if (json) {
-            this.isSystem = json.isSystem ? true : false;
-        }
+    handleError(error: any) {
+        console.error(error);
     }
+
 }

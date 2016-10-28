@@ -21,23 +21,19 @@ import { ContainerColumnModel } from './container-column.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
-import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 
-// TODO: inherit FormFieldModel
 export class ContainerModel extends FormWidgetModel {
 
-    fieldType: string;
-    id: string;
-    name: string;
-    type: string;
-    tab: string;
+    field: FormFieldModel;
     numberOfColumns: number = 1;
     params: FormFieldMetadata = {};
-    isVisible: boolean = true;
-    visibilityCondition: WidgetVisibilityModel = null;
 
     columns: ContainerColumnModel[] = [];
     isExpanded: boolean = true;
+
+    get isVisible(): boolean {
+        return this.field.isVisible;
+    }
 
     isGroup(): boolean {
         return this.type === FormFieldTypes.GROUP;
@@ -67,14 +63,9 @@ export class ContainerModel extends FormWidgetModel {
         super(form, json);
 
         if (json) {
-            this.fieldType = json.fieldType;
-            this.id = json.id;
-            this.name = json.name;
-            this.type = json.type;
-            this.tab = json.tab;
+            this.field = new FormFieldModel(form, json);
             this.numberOfColumns = <number> json.numberOfColumns;
             this.params = <FormFieldMetadata> json.params || {};
-            this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
 
             let columnSize: number = 12;
             if (this.numberOfColumns > 1) {
@@ -97,5 +88,23 @@ export class ContainerModel extends FormWidgetModel {
 
             this.isExpanded = !this.isCollapsedByDefault();
         }
+    }
+
+    getFormFields(): FormFieldModel[] {
+        let result: FormFieldModel[] = [];
+
+        if (this.field) {
+            result.push(this.field);
+        }
+
+        for (let j = 0; j < this.columns.length; j++) {
+            let column = this.columns[j];
+            for (let k = 0; k < column.fields.length; k++) {
+                let field = column.fields[k];
+                result.push(field);
+            }
+        }
+
+        return result;
     }
 }

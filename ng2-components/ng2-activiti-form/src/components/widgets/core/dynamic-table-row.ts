@@ -15,21 +15,10 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
+export interface DynamicTableRow {
 
-export class FormOutcomeModel extends FormWidgetModel {
+    isNew: boolean;
+    selected: boolean;
+    value: any;
 
-    static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
-    static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
-
-    isSystem: boolean = false;
-
-    constructor(form: FormModel, json?: any) {
-        super(form, json);
-
-        if (json) {
-            this.isSystem = json.isSystem ? true : false;
-        }
-    }
 }

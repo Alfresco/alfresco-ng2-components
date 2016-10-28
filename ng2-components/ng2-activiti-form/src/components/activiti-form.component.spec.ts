@@ -18,7 +18,7 @@
 import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
 import { ActivitiForm } from './activiti-form.component';
-import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent } from './widgets/index';
+import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent, FormFieldTypes } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
 import { NodeService } from './../services/node.service';
@@ -554,7 +554,7 @@ describe('ActivitiForm', () => {
         let form = formComponent.parseForm({
             id: '<id>',
             fields: [
-                { id: 'field1' }
+                { id: 'field1', type: FormFieldTypes.CONTAINER }
             ]
         });
 

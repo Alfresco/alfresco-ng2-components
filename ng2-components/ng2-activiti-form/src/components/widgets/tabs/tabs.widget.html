@@ -12,10 +12,22 @@
              class="mdl-tabs__panel"
              [class.is-active]="isFirst"
              [attr.id]="tab.id">
-            <container-widget
-                *ngFor="let field of tab.fields"
-                [content]="field" (formValueChanged)="tabChanged($event);">
-            </container-widget>
+             <div *ngFor="let field of tab.fields">
+                 <div [ngSwitch]="field.type">
+                     <div *ngSwitchCase="'container'">
+                        <container-widget [content]="field" (formValueChanged)="tabChanged($event);"></container-widget>
+                     </div>
+                     <div *ngSwitchCase="'group'">
+                        <container-widget [content]="field" (formValueChanged)="tabChanged($event);"></container-widget>
+                     </div>
+                     <div *ngSwitchCase="'dynamic-table'">
+                         <dynamic-table-widget [content]="field"></dynamic-table-widget>
+                     </div>
+                     <div *ngSwitchDefault>
+                        <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+                    </div>
+                 </div>
+             </div>
         </div>
     </div>
 </div>
