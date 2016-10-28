@@ -16,10 +16,9 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { Subject } from 'rxjs/Rx';
 import { ObjectUtils } from 'ng2-alfresco-core';
 import {
-    PaginationProvider,
+    PaginationProvider, DataLoadedEventEmitter,
     DataTableAdapter,
     DataRow, DataColumn, DataSorting
 } from 'ng2-alfresco-datatable';
@@ -52,12 +51,12 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     private _maxItems: number = this.DEFAULT_PAGE_SIZE;
 
     thumbnails: boolean = false;
-    dataLoaded: Subject<any>;
+    dataLoaded: DataLoadedEventEmitter;
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,
                 schema: DataColumn[]) {
-        this.dataLoaded = new Subject<any>();
+        this.dataLoaded = new DataLoadedEventEmitter();
         this.rows = [];
         this.columns = schema || [];
         this.resetPagination();
@@ -206,7 +205,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
                 })
                 .subscribe(val => {
                     this.loadPage(<NodePaging>val);
-                    this.dataLoaded.next();
+                    this.dataLoaded.emit(null);
                 },
                 error => console.error(error));
         }

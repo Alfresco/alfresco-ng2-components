@@ -50,5 +50,15 @@ export interface PaginationProvider {
     /**
      * An event that is emitted every time data is loaded.
      */
-    dataLoaded: Subject<any>;
+    dataLoaded: DataLoadedEventEmitter;
+}
+
+export class DataLoadedEventEmitter extends Subject<any> {
+    constructor() {
+        super();
+    }
+
+    emit(value) {
+        super.next(value);
+    }
 }
