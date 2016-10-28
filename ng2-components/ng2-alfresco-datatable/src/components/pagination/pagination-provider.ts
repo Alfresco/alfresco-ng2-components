@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { Subject } from 'rxjs/Rx';
+
 export interface PaginationProvider {
 
     /**
@@ -44,4 +46,9 @@ export interface PaginationProvider {
      * or if there was no maxItems parameter the default value is 100.
      */
     maxItems: number;
+
+    /**
+     * An event that is emitted every time data is loaded.
+     */
+    dataLoaded: Subject<any>;
 }
