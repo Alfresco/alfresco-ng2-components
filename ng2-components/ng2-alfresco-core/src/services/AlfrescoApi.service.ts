@@ -16,18 +16,18 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoJsApi } from 'alfresco-js-api';
+import { AlfrescoApi } from  'alfresco-js-api';
 
 @Injectable()
 export class AlfrescoApiService {
 
-    private _instance: AlfrescoJsApi;
+    private _instance: AlfrescoApi;
 
-    public getInstance(): AlfrescoJsApi {
+    public getInstance(): AlfrescoApi {
         return this._instance;
     }
 
-    public setInstance(value: AlfrescoJsApi) {
+    public setInstance(value: AlfrescoApi) {
         this._instance = value;
     }
 

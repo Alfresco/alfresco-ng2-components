@@ -20,7 +20,6 @@ import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
 import { AlfrescoApiService } from './AlfrescoApi.service';
 
-declare var AlfrescoApi: any;
 declare let jasmine: any;
 
 describe('AlfrescoAuthentication', () => {
