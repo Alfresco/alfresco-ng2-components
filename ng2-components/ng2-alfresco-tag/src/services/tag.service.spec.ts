@@ -24,7 +24,6 @@ import {
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
-declare var AlfrescoApi: any;
 
 describe('Tag service', () => {
 

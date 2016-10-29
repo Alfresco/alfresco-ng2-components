@@ -19,17 +19,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 import { AlfrescoApiService } from './AlfrescoApi.service';
-import { AlfrescoJsApi } from 'alfresco-js-api';
-
-declare var AlfrescoApi: AlfrescoJsApi;
-
+import * as alfrescoApi from  'alfresco-js-api';
+import { AlfrescoApi } from  'alfresco-js-api';
 /**
  * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
  */
 @Injectable()
 export class AlfrescoAuthenticationService {
 
-    alfrescoApi: AlfrescoJsApi;
+    alfrescoApi: AlfrescoApi;
 
     /**
      * Constructor
@@ -38,7 +36,7 @@ export class AlfrescoAuthenticationService {
      */
     constructor(private settingsService: AlfrescoSettingsService,
                 private apiService: AlfrescoApiService) {
-        this.alfrescoApi = new AlfrescoApi({
+        this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
             provider: this.settingsService.getProviders(),
             ticketEcm: this.getTicketEcm(),
             ticketBpm: this.getTicketBpm(),
@@ -216,7 +214,7 @@ export class AlfrescoAuthenticationService {
         return Observable.throw(error || 'Server error');
     }
 
-    getAlfrescoApi(): AlfrescoJsApi {
+    getAlfrescoApi(): any {
         return this.alfrescoApi;
     }
 }
