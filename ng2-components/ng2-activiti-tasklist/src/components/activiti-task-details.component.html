@@ -12,7 +12,7 @@
     <activiti-task-header [taskDetails]="taskDetails" #activitiheader></activiti-task-header>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-people [people]="taskPeople"></activiti-people>
+            <activiti-people [people]="taskPeople" [taskId]="taskDetails.id"></activiti-people>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
             <activiti-comments [taskId]="taskDetails.id" #activiticomments></activiti-comments>
