@@ -6,11 +6,13 @@
   "scripts": {
     "clean": "npm install rimraf && rimraf dist node_modules typings",
     "build": "npm run tslint && npm run tsc && npm run licensecheck",
-    "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run serve\" ",
+    "start": "npm run build && npm run serve",
+    "start:dev": "npm run build && concurrently \"npm run tsc:w\" \"npm run serve:dev\" ",
     "aws": "node app.js",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "serve": "wsrv -O http://localhost:3000 -s -l -p 3000 -a 0.0.0.0 -x ./server/versions.js",
+    "serve": "wsrv -O http://localhost:3000 -s -p 3000 -a 0.0.0.0 -x ./server/versions.js",
+    "serve:dev": "wsrv -O http://localhost:3000 -s -l -p 3000 -a 0.0.0.0 -x ./server/versions.js",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'app/{,**/}**.ts'",
     "licensecheck": "license-check"
   },
