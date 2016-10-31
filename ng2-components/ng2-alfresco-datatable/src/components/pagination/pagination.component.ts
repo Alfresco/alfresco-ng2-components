@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PaginationProvider } from './pagination-provider';
 
 @Component({
@@ -24,9 +24,11 @@ import { PaginationProvider } from './pagination-provider';
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit {
 
     DEFAULT_PAGE_SIZE: number = 20;
+
+    private _summary: string = '';
 
     @Input()
     supportedPageSizes: number[] = [5, 10, 20, 50, 100];
@@ -52,13 +54,7 @@ export class PaginationComponent {
     }
 
     get summary(): string {
-        let from = this.provider.skipCount;
-        if (from === 0) {
-            from = 1;
-        }
-        let to = this.provider.skipCount + this.provider.count;
-        let of = this.provider.totalItems;
-        return `${from}-${to} of ${of}`;
+        return this._summary;
     }
 
     get nextPageAvail(): boolean {
@@ -75,5 +71,21 @@ export class PaginationComponent {
 
     showPrevPage() {
         this.provider.skipCount -= this.provider.maxItems;
+    }
+
+    ngOnInit() {
+        this.provider.dataLoaded.subscribe(() => {
+            this.updateSummary();
+        });
+    }
+
+    private updateSummary() {
+        let from = this.provider.skipCount;
+        if (from === 0) {
+            from = 1;
+        }
+        let to = this.provider.skipCount + this.provider.count;
+        let of = this.provider.totalItems;
+        this._summary = `${from}-${to} of ${of}`;
     }
 }
