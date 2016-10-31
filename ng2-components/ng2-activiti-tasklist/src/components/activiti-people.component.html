@@ -1,16 +1,19 @@
 <span class="activiti-label mdl-badge"
       [attr.data-badge]="people?.length">{{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }}</span>
 <div id="addPeople" (click)="showDialog()" class="icon material-icons">add</div>
-<div class="mdl-tooltip" for="addPeople">
+<div class="mdl-tooltip" data-mdl-for="addPeople">
     Add a person
 </div>
 <div class="menu-container" *ngIf="people?.length > 0">
     <ul class='mdl-list'>
         <li class="mdl-list__item" *ngFor="let user of people">
             <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon">face</i>
-            {{user.firstName}}
+                <i class="material-icons mdl-list__item-icon">face</i>
+                <span>{{user.firstName}} {{user.lastName}}</span>
             </span>
+            <a class="mdl-list__item-secondary-action">
+                <i id="remove" class="material-icons" (click)="removeInvolvedUser(user)">delete</i>
+            </a>
         </li>
     </ul>
 </div>
@@ -19,15 +22,14 @@
 </div>
 
 <dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">New User</h4>
-    <div class="mdl-dialog__content">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="people" />
-            <label class="mdl-textfield__label" for="people">Name</label>
-        </div>
+    <h4 class="mdl-dialog__title">Involve User</h4>
+    <div class="mdl-dialog__content involve-user-padding">
+        <activiti-people-search (onSearch)="searchUser($event)"
+                                (onModalRowClicked)="involveUser($event)"
+                                [results]="people$">
+        </activiti-people-search>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="add()" class="mdl-button">Add User</button>
         <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
     </div>
 </dialog>

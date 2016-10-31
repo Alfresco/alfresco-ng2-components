@@ -9,3 +9,7 @@
 .material-icons:hover {
     color: rgb(255, 152, 0);
 }
+
+.involve-user-padding {
+    padding: 20px 24px 2px;
+}

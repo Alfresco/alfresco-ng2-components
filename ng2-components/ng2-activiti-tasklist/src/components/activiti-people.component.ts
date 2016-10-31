@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
 import { Observer, Observable } from 'rxjs/Rx';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 @Component({
     selector: 'activiti-people',
@@ -26,35 +27,32 @@ import { Observer, Observable } from 'rxjs/Rx';
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
-export class ActivitiPeople implements OnInit {
+export class ActivitiPeople {
 
     @Input()
     people: User [] = [];
 
+    @Input()
+    taskId: string = '';
+
     @ViewChild('dialog')
     dialog: any;
 
-    private peopleObserver: Observer<User>;
+    private peopleObserver: Observer<User[]>;
     people$: Observable<User>;
 
     /**
      * Constructor
-     * @param auth
      * @param translate
+     * @param people service
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService) {
+    constructor(private translate: AlfrescoTranslationService,
+                private peopleService: ActivitiPeopleService) {
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
-        this.people$ = new Observable<User>(observer =>  this.peopleObserver = observer).share();
-    }
-
-    ngOnInit() {
-        this.people$.subscribe((user: User) => {
-            this.people.push(user);
-        });
+        this.people$ = new Observable<User>(observer => this.peopleObserver = observer).share();
     }
 
     public showDialog() {
@@ -66,16 +64,33 @@ export class ActivitiPeople implements OnInit {
         }
     }
 
-    public add() {
-        alert('add people');
-
-        this.cancel();
-    }
-
     public cancel() {
         if (this.dialog) {
             this.dialog.nativeElement.close();
         }
+    }
+
+    searchUser(searchedWord: string) {
+        this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
+            .subscribe((users) => {
+                this.peopleObserver.next(users);
+            }, error => console.log('Could not load users'));
+    }
+
+    involveUser(user: User) {
+        this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
+            .subscribe(() => {
+                this.people.push(user);
+            }, error => console.error('Impossible to involve user with task'));
+    }
+
+    removeInvolvedUser(user: User) {
+        this.peopleService.removeInvolvedUser(this.taskId, user.id.toString())
+            .subscribe(() => {
+                this.people = this.people.filter((involvedUser) => {
+                    return involvedUser.id !== user.id;
+                });
+            }, error => console.error('Impossible to remove involved user from task'));
     }
 
 }
