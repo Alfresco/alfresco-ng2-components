@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
@@ -27,13 +28,16 @@ declare let componentHandler: any;
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessButton implements OnInit {
+export class ActivitiStartProcessButton implements OnInit, OnChanges {
 
     @Input()
     appId: string;
 
     @ViewChild('dialog')
     dialog: any;
+
+    @ViewChild('startForm')
+    startForm: ActivitiStartForm;
 
     processDefinitions: any[] = [];
 
@@ -50,6 +54,10 @@ export class ActivitiStartProcessButton implements OnInit {
 
     ngOnInit() {
         this.load(this.appId);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        console.log('changes', changes);
     }
 
     public load(appId: string) {
@@ -86,5 +94,32 @@ export class ActivitiStartProcessButton implements OnInit {
         if (this.dialog) {
             this.dialog.nativeElement.close();
         }
+    }
+
+    hasFormKey() {
+        return true;
+    }
+
+    onFormSaved($event: Event) {
+        $event.preventDefault();
+        console.log('form saved');
+    }
+
+    onFormCompleted($event: Event) {
+        $event.preventDefault();
+        console.log('form saved');
+    }
+
+    onExecuteOutcome($event: Event) {
+        $event.preventDefault();
+        console.log('form outcome executed');
+    }
+
+    onFormLoaded($event: Event) {
+        console.log('form loaded', $event);
+    }
+
+    onFormError($event: Event) {
+        console.log('form error', $event);
     }
 }

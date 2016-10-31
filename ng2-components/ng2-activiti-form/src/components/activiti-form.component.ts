@@ -145,7 +145,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     debugMode: boolean = false;
 
-    constructor(private formService: FormService,
+    constructor(protected formService: FormService,
                 private visibilityService: WidgetVisibilityService,
                 private ecmModelService: EcmModelService,
                 private nodeService: NodeService) {
