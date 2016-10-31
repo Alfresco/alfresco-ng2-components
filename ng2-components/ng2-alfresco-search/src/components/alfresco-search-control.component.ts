@@ -49,7 +49,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     searchSubmit = new EventEmitter();
 
     @Output()
-    preview = new EventEmitter();
+    fileSelect = new EventEmitter();
 
     @Output()
     expand = new EventEmitter();
@@ -158,7 +158,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     onFileClicked(event): void {
-        this.preview.emit({
+        this.fileSelect.emit({
             value: event.value
         });
     }

@@ -1,5 +1,5 @@
 <alfresco-search-control *ngIf="isLoggedIn()" [searchTerm]="searchTerm" [autocomplete]="false"
-    (searchSubmit)="onSearchSubmit($event);" (searchChange)="onSearchTermChange($event);" (expand)="onExpandToggle($event);" (preview)="onFileClicked($event)"></alfresco-search-control>
+    (searchSubmit)="onSearchSubmit($event);" (searchChange)="onSearchTermChange($event);" (expand)="onExpandToggle($event);" (fileSelect)="onFileClicked($event)"></alfresco-search-control>
 
 <alfresco-viewer [(showViewer)]="fileShowed"
                  [fileNodeId]="fileNodeId"

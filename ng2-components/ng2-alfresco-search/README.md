@@ -92,7 +92,8 @@ Also make sure you include these dependencies in your .html page:
 <alfresco-search-control [searchTerm]="searchTerm"
                         inputType="search"
                         (searchChange)="onSearchChange($event);"
-                        (searchSubmit)="onSearchSubmit($event);">
+                        (searchSubmit)="onSearchSubmit($event);"
+                        (fileSelect)="onSearchResultSelect($event);">
 </alfresco-search-control>
 ```
 
@@ -172,6 +173,8 @@ bootstrap(SearchDemo, [
 
 **searchChange**: Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object. If the term is at less than three characters in length then the term is truncated to an empty string.<br />
 **searchSubmit**: Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object.<br />
+**fileSelect**: Emitted when a file item from the list of find-as-you-type results is selected
+**expand**: Emitted when the expanded state of the control changes based on focus events and the content of the input control
 
 #### Options
 

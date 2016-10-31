@@ -100,7 +100,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect( element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
                 expect( element.querySelector('#result_name_0').innerHTML).toBe('<b _ngcontent-a-1="">MyDoc</b>');
@@ -115,7 +115,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(results));
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelectorAll('table[data-automation-id="autocomplete_results"] tbody tr').length).toBe(2);
                 done();
@@ -136,7 +136,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('fake-type-icon.svg');
             spyOn(thumbnailService, 'getMimeTypeKey').and.returnValue('FAKE_TYPE');
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let imgEl = <any> element.querySelector('#result_row_0 img');
                 expect(imgEl).not.toBeNull();
@@ -153,7 +153,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#search_no_result')).not.toBeNull();
                 done();
@@ -176,7 +176,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should display an error if an error is encountered running the search', (done) => {
 
-            component.errorEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {}, () => {
                 fixture.detectChanges();
                 let resultsEl = element.querySelector('[data-automation-id="autocomplete_results"]');
                 let errorEl = <any> element.querySelector('[data-automation-id="autocomplete_error_message"]');
@@ -213,19 +213,19 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
         });
 
-        it('should emit preview when file item clicked', (done) => {
+        it('should emit file select when file item clicked', (done) => {
 
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<any> element.querySelector('#result_row_0')).click();
             });
 
             updateSearchTerm('searchTerm');
 
-            component.preview.subscribe(() => {
+            component.fileSelect.subscribe(() => {
                 done();
             });
         });
@@ -235,11 +235,11 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(folderResult));
 
-            spyOn(component.preview, 'emit');
-            component.resultsEmitter.subscribe(() => {
+            spyOn(component.fileSelect, 'emit');
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<any> element.querySelector('#result_row_0')).click();
-                expect(component.preview.emit).not.toHaveBeenCalled();
+                expect(component.fileSelect.emit).not.toHaveBeenCalled();
                 done();
             });
 
@@ -258,9 +258,9 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                 .and.returnValue(Promise.resolve(results));
         });
 
-        it('should emit preview when enter key pressed when a file item is in focus', (done) => {
+        it('should emit file select when enter key pressed when a file item is in focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<any> element.querySelector('#result_row_0')).dispatchEvent(new KeyboardEvent('keyup', {
                     key: 'Enter'
@@ -269,14 +269,14 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
             updateSearchTerm('searchTerm');
 
-            component.preview.subscribe(() => {
+            component.fileSelect.subscribe(() => {
                 done();
             });
         });
 
         it('should emit cancel event when escape key pressed when a result is in focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<any> element.querySelector('#result_row_0')).dispatchEvent(new KeyboardEvent('keyup', {
                     key: 'Escape'
@@ -285,14 +285,14 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
             updateSearchTerm('searchTerm');
 
-            component.cancelEmitter.subscribe(() => {
+            component.cancel.subscribe(() => {
                 done();
             });
         });
 
         it('should focus the next result when down arrow key pressed when a result is in focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let firstResult: any = element.querySelector('#result_row_0');
                 let secondResult: any = element.querySelector('#result_row_1');
@@ -310,7 +310,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should do nothing when down arrow key pressed when the last result is in focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let lastResult: any = element.querySelector('#result_row_2');
                 lastResult.focus();
@@ -325,7 +325,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should focus the previous result when up arrow key pressed when a result is in focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let firstResult: any = element.querySelector('#result_row_0');
                 let secondResult: any = element.querySelector('#result_row_1');
@@ -343,7 +343,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should emit scroll back event when up arrow key pressed and the first result is in focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let firstResult: any = element.querySelector('#result_row_0');
                 firstResult.dispatchEvent(new KeyboardEvent('keyup', {
@@ -351,7 +351,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                 }));
             });
 
-            component.scrollBackEmitter.subscribe(() => {
+            component.scrollBack.subscribe(() => {
                 done();
             });
 
@@ -372,14 +372,14 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should emit a focus event when a result comes into focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<any> element.querySelector('#result_row_0')).dispatchEvent(new FocusEvent('focus'));
             });
 
             updateSearchTerm('searchTerm');
 
-            component.focusEmitter.subscribe((e: FocusEvent) => {
+            component.searchFocus.subscribe((e: FocusEvent) => {
                 expect(e).not.toBeNull();
                 expect(e.type).toBe('focus');
                 done();
@@ -388,14 +388,14 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should emit a focus event when a result loses focus', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<any> element.querySelector('#result_row_0')).dispatchEvent(new FocusEvent('blur'));
             });
 
             updateSearchTerm('searchTerm');
 
-            component.focusEmitter.subscribe((e: FocusEvent) => {
+            component.searchFocus.subscribe((e: FocusEvent) => {
                 expect(e).not.toBeNull();
                 expect(e.type).toBe('blur');
                 done();
@@ -404,7 +404,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should give focus to the first result when focusResult() is called externally', (done) => {
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 let firstResult: any = element.querySelector('#result_row_0');
                 spyOn(firstResult, 'focus');

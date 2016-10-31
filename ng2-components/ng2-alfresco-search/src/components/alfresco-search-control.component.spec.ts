@@ -338,12 +338,12 @@ describe('AlfrescoSearchControlComponent', () => {
 
     describe('file preview', () => {
 
-        it('should emit a preview event when onFileClicked is called', () => {
-            spyOn(component.preview, 'emit');
+        it('should emit a file select event when onFileClicked is called', () => {
+            spyOn(component.fileSelect, 'emit');
             component.onFileClicked({
                 value: 'node12345'
             });
-            expect(component.preview.emit).toHaveBeenCalledWith({
+            expect(component.fileSelect.emit).toHaveBeenCalledWith({
                 'value': 'node12345'
             });
         });

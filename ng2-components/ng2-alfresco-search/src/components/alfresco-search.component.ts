@@ -38,10 +38,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     preview: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    resultsEmitter = new EventEmitter();
-
-    @Output()
-    errorEmitter = new EventEmitter();
+    resultsLoad = new EventEmitter();
 
     results: any = null;
 
@@ -112,13 +109,13 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                 .subscribe(
                     results => {
                         this.results = results.list.entries;
-                        this.resultsEmitter.emit(this.results);
+                        this.resultsLoad.emit(this.results);
                         this.errorMessage = null;
                     },
                     error => {
                         this.results = null;
                         this.errorMessage = <any>error;
-                        this.errorEmitter.emit(error);
+                        this.resultsLoad.error(error);
                     }
                 );
         }

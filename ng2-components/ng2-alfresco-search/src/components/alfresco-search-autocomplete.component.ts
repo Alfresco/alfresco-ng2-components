@@ -44,22 +44,19 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     maxResults: number = 5;
 
     @Output()
-    preview: EventEmitter<any> = new EventEmitter();
+    fileSelect: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+    searchFocus: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
     @Output()
-    cancelEmitter = new EventEmitter();
+    cancel = new EventEmitter();
 
     @Output()
-    resultsEmitter = new EventEmitter();
+    resultsLoad = new EventEmitter();
 
     @Output()
-    scrollBackEmitter = new EventEmitter();
-
-    @Output()
-    errorEmitter = new EventEmitter();
+    scrollBack = new EventEmitter();
 
     @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
@@ -94,12 +91,12 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
                     results => {
                         this.results = results.list.entries.slice(0, this.maxResults);
                         this.errorMessage = null;
-                        this.resultsEmitter.emit(this.results);
+                        this.resultsLoad.emit(this.results);
                     },
                     error => {
                         this.results = null;
                         this.errorMessage = <any>error;
-                        this.errorEmitter.emit(error);
+                        this.resultsLoad.error(error);
                     }
                 );
         }
@@ -138,7 +135,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     onItemClick(node): void {
         if (node && node.entry) {
             if (node.entry.isFile) {
-                this.preview.emit({
+                this.fileSelect.emit({
                     value: node
                 });
             }
@@ -146,17 +143,17 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     }
 
     onRowFocus($event: FocusEvent): void {
-        this.focusEmitter.emit($event);
+        this.searchFocus.emit($event);
     }
 
     onRowBlur($event: FocusEvent): void {
-        this.focusEmitter.emit($event);
+        this.searchFocus.emit($event);
     }
 
     onRowEnter(node): void {
         if (node && node.entry) {
             if (node.entry.isFile) {
-                this.preview.emit({
+                this.fileSelect.emit({
                     value: node
                 });
             }
@@ -183,12 +180,12 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
         if (previousElement) {
             (<any> previousElement).focus();
         } else {
-            this.scrollBackEmitter.emit($event);
+            this.scrollBack.emit($event);
         }
     }
 
     onRowEscape($event: KeyboardEvent): void {
-        this.cancelEmitter.emit($event);
+        this.cancel.emit($event);
     }
 
 }
