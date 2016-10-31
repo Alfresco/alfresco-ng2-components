@@ -1,5 +1,5 @@
-<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="field.id">
-    <input type="checkbox"
+<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="field.id" [formGroup]="formGroup">
+    <input formControlName="{{controllerName}}" type="checkbox"
            [attr.id]="field.id"
            class="mdl-checkbox__input"
            [checked]="field.value"

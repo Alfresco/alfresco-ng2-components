@@ -77,6 +77,7 @@
     "moment": "2.15.1",
     "chart.js": "^2.1.4",
     "ng2-charts": "1.1.0",
+    "raphael": "^2.2.6",
     "md-date-time-picker": "^2.2.0",
     "alfresco-js-api": "^0.3.0",
     "ng2-alfresco-core": "0.3.2",
@@ -106,7 +107,7 @@
   "license-check-config": {
     "src": [
       "./app/**/*.js",
-      "!./app/js/xml2json.js"
+      "!./app/js/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,

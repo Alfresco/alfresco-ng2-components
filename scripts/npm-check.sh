@@ -7,6 +7,7 @@ npm install -g npm-check
 echo 'start' > ../check-dependecies.log
 
 for PACKAGE in \
+  ng2-activiti-diagrams \
   ng2-activiti-analytics \
   ng2-activiti-form \
   ng2-activiti-processlist \

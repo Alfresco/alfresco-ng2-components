@@ -19,10 +19,12 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import {
     CoreModule
 } from 'ng2-alfresco-core';
+import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { AnalyticsComponent } from '../components/analytics.component';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
+import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
 import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { Chart } from '../models/chart.model';
@@ -35,6 +37,7 @@ export const ANALYTICS_DIRECTIVES: any[] = [
     AnalyticsComponent,
     AnalyticsReportParametersComponent,
     AnalyticsReportListComponent,
+    AnalyticsReportHeatMapComponent,
     WIDGET_DIRECTIVES
 ];
 export const ANALYTICS_PROVIDERS: any[] = [
@@ -56,7 +59,8 @@ describe('Test ng2-activiti-analytics Report ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule,
+                DiagramsModule
             ],
             declarations: [
                 ...ANALYTICS_DIRECTIVES,

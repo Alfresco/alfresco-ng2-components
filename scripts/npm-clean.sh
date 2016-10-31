@@ -3,6 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 for PACKAGE in \
+  ng2-activiti-diagrams \
   ng2-activiti-analytics \
   ng2-alfresco-core \
   ng2-alfresco-datatable \

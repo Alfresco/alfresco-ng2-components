@@ -20,7 +20,7 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
-import { Chart, PieChart, TableChart, BarChart } from '../models/chart.model';
+import { Chart, PieChart, TableChart, BarChart, HeatMapChart } from '../models/chart.model';
 
 @Injectable()
 export class AnalyticsService {
@@ -109,6 +109,19 @@ export class AnalyticsService {
         });
     }
 
+    getMetricValues(): Observable<any> {
+        let paramOptions: ParameterValueModel[] = [];
+
+        paramOptions.push(new ParameterValueModel({id: 'totalCount', name: 'Number of times a step is executed'}));
+        paramOptions.push(new ParameterValueModel({id: 'totalTime', name: 'Total time spent in a process step'}));
+        paramOptions.push(new ParameterValueModel({id: 'avgTime', name: 'Average time spent in a process step'}));
+
+        return Observable.create(observer => {
+            observer.next(paramOptions);
+            observer.complete();
+        });
+    }
+
     getProcessDefinitionsValues(appId: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions`;
         let params: URLSearchParams;
@@ -171,7 +184,7 @@ export class AnalyticsService {
                     } else if (chartData.type === 'table') {
                         elements.push(new TableChart(chartData));
                     } else if (chartData.type === 'processDefinitionHeatMap') {
-                        elements.push(new TableChart(chartData));
+                        elements.push(new HeatMapChart(chartData));
                     } else if (chartData.type === 'masterDetailTable') {
                         elements.push(new TableChart(chartData));
                     } else if (chartData.type === 'barChart') {

@@ -16,7 +16,8 @@
                 </div>
                 <div *ngSwitchCase="'boolean'">
                     <br>
-                    <checkbox-widget [field]="field"></checkbox-widget>
+                    <checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
+                                     [controllerName]="'typeFiltering'"></checkbox-widget>
                 </div>
                 <div *ngSwitchCase="'status'">
                     <br>

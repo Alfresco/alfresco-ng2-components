@@ -47,6 +47,7 @@ module.exports = function (config) {
 
       // ng2-components
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.*', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-activiti-diagrams/dist/**/*.*', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-charts/**/*.js', included: false, served: true, watched: false },
       { pattern: 'node_modules/md-date-time-picker/**/*.js', included: false, served: true, watched: false },
       { pattern: 'node_modules/moment/**/*.js', included: false, served: true, watched: false },

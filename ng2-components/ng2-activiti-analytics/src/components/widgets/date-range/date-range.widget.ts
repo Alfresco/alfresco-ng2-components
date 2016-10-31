@@ -20,8 +20,6 @@ import { AbstractControl, FormGroup, FormBuilder, FormControl, Validators } from
 import { WidgetComponent } from './../widget.component';
 import * as moment from 'moment';
 
-declare let mdDateTimePicker: any;
-
 function dateCheck(c: AbstractControl) {
     let startDate = moment(c.get('startDate').value);
     let endDate = moment(c.get('endDate').value);

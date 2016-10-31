@@ -12,6 +12,7 @@ build_project() {
 
 for PACKAGE in \
   ng2-alfresco-core \
+  ng2-activiti-diagrams \
   ng2-activiti-analytics \
   ng2-activiti-form \
   ng2-activiti-tasklist \
