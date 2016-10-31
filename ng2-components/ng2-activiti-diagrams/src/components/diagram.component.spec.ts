@@ -25,6 +25,7 @@ import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
 import { DiagramComponent } from './index';
 import { DebugElement } from '@angular/core';
 import * as diagramsEventsMock from '../assets/diagramEvents.mock';
+import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
 
 declare let jasmine: any;
 
@@ -222,5 +223,338 @@ describe('Test ng2-activiti-diagrams ', () => {
                 responseText: resp
             });
         }));
+    });
+
+    describe('Diagrams component Activities: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the User Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake User task');
+
+                    let iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.userTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Manual Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Manual task');
+
+                    let iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.manualTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Service Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Service task');
+
+                    let iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.serviceTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Service Mail Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(true).toBe(true);
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.mailTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Service Camel Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Camel task');
+
+                    let iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.camelTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Service Mule Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Mule task');
+
+                    let iconTask: any = element.querySelector('diagram-mule-task > diagram-icon-mule-task > raphael-icon-mule');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.muleTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Service Alfresco Publish Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
+
+                    let iconTask: any = element.querySelector('diagram-alfresco-publish-task > diagram-icon-alfresco-publish-task >' +
+                        ' raphael-icon-alfresco-publish');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.alfrescoPublishTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Service Google Drive Publish Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
+
+                    let iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
+                        ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.googleDrivePublishTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Rest Call Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
+
+                    let iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
+                        ' raphael-icon-rest-call');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.restCallTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Service Box Publish Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
+
+                    let iconTask: any = element.querySelector('diagram-box-publish-task >' +
+                        ' diagram-icon-box-publish-task > raphael-icon-box-publish');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.boxPublishTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Receive Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Receive task');
+
+                    let iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.receiveTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Script Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake Script task');
+
+                    let iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.scriptTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Business Rule Task', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect');
+                    expect(task).not.toBeNull();
+
+                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-text');
+                    expect(taskText).not.toBeNull();
+                    expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
+
+                    let iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
+                    expect(iconTask).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsActivitiesMock.businessRuleTask]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
     });
 });
