@@ -10,7 +10,8 @@
     </li>
     <li>
         <div class="mdl-textfield mdl-js-textfield tag-container-input">
-            <input class="mdl-textfield__input tag-input" type="tag" id="new-tag-text" [(ngModel)]="newTagName"/>
+            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" [(ngModel)]="newTagName"/>
+            <label class="mdl-textfield__label tag-label" for="new-tag-text">New Tag...</label>
         </div>
         <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
             Add tag
@@ -28,7 +29,8 @@
     </li>
     <li>
         <div class="mdl-textfield mdl-js-textfield tag-container-input">
-            <input class="mdl-textfield__input tag-input" type="tag" id="new-tag-text" [(ngModel)]="newTagName"/>
+            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" [(ngModel)]="newTagName"/>
+            <label class="mdl-textfield__label tag-label" for="new-tag-text">New Tag...</label>
         </div>
         <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
             Add tag
