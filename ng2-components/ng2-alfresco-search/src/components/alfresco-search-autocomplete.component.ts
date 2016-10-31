@@ -128,8 +128,8 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     }
 
     focusResult(): void {
-        let firstResult = this.resultsTableBody.nativeElement.querySelector('tr');
-        (<any> firstResult).focus();
+        let firstResult: any = this.resultsTableBody.nativeElement.querySelector('tr');
+        firstResult.focus();
     }
 
     onItemClick(node): void {
@@ -169,16 +169,16 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     }
 
     onRowArrowDown($event: KeyboardEvent): void {
-        let nextElement = this.getNextElementSibling(<Element> $event.target);
+        let nextElement: any = this.getNextElementSibling(<Element> $event.target);
         if (nextElement) {
-            (<any> nextElement).focus();
+            nextElement.focus();
         }
     }
 
     onRowArrowUp($event: KeyboardEvent): void {
-        let previousElement = this.getPreviousElementSibling(<Element> $event.target);
+        let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
         if (previousElement) {
-            (<any> previousElement).focus();
+            previousElement.focus();
         } else {
             this.scrollBack.emit($event);
         }
