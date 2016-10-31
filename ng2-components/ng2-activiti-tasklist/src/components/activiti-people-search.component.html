@@ -1,0 +1,17 @@
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="userSearchText"
+           [formControl]="searchUser"/>
+    <label class="mdl-textfield__label" for="userSearchText">Search user</label>
+</div>
+<ul class='mdl-list'>
+    <li class="mdl-list__item fix-element-user-list" *ngFor="let user of userList">
+        <span class="mdl-list__item-primary-content mdl-button mdl-js-button mdl-js-ripple-effect"
+              (click)="onRowClick(user)">
+            <i class="material-icons md-light">face</i>
+            {{ user.firstName }} - {{ user.lastName }}
+        </span>
+    </li>
+    <div *ngIf="userList?.length === 0">
+        No user found to involve
+    </div>
+</ul>
