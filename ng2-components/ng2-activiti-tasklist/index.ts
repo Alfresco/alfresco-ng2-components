@@ -19,6 +19,8 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiFormModule } from 'ng2-activiti-form';
+import { ActivitiPeopleService } from './src/services/activiti-people.service';
+import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
 
 import {
     ActivitiApps,
@@ -30,10 +32,9 @@ import {
     ActivitiComments,
     ActivitiPeople,
     ActivitiTaskHeader,
-    ActivitiStartProcessButton
+    ActivitiStartProcessButton,
+    ActivitiPeopleSearch
 } from './src/components/index';
-
-import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
 
 export * from './src/components/index';
 export * from './src/services/activiti-tasklist.service';
@@ -49,11 +50,13 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiComments,
     ActivitiPeople,
     ActivitiTaskHeader,
-    ActivitiStartProcessButton
+    ActivitiStartProcessButton,
+    ActivitiPeopleSearch
 ];
 
 export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
-    ActivitiTaskListService
+    ActivitiTaskListService,
+    ActivitiPeopleService
 ];
 
 @NgModule({
