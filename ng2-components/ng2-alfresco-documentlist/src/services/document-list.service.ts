@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoJsApi, NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
+import { AlfrescoApi, NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoAuthenticationService,
     AlfrescoContentService
@@ -61,7 +61,7 @@ export class DocumentListService {
     constructor(private authService: AlfrescoAuthenticationService, private contentService: AlfrescoContentService) {
     }
 
-    private getAlfrescoApi(): AlfrescoJsApi {
+    private getAlfrescoApi(): AlfrescoApi {
         return this.authService.getAlfrescoApi();
     }
 
