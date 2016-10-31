@@ -59,7 +59,7 @@ export class UploadWidget extends WidgetComponent implements OnInit {
     }
 
     onFileChanged(event: any) {
-        let files = event.srcElement.files;
+        let files = event.target.files;
         if (files && files.length > 0) {
 
             let file = files[0];

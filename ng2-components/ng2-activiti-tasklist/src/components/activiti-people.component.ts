@@ -18,10 +18,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
-
-declare let componentHandler: any;
+import { Observer, Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'activiti-people',
@@ -62,6 +59,9 @@ export class ActivitiPeople implements OnInit {
 
     public showDialog() {
         if (this.dialog) {
+            if (!this.dialog.nativeElement.showModal) {
+                dialogPolyfill.registerDialog(this.dialog.nativeElement);
+            }
             this.dialog.nativeElement.showModal();
         }
     }

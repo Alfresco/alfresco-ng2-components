@@ -94,7 +94,8 @@
     "ng2-activiti-processlist": "0.3.3",
     "ng2-alfresco-webscript": "0.3.2",
     "ng2-alfresco-tag": "0.3.2",
-    "dialog-polyfill": "^0.4.3"
+    "dialog-polyfill": "^0.4.3",
+    "element.scrollintoviewifneeded-polyfill": "^1.0.1"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.32",
