@@ -16,9 +16,11 @@
  */
 
 import { FormControl, Validators } from '@angular/forms';
-import { Component, Input, Output, OnInit, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, OnDestroy, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchTermValidator } from './../forms/search-term-validator';
+import { Observable, Subject } from 'rxjs/Rx';
 
 @Component({
     moduleId: module.id,
@@ -26,7 +28,7 @@ import { SearchTermValidator } from './../forms/search-term-validator';
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css']
 })
-export class AlfrescoSearchControlComponent implements OnInit {
+export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
     searchTerm = '';
@@ -47,7 +49,7 @@ export class AlfrescoSearchControlComponent implements OnInit {
     searchSubmit = new EventEmitter();
 
     @Output()
-    preview = new EventEmitter();
+    fileSelect = new EventEmitter();
 
     @Output()
     expand = new EventEmitter();
@@ -55,6 +57,9 @@ export class AlfrescoSearchControlComponent implements OnInit {
     searchControl: FormControl;
 
     @ViewChild('searchInput', {}) searchInput: ElementRef;
+
+    @ViewChild('autocomplete')
+    autocompleteComponent: AlfrescoSearchAutocompleteComponent;
 
     @Input()
     autocompleteEnabled = true;
@@ -65,6 +70,8 @@ export class AlfrescoSearchControlComponent implements OnInit {
     searchActive = false;
 
     searchValid = false;
+
+    private focusSubject = new Subject<FocusEvent>();
 
     constructor(private translate: AlfrescoTranslationService) {
 
@@ -80,17 +87,38 @@ export class AlfrescoSearchControlComponent implements OnInit {
                 this.onSearchTermChange(value);
             }
         );
+
+        this.setupFocusEventHandlers();
+
         this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
     }
 
+    ngOnDestroy(): void {
+        this.focusSubject.unsubscribe();
+    }
+
     private onSearchTermChange(value: string): void {
-        this.searchActive = true;
+        this.setAutoCompleteDisplayed(true);
         this.autocompleteSearchTerm = value;
         this.searchControl.setValue(value, true);
         this.searchValid = this.searchControl.valid;
         this.searchChange.emit({
             value: value,
             valid: this.searchValid
+        });
+    }
+
+    private setupFocusEventHandlers() {
+        let focusEvents: Observable<FocusEvent> = this.focusSubject.asObservable().debounceTime(50);
+        focusEvents.filter(($event: FocusEvent) => {
+            return $event.type === 'focusin' || $event.type === 'focus';
+        }).subscribe(($event) => {
+            this.onSearchFocus($event);
+        });
+        focusEvents.filter(($event: any) => {
+            return $event.type === 'focusout' || $event.type === 'blur';
+        }).subscribe(($event) => {
+            this.onSearchBlur($event);
         });
     }
 
@@ -121,38 +149,73 @@ export class AlfrescoSearchControlComponent implements OnInit {
         }
     }
 
+    isAutoCompleteDisplayed(): boolean {
+        return this.searchActive;
+    }
+
+    setAutoCompleteDisplayed(display: boolean): void {
+        this.searchActive = display;
+    }
+
     onFileClicked(event): void {
-        this.preview.emit({
+        this.fileSelect.emit({
             value: event.value
         });
     }
 
-    onFocus(): void {
-        this.searchActive = true;
+    onSearchFocus($event): void {
+        this.setAutoCompleteDisplayed(true);
+    }
+
+    onSearchBlur($event): void {
+        this.setAutoCompleteDisplayed(false);
+    }
+
+    onFocus($event): void {
         if (this.expandable) {
             this.expand.emit({
                 expanded: true
             });
         }
+        this.focusSubject.next($event);
     }
 
-    onBlur(): void {
-        window.setTimeout(() => {
-            this.searchActive = false;
-        }, 200);
+    onBlur($event): void {
         if (this.expandable && (this.searchControl.value === '' || this.searchControl.value === undefined)) {
             this.expand.emit({
                 expanded: false
             });
         }
+        this.focusSubject.next($event);
     }
 
     onEscape(): void {
-        this.searchActive = false;
+        this.setAutoCompleteDisplayed(false);
     }
 
     onArrowDown(): void {
-        this.searchActive = true;
+        if (this.isAutoCompleteDisplayed()) {
+            this.autocompleteComponent.focusResult();
+        } else {
+            this.setAutoCompleteDisplayed(true);
+        }
+    }
+
+    onAutoCompleteFocus($event): void {
+        this.focusSubject.next($event);
+    }
+
+    onAutoCompleteReturn($event): void {
+        if (this.searchInput) {
+            (<any> this.searchInput.nativeElement).focus();
+        }
+    }
+
+    onAutoCompleteCancel($event): void {
+        if (this.searchInput) {
+            (<any> this.searchInput.nativeElement).focus();
+        }
+        this.setAutoCompleteDisplayed(false);
     }
 
 }

@@ -162,7 +162,7 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.resultsEmitter.subscribe(x => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect(searchService.getSearchNodesPromise).toHaveBeenCalled();
                 expect(element.querySelector('#result_user_0')).not.toBeNull();
@@ -181,7 +181,7 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
-            component.resultsEmitter.subscribe(x => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#search_no_result')).not.toBeNull();
                 done();
@@ -197,7 +197,7 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
 
-            component.errorEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {}, () => {
                 fixture.detectChanges();
                 let resultsEl = element.querySelector('[data-automation-id="search_result_table"]');
                 let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
@@ -217,7 +217,7 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.resultsEmitter.subscribe(x => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect(searchService.getSearchNodesPromise).toHaveBeenCalledWith('searchTerm2');
                 expect(element.querySelector('#result_user_0')).not.toBeNull();
@@ -238,7 +238,7 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getSearchNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.resultsEmitter.subscribe(() => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<HTMLTableRowElement> element.querySelector('#result_row_0')).click();
             });
@@ -246,7 +246,7 @@ describe('AlfrescoSearchComponent', () => {
             component.searchTerm = 'searchTerm';
             component.ngOnInit();
 
-            component.preview.subscribe(e => {
+            component.preview.subscribe(() => {
                 done();
             });
         });
@@ -258,7 +258,7 @@ describe('AlfrescoSearchComponent', () => {
                 .and.returnValue(Promise.resolve(folderResult));
 
             spyOn(component.preview, 'emit');
-            component.resultsEmitter.subscribe(x => {
+            component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<HTMLTableRowElement> element.querySelector('#result_row_0')).click();
                 expect(component.preview.emit).not.toHaveBeenCalled();

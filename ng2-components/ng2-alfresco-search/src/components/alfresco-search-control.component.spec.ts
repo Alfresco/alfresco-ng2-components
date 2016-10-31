@@ -20,6 +20,7 @@ import { AlfrescoSearchControlComponent } from './alfresco-search-control.compon
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { result } from './../assets/alfresco-search.component.mock';
 import {
     AlfrescoSettingsService,
     AlfrescoApiService,
@@ -150,24 +151,45 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
-        it('should make find-as-you-type control visible when search box has focus', () => {
+        it('should make find-as-you-type control visible when search box has focus', (done) => {
             fixture.detectChanges();
-            inputEl.dispatchEvent(new Event('focus'));
-            fixture.detectChanges();
-            let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
-            expect(autocomplete.classList.contains('active')).toBe(true);
+            inputEl.dispatchEvent(new FocusEvent('focus'));
+            window.setTimeout(() => { // wait for debounce() to complete
+                fixture.detectChanges();
+                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+                expect(autocomplete.classList.contains('active')).toBe(true);
+                done();
+            }, 100);
         });
 
         it('should hide find-as-you-type results when the search box loses focus', (done) => {
             fixture.detectChanges();
-            inputEl.dispatchEvent(new Event('focus'));
-            inputEl.dispatchEvent(new Event('blur'));
+            inputEl.dispatchEvent(new FocusEvent('focus'));
+            inputEl.dispatchEvent(new FocusEvent('blur'));
             window.setTimeout(() => {
                 fixture.detectChanges();
                 let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
                 expect(autocomplete.classList.contains('active')).toBe(false);
                 done();
-            }, 250);
+            }, 100);
+        });
+
+        it('should keep find-as-you-type control visible when user tabs into results', (done) => {
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getSearchNodesPromise')
+                .and.returnValue(Promise.resolve(result));
+
+            fixture.detectChanges();
+            inputEl.dispatchEvent(new FocusEvent('focus'));
+            fixture.detectChanges();
+            inputEl.dispatchEvent(new FocusEvent('blur'));
+            component.onAutoCompleteFocus(new FocusEvent('focus'));
+            window.setTimeout(() => { // wait for debounce() to complete
+                fixture.detectChanges();
+                let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
+                expect(autocomplete.classList.contains('active')).toBe(true);
+                done();
+            }, 100);
         });
 
         it('should hide find-as-you-type results when escape key pressed', () => {
@@ -193,6 +215,42 @@ describe('AlfrescoSearchControlComponent', () => {
             fixture.detectChanges();
             let autocomplete: Element = element.querySelector('alfresco-search-autocomplete');
             expect(autocomplete.classList.contains('active')).toBe(true);
+        });
+
+        it('should select the first result in find-as-you-type when down arrow is pressed and FAYT is visible', (done) => {
+            fixture.detectChanges();
+            spyOn(component.autocompleteComponent, 'focusResult');
+            fixture.detectChanges();
+            inputEl.dispatchEvent(new Event('focus'));
+            window.setTimeout(() => { // wait for debounce() to complete
+                fixture.detectChanges();
+                inputEl.dispatchEvent(new KeyboardEvent('keyup', {
+                    key: 'ArrowDown'
+                }));
+                fixture.detectChanges();
+                expect(component.autocompleteComponent.focusResult).toHaveBeenCalled();
+                done();
+            }, 100);
+        });
+
+        it('should focus input element when find-as-you-type returns control', () => {
+            fixture.detectChanges();
+            spyOn(inputEl, 'focus');
+            fixture.detectChanges();
+            component.onAutoCompleteReturn(new KeyboardEvent('keyup', {
+                key: 'ArrowUp'
+            }));
+            expect(inputEl.focus).toHaveBeenCalled();
+        });
+
+        it('should focus input element when find-as-you-type is cancelled', () => {
+            fixture.detectChanges();
+            spyOn(inputEl, 'focus');
+            fixture.detectChanges();
+            component.onAutoCompleteCancel(new KeyboardEvent('keyup', {
+                key: 'ArrowUp'
+            }));
+            expect(inputEl.focus).toHaveBeenCalled();
         });
 
         it('should NOT display a find-as-you-type control when configured not to', () => {
@@ -239,44 +297,53 @@ describe('AlfrescoSearchControlComponent', () => {
 
     describe('component focus', () => {
 
-        it('should fire an event when the search box receives focus', () => {
+        it('should fire an event when the search box receives focus', (done) => {
             spyOn(component.expand, 'emit');
             let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new Event('focus'));
-            expect(component.expand.emit).toHaveBeenCalledWith({
-                expanded: true
-            });
+            inputEl.dispatchEvent(new FocusEvent('focus'));
+            window.setTimeout(() => {
+                expect(component.expand.emit).toHaveBeenCalledWith({
+                    expanded: true
+                });
+                done();
+            }, 100);
         });
 
-        it('should fire an event when the search box loses focus', () => {
+        it('should fire an event when the search box loses focus', (done) => {
             spyOn(component.expand, 'emit');
             let inputEl: HTMLElement = element.querySelector('input');
-            inputEl.dispatchEvent(new Event('blur'));
-            expect(component.expand.emit).toHaveBeenCalledWith({
-                expanded: false
-            });
+            inputEl.dispatchEvent(new FocusEvent('blur'));
+            window.setTimeout(() => {
+                expect(component.expand.emit).toHaveBeenCalledWith({
+                    expanded: false
+                });
+                done();
+            }, 100);
         });
 
         it('should NOT fire an event when the search box receives/loses focus but the component is not expandable',
-            () => {
+            (done) => {
                 spyOn(component.expand, 'emit');
                 component.expandable = false;
                 let inputEl: HTMLElement = element.querySelector('input');
-                inputEl.dispatchEvent(new Event('focus'));
-                inputEl.dispatchEvent(new Event('blur'));
-                expect(component.expand.emit).not.toHaveBeenCalled();
+                inputEl.dispatchEvent(new FocusEvent('focus'));
+                inputEl.dispatchEvent(new FocusEvent('blur'));
+                window.setTimeout(() => {
+                    expect(component.expand.emit).not.toHaveBeenCalled();
+                    done();
+                }, 100);
             });
 
     });
 
     describe('file preview', () => {
 
-        it('should emit a preview event when onFileClicked is called', () => {
-            spyOn(component.preview, 'emit');
+        it('should emit a file select event when onFileClicked is called', () => {
+            spyOn(component.fileSelect, 'emit');
             component.onFileClicked({
                 value: 'node12345'
             });
-            expect(component.preview.emit).toHaveBeenCalledWith({
+            expect(component.fileSelect.emit).toHaveBeenCalledWith({
                 'value': 'node12345'
             });
         });
