@@ -56,6 +56,13 @@ npm link ng2-activiti-tasklist
 npm link
 npm run build
 
+#LINK DIAGRAMS
+echo "====== linking component: ng2-activiti-diagrams ====="
+cd "$DIR/../ng2-components/ng2-activiti-diagrams"
+npm link ng2-alfresco-core
+npm link
+npm run build
+
 #LINK ANALYTICS
 echo "====== linking component: ng2-activiti-analytics ====="
 cd "$DIR/../ng2-components/ng2-activiti-analytics"
