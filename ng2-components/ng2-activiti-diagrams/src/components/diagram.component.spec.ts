@@ -27,6 +27,7 @@ import { DebugElement } from '@angular/core';
 import * as diagramsEventsMock from '../assets/diagramEvents.mock';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
 import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
+import * as intermediateCatchingMock from '../assets/diagramIntermediate.mock';
 
 declare let jasmine: any;
 
@@ -641,8 +642,15 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
                     expect(shape).not.toBeNull();
 
-                    let shape1: any = element.querySelector('diagram-event-gateway > raphael-circle');
+                    let shape1: any = element.querySelector('diagram-event-gateway');
                     expect(shape1).not.toBeNull();
+                    expect(shape1.children.length).toBe(4);
+
+                    let outerCircle = shape1.children[1];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape1.children[2];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
 
                     let shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
@@ -650,6 +658,134 @@ describe('Test ng2-activiti-diagrams ', () => {
             });
             component.ngOnChanges();
             let resp = {elements: [diagramsGatewaysMock.eventGatway]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+    });
+
+    describe('Diagrams component Intermediate Catching events: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the Intermediate catching time event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-timer');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [intermediateCatchingMock.intermediateCatchingTimeEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Intermediate catching error event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-error');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [intermediateCatchingMock.intermediateCatchingErrorEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Intermediate catching signal event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-signal');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [intermediateCatchingMock.intermediateCatchingSignalEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Intermediate catching signal message', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-intermediate-catching-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-message');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [intermediateCatchingMock.intermediateCatchingMessageEvent]};
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
