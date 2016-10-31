@@ -67,13 +67,12 @@ npm run build
 echo "====== linking component: ng2-activiti-analytics ====="
 cd "$DIR/../ng2-components/ng2-activiti-analytics"
 npm link ng2-alfresco-core
-npm link ng2-alfresco-diagrams
+npm link ng2-activiti-diagrams
 npm link
 npm run build
 
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
-  ng2-activiti-diagrams \
   ng2-alfresco-login \
   ng2-alfresco-search \
   ng2-alfresco-userinfo \
