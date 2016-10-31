@@ -42,7 +42,7 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     processDefinitions: any[] = [];
 
     name: string;
-    processDefinition: string;
+    processDefinitionId: string;
 
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
@@ -78,8 +78,8 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     }
 
     public startProcess() {
-        if (this.processDefinition && this.name) {
-            this.activitiProcess.startProcess(this.processDefinition, this.name).subscribe(
+        if (this.processDefinitionId && this.name) {
+            this.activitiProcess.startProcess(this.processDefinitionId, this.name).subscribe(
                 (res: any) => {
                     this.cancel();
                 },
