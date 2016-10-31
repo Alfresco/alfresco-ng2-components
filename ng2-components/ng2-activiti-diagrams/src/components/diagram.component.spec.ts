@@ -28,6 +28,8 @@ import * as diagramsEventsMock from '../assets/diagramEvents.mock';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
 import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
 import * as intermediateCatchingMock from '../assets/diagramIntermediate.mock';
+import * as boundaryEventMock from '../assets/diagramBoundary.mock';
+import * as throwEventMock from '../assets/diagramThrow.mock';
 
 declare let jasmine: any;
 
@@ -786,6 +788,320 @@ describe('Test ng2-activiti-diagrams ', () => {
             });
             component.ngOnChanges();
             let resp = {elements: [intermediateCatchingMock.intermediateCatchingMessageEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+    });
+
+    describe('Diagrams component Boundary events: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the Boundary time event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-boundary-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-timer');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [boundaryEventMock.boundaryTimeEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Boundary error event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-boundary-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-error');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [boundaryEventMock.boundaryErrorEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Boundary signal event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-boundary-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-signal');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [boundaryEventMock.boundarySignalEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Boundary signal message', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-boundary-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-message');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [boundaryEventMock.boundaryMessageEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Boundary signal message', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-boundary-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-message');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [boundaryEventMock.boundaryMessageEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+    });
+
+    describe('Diagrams component Throw events: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the Throw time event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-throw-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-timer');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [throwEventMock.throwTimeEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Throw error event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-throw-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-error');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [throwEventMock.throwErrorEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Throw signal event', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-throw-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-signal');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [throwEventMock.throwSignalEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Throw signal message', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-throw-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-message');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [throwEventMock.throwMessageEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Throw signal message', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-throw-event');
+                    expect(shape).not.toBeNull();
+                    expect(shape.children.length).toBe(3);
+
+                    let outerCircle = shape.children[0];
+                    expect(outerCircle.localName).toEqual('raphael-circle');
+
+                    let innerCircle = shape.children[1];
+                    expect(innerCircle.localName).toEqual('raphael-circle');
+
+                    let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
+                        ' div > div > diagram-icon-message');
+                    expect(iconShape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [throwEventMock.throwMessageEvent]};
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
