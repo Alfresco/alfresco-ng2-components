@@ -25,8 +25,7 @@ export class AlfrescoTranslationService {
     userLang: string = 'en' ;
 
     constructor(private translate: TranslateService) {
-        this.userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        this.userLang = /(fr|en)/gi.test(this.userLang) ? this.userLang : 'en';
+        this.userLang = translate.getBrowserLang() || 'en';
         translate.setDefaultLang(this.userLang);
     }
 
