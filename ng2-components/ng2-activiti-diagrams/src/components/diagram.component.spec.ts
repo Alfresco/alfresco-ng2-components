@@ -26,6 +26,7 @@ import { DiagramComponent } from './index';
 import { DebugElement } from '@angular/core';
 import * as diagramsEventsMock from '../assets/diagramEvents.mock';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
+import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
 
 declare let jasmine: any;
 
@@ -556,5 +557,104 @@ describe('Test ng2-activiti-diagrams ', () => {
             });
         }));
 
+    });
+
+    describe('Diagrams component Gateways: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the Exclusive Gateway', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-exclusive-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape).not.toBeNull();
+
+                    let shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
+                    expect(shape1).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsGatewaysMock.exclusiveGatway]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Inclusive Gateway', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-inclusive-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape).not.toBeNull();
+
+                    let shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
+                    expect(shape1).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsGatewaysMock.inclusiveGatway]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Parallel Gateway', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-parallel-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape).not.toBeNull();
+
+                    let shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
+                    expect(shape1).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsGatewaysMock.parallelGatway]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Event Gateway', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-event-gateway > diagram-gateway > raphael-rhombus');
+                    expect(shape).not.toBeNull();
+
+                    let shape1: any = element.querySelector('diagram-event-gateway > raphael-circle');
+                    expect(shape1).not.toBeNull();
+
+                    let shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
+                    expect(shape2).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [diagramsGatewaysMock.eventGatway]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
     });
 });
