@@ -19,10 +19,7 @@ import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
-
-declare let componentHandler: any;
+import { Observer, Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'activiti-comments',
@@ -97,6 +94,9 @@ export class ActivitiComments implements OnInit, OnChanges {
 
     public showDialog() {
         if (this.dialog) {
+            if (!this.dialog.nativeElement.showModal) {
+                dialogPolyfill.registerDialog(this.dialog.nativeElement);
+            }
             this.dialog.nativeElement.showModal();
         }
     }
