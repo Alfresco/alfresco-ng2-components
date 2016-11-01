@@ -35,7 +35,7 @@ export class SettingComponent {
 
     constructor(public alfrescoSettingsService: AlfrescoSettingsService) {
         this.ecmHost = this.alfrescoSettingsService.ecmHost;
-        this.bpmHost = this.alfrescoSettingsService.bpmHost
+        this.bpmHost = this.alfrescoSettingsService.bpmHost;
     }
 
     public onChangeECMHost(event: KeyboardEvent): void {

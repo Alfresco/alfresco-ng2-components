@@ -63,7 +63,7 @@ export class LoginDemoComponent implements OnInit {
         if (this.providers === 'BPM') {
             this.isECM = false;
             this.isBPM = true;
-        } else if (this.providers == 'ECM') {
+        } else if (this.providers === 'ECM') {
             this.isECM = true;
             this.isBPM = false;
         } else if (this.providers === 'ALL') {
