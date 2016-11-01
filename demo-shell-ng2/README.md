@@ -31,6 +31,17 @@ npm start
 TypeScript watchers are also configured for `node_modules` folder within demo shell
 and provide live reload for all the component libraries as well.
 
+#### Development branch build
+
+If you want to run the demo shell with the latest change from the development branch, use the following command from the /script folder:
+
+1 Install dependencies
+
+```sh
+./npm-clean.sh
+./start-linked.sh -install
+```
+
 ###Multi-language
 To support a new language you need to create your language file (.json) and add it to `i18n/` folder.
 
