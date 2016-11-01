@@ -8,7 +8,10 @@
     "LABELS": {
       "ASSIGNEE": "Assegnatario",
       "DUE": "Scadenza",
-      "FORM": "Form"
+      "FORM": "Form",
+      "PEOPLE": "Persone",
+      "COMMENTS": "Commenti",
+      "CHECKLIST": "Checklist"
     },
     "MESSAGES": {
       "NONE": "Nessun dettaglio task trovato."

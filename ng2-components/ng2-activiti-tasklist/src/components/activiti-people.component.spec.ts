@@ -15,36 +15,247 @@
  * limitations under the License.
  */
 
-/*
- import {
- AlfrescoAuthenticationService,
- AlfrescoSettingsService,
- AlfrescoApiService
- } from 'ng2-alfresco-core';*/
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import {
+    CoreModule,
+    AlfrescoTranslationService
+} from 'ng2-alfresco-core';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiPeople } from './activiti-people.component';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { TranslationMock } from '../assets/translation.service.mock';
+import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { User } from '../models/user.model';
+
+declare let jasmine: any;
+
+const fakeUser: User = new User({
+    id: 'fake-id',
+    firstName: 'fake-name',
+    lastName: 'fake-last',
+    email: 'fake@mail.com'
+});
+
+const fakeUserToInvolve: User = new User({
+    id: 'fake-involve-id',
+    firstName: 'fake-involve-name',
+    lastName: 'fake-involve-last',
+    email: 'fake-involve@mail.com'
+});
 
 describe('Activiti People Component', () => {
 
     let activitiPeopleComponent: ActivitiPeople;
     let fixture: ComponentFixture<ActivitiPeople>;
     let element: HTMLElement;
+    let componentHandler;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ActivitiPeople],
-            providers: [AlfrescoTranslationService, ActivitiPeopleService]
+            imports: [CoreModule],
+            declarations: [ActivitiPeople, ActivitiPeopleSearch],
+            providers: [
+                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                ActivitiPeopleService]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(ActivitiPeople);
             activitiPeopleComponent = fixture.componentInstance;
             element = fixture.nativeElement;
+            componentHandler = jasmine.createSpyObj('componentHandler', [
+                'upgradeAllRegistered'
+            ]);
+
+            window['componentHandler'] = componentHandler;
         });
     }));
 
-    it('should not show any image if the user is not logged in', () => {
-        expect(element.querySelector('#userinfo_container')).toBeDefined();
-        expect(element.querySelector('#logged-user-img')).toBeNull();
+    afterAll(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
+    it('should show people component title', () => {
+        expect(element.querySelector('#people-title')).toBeDefined();
+        expect(element.querySelector('#people-title')).not.toBeNull();
+    });
+
+    it('should show no people involved message', () => {
+        fixture.detectChanges();
+        fixture.whenStable()
+            .then(() => {
+                expect(element.querySelector('#no-people-label')).not.toBeNull();
+                expect(element.querySelector('#no-people-label').textContent).toContain('TASK_DETAILS.PEOPLE.NONE');
+            });
+    });
+
+    describe('when interact with people dialog', () => {
+
+        beforeEach(() => {
+            activitiPeopleComponent.taskId = 'fake-task-id';
+            activitiPeopleComponent.people = [];
+            fixture.detectChanges();
+        });
+
+        it('should show dialog when clicked on add', () => {
+            expect(element.querySelector('#addPeople')).not.toBeNull();
+            activitiPeopleComponent.showDialog();
+
+            expect(element.querySelector('#add-people-dialog')).not.toBeNull();
+            expect(element.querySelector('#add-people-dialog-title')).not.toBeNull();
+            expect(element.querySelector('#add-people-dialog-title').textContent).toContain('Involve User');
+        });
+
+        it('should close dialog when clicked on cancel', () => {
+            activitiPeopleComponent.showDialog();
+            expect(element.querySelector('#addPeople')).not.toBeNull();
+            activitiPeopleComponent.cancel();
+            let dialogWindow = <HTMLElement> element.querySelector('#add-people-dialog');
+            expect(dialogWindow.getAttribute('open')).toBeNull();
+        });
+    });
+
+    describe('when there are involved people', () => {
+
+        beforeEach(() => {
+            activitiPeopleComponent.taskId = 'fake-task-id';
+            activitiPeopleComponent.people.push(fakeUser);
+            fixture.detectChanges();
+        });
+
+        beforeEach(() => {
+            jasmine.Ajax.install();
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('should show people involved', () => {
+            expect(element.querySelector('#user-fake-id')).not.toBeNull();
+            expect(element.querySelector('#user-fake-id').textContent).toContain('fake-name');
+            expect(element.querySelector('#user-fake-id').textContent).toContain('fake-last');
+        });
+
+        it('should remove pepole involved', fakeAsync(() => {
+            activitiPeopleComponent.removeInvolvedUser(fakeUser);
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200
+            });
+            tick();
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#user-fake-id')).toBeNull();
+                });
+        }));
+
+        it('should involve pepole', fakeAsync(() => {
+            activitiPeopleComponent.involveUser(fakeUserToInvolve);
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200
+            });
+            tick();
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#user-fake-involve-id')).not.toBeNull();
+                    expect(element.querySelector('#user-fake-involve-id').textContent)
+                        .toBe('fake-involve-name fake-involve-last');
+                });
+        }));
+
+        it('should return an observable with user search results', (done) => {
+            activitiPeopleComponent.people$.subscribe((users) => {
+                expect(users.length).toBe(2);
+                expect(users[0].firstName).toBe('fake-test-1');
+                expect(users[0].lastName).toBe('fake-last-1');
+                expect(users[0].email).toBe('fake-test-1@test.com');
+                expect(users[0].id).toBe(1);
+                done();
+            });
+            activitiPeopleComponent.searchUser('fake-search-word');
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {
+                    data: [{
+                        id: 1,
+                        firstName: 'fake-test-1',
+                        lastName: 'fake-last-1',
+                        email: 'fake-test-1@test.com'
+                    }, {
+                        id: 2,
+                        firstName: 'fake-test-2',
+                        lastName: 'fake-last-2',
+                        email: 'fake-test-2@test.com'
+                    }]
+                }
+            });
+        });
+
+        it('should return an empty list for not valid search', (done) => {
+            activitiPeopleComponent.people$.subscribe((users) => {
+                expect(users.length).toBe(0);
+                done();
+            });
+            activitiPeopleComponent.searchUser('fake-search-word');
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {}
+            });
+        });
+    });
+
+    describe('when there are errors on service call', () => {
+
+        beforeEach(() => {
+            jasmine.Ajax.install();
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('should log error message when search fails', fakeAsync(() => {
+            console.log = jasmine.createSpy('log');
+            activitiPeopleComponent.searchUser('fake-search');
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
+            tick();
+
+            expect(console.log).toHaveBeenCalledWith('Could not load users');
+        }));
+
+        it('should not remove user if remove involved user fail', fakeAsync(() => {
+            activitiPeopleComponent.people.push(fakeUser);
+            fixture.detectChanges();
+            activitiPeopleComponent.removeInvolvedUser(fakeUser);
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
+            tick();
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#user-fake-id')).not.toBeNull();
+                    expect(element.querySelector('#user-fake-id').textContent)
+                        .toBe('fake-name fake-last');
+                });
+        }));
+
+        it('should not involve user if involve user fail', fakeAsync(() => {
+            activitiPeopleComponent.involveUser(fakeUserToInvolve);
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 403
+            });
+            tick();
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#user-fake-id')).toBeNull();
+                    expect(element.querySelector('#no-people-label').textContent).toContain('TASK_DETAILS.PEOPLE.NONE');
+                });
+        }));
     });
 });

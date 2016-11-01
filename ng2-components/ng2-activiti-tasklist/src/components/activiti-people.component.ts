@@ -39,7 +39,7 @@ export class ActivitiPeople {
     dialog: any;
 
     private peopleObserver: Observer<User[]>;
-    people$: Observable<User>;
+    people$: Observable<User[]>;
 
     /**
      * Constructor
@@ -52,7 +52,7 @@ export class ActivitiPeople {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
-        this.people$ = new Observable<User>(observer => this.peopleObserver = observer).share();
+        this.people$ = new Observable<User[]>(observer => this.peopleObserver = observer).share();
     }
 
     public showDialog() {
