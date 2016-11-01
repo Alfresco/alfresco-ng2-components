@@ -180,6 +180,10 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
             }
         }
 
+        if (column.type === 'Amount') {
+            return (column.amountCurrency || '$') + ' ' + (result || 0);
+        }
+
         return result || '';
     }
 }

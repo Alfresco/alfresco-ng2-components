@@ -641,4 +641,33 @@ describe('DisplayValueWidget', () => {
         expect(widget.getCellValue(row, column)).toBe('');
     });
 
+    it('should prepend default amount currency', () => {
+        const value = '10';
+        let row = <DynamicTableRow> { value: { key: value } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Amount' };
+
+        const expected = `$ ${value}`;
+        expect(widget.getCellValue(row, column)).toBe(expected);
+    });
+
+    it('should prepend custom amount currency', () => {
+        const value = '10';
+        const currency = 'GBP';
+        let row = <DynamicTableRow> { value: { key: value } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Amount', amountCurrency: currency };
+
+        const expected = `${currency} ${value}`;
+        expect(widget.getCellValue(row, column)).toBe(expected);
+    });
+
+    it('should use zero for missing amount', () => {
+        const value = null;
+        const currency = 'GBP';
+        let row = <DynamicTableRow> { value: { key: value } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Amount', amountCurrency: currency };
+
+        const expected = `${currency} 0`;
+        expect(widget.getCellValue(row, column)).toBe(expected);
+    });
+
 });
