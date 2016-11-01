@@ -31,7 +31,7 @@ describe('TextEditorComponent', () => {
         let column = <DynamicTableColumn> { id: 'key' };
 
         const value = '<value>';
-        let event = { srcElement: { value } };
+        let event = { target: { value } };
 
         editor.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBe(value);
