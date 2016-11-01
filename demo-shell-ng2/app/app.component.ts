@@ -19,9 +19,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
-    AlfrescoSettingsService,
     AlfrescoTranslationService,
-    AlfrescoAuthenticationService
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService
 } from 'ng2-alfresco-core';
 
 declare var document: any;
@@ -40,27 +40,14 @@ export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
-                translate: AlfrescoTranslationService,
-                public alfrescoSettingsService: AlfrescoSettingsService) {
+                public alfrescoSettingsService: AlfrescoSettingsService,
+                translate: AlfrescoTranslationService) {
         this.setEcmHost();
         this.setBpmHost();
+        this.setProvider();
 
         this.translate = translate;
         this.translate.addTranslationFolder();
-    }
-
-    public onChangeECMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.ecmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
-        localStorage.setItem(`ecmHost`, this.ecmHost);
-    }
-
-    public onChangeBPMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.bpmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.bpmHost = this.bpmHost;
-        localStorage.setItem(`bpmHost`, this.bpmHost);
     }
 
     isLoggedIn(): boolean {
@@ -118,6 +105,12 @@ export class AppComponent {
             this.bpmHost = localStorage.getItem(`bpmHost`);
         } else {
             this.alfrescoSettingsService.bpmHost = this.bpmHost;
+        }
+    }
+
+    private setProvider() {
+        if (localStorage.getItem(`providers`)) {
+            this.alfrescoSettingsService.setProviders(localStorage.getItem(`providers`));
         }
     }
 }

@@ -8,3 +8,7 @@
 .toggle {
     width:120px;margin: 20px;
 }
+
+.setting-button {
+     position: absolute;  right: 10px; top: 10px;   z-index: 1;
+}
