@@ -314,26 +314,26 @@ describe('DataTable', () => {
 
     it('should replace image source with fallback thumbnail on error', () => {
         let event = <any> {
-            srcElement: {
+            target: {
                 src: 'missing-image'
             }
         };
 
         dataTable.fallbackThumbnail = '<fallback>';
         dataTable.onImageLoadingError(event);
-        expect(event.srcElement.src).toBe(dataTable.fallbackThumbnail);
+        expect(event.target.src).toBe(dataTable.fallbackThumbnail);
     });
 
     it('should replace image source only when fallback available', () => {
         const originalSrc = 'missing-image';
         let event = <any> {
-            srcElement: {
+            target: {
                 src: originalSrc
             }
         };
 
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event);
-        expect(event.srcElement.src).toBe(originalSrc);
+        expect(event.target.src).toBe(originalSrc);
     });
 });

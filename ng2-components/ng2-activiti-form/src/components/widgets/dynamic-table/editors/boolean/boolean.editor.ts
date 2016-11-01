@@ -28,7 +28,7 @@ import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 export class BooleanEditorComponent extends CellEditorComponent {
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
-        let value: boolean = (<HTMLInputElement>event.srcElement).checked;
+        let value: boolean = (<HTMLInputElement>event.target).checked;
         row.value[column.id] = value;
     }
 

@@ -146,7 +146,7 @@ describe('DropdownEditorComponent', () => {
     });
 
     it('should update row on value change', () => {
-        let event = { srcElement: { value: 'two' } };
+        let event = { target: { value: 'two' } };
         component.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBe(column.options[1]);
     });
