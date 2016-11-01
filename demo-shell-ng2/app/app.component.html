@@ -1,68 +1,70 @@
 <!-- Always shows a header, even in smaller screens. -->
 <div mdl class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-            <!-- Title -->
-            <span class="mdl-layout-title">Demo Application</span>
-            <!-- Add spacer, to align navigation to the right -->
-            <div class="mdl-layout-spacer"></div>
+    <div *ngIf="isLoggedIn()">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">Demo Application</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
 
-            <!-- Search bar -->
-            <search-bar (expand)="onToggleSearch($event)"></search-bar>
+                <!-- Search bar -->
+                <search-bar (expand)="onToggleSearch($event)"></search-bar>
 
-            <!-- Navigation. We hide it in small screens. -->
-            <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" data-automation-id="files" href="" routerLink="/files">DocumentList</a>
-                <a class="mdl-navigation__link" data-automation-id="datatable" href="" routerLink="/datatable">DataTable</a>
-                <a class="mdl-navigation__link" data-automation-id="uploader" href="" routerLink="/uploader">Uploader</a>
-                <a class="mdl-navigation__link" data-automation-id="activiti" href="" routerLink="/activiti">Activiti</a>
-                <a class="mdl-navigation__link" data-automation-id="webscript" href="" routerLink="/webscript">Webscript</a>
-                <a class="mdl-navigation__link" data-automation-id="tag" href="" routerLink="/tag">Tag</a>
-                <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
-            </nav>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" data-automation-id="files" href=""
+                       routerLink="/files">DocumentList</a>
+                    <a class="mdl-navigation__link" data-automation-id="datatable" href="" routerLink="/datatable">DataTable</a>
+                    <a class="mdl-navigation__link" data-automation-id="uploader" href="" routerLink="/uploader">Uploader</a>
+                    <a class="mdl-navigation__link" data-automation-id="activiti" href="" routerLink="/activiti">Activiti</a>
+                    <a class="mdl-navigation__link" data-automation-id="webscript" href="" routerLink="/webscript">Webscript</a>
+                    <a class="mdl-navigation__link" data-automation-id="tag" href="" routerLink="/tag">Tag</a>
+                    <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
+                    <a class="mdl-navigation__link" data-automation-id="settings" href="" routerLink="/settings">Settings</a>
+                </nav>
 
-            <div class="user-profile" *ngIf="isLoggedIn()">
-                <ng2-alfresco-userinfo></ng2-alfresco-userinfo>
+                <div class="user-profile" *ngIf="isLoggedIn()">
+                    <ng2-alfresco-userinfo></ng2-alfresco-userinfo>
+                </div>
+
+                <!-- Right aligned menu below button -->
+                <button id="demo-menu-lower-right" data-automation-id="right-action-menu"
+                        class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">more_vert</i>
+                </button>
+
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    for="demo-menu-lower-right">
+                    <li class="mdl-menu__item" (click)="changeLanguage('en')"><span
+                        class="flag-icon flag-icon-gb"></span><label tabindex="0"> English</label></li>
+                    <li class="mdl-menu__item" (click)="changeLanguage('gr')"><span
+                        class="flag-icon flag-icon-gr"></span><label tabindex="0"> Greek</label></li>
+                    <li class="mdl-menu__item" (click)="changeLanguage('it')"><span
+                        class="flag-icon flag-icon-it"></span><label tabindex="0"> Italian</label></li>
+                    <a class="mdl-menu__item" routerLink="/about"><label tabindex="0">About</label></a>
+                    <a *ngIf="!isLoggedIn()" class="mdl-menu__item" routerLink="/login"><label
+                        tabindex="0">Login</label></a>
+                    <li *ngIf="isLoggedIn()" class="mdl-menu__item" (click)="onLogout($event)"><label tabindex="0">Logout</label>
+                    </li>
+                </ul>
             </div>
-
-            <!-- Right aligned menu below button -->
-            <button id="demo-menu-lower-right" data-automation-id="right-action-menu"
-                    class="mdl-button mdl-js-button mdl-button--icon">
-                <i class="material-icons">more_vert</i>
-            </button>
-
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                for="demo-menu-lower-right">
-                <li class="mdl-menu__item" (click)="changeLanguage('en')"><span class="flag-icon flag-icon-gb"></span><label tabindex="0"> English</label></li>
-                <li class="mdl-menu__item" (click)="changeLanguage('gr')"><span class="flag-icon flag-icon-gr"></span><label tabindex="0"> Greek</label></li>
-                <li class="mdl-menu__item" (click)="changeLanguage('it')"><span class="flag-icon flag-icon-it"></span><label tabindex="0"> Italian</label></li>
-                <a class="mdl-menu__item" routerLink="/about"><label tabindex="0">About</label></a>
-                <a *ngIf="!isLoggedIn()" class="mdl-menu__item" routerLink="/login"><label tabindex="0">Login</label></a>
-                <li *ngIf="isLoggedIn()" class="mdl-menu__item" (click)="onLogout($event)"><label tabindex="0">Logout</label></li>
-            </ul>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Components List</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="" routerLink="/files" (click)="hideDrawer()">DocumentList Demo</a>
+                <a class="mdl-navigation__link" href="" routerLink="/datatable" (click)="hideDrawer()">DataTable
+                    Demo</a>
+                <a class="mdl-navigation__link" href="" routerLink="/uploader" (click)="hideDrawer()">Uploader Demo</a>
+                <a class="mdl-navigation__link" href="" routerLink="/login" (click)="hideDrawer()">Login Demo</a>
+                <a class="mdl-navigation__link" href="" routerLink="/activiti" (click)="hideDrawer()">Activiti
+                    Components Demo</a>
+                <a class="mdl-navigation__link" href="" routerLink="/webscript" (click)="hideDrawer()">Webscript</a>
+                <a class="mdl-navigation__link" href="" routerLink="/tag" (click)="hideDrawer()">Tag</a>
+                <a class="mdl-navigation__link" href="" routerLink="/settings" (click)="hideDrawer()">Settings</a>
+            </nav>
         </div>
-    </header>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Components List</span>
-        <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="" routerLink="/files" (click)="hideDrawer()">DocumentList Demo</a>
-            <a class="mdl-navigation__link" href="" routerLink="/datatable" (click)="hideDrawer()">DataTable Demo</a>
-            <a class="mdl-navigation__link" href="" routerLink="/uploader" (click)="hideDrawer()">Uploader Demo</a>
-            <a class="mdl-navigation__link" href="" routerLink="/login" (click)="hideDrawer()">Login Demo</a>
-            <a class="mdl-navigation__link" href="" routerLink="/activiti" (click)="hideDrawer()">Activiti Components Demo</a>
-            <a class="mdl-navigation__link" href="" routerLink="/webscript" (click)="hideDrawer()">Webscript</a>
-            <a class="mdl-navigation__link" href="" routerLink="/tag" (click)="hideDrawer()">Tag</a>
-        </nav>
-        <span class="mdl-layout-title">ECM host</span>
-        <nav class="mdl-navigation">
-            <input type="text" class="mdl-textfield__input" id="ecmHost" data-automation-id="ecmHost"
-                   tabindex="1" (change)="onChangeECMHost($event)" value="{{ecmHost}}"/>
-        </nav>
-        <span class="mdl-layout-title">BPM host</span>
-        <nav class="mdl-navigation">
-            <input type="text" class="mdl-textfield__input" id="bpmHost" data-automation-id="bpmHost"
-                   tabindex="1" (change)="onChangeBPMHost($event)" value="{{bpmHost}}"/>
-        </nav>
     </div>
     <main class="mdl-layout__content">
         <div class="page-content">

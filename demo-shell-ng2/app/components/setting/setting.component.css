@@ -1,0 +1,26 @@
+.setting-card.mdl-card {
+    width: 320px;
+    height: 320px;
+}
+.setting-card > .mdl-card__title {
+    color: #fff;
+    background: bottom right 15% no-repeat #1fbcd2;
+}
+
+.setting-card-padding {
+    width: 50%;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.setting-container {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.icon-margin {
+     margin-right: 9px;
+ }

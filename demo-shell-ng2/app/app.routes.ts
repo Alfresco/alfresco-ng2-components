@@ -28,7 +28,8 @@ import {
     TagComponent,
     AboutComponent,
     FormViewer,
-    FormNodeViewer
+    FormNodeViewer,
+    SettingComponent
 } from './components/index';
 
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
@@ -47,7 +48,8 @@ export const appRoutes: Routes = [
     { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
     { path: 'webscript', component: WebscriptComponent },
     { path: 'tag', component: TagComponent },
-    { path: 'about', component: AboutComponent }
+    { path: 'about', component: AboutComponent },
+    { path: 'settings', component: SettingComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

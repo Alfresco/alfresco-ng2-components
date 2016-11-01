@@ -47,7 +47,8 @@ import {
     TagComponent,
     AboutComponent,
     FilesComponent,
-    FormNodeViewer
+    FormNodeViewer,
+    SettingComponent
 } from './components/index';
 
 @NgModule({
@@ -82,7 +83,8 @@ import {
         TagComponent,
         AboutComponent,
         FilesComponent,
-        FormNodeViewer
+        FormNodeViewer,
+        SettingComponent
     ],
     providers: [],
     bootstrap: [ AppComponent ]
