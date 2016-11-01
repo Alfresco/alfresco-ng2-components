@@ -35,8 +35,6 @@ and provide live reload for all the component libraries as well.
 
 If you want to run the demo shell with the latest change from the development branch, use the following command from the /script folder:
 
-1 Install dependencies
-
 ```sh
 ./npm-clean.sh
 ./start-linked.sh -install
