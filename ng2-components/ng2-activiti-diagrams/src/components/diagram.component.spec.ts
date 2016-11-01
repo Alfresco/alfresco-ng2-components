@@ -30,6 +30,7 @@ import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
 import * as intermediateCatchingMock from '../assets/diagramIntermediate.mock';
 import * as boundaryEventMock from '../assets/diagramBoundary.mock';
 import * as throwEventMock from '../assets/diagramThrow.mock';
+import * as structuralMock from '../assets/diagramStructural.mock';
 
 declare let jasmine: any;
 
@@ -1102,6 +1103,54 @@ describe('Test ng2-activiti-diagrams ', () => {
             });
             component.ngOnChanges();
             let resp = {elements: [throwEventMock.throwMessageEvent]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+    });
+
+    describe('Diagrams component Structural: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the Subprocess', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-subprocess > raphael-rect');
+                    expect(shape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [structuralMock.subProcess]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Event Subprocess', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
+                    expect(shape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {elements: [structuralMock.eventSubProcess]};
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
