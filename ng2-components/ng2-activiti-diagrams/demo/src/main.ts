@@ -15,19 +15,35 @@
  * limitations under the License.
  */
 
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Component } from '@angular/core';
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
-import {  } from 'ng2-activiti-diagrams';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 @Component({
     selector: 'activiti-diagrams-demo',
-    template: `<activiti-diagrams></activiti-diagrams>`,
-    directives: [DiagramsComponent]
+    template: `
+    <label for="processDefinitionId"><b>Insert the ProcessDefinitionId:</b></label><br>
+    <input id="processDefinitionId" size="70" type="text" [(ngModel)]="processDefinitionId">
+    <activiti-diagram [processDefinitionId]="processDefinitionId"></activiti-diagram>`
 })
-class ActivitiDiagramsDemo {
+
+export class DiagramDemoComponent {
+
+    private processDefinitionId: string = 'ThirdProcess:1:15053';
 }
 
-bootstrap(ActivitiDiagramsDemo, [
-    ALFRESCO_CORE_PROVIDERS]
-);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DiagramsModule
+    ],
+    declarations: [ DiagramDemoComponent ],
+    bootstrap:    [ DiagramDemoComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
