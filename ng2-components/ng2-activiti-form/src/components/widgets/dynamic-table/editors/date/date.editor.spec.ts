@@ -165,8 +165,4 @@ describe('DateEditorComponent', () => {
         expect(table.flushValue).toHaveBeenCalled();
     });
 
-    it('should not setup datepicker trigger', () => {
-        let component =
-    });
-
 });

@@ -216,7 +216,7 @@ export class DateCellValidator implements CellValidator {
     ];
 
     isSupported(column: DynamicTableColumn): boolean {
-        return column && this.supportedTypes.indexOf(column.type) > -1;
+        return column && column.editable && this.supportedTypes.indexOf(column.type) > -1;
     }
 
     validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
