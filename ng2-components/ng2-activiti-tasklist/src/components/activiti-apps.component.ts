@@ -94,7 +94,6 @@ export class ActivitiApps implements OnInit {
                         app.theme = ActivitiApps.DEFAULT_TASKS_APP_THEME;
                         app.icon = ActivitiApps.DEFAULT_TASKS_APP_ICON;
                         this.appsObserver.next(app);
-                        this.selectApp(app);
                     } else if (app.deploymentId) {
                         this.appsObserver.next(app);
                     }
