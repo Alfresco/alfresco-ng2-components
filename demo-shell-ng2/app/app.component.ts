@@ -51,11 +51,18 @@ export class AppComponent {
     }
 
     isLoggedIn(): boolean {
+        this.redirectToLoginPageIfNotLoggedIn();
         return this.auth.isLoggedIn();
     }
 
+    redirectToLoginPageIfNotLoggedIn(): void {
+        if (!this.isLoginPage() && !this.auth.isLoggedIn()) {
+            this.router.navigate(['/login']);
+        }
+    }
+
     isLoginPage(): boolean {
-        return location.pathname === '/login' || location.pathname === '/';
+        return location.pathname === '/login' || location.pathname === '/' || location.pathname === '/settings';
     }
 
     onLogout(event) {
