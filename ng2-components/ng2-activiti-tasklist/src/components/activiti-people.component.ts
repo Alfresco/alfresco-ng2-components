@@ -66,6 +66,7 @@ export class ActivitiPeople {
     public cancel() {
         if (this.dialog) {
             this.dialog.nativeElement.close();
+            this.peopleObserver.next([]);
         }
     }
 

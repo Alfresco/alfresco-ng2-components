@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
@@ -29,7 +29,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-start-task.component.html',
     styleUrls: ['./activiti-start-task.component.css']
 })
-export class ActivitiStartProcessButton implements OnInit {
+export class ActivitiStartProcessButton {
 
     @Input()
     appId: string;
@@ -49,16 +49,12 @@ export class ActivitiStartProcessButton implements OnInit {
      * @param translate
      * @param taskService
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private taskService: ActivitiTaskListService) {
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
-    }
-
-    ngOnInit() {
     }
 
     public start() {
