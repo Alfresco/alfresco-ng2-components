@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CellEditorComponent } from './../cell.editor';
 import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
@@ -25,7 +25,13 @@ import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
     templateUrl: './text.editor.html',
     styleUrls: ['./text.editor.css']
 })
-export class TextEditorComponent extends CellEditorComponent {
+export class TextEditorComponent extends CellEditorComponent implements OnInit {
+
+    displayName: string;
+
+    ngOnInit() {
+        this.displayName = this.table.getDisplayText(this.column);
+    }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         let value: any = (<HTMLInputElement>event.target).value;

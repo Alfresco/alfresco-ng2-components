@@ -161,6 +161,15 @@ export class DynamicTableModel extends FormWidgetModel {
 
         return result || '';
     }
+
+    getDisplayText(column: DynamicTableColumn): string {
+        let result = column.name;
+        if (column.type === 'Amount') {
+            let currency = column.amountCurrency || '$';
+            result = `${column.name} (${currency})`;
+        }
+        return result;
+    }
 }
 
 export interface DynamicRowValidationSummary {
