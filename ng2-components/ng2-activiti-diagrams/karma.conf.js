@@ -34,6 +34,7 @@ module.exports = function (config) {
 
       'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
       'node_modules/raphael/raphael.min.js',
+      'assets/Polyline.js',
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
 
       'karma-test-shim.js',

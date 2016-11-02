@@ -32,6 +32,7 @@ import * as boundaryEventMock from '../assets/diagramBoundary.mock';
 import * as throwEventMock from '../assets/diagramThrow.mock';
 import * as structuralMock from '../assets/diagramStructural.mock';
 import * as swimLanesMock from '../assets/diagramSwimlanes.mock';
+import * as flowsMock from '../assets/diagramFlows.mock';
 
 declare let jasmine: any;
 
@@ -1211,6 +1212,36 @@ describe('Test ng2-activiti-diagrams ', () => {
             });
             component.ngOnChanges();
             let resp = {pools: [swimLanesMock.poolLanes]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+    });
+
+    describe('Diagrams component Flows: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the flow', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-sequence-flow > raphael-flow-arrow');
+                    expect(shape).not.toBeNull();
+                });
+            });
+            component.ngOnChanges();
+            let resp = {flows: [flowsMock.flow]};
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
