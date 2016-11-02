@@ -69,6 +69,7 @@ export class DynamicTableModel extends FormWidgetModel {
 
         this._validators = [
             new RequiredCellValidator(),
+            new DateCellValidator(),
             new NumberCellValidator()
         ];
     }
@@ -206,7 +207,34 @@ export class RequiredCellValidator implements CellValidator {
 
         return true;
     }
+}
 
+export class DateCellValidator implements CellValidator {
+
+    private supportedTypes: string[] = [
+        'Date'
+    ];
+
+    isSupported(column: DynamicTableColumn): boolean {
+        return column && this.supportedTypes.indexOf(column.type) > -1;
+    }
+
+    validate(row: DynamicTableRow, column: DynamicTableColumn, summary?: DynamicRowValidationSummary): boolean {
+
+        if (this.isSupported(column)) {
+            let value = row.value[column.id];
+            let dateValue = moment(value, 'D-M-YYYY');
+            if (!dateValue.isValid()) {
+                if (summary) {
+                    summary.isValid = false;
+                    summary.text = `Invalid '${column.name}' format.`;
+                }
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
 export class NumberCellValidator implements CellValidator {
