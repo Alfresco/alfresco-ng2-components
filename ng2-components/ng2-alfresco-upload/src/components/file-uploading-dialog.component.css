@@ -139,26 +139,9 @@
     text-align: left;
 }
 
-@media only screen and (max-device-width: 520px){
-    .file-dialog {
+@media (max-width: 720px) {
+    :host .file-dialog {
         width: 100%;
-        padding: 0 0 0 0;
-        margin: 0 0 0 0;
         right: 0;
-        left: 0;
-        position: absolute;
     }
 }
-
-@media (max-device-width: 568px) {
-    .file-dialog {
-        width: 280px;
-    }
-}
-
-@media (max-width: 740px) {
-    .file-dialog {
-        width: 325px;
-    }
-}
-
