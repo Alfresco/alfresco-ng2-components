@@ -52,6 +52,7 @@
     "@angular/upgrade": "2.0.0",
     "@types/node": "^6.0.42",
     "alfresco-js-api": "^0.3.0",
+    "moment": "2.15.1",
     "chart.js": "^2.1.4",
     "core-js": "^2.4.1",
     "md-date-time-picker": "^2.2.0",
