@@ -32,7 +32,7 @@ import {
     ActivitiComments,
     ActivitiPeople,
     ActivitiTaskHeader,
-    ActivitiStartProcessButton,
+    ActivitiStartTaskButton,
     ActivitiPeopleSearch
 } from './src/components/index';
 
@@ -50,7 +50,7 @@ export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     ActivitiComments,
     ActivitiPeople,
     ActivitiTaskHeader,
-    ActivitiStartProcessButton,
+    ActivitiStartTaskButton,
     ActivitiPeopleSearch
 ];
 

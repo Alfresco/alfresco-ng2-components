@@ -29,7 +29,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-start-task.component.html',
     styleUrls: ['./activiti-start-task.component.css']
 })
-export class ActivitiStartProcessButton {
+export class ActivitiStartTaskButton {
 
     @Input()
     appId: string;
