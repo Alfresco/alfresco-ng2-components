@@ -31,6 +31,7 @@ import * as intermediateCatchingMock from '../assets/diagramIntermediate.mock';
 import * as boundaryEventMock from '../assets/diagramBoundary.mock';
 import * as throwEventMock from '../assets/diagramThrow.mock';
 import * as structuralMock from '../assets/diagramStructural.mock';
+import * as swimLanesMock from '../assets/diagramSwimlanes.mock';
 
 declare let jasmine: any;
 
@@ -1151,6 +1152,65 @@ describe('Test ng2-activiti-diagrams ', () => {
             });
             component.ngOnChanges();
             let resp = {elements: [structuralMock.eventSubProcess]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+    });
+
+    describe('Diagrams component Swim lane: ', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+            component.processDefinitionId = 'fakeprocess:24:38399';
+            component.metricPercentages = {startEvent: 0};
+        });
+
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('Should render the Pool', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shape: any = element.querySelector('diagram-pool > raphael-rect');
+                    expect(shape).not.toBeNull();
+
+                    let shapeText: any = element.querySelector('diagram-pool > raphael-text');
+                    expect(shapeText).not.toBeNull();
+                    expect(shapeText.attributes[2].value).toEqual('Activiti');
+                });
+            });
+            component.ngOnChanges();
+            let resp = {pools: [swimLanesMock.pool]};
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: resp
+            });
+        }));
+
+        it('Should render the Pool with Lanes', async(() => {
+            component.onSuccess.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(res).not.toBeNull();
+                    let shapeLane: any = element.querySelector('diagram-lanes > div > div > diagram-lane');
+                    expect(shapeLane).not.toBeNull();
+
+                    let shapeRect: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-rect');
+                    expect(shapeRect).not.toBeNull();
+
+                    let shapeText: any = element.querySelector('diagram-lanes > div > div > diagram-lane > raphael-text');
+                    expect(shapeText).not.toBeNull();
+                    expect(shapeText.attributes[2].value).toEqual('Beckend');
+                });
+            });
+            component.ngOnChanges();
+            let resp = {pools: [swimLanesMock.poolLanes]};
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
