@@ -54,6 +54,10 @@ export class AppComponent {
         return this.auth.isLoggedIn();
     }
 
+    isLoginPage(): boolean {
+        return location.pathname === '/login' || location.pathname === '/';
+    }
+
     onLogout(event) {
         event.preventDefault();
         this.auth.logout()
