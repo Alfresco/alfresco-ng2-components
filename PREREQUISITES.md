@@ -8,7 +8,7 @@ The [Angular 2](https://angular.io/) based application development framework req
 - [npm](https://www.npmjs.com/) package manager for JavaScript.
 - (If you use ECM and BPM togheter) Make sure your user has the same username and password in both system
 
-*Note: Default username for activiti is "admin@app.activiti.com" and "admin" for Alfresco, and also the default password are different. Change them to be equal.
+*Note: Default username for activiti is "admin@app.activiti.com" and "admin" for Alfresco, and also the default password are different. Change them to be equal.*
 
 **Verify that you are running at least node `v5.x.x` and npm `3.x.x`**
 by running `node -v` and `npm -v` in a terminal/console window.
