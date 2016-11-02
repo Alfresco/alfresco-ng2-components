@@ -19,6 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@
 import { FormControl } from '@angular/forms';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let componentHandler: any;
 
@@ -40,11 +41,15 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     @Output()
     onModalRowClicked: EventEmitter<any> = new EventEmitter();
 
-    private searchUser: FormControl = new FormControl();
+    searchUser: FormControl = new FormControl();
 
     userList: User[] = [];
 
-    constructor() {
+    constructor(private translate: AlfrescoTranslationService) {
+        if (translate) {
+            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
+        }
+
         this.searchUser
             .valueChanges
             .debounceTime(200)
@@ -65,11 +70,12 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
     setupMaterialComponents(handler?: any): boolean {
         // workaround for MDL issues with dynamic components
+        let isUpgraded: boolean = false;
         if (handler) {
             handler.upgradeAllRegistered();
-            return true;
+            isUpgraded = true;
         }
-        return false;
+        return isUpgraded;
     }
 
     onRowClick(userClicked: User) {

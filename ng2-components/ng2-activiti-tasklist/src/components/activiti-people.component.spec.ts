@@ -68,11 +68,6 @@ describe('Activiti People Component', () => {
         });
     }));
 
-    afterAll(() => {
-        fixture.destroy();
-        TestBed.resetTestingModule();
-    });
-
     it('should show people component title', () => {
         expect(element.querySelector('#people-title')).toBeDefined();
         expect(element.querySelector('#people-title')).not.toBeNull();

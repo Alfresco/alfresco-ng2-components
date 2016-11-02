@@ -48,7 +48,6 @@ export class ActivitiPeople {
      */
     constructor(private translate: AlfrescoTranslationService,
                 private peopleService: ActivitiPeopleService) {
-
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
