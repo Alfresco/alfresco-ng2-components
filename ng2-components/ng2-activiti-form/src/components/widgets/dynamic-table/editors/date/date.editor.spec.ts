@@ -17,7 +17,7 @@
 
 import { ElementRef } from '@angular/core';
 import { DateEditorComponent } from './date.editor';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn/*, DynamicRowValidationSummary*/ } from './../../../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../../core/index';
 
 describe('DateEditorComponent', () => {
 
@@ -54,7 +54,7 @@ describe('DateEditorComponent', () => {
 
         let settings = component.settings;
         expect(settings.type).toBe('date');
-        expect(settings.future.year()).toBe(moment().year() + 21);
+        expect(settings.future.year()).toBe(moment().year() + 100);
         expect(settings.init.isSame(moment('14-03-1879', component.DATE_FORMAT))).toBeTruthy();
         expect(component.datePicker.trigger).toBe(trigger);
     });
@@ -133,6 +133,36 @@ describe('DateEditorComponent', () => {
         });
         component.updateMaterialTextField(elementRef, value);
         expect(called).toBeTruthy();
+    });
+
+    it('should update picker when input changed', () => {
+        const input = '14-03-2016';
+        let event = { target: { value: input } };
+        component.ngOnInit();
+        component.onDateChanged(event);
+
+        expect(component.datePicker.time.isSame(moment(input, 'DD-MM-YYYY'))).toBeTruthy();
+    });
+
+    it('should update row value upon user input', () => {
+        const input = '14-03-2016';
+        let event = { target: { value: input } };
+
+        component.ngOnInit();
+        component.onDateChanged(event);
+
+        let actual = row.value[column.id];
+        expect(actual).toBe('2016-03-14T00:00:00.000Z');
+    });
+
+    it('should flush value on user input', () => {
+        spyOn(table, 'flushValue').and.callThrough();
+        let event = { target: { value: 'value' } };
+
+        component.ngOnInit();
+        component.onDateChanged(event);
+
+        expect(table.flushValue).toHaveBeenCalled();
     });
 
 });

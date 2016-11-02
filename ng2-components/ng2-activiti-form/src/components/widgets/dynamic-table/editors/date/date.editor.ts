@@ -30,6 +30,7 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
 
     datePicker: any;
     settings: any;
+    value: any;
 
     constructor(private elementRef: ElementRef) {
         super();
@@ -38,12 +39,13 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
     ngOnInit() {
         this.settings = {
             type: 'date',
-            future: moment().add(21, 'years')
+            past: moment().subtract(100, 'years'),
+            future: moment().add(100, 'years')
         };
 
-        let value = this.table.getCellValue(this.row, this.column);
-        if (value) {
-            this.settings.init = moment(value, this.DATE_FORMAT);
+        this.value = this.table.getCellValue(this.row, this.column);
+        if (this.value) {
+            this.settings.init = moment(this.value, this.DATE_FORMAT);
         }
 
         this.datePicker = new mdDateTimePicker.default(this.settings);
@@ -52,9 +54,18 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
         }
     }
 
+    onDateChanged(event: any) {
+        let newValue = (<HTMLInputElement> event.target).value;
+        let dateValue = moment(newValue, this.DATE_FORMAT);
+        this.datePicker.time = dateValue;
+        this.row.value[this.column.id] = `${dateValue.format('YYYY-MM-DD')}T00:00:00.000Z`;
+        this.table.flushValue();
+    };
+
     onDateSelected(event: CustomEvent) {
+        this.value = this.datePicker.time.format('DD-MM-YYYY');
         let newValue = this.datePicker.time.format('YYYY-MM-DD');
-        this.row.value[this.column.id] = newValue + 'T00:00:00.000Z';
+        this.row.value[this.column.id] = `${newValue}T00:00:00.000Z`;
         this.table.flushValue();
 
         if (this.elementRef) {
@@ -75,5 +86,4 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
         }
         return false;
     }
-
 }

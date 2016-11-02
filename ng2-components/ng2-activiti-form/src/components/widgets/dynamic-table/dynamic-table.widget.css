@@ -8,6 +8,11 @@
 }
 
 .dynamic-table-widget__table {
+    overflow-y: auto;
+    width: 100%;
+}
+
+.dynamic-table-widget__table > table {
     width: 100%;
 }
 

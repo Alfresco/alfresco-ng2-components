@@ -97,7 +97,11 @@ export class DynamicTableWidget extends WidgetComponent {
 
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
         if (this.content) {
-            return this.content.getCellValue(row, column);
+            let result = this.content.getCellValue(row, column);
+            if (column.type === 'Amount') {
+                return (column.amountCurrency || '$') + ' ' + (result || 0);
+            }
+            return result;
         }
         return null;
     }

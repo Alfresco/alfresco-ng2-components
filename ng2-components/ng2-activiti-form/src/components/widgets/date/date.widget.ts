@@ -38,7 +38,8 @@ export class DateWidget extends TextFieldWidgetComponent implements OnInit, Afte
 
         let settings: any = {
             type: 'date',
-            future: moment().add(21, 'years')
+            past: moment().subtract(100, 'years'),
+            future: moment().add(100, 'years')
         };
 
         if (this.field) {

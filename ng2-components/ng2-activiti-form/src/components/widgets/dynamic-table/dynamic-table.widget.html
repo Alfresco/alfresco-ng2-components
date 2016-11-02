@@ -2,26 +2,28 @@
      <div>{{content.name}}</div>
 
      <div *ngIf="!editMode">
-        <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
-            <thead>
-                <tr>
-                    <th *ngFor="let column of content.visibleColumns"
-                        class="mdl-data-table__cell--non-numeric">
-                        {{column.name}}
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of content.rows"
-                    [class.dynamic-table-widget__row-selected]="row.selected">
-                    <td *ngFor="let column of content.visibleColumns"
-                        class="mdl-data-table__cell--non-numeric"
-                        (click)="onRowClicked(row)">
-                        {{ getCellValue(row, column) }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+         <div class="dynamic-table-widget__table">
+            <table class="mdl-data-table mdl-js-data-table">
+                <thead>
+                    <tr>
+                        <th *ngFor="let column of content.visibleColumns"
+                            class="mdl-data-table__cell--non-numeric">
+                            {{column.name}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of content.rows"
+                        [class.dynamic-table-widget__row-selected]="row.selected">
+                        <td *ngFor="let column of content.visibleColumns"
+                            class="mdl-data-table__cell--non-numeric"
+                            (click)="onRowClicked(row)">
+                            {{ getCellValue(row, column) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+         </div>
 
         <div>
             <button class="mdl-button mdl-js-button mdl-button--icon"
