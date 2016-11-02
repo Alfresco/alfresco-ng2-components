@@ -1,4 +1,4 @@
-# Activiti Analytics Component for Angular 2
+# Activiti Diagrams Component for Angular 2
 
 ## Prerequisites
 
@@ -8,19 +8,32 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 ## Install
 
 ```sh
-npm install --save ng2-activiti-analytics
+npm install --save ng2-activiti-diagrams
 ```
 
-#### Ng2-Charts
+
+### Dependencies
+
+Add the following dependency to your index.html:
+
+```html
+<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
+```
+
+The following component needs to be added to your `systemjs.config.js` file: 
+
+- [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core)
+
+#### raphael
 
 ```sh
-npm install ng2-charts chart.js --save
+npm install raphael --save
 ```
 
 Also make sure you include these dependencies in your `index.html` file:
 
 ```html
-    <script src="node_modules/chart.js/dist/Chart.bundle.min.js"></script>
+    <script src="node_modules/raphael/raphael.min.js"></script>
 ```
 
 #### Material Design Lite
@@ -41,17 +54,19 @@ Also make sure you include these dependencies in your `index.html` file:
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
-## Basic usage example Activiti Analytics
-
+## Basic usage example Activiti Diagrams
+The component shows the diagram of the input process.
 ```html
-<activiti-analytics></activiti-analytics>
+<activiti-diagrams [processDefinitionId]="processDefinitionId"></activiti-diagrams>
 ```
 
 #### Events
+**onSuccess**: The event is emitted when the diagrams element are loaded
 
+**onError**: The event is emitted when the an error occur during the loading
 
 #### Options
-
+**metricPercentages** The array that contains the percentage of the time for each element
 
 ## Build from sources
 
