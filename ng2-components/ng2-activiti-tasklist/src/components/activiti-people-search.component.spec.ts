@@ -107,7 +107,7 @@ describe('Activiti People Search', () => {
     });
 
     it('should send an event when an user is clicked', async(() => {
-        activitiPeopleSearchComponent.onModalRowClicked.subscribe((user) => {
+        activitiPeopleSearchComponent.onRowClicked.subscribe((user) => {
             expect(user).toBeDefined();
             expect(user.firstName).toBe('fake-name');
         });

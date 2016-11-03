@@ -39,7 +39,7 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     onSearch: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    onModalRowClicked: EventEmitter<any> = new EventEmitter();
+    onRowClicked: EventEmitter<any> = new EventEmitter();
 
     searchUser: FormControl = new FormControl();
 
@@ -79,9 +79,15 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     }
 
     onRowClick(userClicked: User) {
-        this.onModalRowClicked.emit(userClicked);
+        this.onRowClicked.emit(userClicked);
         this.userList = this.userList.filter((user) => {
             return user.id !== userClicked.id;
         });
+    }
+
+    getDisplayUser(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
+        let lastName =  user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
+        return firstName + ' - ' + lastName;
     }
 }

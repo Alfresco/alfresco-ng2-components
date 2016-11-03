@@ -157,7 +157,7 @@ describe('Activiti People Component', () => {
         }));
 
         it('should return an observable with user search results', (done) => {
-            activitiPeopleComponent.people$.subscribe((users) => {
+            activitiPeopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(2);
                 expect(users[0].firstName).toBe('fake-test-1');
                 expect(users[0].lastName).toBe('fake-last-1');
@@ -186,7 +186,7 @@ describe('Activiti People Component', () => {
         });
 
         it('should return an empty list for not valid search', (done) => {
-            activitiPeopleComponent.people$.subscribe((users) => {
+            activitiPeopleComponent.peopleSearch$.subscribe((users) => {
                 expect(users.length).toBe(0);
                 done();
             });
@@ -211,7 +211,7 @@ describe('Activiti People Component', () => {
 
         it('should log error message when search fails', async(() => {
             console.log = jasmine.createSpy('log');
-            activitiPeopleComponent.people$.subscribe(() => {
+            activitiPeopleComponent.peopleSearch$.subscribe(() => {
                 expect(console.log).toHaveBeenCalledWith('Could not load users');
             });
             activitiPeopleComponent.searchUser('fake-search');

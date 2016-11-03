@@ -6,7 +6,7 @@
     font-weight: bolder;
 }
 
-.material-icons:hover {
+.material-icons.people-search__icon:hover {
     color: rgb(255, 152, 0);
 }
 

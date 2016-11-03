@@ -41,8 +41,8 @@ export class ActivitiPeople {
     @ViewChild('dialog')
     dialog: any;
 
-    private peopleObserver: Observer<User[]>;
-    people$: Observable<User[]>;
+    private peopleSearchObserver: Observer<User[]>;
+    peopleSearch$: Observable<User[]>;
 
     /**
      * Constructor
@@ -54,7 +54,7 @@ export class ActivitiPeople {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
-        this.people$ = new Observable<User[]>(observer => this.peopleObserver = observer).share();
+        this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     public showDialog() {
@@ -69,14 +69,14 @@ export class ActivitiPeople {
     public cancel() {
         if (this.dialog) {
             this.dialog.nativeElement.close();
-            this.peopleObserver.next([]);
+            this.peopleSearchObserver.next([]);
         }
     }
 
     searchUser(searchedWord: string) {
         this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
             .subscribe((users) => {
-                this.peopleObserver.next(users);
+                this.peopleSearchObserver.next(users);
             }, error => console.log('Could not load users'));
     }
 
@@ -94,6 +94,12 @@ export class ActivitiPeople {
                     return involvedUser.id !== user.id;
                 });
             }, error => console.error('Impossible to remove involved user from task'));
+    }
+
+    getDisplayUser(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
+        let lastName =  user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
+        return firstName + ' ' + lastName;
     }
 
 }
