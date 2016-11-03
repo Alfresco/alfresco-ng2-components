@@ -1,6 +1,6 @@
 {
-  "name": "ng2-activiti-analytics-demo",
-  "description": "Alfresco Angular2 Analytics Component - Demo",
+  "name": "ng2-activiti-diagrams-demo",
+  "description": "Alfresco Angular2 Diagrams Component - Demo",
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
   "main": "index.js",
@@ -9,36 +9,54 @@
     "postinstall": "npm run build",
     "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run server\" ",
     "server": "wsrv -o -s -l",
-    "build": "npm run tslint && rimraf dist && npm run tsc",
+    "build": "npm run tslint && rimraf dist && tsc",
+    "build:w": "npm run tslint && rimraf dist && tsc -w",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts"
   },
   "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Maurizio Vitale",
+      "email": "maurizio.vitale@alfresco.com"
+    }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "activiti",
+    "activiti-diagrams"
+  ],
   "dependencies": {
-    "@angular/common": "2.0.0-rc.3",
-    "@angular/compiler": "2.0.0-rc.3",
-    "@angular/core": "2.0.0-rc.3",
-    "@angular/forms": "0.1.1",
-    "@angular/http": "2.0.0-rc.3",
-    "@angular/platform-browser": "2.0.0-rc.3",
-    "@angular/platform-browser-dynamic": "2.0.0-rc.3",
-    "@angular/router": "3.0.0-alpha.7",
-    "@angular/router-deprecated": "2.0.0-rc.2",
-    "@angular/upgrade": "2.0.0-rc.3",
+    "@angular/common": "2.0.0",
+    "@angular/compiler": "2.0.0",
+    "@angular/core": "2.0.0",
+    "@angular/forms": "2.0.0",
+    "@angular/http": "2.0.0",
+    "@angular/platform-browser": "2.0.0",
+    "@angular/platform-browser-dynamic": "2.0.0",
+    "@angular/router": "3.0.0",
+    "@angular/upgrade": "2.0.0",
+    "@types/node": "^6.0.42",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.27",
-    "core-js": "2.4.0",
-    "reflect-metadata": "0.1.3",
-    "rxjs": "5.0.0-beta.6",
-    "zone.js": "0.6.12",
-    "license-check": "1.1.5",
+    "zone.js": "^0.6.23",
+    "md-date-time-picker": "^2.2.0",
+    "raphael": "^2.2.6",
     "material-design-icons": "2.2.3",
-    "material-design-lite": "1.1.3",
-    "ng2-translate": "2.2.2",
+    "material-design-lite": "1.2.1",
+    "ng2-translate": "2.5.0",
     "alfresco-js-api": "^0.3.0",
     "ng2-alfresco-core": "^0.3.0",
+    "ng2-activiti-diagrams": "^0.3.0",
     "ng2-activiti-analytics": "^0.3.0",
     "chart.js": "^2.1.4",
+    "moment": "2.15.1",
+    "md-date-time-picker": "^2.2.0",
     "ng2-charts": "1.1.0"
   },
   "devDependencies": {
@@ -46,37 +64,8 @@
     "@types/jasmine": "^2.2.33",
     "concurrently": "^2.2.0",
     "rimraf": "2.5.2",
-    "tslint": "3.15.1",
-    "typescript": "^2.0.2",
+    "tslint": "^3.8.1",
+    "typescript": "^2.0.3",
     "wsrv": "^0.1.5"
-  },
-  "keywords": [
-    "angular2",
-    "typescript"
-  ],
-  "license-check-config": {
-    "src": [
-      "**/*.js",
-      "**/*.ts",
-      "!/**/coverage/**/*",
-      "!/**/demo/**/*",
-      "!/**/node_modules/**/*",
-      "!/**/typings/**/*",
-      "!*.js"
-    ],
-    "contributors": [
-      {
-        "name": "Maurizio Vitale",
-        "email": "maurizio.vitale84@gmail.com"
-      },
-      {
-        "name": "Eugenio Romano",
-        "email": "eugenio.romano@alfresco.com"
-      }
-    ],
-    "path": "assets/license_header.txt",
-    "blocking": true,
-    "logInfo": false,
-    "logError": true
   }
 }

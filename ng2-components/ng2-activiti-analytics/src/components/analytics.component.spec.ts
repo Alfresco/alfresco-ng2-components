@@ -94,7 +94,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
         });
 
         it('Should render the Process definition overview report ', (done) => {
-            component.onShowReport.subscribe((res) => {
+            component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(3);
 
@@ -133,7 +133,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
         });
 
         it('Should render the Task overview report ', (done) => {
-            component.onShowReport.subscribe((res) => {
+            component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
 

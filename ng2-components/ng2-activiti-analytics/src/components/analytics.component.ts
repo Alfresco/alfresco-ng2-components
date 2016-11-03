@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Input, Output, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportQuery } from '../models/report.model';
@@ -27,7 +27,7 @@ import { Chart } from '../models/chart.model';
     templateUrl: './analytics.component.html',
     styleUrls: ['./analytics.component.css']
 })
-export class AnalyticsComponent implements  OnInit, OnChanges {
+export class AnalyticsComponent implements OnChanges {
 
     @Input()
     appId: string;
@@ -40,9 +40,6 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
 
     @Output()
     onSuccess = new EventEmitter();
-
-    @Output()
-    onShowReport = new EventEmitter();
 
     @Output()
     onError = new EventEmitter();
@@ -59,9 +56,6 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         }
     }
 
-    ngOnInit() {
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         this.reset();
     }
@@ -71,7 +65,7 @@ export class AnalyticsComponent implements  OnInit, OnChanges {
         this.analyticsService.getReportsByParams(this.reportId, this.reportParamQuery).subscribe(
             (res: Chart[]) => {
                 this.reports = res;
-                this.onShowReport.emit(res);
+                this.onSuccess.emit(res);
             },
             (err: any) => {
                 this.onError.emit(err);

@@ -15,19 +15,49 @@
  * limitations under the License.
  */
 
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { Component } from '@angular/core';
-import { ALFRESCO_CORE_PROVIDERS } from 'ng2-alfresco-core';
-import { AnalyticsComponent } from 'ng2-activiti-analytics';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { AnalyticsModule } from 'ng2-activiti-analytics';
 
 @Component({
     selector: 'activiti-analytics-demo',
-    template: `<activiti-analytics></activiti-analytics>`,
-    directives: [AnalyticsComponent]
+    template: `
+    <div class="page-content">
+        <label for="appId"><b>Insert the appId:</b></label><br>
+        <input id="appId" size="10" type="text" [(ngModel)]="appId">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
+                <analytics-report-list (reportClick)="onReportClick($event)"></analytics-report-list>
+            </div>
+            <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
+                <activiti-analytics [appId]="appId" *ngIf="report" [reportId]="report.id"></activiti-analytics>
+            </div>
+        </div>
+    </div>`
 })
-class ActivitiAnalyticsDemo {
+
+export class AnalyticsDemoComponent {
+
+    appId: number;
+    report: any;
+
+    onReportClick(event: any) {
+        this.report = event;
+    }
 }
 
-bootstrap(ActivitiAnalyticsDemo, [
-    ALFRESCO_CORE_PROVIDERS]
-);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        AnalyticsModule
+    ],
+    declarations: [ AnalyticsDemoComponent ],
+    bootstrap:    [ AnalyticsDemoComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
