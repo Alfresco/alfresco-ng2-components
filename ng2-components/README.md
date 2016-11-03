@@ -76,7 +76,7 @@ npm run build:w
 
 ```
 
-3. Move inside the demo folder and link the component to the local node_modules folder.
+3. From another terminal move inside the demo sub folder and link the component to the local node_modules folder.
 ```sh
 
 cd demo

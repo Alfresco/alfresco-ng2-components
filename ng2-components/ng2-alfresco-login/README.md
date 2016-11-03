@@ -47,21 +47,14 @@ Components included:
 
 ## Dependencies
 
-Add the following dependency to your index.html:
-
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
-
-The following component needs to be added to your systemjs.config: 
+The following component needs to be added to your systemjs.config.js :
 
 - ng2-translate
 - ng2-alfresco-core
 - ng2-alfresco-login
 
-Please refer to the following example to have an idea of how your systemjs.config should look like :
-
-https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-login/demo/systemjs.config.js
+Please refer to the following example to have an idea of how your systemjs.config should look this [systemjs.config.js](demo/systemjs
+.config.js) .
 
 ## Style
 The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
@@ -80,6 +73,11 @@ Also make sure you include these dependencies in your .html page:
 <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 ```
 
+## Browser support
+
+If you need to have a large cross-browser compatibility make sure you include the polyfill necessary for Angular 2, more info at this
+[page](/BROWSER-SUPPORT.md) .
+
 ## Basic usage
 
 ```html
@@ -91,31 +89,28 @@ Example of an App that use Alfresco login component :
 **main.ts**
 ```ts
 
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
     selector: 'my-app',
-    template: '
-    <alfresco-login 
-        providers="'ALL'" 
-        (onSuccess)="mySuccessMethod($event)" 
-        (onError)="myErrorMethod($event)">
-    </alfresco-login>',
-    directives: [AlfrescoLoginComponent]
+    template: `
+       <alfresco-login [providers]="'ALL'"
+                       [disableCsrf]="true"
+                       (onSuccess)="mySuccessMethod($event)"
+                       (onError)="myErrorMethod($event)">
+        </alfresco-login>`
 })
 export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
-                alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://myalfrescoip';
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080/';
+        settingsService.bpmHost = 'http://localhost:9999/';
     }
 
     mySuccessMethod($event) {
@@ -125,15 +120,23 @@ export class AppComponent {
     myErrorMethod($event) {
         console.log('Error Login EventEmitt called with: ' + $event.value);
     }
-
 }
 
-bootstrap(AppComponent, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        LoginModule
+    ],
+    declarations: [ AppComponent ],
+    bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 
 ```
+
 #### Events
 
 | Name | Description |
