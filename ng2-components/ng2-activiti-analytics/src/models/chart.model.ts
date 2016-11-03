@@ -76,6 +76,8 @@ export class BarChart extends Chart {
     labels: string[] = [];
     datasets: any[] = [];
     data: any[] = [];
+    xAxisType: string;
+    yAxisType: string;
     options: any = {
         scales: {
             yAxes: [{
@@ -83,6 +85,9 @@ export class BarChart extends Chart {
                     beginAtZero: true,
                     stepSize: 1
                 }
+            }],
+            xAxes: [{
+                ticks: {}
             }]
         }
     };
@@ -91,6 +96,9 @@ export class BarChart extends Chart {
         super(obj);
         this.title = obj && obj.title || null;
         this.titleKey = obj && obj.titleKey || null;
+        this.xAxisType = obj && obj.xAxisType || null;
+        this.yAxisType = obj && obj.yAxisType || null;
+        this.options.scales.xAxes[0].ticks.callback = this.xAxisTickFormatFunction(this.xAxisType);
         obj.values.forEach((params: any) => {
             let dataValue = [];
             params.values.forEach((info: any) => {
@@ -107,6 +115,18 @@ export class BarChart extends Chart {
             }
         });
     }
+
+    xAxisTickFormatFunction = function (xAxisType) {
+        return function (value) {
+            if ('date_day' === xAxisType) {
+                return moment(new Date(value)).format('DD');
+            } else if ('date_month' === xAxisType) {
+                return moment(new Date(value)).format('MMMM');
+            } else if ('date_year' === xAxisType) {
+                return moment(new Date(value)).format('YYYY');
+            }
+        };
+    };
 
     hasDatasets() {
         return this.datasets && this.datasets.length > 0 ? true : false;
