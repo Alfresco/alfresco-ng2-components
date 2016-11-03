@@ -78,6 +78,8 @@ export class ActivitiStartProcessButton implements OnInit {
             let formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.processDefinitionId, this.name, formValues).subscribe(
                 (res: any) => {
+                    this.name = '';
+                    this.processDefinitionId = '';
                     this.cancel();
                 },
                 (err) => {
