@@ -23,7 +23,7 @@ import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiPeople } from './activiti-people.component';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
 import { TranslationMock } from '../assets/translation.service.mock';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { User } from '../models/user.model';
 
 declare let jasmine: any;
@@ -130,28 +130,26 @@ describe('Activiti People Component', () => {
             expect(element.querySelector('#user-fake-id').textContent).toContain('fake-last');
         });
 
-        it('should remove pepole involved', fakeAsync(() => {
+        it('should remove pepole involved', async(() => {
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
-            tick();
-            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
+                    fixture.detectChanges();
                     expect(element.querySelector('#user-fake-id')).toBeNull();
                 });
         }));
 
-        it('should involve pepole', fakeAsync(() => {
+        it('should involve pepole', async(() => {
             activitiPeopleComponent.involveUser(fakeUserToInvolve);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200
             });
-            tick();
-            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
+                    fixture.detectChanges();
                     expect(element.querySelector('#user-fake-involve-id')).not.toBeNull();
                     expect(element.querySelector('#user-fake-involve-id').textContent)
                         .toBe('fake-involve-name fake-involve-last');
@@ -211,43 +209,41 @@ describe('Activiti People Component', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('should log error message when search fails', fakeAsync(() => {
+        it('should log error message when search fails', async(() => {
             console.log = jasmine.createSpy('log');
+            activitiPeopleComponent.people$.subscribe(() => {
+                expect(console.log).toHaveBeenCalledWith('Could not load users');
+            });
             activitiPeopleComponent.searchUser('fake-search');
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-            tick();
-
-            expect(console.log).toHaveBeenCalledWith('Could not load users');
         }));
 
-        it('should not remove user if remove involved user fail', fakeAsync(() => {
+        it('should not remove user if remove involved user fail', async(() => {
             activitiPeopleComponent.people.push(fakeUser);
             fixture.detectChanges();
             activitiPeopleComponent.removeInvolvedUser(fakeUser);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-            tick();
-            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
+                    fixture.detectChanges();
                     expect(element.querySelector('#user-fake-id')).not.toBeNull();
                     expect(element.querySelector('#user-fake-id').textContent)
                         .toBe('fake-name fake-last');
                 });
         }));
 
-        it('should not involve user if involve user fail', fakeAsync(() => {
+        it('should not involve user if involve user fail', async(() => {
             activitiPeopleComponent.involveUser(fakeUserToInvolve);
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 403
             });
-            tick();
-            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
+                    fixture.detectChanges();
                     expect(element.querySelector('#user-fake-id')).toBeNull();
                     expect(element.querySelector('#no-people-label').textContent).toContain('TASK_DETAILS.PEOPLE.NONE');
                 });
