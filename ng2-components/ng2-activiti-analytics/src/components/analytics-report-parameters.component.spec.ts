@@ -293,7 +293,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamProcessDefOptions
+                responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
             });
         });
 

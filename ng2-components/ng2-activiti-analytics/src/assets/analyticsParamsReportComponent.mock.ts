@@ -69,6 +69,29 @@ export var reportDefParamProcessDef = {
     'definition': '{ "parameters" :[{"id":"processDefinitionId","name":null,"nameKey":null,"type":"processDefinition","value":null,"dependsOn":null}]}'
 };
 
+export var reportDefParamProcessDefOptionsNoApp = [
+    {
+        'id': 'FakeProcessTest 1:1:1',
+        'name': 'Fake Process Test 1 Name ',
+        'version': 1
+    },
+    {
+        'id': 'FakeProcessTest 1:2:1',
+        'name': 'Fake Process Test 1 Name ',
+        'version': 2
+    },
+    {
+        'id': 'FakeProcessTest 2:1:1',
+        'name': 'Fake Process Test 2 Name ',
+        'version': 1
+    },
+    {
+        'id': 'FakeProcessTest 3:1:1',
+        'name': 'Fake Process Test 3 Name ',
+        'version': 1
+    }
+];
+
 export var reportDefParamProcessDefOptions = {
     'size': 4, 'total': 4, 'start': 0, 'data': [
         {
