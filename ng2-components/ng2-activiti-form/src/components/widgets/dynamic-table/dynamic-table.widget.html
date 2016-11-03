@@ -1,9 +1,10 @@
-<div class="dynamic-table-widget">
-     <div>{{content.name}}</div>
+<div class="dynamic-table-widget"
+    [class.dynamic-table-widget__invalid]="!isValid()">
+     <div class="dynamic-table-widget__label">{{content.name}}</div>
 
      <div *ngIf="!editMode">
-         <div class="dynamic-table-widget__table">
-            <table class="mdl-data-table mdl-js-data-table">
+         <div class="dynamic-table-widget__table-container">
+            <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
                 <thead>
                     <tr>
                         <th *ngFor="let column of content.visibleColumns"
@@ -60,5 +61,7 @@
         (save)="onSaveChanges()"
         (cancel)="onCancelChanges()">
      </row-editor>
+
+     <div class="dynamic-table-widget__summary">{{content?.field.validationSummary}}</div>
 
 </div>

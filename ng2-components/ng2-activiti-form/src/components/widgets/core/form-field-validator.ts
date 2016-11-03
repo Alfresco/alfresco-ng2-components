@@ -37,7 +37,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.FUNCTIONAL_GROUP,
         FormFieldTypes.RADIO_BUTTONS,
         FormFieldTypes.UPLOAD,
-        FormFieldTypes.AMOUNT
+        FormFieldTypes.AMOUNT,
+        FormFieldTypes.DYNAMIC_TABLE
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -64,6 +65,10 @@ export class RequiredFieldValidator implements FormFieldValidator {
 
             if (field.type === FormFieldTypes.UPLOAD) {
                 return field.value && field.value.length > 0;
+            }
+
+            if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
+                return field.value && field.value instanceof Array && field.value.length > 0;
             }
 
             if (field.value === null || field.value === undefined || field.value === '') {
