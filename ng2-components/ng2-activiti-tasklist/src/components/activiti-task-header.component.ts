@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Component, Input } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 
 declare let componentHandler: any;
@@ -27,7 +27,7 @@ declare let componentHandler: any;
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css']
 })
-export class ActivitiTaskHeader implements OnInit {
+export class ActivitiTaskHeader {
 
     @Input()
     taskDetails: TaskDetailsModel;
@@ -37,16 +37,11 @@ export class ActivitiTaskHeader implements OnInit {
      * @param auth
      * @param translate
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService) {
+    constructor(private translate: AlfrescoTranslationService) {
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
-    }
-
-    ngOnInit() {
-
     }
 
 }

@@ -33,6 +33,9 @@ export class ActivitiComments implements OnInit, OnChanges {
     @Input()
     taskId: string;
 
+    @Input()
+    readOnly: boolean = false;
+
     @ViewChild('dialog')
     dialog: any;
 

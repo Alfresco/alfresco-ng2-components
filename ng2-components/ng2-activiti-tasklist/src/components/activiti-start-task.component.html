@@ -1,19 +1,27 @@
-<button type="button" (click)="showDialog()" class="mdl-button">{{'START_TASK.BUTTON'|translate}}</button>
+<button type="button" (click)="showDialog()" class="mdl-button" id="start-task-button">
+    {{'START_TASK.BUTTON'|translate}}
+</button>
 
-<dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">{{'START_TASK.DIALOG.TITLE'|translate}}</h4>
+<dialog class="mdl-dialog" id="start-task-dialog" #dialog>
+    <h4 class="mdl-dialog__title" id="start-task-dialog-title">{{'START_TASK.DIALOG.TITLE'|translate}}</h4>
     <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" [(ngModel)]="name" id="taskName" />
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="name" id="taskName"/>
             <label class="mdl-textfield__label" for="taskName">{{'START_TASK.DIALOG.LABEL.NAME'|translate}}</label>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-            <textarea class="mdl-textfield__input" type="text" [(ngModel)]="description" rows="3" id="taskDescription"></textarea>
-            <label class="mdl-textfield__label" for="taskDescription">{{'START_TASK.DIALOG.LABEL.DESCRIPTION'|translate}}</label>
+            <textarea class="mdl-textfield__input" type="text" [(ngModel)]="description" rows="3"
+                      id="taskDescription"></textarea>
+            <label class="mdl-textfield__label" id="task-description-label"
+                   for="taskDescription">{{'START_TASK.DIALOG.LABEL.DESCRIPTION'|translate}}</label>
         </div>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="start()" class="mdl-button">{{'START_TASK.DIALOG.ACTION.START'|translate}}</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">{{'START_TASK.DIALOG.ACTION.CANCEL'|translate}}</button>
+        <button type="button" id="button-start" (click)="start()" class="mdl-button">
+            {{'START_TASK.DIALOG.ACTION.START'|translate}}
+        </button>
+        <button type="button" id="button-cancel" (click)="cancel()" class="mdl-button close">
+            {{'START_TASK.DIALOG.ACTION.CANCEL'|translate}}
+        </button>
     </div>
 </dialog>

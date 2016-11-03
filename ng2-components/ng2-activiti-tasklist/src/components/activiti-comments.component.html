@@ -1,7 +1,7 @@
 <span class="activiti-label mdl-badge"
       [attr.data-badge]="comments?.length">{{ 'TASK_DETAILS.LABELS.COMMENTS' |translate }}</span>
-<div id="addComment" (click)="showDialog()" class="icon material-icons">add</div>
-<div class="mdl-tooltip" for="addComment">
+<div *ngIf="!readOnly" id="addComment" (click)="showDialog()" class="icon material-icons">add</div>
+<div *ngIf="!readOnly" class="mdl-tooltip" for="addComment">
     Add a comment
 </div>
 

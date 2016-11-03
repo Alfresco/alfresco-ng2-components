@@ -1,33 +1,33 @@
-<span class="activiti-label mdl-badge"
+<span class="activiti-label mdl-badge" id="checklist-label"
       [attr.data-badge]="checklist?.length">{{ 'TASK_DETAILS.LABELS.CHECKLIST' | translate }}</span>
-<div id="addChecklist" (click)="showDialog()" class="icon material-icons">add</div>
-<div class="mdl-tooltip" for="addChecklist">
+<div *ngIf="!readOnly" id="addChecklist" (click)="showDialog()" id="add-checklist" class="icon material-icons">add</div>
+<div *ngIf="!readOnly" class="mdl-tooltip" for="add-checklist">
     Add a checklist
 </div>
 <div class="menu-container" *ngIf="checklist?.length > 0">
     <ul class='mdl-list'>
         <li class="mdl-list__item" *ngFor="let check of checklist">
-            <span class="mdl-list__item-primary-content">
+            <span class="mdl-list__item-primary-content" id="check-{{check.id}}">
             <i class="material-icons mdl-list__item-icon">done</i>
             {{check.name}}
             </span>
         </li>
     </ul>
 </div>
-<div *ngIf="checklist?.length === 0">
+<div *ngIf="checklist?.length === 0" id="checklist-none-message">
     {{ 'TASK_DETAILS.CHECKLIST.NONE' | translate }}
 </div>
 
-<dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">New Task</h4>
+<dialog class="mdl-dialog" id="checklist-dialog" #dialog>
+    <h4 class="mdl-dialog__title" id="add-checklist-title">New Check</h4>
     <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" [(ngModel)]="taskName" id="task" />
-            <label class="mdl-textfield__label" for="task">Name</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="taskName" id="checklist-name"/>
+            <label class="mdl-textfield__label" for="checklist-name">Name</label>
         </div>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="add()" class="mdl-button">Add Checklist</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
+        <button type="button" id="add-check" (click)="add()" class="mdl-button">Add Checklist</button>
+        <button type="button" id="close-check-dialog" (click)="cancel()" class="mdl-button close">Cancel</button>
     </div>
 </dialog>
