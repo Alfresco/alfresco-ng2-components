@@ -229,6 +229,22 @@ describe('FormService', () => {
         });
     });
 
+    it('should get start form definition by process definition id', (done) => {
+        responseBody = {id: 1};
+
+        service.getStartFormDefinition('myprocess:1').subscribe(result => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions/myprocess%3A1/start-form')).toBe(true);
+            expect(result.id).toEqual(responseBody.id);
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
+        });
+    });
+
     it('should not get form id from response', () => {
         let response = new Response(new ResponseOptions({body: null}));
         expect(service.getFormId(response)).toBeNull();

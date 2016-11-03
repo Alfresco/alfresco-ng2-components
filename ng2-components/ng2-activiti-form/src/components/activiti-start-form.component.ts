@@ -19,27 +19,30 @@ import {
     Component,
     OnInit, AfterViewChecked, OnChanges,
     SimpleChanges,
-    Input
+    Input,
+    ViewChild,
+    ElementRef
 } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
 /**
+ * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.
+ *
+ * After the form has been completed the form values are available from the attribute component.form.values and
+ * component.form.isValid (boolean) can be used to check the if the form is valid or not. Both of these properties are
+ * updated as the user types into the form.
+ *
  * @Input
- * ActivitiForm can show 4 types of forms searching by 4 type of params:
- *   1) Form attached to a task passing the {taskId}.
- *
- *   2) Form that are only defined with the {formId} (in this case you receive only the form definition and the form will not be
- *   attached to any process, useful in case you want to use ActivitiForm as form designer), in this case you can pass also other 2
- *   parameters:
- *      - {saveOption} as parameter to tell what is the function to call on the save action.
- *      - {data} to fill the form field with some data, the id of the form must to match the name of the field of the provided data object.
- *
- *   @Output
- *   {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
- *   {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
- *   {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
+ * {processDefinitionId} string: The process definition ID
+ * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, as yet these don't do anything so this
+ * is false by default
+ *  @Output
+ *  {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
+ *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
+ *  {formCompleted} EventEmitter - This event is fired when the form is completed, it pass all the value in the form.
  *
  * @returns {ActivitiForm} .
  */
@@ -52,20 +55,30 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
 export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     @Input()
-    processId: string;
+    processDefinitionId: string;
 
-    constructor(formService: FormService,
+    @Input()
+    showOutcomeButtons: boolean = false;
+
+    @ViewChild('outcomesContainer', {})
+    outcomesContainer: ElementRef = null;
+
+    constructor(private translate: AlfrescoTranslationService,
+                formService: FormService,
                 visibilityService: WidgetVisibilityService) {
         super(formService, visibilityService, null, null);
     }
 
     ngOnInit() {
         this.loadForm();
+
+        if (this.translate) {
+            this.translate.addTranslationFolder('node_modules/ng2-activiti-form/src');
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log('changes', changes);
-        let processId = changes['processId'];
+        let processId = changes['processDefinitionId'];
         if (processId && processId.currentValue) {
             this.getStartFormDefinition(processId.currentValue);
             return;
@@ -73,8 +86,8 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     }
 
     loadForm() {
-        if (this.processId) {
-            this.getStartFormDefinition(this.formId);
+        if (this.processDefinitionId) {
+            this.getStartFormDefinition(this.processDefinitionId);
             return;
         }
     }

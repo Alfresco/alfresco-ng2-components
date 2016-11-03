@@ -213,9 +213,7 @@ export class FormService {
      */
     getStartFormDefinition(processId: string): Observable<any> {
         return Observable.fromPromise(
-            this.apiService.getInstance().activiti.processApi.getProcessDefinitionStartForm({
-                processDefinitionId: processId
-            }))
+            this.apiService.getInstance().activiti.processApi.getProcessDefinitionStartForm(processId))
             .map(this.toJson)
             .catch(this.handleError);
     }

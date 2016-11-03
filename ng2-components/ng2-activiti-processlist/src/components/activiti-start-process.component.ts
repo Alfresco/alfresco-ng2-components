@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
@@ -28,7 +28,7 @@ declare let componentHandler: any;
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessButton implements OnInit, OnChanges {
+export class ActivitiStartProcessButton implements OnInit {
 
     @Input()
     appId: string;
@@ -56,10 +56,6 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
         this.load(this.appId);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        console.log('changes', changes);
-    }
-
     public load(appId: string) {
         this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
             (res: any[]) => {
@@ -79,7 +75,8 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
 
     public startProcess() {
         if (this.processDefinitionId && this.name) {
-            this.activitiProcess.startProcess(this.processDefinitionId, this.name).subscribe(
+            let formValues = this.startForm ? this.startForm.form.values : undefined;
+            this.activitiProcess.startProcess(this.processDefinitionId, this.name, formValues).subscribe(
                 (res: any) => {
                     this.cancel();
                 },
@@ -96,30 +93,22 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
         }
     }
 
-    hasFormKey() {
-        return true;
+    private getSelectedProcess(): any {
+        return this.processDefinitions.filter((processDefinition) => {
+            return processDefinition.id === this.processDefinitionId;
+        })[0];
     }
 
-    onFormSaved($event: Event) {
-        $event.preventDefault();
-        console.log('form saved');
+    hasStartForm() {
+        let selectedProcessDefinition = this.getSelectedProcess();
+        return selectedProcessDefinition && selectedProcessDefinition.hasStartForm;
     }
 
-    onFormCompleted($event: Event) {
-        $event.preventDefault();
-        console.log('form saved');
+    isStartFormMissingOrValid() {
+        return !this.startForm || this.startForm.form.isValid;
     }
 
-    onExecuteOutcome($event: Event) {
-        $event.preventDefault();
-        console.log('form outcome executed');
-    }
-
-    onFormLoaded($event: Event) {
-        console.log('form loaded', $event);
-    }
-
-    onFormError($event: Event) {
-        console.log('form error', $event);
+    validateForm() {
+        return this.processDefinitionId && this.name && this.isStartFormMissingOrValid();
     }
 }

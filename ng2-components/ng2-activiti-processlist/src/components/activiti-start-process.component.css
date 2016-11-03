@@ -9,3 +9,7 @@
 .material-icons:hover {
     color: rgb(255, 152, 0);
 }
+
+.mdl-dialog {
+    width: 400px;
+}

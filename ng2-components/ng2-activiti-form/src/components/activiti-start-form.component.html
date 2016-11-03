@@ -14,7 +14,7 @@
                     <container-widget *ngFor="let field of form.fields" [content]="field" (formValueChanged)="checkVisibility($event);"></container-widget>
                 </div>
             </div>
-            <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">
+            <div *ngIf="showOutcomeButtons && form.hasOutcomes()" class="mdl-card__actions mdl-card--border" #outcomesContainer>
                 <button *ngFor="let outcome of form.outcomes"
                         alfresco-mdl-button
                         [disabled]="!isOutcomeButtonEnabled(outcome)"
