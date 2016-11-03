@@ -31,19 +31,30 @@
   </a>
 </p>
 
-### Node
-To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
+## Prerequisites
+
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
 ```sh
-npm install --save ng2-alfresco-login
+npm install ng2-alfresco-login material-design-icons material-design-lite --save
 ```
 
-Components included:
+Also make sure you include these dependencies in your .html page:
 
-* Alfresco Login Component
-* Alfresco Authentication Service
+```html
+
+<!-- Google Material Design Lite -->
+<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+<script src="node_modules/material-design-lite/material.min.js"></script>
+<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+```
+
+*If you need to have a large cross-browser compatibility make sure you include the polyfill necessary to Angular 2. More info at this
+[page](/BROWSER-SUPPORT.md) .*
 
 ## Dependencies
 
@@ -55,28 +66,6 @@ The following component needs to be added to your systemjs.config.js :
 
 Please refer to the following example to have an idea of how your systemjs.config should look this [systemjs.config.js](demo/systemjs
 .config.js) .
-
-## Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
-
-```sh
-npm install --save material-design-icons material-design-lite
-```
-
-Also make sure you include these dependencies in your .html page:
-
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
-
-## Browser support
-
-If you need to have a large cross-browser compatibility make sure you include the polyfill necessary for Angular 2, more info at this
-[page](/BROWSER-SUPPORT.md) .
 
 ## Basic usage
 
@@ -141,8 +130,8 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-| onSuccess | The event is emitted when the login is done |
-| onError | The event is emitted when the login fails |
+| `onSuccess` | The event is emitted when the login is done |
+| `onError` | The event is emitted when the login fails |
 
 Attribute     |   Description | 
 ---           | ---         |
@@ -182,6 +171,7 @@ Alternatively you can bind to your component properties and provide values dynam
 ```
 
 #### Customize Validation rules
+
 If needed it is possible customize the validation rules of the login
 form. You can add/modify the default rules of the login form.
 
