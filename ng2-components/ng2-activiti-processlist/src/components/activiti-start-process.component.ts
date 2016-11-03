@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, DebugElement } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
@@ -34,7 +34,7 @@ export class ActivitiStartProcessButton implements OnInit {
     appId: string;
 
     @ViewChild('dialog')
-    dialog: any;
+    dialog: DebugElement;
 
     @ViewChild('startForm')
     startForm: ActivitiStartForm;
@@ -68,9 +68,7 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public showDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
-        }
+        this.dialog.nativeElement.showModal();
     }
 
     public startProcess() {
@@ -90,9 +88,7 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public cancel() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
+        this.dialog.nativeElement.close();
     }
 
     private getSelectedProcess(): any {
