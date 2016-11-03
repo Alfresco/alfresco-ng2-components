@@ -95,3 +95,5 @@ All components are supported in the below browsers:
 |Firefox*    	|Latest     	|
 
 *Concerning Alfresco Upload Component, folder upload currently not supported [firefox known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880 ) 
+
+Please refer to [Browser Support](BROWSER-SUPPORT.md) article for more details. 
