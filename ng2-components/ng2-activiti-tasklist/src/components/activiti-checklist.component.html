@@ -1,7 +1,7 @@
 <span class="activiti-label mdl-badge" id="checklist-label"
       [attr.data-badge]="checklist?.length">{{ 'TASK_DETAILS.LABELS.CHECKLIST' | translate }}</span>
-<div id="addChecklist" (click)="showDialog()" id="add-checklist" class="icon material-icons">add</div>
-<div class="mdl-tooltip" for="add-checklist">
+<div *ngIf="!readOnly" id="addChecklist" (click)="showDialog()" id="add-checklist" class="icon material-icons">add</div>
+<div *ngIf="!readOnly" class="mdl-tooltip" for="add-checklist">
     Add a checklist
 </div>
 <div class="menu-container" *ngIf="checklist?.length > 0">

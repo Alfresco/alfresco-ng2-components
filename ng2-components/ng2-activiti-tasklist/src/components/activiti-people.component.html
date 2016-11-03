@@ -1,7 +1,7 @@
 <span class="activiti-label mdl-badge" id="people-title"
       [attr.data-badge]="people?.length">{{ 'TASK_DETAILS.LABELS.PEOPLE' | translate }}</span>
-<div id="addPeople" (click)="showDialog()" class="icon material-icons">add</div>
-<div class="mdl-tooltip" data-mdl-for="addPeople">
+<div *ngIf="!readOnly" id="addPeople" (click)="showDialog()" class="icon material-icons">add</div>
+<div *ngIf="!readOnly" class="mdl-tooltip" data-mdl-for="addPeople">
     Add a person
 </div>
 <div class="menu-container" *ngIf="people?.length > 0">
@@ -11,8 +11,9 @@
                 <i class="material-icons mdl-list__item-icon">face</i>
                 <span id="user-{{user.id}}">{{user.firstName}} {{user.lastName}}</span>
             </span>
-            <a class="mdl-list__item-secondary-action">
-                <i id="remove" class="material-icons" (click)="removeInvolvedUser(user)">delete</i>
+            <a *ngIf="!readOnly" class="mdl-list__item-secondary-action">
+                <i id="remove" class="material-icons"
+                   (click)="removeInvolvedUser(user)">delete</i>
             </a>
         </li>
     </ul>

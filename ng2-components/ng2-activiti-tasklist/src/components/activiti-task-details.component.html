@@ -12,13 +12,16 @@
     <activiti-task-header [taskDetails]="taskDetails" #activitiheader></activiti-task-header>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-people [people]="taskPeople" [taskId]="taskDetails.id"></activiti-people>
+            <activiti-people [people]="taskPeople" [readOnly]="readOnlyForm"
+                             [taskId]="taskDetails.id"></activiti-people>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-comments [taskId]="taskDetails.id" #activiticomments></activiti-comments>
+            <activiti-comments [readOnly]="readOnlyForm" [taskId]="taskDetails.id"
+                               #activiticomments></activiti-comments>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-checklist [taskId]="taskDetails.id" #activitichecklist></activiti-checklist>
+            <activiti-checklist [readOnly]="readOnlyForm" [taskId]="taskDetails.id"
+                                #activitichecklist></activiti-checklist>
         </div>
     </div>
     <activiti-form *ngIf="hasFormKey()" [taskId]="taskDetails.id"
