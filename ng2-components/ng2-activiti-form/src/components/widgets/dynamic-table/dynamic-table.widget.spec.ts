@@ -16,7 +16,7 @@
  */
 
 import { DynamicTableWidget } from './dynamic-table.widget';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, FormModel, FormFieldTypes } from './../core/index';
 
 describe('DynamicTableWidget', () => {
 
@@ -204,6 +204,48 @@ describe('DynamicTableWidget', () => {
 
         expect(widget.editMode).toBeFalsy();
         expect(widget.editRow).toBeNull();
+    });
+
+    it('should be valid by default', () => {
+        widget.content.field = null;
+        expect(widget.isValid()).toBeTruthy();
+
+        widget.content = null;
+        expect(widget.isValid()).toBeTruthy();
+    });
+
+    it('should take validation state from underlying field', () => {
+        let form = new FormModel();
+        widget.content = new DynamicTableModel(form, {
+            type: FormFieldTypes.DYNAMIC_TABLE,
+            required: true,
+            value: null
+        });
+
+        expect(widget.content.field.validate()).toBeFalsy();
+        expect(widget.isValid()).toBe(widget.content.field.isValid);
+        expect(widget.content.field.isValid).toBeFalsy();
+
+        widget.content.field.value = [{}];
+
+        expect(widget.content.field.validate()).toBeTruthy();
+        expect(widget.isValid()).toBe(widget.content.field.isValid);
+        expect(widget.content.field.isValid).toBeTruthy();
+
+    });
+
+    it('should prepend default currency for amount columns', () => {
+        let row = <DynamicTableRow> { value: { key: '100' } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Amount' };
+        let actual = widget.getCellValue(row, column);
+        expect(actual).toBe('$ 100');
+    });
+
+    it('should prepend custom currency for amount columns', () => {
+        let row = <DynamicTableRow> { value: { key: '100' } };
+        let column = <DynamicTableColumn> { id: 'key', type: 'Amount', amountCurrency: 'GBP' };
+        let actual = widget.getCellValue(row, column);
+        expect(actual).toBe('GBP 100');
     });
 
 });

@@ -7,27 +7,32 @@
     background-color: #eef !important;
 }
 
-.dynamic-table-widget__table {
+.dynamic-table-widget__table-container {
     overflow-y: auto;
     width: 100%;
 }
 
-.dynamic-table-widget__table > table {
+.dynamic-table-widget__table {
     width: 100%;
 }
 
-.dynamic-table-widget__invalid .mdl-textfield__input {
-    border-color: #d50000;
-}
-
-.dynamic-table-widget__invalid .mdl-textfield__label {
+.dynamic-table-widget__invalid .dynamic-table-widget__label {
     color: #d50000;
 }
 
-.dynamic-table-widget__invalid .mdl-textfield__label:after {
-    background-color: #d50000;
+.dynamic-table-widget__invalid .dynamic-table-widget__table-container {
+    border: 1px solid #d50000;
 }
 
-.dynamic-table-widget__invalid .mdl-textfield__error {
+.dynamic-table-widget__invalid .dynamic-table-widget__table {
+    border: none;
+}
+
+.dynamic-table-widget__summary {
+    visibility: hidden;
+    color: #d50000;
+}
+
+.dynamic-table-widget__invalid .dynamic-table-widget__summary {
     visibility: visible !important;
 }

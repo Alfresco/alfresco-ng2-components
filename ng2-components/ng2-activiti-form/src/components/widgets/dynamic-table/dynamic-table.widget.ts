@@ -39,6 +39,16 @@ export class DynamicTableWidget extends WidgetComponent {
         super();
     }
 
+    isValid() {
+        let result = true;
+
+        if (this.content && this.content.field) {
+            result = this.content.field.isValid;
+        }
+
+        return result;
+    }
+
     onRowClicked(row: DynamicTableRow) {
         if (this.content) {
             this.content.selectedRow = row;
