@@ -272,6 +272,7 @@ export class AlfrescoLoginComponent implements OnInit {
      */
     private disableError() {
         this.error = false;
+        this.initFormError();
     }
 
     /**
