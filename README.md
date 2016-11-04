@@ -88,11 +88,13 @@ To deploy directly on your AWS instance our demo shell click the button below:
 ## Browser Support
 All components are supported in the below browsers:
 
-|**Browser**   	|**Version**   	|
-|---        	|---	        |
-|Chrome     	|Latest     	|
-|Safari (OS X)  |9.x        	|
-|Firefox*    	|Latest     	|
+|**Browser**   	   |**Version**   	|
+|---        	   |---  	        |
+|Chrome     	   |Latest       	|
+|Safari (OS X)     |9.x          	|
+|Firefox*    	   |Latest       	|
+|Edge       	   |13, 14     	    |
+|Internet Explorer |11     	        |
 
 *Concerning Alfresco Upload Component, folder upload currently not supported [firefox known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880 ) 
 
