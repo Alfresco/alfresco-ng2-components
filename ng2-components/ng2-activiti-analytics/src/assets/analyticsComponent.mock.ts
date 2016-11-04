@@ -93,5 +93,21 @@ export var chartTaskOverview = {
             ['fake 1 user task', '1', '2.0', '3.0', '4.0', '5.0', '6.0'],
             ['fake 2 user task', '1', '2.0', '3.0', '4.0', '5.0', '6.0']
         ]
+    }, {
+        'id': 'id10931125229538',
+        'type': 'multiBarChart',
+        'title': 'Task duration',
+        'titleKey': 'REPORTING.DEFAULT-REPORTS.TASK-OVERVIEW.TASK-DURATIONS-TITLE',
+        'values': [{
+            'key': 'averages',
+            'values': [[1, 0], [2, 5], [3, 2]]
+        }, {
+            'key': 'minima',
+            'values': [[1, 0], [2, 0], [3, 0]]
+        }, {
+            'key': 'maxima',
+            'values': [[1, 0], [2, 29], [3, 29]]
+        }],
+        'yAxisType': 'count'
     }]
 };

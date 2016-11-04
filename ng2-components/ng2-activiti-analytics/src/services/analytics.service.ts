@@ -20,7 +20,7 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
-import { Chart, PieChart, TableChart, BarChart, HeatMapChart } from '../models/chart.model';
+import { Chart, PieChart, TableChart, BarChart, HeatMapChart, MultiBarChart } from '../models/chart.model';
 
 @Injectable()
 export class AnalyticsService {
@@ -206,6 +206,8 @@ export class AnalyticsService {
                         elements.push(new TableChart(chartData));
                     } else if (chartData.type === 'barChart') {
                         elements.push(new BarChart(chartData));
+                    } else if (chartData.type === 'multiBarChart') {
+                        elements.push(new MultiBarChart(chartData));
                     }
                 });
 

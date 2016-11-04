@@ -48,6 +48,23 @@ export class AnalyticsComponent implements OnChanges {
 
     reports: any[];
 
+    public barChartOptions: any = {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                },
+                stacked: true
+            }]
+        }
+    };
+
     constructor(private translate: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService) {
         console.log('AnalyticsComponent');
@@ -78,5 +95,16 @@ export class AnalyticsComponent implements OnChanges {
         if (this.reports) {
             this.reports = undefined;
         }
+    }
+
+    public refresh(report): void {
+        /**
+         * (My guess), for Angular to recognize the change in the dataset
+         * it has to change the dataset variable directly,
+         * so one way around it, is to clone the data, change it and then
+         * assign it;
+         */
+        let clone = JSON.parse(JSON.stringify(report));
+        report.datasets = clone.datasets;
     }
 }

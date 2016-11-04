@@ -135,7 +135,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
         it('Should render the Task overview report ', (done) => {
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
-                expect(res.length).toEqual(2);
+                expect(res.length).toEqual(3);
 
                 expect(res[0]).toBeDefined();
                 expect(res[0].type).toEqual('bar');
@@ -165,6 +165,26 @@ describe('Test ng2-activiti-analytics Report ', () => {
                 expect(res[1].datasets[1][4]).toEqual('4.0');
                 expect(res[1].datasets[1][5]).toEqual('5.0');
                 expect(res[1].datasets[1][6]).toEqual('6.0');
+
+                expect(res[2]).toBeDefined();
+                expect(res[2].type).toEqual('multiBar');
+                expect(res[2].labels).toBeDefined();
+                expect(res[2].labels.length).toEqual(3);
+                expect(res[2].labels[0]).toEqual(1);
+                expect(res[2].labels[1]).toEqual(2);
+                expect(res[2].labels[2]).toEqual(3);
+                expect(res[2].datasets[0].label).toEqual('averages');
+                expect(res[2].datasets[0].data[0]).toEqual(0);
+                expect(res[2].datasets[0].data[1]).toEqual(5);
+                expect(res[2].datasets[0].data[2]).toEqual(2);
+                expect(res[2].datasets[1].label).toEqual('minima');
+                expect(res[2].datasets[1].data[0]).toEqual(0);
+                expect(res[2].datasets[1].data[1]).toEqual(0);
+                expect(res[2].datasets[1].data[2]).toEqual(0);
+                expect(res[2].datasets[2].label).toEqual('maxima');
+                expect(res[2].datasets[2].data[0]).toEqual(0);
+                expect(res[2].datasets[2].data[1]).toEqual(29);
+                expect(res[2].datasets[2].data[2]).toEqual(29);
 
                 done();
             });
