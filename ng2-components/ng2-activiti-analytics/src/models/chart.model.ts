@@ -41,6 +41,9 @@ export class Chart {
             case 'barChart':
                 chartType = 'bar';
                 break;
+            case 'multiBarChart':
+                chartType = 'multiBar';
+                break;
             case 'processDefinitionHeatMap':
                 chartType = 'HeatMap';
                 break;
@@ -79,6 +82,7 @@ export class BarChart extends Chart {
     xAxisType: string;
     yAxisType: string;
     options: any = {
+        responsive: true,
         scales: {
             yAxes: [{
                 ticks: {
@@ -87,7 +91,9 @@ export class BarChart extends Chart {
                 }
             }],
             xAxes: [{
-                ticks: {}
+                ticks: {
+                },
+                stacked: false
             }]
         }
     };
@@ -99,12 +105,15 @@ export class BarChart extends Chart {
         this.xAxisType = obj && obj.xAxisType || null;
         this.yAxisType = obj && obj.yAxisType || null;
         this.options.scales.xAxes[0].ticks.callback = this.xAxisTickFormatFunction(this.xAxisType);
+        this.options.scales.yAxes[0].ticks.callback = this.yAxisTickFormatFunction(this.yAxisType);
         obj.values.forEach((params: any) => {
             let dataValue = [];
             params.values.forEach((info: any) => {
                 info.forEach((value: any, index: any) => {
                     if (index % 2 === 0) {
-                        this.labels.push(value);
+                        if (!this.labels.includes(value)) {
+                            this.labels.push(value);
+                        }
                     } else {
                         dataValue.push(value);
                     }
@@ -118,18 +127,57 @@ export class BarChart extends Chart {
 
     xAxisTickFormatFunction = function (xAxisType) {
         return function (value) {
-            if ('date_day' === xAxisType) {
-                return moment(new Date(value)).format('DD');
-            } else if ('date_month' === xAxisType) {
-                return moment(new Date(value)).format('MMMM');
-            } else if ('date_year' === xAxisType) {
-                return moment(new Date(value)).format('YYYY');
+            if (xAxisType !== null && xAxisType !== undefined) {
+                if ('date_day' === xAxisType) {
+                    return moment(new Date(value)).format('DD');
+                } else if ('date_month' === xAxisType) {
+                    return moment(new Date(value)).format('MMMM');
+                } else if ('date_year' === xAxisType) {
+                    return moment(new Date(value)).format('YYYY');
+                }
             }
+            return value;
+        };
+    };
+
+    yAxisTickFormatFunction = function (yAxisType) {
+        return function (value) {
+            if (yAxisType !== null && yAxisType !== undefined) {
+                if ('count' === yAxisType) {
+                    let label = '' + value;
+                    if (label.indexOf('.') !== -1) {
+                        return '';
+                    }
+                }
+            }
+            return value;
         };
     };
 
     hasDatasets() {
         return this.datasets && this.datasets.length > 0 ? true : false;
+    }
+}
+
+export class MultiBarChart extends BarChart {
+    options: any = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                },
+                stacked: false
+            }]
+        }
+    };
+
+    constructor(obj?: any) {
+        super(obj);
     }
 }
 
