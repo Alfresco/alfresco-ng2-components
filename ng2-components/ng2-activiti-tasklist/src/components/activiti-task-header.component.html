@@ -1,14 +1,16 @@
 <div *ngIf="taskDetails">
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col">
-            <span class="activiti-label">{{ 'TASK_DETAILS.LABELS.ASSIGNEE' | translate }}</span>:
-            {{taskDetails.assignee.lastName }}
+            <span class="activiti-task-header__label">{{ 'TASK_DETAILS.LABELS.ASSIGNEE' | translate }}: </span>
+            <span class="activiti-task-header__value">{{taskDetails.assignee.lastName }}</span>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
-            <span class="activiti-label">
-                {{ 'TASK_DETAILS.LABELS.DUE' | translate }}</span>:
-            {{taskDetails?.dueDate ? taskDetails.dueDate : ('TASK_DETAILS.DUE.NONE' |translate) }}
-
+            <span class="activiti-task-header__label">{{ 'TASK_DETAILS.LABELS.DUE' | translate }}: </span>
+            <span class="activiti-task-header__value">{{taskDetails?.dueDate ? taskDetails.dueDate : ('TASK_DETAILS.DUE.NONE' |translate) }}</span>
+        </div>
+        <div *ngIf="formName" class="mdl-cell mdl-cell--4-col">
+            <span class="activiti-task-header__label">{{ 'TASK_DETAILS.LABELS.FORM' | translate }}: </span>
+            <span class="activiti-task-header__value">{{formName}}</span>
         </div>
     </div>
 </div>

@@ -19,8 +19,6 @@ import { Component, Input } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 
-declare let componentHandler: any;
-
 @Component({
     selector: 'activiti-task-header',
     moduleId: module.id,
@@ -30,18 +28,14 @@ declare let componentHandler: any;
 export class ActivitiTaskHeader {
 
     @Input()
+    formName: string = 'No form';
+
+    @Input()
     taskDetails: TaskDetailsModel;
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     */
     constructor(private translate: AlfrescoTranslationService) {
-
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
     }
-
 }

@@ -2,6 +2,10 @@
     width: 100%;
 }
 
-.activiti-label {
-    font-weight: bolder;
+.activiti-task-header__label {
+     font-weight: bold;
+}
+
+.activiti-task-header__value {
+    color: rgb(68,138,255);
 }
