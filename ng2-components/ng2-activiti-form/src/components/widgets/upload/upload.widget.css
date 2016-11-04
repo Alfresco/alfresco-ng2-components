@@ -1,5 +1,6 @@
 .upload-widget {
-    width:100%
+    width:100%;
+    word-break: break-all;
 }
 
 .upload-widget__icon {
@@ -13,7 +14,7 @@
 
 .upload-widget__reset {
     float: left;
-    margin-top: 4px;
+    margin-top: -2px;
 }
 
 .upload-widget__invalid .upload-widget__label {
