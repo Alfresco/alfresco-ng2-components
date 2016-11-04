@@ -10,7 +10,10 @@
                [attr.id]="field.id"
                class="upload-widget__file"
                (change)="onFileChanged($event)">
-        <button *ngIf="hasFile" (click)="reset(file);" class="upload-widget__reset">X</button>
+        <button *ngIf="hasFile" (click)="reset(file);"
+                class="mdl-button mdl-js-button mdl-button--icon upload-widget__reset">
+            <i class="material-icons">highlight_off</i>
+        </button>
     </div>
     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>
