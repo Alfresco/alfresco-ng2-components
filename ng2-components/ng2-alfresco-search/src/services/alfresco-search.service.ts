@@ -32,25 +32,30 @@ export class AlfrescoSearchService {
      * Execute a search against the repository
      *
      * @param term Search term
+     * @param options Additional options passed to the search
      * @returns {Observable<NodePaging>} Search results
      */
-    public getLiveSearchResults(term: string): Observable<any> {
-        return Observable.fromPromise(this.getSearchNodesPromise(term))
+    public getNodeQueryResults(term: string, options?: SearchOptions): Observable<any> {
+        return Observable.fromPromise(this.getQueryNodesPromise(term, options))
             .map(res => <any> res)
             .catch(this.handleError);
     }
 
-    private getSearchNodesPromise(term: string) {
-        let nodeId = '-root-';
-        let opts = {
-            include: ['path'],
-            rootNodeId: nodeId,
-            nodeType: 'cm:content'
-        };
-        return this.authService.getAlfrescoApi().core.searchApi.liveSearchNodes(term, opts);
+    private getQueryNodesPromise(term: string, opts: SearchOptions) {
+        return this.authService.getAlfrescoApi().core.queriesApi.findNodes(term, opts);
     }
 
     private handleError(error: any): Observable<any> {
         return Observable.throw(error || 'Server error');
     }
+}
+
+export interface SearchOptions {
+    skipCount?: number;
+    maxItems?: number;
+    rootNodeId?: string;
+    nodeType?: string;
+    include?: string[];
+    orderBy?: string;
+    fields?: string[];
 }

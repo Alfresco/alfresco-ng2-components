@@ -56,8 +56,8 @@ export var fakeError = {
 
 export var fakeApi = {
     core: {
-        searchApi: {
-            liveSearchNodes: (term, opts) => Promise.resolve(fakeSearch)
+        queriesApi: {
+            findNodes: (term, opts) => Promise.resolve(fakeSearch)
         }
     }
 };

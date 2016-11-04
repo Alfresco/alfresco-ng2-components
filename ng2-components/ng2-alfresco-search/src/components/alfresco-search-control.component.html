@@ -22,8 +22,13 @@
         </div>
     </div>
 </form>
-<alfresco-search-autocomplete #autocomplete *ngIf="autocompleteEnabled"
-                              [searchTerm]="autocompleteSearchTerm" [ngClass]="{active: searchActive, valid: searchValid}"
+<alfresco-search-autocomplete #autocomplete *ngIf="liveSearchEnabled"
+                              [searchTerm]="liveSearchTerm"
+                              [rootNodeId]="liveSearchRoot"
+                              [resultType]="liveSearchResultType"
+                              [resultSort]="liveSearchResultSort"
+                              [maxResults]="liveSearchMaxResults"
+                              [ngClass]="{active: searchActive, valid: searchValid}"
                               (fileSelect)="onFileClicked($event)"
                               (searchFocus)="onAutoCompleteFocus($event)"
                               (scrollBack)="onAutoCompleteReturn($event)"

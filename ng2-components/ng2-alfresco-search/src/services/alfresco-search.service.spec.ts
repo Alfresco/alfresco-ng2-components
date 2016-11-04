@@ -40,23 +40,34 @@ describe('AlfrescoSearchService', () => {
         spyOn(authenticationService, 'getAlfrescoApi').and.returnValue(fakeApi);
     });
 
-    it('should call search API with the correct parameters', (done) => {
+    it('should call search API with no additional options', (done) => {
+        let searchTerm = 'searchTerm63688';
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        service.getNodeQueryResults(searchTerm).subscribe(
+            () => {
+                expect(fakeApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
+                done();
+            }
+        );
+    });
+
+    it('should call search API with additional options', (done) => {
         let searchTerm = 'searchTerm63688', options = {
             include: [ 'path' ],
             rootNodeId: '-root-',
             nodeType: 'cm:content'
         };
-        spyOn(fakeApi.core.searchApi, 'liveSearchNodes').and.returnValue(Promise.resolve(fakeSearch));
-        service.getLiveSearchResults(searchTerm).subscribe(
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        service.getNodeQueryResults(searchTerm, options).subscribe(
             () => {
-                expect(fakeApi.core.searchApi.liveSearchNodes).toHaveBeenCalledWith(searchTerm, options);
+                expect(fakeApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
                 done();
             }
         );
     });
 
     it('should return search results returned from the API', (done) => {
-        service.getLiveSearchResults('').subscribe(
+        service.getNodeQueryResults('').subscribe(
             (res: any) => {
                 expect(res).toBeDefined();
                 expect(res).toEqual(fakeSearch);
@@ -66,8 +77,8 @@ describe('AlfrescoSearchService', () => {
     });
 
     it('should notify errors returned from the API', (done) => {
-        spyOn(fakeApi.core.searchApi, 'liveSearchNodes').and.returnValue(Promise.reject(fakeError));
-        service.getLiveSearchResults('').subscribe(
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(fakeError));
+        service.getNodeQueryResults('').subscribe(
             () => {},
             (res: any) => {
                 expect(res).toBeDefined();
@@ -78,8 +89,8 @@ describe('AlfrescoSearchService', () => {
     });
 
     it('should notify a general error if the API does not return a specific error', (done) => {
-        spyOn(fakeApi.core.searchApi, 'liveSearchNodes').and.returnValue(Promise.reject(null));
-        service.getLiveSearchResults('').subscribe(
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(null));
+        service.getNodeQueryResults('').subscribe(
             () => {},
             (res: any) => {
                 expect(res).toBeDefined();

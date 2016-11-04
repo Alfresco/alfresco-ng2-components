@@ -56,16 +56,29 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     searchControl: FormControl;
 
-    @ViewChild('searchInput', {}) searchInput: ElementRef;
+    @ViewChild('searchInput', {})
+    searchInput: ElementRef;
 
-    @ViewChild('autocomplete')
-    autocompleteComponent: AlfrescoSearchAutocompleteComponent;
-
-    @Input()
-    autocompleteEnabled = true;
+    @ViewChild(AlfrescoSearchAutocompleteComponent)
+    liveSearchComponent: AlfrescoSearchAutocompleteComponent;
 
     @Input()
-    autocompleteSearchTerm = '';
+    liveSearchEnabled: boolean = true;
+
+    @Input()
+    liveSearchTerm: string = '';
+
+    @Input()
+    liveSearchRoot: string = '-root-';
+
+    @Input()
+    liveSearchResultType: string = 'cm:content';
+
+    @Input()
+    liveSearchResultSort: string = null;
+
+    @Input()
+    liveSearchMaxResults: number = 5;
 
     searchActive = false;
 
@@ -99,7 +112,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     private onSearchTermChange(value: string): void {
         this.setAutoCompleteDisplayed(true);
-        this.autocompleteSearchTerm = value;
+        this.liveSearchTerm = value;
         this.searchControl.setValue(value, true);
         this.searchValid = this.searchControl.valid;
         this.searchChange.emit({
@@ -195,7 +208,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     onArrowDown(): void {
         if (this.isAutoCompleteDisplayed()) {
-            this.autocompleteComponent.focusResult();
+            this.liveSearchComponent.focusResult();
         } else {
             this.setAutoCompleteDisplayed(true);
         }
