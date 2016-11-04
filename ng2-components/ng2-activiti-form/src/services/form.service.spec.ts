@@ -30,7 +30,7 @@ declare let jasmine: any;
 
 describe('FormService', () => {
 
-    let responseBody: any, service: FormService;
+    let responseBody: any, service: FormService, apiService: AlfrescoApiService;
 
     beforeAll(() => {
         TestBed.configureTestingModule({
@@ -44,6 +44,7 @@ describe('FormService', () => {
             ]
         });
         service = TestBed.get(FormService);
+        apiService = TestBed.get(AlfrescoApiService);
     });
 
     beforeEach(() => {
@@ -230,18 +231,18 @@ describe('FormService', () => {
     });
 
     it('should get start form definition by process definition id', (done) => {
-        responseBody = {id: 1};
+
+        let processApiSpy = jasmine.createSpyObj(['getProcessDefinitionStartForm']);
+        spyOn(apiService, 'getInstance').and.returnValue({
+            activiti: {
+                processApi: processApiSpy
+            }
+        });
+        processApiSpy.getProcessDefinitionStartForm.and.returnValue(Promise.resolve({ id: '1' }));
 
         service.getStartFormDefinition('myprocess:1').subscribe(result => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('/process-definitions/myprocess%3A1/start-form')).toBe(true);
-            expect(result.id).toEqual(responseBody.id);
+            expect(processApiSpy.getProcessDefinitionStartForm).toHaveBeenCalledWith('myprocess:1');
             done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200,
-            contentType: 'application/json',
-            responseText: JSON.stringify(responseBody)
         });
     });
 
