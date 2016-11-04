@@ -21,6 +21,7 @@ import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-start-process-instance',
@@ -68,6 +69,9 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
         this.dialog.nativeElement.showModal();
     }
 
