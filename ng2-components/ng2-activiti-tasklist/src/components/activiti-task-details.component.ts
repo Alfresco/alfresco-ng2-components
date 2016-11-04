@@ -20,10 +20,8 @@ import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-a
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
-import { FormModel, FormService } from 'ng2-activiti-form';
+import { FormService, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
-
-declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-task-details',
@@ -61,23 +59,22 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     showFormRefreshButton: boolean = true;
 
     @Output()
-    formSaved = new EventEmitter();
+    formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
-    formCompleted = new EventEmitter();
+    formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
-    formLoaded = new EventEmitter();
+    formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
-    onError = new EventEmitter();
+    onError: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    executeOutcome = new EventEmitter();
+    executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
     taskDetails: TaskDetailsModel;
-
-    taskForm: FormModel;
+    taskFormName: string = null;
 
     taskPeople: User[] = [];
 
@@ -142,8 +139,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      * @param taskId
      */
     loadDetails(taskId: string) {
-        this.taskForm = null;
         this.taskPeople = [];
+        this.taskFormName = null;
         if (taskId) {
             this.activitiTaskList.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
@@ -194,61 +191,34 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      */
     onComplete() {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
-            (res) => {
-                console.log(res);
-                this.formCompleted.emit(res);
-            }
+            (res) => this.formCompleted.emit(null)
         );
     }
 
-    /**
-     * Emit the form saved event
-     * @param data
-     */
-    formSavedEmitter(data: any) {
-        this.formSaved.emit(data);
+    onFormSaved(form: FormModel) {
+        this.formSaved.emit(form);
     }
 
-    /**
-     * Emit the form completed event
-     * @param data
-     */
-    formCompletedEmitter(data: any) {
-        this.formCompleted.emit(data);
-        if (this.isShowNextTask()) {
+    onFormCompleted(form: FormModel) {
+        this.formCompleted.emit(form);
+        if (this.showNextTask) {
             this.loadNextTask(this.taskDetails.processInstanceId, this.taskDetails.processDefinitionId);
         }
     }
 
-    /**
-     * Emit the form loaded event
-     * @param data
-     */
-    formLoadedEmitter(data: any) {
-        this.formLoaded.emit(data);
+    onFormLoaded(form: FormModel) {
+        this.taskFormName = null;
+        if (form && form.name) {
+            this.taskFormName = form.name;
+        }
+        this.formLoaded.emit(form);
     }
 
-    /**
-     * Emit the error event of the form
-     * @param data
-     */
-    onErrorEmitter(err: any) {
-        this.onError.emit(err);
+    onFormError(error: any) {
+        this.onError.emit(error);
     }
 
-    /**
-     * Emit the execute outcome of the form
-     * @param data
-     */
-    executeOutcomeEmitter(data: any) {
-        this.executeOutcome.emit(data);
-    }
-
-    /**
-     * Return the showNexTask value
-     * @returns {boolean}
-     */
-    isShowNextTask(): boolean {
-        return this.showNextTask;
+    onExecuteFormOutcome(event: FormOutcomeEvent) {
+        this.executeOutcome.emit(event);
     }
 }

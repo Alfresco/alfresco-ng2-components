@@ -8,6 +8,7 @@
         "node_modules/ng2-alfresco-upload/dist/**/*.{html,css,js}",
         "node_modules/ng2-alfresco-viewer/dist/**/*.{html,css,js}",
         "node_modules/ng2-alfresco-webscript/dist/**/*.{html,css,js}",
-        "node_modules/ng2-activiti-form/dist/**/*.{html,css,js}"
+        "node_modules/ng2-activiti-form/dist/**/*.{html,css,js}",
+        "node_modules/ng2-activiti-tasklist/dist/**/*.{html,css,js}"
     ]
 }
