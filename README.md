@@ -93,8 +93,7 @@ All components are supported in the below browsers:
 |Chrome     	   |Latest       	|
 |Safari (OS X)     |9.x          	|
 |Firefox*    	   |Latest       	|
-|Edge       	   |14     	        |
-|Edge              |13           	|
+|Edge       	   |13, 14     	    |
 |Internet Explorer |11     	        |
 
 *Concerning Alfresco Upload Component, folder upload currently not supported [firefox known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880 ) 
