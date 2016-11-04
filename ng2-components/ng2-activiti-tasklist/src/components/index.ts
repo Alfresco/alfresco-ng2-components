@@ -25,3 +25,4 @@ export * from './no-task-detail-template.component';
 export * from './activiti-filters.component';
 export * from './activiti-task-details.component';
 export * from './activiti-start-task.component';
+export * from './activiti-people-search.component';

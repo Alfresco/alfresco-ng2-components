@@ -182,7 +182,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     }
 
     public convertNumber(value: string): number {
-        return parseInt(value, 10);
+        return value != null ? parseInt(value, 10) : 0;
     }
 
     convertFormValuesToReportParamQuery(values: any): ReportQuery {

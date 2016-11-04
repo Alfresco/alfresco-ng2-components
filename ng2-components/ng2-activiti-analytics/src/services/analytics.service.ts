@@ -68,7 +68,11 @@ export class AnalyticsService {
         if (type === 'status') {
             return this.getProcessStatusValues();
         } else if (type === 'processDefinition') {
-            return this.getProcessDefinitionsValues(appId);
+            if (appId === null || appId === undefined) {
+                return this.getProcessDefinitionsValuesNoApp();
+            } else {
+                return this.getProcessDefinitionsValues(appId);
+            }
         } else if (type === 'dateInterval') {
             return this.getDateIntervalValues();
         } else if (type === 'task') {
@@ -122,13 +126,26 @@ export class AnalyticsService {
         });
     }
 
+    getProcessDefinitionsValuesNoApp(): Observable<any> {
+        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/process-definitions`;
+        let options = this.getRequestOptions();
+        return this.http
+            .get(url, options)
+            .map((res: any) => {
+                let paramOptions: ParameterValueModel[] = [];
+                let body = res.json();
+                body.forEach((opt) => {
+                    paramOptions.push(new ParameterValueModel(opt));
+                });
+                return paramOptions;
+            }).catch(this.handleError);
+    }
+
     getProcessDefinitionsValues(appId: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions`;
         let params: URLSearchParams;
-        if (appId) {
-            params = new URLSearchParams();
-            params.set('appDefinitionId', appId);
-        }
+        params = new URLSearchParams();
+        params.set('appDefinitionId', appId);
         let options = this.getRequestOptions(params);
         return this.http
             .get(url, options)
