@@ -624,7 +624,7 @@ describe('DisplayValueWidget', () => {
         let row = <DynamicTableRow> { value: { key: value } };
         let column = <DynamicTableColumn> { id: 'key', type: 'Date' };
 
-        expect(widget.getCellValue(row, column)).toBe('04-10-2016');
+        expect(widget.getCellValue(row, column)).toBe('4-10-2016');
     });
 
     it('should fallback to empty cell value for date', () => {

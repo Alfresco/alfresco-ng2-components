@@ -176,7 +176,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
         if (column.type === 'Date') {
             if (result) {
-                return moment(result.split('T')[0], 'YYYY-MM-DD').format('DD-MM-YYYY');
+                return moment(result.split('T')[0], 'YYYY-MM-DD').format('D-M-YYYY');
             }
         }
 
