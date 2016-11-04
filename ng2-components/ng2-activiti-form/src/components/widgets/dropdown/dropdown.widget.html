@@ -2,6 +2,7 @@
      [class.dropdown-widget__invalid]="!field.isValid">
     <label class="dropdown-widget__label" [attr.for]="field.id">{{field.name}}</label>
     <select class="dropdown-widget__select"
+            [attr.id]="field.id"
             [(ngModel)]="field.value"
             (ngModelChange)="checkVisibility(field)">
         <option *ngFor="let opt of field.options" [value]="opt.id">{{opt.name}}</option>
