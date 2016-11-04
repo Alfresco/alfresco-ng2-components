@@ -33,6 +33,11 @@
     },
     "CHECKLIST": {
       "NONE": "No checklist."
+    },
+    "ERROR": {
+      "TITLE": "Something went wrong",
+      "DESCRIPTION": "Could not complete the specified action. Please try again or check that you have permission.",
+      "CLOSE": "Close"
     }
   },
   "TASK_FILTERS": {

@@ -40,4 +40,11 @@
     <button type="button" class="mdl-button" *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
         {{ 'TASK_DETAILS.BUTTON.COMPLETE' | translate }}
     </button>
+    <dialog class="mdl-dialog error-dialog" #errorDialog>
+        <div class="mdl-dialog__content">
+            <h3>{{'TASK_DETAILS.ERROR.TITLE'|translate}}</h3>
+            <p>{{'TASK_DETAILS.ERROR.DESCRIPTION'|translate}}</p>
+            <button type="button" class="mdl-button" (click)="closeErrorDialog()">{{'TASK_DETAILS.ERROR.CLOSE'|translate}}</button>
+        </div>
+    </dialog>
 </div>

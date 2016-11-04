@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges, DebugElement } from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -36,6 +36,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @ViewChild('activitichecklist')
     activitichecklist: any;
+
+    @ViewChild('errorDialog')
+    errorDialog: DebugElement;
 
     @Input()
     taskId: string;
@@ -215,10 +218,15 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     }
 
     onFormError(error: any) {
+        this.errorDialog.nativeElement.showModal();
         this.onError.emit(error);
     }
 
     onExecuteFormOutcome(event: FormOutcomeEvent) {
         this.executeOutcome.emit(event);
+    }
+
+    closeErrorDialog(): void {
+        this.errorDialog.nativeElement.close();
     }
 }
