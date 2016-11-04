@@ -1,65 +1,74 @@
 <div id="userinfo_container">
-    <span id="ecm_username" *ngIf="ecmUser">{{ecmUser.firstName || ecmUser.lastName}}</span>
-    <span id="bpm_username" *ngIf="bpmUser && !ecmUser">
-        {{ formatValue(bpmUser.firstName) ||
-           formatValue(bpmUser.lastName)  ||
-           formatValue(bpmUser.fullname) }}
-    </span>
-    <div *ngIf="ecmUser || bpmUser" class="button-profile" id="user-profile" data-automation-id="user-profile">
-                <img id="logged-user-img"
-                     [src]="getUserAvatar()"
-                     class="profile-image"/>
+    <div class="button-profile" id="user-profile" data-automation-id="user-profile">
+        <img id="logged-user-img"
+             [src]="getUserAvatar()"
+             (error)="onImageLoadingError($event)"
+             class="profile-image"/>
     </div>
-    <div *ngIf="ecmUser || bpmUser" id="user-profile-lists" class="user-profile-list-mdl
+    <div id="user-profile-lists" class="user-profile-list-mdl
                 mdl-menu mdl-menu--bottom-right
                 mdl-js-menu mdl-js-ripple-effect"
-                for="user-profile">
-            <ul class='detail-user-profile-list-mdl mdl-list'>
-                <div id="ecm-user-detail" *ngIf="ecmUser">
-                    <hr class="title-start">
-                    <span id="ecm_title" class="header-profile"><b>ECM</b></span>
-                    <li class="mdl-list__item mdl-list__item--two-line">
+         for="user-profile" (click)="stopClosing($event)">
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect menu-container__items">
+            <div class="mdl-tabs__tab-bar" [hidden]="!(ecmUser && bpmUser)">
+                <a href="#ecm-panel" class="mdl-tabs__tab is-active">ECM</a>
+                <a href="#bpm-panel" class="mdl-tabs__tab">BPM</a>
+            </div>
+            <div class="mdl-tabs__panel" [class.is-active]="ecmUser?true:false" id="ecm-panel">
+                <div class="detail-user-profile-list-mdl mdl-list" *ngIf="ecmUser">
+                    <div class="demo-card-wide mdl-card">
+                        <div class="card-title__option mdl-card__title"
+                             [style.background-image]="'url(' + baseComponentPath + '/../img/orangeBanner.png)'">
+                            <img class="profile-picture"
+                                 (error)="onImageLoadingError($event)"
+                                 [src]="getEcmUserAvatar()"/>
+                            <h2 class="mdl-card__title-text">{{getUserNameHeaderFor('ECM')}}</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <li class="mdl-list__item mdl-list__item--two-line">
                         <span class="mdl-list__item-primary-content">
-                          <i class="mdl-list__item-avatar">
-                              <img id="ecm-user-detail-image"
-                                   [src]="getEcmUserAvatar()"
-                                   class="profile-image"/>
-                          </i>
                           <span id="ecm-full-name" class="truncate-long-names">
-                              {{ecmUser.firstName}} {{ecmUser.lastName}}
+                              {{ formatValue(ecmUser.firstName) }} {{ formatValue(ecmUser.lastName) }}
                           </span>
-                          <span  id="ecm-email" class="mdl-list__item-sub-title">{{ecmUser.email}}</span>
+                          <span id="ecm-email" class="mdl-list__item-sub-title">{{ecmUser.email}}</span>
                         </span>
-                        <span id="ecm-job-title" class="mdl-list__item-secondary-content custom-role-style">
-                            <span class="role-label-user">Job Role</span>
-                            {{ ecmUser.jobTitle ? ecmUser.jobTitle : 'N/A' }}
+                                <span id="ecm-tenant" class="mdl-list__item-secondary-content custom-role-style">
+                            <span class="role-label-user">Job Title</span>
+                            {{ecmUser.jobTitle}}
                         </span>
-                    </li>
-                    <br>
+                            </li>
+                        </div>
+                    </div>
                 </div>
-                <div id="bpm-user-detail" *ngIf="bpmUser">
-                    <hr class="title-start">
-                    <span  id="bpm_title" class="header-profile"><b>BPM</b></span>
-                    <li class="mdl-list__item mdl-list__item--two-line">
+            </div>
+            <div  class="mdl-tabs__panel" [class.is-active]="bpmUser && !ecmUser?true:false" id="bpm-panel">
+                <div class="detail-user-profile-list-mdl mdl-list" *ngIf="bpmUser">
+                    <div class="demo-card-wide mdl-card">
+                        <div class="card-title__option mdl-card__title"
+                             [style.background-image]="'url(' + baseComponentPath + '/../img/blueBanner.png)'">
+                            <img class="profile-picture"
+                                 (error)="onImageLoadingError($event)"
+                                 [src]="getEcmUserAvatar()"/>
+                            <h2 class="mdl-card__title-text">{{getUserNameHeaderFor('BPM')}}</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                            <li class="mdl-list__item mdl-list__item--two-line">
                         <span class="mdl-list__item-primary-content">
-                          <i class="mdl-list__item-avatar">
-                              <img id="bpm-user-detail-image"
-                                   [src]="getBpmUserAvatar()"
-                                   class="profile-image"/>
-                          </i>
-                          <span  id="bpm-full-name" class="truncate-long-names">
+                          <span id="ecm-full-name" class="truncate-long-names">
                               {{ formatValue(bpmUser.firstName) }} {{ formatValue(bpmUser.lastName) }}
                           </span>
-                          <span id="bpm-email" class="mdl-list__item-sub-title">{{bpmUser.email}}</span>
+                          <span id="ecm-email" class="mdl-list__item-sub-title">{{bpmUser.email}}</span>
                         </span>
-                        <span  id="bpm-tenant" class="mdl-list__item-secondary-content custom-role-style">
-                            <span class="role-label-user">Tenant</span>
+                                <span id="ecm-tenant" class="mdl-list__item-secondary-content custom-role-style">
+                            <span class="role-label-user">Job Title</span>
                             {{bpmUser.tenantName}}
                         </span>
-                    </li>
+                            </li>
+                        </div>
+                    </div>
                 </div>
-            </ul>
+            </div>
+        </div>
     </div>
+
 </div>
-
-

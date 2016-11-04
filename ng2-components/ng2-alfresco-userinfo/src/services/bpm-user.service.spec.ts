@@ -25,7 +25,7 @@ declare let jasmine: any;
 
 describe('Bpm User service', () => {
 
-    let service, injector, authService;
+    let service, injector, authService, apiService;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
@@ -39,6 +39,7 @@ describe('Bpm User service', () => {
     beforeEach(() => {
         service = injector.get(BpmUserService);
         authService = injector.get(AlfrescoAuthenticationService);
+        apiService =  injector.get(AlfrescoApiService);
         jasmine.Ajax.install();
     });
 
@@ -47,7 +48,7 @@ describe('Bpm User service', () => {
     });
 
     it('can instantiate service with authorization', () => {
-        let serviceTest = new BpmUserService(authService);
+        let serviceTest = new BpmUserService(authService, apiService);
 
         expect(serviceTest instanceof BpmUserService).toBe(true, 'new service should be ok');
     });

@@ -61,12 +61,30 @@ export class UserInfoComponent implements OnInit {
                 .subscribe((res) => {
                     this.bpmUser = <BpmUserModel> res;
                 });
-            this.bpmUserService.getCurrentUserProfileImage()
-                .subscribe(
-                    (res) => {
-                        this.bpmUserImage = res;
-                    }
-                );
+            this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+        }
+    }
+
+    onImageLoadingError(event) {
+        if (event) {
+            let element = <any> event.target;
+            element.src = this.anonymousImageUrl;
+        }
+    }
+
+    stopClosing(event) {
+        event.stopPropagation();
+    }
+
+    getUserNameHeaderFor(env: string) {
+        if (this.ecmUser && env === 'ECM') {
+            return this.ecmUser.firstName || this.ecmUser.lastName;
+        }
+
+        if (this.bpmUser && env === 'BPM') {
+            return this.formatValue(this.bpmUser.firstName) ||
+                this.formatValue(this.bpmUser.lastName) ||
+                this.formatValue(this.bpmUser.fullname);
         }
     }
 
@@ -75,15 +93,15 @@ export class UserInfoComponent implements OnInit {
     }
 
     getUserAvatar() {
-        return this.ecmUserImage || this.bpmUserImage || this.anonymousImageUrl;
+        return this.ecmUserImage || this.bpmUserImage;
     }
 
     getBpmUserAvatar() {
-        return this.bpmUserImage || this.anonymousImageUrl;
+        return this.bpmUserImage;
     }
 
     getEcmUserAvatar() {
-        return this.ecmUserImage || this.anonymousImageUrl;
+        return this.ecmUserImage;
     }
 
     formatValue(value: string) {
