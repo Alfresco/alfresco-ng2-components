@@ -5,6 +5,7 @@
     <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
             <select name="processDefinition" [(ngModel)]="processDefinitionId" id="processDefinition">
+                <option value="" selected="selected">{{'START_PROCESS.DIALOG.TYPE_PLACEHOLDER'|translate}}</option>
                 <option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
                     {{processDef.name}}
                 </option>

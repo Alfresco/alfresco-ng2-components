@@ -80,13 +80,13 @@ describe('ActivitiStartProcessButton', () => {
     it('should display the correct number of processes in the select list', () => {
         fixture.detectChanges();
         de = fixture.debugElement.query(By.css('select'));
-        expect(de.children.length).toBe(2);
+        expect(de.children.length).toBe(3);
     });
 
     it('should display the correct process def details', (done) => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            de = fixture.debugElement.query(By.css('select option'));
+            de = fixture.debugElement.queryAll(By.css('select option'))[1];
             let optionEl: HTMLOptionElement = de.nativeElement;
             expect(optionEl.value).toBe('my:process1');
             expect(optionEl.textContent.trim()).toBe('My Process 1');
