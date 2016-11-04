@@ -173,7 +173,7 @@ bootstrap(SearchDemo, [
 
 **searchChange**: Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object. If the term is at less than three characters in length then the term is truncated to an empty string.<br />
 **searchSubmit**: Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object.<br />
-**fileSelect**: Emitted when a file item from the list of find-as-you-type results is selected
+**fileSelect**: Emitted when a file item from the list of find-as-you-type results is selected<br />
 **expand**: Emitted when the expanded state of the control changes based on focus events and the content of the input control
 
 #### Options
@@ -335,7 +335,8 @@ bootstrap(SearchDemo, [
 
 #### Events
 
-None
+**preview**: Emitted when a file result is clicked/selected<br />
+**resultsLoad**: Emitted when search results have fully loaded
 
 #### Options
 
