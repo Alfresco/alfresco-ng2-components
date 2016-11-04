@@ -160,21 +160,6 @@ export class BarChart extends Chart {
 }
 
 export class MultiBarChart extends BarChart {
-    options: any = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1
-                }
-            }],
-            xAxes: [{
-                ticks: {
-                },
-                stacked: false
-            }]
-        }
-    };
 
     constructor(obj?: any) {
         super(obj);
