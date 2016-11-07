@@ -71,6 +71,7 @@ export class DateRangeWidget extends WidgetComponent {
 
     ngOnInit() {
         this.initForm();
+        this.fixDatePickerAccessibility();
         this.initSartDateDialog();
         this.initEndDateDialog();
     }
@@ -97,6 +98,36 @@ export class DateRangeWidget extends WidgetComponent {
         startDateButton.addEventListener('click', () => {
             this.dialogStart.toggle();
         });
+    }
+
+    private fixDatePickerAccessibility() {
+        let left: any = document.querySelector('#mddtp-date__left');
+        if (left) {
+            left.appendChild(this.createCustomElement('date left'));
+        }
+
+        let right: any = document.querySelector('#mddtp-date__right');
+        if (right) {
+            right.appendChild(this.createCustomElement('date right'));
+        }
+
+        let cancel: any = document.querySelector('#mddtp-date__cancel');
+        if (cancel) {
+            cancel.appendChild(this.createCustomElement('date cancel'));
+        }
+
+        let ok: any = document.querySelector('#mddtp-date__ok');
+        if (ok) {
+            ok.appendChild(this.createCustomElement('date ok'));
+        }
+    }
+
+    private createCustomElement(text: string): HTMLElement {
+        let span = document.createElement('span');
+        span.style.visibility = 'hidden';
+        let rightSpanText = document.createTextNode(text);
+        span.appendChild(rightSpanText);
+        return span;
     }
 
     initEndDateDialog() {
