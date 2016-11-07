@@ -38,42 +38,65 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 
 ## Install
 
-```sh
-npm install ng2-alfresco-login material-design-icons material-design-lite --save
-```
+Follow the 3 steps below:
 
-Also make sure you include these dependencies in your .html page:
+1. Npm
 
-```html
+    ```sh
+    npm install ng2-alfresco-login --save
+    ```
 
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+2. Html
 
-```
+    Include these dependencies in your index.html page:
 
-*If you need to have a large cross-browser compatibility make sure you include the polyfill necessary to Angular 2. More info at this
-[page](/BROWSER-SUPPORT.md) .*
+    ```html
 
-## Dependencies
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-The following component needs to be added to your systemjs.config.js :
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-- ng2-translate
-- ng2-alfresco-core
-- ng2-alfresco-login
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-Please refer to the following example to have an idea of how your systemjs.config should look this [systemjs.config.js](demo/systemjs
-.config.js) .
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+
+     <!-- Modules  -->
+     <script src="node_modules/zone.js/dist/zone.js"></script>
+     <script src="node_modules/reflect-metadata/Reflect.js"></script>
+     <script src="node_modules/systemjs/dist/system.src.js"></script>
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - ng2-alfresco-core
+    - ng2-alfresco-login
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage
+
+This component allow to authenticate to Alfresco One and Alfresco Activiti.
+
 
 ```html
 <alfresco-login [providers]="'ALL'"></alfresco-login>
 ```
 
-Example of an App that use Alfresco login component :
+Usage example of this component :
 
 **main.ts**
 ```ts
@@ -133,17 +156,17 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `onSuccess` | The event is emitted when the login is done |
 | `onError` | The event is emitted when the login fails |
 
-Attribute     |   Description | 
----           | ---         |
-`onSuccess`         | The event is emitted when the login is done         |
-`onError`         | The event is emitted when the login fails      |
+| Name |   Description |
+| --- | --- |
+| `onSuccess` | The event is emitted when the login is done |
+| `onError` | The event is emitted when the login fails |
 
 #### Options
 
-Attribute     | Options     | Default      | Description | Mandatory
----           | ---         | ---          | ---         | ---
-`providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL | 
-`disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call | 
+| Name     | Options     | Default      | Description | Mandatory
+| ---           | ---         | ---          | ---         | ---
+| `providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL |
+| `disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call |
 
  
 ## Custom logo and background

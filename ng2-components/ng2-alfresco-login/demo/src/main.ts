@@ -29,6 +29,7 @@ import { LoginModule } from 'ng2-alfresco-login';
        ECM Host:  <input id="ecmHost" type="text" size="48" (change)="updateEcmHost()" [(ngModel)]="ecmHost"><br>
        BPM Host:  <input id="bpmHost" type="text" size="48" (change)="updateBpmHost()" [(ngModel)]="bpmHost"><br>
        <div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 120px; z-index: 1;">
+
         <p style="width:120px;margin: 20px;">
         <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
             <input type="checkbox" id="switch1" class="mdl-switch__input" checked
@@ -130,7 +131,6 @@ export class AppComponent {
     declarations: [AppComponent],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
 
 platformBrowserDynamic().bootstrapModule(AppModule);

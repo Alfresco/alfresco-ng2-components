@@ -38,46 +38,69 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 
 ## Install
 
-```sh
-npm install ng2-activiti-analytics ng2-charts chart.js moment md-date-time-picker material-design-icons material-design-lite --save
-```
+Follow the 3 steps below:
 
-Also make sure you include these dependencies in your `index.html` file:
+1. Npm
 
-```html
+    ```sh
+    npm install ng2-activiti-analytics --save
+    ```
 
-<!-- Charts -->
-<script src="node_modules/chart.js/dist/Chart.bundle.min.js"></script>
+2. Html
 
-<!-- Moment js -->
-<script src="node_modules/moment/min/moment.min.js"></script>
+    Include these dependencies in your index.html page:
 
-<!-- Date picker -->
-<script src="node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js"></script>
+    ```html
 
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+    <!-- Charts -->
+    <script src="node_modules/chart.js/dist/Chart.bundle.min.js"></script>
+    <script src="node_modules/raphael/raphael.min.js"></script>
 
-```
+    <!-- Moment js -->
+    <script src="node_modules/moment/min/moment.min.js"></script>
 
-*If you need to have a large cross-browser compatibility make sure you include the polyfill necessary to Angular 2. More info at this
-[page](/BROWSER-SUPPORT.md) .*
+    <!-- Date picker -->
+    <script src="node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js"></script>
+    <script src="node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js"></script>
+    <link rel="stylesheet" href="node_modules/md-date-time-picker/dist/css/mdDateTimePicker.css" media="all">
 
-## Dependencies
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-The following component needs to be added to your systemjs.config.js :
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-- ng2-charts
-- ng2-translate
-- alfresco-js-api
-- ng2-alfresco-core
-- ng2-activiti-diagrams
-- ng2-activiti-analytics
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-Please refer to the following example to have an idea of how your systemjs.config should look [systemjs.config.js](demo/systemjs
-.config.js) .
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-charts
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-activiti-diagrams
+    - ng2-activiti-analytics
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage example Activiti Analytics List
 
@@ -91,6 +114,12 @@ Example of an App that use Activiti Analytics List component :
 
 **main.ts**
 ```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AnalyticsModule } from 'ng2-activiti-analytics';
 
 @Component({
     selector: 'activiti-analytics-demo',
@@ -106,6 +135,17 @@ Example of an App that use Activiti Analytics List component :
 
 export class AnalyticsDemoComponent {
 
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+    }
 }
 
 @NgModule({
@@ -149,13 +189,19 @@ Example of an App that use Activiti Analytics component :
 **main.ts**
 ```ts
 
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AnalyticsModule } from 'ng2-activiti-analytics';
+
 @Component({
     selector: 'activiti-analytics-demo',
     template: `
     <div class="page-content">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <activiti-analytics [appId]="123" *ngIf="report" [reportId]="123"></activiti-analytics>
+                <activiti-analytics [appId]="1001" [reportId]="2006"></activiti-analytics>
             </div>
         </div>
     </div>`
@@ -163,6 +209,17 @@ Example of an App that use Activiti Analytics component :
 
 export class AnalyticsDemoComponent {
 
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+    }
 }
 
 @NgModule({

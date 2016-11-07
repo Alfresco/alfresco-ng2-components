@@ -1,4 +1,35 @@
 # Activiti Diagrams Component for Angular 2
+<p>
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
+    Status' />
+  </a>
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+  </a>
+  <a href='https://www.npmjs.com/package/ng2-activiti-diagrams'>
+    <img src='https://img.shields.io/npm/dt/ng2-activiti-diagrams.svg' alt='npm downloads' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://angular.io/'>
+     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
+  </a>
+  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
+     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+</p>
 
 ## Prerequisites
 
@@ -7,70 +38,135 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 
 ## Install
 
-```sh
-npm install --save ng2-activiti-diagrams
-```
+Follow the 3 steps below:
 
+1. Npm
 
-### Dependencies
+    ```sh
+    npm install ng2-activiti-diagrams --save
+    ```
 
-Add the following dependency to your index.html:
+2. Html
 
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+    Include these dependencies in your index.html page:
 
-The following component needs to be added to your `systemjs.config.js` file: 
+    ```html
 
-- [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core)
-
-#### raphael
-
-```sh
-npm install raphael --save
-```
-
-Also make sure you include these dependencies in your `index.html` file:
-
-```html
+    <!-- Raphael -->
     <script src="node_modules/raphael/raphael.min.js"></script>
-```
+    <!-- Diagrams -->
+    <script src="node_modules/ng2-activiti-diagrams/assets/Polyline.js"></script>
 
-#### Material Design Lite
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-The style of this component is based on [material design](https://getmdl.io/), so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-Also make sure you include these dependencies in your `index.html` file:
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translat
+    - ng2-alfresco-core
+    - ng2-activiti-diagrams
+    - alfresco-js-api
+    - raphael
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage example Activiti Diagrams
-The component shows the diagram of the input process.
+
+This component shows the diagram of a process.
+
 ```html
 <activiti-diagrams [processDefinitionId]="processDefinitionId"></activiti-diagrams>
 ```
 
-#### Events
-**onSuccess**: The event is emitted when the diagrams element are loaded
+Usage example of this component :
 
-**onError**: The event is emitted when the an error occur during the loading
+**main.ts**
+```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { DiagramsModule } from 'ng2-activiti-diagrams';
+
+@Component({
+    selector: 'activiti-diagrams-demo',
+    template: `<activiti-diagram [processDefinitionId]="'HealthCareExpressVisitationLog:10:27642'"></activiti-diagram>`
+})
+
+export class DiagramDemoComponent {
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DiagramsModule
+    ],
+    declarations: [ DiagramDemoComponent ],
+    bootstrap:    [ DiagramDemoComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+```
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| `onSuccess` | The event is emitted when the diagrams element are loaded |
+| `onError` | The event is emitted when the an error occur during the loading |
 
 #### Options
-**metricPercentages** The array that contains the percentage of the time for each element
+
+| Name | Description |
+| --- | --- |
+| `metricPercentage` | The array that contains the percentage of the time for each element |
 
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -83,7 +179,7 @@ npm run build
 $ npm run build:w
 ```
 
-### Running unit tests
+## Running unit tests
 
 ```sh
 npm test
@@ -103,3 +199,17 @@ before performing unit testing.
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)
