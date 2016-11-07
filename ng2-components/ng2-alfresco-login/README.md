@@ -1,4 +1,4 @@
-# Alfresco Login Component for Angular 2
+# Alfresco Core Component for Angular 2
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
