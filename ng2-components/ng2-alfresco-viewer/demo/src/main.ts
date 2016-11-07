@@ -22,7 +22,7 @@ import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } fr
 import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `
                <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
                <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>

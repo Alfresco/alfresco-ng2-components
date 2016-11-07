@@ -24,7 +24,7 @@ import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Component({
-  selector: 'my-app',
+  selector: 'alfresco-app-demo',
   template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
                <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
                <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>

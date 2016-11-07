@@ -30,7 +30,7 @@ import {
 } from 'ng2-alfresco-datatable';
 
 @Component({
-    selector: 'alfresco-datatable-demo',
+    selector: 'alfresco-app-demo',
     template: `
         <div class="container">
             <div class="p-10">

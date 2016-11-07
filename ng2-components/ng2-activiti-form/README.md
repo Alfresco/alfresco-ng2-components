@@ -1,72 +1,155 @@
-# Alfresco Bpm Form component for Angular 2
+# Alfresco Login Component for Angular 2
+<p>
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
+    Status' />
+  </a>
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+  </a>
+  <a href='https://www.npmjs.com/package/ng2-activiti-form'>
+    <img src='https://img.shields.io/npm/dtng2-activiti-form.svg' alt='npm downloads' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://angular.io/'>
+     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
+  </a>
+  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
+     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+</p>
 
 ## Prerequisites
 
-Before you start using this development framework, make sure you have installed all required software and done all the 
+Before you start using this development framework, make sure you have installed all required software and done all the
 necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
-```sh
-npm install --save ng2-activiti-form
-```
+Follow the 3 steps below:
 
-### Dependencies
+1. Npm
 
-Add the following dependency to your index.html:
+    ```sh
+    npm install ng2-activiti-form --save
+    ```
 
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+2. Html
 
-You must separately install the following libraries for your application:
- 
-- [ng2-translate](https://github.com/ocombe/ng2-translate)
-- [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core)
+    Include these dependencies in your index.html page:
 
-```sh
-npm install --save ng2-translate ng2-alfresco-core
-```
+    ```html
 
-#### Material Design Lite
+    <!-- Moment js -->
+    <script src="node_modules/moment/min/moment.min.js"></script>
 
-The style of this component is based on [material design](https://getmdl.io/), so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    <!-- Date picker -->
+    <script src="node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js"></script>
+    <script src="node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js"></script>
+    <link rel="stylesheet" href="node_modules/md-date-time-picker/dist/css/mdDateTimePicker.css" media="all">
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-Also make sure you include these dependencies in your `index.html` file:
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
-#### Dialogs Polyfill
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-To make the dialog working with all the browser you have to add the dialog polyfill to you project:
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
 
-```sh
-npm install --save dialog-polyfill
-```
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    ```
 
-Also make sure you include these dependencies in your `index.html` file:
+3. SystemJs
 
-```html
-<!-- Polyfill(s) for dialogs -->
-<script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
-<link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
-<style>
-._dialog_overlay {
-    position: static !important;
-}
-</style>
-```
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - ng2-alfresco-core
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage examples
+
+The component shows a Form from Activiti
+
+```html
+<analytics-report-list></analytics-report-list>
+```
+
+Example of an App that use Activiti Analytics List component :
+
+**main.ts**
+```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ActivitiFormModule } from 'ng2-activiti-form';
+
+@Component({
+    selector: 'activiti-app-demo',
+    template: `<activiti-form [taskId]="77501"></activiti-form>`
+})
+
+export class FormDemoComponent {
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ActivitiFormModule.forRoot()
+    ],
+    declarations: [FormDemoComponent],
+    bootstrap: [FormDemoComponent]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+
+```
 
 ### Display form instance by task id
 
@@ -138,42 +221,38 @@ The recommended set of properties can be found in the following table:
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| taskId | string |  | Task id to fetch corresponding form and values. |
-| formId | string | | The id of the form definition to load and display with custom values. |
-| formName | string | | Name of hte form definition to load and display with custom values. |
-| data | `FormValues` | | Custom form values map to be used with the rendered form. |
-| showTitle | boolean | true | Toggle rendering of the form title. |
-| showCompleteButton | boolean | true | Toggle rendering of the `Complete` outcome button. |
-| showSaveButton | boolean | true | Toggle rendering of the `Save` outcome button. |
-| showDebugButton | boolean | false | Toggle debug options. |
-| readOnly | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
-| showRefreshButton | boolean | true | Toggle rendering of the `Refresh` button. |
-| saveMetadata | boolean | false | Store the value of the form as metadata. |
-| path | string |  |  Path of the folder where to store the metadata. |
-| nameNode (optional) | string | true | Name to assign to the new node where the metadata are stored. |
+| `taskId` | string |  | Task id to fetch corresponding form and values. |
+| `formId` | string | | The id of the form definition to load and display with custom values. |
+| `formName` | string | | Name of hte form definition to load and display with custom values. |
+| `data` | FormValues | | Custom form values map to be used with the rendered form. |
+| `showTitle` | boolean | true | Toggle rendering of the form title. |
+| `showCompleteButton` | boolean | true | Toggle rendering of the `Complete` outcome button. |
+| `showSaveButton` | boolean | true | Toggle rendering of the `Save` outcome button. |
+| `showDebugButton` | boolean | false | Toggle debug options. |
+| `readOnly` | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
+| `showRefreshButton` | boolean | true | Toggle rendering of the `Refresh` button. |
+| `saveMetadata` | boolean | false | Store the value of the form as metadata. |
+| `path` | string |  |  Path of the folder where to store the metadata. |
+| `nameNode` (optional) | string | true | Name to assign to the new node where the metadata are stored. |
 
-
- *   {path} string - path of the folder where the to store the metadata
- *
- *   {nameNode} string (optional) - name of the node stored, if not defined the node will be sotred with an uuid as name
 #### Advanced properties
  
  The following properties are for complex customisation purposes:
  
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| form | `FormModel` | | Underlying form model instance. |
-| debugMode | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
+| `form` | FormModel | | Underlying form model instance. |
+| `debugMode` | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
 
 ### Events
 
 | Name | Description |
 | --- | --- |
-| formLoaded | Invoked when form is loaded or reloaded. |
-| formSaved | Invoked when form is submitted with `Save` or custom outcomes.  |
-| formCompleted | Invoked when form is submitted with `Complete` outcome.  |
-| executeOutcome | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
-| onError | Invoked at any error |
+| `formLoaded` | Invoked when form is loaded or reloaded. |
+| `formSaved` | Invoked when form is submitted with `Save` or custom outcomes.  |
+| `formCompleted` | Invoked when form is submitted with `Complete` outcome.  |
+| `executeOutcome` | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
+| `onError` | Invoked at any error |
 
 All `form*` events receive an instance of the `FormModel` as event argument for ease of development:
 
@@ -242,45 +321,10 @@ There are two additional functions that can be of a great value when controlling
 **Please note that if `event.preventDefault()` is not called then default outcome behaviour 
 will also be executed after your custom code.**
 
-## Supported form widgets
-
-Form renderer provides support for all basic widgets:
-
-- [x] Tabs
-- [x] Text
-- [x] Multiline Text
-- [x] Number
-- [x] Checkbox
-- [x] Date
-- Dropdown
-  * [x] Manual
-  * [x] REST service
-- [x] Typeahead
-- [x] Amount
-- Radio buttons
-  * [x] Manual
-  * [x] REST service
-- [x] People
-- [x] Group of People
-- [x] Dynamic Table
-- [x] Hyperlink
-- Header
-  * [x] Plain header
-  * [x] Collapsible header
-- [x] Attach file **
-- [x] Display value
-- [x] Display text
-
-** Files may be uploaded from a user's device if the file source selected is
-'Local file' or 'All sources' and 'link to files' is not selected. Alternatively
-you can link to files in a configured Alfresco repository by selecting this source
-explicitly from the list and making sure that 'link to files' is selected. Copying
-files from Alfresco into Activiti via the control (no linking) is not currently
-supported, nor is allowing the user to choose between more than one source.
-
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -293,7 +337,7 @@ npm run build
 $ npm run build:w
 ```
     
-### Running unit tests
+## Running unit tests
 
 ```sh
 npm test
@@ -313,3 +357,17 @@ before performing unit testing.
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

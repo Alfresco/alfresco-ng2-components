@@ -23,7 +23,7 @@ import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } fr
 import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `
     <label for="host"><b>Insert the ip of your Alfresco and Activiti instance:</b></label><br>
        ECM Host:  <input id="ecmHost" type="text" size="48" (change)="updateEcmHost()" [(ngModel)]="ecmHost"><br>

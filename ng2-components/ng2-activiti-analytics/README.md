@@ -81,6 +81,7 @@ Follow the 3 steps below:
     <!-- Polyfill(s) for dialogs -->
     <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
     <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
 
     <!-- Modules  -->
     <script src="node_modules/zone.js/dist/zone.js"></script>

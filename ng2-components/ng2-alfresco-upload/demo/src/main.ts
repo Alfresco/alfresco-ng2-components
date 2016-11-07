@@ -23,7 +23,7 @@ import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } fr
 import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
                <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>

@@ -1,0 +1,44 @@
+{
+  "name": "ng2-activiti-form-demo",
+  "description": "Alfresco Activiti Form Component - Demo",
+  "version": "0.1.0",
+  "author": "Alfresco Software, Ltd.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "npm install rimraf && rimraf dist node_modules typings dist",
+    "postinstall": "npm run build",
+    "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run server\" ",
+    "server": "wsrv -o -s -l",
+    "build": "npm run tslint && rimraf dist && tsc",
+    "build:w": "npm run tslint && rimraf dist && tsc -w",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts"
+  },
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Mario Romano",
+      "email": "mario.romano@alfresco.com"
+    }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "activiti",
+    "activiti-form"
+  ],
+  "dependencies": {
+    "ng2-activiti-form": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/core-js": "^0.9.32",
+    "@types/jasmine": "^2.2.33",
+    "concurrently": "^2.2.0",
+    "rimraf": "2.5.2",
+    "tslint": "^3.8.1",
+    "typescript": "^2.0.3",
+    "wsrv": "^0.1.5"
+  }
+}

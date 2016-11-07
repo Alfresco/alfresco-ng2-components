@@ -32,7 +32,7 @@ import {
 import { DocumentActionsService } from 'ng2-alfresco-documentlist';
 
 @Component({
-    selector: 'alfresco-documentlist-demo',
+    selector: 'alfresco-app-demo',
     template: `
         <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
                <input id="ticket" type="text" size="48" (change)="updateTicket(); documentList.reload()" [(ngModel)]="ticket"><br>

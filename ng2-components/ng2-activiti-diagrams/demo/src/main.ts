@@ -23,7 +23,7 @@ import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } fr
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 @Component({
-    selector: 'activiti-diagrams-demo',
+    selector: 'alfresco-app-demo',
     template: `
     <label for="ticket"><b>Insert a valid ticket:</b></label><br>
     <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>

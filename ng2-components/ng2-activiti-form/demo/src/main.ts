@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { AnalyticsModule } from 'ng2-activiti-analytics';
+import { ActivitiFormModule } from 'ng2-activiti-form';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -34,25 +34,14 @@ import { AnalyticsModule } from 'ng2-activiti-analytics';
     </div>
     <hr>
 
-    <div class="page-content">
-        <label for="appId"><b>Insert the appId:</b></label><br>
-        <input id="appId" size="10" type="text" [(ngModel)]="appId">
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
-                <analytics-report-list (reportClick)="onReportClick($event)"></analytics-report-list>
-            </div>
-            <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <activiti-analytics [appId]="appId" *ngIf="report" [reportId]="report.id"></activiti-analytics>
-            </div>
-        </div>
-    </div>`
+    <label for="taskId"><b>Insert the taskId:</b></label><br>
+    <input id="taskId" size="10" type="text" [(ngModel)]="taskId">
+    <activiti-form [taskId]="taskId"></activiti-form>`
 })
 
-export class AnalyticsDemoComponent implements OnInit {
+export class FormDemoComponent implements OnInit {
 
-    appId: number;
-
-    report: any;
+    taskId: number;
 
     authenticated: boolean;
 
@@ -67,10 +56,6 @@ export class AnalyticsDemoComponent implements OnInit {
         if (this.authService.getTicketBpm()) {
             this.ticket = this.authService.getTicketBpm();
         }
-    }
-
-    onReportClick(event: any) {
-        this.report = event;
     }
 
     public updateTicket(): void {
@@ -104,10 +89,10 @@ export class AnalyticsDemoComponent implements OnInit {
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        AnalyticsModule
+        ActivitiFormModule.forRoot()
     ],
-    declarations: [AnalyticsDemoComponent],
-    bootstrap: [AnalyticsDemoComponent]
+    declarations: [FormDemoComponent],
+    bootstrap: [FormDemoComponent]
 })
 export class AppModule {
 }

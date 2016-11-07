@@ -24,7 +24,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'alfresco-userinfo-demo',
+    selector: 'alfresco-app-demo',
     template: `<h4> START DEMO USERINFO </h4>
                <div style="border-radius: 8px; position: absolute; background-color:papayawhip; color: cadetblue; left: 320px; top: 30px; z-index: 1;">
                  <p style="width:120px;margin: 20px;">
