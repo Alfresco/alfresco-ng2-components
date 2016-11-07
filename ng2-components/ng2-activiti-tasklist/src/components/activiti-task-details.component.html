@@ -9,7 +9,7 @@
 </div>
 <div *ngIf="taskDetails">
     <h2 class="mdl-card__title-text">{{taskDetails.name}}</h2>
-    <activiti-task-header [taskDetails]="taskDetails" [formName]="taskFormName" #activitiheader></activiti-task-header>
+    <activiti-task-header [taskDetails]="taskDetails" [formName]="taskFormName"></activiti-task-header>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col">
             <activiti-people [people]="taskPeople" [readOnly]="readOnlyForm"
@@ -34,7 +34,7 @@
                    (formCompleted)='onFormCompleted($event)'
                    (formLoaded)='onFormLoaded($event)'
                    (onError)='onFormError($event)'
-                   (executeOutcome)='onExecuteFormOutcome($event)'
+                   (executeOutcome)='onFormExecuteOutcome($event)'
                    #activitiForm>
     </activiti-form>
     <button type="button" class="mdl-button" *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">

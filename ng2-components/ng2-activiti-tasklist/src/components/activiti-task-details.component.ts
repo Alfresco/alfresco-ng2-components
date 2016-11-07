@@ -85,8 +85,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     /**
      * Constructor
-     * @param auth
-     * @param translate
+     * @param auth Authentication service
+     * @param translate Translation service
+     * @param activitiForm Form service
+     * @param activitiTaskList Task service
      */
     constructor(private auth: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService,
@@ -117,9 +119,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     }
 
     /**
-     * Reset the task detail to undefined
+     * Reset the task details
      */
-    reset() {
+    private reset() {
         this.taskDetails = null;
     }
 
@@ -141,7 +143,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      * Load the activiti task details
      * @param taskId
      */
-    loadDetails(taskId: string) {
+    private loadDetails(taskId: string) {
         this.taskPeople = [];
         this.taskFormName = null;
         if (taskId) {
@@ -157,10 +159,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                             this.taskPeople.push(new User(user));
                         });
                     }
-                }
-            );
-        } else {
-            this.reset();
+                });
         }
     }
 
@@ -169,7 +168,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      * @param processInstanceId
      * @param processDefinitionId
      */
-    loadNextTask(processInstanceId: string, processDefinitionId: string) {
+    private loadNextTask(processInstanceId: string, processDefinitionId: string) {
         let requestNode = new TaskQueryRequestRepresentationModel(
             {
                 processInstanceId: processInstanceId,
@@ -190,11 +189,11 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     }
 
     /**
-     * Complete the activiti task
+     * Complete button clicked
      */
     onComplete() {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
-            (res) => this.formCompleted.emit(null)
+            (res) => this.onFormCompleted(null)
         );
     }
 
@@ -222,7 +221,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.onError.emit(error);
     }
 
-    onExecuteFormOutcome(event: FormOutcomeEvent) {
+    onFormExecuteOutcome(event: FormOutcomeEvent) {
         this.executeOutcome.emit(event);
     }
 
