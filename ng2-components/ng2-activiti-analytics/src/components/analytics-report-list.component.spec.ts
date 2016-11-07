@@ -81,6 +81,40 @@ describe('Test ng2-activiti-analytics Report list', () => {
             expect(component.isReportsEmpty()).toBeTruthy();
         });
 
+        it('should return the default reports when the report list is empty', (done) => {
+            fixture.detectChanges();
+
+            component.onSuccess.subscribe(() => {
+                fixture.detectChanges();
+                expect(element.querySelector('#report-list-0 > i').innerHTML).toBe('assignment');
+                expect(element.querySelector('#report-list-0 > span').innerHTML).toBe('Fake Test Process definition heat map');
+                expect(element.querySelector('#report-list-1 > span').innerHTML).toBe('Fake Test Process definition overview');
+                expect(element.querySelector('#report-list-2 > span').innerHTML).toBe('Fake Test Process instances overview');
+                expect(element.querySelector('#report-list-3 > span').innerHTML).toBe('Fake Test Task overview');
+                expect(element.querySelector('#report-list-4 > span').innerHTML).toBe('Fake Test Task service level agreement');
+                expect(component.isReportsEmpty()).toBeFalsy();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: []
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: []
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: reportList
+            });
+        });
+
         it('Report render the report list relative to a single app', (done) => {
             fixture.detectChanges();
 

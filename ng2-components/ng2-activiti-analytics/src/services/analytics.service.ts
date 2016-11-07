@@ -46,9 +46,6 @@ export class AnalyticsService {
                     let reportModel = new ReportParametersModel(report);
                     reports.push(reportModel);
                 });
-                if (body && body.length === 0) {
-                    return this.createDefaultReports();
-                }
                 return reports;
             }).catch(this.handleError);
     }
@@ -215,9 +212,15 @@ export class AnalyticsService {
             }).catch(this.handleError);
     }
 
-    public createDefaultReports(): ReportParametersModel[] {
-        let reports: ReportParametersModel[] = [];
-        return reports;
+    public createDefaultReports(): Observable<any> {
+        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/default-reports`;
+        let options = this.getRequestOptions();
+        let body = {};
+        return this.http
+            .post(url, body, options)
+            .map((res: any) => {
+                return res;
+            }).catch(this.handleError);
     }
 
     public getHeaders(): Headers {
