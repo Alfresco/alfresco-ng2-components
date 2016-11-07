@@ -32,7 +32,11 @@ import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 export class DiagramDemoComponent {
 
-    private processDefinitionId: string = 'ThirdProcess:1:15053';
+    private processDefinitionId: string;
+
+    ngOnInit() {
+        this.processDefinitionId = 'ThirdProcess:1:15053';
+    }
 }
 
 @NgModule({

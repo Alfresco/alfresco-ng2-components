@@ -54,18 +54,20 @@
                 <div *ngSwitchCase="'multiBar'">
                     <div class="col-md-6">
                         <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="'stacked-id'">
-                            <input type="checkbox" [attr.id]="'stacked-id'" class="mdl-checkbox__input"
-                                   [checked]="report.options.scales.xAxes[0].stacked"
-                                   [(ngModel)]="report.options.scales.xAxes[0].stacked"
-                                   (change)="refresh(report)">
-                            <span class="mdl-checkbox__label">Stacked</span>
-                        </label>
-                        <base-chart *ngIf="report.hasDatasets()" class="chart"
-                                    [datasets]="report.datasets"
-                                    [labels]="report.labels"
-                                    [options]="report.options"
-                                    [chartType]="'bar'"></base-chart>
+                        <div *ngIf="report.hasDatasets()">
+                            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="'stacked-id'">
+                                <input type="checkbox" [attr.id]="'stacked-id'" class="mdl-checkbox__input"
+                                       [checked]="report.options.scales.xAxes[0].stacked"
+                                       [(ngModel)]="report.options.scales.xAxes[0].stacked"
+                                       (change)="refresh(report)">
+                                <span class="mdl-checkbox__label">Stacked</span>
+                            </label>
+                            <base-chart class="chart"
+                                        [datasets]="report.datasets"
+                                        [labels]="report.labels"
+                                        [options]="report.options"
+                                        [chartType]="'bar'"></base-chart>
+                        </div>
                     </div>
                 </div>
                 <div *ngSwitchCase="'HeatMap'">
