@@ -32,7 +32,6 @@ declare var document: any;
     styleUrls: ['app/app.component.css']
 })
 export class AppComponent {
-    translate: AlfrescoTranslationService;
     searchTerm: string = '';
 
     ecmHost: string = 'http://' + window.location.hostname + ':8080';
@@ -41,13 +40,14 @@ export class AppComponent {
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
                 public alfrescoSettingsService: AlfrescoSettingsService,
-                translate: AlfrescoTranslationService) {
+                private translate: AlfrescoTranslationService) {
         this.setEcmHost();
         this.setBpmHost();
         this.setProvider();
 
-        this.translate = translate;
-        this.translate.addTranslationFolder();
+        if (translate) {
+            translate.addTranslationFolder();
+        }
     }
 
     isLoggedIn(): boolean {
