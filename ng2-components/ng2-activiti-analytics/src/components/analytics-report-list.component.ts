@@ -60,13 +60,20 @@ export class AnalyticsReportListComponent implements  OnInit {
         this.getReportListByAppId();
     }
 
+    /**
+     * Get the report list by app id
+     */
     getReportListByAppId() {
         this.analyticsService.getReportList().subscribe(
             (res: ReportParametersModel[]) => {
-                res.forEach((report) => {
-                    this.reportObserver.next(report);
-                });
-                this.onSuccess.emit(res);
+                if (res && res.length === 0) {
+                    this.createDefaultReports();
+                } else {
+                    res.forEach((report) => {
+                        this.reportObserver.next(report);
+                    });
+                    this.onSuccess.emit(res);
+                }
             },
             (err: any) => {
                 this.onError.emit(err);
@@ -75,6 +82,28 @@ export class AnalyticsReportListComponent implements  OnInit {
         );
     }
 
+    /**
+     * Create the default reports and return the report list
+     */
+    createDefaultReports() {
+        this.analyticsService.createDefaultReports().subscribe(
+            () => {
+                this.analyticsService.getReportList().subscribe(
+                    (response: ReportParametersModel[]) => {
+                        response.forEach((report) => {
+                            this.reportObserver.next(report);
+                        });
+                        this.onSuccess.emit(response);
+                    }
+                );
+            }
+        );
+    }
+
+    /**
+     * Check if the report list is empty
+     * @returns {boolean|ReportParametersModel[]}
+     */
     isReportsEmpty(): boolean {
         return this.reports === undefined || (this.reports && this.reports.length === 0);
     }
