@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core';
-import { AlfrescoSearchService } from './../services/alfresco-search.service';
+import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
@@ -42,6 +42,15 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     @Input()
     maxResults: number = 5;
+
+    @Input()
+    resultSort: string = null;
+
+    @Input()
+    rootNodeId: string = '-root';
+
+    @Input()
+    resultType: string = null;
 
     @Output()
     fileSelect: EventEmitter<any> = new EventEmitter();
@@ -84,9 +93,16 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      * @param searchTerm Search query entered by user
      */
     private displaySearchResults(searchTerm) {
+        let searchOpts: SearchOptions = {
+            include: ['path'],
+            rootNodeId: this.rootNodeId,
+            nodeType: this.resultType,
+            maxItems: this.maxResults,
+            orderBy: this.resultSort
+        };
         if (searchTerm !== null && searchTerm !== '') {
             this.alfrescoSearchService
-                .getLiveSearchResults(searchTerm)
+                .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
                         this.results = results.list.entries.slice(0, this.maxResults);

@@ -154,17 +154,40 @@ describe('AlfrescoSearchComponent', () => {
         expect(translationService.addTranslationFolder).toHaveBeenCalledWith('node_modules/ng2-alfresco-search/dist/src');
     });
 
-    describe('Rendering search results', () => {
+    describe('Search results', () => {
+
+        it('should call search service with the correct parameters', (done) => {
+            let searchTerm = 'searchTerm63688', options = {
+                include: ['path'],
+                rootNodeId: '-my-',
+                nodeType: 'my:type',
+                maxItems: 20,
+                orderBy: null
+            };
+            component.searchTerm = searchTerm;
+            component.rootNodeId = '-my-';
+            component.resultType = 'my:type';
+            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            spyOn(searchService, 'getQueryNodesPromise')
+                .and.returnValue(Promise.resolve(result));
+            fixture.detectChanges();
+
+            component.resultsLoad.subscribe(() => {
+                fixture.detectChanges();
+                expect(searchService.getQueryNodesPromise).toHaveBeenCalledWith(searchTerm, options);
+                done();
+            });
+        });
 
         it('should display search results when a search term is provided', (done) => {
 
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(searchService.getSearchNodesPromise).toHaveBeenCalled();
+                expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
                 expect(element.querySelector('#result_user_0')).not.toBeNull();
                 expect(element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
                 expect(element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
@@ -178,7 +201,7 @@ describe('AlfrescoSearchComponent', () => {
         it('should display no result if no result are returned', (done) => {
 
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
             component.resultsLoad.subscribe(() => {
@@ -194,7 +217,7 @@ describe('AlfrescoSearchComponent', () => {
         it('should display an error if an error is encountered running the search', (done) => {
 
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
 
             component.resultsLoad.subscribe(() => {}, () => {
@@ -214,12 +237,12 @@ describe('AlfrescoSearchComponent', () => {
         it('should update search results when the search term input is changed', (done) => {
 
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(searchService.getSearchNodesPromise).toHaveBeenCalledWith('searchTerm2');
+                expect(searchService.getQueryNodesPromise.calls.mostRecent().args[0]).toBe('searchTerm2');
                 expect(element.querySelector('#result_user_0')).not.toBeNull();
                 expect(element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
                 expect(element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
@@ -235,7 +258,7 @@ describe('AlfrescoSearchComponent', () => {
         it('should emit preview when file item clicked', (done) => {
 
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
             component.resultsLoad.subscribe(() => {
@@ -254,7 +277,7 @@ describe('AlfrescoSearchComponent', () => {
         it('should not emit preview when non-file item is clicked', (done) => {
 
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(folderResult));
 
             spyOn(component.preview, 'emit');

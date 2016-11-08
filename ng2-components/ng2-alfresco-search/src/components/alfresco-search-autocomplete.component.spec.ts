@@ -80,7 +80,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should clear results straight away when a new search term is entered', async(() => {
 
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
             component.searchTerm = 'searchTerm';
@@ -97,7 +97,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should display the returned search results', (done) => {
 
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
             component.resultsLoad.subscribe(() => {
@@ -112,7 +112,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should limit the number of returned search results to the configured maximum', (done) => {
 
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(results));
 
             component.resultsLoad.subscribe(() => {
@@ -127,7 +127,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should display the correct thumbnail for result items', (done) => {
 
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
             component.baseComponentPath = 'http://localhost';
@@ -150,7 +150,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should display no result if no result are returned', (done) => {
 
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(noResult));
 
             component.resultsLoad.subscribe(() => {
@@ -170,7 +170,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         beforeEach(() => {
             searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
         });
 
@@ -215,7 +215,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should emit file select when file item clicked', (done) => {
 
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
             component.resultsLoad.subscribe(() => {
@@ -232,7 +232,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         it('should not emit preview if a non-file item is clicked', (done) => {
 
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(folderResult));
 
             spyOn(component.fileSelect, 'emit');
@@ -254,7 +254,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         beforeEach(() => {
             searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(results));
         });
 
@@ -366,7 +366,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
 
         beforeEach(() => {
             searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getSearchNodesPromise')
+            spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
         });
 

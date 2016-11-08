@@ -17,7 +17,7 @@
 
 import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlfrescoSearchService } from './../services/alfresco-search.service';
+import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
@@ -33,6 +33,18 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     @Input()
     searchTerm: string = '';
+
+    @Input()
+    maxResults: number = 20;
+
+    @Input()
+    resultSort: string = null;
+
+    @Input()
+    rootNodeId: string = '-root-';
+
+    @Input()
+    resultType: string = null;
 
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
@@ -102,10 +114,17 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    public displaySearchResults(searchTerm): void {
-        if (searchTerm !== null && this.alfrescoSearchService !== null) {
+    private displaySearchResults(searchTerm): void {
+        if (searchTerm && this.alfrescoSearchService) {
+            let searchOpts: SearchOptions = {
+                include: ['path'],
+                rootNodeId: this.rootNodeId,
+                nodeType: this.resultType,
+                maxItems: this.maxResults,
+                orderBy: this.resultSort
+            };
             this.alfrescoSearchService
-                .getLiveSearchResults(searchTerm)
+                .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
                         this.results = results.list.entries;

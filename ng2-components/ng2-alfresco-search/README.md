@@ -173,16 +173,20 @@ bootstrap(SearchDemo, [
 
 **searchChange**: Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object. If the term is at less than three characters in length then the term is truncated to an empty string.<br />
 **searchSubmit**: Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object.<br />
-**fileSelect**: Emitted when a file item from the list of find-as-you-type results is selected
+**fileSelect**: Emitted when a file item from the list of find-as-you-type results is selected<br />
 **expand**: Emitted when the expanded state of the control changes based on focus events and the content of the input control
 
 #### Options
 
 **searchTerm**: {string} (optional) default "". Search term to pre-populate the field with<br />
 **inputType**: {string} (optional) default "text". Type of the input field to render, e.g. "search" or "text" (default)<br />
-**expandable** {boolean} (optional) default true. Whether to use an expanding search control, if false then a regular input is used.
-**autocomplete** {boolean} (optional) default true. Whether the browser should offer field auto-completion for the input field to the user.
-**autocompleteEnabled** {boolean} (optional) default true. Whether find-as-you-type suggestions should be offered for matching content items. Set to false to disable.
+**expandable** {boolean} (optional) default true. Whether to use an expanding search control, if false then a regular input is used.<br />
+**autocomplete** {boolean} (optional) default true. Whether the browser should offer field auto-completion for the input field to the user.<br />
+**liveSearchEnabled** {boolean} (optional) default true. Whether find-as-you-type suggestions should be offered for matching content items. Set to false to disable.<br />
+**liveSearchRoot** {boolean} (optional) default "-root-". NodeRef or node name where the search should start.<br />
+**liveSearchResultType** {boolean} (optional) default (none). Node type to filter live search results by, e.g. 'cm:content'.<br />
+**liveSearchMaxResults** {boolean} (optional) default 5. Maximum number of results to show in the live search.<br />
+**liveSearchResultSort** {boolean} (optional) default (none). Criteria to sort live search results by, must be one of "name" , "modifiedAt" or "createdAt"
 
 ### Search results
 
@@ -331,12 +335,17 @@ bootstrap(SearchDemo, [
 
 #### Events
 
-None
+**preview**: Emitted when a file result is clicked/selected<br />
+**resultsLoad**: Emitted when search results have fully loaded
 
 #### Options
 
 **searchTerm**: {string} (optional) default "". Search term to use when executing the search. Updating this value will
 run a new search and update the results.<br />
+**rootNodeId** {boolean} (optional) default "-root-". NodeRef or node name where the search should start.<br />
+**resultType** {boolean} (optional) default (none). Node type to filter search results by, e.g. 'cm:content'.<br />
+**maxResults** {boolean} (optional) default 20. Maximum number of results to show in the search.<br />
+**resultSort** {boolean} (optional) default (none). Criteria to sort search results by, must be one of "name" , "modifiedAt" or "createdAt"
 
 ## Build from sources
 
