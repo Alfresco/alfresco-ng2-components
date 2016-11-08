@@ -71,7 +71,7 @@ export class DateRangeWidget extends WidgetComponent {
 
     ngOnInit() {
         this.initForm();
-        this.fixDatePickerAccessibility();
+        this.addAccessibilityLabelToDatePicker();
         this.initSartDateDialog();
         this.initEndDateDialog();
     }
@@ -100,7 +100,7 @@ export class DateRangeWidget extends WidgetComponent {
         });
     }
 
-    private fixDatePickerAccessibility() {
+    private addAccessibilityLabelToDatePicker() {
         let left: any = document.querySelector('#mddtp-date__left');
         if (left) {
             left.appendChild(this.createCustomElement('date left'));
