@@ -16,7 +16,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "ng2-activiti-tasklist": "0.3.3"
+    "ng2-activiti-tasklist": "^0.3.3"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.32",

@@ -18,9 +18,14 @@
 import { Input, NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import {
+    ActivitiTaskListModule,
+    AppDefinitionRepresentationModel,
+    FilterRepresentationModel,
+    ActivitiApps,
+    ActivitiTaskList
+} from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
@@ -45,7 +50,7 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
             <div class="mdl-layout__tab-bar mdl-js-ripple-effect" #tabheader>
                 <a id="apps-header" href="#apps" class="mdl-layout__tab is-active">APPS</a>
-                <a id="processes-header" href="#processes" class="mdl-layout__tab">PROCESS LIST</a>
+                <a id="tasks-header" href="#tasks" class="mdl-layout__tab">TASKS LIST</a>
             </div>
         </header>
 
@@ -59,38 +64,33 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
                 </div>
             </section>
 
-            <!--  PROCESS COMPONENT -->
+            <!--  TASKS COMPONENT -->
 
-            <section class="mdl-layout__tab-panel" id="processes">
+            <section class="mdl-layout__tab-panel" id="tasks">
                 <div class="page-content">
-                    <div class="page-content">
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--2-col task-column">
-                                <span>Process Filters</span>
-                                <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
-                                <activiti-process-instance-filters
-                                            [appId]="appId"
-                                            (filterClick)="onProcessFilterClick($event)"
-                                            (onSuccess)="onSuccessProcessFilterList($event)"
-                                            #activitiprocessfilter></activiti-process-instance-filters>
-                            </div>
-                            <div class="mdl-cell mdl-cell--3-col task-column">
-                                <span>Process List</span>
-                                <activiti-process-instance-list
-                                            [filter]="processFilter"
-                                            [data]="dataProcesses"
-                                            (rowClick)="onProcessRowClick($event)"
-                                            (onSuccess)="onSuccessProcessList($event)"
-                                            #activitiprocesslist></activiti-process-instance-list>
-                            </div>
-                            <div class="mdl-cell mdl-cell--7-col task-column">
-                                <span>Process Details</span>
-                                <activiti-process-instance-details
-                                            [processInstanceId]="currentProcessInstanceId"
-                                            (taskFormCompleted)="taskFormCompleted()"
-                                            (processCancelled)="processCancelled()"
-                                            #activitiprocessdetails></activiti-process-instance-details>
-                            </div>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
+                            <span>Task Filters</span>
+                            <activiti-start-task [appId]="appId"
+                                                 (onSuccess)="onStartTaskSuccess($event)"></activiti-start-task>
+                            <activiti-filters [appId]="appId"
+                                              (filterClick)="onTaskFilterClick($event)"
+                                              (onSuccess)="onSuccessTaskFilterList($event)"
+                                              #activitifilter></activiti-filters>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
+                            <span>Task List</span>
+                            <activiti-tasklist [taskFilter]="taskFilter"
+                                               [data]="dataTasks"
+                                               (rowClick)="onTaskRowClick($event)"
+                                               (onSuccess)="onSuccessTaskList($event)"
+                                               #activititasklist></activiti-tasklist>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
+                            <span>Task Details</span>
+                            <activiti-task-details [taskId]="currentTaskId"
+                                                   (formCompleted)="onFormCompleted($event)"
+                                                   #activitidetails></activiti-task-details>
                         </div>
                     </div>
                 </div>
@@ -108,29 +108,36 @@ class MyDemoApp implements OnInit {
 
     ticket: string;
 
+    @ViewChild('activitiapps')
+    activitiapps: ActivitiApps;
+
     @ViewChild('tabmain')
     tabMain: any;
 
     @ViewChild('tabheader')
     tabHeader: any;
 
-    @ViewChild('activitiprocessfilter')
-    activitiprocessfilter: any;
+    @ViewChild('activitifilter')
+    activitifilter: any;
 
-    @ViewChild('activitiprocesslist')
-    activitiprocesslist: any;
+    @ViewChild('activitidetails')
+    activitidetails: any;
 
-    @ViewChild('activitiprocessdetails')
-    activitiprocessdetails: any;
+    @ViewChild('activititasklist')
+    activititasklist: ActivitiTaskList;
 
     @Input()
     appId: number;
 
-    processFilter: any;
+    layoutType: string;
 
-    currentProcessInstanceId: string;
+    currentTaskId: string;
 
-    dataProcesses: ObjectDataTableAdapter;
+    taskSchemaColumns: any [] = [];
+
+    taskFilter: any;
+
+    dataTasks: ObjectDataTableAdapter;
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
         settingsService.bpmHost = this.host;
@@ -140,14 +147,14 @@ class MyDemoApp implements OnInit {
             this.ticket = this.authService.getTicketBpm();
         }
 
-        this.dataProcesses = new ObjectDataTableAdapter(
+        this.dataTasks = new ObjectDataTableAdapter(
             [],
             [
                 {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
                 {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
             ]
         );
-        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
+        this.dataTasks.setSorting(new DataSorting('started', 'desc'));
     }
 
     public updateTicket(): void {
@@ -179,31 +186,32 @@ class MyDemoApp implements OnInit {
     onAppClick(app: AppDefinitionRepresentationModel) {
         this.appId = app.id;
 
-        this.processFilter = null;
-        this.currentProcessInstanceId = null;
-
-        this.changeTab('apps', 'processes');
+        this.changeTab('apps', 'tasks');
     }
 
-    onProcessFilterClick(event: any) {
-        this.processFilter = event;
+    onTaskFilterClick(event: FilterRepresentationModel) {
+        this.taskFilter = event;
     }
 
-    onSuccessProcessFilterList(event: any) {
-        this.processFilter = this.activitiprocessfilter.getCurrentFilter();
+    onSuccessTaskFilterList(event: any) {
+        this.taskFilter = this.activitifilter.getCurrentFilter();
     }
 
-    onSuccessProcessList(event: any) {
-        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
+    onStartTaskSuccess(event: any) {
+        this.activititasklist.reload();
     }
 
-    onProcessRowClick(processInstanceId) {
-        this.currentProcessInstanceId = processInstanceId;
+    onSuccessTaskList(event: FilterRepresentationModel) {
+        this.currentTaskId = this.activititasklist.getCurrentTaskId();
     }
 
-    processCancelled(data: any) {
-        this.currentProcessInstanceId = null;
-        this.activitiprocesslist.reload();
+    onTaskRowClick(taskId) {
+        this.currentTaskId = taskId;
+    }
+
+    onFormCompleted(form) {
+        this.activititasklist.load(this.taskFilter);
+        this.currentTaskId = null;
     }
 
     changeTab(origin: string, destination: string) {
@@ -220,7 +228,6 @@ class MyDemoApp implements OnInit {
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        ActivitiProcessListModule,
         ActivitiTaskListModule.forRoot()
     ],
     declarations: [MyDemoApp],
