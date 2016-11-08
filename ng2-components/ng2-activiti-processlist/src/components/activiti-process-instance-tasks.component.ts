@@ -20,6 +20,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { Observable, Observer } from 'rxjs/Rx';
+import { DatePipe } from '@angular/common';
 
 declare let componentHandler: any;
 
@@ -130,6 +131,15 @@ export class ActivitiProcessInstanceTasks implements OnInit {
                 user.lastName;
         }
         return '';
+    }
+
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            console.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
+        }
     }
 
     public clickTask($event: any, task: TaskDetailsModel) {
