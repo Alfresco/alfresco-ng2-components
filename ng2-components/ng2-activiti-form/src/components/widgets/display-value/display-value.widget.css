@@ -9,3 +9,23 @@
 .display-value-widget__dynamic-table table {
     width: 100%;
 }
+
+.upload-widget {
+    width:100%;
+    word-break: break-all;
+}
+
+.upload-widget__icon {
+    float: left;
+    color: rgba(0,0,0,.26);
+}
+
+.upload-widget__file {
+    float: left;
+    margin-top: 4px;
+    color: rgba(0,0,0,.26);
+}
+
+.upload-widget__label {
+    color: rgba(0,0,0,.26);
+}

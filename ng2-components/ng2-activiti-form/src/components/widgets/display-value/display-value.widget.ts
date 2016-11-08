@@ -43,6 +43,9 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     columns: DynamicTableColumn[] = [];
     visibleColumns: DynamicTableColumn[] = [];
 
+    // upload/attach
+    hasFile: boolean = false;
+
     constructor(private formService: FormService) {
         super();
     }
@@ -77,8 +80,10 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             let files = this.field.value || [];
                             if (files.length > 0) {
                                 this.value = decodeURI(files[0].name);
+                                this.hasFile = true;
                             } else {
                                 this.value = null;
+                                this.hasFile = false;
                             }
                             break;
                         case FormFieldTypes.TYPEAHEAD:

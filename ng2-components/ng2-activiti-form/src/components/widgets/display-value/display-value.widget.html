@@ -29,8 +29,7 @@
         </textarea>
         <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
     </div>
-    <div *ngSwitchCase="'hyperlink'"
-         class="hyperlink-widget">
+    <div *ngSwitchCase="'hyperlink'" class="hyperlink-widget">
         <div>
             <span>{{field.name}}</span>
         </div>
@@ -59,6 +58,15 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div *ngSwitchCase="'upload'">
+        <div class="upload-widget">
+            <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
+            <div>
+                <i *ngIf="hasFile" class="material-icons upload-widget__icon">attachment</i>
+                <span *ngIf="hasFile" class="upload-widget__file">{{value}}</span>
+            </div>
         </div>
     </div>
     <div *ngSwitchDefault
