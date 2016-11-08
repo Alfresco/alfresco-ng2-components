@@ -89,8 +89,11 @@ Follow the 3 steps below:
 
     Add the following components to your systemjs.config.js file:
 
+    - moment
     - ng2-translate
     - ng2-alfresco-core
+    - alfresco-js-api
+    - ng2-activiti-form
 
     Please refer to the following example file: [systemjs.config.js](demo/systemjs
     .config.js) .

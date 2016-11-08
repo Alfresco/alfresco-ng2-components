@@ -93,6 +93,7 @@ Follow the 3 steps below:
 
     Add the following components to your systemjs.config.js file:
 
+    - moment
     - ng2-charts
     - ng2-translate
     - alfresco-js-api

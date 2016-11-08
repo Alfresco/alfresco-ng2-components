@@ -89,8 +89,8 @@ Follow the 3 steps below:
 
     - ng2-translat
     - ng2-alfresco-core
-    - ng2-activiti-diagrams
     - alfresco-js-api
+    - ng2-activiti-diagrams
     - raphael
 
     Please refer to the following example file: [systemjs.config.js](demo/systemjs

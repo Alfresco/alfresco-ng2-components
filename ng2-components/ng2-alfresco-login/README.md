@@ -83,6 +83,7 @@ Follow the 3 steps below:
 
     - ng2-translate
     - ng2-alfresco-core
+    - alfresco-js-api
     - ng2-alfresco-login
 
     Please refer to the following example file: [systemjs.config.js](demo/systemjs

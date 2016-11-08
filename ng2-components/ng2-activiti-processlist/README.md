@@ -94,10 +94,12 @@ Follow the 3 steps below:
     Add the following components to your systemjs.config.js file:
 
     - ng2-translate
+    - alfresco-js-api
     - ng2-alfresco-core
     - ng2-activiti-form
-    - ng2-activiti-tasklist
     - ng2-alfresco-datatable
+    - ng2-activiti-tasklist
+    - ng2-activiti-processlist
 
     Please refer to the following example file: [systemjs.config.js](demo/systemjs
     .config.js) .
@@ -115,10 +117,10 @@ This component renders a list containing all the process instances matched by th
 **main.ts**
 ```ts
 
-import { NgModule, Component, OnInit } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { UserProcessInstanceFilterRepresentationModel } from 'ng2-activiti-tasklist';
+import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
@@ -126,14 +128,14 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<activiti-process-instance-list [filter]="processInstanceFilterRepresentation" [data]="dataProcesses"
+    template: `<activiti-process-instance-list [filter]="filterRepresentationModel" [data]="dataProcesses"
              #activitiprocesslist></activiti-process-instance-list>`
 })
-class MyDemoApp implements OnInit {
+class MyDemoApp {
 
     dataProcesses: ObjectDataTableAdapter;
 
-    processInstanceFilterRepresentation: UserProcessInstanceFilterRepresentationModel;
+    filterRepresentationModel: FilterRepresentationModel;
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
         settingsService.bpmHost = 'http://localhost:9999';
@@ -146,15 +148,14 @@ class MyDemoApp implements OnInit {
                 console.log(error);
             });
 
-        this.dataProcesses = new ObjectDataTableAdapter([],
-            [
+        this.dataProcesses = new ObjectDataTableAdapter([], [
                 {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
                 {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
             ]
         );
         this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
 
-        this.processInstanceFilterRepresentation = new UserProcessInstanceFilterRepresentationModel({
+        this.filterRepresentationModel = new FilterRepresentationModel({
             appId: '3003',
             filter: {
                 processDefinitionKey: null,
