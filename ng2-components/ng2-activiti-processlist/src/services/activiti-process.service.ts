@@ -226,10 +226,14 @@ export class ActivitiProcessService {
             .catch(this.handleError);
     }
 
-    startProcess(processDefinitionId: string, name: string) {
-        let startRequest: any = {};
-        startRequest.name = name;
-        startRequest.processDefinitionId = processDefinitionId;
+    startProcess(processDefinitionId: string, name: string, startFormValues?: any) {
+        let startRequest: any = {
+            name: name,
+            processDefinitionId: processDefinitionId
+        };
+        if (startFormValues) {
+            startRequest.values = startFormValues;
+        }
         return Observable.fromPromise(
             this.authService.getAlfrescoApi().activiti.processApi.startNewProcessInstance(startRequest)
             )

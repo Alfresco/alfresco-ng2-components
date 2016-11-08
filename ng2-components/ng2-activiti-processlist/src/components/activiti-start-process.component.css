@@ -9,3 +9,13 @@
 .material-icons:hover {
     color: rgb(255, 152, 0);
 }
+
+.mdl-dialog {
+    width: 400px;
+}
+
+.mdl-textfield.alf-mdl-selectfield label {
+    color: rgba(0,0,0,.54);
+    font-size: 12px;
+    top: 4px;
+}

@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, DebugElement } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-start-process-instance',
@@ -33,12 +35,15 @@ export class ActivitiStartProcessButton implements OnInit {
     appId: string;
 
     @ViewChild('dialog')
-    dialog: any;
+    dialog: DebugElement;
+
+    @ViewChild('startForm')
+    startForm: ActivitiStartForm;
 
     processDefinitions: any[] = [];
 
     name: string;
-    processDefinition: string;
+    processDefinitionId: string;
 
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
@@ -64,15 +69,19 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public showDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
         }
+        this.dialog.nativeElement.showModal();
     }
 
     public startProcess() {
-        if (this.processDefinition && this.name) {
-            this.activitiProcess.startProcess(this.processDefinition, this.name).subscribe(
+        if (this.processDefinitionId && this.name) {
+            let formValues = this.startForm ? this.startForm.form.values : undefined;
+            this.activitiProcess.startProcess(this.processDefinitionId, this.name, formValues).subscribe(
                 (res: any) => {
+                    this.name = '';
+                    this.processDefinitionId = '';
                     this.cancel();
                 },
                 (err) => {
@@ -83,8 +92,25 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public cancel() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
+        this.dialog.nativeElement.close();
+    }
+
+    private getSelectedProcess(): any {
+        return this.processDefinitions.filter((processDefinition) => {
+            return processDefinition.id === this.processDefinitionId;
+        })[0];
+    }
+
+    hasStartForm() {
+        let selectedProcessDefinition = this.getSelectedProcess();
+        return selectedProcessDefinition && selectedProcessDefinition.hasStartForm;
+    }
+
+    isStartFormMissingOrValid() {
+        return !this.startForm || this.startForm.form.isValid;
+    }
+
+    validateForm() {
+        return this.processDefinitionId && this.name && this.isStartFormMissingOrValid();
     }
 }

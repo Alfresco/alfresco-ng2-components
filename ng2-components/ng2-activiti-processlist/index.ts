@@ -18,6 +18,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
 import { ActivitiProcessInstanceListComponent } from './src/components/activiti-processlist.component';
@@ -54,6 +55,7 @@ export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
     imports: [
         CoreModule,
         DataTableModule,
+        ActivitiFormModule,
         ActivitiTaskListModule
     ],
     declarations: [

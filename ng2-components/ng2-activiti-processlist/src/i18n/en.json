@@ -45,6 +45,7 @@
                 "TYPE": "Type",
                 "NAME": "Name"
             },
+            "TYPE_PLACEHOLDER": "Choose one...",
             "ACTION": {
                 "START": "Start",
                 "CANCEL": "Cancel"

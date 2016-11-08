@@ -46,7 +46,7 @@ module.exports = function (config) {
       { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.*', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-alfresco-datatable/dist/**/*.*', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-activiti-tasklist/dist/**/*.js', included: false, served: true, watched: false },
-      { pattern: 'node_modules/ng2-activiti-form/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-activiti-form/dist/**/*.*', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},

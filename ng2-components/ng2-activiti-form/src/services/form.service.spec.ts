@@ -30,7 +30,7 @@ declare let jasmine: any;
 
 describe('FormService', () => {
 
-    let responseBody: any, service: FormService;
+    let responseBody: any, service: FormService, apiService: AlfrescoApiService;
 
     beforeAll(() => {
         TestBed.configureTestingModule({
@@ -44,6 +44,7 @@ describe('FormService', () => {
             ]
         });
         service = TestBed.get(FormService);
+        apiService = TestBed.get(AlfrescoApiService);
     });
 
     beforeEach(() => {
@@ -226,6 +227,22 @@ describe('FormService', () => {
             'status': 200,
             contentType: 'application/json',
             responseText: JSON.stringify(responseBody)
+        });
+    });
+
+    it('should get start form definition by process definition id', (done) => {
+
+        let processApiSpy = jasmine.createSpyObj(['getProcessDefinitionStartForm']);
+        spyOn(apiService, 'getInstance').and.returnValue({
+            activiti: {
+                processApi: processApiSpy
+            }
+        });
+        processApiSpy.getProcessDefinitionStartForm.and.returnValue(Promise.resolve({ id: '1' }));
+
+        service.getStartFormDefinition('myprocess:1').subscribe(result => {
+            expect(processApiSpy.getProcessDefinitionStartForm).toHaveBeenCalledWith('myprocess:1');
+            done();
         });
     });
 

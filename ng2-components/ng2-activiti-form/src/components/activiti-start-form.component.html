@@ -1,0 +1,35 @@
+<div>
+    <div *ngIf="hasForm()">
+        <div class="mdl-card mdl-shadow--2dp activiti-form-container">
+            <div class="mdl-card__title">
+                <i class="material-icons">{{ form.isValid ? 'event_available' : 'event_busy' }}</i>
+                <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
+            </div>
+            <div class="mdl-card__media">
+                <div *ngIf="form.hasTabs()">
+                    <tabs-widget [tabs]="form.tabs" (formTabChanged)="checkVisibility($event);"></tabs-widget>
+                </div>
+
+                <div *ngIf="!form.hasTabs() && form.hasFields()">
+                    <container-widget *ngFor="let field of form.fields" [content]="field" (formValueChanged)="checkVisibility($event);"></container-widget>
+                </div>
+            </div>
+            <div *ngIf="showOutcomeButtons && form.hasOutcomes()" class="mdl-card__actions mdl-card--border" #outcomesContainer>
+                <button *ngFor="let outcome of form.outcomes"
+                        alfresco-mdl-button
+                        [disabled]="!isOutcomeButtonEnabled(outcome)"
+                        [class.mdl-button--colored]="!outcome.isSystem"
+                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome)"
+                        (click)="onOutcomeClicked(outcome, $event)">
+                    {{outcome.name}}
+                </button>
+            </div>
+            <div  *ngIf="showRefreshButton" class="mdl-card__menu" >
+                <button (click)="onRefreshClicked()"
+                        class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                    <i class="material-icons">refresh</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

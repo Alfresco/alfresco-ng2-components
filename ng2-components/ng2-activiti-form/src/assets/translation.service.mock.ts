@@ -19,7 +19,7 @@ import { Observable } from 'rxjs/Rx';
 
 export class TranslationMock {
 
-    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+    get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
         return Observable.of(key);
     }
 

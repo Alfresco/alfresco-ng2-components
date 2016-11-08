@@ -206,6 +206,18 @@ export class FormService {
             .catch(this.handleError);
     }
 
+    /**
+     * Get start form definition for a given process
+     * @param processId Process definition ID
+     * @returns {Observable<any>}
+     */
+    getStartFormDefinition(processId: string): Observable<any> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.processApi.getProcessDefinitionStartForm(processId))
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
     getRestFieldValues(taskId: string, field: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
         return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field));
