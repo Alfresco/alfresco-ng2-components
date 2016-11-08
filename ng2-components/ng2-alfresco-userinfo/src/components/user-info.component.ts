@@ -20,7 +20,7 @@ import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
 import { BpmUserService } from './../services/bpm-user.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
@@ -41,7 +41,11 @@ export class UserInfoComponent implements OnInit {
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
-                public setting: AlfrescoSettingsService) {
+                public setting: AlfrescoSettingsService,
+                private translate: AlfrescoTranslationService) {
+        if (translate) {
+            translate.addTranslationFolder('node_modules/ng2-alfresco-userinfo/src');
+        }
     }
 
     ngOnInit() {
