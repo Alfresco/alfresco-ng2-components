@@ -6,7 +6,7 @@
         </div>
         <div class="mdl-cell mdl-cell--4-col">
             <span class="activiti-label">{{ 'DETAILS.LABELS.STARTED' | translate }}</span>:
-            {{getStartedDate() | date:'medium'}}
+            {{getFormatDate(processInstance.started, 'medium')}}
         </div>
         <div class="mdl-cell mdl-cell--4-col">
             <button type="button" (click)="cancelProcess()" class="mdl-button">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>

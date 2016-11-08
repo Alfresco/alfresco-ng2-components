@@ -19,6 +19,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance';
 import { ActivitiProcessService } from './../services/activiti-process.service';
+import { DatePipe } from '@angular/common';
 
 declare let componentHandler: any;
 
@@ -53,8 +54,13 @@ export class ActivitiProcessInstanceHeader {
         return '';
     }
 
-    getStartedDate() {
-        return this.processInstance ? new Date(this.processInstance.started) : null;
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            console.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
+        }
     }
 
     cancelProcess() {
