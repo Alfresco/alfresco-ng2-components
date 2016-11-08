@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { UserTaskFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare let componentHandler: any;
 
@@ -32,7 +32,7 @@ declare let componentHandler: any;
 export class ActivitiTaskList implements OnInit, OnChanges {
 
     @Input()
-    taskFilter: UserTaskFilterRepresentationModel;
+    taskFilter: FilterRepresentationModel;
 
     @Input()
     data: DataTableAdapter;
@@ -191,13 +191,15 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         return tasks;
     }
 
-    private convertTaskUserToTaskQuery(userTask: UserTaskFilterRepresentationModel) {
-        let requestNode = {appDefinitionId: userTask.appId,
+    private convertTaskUserToTaskQuery(userTask: FilterRepresentationModel) {
+        let requestNode = {
+            appDefinitionId: userTask.appId,
             processDefinitionId: userTask.filter.processDefinitionId,
             text: userTask.filter.name,
             assignment: userTask.filter.assignment,
             state: userTask.filter.state,
-            sort: userTask.filter.sort};
+            sort: userTask.filter.sort
+        };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
 }

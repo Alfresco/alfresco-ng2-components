@@ -85,6 +85,9 @@ export class FilterParamRepresentationModel {
     name: string;
     state: string;
     sort: string;
+    assignment: string;
+    dueAfter: Date;
+    dueBefore: Date;
 
     constructor(obj?: any) {
         this.processDefinitionId = obj && obj.processDefinitionId || null;
@@ -92,38 +95,6 @@ export class FilterParamRepresentationModel {
         this.name = obj && obj.name || null;
         this.state = obj && obj.state || null;
         this.sort = obj && obj.sort || null;
-    }
-}
-
-export class UserProcessInstanceFilterRepresentationModel extends FilterRepresentationModel {
-    public filter: ProcessInstanceFilterRepresentation;
-    constructor(obj?: any) {
-        super(obj);
-        this.filter = new ProcessInstanceFilterRepresentation(obj.filter);
-    }
-}
-
-export class ProcessInstanceFilterRepresentation extends FilterParamRepresentationModel {
-    constructor(obj?: any) {
-        super(obj);
-    }
-}
-
-export class UserTaskFilterRepresentationModel extends FilterRepresentationModel {
-    public filter: TaskFilterRepresentationModel;
-    constructor(obj?: any) {
-        super(obj);
-        this.filter = new TaskFilterRepresentationModel(obj.filter);
-    }
-}
-
-export class TaskFilterRepresentationModel extends FilterParamRepresentationModel {
-    assignment: string;
-    dueAfter: Date;
-    dueBefore: Date;
-
-    constructor(obj?: any) {
-        super(obj);
         this.assignment = obj && obj.assignment || null;
         this.dueAfter = obj && obj.dueAfter || null;
         this.dueBefore = obj && obj.dueBefore || null;

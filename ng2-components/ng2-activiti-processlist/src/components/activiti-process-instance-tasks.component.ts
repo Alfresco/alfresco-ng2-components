@@ -18,7 +18,7 @@
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { TaskDetailsModel } from '../models/task-details.model';
+import { TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { Observable, Observer } from 'rxjs/Rx';
 import { DatePipe } from '@angular/common';
 

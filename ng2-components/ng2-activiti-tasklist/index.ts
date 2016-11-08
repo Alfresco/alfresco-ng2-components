@@ -38,7 +38,7 @@ import {
 
 export * from './src/components/index';
 export * from './src/services/activiti-tasklist.service';
-export * from  './src/models/filter.model';
+export * from  './src/models/index';
 
 export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
     NoTaskDetailsTemplateComponent,

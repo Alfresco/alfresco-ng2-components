@@ -18,9 +18,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataRowEvent, DataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
-import { TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
+import { TaskQueryRequestRepresentationModel, FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { ActivitiProcessService } from '../services/activiti-process.service';
-import { UserProcessInstanceFilterRepresentationModel } from '../models/filter.model';
 
 @Component({
     moduleId: module.id,
@@ -37,7 +36,7 @@ import { UserProcessInstanceFilterRepresentationModel } from '../models/filter.m
 export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
     @Input()
-    filter: UserProcessInstanceFilterRepresentationModel;
+    filter: FilterRepresentationModel;
 
     @Input()
     data: DataTableAdapter;
@@ -193,7 +192,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         return tasks;
     }
 
-    private convertProcessInstanceToTaskQuery(processFilter: UserProcessInstanceFilterRepresentationModel) {
+    private convertProcessInstanceToTaskQuery(processFilter: FilterRepresentationModel) {
         let requestNode = {
             appDefinitionId: processFilter.appId,
             processDefinitionKey: processFilter.filter.processDefinitionKey,

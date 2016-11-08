@@ -18,7 +18,7 @@
 import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { FilterRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { Observable, Observer } from 'rxjs/Rx';
 
 declare let componentHandler: any;
