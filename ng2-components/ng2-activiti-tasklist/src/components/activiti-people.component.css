@@ -13,3 +13,7 @@
 .add-people-dialog__content {
     padding: 20px 24px 2px;
 }
+
+.mdl-tooltip {
+    will-change: unset;
+}
