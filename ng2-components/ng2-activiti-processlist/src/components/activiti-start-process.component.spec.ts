@@ -35,7 +35,7 @@ describe('ActivitiStartProcessButton', () => {
     let formService: FormService;
     let getDefinitionsSpy: jasmine.Spy;
     let startProcessSpy: jasmine.Spy;
-    let de: DebugElement;
+    let debugElement: DebugElement;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -55,6 +55,7 @@ describe('ActivitiStartProcessButton', () => {
 
         fixture = TestBed.createComponent(ActivitiStartProcessButton);
         component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
         processService = fixture.debugElement.injector.get(ActivitiProcessService);
         formService = fixture.debugElement.injector.get(FormService);
 
@@ -79,15 +80,14 @@ describe('ActivitiStartProcessButton', () => {
 
     it('should display the correct number of processes in the select list', () => {
         fixture.detectChanges();
-        de = fixture.debugElement.query(By.css('select'));
-        expect(de.children.length).toBe(3);
+        let selectElement = debugElement.query(By.css('select'));
+        expect(selectElement.children.length).toBe(3);
     });
 
     it('should display the correct process def details', (done) => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-            de = fixture.debugElement.queryAll(By.css('select option'))[1];
-            let optionEl: HTMLOptionElement = de.nativeElement;
+            let optionEl: HTMLOptionElement = debugElement.queryAll(By.css('select option'))[1].nativeElement;
             expect(optionEl.value).toBe('my:process1');
             expect(optionEl.textContent.trim()).toBe('My Process 1');
             done();
