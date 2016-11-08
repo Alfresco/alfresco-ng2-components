@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataRowEvent, DataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
 import { ActivitiProcessService } from '../services/activiti-process.service';
-import { UserProcessInstanceFilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { UserProcessInstanceFilterRepresentationModel } from '../models/filter.model';
 
 @Component({
     moduleId: module.id,
     selector: 'activiti-process-instance-list',
     styles: [
-      `
+        `
               :host h1 {
                   font-size:22px
               }
@@ -60,7 +61,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
     ];
 
-    constructor (private processService: ActivitiProcessService, private translate: AlfrescoTranslationService) {
+    constructor(private processService: ActivitiProcessService, private translate: AlfrescoTranslationService) {
         if (translate !== null) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
@@ -193,11 +194,13 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     }
 
     private convertProcessInstanceToTaskQuery(processFilter: UserProcessInstanceFilterRepresentationModel) {
-        let requestNode = {appDefinitionId: processFilter.appId,
+        let requestNode = {
+            appDefinitionId: processFilter.appId,
             processDefinitionKey: processFilter.filter.processDefinitionKey,
             text: processFilter.filter.name,
             state: processFilter.filter.state,
-            sort: processFilter.filter.sort};
+            sort: processFilter.filter.sort
+        };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
 }

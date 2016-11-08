@@ -17,37 +17,6 @@
 
 /**
  *
- * This object represent the app definition.
- *
- *
- * @returns {AppDefinitionRepresentationModel} .
- */
-export class AppDefinitionRepresentationModel {
-    defaultAppId: string;
-    deploymentId: string;
-    name: string;
-    description: string;
-    theme: string;
-    icon: string;
-    id: number;
-    modelId: number;
-    tenantId: number;
-
-    constructor(obj?: any) {
-        this.defaultAppId = obj && obj.defaultAppId || null;
-        this.deploymentId = obj && obj.deploymentId || false;
-        this.name = obj && obj.name || null;
-        this.description = obj && obj.description || null;
-        this.theme = obj && obj.theme || null;
-        this.icon = obj && obj.icon || null;
-        this.id = obj && obj.id;
-        this.modelId = obj && obj.modelId;
-        this.tenantId = obj && obj.tenantId;
-    }
-}
-
-/**
- *
  * This object represent the filter.
  *
  *
@@ -106,52 +75,5 @@ export class UserProcessInstanceFilterRepresentationModel extends FilterRepresen
 export class ProcessInstanceFilterRepresentation extends FilterParamRepresentationModel {
     constructor(obj?: any) {
         super(obj);
-    }
-}
-
-export class UserTaskFilterRepresentationModel extends FilterRepresentationModel {
-    public filter: TaskFilterRepresentationModel;
-    constructor(obj?: any) {
-        super(obj);
-        this.filter = new TaskFilterRepresentationModel(obj.filter);
-    }
-}
-
-export class TaskFilterRepresentationModel extends FilterParamRepresentationModel {
-    assignment: string;
-    dueAfter: Date;
-    dueBefore: Date;
-
-    constructor(obj?: any) {
-        super(obj);
-        this.assignment = obj && obj.assignment || null;
-        this.dueAfter = obj && obj.dueAfter || null;
-        this.dueBefore = obj && obj.dueBefore || null;
-    }
-}
-
-export class TaskQueryRequestRepresentationModel {
-    appDefinitionId: string;
-    processInstanceId: string;
-    processDefinitionId: string;
-    processDefinitionKey: string;
-    text: string;
-    assignment: string;
-    state: string;
-    sort: string;
-    page: number;
-    size: number;
-
-    constructor(obj?: any) {
-        this.appDefinitionId = obj && obj.appDefinitionId || null;
-        this.processInstanceId = obj && obj.processInstanceId || null;
-        this.processDefinitionId = obj && obj.processDefinitionId || null;
-        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
-        this.text = obj && obj.text || null;
-        this.assignment = obj && obj.assignment || null;
-        this.state = obj && obj.state || null;
-        this.sort = obj && obj.sort || null;
-        this.page = obj && obj.page || 0;
-        this.size = obj && obj.size || 25;
     }
 }

@@ -70,7 +70,7 @@ Also make sure you include these dependencies in your `index.html` file:
 
 ## Basic usage example Activiti Task List
 The component shows the list of all the tasks filter by the
-FilterParamModel passed in input.
+FilterParamRepresentationModel passed in input.
 ```html
 <activiti-tasklist [taskFilter]="taskFilterModel"></activiti-tasklist>
 ```
@@ -82,7 +82,7 @@ clicked<br />
 
 #### Options
 
-**taskFilter**: { FilterParamModel } required) FilterParamModel object that
+**taskFilter**: { FilterParamRepresentationModel } required) FilterParamRepresentationModel object that
 is passed to the task list API to filter the task list.
 Example:
 ```json

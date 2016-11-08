@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {ProcessInstance} from '../models/process-instance';
-import {TaskQueryRequestRepresentationModel, UserProcessInstanceFilterRepresentationModel} from '../models/filter.model';
-import {User} from '../models/user.model';
-import {Comment} from '../models/comment.model';
-import {Injectable}     from '@angular/core';
-import {Observable}     from 'rxjs/Observable';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ProcessInstance } from '../models/process-instance';
+import { TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
+import { UserProcessInstanceFilterRepresentationModel } from '../models/filter.model';
+import { User } from '../models/user.model';
+import { Comment } from '../models/comment.model';
+import { Injectable }     from '@angular/core';
+import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -203,7 +204,7 @@ export class ActivitiProcessService {
      */
     addProcessInstanceComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(
-                this.authService.getAlfrescoApi().activiti.commentsApi.addProcessInstanceComment({message: message}, id)
+            this.authService.getAlfrescoApi().activiti.commentsApi.addProcessInstanceComment({message: message}, id)
             )
             .map(res => res)
             .map((response: Comment) => {
