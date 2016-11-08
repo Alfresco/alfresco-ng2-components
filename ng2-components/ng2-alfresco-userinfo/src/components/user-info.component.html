@@ -20,7 +20,7 @@
                     <div class="demo-card-wide mdl-card">
                         <div class="card-title__option mdl-card__title"
                              id="ecm-background-image"
-                             [style.background-image]="'url(' + baseComponentPath + '/../img/orangeBanner.png)'">
+                             [style.background-image]="'url(' + ( ecmBackgroundImage || baseComponentPath + '/../img/orangeBanner.png')+')'">
                             <img class="profile-picture"
                                  id="ecm-user-detail-image"
                                  alt="ecm-profile-image"
@@ -37,7 +37,8 @@
                                   <span id="ecm-email" class="mdl-list__item-sub-title">{{ecmUser.email}}</span>
                                 </span>
                                 <span id="ecm-job-title" class="mdl-list__item-secondary-content custom-role-style">
-                                    <span class="role-label-user">{{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}</span>
+                                    <span
+                                        class="role-label-user">{{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}</span>
                                     {{ecmUser.jobTitle?ecmUser.jobTitle:'N/A'}}
                                 </span>
                             </li>
@@ -50,7 +51,7 @@
                     <div class="demo-card-wide mdl-card">
                         <div class="card-title__option mdl-card__title"
                              id="bpm-background-image"
-                             [style.background-image]="'url(' + baseComponentPath + '/../img/blueBanner.png)'">
+                             [style.background-image]="'url(' + (bpmBackgroundImage || baseComponentPath + '/../img/blueBanner.png')+')'">
                             <img class="profile-picture"
                                  id="bpm-user-detail-image"
                                  alt="bpm-profile-image"

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
@@ -30,6 +30,15 @@ import { AlfrescoSettingsService, AlfrescoTranslationService } from 'ng2-alfresc
 })
 
 export class UserInfoComponent implements OnInit {
+
+    @Input()
+    ecmBackgroundImage: string;
+
+    @Input()
+    bpmBackgroundImage: string;
+
+    @Input()
+    fallBackThumbnailImage: string;
 
     private baseComponentPath = module.id.replace('components/user-info.component.js', '');
 
@@ -72,7 +81,7 @@ export class UserInfoComponent implements OnInit {
     onImageLoadingError(event) {
         if (event) {
             let element = <any> event.target;
-            element.src = this.anonymousImageUrl;
+            element.src = this.fallBackThumbnailImage || this.anonymousImageUrl;
         }
     }
 
