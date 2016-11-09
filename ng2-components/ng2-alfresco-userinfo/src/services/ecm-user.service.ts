@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -29,7 +29,8 @@ import { EcmUserModel } from '../models/ecm-user.model';
 @Injectable()
 export class EcmUserService {
 
-    constructor(private authService: AlfrescoAuthenticationService,
+    constructor(private apiService: AlfrescoApiService,
+                private authService: AlfrescoAuthenticationService,
                 private contentService: AlfrescoContentService) {
     }
 
@@ -50,7 +51,7 @@ export class EcmUserService {
     }
 
     private callApiGetPersonInfo(userName: string, opts?: any) {
-        return this.authService.getAlfrescoApi().core.peopleApi.getPerson(userName, opts);
+        return this.apiService.getInstance().core.peopleApi.getPerson(userName, opts);
     }
 
     getUserProfileImage(avatarId: string) {

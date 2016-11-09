@@ -29,7 +29,7 @@ declare let jasmine: any;
 
 describe('Ecm User service', () => {
 
-    let service, injector, authService, contentService;
+    let service, injector, authService, contentService, apiService;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
@@ -43,20 +43,28 @@ describe('Ecm User service', () => {
 
     beforeEach(() => {
         service = injector.get(EcmUserService);
+        apiService = injector.get(AlfrescoApiService);
         authService = injector.get(AlfrescoAuthenticationService);
         contentService = injector.get(AlfrescoContentService);
     });
 
     it('can instantiate service with authorization', () => {
         expect(authService).not.toBeNull('authorization should be provided');
-        let serviceAuth = new EcmUserService(authService, null);
+        let serviceAuth = new EcmUserService(null, authService, null);
 
         expect(serviceAuth instanceof EcmUserService).toBe(true, 'new service should be ok');
     });
 
     it('can instantiate service with content service', () => {
         expect(contentService).not.toBeNull('contentService should be provided');
-        let serviceContent = new EcmUserService(null, contentService);
+        let serviceContent = new EcmUserService(null, null, contentService);
+
+        expect(serviceContent instanceof EcmUserService).toBe(true, 'new service should be ok');
+    });
+
+    it('can instantiate service with api service', () => {
+        expect(contentService).not.toBeNull('api service should be provided');
+        let serviceContent = new EcmUserService(apiService, null, null);
 
         expect(serviceContent instanceof EcmUserService).toBe(true, 'new service should be ok');
     });

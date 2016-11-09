@@ -24,8 +24,8 @@ module.exports = function (config) {
       'node_modules/zone.js/dist/fake-async-test.js',
 
       // RxJs
-      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false},
 
       // Paths loaded via module imports:
       // Angular itself
@@ -44,11 +44,13 @@ module.exports = function (config) {
       {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
 
       // ng2-components
-      { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
+      {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
       // Fake files
-      { pattern: 'src/assets/ecmImg.gif', included: false, watched: true, served: true },
-      { pattern: 'src/assets/bpmImg.gif', included: false, watched: true, served: true },
-      { pattern: 'src/img/anonymous.gif', included: false, watched: true, served: true },
+      {pattern: 'src/assets/ecmImg.gif', included: false, watched: true, served: true},
+      {pattern: 'src/assets/bpmImg.gif', included: false, watched: true, served: true},
+      {pattern: 'src/img/anonymous.gif', included: false, watched: true, served: true},
+      {pattern: 'src/img/blueBanner.png', included: false, watched: true, served: true},
+      {pattern: 'src/img/orangeBanner.png', included: false, watched: true, served: true},
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},

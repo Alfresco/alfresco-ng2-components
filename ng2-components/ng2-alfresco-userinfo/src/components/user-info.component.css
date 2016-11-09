@@ -7,6 +7,7 @@
   cursor: pointer;
   border: 1px solid #999999;
   vertical-align: middle;
+  background-color:white;;
 }
 
 .button-profile {
@@ -16,7 +17,6 @@
 }
 
 .detail-user-profile-list-mdl{
-    margin-right: 10px;
     padding: 0px 0;
 }
 
@@ -24,6 +24,7 @@
     max-height: 450px;
     min-width: 450px;
     overflow: auto;
+    padding:0px;
 }
 
 .header-profile{
@@ -52,4 +53,34 @@ span.role-label-user{
 
 .truncate-long-names{
     text-overflow: ellipsis;
+}
+.demo-card-wide.mdl-card {
+    width: inherit;
+}
+.demo-card-wide > .mdl-card__title {
+    color: #fff;
+    height: 176px;
+}
+.demo-card-wide > .mdl-card__menu {
+    color: #fff;
+}
+
+.card-title__option{
+    height: 100px!important;
+}
+
+img.profile-picture {
+    background-color: white;
+    background-size: cover;
+    border-radius: 50%;
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), 1px 1px 4px rgba(0,0,0,0.3);
+    height: 80px;
+    width: 80px;
+    z-index: 3;
+    margin-left: 0px;
+    margin-right: 8px;
+}
+
+.menu-container__items{
+
 }

@@ -9,5 +9,9 @@
 }
 
 .user-profile {
-    margin-right: 3px;
+    margin-right: 50px;
+}
+
+.mdl-button-padding {
+    padding-left: 20px;
 }

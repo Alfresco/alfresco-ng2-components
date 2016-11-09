@@ -25,7 +25,7 @@ declare let jasmine: any;
 
 describe('Bpm User service', () => {
 
-    let service, injector, authService;
+    let service, injector, authService, apiService;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
@@ -39,6 +39,7 @@ describe('Bpm User service', () => {
     beforeEach(() => {
         service = injector.get(BpmUserService);
         authService = injector.get(AlfrescoAuthenticationService);
+        apiService = injector.get(AlfrescoApiService);
         jasmine.Ajax.install();
     });
 
@@ -47,7 +48,7 @@ describe('Bpm User service', () => {
     });
 
     it('can instantiate service with authorization', () => {
-        let serviceTest = new BpmUserService(authService);
+        let serviceTest = new BpmUserService(authService, apiService);
 
         expect(serviceTest instanceof BpmUserService).toBe(true, 'new service should be ok');
     });
@@ -71,29 +72,14 @@ describe('Bpm User service', () => {
             });
         });
 
-        it('should retrieve avatar url for current user', (done) => {
-            spyOn(service, 'callGetProfilePictureApi').and.returnValue(Promise.resolve('fake/img/path'));
-            service.getCurrentUserProfileImage().subscribe(
-                (path) => {
-                    expect(path).toBeDefined();
-                    expect(path).toEqual('fake/img/path');
-                    done();
-                });
+        it('should retrieve avatar url for current user', () => {
+            let path = service.getCurrentUserProfileImage();
+            expect(path).toBeDefined();
+            expect(path).toContain('/app/rest/admin/profile-picture');
         });
 
         it('should catch errors on call for profile', (done) => {
             service.getCurrentUserInfo().subscribe(() => {
-            }, () => {
-                done();
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 403
-            });
-        });
-
-        it('should catch errors on call for profile picture', (done) => {
-            service.getCurrentUserProfileImage().subscribe(() => {
             }, () => {
                 done();
             });

@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
 import { BpmUserService } from './../services/bpm-user.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
@@ -30,6 +30,18 @@ import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 })
 
 export class UserInfoComponent implements OnInit {
+
+    @Input()
+    ecmBackgroundImage: string;
+
+    @Input()
+    bpmBackgroundImage: string;
+
+    @Input()
+    menuOpenType: string = 'right';
+
+    @Input()
+    fallBackThumbnailImage: string;
 
     private baseComponentPath = module.id.replace('components/user-info.component.js', '');
 
@@ -41,7 +53,11 @@ export class UserInfoComponent implements OnInit {
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
-                public setting: AlfrescoSettingsService) {
+                public setting: AlfrescoSettingsService,
+                private translate: AlfrescoTranslationService) {
+        if (translate) {
+            translate.addTranslationFolder('node_modules/ng2-alfresco-userinfo/src');
+        }
     }
 
     ngOnInit() {
@@ -61,12 +77,30 @@ export class UserInfoComponent implements OnInit {
                 .subscribe((res) => {
                     this.bpmUser = <BpmUserModel> res;
                 });
-            this.bpmUserService.getCurrentUserProfileImage()
-                .subscribe(
-                    (res) => {
-                        this.bpmUserImage = res;
-                    }
-                );
+            this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+        }
+    }
+
+    onImageLoadingError(event) {
+        if (event) {
+            let element = <any> event.target;
+            element.src = this.fallBackThumbnailImage || this.anonymousImageUrl;
+        }
+    }
+
+    stopClosing(event) {
+        event.stopPropagation();
+    }
+
+    getUserNameHeaderFor(env: string) {
+        if (this.ecmUser && env === 'ECM') {
+            return this.ecmUser.firstName || this.ecmUser.lastName;
+        }
+
+        if (this.bpmUser && env === 'BPM') {
+            return this.formatValue(this.bpmUser.firstName) ||
+                this.formatValue(this.bpmUser.lastName) ||
+                this.formatValue(this.bpmUser.fullname);
         }
     }
 
@@ -75,15 +109,15 @@ export class UserInfoComponent implements OnInit {
     }
 
     getUserAvatar() {
-        return this.ecmUserImage || this.bpmUserImage || this.anonymousImageUrl;
+        return this.ecmUserImage || this.bpmUserImage;
     }
 
     getBpmUserAvatar() {
-        return this.bpmUserImage || this.anonymousImageUrl;
+        return this.bpmUserImage;
     }
 
     getEcmUserAvatar() {
-        return this.ecmUserImage || this.anonymousImageUrl;
+        return this.ecmUserImage;
     }
 
     formatValue(value: string) {

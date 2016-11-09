@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -29,7 +29,8 @@ import { BpmUserModel } from '../models/bpm-user.model';
 @Injectable()
 export class BpmUserService {
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private alfrescoJsApi: AlfrescoApiService) {
     }
 
     /**
@@ -37,19 +38,13 @@ export class BpmUserService {
      * @param userName - the user name
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.profileApi.getProfile())
+        return Observable.fromPromise(this.alfrescoJsApi.getInstance().activiti.profileApi.getProfile())
             .map((data) => <BpmUserModel> data)
             .catch(this.handleError);
     }
 
-    getCurrentUserProfileImage(): Observable<any> {
-        return Observable.fromPromise(this.callGetProfilePictureApi())
-            .map((data) => data)
-            .catch(this.handleError);
-    }
-
-    private callGetProfilePictureApi() {
-        return this.authService.getAlfrescoApi().activiti.profileApi.getProfilePicture();
+    getCurrentUserProfileImage(): string {
+        return this.alfrescoJsApi.getInstance().activiti.profileApi.getProfilePictureUrl();
     }
 
     /**
