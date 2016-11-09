@@ -2,11 +2,11 @@
 
 The [Angular 2](https://angular.io/) based application development framework requires the following:
 
-- An Alfresco Platform Repository (version [5.2.a-EA](https://wiki.alfresco.com/wiki/Community_file_list_201606-EA) or newer) to talk to, which has [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) enabled.
+- An Alfresco Platform Repository (version [201609 Early Access](https://community.alfresco.com/docs/DOC-6372-alfresco-community-edition-file-list-201609-ea) or newer) to talk to, which has [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) enabled.
 - [Download and install Activiti](https://www.alfresco.com/products/bpm/alfresco-activiti/trial)
 - [Node.js](https://nodejs.org/en/) JavaScript runtime.
 - [npm](https://www.npmjs.com/) package manager for JavaScript.
-- (If you use ECM and BPM togheter) Make sure your user has the same username and password in both system
+- (If you use ECM and BPM together) Make sure your user has the same username and password in both system
 
 *Note: Default username for activiti is "admin@app.activiti.com" and "admin" for Alfresco, and also the default password are different. Change them to be equal.*
 
@@ -47,4 +47,4 @@ All those values can be modified at their respective `location` directive on the
 
 It also need to be compiled with the [Headers More](https://www.nginx.com/resources/wiki/modules/headers_more/) module , which add more control over sending headers to the backend.
 
-If you want to know more on how to install and configure NginX to work with the Application Development Framework can be found [here](https://community.alfresco.com/community/application-development-framework/blog/2016/09/28/adf-development-set-up-with-nginx-proxy)
+If you want to know more on how to install and configure Nginx to work with the Application Development Framework can be found [here](https://community.alfresco.com/community/application-development-framework/blog/2016/09/28/adf-development-set-up-with-nginx-proxy)
