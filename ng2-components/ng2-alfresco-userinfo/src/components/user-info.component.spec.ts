@@ -22,7 +22,7 @@ import { BpmUserModel } from '../models/bpm-user.model';
 import { TranslationMock } from '../assets/translation.service.mock';
 import {
     CoreModule,
-    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
@@ -73,16 +73,19 @@ describe('User info component', () => {
     let userInfoComp: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
     let element: HTMLElement;
-    let stubSetting: AlfrescoSettingsService;
+    let stubAuthService: AlfrescoAuthenticationService;
     let stubContent: AlfrescoContentService;
+    let componentHandler;
 
     beforeEach(async(() => {
+        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+        window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [CoreModule],
             declarations: [UserInfoComponent],
             providers: [EcmUserService,
                 BpmUserService,
-                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
@@ -135,9 +138,9 @@ describe('User info component', () => {
     describe('when user is logged on ecm', () => {
 
         beforeEach(() => {
-            stubSetting = fixture.debugElement.injector.get(AlfrescoSettingsService);
+            stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             stubContent = fixture.debugElement.injector.get(AlfrescoContentService);
-            spyOn(stubSetting, 'getProviders').and.returnValue('ECM');
+            spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
         });
 
         beforeEach(() => {
@@ -244,8 +247,8 @@ describe('User info component', () => {
         let fakeBpmUserForTest;
 
         beforeEach(() => {
-            stubSetting = fixture.debugElement.injector.get(AlfrescoSettingsService);
-            spyOn(stubSetting, 'getProviders').and.returnValue('BPM');
+            stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
+            spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             jasmine.Ajax.install();
             fakeBpmUserForTest = fakeBpmUser;
         });
@@ -324,9 +327,10 @@ describe('User info component', () => {
     describe('when user is logged on bpm and ecm', () => {
 
         beforeEach(async(() => {
-            stubSetting = fixture.debugElement.injector.get(AlfrescoSettingsService);
+            stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             stubContent = fixture.debugElement.injector.get(AlfrescoContentService);
-            spyOn(stubSetting, 'getProviders').and.returnValue('ALL');
+            spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
+            spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/ecmImg.gif');
             userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
             jasmine.Ajax.install();
