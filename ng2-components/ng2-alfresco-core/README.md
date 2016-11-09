@@ -66,8 +66,6 @@ npm install --save ng2-alfresco-core
 Provides access to initialized **AlfrescoJSApi** instance.
 
 ```ts
-import { OnInit } from '@angular/core'; 
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 export class MyComponent implements OnInit {
 
@@ -136,38 +134,44 @@ export class MyComponent implements OnInit {
 The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
 
 ```ts
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `
                <div *ngIf="!authenticated" >
                     Authentication failed to ip {{ ecmHost }} with user: admin, admin
                </div>
                <div *ngIf="authenticated">
-                    Authentication successfull to ip {{ ecmHost }} with user: admin, admin, your token is {{ token }}
+                    <H5>ECM</H5>
+                    Authentication successfull to ip {{ ecmHost }} with user: admin, admin<br> 
+                    your token is {{ tokenEcm }}<br>
+                    <H5>BPM</H5>
+                    Authentication successfull to ip {{ bpmHost }} with user: admin, admin<br> 
+                    your token is {{ tokenBpm }}<br>
                </div>`
 })
 class MyDemoApp {
     authenticated: boolean = false;
 
-    ecmHost: string = 'http://127.0.0.1:8080';
+    public ecmHost: string = 'http://localhost:8080';
 
-    token: string;
+    public bpmHost: string = 'http://localhost:9999';
+
+    tokenBpm: string;
+
+    tokenEcm: string;
 
     constructor(public alfrescoAuthenticationService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
 
         alfrescoSettingsService.ecmHost = this.ecmHost;
-        alfrescoSettingsService.setProviders('ECM');
+        alfrescoSettingsService.bpmHost = this.bpmHost;
+
+        alfrescoSettingsService.setProviders('ALL');
     }
 
     ngOnInit() {
@@ -177,7 +181,8 @@ class MyDemoApp {
     login() {
         this.alfrescoAuthenticationService.login('admin', 'admin').subscribe(
             token => {
-                this.token = token.ticket;
+                this.tokenBpm = this.alfrescoAuthenticationService.getTicketBpm();
+                this.tokenEcm = this.alfrescoAuthenticationService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
@@ -186,11 +191,19 @@ class MyDemoApp {
             });
     }
 }
-bootstrap(MyDemoApp, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
 
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot()
+    ],
+    declarations: [MyDemoApp],
+    bootstrap: [MyDemoApp]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 #### Renditions Service
