@@ -112,6 +112,8 @@ The component shows the list of all the tasks filter by the FilterParamRepresent
 <activiti-tasklist [taskFilter]="taskFilterModel"></activiti-tasklist>
 ```
 
+Usage example of this component :
+
 **main.ts**
 ```ts
 

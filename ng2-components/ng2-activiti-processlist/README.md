@@ -114,6 +114,8 @@ This component renders a list containing all the process instances matched by th
 <activiti-process-instance-list [filter]="processFilterModel"></activiti-tasklist>
 ```
 
+Usage example of this component :
+
 **main.ts**
 ```ts
 

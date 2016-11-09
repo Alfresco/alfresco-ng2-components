@@ -112,7 +112,7 @@ The component shows the list of all the available reports
 <analytics-report-list></analytics-report-list>
 ```
 
-Example of an App that use Activiti Analytics List component :
+Usage example of this component :
 
 **main.ts**
 ```ts

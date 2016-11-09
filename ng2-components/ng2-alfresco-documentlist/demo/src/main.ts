@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-
-import { NgModule, Component, OnInit } from '@angular/core';
+import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule }  from 'ng2-alfresco-datatable';
-import { DocumentListModule } from 'ng2-alfresco-documentlist';
+import { DocumentListModule, DocumentList } from 'ng2-alfresco-documentlist';
 
 import {
     AlfrescoSettingsService,
@@ -142,10 +141,15 @@ import { DocumentActionsService } from 'ng2-alfresco-documentlist';
 class DocumentListDemo implements OnInit {
 
     currentPath: string = '/';
+
     authenticated: boolean = false;
-    ecmHost: string = 'http://devproducts-platform.alfresco.me';
+
+    ecmHost: string = 'http://localhost:8080';
 
     ticket: string;
+
+    @ViewChild(DocumentList)
+    documentList: DocumentList;
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService,
                 translation: AlfrescoTranslationService, private documentActions: DocumentActionsService) {
@@ -194,6 +198,7 @@ class DocumentListDemo implements OnInit {
                 console.log(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
+                this.documentList.reload();
             },
             error => {
                 console.log(error);

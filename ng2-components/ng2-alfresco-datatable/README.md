@@ -93,6 +93,7 @@ Follow the 3 steps below:
 
 ## Basic usage example
 
+Usage example of this component :
 
 **my.component.ts**
 

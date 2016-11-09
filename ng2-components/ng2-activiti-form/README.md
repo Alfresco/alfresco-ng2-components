@@ -103,10 +103,10 @@ Follow the 3 steps below:
 The component shows a Form from Activiti
 
 ```html
-<analytics-report-list></analytics-report-list>
+<activiti-form [taskId]="taskId"></activiti-form>
 ```
 
-Example of an App that use Activiti Analytics List component :
+Usage example of this component :
 
 **main.ts**
 ```ts
