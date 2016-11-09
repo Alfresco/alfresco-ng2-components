@@ -72,7 +72,6 @@
 
     "ng2-translate": "2.5.0",
     "alfresco-js-api": "^0.3.0",
-    "ng2-activiti-tasklist": "0.3.3",
     "ng2-activiti-form": "0.3.3",
     "ng2-alfresco-core": "0.3.2",
     "ng2-alfresco-datatable": "0.3.2"
