@@ -1,4 +1,4 @@
-<div id="userinfo_container">
+<div id="userinfo_container" *ngIf="isLoggedIn()">
     <div *ngIf="ecmUser || bpmUser" class="button-profile" id="user-profile" data-automation-id="user-profile">
         <img id="logged-user-img"
              [src]="getUserAvatar()"

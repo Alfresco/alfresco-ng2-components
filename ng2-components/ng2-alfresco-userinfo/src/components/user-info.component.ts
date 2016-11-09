@@ -47,9 +47,13 @@ export class UserInfoComponent implements AfterViewChecked, OnInit {
     private baseComponentPath = module.id.replace('components/user-info.component.js', '');
 
     ecmUser: EcmUserModel;
+
     bpmUser: BpmUserModel;
+
     anonymousImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
+
     bpmUserImage: any;
+
     ecmUserImage: any;
 
     constructor(private ecmUserService: EcmUserService,
@@ -59,6 +63,10 @@ export class UserInfoComponent implements AfterViewChecked, OnInit {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-alfresco-userinfo/src');
         }
+
+        authService.loginSubject.subscribe((response) => {
+            this.getUserInfo();
+        });
     }
 
     ngAfterViewChecked() {
@@ -69,8 +77,16 @@ export class UserInfoComponent implements AfterViewChecked, OnInit {
     }
 
     ngOnInit() {
+        this.getUserInfo();
+    }
+
+    getUserInfo() {
         this.getEcmUserInfo();
         this.getBpmUserInfo();
+    }
+
+    isLoggedIn() {
+        return this.authService.isLoggedIn();
     }
 
     getEcmUserInfo(): void {

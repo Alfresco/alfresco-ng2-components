@@ -64,7 +64,6 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
                     <ng2-alfresco-userinfo [menuOpenType]="left"></ng2-alfresco-userinfo>
                </div>
 
-
                <!-- LOGIN COMPONENT -->
                       <alfresco-login [providers]="providers"
                        [disableCsrf]="disableCsrf"></alfresco-login>`,
