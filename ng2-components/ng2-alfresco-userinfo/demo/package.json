@@ -16,7 +16,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "ng2-alfresco-userinfo": "0.3.2"
+    "ng2-alfresco-userinfo": "0.3.2",
+    "ng2-alfresco-login": "^0.3.2"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.32",
