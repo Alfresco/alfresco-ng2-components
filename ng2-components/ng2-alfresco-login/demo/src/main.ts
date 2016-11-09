@@ -61,9 +61,9 @@ import { LoginModule } from 'ng2-alfresco-login';
 })
 export class AppComponent {
 
-    public ecmHost: string = 'http://devproducts-platform.alfresco.me/alfresco';
+    public ecmHost: string = 'http://localhost:8080';
 
-    public bpmHost: string = 'http://devproducts-platform.alfresco.me/activiti';
+    public bpmHost: string = 'http://localhost:9999'
 
     public ticket: string;
 
