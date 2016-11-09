@@ -141,6 +141,7 @@ describe('User info component', () => {
             stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             stubContent = fixture.debugElement.injector.get(AlfrescoContentService);
             spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
+            spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
         });
 
         beforeEach(() => {
@@ -153,7 +154,8 @@ describe('User info component', () => {
 
         describe('and has image', () => {
 
-            beforeEach(() => {
+            beforeEach(async(() => {
+                spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/ecmImg.gif');
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
@@ -169,41 +171,33 @@ describe('User info component', () => {
                         }
                     }
                 });
-            });
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                });
+            }));
 
             it('should show ecm only last name when user first name is null ', async(() => {
-                spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/ecmImg.gif');
-                fixture.whenStable().then(() => {
-                    userInfoComp.ecmUser.firstName = null;
-                    fixture.detectChanges();
-                    expect(element.querySelector('#userinfo_container')).toBeDefined();
-                    expect(element.querySelector('#ecm-username')).toBeDefined();
-                    expect(element.querySelector('#ecm-username').textContent).not.toContain('fake-ecm-first-name');
-                });
+                userInfoComp.ecmUser.firstName = null;
+                fixture.detectChanges();
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#ecm-username')).toBeDefined();
+                expect(element.querySelector('#ecm-username').textContent).not.toContain('fake-ecm-first-name');
             }));
 
             it('should get the ecm current user image from the service', async(() => {
-                spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/ecmImg.gif');
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#userinfo_container')).toBeDefined();
-                    expect(element.querySelector('#logged-user-img')).toBeDefined();
-                    expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
-                });
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#logged-user-img')).toBeDefined();
+                expect(element.querySelector('#logged-user-img').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
             }));
 
             it('should get the ecm user informations from the service', async(() => {
-                spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/ecmImg.gif');
-                fixture.whenStable().then(() => {
-                    fixture.detectChanges();
-                    expect(element.querySelector('#userinfo_container')).toBeDefined();
-                    expect(element.querySelector('#ecm_username')).toBeDefined();
-                    expect(element.querySelector('#ecm_title')).toBeDefined();
-                    expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
-                    expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
-                    expect(element.querySelector('#ecm-full-name').textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
-                    expect(element.querySelector('#ecm-job-title').textContent).toContain('USER_PROFILE.LABELS.ECM.JOB_TITLE');
-                });
+                expect(element.querySelector('#userinfo_container')).toBeDefined();
+                expect(element.querySelector('#ecm_username')).toBeDefined();
+                expect(element.querySelector('#ecm_title')).toBeDefined();
+                expect(element.querySelector('#ecm-user-detail-image')).toBeDefined();
+                expect(element.querySelector('#ecm-user-detail-image').getAttribute('src')).toEqual('src/assets/ecmImg.gif');
+                expect(element.querySelector('#ecm-full-name').textContent).toContain('fake-ecm-first-name fake-ecm-last-name');
+                expect(element.querySelector('#ecm-job-title').textContent).toContain('USER_PROFILE.LABELS.ECM.JOB_TITLE');
             }));
         });
 
@@ -211,6 +205,7 @@ describe('User info component', () => {
 
             beforeEach(async(() => {
                 userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
+                spyOn(stubContent, 'getContentUrl').and.returnValue('wrongImage.gif');
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
@@ -249,6 +244,7 @@ describe('User info component', () => {
         beforeEach(() => {
             stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
+            spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             jasmine.Ajax.install();
             fakeBpmUserForTest = fakeBpmUser;
         });
@@ -331,6 +327,7 @@ describe('User info component', () => {
             stubContent = fixture.debugElement.injector.get(AlfrescoContentService);
             spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
+            spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/ecmImg.gif');
             userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
             jasmine.Ajax.install();
