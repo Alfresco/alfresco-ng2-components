@@ -69,7 +69,6 @@ import { UploadModule } from 'ng2-alfresco-upload';
                     </label>
                 </p>
                 
-                
                 <p style="width:250px;margin: 20px;">
                     <label for="switch-folder-upload" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
                         <input type="checkbox" id="switch-folder-upload" class="mdl-switch__input" (change)="toggleFolder()">
@@ -106,7 +105,7 @@ export class MyDemoApp implements OnInit {
 
     authenticated: boolean;
 
-    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://localhost:8080';
 
     multipleFileUpload: boolean = false;
     folderUpload: boolean = false;
@@ -153,7 +152,6 @@ export class MyDemoApp implements OnInit {
                 this.authenticated = false;
             });
     }
-
 
     toggleMultipleFileUpload() {
         this.multipleFileUpload = !this.multipleFileUpload;
