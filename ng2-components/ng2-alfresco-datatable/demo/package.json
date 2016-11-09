@@ -22,30 +22,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@angular/common": "2.0.0",
-    "@angular/compiler": "2.0.0",
-    "@angular/core": "2.0.0",
-    "@angular/forms": "2.0.0",
-    "@angular/http": "2.0.0",
-    "@angular/platform-browser": "2.0.0",
-    "@angular/platform-browser-dynamic": "2.0.0",
-    "@angular/router": "3.0.0",
-    "@angular/upgrade": "2.0.0",
-    "@types/node": "^6.0.42",
-    "core-js": "^2.4.1",
-    "reflect-metadata": "^0.1.3",
-    "rxjs": "5.0.0-beta.12",
-    "systemjs": "0.19.27",
-    "zone.js": "^0.6.23",
-
-    "license-check": "1.1.5",
-
-    "ng2-translate": "2.5.0",
-    "ng2-alfresco-core": "0.3.2",
-    "ng2-alfresco-datatable": "0.3.2",
-
-    "material-design-icons": "2.2.3",
-    "material-design-lite": "1.2.1"
+    "ng2-alfresco-datatable": "0.3.2"
   },
   "devDependencies": {
     "@types/core-js": "^0.9.32",
