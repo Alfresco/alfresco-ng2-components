@@ -7,8 +7,9 @@
              class="profile-image"/>
     </div>
     <div *ngIf="ecmUser || bpmUser" id="user-profile-lists" class="user-profile-list-mdl
-                mdl-menu mdl-menu--bottom-right
-                mdl-js-menu mdl-js-ripple-effect"
+                mdl-menu mdl-js-menu mdl-js-ripple-effect"
+         [class.mdl-menu--bottom-left]="menuOpenType === 'left'? true : false"
+         [class.mdl-menu--bottom-right]="menuOpenType === 'right'? true : false"
          for="user-profile" (click)="stopClosing($event)">
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect menu-container__items">
             <div id="tab-bar-env" class="mdl-tabs__tab-bar" [hidden]="!(ecmUser && bpmUser)">

@@ -38,6 +38,9 @@ export class UserInfoComponent implements OnInit {
     bpmBackgroundImage: string;
 
     @Input()
+    menuOpenType: string = 'right';
+
+    @Input()
     fallBackThumbnailImage: string;
 
     private baseComponentPath = module.id.replace('components/user-info.component.js', '');

@@ -97,7 +97,8 @@ Also make sure you include these dependencies in your `index.html` file:
 | --- | --- | --- | --- |
 | ecmBackgroundImage | string |  | Custom path for the background banner image for ECM users |
 | bpmBackgroundImage | string |  | Custom path for the background banner image for BPM users |
-| fallBackThumbnailImage | string | ng2-alfresco-userinfo/src/img/anonymous.gif | Fallback image for profile when thubnail is missing|
+| menuOpenType | string | bottom-right  | Custom choice for opening menu bottom right or bottom left  |
+| fallBackThumbnailImage | string | image at ng2-alfresco-userinfo/src/img/anonymous.gif | Fallback image for profile when thubnail is missing|
 
 This will show a round icon with user and on click some user information are showed.
 If user is logged in with ECM and BPM the ECM image will be showed.
