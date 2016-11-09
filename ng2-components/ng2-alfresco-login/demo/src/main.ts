@@ -63,7 +63,7 @@ export class AppComponent {
 
     public ecmHost: string = 'http://localhost:8080';
 
-    public bpmHost: string = 'http://localhost:9999'
+    public bpmHost: string = 'http://localhost:9999';
 
     public ticket: string;
 
