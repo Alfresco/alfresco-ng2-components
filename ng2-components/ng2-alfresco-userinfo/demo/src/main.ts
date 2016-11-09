@@ -43,7 +43,7 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
                  </p>
                </div>
                <div *ngIf="isLoggedIn()">
-                   <ng2-alfresco-userinfo></ng2-alfresco-userinfo>
+                   <ng2-alfresco-userinfo [menuOpenType]="left"></ng2-alfresco-userinfo>
                </div>
                <p></p>
                <div>

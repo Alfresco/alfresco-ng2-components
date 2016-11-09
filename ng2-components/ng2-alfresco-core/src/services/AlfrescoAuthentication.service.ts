@@ -105,10 +105,10 @@ export class AlfrescoAuthenticationService {
      * @returns {Observable<R>|Observable<T>}
      */
     public logout() {
+        this.removeTicket();
         return Observable.fromPromise(this.callApiLogout())
             .map(res => <any> res)
             .do(response => {
-                this.removeTicket();
                 return response;
             })
             .catch(this.handleError);

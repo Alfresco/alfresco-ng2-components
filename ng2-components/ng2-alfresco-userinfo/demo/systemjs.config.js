@@ -38,7 +38,6 @@
                 defaultExtension: 'js'
             },
             'ng2-translate': { defaultExtension: 'js' },
-
             'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-userinfo': { main: './index.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'}
