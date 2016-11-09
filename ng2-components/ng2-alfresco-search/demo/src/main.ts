@@ -28,7 +28,6 @@ import {
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 
-
 @Component({
     selector: 'alfresco-app-demo',
     template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
@@ -54,7 +53,7 @@ class SearchDemo implements OnInit {
 
     public searchTerm: string = 'test';
 
-    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://localhost:8080';
 
     ticket: string;
 

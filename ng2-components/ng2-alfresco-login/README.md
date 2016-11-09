@@ -1,4 +1,5 @@
 # Alfresco Core Component for Angular 2
+
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
@@ -92,7 +93,6 @@ Follow the 3 steps below:
 ## Basic usage
 
 This component allow to authenticate to Alfresco One and Alfresco Activiti.
-
 
 ```html
 <alfresco-login [providers]="'ALL'"></alfresco-login>
