@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
-export * from './pagination-provider';
+export * from './paginationProvider.interface';
 export * from './pagination.component';
