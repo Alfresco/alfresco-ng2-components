@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { PaginationProvider } from './pagination-provider';
+import { PaginationProvider } from './paginationProvider.interface';
 
 @Component({
     moduleId: module.id,
