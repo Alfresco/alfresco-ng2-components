@@ -1,7 +1,7 @@
 {
   "name": "ng2-activiti-analytics",
   "description": "Activiti Angular2 Analytics Component",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "author": "Alfresco Software, Ltd.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -66,10 +66,10 @@
     "moment": "2.15.1",
     "raphael": "^2.2.6",
 
-    "alfresco-js-api": "^0.3.0",
+    "alfresco-js-api": "^0.4.0",
     "ng2-translate": "2.5.0",
-    "ng2-alfresco-core": "0.3.2",
-    "ng2-activiti-diagrams": "0.3.3"
+    "ng2-alfresco-core": "0.4.0",
+    "ng2-activiti-diagrams": "0.4.0"
   },
   "devDependencies": {
     "@types/node": "^6.0.42",

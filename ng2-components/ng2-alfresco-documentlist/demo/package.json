@@ -37,10 +37,10 @@
     "material-design-lite": "1.2.1",
 
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "^0.3.0",
-    "ng2-alfresco-core": "0.3.2",
-    "ng2-alfresco-datatable": "0.3.2",
-    "ng2-alfresco-documentlist": "^0.3.0"
+    "alfresco-js-api": "^0.4.0",
+    "ng2-alfresco-core": "0.4.0",
+    "ng2-alfresco-datatable": "0.4.0",
+    "ng2-alfresco-documentlist": "^0.4.0"
   },
   "devDependencies": {
     "@types/node": "^6.0.42",
