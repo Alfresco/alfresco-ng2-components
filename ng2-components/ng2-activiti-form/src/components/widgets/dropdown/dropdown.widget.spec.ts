@@ -98,4 +98,53 @@ describe('DropdownWidget', () => {
         expect(widget.field.options[0]).toBe(emptyOption);
         expect(widget.field.options[1]).toBe(restFieldValue);
     });
+
+    describe('when template is ready', () => {
+        let dropDownWidget: DropdownWidget;
+        let fixture: ComponentFixture<DropdownWidget>;
+        let element: HTMLElement;
+        let componentHandler;
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [DropdownWidget]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(DropdownWidget);
+                dateWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        beforeEach(() => {
+            spyOn(dateWidget, 'setupMaterialTextField').and.stub();
+            dateWidget.field = new FormFieldModel(new FormModel(), {
+                id: 'date-field-id',
+                name: 'date-name',
+                value: '9-9-9999',
+                type: 'date',
+                readOnly: 'false'
+            });
+            dateWidget.field.isVisible = true;
+            fixture.detectChanges();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should show visible date widget', async(() => {
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#date-field-id')).toBeDefined();
+                    expect(element.querySelector('#date-field-id')).not.toBeNull();
+                    let dateElement: any = element.querySelector('#date-field-id');
+                    expect(dateElement.value).toEqual('9-9-9999');
+                });
+        }));
+
+    });
 });
