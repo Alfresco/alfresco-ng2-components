@@ -52,10 +52,10 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
     showRefreshButton: boolean = true;
 
     @Output()
-    processCancelledEmitter = new EventEmitter();
+    processCancelled: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    taskFormCompletedEmitter = new EventEmitter();
+    taskFormCompleted: EventEmitter<any> = new EventEmitter<any>();
 
     processInstanceDetails: ProcessInstance;
 
@@ -113,11 +113,11 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
         }
     }
 
-    processCancelled(data: any) {
-        this.processCancelledEmitter.emit(data);
+    bubbleProcessCancelled(data: any) {
+        this.processCancelled.emit(data);
     }
 
-    taskFormCompleted(data: any) {
-        this.taskFormCompletedEmitter.emit(data);
+    bubbleTaskFormCompleted(data: any) {
+        this.taskFormCompleted.emit(data);
     }
 }

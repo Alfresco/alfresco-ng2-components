@@ -71,7 +71,7 @@
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column">
                             <span>Process Details</span>
-                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (taskFormCompleted)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
+                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (activitiprocesslist)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
                         </div>
                     </div>
                 </div>

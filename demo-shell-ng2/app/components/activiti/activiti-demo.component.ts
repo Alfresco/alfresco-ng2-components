@@ -181,6 +181,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.activitiprocesslist.reload();
     }
 
+    onSuccessNewProcess(data: any) {
+        this.activitiprocesslist.reload();
+    }
+
     taskFormCompleted(data: any) {
         this.activitiprocesslist.reload();
     }
