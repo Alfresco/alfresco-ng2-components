@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, DebugElement } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, DebugElement, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
@@ -29,7 +29,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessButton implements OnInit {
+export class ActivitiStartProcessButton implements OnInit, OnChanges {
 
     @Input()
     appId: string;
@@ -55,6 +55,14 @@ export class ActivitiStartProcessButton implements OnInit {
 
     ngOnInit() {
         this.load(this.appId);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let appId = changes['appId'];
+        if (appId && (appId.currentValue || appId.currentValue === null)) {
+            this.load(appId.currentValue);
+            return;
+        }
     }
 
     public load(appId: string) {
