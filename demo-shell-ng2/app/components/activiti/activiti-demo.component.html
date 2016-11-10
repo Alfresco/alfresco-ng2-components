@@ -58,7 +58,7 @@
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
                             <span>Process Filters</span>
-                            <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
+                            <activiti-start-process-instance [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process-instance>
                             <activiti-process-instance-filters [appId]="appId"
                                     (filterClick)="onProcessFilterClick($event)" (onSuccess)="onSuccessProcessFilterList($event)"
                                     #activitiprocessfilter></activiti-process-instance-filters>

@@ -22,6 +22,7 @@ import {
     ActivitiApps,
     ActivitiTaskList
 } from 'ng2-activiti-tasklist';
+import { ActivitiProcessInstanceListComponent } from 'ng2-activiti-processlist';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
@@ -49,14 +50,14 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     @ViewChild('activitidetails')
     activitidetails: any;
 
-    @ViewChild('activititasklist')
+    @ViewChild(ActivitiTaskList)
     activititasklist: ActivitiTaskList;
 
     @ViewChild('activitiprocessfilter')
     activitiprocessfilter: any;
 
-    @ViewChild('activitiprocesslist')
-    activitiprocesslist: any;
+    @ViewChild(ActivitiProcessInstanceListComponent)
+    activitiprocesslist: ActivitiProcessInstanceListComponent;
 
     @ViewChild('activitiprocessdetails')
     activitiprocessdetails: any;
@@ -174,6 +175,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     onProcessRowClick(processInstanceId) {
         this.currentProcessInstanceId = processInstanceId;
+    }
+
+    onStartProcessInstance() {
+        this.activitiprocesslist.reload();
     }
 
     processCancelled(data: any) {
