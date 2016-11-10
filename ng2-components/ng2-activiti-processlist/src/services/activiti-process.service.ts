@@ -217,7 +217,7 @@ export class ActivitiProcessService {
     getProcessDefinitions(appId: string) {
         let opts = appId ? {
             latest: true,
-            appId: appId
+            appDefinitionId: appId
         } : {
             latest: true
         };
