@@ -108,13 +108,6 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
                 });
     }
 
-    public reload() {
-        if (this.filter) {
-            let requestNode = this.convertProcessInstanceToTaskQuery(this.filter);
-            this.load(requestNode);
-        }
-    }
-
     /**
      * Create an array of ObjectDataRow
      * @param processes
