@@ -19,3 +19,11 @@
     font-size: 12px;
     top: 4px;
 }
+
+.mdl-dialog {
+    width: -moz-fit-content;
+    width: -webkit-fit-content;
+    width: -ms-fit-content;
+    width: -o-fit-content;
+    width: fit-content;
+}
