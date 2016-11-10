@@ -1,11 +1,11 @@
 <div class="dropdown-widget"
-     [class.dropdown-widget__invalid]="!field.isValid">
+     [class.dropdown-widget__invalid]="!field.isValid" *ngIf="field?.isVisible">
     <label class="dropdown-widget__label" [attr.for]="field.id">{{field.name}}</label>
     <select class="dropdown-widget__select"
             [attr.id]="field.id"
             [(ngModel)]="field.value"
             (ngModelChange)="checkVisibility(field)">
-        <option *ngFor="let opt of field.options" [value]="opt.id">{{opt.name}}</option>
+        <option *ngFor="let opt of field.options" [value]="getOptionValue(opt)" [id]="opt.id">{{opt.name}}</option>
     </select>
     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>
