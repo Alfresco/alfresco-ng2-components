@@ -23,6 +23,8 @@ import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+declare var moment: any;
+
 @Injectable()
 export class ActivitiProcessService {
 
@@ -168,7 +170,7 @@ export class ActivitiProcessService {
         return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.listTasks(taskOpts))
             .map(this.extractData)
             .map(tasks => tasks.map((task: any) => {
-                task.created = new Date(task.created);
+                task.created =  moment(task.created, 'YYYY-MM-DD').format();
                 return task;
             }))
             .catch(this.handleError);
