@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, DebugElement, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, DebugElement, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
@@ -33,6 +33,9 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
 
     @Input()
     appId: string;
+
+    @Output()
+    start: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('dialog')
     dialog: DebugElement;
@@ -54,18 +57,18 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.load(this.appId);
+        this.load();
     }
 
     ngOnChanges(changes: SimpleChanges) {
         let appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
-            this.load(appId.currentValue);
+            this.load();
             return;
         }
     }
 
-    public load(appId: string) {
+    public load() {
         this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
             (res: any[]) => {
                 this.processDefinitions = res;
@@ -90,6 +93,7 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
                 (res: any) => {
                     this.name = '';
                     this.processDefinitionId = '';
+                    this.start.emit(res);
                     this.cancel();
                 },
                 (err) => {

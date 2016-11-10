@@ -37,6 +37,11 @@ describe('ActivitiStartProcessButton', () => {
     let startProcessSpy: jasmine.Spy;
     let debugElement: DebugElement;
 
+    let newProcess = {
+        id: '32323',
+        name: 'Process'
+    };
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [ CoreModule, ActivitiFormModule ],
@@ -66,10 +71,7 @@ describe('ActivitiStartProcessButton', () => {
             id: 'my:process2',
             name: 'My Process 2'
         }]));
-        startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of({
-            id: '32323',
-            name: 'Process'
-        }));
+        startProcessSpy = spyOn(processService, 'startProcess').and.returnValue(Observable.of(newProcess));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -124,6 +126,19 @@ describe('ActivitiStartProcessButton', () => {
         component.startProcess();
         fixture.whenStable().then(() => {
             expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined);
+            done();
+        });
+    });
+
+    it('should output start event when process started successfully', (done) => {
+        let emitSpy = spyOn(component.start, 'emit');
+        component.name = 'My new process';
+        component.processDefinitionId = 'my:process1';
+        component.showDialog();
+        fixture.detectChanges();
+        component.startProcess();
+        fixture.whenStable().then(() => {
+            expect(emitSpy).toHaveBeenCalledWith(newProcess);
             done();
         });
     });
