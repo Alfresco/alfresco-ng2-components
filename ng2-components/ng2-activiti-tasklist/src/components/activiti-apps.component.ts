@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
 import { IconModel } from '../models/icon.model';
@@ -48,6 +48,9 @@ export class ActivitiApps implements OnInit {
     @Output()
     appClick: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     private appsObserver: Observer<AppDefinitionRepresentationModel>;
     apps$: Observable<AppDefinitionRepresentationModel>;
 
@@ -59,11 +62,10 @@ export class ActivitiApps implements OnInit {
 
     /**
      * Constructor
-     * @param auth
-     * @param translate
+     * @param translate Translate service
+     * @param activitiTaskList Task service
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
@@ -85,8 +87,8 @@ export class ActivitiApps implements OnInit {
         this.load();
     }
 
-    public load(name?: string) {
-        this.activitiTaskList.getDeployedApplications(name).subscribe(
+    private load() {
+        this.activitiTaskList.getDeployedApplications().subscribe(
             (res) => {
                 res.forEach((app: AppDefinitionRepresentationModel) => {
                     if (app.defaultAppId === ActivitiApps.DEFAULT_TASKS_APP) {
@@ -100,7 +102,7 @@ export class ActivitiApps implements OnInit {
                 });
             },
             (err) => {
-                console.log(err);
+                this.error.emit(err);
             }
         );
     }

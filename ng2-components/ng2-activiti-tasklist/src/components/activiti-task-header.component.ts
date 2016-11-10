@@ -28,7 +28,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 export class ActivitiTaskHeader {
 
     @Input()
-    formName: string = 'No form';
+    formName: string = null;
 
     @Input()
     taskDetails: TaskDetailsModel;
@@ -37,5 +37,9 @@ export class ActivitiTaskHeader {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
+    }
+
+    public hasAssignee(): boolean {
+        return (this.taskDetails && this.taskDetails.assignee) ? true : false;
     }
 }

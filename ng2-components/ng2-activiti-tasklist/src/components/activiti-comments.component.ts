@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Component, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
 import { Observer, Observable } from 'rxjs/Rx';
@@ -36,6 +36,9 @@ export class ActivitiComments implements OnInit, OnChanges {
     @Input()
     readOnly: boolean = false;
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('dialog')
     dialog: any;
 
@@ -48,11 +51,10 @@ export class ActivitiComments implements OnInit, OnChanges {
 
     /**
      * Constructor
-     * @param auth
-     * @param translate
+     * @param translate Translation service
+     * @param activitiTaskList Task service
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
@@ -60,25 +62,28 @@ export class ActivitiComments implements OnInit, OnChanges {
         }
 
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
-
     }
 
     ngOnInit() {
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
+        this.getTaskComments(this.taskId);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         let taskId = changes['taskId'];
-        if (taskId && taskId.currentValue) {
-            this.getTaskComments(taskId.currentValue);
-            return;
+        if (taskId) {
+            if (taskId.currentValue) {
+                this.getTaskComments(taskId.currentValue);
+            } else {
+                this.resetComments();
+            }
         }
     }
 
-    public getTaskComments(taskId: string) {
-        this.comments = [];
+    private getTaskComments(taskId: string) {
+        this.resetComments();
         if (taskId) {
             this.activitiTaskList.getTaskComments(taskId).subscribe(
                 (res: Comment[]) => {
@@ -87,21 +92,23 @@ export class ActivitiComments implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    console.log(err);
+                    this.error.emit(err);
                 }
             );
         } else {
-            this.comments = [];
+            this.resetComments();
         }
     }
 
+    private resetComments() {
+        this.comments = [];
+    }
+
     public showDialog() {
-        if (this.dialog) {
-            if (!this.dialog.nativeElement.showModal) {
-                dialogPolyfill.registerDialog(this.dialog.nativeElement);
-            }
-            this.dialog.nativeElement.showModal();
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
         }
+        this.dialog.nativeElement.showModal();
     }
 
     public add() {
@@ -111,7 +118,7 @@ export class ActivitiComments implements OnInit, OnChanges {
                 this.message = '';
             },
             (err) => {
-                console.log(err);
+                this.error.emit(err);
             }
         );
         this.cancel();
