@@ -1,4 +1,35 @@
-# Activiti Task List Component for Angular 2
+# Activiti Process List Component for Angular 2
+<p>
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
+    Status' />
+  </a>
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+  </a>
+  <a href='https://www.npmjs.com/package/ng2-activiti-processlist'>
+    <img src='https://img.shields.io/npm/dt/ng2-activiti-processlist.svg' alt='npm downloads' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://angular.io/'>
+     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
+  </a>
+  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
+     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+</p>
 
 Displays lists of process instances both active and completed, using any defined process filter, and 
 render details of any chosen instance.
@@ -10,49 +41,70 @@ necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2
 
 ## Install
 
-```sh
-npm install --save ng2-activiti-processlist
-```
+Follow the 3 steps below:
 
-### Dependencies
+1. Npm
 
-Add the following dependency to your index.html:
+    ```sh
+    npm install ng2-activiti-processlist --save
+    ```
 
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+2. Html
 
-You must separately install the following libraries for your application:
+    Include these dependencies in your index.html page:
 
-- [ng2-translate](https://github.com/ocombe/ng2-translate)
-- [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core)
-- [ng2-alfresco-datatable](https://www.npmjs.com/package/ng2-alfresco-datatable)
-- [ng2-activiti-tasklist](https://www.npmjs.com/package/ng2-activiti-tasklist)
+    ```html
 
+      <!-- Moment js -->
+      <script src="node_modules/moment/min/moment.min.js"></script>
 
-```sh
-npm install --save ng2-translate ng2-alfresco-core ng2-alfresco-datatable ng2-activiti-tasklist
-```
+      <!-- Date picker -->
+      <script src="node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js"></script>
+      <script src="node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js"></script>
+      <link rel="stylesheet" href="node_modules/md-date-time-picker/dist/css/mdDateTimePicker.css" media="all">
 
-#### Material Design Lite
+      <!-- Google Material Design Lite -->
+      <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+      <script src="node_modules/material-design-lite/material.min.js"></script>
+      <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-The style of this component is based on [material design](https://getmdl.io/), so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+      <!-- Polyfill(s) for Safari (pre-10.x) -->
+      <script src="node_modules/intl/dist/Intl.min.js"></script>
+      <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+      <!-- Polyfill(s) for older browsers -->
+      <script src="node_modules/core-js/client/shim.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+      <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-Also make sure you include these dependencies in your `index.html` file:
+      <!-- Polyfill(s) for dialogs -->
+      <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+      <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+      <style>._dialog_overlay { position: static !important; } </style>
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+      <!-- Modules  -->
+      <script src="node_modules/zone.js/dist/zone.js"></script>
+      <script src="node_modules/reflect-metadata/Reflect.js"></script>
+      <script src="node_modules/systemjs/dist/system.src.js"></script>
 
-## Usage
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-activiti-form
+    - ng2-alfresco-datatable
+    - ng2-activiti-tasklist
+    - ng2-activiti-processlist
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
+
+## Basic usage
 
 ### Activiti Process Instance List
 
@@ -62,33 +114,102 @@ This component renders a list containing all the process instances matched by th
 <activiti-process-instance-list [filter]="processFilterModel"></activiti-tasklist>
 ```
 
+Usage example of this component :
+
+**main.ts**
+```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
+
+@Component({
+    selector: 'alfresco-app-demo',
+    template: `<activiti-process-instance-list [filter]="filterRepresentationModel" [data]="dataProcesses"
+             #activitiprocesslist></activiti-process-instance-list>`
+})
+class MyDemoApp {
+
+    dataProcesses: ObjectDataTableAdapter;
+
+    filterRepresentationModel: FilterRepresentationModel;
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+
+        this.dataProcesses = new ObjectDataTableAdapter([], [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
+
+        this.filterRepresentationModel = new FilterRepresentationModel({
+            appId: '3003',
+            filter: {
+                processDefinitionKey: null,
+                name: null,
+                state: 'running',
+                sort: 'created-desc'
+            }
+        });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ActivitiProcessListModule
+    ],
+    declarations: [MyDemoApp],
+    bootstrap: [MyDemoApp]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+
+```
+
 #### Options
 
-**filter**: { FilterModel } (required) FilterModel object that
-is passed to the process instance list API to filter the returned list.
+| Name | Description |
+| --- | --- |
+|`filter`| { UserProcessInstanceFilterRepresentationModel } (required) UserProcessInstanceFilterRepresentationModel object that is passed to the process instance list API to filter the returned list. |
 
 Example:
 
 
 ```json
 {
-	"id": 4,
-	"name": "Running Processes",
-	"recent": false,
-	"icon": "glyphicon-align-left",
-	"filter": {
-		"appDefinitionId": "1",
-		"sort": "created-desc",
-		"name": "",
-		"state": "open",
-		"page": "0",
-		"size": "25"
-	},
-	"appId": 1001
+    appId: '3003',
+    filter:{
+        processDefinitionKey: null,
+        name:null,
+        state:'running',
+        sort: 'created-desc'
+    }
 }
 ```
 
-**schemaColumn**: {any} List of columns to display in the process instances datatable
+| Name | Description |
+| --- | --- |
+|`schemaColumn`| {any} List of columns to display in the process instances datatable |
 
 Example:
 
@@ -122,17 +243,20 @@ process instances are displayed in the list.
 
 #### Options
 
-- **`appId`**: Display filters available to the current user for the application with the specified ID
-- **`appName`**: Display filters available to the current user for the application with the specified name
+| Name | Description |
+| --- | --- |
+| `appId` | Display filters available to the current user for the application with the specified ID |
+| `appName` | Display filters available to the current user for the application with the specified name |
 
 If both `appId` and `appName` are specified then `appName` will take precedence and `appId` will be ignored.
 
 #### Events
 
-- **`onSuccess`**: Emitted when the list of filters hase been successfully loaded from the server
-- **`onError`**: Emitted when an error occurred fetching the list of process instance filters, or fetching the 
-list of deployed applications when an app name was specified.
-- **`filterClick`**: Emitted when the user selects a filter from the list
+| Name | Description |
+| --- | --- |
+| `onSuccess` | Emitted when the list of filters hase been successfully loaded from the server |
+| `onError` | Emitted when an error occurs |
+| `ilterClick` | Emitted when the user selects a filter from the list |
 
 ### Start Process Button component
 
@@ -145,7 +269,10 @@ to specify some basic details needed to start a new process instance.
 
 #### Options
 
-- **`appId`**: Limit the list of processes which can be started to those contained in the specified app
+
+| Name | Description |
+| --- | --- |
+| `appId` | Limit the list of processes which can be started to those contained in the specified app |
 
 #### Events
 
@@ -161,12 +288,18 @@ This component displays detailed information on a specified process instance
 
 #### Options
 
-- **`processInstanceId`** (required): The numeric ID of the process instance to display
+
+| Name | Description |
+| --- | --- |
+| `processInstanceId` | (required): The numeric ID of the process instance to display |
 
 #### Events
 
-- **`processCancelledEmitter`**: Emitted when the current process is cancelled by the user from within the component
-- **`taskFormCompletedEmitter`**: Emitted when the form associated with an active task is completed from within the component
+
+| Name | Description |
+| --- | --- |
+| `processCancelledEmitter` |  Emitted when the current process is cancelled by the user from within the component |
+| `taskFormCompletedEmitter` |  Emitted when the form associated with an active task is completed from within the component |
 
 ### Process Instance Details Header component
 
@@ -178,11 +311,17 @@ This is a sub-component of the process details component, which renders some gen
 
 #### Options
 
-- **`processInstance`** (required): Full details of the process instance to display information about
+
+| Name | Description |
+| --- | --- |
+| `processInstance` |  (required): Full details of the process instance to display information about |
 
 #### Events
 
-- **`processCancelled`**: Emitted when the Cancel Process button shown by the component is clicked
+
+| Name | Description |
+| --- | --- |
+| `processCancelled` |  Emitted when the Cancel Process button shown by the component is clicked |
 
 ### Process Instance Tasks component
 
@@ -194,12 +333,17 @@ Lists both the active and completed tasks associated with a particular process i
 
 #### Options
 
-- **`processInstanceId`** (required): The numeric ID of the process instance to display tasks for
-- **`showRefreshButton`** (default: `true`): Whether to show a refresh button next to the list of tasks to allow this to be updated from the server
+
+| Name | Description |
+| --- | --- |
+| `processInstanceId` |  (required): The numeric ID of the process instance to display tasks for |
+| `showRefreshButton` |  (default: `true`): Whether to show a refresh button next to the list of tasks to allow this to be updated from the server |
 
 #### Events
 
-- **`taskFormCompletedEmitter`**: Emitted when the form associated with an active task is completed from within the component
+| Name | Description |
+| --- | --- |
+| `taskFormCompletedEmitter` |  Emitted when the form associated with an active task is completed from within the component |
 
 ### Process Instance Comments component
 
@@ -211,7 +355,10 @@ Displays comments associated with a particular process instances and allows the 
 
 #### Options
 
-- **`processInstanceId`** (required): The numeric ID of the process instance to display comments for
+
+| Name | Description |
+| --- | --- |
+| `processInstanceId` | (required): The numeric ID of the process instance to display comments for |
 
 #### Events
 
@@ -220,6 +367,7 @@ No events are emitted by this component
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -232,7 +380,7 @@ npm run build
 $ npm run build:w
 ```
 
-### Running unit tests
+## Running unit tests
 
 ```sh
 npm test
@@ -252,3 +400,27 @@ before performing unit testing.
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

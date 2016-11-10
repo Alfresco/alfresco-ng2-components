@@ -1,7 +1,6 @@
 npm-debug.log
 .idea
 
-assets/
 coverage/
 node_modules
 typings/

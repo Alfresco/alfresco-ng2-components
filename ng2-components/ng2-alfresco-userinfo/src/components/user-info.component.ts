@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewChecked } from '@angular/core';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
 import { BpmUserService } from './../services/bpm-user.service';
-import { AlfrescoSettingsService, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+
+declare let componentHandler: any;
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
@@ -28,8 +30,7 @@ import { AlfrescoSettingsService, AlfrescoTranslationService } from 'ng2-alfresc
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })
-
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements AfterViewChecked, OnInit {
 
     @Input()
     ecmBackgroundImage: string;
@@ -46,23 +47,50 @@ export class UserInfoComponent implements OnInit {
     private baseComponentPath = module.id.replace('components/user-info.component.js', '');
 
     ecmUser: EcmUserModel;
+
     bpmUser: BpmUserModel;
+
     anonymousImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
+
     bpmUserImage: any;
+
     ecmUserImage: any;
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
-                public setting: AlfrescoSettingsService,
+                private authService: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService) {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-alfresco-userinfo/src');
         }
+
+        authService.loginSubject.subscribe((response) => {
+            this.getUserInfo();
+        });
+    }
+
+    ngAfterViewChecked() {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
     }
 
     ngOnInit() {
-        if (this.setting.getProviders() === 'ECM' ||
-            this.setting.getProviders() === 'ALL') {
+        this.getUserInfo();
+    }
+
+    getUserInfo() {
+        this.getEcmUserInfo();
+        this.getBpmUserInfo();
+    }
+
+    isLoggedIn() {
+        return this.authService.isLoggedIn();
+    }
+
+    getEcmUserInfo(): void {
+        if (this.authService.isEcmLoggedIn()) {
             this.ecmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
                         this.ecmUser = <EcmUserModel> res;
@@ -70,9 +98,10 @@ export class UserInfoComponent implements OnInit {
                     }
                 );
         }
+    }
 
-        if (this.setting.getProviders() === 'BPM' ||
-            this.setting.getProviders() === 'ALL') {
+    getBpmUserInfo(): void {
+        if (this.authService.isBpmLoggedIn()) {
             this.bpmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
                     this.bpmUser = <BpmUserModel> res;

@@ -21,6 +21,8 @@ import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 import { AlfrescoApiService } from './AlfrescoApi.service';
 import * as alfrescoApi from  'alfresco-js-api';
 import { AlfrescoApi } from  'alfresco-js-api';
+import { Subject } from 'rxjs/Subject';
+
 /**
  * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
  */
@@ -28,6 +30,10 @@ import { AlfrescoApi } from  'alfresco-js-api';
 export class AlfrescoAuthenticationService {
 
     alfrescoApi: AlfrescoApi;
+
+    public loginSubject: Subject<any> = new Subject<any>();
+
+    public logoutSubject: Subject<any> = new Subject<any>();
 
     /**
      * Constructor
@@ -84,6 +90,7 @@ export class AlfrescoAuthenticationService {
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
                 this.saveTickets();
+                this.loginSubject.next(response);
                 return {type: this.settingsService.getProviders(), ticket: response};
             })
             .catch(this.handleError);
@@ -105,10 +112,11 @@ export class AlfrescoAuthenticationService {
      * @returns {Observable<R>|Observable<T>}
      */
     public logout() {
+        this.removeTicket();
         return Observable.fromPromise(this.callApiLogout())
             .map(res => <any> res)
             .do(response => {
-                this.removeTicket();
+                this.logoutSubject.next(response);
                 return response;
             })
             .catch(this.handleError);

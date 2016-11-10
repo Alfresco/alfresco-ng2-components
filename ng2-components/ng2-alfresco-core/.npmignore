@@ -1,7 +1,6 @@
 npm-debug.log
 .idea
 
-assets/
 coverage/
 demo/
 node_modules

@@ -15,13 +15,11 @@
  * limitations under the License.
  */
 
-import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {ProcessInstance} from '../models/process-instance';
-import {TaskQueryRequestRepresentationModel, UserProcessInstanceFilterRepresentationModel} from '../models/filter.model';
-import {User} from '../models/user.model';
-import {Comment} from '../models/comment.model';
-import {Injectable}     from '@angular/core';
-import {Observable}     from 'rxjs/Observable';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ProcessInstance } from '../models/process-instance';
+import { User, Comment, FilterRepresentationModel, TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
+import { Injectable }     from '@angular/core';
+import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -61,9 +59,9 @@ export class ActivitiProcessService {
         } : {};
         return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(filterOpts))
             .map((response: any) => {
-                let filters: UserProcessInstanceFilterRepresentationModel[] = [];
-                response.data.forEach((filter: UserProcessInstanceFilterRepresentationModel) => {
-                    let filterModel = new UserProcessInstanceFilterRepresentationModel(filter);
+                let filters: FilterRepresentationModel[] = [];
+                response.data.forEach((filter: FilterRepresentationModel) => {
+                    let filterModel = new FilterRepresentationModel(filter);
                     filters.push(filterModel);
                 });
                 if (response && response.data && response.data.length === 0) {
@@ -77,10 +75,10 @@ export class ActivitiProcessService {
     /**
      * Create and return the default filters
      * @param appId
-     * @returns {UserProcessInstanceFilterRepresentationModel[]}
+     * @returns {FilterRepresentationModel[]}
      */
-    private createDefaultFilters(appId: string): UserProcessInstanceFilterRepresentationModel[] {
-        let filters: UserProcessInstanceFilterRepresentationModel[] = [];
+    private createDefaultFilters(appId: string): FilterRepresentationModel[] {
+        let filters: FilterRepresentationModel[] = [];
 
         let involvedTasksFilter = this.getRunningFilterInstance(appId);
         this.addFilter(involvedTasksFilter);
@@ -100,10 +98,10 @@ export class ActivitiProcessService {
     /**
      * Return a static Running filter instance
      * @param appId
-     * @returns {UserProcessInstanceFilterRepresentationModel}
+     * @returns {FilterRepresentationModel}
      */
-    private getRunningFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
-        return new UserProcessInstanceFilterRepresentationModel({
+    private getRunningFilterInstance(appId: string): FilterRepresentationModel {
+        return new FilterRepresentationModel({
             'name': 'Running',
             'appId': appId,
             'recent': true,
@@ -115,10 +113,10 @@ export class ActivitiProcessService {
     /**
      * Return a static Completed filter instance
      * @param appId
-     * @returns {UserProcessInstanceFilterRepresentationModel}
+     * @returns {FilterRepresentationModel}
      */
-    private getCompletedFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
-        return new UserProcessInstanceFilterRepresentationModel({
+    private getCompletedFilterInstance(appId: string): FilterRepresentationModel {
+        return new FilterRepresentationModel({
             'name': 'Completed',
             'appId': appId,
             'recent': false,
@@ -130,10 +128,10 @@ export class ActivitiProcessService {
     /**
      * Return a static All filter instance
      * @param appId
-     * @returns {UserProcessInstanceFilterRepresentationModel}
+     * @returns {FilterRepresentationModel}
      */
-    private getAllFilterInstance(appId: string): UserProcessInstanceFilterRepresentationModel {
-        return new UserProcessInstanceFilterRepresentationModel({
+    private getAllFilterInstance(appId: string): FilterRepresentationModel {
+        return new FilterRepresentationModel({
             'name': 'All',
             'appId': appId,
             'recent': true,
@@ -144,13 +142,13 @@ export class ActivitiProcessService {
 
     /**
      * Add a filter
-     * @param filter - UserProcessInstanceFilterRepresentationModel
-     * @returns {UserProcessInstanceFilterRepresentationModel}
+     * @param filter - FilterRepresentationModel
+     * @returns {FilterRepresentationModel}
      */
-    addFilter(filter: UserProcessInstanceFilterRepresentationModel): Observable<UserProcessInstanceFilterRepresentationModel> {
+    addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
         return Observable.fromPromise(this.callApiAddFilter(filter))
             .map(res => res)
-            .map((response: UserProcessInstanceFilterRepresentationModel) => {
+            .map((response: FilterRepresentationModel) => {
                 return response;
             }).catch(this.handleError);
     }
@@ -187,8 +185,12 @@ export class ActivitiProcessService {
             .map((response: any) => {
                 let comments: Comment[] = [];
                 response.data.forEach((comment) => {
-                    let user = new User(
-                        comment.createdBy.id, comment.createdBy.email, comment.createdBy.firstName, comment.createdBy.lastName);
+                    let user = new User({
+                        id: comment.createdBy.id,
+                        email: comment.createdBy.email,
+                        firstName: comment.createdBy.firstName,
+                        lastName: comment.createdBy.lastName
+                    });
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;
@@ -203,7 +205,7 @@ export class ActivitiProcessService {
      */
     addProcessInstanceComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(
-                this.authService.getAlfrescoApi().activiti.commentsApi.addProcessInstanceComment({message: message}, id)
+            this.authService.getAlfrescoApi().activiti.commentsApi.addProcessInstanceComment({message: message}, id)
             )
             .map(res => res)
             .map((response: Comment) => {
@@ -251,7 +253,7 @@ export class ActivitiProcessService {
         return this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts);
     }
 
-    private callApiAddFilter(filter: UserProcessInstanceFilterRepresentationModel) {
+    private callApiAddFilter(filter: FilterRepresentationModel) {
         return this.authService.getAlfrescoApi().activiti.userFiltersApi.createUserProcessInstanceFilter(filter);
     }
 

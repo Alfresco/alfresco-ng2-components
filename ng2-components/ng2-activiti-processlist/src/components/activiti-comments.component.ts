@@ -18,7 +18,7 @@
 import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { Comment } from '../models/comment.model';
+import { Comment } from 'ng2-activiti-tasklist';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 

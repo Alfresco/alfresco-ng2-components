@@ -15,79 +15,166 @@
  * limitations under the License.
  */
 
-import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
+import { Input, NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
+import {
+    ActivitiTaskListModule,
+    AppDefinitionRepresentationModel,
+    FilterRepresentationModel,
+    ActivitiApps,
+    ActivitiTaskList
+} from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule }  from 'ng2-alfresco-datatable';
-import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
-    selector: 'activiti-tasklist-demo',
-    template: `<label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Activiti instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="bpmHost"><br><br>
-               <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ bpmHost }} with user: admin, admin, you can still try to add a valid token to perform
-                    operations.
-               </div>
-               <hr>
-        <div class="container" *ngIf="authenticated">
-            <span>Task Filters</span>
-            <activiti-filters (filterClick)="onFilterClick($event)"></activiti-filters>
-            <span>Tasks</span>
-            <activiti-tasklist [taskFilter]="taskFilter" [schemaColumn]="schemaColumn"
-                                               (rowClick)="onRowClick($event)" #activititasklist></activiti-tasklist>
-            <span>Task Details</span>
-            <activiti-task-details [taskId]="currentTaskId" #activitidetails></activiti-task-details>
-        </div>`,
-    styles: [
-        ':host > .container {padding: 10px}',
-        '.p-10 { padding: 10px; }'
-    ]
-})
-class ActivitiTaskListDemo implements OnInit {
+    selector: 'alfresco-app-demo',
+    template: `
+    <label for="ticket"><b>Insert a valid ticket:</b></label><br>
+    <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+    <label for="host"><b>Insert the ip of your Activiti instance:</b></label><br>
+    <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+    <div *ngIf="!authenticated" style="color:#FF2323">
+        Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
+        operations.
+    </div>
+    <hr>
 
-    @ViewChild('activititasklist')
-    activititasklist: any;
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+        <header class="mdl-layout__header">
+
+            <!-- TABS -->
+
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect" #tabheader>
+                <a id="apps-header" href="#apps" class="mdl-layout__tab is-active">APPS</a>
+                <a id="tasks-header" href="#tasks" class="mdl-layout__tab">TASKS LIST</a>
+            </div>
+        </header>
+
+        <main class="mdl-layout__content activiti" #tabmain>
+
+            <!--  APPPS COMPONENT -->
+
+            <section class="mdl-layout__tab-panel is-active" id="apps">
+                <div class="page-content">
+                    <activiti-apps [layoutType]="'GRID'" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
+                </div>
+            </section>
+
+            <!--  TASKS COMPONENT -->
+
+            <section class="mdl-layout__tab-panel" id="tasks">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
+                            <span>Task Filters</span>
+                            <activiti-start-task [appId]="appId"
+                                                 (onSuccess)="onStartTaskSuccess($event)"></activiti-start-task>
+                            <activiti-filters [appId]="appId"
+                                              (filterClick)="onTaskFilterClick($event)"
+                                              (onSuccess)="onSuccessTaskFilterList($event)"
+                                              #activitifilter></activiti-filters>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
+                            <span>Task List</span>
+                            <activiti-tasklist [taskFilter]="taskFilter"
+                                               [data]="dataTasks"
+                                               (rowClick)="onTaskRowClick($event)"
+                                               (onSuccess)="onSuccessTaskList($event)"
+                                               #activititasklist></activiti-tasklist>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
+                            <span>Task Details</span>
+                            <activiti-task-details [taskId]="currentTaskId"
+                                                   (formCompleted)="onFormCompleted($event)"
+                                                   #activitidetails></activiti-task-details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+`
+})
+class MyDemoApp implements OnInit {
+
+    authenticated: boolean;
+
+    host: string = 'http://localhost:9999';
+
+    ticket: string;
+
+    @ViewChild('activitiapps')
+    activitiapps: ActivitiApps;
+
+    @ViewChild('tabmain')
+    tabMain: any;
+
+    @ViewChild('tabheader')
+    tabHeader: any;
+
+    @ViewChild('activitifilter')
+    activitifilter: any;
 
     @ViewChild('activitidetails')
     activitidetails: any;
 
-    bpmHost: string = 'http://127.0.0.1:9999';
+    @ViewChild('activititasklist')
+    activititasklist: ActivitiTaskList;
 
-    token: string;
+    @Input()
+    appId: number;
 
-    authenticated: boolean;
-
-    schemaColumn: any [] = [];
+    layoutType: string;
 
     currentTaskId: string;
 
+    taskSchemaColumns: any [] = [];
+
     taskFilter: any;
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService) {
-        this.settingsService.setProviders('BPM');
+    dataTasks: ObjectDataTableAdapter;
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = this.host;
+        settingsService.setProviders('BPM');
+
+        if (this.authService.getTicketBpm()) {
+            this.ticket = this.authService.getTicketBpm();
+        }
+
+        this.dataTasks = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataTasks.setSorting(new DataSorting('started', 'desc'));
     }
 
-    ngOnInit() {
-        this.login();
+    public updateTicket(): void {
+        localStorage.setItem('ticket-BPM', this.ticket);
+    }
 
-        this.schemaColumn = [
-            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
-        ];
+    public updateHost(): void {
+        this.settingsService.bpmHost = this.host;
+        this.login();
+    }
+
+    public ngOnInit(): void {
+        this.login();
     }
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketBpm();
                 this.authenticated = true;
             },
             error => {
@@ -96,27 +183,57 @@ class ActivitiTaskListDemo implements OnInit {
             });
     }
 
-    onFilterClick(event: any) {
-        this.taskFilter = event;
-        this.activititasklist.load(this.taskFilter);
+    onAppClick(app: AppDefinitionRepresentationModel) {
+        this.appId = app.id;
+
+        this.changeTab('apps', 'tasks');
     }
 
-    onRowClick(taskId) {
-        this.currentTaskId = taskId;
-        this.activitidetails.loadDetails(this.currentTaskId);
+    onTaskFilterClick(event: FilterRepresentationModel) {
+        this.taskFilter = event;
     }
+
+    onSuccessTaskFilterList(event: any) {
+        this.taskFilter = this.activitifilter.getCurrentFilter();
+    }
+
+    onStartTaskSuccess(event: any) {
+        this.activititasklist.reload();
+    }
+
+    onSuccessTaskList(event: FilterRepresentationModel) {
+        this.currentTaskId = this.activititasklist.getCurrentTaskId();
+    }
+
+    onTaskRowClick(taskId) {
+        this.currentTaskId = taskId;
+    }
+
+    onFormCompleted(form) {
+        this.activititasklist.load(this.taskFilter);
+        this.currentTaskId = null;
+    }
+
+    changeTab(origin: string, destination: string) {
+        this.tabMain.nativeElement.children[origin].classList.remove('is-active');
+        this.tabMain.nativeElement.children[destination].classList.add('is-active');
+
+        this.tabHeader.nativeElement.children[`${origin}-header`].classList.remove('is-active');
+        this.tabHeader.nativeElement.children[`${destination}-header`].classList.add('is-active');
+    }
+
 }
 
 @NgModule({
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        DataTableModule,
-        ActivitiTaskListModule
+        ActivitiTaskListModule.forRoot()
     ],
-    declarations: [ ActivitiTaskListDemo ],
-    bootstrap:    [ ActivitiTaskListDemo ]
+    declarations: [MyDemoApp],
+    bootstrap: [MyDemoApp]
 })
-export class AppModule { }
+export class AppModule {
+}
 
 platformBrowserDynamic().bootstrapModule(AppModule);

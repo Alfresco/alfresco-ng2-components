@@ -23,11 +23,13 @@ import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } fr
 import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `
-    <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
-       <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
+    <label for="host"><b>Insert the ip of your Alfresco and Activiti instance:</b></label><br>
+       ECM Host:  <input id="ecmHost" type="text" size="48" (change)="updateEcmHost()" [(ngModel)]="ecmHost"><br>
+       BPM Host:  <input id="bpmHost" type="text" size="48" (change)="updateBpmHost()" [(ngModel)]="bpmHost"><br>
        <div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 120px; z-index: 1;">
+
         <p style="width:120px;margin: 20px;">
         <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
             <input type="checkbox" id="switch1" class="mdl-switch__input" checked
@@ -42,16 +44,26 @@ import { LoginModule } from 'ng2-alfresco-login';
                 <span class="mdl-switch__label">BPM</span>
             </label>
         </p>
+        <p style="width:120px;margin: 20px;">
+            <label for="switch3" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                <input type="checkbox" id="switch3" class="mdl-switch__input" checked (click)="toggleCSRF()" #csrf>
+                <span class="mdl-switch__label">CSRF</span>
+            </label>
+        </p>
         </div>
        {{ status }}
        <hr>
 
-       <alfresco-login [providers]="providers" (onSuccess)="mySuccessMethod($event)"
-       (onError)="myErrorMethod($event)"></alfresco-login>`
+       <alfresco-login [providers]="providers"
+                       [disableCsrf]="disableCsrf"
+                       (onSuccess)="mySuccessMethod($event)"
+                       (onError)="myErrorMethod($event)"></alfresco-login>`
 })
 export class AppComponent {
 
-    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://localhost:8080';
+
+    public bpmHost: string = 'http://localhost:9999';
 
     public ticket: string;
 
@@ -59,13 +71,20 @@ export class AppComponent {
 
     public providers: string = 'ECM';
 
+    public disableCsrf: boolean = false;
+
     constructor(public auth: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = this.ecmHost;
+        settingsService.bpmHost = this.bpmHost;
     }
 
-    public updateHost(): void {
+    public updateEcmHost(): void {
         this.settingsService.ecmHost = this.ecmHost;
+    }
+
+    public updateBpmHost(): void {
+        this.settingsService.bpmHost = this.bpmHost;
     }
 
     mySuccessMethod($event) {
@@ -83,8 +102,8 @@ export class AppComponent {
             this.providers = 'ALL';
         } else if (checked) {
             this.providers = 'ECM';
-        } else {
-            this.providers = undefined;
+        } else if (!checked && this.providers === 'ALL') {
+            this.providers = 'BPM';
         }
     }
 
@@ -93,9 +112,13 @@ export class AppComponent {
             this.providers = 'ALL';
         } else if (checked) {
             this.providers = 'BPM';
-        } else {
-            this.providers = undefined;
+        } else if (!checked && this.providers === 'ALL') {
+            this.providers = 'ECM';
         }
+    }
+
+    toggleCSRF() {
+        this.disableCsrf = !this.disableCsrf;
     }
 }
 
@@ -105,8 +128,8 @@ export class AppComponent {
         CoreModule.forRoot(),
         LoginModule
     ],
-    declarations: [ AppComponent ],
-    bootstrap:    [ AppComponent ]
+    declarations: [AppComponent],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
 

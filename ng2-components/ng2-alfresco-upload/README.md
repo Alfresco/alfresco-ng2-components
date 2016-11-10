@@ -1,4 +1,5 @@
 # Alfresco Upload Component for Angular 2
+
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
@@ -31,57 +32,65 @@
   </a>
 </p>
 
-### Node
-To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
+## Prerequisites
+
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
-```sh
-npm install --save ng2-alfresco-upload
-```
+Follow the 3 steps below:
 
-Components included:
+1. Npm
 
-- [Upload button](#upload-button)
-- [Drag and Drop](#drag-and-drop)
+    ```sh
+    npm install ng2-alfresco-upload --save
+    ```
 
-### Upload button
-This component, provide a buttons to upload files to alfresco.
+2. Html
 
-#### Dependencies
+    Include these dependencies in your index.html page:
 
-Add the following dependency to your index.html:
+    ```html
 
-```html
-<script src="node_modules/alfresco-js-api/bundle.js"></script>
-```
+      <!-- Google Material Design Lite -->
+      <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+      <script src="node_modules/material-design-lite/material.min.js"></script>
+      <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-The following component needs to be added to your systemjs.config: 
+      <!-- Polyfill(s) for Safari (pre-10.x) -->
+      <script src="node_modules/intl/dist/Intl.min.js"></script>
+      <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-- ng2-translate
-- ng2-alfresco-core
-- ng2-alfresco-upload
+      <!-- Polyfill(s) for older browsers -->
+      <script src="node_modules/core-js/client/shim.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+      <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-Please refer to the following example to have an idea of how your systemjs.config should look like :
+      <!-- Polyfill(s) for dialogs -->
+      <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+      <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+      <style>._dialog_overlay { position: static !important; } </style>
 
-https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-upload/demo/systemjs.config.js
+      <!-- Modules  -->
+      <script src="node_modules/zone.js/dist/zone.js"></script>
+      <script src="node_modules/reflect-metadata/Reflect.js"></script>
+      <script src="node_modules/systemjs/dist/system.src.js"></script>
 
-#### Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    ```
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+3. SystemJs
 
-Also make sure you include these dependencies in your .html page:
+    Add the following components to your systemjs.config.js file:
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-alfresco-upload
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
+
 
 #### Basic usage
 
@@ -101,41 +110,53 @@ Also make sure you include these dependencies in your .html page:
 Example of an App that declares upload button component :
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService
-} from 'ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `<alfresco-upload-button [showUdoNotificationBar]="true"
                                        [uploadFolders]="false"
                                        [multipleFiles]="false"
                                        [acceptedFilesType]="'.jpg,.gif,.png,.svg'"
-                                       (onSuccess)="customMethod($event)">
+                                       (onSuccess)="onSuccess($event)">
                </alfresco-upload-button>
-               <file-uploading-dialog></file-uploading-dialog>`,
-    directives: [ALFRESCO_ULPOAD_COMPONENTS]
+               <file-uploading-dialog></file-uploading-dialog>`
 })
 export class MyDemoApp {
-    constructor(alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://myalfrescoip';
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
     }
 
-    public customMethod(event: Object): void {
+    public onSuccess(event: Object): void {
         console.log('File uploaded');
     }
 }
 
-bootstrap(MyDemoApp, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS,
-    UploadService
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        UploadModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 
 ```
 #### Events
@@ -169,40 +190,52 @@ This component, provide a drag and drop are to upload files to alfresco.
 Example of an App that declares upload drag and drop component :
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService
-} from 'ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `<alfresco-upload-drag-area (onSuccess)="customMethod($event)" >
                      <div style="width: 200px; height: 100px; border: 1px solid #888888">
                          DRAG HERE
                      </div>
                </alfresco-upload-drag-area>
-               <file-uploading-dialog></file-uploading-dialog>`,
-    directives: [ALFRESCO_ULPOAD_COMPONENTS]
+               <file-uploading-dialog></file-uploading-dialog>`
 })
 export class MyDemoApp {
-    constructor(alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://myalfrescoip';
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
     }
 
-    public customMethod(event: Object): void {
+    public onSuccess(event: Object): void {
         console.log('File uploaded');
     }
 }
 
-bootstrap(MyDemoApp, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS,
-    UploadService
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        UploadModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 
 ```
 
@@ -232,6 +265,7 @@ with upload button or drag & drop area components. This component should
 ```
 
 ## Build from sources
+
 Alternatively you can build component from sources with the following commands:
 
 
@@ -240,28 +274,28 @@ npm install
 npm run build
 ```
 
-##Build the files and keep watching for changes
+### Build the files and keep watching for changes
 
 ```sh
-npm run build:w
+$ npm run build:w
 ```
-    
+
 ## Running unit tests
 
 ```sh
 npm test
 ```
 
-## Running unit tests in browser
+### Running unit tests in browser
 
 ```sh
 npm test-browser
 ```
 
-This task rebuilds all the code, runs tslint, license checks and other quality check tools 
-before performing unit testing. 
+This task rebuilds all the code, runs tslint, license checks and other quality check tools
+before performing unit testing.
 
-## Code coverage
+### Code coverage
 
 ```sh
 npm run coverage
@@ -276,3 +310,17 @@ cd demo
 npm install
 npm start
 ```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

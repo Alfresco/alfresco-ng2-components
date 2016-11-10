@@ -34,96 +34,133 @@
 
 ## Prerequisites
 
-Before you start using this development framework, make sure you have installed all required software and done all the 
+Before you start using this development framework, make sure you have installed all required software and done all the
 necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
-```sh
-npm install --save ng2-alfresco-datatable
-```
+Follow the 3 steps below:
 
-### Dependencies
+1. Npm
 
-You must separately install the following libraries for your application:
- 
-- [ng2-translate](https://github.com/ocombe/ng2-translate)
-- [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core)
+    ```sh
+    npm install ng2-alfresco-datatable --save
+    ```
 
-```sh
-npm install --save ng2-translate ng2-alfresco-core
-```
+2. Html
 
-#### Material Design Lite
+    Include these dependencies in your index.html page:
 
-The style of this component is based on [material design](https://getmdl.io/), so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    ```html
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-Also make sure you include these dependencies in your `index.html` file:
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
+
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
+
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-alfresco-datatable
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage example
 
+Usage example of this component :
 
 **my.component.ts**
 
 ```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule }  from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { Component } from '@angular/core';
-import { 
-    CONTEXT_MENU_DIRECTIVES, 
-    CONTEXT_MENU_PROVIDERS 
-} from 'ng2-alfresco-core';
-import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
-    ObjectDataTableAdapter
-} from 'ng2-alfresco-datatable';
+import { CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
+import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
-    selector: 'my-view',
+    selector: 'alfresco-app-demo',
     template: `<alfresco-datatable [data]="data">
         </alfresco-datatable>`,
     directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
     providers: [CONTEXT_MENU_PROVIDERS]
 })
-export class MyView {
+export class DataTableDemo {
     data: ObjectDataTableAdapter;
 
     constructor() {
         this.data = new ObjectDataTableAdapter(
             // data
             [
-                { id: 1, name: 'Name 1' },
-                { id: 2, name: 'Name 2' }
+                {id: 1, name: 'Name 1'},
+                {id: 2, name: 'Name 2'}
             ],
             // schema
             [
-                { 
-                    type: 'text', 
-                    key: 'id', 
-                    title: 'Id', 
-                    sortable: true 
+                {
+                    type: 'text',
+                    key: 'id',
+                    title: 'Id',
+                    sortable: true
                 },
-                { 
-                    type: 'text', 
-                    key: 'name', 
-                    title: 'Name', 
-                    cssClass: 'full-width', 
-                    sortable: true 
+                {
+                    type: 'text',
+                    key: 'name',
+                    title: 'Name',
+                    cssClass: 'full-width',
+                    sortable: true
                 }
             ]
         );
     }
 }
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DataTableModule
+    ],
+    declarations: [DataTableDemo],
+    bootstrap: [DataTableDemo]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+
 ```
 
 ![DataTable demo](docs/assets/datatable-demo.png)
@@ -132,10 +169,10 @@ export class MyView {
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
-| data | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
-| multiselect | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
-| actions | boolean | false | Toggles data actions column |
-| fallbackThubnail | string |  | Fallback image for row ehre thubnail is missing|
+| `data` | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
+| `multiselect` | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
+| `actions` | boolean | false | Toggles data actions column |
+| `fallbackThubnail` | string |  | Fallback image for row ehre thubnail is missing|
 
 ### Events
 
@@ -366,6 +403,7 @@ let data = new ObjectDataTableAdapter(
 ```
 
 ## Generate schema 
+
 Is possible to auto generate your schema if you have only the data row  
 
 ```ts
@@ -397,10 +435,10 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 
 ```
 
-
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -412,8 +450,8 @@ npm run build
 ```sh
 $ npm run build:w
 ```
-    
-### Running unit tests
+
+## Running unit tests
 
 ```sh
 npm test
@@ -425,11 +463,35 @@ npm test
 npm test-browser
 ```
 
-This task rebuilds all the code, runs tslint, license checks and other quality check tools 
-before performing unit testing. 
+This task rebuilds all the code, runs tslint, license checks and other quality check tools
+before performing unit testing.
 
 ### Code coverage
 
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

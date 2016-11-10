@@ -15,24 +15,8 @@
  * limitations under the License.
  */
 
-/**
- *
- * This object represent the user.
- *
- *
- * @returns {User} .
- */
-
-export class User {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-
-    constructor(id: number, email: string, firstName: string, lastName: string) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-}
+export * from './comment.model';
+export * from './filter.model';
+export * from './icon.model';
+export * from './user.model';
+export * from './task-details.model';

@@ -39,13 +39,12 @@ ADF (demo shell) imports by default the following set of recommended polyfills:
 <script src="node_modules/intl/dist/Intl.min.js"></script>
 <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-<script src="node_modules/moment/min/moment.min.js"></script>
-
 <!-- Polyfill(s) for older browsers -->
 <script src="node_modules/core-js/client/shim.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
 <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
+<!-- Polyfill(s) for pdf support -->
 <script src="node_modules/pdfjs-dist/web/compatibility.js"></script>
 
 <!-- Polyfill(s) for dialogs -->

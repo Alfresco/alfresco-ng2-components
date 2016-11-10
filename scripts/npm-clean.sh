@@ -22,6 +22,12 @@ do
   echo "====== clean component: ${PACKAGE} ====="
   cd "$DIR/../ng2-components/${PACKAGE}"
   npm run clean
+
+  if [ -d "$DIR/../ng2-components/${PACKAGE}/demo" ]; then
+    echo "====== clean component demo: ${PACKAGE} ====="
+    cd "$DIR/../ng2-components/${PACKAGE}/demo"
+    npm run clean
+  fi
 done
 
 cd "$DIR/../demo-shell-ng2"

@@ -23,7 +23,7 @@ import {
 } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { UserTaskFilterRepresentationModel, AppDefinitionRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel, AppDefinitionRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 
 declare let AlfrescoApi: any;
@@ -415,13 +415,13 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should add a filter ', (done) => {
-        let filterFake = new UserTaskFilterRepresentationModel({
+        let filterFake = new FilterRepresentationModel({
             name: 'FakeNameFilter',
             assignment: 'fake-assignement'
         });
 
         service.addFilter(filterFake).subscribe(
-            (res: UserTaskFilterRepresentationModel) => {
+            (res: FilterRepresentationModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).not.toEqual('');
                 expect(res.name).toEqual('FakeNameFilter');

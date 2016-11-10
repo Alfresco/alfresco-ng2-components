@@ -22,7 +22,7 @@ import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } fr
 import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `
                <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
                <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
@@ -33,16 +33,21 @@ import { ViewerModule } from 'ng2-alfresco-viewer';
                     operations.
                </div>
                <hr>
-        <div class="container" *ngIf="authenticated">
-            <alfresco-viewer
-                    [showViewer]="true"
-                    [overlayMode]="true"
-                    [urlFile]="'localTestFile.pdf'">
-                    <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                   </alfresco-viewer>
-                   </div>`
+
+               File node id: <input id="fileNodeId" type="text" [(ngModel)]="fileNodeId">
+               <div class="container" *ngIf="authenticated">
+                    <alfresco-viewer *ngIf="fileNodeId"
+                            [showViewer]="true"
+                            [overlayMode]="true"
+                            [fileNodeId]="fileNodeId">
+                            <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                    </alfresco-viewer>
+               </div>`
 })
 class MyDemoApp {
+
+    fileNodeId: string;
+
     authenticated: boolean;
 
     ecmHost: string = 'http://127.0.0.1:8080';

@@ -26,7 +26,8 @@
             'ng2-translate': 'npm:ng2-translate',
             'alfresco-js-api': 'npm:alfresco-js-api/dist',
             'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
-            'ng2-alfresco-userinfo': 'npm:ng2-alfresco-userinfo/dist'
+            'ng2-alfresco-userinfo': 'npm:ng2-alfresco-userinfo/dist',
+            'ng2-alfresco-login': 'npm:ng2-alfresco-login/dist'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -38,10 +39,10 @@
                 defaultExtension: 'js'
             },
             'ng2-translate': { defaultExtension: 'js' },
-
             'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-userinfo': { main: './index.js', defaultExtension: 'js'},
-            'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'}
+            'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
+            'ng2-alfresco-login': { main: './index.js', defaultExtension: 'js'}
         }
     });
 })(this);

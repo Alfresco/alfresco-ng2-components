@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { UserProcessInstanceFilterRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 
 export var fakeFilters = {
     size: 0, total: 0, start: 0,
-    data: [new UserProcessInstanceFilterRepresentationModel({
+    data: [new FilterRepresentationModel({
         'name': 'Running',
         'appId': '22',
         'recent': true,
@@ -30,14 +30,14 @@ export var fakeFilters = {
 
 export var fakeEmptyFilters = {
     size: 0, total: 0, start: 0,
-    data: [ ]
+    data: []
 };
 
 export var fakeApi = {
     activiti: {
         userFiltersApi: {
             getUserProcessInstanceFilters: (filterOpts) => Promise.resolve({}),
-            createUserProcessInstanceFilter: (filter: UserProcessInstanceFilterRepresentationModel) => Promise.resolve(filter)
+            createUserProcessInstanceFilter: (filter: FilterRepresentationModel) => Promise.resolve(filter)
         }
     }
 };

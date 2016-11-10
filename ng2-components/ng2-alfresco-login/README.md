@@ -1,4 +1,5 @@
-# Alfresco Login Component for Angular 2
+# Alfresco Core Component for Angular 2
+
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
@@ -31,91 +32,99 @@
   </a>
 </p>
 
-### Node
-To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
+## Prerequisites
+
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
-```sh
-npm install --save ng2-alfresco-login
-```
+Follow the 3 steps below:
 
-Components included:
+1. Npm
 
-* Alfresco Login Component
-* Alfresco Authentication Service
+    ```sh
+    npm install ng2-alfresco-login --save
+    ```
 
-## Dependencies
+2. Html
 
-Add the following dependency to your index.html:
+    Include these dependencies in your index.html page:
 
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+    ```html
 
-The following component needs to be added to your systemjs.config: 
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-- ng2-translate
-- ng2-alfresco-core
-- ng2-alfresco-login
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-Please refer to the following example to have an idea of how your systemjs.config should look like :
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-login/demo/systemjs.config.js
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
 
-## Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    ```
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+3. SystemJs
 
-Also make sure you include these dependencies in your .html page:
+    Add the following components to your systemjs.config.js file:
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    - ng2-translate
+    - ng2-alfresco-core
+    - alfresco-js-api
+    - ng2-alfresco-login
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage
+
+This component allow to authenticate to Alfresco One and Alfresco Activiti.
 
 ```html
 <alfresco-login [providers]="'ALL'"></alfresco-login>
 ```
 
-Example of an App that use Alfresco login component :
+Usage example of this component :
 
 **main.ts**
 ```ts
 
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { AlfrescoLoginComponent } from 'ng2-alfresco-login';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
     selector: 'my-app',
-    template: '
-    <alfresco-login 
-        providers="'ALL'" 
-        (onSuccess)="mySuccessMethod($event)" 
-        (onError)="myErrorMethod($event)">
-    </alfresco-login>',
-    directives: [AlfrescoLoginComponent]
+    template: `
+       <alfresco-login [providers]="'ALL'"
+                       [disableCsrf]="true"
+                       (onSuccess)="mySuccessMethod($event)"
+                       (onError)="myErrorMethod($event)">
+        </alfresco-login>`
 })
 export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
-                alfrescoSettingsService: AlfrescoSettingsService) {
-        alfrescoSettingsService.host = 'http://myalfrescoip';
+                private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080/';
+        settingsService.bpmHost = 'http://localhost:9999/';
     }
 
     mySuccessMethod($event) {
@@ -125,33 +134,41 @@ export class AppComponent {
     myErrorMethod($event) {
         console.log('Error Login EventEmitt called with: ' + $event.value);
     }
-
 }
 
-bootstrap(AppComponent, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        LoginModule
+    ],
+    declarations: [ AppComponent ],
+    bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 
 ```
+
 #### Events
 
 | Name | Description |
 | --- | --- |
-| onSuccess | The event is emitted when the login is done |
-| onError | The event is emitted when the login fails |
+| `onSuccess` | The event is emitted when the login is done |
+| `onError` | The event is emitted when the login fails |
 
-Attribute     |   Description | 
----           | ---         |
-`onSuccess`         | The event is emitted when the login is done         |
-`onError`         | The event is emitted when the login fails      |
+| Name |   Description |
+| --- | --- |
+| `onSuccess` | The event is emitted when the login is done |
+| `onError` | The event is emitted when the login fails |
 
 #### Options
 
-Attribute     | Options     | Default      | Description | Mandatory
----           | ---         | ---          | ---         | ---
-`providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL | 
-`disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call | 
+| Name     | Options     | Default      | Description | Mandatory
+| ---           | ---         | ---          | ---         | ---
+| `providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL |
+| `disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call |
 
  
 ## Custom logo and background
@@ -179,6 +196,7 @@ Alternatively you can bind to your component properties and provide values dynam
 ```
 
 #### Customize Validation rules
+
 If needed it is possible customize the validation rules of the login
 form. You can add/modify the default rules of the login form.
 
@@ -293,6 +311,16 @@ cd demo
 npm install
 npm start
 ```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
 
 ## License
 

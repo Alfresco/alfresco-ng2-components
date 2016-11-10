@@ -10,13 +10,27 @@
     <script src="node_modules/material-design-lite/material.min.js"></script>
     <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
+
     <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
+
+    <!-- Modules  -->
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <!-- Polyfill(s) for pdf support -->
+    <script src="node_modules/pdfjs-dist/web/compatibility.js"></script>
 
     <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
     <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
@@ -29,7 +43,7 @@
 </head>
 <body>
 
-<my-app></my-app>
+<alfresco-app-demo></alfresco-app-demo>
 
 </body>
 </html>

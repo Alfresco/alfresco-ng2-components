@@ -1,4 +1,5 @@
 # Alfresco File Viewer Component for Angular 2
+
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
     <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
@@ -31,47 +32,72 @@
   </a>
 </p>
 
-### Node
-To correctly use this component check that on your machine is running Node version 5.0.0 or higher.
+## Prerequisites
+
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
-```sh
-npm install --save ng2-alfresco-viewer
-```
+Follow the 3 steps below:
 
-#### Dependencies
+1. Npm
 
-Add the following dependency to your index.html:
+    ```sh
+    npm install ng2-alfresco-viewer --save
+    ```
 
-```html
-<script src="node_modules/pdfjs-dist/build/pdf.js"></script>
-<script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
-<script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+2. Html
 
-The following component needs to be added to your systemjs.config: 
+    Include these dependencies in your index.html page:
 
-- ng2-translate
-- ng2-alfresco-core
+    ```html
 
-#### Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-Also make sure you include these dependencies in your .html page:
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
+
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <!-- Polyfill(s) for pdf support -->
+    <script src="node_modules/pdfjs-dist/web/compatibility.js"></script>
+
+    <script src="node_modules/pdfjs-dist/build/pdf.js"></script>
+    <script src="node_modules/pdfjs-dist/build/pdf.worker.js"></script>
+    <script src="node_modules/pdfjs-dist/web/pdf_viewer.js"></script>
+
+
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-alfresco-viewer
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 #### Basic usage with node id
 
@@ -82,28 +108,46 @@ Also make sure you include these dependencies in your .html page:
 Example of an App that declares the file viewer component :
 
 ```ts
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
-    selector: 'my-app',
-    template: `   <alfresco-viewer [showViewer]="true" [overlayMode]="true" [fileNodeId]="fileNodeId">
+    selector: 'alfresco-app-demo',
+    template: `<alfresco-viewer [showViewer]="true" [overlayMode]="true" [fileNodeId]="'d367023a-7ebe-4f3a-a7d0-4f27c43f1045'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                   </alfresco-viewer>`,
-    directives: [VIEWERCOMPONENT]
+                   </alfresco-viewer>`
 })
 class MyDemoApp {
 
-    fileNodeId: any;
-    
-    constructor() {
-        this.fileNodeId = '09469a81-1ed9-4caa-a5df-8362fc3d096f';    
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
     }
 }
-bootstrap(MyDemoApp, [
-    VIEWERCOMPONENT
-]);
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ViewerModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
 ```
 
 #### Basic usage with urlFile
@@ -115,25 +159,45 @@ bootstrap(MyDemoApp, [
 Example of an App that declares the file viewer component :
 
 ```ts
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
-    selector: 'my-app',
-    template: `   <alfresco-viewer [showViewer]="true" [overlayMode]="true" [urlFile]="'local_filename.pdf'">
+    selector: 'alfresco-app-demo',
+    template: `<alfresco-viewer [showViewer]="true" [overlayMode]="true" [urlFile]="'localTestFile.pdf'">
                     <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                   </alfresco-viewer>`,
-    directives: [VIEWERCOMPONENT]
+               </alfresco-viewer>`
 })
 class MyDemoApp {
-    constructor() {
-        console.log('constructor');
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
     }
 }
-bootstrap(MyDemoApp, [
-    VIEWERCOMPONENT
-]);
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ViewerModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 #### Options
@@ -157,26 +221,28 @@ Text          | pdf
 
 
 ## Build from sources
+
 Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
 npm run build
 ```
 
-##Build the files and keep watching for changes
+### Build the files and keep watching for changes
 
-    ```sh
-    $ npm run build:w
-    ```
-    
+```sh
+$ npm run build:w
+```
+
 ## Running unit tests
 
 ```sh
 npm test
 ```
 
-## Running unit tests in browser
+### Running unit tests in browser
 
 ```sh
 npm test-browser
@@ -185,7 +251,7 @@ npm test-browser
 This task rebuilds all the code, runs tslint, license checks and other quality check tools
 before performing unit testing.
 
-## Code coverage
+### Code coverage
 
 ```sh
 npm run coverage
@@ -201,25 +267,17 @@ npm install
 npm start
 ```
 
+## NPM scripts
 
-## History
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
 
-For detailed changelog, check [Releases](https://github.com/alfresco/ng2-alfresco-viewer/releases).
+## License
 
-## Contributors
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)
 
-[Contributors](https://github.com/alfresco/ng2-alfresco-viewer/graphs/contributors)
-
-
-[npm-image]: https://badge.fury.io/js/ng2-alfresco-viewer.svg
-[npm-url]: https://npmjs.org/package/ng2-alfresco-viewer
-[travis-image]: https://travis-ci.org/alfresco/ng2-alfresco-viewer.svg?branch=master
-[travis-url]: https://travis-ci.org/alfresco/ng2-alfresco-viewer
-[daviddm-image]: https://david-dm.org/alfresco/ng2-alfresco-viewer.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/alfresco/ng2-alfresco-viewer
-[coveralls-image]: https://coveralls.io/repos/alfresco/ng2-alfresco-viewer/badge.svg
-[coveralls-url]: https://coveralls.io/r/alfresco/ng2-alfresco-viewer
-[style-url]: https://github.com/mgechev/angular2-style-guide
-[style-image]: https://mgechev.github.io/angular2-style-guide/images/badge.svg
-[alfrescocomponent-image]: https://img.shields.io/badge/Alfresco%20component-approved-green.svg
-[alfrescocomponent-url]: https://www.alfresco.com

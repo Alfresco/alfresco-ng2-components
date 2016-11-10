@@ -26,17 +26,8 @@
             'ng2-translate': 'npm:ng2-translate',
             'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
             'ng2-alfresco-datatable': 'npm:ng2-alfresco-datatable/dist',
-            'ng2-alfresco-documentlist': 'npm:ng2-alfresco-documentlist/dist',
-            'ng2-alfresco-login': 'npm:ng2-alfresco-login/dist',
-            'ng2-alfresco-search': 'npm:ng2-alfresco-search/dist',
-            'ng2-alfresco-upload': 'npm:ng2-alfresco-upload/dist',
-            'ng2-activiti-form': 'npm:ng2-activiti-form/dist',
-            'ng2-alfresco-viewer': 'npm:ng2-alfresco-viewer/dist',
             'ng2-alfresco-webscript': 'npm:ng2-alfresco-webscript/dist',
-            'ng2-alfresco-tag': 'npm:ng2-alfresco-tag/dist',
-            'ng2-activiti-tasklist': 'npm:ng2-activiti-tasklist/dist',
-            'alfresco-js-api': 'npm:alfresco-js-api/dist',
-            'ng2-activiti-processlist': 'npm:ng2-activiti-processlist/dist'
+            'alfresco-js-api': 'npm:alfresco-js-api/dist'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -48,19 +39,9 @@
                 defaultExtension: 'js'
             },
             'ng2-translate': { defaultExtension: 'js' },
-
             'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-datatable': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-documentlist': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-login': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-search': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-upload': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-viewer': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-form': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-processlist': { main: './index.js', defaultExtension: 'js'},
-            'ng2-activiti-tasklist': { main: './index.js', defaultExtension: 'js'},
             'ng2-alfresco-webscript': { main: './index.js', defaultExtension: 'js'},
-            'ng2-alfresco-tag': { main: './index.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'}
         }
     });

@@ -28,9 +28,8 @@ import {
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 
-
 @Component({
-    selector: 'alfresco-search-demo',
+    selector: 'alfresco-app-demo',
     template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
                <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
@@ -54,7 +53,7 @@ class SearchDemo implements OnInit {
 
     public searchTerm: string = 'test';
 
-    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://localhost:8080';
 
     ticket: string;
 

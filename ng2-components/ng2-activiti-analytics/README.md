@@ -1,4 +1,35 @@
 # Activiti Analytics Component for Angular 2
+<p>
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
+    Status' />
+  </a>
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+  </a>
+  <a href='https://www.npmjs.com/package/ng2-activiti-analytics'>
+    <img src='https://img.shields.io/npm/dt/ng2-activiti-analytics.svg' alt='npm downloads' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://angular.io/'>
+     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
+  </a>
+  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
+     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+</p>
 
 ## Prerequisites
 
@@ -7,97 +38,227 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 
 ## Install
 
-```sh
-npm install --save ng2-activiti-analytics
-```
+Follow the 3 steps below:
 
-#### Ng2-Charts
+1. Npm
 
-```sh
-npm install ng2-charts chart.js --save
-```
+    ```sh
+    npm install ng2-activiti-analytics --save
+    ```
 
-Also make sure you include these dependencies in your `index.html` file:
+2. Html
 
-```html
+    Include these dependencies in your index.html page:
+
+    ```html
+
+    <!-- Charts -->
     <script src="node_modules/chart.js/dist/Chart.bundle.min.js"></script>
-```
+    <script src="node_modules/raphael/raphael.min.js"></script>
 
-#### Moment
-
-```sh
-npm install moment --save
-```
-
-Also make sure you include these dependencies in your `index.html` file:
-
-```html
+    <!-- Moment js -->
     <script src="node_modules/moment/min/moment.min.js"></script>
-```
 
-
-#### Material Design Date picker
-
-```sh
-npm install md-date-time-picker --save
-```
-
-Also make sure you include these dependencies in your `index.html` file:
-
-```html
+    <!-- Date picker -->
     <script src="node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js"></script>
-```
+    <script src="node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js"></script>
+    <link rel="stylesheet" href="node_modules/md-date-time-picker/dist/css/mdDateTimePicker.css" media="all">
 
-#### Material Design Lite
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-The style of this component is based on [material design](https://getmdl.io/), so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-Also make sure you include these dependencies in your `index.html` file:
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - moment
+    - ng2-charts
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-activiti-diagrams
+    - ng2-activiti-analytics
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage example Activiti Analytics List
+
 The component shows the list of all the available reports
+
 ```html
 <analytics-report-list></analytics-report-list>
 ```
 
+Usage example of this component :
+
+**main.ts**
+```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AnalyticsModule } from 'ng2-activiti-analytics';
+
+@Component({
+    selector: 'activiti-analytics-demo',
+    template: `
+    <div class="page-content">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
+                <analytics-report-list></analytics-report-list>
+            </div>
+        </div>
+    </div>`
+})
+
+export class AnalyticsDemoComponent {
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        AnalyticsModule
+    ],
+    declarations: [ AnalyticsDemoComponent ],
+    bootstrap:    [ AnalyticsDemoComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+
+```
+
 #### Events
-**onSuccess**: The event is emitted when the report list are loaded<br />
-**onError**: The event is emitted when an error occur during the loading<br />
-**reportClick**: The event is emitted when the report in the list is selected<br />
+
+| Name | Description |
+| --- | --- |
+|`onSuccess`| The event is emitted when the report list are loaded |
+|`onError`| The event is emitted when an error occur during the loading |
+|`reportClick`| The event is emitted when the report in the list is selected |
 
 #### Options
+
 No options.
 
 ## Basic usage example Activiti Analytics
+
 The component shows the charts related to the reportId passed as input
+
 ```html
 <activiti-analytics [appId]="appId" [reportId]="reportId"></activiti-analytics>
 ```
 
+Example of an App that use Activiti Analytics component :
+
+**main.ts**
+```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AnalyticsModule } from 'ng2-activiti-analytics';
+
+@Component({
+    selector: 'activiti-analytics-demo',
+    template: `
+    <div class="page-content">
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
+                <activiti-analytics [appId]="1001" [reportId]="2006"></activiti-analytics>
+            </div>
+        </div>
+    </div>`
+})
+
+export class AnalyticsDemoComponent {
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        AnalyticsModule
+    ],
+    declarations: [ AnalyticsDemoComponent ],
+    bootstrap:    [ AnalyticsDemoComponent ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+
+```
+
 #### Events
-**onSuccess**: The event is emitted when the report parameters are loaded<br />
-**onError**: The event is emitted when an error occur during the loading<br />
+
+| Name | Description |
+| --- | --- |
+|`onSuccess` | The event is emitted when the report parameters are loaded |
+|`onError` | The event is emitted when an error occur during the loading |
 
 #### Options
-**appId**: The application id<br />
-**reportId**: The report id<br />
-**debug**: Flag to enable or disable the Form values in the console log<br />
+
+| Name | Description |
+| --- | --- |
+|`appId` | The application id |
+|`reportId` | The report id |
+|`debug` | Flag to enable or disable the Form values in the console log |
 
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -110,7 +271,7 @@ npm run build
 $ npm run build:w
 ```
 
-### Running unit tests
+## Running unit tests
 
 ```sh
 npm test
@@ -130,3 +291,27 @@ before performing unit testing.
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)
