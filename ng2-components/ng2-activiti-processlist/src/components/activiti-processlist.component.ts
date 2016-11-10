@@ -70,10 +70,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         if (!this.data) {
             this.data = this.initDefaultSchemaColumns();
         }
-        if (this.filter) {
-            let requestNode = this.convertProcessInstanceToTaskQuery(this.filter);
-            this.load(requestNode);
-        }
+        this.reload();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -197,6 +194,13 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
             return t;
         });
         return tasks;
+    }
+
+    public reload() {
+        if (this.filter) {
+            let requestNode = this.convertProcessInstanceToTaskQuery(this.filter);
+            this.load(requestNode);
+        }
     }
 
     private convertProcessInstanceToTaskQuery(processFilter: FilterRepresentationModel) {
