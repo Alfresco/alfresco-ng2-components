@@ -106,23 +106,25 @@ export class BarChart extends Chart {
         this.yAxisType = obj && obj.yAxisType || null;
         this.options.scales.xAxes[0].ticks.callback = this.xAxisTickFormatFunction(this.xAxisType);
         this.options.scales.yAxes[0].ticks.callback = this.yAxisTickFormatFunction(this.yAxisType);
-        obj.values.forEach((params: any) => {
-            let dataValue = [];
-            params.values.forEach((info: any) => {
-                info.forEach((value: any, index: any) => {
-                    if (index % 2 === 0) {
-                        if (!this.labels.includes(value)) {
-                            this.labels.push(value);
+        if (obj.values) {
+            obj.values.forEach((params: any) => {
+                let dataValue = [];
+                params.values.forEach((info: any) => {
+                    info.forEach((value: any, index: any) => {
+                        if (index % 2 === 0) {
+                            if (!this.labels.includes(value)) {
+                                this.labels.push(value);
+                            }
+                        } else {
+                            dataValue.push(value);
                         }
-                    } else {
-                        dataValue.push(value);
-                    }
+                    });
                 });
+                if (dataValue && dataValue.length > 0) {
+                    this.datasets.push({data: dataValue, label: params.key});
+                }
             });
-            if (dataValue && dataValue.length > 0) {
-                this.datasets.push({data: dataValue, label: params.key});
-            }
-        });
+        }
     }
 
     xAxisTickFormatFunction = function (xAxisType) {

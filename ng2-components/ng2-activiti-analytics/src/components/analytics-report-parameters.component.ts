@@ -134,7 +134,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
         this.reportParamsSub = this.analyticsService.getReportParams(reportId).subscribe(
             (res: ReportParametersModel) => {
                 this.reportParameters = res;
-                this.onSuccessReportParams.emit(res);
+                if (this.reportParameters.hasParameters()) {
+                    this.onSuccessReportParams.emit(res);
+                } else {
+                    this.onSuccess.emit();
+                }
             },
             (err: any) => {
                 console.log(err);

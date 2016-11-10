@@ -38,7 +38,7 @@ export class ReportParametersModel {
     }
 
     hasParameters() {
-        return (this.definition && this.definition.parameters) ? true : false;
+        return (this.definition && this.definition.parameters && this.definition.parameters.length > 0) ? true : false;
     }
 }
 
