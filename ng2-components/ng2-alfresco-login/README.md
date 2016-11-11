@@ -158,11 +158,6 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `onSuccess` | The event is emitted when the login is done |
 | `onError` | The event is emitted when the login fails |
 
-| Name |   Description |
-| --- | --- |
-| `onSuccess` | The event is emitted when the login is done |
-| `onError` | The event is emitted when the login fails |
-
 #### Options
 
 | Name     | Options     | Default      | Description | Mandatory
