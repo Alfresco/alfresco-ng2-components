@@ -80,9 +80,8 @@
 <dialog class="mdl-dialog task-details-dialog" #startDialog>
     <h4 class="mdl-dialog__title">{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
     <div class="mdl-dialog__content">
-        <activiti-form [processId]="processId" [showSaveButton]="false" [showCompleteButton]="false" [showDebugButton]="false"
-                       [showRefreshButton]="false">
-        </activiti-form>
+        <activiti-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails.processDefinitionId" [showOutcomeButtons]="false">
+        </activiti-start-form>
     </div>
     <div class="mdl-dialog__actions">
         <button type="button" (click)="closeSartDialog()" class="mdl-button close">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>

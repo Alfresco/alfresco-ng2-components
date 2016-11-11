@@ -34,7 +34,7 @@ export class FormModel {
     readonly name: string;
     readonly taskId: string;
     readonly taskName: string = FormModel.UNSET_TASK_NAME;
-    readonly processDefinitionId: string;
+    processDefinitionId: string;
     private _isValid: boolean = true;
 
     get isValid(): boolean {
