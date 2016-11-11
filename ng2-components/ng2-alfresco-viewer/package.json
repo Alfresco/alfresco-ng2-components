@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-viewer",
   "description": "Alfresco documents viewer",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "npm install rimraf && rimraf dist node_modules typings",
@@ -66,8 +66,8 @@
     "material-design-lite": "1.2.1",
 
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "^0.3.0",
-    "ng2-alfresco-core": "0.3.2",
+    "alfresco-js-api": "^0.4.0",
+    "ng2-alfresco-core": "0.4.0",
     "pdfjs-dist": "1.5.404"
   },
   "devDependencies": {
