@@ -109,9 +109,11 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     }
 
     onChange(processDefinitionId) {
-        this.currentProcessDef = this.processDefinitions.filter((processDefinition) => {
+        let processDef = this.processDefinitions.find((processDefinition) => {
             return processDefinition.id === processDefinitionId;
-        })[0];
+        });
+        let clone = JSON.parse(JSON.stringify(processDef));
+        this.currentProcessDef = clone;
     }
 
     hasStartForm() {
