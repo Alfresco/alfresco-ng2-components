@@ -31,9 +31,22 @@ export class ProcessList {
 
 export class SingleProcessList extends ProcessList {
     constructor(name?: string) {
-        let instance = new ProcessInstance();
-        instance.id = '123';
-        instance.name = name;
+        let instance = new ProcessInstance({
+            id: '123',
+            name: name
+        });
         super([instance]);
     }
 }
+
+export var exampleProcess = new ProcessInstance({
+    id: '123',
+    name: 'Process 123',
+    started: '2016-11-10T03:37:30.010+0000',
+    startedBy: {
+        id: 1001,
+        firstName: 'Bob',
+        lastName: 'Jones',
+        email: 'bob@app.activiti.com'
+    }
+});

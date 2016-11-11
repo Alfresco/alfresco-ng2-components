@@ -41,7 +41,7 @@ export class ActivitiProcessInstanceTasks implements OnInit {
     showRefreshButton: boolean = true;
 
     @Output()
-    taskFormCompletedEmitter = new EventEmitter();
+    taskFormCompleted = new EventEmitter();
 
     activeTasks: TaskDetailsModel[] = [];
     completedTasks: TaskDetailsModel[] = [];
@@ -191,10 +191,10 @@ export class ActivitiProcessInstanceTasks implements OnInit {
         }
     }
 
-    public taskFormCompleted() {
+    public onTaskFormCompleted() {
         this.closeDialog();
         this.load(this.processInstanceDetails.id);
-        this.taskFormCompletedEmitter.emit(this.processInstanceDetails.id);
+        this.taskFormCompleted.emit(this.processInstanceDetails.id);
     }
 
     public onRefreshClicked() {

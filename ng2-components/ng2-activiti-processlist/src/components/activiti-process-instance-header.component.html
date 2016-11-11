@@ -1,15 +1,19 @@
 <div *ngIf="processInstance">
     <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col">
+        <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-started-by">
             <span class="activiti-label">{{ 'DETAILS.LABELS.STARTED_BY' | translate }}</span>:
-            {{getStartedByFullName()}}
+            <span class="activiti-process-header__value">{{getStartedByFullName()}}</span>
         </div>
-        <div class="mdl-cell mdl-cell--4-col">
+        <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-started">
             <span class="activiti-label">{{ 'DETAILS.LABELS.STARTED' | translate }}</span>:
-            {{getFormatDate(processInstance.started, 'medium')}}
+            <span class="activiti-process-header__value">{{getFormatDate(processInstance.started, 'medium')}}</span>
         </div>
-        <div class="mdl-cell mdl-cell--4-col">
+        <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="isRunning()">
             <button type="button" (click)="cancelProcess()" class="mdl-button">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="!isRunning()">
+            <span class="activiti-label">{{ 'DETAILS.LABELS.ENDED' | translate }}</span>:
+            <span class="activiti-process-header__value">{{getFormatDate(processInstance.ended, 'medium')}}</span>
         </div>
     </div>
 </div>

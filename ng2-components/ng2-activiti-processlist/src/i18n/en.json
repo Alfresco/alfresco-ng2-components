@@ -16,6 +16,7 @@
         "LABELS": {
             "STARTED_BY": "Started by",
             "STARTED": "Started",
+            "ENDED": "Ended",
             "COMMENTS": "Comments",
             "START_FORM": "Start Form",
             "TASKS_ACTIVE": "Active Tasks",

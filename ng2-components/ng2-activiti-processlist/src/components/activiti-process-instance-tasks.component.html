@@ -10,7 +10,7 @@
 <span class="activiti-label mdl-badge"
       [attr.data-badge]="activeTasks?.length">{{ 'DETAILS.LABELS.TASKS_ACTIVE'|translate }}</span>
 
-<div class="menu-container" *ngIf="activeTasks?.length > 0">
+<div class="menu-container" *ngIf="activeTasks?.length > 0" data-automation-id="active-tasks">
     <ul class='mdl-list'>
         <li class="mdl-list__item mdl-list__item--two-line" *ngFor="let task of activeTasks">
             <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
@@ -24,7 +24,7 @@
 
 <!-- START FORM -->
 
-<div *ngIf="activeTasks?.length === 0">
+<div *ngIf="activeTasks?.length === 0" data-automation-id="active-tasks-none">
     {{ 'DETAILS.TASKS.NO_ACTIVE' | translate }}
 </div>
 
@@ -51,7 +51,7 @@
 <span class="activiti-label mdl-badge"
       [attr.data-badge]="completedTasks?.length">{{ 'DETAILS.LABELS.TASKS_COMPLETED'|translate }}</span>
 
-<div class="menu-container" *ngIf="completedTasks?.length > 0">
+<div class="menu-container" *ngIf="completedTasks?.length > 0" data-automation-id="completed-tasks">
     <ul class='mdl-list'>
         <li class="mdl-list__item mdl-list__item--two-line" *ngFor="let task of completedTasks">
             <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
@@ -64,7 +64,7 @@
     </ul>
 </div>
 
-<div *ngIf="completedTasks?.length === 0">
+<div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none">
     {{ 'DETAILS.TASKS.NO_COMPLETED' | translate }}
 </div>
 
