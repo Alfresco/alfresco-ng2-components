@@ -34,19 +34,42 @@ export class RadioButtonsWidget extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field && this.field.restUrl) {
-            this.formService
-                .getRestFieldValues(
-                    this.field.form.taskId,
-                    this.field.id
-                )
-                .subscribe(
-                    (result: FormFieldOption[]) => {
-                        this.field.options = result || [];
-                        this.field.updateForm();
-                    },
-                    this.handleError
-                );
+            if (this.field.form.processDefinitionId) {
+                this.getOptionsByProcessDefinitionId();
+            } else {
+                this.getOptionsByTaskId();
+            }
         }
+    }
+
+    getOptionsByTaskId() {
+        this.formService
+            .getRestFieldValues(
+                this.field.form.taskId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    this.field.options = result || [];
+                    this.field.updateForm();
+                },
+                this.handleError
+            );
+    }
+
+    getOptionsByProcessDefinitionId() {
+        this.formService
+            .getRestFieldValuesByProcessId(
+                this.field.form.processDefinitionId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    this.field.options = result || [];
+                    this.field.updateForm();
+                },
+                this.handleError
+            );
     }
 
     onOptionClick(optionSelected: any) {

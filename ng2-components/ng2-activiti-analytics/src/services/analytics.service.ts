@@ -85,9 +85,9 @@ export class AnalyticsService {
     getProcessStatusValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({id: 'All', name: 'All'}));
-        paramOptions.push(new ParameterValueModel({id: 'Active', name: 'Active'}));
-        paramOptions.push(new ParameterValueModel({id: 'Complete', name: 'Complete'}));
+        paramOptions.push(new ParameterValueModel({ id: 'All', name: 'All' }));
+        paramOptions.push(new ParameterValueModel({ id: 'Active', name: 'Active' }));
+        paramOptions.push(new ParameterValueModel({ id: 'Complete', name: 'Complete' }));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -98,11 +98,11 @@ export class AnalyticsService {
     getDateIntervalValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({id: 'byHour', name: 'By hour'}));
-        paramOptions.push(new ParameterValueModel({id: 'byDay', name: 'By day'}));
-        paramOptions.push(new ParameterValueModel({id: 'byWeek', name: 'By week'}));
-        paramOptions.push(new ParameterValueModel({id: 'byMonth', name: 'By month'}));
-        paramOptions.push(new ParameterValueModel({id: 'byYear', name: 'By year'}));
+        paramOptions.push(new ParameterValueModel({ id: 'byHour', name: 'By hour' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byDay', name: 'By day' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byWeek', name: 'By week' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byMonth', name: 'By month' }));
+        paramOptions.push(new ParameterValueModel({ id: 'byYear', name: 'By year' }));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -113,9 +113,9 @@ export class AnalyticsService {
     getMetricValues(): Observable<any> {
         let paramOptions: ParameterValueModel[] = [];
 
-        paramOptions.push(new ParameterValueModel({id: 'totalCount', name: 'Number of times a step is executed'}));
-        paramOptions.push(new ParameterValueModel({id: 'totalTime', name: 'Total time spent in a process step'}));
-        paramOptions.push(new ParameterValueModel({id: 'avgTime', name: 'Average time spent in a process step'}));
+        paramOptions.push(new ParameterValueModel({ id: 'totalCount', name: 'Number of times a step is executed' }));
+        paramOptions.push(new ParameterValueModel({ id: 'totalTime', name: 'Total time spent in a process step' }));
+        paramOptions.push(new ParameterValueModel({ id: 'avgTime', name: 'Average time spent in a process step' }));
 
         return Observable.create(observer => {
             observer.next(paramOptions);
@@ -171,7 +171,7 @@ export class AnalyticsService {
                     let paramOptions: ParameterValueModel[] = [];
                     let body = res.json();
                     body.forEach((opt) => {
-                        paramOptions.push(new ParameterValueModel({id: opt, name: opt}));
+                        paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
                     });
                     return paramOptions;
                 }).catch(this.handleError);
@@ -185,7 +185,7 @@ export class AnalyticsService {
 
     getReportsByParams(reportId: number, paramsQuery: any): Observable<any> {
         let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}`;
-        let body = JSON.stringify(paramsQuery);
+        let body = paramsQuery ? JSON.stringify(paramsQuery) : {};
         let options = this.getRequestOptions();
         return this.http
             .post(url, body, options)
@@ -233,7 +233,7 @@ export class AnalyticsService {
 
     public getRequestOptions(param?: any): RequestOptions {
         let headers = this.getHeaders();
-        return new RequestOptions({headers: headers, withCredentials: true, search: param});
+        return new RequestOptions({ headers: headers, withCredentials: true, search: param });
     }
 
     private handleError(error: Response) {

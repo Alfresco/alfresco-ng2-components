@@ -38,9 +38,41 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.field.form.processDefinitionId) {
+            this.getValuesByProcessDefinitionId();
+        } else {
+            this.getValuesByTaskId();
+        }
+    }
+
+    getValuesByTaskId() {
         this.formService
             .getRestFieldValues(
                 this.field.form.taskId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    let options = result || [];
+                    this.field.options = options;
+                    this.field.updateForm();
+
+                    let fieldValue = this.field.value;
+                    if (fieldValue) {
+                        let toSelect = options.find(item => item.id === fieldValue);
+                        if (toSelect) {
+                            this.value = toSelect.name;
+                        }
+                    }
+                },
+                this.handleError
+            );
+    }
+
+    getValuesByProcessDefinitionId() {
+        this.formService
+            .getRestFieldValuesByProcessId(
+                this.field.form.processDefinitionId,
                 this.field.id
             )
             .subscribe(

@@ -34,7 +34,7 @@ export class FormModel {
     readonly name: string;
     readonly taskId: string;
     readonly taskName: string = FormModel.UNSET_TASK_NAME;
-
+    readonly processDefinitionId: string;
     private _isValid: boolean = true;
 
     get isValid(): boolean {
@@ -72,6 +72,7 @@ export class FormModel {
             this.name = json.name;
             this.taskId = json.taskId;
             this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
+            this.processDefinitionId = json.processDefinitionId;
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 

@@ -143,7 +143,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let body = JSON.stringify({values: formValues});
+        let body = JSON.stringify({ values: formValues });
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.saveTaskForm(taskId, body))
             .catch(this.handleError);
@@ -157,7 +157,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = {values: formValues};
+        let data: any = { values: formValues };
         if (outcome) {
             data.outcome = outcome;
         }
@@ -221,6 +221,16 @@ export class FormService {
     getRestFieldValues(taskId: string, field: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
         return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field));
+    }
+
+    getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestFieldValues(processDefinitionId, field));
+    }
+
+    getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestTableFieldValues(processDefinitionId, field, column));
     }
 
     getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
