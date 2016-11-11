@@ -61,9 +61,8 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
 
     /**
      * Constructor
-     * @param auth
-     * @param translate
-     * @param activitiProcess
+     * @param translate Translation service
+     * @param activitiProcess   Process service
      */
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {

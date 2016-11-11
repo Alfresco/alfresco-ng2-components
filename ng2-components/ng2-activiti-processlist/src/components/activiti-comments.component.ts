@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { Comment } from 'ng2-activiti-tasklist';
@@ -23,6 +23,7 @@ import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-process-instance-comments',
@@ -36,6 +37,9 @@ export class ActivitiComments implements OnInit, OnChanges {
     @Input()
     processInstanceId: string;
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('dialog')
     dialog: any;
 
@@ -48,8 +52,8 @@ export class ActivitiComments implements OnInit, OnChanges {
 
     /**
      * Constructor
-     * @param auth
-     * @param translate
+     * @param translate Translation service
+     * @param activitiProcess Process service
      */
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
@@ -66,17 +70,24 @@ export class ActivitiComments implements OnInit, OnChanges {
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        let processInstanceId = changes['processInstanceId'];
-        if (processInstanceId && processInstanceId.currentValue) {
-            this.getProcessComments(processInstanceId.currentValue);
+        if (this.processInstanceId) {
+            this.getProcessComments(this.processInstanceId);
             return;
         }
     }
 
-    public getProcessComments(processInstanceId: string) {
+    ngOnChanges(changes: SimpleChanges) {
+        let processInstanceId = changes['processInstanceId'];
+        if (processInstanceId) {
+            if (processInstanceId.currentValue) {
+                this.getProcessComments(processInstanceId.currentValue);
+            } else {
+                this.resetComments();
+            }
+        }
+    }
+
+    private getProcessComments(processInstanceId: string) {
         this.comments = [];
         if (processInstanceId) {
             this.activitiProcess.getProcessInstanceComments(processInstanceId).subscribe(
@@ -86,15 +97,22 @@ export class ActivitiComments implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    console.log(err);
+                    this.error.emit(err);
                 }
             );
         } else {
-            this.comments = [];
+            this.resetComments();
         }
     }
 
+    private resetComments() {
+        this.comments = [];
+    }
+
     public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }
@@ -107,7 +125,7 @@ export class ActivitiComments implements OnInit, OnChanges {
                 this.message = '';
             },
             (err) => {
-                console.log(err);
+                this.error.emit(err);
             }
         );
         this.cancel();

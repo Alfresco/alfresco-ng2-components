@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
 import { TranslationMock } from './../assets/translation.service.mock';
+import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
@@ -60,8 +61,23 @@ describe('ActivitiProcessInstanceListComponent', () => {
         });
     }));
 
-    it('should initialise data table', () => {
-        fixture.detectChanges();
+    it('should use the default schemaColumn as default', () => {
+        component.ngOnInit();
+        expect(component.data.getColumns()).toBeDefined();
+        expect(component.data.getColumns().length).toEqual(4);
+    });
+
+    it('should use the schemaColumn passed in input', () => {
+        component.data = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'fake-id', title: 'Name'}
+            ]
+        );
+
+        component.ngOnInit();
+        expect(component.data.getColumns()).toBeDefined();
+        expect(component.data.getColumns().length).toEqual(1);
     });
 
     it('should fetch process instances when a filter is provided', () => {
