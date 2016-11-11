@@ -19,8 +19,27 @@
         </li>
     </ul>
 </div>
+
 <div *ngIf="activeTasks?.length === 0">
     {{ 'DETAILS.TASKS.NO_ACTIVE' | translate }}
+</div>
+
+<div *ngIf="processInstanceDetails && processInstanceDetails.startFormDefined">
+    <span class="activiti-label">{{ 'DETAILS.LABELS.START_FORM'|translate }}</span>
+
+    <div class="menu-container" *ngIf="completedTasks?.length > 0">
+        <ul class='mdl-list'>
+            <li class="mdl-list__item mdl-list__item--two-line">
+                <span class="mdl-list__item-primary-content" (click)="clickTask($event, completedTasks[0])">
+                    <i class="material-icons mdl-list__item-icon">assignment</i>
+                    <span>{{ 'DETAILS.LABELS.START_FORM'|translate }}</span>
+                    <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:
+                        getUserFullName(completedTasks[0].assignee), created: getFormatDate(completedTasks[0].created, 'mediumDate') }
+                        }}</span>
+                </span>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <span class="activiti-label mdl-badge"
@@ -38,6 +57,7 @@
         </li>
     </ul>
 </div>
+
 <div *ngIf="completedTasks?.length === 0">
     {{ 'DETAILS.TASKS.NO_COMPLETED' | translate }}
 </div>

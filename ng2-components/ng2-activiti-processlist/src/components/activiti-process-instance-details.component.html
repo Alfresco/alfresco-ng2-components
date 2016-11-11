@@ -4,7 +4,7 @@
     <activiti-process-instance-header [processInstance]="processInstanceDetails" (processCancelled)="bubbleProcessCancelled()" #activitiprocessheader></activiti-process-instance-header>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--8-col">
-            <activiti-process-instance-tasks [processInstanceId]="processInstanceDetails.id" (taskFormCompleted)="bubbleTaskFormCompleted()" #activitiprocesstasks></activiti-process-instance-tasks>
+            <activiti-process-instance-tasks [processInstanceDetails]="processInstanceDetails" (taskFormCompleted)="bubbleTaskFormCompleted()" #activitiprocesstasks></activiti-process-instance-tasks>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
             <activiti-process-instance-comments [processInstanceId]="processInstanceDetails.id" #activitiprocesscomments></activiti-process-instance-comments>
