@@ -20,48 +20,5 @@
                 "CUSTOM": "Custom action"
             }
         }
-    },
-
-    "DATATABLE": {
-        "COLUMNS": {
-            "DISPLAY_NAME": "Display name",
-            "CREATED_BY": "Created by",
-            "CREATED_ON": "Created on"
-        },
-        "ACTIONS": {
-            "FOLDER": {
-                "SYSTEM_1": "System folder action 1",
-                "CUSTOM": "Custom folder action"
-            },
-            "DOCUMENT": {
-                "DOWNLOAD": "Download",
-                "SYSTEM_2": "System document action 2",
-                "CUSTOM": "Custom action"
-            }
-        }
-    },
-
-    "LOGIN": {
-        "LOGO": "Alfresco",
-        "LABEL": {
-            "LOGIN": "Login",
-            "USERNAME": "Username",
-            "PASSWORD": "Password",
-            "REMEMBER": "Remember"
-        },
-        "MESSAGES": {
-            "USERNAME-REQUIRED": "Required",
-            "USERNAME-MIN": "Your username needs to be at least 4 characters.",
-            "PASSWORD-REQUIRED": "Enter your password to sign in",
-            "LOGIN-ERROR": "You have entered an invalid username or password",
-            "LOGIN-SUCCESS": "Login successful"
-        },
-        "BUTTON": {
-            "LOGIN": "Login"
-        },
-        "ACTION": {
-            "HELP": "NEED HELP?",
-            "REGISTER": "REGISTER"
-        }
     }
 }
