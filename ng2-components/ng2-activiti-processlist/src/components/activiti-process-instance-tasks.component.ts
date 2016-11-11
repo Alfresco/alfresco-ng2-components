@@ -21,6 +21,7 @@ import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { Observable, Observer } from 'rxjs/Rx';
 import { DatePipe } from '@angular/common';
+import { ProcessInstance } from '../models/process-instance';
 
 declare let componentHandler: any;
 
@@ -33,7 +34,7 @@ declare let componentHandler: any;
 export class ActivitiProcessInstanceTasks implements OnInit {
 
     @Input()
-    processInstanceId: string;
+    processInstanceDetails: ProcessInstance;
 
     @Input()
     showRefreshButton: boolean = true;
@@ -78,8 +79,8 @@ export class ActivitiProcessInstanceTasks implements OnInit {
             this.completedTasks.push(task);
         });
 
-        if (this.processInstanceId) {
-            this.load(this.processInstanceId);
+        if (this.processInstanceDetails && this.processInstanceDetails.id) {
+            this.load(this.processInstanceDetails.id);
         }
     }
 
@@ -166,11 +167,11 @@ export class ActivitiProcessInstanceTasks implements OnInit {
 
     public taskFormCompleted() {
         this.closeDialog();
-        this.load(this.processInstanceId);
-        this.taskFormCompletedEmitter.emit(this.processInstanceId);
+        this.load(this.processInstanceDetails.id);
+        this.taskFormCompletedEmitter.emit(this.processInstanceDetails.id);
     }
 
     public onRefreshClicked() {
-        this.load(this.processInstanceId);
+        this.load(this.processInstanceDetails.id);
     }
 }
