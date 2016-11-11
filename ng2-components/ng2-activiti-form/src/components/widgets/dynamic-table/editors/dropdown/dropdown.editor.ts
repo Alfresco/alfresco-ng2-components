@@ -39,7 +39,7 @@ export class DropdownEditorComponent extends CellEditorComponent implements OnIn
         let field = this.table.field;
         if (field) {
             if (this.column.optionType === 'rest') {
-                if (this.table.form.processDefinitionId) {
+                if (this.table.form && this.table.form.processDefinitionId) {
                     this.getValuesByProcessDefinitionId(field);
                 } else {
                     this.getValuesByTaskId(field);
