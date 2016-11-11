@@ -58,7 +58,13 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     processDefinitionId: string;
 
     @Input()
+    processId: string;
+
+    @Input()
     showOutcomeButtons: boolean = false;
+
+    @Input()
+    showRefreshButton: boolean = true;
 
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
@@ -70,7 +76,11 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     }
 
     ngOnInit() {
-        this.loadForm();
+        if (this.processId) {
+            this.loadStartForm(this.processId);
+        }else {
+            this.loadForm();
+        }
 
         if (this.translate) {
             this.translate.addTranslationFolder('node_modules/ng2-activiti-form/src');
@@ -78,9 +88,15 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let processId = changes['processDefinitionId'];
-        if (processId && processId.currentValue) {
-            this.getStartFormDefinition(processId.currentValue);
+        let processDefinitionId = changes['processDefinitionId'];
+        if (processDefinitionId && processDefinitionId.currentValue) {
+            this.getStartFormDefinition(processDefinitionId.currentValue);
+            return;
+        }
+
+        let processId = changes['processId'];
+        if (processId  && processId.currentValue) {
+            this.loadStartForm(processId.currentValue);
             return;
         }
     }
@@ -90,6 +106,23 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
             this.getStartFormDefinition(this.processDefinitionId);
             return;
         }
+    }
+
+    loadStartForm(processId: string) {
+        this.formService
+            .getStartFormInstance(processId)
+            .subscribe(
+                form => {
+                    this.formName = form.name;
+                    form.processDefinitionId = this.processDefinitionId;
+                    this.form = this.parseForm(form);
+                    // this.form.processDefinitionId = this.processDefinitionId;
+                    this.formLoaded.emit(this.form);
+                },
+                (error) => {
+                    this.handleError(error);
+                }
+            );
     }
 
     getStartFormDefinition(processId: string) {

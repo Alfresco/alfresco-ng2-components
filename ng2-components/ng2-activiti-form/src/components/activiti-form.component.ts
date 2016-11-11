@@ -85,9 +85,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     static CUSTOM_OUTCOME_ID: string = '$custom';
 
     @Input()
-    processId: string;
-
-    @Input()
     taskId: string;
 
     @Input()
@@ -196,11 +193,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     ngOnInit() {
-        if (this.processId) {
-            this.loadStartForm(this.processId);
-            return;
-        }
-
         if (this.nodeId) {
             this.loadFormForEcmNode();
         } else {
@@ -228,12 +220,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         let formName = changes['formName'];
         if (formName && formName.currentValue) {
             this.getFormDefinitionByFormName(formName.currentValue);
-            return;
-        }
-
-        let processId = changes['processId'];
-        if (processId  && processId.currentValue) {
-            this.loadStartForm(processId.currentValue);
             return;
         }
     }
@@ -322,21 +308,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .subscribe(
                 form => {
                     this.form = new FormModel(form, data, this.readOnly);
-                    this.formLoaded.emit(this.form);
-                },
-                (error) => {
-                    this.handleError(error);
-                }
-            );
-    }
-
-    loadStartForm(processId: string) {
-        this.formService
-            .getStartFormInstance(processId)
-            .subscribe(
-                form => {
-                    this.formName = form.name;
-                    this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form);
                 },
                 (error) => {
