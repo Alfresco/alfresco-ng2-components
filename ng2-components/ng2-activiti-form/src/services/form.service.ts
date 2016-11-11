@@ -207,6 +207,18 @@ export class FormService {
     }
 
     /**
+     * Get start form instance for a given processId
+     * @param processId Process definition ID
+     * @returns {Observable<any>}
+     */
+    getStartFormInstance(processId: string): Observable<any> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.processApi.getProcessInstanceStartForm(processId))
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    /**
      * Get start form definition for a given process
      * @param processId Process definition ID
      * @returns {Observable<any>}
