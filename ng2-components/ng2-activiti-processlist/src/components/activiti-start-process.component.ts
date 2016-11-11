@@ -48,6 +48,8 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     name: string;
     processDefinitionId: string;
 
+    currentProcessDef: any;
+
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
@@ -57,18 +59,19 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.load();
+        this.load(this.appId);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         let appId = changes['appId'];
         if (appId && (appId.currentValue || appId.currentValue === null)) {
-            this.load();
+            this.load(appId.currentValue);
             return;
         }
     }
 
-    public load() {
+    public load(appId: string) {
+        this.reset();
         this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
             (res: any[]) => {
                 this.processDefinitions = res;
@@ -107,15 +110,14 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
         this.dialog.nativeElement.close();
     }
 
-    private getSelectedProcess(): any {
-        return this.processDefinitions.filter((processDefinition) => {
-            return processDefinition.id === this.processDefinitionId;
+    onChange(processDefinitionId) {
+        this.currentProcessDef = this.processDefinitions.filter((processDefinition) => {
+            return processDefinition.id === processDefinitionId;
         })[0];
     }
 
     hasStartForm() {
-        let selectedProcessDefinition = this.getSelectedProcess();
-        return selectedProcessDefinition && selectedProcessDefinition.hasStartForm;
+        return this.currentProcessDef && this.currentProcessDef.hasStartForm;
     }
 
     isStartFormMissingOrValid() {
@@ -124,5 +126,10 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
 
     validateForm() {
         return this.processDefinitionId && this.name && this.isStartFormMissingOrValid();
+    }
+
+    reset() {
+        this.processDefinitionId = undefined;
+        this.currentProcessDef = undefined;
     }
 }
