@@ -124,7 +124,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                                 this.visibleColumns = this.columns.filter(col => col.visible);
                             }
                             if (json.value) {
-                                this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
+                                this.rows = json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
                             }
                             break;
                         default:
@@ -147,6 +147,37 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     }
 
     loadRestFieldValue() {
+        if (this.field.form.processDefinitionId) {
+            this.getValuesByProcessDefinitionId();
+        } else {
+            this.getValuesByTaskId();
+        }
+    }
+
+    getValuesByProcessDefinitionId(){
+        this.formService
+            .getRestFieldValuesByProcessId(
+                this.field.form.processDefinitionId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    let options = result || [];
+                    let toSelect = options.find(item => item.id === this.field.value);
+                    if (toSelect) {
+                        this.value = toSelect.name;
+                    } else {
+                        this.value = this.field.value;
+                    }
+                },
+                error => {
+                    console.log(error);
+                    this.value = this.field.value;
+                }
+            );
+    }
+
+    getValuesByTaskId() {
         this.formService
             .getRestFieldValues(this.field.form.taskId, this.field.id)
             .subscribe(

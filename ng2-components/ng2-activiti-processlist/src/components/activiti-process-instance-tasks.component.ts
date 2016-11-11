@@ -161,6 +161,10 @@ export class ActivitiProcessInstanceTasks implements OnInit {
     }
 
     public showStartDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
+        
         if (this.startDialog) {
             this.startDialog.nativeElement.showModal();
         }
