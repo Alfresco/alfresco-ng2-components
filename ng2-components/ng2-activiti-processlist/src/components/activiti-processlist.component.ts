@@ -87,7 +87,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         );
     }
 
-    load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (processInstances) => {
