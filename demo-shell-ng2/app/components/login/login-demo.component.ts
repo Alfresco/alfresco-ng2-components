@@ -88,6 +88,8 @@ export class LoginDemoComponent implements OnInit {
             this.providers = 'ECM';
         } else if (!checked && this.providers === 'ALL') {
             this.providers = 'BPM';
+        } else if (!checked && this.providers === 'ECM') {
+            this.providers = '';
         }
 
         localStorage.setItem('providers', this.providers);
@@ -100,6 +102,8 @@ export class LoginDemoComponent implements OnInit {
             this.providers = 'BPM';
         } else if (!checked && this.providers === 'ALL') {
             this.providers = 'ECM';
+        } else if (!checked && this.providers === 'BPM') {
+            this.providers = '';
         }
 
         localStorage.setItem('providers', this.providers);

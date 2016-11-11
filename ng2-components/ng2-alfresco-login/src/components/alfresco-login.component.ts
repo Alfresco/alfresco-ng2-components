@@ -171,7 +171,7 @@ export class AlfrescoLoginComponent implements OnInit {
      * @returns {boolean}
      */
     private checkRequiredParams(): boolean {
-        if (this.providers === undefined) {
+        if (this.providers === undefined || this.providers === null || this.providers === '') {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
             this.enableError();
             let messageProviders: any;
