@@ -154,7 +154,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
         }
     }
 
-    getValuesByProcessDefinitionId(){
+    getValuesByProcessDefinitionId() {
         this.formService
             .getRestFieldValuesByProcessId(
                 this.field.form.processDefinitionId,
