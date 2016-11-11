@@ -17,6 +17,7 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import {
     DocumentActionsService,
     DocumentList,
@@ -50,6 +51,7 @@ export class FilesComponent implements OnInit {
     documentList: DocumentList;
 
     constructor(private documentActions: DocumentActionsService,
+                public auth: AlfrescoAuthenticationService,
                 private formService: FormService,
                 private router: Router) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
@@ -104,10 +106,14 @@ export class FilesComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.formService.getProcessDefinitions().subscribe(
-            defs => this.setupBpmActions(defs || []),
-            err => console.log(err)
-        );
+      if ( this.auth.isBpmLoggedIn() ) {
+          this.formService.getProcessDefinitions().subscribe(
+              defs => this.setupBpmActions(defs || []),
+              err => console.log(err)
+          );
+      } else {
+          console.log('You are not logged in');
+      }
     }
 
     viewActivitiForm(event?: any) {
