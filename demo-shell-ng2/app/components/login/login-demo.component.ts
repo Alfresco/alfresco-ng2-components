@@ -92,9 +92,7 @@ export class LoginDemoComponent implements OnInit {
             this.providers = '';
         }
 
-        if (this.providers) {
-            localStorage.setItem('providers', this.providers);
-        }
+        localStorage.setItem('providers', this.providers);
     }
 
     toggleBPM(checked) {
@@ -108,9 +106,7 @@ export class LoginDemoComponent implements OnInit {
             this.providers = '';
         }
 
-        if (this.providers) {
-            localStorage.setItem('providers', this.providers);
-        }
+        localStorage.setItem('providers', this.providers);
     }
 
     toggleCSRF() {
