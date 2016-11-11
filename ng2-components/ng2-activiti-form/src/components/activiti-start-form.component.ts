@@ -63,6 +63,9 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     @Input()
     showOutcomeButtons: boolean = false;
 
+    @Input()
+    showRefreshButton: boolean = true;
+
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 

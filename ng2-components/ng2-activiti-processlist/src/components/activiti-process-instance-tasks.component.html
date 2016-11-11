@@ -38,7 +38,8 @@
                 <span class="mdl-list__item-primary-content" (click)="clickStartTask($event)">
                     <i class="material-icons mdl-list__item-icon">assignment</i>
                     <span>{{ 'DETAILS.LABELS.START_FORM'|translate }}</span>
-
+                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:
+                    getUserFullName(processInstanceDetails.startedBy), created: getFormatDate(processInstanceDetails.started, 'mediumDate') } }}</span>
                 </span>
             </li>
         </ul>
@@ -80,7 +81,8 @@
 <dialog class="mdl-dialog task-details-dialog" #startDialog>
     <h4 class="mdl-dialog__title">{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
     <div class="mdl-dialog__content">
-        <activiti-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails.processDefinitionId" [showOutcomeButtons]="false">
+        <activiti-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails.processDefinitionId"
+                             [showOutcomeButtons]="false" [showRefreshButton]="false">
         </activiti-start-form>
     </div>
     <div class="mdl-dialog__actions">
