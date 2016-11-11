@@ -34,23 +34,50 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field && this.field.restUrl) {
-            this.formService
-                .getRestFieldValues(
-                    this.field.form.taskId,
-                    this.field.id
-                )
-                .subscribe(
-                    (result: FormFieldOption[]) => {
-                        let options = [];
-                        if (this.field.emptyOption) {
-                            options.push(this.field.emptyOption);
-                        }
-                        this.field.options = options.concat((result || []));
-                        this.field.updateForm();
-                    },
-                    this.handleError
-                );
+            if (this.field.form.processDefinitionId) {
+                this.getValuesByProcessDefinitionId();
+            } else {
+                this.getValuesByTaskId();
+            }
         }
+    }
+
+    getValuesByTaskId() {
+        this.formService
+            .getRestFieldValues(
+                this.field.form.taskId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    let options = [];
+                    if (this.field.emptyOption) {
+                        options.push(this.field.emptyOption);
+                    }
+                    this.field.options = options.concat((result || []));
+                    this.field.updateForm();
+                },
+                this.handleError
+            );
+    }
+
+    getValuesByProcessDefinitionId() {
+        this.formService
+            .getRestFieldValuesByProcessId(
+                this.field.form.processDefinitionId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    let options = [];
+                    if (this.field.emptyOption) {
+                        options.push(this.field.emptyOption);
+                    }
+                    this.field.options = options.concat((result || []));
+                    this.field.updateForm();
+                },
+                this.handleError
+            );
     }
 
     handleError(error: any) {

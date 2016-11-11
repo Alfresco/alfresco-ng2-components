@@ -39,25 +39,50 @@ export class DropdownEditorComponent extends CellEditorComponent implements OnIn
         let field = this.table.field;
         if (field) {
             if (this.column.optionType === 'rest') {
-                this.formService
-                    .getRestFieldValuesColumn(
-                        field.form.taskId,
-                        field.id,
-                        this.column.id
-                    )
-                    .subscribe(
-                        (result: DynamicTableColumnOption[]) => {
-                            this.column.options = result || [];
-                            this.options = this.column.options;
-                            this.value = this.table.getCellValue(this.row, this.column);
-                        },
-                        err => this.handleError(err)
-                    );
+                if (this.table.form.processDefinitionId) {
+                    this.getValuesByProcessDefinitionId(field);
+                } else {
+                    this.getValuesByTaskId(field);
+                }
             } else {
                 this.options = this.column.options || [];
                 this.value = this.table.getCellValue(this.row, this.column);
             }
         }
+    }
+
+    getValuesByTaskId(field) {
+        this.formService
+            .getRestFieldValuesColumn(
+                field.form.taskId,
+                field.id,
+                this.column.id
+            )
+            .subscribe(
+                (result: DynamicTableColumnOption[]) => {
+                    this.column.options = result || [];
+                    this.options = this.column.options;
+                    this.value = this.table.getCellValue(this.row, this.column);
+                },
+                err => this.handleError(err)
+            );
+    }
+
+    getValuesByProcessDefinitionId(field) {
+        this.formService
+            .getRestFieldValuesColumnByProcessId(
+                field.form.processDefinitionId,
+                field.id,
+                this.column.id
+            )
+            .subscribe(
+                (result: DynamicTableColumnOption[]) => {
+                    this.column.options = result || [];
+                    this.options = this.column.options;
+                    this.value = this.table.getCellValue(this.row, this.column);
+                },
+                err => this.handleError(err)
+            );
     }
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
