@@ -88,9 +88,13 @@ export class LoginDemoComponent implements OnInit {
             this.providers = 'ECM';
         } else if (!checked && this.providers === 'ALL') {
             this.providers = 'BPM';
+        } else if (!checked && this.providers === 'ECM') {
+            this.providers = '';
         }
 
-        localStorage.setItem('providers', this.providers);
+        if (this.providers) {
+            localStorage.setItem('providers', this.providers);
+        }
     }
 
     toggleBPM(checked) {
@@ -100,9 +104,13 @@ export class LoginDemoComponent implements OnInit {
             this.providers = 'BPM';
         } else if (!checked && this.providers === 'ALL') {
             this.providers = 'ECM';
+        } else if (!checked && this.providers === 'BPM') {
+            this.providers = '';
         }
 
-        localStorage.setItem('providers', this.providers);
+        if (this.providers) {
+            localStorage.setItem('providers', this.providers);
+        }
     }
 
     toggleCSRF() {
