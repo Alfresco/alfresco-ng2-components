@@ -55,8 +55,13 @@ export class ActivitiProcessInstanceTasks implements OnInit {
 
     selectedTaskId: string;
 
+    processId: string;
+
     @ViewChild('dialog')
     dialog: any;
+
+    @ViewChild('startDialog')
+    startDialog: any;
 
     @ViewChild('taskdetails')
     taskdetails: any;
@@ -67,8 +72,8 @@ export class ActivitiProcessInstanceTasks implements OnInit {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
 
-        this.task$ = new Observable<TaskDetailsModel>(observer =>  this.taskObserver = observer).share();
-        this.completedTask$ = new Observable<TaskDetailsModel>(observer =>  this.completedTaskObserver = observer).share();
+        this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
+        this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer).share();
     }
 
     ngOnInit() {
@@ -149,14 +154,27 @@ export class ActivitiProcessInstanceTasks implements OnInit {
         this.showDialog();
     }
 
+    public clickStartTask() {
+        this.processId = this.processInstanceDetails.id;
+        this.showStartDialog();
+    }
+
+    public showStartDialog() {
+        if (this.startDialog) {
+            this.startDialog.nativeElement.showModal();
+        }
+    }
+
     public showDialog() {
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }
     }
 
-    public cancelDialog() {
-        this.closeDialog();
+    public closeSartDialog() {
+        if (this.startDialog) {
+            this.startDialog.nativeElement.close();
+        }
     }
 
     private closeDialog() {
