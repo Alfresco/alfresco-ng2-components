@@ -4,7 +4,7 @@
     <h4 class="mdl-dialog__title">{{'START_PROCESS.DIALOG.TITLE'|translate}}</h4>
     <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
-            <select name="processDefinition" [(ngModel)]="processDefinitionId" (ngModelChange)="onChange($event)" id="processDefinition">
+            <select name="processDefinition" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onChange($event)" id="processDefinition">
                 <option value="" selected="selected">{{'START_PROCESS.DIALOG.TYPE_PLACEHOLDER'|translate}}</option>
                 <option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
                     {{processDef.name}}
@@ -17,7 +17,7 @@
             <input class="mdl-textfield__input" type="text" [(ngModel)]="name" id="processName" />
             <label class="mdl-textfield__label" for="processName">{{'START_PROCESS.DIALOG.LABEL.NAME'|translate}}</label>
         </div>
-        <activiti-start-form *ngIf="hasStartForm()" [processDefinitionId]="processDefinitionId"
+        <activiti-start-form *ngIf="hasStartForm()" [processDefinitionId]="currentProcessDef.id"
                        (formSaved)='onFormSaved($event)'
                        (formCompleted)='onFormCompleted($event)'
                        (formLoaded)='onFormLoaded($event)'

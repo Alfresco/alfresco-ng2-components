@@ -98,9 +98,9 @@ describe('ActivitiStartProcessButton', () => {
 
     it('should call service to start process if required fields provided', (done) => {
         component.name = 'My new process';
-        component.processDefinitionId = 'my:process1';
         component.showDialog();
         fixture.detectChanges();
+        component.onChange('my:process1');
         component.startProcess();
         fixture.whenStable().then(() => {
             expect(startProcessSpy).toHaveBeenCalled();
@@ -120,9 +120,9 @@ describe('ActivitiStartProcessButton', () => {
 
     it('should call service to start process with the correct parameters', (done) => {
         component.name = 'My new process';
-        component.processDefinitionId = 'my:process1';
         component.showDialog();
         fixture.detectChanges();
+        component.onChange('my:process1');
         component.startProcess();
         fixture.whenStable().then(() => {
             expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined);
@@ -133,9 +133,9 @@ describe('ActivitiStartProcessButton', () => {
     it('should output start event when process started successfully', (done) => {
         let emitSpy = spyOn(component.start, 'emit');
         component.name = 'My new process';
-        component.processDefinitionId = 'my:process1';
         component.showDialog();
         fixture.detectChanges();
+        component.onChange('my:process1');
         component.startProcess();
         fixture.whenStable().then(() => {
             expect(emitSpy).toHaveBeenCalledWith(newProcess);
@@ -145,9 +145,9 @@ describe('ActivitiStartProcessButton', () => {
 
     it('should indicate start form is missing when process does not have a start form', (done) => {
         component.name = 'My new process';
-        component.processDefinitionId = 'my:process1';
         component.showDialog();
         fixture.detectChanges();
+        component.onChange('my:process1');
         component.startProcess();
         fixture.whenStable().then(() => {
             expect(component.isStartFormMissingOrValid()).toBe(true);

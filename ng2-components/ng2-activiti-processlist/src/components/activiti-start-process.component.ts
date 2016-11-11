@@ -46,7 +46,6 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     processDefinitions: any[] = [];
 
     name: string;
-    processDefinitionId: string;
 
     currentProcessDef: any;
 
@@ -90,12 +89,11 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     }
 
     public startProcess() {
-        if (this.processDefinitionId && this.name) {
+        if (this.currentProcessDef.id && this.name) {
             let formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.processDefinitionId, this.name, formValues).subscribe(
+            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, formValues).subscribe(
                 (res: any) => {
                     this.name = '';
-                    this.processDefinitionId = '';
                     this.start.emit(res);
                     this.cancel();
                 },
@@ -125,11 +123,10 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     }
 
     validateForm() {
-        return this.processDefinitionId && this.name && this.isStartFormMissingOrValid();
+        return this.currentProcessDef.id && this.name && this.isStartFormMissingOrValid();
     }
 
     reset() {
-        this.processDefinitionId = undefined;
-        this.currentProcessDef = undefined;
+        this.currentProcessDef = {};
     }
 }
