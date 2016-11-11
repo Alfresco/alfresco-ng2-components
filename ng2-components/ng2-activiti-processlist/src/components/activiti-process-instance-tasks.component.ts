@@ -24,6 +24,7 @@ import { DatePipe } from '@angular/common';
 import { ProcessInstance } from '../models/process-instance';
 
 declare let componentHandler: any;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-process-instance-tasks',
@@ -150,6 +151,9 @@ export class ActivitiProcessInstanceTasks implements OnInit {
     }
 
     public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }
