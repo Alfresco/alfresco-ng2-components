@@ -1,16 +1,19 @@
 <div *ngIf="taskDetails">
     <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col">
+        <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-assignee">
             <span class="activiti-task-header__label">{{ 'TASK_DETAILS.LABELS.ASSIGNEE' | translate }}: </span>
-            <span class="activiti-task-header__value">{{taskDetails.assignee.lastName }}</span>
+            <span class="activiti-task-header__value" *ngIf="hasAssignee()">{{ taskDetails.assignee.firstName }} {{ taskDetails.assignee.lastName }}</span>
+            <span class="activiti-task-header__value" *ngIf="!hasAssignee()">{{ 'TASK_DETAILS.ASSIGNEE.NONE' | translate }}</span>
         </div>
-        <div class="mdl-cell mdl-cell--4-col">
+        <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-due-date">
             <span class="activiti-task-header__label">{{ 'TASK_DETAILS.LABELS.DUE' | translate }}: </span>
-            <span class="activiti-task-header__value">{{taskDetails?.dueDate ? taskDetails.dueDate : ('TASK_DETAILS.DUE.NONE' |translate) }}</span>
+            <span class="activiti-task-header__value" *ngIf="taskDetails?.dueDate">{{ taskDetails.dueDate }}</span>
+            <span class="activiti-task-header__value" *ngIf="!taskDetails?.dueDate">{{ 'TASK_DETAILS.DUE.NONE' |translate }}</span>
         </div>
-        <div *ngIf="formName" class="mdl-cell mdl-cell--4-col">
+        <div *ngIf="formName" class="mdl-cell mdl-cell--4-col" data-automation-id="header-form-name">
             <span class="activiti-task-header__label">{{ 'TASK_DETAILS.LABELS.FORM' | translate }}: </span>
-            <span class="activiti-task-header__value">{{formName}}</span>
+            <span class="activiti-task-header__value" *ngIf="formName">{{ formName }}</span>
+            <span class="activiti-task-header__value" *ngIf="!formName">{{ 'TASK_DETAILS.FORM.NONE' | translate }}</span>
         </div>
     </div>
 </div>

@@ -25,11 +25,25 @@
     "DUE": {
       "NONE": "No due date."
     },
+    "ASSIGNEE": {
+      "NONE": "No assignee."
+    },
     "PEOPLE": {
       "NONE": "No people involved."
     },
     "COMMENTS": {
-      "NONE": "No comments."
+      "NONE": "No comments.",
+      "ADD": "Add a comment",
+      "DIALOG": {
+        "TITLE": "New comment",
+        "LABELS": {
+          "MESSAGE": "Message"
+        },
+        "BUTTON": {
+          "ADD": "Add Comment",
+          "CANCEL": "Cancel"
+        }
+      }
     },
     "CHECKLIST": {
       "NONE": "No checklist."
