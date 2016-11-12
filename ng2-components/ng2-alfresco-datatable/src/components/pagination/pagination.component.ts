@@ -15,23 +15,20 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
-
-import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
-import { PaginationProvider } from './pagination-provider';
-
-declare let __moduleName: string;
+import { Component, Input, OnInit } from '@angular/core';
+import { PaginationProvider } from './paginationProvider.interface';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-pagination',
     templateUrl: './pagination.component.html',
-    styleUrls: ['./pagination.component.css'],
-    directives: [MATERIAL_DESIGN_DIRECTIVES]
+    styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnInit {
 
     DEFAULT_PAGE_SIZE: number = 20;
+
+    private _summary: string = '';
 
     @Input()
     supportedPageSizes: number[] = [5, 10, 20, 50, 100];
@@ -57,13 +54,7 @@ export class PaginationComponent {
     }
 
     get summary(): string {
-        let from = this.provider.skipCount;
-        if (from === 0) {
-            from = 1;
-        }
-        let to = this.provider.skipCount + this.provider.count;
-        let of = this.provider.totalItems;
-        return `${from}-${to} of ${of}`;
+        return this._summary;
     }
 
     get nextPageAvail(): boolean {
@@ -81,6 +72,20 @@ export class PaginationComponent {
     showPrevPage() {
         this.provider.skipCount -= this.provider.maxItems;
     }
+
+    ngOnInit() {
+        this.provider.dataLoaded.subscribe(() => {
+            this.updateSummary();
+        });
+    }
+
+    private updateSummary() {
+        let from = this.provider.skipCount;
+        if (from === 0) {
+            from = 1;
+        }
+        let to = this.provider.skipCount + this.provider.count;
+        let of = this.provider.totalItems;
+        this._summary = `${from}-${to} of ${of}`;
+    }
 }
-
-

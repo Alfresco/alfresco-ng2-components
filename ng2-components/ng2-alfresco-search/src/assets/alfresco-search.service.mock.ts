@@ -15,36 +15,49 @@
  * limitations under the License.
  */
 
-import { AlfrescoSearchService } from '../services/alfresco-search.service';
-import { Observable } from 'rxjs/Rx';
-
-export class SearchServiceMock extends AlfrescoSearchService {
-
-    getLiveSearchResults(term: string): Observable<any> {
-        if (term.length > 3) {
-            return Observable.of({
-                list: {
-                    entries: [
-                        {
-                            entry: {
-                                id: '123',
-                                name: 'MyDoc',
-                                content: {
-                                    mimetype: 'text/plain'
-                                },
-                                createdByUser: {
-                                    displayName: 'John Doe'
-                                },
-                                modifiedByUser: {
-                                    displayName: 'John Doe'
-                                }
-                            }
-                        }
-                    ]
+export var fakeSearch = {
+    list: {
+        pagination: {
+            count: 1,
+            hasMoreItems: false,
+            totalItems: 1,
+            skipCount: 0,
+            maxItems: 100
+        },
+        entries: [
+            {
+                entry: {
+                    id: '123',
+                    name: 'MyDoc',
+                    content: {
+                        mimetype: 'text/plain'
+                    },
+                    createdByUser: {
+                        displayName: 'John Doe'
+                    },
+                    modifiedByUser: {
+                        displayName: 'John Doe'
+                    }
                 }
-            });
-        } else {
-            return Observable.throw('Fake server error');
+            }
+        ]
+    }
+};
+
+export var fakeError = {
+    error: {
+        errorKey: 'Search failed',
+        statusCode: 400,
+        briefSummary: '08220082 search failed',
+        stackTrace: 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+        descriptionURL: 'https://api-explorer.alfresco.com'
+    }
+};
+
+export var fakeApi = {
+    core: {
+        queriesApi: {
+            findNodes: (term, opts) => Promise.resolve(fakeSearch)
         }
     }
-}
+};

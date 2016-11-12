@@ -1,0 +1,15 @@
+.attach-widget {
+    width:100%
+}
+
+.attach-widget__icon {
+    float: left;
+}
+
+.attach-widget__file {
+    margin-top: 4px;
+}
+
+.attach-widget__reset {
+    margin-top: 4px;
+}

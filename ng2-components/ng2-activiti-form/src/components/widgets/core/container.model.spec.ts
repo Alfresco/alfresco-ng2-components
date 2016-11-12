@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
 import { FormFieldTypes } from './form-field-types';
@@ -70,6 +69,7 @@ describe('ContainerModel', () => {
             tab: '<tab>',
             numberOfColumns: 3,
             params: {},
+            visibilityCondition: {},
             fields: {
                 '1': [
                     { id: 'field-1' },
@@ -106,7 +106,12 @@ describe('ContainerModel', () => {
         });
 
         expect(container.isCollapsible()).toBeFalsy();
-        container.type = FormFieldTypes.GROUP;
+        container = new ContainerModel(new FormModel(), {
+            type:  FormFieldTypes.GROUP,
+            params: {
+                allowCollapse: true
+            }
+        });
         expect(container.isCollapsible()).toBeTruthy();
     });
 

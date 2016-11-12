@@ -15,29 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { Comment } from '../models/comment.model';
+import { Comment } from 'ng2-activiti-tasklist';
 import { Observer } from 'rxjs/Observer';
 import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
-    selector: 'activiti-comments',
-    moduleId: __moduleName,
+    selector: 'activiti-process-instance-comments',
+    moduleId: module.id,
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],
-    providers: [ActivitiProcessService],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    providers: [ActivitiProcessService]
 })
-export class ActivitiComments implements OnInit {
+export class ActivitiComments implements OnInit, OnChanges {
 
     @Input()
-    processId: string;
+    processInstanceId: string;
 
     @ViewChild('dialog')
     dialog: any;
@@ -54,8 +51,7 @@ export class ActivitiComments implements OnInit {
      * @param auth
      * @param translate
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
@@ -70,16 +66,20 @@ export class ActivitiComments implements OnInit {
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
+    }
 
-        if (this.processId) {
-            this.load(this.processId);
+    ngOnChanges(changes: SimpleChanges) {
+        let processInstanceId = changes['processInstanceId'];
+        if (processInstanceId && processInstanceId.currentValue) {
+            this.getProcessComments(processInstanceId.currentValue);
+            return;
         }
     }
 
-    public load(taskId: string) {
+    public getProcessComments(processInstanceId: string) {
         this.comments = [];
-        if (this.processId) {
-            this.activitiProcess.getProcessInstanceComments(this.processId).subscribe(
+        if (processInstanceId) {
+            this.activitiProcess.getProcessInstanceComments(processInstanceId).subscribe(
                 (res: Comment[]) => {
                     res.forEach((comment) => {
                         this.commentObserver.next(comment);
@@ -101,7 +101,7 @@ export class ActivitiComments implements OnInit {
     }
 
     public add() {
-        this.activitiProcess.addProcessInstanceComment(this.processId, this.message).subscribe(
+        this.activitiProcess.addProcessInstanceComment(this.processInstanceId, this.message).subscribe(
             (res: Comment) => {
                 this.comments.push(res);
                 this.message = '';

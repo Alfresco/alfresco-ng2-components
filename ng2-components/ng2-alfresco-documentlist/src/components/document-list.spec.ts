@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { NgZone } from '@angular/core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 import { DocumentList } from './document-list';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { MinimalNodeEntity } from '../models/document-library.model';
+import { NodeMinimalEntry } from '../models/document-library.model';
 
 describe('DocumentList', () => {
 
@@ -117,7 +116,6 @@ describe('DocumentList', () => {
             documentMenu
         ];
 
-
         let actions = documentList.getNodeActions(new FolderNode());
         expect(actions.length).toBe(1);
         expect(actions[0]).toBe(folderMenu);
@@ -132,7 +130,7 @@ describe('DocumentList', () => {
         documentButton.target = 'document';
         documentList.actions = [documentButton];
 
-        let node = new MinimalNodeEntity();
+        let node = new NodeMinimalEntry();
         expect(documentList.getNodeActions(node)).toEqual([]);
 
         node = new FileNode();
@@ -492,35 +490,11 @@ describe('DocumentList', () => {
         expect(documentList.displayFolderContent).not.toHaveBeenCalled();
     });
 
-    // TODO: move to data adapter
-    /*
-    it('should sort by dates up to ms', () => {
-        let file1 = new FileNode();
-        file1.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 1);
-
-        let file2 = new FileNode();
-        file2.entry['dateProp'] = new Date(2016, 6, 30, 13, 14, 2);
-
-        let page = new PageNode([file1, file2]);
-
-        // desc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'dateProp',
-            direction: 'desc'
-        }));
-
-        expect(page.list.entries[0]).toBe(file2);
-        expect(page.list.entries[1]).toBe(file1);
-
-        // asc
-        documentList.sort(page, new ColumnSortingModel({
-            key: 'dateProp',
-            direction: 'asc'
-        }));
-
-        expect(page.list.entries[0]).toBe(file1);
-        expect(page.list.entries[1]).toBe(file2);
+    it('should enforce single-click on mobile browser', () => {
+        spyOn(documentList, 'isMobile').and.returnValue(true);
+        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.ngOnInit();
+        expect(documentList.isMobile).toHaveBeenCalled();
+        expect(documentList.navigationMode).toBe(DocumentList.SINGLE_CLICK_NAVIGATION);
     });
-    */
-
 });

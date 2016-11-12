@@ -16,70 +16,72 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
-import { ObjectUtils } from 'ng2-alfresco-core';
+import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
-
-declare let __moduleName: string;
-declare var componentHandler;
+import { FormFieldOption } from './../core/form-field-option';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.css']
 })
 export class DropdownWidget extends WidgetComponent implements OnInit {
 
-    static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
-    static GENERIC_ERROR_MESSAGE: string = 'Server error';
-
-    constructor(private http: Http) {
+    constructor(private formService: FormService) {
         super();
     }
 
     ngOnInit() {
-        if (this.field &&
-            this.field.optionType === 'rest' &&
-            this.field.restUrl &&
-            this.field.restIdProperty &&
-            this.field.restLabelProperty) {
+        if (this.field && this.field.restUrl) {
+            if (this.field.form.processDefinitionId) {
+                this.getValuesByProcessDefinitionId();
+            } else {
+                this.getValuesByTaskId();
+            }
+        }
+    }
 
-            let url = `${this.field.restUrl}`;
-            this.http.get(url).subscribe(
-                response => {
-                    let json: any = response.json();
-                    this.loadFromJson(json);
+    getValuesByTaskId() {
+        this.formService
+            .getRestFieldValues(
+                this.field.form.taskId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    let options = [];
+                    if (this.field.emptyOption) {
+                        options.push(this.field.emptyOption);
+                    }
+                    this.field.options = options.concat((result || []));
+                    this.field.updateForm();
                 },
                 this.handleError
             );
-        }
     }
 
-    // TODO: support 'restResponsePath'
-    loadFromJson(json: any): boolean {
-        if (this.field && json && json instanceof Array) {
-            let options = json.map(obj => {
-                return {
-                    id: ObjectUtils.getValue(obj, this.field.restIdProperty).toString(),
-                    name: ObjectUtils.getValue(obj, this.field.restLabelProperty).toString()
-                };
-            });
-            this.field.options = options;
-            this.field.updateForm();
-            return true;
-        }
-        return false;
+    getValuesByProcessDefinitionId() {
+        this.formService
+            .getRestFieldValuesByProcessId(
+                this.field.form.processDefinitionId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    let options = [];
+                    if (this.field.emptyOption) {
+                        options.push(this.field.emptyOption);
+                    }
+                    this.field.options = options.concat((result || []));
+                    this.field.updateForm();
+                },
+                this.handleError
+            );
     }
-
 
     handleError(error: any) {
-        let errMsg = DropdownWidget.UNKNOWN_ERROR_MESSAGE;
-        if (error) {
-            errMsg = (error.message) ? error.message :
-                error.status ? `${error.status} - ${error.statusText}` : DropdownWidget.GENERIC_ERROR_MESSAGE;
-        }
-        console.error(errMsg);
+        console.error(error);
     }
 
 }

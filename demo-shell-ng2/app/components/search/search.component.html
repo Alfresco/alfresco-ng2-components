@@ -1,8 +1,8 @@
 <div class="search-results-container">
     <h1>Search results</h1>
-    <alfresco-search (preview)="onFileClicked($event)"></alfresco-search>
+    <alfresco-search [resultType]="'cm:content'" (preview)="onFileClicked($event)"></alfresco-search>
 </div>
 
-<alfresco-viewer [(showViewer)]="previewActive" [urlFile]="previewContentUrl" [fileName]="previewName" [mimeType]="previewMimeType" [overlayMode]="true">
+<alfresco-viewer [(showViewer)]="fileShowed" [fileNodeId]="fileNodeId" [overlayMode]="true">
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
 </alfresco-viewer>

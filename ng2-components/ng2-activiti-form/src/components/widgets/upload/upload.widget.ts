@@ -19,63 +19,57 @@ import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
-declare var componentHandler;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.css']
 })
 export class UploadWidget extends WidgetComponent implements OnInit {
 
+    hasFile: boolean;
+    fileName: string;
+    displayText: string;
+
     constructor(private settingsService: AlfrescoSettingsService,
                 private authService: AlfrescoAuthenticationService) {
         super();
     }
-
-    hasFile: boolean;
-    fileName: string;
 
     ngOnInit() {
         if (this.field &&
             this.field.value &&
             this.field.value.length > 0) {
             this.hasFile = true;
-        }
-    }
-
-    getUploadedFileName(): string {
-        let result = this.fileName;
-
-        if (this.field &&
-            this.field.value &&
-            this.field.value.length > 0) {
             let file = this.field.value[0];
-            result = file.name;
+            this.fileName = file.name;
+            this.displayText = decodeURI(file.name);
         }
-
-        return result;
     }
 
     reset() {
-        this.field.value = null;
-        this.field.json.value = null;
         this.hasFile = false;
+        this.fileName = null;
+        this.displayText = null;
+
+        if (this.field) {
+            this.field.value = null;
+            this.field.json.value = null;
+        }
     }
 
     onFileChanged(event: any) {
-        let files = event.srcElement.files;
+        let files = event.target.files;
         if (files && files.length > 0) {
 
             let file = files[0];
 
             this.hasFile = true;
-            this.fileName = file.name;
+            this.fileName = encodeURI(file.name);
+            this.displayText = file.name;
 
             let formData: FormData = new FormData();
-            formData.append('file', file, file.name);
+            formData.append('file', file, this.fileName);
 
             let xhr: XMLHttpRequest = new XMLHttpRequest();
 

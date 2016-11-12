@@ -1,0 +1,134 @@
+:host {
+    width: 100%;
+}
+.logo {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.logo i{
+    font-size: 70px;
+}
+.theme-1 {
+    background-color: #269abc;
+}
+.theme-1 .logo i {
+    color: #168aac;
+}
+.theme-1 .mdl-card__actions i {
+    color: #168aac;
+}
+.theme-1 .mdl-card__actions i:hover {
+    color: #b7dfea;
+}
+.theme-2 {
+    background-color: #7da9b0;
+}
+.theme-2 .logo i {
+    color: #6d99a0;
+}
+.theme-2 .mdl-card__actions i {
+    color: #6d99a0;
+}
+.theme-2 .mdl-card__actions i:hover {
+ color: #def2f5;
+}
+.theme-3 {
+    background-color: #7689ab;
+}
+.theme-3 .logo i {
+    color: #66799b;
+}
+.theme-3 .mdl-card__actions i {
+    color: #66799b;
+}
+.theme-3 .mdl-card__actions i:hover {
+    color: #a2b4d6;
+}
+.theme-4 {
+    background-color: #c74e3e;
+}
+.theme-4 .logo i {
+    color: #b73e2e;
+}
+.theme-4 .mdl-card__actions i {
+    color: #b73e2e;
+}
+.theme-4 .mdl-card__actions i:hover {
+    color: #de8b80;
+}
+.theme-5 {
+    background-color: #fab96c;
+}
+.theme-5 .logo i {
+    color: #eaa95c;
+}
+.theme-5 .mdl-card__actions i {
+    color: #eaa95c;
+}
+.theme-5 .mdl-card__actions i:hover {
+    color: #fdd9ae;
+}
+.theme-6 {
+    background-color: #759d4c;
+}
+.theme-6 .logo i {
+    color: #658d3c;
+}
+.theme-6 .mdl-card__actions i {
+    color: #658d3c;
+}
+.theme-6 .mdl-card__actions i:hover {
+    color: #a8d07f;
+}
+.theme-7 {
+    background-color: #b1b489;
+}
+.theme-7 .logo i {
+    color: #a1a479;
+}
+.theme-7 .mdl-card__actions i {
+    color: #a1a479;
+}
+.theme-7 .mdl-card__actions i:hover {
+    color: #d9dcb2;
+}
+.theme-8 {
+    background-color: #a17299;
+}
+.theme-8 .logo i {
+    color: #916289;
+}
+.theme-8 .mdl-card__actions i {
+    color: #916289;
+}
+.theme-8 .mdl-card__actions i:hover {
+    color: #d0a8c9;
+}
+.theme-9 {
+    background-color: #696c67;
+}
+.theme-9 .logo i {
+    color: #595c57;
+}
+.theme-9 .mdl-card__actions i {
+    color: #595c57;
+}
+.theme-9 .mdl-card__actions i:hover {
+    color: #a6a9a4;
+}
+.theme-10 {
+    background-color: #cabb33;
+}
+.theme-10 .logo i {
+    color: #baab23;
+}
+.theme-10 .mdl-card__actions i {
+    color: #baab23;
+}
+.theme-10 .mdl-card__actions i:hover {
+    color: #efe79e;
+}
+.selectedIcon{
+    color: #e9f1f3!important;
+}

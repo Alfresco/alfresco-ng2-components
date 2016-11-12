@@ -4,3 +4,7 @@ workspace.xml
 .idea/
 dist/
 !systemjs.config.js
+demo-shell-ng2/app/components/router/
+ng2-components/ng2-alfresco-userinfo-old/demo/src/app/
+ng2-components/ng2-alfresco-userinfo-old/src/services/bpm-user.service.spec.ts
+ng2-components/ng2-alfresco-userinfo-old/src/services/ecm-user.service.spec.ts

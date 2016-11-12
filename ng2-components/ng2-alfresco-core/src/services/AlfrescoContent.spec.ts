@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import {describe, it, beforeEach} from '@angular/core/testing';
 import {ReflectiveInjector} from '@angular/core';
 import {AlfrescoSettingsService} from './AlfrescoSettings.service';
 import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';
 import {AlfrescoContentService} from './AlfrescoContent.service';
+import { AlfrescoApiService } from './AlfrescoApi.service';
 
 describe('AlfrescoContentService', () => {
 
@@ -29,6 +29,7 @@ describe('AlfrescoContentService', () => {
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoApiService,
             AlfrescoContentService,
             AlfrescoAuthenticationService,
             AlfrescoSettingsService

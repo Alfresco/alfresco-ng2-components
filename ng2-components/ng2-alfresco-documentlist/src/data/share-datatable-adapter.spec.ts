@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { DataColumn, DataRow, DataSorting } from 'ng2-alfresco-datatable';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ShareDataTableAdapter, ShareDataRow } from './share-datatable-adapter';
@@ -131,7 +130,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should covert cell value to formatted date', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
         let dateValue = 'Jul 15, 2015, 9:43:11 PM';
 
         let file = new FileNode();
@@ -151,7 +150,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should use default date format as fallback', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
         let dateValue = 'Jul 15, 2015, 9:43:11 PM';
 
         let file = new FileNode();
@@ -171,7 +170,7 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should return date value as string', () => {
-        let rawValue = new Date(2015, 6, 15, 21, 43, 11).toString(); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
+        let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
 
         let file = new FileNode();
         file.entry.createdAt = rawValue;
@@ -189,9 +188,9 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should log error when having date conversion issues', () => {
-        let dateValue = '[wrong-date]';
+        let dateValue = <Date> {};
         let file = new FileNode();
-        file.entry.createdAt = dateValue;
+        file.entry.createdAt = <any> dateValue;
 
         let col = <DataColumn> {
             key: 'createdAt',
@@ -262,7 +261,6 @@ describe('ShareDataTableAdapter', () => {
 
         let file = new FileNode();
         file.entry['icon'] = imageUrl;
-
 
         let adapter = new ShareDataTableAdapter(null, basePath, null);
         let row = new ShareDataRow(file);
@@ -399,6 +397,34 @@ describe('ShareDataTableAdapter', () => {
         adapter.sort('dateProp', 'desc');
         expect((<ShareDataRow> rows[0]).node).toBe(file2);
         expect((<ShareDataRow> rows[1]).node).toBe(file1);
+    });
+
+    it('should preserve sorting on navigation', () => {
+        let file1 = new FileNode('file1');
+        let file2 = new FileNode('file2');
+        let file3 = new FileNode('file3');
+        let file4 = new FileNode('file4');
+
+        let col = <DataColumn> { key: 'name' };
+        let adapter = new ShareDataTableAdapter(documentListService, null, [col]);
+        adapter.setSorting(new DataSorting('name', 'asc'));
+
+        let page1 = new PageNode([file2, file1]);
+        let page2 = new PageNode([file4, file3]);
+
+        documentListService.getFolderResult = page1;
+        adapter.loadPath('/page1');
+
+        let sorted = adapter.getRows();
+        expect((<ShareDataRow> sorted[0]).node).toBe(file1);
+        expect((<ShareDataRow> sorted[1]).node).toBe(file2);
+
+        documentListService.getFolderResult = page2;
+        adapter.loadPath('/page2');
+
+        sorted = adapter.getRows();
+        expect((<ShareDataRow> sorted[0]).node).toBe(file3);
+        expect((<ShareDataRow> sorted[1]).node).toBe(file4);
     });
 });
 

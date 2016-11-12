@@ -2,20 +2,22 @@
     [data]="data"
     [actions]="contentActions"
     [multiselect]="multiselect"
-    [fallbackThumbnail]="baseComponentPath + '/img/ft_ic_miscellaneous.svg'"
+    [fallbackThumbnail]="fallbackThubnail"
     (showRowContextMenu)="onShowRowContextMenu($event)"
     (showRowActionsMenu)="onShowRowActionsMenu($event)"
     (executeRowAction)="onExecuteRowAction($event)"
     (rowClick)="onRowClick($event)"
     (rowDblClick)="onRowDblClick($event)">
-    <no-content-template>
-        <template>
-            <div class="document-list_empty_template">
-                <div class="document-list__this-space-is-empty">This folder is empty</div>
-                <div class="document-list__drag-drop">Drag and Drop</div>
-                <div class="document-list__any-files-here-to-add">any files here to add</div>
-                <img [src]="baseComponentPath + '/img/empty_doc_lib.svg'" class="document-list__empty_doc_lib">
-            </div>
-        </template>
-    </no-content-template>
+    <div *ngIf="!isEmptyTemplateDefined()">
+        <no-content-template>
+            <template>
+                <div class="document-list_empty_template">
+                    <div class="document-list__this-space-is-empty">This folder is empty</div>
+                    <div class="document-list__drag-drop">Drag and Drop</div>
+                    <div class="document-list__any-files-here-to-add">any files here to add</div>
+                    <img [src]="baseComponentPath + '/img/empty_doc_lib.svg'" class="document-list__empty_doc_lib">
+                </div>
+            </template>
+        </no-content-template>
+    </div>
 </alfresco-datatable>

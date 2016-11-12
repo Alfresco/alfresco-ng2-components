@@ -1,0 +1,67 @@
+<div *ngIf="diagram">
+    <div *ngFor="let element of diagram.elements">
+        <div [ngSwitch]="element.type">
+            <div *ngSwitchCase="'StartEvent'">
+                <diagram-start-event [data]="element"></diagram-start-event>
+            </div>
+            <div *ngSwitchCase="'ExclusiveGateway'">
+                <diagram-exclusive-gateway [data]="element"></diagram-exclusive-gateway>
+            </div>
+            <div *ngSwitchCase="'InclusiveGateway'">
+                <diagram-inclusive-gateway [data]="element"></diagram-inclusive-gateway>
+            </div>
+            <div *ngSwitchCase="'EventGateway'">
+                <diagram-event-gateway [data]="element"></diagram-event-gateway>
+            </div>
+            <div *ngSwitchCase="'ParallelGateway'">
+                <diagram-parallel-gateway [data]="element"></diagram-parallel-gateway>
+            </div>
+            <div *ngSwitchCase="'EndEvent'">
+                <diagram-end-event [data]="element"></diagram-end-event>
+            </div>
+            <div *ngSwitchCase="'UserTask'">
+                <diagram-user-task [data]="element"></diagram-user-task>
+            </div>
+            <div *ngSwitchCase="'ManualTask'">
+                <diagram-manual-task [data]="element"></diagram-manual-task>
+            </div>
+            <div *ngSwitchCase="'ServiceTask'">
+                <diagram-container-service-task [data]="element"></diagram-container-service-task>
+            </div>
+            <div *ngSwitchCase="'ReceiveTask'">
+                <diagram-receive-task [data]="element"></diagram-receive-task>
+            </div>
+            <div *ngSwitchCase="'ScriptTask'">
+                <diagram-script-task [data]="element"></diagram-script-task>
+            </div>
+            <div *ngSwitchCase="'BusinessRuleTask'">
+                <diagram-business-rule-task [data]="element"></diagram-business-rule-task>
+            </div>
+            <div *ngSwitchCase="'BoundaryEvent'">
+                <diagram-boundary-event [data]="element"></diagram-boundary-event>
+            </div>
+            <div *ngSwitchCase="'ThrowEvent'">
+                <diagram-throw-event [data]="element"></diagram-throw-event>
+            </div>
+            <div *ngSwitchCase="'IntermediateCatchEvent'">
+                <diagram-intermediate-catching-event [data]="element"></diagram-intermediate-catching-event>
+            </div>
+            <div *ngSwitchCase="'SubProcess'">
+                <diagram-subprocess [data]="element"></diagram-subprocess>
+            </div>
+            <div *ngSwitchCase="'EventSubProcess'">
+                <diagram-event-subprocess [data]="element"></diagram-event-subprocess>
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let flow of diagram.flows">
+        <div [ngSwitch]="flow.type">
+            <div *ngSwitchCase="'sequenceFlow'">
+                <diagram-sequence-flow [flow]="flow"></diagram-sequence-flow>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="diagram.pools">
+        <diagram-pools [pools]="diagram.pools"></diagram-pools>
+    </div>
+</div>

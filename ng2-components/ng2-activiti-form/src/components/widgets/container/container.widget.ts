@@ -16,24 +16,13 @@
  */
 
 import { Component, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { ContainerModel } from './../core/index';
-
-import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
-import { PRIMITIVE_WIDGET_DIRECTIVES } from './../index';
-import { FormFieldModel } from '../core/index';
-
-declare let __moduleName: string;
-declare var componentHandler;
+import { ContainerModel, FormFieldModel } from './../core/index';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'container-widget',
     templateUrl: './container.widget.html',
-    styleUrls: ['./container.widget.css'],
-    directives: [
-        MATERIAL_DESIGN_DIRECTIVES,
-        PRIMITIVE_WIDGET_DIRECTIVES
-    ]
+    styleUrls: ['./container.widget.css']
 })
 export class ContainerWidget implements AfterViewInit {
 

@@ -1,26 +1,32 @@
 <div class="content-grid mdl-grid content-layout login-content"
     [style.background-image]="'url(' + (backgroundImageUrl || baseComponentPath + '/../assets/images/background.svg') + ')'">
     <div class="login-card-wide mdl-card mdl-shadow--4dp">
-        <form [ngFormModel]="form" (submit)="onSubmit(form.value, $event)">
+        <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
                 <img class="center" [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'" alt="{{'LOGIN.LOGO' | translate }}">
             </div>
             <div class="mdl-card__supporting-text">
                 <div>
                     <div *ngIf="error" id="login-error" data-automation-id="login-error"
-                         class="error mdl-card__supporting-text">{{'LOGIN.MESSAGES.LOGIN-ERROR' | translate }}</div>
+                         class="error mdl-card__supporting-text">{{errorMsg | translate }}</div>
                     <div *ngIf="success" id="login-success" data-automation-id="login-success" class="mdl-card__supporting-text" style="color: blue;">{{'LOGIN.MESSAGES.LOGIN-SUCCESS' | translate }}</div>
                 </div>
                 <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}"
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                     <label for="username" class="mdl-textfield__label">{{'LOGIN.LABEL.USERNAME' | translate }}</label>
-                    <input  type="text" class="mdl-textfield__input" id="username" data-automation-id="username" ngControl="username" tabindex="1" />
+                    <input
+                        type="text"
+                        class="mdl-textfield__input"
+                        id="username"
+                        data-automation-id="username"
+                        [formControl]="form.controls['username']"
+                        tabindex="1"
+                        autocapitalize="none"/>
                     <span class="mdl-tooltip--validation" for="username" *ngIf="formError.username">
                             <span id="username-error" class="mdl-textfield__error" style="visibility: visible" data-automation-id="username-error">{{formError.username | translate }}</span>
                     </span>
                 </div>
-                <div
-                     class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <div class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label alfresco-login__password">
                     <i [ngClass]="{hide: isPasswordShow}" [ngClass]="{show: !isPasswordShow}" (click)="toggleShowPassword()" data-automation-id="show_password"
                        class="icon-inline">
                         <svg style="width:24px;height:24px;float: right;" viewBox="0 0 24 24">
@@ -34,7 +40,7 @@
                         </svg>
                     </i>
                     <label for="password" class="mdl-textfield__label">{{'LOGIN.LABEL.PASSWORD' | translate }}</label>
-                    <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" ngControl="password" tabindex="2" />
+                    <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" [formControl]="form.controls['password']" tabindex="2" />
                     <span class="mdl-tooltip--validation" for="password" *ngIf="formError.password">
                             <span id="password-required" class="mdl-textfield__error" style="visibility: visible" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>

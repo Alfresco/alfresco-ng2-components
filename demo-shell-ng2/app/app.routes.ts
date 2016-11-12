@@ -15,22 +15,26 @@
  * limitations under the License.
  */
 
-import { provideRouter, RouterConfig } from '@angular/router';
+import { ModuleWithProviders }  from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 import {
     FilesComponent,
-    UploadButtonComponent,
     DataTableDemoComponent,
     SearchComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
     WebscriptComponent,
+    TagComponent,
     AboutComponent,
-    FormViewer
+    FormViewer,
+    FormNodeViewer,
+    SettingComponent
 } from './components/index';
-import { FormNodeViewer } from './components/activiti/form-node-viewer.component';
 
-export const routes: RouterConfig = [
+import { UploadButtonComponent } from 'ng2-alfresco-upload';
+
+export const appRoutes: Routes = [
     { path: 'home', component: FilesComponent },
     { path: 'files', component: FilesComponent },
     { path: 'datatable', component: DataTableDemoComponent },
@@ -39,12 +43,13 @@ export const routes: RouterConfig = [
     { path: 'login', component: LoginDemoComponent },
     { path: 'search', component: SearchComponent },
     { path: 'activiti', component: ActivitiDemoComponent },
+    { path: 'activiti/appId/:appId', component: ActivitiDemoComponent },
     { path: 'activiti/tasks/:id', component: FormViewer },
     { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
     { path: 'webscript', component: WebscriptComponent },
-    { path: 'about', component: AboutComponent }
+    { path: 'tag', component: TagComponent },
+    { path: 'about', component: AboutComponent },
+    { path: 'settings', component: SettingComponent }
 ];
 
-export const appRouterProviders = [
-    provideRouter(routes)
-];
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

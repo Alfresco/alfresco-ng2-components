@@ -3,3 +3,15 @@
         display: none;
     }
 }
+
+.mdl-layout-title {
+    font-size: 17px;
+}
+
+.user-profile {
+    margin-right: 50px;
+}
+
+.mdl-button-padding {
+    padding-left: 20px;
+}

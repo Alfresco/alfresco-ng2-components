@@ -17,10 +17,12 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormValues } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
+import { GroupModel } from './../components/widgets/core/group.model';
+import { GroupUserModel } from './../components/widgets/core/group-user.model';
 
 @Injectable()
 export class FormService {
@@ -28,22 +30,22 @@ export class FormService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private ecmModelService: EcmModelService) {
+    constructor(private ecmModelService: EcmModelService,
+                private apiService: AlfrescoApiService) {
     }
 
     /**
      * Create a Form with a fields for each metadata properties
      * @returns {Observable<any>}
      */
-    public createFormFromNodeType(formName: string): Observable<any> {
+    createFormFromANode(formName: string): Observable<any> {
         return Observable.create(observer => {
             this.createForm(formName).subscribe(
                 form => {
                     this.ecmModelService.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                         customType => {
                             let formDefinitionModel = new FormDefinitionModel(form.id, form.name, form.lastUpdatedByFullName, form.lastUpdated, customType.entry.properties);
-                            this.addFieldsNodeTypePropertiesToTheForm(form.id, formDefinitionModel).subscribe(formData => {
+                            this.addFieldsToAForm(form.id, formDefinitionModel).subscribe(formData => {
                                 observer.next(formData);
                                 observer.complete();
                             }, this.handleError);
@@ -57,7 +59,7 @@ export class FormService {
      * Create a Form
      * @returns {Observable<any>}
      */
-    public createForm(formName: string): Observable<any> {
+    createForm(formName: string): Observable<any> {
         let dataModel = {
             name: formName,
             description: '',
@@ -65,35 +67,27 @@ export class FormService {
             stencilSet: 0
         };
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.modelsApi.createModel(dataModel));
-    }
-
-    /**
-     * Add Fields to A form from a metadata properties
-     * @returns {Observable<any>}
-     */
-    public addFieldsNodeTypePropertiesToTheForm(formId: string, formDefinitionModel: FormDefinitionModel): Observable<any> {
-        return this.addFieldsToAForm(formId, formDefinitionModel);
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.createModel(dataModel));
     }
 
     /**
      * Add Fileds to A form
      * @returns {Observable<any>}
      */
-    public addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.editorApi.saveForm(formId, formModel));
+    addFieldsToAForm(formId: string, formModel: FormDefinitionModel): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.editorApi.saveForm(formId, formModel));
     }
 
     /**
      * Search For A Form by name
      * @returns {Observable<any>}
      */
-    public searchFrom(name: string): Observable<any> {
+    searchFrom(name: string): Observable<any> {
         let opts = {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.modelsApi.getModels(opts)).map(function (forms: any) {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts)).map(function (forms: any) {
             return forms.data.find(formdata => formdata.name === name);
         }).catch(this.handleError);
     }
@@ -102,20 +96,20 @@ export class FormService {
      * Get All the forms
      * @returns {Observable<any>}
      */
-    public getForms(): Observable<any> {
+    getForms(): Observable<any> {
         let opts = {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.modelsApi.getModels(opts));
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts));
     }
 
     /**
      * Get Process Definition
      * @returns {Observable<any>}
      */
-    public getProcessDefinitions(): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.processApi.getProcessDefinitions({}))
+    getProcessDefinitions(): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessDefinitions({}))
             .map(this.toJsonArray)
             .catch(this.handleError);
     }
@@ -125,8 +119,8 @@ export class FormService {
      * @param taskId Task Id
      * @returns {Observable<any>}
      */
-    public getTasks(): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.listTasks({}))
+    getTasks(): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.listTasks({}))
             .map(this.toJsonArray)
             .catch(this.handleError);
     }
@@ -136,8 +130,8 @@ export class FormService {
      * @param taskId Task Id
      * @returns {Observable<any>}
      */
-    public getTask(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.getTask(taskId))
+    getTask(taskId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTask(taskId))
             .map(this.toJson)
             .catch(this.handleError);
     }
@@ -148,10 +142,10 @@ export class FormService {
      * @param formValues Form Values
      * @returns {Observable<any>}
      */
-    public saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let body = JSON.stringify({values: formValues});
+    saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
+        let body = JSON.stringify({ values: formValues });
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.saveTaskForm(taskId, body))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.saveTaskForm(taskId, body))
             .catch(this.handleError);
     }
 
@@ -162,14 +156,14 @@ export class FormService {
      * @param outcome Form Outcome
      * @returns {Observable<any>}
      */
-    public completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = {values: formValues};
+    completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
+        let data: any = { values: formValues };
         if (outcome) {
             data.outcome = outcome;
         }
         let body = JSON.stringify(data);
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.completeTaskForm(taskId, body))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.completeTaskForm(taskId, body))
             .catch(this.handleError);
     }
 
@@ -178,8 +172,8 @@ export class FormService {
      * @param taskId Task Id
      * @returns {Observable<any>}
      */
-    public getTaskForm(taskId: string): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.getTaskForm(taskId))
+    getTaskForm(taskId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskForm(taskId))
             .map(this.toJson)
             .catch(this.handleError);
     }
@@ -189,8 +183,8 @@ export class FormService {
      * @param formId Form Id
      * @returns {Observable<any>}
      */
-    public getFormDefinitionById(formId: string): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.editorApi.getForm(formId))
+    getFormDefinitionById(formId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.editorApi.getForm(formId))
             .map(this.toJson)
             .catch(this.handleError);
     }
@@ -200,16 +194,125 @@ export class FormService {
      * @param name
      * @returns {Promise<T>|Promise<ErrorObservable>}
      */
-    public getFormDefinitionByName(name: string): Observable<any> {
+    getFormDefinitionByName(name: string): Observable<any> {
         let opts = {
             'filter': 'myReusableForms',
             'filterText': name,
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.modelsApi.getModels(opts))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
             .map(this.getFormId)
             .catch(this.handleError);
+    }
+
+    /**
+     * Get start form instance for a given processId
+     * @param processId Process definition ID
+     * @returns {Observable<any>}
+     */
+    getStartFormInstance(processId: string): Observable<any> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.processApi.getProcessInstanceStartForm(processId))
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    /**
+     * Get start form definition for a given process
+     * @param processId Process definition ID
+     * @returns {Observable<any>}
+     */
+    getStartFormDefinition(processId: string): Observable<any> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.processApi.getProcessDefinitionStartForm(processId))
+            .map(this.toJson)
+            .catch(this.handleError);
+    }
+
+    getRestFieldValues(taskId: string, field: string): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field));
+    }
+
+    getRestFieldValuesByProcessId(processDefinitionId: string, field: string): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestFieldValues(processDefinitionId, field));
+    }
+
+    getRestFieldValuesColumnByProcessId(processDefinitionId: string, field: string, column?: string): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.processApi.getRestTableFieldValues(processDefinitionId, field, column));
+    }
+
+    getRestFieldValuesColumn(taskId: string, field: string, column?: string): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValuesColumn(taskId, field, column));
+    }
+
+    // TODO: uses private webApp api
+    getWorkflowGroups(filter: string, groupId?: string): Observable<GroupModel[]> {
+        return Observable.create(observer => {
+
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        let json = JSON.parse(xhr.response);
+                        let data: GroupModel[] = (json.data || []).map(item => <GroupModel> item);
+                        // console.log(json);
+                        observer.next(data);
+                        observer.complete();
+                    } else {
+                        console.error(xhr.response);
+                        Observable.throw(new Error(xhr.response));
+                    }
+                }
+            };
+
+            let host = this.apiService.getInstance().config.hostBpm;
+            let url = `${host}/activiti-app/app/rest/workflow-groups?filter=${filter}`;
+            if (groupId) {
+                url += `&groupId=${groupId}`;
+            }
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
+            xhr.send();
+        });
+    }
+
+    getWorkflowUsers(filter: string, groupId?: string): Observable<GroupUserModel[]> {
+        return Observable.create(observer => {
+
+            let xhr: XMLHttpRequest = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        let json = JSON.parse(xhr.response);
+                        let data: GroupUserModel[] = (json.data || []).map(item => <GroupUserModel> item);
+                        // console.log(json);
+                        observer.next(data);
+                        observer.complete();
+                    } else {
+                        console.error(xhr.response);
+                        Observable.throw(new Error(xhr.response));
+                    }
+                }
+            };
+
+            let host = this.apiService.getInstance().config.hostBpm;
+            let url = `${host}/activiti-app/app/rest/workflow-users?filter=${filter}`;
+            if (groupId) {
+                url += `&groupId=${groupId}`;
+            }
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('Authorization', this.apiService.getInstance().getTicketBpm());
+            xhr.send();
+        });
     }
 
     getFormId(res: any) {

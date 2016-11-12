@@ -19,7 +19,6 @@ import {
     Directive,
     ContentChild,
     TemplateRef,
-    OnInit,
     AfterContentInit
 } from '@angular/core';
 import { DocumentList } from './document-list';
@@ -27,19 +26,16 @@ import { DocumentList } from './document-list';
 @Directive({
     selector: 'empty-folder-content'
 })
-export class EmptyFolderContent implements OnInit, AfterContentInit {
+export class EmptyFolderContent implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(
-        private documentList: DocumentList) {
-    }
-
-    ngOnInit() {
+    constructor(private documentList: DocumentList) {
     }
 
     ngAfterContentInit() {
         this.documentList.emptyFolderTemplate = this.template;
+        this.documentList.dataTable.noContentTemplate = this.template;
     }
 }

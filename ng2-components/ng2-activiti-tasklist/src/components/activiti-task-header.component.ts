@@ -15,68 +15,31 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { Component, Input } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { FormModel, FormService } from 'ng2-activiti-form';
-
-declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-task-header',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-task-header.component.html',
-    styleUrls: ['./activiti-task-header.component.css'],
-    providers: [ FormService ],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    styleUrls: ['./activiti-task-header.component.css']
 })
-export class ActivitiTaskHeader implements OnInit, OnChanges {
+export class ActivitiTaskHeader {
+
+    @Input()
+    formName: string = null;
 
     @Input()
     taskDetails: TaskDetailsModel;
 
-    taskForm: FormModel;
-
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private activitiForm: FormService,
-                private translate: AlfrescoTranslationService) {
-
+    constructor(private translate: AlfrescoTranslationService) {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
     }
 
-    ngOnInit() {
-        if (this.taskDetails && this.taskDetails.formKey) {
-            this.load(this.taskDetails.id);
-        }
-    }
-
-    ngOnChanges(change) {
-        if (this.taskDetails && this.taskDetails.formKey) {
-            this.load(this.taskDetails.id);
-        } else {
-            this.taskForm = null;
-        }
-    }
-
-    public load(taskId: string) {
-        if (taskId) {
-            this.activitiForm.getTaskForm(taskId).subscribe(
-                (response) => {
-                    this.taskForm = response;
-                },
-                (err) => {
-                    console.error(err);
-                }
-            );
-        }
+    public hasAssignee(): boolean {
+        return (this.taskDetails && this.taskDetails.assignee) ? true : false;
     }
 }

@@ -16,9 +16,19 @@
  */
 
 import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
-import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
-import { ACTIVITI_PROCESSLIST_DIRECTIVES } from 'ng2-activiti-processlist';
-import { ActivitiForm } from 'ng2-activiti-form';
+import {
+    AppDefinitionRepresentationModel,
+    FilterRepresentationModel,
+    ActivitiApps,
+    ActivitiTaskList
+} from 'ng2-activiti-tasklist';
+import { ActivitiProcessInstanceListComponent } from 'ng2-activiti-processlist';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
+import {
+    ObjectDataTableAdapter,
+    DataSorting
+} from 'ng2-alfresco-datatable';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -27,25 +37,41 @@ declare var componentHandler;
     moduleId: __moduleName,
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
-    styleUrls: ['./activiti-demo.component.css'],
-    directives: [ALFRESCO_TASKLIST_DIRECTIVES, ACTIVITI_PROCESSLIST_DIRECTIVES, ActivitiForm]
+    styleUrls: ['./activiti-demo.component.css']
 })
 export class ActivitiDemoComponent implements AfterViewChecked {
 
-    currentChoice: string = 'task-list';
+    @ViewChild('activitiapps')
+    activitiapps: ActivitiApps;
+
+    @ViewChild('activitifilter')
+    activitifilter: any;
 
     @ViewChild('activitidetails')
     activitidetails: any;
 
-    @ViewChild('activititasklist')
-    activititasklist: any;
+    @ViewChild(ActivitiTaskList)
+    activititasklist: ActivitiTaskList;
 
-    @ViewChild('activitiprocesslist')
-    activitiprocesslist: any;
+    @ViewChild('activitiprocessfilter')
+    activitiprocessfilter: any;
+
+    @ViewChild(ActivitiProcessInstanceListComponent)
+    activitiprocesslist: ActivitiProcessInstanceListComponent;
 
     @ViewChild('activitiprocessdetails')
     activitiprocessdetails: any;
 
+    @ViewChild('tabmain')
+    tabMain: any;
+
+    @ViewChild('tabheader')
+    tabHeader: any;
+
+    @Input()
+    appId: number;
+
+    layoutType: string;
     currentTaskId: string;
     currentProcessInstanceId: string;
 
@@ -53,51 +79,106 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     processSchemaColumns: any [] = [];
 
     taskFilter: any;
+    report: any;
     processFilter: any;
 
-    @Input()
-    appId: string;
+    sub: Subscription;
 
-    setChoice($event) {
-        this.currentChoice = $event.target.value;
+    dataTasks: ObjectDataTableAdapter;
+    dataProcesses: ObjectDataTableAdapter;
+
+    constructor(private route: ActivatedRoute) {
+        this.dataTasks = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataTasks.setSorting(new DataSorting('created', 'desc'));
+
+        this.dataProcesses = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
     }
 
-    isProcessListSelected() {
-        return this.currentChoice === 'process-list';
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            this.appId = params['appId'];
+        });
+        this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
 
-    isTaskListSelected() {
-        return this.currentChoice === 'task-list';
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
-    constructor() {
-        this.taskSchemaColumns = [
-            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
-            // {type: 'text', key: 'created', title: 'Created', sortable: true}
-        ];
-        this.processSchemaColumns = [
-            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true}
-        ];
+    onAppClick(app: AppDefinitionRepresentationModel) {
+        this.appId = app.id;
+        this.taskFilter = null;
+        this.currentTaskId = null;
+
+        this.processFilter = null;
+        this.currentProcessInstanceId = null;
+
+        this.changeTab('apps', 'tasks');
     }
 
-    onTaskFilterClick(event: any) {
+    changeTab(origin: string, destination: string) {
+        this.tabMain.nativeElement.children[origin].classList.remove('is-active');
+        this.tabMain.nativeElement.children[destination].classList.add('is-active');
+
+        this.tabHeader.nativeElement.children[`${origin}-header`].classList.remove('is-active');
+        this.tabHeader.nativeElement.children[`${destination}-header`].classList.add('is-active');
+    }
+
+    onTaskFilterClick(event: FilterRepresentationModel) {
         this.taskFilter = event;
-        this.activititasklist.load(this.taskFilter);
+    }
+
+    onReportClick(event: any) {
+        this.report = event;
+    }
+
+    onSuccessTaskFilterList(event: any) {
+        this.taskFilter = this.activitifilter.getCurrentFilter();
+    }
+
+    onStartTaskSuccess(event: any) {
+        this.activititasklist.reload();
+    }
+
+    onSuccessTaskList(event: FilterRepresentationModel) {
+        this.currentTaskId = this.activititasklist.getCurrentTaskId();
     }
 
     onProcessFilterClick(event: any) {
-        this.processFilter = event.filter;
-        this.activitiprocesslist.load(this.processFilter);
+        this.processFilter = event;
+    }
+
+    onSuccessProcessFilterList(event: any) {
+        this.processFilter = this.activitiprocessfilter.getCurrentFilter();
+    }
+
+    onSuccessProcessList(event: any) {
+        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
     }
 
     onTaskRowClick(taskId) {
         this.currentTaskId = taskId;
-        this.activitidetails.loadDetails(this.currentTaskId);
     }
 
     onProcessRowClick(processInstanceId) {
         this.currentProcessInstanceId = processInstanceId;
-        this.activitiprocessdetails.load(this.currentProcessInstanceId);
+    }
+
+    onStartProcessInstance() {
+        this.activitiprocesslist.reload();
     }
 
     processCancelled(data: any) {
@@ -105,8 +186,17 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.activitiprocesslist.reload();
     }
 
+    onSuccessNewProcess(data: any) {
+        this.activitiprocesslist.reload();
+    }
+
     taskFormCompleted(data: any) {
         this.activitiprocesslist.reload();
+    }
+
+    onFormCompleted(form) {
+        this.activititasklist.load(this.taskFilter);
+        this.currentTaskId = null;
     }
 
     ngAfterViewChecked() {

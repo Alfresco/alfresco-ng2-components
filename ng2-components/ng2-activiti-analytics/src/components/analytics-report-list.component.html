@@ -1,0 +1,11 @@
+<div class="menu-container">
+    <ul class='mdl-list'>
+        <li class="mdl-list__item activiti-filters__entry" (click)="selectReport(report)" *ngFor="let report of reports; let idx = index"
+            [class.active]="currentReport === report">
+            <span [attr.id]="'report-list-' + idx" class="mdl-list__item-primary-content">
+            <i class="material-icons mdl-list__item-icon activiti-filters__entry-icon" [attr.data-automation-id]="report.name + '_filter'">assignment</i>
+            <span class="text">{{report.name}}</span>
+            </span>
+        </li>
+    </ul>
+</div>

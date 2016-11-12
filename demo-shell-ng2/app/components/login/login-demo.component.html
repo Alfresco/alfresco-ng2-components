@@ -1,15 +1,36 @@
-<div style="border-radius: 8px; position: absolute; background-color: papayawhip; color: cadetblue; left: 10px; top: 10px; z-index: 1;">
-    <p style="width:120px;margin: 20px;">
+<div class="setting">
+    <p class="toggle">
         <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch1" class="mdl-switch__input" checked (click)="toggleECM(ecm.checked)" #ecm>
+            <input type="checkbox" id="switch1" [checked]="isECM" class="mdl-switch__input"
+                   (click)="toggleECM(ecm.checked)" #ecm>
             <span class="mdl-switch__label">ECM</span>
         </label>
     </p>
-    <p style="width:120px;margin: 20px;">
+    <p class="toggle">
         <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch2" class="mdl-switch__input"  (click)="toggleBPM(bpm.checked)" #bpm>
+            <input type="checkbox" id="switch2" [checked]="isBPM" class="mdl-switch__input"
+                   (click)="toggleBPM(bpm.checked)" #bpm>
             <span class="mdl-switch__label">BPM</span>
         </label>
     </p>
+    <p class="toggle">
+        <label for="switch3" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input type="checkbox" id="switch3" class="mdl-switch__input" checked (click)="toggleCSRF()" #csrf>
+            <span class="mdl-switch__label">CSRF</span>
+        </label>
+    </p>
+    <p class="banned">
+        <label for="blacklistusername">Banned username</label><br>
+        <input id="blacklistusername" type="text" placeholder="banned username" [(ngModel)]="blackListUsername"/>
+    </p>
 </div>
-<alfresco-login [providers]="providers" (onSuccess)="onLogin($event)" (onError)="onError($event)"></alfresco-login>
+
+<a class="mdl-navigation__link setting-button" data-automation-id="settings" href="" routerLink="/settings">
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+        <i class="material-icons">settings</i>
+    </button>
+</a>
+<alfresco-login [providers]="providers" [fieldsValidation]="customValidation" [disableCsrf]="disableCsrf"
+                (executeSubmit)="validateForm($event)"
+                (onSuccess)="onLogin($event)"
+                (onError)="onError($event)" #alfrescologin></alfresco-login>

@@ -15,15 +15,13 @@
  * limitations under the License.
  */
 
-
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
-import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import 'rxjs/Rx';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
@@ -49,10 +47,9 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  */
 @Component({
     selector: 'alfresco-upload-button',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './upload-button.component.html',
-    styleUrls: ['./upload-button.component.css'],
-    pipes: [AlfrescoPipeTranslate]
+    styleUrls: ['./upload-button.component.css']
 })
 export class UploadButtonComponent {
 
@@ -88,10 +85,9 @@ export class UploadButtonComponent {
 
     translate: AlfrescoTranslationService;
 
-
     constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
     }
 
     ngOnChanges(changes) {

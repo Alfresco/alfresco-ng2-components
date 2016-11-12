@@ -22,7 +22,6 @@ import {
     Output,
     EventEmitter,
     AfterContentInit,
-    AfterViewInit,
     AfterViewChecked,
     TemplateRef,
     NgZone,
@@ -30,20 +29,10 @@ import {
     HostListener
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
-import {
-    CONTEXT_MENU_DIRECTIVES,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
-
-import {
-    ALFRESCO_DATATABLE_DIRECTIVES,
-    DataRowEvent,
-    DataTableComponent,
-    ObjectDataColumn
-} from 'ng2-alfresco-datatable';
-
+import { MinimalNodeEntity } from 'alfresco-js-api';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
-import { MinimalNodeEntity } from './../models/document-library.model';
 import { ContentActionModel } from './../models/content-action.model';
 import {
     ShareDataTableAdapter,
@@ -53,17 +42,14 @@ import {
 } from './../data/share-datatable-adapter';
 
 declare var componentHandler;
-declare let __moduleName: string;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
-    templateUrl: './document-list.html',
-    providers: [DocumentListService],
-    directives: [CONTEXT_MENU_DIRECTIVES, ALFRESCO_DATATABLE_DIRECTIVES]
+    templateUrl: './document-list.html'
 })
-export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, AfterContentInit {
+export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -71,13 +57,16 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
 
     DEFAULT_ROOT_FOLDER: string = '/';
 
-    baseComponentPath = __moduleName.replace('/components/document-list.js', '');
+    baseComponentPath = module.id.replace('/components/document-list.js', '');
+
+    @Input()
+    fallbackThubnail: string = this.baseComponentPath + '/img/ft_ic_miscellaneous.svg';
 
     @Input()
     navigate: boolean = true;
 
     @Input()
-    navigationMode: string = 'dblclick'; // click|dblclick
+    navigationMode: string = DocumentList.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
     @Input()
     thumbnails: boolean = false;
@@ -184,6 +173,11 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         this.data.thumbnails = this.thumbnails;
         this.data.maxItems = this.pageSize;
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
+
+        // Automatically enforce single-click navigation for mobile browsers
+        if (this.isMobile()) {
+            this.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        }
     }
 
     ngAfterContentInit() {
@@ -193,12 +187,13 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         }
     }
 
-    ngAfterViewInit() {
+    isEmptyTemplateDefined() {
         if (this.dataTable) {
             if (this.emptyFolderTemplate) {
-                this.dataTable.noContentTemplate = this.emptyFolderTemplate;
+                return true;
             }
         }
+        return false;
     }
 
     ngAfterViewChecked() {
@@ -206,6 +201,10 @@ export class DocumentList implements OnInit, AfterViewInit, AfterViewChecked, Af
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
+    }
+
+    isMobile(): boolean {
+        return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     }
 

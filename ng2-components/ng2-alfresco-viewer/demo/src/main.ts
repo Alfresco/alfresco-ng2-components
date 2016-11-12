@@ -15,41 +15,39 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
-
-import { HTTP_PROVIDERS } from '@angular/http';
-
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `
                <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
-               <input id="ticket" type="text" size="48" (change)="updateTicket();documentList.reload()" [(ngModel)]="ticket"><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="host" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
                     Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
                </div>
                <hr>
-        <div class="container" *ngIf="authenticated">
-            <alfresco-viewer
-                    [showViewer]="true"
-                    [overlayMode]="true"
-                    [urlFile]="'localTestFile.pdf'">
-                    <div class="mdl-spinner mdl-js-spinner is-active"></div>
-                   </alfresco-viewer>
-                   </div>`,
-    directives: [VIEWERCOMPONENT]
+
+               File node id: <input id="fileNodeId" type="text" [(ngModel)]="fileNodeId">
+               <div class="container" *ngIf="authenticated">
+                    <alfresco-viewer *ngIf="fileNodeId"
+                            [showViewer]="true"
+                            [overlayMode]="true"
+                            [fileNodeId]="fileNodeId">
+                            <div class="mdl-spinner mdl-js-spinner is-active"></div>
+                    </alfresco-viewer>
+               </div>`
 })
 class MyDemoApp {
+
+    fileNodeId: string;
+
     authenticated: boolean;
 
     ecmHost: string = 'http://127.0.0.1:8080';
@@ -58,8 +56,9 @@ class MyDemoApp {
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService) {
-
         settingsService.ecmHost = this.ecmHost;
+        settingsService.setProviders('ECM');
+
         if (this.authService.getTicketEcm()) {
             this.ticket = this.authService.getTicketEcm();
         }
@@ -91,8 +90,16 @@ class MyDemoApp {
             });
     }
 }
-bootstrap(MyDemoApp, [
-    VIEWERCOMPONENT,
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ViewerModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

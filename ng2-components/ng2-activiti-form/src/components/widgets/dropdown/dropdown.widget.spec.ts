@@ -15,198 +15,87 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
-import { Http, RequestOptionsArgs, Response, ResponseOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { FormService } from '../../../services/form.service';
 import { DropdownWidget } from './dropdown.widget';
 import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
+import { FormFieldOption } from './../core/form-field-option';
 
 describe('DropdownWidget', () => {
 
-    let http: Http;
+    let formService: FormService;
     let widget: DropdownWidget;
 
     beforeEach(() => {
-        http = <Http> {
-            get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-                return null;
-            }
-        };
-        widget = new DropdownWidget(http);
+        formService = new FormService(null, null);
+        widget = new DropdownWidget(formService);
+        widget.field = new FormFieldModel(new FormModel());
     });
 
-    it('should fetch and parse REST data on init', () => {
+    it('should require field with restUrl', () => {
+        spyOn(formService, 'getRestFieldValues').and.stub();
 
-        let data = [
-            { uid: '1', text: 'One' },
-            { uid: '2', text: 'Two' }
-        ];
-
-        spyOn(http, 'get').and.callFake((url) => {
-            return Observable.create(observer => {
-                let options = new ResponseOptions({
-                    body: data,
-                    url: url
-                });
-                let response = new Response(options);
-                observer.next(response);
-                observer.complete();
-            });
-        });
-
-        let field = new FormFieldModel(new FormModel(), {
-            optionType: 'rest',
-            restUrl: 'http://<address>',
-            restIdProperty: 'uid',
-            restLabelProperty: 'text'
-        });
-
-        widget.field = field;
-        widget.ngOnInit();
-
-
-        expect((<any>http.get).calls.argsFor(0)).toEqual([field.restUrl]);
-        expect(field.options.length).toBe(2);
-
-        expect(field.options[0].id).toBe(data[0].uid);
-        expect(field.options[0].name).toBe(data[0].text);
-
-        expect(field.options[1].id).toBe(data[1].uid);
-        expect(field.options[1].name).toBe(data[1].text);
-    });
-
-    it('should require REST settings to fetch data', () => {
-        let form = new FormModel();
-        spyOn(http, 'get').and.stub();
-
-        // 1) Null field
         widget.field = null;
         widget.ngOnInit();
-        expect(http.get).not.toHaveBeenCalled();
+        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
 
-        // 2) Missing [optionType]
-        widget.field = new FormFieldModel(form, {
-            optionType: null,
-            restUrl: 'http://<address>',
-            restIdProperty: 'uid',
-            restLabelProperty: 'text'
-        });
+        widget.field = new FormFieldModel(null, { restUrl: null });
         widget.ngOnInit();
-        expect(http.get).not.toHaveBeenCalled();
-
-        // 3) Missing [restUrl]
-        widget.field = new FormFieldModel(form, {
-            optionType: 'rest',
-            restUrl: null,
-            restIdProperty: 'uid',
-            restLabelProperty: 'text'
-        });
-        widget.ngOnInit();
-        expect(http.get).not.toHaveBeenCalled();
-
-        // 4) Missing [restIdProperty]
-        widget.field = new FormFieldModel(form, {
-            optionType: 'rest',
-            restUrl: 'http://<address>',
-            restIdProperty: null,
-            restLabelProperty: 'text'
-        });
-        widget.ngOnInit();
-        expect(http.get).not.toHaveBeenCalled();
-
-        // 4) Missing [restLabelProperty]
-        widget.field = new FormFieldModel(form, {
-            optionType: 'rest',
-            restUrl: 'http://<address>',
-            restIdProperty: null,
-            restLabelProperty: null
-        });
-        widget.ngOnInit();
-        expect(http.get).not.toHaveBeenCalled();
+        expect(formService.getRestFieldValues).not.toHaveBeenCalled();
     });
 
-    it('should parse only array response', () => {
-        expect(widget.loadFromJson([])).toBeFalsy();
+    it('should request field values from service', () => {
+        const taskId = '<form-id>';
+        const fieldId = '<field-id>';
 
-        widget.field = new FormFieldModel(new FormModel());
-        expect(widget.loadFromJson([])).toBeTruthy();
+        let form = new FormModel({
+            taskId: taskId
+        });
 
-        expect(widget.loadFromJson(null)).toBeFalsy();
-        expect(widget.loadFromJson({})).toBeFalsy();
-    });
+        widget.field = new FormFieldModel(form, {
+            id: fieldId,
+            restUrl: '<url>'
+        });
 
-    it('should bind to nested properties', () => {
-        let data = [
-            { uid: { value: 1 }, name: { fullName: 'John Doe' } }
-        ];
-
-        spyOn(http, 'get').and.callFake((url) => {
-            return Observable.create(observer => {
-                let options = new ResponseOptions({
-                    body: data,
-                    url: url
-                });
-                let response = new Response(options);
-                observer.next(response);
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
+                observer.next(null);
                 observer.complete();
-            });
-        });
+            })
+        );
+        widget.ngOnInit();
+        expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
+    });
 
-        let field = new FormFieldModel(new FormModel(), {
-            optionType: 'rest',
-            restUrl: 'http://<address>',
-            restIdProperty: 'uid.value',
-            restLabelProperty: 'name.fullName'
-        });
+    it('should log error to console by default', () => {
+        spyOn(console, 'error').and.stub();
+        widget.handleError('Err');
+        expect(console.error).toHaveBeenCalledWith('Err');
+    });
 
-        widget.field = field;
+    it('should preserve empty option when loading fields', () => {
+        let restFieldValue: FormFieldOption = <FormFieldOption> { id: '1', name: 'Option1' };
+        spyOn(formService, 'getRestFieldValues').and.returnValue(
+            Observable.create(observer => {
+                observer.next([restFieldValue]);
+                observer.complete();
+            })
+        );
+
+        let form = new FormModel({ taskId: '<id>' });
+        let emptyOption: FormFieldOption = <FormFieldOption> { id: 'empty', name: 'Empty' };
+        widget.field = new FormFieldModel(form, {
+            id: '<id>',
+            restUrl: '/some/url/address',
+            hasEmptyValue: true,
+            options: [emptyOption]
+        });
         widget.ngOnInit();
 
-        expect(field.options.length).toBe(1);
-        expect(field.options[0].id).toBe(data[0].uid.value.toString());
-        expect(field.options[0].name).toBe(data[0].name.fullName);
+        expect(formService.getRestFieldValues).toHaveBeenCalled();
+        expect(widget.field.options.length).toBe(2);
+        expect(widget.field.options[0]).toBe(emptyOption);
+        expect(widget.field.options[1]).toBe(restFieldValue);
     });
-
-    it('should update form upon loading REST data', () => {
-        let field = new FormFieldModel(new FormModel());
-        widget.field = field;
-
-        spyOn(field, 'updateForm').and.stub();
-
-        expect(widget.loadFromJson([])).toBeTruthy();
-        expect(field.updateForm).toHaveBeenCalled();
-    });
-
-    it('should handle error with generic message', () => {
-        spyOn(console, 'error').and.stub();
-
-        widget.handleError(null);
-        expect(console.error).toHaveBeenCalledWith(DropdownWidget.UNKNOWN_ERROR_MESSAGE);
-    });
-
-    it('should handle error with error message', () => {
-        spyOn(console, 'error').and.stub();
-
-        const message = '<error>';
-        widget.handleError({ message: message });
-
-        expect(console.error).toHaveBeenCalledWith(message);
-    });
-
-    it('should handle error with detailed message', () => {
-        spyOn(console, 'error').and.stub();
-        widget.handleError({
-            status: '400',
-            statusText: 'Bad request'
-        });
-        expect(console.error).toHaveBeenCalledWith('400 - Bad request');
-    });
-
-    it('should handle error with generic message', () => {
-        spyOn(console, 'error').and.stub();
-        widget.handleError({});
-        expect(console.error).toHaveBeenCalledWith(DropdownWidget.GENERIC_ERROR_MESSAGE);
-    });
-
 });

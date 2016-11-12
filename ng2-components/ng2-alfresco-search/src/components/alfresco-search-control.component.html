@@ -1,15 +1,35 @@
-<form (submit)="onSearch($event)">
+<form #f="ngForm" (ngSubmit)="onSearch(f.value)">
     <div [class]="getTextFieldClassName()">
         <label *ngIf="expandable" class="mdl-button mdl-js-button mdl-button--icon" for="searchControl">
-            <i class="material-icons">search</i>
+            <i mdl-upgrade class="material-icons">search</i>
         </label>
         <div [class]="getTextFieldHolderClassName()">
-            <input class="mdl-textfield__input" [type]="inputType" [autocomplete]="getAutoComplete()" data-automation-id="search_input"
-                   #searchInput id="searchControl" [ngFormControl]="searchControl" [(ngModel)]="searchTerm" (focus)="onFocus($event)"
-                   (blur)="onBlur($event)" aria-labelledby="searchLabel">
+            <input mdl-upgrade
+                   class="mdl-textfield__input"
+                   [type]="inputType"
+                   [autocomplete]="getAutoComplete()"
+                   data-automation-id="search_input"
+                   #searchInput
+                   id="searchControl"
+                   [formControl]="searchControl"
+                   [(ngModel)]="searchTerm"
+                   (focus)="onFocus($event)"
+                   (blur)="onBlur($event)"
+                   (keyup.escape)="onEscape($event)"
+                   (keyup.arrowdown)="onArrowDown($event)"
+                   aria-labelledby="searchLabel">
             <label id="searchLabel" class="mdl-textfield__label" for="searchControl">{{'SEARCH.CONTROL.LABEL' | translate}}</label>
         </div>
     </div>
 </form>
-<alfresco-search-autocomplete [searchTerm]="autocompleteSearchTerm" [ngClass]="{active: searchActive, valid: searchValid}"
-                              (preview)="onFileClicked($event)"></alfresco-search-autocomplete>
+<alfresco-search-autocomplete #autocomplete *ngIf="liveSearchEnabled"
+                              [searchTerm]="liveSearchTerm"
+                              [rootNodeId]="liveSearchRoot"
+                              [resultType]="liveSearchResultType"
+                              [resultSort]="liveSearchResultSort"
+                              [maxResults]="liveSearchMaxResults"
+                              [ngClass]="{active: searchActive, valid: searchValid}"
+                              (fileSelect)="onFileClicked($event)"
+                              (searchFocus)="onAutoCompleteFocus($event)"
+                              (scrollBack)="onAutoCompleteReturn($event)"
+                              (cancel)="onAutoCompleteCancel($event)"></alfresco-search-autocomplete>

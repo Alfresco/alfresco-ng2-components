@@ -10,7 +10,7 @@
         <th class="mdl-cell--hide-phone size-column">{{'FILE_UPLOAD.FILE_INFO.SIZE' | translate}}</th>
         <th>{{'FILE_UPLOAD.FILE_INFO.ACTION' | translate}}</th>
     </tr>
-    <tr *ngFor="let file of filesUploadingList">
+    <tr *ngFor="let file of filesUploadingList" tabindex="0">
         <td attr.data-automation-id="dialog_{{file.name}}" class="mdl-data-table__cell--non-numeric"><div class="truncate">{{file.name}}</div></td>
         <td _ngcontent-hvq-3="">
             <div _ngcontent-hvq-3="" class="mdl-progress mdl-js-progress is-upgraded" id="{{file.id}}"
@@ -23,10 +23,10 @@
         <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone size-column" attr.data-automation-id="{{file.name}}_filesize">{{file.size}}</td>
         <td>
             <span *ngIf="file.done && !file.abort" ><i data-automation-id="done_icon" class="material-icons action-icons">done</i></span>
-            <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" ><i data-automation-id="abort_cancel_upload"
+            <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" tabindex="0"><i data-automation-id="abort_cancel_upload"
                                                                                      class="material-icons action-icons">
                 remove_circle_outline</i></span>
-            <span *ngIf="file.abort"><i class="material-icons action-icons" data-automation-id="upload_stopped">remove_circle</i></span>
+            <span *ngIf="file.abort"><i class="material-icons action-icons" data-automation-id="upload_stopped" tabindex="0">remove_circle</i></span>
         </td>
     </tr>
 </table>

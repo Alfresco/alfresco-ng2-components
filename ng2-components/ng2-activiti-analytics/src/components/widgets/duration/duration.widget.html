@@ -1,0 +1,21 @@
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label number-widget">
+            <input class="mdl-textfield__input"
+                   type="text"
+                   pattern="-?[0-9]*(\.[0-9]+)?"
+                   [attr.id]="field.id"
+                   [value]="field.value"
+                   [(ngModel)]="field.value"
+                   (ngModelChange)="calculateDuration()">
+            <label class="mdl-textfield__label" [attr.for]="field.id">{{field.nameKey | translate}}</label>
+        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col">
+        <div style="margin-top: 30px">
+            <dropdown-widget [field]="duration" [group]="formGroup" [controllerName]="'timeType'"
+                             [showDefaultOption]="false"
+                             (fieldChanged)="calculateDuration()"></dropdown-widget>
+        </div>
+    </div>
+</div>

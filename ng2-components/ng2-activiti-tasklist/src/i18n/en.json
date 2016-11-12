@@ -13,6 +13,9 @@
       "COMMENTS": "Comments",
       "CHECKLIST": "Checklist"
     },
+    "BUTTON": {
+      "COMPLETE": "Complete"
+    },
     "MESSAGES": {
       "NONE": "No task details found."
     },
@@ -22,19 +25,52 @@
     "DUE": {
       "NONE": "No due date."
     },
+    "ASSIGNEE": {
+      "NONE": "No assignee."
+    },
     "PEOPLE": {
       "NONE": "No people involved."
     },
     "COMMENTS": {
-      "NONE": "No comments."
+      "NONE": "No comments.",
+      "ADD": "Add a comment",
+      "DIALOG": {
+        "TITLE": "New comment",
+        "LABELS": {
+          "MESSAGE": "Message"
+        },
+        "BUTTON": {
+          "ADD": "Add Comment",
+          "CANCEL": "Cancel"
+        }
+      }
     },
     "CHECKLIST": {
       "NONE": "No checklist."
+    },
+    "ERROR": {
+      "TITLE": "Something went wrong",
+      "DESCRIPTION": "Could not complete the specified action. Please try again or check that you have permission.",
+      "CLOSE": "Close"
     }
   },
   "TASK_FILTERS": {
     "MESSAGES": {
       "NONE": "No task filter selected."
+    }
+  },
+  "START_TASK": {
+    "BUTTON": "Start Task",
+    "DIALOG": {
+      "TITLE": "Start Task",
+      "LABEL": {
+        "NAME": "Name",
+        "DESCRIPTION": "Description"
+      },
+      "ACTION": {
+        "START": "Start",
+        "CANCEL": "Cancel"
+      }
     }
   }
 }

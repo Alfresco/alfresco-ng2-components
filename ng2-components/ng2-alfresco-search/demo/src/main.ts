@@ -15,25 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { NgModule, Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { CoreModule } from 'ng2-alfresco-core';
+import { SearchModule } from 'ng2-alfresco-search';
+
 import {
-    ALFRESCO_CORE_PROVIDERS,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoPipeTranslate,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
-import {
-    ALFRESCO_SEARCH_PROVIDERS,
-    ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search';
 
 @Component({
-    selector: 'alfresco-search-demo',
+    selector: 'alfresco-app-demo',
     template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
-               <input id="ticket" type="text" size="48" (change)="updateticket()" [(ngModel)]="ticket"><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
                <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
@@ -47,10 +45,7 @@ import {
                     <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
                 </div>
     `,
-    styles: [':host > .container {padding: 10px}'],
-    providers: [ALFRESCO_SEARCH_PROVIDERS],
-    directives: [ALFRESCO_SEARCH_DIRECTIVES],
-    pipes: [AlfrescoPipeTranslate]
+    styles: [':host > .container {padding: 10px}']
 })
 class SearchDemo implements OnInit {
 
@@ -58,7 +53,7 @@ class SearchDemo implements OnInit {
 
     public searchTerm: string = 'test';
 
-    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://localhost:8080';
 
     ticket: string;
 
@@ -100,8 +95,15 @@ class SearchDemo implements OnInit {
     }
 }
 
-bootstrap(SearchDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS,
-    ALFRESCO_SEARCH_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        SearchModule
+    ],
+    declarations: [ SearchDemo ],
+    bootstrap:    [ SearchDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

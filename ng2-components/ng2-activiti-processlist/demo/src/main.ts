@@ -14,79 +14,160 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, OnInit, Injectable, provide } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import {
-    ACTIVITI_PROCESSLIST_PROVIDERS,
-    ACTIVITI_PROCESSLIST_DIRECTIVES
-} from 'ng2-activiti-processlist/dist/ng2-activiti-processlist';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    ALFRESCO_CORE_PROVIDERS
-} from 'ng2-alfresco-core';
+
+import { Input, NgModule, Component, OnInit, ViewChild } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
-  selector: 'my-app',
-  template: `label for="token"><b>Insert a valid access token / ticket:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateToken();documentList.reload()" [(ngModel)]="token"><br>
-               <label for="token"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="token" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="bpmHost"><br><br>
-               <div *ngIf="!authenticated" style="color:#FF2323">
-                    Authentication failed to ip {{ bpmHost }} with user: admin, admin, you can still try to add a valid token to perform
-                    operations.
-               </div>
-               <hr>
-                <label for="token"><b>Insert a scriptPath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="scriptPath"><br>
-                <label for="token"><b>Insert a contextRoot</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="contextRoot"><br>
-                <label for="token"><b>Insert a servicePath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
-        <div class="container" *ngIf="authenticated">
-            <activiti-process-instance-list></activiti-process-instance-list>
-        </div>`,
-  providers: [ACTIVITI_PROCESSLIST_PROVIDERS],
-  directives: [ACTIVITI_PROCESSLIST_DIRECTIVES]
+    selector: 'alfresco-app-demo',
+    template: `
+    <label for="ticket"><b>Insert a valid ticket:</b></label><br>
+    <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+    <label for="host"><b>Insert the ip of your Activiti instance:</b></label><br>
+    <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+    <div *ngIf="!authenticated" style="color:#FF2323">
+        Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
+        operations.
+    </div>
+    <hr>
+
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+        <header class="mdl-layout__header">
+
+            <!-- TABS -->
+
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect" #tabheader>
+                <a id="apps-header" href="#apps" class="mdl-layout__tab is-active">APPS</a>
+                <a id="processes-header" href="#processes" class="mdl-layout__tab">PROCESS LIST</a>
+            </div>
+        </header>
+
+        <main class="mdl-layout__content activiti" #tabmain>
+
+            <!--  APPPS COMPONENT -->
+
+            <section class="mdl-layout__tab-panel is-active" id="apps">
+                <div class="page-content">
+                    <activiti-apps [layoutType]="'GRID'" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
+                </div>
+            </section>
+
+            <!--  PROCESS COMPONENT -->
+
+            <section class="mdl-layout__tab-panel" id="processes">
+                <div class="page-content">
+                    <div class="page-content">
+                        <div class="mdl-grid">
+                            <div class="mdl-cell mdl-cell--2-col task-column">
+                                <span>Process Filters</span>
+                                <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
+                                <activiti-process-instance-filters
+                                            [appId]="appId"
+                                            (filterClick)="onProcessFilterClick($event)"
+                                            (onSuccess)="onSuccessProcessFilterList($event)"
+                                            #activitiprocessfilter></activiti-process-instance-filters>
+                            </div>
+                            <div class="mdl-cell mdl-cell--3-col task-column">
+                                <span>Process List</span>
+                                <activiti-process-instance-list
+                                            [filter]="processFilter"
+                                            [data]="dataProcesses"
+                                            (rowClick)="onProcessRowClick($event)"
+                                            (onSuccess)="onSuccessProcessList($event)"
+                                            #activitiprocesslist></activiti-process-instance-list>
+                            </div>
+                            <div class="mdl-cell mdl-cell--7-col task-column">
+                                <span>Process Details</span>
+                                <activiti-process-instance-details
+                                            [processInstanceId]="currentProcessInstanceId"
+                                            (taskFormCompleted)="taskFormCompleted()"
+                                            (processCancelled)="processCancelled()"
+                                            #activitiprocessdetails></activiti-process-instance-details>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+`
 })
 class MyDemoApp implements OnInit {
 
     authenticated: boolean;
-    ecmHost: string = 'http://127.0.0.1:9999';
-    token: string;
 
-    constructor(
-        private authService: AlfrescoAuthenticationService,
-        private settingsService: AlfrescoSettingsService
-    ) {
-        console.log('constructor');
+    host: string = 'http://localhost:9999';
 
+    ticket: string;
+
+    @ViewChild('tabmain')
+    tabMain: any;
+
+    @ViewChild('tabheader')
+    tabHeader: any;
+
+    @ViewChild('activitiprocessfilter')
+    activitiprocessfilter: any;
+
+    @ViewChild('activitiprocesslist')
+    activitiprocesslist: any;
+
+    @ViewChild('activitiprocessdetails')
+    activitiprocessdetails: any;
+
+    @Input()
+    appId: number;
+
+    processFilter: any;
+
+    currentProcessInstanceId: string;
+
+    dataProcesses: ObjectDataTableAdapter;
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');
-        settingsService.bpmHost = this.bpmHost;
 
-        if (this.authService.getTicket()) {
-            this.token = this.authService.getTicket();
+        if (this.authService.getTicketBpm()) {
+            this.ticket = this.authService.getTicketBpm();
         }
+
+        this.dataProcesses = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
     }
 
-    ngOnInit() {
-        this.login();
-    }
-
-    public updateToken(): void {
-        localStorage.setItem('token', this.token);
+    public updateTicket(): void {
+        localStorage.setItem('ticket-BPM', this.ticket);
     }
 
     public updateHost(): void {
-        this.settingsService.ecmHost = this.ecmHost;
+        this.settingsService.bpmHost = this.host;
+        this.login();
+    }
+
+    public ngOnInit(): void {
         this.login();
     }
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
-            token => {
-                console.log(token);
-                this.token = token;
+            ticket => {
+                console.log(ticket);
+                this.ticket = this.authService.getTicketBpm();
                 this.authenticated = true;
             },
             error => {
@@ -94,8 +175,58 @@ class MyDemoApp implements OnInit {
                 this.authenticated = false;
             });
     }
+
+    onAppClick(app: AppDefinitionRepresentationModel) {
+        this.appId = app.id;
+
+        this.processFilter = null;
+        this.currentProcessInstanceId = null;
+
+        this.changeTab('apps', 'processes');
+    }
+
+    onProcessFilterClick(event: any) {
+        this.processFilter = event;
+    }
+
+    onSuccessProcessFilterList(event: any) {
+        this.processFilter = this.activitiprocessfilter.getCurrentFilter();
+    }
+
+    onSuccessProcessList(event: any) {
+        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
+    }
+
+    onProcessRowClick(processInstanceId) {
+        this.currentProcessInstanceId = processInstanceId;
+    }
+
+    processCancelled(data: any) {
+        this.currentProcessInstanceId = null;
+        this.activitiprocesslist.reload();
+    }
+
+    changeTab(origin: string, destination: string) {
+        this.tabMain.nativeElement.children[origin].classList.remove('is-active');
+        this.tabMain.nativeElement.children[destination].classList.add('is-active');
+
+        this.tabHeader.nativeElement.children[`${origin}-header`].classList.remove('is-active');
+        this.tabHeader.nativeElement.children[`${destination}-header`].classList.add('is-active');
+    }
+
 }
 
-bootstrap(MyDemoApp, [
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ActivitiProcessListModule,
+        ActivitiTaskListModule.forRoot()
+    ],
+    declarations: [MyDemoApp],
+    bootstrap: [MyDemoApp]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);

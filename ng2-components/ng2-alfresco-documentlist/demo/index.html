@@ -12,15 +12,16 @@
     <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
     <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
+
     <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
 
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
-
-    <!-- Additional Alfresco libraries -->
-    <script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
 
     <script src="systemjs.config.js"></script>
     <script>
@@ -30,7 +31,7 @@
 </head>
 <body>
 
-<alfresco-documentlist-demo></alfresco-documentlist-demo>
+<alfresco-app-demo></alfresco-app-demo>
 
 </body>
 </html>

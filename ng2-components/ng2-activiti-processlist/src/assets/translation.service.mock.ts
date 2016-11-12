@@ -16,22 +16,13 @@
  */
 
 import { Observable } from 'rxjs/Rx';
-import { EventEmitter } from '@angular/core';
-
-export interface LangChangeEvent {
-    lang: string;
-    translations: any;
-}
 
 export class TranslationMock {
-
-    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
 
     public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
         return Observable.of(key);
     }
 
     addTranslationFolder() {
-
     }
 }

@@ -18,13 +18,11 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
+import { AlfrescoApi, NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoAuthenticationService,
     AlfrescoContentService
 } from 'ng2-alfresco-core';
-
-declare let AlfrescoApi: any;
 
 @Injectable()
 export class DocumentListService {
@@ -60,21 +58,18 @@ export class DocumentListService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
     };
 
-    constructor(
-        private authService: AlfrescoAuthenticationService,
-        private contentService: AlfrescoContentService
-    ) {
+    constructor(private authService: AlfrescoAuthenticationService, private contentService: AlfrescoContentService) {
     }
 
-    private getAlfrescoApi() {
+    private getAlfrescoApi(): AlfrescoApi {
         return this.authService.getAlfrescoApi();
     }
 
-    private getNodesPromise(folder: string, opts?: any) {
+    private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
         let nodeId = '-root-';
         let params: any = {
             relativePath: folder,
-            include: ['path']
+            include: ['path', 'properties']
         };
 
         if (opts) {
@@ -86,11 +81,11 @@ export class DocumentListService {
             }
         }
 
-        return this.getAlfrescoApi().node.getNodeChildren(nodeId, params);
+        return this.getAlfrescoApi().nodes.getNodeChildren(nodeId, params);
     }
 
-    deleteNode(nodeId: string) {
-        return Observable.fromPromise(this.getAlfrescoApi().node.deleteNode(nodeId));
+    deleteNode(nodeId: string): Observable<any> {
+        return Observable.fromPromise(this.getAlfrescoApi().nodes.deleteNode(nodeId));
     }
 
     /**

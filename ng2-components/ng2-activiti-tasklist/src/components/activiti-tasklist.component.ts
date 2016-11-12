@@ -15,37 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
-import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter, DataTableAdapter, DataRowEvent } from 'ng2-alfresco-datatable';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { FilterModel } from '../models/filter.model';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-tasklist',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-tasklist.component.html',
-    styleUrls: ['./activiti-tasklist.component.css'],
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES],
-    providers: [ActivitiTaskListService],
-    pipes: [AlfrescoPipeTranslate]
-
+    styleUrls: ['./activiti-tasklist.component.css']
 })
-export class ActivitiTaskList implements OnInit {
+export class ActivitiTaskList implements OnInit, OnChanges {
 
     @Input()
-    taskFilter: FilterModel;
+    taskFilter: FilterRepresentationModel;
 
     @Input()
-    schemaColumn: any[] = [
-        {type: 'text', key: 'id', title: 'Id'},
-        {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-        {type: 'text', key: 'formKey', title: 'Form Key', sortable: true},
-        {type: 'text', key: 'created', title: 'Created', sortable: true}
-    ];
+    data: DataTableAdapter;
 
     @Output()
     rowClick: EventEmitter<string> = new EventEmitter<string>();
@@ -56,47 +46,87 @@ export class ActivitiTaskList implements OnInit {
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
-    data: DataTableAdapter;
-
-    tasks: ObjectDataTableAdapter;
-
     currentTaskId: string;
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param translate
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
-                public activiti: ActivitiTaskListService) {
+    private defaultSchemaColumn: any[] = [
+        {type: 'text', key: 'id', title: 'Id'},
+        {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+        {type: 'text', key: 'formKey', title: 'Form Key', sortable: true},
+        {type: 'text', key: 'created', title: 'Created', sortable: true}
+    ];
 
+    constructor(private translate: AlfrescoTranslationService,
+                public activiti: ActivitiTaskListService) {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
     }
 
     ngOnInit() {
-        this.data = new ObjectDataTableAdapter(
-            [],
-            this.schemaColumn
-        );
+        if (!this.data) {
+            this.data = new ObjectDataTableAdapter(
+                [],
+                this.defaultSchemaColumn
+            );
+        }
 
         if (this.taskFilter) {
-            this.load(this.taskFilter);
+            let requestNode = this.convertTaskUserToTaskQuery(this.taskFilter);
+            this.load(new TaskQueryRequestRepresentationModel(requestNode));
         }
     }
 
-    public load(filter: FilterModel) {
-        this.activiti.getTasks(filter).subscribe(
+    ngOnChanges(changes: SimpleChanges) {
+        let taskFilter = changes['taskFilter'];
+        if (taskFilter && taskFilter.currentValue) {
+            let requestNode = this.convertTaskUserToTaskQuery(taskFilter.currentValue);
+            this.load(new TaskQueryRequestRepresentationModel(requestNode));
+            return;
+        }
+    }
+
+    public reload() {
+        if (this.taskFilter) {
+            let requestNode = this.convertTaskUserToTaskQuery(this.taskFilter);
+            this.load(new TaskQueryRequestRepresentationModel(requestNode));
+        }
+    }
+
+    public load(requestNode: TaskQueryRequestRepresentationModel) {
+        this.activiti.getTotalTasks(requestNode).subscribe(
             (res) => {
-                this.renderTasks(res.data);
-                this.onSuccess.emit(res);
+                requestNode.size = res.total;
+                this.activiti.getTasks(requestNode).subscribe(
+                    (response) => {
+                        let taskRow = this.createDataRow(response.data);
+                        this.renderTasks(taskRow);
+                        this.selectFirstTask();
+                        this.onSuccess.emit(response);
+                    }, (error) => {
+                        console.error(error);
+                        this.onError.emit(error);
+                    });
             }, (err) => {
                 console.error(err);
                 this.onError.emit(err);
             });
+    }
+
+    /**
+     * Create an array of ObjectDataRow
+     * @param tasks
+     * @returns {ObjectDataRow[]}
+     */
+    private createDataRow(tasks: any[]): ObjectDataRow[] {
+        let taskRows: ObjectDataRow[] = [];
+        tasks.forEach((row) => {
+            taskRows.push(new ObjectDataRow({
+                id: row.id,
+                name: row.name,
+                created: row.created
+            }));
+        });
+        return taskRows;
     }
 
     /**
@@ -105,7 +135,26 @@ export class ActivitiTaskList implements OnInit {
      */
     private renderTasks(tasks: any[]) {
         tasks = this.optimizeTaskName(tasks);
-        this.tasks = new ObjectDataTableAdapter(tasks, this.data.getColumns());
+        this.data.setRows(tasks);
+    }
+
+    /**
+     * Select the first task of a tasklist if present
+     */
+    selectFirstTask() {
+        if (!this.isTaskListEmpty()) {
+            this.currentTaskId = this.data.getRows()[0].getValue('id');
+        } else {
+            this.currentTaskId = null;
+        }
+    }
+
+    /**
+     * Return the current task
+     * @returns {string}
+     */
+    getCurrentTaskId(): string {
+        return this.currentTaskId;
     }
 
     /**
@@ -113,7 +162,7 @@ export class ActivitiTaskList implements OnInit {
      * @returns {ObjectDataTableAdapter|boolean}
      */
     isTaskListEmpty(): boolean {
-        return this.tasks === undefined || (this.tasks && this.tasks.getRows() && this.tasks.getRows().length === 0);
+        return this.data === undefined || (this.data && this.data.getRows() && this.data.getRows().length === 0);
     }
 
     /**
@@ -133,12 +182,24 @@ export class ActivitiTaskList implements OnInit {
      */
     private optimizeTaskName(tasks: any[]) {
         tasks = tasks.map(t => {
-            t.name = t.name || 'Nameless task';
-            if (t.name.length > 50) {
-                t.name = t.name.substring(0, 50) + '...';
+            t.obj.name = t.obj.name || 'Nameless task';
+            if (t.obj.name.length > 50) {
+                t.obj.name = t.obj.name.substring(0, 50) + '...';
             }
             return t;
         });
         return tasks;
+    }
+
+    private convertTaskUserToTaskQuery(userTask: FilterRepresentationModel) {
+        let requestNode = {
+            appDefinitionId: userTask.appId,
+            processDefinitionId: userTask.filter.processDefinitionId,
+            text: userTask.filter.name,
+            assignment: userTask.filter.assignment,
+            state: userTask.filter.state,
+            sort: userTask.filter.sort
+        };
+        return new TaskQueryRequestRepresentationModel(requestNode);
     }
 }

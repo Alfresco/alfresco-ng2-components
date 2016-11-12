@@ -23,17 +23,10 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { MATERIAL_DESIGN_DIRECTIVES, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
-
-import { TabsWidget } from './widgets/tabs/tabs.widget';
-import { ContainerWidget } from './widgets/container/container.widget';
-
-declare let __moduleName: string;
-declare var componentHandler;
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
@@ -60,6 +53,8 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  *
  *   {showRefreshButton} boolean - to hide the refresh button of the form pass false, default true;
  *
+ *   {showDebugButton} boolean - to show the debug options, default false;
+ *
  *   {showCompleteButton} boolean - to hide the complete button of the form pass false, default true;
  *
  *   {showSaveButton} boolean - to hide the save button of the form pass false, default true;
@@ -78,12 +73,10 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  * @returns {ActivitiForm} .
  */
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
-    styleUrls: ['./activiti-form.component.css'],
-    directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget, TabsWidget],
-    providers: [EcmModelService, FormService, WidgetVisibilityService, NodeService]
+    styleUrls: ['./activiti-form.component.css']
 })
 export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
@@ -125,6 +118,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     showSaveButton: boolean = true;
 
     @Input()
+    showDebugButton: boolean = true;
+
+    @Input()
     readOnly: boolean = false;
 
     @Input()
@@ -142,13 +138,15 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     @Output()
     executeOutcome: EventEmitter<FormOutcomeEvent> = new EventEmitter<FormOutcomeEvent>();
 
+    @Output()
+    onError: EventEmitter<any> = new EventEmitter<any>();
+
     form: FormModel;
 
     debugMode: boolean = false;
 
-    constructor(private formService: FormService,
+    constructor(protected formService: FormService,
                 private visibilityService: WidgetVisibilityService,
-                private authService: AlfrescoAuthenticationService,
                 private ecmModelService: EcmModelService,
                 private nodeService: NodeService) {
     }
@@ -167,6 +165,21 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     isOutcomeButtonEnabled(outcome: FormOutcomeModel): boolean {
+        if (this.form.readOnly) {
+            return false;
+        }
+
+        if (outcome) {
+            // Make 'Save' button always available
+            if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
+                return true;
+            }
+            return this.form.isValid;
+        }
+        return false;
+    }
+
+    isOutcomeButtonVisible(outcome: FormOutcomeModel): boolean {
         if (outcome && outcome.name) {
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.showCompleteButton;
@@ -181,7 +194,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     ngOnInit() {
         if (this.nodeId) {
-            this.loadActivitiFormForEcmNode();
+            this.loadFormForEcmNode();
         } else {
             this.loadForm();
         }
@@ -264,7 +277,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     loadForm() {
         if (this.taskId) {
             this.getFormByTaskId(this.taskId);
-            this.visibilityService.getTaskProcessVariableModelsForTask(this.taskId);
+            this.visibilityService.getTaskProcessVariable(this.taskId);
             return;
         }
 
@@ -297,7 +310,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.form = new FormModel(form, data, this.readOnly);
                     this.formLoaded.emit(this.form);
                 },
-                this.handleError
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -310,7 +325,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.form = this.parseForm(form);
                     this.formLoaded.emit(this.form);
                 },
-                this.handleError
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -325,10 +342,14 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                             this.form = this.parseForm(form);
                             this.formLoaded.emit(this.form);
                         },
-                        this.handleError
+                        (error) => {
+                            this.handleError(error);
+                        }
                     );
                 },
-                this.handleError
+                (error) => {
+                    this.handleError(error);
+                }
             );
     }
 
@@ -341,7 +362,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                         this.formSaved.emit(this.form);
                         this.storeFormAsMetadata();
                     },
-                    this.handleError
+                    (error) => {
+                        this.handleError(error);
+                    }
                 );
         }
     }
@@ -355,13 +378,16 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                         this.formCompleted.emit(this.form);
                         this.storeFormAsMetadata();
                     },
-                    this.handleError
+                    (error) => {
+                        this.handleError(error);
+                    }
                 );
         }
     }
 
     handleError(err: any): any {
         console.log(err);
+        this.onError.emit(err);
     }
 
     parseForm(json: any): FormModel {
@@ -388,11 +414,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     checkVisibility(field: FormFieldModel) {
         if (field && field.form) {
-            this.visibilityService.updateVisibilityForForm(field.form);
+            this.visibilityService.refreshVisibility(field.form);
         }
     }
 
-    private loadActivitiFormForEcmNode(): void {
+    private loadFormForEcmNode(): void {
         this.nodeService.getNodeMetadata(this.nodeId).subscribe(data => {
                 this.data = data.metadata;
                 this.loadFormFromActiviti(data.nodeType);
@@ -400,18 +426,20 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             this.handleError);
     }
 
-    public loadFormFromActiviti(nodeType: string): any {
+    loadFormFromActiviti(nodeType: string): any {
         this.formService.searchFrom(nodeType).subscribe(
             form => {
                 if (!form) {
-                    this.formService.createFormFromNodeType(nodeType).subscribe(formMetadata => {
+                    this.formService.createFormFromANode(nodeType).subscribe(formMetadata => {
                         this.loadFormFromFormId(formMetadata.id);
                     });
                 } else {
                     this.loadFormFromFormId(form.id);
                 }
             },
-            this.handleError
+            (error) => {
+                this.handleError(error);
+            }
         );
     }
 
@@ -424,7 +452,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         if (this.saveMetadata) {
             this.ecmModelService.createEcmTypeForActivitiForm(this.formName, this.form).subscribe(type => {
                     this.nodeService.createNodeMetadata(type.nodeType || type.entry.prefixedName, EcmModelService.MODEL_NAMESPACE, this.form.values, this.path, this.nameNode);
-                }, this.handleError
+                },
+                (error) => {
+                    this.handleError(error);
+                }
             );
         }
     }

@@ -15,31 +15,40 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit } from '@angular/core';
-import { MATERIAL_DESIGN_DIRECTIVES } from 'ng2-alfresco-core';
-import { TabModel } from './../core/index';
-import { ContainerWidget } from './../container/container.widget';
-
-declare let __moduleName: string;
-declare var componentHandler;
+import { Component, Input, AfterViewInit, AfterContentChecked, EventEmitter, Output } from '@angular/core';
+import { TabModel, FormFieldModel } from './../core/index';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'tabs-widget',
-    templateUrl: './tabs.widget.html',
-    directives: [MATERIAL_DESIGN_DIRECTIVES, ContainerWidget]
+    templateUrl: './tabs.widget.html'
 })
-export class TabsWidget implements AfterViewInit {
+export class TabsWidget implements AfterContentChecked, AfterViewInit {
 
     @Input()
     tabs: TabModel[] = [];
+
+    @Output()
+    formTabChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
+
+    visibleTabs: TabModel[] = [];
 
     hasTabs() {
         return this.tabs && this.tabs.length > 0;
     }
 
+    ngAfterContentChecked() {
+        this.filterVisibleTabs();
+    }
+
     ngAfterViewInit() {
         this.setupMaterialComponents();
+    }
+
+    filterVisibleTabs() {
+        this.visibleTabs = this.tabs.filter(tab => {
+            return tab.isVisible;
+        });
     }
 
     setupMaterialComponents(): boolean {
@@ -50,4 +59,9 @@ export class TabsWidget implements AfterViewInit {
         }
         return false;
     }
+
+    tabChanged(field: FormFieldModel) {
+        this.formTabChanged.emit(field);
+    }
+
 }

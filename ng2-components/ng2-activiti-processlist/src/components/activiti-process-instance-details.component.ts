@@ -15,29 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
 import { ActivitiComments } from './activiti-comments.component';
 import { ProcessInstance } from '../models/process-instance';
 
-
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-process-instance-details',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-process-instance-details.component.html',
-    styleUrls: ['./activiti-process-instance-details.component.css'],
-    providers: [ActivitiProcessService],
-    directives: [ActivitiProcessInstanceHeader, ActivitiComments, ActivitiProcessInstanceTasks],
-    pipes: [AlfrescoPipeTranslate]
-
+    styleUrls: ['./activiti-process-instance-details.component.css']
 })
-export class ActivitiProcessInstanceDetails {
+export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
 
     @Input()
     processInstanceId: string;
@@ -58,10 +52,10 @@ export class ActivitiProcessInstanceDetails {
     showRefreshButton: boolean = true;
 
     @Output()
-    processCancelledEmitter = new EventEmitter();
+    processCancelled: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    taskFormCompletedEmitter = new EventEmitter();
+    taskFormCompleted: EventEmitter<any> = new EventEmitter<any>();
 
     processInstanceDetails: ProcessInstance;
 
@@ -71,13 +65,37 @@ export class ActivitiProcessInstanceDetails {
      * @param translate
      * @param activitiProcess
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
+    }
+
+    ngOnInit() {
+        if (this.processInstanceId) {
+            this.load(this.processInstanceId);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        let processInstanceId = changes['processInstanceId'];
+        if (processInstanceId && !processInstanceId.currentValue) {
+            this.reset();
+            return;
+        }
+        if (processInstanceId && processInstanceId.currentValue) {
+            this.load(processInstanceId.currentValue);
+            return;
+        }
+    }
+
+    /**
+     * Reset the task detail to undefined
+     */
+    reset() {
+        this.processInstanceDetails = null;
     }
 
     load(processId: string) {
@@ -86,9 +104,6 @@ export class ActivitiProcessInstanceDetails {
                 (res: ProcessInstance) => {
                     this.processInstanceDetails = res;
                     if (this.processInstanceDetails) {
-                        if (this.commentsList) {
-                            this.commentsList.load(this.processInstanceDetails.id);
-                        }
                         if (this.tasksList) {
                             this.tasksList.load(this.processInstanceDetails.id);
                         }
@@ -98,11 +113,11 @@ export class ActivitiProcessInstanceDetails {
         }
     }
 
-    processCancelled(data: any) {
-        this.processCancelledEmitter.emit(data);
+    bubbleProcessCancelled(data: any) {
+        this.processCancelled.emit(data);
     }
 
-    taskFormCompleted(data: any) {
-        this.taskFormCompletedEmitter.emit(data);
+    bubbleTaskFormCompleted(data: any) {
+        this.taskFormCompleted.emit(data);
     }
 }

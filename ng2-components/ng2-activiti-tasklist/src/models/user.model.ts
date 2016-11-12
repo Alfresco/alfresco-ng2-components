@@ -29,10 +29,10 @@ export class User {
     firstName: string;
     lastName: string;
 
-    constructor(id: number, email: string, firstName: string, lastName: string) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    constructor(obj?: any) {
+        this.id = obj && obj.id;
+        this.email = obj && obj.email || null;
+        this.firstName = obj && obj.firstName || null;
+        this.lastName = obj && obj.lastName || null;
     }
 }

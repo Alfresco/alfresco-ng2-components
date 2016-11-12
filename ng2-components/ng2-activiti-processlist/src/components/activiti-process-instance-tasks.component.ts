@@ -16,30 +16,26 @@
  */
 
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { TaskDetailsModel } from '../models/task-details.model';
-import { ALFRESCO_TASKLIST_DIRECTIVES } from 'ng2-activiti-tasklist';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
+import { TaskDetailsModel } from 'ng2-activiti-tasklist';
+import { Observable, Observer } from 'rxjs/Rx';
+import { DatePipe } from '@angular/common';
+import { ProcessInstance } from '../models/process-instance';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-process-instance-tasks',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-process-instance-tasks.component.html',
-    styleUrls: ['./activiti-process-instance-tasks.component.css'],
-    providers: [ActivitiProcessService],
-    directives: [ ALFRESCO_TASKLIST_DIRECTIVES ],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    styleUrls: ['./activiti-process-instance-tasks.component.css']
 })
 export class ActivitiProcessInstanceTasks implements OnInit {
 
     @Input()
-    processId: string;
+    processInstanceDetails: ProcessInstance;
 
     @Input()
     showRefreshButton: boolean = true;
@@ -60,29 +56,25 @@ export class ActivitiProcessInstanceTasks implements OnInit {
 
     selectedTaskId: string;
 
+    processId: string;
+
     @ViewChild('dialog')
     dialog: any;
+
+    @ViewChild('startDialog')
+    startDialog: any;
 
     @ViewChild('taskdetails')
     taskdetails: any;
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param activitiProcess
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
-
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
         }
 
-        this.task$ = new Observable<TaskDetailsModel>(observer =>  this.taskObserver = observer).share();
-        this.completedTask$ = new Observable<TaskDetailsModel>(observer =>  this.completedTaskObserver = observer).share();
-
+        this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
+        this.completedTask$ = new Observable<TaskDetailsModel>(observer => this.completedTaskObserver = observer).share();
     }
 
     ngOnInit() {
@@ -93,8 +85,8 @@ export class ActivitiProcessInstanceTasks implements OnInit {
             this.completedTasks.push(task);
         });
 
-        if (this.processId) {
-            this.load(this.processId);
+        if (this.processInstanceDetails && this.processInstanceDetails.id) {
+            this.load(this.processInstanceDetails.id);
         }
     }
 
@@ -148,20 +140,49 @@ export class ActivitiProcessInstanceTasks implements OnInit {
         return '';
     }
 
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            console.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
+        }
+    }
+
     public clickTask($event: any, task: TaskDetailsModel) {
         this.selectedTaskId = task.id;
         this.taskdetails.loadDetails(task.id);
         this.showDialog();
     }
 
+    public clickStartTask() {
+        this.processId = this.processInstanceDetails.id;
+        this.showStartDialog();
+    }
+
+    public showStartDialog() {
+        if (!this.startDialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.startDialog.nativeElement);
+        }
+
+        if (this.startDialog) {
+            this.startDialog.nativeElement.showModal();
+        }
+    }
+
     public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }
     }
 
-    public cancelDialog() {
-        this.closeDialog();
+    public closeSartDialog() {
+        if (this.startDialog) {
+            this.startDialog.nativeElement.close();
+        }
     }
 
     private closeDialog() {
@@ -172,11 +193,11 @@ export class ActivitiProcessInstanceTasks implements OnInit {
 
     public taskFormCompleted() {
         this.closeDialog();
-        this.load(this.processId);
-        this.taskFormCompletedEmitter.emit(this.processId);
+        this.load(this.processInstanceDetails.id);
+        this.taskFormCompletedEmitter.emit(this.processInstanceDetails.id);
     }
 
     public onRefreshClicked() {
-        this.load(this.processId);
+        this.load(this.processInstanceDetails.id);
     }
 }

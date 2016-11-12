@@ -1,20 +1,36 @@
 <div *ngIf="hasTabs()" class="alfresco-tabs-widget">
     <div alfresco-mdl-tabs>
         <div class="mdl-tabs__tab-bar">
-            <a *ngFor="let tab of tabs; let isFirst = first"
+            <a *ngFor="let tab of visibleTabs; let isFirst = first"
+               id="title-{{tab.id}}"
                [href]="'#' + tab.id"
                class="mdl-tabs__tab" [class.is-active]="isFirst">
                 {{tab.title}}
             </a>
         </div>
-        <div *ngFor="let tab of tabs; let isFirst = first"
+        <div *ngFor="let tab of visibleTabs; let isFirst = first"
              class="mdl-tabs__panel"
              [class.is-active]="isFirst"
              [attr.id]="tab.id">
-            <container-widget
-                *ngFor="let field of tab.fields"
-                [content]="field">
-            </container-widget>
+             <div *ngFor="let field of tab.fields">
+                 <div [ngSwitch]="field.type">
+                     <div *ngSwitchCase="'container'">
+                        <container-widget [content]="field" (formValueChanged)="tabChanged($event);"></container-widget>
+                     </div>
+                     <div *ngSwitchCase="'group'">
+                        <container-widget [content]="field" (formValueChanged)="tabChanged($event);"></container-widget>
+                     </div>
+                     <div *ngSwitchCase="'dynamic-table'">
+                         <dynamic-table-widget [content]="field"></dynamic-table-widget>
+                     </div>
+                     <div *ngSwitchCase="'readonly'">
+                        <display-value-widget [field]="field.field" (fieldChanged)="tabChanged($event);"></display-value-widget>
+                     </div>
+                     <div *ngSwitchDefault>
+                        <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+                    </div>
+                 </div>
+             </div>
         </div>
     </div>
 </div>

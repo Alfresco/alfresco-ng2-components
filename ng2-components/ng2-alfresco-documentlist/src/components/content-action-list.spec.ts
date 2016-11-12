@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-
 import { DocumentList } from './document-list';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
 import { ContentActionModel } from './../models/content-action.model';
@@ -63,5 +56,3 @@ describe('ContentColumnList', () => {
     });
 
 });
-
-

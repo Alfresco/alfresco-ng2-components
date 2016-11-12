@@ -186,3 +186,11 @@
     right: 0;
     bottom: 20px;
 }
+
+.alfresco-login__password {
+    padding-right: 25px;
+}
+
+.alfresco-login__password .icon-inline {
+    left: 90%;
+}

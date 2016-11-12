@@ -87,6 +87,10 @@
     border: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 /* small desktop */
 @media all and (max-width: 1200px) {}
 
@@ -104,4 +108,9 @@
     .desktop-only {
         display: none;
     }
+}
+
+.mdl-data-table-fix-firefox{
+    border-collapse: unset;
+    border-spacing: 0;
 }

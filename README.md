@@ -33,7 +33,7 @@
   
 <p align="center">
   <img title="alfresco" alt='alfresco' src='assets/alfresco.png'  width="280px" height="150px"></img>
-  <img title="angular2" alt='angular2' src='assets/angular2.png'  width="150px" height="150px"></img>
+  <img title="angular2" alt='angular2' src='assets/angular2.png'  width="150px" height="150px"></img>    
 </p>
 
 <p align="center">
@@ -52,9 +52,9 @@ necessary configuration, see this [page](PREREQUISITES.md).
 ## Components
 
 To view the complete list of all the components that you can use to build your custom Alfresco (ECM,BPM) client follow this link:
-[Components](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components).
+[Components](/ng2-components).
 
-You can browse all the components also at the following [page](http://devproducts.alfresco.com/).
+You can browse all the components at the following [page](http://devproducts.alfresco.com/).
 
 ## Yeoman generators
 
@@ -89,3 +89,17 @@ To deploy directly on your AWS instance our demo shell click the button below:
 
 <a title="Deploy to AWS" href="https://console.aws.amazon.com/elasticbeanstalk/home?region=us-west-2#/newApplication?applicationName=Alfresco&solutionStackName=Node.js&tierName=WebServer&sourceBundleUrl=https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-677901592050/2016210o6l-Archive-v7.zip" target="_blank"><img src="http://d0.awsstatic.com/product-marketing/Elastic%20Beanstalk/deploy-to-aws.png" height="40"></a>
 
+## Browser Support
+All components are supported in the below browsers:
+
+|**Browser**   	   |**Version**   	|
+|---        	   |---  	        |
+|Chrome     	   |Latest       	|
+|Safari (OS X)     |9.x          	|
+|Firefox*    	   |Latest       	|
+|Edge       	   |13, 14     	    |
+|Internet Explorer |11     	        |
+
+*Concerning Alfresco Upload Component, folder upload currently not supported [firefox known issue](https://bugzilla.mozilla.org/show_bug.cgi?id=1188880 ) 
+
+Please refer to [Browser Support](BROWSER-SUPPORT.md) article for more details. 

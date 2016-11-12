@@ -15,29 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { FilterModel } from '../models/filter.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
+import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
+import { Observable, Observer } from 'rxjs/Rx';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
-    selector: 'activiti-process-filters',
-    moduleId: __moduleName,
+    selector: 'activiti-process-instance-filters',
+    moduleId: module.id,
     templateUrl: './activiti-filters.component.html',
-    styleUrls: ['activiti-filters.component.css'],
-    providers: [ActivitiProcessService],
-    pipes: [AlfrescoPipeTranslate]
-
+    styleUrls: ['activiti-filters.component.css']
 })
-export class ActivitiProcessFilters implements OnInit {
+export class ActivitiProcessFilters implements OnInit, OnChanges {
 
     @Output()
-    filterClick: EventEmitter<FilterModel> = new EventEmitter<FilterModel>();
+    filterClick: EventEmitter<FilterRepresentationModel> = new EventEmitter<FilterRepresentationModel>();
 
     @Output()
     onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -51,23 +46,16 @@ export class ActivitiProcessFilters implements OnInit {
     @Input()
     appName: string;
 
-    private filterObserver: Observer<FilterModel>;
-    filter$: Observable<FilterModel>;
+    private filterObserver: Observer<FilterRepresentationModel>;
+    filter$: Observable<FilterRepresentationModel>;
 
-    currentFilter: FilterModel;
+    currentFilter: FilterRepresentationModel;
 
-    filters: FilterModel [] = [];
+    filters: FilterRepresentationModel [] = [];
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param activiti
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
-                public activiti: ActivitiProcessService) {
-        this.filter$ = new Observable<FilterModel>(observer => this.filterObserver = observer).share();
+    constructor(private translate: AlfrescoTranslationService,
+                private activiti: ActivitiProcessService) {
+        this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
@@ -75,31 +63,51 @@ export class ActivitiProcessFilters implements OnInit {
     }
 
     ngOnInit() {
-        this.filter$.subscribe((filter: FilterModel) => {
+        this.filter$.subscribe((filter: FilterRepresentationModel) => {
             this.filters.push(filter);
         });
 
-        this.load();
+        this.getFilters(this.appId, this.appName);
     }
 
-    /**
-     * The method call the adapter data table component for render the task list
-     * @param tasks
-     */
-    private load() {
-        if (this.appName) {
-            this.filterByAppName();
-        } else {
-            this.filterByAppId(this.appId);
+    ngOnChanges(changes: SimpleChanges) {
+        let appId = changes['appId'];
+        if (appId && (appId.currentValue || appId.currentValue === null)) {
+            this.getFiltersByAppId(appId.currentValue);
+            return;
+        }
+        let appName = changes['appName'];
+        if (appName && appName.currentValue) {
+            this.getFiltersByAppName(appName.currentValue);
+            return;
         }
     }
 
-    private filterByAppId(appId) {
+    /**
+     * Return the task list filtered by appId or by appName
+     * @param appId
+     * @param appName
+     */
+    getFilters(appId?: string, appName?: string) {
+        if (appName) {
+            this.getFiltersByAppName(appName);
+        } else {
+            this.getFiltersByAppId(appId);
+        }
+    }
+
+    /**
+     * Return the filter list filtered by appId
+     * @param appId - optional
+     */
+    getFiltersByAppId(appId?: string) {
         this.activiti.getProcessFilters(appId).subscribe(
-            (res: FilterModel[]) => {
+            (res: FilterRepresentationModel[]) => {
+                this.resetFilter();
                 res.forEach((filter) => {
                     this.filterObserver.next(filter);
                 });
+                this.selectFirstFilter();
                 this.onSuccess.emit(res);
             },
             (err) => {
@@ -109,10 +117,15 @@ export class ActivitiProcessFilters implements OnInit {
         );
     }
 
-    private filterByAppName() {
-        this.activiti.getDeployedApplications(this.appName).subscribe(
+    /**
+     * Return the filter list filtered by appName
+     * @param appName
+     */
+    getFiltersByAppName(appName: string) {
+        this.activiti.getDeployedApplications(appName).subscribe(
             application => {
-                this.filterByAppId(application.id);
+                this.getFiltersByAppId(application.id);
+                this.selectFirstFilter();
             },
             (err) => {
                 console.log(err);
@@ -124,8 +137,43 @@ export class ActivitiProcessFilters implements OnInit {
      * Pass the selected filter as next
      * @param filter
      */
-    public selectFilter(filter: FilterModel) {
+    public selectFilter(filter: FilterRepresentationModel) {
         this.currentFilter = filter;
         this.filterClick.emit(filter);
+    }
+
+    /**
+     * Select the first filter of a list if present
+     */
+    private selectFirstFilter() {
+        if (!this.isFilterListEmpty()) {
+            this.currentFilter = this.filters[0];
+        } else {
+            this.currentFilter = null;
+        }
+    }
+
+    /**
+     * Return the current task
+     * @returns {FilterRepresentationModel}
+     */
+    getCurrentFilter(): FilterRepresentationModel {
+        return this.currentFilter;
+    }
+
+    /**
+     * Check if the filter list is empty
+     * @returns {boolean}
+     */
+    isFilterListEmpty(): boolean {
+        return this.filters === undefined || (this.filters && this.filters.length === 0);
+    }
+
+    /**
+     * Reset the filters properties
+     */
+    private resetFilter() {
+        this.filters = [];
+        this.currentFilter = null;
     }
 }

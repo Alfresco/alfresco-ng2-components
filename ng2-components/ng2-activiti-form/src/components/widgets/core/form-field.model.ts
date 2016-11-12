@@ -21,12 +21,29 @@ import { FormFieldTypes } from './form-field-types';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormModel } from './form.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
+import {
+    FormFieldValidator,
+    RequiredFieldValidator,
+    NumberFieldValidator,
+    MinLengthFieldValidator,
+    MaxLengthFieldValidator,
+    MinValueFieldValidator,
+    MaxValueFieldValidator,
+    RegExFieldValidator,
+    DateFieldValidator,
+    MinDateFieldValidator,
+    MaxDateFieldValidator
+} from './form-field-validator';
+
+declare var moment: any;
 
 export class FormFieldModel extends FormWidgetModel {
 
     private _value: string;
     private _readOnly: boolean = false;
+    private _isValid: boolean = true;
 
+    // model members
     fieldType: string;
     id: string;
     name: string;
@@ -35,6 +52,11 @@ export class FormFieldModel extends FormWidgetModel {
     overrideId: boolean;
     tab: string;
     colspan: number = 1;
+    minLength: number = 0;
+    maxLength: number = 0;
+    minValue: string;
+    maxValue: string;
+    regexPattern: string;
     options: FormFieldOption[] = [];
     restUrl: string;
     restResponsePath: string;
@@ -48,6 +70,13 @@ export class FormFieldModel extends FormWidgetModel {
     displayText: string;
     isVisible: boolean = true;
     visibilityCondition: WidgetVisibilityModel = null;
+    enableFractions: boolean = false;
+    currency: string = null;
+
+    // advanced members
+    emptyOption: FormFieldOption;
+    validationSummary: string;
+    validators: FormFieldValidator[] = [];
 
     get value(): any {
         return this._value;
@@ -55,6 +84,7 @@ export class FormFieldModel extends FormWidgetModel {
 
     set value(v: any) {
         this._value = v;
+        this.validate();
         this.updateForm();
     }
 
@@ -63,6 +93,27 @@ export class FormFieldModel extends FormWidgetModel {
             return true;
         }
         return this._readOnly;
+    }
+
+    get isValid(): boolean {
+        return this._isValid;
+    }
+
+    validate(): boolean {
+        this.validationSummary = null;
+
+        // TODO: consider doing that on value setter and caching result
+        if (this.validators && this.validators.length > 0) {
+            for (let i = 0; i < this.validators.length; i++) {
+                if (!this.validators[i].validate(this)) {
+                    this._isValid = false;
+                    return this._isValid;
+                }
+            }
+        }
+
+        this._isValid = true;
+        return this._isValid;
     }
 
     constructor(form: FormModel, json?: any) {
@@ -82,6 +133,11 @@ export class FormFieldModel extends FormWidgetModel {
             this.restIdProperty = json.restIdProperty;
             this.restLabelProperty = json.restLabelProperty;
             this.colspan = <number> json.colspan;
+            this.minLength = <number> json.minLength || 0;
+            this.maxLength = <number> json.maxLength || 0;
+            this.minValue = json.minValue;
+            this.maxValue = json.maxValue;
+            this.regexPattern = json.regexPattern;
             this.options = <FormFieldOption[]> json.options || [];
             this.hasEmptyValue = <boolean> json.hasEmptyValue;
             this.className = json.className;
@@ -90,10 +146,29 @@ export class FormFieldModel extends FormWidgetModel {
             this.hyperlinkUrl = json.hyperlinkUrl;
             this.displayText = json.displayText;
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
-
+            this.enableFractions = <boolean>json.enableFractions;
+            this.currency = json.currency;
             this._value = this.parseValue(json);
-            this.updateForm();
         }
+
+        if (this.hasEmptyValue && this.options && this.options.length > 0) {
+            this.emptyOption = this.options[0];
+        }
+
+        this.validators = [
+            new RequiredFieldValidator(),
+            new NumberFieldValidator(),
+            new MinLengthFieldValidator(),
+            new MaxLengthFieldValidator(),
+            new MinValueFieldValidator(),
+            new MaxValueFieldValidator(),
+            new RegExFieldValidator(),
+            new DateFieldValidator(),
+            new MinDateFieldValidator(),
+            new MaxDateFieldValidator()
+        ];
+
+        this.updateForm();
     }
 
     parseValue(json: any): any {
@@ -103,10 +178,15 @@ export class FormFieldModel extends FormWidgetModel {
          This is needed due to Activiti issue related to reading dropdown values as value string
          but saving back as object: { id: <id>, name: <name> }
          */
-        // TODO: needs review
         if (json.type === FormFieldTypes.DROPDOWN) {
-            if (value === '') {
-                value = 'empty';
+            if (json.hasEmptyValue && json.options) {
+                let options = <FormFieldOption[]> json.options || [];
+                if (options.length > 0) {
+                    let emptyOption = json.options[0];
+                    if (value === '' || value === emptyOption.id || value === emptyOption.name) {
+                        value = emptyOption.id;
+                    }
+                }
             }
         }
 
@@ -115,13 +195,25 @@ export class FormFieldModel extends FormWidgetModel {
          but saving back as object: { id: <id>, name: <name> }
          */
         if (json.type === FormFieldTypes.RADIO_BUTTONS) {
-            // Activiti has a bug with default radio button value,
-            // so try resolving current one with a fallback to first entry
-            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === value);
+            // Activiti has a bug with default radio button value where initial selection passed as `name` value
+            // so try resolving current one with a fallback to first entry via name or id
+            // TODO: needs to be reported and fixed at Activiti side
+            let entry: FormFieldOption[] = this.options.filter(opt => opt.id === value || opt.name === value);
             if (entry.length > 0) {
                 value = entry[0].id;
-            } else if (this.options.length > 0) {
-                value = this.options[0].id;
+            }
+        }
+
+        /*
+        This is needed due to Activiti displaying/editing dates in d-M-YYYY format
+        but storing on server in ISO8601 format (i.e. 2013-02-04T22:44:30.652Z)
+         */
+        if (json.type === FormFieldTypes.DATE) {
+            if (value) {
+                let d = moment(value.split('T')[0], 'YYYY-M-D');
+                if (d.isValid()) {
+                    value = d.format('D-M-YYYY');
+                }
             }
         }
 
@@ -129,6 +221,9 @@ export class FormFieldModel extends FormWidgetModel {
     }
 
     updateForm() {
+        if (!this.form) {
+            return;
+        }
 
         switch (this.type) {
             case FormFieldTypes.DROPDOWN:
@@ -150,9 +245,9 @@ export class FormFieldModel extends FormWidgetModel {
                  This is needed due to Activiti issue related to reading radio button values as value string
                  but saving back as object: { id: <id>, name: <name> }
                  */
-                let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
-                if (entry.length > 0) {
-                    this.form.values[this.id] = entry[0];
+                let rbEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                if (rbEntry.length > 0) {
+                    this.form.values[this.id] = rbEntry[0];
                 } else if (this.options.length > 0) {
                     this.form.values[this.id] = this.options[0];
                 }
@@ -164,10 +259,34 @@ export class FormFieldModel extends FormWidgetModel {
                     this.form.values[this.id] = null;
                 }
                 break;
+            case FormFieldTypes.TYPEAHEAD:
+                let taEntry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                if (taEntry.length > 0) {
+                    this.form.values[this.id] = taEntry[0];
+                } else if (this.options.length > 0) {
+                    this.form.values[this.id] = null;
+                }
+                break;
+            case FormFieldTypes.DATE:
+                let d = moment(this.value, 'D-M-YYYY');
+                if (d.isValid()) {
+                    this.form.values[this.id] = `${d.format('YYYY-MM-DD')}T00:00:00.000Z`;
+                } else {
+                    this.form.values[this.id] = null;
+                }
+                break;
+            case FormFieldTypes.NUMBER:
+                this.form.values[this.id] = parseInt(this.value, 10);
+                break;
+            case FormFieldTypes.AMOUNT:
+                this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
+                break;
             default:
                 if (!FormFieldTypes.isReadOnlyType(this.type)) {
                     this.form.values[this.id] = this.value;
                 }
         }
+
+        this.form.onFormFieldChanged(this);
     }
 }

@@ -10,7 +10,8 @@
       "USERNAME-REQUIRED": "Campo obbligatorio",
       "USERNAME-MIN": "Inserire un nome utente di minimo 4 caratteri.",
       "PASSWORD-REQUIRED": "Campo obbligatorio",
-      "LOGIN-ERROR": "Nome utente o password non validi",
+      "LOGIN-ERROR-CREDENTIALS": "Nome utente o password non validi",
+      "LOGIN-ERROR-PROVIDERS": "Providers non può essere nullo",
       "LOGIN-SUCCESS": "Login effettuata con successo"
     },
     "BUTTON": {

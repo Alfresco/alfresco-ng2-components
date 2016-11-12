@@ -15,25 +15,19 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-
+import { SimpleChange } from '@angular/core';
 import { ActivitiFilters } from './activiti-filters.component';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { Observable } from 'rxjs/Rx';
-import { FilterModel } from '../models/filter.model';
+import { FilterRepresentationModel } from '../models/filter.model';
 
 describe('ActivitiFilters', () => {
 
     let filterList: ActivitiFilters;
 
     let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterModel('FakeInvolvedTasks', false, 'glyphicon-align-left', '', 'open', 'fake-involved'));
-    fakeGlobalFilter.push(new FilterModel('FakeMyTasks', false, 'glyphicon-align-left', '', 'open', 'fake-assignee'));
+    fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeInvolvedTasks', filter: { state: 'open', assignment: 'fake-involved'}}));
+    fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}}));
 
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
@@ -89,6 +83,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
+        filterList.appId = '1';
         spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         filterList.onError.subscribe((err) => {
@@ -99,10 +94,22 @@ describe('ActivitiFilters', () => {
         filterList.ngOnInit();
     });
 
-    it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterModel('FakeInvolvedTasks', false, 'glyphicon-align-left', '', 'open', 'fake-involved');
+    it('should emit an error with a bad response', (done) => {
+        filterList.appName = 'fake-app';
+        spyOn(filterList.activiti, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
-        filterList.filterClick.subscribe((filter: FilterModel) => {
+        filterList.onError.subscribe((err) => {
+            expect(err).toBeDefined();
+            done();
+        });
+
+        filterList.ngOnInit();
+    });
+
+    it('should emit an event when a filter is selected', (done) => {
+        let currentFilter = new FilterRepresentationModel({filter: { state: 'open', assignment:  'fake-involved'}});
+
+        filterList.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
             expect(filter).toEqual(currentFilter);
             expect(filterList.currentFilter).toEqual(currentFilter);
@@ -110,6 +117,43 @@ describe('ActivitiFilters', () => {
         });
 
         filterList.selectFilter(currentFilter);
+    });
+
+    it('should reload filters by appId on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+        const appId = '1';
+
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
+    });
+
+    it('should reload filters by appId null on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+        const appId = null;
+
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalledWith(appId);
+    });
+
+    it('should reload filters by app name on binding changes', () => {
+        spyOn(filterList, 'getFiltersByAppName').and.stub();
+        const appName = 'fake-app-name';
+
+        let change = new SimpleChange(null, appName);
+        filterList.ngOnChanges({ 'appName': change });
+
+        expect(filterList.getFiltersByAppName).toHaveBeenCalledWith(appName);
+    });
+
+    it('should return the current filter after one is selected', () => {
+        let filter = new FilterRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}});
+        expect(filterList.currentFilter).toBeUndefined();
+        filterList.selectFilter(filter);
+        expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
 });

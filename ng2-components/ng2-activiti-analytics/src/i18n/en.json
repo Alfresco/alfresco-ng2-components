@@ -1,0 +1,45 @@
+{
+  "ANALYTICS": {
+    "TTILE": "ANALYTICS",
+    "MESSAGES": {
+      "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
+      "FILL-PARAMETER": "Fill in the parameters to generate your report",
+      "NO-DATA-FOUND": "No data found"
+    }
+  },
+  "__KEY_REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-DEFINITION-OVERVIEW": {
+        "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Total number of process definitions",
+        "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Total number of process instances",
+        "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Total number of active process instances",
+        "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Total number of completed process instances"
+      }
+    }
+  },
+  "REPORTING": {
+    "DEFAULT-REPORTS": {
+      "PROCESS-HEAT-MAP": {
+        "TYPE-FILTERING": "Include all process steps (Unchecking this, will remove pass through steps like start events, gateways, etc.)?"
+      },
+      "PROCESS-INSTANCES-OVERVIEW": {
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLOW-PROC-INST-NUMBER": "How many of the slowest process instances should be displayed?"
+      },
+      "TASK-OVERVIEW": {
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "DATE-RANGE-INTERVAL": "Aggregate dates by"
+      },
+      "TASK-SLA": {
+        "TASK": "Task",
+        "PROCESS-DEFINITION": "Process definition",
+        "DATE-RANGE": "Date range",
+        "SLA-DURATION": "What is the time this task needs to be completed in to be within the SLA?"
+      }
+    },
+    "PROCESS-STATUS": "Process status",
+    "TASK-STATUS": "Task status"
+  }
+}

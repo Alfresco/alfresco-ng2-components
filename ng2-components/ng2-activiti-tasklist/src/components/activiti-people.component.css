@@ -6,6 +6,14 @@
     font-weight: bolder;
 }
 
-.material-icons:hover {
+.material-icons.people__icon:hover {
     color: rgb(255, 152, 0);
+}
+
+.add-people-dialog__content {
+    padding: 20px 24px 2px;
+}
+
+.mdl-tooltip {
+    will-change: unset;
 }

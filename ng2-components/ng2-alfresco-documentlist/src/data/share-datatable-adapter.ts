@@ -18,12 +18,12 @@
 import { DatePipe } from '@angular/common';
 import { ObjectUtils } from 'ng2-alfresco-core';
 import {
-    PaginationProvider,
+    PaginationProvider, DataLoadedEventEmitter,
     DataTableAdapter,
     DataRow, DataColumn, DataSorting
 } from 'ng2-alfresco-datatable';
 
-import { NodePaging, MinimalNodeEntity } from './../models/document-library.model';
+import { NodePaging, NodeMinimalEntry } from './../models/document-library.model';
 import { DocumentListService } from './../services/document-list.service';
 
 export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvider {
@@ -51,10 +51,12 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     private _maxItems: number = this.DEFAULT_PAGE_SIZE;
 
     thumbnails: boolean = false;
+    dataLoaded: DataLoadedEventEmitter;
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,
                 schema: DataColumn[]) {
+        this.dataLoaded = new DataLoadedEventEmitter();
         this.rows = [];
         this.columns = schema || [];
         this.resetPagination();
@@ -122,7 +124,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         let value = row.getValue(col.key);
 
         if (col.type === 'date') {
-            let datePipe = new DatePipe();
+            let datePipe = new DatePipe('en-US');
             let format = col.format || this.DEFAULT_DATE_FORMAT;
             try {
                 return datePipe.transform(value, format);
@@ -181,9 +183,49 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     setSorting(sorting: DataSorting): void {
         this.sorting = sorting;
+        this.sortRows(this.rows, this.sorting);
+    }
 
-        if (sorting && sorting.key && this.rows && this.rows.length > 0) {
-            this.rows.sort((a: ShareDataRow, b: ShareDataRow) => {
+    sort(key?: string, direction?: string): void {
+        let sorting = this.sorting || new DataSorting();
+        if (key) {
+            sorting.key = key;
+            sorting.direction = direction || 'asc';
+        }
+        this.setSorting(sorting);
+    }
+
+    loadPath(path: string) {
+        if (path && this.documentListService) {
+            this.currentPath = path;
+            this.documentListService
+                .getFolder(path, {
+                    maxItems: this._maxItems,
+                    skipCount: this._skipCount
+                })
+                .subscribe(val => {
+                    this.loadPage(<NodePaging>val);
+                    this.dataLoaded.emit(null);
+                },
+                error => console.error(error));
+        }
+    }
+
+    setFilter(filter: RowFilter) {
+        this.filter = filter;
+
+        if (this.filter && this.currentPath) {
+            this.loadPath(this.currentPath);
+        }
+    }
+
+    setImageResolver(resolver: ImageResolver) {
+        this.imageResolver = resolver;
+    }
+
+    private sortRows(rows: DataRow[], sorting: DataSorting) {
+        if (sorting && sorting.key && rows && rows.length > 0) {
+            rows.sort((a: ShareDataRow, b: ShareDataRow) => {
                 if (a.node.entry.isFolder !== b.node.entry.isFolder) {
                     return a.node.entry.isFolder ? -1 : 1;
                 }
@@ -209,40 +251,6 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         }
     }
 
-    sort(key?: string, direction?: string): void {
-        let sorting = this.sorting || new DataSorting();
-        if (key) {
-            sorting.key = key;
-            sorting.direction = direction || 'asc';
-        }
-        this.setSorting(sorting);
-    }
-
-    loadPath(path: string) {
-        if (path && this.documentListService) {
-            this.currentPath = path;
-            this.documentListService
-                .getFolder(path, {
-                    maxItems: this._maxItems,
-                    skipCount: this._skipCount
-                })
-                .subscribe(val => this.loadPage(<NodePaging>val),
-                error => console.error(error));
-        }
-    }
-
-    setFilter(filter: RowFilter) {
-        this.filter = filter;
-
-        if (this.filter && this.currentPath) {
-            this.loadPath(this.currentPath);
-        }
-    }
-
-    setImageResolver(resolver: ImageResolver) {
-        this.imageResolver = resolver;
-    }
-
     private loadPage(page: NodePaging) {
         this.page = page;
         this.resetPagination();
@@ -260,11 +268,16 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
                 // Sort by first sortable or just first column
                 if (this.columns && this.columns.length > 0) {
-                    let sortable = this.columns.filter(c => c.sortable);
-                    if (sortable.length > 0) {
-                        this.sort(sortable[0].key, 'asc');
+                    let sorting = this.getSorting();
+                    if (sorting) {
+                        this.sortRows(rows, sorting);
                     } else {
-                        this.sort(this.columns[0].key, 'asc');
+                        let sortable = this.columns.filter(c => c.sortable);
+                        if (sortable.length > 0) {
+                            this.sort(sortable[0].key, 'asc');
+                        } else {
+                            this.sort(this.columns[0].key, 'asc');
+                        }
                     }
                 }
             }
@@ -297,11 +310,11 @@ export class ShareDataRow implements DataRow {
 
     isSelected: boolean = false;
 
-    get node(): MinimalNodeEntity {
+    get node(): NodeMinimalEntry {
         return this.obj;
     }
 
-    constructor(private obj: MinimalNodeEntity) {
+    constructor(private obj: NodeMinimalEntry) {
         if (!obj) {
             throw new Error(ShareDataRow.ERR_OBJECT_NOT_FOUND);
         }
@@ -317,7 +330,7 @@ export class ShareDataRow implements DataRow {
 }
 
 export interface RowFilter {
-    (value: ShareDataRow, index: number, array: ShareDataRow[]): boolean;
+    (value: ShareDataRow, index: number, array: ShareDataRow[]): any;
 }
 
 export interface ImageResolver {

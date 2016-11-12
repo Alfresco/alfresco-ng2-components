@@ -1,0 +1,15 @@
+:host .mdl-data-table caption {
+    margin: 0 0 16px 0;
+    text-align: left;
+}
+:host .mdl-data-table td {
+    white-space: nowrap;
+}
+:host .mdl-data-table td.col-mimetype-icon {
+    width: 24px;
+}
+:host .col-display-name {
+    min-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

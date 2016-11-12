@@ -15,70 +15,91 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
-
-declare let componentHandler: any;
-declare let __moduleName: string;
+import { Observer, Observable } from 'rxjs/Rx';
+import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 @Component({
     selector: 'activiti-people',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-people.component.html',
-    styleUrls: ['./activiti-people.component.css'],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    styleUrls: ['./activiti-people.component.css']
 })
-export class ActivitiPeople implements OnInit {
+export class ActivitiPeople {
 
     @Input()
     people: User [] = [];
 
+    @Input()
+    taskId: string = '';
+
+    @Input()
+    readOnly: boolean = false;
+
     @ViewChild('dialog')
     dialog: any;
 
-    private peopleObserver: Observer<User>;
-    people$: Observable<User>;
+    private peopleSearchObserver: Observer<User[]>;
+    peopleSearch$: Observable<User[]>;
 
     /**
      * Constructor
-     * @param auth
      * @param translate
+     * @param people service
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService) {
-
+    constructor(private translate: AlfrescoTranslationService,
+                private peopleService: ActivitiPeopleService) {
         if (translate) {
             translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
         }
-        this.people$ = new Observable<User>(observer =>  this.peopleObserver = observer).share();
-    }
-
-    ngOnInit() {
-        this.people$.subscribe((user: User) => {
-            this.people.push(user);
-        });
+        this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }
 
     public showDialog() {
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+        }
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }
     }
 
-    public add() {
-        alert('add people');
-
-        this.cancel();
-    }
-
     public cancel() {
         if (this.dialog) {
             this.dialog.nativeElement.close();
+            this.peopleSearchObserver.next([]);
         }
+    }
+
+    searchUser(searchedWord: string) {
+        this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
+            .subscribe((users) => {
+                this.peopleSearchObserver.next(users);
+            }, error => console.log('Could not load users'));
+    }
+
+    involveUser(user: User) {
+        this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
+            .subscribe(() => {
+                this.people.push(user);
+            }, error => console.error('Impossible to involve user with task'));
+    }
+
+    removeInvolvedUser(user: User) {
+        this.peopleService.removeInvolvedUser(this.taskId, user.id.toString())
+            .subscribe(() => {
+                this.people = this.people.filter((involvedUser) => {
+                    return involvedUser.id !== user.id;
+                });
+            }, error => console.error('Impossible to remove involved user from task'));
+    }
+
+    getDisplayUser(user: User): string {
+        let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
+        let lastName =  user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
+        return firstName + ' ' + lastName;
     }
 
 }

@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
-
-declare let __moduleName: string;
-declare var componentHandler;
+import { Component, ElementRef } from '@angular/core';
+import { TextFieldWidgetComponent } from './../textfield-widget.component';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'number-widget',
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.css']
 })
-export class NumberWidget extends WidgetComponent {
+export class NumberWidget extends TextFieldWidgetComponent {
+
+    constructor(elementRef: ElementRef) {
+        super(elementRef);
+    }
 
 }

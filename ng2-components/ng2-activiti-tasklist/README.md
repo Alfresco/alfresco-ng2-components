@@ -31,92 +31,225 @@
   </a>
 </p>
 
+<p>
+  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
+    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
+    Status' />
+  </a>
+  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
+    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
+    Status' />
+  </a>
+  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
+    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
+  </a>
+  <a href='https://www.npmjs.com/package/ng2-activiti-tasklist'>
+    <img src='https://img.shields.io/npm/dt/ng2-activiti-tasklist.svg' alt='npm downloads' />
+  </a>
+  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
+     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
+  </a>
+  <a href='https://angular.io/'>
+     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
+  </a>
+  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
+     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
+  </a>
+  <a href='https://www.alfresco.com/'>
+     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
+  </a>
+</p>
+
+Displays lists of process instances both active and completed, using any defined process filter, and
+render details of any chosen instance.
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
-necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
+necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
-```sh
-npm install --save ng2-activiti-tasklist
-```
+Follow the 3 steps below:
 
-### Dependencies
+1. Npm
 
-Add the following dependency to your index.html:
+    ```sh
+    npm install ng2-activiti-tasklist --save
+    ```
 
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+2. Html
 
-You must separately install the following libraries for your application:
+    Include these dependencies in your index.html page:
 
-- [ng2-translate](https://github.com/ocombe/ng2-translate)
-- [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core)
-- [ng2-alfresco-datatable](https://www.npmjs.com/package/ng2-alfresco-datatable)
+    ```html
 
+      <!-- Moment js -->
+      <script src="node_modules/moment/min/moment.min.js"></script>
 
-```sh
-npm install --save ng2-translate ng2-alfresco-core ng2-alfresco-datatable
-```
+      <!-- Date picker -->
+      <script src="node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js"></script>
+      <script src="node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js"></script>
+      <link rel="stylesheet" href="node_modules/md-date-time-picker/dist/css/mdDateTimePicker.css" media="all">
 
-#### Material Design Lite
+      <!-- Google Material Design Lite -->
+      <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+      <script src="node_modules/material-design-lite/material.min.js"></script>
+      <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-The style of this component is based on [material design](https://getmdl.io/), so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+      <!-- Polyfill(s) for Safari (pre-10.x) -->
+      <script src="node_modules/intl/dist/Intl.min.js"></script>
+      <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+      <!-- Polyfill(s) for older browsers -->
+      <script src="node_modules/core-js/client/shim.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+      <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-Also make sure you include these dependencies in your `index.html` file:
+      <!-- Polyfill(s) for dialogs -->
+      <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+      <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+      <style>._dialog_overlay { position: static !important; } </style>
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+      <!-- Modules  -->
+      <script src="node_modules/zone.js/dist/zone.js"></script>
+      <script src="node_modules/reflect-metadata/Reflect.js"></script>
+      <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-activiti-form
+    - ng2-alfresco-datatable
+    - ng2-activiti-tasklist
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage example Activiti Task List
-The component shows the list of all the tasks filter by the
-FilterModel passed in input.
+
+The component shows the list of all the tasks filter by the FilterParamRepresentationModel passed in input.
+
 ```html
 <activiti-tasklist [taskFilter]="taskFilterModel"></activiti-tasklist>
 ```
 
+Usage example of this component :
+
+**main.ts**
+```ts
+
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { FilterRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
+
+@Component({
+    selector: 'alfresco-app-demo',
+    template: `<activiti-tasklist [taskFilter]="filterRepresentationModel"
+                                               [data]="dataTasks"
+                                               #activititasklist></activiti-tasklist>`
+})
+class MyDemoApp {
+
+    dataTasks: ObjectDataTableAdapter;
+
+    filterRepresentationModel: FilterRepresentationModel;
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.bpmHost = 'http://localhost:9999';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
+
+        this.dataTasks = new ObjectDataTableAdapter([], [
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+            ]
+        );
+        this.dataTasks.setSorting(new DataSorting('started', 'desc'));
+
+        this.filterRepresentationModel = new FilterRepresentationModel({
+            appId: '3003',
+            filter: {
+                processDefinitionKey: null,
+                assignment: 'involved',
+                name: null,
+                state: 'running',
+                sort: 'created-desc'
+            }
+        });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        ActivitiTaskListModule.forRoot()
+    ],
+    declarations: [MyDemoApp],
+    bootstrap: [MyDemoApp]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+
+```
+
 #### Events
-**onSuccess**: The event is emitted when the task list is loaded
-**rowClick**: The event is emitted when the task in the list is
-clicked<br />
+
+| Name | Description |
+| --- | --- |
+| `onSuccess` | The event is emitted when the task list is loaded |
+| `rowClick` | The event is emitted when the task in the list is clicked |
 
 #### Options
 
-**taskFilter**: { FilterModel } required) FilterModel object that
-is passed to the task list API to filter the task list.
+| Name | Description |
+| --- | --- |
+| `taskFilter` | { FilterParamRepresentationModel } required) FilterParamRepresentationModel object that is passed to the task list API  to filter the task list. |
+
 Example:
+
 ```json
 {
-	"id": 4,
-	"name": "Involved Tasks",
-	"recent": false,
-	"icon": "glyphicon-align-left",
-	"filter": {
-		"appDefinitionId": "1",
-		"processDefinitionId": "1533",
-		"sort": "created-desc",
-		"name": "",
-		"state": "open",
-		"assignment": "involved",
-		"page": "0",
-		"size": "25"
-	}
+    appId: '3003',
+    filter:{
+        processDefinitionKey: null,
+        name:null,
+        assignment: 'involved',
+        state:'running',
+        sort: 'created-desc'
+    }
 }
 ```
-**schemaColumn**: { any[] } optional) JSON object that represent
-the number and the type of the columns that you want show
+
+| Name | Description |
+| --- | --- |
+| `schemaColumn` | { any[] } optional) JSON object that represent the number and the type of the columns that you want show |
+
 Example:
+
 ```json
 [
  {type: 'text', key: 'id', title: 'Id'},
@@ -127,20 +260,57 @@ Example:
 ```
 
 ## Basic usage example Activiti Task Details
+
 The component shows the details of the task id passed in input
+
 ```html
 <activiti-task-details [taskId]="taskId"></activiti-task-details>
 ```
 
 #### Events
-No events
+
+| Name | Description |
+| --- | --- |
+| `formLoaded` | Invoked when form is loaded or reloaded. |
+| `formSaved` | Invoked when form is submitted with `Save` or custom outcomes.  |
+| `formCompleted` | Invoked when form is submitted with `Complete` outcome.  |
+| `executeOutcome` | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
+| `onError` | Invoked at any error |
 
 #### Options
 
-**taskId**: { string } required) The id of the task details that we
-are asking for.
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `taskId` | {string} | required | The id of the task details that we are asking for. |
+| `showNextTask` | {boolean} | optional | Automatically render the next one, when the task is completed. |
+| `showFormTitle` | {boolean} | optional | Toggle rendering of the form title. |
+| `readOnlyForm` | {boolean} | optional | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
+| `showFormRefreshButton` | {boolean} | optional | Toggle rendering of the `Refresh` button. |
+| `showFormSaveButton` | {boolean} | optional | Toggle rendering of the `Save` outcome button. |
+| `showFormCompleteButton` | {boolean} | optional | Toggle rendering of the Form `Complete` outcome button |
+
+### Custom 'empty Activiti Task Details' template
+
+By default the Activiti Task Details provides the following message for the empty task details:
+
+'No Tasks'
+
+
+This can be changed by adding the following custom html template:
+
+```html
+<activiti-task-details [taskId]="taskId">
+    <no-task-details-template>
+        <template>
+             <h1>Sorry, no tasks here</h1>
+             <img src="example.jpg">
+        </template>
+    </no-task-details-template>
+</activiti-task-details>    
+```
 
 ## Basic usage example Activiti Filter
+
 The component shows all the available filters.
 
 ```html
@@ -148,15 +318,19 @@ The component shows all the available filters.
 ```
 
 #### Events
-**filterClick**: The event is emitted when the filter in the  list is
- clicked
+
+| Name | Description |
+| --- | --- |
+| `filterClick` |  The event is emitted when the filter in the  list is clicked  |
 
 #### Options
+
 No options
 
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -169,7 +343,7 @@ npm run build
 $ npm run build:w
 ```
 
-### Running unit tests
+## Running unit tests
 
 ```sh
 npm test
@@ -189,3 +363,27 @@ before performing unit testing.
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

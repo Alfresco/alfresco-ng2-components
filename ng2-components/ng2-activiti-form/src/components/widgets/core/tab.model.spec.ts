@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { ContainerModel } from './container.model';
@@ -32,6 +31,7 @@ describe('TabModel', () => {
         let model = new TabModel(null, json);
         expect(model.id).toBe(json.id);
         expect(model.title).toBe(json.title);
+        expect(model.isVisible).toBe(true);
         expect(model.visibilityCondition).toBe(json.visibilityCondition);
     });
 
@@ -39,6 +39,8 @@ describe('TabModel', () => {
         let model = new TabModel(null, null);
         expect(model.id).toBeUndefined();
         expect(model.title).toBeUndefined();
+        expect(model.isVisible).toBeDefined();
+        expect(model.isVisible).toBe(true);
         expect(model.visibilityCondition).toBeUndefined();
     });
 

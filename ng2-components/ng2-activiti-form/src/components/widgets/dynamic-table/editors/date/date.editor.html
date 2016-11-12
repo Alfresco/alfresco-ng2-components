@@ -1,0 +1,23 @@
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--11-col">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label date-editor">
+            <input id="dateInput"
+                class="mdl-textfield__input"
+                type="text"
+                [value]="value"
+                [attr.id]="column.id"
+                [required]="column.required"
+                [disabled]="!column.editable"
+                (keyup)="onDateChanged($event)"
+                (onOk)="onDateSelected($event)">
+            <label class="mdl-textfield__label" [attr.for]="column.id">{{column.name}} (d-M-yyyy)</label>
+        </div>
+    </div>
+    <div *ngIf="column.editable" class="mdl-cell mdl-cell--1-col">
+        <button
+            class="mdl-button mdl-js-button mdl-button--icon date-editor--button"
+            (click)="datePicker.toggle()">
+            <i class="material-icons">date_range</i>
+        </button>
+    </div>
+</div>

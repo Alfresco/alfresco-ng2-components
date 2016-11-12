@@ -15,17 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    beforeEach,
-    expect
-} from '@angular/core/testing';
-
-import {
-    DocumentListBreadcrumb,
-    PathNode
-} from './breadcrumb.component';
+import { DocumentListBreadcrumb, PathNode } from './breadcrumb.component';
 import { DocumentList } from '../document-list';
 
 describe('DocumentListBreadcrumb', () => {

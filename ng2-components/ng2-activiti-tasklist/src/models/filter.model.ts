@@ -17,23 +17,58 @@
 
 /**
  *
+ * This object represent the app definition.
+ *
+ *
+ * @returns {AppDefinitionRepresentationModel} .
+ */
+export class AppDefinitionRepresentationModel {
+    defaultAppId: string;
+    deploymentId: string;
+    name: string;
+    description: string;
+    theme: string;
+    icon: string;
+    id: number;
+    modelId: number;
+    tenantId: number;
+
+    constructor(obj?: any) {
+        this.defaultAppId = obj && obj.defaultAppId || null;
+        this.deploymentId = obj && obj.deploymentId || false;
+        this.name = obj && obj.name || null;
+        this.description = obj && obj.description || null;
+        this.theme = obj && obj.theme || null;
+        this.icon = obj && obj.icon || null;
+        this.id = obj && obj.id;
+        this.modelId = obj && obj.modelId;
+        this.tenantId = obj && obj.tenantId;
+    }
+}
+
+/**
+ *
  * This object represent the filter.
  *
  *
- * @returns {FilterModel} .
+ * @returns {FilterRepresentationModel} .
  */
-export class FilterModel {
+export class FilterRepresentationModel {
     id: number;
+    appId: string;
     name: string;
-    recent: boolean = false;
+    recent: boolean;
     icon: string;
-    filter: FilterParamsModel;
+    filter: FilterParamRepresentationModel;
+    index: number;
 
-    constructor(name: string, recent: boolean, icon: string, query: string, state: string, assignment: string, appDefinitionId?: string) {
-        this.name = name;
-        this.recent = recent;
-        this.icon = icon;
-        this.filter = new FilterParamsModel(query, state, assignment, appDefinitionId);
+    constructor(obj?: any) {
+        this.appId = obj && obj.appId || null;
+        this.name = obj && obj.name || null;
+        this.recent = obj && obj.recent || false;
+        this.icon = obj && obj.icon || null;
+        this.filter = new FilterParamRepresentationModel(obj.filter);
+        this.index = obj && obj.index;
     }
 }
 
@@ -42,18 +77,52 @@ export class FilterModel {
  * This object represent the parameters of a filter.
  *
  *
- * @returns {FilterModel} .
+ * @returns {FilterParamRepresentationModel} .
  */
-export class FilterParamsModel {
+export class FilterParamRepresentationModel {
+    processDefinitionId: string;
+    processDefinitionKey: string;
     name: string;
     state: string;
+    sort: string;
     assignment: string;
-    appDefinitionId: string;
+    dueAfter: Date;
+    dueBefore: Date;
 
-    constructor(query: string, state: string, assignment: string, appDefinitionId?: string) {
-        this.name = query;
-        this.state = state;
-        this.assignment = assignment;
-        this.appDefinitionId = appDefinitionId;
+    constructor(obj?: any) {
+        this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
+        this.name = obj && obj.name || null;
+        this.state = obj && obj.state || null;
+        this.sort = obj && obj.sort || null;
+        this.assignment = obj && obj.assignment || null;
+        this.dueAfter = obj && obj.dueAfter || null;
+        this.dueBefore = obj && obj.dueBefore || null;
+    }
+}
+
+export class TaskQueryRequestRepresentationModel {
+    appDefinitionId: string;
+    processInstanceId: string;
+    processDefinitionId: string;
+    processDefinitionKey: string;
+    text: string;
+    assignment: string;
+    state: string;
+    sort: string;
+    page: number;
+    size: number;
+
+    constructor(obj?: any) {
+        this.appDefinitionId = obj && obj.appDefinitionId || null;
+        this.processInstanceId = obj && obj.processInstanceId || null;
+        this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.processDefinitionKey = obj && obj.processDefinitionKey || null;
+        this.text = obj && obj.text || null;
+        this.assignment = obj && obj.assignment || null;
+        this.state = obj && obj.state || null;
+        this.sort = obj && obj.sort || null;
+        this.page = obj && obj.page || 0;
+        this.size = obj && obj.size || 25;
     }
 }

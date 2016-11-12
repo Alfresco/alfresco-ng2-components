@@ -17,22 +17,28 @@
 
 import { FormModel } from './form.model';
 
-export class FormWidgetModel {
+export abstract class FormWidgetModel {
 
-    private _form: FormModel;
-    private _json: any;
+    readonly fieldType: string;
+    readonly id: string;
+    readonly name: string;
+    readonly type: string;
+    readonly tab: string;
 
-    get form(): FormModel {
-        return this._form;
-    }
-
-    get json(): any {
-        return this._json;
-    }
+    readonly form: FormModel;
+    readonly json: any;
 
     constructor(form: FormModel, json: any) {
-        this._form = form;
-        this._json = json;
+        this.form = form;
+        this.json = json;
+
+        if (json) {
+            this.fieldType = json.fieldType;
+            this.id = json.id;
+            this.name = json.name;
+            this.type = json.type;
+            this.tab = json.tab;
+        }
     }
 }
 

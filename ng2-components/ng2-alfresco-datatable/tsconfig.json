@@ -1,21 +1,26 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "system",
+        "module": "commonjs",
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
         "removeComments": true,
         "declaration": true,
-        "outDir": "dist"
+        "noLib": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
+        "outDir": "dist",
+        "types": ["core-js", "jasmine", "node"]
     },
     "exclude": [
         "demo",
-        "dist",
         "node_modules",
-        "typings/main",
-        "typings/main.d.ts",
         "dist"
     ]
 }

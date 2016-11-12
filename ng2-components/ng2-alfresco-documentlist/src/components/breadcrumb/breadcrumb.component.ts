@@ -23,10 +23,8 @@ import {
 } from '@angular/core';
 import { DocumentList } from '../document-list';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.css']

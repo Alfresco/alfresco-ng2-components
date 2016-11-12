@@ -15,13 +15,6 @@
  * limitations under the License.
  */
 
-import {
-    it,
-    describe,
-    expect,
-    beforeEach
-} from '@angular/core/testing';
-
 import { DataTableComponent } from './datatable.component';
 import {
     DataRow,
@@ -188,7 +181,6 @@ describe('DataTable', () => {
         dataTable.ngAfterViewChecked();
     });
 
-
     it('should invert "select all" status', () => {
         expect(dataTable.isSelectAllChecked).toBeFalsy();
         dataTable.onSelectAllClick(null);
@@ -196,7 +188,6 @@ describe('DataTable', () => {
         dataTable.onSelectAllClick(null);
         expect(dataTable.isSelectAllChecked).toBeFalsy();
     });
-
 
     it('should update rows on "select all" click', () => {
         let data = new ObjectDataTableAdapter([{}, {}, {}], []);
@@ -323,26 +314,26 @@ describe('DataTable', () => {
 
     it('should replace image source with fallback thumbnail on error', () => {
         let event = <any> {
-            srcElement: {
+            target: {
                 src: 'missing-image'
             }
         };
 
         dataTable.fallbackThumbnail = '<fallback>';
         dataTable.onImageLoadingError(event);
-        expect(event.srcElement.src).toBe(dataTable.fallbackThumbnail);
+        expect(event.target.src).toBe(dataTable.fallbackThumbnail);
     });
 
     it('should replace image source only when fallback available', () => {
         const originalSrc = 'missing-image';
         let event = <any> {
-            srcElement: {
+            target: {
                 src: originalSrc
             }
         };
 
         dataTable.fallbackThumbnail = null;
         dataTable.onImageLoadingError(event);
-        expect(event.srcElement.src).toBe(originalSrc);
+        expect(event.target.src).toBe(originalSrc);
     });
 });

@@ -15,29 +15,26 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
-
-declare let componentHandler: any;
-declare let __moduleName: string;
+import { Observer, Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'activiti-checklist',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-checklist.component.html',
     styleUrls: ['./activiti-checklist.component.css'],
-    providers: [ActivitiTaskListService],
-    pipes: [AlfrescoPipeTranslate]
-
+    providers: [ActivitiTaskListService]
 })
-export class ActivitiChecklist implements OnInit {
+export class ActivitiChecklist implements OnInit, OnChanges {
 
     @Input()
     taskId: string;
+
+    @Input()
+    readOnly: boolean = false;
 
     @ViewChild('dialog')
     dialog: any;
@@ -54,8 +51,7 @@ export class ActivitiChecklist implements OnInit {
      * @param auth
      * @param translate
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
@@ -68,13 +64,17 @@ export class ActivitiChecklist implements OnInit {
         this.task$.subscribe((task: TaskDetailsModel) => {
             this.checklist.push(task);
         });
+    }
 
-        if (this.taskId) {
-            this.load(this.taskId);
+    ngOnChanges(changes: SimpleChanges) {
+        let taskId = changes['taskId'];
+        if (taskId && taskId.currentValue) {
+            this.getTaskChecklist(taskId.currentValue);
+            return;
         }
     }
 
-    public load(taskId: string) {
+    public getTaskChecklist(taskId: string) {
         this.checklist = [];
         if (this.taskId) {
             this.activitiTaskList.getTaskChecklist(this.taskId).subscribe(
@@ -94,6 +94,9 @@ export class ActivitiChecklist implements OnInit {
 
     public showDialog() {
         if (this.dialog) {
+            if (!this.dialog.nativeElement.showModal) {
+                dialogPolyfill.registerDialog(this.dialog.nativeElement);
+            }
             this.dialog.nativeElement.showModal();
         }
     }

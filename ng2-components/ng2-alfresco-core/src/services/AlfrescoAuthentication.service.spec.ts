@@ -15,22 +15,27 @@
  * limitations under the License.
  */
 
-import {it, describe, beforeEach, afterEach} from '@angular/core/testing';
-import {ReflectiveInjector, provide} from '@angular/core';
-import {AlfrescoSettingsService} from './AlfrescoSettings.service';
-import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';
+import { ReflectiveInjector } from '@angular/core';
+import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
+import { AlfrescoApiService } from './AlfrescoApi.service';
 
-declare var AlfrescoApi: any;
 declare let jasmine: any;
 
 describe('AlfrescoAuthentication', () => {
-    let injector, authService;
+    let injector;
+    let authService: AlfrescoAuthenticationService;
+    let settingsService: AlfrescoSettingsService;
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
-            provide(AlfrescoSettingsService, {useClass: AlfrescoSettingsService}),
+            AlfrescoSettingsService,
+            AlfrescoApiService,
             AlfrescoAuthenticationService
         ]);
+
+        authService = injector.get(AlfrescoAuthenticationService);
+        settingsService = injector.get(AlfrescoSettingsService);
 
         let store = {};
 
@@ -61,14 +66,29 @@ describe('AlfrescoAuthentication', () => {
     describe('when the setting is ECM', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.alfrescoSetting.setProviders('ECM');
+            settingsService.setProviders('ECM');
         });
 
         it('should return an ECM ticket after the login done', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
+                expect(authService.isEcmLoggedIn()).toBe(true);
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+        });
+
+        it('should save only ECM ticket on localStorage', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicketBpm()).toBeNull();
+                expect(authService.getAlfrescoApi().bpmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
@@ -86,6 +106,7 @@ describe('AlfrescoAuthentication', () => {
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -121,6 +142,7 @@ describe('AlfrescoAuthentication', () => {
                 authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -138,25 +160,41 @@ describe('AlfrescoAuthentication', () => {
 
         it('should return false if the user is not logged in', () => {
             expect(authService.isLoggedIn()).toBe(false);
+            expect(authService.isEcmLoggedIn()).toBe(false);
         });
     });
 
     describe('when the setting is BPM', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.alfrescoSetting.setProviders('BPM');
+            settingsService.setProviders('BPM');
         });
 
         it('should return an BPM ticket after the login done', (done) => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+                expect(authService.isBpmLoggedIn()).toBe(true);
                 done();
             });
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200
+            });
+        });
+
+        it('should save only BPM ticket on localStorage', (done) => {
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                expect(authService.isLoggedIn()).toBe(true);
+                expect(authService.getTicketEcm()).toBeNull();
+                expect(authService.getAlfrescoApi().ecmAuth.isLoggedIn()).toBeFalsy();
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
             });
         });
 
@@ -167,6 +205,7 @@ describe('AlfrescoAuthentication', () => {
                 (err: any) => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -180,6 +219,7 @@ describe('AlfrescoAuthentication', () => {
                 authService.logout().subscribe(() => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -212,24 +252,23 @@ describe('AlfrescoAuthentication', () => {
     describe('Setting service change should reflect in the api', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.alfrescoSetting.setProviders('ALL');
+            settingsService.setProviders('ALL');
         });
 
         it('should host ecm url change be reflected in the api configuration', () => {
-            authService.alfrescoSetting.ecmHost = '127.99.99.99';
+            settingsService.ecmHost = '127.99.99.99';
 
             expect(authService.getAlfrescoApi().config.hostEcm).toBe('127.99.99.99');
         });
 
         it('should host bpm url change be reflected in the api configuration', () => {
-            authService.alfrescoSetting.bpmHost = '127.99.99.99';
+            settingsService.bpmHost = '127.99.99.99';
 
             expect(authService.getAlfrescoApi().config.hostBpm).toBe('127.99.99.99');
         });
 
         it('should host bpm provider change be reflected in the api configuration', () => {
-            authService.alfrescoSetting.setProviders('ECM');
+            settingsService.setProviders('ECM');
 
             expect(authService.getAlfrescoApi().config.provider).toBe('ECM');
         });
@@ -239,8 +278,7 @@ describe('AlfrescoAuthentication', () => {
     describe('when the setting is both ECM and BPM ', () => {
 
         beforeEach(() => {
-            authService = injector.get(AlfrescoAuthenticationService);
-            authService.providers = 'ALL';
+            settingsService.setProviders('ALL');
         });
 
         it('should return both ECM and BPM tickets after the login done', (done) => {
@@ -248,6 +286,8 @@ describe('AlfrescoAuthentication', () => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toEqual('fake-post-ticket');
                 expect(authService.getTicketBpm()).toEqual('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+                expect(authService.isBpmLoggedIn()).toBe(true);
+                expect(authService.isEcmLoggedIn()).toBe(true);
                 done();
             });
 
@@ -270,6 +310,7 @@ describe('AlfrescoAuthentication', () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -290,6 +331,7 @@ describe('AlfrescoAuthentication', () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
                     done();
                 });
 
@@ -312,6 +354,8 @@ describe('AlfrescoAuthentication', () => {
                     expect(authService.isLoggedIn()).toBe(false);
                     expect(authService.getTicketEcm()).toBe(null);
                     expect(authService.getTicketBpm()).toBe(null);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
                     done();
                 });
 

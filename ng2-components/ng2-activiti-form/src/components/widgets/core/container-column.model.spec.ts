@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { ContainerColumnModel } from './container-column.model';
+import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
 
 describe('ContainerColumnModel', () => {
@@ -35,7 +35,7 @@ describe('ContainerColumnModel', () => {
         column.fields = [];
         expect(column.hasFields()).toBeFalsy();
 
-        column.fields = [new FormFieldModel(null, null)];
+        column.fields = [new FormFieldModel(new FormModel(), null)];
         expect(column.hasFields()).toBeTruthy();
     });
 

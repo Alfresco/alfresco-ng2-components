@@ -16,20 +16,18 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance';
 import { ActivitiProcessService } from './../services/activiti-process.service';
+import { DatePipe } from '@angular/common';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
 
 @Component({
     selector: 'activiti-process-instance-header',
-    moduleId: __moduleName,
+    moduleId: module.id,
     templateUrl: './activiti-process-instance-header.component.html',
-    styleUrls: ['./activiti-process-instance-header.component.css'],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    styleUrls: ['./activiti-process-instance-header.component.css']
 })
 export class ActivitiProcessInstanceHeader {
 
@@ -37,16 +35,12 @@ export class ActivitiProcessInstanceHeader {
     processInstance: ProcessInstance;
 
     @Output()
-    processCancelled = new EventEmitter();
+    processCancelled: EventEmitter<any> = new EventEmitter();
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param activitiProcess
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    @Output()
+    onError: EventEmitter<any> = new EventEmitter<any>();
+
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
@@ -63,11 +57,22 @@ export class ActivitiProcessInstanceHeader {
         return '';
     }
 
-    getStartedDate() {
-        return this.processInstance ? new Date(this.processInstance.started) : null;
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            console.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
+        }
     }
 
     cancelProcess() {
-        this.processCancelled.emit(this.activitiProcess.cancelProcess(this.processInstance.id));
+        this.activitiProcess.cancelProcess(this.processInstance.id).subscribe(
+            (res) => {
+                this.processCancelled.emit(res);
+            }, (err) => {
+                console.error(err);
+                this.onError.emit(err);
+            });
     }
 }

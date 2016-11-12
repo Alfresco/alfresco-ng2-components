@@ -1,0 +1,45 @@
+<div class="row-editor mdl-shadow--2dp"
+    [class.row-editor__invalid]="!validationSummary.isValid">
+    <div class="mdl-grid" *ngFor="let column of table.columns">
+        <div class="mdl-cell mdl-cell--6-col" [ngSwitch]="column.type">
+            <div *ngSwitchCase="'Dropdown'">
+                <alf-dropdown-editor
+                    [table]="table"
+                    [row]="row"
+                    [column]="column">
+                </alf-dropdown-editor>
+                </div>
+                <div *ngSwitchCase="'Date'">
+                    <alf-date-editor
+                    [table]="table"
+                    [row]="row"
+                    [column]="column">
+                </alf-date-editor>
+                </div>
+
+                <div *ngSwitchCase="'Boolean'">
+                <alf-boolean-editor
+                    [table]="table"
+                    [row]="row"
+                    [column]="column">
+                </alf-boolean-editor>
+                </div>
+                <div *ngSwitchDefault>
+                <alf-text-editor
+                    [table]="table"
+                    [row]="row"
+                    [column]="column">
+                </alf-text-editor>
+            </div>
+        </div>
+    </div>
+    <div class="row-editor__validation-summary" *ngIf="!validationSummary.isValid">{{validationSummary.text}}</div>
+    <div>
+        <button
+            class="mdl-button mdl-js-button mdl-js-ripple-effect"
+            (click)="onCancelChanges()">Cancel</button>
+        <button
+            class="mdl-button mdl-js-button mdl-js-ripple-effect"
+            (click)="onSaveChanges()">Save</button>
+    </div>
+</div>

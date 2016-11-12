@@ -1,65 +1,98 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
     <header class="mdl-layout__header">
-        <!-- Tabs -->
-        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">TASK LIST</a>
-            <a href="#scroll-tab-2" class="mdl-layout__tab">PROCESS LIST</a>
-            <a href="#scroll-tab-3" class="mdl-layout__tab">REPORT</a>
+
+        <!-- TABS -->
+
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect" #tabheader>
+            <a id="apps-header" href="#apps" class="mdl-layout__tab is-active">APPS</a>
+            <a id="tasks-header" href="#tasks" class="mdl-layout__tab">TASK LIST</a>
+            <a id="processes-header" href="#processes" class="mdl-layout__tab">PROCESS LIST</a>
+            <a id="report-header" href="#report" class="mdl-layout__tab">ANALYTICS</a>
         </div>
     </header>
-    <main class="mdl-layout__content activiti">
-        <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
+
+    <main class="mdl-layout__content activiti" #tabmain>
+
+        <!--  APPPS COMPONENT -->
+
+        <section class="mdl-layout__tab-panel is-active" id="apps">
+            <div class="page-content">
+                <activiti-apps [layoutType]="layoutType" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
+            </div>
+        </section>
+
+
+        <!--  TASKS COMPONENT -->
+
+        <section class="mdl-layout__tab-panel" id="tasks">
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
                         <span>Task Filters</span>
-                        <activiti-filters (filterClick)="onTaskFilterClick($event)"></activiti-filters>
+                        <activiti-start-task [appId]="appId" (onSuccess)="onStartTaskSuccess($event)"></activiti-start-task>
+                        <activiti-filters [appId]="appId" (filterClick)="onTaskFilterClick($event)" (onSuccess)="onSuccessTaskFilterList($event)"
+                                          #activitifilter></activiti-filters>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                         <span>Task List</span>
-                        <activiti-tasklist *ngIf="isTaskListSelected()" [taskFilter]="taskFilter" [schemaColumn]="taskSchemaColumns"
-                                           (rowClick)="onTaskRowClick($event)" #activititasklist></activiti-tasklist>
+                        <activiti-tasklist [taskFilter]="taskFilter" [data]="dataTasks"
+                                           (rowClick)="onTaskRowClick($event)" (onSuccess)="onSuccessTaskList($event)"
+                                           #activititasklist></activiti-tasklist>
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
                         <span>Task Details</span>
-                        <activiti-task-details [taskId]="currentTaskId" #activitidetails></activiti-task-details>
+                        <activiti-task-details [taskId]="currentTaskId" (formCompleted)="onFormCompleted($event)"
+                                               #activitidetails></activiti-task-details>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-2">
+
+
+        <!--  PROCESS COMPONENT -->
+
+        <section class="mdl-layout__tab-panel" id="processes">
             <div class="page-content">
                 <div class="page-content">
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
                             <span>Process Filters</span>
-                            <activiti-start-process [appId]="appId"></activiti-start-process>
-                            <activiti-process-filters (filterClick)="onProcessFilterClick($event)"></activiti-process-filters>
+                            <activiti-start-process-instance [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process-instance>
+                            <activiti-process-instance-filters [appId]="appId"
+                                    (filterClick)="onProcessFilterClick($event)" (onSuccess)="onSuccessProcessFilterList($event)"
+                                    #activitiprocessfilter></activiti-process-instance-filters>
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
                             <span>Process List</span>
-                            <activiti-process-instance-list [filter]="processFilter" [schemaColumn]="processSchemaColumns"
-                                               (rowClick)="onProcessRowClick($event)" #activitiprocesslist></activiti-process-instance-list>
+                            <activiti-process-instance-list [filter]="processFilter" [data]="dataProcesses"
+                                               (rowClick)="onProcessRowClick($event)" (onSuccess)="onSuccessProcessList($event)"
+                                                            #activitiprocesslist></activiti-process-instance-list>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column">
                             <span>Process Details</span>
-                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (taskFormCompleted)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
+                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (activitiprocesslist)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-            <div class="page-content"><!-- Your content goes here --></div>
+
+
+        <!--  ANALYTICS COMPONENT -->
+
+        <section class="mdl-layout__tab-panel" id="report">
+            <div class="page-content">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
+                        <analytics-report-list (reportClick)="onReportClick($event)"></analytics-report-list>
+                    </div>
+                    <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
+                        <activiti-analytics [appId]="appId" *ngIf="report" [reportId]="report.id"></activiti-analytics>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-4">
-            <div class="page-content"><!-- Your content goes here --></div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-5">
-            <div class="page-content"><!-- Your content goes here --></div>
-        </section>
-        <section class="mdl-layout__tab-panel" id="scroll-tab-6">
-            <div class="page-content"><!-- Your content goes here --></div>
-        </section>
+
     </main>
 </div>

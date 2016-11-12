@@ -17,11 +17,9 @@
 
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
-import { FileDraggableDirective } from '../directives/file-draggable.directive';
-import { AlfrescoTranslationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
-declare let __moduleName: string;
 declare let componentHandler: any;
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
@@ -37,11 +35,9 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  */
 @Component({
     selector: 'alfresco-upload-drag-area',
-    moduleId: __moduleName,
-    directives: [FileDraggableDirective],
+    moduleId: module.id,
     templateUrl: './upload-drag-area.component.html',
-    styleUrls: ['./upload-drag-area.component.css'],
-    pipes: [AlfrescoPipeTranslate]
+    styleUrls: ['./upload-drag-area.component.css']
 })
 export class UploadDragAreaComponent {
 
@@ -64,7 +60,7 @@ export class UploadDragAreaComponent {
 
     constructor(private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        this.translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
+        translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
     }
 
     ngOnChanges(changes) {
@@ -244,9 +240,11 @@ export class UploadDragAreaComponent {
      * @returns {string} - The message without placeholder
      */
     private formatString(message: string, keys: any []) {
-        let i = keys.length;
-        while (i--) {
-            message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
+        if (message) {
+            let i = keys.length;
+            while (i--) {
+                message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
+            }
         }
         return message;
     }

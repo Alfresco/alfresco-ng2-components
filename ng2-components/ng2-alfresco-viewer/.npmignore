@@ -1,7 +1,7 @@
 npm-debug.log
 .idea
+demo/localTestFile.pdf
 
-assets/
 coverage/
 node_modules
 typings/

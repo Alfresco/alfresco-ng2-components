@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { ContainerModel } from './container.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormValues } from './form-values';
+import { FormFieldTypes } from './form-field-types';
 
 describe('FormModel', () => {
 
@@ -119,8 +119,14 @@ describe('FormModel', () => {
     it('should parse fields', () => {
         let json = {
             fields: [
-                { id: 'field1' },
-                { id: 'field2' }
+                {
+                    id: 'field1',
+                    type: FormFieldTypes.CONTAINER
+                },
+                {
+                    id: 'field2',
+                    type: FormFieldTypes.CONTAINER
+                }
             ]
         };
 
@@ -135,8 +141,14 @@ describe('FormModel', () => {
             fields: null,
             formDefinition: {
                 fields: [
-                    { id: 'field1' },
-                    { id: 'field2' }
+                    {
+                        id: 'field1',
+                        type: FormFieldTypes.CONTAINER
+                    },
+                    {
+                        id: 'field2',
+                        type: FormFieldTypes.CONTAINER
+                    }
                 ]
             }
         };
@@ -164,10 +176,10 @@ describe('FormModel', () => {
                 { id: 'tab2' }
             ],
             fields: [
-                { id: 'field1', tab: 'tab1' },
-                { id: 'field2', tab: 'tab2' },
-                { id: 'field3', tab: 'tab1' },
-                { id: 'field4', tab: 'missing-tab' }
+                { id: 'field1', tab: 'tab1', type: FormFieldTypes.CONTAINER },
+                { id: 'field2', tab: 'tab2', type: FormFieldTypes.CONTAINER },
+                { id: 'field3', tab: 'tab1', type: FormFieldTypes.DYNAMIC_TABLE },
+                { id: 'field4', tab: 'missing-tab', type: FormFieldTypes.DYNAMIC_TABLE }
             ]
         };
 
@@ -227,7 +239,7 @@ describe('FormModel', () => {
         let form = new FormModel(json, data);
         expect(form.fields.length).toBe(1);
 
-        let container = form.fields[0];
+        let container = <ContainerModel> form.fields[0];
         expect(container.columns.length).toBe(2);
 
         let column1 = container.columns[0];

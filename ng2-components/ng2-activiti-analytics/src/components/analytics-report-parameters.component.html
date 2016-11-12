@@ -1,0 +1,58 @@
+<div class="col-md-6">
+    <div *ngIf="reportParameters">
+        <form [formGroup]="reportForm" novalidate>
+        <h1>{{reportParameters.name}}</h1>
+        <div *ngFor="let field of reportParameters.definition.parameters">
+            <div [ngSwitch]="field.type">
+                <div *ngSwitchCase="'integer'">
+                    <br>
+                    <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup" [controllerName]="'slowProcessInstanceInteger'"
+                                   [required]="true"></number-widget>
+                </div>
+                <div *ngSwitchCase="'duration'">
+                    <br>
+                    <duration-widget [field]="field" [group]="reportForm.controls.durationGroup"
+                                     [controllerName]="'duration'"></duration-widget>
+                </div>
+                <div *ngSwitchCase="'boolean'">
+                    <br>
+                    <checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
+                                     [controllerName]="'typeFiltering'"></checkbox-widget>
+                </div>
+                <div *ngSwitchCase="'status'">
+                    <br>
+                    <dropdown-widget [field]="field" [group]="reportForm.controls.statusGroup" [controllerName]="'status'"
+                                     [required]="true"></dropdown-widget>
+                </div>
+                <div *ngSwitchCase="'processDefinition'">
+                    <br>
+                    <dropdown-widget [field]="field" [group]="reportForm.controls.processDefGroup" [controllerName]="'processDefinitionId'"
+                                     [required]="true" (fieldChanged)="onProcessDefinitionChanges(field)"></dropdown-widget>
+                </div>
+                <div *ngSwitchCase="'task'">
+                    <br>
+                    <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup" [controllerName]="'taskName'"
+                                     [required]="true"></dropdown-widget>
+                </div>
+                <div *ngSwitchCase="'dateRange'">
+                    <br>
+                    <date-range-widget [field]="field" [group]="reportForm.controls.dateRange"></date-range-widget>
+                </div>
+                <div *ngSwitchCase="'dateInterval'">
+                    <br>
+                    <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup" [controllerName]="'dateRangeInterval'"
+                                     [required]="true" [showDefaultOption]="false"></dropdown-widget>
+                </div>
+                <div *ngSwitchDefault>
+                    <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{field.type}}</span>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="debug">
+            <p>ReportForm valid : {{ reportForm.valid }}</p>
+            <p>ReportForm status : {{ reportForm.errors | json }}</p>
+            <p>ReportForm FormGroup valid : {{reportForm && reportForm.controls.dateRange.valid | json }}</p>
+        </div>
+        </form>
+    </div>
+</div>

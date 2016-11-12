@@ -15,19 +15,22 @@
  * limitations under the License.
  */
 
-import { it, describe, expect, beforeEach } from '@angular/core/testing';
 import { ContainerWidget } from './container.widget';
 import { FormModel } from './../core/form.model';
 import { ContainerModel } from './../core/container.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
+import { WIDGET_DIRECTIVES } from '../index';
+import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 
 describe('ContainerWidget', () => {
 
     let componentHandler;
 
     beforeEach(() => {
-        componentHandler =  jasmine.createSpyObj('componentHandler', [
+        componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
 
@@ -50,7 +53,7 @@ describe('ContainerWidget', () => {
 
     it('should toggle underlying group container', () => {
         let container = new ContainerModel(new FormModel(), {
-            type:  FormFieldTypes.GROUP,
+            type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
             }
@@ -68,7 +71,7 @@ describe('ContainerWidget', () => {
 
     it('should toggle only collapsible container', () => {
         let container = new ContainerModel(new FormModel(), {
-            type:  FormFieldTypes.GROUP
+            type: FormFieldTypes.GROUP
         });
 
         let widget = new ContainerWidget();
@@ -81,7 +84,7 @@ describe('ContainerWidget', () => {
 
     it('should toggle only group container', () => {
         let container = new ContainerModel(new FormModel(), {
-            type:  FormFieldTypes.CONTAINER,
+            type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
             }
@@ -107,6 +110,103 @@ describe('ContainerWidget', () => {
         });
 
         widget.fieldChanged(fakeField);
+    });
+
+    describe('when template is ready', () => {
+        let containerWidgetComponent: ContainerWidget;
+        let fixture: ComponentFixture<ContainerWidget>;
+        let element: HTMLElement;
+        let fakeContainerVisible: ContainerModel;
+        let fakeContainerInvisible: ContainerModel;
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [WIDGET_DIRECTIVES]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(ContainerWidget);
+                containerWidgetComponent = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        beforeEach(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            fakeContainerVisible = new ContainerModel(new FormModel(fakeFormJson), {
+                fieldType: FormFieldTypes.GROUP,
+                id: 'fake-cont-id-1',
+                name: 'fake-cont-1-name',
+                type: FormFieldTypes.GROUP
+            });
+            fakeContainerInvisible = new ContainerModel(new FormModel(fakeFormJson), {
+                fieldType: FormFieldTypes.GROUP,
+                id: 'fake-cont-id-2',
+                name: 'fake-cont-2-name',
+                type: FormFieldTypes.GROUP
+            });
+            fakeContainerVisible.field.isVisible = true;
+            fakeContainerInvisible.field.isVisible = false;
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should show the container header when it is visible', () => {
+            containerWidgetComponent.content = fakeContainerVisible;
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#container-header')).toBeDefined();
+                    expect(element.querySelector('#container-header')).not.toBeNull();
+                    expect(element.querySelector('#container-header-label')).toBeDefined();
+                    expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-1-name');
+                });
+        });
+
+        it('should not show the container header when it is not visible', () => {
+            containerWidgetComponent.content = fakeContainerInvisible;
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    expect(element.querySelector('#container-header')).toBeNull();
+                    expect(element.querySelector('#container-header-label')).toBeNull();
+                });
+        });
+
+        it('should hide header when it becomes not visible', async(() => {
+            containerWidgetComponent.content = fakeContainerVisible;
+            fixture.detectChanges();
+            containerWidgetComponent.formValueChanged.subscribe((res) => {
+                containerWidgetComponent.content.field.isVisible = false;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#container-header')).toBeNull();
+                        expect(element.querySelector('#container-header-label')).toBeNull();
+                    });
+            });
+            containerWidgetComponent.fieldChanged(null);
+        }));
+
+        it('should show header when it becomes visible', async(() => {
+            containerWidgetComponent.content = fakeContainerInvisible;
+            containerWidgetComponent.formValueChanged.subscribe((res) => {
+                containerWidgetComponent.content.field.isVisible = true;
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        expect(element.querySelector('#container-header')).toBeDefined();
+                        expect(element.querySelector('#container-header')).not.toBeNull();
+                        expect(element.querySelector('#container-header-label')).toBeDefined();
+                        expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-2-name');
+                    });
+            });
+            containerWidgetComponent.fieldChanged(null);
+        }));
+
     });
 
 });

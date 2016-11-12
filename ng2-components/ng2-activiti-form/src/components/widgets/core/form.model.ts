@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-import { FormWidgetModelCache } from './form-widget.model';
+import { FormWidgetModel, FormWidgetModelCache } from './form-widget.model';
 import { FormValues } from './form-values';
 import { ContainerModel } from './container.model';
 import { TabModel } from './tab.model';
 import { FormOutcomeModel } from './form-outcome.model';
+import { FormFieldModel } from './form-field.model';
+import { FormFieldTypes } from './form-field-types';
+import { DynamicTableModel } from './dynamic-table.model';
 
 export class FormModel {
 
@@ -27,39 +30,25 @@ export class FormModel {
     static SAVE_OUTCOME: string = '$save';
     static COMPLETE_OUTCOME: string = '$complete';
 
-    private _id: string;
-    private _name: string;
-    private _taskId: string;
-    private _taskName: string = FormModel.UNSET_TASK_NAME;
+    readonly id: string;
+    readonly name: string;
+    readonly taskId: string;
+    readonly taskName: string = FormModel.UNSET_TASK_NAME;
+    processDefinitionId: string;
+    private _isValid: boolean = true;
 
-    get id(): string {
-        return this._id;
-    }
-
-    get name(): string {
-        return this._name;
-    }
-
-    get taskId(): string {
-        return this._taskId;
-    }
-
-    get taskName(): string {
-        return this._taskName;
+    get isValid(): boolean {
+        return this._isValid;
     }
 
     readOnly: boolean = false;
     tabs: TabModel[] = [];
-    fields: ContainerModel[] = [];
+    fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
 
     values: FormValues = {};
 
-    private _json: any;
-
-    get json() {
-        return this._json;
-    }
+    readonly json: any;
 
     hasTabs(): boolean {
         return this.tabs && this.tabs.length > 0;
@@ -75,13 +64,15 @@ export class FormModel {
 
     constructor(json?: any, data?: FormValues, readOnly: boolean = false) {
         this.readOnly = readOnly;
-        if (json) {
-            this._json = json;
 
-            this._id = json.id;
-            this._name = json.name;
-            this._taskId = json.taskId;
-            this._taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
+        if (json) {
+            this.json = json;
+
+            this.id = json.id;
+            this.name = json.name;
+            this.taskId = json.taskId;
+            this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
+            this.processDefinitionId = json.processDefinitionId;
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
@@ -91,7 +82,7 @@ export class FormModel {
                 return model;
             });
 
-            this.fields = this.parseContainerFields(json);
+            this.fields = this.parseRootFields(json);
 
             if (data) {
                 this.loadData(data);
@@ -102,7 +93,7 @@ export class FormModel {
                 if (field.tab) {
                     let tab = tabCache[field.tab];
                     if (tab) {
-                        tab.fields.push(new ContainerModel(this, field.json));
+                        tab.fields.push(field);
                     }
                 }
             }
@@ -117,9 +108,58 @@ export class FormModel {
                 );
             }
         }
+        this.validateForm();
     }
 
-    private parseContainerFields(json: any): ContainerModel[] {
+    onFormFieldChanged(field: FormFieldModel) {
+        this.validateField(field);
+    }
+
+    // TODO: consider evaluating and caching once the form is loaded
+    getFormFields(): FormFieldModel[] {
+        let result: FormFieldModel[] = [];
+
+        for (let i = 0; i < this.fields.length; i++) {
+            let field = this.fields[i];
+
+            if (field.type === FormFieldTypes.CONTAINER || field.type === FormFieldTypes.GROUP) {
+                let container = <ContainerModel> field;
+                result.push(...container.getFormFields());
+            }
+
+            if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
+                let dynamicTable = <DynamicTableModel> field;
+                result.push(dynamicTable.field);
+            }
+        }
+
+        return result;
+    }
+
+    private validateForm() {
+        this._isValid = true;
+        let fields = this.getFormFields();
+        for (let i = 0; i < fields.length; i++) {
+            if (!fields[i].validate()) {
+                this._isValid = false;
+                return;
+            }
+        }
+    }
+
+    private validateField(field: FormFieldModel) {
+        if (!field) {
+            return;
+        }
+        if (!field.validate()) {
+            this._isValid = false;
+            return;
+        }
+        this.validateForm();
+    }
+
+    // Activiti supports 2 types of root fields: 'container' and 'dynamic-table'.
+    private parseRootFields(json: any): FormWidgetModel[] {
         let fields = [];
 
         if (json.fields) {
@@ -128,23 +168,34 @@ export class FormModel {
             fields = json.formDefinition.fields;
         }
 
-        return fields.map(obj => new ContainerModel(this, obj));
+        let result: FormWidgetModel[] = [];
+
+        for (let field of fields) {
+            if (field.type === FormFieldTypes.CONTAINER || field.type === FormFieldTypes.GROUP ) {
+                result.push(new ContainerModel(this, field));
+            } else if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
+                result.push(new DynamicTableModel(this, field));
+            } else if (field.type === FormFieldTypes.DISPLAY_VALUE) {
+                // workaround for dynamic table on a completed/readonly form
+                if (field.params) {
+                    let originalField = field.params['field'];
+                    if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
+                        result.push(new DynamicTableModel(this, field));
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     // Loads external data and overrides field values
     // Typically used when form definition and form data coming from different sources
     private loadData(data: FormValues) {
-        for (let i = 0; i < this.fields.length; i++) {
-            let container = this.fields[i];
-            for (let i = 0; i < container.columns.length; i++) {
-                let column = container.columns[i];
-                for (let i = 0; i < column.fields.length; i++) {
-                    let field = column.fields[i];
-                    if (data[field.id]) {
-                        field.json.value = data[field.id];
-                        field.value = data[field.id];
-                    }
-                }
+        for (let field of this.getFormFields()) {
+            if (data[field.id]) {
+                field.json.value = data[field.id];
+                field.value = data[field.id];
             }
         }
     }

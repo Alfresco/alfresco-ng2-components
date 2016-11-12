@@ -27,3 +27,7 @@ export * from './container.model';
 export * from './tab.model';
 export * from './form-outcome.model';
 export * from './form-outcome-event.model';
+export * from './form-field-validator';
+export * from './dynamic-table.model';
+export * from './dynamic-table-column';
+export * from './dynamic-table-row';

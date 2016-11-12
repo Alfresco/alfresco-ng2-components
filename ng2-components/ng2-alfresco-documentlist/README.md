@@ -34,49 +34,63 @@
 
 ## Prerequisites
 
-Before you start using this development framework, make sure you have installed all required software and done all the 
-necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
+Before you start using this development framework, make sure you have installed all required software and done all the
+necessary configuration [prerequisites](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
 
-```sh
-npm install --save ng2-alfresco-documentlist
-```
+Follow the 3 steps below:
 
-### Dependencies
+1. Npm
 
-Add the following dependency to your index.html:
+    ```sh
+    npm install ng2-alfresco-documentlist --save
+    ```
 
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+2. Html
 
-The following component needs to be added to your `systemjs.config.js` file: 
+    Include these dependencies in your index.html page:
 
-- [ng2-translate](https://github.com/ocombe/ng2-translate)
-- [ng2-alfresco-core](https://www.npmjs.com/package/ng2-alfresco-core)
-- [ng2-alfresco-datatable](https://www.npmjs.com/package/ng2-alfresco-datatable)
+    ```html
 
-You can get more details in the 
-[example implementation](https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-documentlist/demo/systemjs.config.js).
+      <!-- Google Material Design Lite -->
+      <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+      <script src="node_modules/material-design-lite/material.min.js"></script>
+      <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-#### Material Design Lite
+      <!-- Polyfill(s) for Safari (pre-10.x) -->
+      <script src="node_modules/intl/dist/Intl.min.js"></script>
+      <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-The style of this component is based on [material design](https://getmdl.io/), so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+      <!-- Polyfill(s) for older browsers -->
+      <script src="node_modules/core-js/client/shim.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+      <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+      <!-- Polyfill(s) for dialogs -->
+      <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+      <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+      <style>._dialog_overlay { position: static !important; } </style>
 
-Also make sure you include these dependencies in your `index.html` file:
+      <!-- Modules  -->
+      <script src="node_modules/zone.js/dist/zone.js"></script>
+      <script src="node_modules/reflect-metadata/Reflect.js"></script>
+      <script src="node_modules/systemjs/dist/system.src.js"></script>
 
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    ```
+
+3. SystemJs
+
+    Add the following components to your systemjs.config.js file:
+
+    - ng2-translate
+    - alfresco-js-api
+    - ng2-alfresco-core
+    - ng2-alfresco-datatable
+    - ng2-alfresco-documentlist
+
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 ## Basic usage
 
@@ -91,27 +105,88 @@ Also make sure you include these dependencies in your `index.html` file:
 </alfresco-document-list>
 ```
 
+Usage example of this component :
+
+**main.ts**
+```ts
+
+import { NgModule, Component, ViewChild } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule }  from 'ng2-alfresco-datatable';
+import { DocumentListModule, DocumentList } from 'ng2-alfresco-documentlist';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+
+@Component({
+    selector: 'alfresco-app-demo',
+    template: `<alfresco-document-list
+                    #documentList
+                    [currentFolderPath]="'/'"
+                    [contextMenuActions]="true"
+                    [contentActions]="true"
+                    [multiselect]="true">
+               </alfresco-document-list>`
+})
+class DocumentListDemo {
+
+    @ViewChild(DocumentList)
+    documentList: DocumentList;
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+                this.documentList.reload();
+            },
+            error => {
+                console.log(error);
+            });
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DataTableModule,
+        DocumentListModule.forRoot()
+    ],
+    declarations: [DocumentListDemo],
+    bootstrap: [DocumentListDemo]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+
+```
+
 ### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| navigate | boolean | true | Toggles navigation to folder content or file preview |
-| navigationMode | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
-| thumbnails | boolean | false | Show document thumbnails rather than icons |
-| multiselect | boolean | false | Toggles multiselect mode |
-| contentActions | boolean | false | Toggles content actions for each row |
-| contextMenuActions | boolean | false | Toggles context menus for each row |
-| rowFilter | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
-| imageResolver | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
+| `navigate` | boolean | true | Toggles navigation to folder content or file preview |
+| `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
+| `thumbnails` | boolean | false | Show document thumbnails rather than icons |
+| `fallbackThubnail` | string |  | Fallback image for row ehre thubnail is missing|
+| `multiselect` | boolean | false | Toggles multiselect mode |
+| `contentActions` | boolean | false | Toggles content actions for each row |
+| `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
+| `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
 ### Events
 
 | Name | Description |
 | --- | --- |
-| nodeClick | Emitted when user clicks the node |
-| nodeDblClick | Emitted when user double-clicks the node |
-| folderChange | Emitted upon display folder changed |
-| preview | Emitted when document preview is requested either with single or double click |
+| `nodeClick` | Emitted when user clicks the node |
+| `nodeDblClick` | Emitted when user double-clicks the node |
+| `folderChange` | Emitted upon display folder changed |
+| `preview` | Emitted when document preview is requested either with single or double click |
 
 
 _For a complete example source code please refer to 
@@ -203,13 +278,13 @@ HTML attributes:
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
-| title | string | | Column title |
-| sr-title | string | | Screen reader title, used only when `title` is empty |
-| key | string | | Column source key, example: `createdByUser.displayName` |
-| sortable | boolean | false | Toggle sorting ability via column header clicks |
-| class | string | | CSS class list, example: `full-width ellipsis-cell` |
-| type | string | text | Column type, text\|date\|number |
-| format | string | | Value format pattern |
+| `title` | string | | Column title |
+| `sr-title` | string | | Screen reader title, used only when `title` is empty |
+| `key` | string | | Column source key, example: `createdByUser.displayName` |
+| `sortable` | boolean | false | Toggle sorting ability via column header clicks |
+| `class`| string | | CSS class list, example: `full-width ellipsis-cell` |
+| `type` | string | text | Column type, text\|date\|number |
+| `format` | string | | Value format pattern |
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
@@ -659,7 +734,8 @@ by means of custom application service.
 
 ## Build from sources
 
-You can build component from sources with the following commands:
+Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -671,8 +747,8 @@ npm run build
 ```sh
 $ npm run build:w
 ```
-    
-### Running unit tests
+
+## Running unit tests
 
 ```sh
 npm test
@@ -684,11 +760,35 @@ npm test
 npm test-browser
 ```
 
-This task rebuilds all the code, runs tslint, license checks and other quality check tools 
-before performing unit testing. 
+This task rebuilds all the code, runs tslint, license checks and other quality check tools
+before performing unit testing.
 
 ### Code coverage
 
 ```sh
 npm run coverage
 ```
+
+## Demo
+
+If you want have a demo of how the component works, please check the demo folder :
+
+```sh
+cd demo
+npm install
+npm start
+```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

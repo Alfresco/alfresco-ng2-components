@@ -4,12 +4,12 @@
             <span id="total-upload-completed">{{totalCompleted}}</span> {{'FILE_UPLOAD.MESSAGES.COMPLETED' | translate}}
         </div>
         <div class="buttons">
-            <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}"  (click)="toggleDialogMinimize()">
-                <i class="material-icons down">keyboard_arrow_down</i>
-                <i class="material-icons up">keyboard_arrow_up</i>
+            <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}" (keyup.enter)="toggleDialogMinimize()" (click)="toggleDialogMinimize()" tabindex="0">
+                <i class="material-icons down" title="minimize upload list">keyboard_arrow_down</i>
+                <i class="material-icons up" title="expand upload list">keyboard_arrow_up</i>
             </div>
 
-            <div class="close-button" (click)="toggleShowDialog()">
+            <div class="close-button" (click)="toggleShowDialog()" (keyup.enter)="toggleShowDialog()" tabindex="0" title="close upload list">
                 <i class="material-icons">clear</i>
             </div>
         </div>

@@ -17,6 +17,7 @@
             "STARTED_BY": "Started by",
             "STARTED": "Started",
             "COMMENTS": "Comments",
+            "START_FORM": "Start Form",
             "TASKS_ACTIVE": "Active Tasks",
             "TASKS_COMPLETED": "Completed Tasks",
             "TASK_SUBTITLE": "Assigned to {{user}}, created {{created}}"
@@ -45,6 +46,7 @@
                 "TYPE": "Type",
                 "NAME": "Name"
             },
+            "TYPE_PLACEHOLDER": "Choose one...",
             "ACTION": {
                 "START": "Start",
                 "CANCEL": "Cancel"

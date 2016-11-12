@@ -18,12 +18,22 @@
 export class FormFieldTypes {
     static CONTAINER: string = 'container';
     static GROUP: string = 'group';
+    static DYNAMIC_TABLE: string = 'dynamic-table';
+    static TEXT: string = 'text';
+    static MULTILINE_TEXT: string = 'multi-line-text';
     static DROPDOWN: string = 'dropdown';
     static HYPERLINK: string = 'hyperlink';
     static RADIO_BUTTONS: string = 'radio-buttons';
     static DISPLAY_VALUE: string = 'readonly';
     static READONLY_TEXT: string = 'readonly-text';
     static UPLOAD: string = 'upload';
+    static TYPEAHEAD: string = 'typeahead';
+    static FUNCTIONAL_GROUP: string = 'functional-group';
+    static PEOPLE: string = 'people';
+    static BOOLEAN: string = 'boolean';
+    static NUMBER: string = 'integer';
+    static DATE: string = 'date';
+    static AMOUNT: string = 'amount';
 
     static READONLY_TYPES: string[] = [
         FormFieldTypes.HYPERLINK,

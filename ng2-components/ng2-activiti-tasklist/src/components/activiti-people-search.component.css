@@ -1,0 +1,18 @@
+:host {
+    width: 100%;
+}
+
+.activiti-label {
+    font-weight: bolder;
+}
+
+.material-icons.people-search__icon:hover {
+    color: rgb(255, 152, 0);
+}
+
+.fix-element-user-list{
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}

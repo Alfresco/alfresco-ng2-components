@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { WidgetComponent } from './../widget.component';
-
-declare let __moduleName: string;
-declare var componentHandler;
+import { Component, ElementRef } from '@angular/core';
+import { TextFieldWidgetComponent } from './../textfield-widget.component';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'multiline-text-widget',
     templateUrl: './multiline-text.widget.html',
     styleUrls: ['./multiline-text.widget.css']
 })
-export class MultilineTextWidget extends WidgetComponent {
+export class MultilineTextWidget extends TextFieldWidgetComponent {
+
+    constructor(elementRef: ElementRef) {
+        super(elementRef);
+    }
 
 }

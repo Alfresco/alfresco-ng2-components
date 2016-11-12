@@ -4,7 +4,7 @@
     "DOCUMENT_LIST": {
         "COLUMNS": {
             "DISPLAY_NAME": "Display name",
-            "CREATED_BY": "mario",
+            "CREATED_BY": "Created by",
             "CREATED_ON": "Created on"
         },
         "ACTIONS": {
@@ -57,7 +57,7 @@
             "LOGIN-SUCCESS": "Login successful"
         },
         "BUTTON": {
-            "LOGIN": "MARIO"
+            "LOGIN": "Login"
         },
         "ACTION": {
             "HELP": "NEED HELP?",

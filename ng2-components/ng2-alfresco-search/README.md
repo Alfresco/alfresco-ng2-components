@@ -39,61 +39,65 @@ necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng
 
 ## Install
 
-```sh
-npm install --save ng2-alfresco-core ng2-alfresco-search
-```
+Follow the 3 steps below:
 
-Components included:
+1. Npm
 
-- [Search control](#search-control)
-- [Search results](#search-results)
+    ```sh
+    npm install ng2-alfresco-search --save
+    ```
 
-### Search control
+2. Html
 
-This component displays a search box on the page, which the user can use to enter a search query. It is decoupled from
-the related [search results](#search-results) component which performs a query and displays results.
+    Include these dependencies in your index.html page:
 
-#### Dependencies
+    ```html
 
-Add the following dependency to your index.html:
+    <!-- Google Material Design Lite -->
+    <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
+    <script src="node_modules/material-design-lite/material.min.js"></script>
+    <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
-```html
-<script src="node_modules/alfresco-js-api/dist/alfresco-js-api.js"></script>
-```
+    <!-- Polyfill(s) for Safari (pre-10.x) -->
+    <script src="node_modules/intl/dist/Intl.min.js"></script>
+    <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
 
-The following component needs to be added to your systemjs.config: 
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src="node_modules/element.scrollintoviewifneeded-polyfill/index.js"></script>
 
-- ng2-translate
-- ng2-alfresco-core
-- ng2-alfresco-search
+    <!-- Polyfill(s) for dialogs -->
+    <script src="node_modules/dialog-polyfill/dialog-polyfill.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/dialog-polyfill/dialog-polyfill.css" />
+    <style>._dialog_overlay { position: static !important; } </style>
 
-Please refer to the following example to have an idea of how your systemjs.config should look like :
+    <!-- Modules  -->
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    ```
 
-https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-search/demo/systemjs.config.js
+3. SystemJs
 
-#### Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
+    Add the following components to your systemjs.config.js file:
 
-```sh
-npm install --save material-design-icons material-design-lite
-```
+    - ng2-translate
+    - ng2-alfresco-core
+    - alfresco-js-api
+    - ng2-alfresco-search
 
-Also make sure you include these dependencies in your .html page:
-
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs
+    .config.js) .
 
 #### Basic usage
 
 ```html
 <alfresco-search-control [searchTerm]="searchTerm"
                         inputType="search"
-                        (searchChange)="customMethod($event);">
+                        (searchChange)="onSearchChange($event);"
+                        (searchSubmit)="onSearchSubmit($event);"
+                        (fileSelect)="onSearchResultSelect($event);">
 </alfresco-search-control>
 ```
 
@@ -102,281 +106,195 @@ but instead the component could emit an event to be consumed upstream, or it cou
 results component embedded inside the same component.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
-import {
-    ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule } from 'ng2-alfresco-core';
+import { SearchModule } from 'ng2-alfresco-search';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'alfresco-search-demo',
-    template: `
-        <alfresco-search-control *ngIf="authenticated" [searchTerm]="searchTerm" (searchChange)="searchTermChange($event);">
-        </alfresco-search-control>
-        <div *ngIf="!authenticated">
-                Authentication failed to ip {{ host }}
-        </div>
-    `,
-    directives: [ALFRESCO_SEARCH_DIRECTIVES]
+    selector: 'alfresco-app-demo',
+    template: `<alfresco-search-control [searchTerm]="'test'"></alfresco-search-control>`
 })
-class SearchDemo implements OnInit {
+class SearchDemo {
 
-    public searchTerm: string = 'test';
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
 
-    authenticated: boolean;
-
-    host: string = 'http://myalfrescoip';
-
-    constructor(
-        private authService: AlfrescoAuthenticationService,
-        settings: AlfrescoSettingsService,
-        translation: AlfrescoTranslationService) {
-
-        settings.host = this.host;
-        translation.addTranslationFolder();
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
     }
-
-    searchTermChange(event) {
-        console.log('Search term changed', event);
-        this.searchTerm = event.value;
-    }
-
-    ngOnInit() {
-        this.login();
-    }
-
-    login() {
-        this.authService.login('admin', 'admin').subscribe(token => {
-            this.authenticated = true;
-        });
-    }
-
 }
 
-bootstrap(SearchDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        SearchModule
+    ],
+    declarations: [SearchDemo],
+    bootstrap: [SearchDemo]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 #### Events
 
-**searchChange**: Emitted when the search term is changed and the form submitted, provided that the term is at least three characters in length<br />
+| Name | Description |
+| --- | --- |
+| `searchChange` | Emitted when the search term is changed. The search term is provided in the 'value' property of the returned object.  If the term is at less than three characters in length then the term is truncated to an empty string. |
+| `searchSubmit` | Emitted when the search form is submitted. The search term is provided in the 'value' property of the returned object. |
+| `fileSelect` | Emitted when a file item from the list of find-as-you-type results is selected |
+| `expand` | Emitted when the expanded state of the control changes based on focus events and the content of the input control |
 
 #### Options
 
-**searchTerm**: {string} (optional) default "". Search term to pre-populate the field with<br />
-**inputType**: {string} (optional) default "text". Type of the input field to render, e.g. "search" or "text" (default)<br />
-**expandable** {boolean} (optional) default true. Whether to use an expanding search control, if false then a regular input is used.
-**autocomplete** {boolean} (optional) default true. Whether the browser should offer field auto-completion for the input field to the user.
+| Name | Type | Optional | Default | Description |
+| --- | --- | --- | --- | --- |
+| `searchTerm` | {string}  | (optional)  |  ""  |  Search term to pre-populate the field with |
+| `inputType` | {string}  | (optional) |   "text" |  Type of the input field to render, e.g. "search" or "text" (default) |
+| `expandable` | {boolean} |  (optional) | true  |  Whether to use an expanding search control, if false then a regular input is used. |
+| `autocomplet` | {boolean} |  (optional) | true  |  Whether the browser should offer field auto-completion for the input field to the   user. |
+| `liveSearchEnabled` | {boolean} |  (optional) |  true  |  Whether find-as-you-type suggestions should be offered for matching  content  items. Set to false to disable. |
+| `liveSearchRoot` | {boolean} |  (optional) |  "-root-"  |  NodeRef or node name where the search should start. |
+| `liveSearchResultType` | {boolean} |  (optional) |   (none)  |  Node type to filter live search results by, e.g. 'cm:content'. |
+| `liveSearchMaxResults` | {boolean} |  (optional) |   5  |  Maximum number of results to show in the live search. |
+| `iveSearchResultSort` | {boolean} |  (optional) |   (none) |  Criteria to sort live search results by, must be one of "name" ,  "modifiedAt" or "createdAt" |
 
-### Search results
-
-This component displays the results of a search to the user.
-
-#### Dependencies
-
-Add the following dependency to your index.html:
-
-```html
-<script src="node_modules/alfresco-js-api/bundle.js"></script>
-```
-
-The following component needs to be added to your systemjs.config: 
-
-- ng2-translate
-- ng2-alfresco-core
-- ng2-alfresco-search
-
-Please refer to the following example to have an idea of how your systemjs.config should look like :
-
-https://github.com/Alfresco/alfresco-ng2-components/blob/master/ng2-components/ng2-alfresco-search/demo/systemjs.config.js
-
-#### Style
-The style of this component is based on material design, so if you want to visualize it correctly you have to add the material
-design dependency to your project:
-
-```sh
-npm install --save material-design-icons material-design-lite
-```
-
-Also make sure you include these dependencies in your .html page:
-
-```html
-<!-- Google Material Design Lite -->
-<link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
-<script src="node_modules/material-design-lite/material.min.js"></script>
-<link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
-```
-
-#### Basic usage
+#### Basic usage Search results
 
 ```html
 <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
 ```
 
 Example of an component that displays search results, using the Angular2 router to supply a 'q' parameter containing the
-search term. If no ruter is present pon the page of if the router does not provide such a parameter then an empty 
+search term. If no router is present on the page of if the router does not provide such a parameter then an empty 
 results page will be shown.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
-
-import {
-    ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search';
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule } from 'ng2-alfresco-core';
+import { SearchModule } from 'ng2-alfresco-search';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'alfresco-search-demo',
-    template: `
-        <alfresco-search *ngIf="authenticated"  [searchTerm]="searchTerm"></alfresco-search>
-         <div *ngIf="!authenticated">
-                Authentication failed to ip {{ host }}
-        </div>
-    `,
-    directives: [ALFRESCO_SEARCH_DIRECTIVES]
-})
-class SearchDemo implements OnInit {
-
-    public searchTerm: string = 'test';
-
-    authenticated: boolean;
-
-    host: string = 'http://192.168.99.101:8080';
-
-    constructor(
-        private authService: AlfrescoAuthenticationService,
-        settings: AlfrescoSettingsService,
-        translation: AlfrescoTranslationService) {
-
-        settings.host = this.host;
-        translation.addTranslationFolder();
-    }
-
-    searchTermChange(event) {
-        console.log('Search term changed', event);
-        this.searchTerm = event.value;
-    }
-
-    ngOnInit() {
-        this.login();
-    }
-
-    login() {
-        this.authService.login('admin', 'admin').subscribe(token => {
-            this.authenticated = true;
-        });
-    }
-
-}
-
-bootstrap(SearchDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
-```
-
-Example of an component that displays search results, taking the search term from a `@Input` property provided by the container.
-
-When the input is updated by the application, the search control will run a new search and display the results.
-
-```ts
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS
-} from 'ng2-alfresco-core';
-import {
-    ALFRESCO_SEARCH_DIRECTIVES
-} from 'ng2-alfresco-search';
-
-@Component({
-    selector: 'alfresco-search-demo',
-    template: `
-        <alfresco-search [searchTerm]="searchTerm"></alfresco-search>
-    `,
-    directives: [ALFRESCO_SEARCH_DIRECTIVES]
+    selector: 'alfresco-app-demo',
+    template: `<alfresco-search [searchTerm]="'test'"></alfresco-search>`
 })
 class SearchDemo {
-    @Input()
-    searchTerm: string = '';
-    constructor() {
+
+    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+        settingsService.ecmHost = 'http://localhost:8080';
+
+        this.authService.login('admin', 'admin').subscribe(
+            ticket => {
+                console.log(ticket);
+            },
+            error => {
+                console.log(error);
+            });
     }
 }
 
-bootstrap(SearchDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        SearchModule
+    ],
+    declarations: [SearchDemo],
+    bootstrap: [SearchDemo]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 #### Events
 
-None
+| Name | Description |
+| --- | --- |
+| `preview` | Emitted when a file result is clicked/selected |
+| `resultsLoad` | Emitted when search results have fully loaded |
 
 #### Options
 
-**searchTerm**: {string} (optional) default "". Search term to use when executing the search. Updating this value will
-run a new search and update the results.<br />
+| Name | Type | Optional | Default | Description |
+| --- | --- | --- | --- | --- |
+| `searchTerm` | {string}  | (optional)  | ""  | Search term to use when executing the search. Updating this value will run a new  search and update the results  |
+| `rootNodeId` | {boolean}  | (optional)  | "-root-" | NodeRef or node name where the search should start. |
+| `resultType` | {boolean}  | (optional)  | (none) | Node type to filter search results by, e.g. 'cm:content'. |
+| `maxResults` | {boolean}  | (optional)  |  20  | Maximum number of results to show in the search. |
+| `resultSort` | {boolean}  | (optional)  | (none) | Criteria to sort search results by, must be one of "name" , "modifiedAt" or   "createdAt" |
 
-## Build from sources
+### Build from sources
 
-Alternatively you can build the component from source with the following commands:
+ Alternatively you can build component from sources with the following commands:
 
-```sh
-npm install
-npm run build
-```
 
-##Build the files and keep watching for changes
+ ```sh
+ npm install
+ npm run build
+ ```
 
-    ```sh
-    $ npm run build:w
-    ```
-    
-## Running unit tests
+ ### Build the files and keep watching for changes
 
-```sh
-npm test
-```
+ ```sh
+ $ npm run build:w
+ ```
 
-## Running unit tests in browser
+ ## Running unit tests
 
-```sh
-npm test-browser
-```
+ ```sh
+ npm test
+ ```
 
-This task rebuilds all the code, runs tslint, license checks and other quality check tools 
-before performing unit testing. 
+ ### Running unit tests in browser
 
-## Code coverage
+ ```sh
+ npm test-browser
+ ```
 
-```sh
-npm run coverage
-```
+ This task rebuilds all the code, runs tslint, license checks and other quality check tools
+ before performing unit testing.
 
-## Demo
+ ### Code coverage
 
-The `demo` folder contains a complete app with both components running on a single page and linked together:
+ ```sh
+ npm run coverage
+ ```
 
-```sh
-cd demo
-npm install
-npm start
-```
+ ## Demo
+
+ If you want have a demo of how the component works, please check the demo folder :
+
+ ```sh
+ cd demo
+ npm install
+ npm start
+ ```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+ ## License
+
+ [Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
-import { it, describe, expect } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
 import { ActivitiForm } from './activiti-form.component';
-import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent } from './widgets/index';
+import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent, FormFieldTypes } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { ContainerWidget } from './widgets/container/container.widget';
+import { NodeService } from './../services/node.service';
 
 describe('ActivitiForm', () => {
 
@@ -30,18 +29,20 @@ describe('ActivitiForm', () => {
     let formService: FormService;
     let formComponent: ActivitiForm;
     let visibilityService:  WidgetVisibilityService;
+    let nodeService: NodeService;
 
     beforeEach(() => {
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
         visibilityService =  jasmine.createSpyObj('WidgetVisibilityService', [
-            'updateVisibilityForForm', 'getTaskProcessVariableModelsForTask'
+            'refreshVisibility', 'getTaskProcessVariable'
         ]);
         window['componentHandler'] = componentHandler;
 
         formService = new FormService(null, null);
-        formComponent = new ActivitiForm(formService, visibilityService, null, null, null);
+        nodeService = new NodeService(null);
+        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService);
     });
 
     it('should upgrade MDL content on view checked', () => {
@@ -98,25 +99,24 @@ describe('ActivitiForm', () => {
     });
 
     it('should not enable outcome button when model missing', () => {
-        expect(formComponent.isOutcomeButtonEnabled(null)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(null)).toBeFalsy();
     });
 
     it('should enable custom outcome buttons', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, { id: 'action1', name: 'Action 1' });
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
     });
-
 
     it('should allow controlling [complete] button visibility', () => {
         let formModel = new FormModel();
         let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.SAVE_ACTION });
 
         formComponent.showSaveButton = true;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
 
         formComponent.showSaveButton = false;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
     });
 
     it('should allow controlling [save] button visibility', () => {
@@ -124,10 +124,10 @@ describe('ActivitiForm', () => {
         let outcome = new FormOutcomeModel(formModel, { id: '$save', name: FormOutcomeModel.COMPLETE_ACTION });
 
         formComponent.showCompleteButton = true;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
 
         formComponent.showCompleteButton = false;
-        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
     });
 
     it('should load form on refresh', () => {
@@ -145,7 +145,7 @@ describe('ActivitiForm', () => {
         formComponent.loadForm();
 
         expect(formComponent.getFormByTaskId).toHaveBeenCalledWith(taskId);
-        expect(visibilityService.getTaskProcessVariableModelsForTask).toHaveBeenCalledWith(taskId);
+        expect(visibilityService.getTaskProcessVariable).toHaveBeenCalledWith(taskId);
     });
 
     it('should get form definition by form id on load', () => {
@@ -554,7 +554,7 @@ describe('ActivitiForm', () => {
         let form = formComponent.parseForm({
             id: '<id>',
             fields: [
-                { id: 'field1' }
+                { id: 'field1', type: FormFieldTypes.CONTAINER }
             ]
         });
 
@@ -571,6 +571,7 @@ describe('ActivitiForm', () => {
         expect(formComponent.getFormDefinitionOutcomes).toHaveBeenCalledWith(form);
     });
 
+    /*
     it('should update the visibility when the container raise the change event', (valueChanged) => {
         spyOn(formComponent, 'checkVisibility').and.callThrough();
         let widget = new ContainerWidget();
@@ -581,6 +582,7 @@ describe('ActivitiForm', () => {
 
         expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
     });
+    */
 
     it('should prevent default outcome execution', () => {
 
@@ -623,15 +625,95 @@ describe('ActivitiForm', () => {
     it('should check visibility only if field with form provided', () => {
 
         formComponent.checkVisibility(null);
-        expect(visibilityService.updateVisibilityForForm).not.toHaveBeenCalled();
+        expect(visibilityService.refreshVisibility).not.toHaveBeenCalled();
 
         let field = new FormFieldModel(null);
         formComponent.checkVisibility(field);
-        expect(visibilityService.updateVisibilityForForm).not.toHaveBeenCalled();
+        expect(visibilityService.refreshVisibility).not.toHaveBeenCalled();
 
         field = new FormFieldModel(new FormModel());
         formComponent.checkVisibility(field);
-        expect(visibilityService.updateVisibilityForForm).toHaveBeenCalledWith(field.form);
+        expect(visibilityService.refreshVisibility).toHaveBeenCalledWith(field.form);
+    });
+
+    it('should load form for ecm node', () => {
+        let metadata = {};
+        spyOn(nodeService, 'getNodeMetadata').and.returnValue(
+            Observable.create(observer => {
+                observer.next({ metadata: metadata });
+                observer.complete();
+            })
+        );
+        spyOn(formComponent, 'loadFormFromActiviti').and.stub();
+
+        const nodeId = '<id>';
+        formComponent.nodeId = nodeId;
+        formComponent.ngOnInit();
+
+        expect(nodeService.getNodeMetadata).toHaveBeenCalledWith(nodeId);
+        expect(formComponent.loadFormFromActiviti).toHaveBeenCalled();
+        expect(formComponent.data).toBe(metadata);
+    });
+
+    it('should disable outcome buttons for readonly form', () => {
+        let formModel = new FormModel();
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
+            name: 'Custom'
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
+    });
+
+    it('should require outcome to eval button state', () => {
+        formComponent.form = new FormModel();
+        expect(formComponent.isOutcomeButtonEnabled(null)).toBeFalsy();
+    });
+
+    it('should always enable save outcome for writeable form', () => {
+        let formModel = new FormModel();
+        let field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: null,
+            required: true
+        });
+
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
+        expect(formModel.isValid).toBeFalsy();
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.SAVE_OUTCOME_ID,
+            name: FormOutcomeModel.SAVE_ACTION
+        });
+
+        formComponent.readOnly = true;
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeTruthy();
+    });
+
+    it('should disable oucome buttons for invalid form', () => {
+        let formModel = new FormModel();
+        let field = new FormFieldModel(formModel, {
+            type: 'text',
+            value: null,
+            required: true
+        });
+
+        formComponent.form = formModel;
+        formModel.onFormFieldChanged(field);
+
+        expect(formModel.isValid).toBeFalsy();
+
+        let outcome = new FormOutcomeModel(new FormModel(), {
+            id: ActivitiForm.CUSTOM_OUTCOME_ID,
+            name: 'Custom'
+        });
+
+        expect(formComponent.isOutcomeButtonEnabled(outcome)).toBeFalsy();
     });
 
 });

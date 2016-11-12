@@ -15,26 +15,21 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
+import { NgModule, Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    CONTEXT_MENU_DIRECTIVES
-} from 'ng2-alfresco-core';
-
-import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService  } from 'ng2-alfresco-core';
+import { DataTableModule }  from 'ng2-alfresco-datatable';
+import { WebScriptModule } from 'ng2-alfresco-webscript';
 
 @Component({
-    selector: 'alfresco-webscript-demo',
+    selector: 'alfresco-app-demo',
     template: `
                <label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
-               <input id="ticket" type="text" size="48" (change)="updateTicket();documentList.reload()" [(ngModel)]="ticket"><br>
+               <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
-               <input id="host" type="text" size="48" (change)="updateHost();documentList.reload()" [(ngModel)]="ecmHost"><br><br>
+               <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="ecmHost"><br><br>
                <div *ngIf="!authenticated" style="color:#FF2323">
                     Authentication failed to ip {{ ecmHost }} with user: admin, admin, you can still try to add a valid ticket to perform
                     operations.
@@ -54,8 +49,7 @@ import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
                            [contentType]="'HTML'"
                            (onSuccess)= "logData($event)"></alfresco-webscript-get>
         </div>
-    `,
-    directives: [WEBSCRIPTCOMPONENT, CONTEXT_MENU_DIRECTIVES]
+    `
 })
 class WebscriptDemo implements OnInit {
 
@@ -117,7 +111,16 @@ class WebscriptDemo implements OnInit {
     }
 }
 
-bootstrap(WebscriptDemo, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DataTableModule,
+        WebScriptModule
+    ],
+    declarations: [ WebscriptDemo ],
+    bootstrap:    [ WebscriptDemo ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

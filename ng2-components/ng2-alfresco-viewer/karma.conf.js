@@ -1,31 +1,56 @@
 'use strict';
 
 module.exports = function (config) {
-  config.set({
-
+  var configuration = {
     basePath: '.',
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
-      // paths loaded by Karma
-      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
-      {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
-      {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
-      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
+      // System.js for module loading
+      'node_modules/systemjs/dist/system.src.js',
+
+      // Polyfills
+      'node_modules/core-js/client/shim.js',
+      'node_modules/reflect-metadata/Reflect.js',
+
+      // zone.js
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/zone.js/dist/long-stack-trace-zone.js',
+      'node_modules/zone.js/dist/proxy.js',
+      'node_modules/zone.js/dist/sync-test.js',
+      'node_modules/zone.js/dist/jasmine-patch.js',
+      'node_modules/zone.js/dist/async-test.js',
+      'node_modules/zone.js/dist/fake-async-test.js',
+
+      // RxJs
+      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+
+      // Paths loaded via module imports:
+      // Angular itself
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
+      {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
-      {pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false},
-      {pattern: 'node_modules/ng2-translate/**/*.js', included: false, served: true, watched: false},
-      {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
+      'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
+      {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
 
-      {pattern: 'karma-test-shim.js', included: true, watched: true},
+      'karma-test-shim.js',
 
       // paths loaded via module imports
       {pattern: 'dist/**/*.js', included: false, watched: true},
       {pattern: 'dist/**/*.html', included: true, served: true, watched: true},
       {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
+
+      // ng2-components
+      { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.*', included: false, served: true, watched: false },
+
+      // pdf-js
+      { pattern: 'node_modules/pdfjs-dist/build/pdf.js', included: true, watched: false },
+      { pattern: 'node_modules/pdfjs-dist/build/pdf.worker.js', included: true, watched: false },
+      { pattern: 'node_modules/pdfjs-dist/web/pdf_viewer.js', included: true, watched: false },
+      { pattern: 'src/assets/fake-test-file.pdf', included: false, watched: true, served: true },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
@@ -54,33 +79,48 @@ module.exports = function (config) {
 
     browsers: ['Chrome'],
 
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
+
     // Karma plugins loaded
     plugins: [
       'karma-jasmine',
       'karma-coverage',
+      'karma-jasmine-ajax',
       'karma-chrome-launcher',
       'karma-mocha-reporter',
       'karma-jasmine-html-reporter'
     ],
 
     // Coverage reporter generates the coverage
-    reporters: ['mocha', 'coverage', 'coveralls', 'kjhtml'],
+    reporters: ['mocha', 'coverage', 'kjhtml'],
 
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'dist/**/!(*spec).js': ['coverage']
+      'dist/**/!(*spec|index|*mock|*model).js': 'coverage'
     },
 
     coverageReporter: {
+      includeAllSources: true,
       dir: 'coverage/',
       subdir: 'report',
-        reporters: [
+      reporters: [
         {type: 'text'},
         {type: 'json', file: 'coverage-final.json'},
         {type: 'html'},
         {type: 'lcov'}
       ]
     }
-  })
+  };
+
+  if (process.env.TRAVIS) {
+    configuration.browsers = ['Chrome_travis_ci'];
+  }
+
+  config.set(configuration)
 };

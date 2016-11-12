@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import { describe, it, beforeEach } from '@angular/core/testing';
 import { ContextMenuService } from './context-menu.service';
 
 describe('ContextMenuService', () => {

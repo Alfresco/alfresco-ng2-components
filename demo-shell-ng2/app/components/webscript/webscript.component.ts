@@ -16,29 +16,24 @@
  */
 
 import { Component } from '@angular/core';
-import {
-    CONTEXT_MENU_DIRECTIVES
-} from 'ng2-alfresco-core';
-
-import { WEBSCRIPTCOMPONENT } from 'ng2-alfresco-webscript';
 
 @Component({
     selector: 'alfresco-webscript-demo',
     template: `
-                <label for="token"><b>Insert a scriptPath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="scriptPath"><br>
-                <label for="token"><b>Insert a contextRoot</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="contextRoot"><br>
-                <label for="token"><b>Insert a servicePath</b></label><br>
-                <input id="token" type="text" size="48"  [(ngModel)]="servicePath"><br>
+
+                <label for="script-path"><b>Insert a scriptPath</b></label><br>
+                <input id="script-path" type="text" size="48"  [(ngModel)]="scriptPath"><br>
+                <label for="context-root"><b>Insert a contextRoot</b></label><br>
+                <input id="context-root" type="text" size="48"  [(ngModel)]="contextRoot"><br>
+                <label for="service-path"><b>Insert a servicePath</b></label><br>
+                <input id="service-path" type="text" size="48"  [(ngModel)]="servicePath"><br>
             <alfresco-webscript-get [scriptPath]="scriptPath"
                            [scriptArgs]="scriptArgs"
                            [contextRoot]="contextRoot"
                            [servicePath]="servicePath"
                            [contentType]="'HTML'"
                            (onSuccess)= "logData($event)"></alfresco-webscript-get>
-    `,
-    directives: [WEBSCRIPTCOMPONENT, CONTEXT_MENU_DIRECTIVES]
+    `
 })
 export class WebscriptComponent {
 

@@ -17,39 +17,26 @@
 
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ALFRESCO_SEARCH_DIRECTIVES } from 'ng2-alfresco-search';
-import { VIEWERCOMPONENT } from 'ng2-alfresco-viewer';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoContentService
-} from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
 @Component({
     moduleId: __moduleName,
     selector: 'search-bar',
-    templateUrl: './search-bar.component.html',
-    styles: [`
-    `],
-    directives: [ ALFRESCO_SEARCH_DIRECTIVES, VIEWERCOMPONENT ]
+    templateUrl: './search-bar.component.html'
 })
 export class SearchBarComponent {
 
-    urlFile: string;
-    fileName: string;
-    mimeType: string;
+    fileNodeId: string;
     fileShowed: boolean = false;
+    searchTerm: string = '';
 
     @Output()
     expand = new EventEmitter();
 
-    constructor(
-        public router: Router,
-        public auth: AlfrescoAuthenticationService,
-        public contentService: AlfrescoContentService
-
-    ) {
+    constructor(public router: Router,
+                public auth: AlfrescoAuthenticationService) {
     }
 
     isLoggedIn(): boolean {
@@ -57,23 +44,25 @@ export class SearchBarComponent {
     }
 
     /**
-     * Called when a new search term is submitted
+     * Called when the user submits the search, e.g. hits enter or clicks submit
      *
-     * @param params Parameters relating to the search
+     * @param event Parameters relating to the search
      */
-    searchTermChange(params) {
-        this.router.navigate(['Search', {
-            q: params.value
+    onSearchSubmit(event) {
+        this.router.navigate(['/search', {
+            q: event.value
         }]);
     }
 
     onFileClicked(event) {
         if (event.value.entry.isFile) {
-            this.fileName = event.value.entry.name;
-            this.mimeType = event.value.entry.content.mimeType;
-            this.urlFile = this.contentService.getContentUrl(event.value);
+            this.fileNodeId = event.value.entry.id;
             this.fileShowed = true;
         }
+    }
+
+    onSearchTermChange(event) {
+        this.searchTerm = event.value;
     }
 
     onExpandToggle(event) {

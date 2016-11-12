@@ -17,7 +17,6 @@
 
 import {
     Component,
-    // NgZone,
     OnInit,
     Input,
     Output,
@@ -25,12 +24,6 @@ import {
     AfterViewChecked,
     TemplateRef
 } from '@angular/core';
-
-import {
-    MATERIAL_DESIGN_DIRECTIVES,
-    CONTEXT_MENU_DIRECTIVES,
-    AlfrescoPipeTranslate
-} from 'ng2-alfresco-core';
 
 import {
     DataTableAdapter,
@@ -42,15 +35,12 @@ import {
 } from '../../data/index';
 
 declare var componentHandler;
-declare let __moduleName: string;
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-datatable',
     styleUrls: ['./datatable.component.css'],
-    templateUrl: './datatable.component.html',
-    directives: [MATERIAL_DESIGN_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    pipes: [AlfrescoPipeTranslate]
+    templateUrl: './datatable.component.html'
 })
 export class DataTableComponent implements OnInit, AfterViewChecked {
 
@@ -84,10 +74,6 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
     @Output()
     executeRowAction: EventEmitter<any> = new EventEmitter();
-
-    // TODO: left for reference, will be removed during future revisions
-    constructor(/*private _ngZone?: NgZone*/) {
-    }
 
     ngOnInit() {
         if (!this.data) {
@@ -160,7 +146,7 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
 
     onImageLoadingError(event: Event) {
         if (event && this.fallbackThumbnail) {
-            let element = <any> event.srcElement;
+            let element = <any> event.target;
             element.src = this.fallbackThumbnail;
         }
     }

@@ -20,7 +20,6 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { FormModel } from '../components/widgets/core/form.model';
-import { NodeService } from './node.service';
 
 @Injectable()
 export class EcmModelService {
@@ -31,13 +30,12 @@ export class EcmModelService {
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private http: Http,
-                public alfrescoSettingsService: AlfrescoSettingsService,
-                private nodeService: NodeService) {
+                public alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
         return Observable.create(observer => {
-            this.seachActivitiEcmModel().subscribe(
+            this.searchActivitiEcmModel().subscribe(
                 model => {
                     if (!model) {
                         this.createActivitiEcmModel(formName, form).subscribe(typeForm => {
@@ -45,7 +43,7 @@ export class EcmModelService {
                             observer.complete();
                         });
                     } else {
-                        this.createFomType(formName, form).subscribe(typeForm => {
+                        this.saveFomType(formName, form).subscribe(typeForm => {
                             observer.next(typeForm);
                             observer.complete();
                         });
@@ -57,13 +55,13 @@ export class EcmModelService {
 
     }
 
-    private seachActivitiEcmModel() {
+    searchActivitiEcmModel() {
         return this.getEcmModels().map(function (ecmModels: any) {
             return ecmModels.list.entries.find(model => model.entry.name === EcmModelService.MODEL_NAME);
         });
     }
 
-    private createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
+    createActivitiEcmModel(formName: string, form: FormModel): Observable<any> {
         return Observable.create(observer => {
             this.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(
                 model => {
@@ -84,7 +82,7 @@ export class EcmModelService {
         });
     }
 
-    private createFomType(formName: string, form: FormModel): Observable<any> {
+    saveFomType(formName: string, form: FormModel): Observable<any> {
         return Observable.create(observer => {
             this.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                 ecmType => {
@@ -130,8 +128,6 @@ export class EcmModelService {
     public activeEcmModel(modelName: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}?select=status`;
         let options = this.getRequestOptions();
-
-
         let body = {status: 'ACTIVE'};
 
         return this.http
@@ -143,8 +139,6 @@ export class EcmModelService {
     public createEcmModel(modelName: string, nameSpace: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
         let options = this.getRequestOptions();
-
-
         let body = {
             status: 'DRAFT', namespaceUri: modelName, namespacePrefix: nameSpace, name: modelName, description: '', author: ''
         };
@@ -164,7 +158,6 @@ export class EcmModelService {
             .map(this.toJson)
             .catch(this.handleError);
     }
-
 
     public getEcmType(modelName: string): Observable<any> {
         let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;

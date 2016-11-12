@@ -1,0 +1,74 @@
+{
+  "name": "ng2-activiti-diagrams-demo",
+  "description": "Alfresco Angular2 Diagrams Component - Demo",
+  "version": "0.1.0",
+  "author": "Alfresco Software, Ltd.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "npm install rimraf && rimraf dist node_modules typings dist",
+    "postinstall": "npm run build",
+    "start": "npm run build && concurrently \"npm run tsc:w\" \"npm run server\" ",
+    "server": "wsrv -o -s -l",
+    "build": "npm run tslint && rimraf dist && tsc",
+    "build:w": "npm run tslint && rimraf dist && tsc -w",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts"
+  },
+  "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Maurizio Vitale",
+      "email": "maurizio.vitale@alfresco.com"
+    }
+  ],
+  "keywords": [
+    "ng2",
+    "angular",
+    "angular2",
+    "activiti",
+    "activiti-diagrams"
+  ],
+  "dependencies": {
+    "@angular/common": "2.0.0",
+    "@angular/compiler": "2.0.0",
+    "@angular/core": "2.0.0",
+    "@angular/forms": "2.0.0",
+    "@angular/http": "2.0.0",
+    "@angular/platform-browser": "2.0.0",
+    "@angular/platform-browser-dynamic": "2.0.0",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.12",
+    "systemjs": "0.19.27",
+    "zone.js": "^0.6.23",
+
+    "intl": "1.2.4",
+    "dialog-polyfill": "^0.4.3",
+    "element.scrollintoviewifneeded-polyfill": "^1.0.1",
+    "material-design-icons": "2.2.3",
+    "material-design-lite": "1.2.1",
+
+    "chart.js": "^2.1.4",
+    "md-date-time-picker": "^2.2.0",
+    "ng2-charts": "1.1.0",
+    "moment": "2.15.1",
+    "raphael": "^2.2.6",
+
+    "ng2-translate": "2.5.0",
+    "alfresco-js-api": "^0.4.0",
+    "ng2-alfresco-core": "0.4.0",
+    "ng2-activiti-diagrams": "0.4.0",
+    "ng2-activiti-analytics": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.42",
+    "@types/core-js": "^0.9.32",
+    "@types/jasmine": "^2.2.33",
+    "concurrently": "^2.2.0",
+    "rimraf": "2.5.2",
+    "tslint": "^3.8.1",
+    "typescript": "^2.0.3",
+    "wsrv": "^0.1.5"
+  }
+}

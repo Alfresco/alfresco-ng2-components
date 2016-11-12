@@ -7,19 +7,36 @@ module.exports = function (config) {
     frameworks: ['jasmine-ajax', 'jasmine'],
 
     files: [
-      // paths loaded by Karma
-      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: true},
-      {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: false},
-      {pattern: 'node_modules/zone.js/dist/zone.js', included: true, watched: true},
-      {pattern: 'node_modules/zone.js/dist/async-test.js', included: true, watched: true},
+      // System.js for module loading
+      'node_modules/systemjs/dist/system.src.js',
 
-      {pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/rxjs/**/*.map', included: false, watched: false},
+      // Polyfills
+      'node_modules/core-js/client/shim.js',
+      'node_modules/reflect-metadata/Reflect.js',
+
+      // zone.js
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/zone.js/dist/long-stack-trace-zone.js',
+      'node_modules/zone.js/dist/proxy.js',
+      'node_modules/zone.js/dist/sync-test.js',
+      'node_modules/zone.js/dist/jasmine-patch.js',
+      'node_modules/zone.js/dist/async-test.js',
+      'node_modules/zone.js/dist/fake-async-test.js',
+
+      // RxJs
+      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+
+      // Paths loaded via module imports:
+      // Angular itself
       {pattern: 'node_modules/@angular/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/@angular/**/*.map', included: false, watched: false},
-      {pattern: 'node_modules/alfresco-js-api/dist/alfresco-js-api.js', included: true, watched: false},
+      {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
-      {pattern: 'karma-test-shim.js', included: true, watched: true},
+      'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
+      {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
+      {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
+
+      'karma-test-shim.js',
 
       // paths loaded via module imports
       {pattern: 'dist/**/*.js', included: false, watched: true},
@@ -71,15 +88,16 @@ module.exports = function (config) {
     ],
 
     // Coverage reporter generates the coverage
-    reporters: ['mocha', 'coverage', 'coveralls', 'kjhtml'],
+    reporters: ['mocha', 'coverage', 'kjhtml'],
 
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'dist/**/!(*spec).js': ['coverage']
+      'dist/**/!(*spec|index|*mock|*model|mdl*).js': 'coverage'
     },
 
     coverageReporter: {
+      includeAllSources: true,
       dir: 'coverage/',
       subdir: 'report',
       reporters: [
@@ -89,7 +107,7 @@ module.exports = function (config) {
         {type: 'lcov'}
       ]
     }
-  }
+  };
 
   if (process.env.TRAVIS) {
     configuration.browsers = ['Chrome_travis_ci'];

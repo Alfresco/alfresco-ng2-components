@@ -15,18 +15,70 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-
-declare let __moduleName: string;
-declare var componentHandler;
+import { FormService } from '../../../services/form.service';
+import { FormFieldOption } from './../core/form-field-option';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'radio-buttons-widget',
     templateUrl: './radio-buttons.widget.html',
     styleUrls: ['./radio-buttons.widget.css']
 })
-export class RadioButtonsWidget extends WidgetComponent {
+export class RadioButtonsWidget extends WidgetComponent implements OnInit {
+
+    constructor(private formService: FormService) {
+        super();
+    }
+
+    ngOnInit() {
+        if (this.field && this.field.restUrl) {
+            if (this.field.form.processDefinitionId) {
+                this.getOptionsByProcessDefinitionId();
+            } else {
+                this.getOptionsByTaskId();
+            }
+        }
+    }
+
+    getOptionsByTaskId() {
+        this.formService
+            .getRestFieldValues(
+                this.field.form.taskId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    this.field.options = result || [];
+                    this.field.updateForm();
+                },
+                this.handleError
+            );
+    }
+
+    getOptionsByProcessDefinitionId() {
+        this.formService
+            .getRestFieldValuesByProcessId(
+                this.field.form.processDefinitionId,
+                this.field.id
+            )
+            .subscribe(
+                (result: FormFieldOption[]) => {
+                    this.field.options = result || [];
+                    this.field.updateForm();
+                },
+                this.handleError
+            );
+    }
+
+    onOptionClick(optionSelected: any) {
+        this.field.value = optionSelected;
+        this.checkVisibility(this.field);
+    }
+
+    handleError(error: any) {
+        console.error(error);
+    }
 
 }

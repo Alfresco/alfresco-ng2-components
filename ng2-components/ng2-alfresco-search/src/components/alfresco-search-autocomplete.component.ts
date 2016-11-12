@@ -15,56 +15,76 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output
-} from '@angular/core';
-import { AlfrescoSearchService } from './../services/alfresco-search.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core';
+import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
-import { AlfrescoPipeTranslate, AlfrescoTranslationService } from 'ng2-alfresco-core';
-
-declare let __moduleName: string;
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
-    moduleId: __moduleName,
+    moduleId: module.id,
     selector: 'alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
-    styleUrls: ['./alfresco-search-autocomplete.component.css'],
-    providers: [AlfrescoSearchService],
-    pipes: [AlfrescoPipeTranslate]
+    styleUrls: ['./alfresco-search-autocomplete.component.css']
 })
-export class AlfrescoSearchAutocompleteComponent implements OnChanges {
+export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
-    baseComponentPath = __moduleName.replace('/components/alfresco-search-autocomplete.component.js', '');
+    baseComponentPath = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
 
     @Input()
     searchTerm: string = '';
 
-    results: any;
+    results: any = null;
 
     errorMessage;
 
     @Input()
     ngClass: any;
 
+    @Input()
+    maxResults: number = 5;
+
+    @Input()
+    resultSort: string = null;
+
+    @Input()
+    rootNodeId: string = '-root';
+
+    @Input()
+    resultType: string = null;
+
     @Output()
-    preview: EventEmitter<any> = new EventEmitter();
+    fileSelect: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    searchFocus: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+
+    @Output()
+    cancel = new EventEmitter();
+
+    @Output()
+    resultsLoad = new EventEmitter();
+
+    @Output()
+    scrollBack = new EventEmitter();
+
+    @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private alfrescoThumbnailService: AlfrescoThumbnailService) {
-        if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
-        }
-        this.results = null;
     }
 
-    ngOnChanges(changes): void {
+    ngOnInit(): void {
+        if (this.translate) {
+            this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+        }
+    }
+
+    ngOnChanges(changes) {
         if (changes.searchTerm) {
-            this.displaySearchResults(this.searchTerm);
+            this.results = null;
+            this.errorMessage = null;
+            this.displaySearchResults(changes.searchTerm.currentValue);
         }
     }
 
@@ -72,18 +92,27 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    public displaySearchResults(searchTerm) {
+    private displaySearchResults(searchTerm) {
+        let searchOpts: SearchOptions = {
+            include: ['path'],
+            rootNodeId: this.rootNodeId,
+            nodeType: this.resultType,
+            maxItems: this.maxResults,
+            orderBy: this.resultSort
+        };
         if (searchTerm !== null && searchTerm !== '') {
             this.alfrescoSearchService
-                .getLiveSearchResults(searchTerm)
+                .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
-                        this.results = results.list.entries;
+                        this.results = results.list.entries.slice(0, this.maxResults);
                         this.errorMessage = null;
+                        this.resultsLoad.emit(this.results);
                     },
                     error => {
                         this.results = null;
                         this.errorMessage = <any>error;
+                        this.resultsLoad.error(error);
                     }
                 );
         }
@@ -114,17 +143,65 @@ export class AlfrescoSearchAutocompleteComponent implements OnChanges {
         }
     }
 
-    onItemClick(node, event?: Event): void {
-        if (event) {
-            event.preventDefault();
-        }
+    focusResult(): void {
+        let firstResult: any = this.resultsTableBody.nativeElement.querySelector('tr');
+        firstResult.focus();
+    }
+
+    onItemClick(node): void {
         if (node && node.entry) {
             if (node.entry.isFile) {
-                this.preview.emit({
+                this.fileSelect.emit({
                     value: node
                 });
             }
         }
+    }
+
+    onRowFocus($event: FocusEvent): void {
+        this.searchFocus.emit($event);
+    }
+
+    onRowBlur($event: FocusEvent): void {
+        this.searchFocus.emit($event);
+    }
+
+    onRowEnter(node): void {
+        if (node && node.entry) {
+            if (node.entry.isFile) {
+                this.fileSelect.emit({
+                    value: node
+                });
+            }
+        }
+    }
+
+    private getNextElementSibling(node: Element): Element {
+        return node.nextElementSibling;
+    }
+
+    private getPreviousElementSibling(node: Element): Element {
+        return node.previousElementSibling;
+    }
+
+    onRowArrowDown($event: KeyboardEvent): void {
+        let nextElement: any = this.getNextElementSibling(<Element> $event.target);
+        if (nextElement) {
+            nextElement.focus();
+        }
+    }
+
+    onRowArrowUp($event: KeyboardEvent): void {
+        let previousElement: any = this.getPreviousElementSibling(<Element> $event.target);
+        if (previousElement) {
+            previousElement.focus();
+        } else {
+            this.scrollBack.emit($event);
+        }
+    }
+
+    onRowEscape($event: KeyboardEvent): void {
+        this.cancel.emit($event);
     }
 
 }

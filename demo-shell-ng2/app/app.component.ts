@@ -16,29 +16,22 @@
  */
 
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import {
-    MDL,
-    AlfrescoSettingsService,
     AlfrescoTranslationService,
-    AlfrescoPipeTranslate,
-    AlfrescoAuthenticationService
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService
 } from 'ng2-alfresco-core';
-
-import { SearchBarComponent } from './components/index';
 
 declare var document: any;
 
 @Component({
     selector: 'alfresco-app',
     templateUrl: 'app/app.component.html',
-    styleUrls: ['app/app.component.css'],
-    directives: [SearchBarComponent, ROUTER_DIRECTIVES, MDL],
-    pipes: [AlfrescoPipeTranslate]
+    styleUrls: ['app/app.component.css']
 })
 export class AppComponent {
-    translate: AlfrescoTranslationService;
     searchTerm: string = '';
 
     ecmHost: string = 'http://' + window.location.hostname + ':8080';
@@ -46,38 +39,46 @@ export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
-                translate: AlfrescoTranslationService,
-                public alfrescoSettingsService: AlfrescoSettingsService) {
+                public alfrescoSettingsService: AlfrescoSettingsService,
+                private translate: AlfrescoTranslationService) {
         this.setEcmHost();
         this.setBpmHost();
+        this.setProvider();
 
-        this.translate = translate;
-        this.translate.addTranslationFolder();
-    }
-
-    public onChangeECMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.ecmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
-        localStorage.setItem(`ecmHost`, this.ecmHost);
-    }
-
-    public onChangeBPMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.bpmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.bpmHost = this.bpmHost;
-        localStorage.setItem(`bpmHost`, this.bpmHost);
+        if (translate) {
+            translate.addTranslationFolder();
+        }
     }
 
     isLoggedIn(): boolean {
+        this.redirectToLoginPageIfNotLoggedIn();
         return this.auth.isLoggedIn();
+    }
+
+    redirectToLoginPageIfNotLoggedIn(): void {
+        if (!this.isLoginPage() && !this.auth.isLoggedIn()) {
+            this.router.navigate(['/login']);
+        }
+    }
+
+    isLoginPage(): boolean {
+        return location.pathname === '/login' || location.pathname === '/' || location.pathname === '/settings';
     }
 
     onLogout(event) {
         event.preventDefault();
         this.auth.logout()
             .subscribe(
-                () => this.router.navigate(['/login'])
+                () => {
+                    this.router.navigate(['/login']);
+                },
+                ($event: any) => {
+                    if ($event && $event.response && $event.response.status === 401) {
+                        this.router.navigate(['/login']);
+                    } else {
+                        console.error('An unknown error occurred while logging out', $event);
+                    }
+                }
             );
     }
 
@@ -115,6 +116,12 @@ export class AppComponent {
             this.bpmHost = localStorage.getItem(`bpmHost`);
         } else {
             this.alfrescoSettingsService.bpmHost = this.bpmHost;
+        }
+    }
+
+    private setProvider() {
+        if (localStorage.getItem(`providers`)) {
+            this.alfrescoSettingsService.setProviders(localStorage.getItem(`providers`));
         }
     }
 }

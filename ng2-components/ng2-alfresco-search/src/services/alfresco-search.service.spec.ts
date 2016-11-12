@@ -15,17 +15,89 @@
  * limitations under the License.
  */
 
-import {
-    describe,
-    beforeEach
-} from '@angular/core/testing';
-import {AlfrescoSearchService} from './alfresco-search.service';
+import { ReflectiveInjector } from '@angular/core';
+import { AlfrescoSearchService } from './alfresco-search.service';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
+
+declare let jasmine: any;
 
 describe('AlfrescoSearchService', () => {
 
     let service: AlfrescoSearchService;
+    let authenticationService: AlfrescoAuthenticationService;
+    let injector: ReflectiveInjector;
 
     beforeEach(() => {
-        service = new AlfrescoSearchService(null);
+        injector = ReflectiveInjector.resolveAndCreate([
+            AlfrescoSearchService,
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService
+        ]);
+        service = injector.get(AlfrescoSearchService);
+        authenticationService = injector.get(AlfrescoAuthenticationService);
+        spyOn(authenticationService, 'getAlfrescoApi').and.returnValue(fakeApi);
     });
+
+    it('should call search API with no additional options', (done) => {
+        let searchTerm = 'searchTerm63688';
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        service.getNodeQueryResults(searchTerm).subscribe(
+            () => {
+                expect(fakeApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, undefined);
+                done();
+            }
+        );
+    });
+
+    it('should call search API with additional options', (done) => {
+        let searchTerm = 'searchTerm63688', options = {
+            include: [ 'path' ],
+            rootNodeId: '-root-',
+            nodeType: 'cm:content'
+        };
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.resolve(fakeSearch));
+        service.getNodeQueryResults(searchTerm, options).subscribe(
+            () => {
+                expect(fakeApi.core.queriesApi.findNodes).toHaveBeenCalledWith(searchTerm, options);
+                done();
+            }
+        );
+    });
+
+    it('should return search results returned from the API', (done) => {
+        service.getNodeQueryResults('').subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res).toEqual(fakeSearch);
+                done();
+            }
+        );
+    });
+
+    it('should notify errors returned from the API', (done) => {
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(fakeError));
+        service.getNodeQueryResults('').subscribe(
+            () => {},
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res).toEqual(fakeError);
+                done();
+            }
+        );
+    });
+
+    it('should notify a general error if the API does not return a specific error', (done) => {
+        spyOn(fakeApi.core.queriesApi, 'findNodes').and.returnValue(Promise.reject(null));
+        service.getNodeQueryResults('').subscribe(
+            () => {},
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res).toEqual('Server error');
+                done();
+            }
+        );
+    });
+
 });

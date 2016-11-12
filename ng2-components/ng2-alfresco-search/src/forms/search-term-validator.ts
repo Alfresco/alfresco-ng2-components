@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Control } from '@angular/common';
+import { FormControl } from '@angular/forms';
 
 export class SearchTermValidator {
 
     static minAlphanumericChars(minChars: number) {
-        return (control: Control) => {
+        return (control: FormControl) => {
             return ('' + control.value).replace(/[^0-9a-zA-Z]+/g, '').length >= minChars ? null : {
                 hasMinAlphanumericChars: false
             };

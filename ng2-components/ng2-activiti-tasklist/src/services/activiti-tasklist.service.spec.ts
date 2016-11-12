@@ -15,25 +15,35 @@
  * limitations under the License.
  */
 
-import {it, describe, inject, beforeEach, beforeEachProviders} from '@angular/core/testing';
-import {ActivitiTaskListService} from './activiti-tasklist.service';
-import {AlfrescoSettingsService, AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {TaskDetailsModel} from '../models/task-details.model';
-import {Comment} from '../models/comment.model';
+import { ReflectiveInjector } from '@angular/core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService
+} from 'ng2-alfresco-core';
+import { ActivitiTaskListService } from './activiti-tasklist.service';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { FilterRepresentationModel, AppDefinitionRepresentationModel } from '../models/filter.model';
+import { Comment } from '../models/comment.model';
 
 declare let AlfrescoApi: any;
 declare let jasmine: any;
 
 describe('ActivitiTaskListService', () => {
-    let service: any;
+    let fakeEmptyFilters = {
+        size: 0, total: 0, start: 0,
+        data: [ ]
+    };
 
     let fakeFilters = {
         size: 2, total: 2, start: 0,
         data: [
-            {
-                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
-                filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved'}
-            },
+            new AppDefinitionRepresentationModel(
+                {
+                    id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+                    filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved'}
+                }
+            ),
             {
                 id: 2, name: 'FakeMyTasks', recent: false, icon: 'glyphicon-align-left',
                 filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee'}
@@ -41,9 +51,32 @@ describe('ActivitiTaskListService', () => {
         ]
     };
 
+    let fakeAppFilter = {
+        size: 1, total: 1, start: 0,
+        data: [
+            {
+                id: 1, name: 'FakeInvolvedTasks', recent: false, icon: 'glyphicon-align-left',
+                filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-involved'}
+            }
+        ]
+    };
+
+    let fakeApps = {
+        size: 2, total: 2, start: 0,
+        data: [
+            {
+                id: 1, defaultAppId: null, name: 'Sales-Fakes-App', description: 'desc-fake1', modelId: 22,
+                theme: 'theme-1-fake', icon: 'glyphicon-asterisk', 'deploymentId': '111', 'tenantId': null
+            },
+            {
+                id: 2, defaultAppId: null, name: 'health-care-Fake', description: 'desc-fake2', modelId: 33,
+                theme: 'theme-2-fake', icon: 'glyphicon-asterisk', 'deploymentId': '444', 'tenantId': null
+            }
+        ]
+    };
+
     let fakeFilter = {
-        page: 2, filterId: 2, appDefinitionId: null,
-        filter: {sort: 'created-desc', name: '', state: 'open', assignment: 'fake-assignee'}
+        sort: 'created-desc', text: '', state: 'open', assignment: 'fake-assignee'
     };
 
     let fakeUser = {id: 1, email: 'fake-email@dom.com', firstName: 'firstName', lastName: 'lastName'};
@@ -93,18 +126,25 @@ describe('ActivitiTaskListService', () => {
         ]
     };
 
-    beforeEachProviders(() => {
-        return [
-            ActivitiTaskListService,
-            AlfrescoSettingsService,
-            AlfrescoAuthenticationService
-        ];
+    let fakeAppPromise = new Promise(function (resolve, reject) {
+        resolve(fakeAppFilter);
     });
 
-    beforeEach(inject([ActivitiTaskListService], (activitiTaskListService: ActivitiTaskListService) => {
+    let service, injector;
+
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
+            ActivitiTaskListService,
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService
+        ]);
+    });
+
+    beforeEach(() => {
+        service = injector.get(ActivitiTaskListService);
         jasmine.Ajax.install();
-        service = activitiTaskListService;
-    }));
+    });
 
     afterEach(() => {
         jasmine.Ajax.uninstall();
@@ -128,9 +168,39 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
+    it('should call the api withthe appId', (done) => {
+        spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
+
+        let appId = 1;
+        service.getTaskListFilters(appId).subscribe(
+            (res) => {
+                expect(service.callApiTaskFilters).toHaveBeenCalledWith(appId);
+                done();
+            }
+        );
+    });
+
+    it('should return the app filter by id', (done) => {
+        let appId = 1;
+        service.getTaskListFilters(appId).subscribe(
+            (res) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(1);
+                expect(res[0].name).toEqual('FakeInvolvedTasks');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeAppFilter)
+        });
+    });
+
     it('should return the task list filtered', (done) => {
         service.getTasks(fakeFilter).subscribe(
-            res => {
+                res => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
                 expect(res.total).toEqual(1);
@@ -299,6 +369,147 @@ describe('ActivitiTaskListService', () => {
             'status': 200,
             contentType: 'application/json',
             responseText: JSON.stringify({})
+        });
+    });
+
+    it('should return the total number of tasks', (done) => {
+        service.getTotalTasks(fakeFilter).subscribe(
+                res => {
+                expect(res).toBeDefined();
+                expect(res.size).toEqual(1);
+                expect(res.total).toEqual(1);
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeTaskList)
+        });
+    });
+
+    it('should call the createDefaultFilter when the list is empty', (done) => {
+        spyOn(service, 'createDefaultFilter');
+
+        service.getTaskListFilters().subscribe(
+            (res) => {
+                expect(service.createDefaultFilter).toHaveBeenCalled();
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeEmptyFilters)
+        });
+    });
+
+    it('should return the default filters', () => {
+        spyOn(service, 'addFilter');
+        let filters = service.createDefaultFilter();
+        expect(service.addFilter).toHaveBeenCalledTimes(4);
+        expect(filters).toBeDefined();
+        expect(filters.length).toEqual(4);
+    });
+
+    it('should add a filter ', (done) => {
+        let filterFake = new FilterRepresentationModel({
+            name: 'FakeNameFilter',
+            assignment: 'fake-assignement'
+        });
+
+        service.addFilter(filterFake).subscribe(
+            (res: FilterRepresentationModel) => {
+                expect(res).toBeDefined();
+                expect(res.id).not.toEqual('');
+                expect(res.name).toEqual('FakeNameFilter');
+                expect(res.filter.assignment).toEqual('fake-assignement');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({
+                id: '2233', name: 'FakeNameFilter', filter: {assignment: 'fake-assignement'}
+            })
+        });
+    });
+
+    it('should get the deployed apps ', (done) => {
+        service.getDeployedApplications().subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(2);
+                expect(res[0].name).toEqual('Sales-Fakes-App');
+                expect(res[0].description).toEqual('desc-fake1');
+                expect(res[0].deploymentId).toEqual('111');
+                expect(res[1].name).toEqual('health-care-Fake');
+                expect(res[1].description).toEqual('desc-fake2');
+                expect(res[1].deploymentId).toEqual('444');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeApps)
+        });
+    });
+
+    it('should get the filter deployed app ', (done) => {
+        let name = 'health-care-Fake';
+        service.getDeployedApplications(name).subscribe(
+            (res: any) => {
+                expect(res).toBeDefined();
+                expect(res.name).toEqual('health-care-Fake');
+                expect(res.description).toEqual('desc-fake2');
+                expect(res.deploymentId).toEqual('444');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(fakeApps)
+        });
+    });
+
+    it('should create a new standalone task ', (done) => {
+        let taskFake = new TaskDetailsModel({
+            name: 'FakeNameTask',
+            description: 'FakeDescription',
+            category: '3'
+        });
+
+        service.createNewTask(taskFake).subscribe(
+            (res: TaskDetailsModel) => {
+                expect(res).toBeDefined();
+                expect(res.id).not.toEqual('');
+                expect(res.name).toEqual('FakeNameTask');
+                expect(res.description).toEqual('FakeDescription');
+                expect(res.category).toEqual('3');
+                expect(res.created).not.toEqual('');
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({
+                id: '777',
+                name: 'FakeNameTask',
+                description: 'FakeDescription',
+                category: '3',
+                assignee: fakeUser,
+                created: '2016-07-15T11:19:17.440+0000'
+            })
         });
     });
 

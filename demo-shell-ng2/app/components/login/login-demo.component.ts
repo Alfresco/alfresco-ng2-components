@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
-import {AlfrescoLoginComponent} from 'ng2-alfresco-login';
-import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Validators } from '@angular/forms';
 
 declare let __moduleName: string;
 
@@ -25,14 +25,51 @@ declare let __moduleName: string;
     moduleId: __moduleName,
     selector: 'login-demo',
     templateUrl: './login-demo.component.html',
-    directives: [ROUTER_DIRECTIVES, AlfrescoLoginComponent],
-    pipes: []
+    styleUrls: ['./login-demo.component.css']
 })
-export class LoginDemoComponent {
+export class LoginDemoComponent implements OnInit {
+
+    @ViewChild('alfrescologin')
+    alfrescologin: any;
 
     providers: string = 'ECM';
+    disableCsrf: boolean = false;
+    blackListUsername: string;
+    customValidation: any;
+
+    isECM: boolean = true;
+    isBPM: boolean = false;
 
     constructor(public router: Router) {
+        this.customValidation = {
+            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            password: ['', Validators.required]
+        };
+    }
+
+    ngOnInit() {
+        this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+        this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
+
+        if (localStorage.getItem('providers')) {
+            this.providers = localStorage.getItem('providers');
+        }
+
+        this.setProviders();
+    }
+
+    setProviders() {
+        if (this.providers === 'BPM') {
+            this.isECM = false;
+            this.isBPM = true;
+        } else if (this.providers === 'ECM') {
+            this.isECM = true;
+            this.isBPM = false;
+        } else if (this.providers === 'ALL') {
+            this.isECM = true;
+            this.isBPM = true;
+        }
     }
 
     onLogin($event) {
@@ -49,9 +86,13 @@ export class LoginDemoComponent {
             this.providers = 'ALL';
         } else if (checked) {
             this.providers = 'ECM';
-        } else {
-            this.providers = undefined;
+        } else if (!checked && this.providers === 'ALL') {
+            this.providers = 'BPM';
+        } else if (!checked && this.providers === 'ECM') {
+            this.providers = '';
         }
+
+        localStorage.setItem('providers', this.providers);
     }
 
     toggleBPM(checked) {
@@ -59,8 +100,25 @@ export class LoginDemoComponent {
             this.providers = 'ALL';
         } else if (checked) {
             this.providers = 'BPM';
-        } else {
-            this.providers = undefined;
+        } else if (!checked && this.providers === 'ALL') {
+            this.providers = 'ECM';
+        } else if (!checked && this.providers === 'BPM') {
+            this.providers = '';
+        }
+
+        localStorage.setItem('providers', this.providers);
+    }
+
+    toggleCSRF() {
+        this.disableCsrf = !this.disableCsrf;
+    }
+
+    validateForm(event: any) {
+        let values = event.values;
+        if (values.controls['username'].value === this.blackListUsername) {
+            this.alfrescologin.addCustomFormError('username', 'This particular username has been blocked');
+            event.preventDefault();
         }
     }
+
 }

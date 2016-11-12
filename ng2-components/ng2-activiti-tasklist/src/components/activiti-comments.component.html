@@ -1,8 +1,8 @@
 <span class="activiti-label mdl-badge"
       [attr.data-badge]="comments?.length">{{ 'TASK_DETAILS.LABELS.COMMENTS' |translate }}</span>
-<div id="addComment" (click)="showDialog()" class="icon material-icons">add</div>
-<div class="mdl-tooltip" for="addComment">
-    Add a comment
+<div *ngIf="!readOnly" id="addComment" (click)="showDialog()" class="icon material-icons">add</div>
+<div *ngIf="!readOnly" class="mdl-tooltip" for="addComment">
+    {{ 'TASK_DETAILS.COMMENTS.ADD' | translate }}
 </div>
 
 <div class="menu-container" *ngIf="comments?.length > 0">
@@ -15,21 +15,21 @@
         </li>
     </ul>
 </div>
-<div *ngIf="comments?.length === 0">
+<div *ngIf="comments?.length === 0" data-automation-id="comments-none">
     {{ 'TASK_DETAILS.COMMENTS.NONE' | translate }}
 </div>
 
 
 <dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">New comment</h4>
+    <h4 class="mdl-dialog__title">{{ 'TASK_DETAILS.COMMENTS.DIALOG.TITLE' | translate }}</h4>
     <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <textarea class="mdl-textfield__input" type="text" [(ngModel)]="message" rows="1" id="commentText"></textarea>
-            <label class="mdl-textfield__label" for="commentText">Message</label>
+            <label class="mdl-textfield__label" for="commentText">{{ 'TASK_DETAILS.COMMENTS.DIALOG.LABELS.MESSAGE' | translate }}</label>
         </div>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="add()" class="mdl-button">Add Comment</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
+        <button type="button" (click)="add()" class="mdl-button">{{ 'TASK_DETAILS.COMMENTS.DIALOG.BUTTON.ADD' | translate }}</button>
+        <button type="button" (click)="cancel()" class="mdl-button close">{{ 'TASK_DETAILS.COMMENTS.DIALOG.BUTTON.CANCEL' | translate }}</button>
     </div>
 </dialog>

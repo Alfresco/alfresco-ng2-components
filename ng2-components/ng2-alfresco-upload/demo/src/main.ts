@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
-import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
+import { NgModule, Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `<label for="ticket"><b>Insert a valid access ticket / ticket:</b></label><br>
                <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
                <label for="host"><b>Insert the ip of your Alfresco instance:</b></label><br>
@@ -46,7 +42,6 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
                 </div>
                 <div *ngIf="!acceptedFilesTypeShow">
                     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                                            [uploaddirectory]="currentPath"
                                             [currentFolderPath]="currentPath"
                                             [multipleFiles]="multipleFileUpload"
                                             [uploadFolders]="folderUpload"
@@ -57,7 +52,6 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
                 </div>
                 <div *ngIf="acceptedFilesTypeShow">
                     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                                            [uploaddirectory]="currentPath"
                                             [currentFolderPath]="currentPath"
                                             acceptedFilesType="{{acceptedFilesType}}"
                                             [multipleFiles]="multipleFileUpload"
@@ -74,7 +68,6 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
                         <span class="mdl-switch__label">Multiple File Upload</span>
                     </label>
                 </p>
-                
                 
                 <p style="width:250px;margin: 20px;">
                     <label for="switch-folder-upload" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
@@ -106,14 +99,13 @@ import { ALFRESCO_ULPOAD_COMPONENTS, UploadService } from 'ng2-alfresco-upload';
                <file-uploading-dialog></file-uploading-dialog>
                `,
     styles: [`.upload-border { position: absolute; padding: 5px 5px }`,
-        `.drag-area { width: 200px; height: 100px; border: 1px solid #888888;}`],
-    directives: [ALFRESCO_ULPOAD_COMPONENTS]
+        `.drag-area { width: 200px; height: 100px; border: 1px solid #888888;}`]
 })
 export class MyDemoApp implements OnInit {
 
     authenticated: boolean;
 
-    public ecmHost: string = 'http://devproducts-platform.alfresco.me';
+    public ecmHost: string = 'http://localhost:8080';
 
     multipleFileUpload: boolean = false;
     folderUpload: boolean = false;
@@ -161,7 +153,6 @@ export class MyDemoApp implements OnInit {
             });
     }
 
-
     toggleMultipleFileUpload() {
         this.multipleFileUpload = !this.multipleFileUpload;
         return this.multipleFileUpload;
@@ -184,8 +175,15 @@ export class MyDemoApp implements OnInit {
     }
 }
 
-bootstrap(MyDemoApp, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS,
-    UploadService
-]);
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        UploadModule.forRoot()
+    ],
+    declarations: [ MyDemoApp ],
+    bootstrap:    [ MyDemoApp ]
+})
+export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

@@ -1,0 +1,13 @@
+{
+    "USER_PROFILE": {
+        "LABELS": {
+            "ECM": {
+                "JOB_TITLE": "Job Title"
+            },
+            "BPM": {
+                "TENANT": "Tenant"
+            }
+        }
+    }
+}
+

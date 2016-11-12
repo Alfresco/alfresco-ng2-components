@@ -15,43 +15,41 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoPipeTranslate } from 'ng2-alfresco-core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, DebugElement, OnChanges, SimpleChanges } from '@angular/core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
-declare let __moduleName: string;
+declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-start-process',
-    moduleId: __moduleName,
+    selector: 'activiti-start-process-instance',
+    moduleId: module.id,
     templateUrl: './activiti-start-process.component.html',
-    styleUrls: ['./activiti-start-process.component.css'],
-    providers: [ActivitiProcessService],
-    pipes: [ AlfrescoPipeTranslate ]
-
+    styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessButton implements OnInit {
+export class ActivitiStartProcessButton implements OnInit, OnChanges {
 
     @Input()
     appId: string;
 
+    @Output()
+    start: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('dialog')
-    dialog: any;
+    dialog: DebugElement;
+
+    @ViewChild('startForm')
+    startForm: ActivitiStartForm;
 
     processDefinitions: any[] = [];
 
     name: string;
-    processDefinition: string;
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param activitiProcess
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    currentProcessDef: any;
+
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
@@ -63,7 +61,16 @@ export class ActivitiStartProcessButton implements OnInit {
         this.load(this.appId);
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+        let appId = changes['appId'];
+        if (appId && (appId.currentValue || appId.currentValue === null)) {
+            this.load(appId.currentValue);
+            return;
+        }
+    }
+
     public load(appId: string) {
+        this.reset();
         this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
             (res: any[]) => {
                 this.processDefinitions = res;
@@ -75,15 +82,19 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public showDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
+        if (!this.dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.dialog.nativeElement);
         }
+        this.dialog.nativeElement.showModal();
     }
 
     public startProcess() {
-        if (this.processDefinition && this.name) {
-            this.activitiProcess.startProcess(this.processDefinition, this.name).subscribe(
+        if (this.currentProcessDef.id && this.name) {
+            let formValues = this.startForm ? this.startForm.form.values : undefined;
+            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, formValues).subscribe(
                 (res: any) => {
+                    this.name = '';
+                    this.start.emit(res);
                     this.cancel();
                 },
                 (err) => {
@@ -94,8 +105,30 @@ export class ActivitiStartProcessButton implements OnInit {
     }
 
     public cancel() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
+        this.dialog.nativeElement.close();
+    }
+
+    onChange(processDefinitionId) {
+        let processDef = this.processDefinitions.find((processDefinition) => {
+            return processDefinition.id === processDefinitionId;
+        });
+        let clone = JSON.parse(JSON.stringify(processDef));
+        this.currentProcessDef = clone;
+    }
+
+    hasStartForm() {
+        return this.currentProcessDef && this.currentProcessDef.hasStartForm;
+    }
+
+    isStartFormMissingOrValid() {
+        return !this.startForm || this.startForm.form.isValid;
+    }
+
+    validateForm() {
+        return this.currentProcessDef.id && this.name && this.isStartFormMissingOrValid();
+    }
+
+    reset() {
+        this.currentProcessDef = {};
     }
 }

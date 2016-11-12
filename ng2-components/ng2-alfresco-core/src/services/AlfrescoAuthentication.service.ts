@@ -15,11 +15,13 @@
  * limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
-import {AlfrescoSettingsService} from './AlfrescoSettings.service';
-
-declare let AlfrescoApi: any;
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { AlfrescoApiService } from './AlfrescoApi.service';
+import * as alfrescoApi from  'alfresco-js-api';
+import { AlfrescoApi } from  'alfresco-js-api';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
@@ -27,32 +29,46 @@ declare let AlfrescoApi: any;
 @Injectable()
 export class AlfrescoAuthenticationService {
 
-    alfrescoApi: any;
+    alfrescoApi: AlfrescoApi;
 
-    /**A
+    public loginSubject: Subject<any> = new Subject<any>();
+
+    public logoutSubject: Subject<any> = new Subject<any>();
+
+    /**
      * Constructor
-     * @param alfrescoSetting
+     * @param settingsService
+     * @param apiService
      */
-    constructor(public alfrescoSetting: AlfrescoSettingsService) {
-        this.alfrescoApi = new AlfrescoApi({
-            provider: this.alfrescoSetting.getProviders(),
+    constructor(private settingsService: AlfrescoSettingsService,
+                private apiService: AlfrescoApiService) {
+        this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
+            provider: this.settingsService.getProviders(),
             ticketEcm: this.getTicketEcm(),
             ticketBpm: this.getTicketBpm(),
-            hostEcm: this.alfrescoSetting.ecmHost,
-            hostBpm: this.alfrescoSetting.bpmHost
+            hostEcm: this.settingsService.ecmHost,
+            hostBpm: this.settingsService.bpmHost,
+            contextRoot: 'alfresco',
+            disableCsrf: true
         });
 
-        alfrescoSetting.bpmHostSubject.subscribe((bpmHost) => {
+        settingsService.bpmHostSubject.subscribe((bpmHost) => {
             this.alfrescoApi.changeBpmHost(bpmHost);
         });
 
-        alfrescoSetting.ecmHostSubject.subscribe((ecmHost) => {
+        settingsService.ecmHostSubject.subscribe((ecmHost) => {
             this.alfrescoApi.changeEcmHost(ecmHost);
         });
 
-        alfrescoSetting.providerSubject.subscribe((value) => {
+        settingsService.csrfSubject.subscribe((csrf) => {
+            this.alfrescoApi.changeCsrfConfig(csrf);
+        });
+
+        settingsService.providerSubject.subscribe((value) => {
             this.alfrescoApi.config.provider = value;
         });
+
+        this.apiService.setInstance(this.alfrescoApi);
     }
 
     /**
@@ -69,11 +85,13 @@ export class AlfrescoAuthenticationService {
      * @param password
      * @returns {Observable<R>|Observable<T>}
      */
-    login(username: string, password: string) {
+    login(username: string, password: string): Observable<{ type: string, ticket: any }> {
+        this.removeTicket();
         return Observable.fromPromise(this.callApiLogin(username, password))
             .map((response: any) => {
                 this.saveTickets();
-                return {type: this.alfrescoSetting.getProviders(), ticket: response};
+                this.loginSubject.next(response);
+                return {type: this.settingsService.getProviders(), ticket: response};
             })
             .catch(this.handleError);
     }
@@ -94,10 +112,11 @@ export class AlfrescoAuthenticationService {
      * @returns {Observable<R>|Observable<T>}
      */
     public logout() {
+        this.removeTicket();
         return Observable.fromPromise(this.callApiLogout())
             .map(res => <any> res)
             .do(response => {
-                this.removeTicket();
+                this.logoutSubject.next(response);
                 return response;
             })
             .catch(this.handleError);
@@ -165,7 +184,7 @@ export class AlfrescoAuthenticationService {
      * The method save the ECM ticket in the localStorage
      */
     public saveTicketEcm(): void {
-        if (this.alfrescoApi) {
+        if (this.alfrescoApi && this.alfrescoApi.getTicketEcm()) {
             localStorage.setItem('ticket-ECM', this.alfrescoApi.getTicketEcm());
         }
     }
@@ -174,9 +193,23 @@ export class AlfrescoAuthenticationService {
      * The method save the BPM ticket in the localStorage
      */
     public saveTicketBpm(): void {
-        if (this.alfrescoApi) {
+        if (this.alfrescoApi && this.alfrescoApi.getTicketBpm()) {
             localStorage.setItem('ticket-BPM', this.alfrescoApi.getTicketBpm());
         }
+    }
+
+    /**
+     * The method return true if user is logged in on ecm provider
+     */
+    public isEcmLoggedIn() {
+        return this.alfrescoApi.ecmAuth && !!this.alfrescoApi.ecmAuth.isLoggedIn();
+    }
+
+    /**
+     * The method return true if user is logged in on bpm provider
+     */
+    public isBpmLoggedIn() {
+        return this.alfrescoApi.bpmAuth && !!this.alfrescoApi.bpmAuth.isLoggedIn();
     }
 
     /**

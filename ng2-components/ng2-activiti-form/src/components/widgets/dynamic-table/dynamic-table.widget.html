@@ -1,0 +1,67 @@
+<div class="dynamic-table-widget"
+    [class.dynamic-table-widget__invalid]="!isValid()">
+     <div class="dynamic-table-widget__label">{{content.name}}</div>
+
+     <div *ngIf="!editMode">
+         <div class="dynamic-table-widget__table-container">
+            <table class="mdl-data-table mdl-js-data-table dynamic-table-widget__table">
+                <thead>
+                    <tr>
+                        <th *ngFor="let column of content.visibleColumns"
+                            class="mdl-data-table__cell--non-numeric">
+                            {{column.name}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of content.rows"
+                        [class.dynamic-table-widget__row-selected]="row.selected">
+                        <td *ngFor="let column of content.visibleColumns"
+                            class="mdl-data-table__cell--non-numeric"
+                            (click)="onRowClicked(row)">
+                            {{ getCellValue(row, column) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+         </div>
+
+        <div>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="moveSelectionUp()">
+                <i class="material-icons">arrow_upward</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="moveSelectionDown()">
+                <i class="material-icons">arrow_downward</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    (click)="addNewRow()">
+                <i class="material-icons">add_circle_outline</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="deleteSelection()">
+                <i class="material-icons">remove_circle_outline</i>
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon"
+                    [disabled]="!hasSelection()"
+                    (click)="editSelection()">
+                <i class="material-icons">edit</i>
+            </button>
+        </div>
+     </div>
+
+     <row-editor *ngIf="editMode"
+        [table]="content"
+        [row]="editRow"
+        [column]="column"
+        (save)="onSaveChanges()"
+        (cancel)="onCancelChanges()">
+     </row-editor>
+
+     <div class="dynamic-table-widget__summary">{{content?.field.validationSummary}}</div>
+
+</div>

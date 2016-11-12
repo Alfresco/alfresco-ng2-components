@@ -1,4 +1,4 @@
-# Alfresco Angular2 Components core
+# Alfresco Angular 2 Components core
 
 <p>
   <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
@@ -32,12 +32,9 @@
   </a>
 </p>
 
-Core library for other ng2-alfresco components.
-This should be added as a dependency for any project using the components.
-
 ## Prerequisites
 
-Before you start using this development framework, make sure you have installed all required software and done all the
+Before you start using this development framework, make sure you have installed all required software and done all the 
 necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
 ## Install
@@ -51,6 +48,51 @@ npm install --save ng2-alfresco-core
 ### Components
 
 - Context Menu directive
+- Material Design directives
+  - [mdl]
+  - [alfresco-mdl-button]
+  - [alfresco-mdl-menu]
+  - [alfresco-mdl-tabs]
+
+### Services
+
+- **AlfrescoApiService**, provides access to Alfresco JS API instance
+- **AlfrescoAuthenticationService**, main authentication APIs
+- **AlfrescoTranslationService**, various i18n-related APIs
+- **ContextMenuService**, global context menu APIs
+
+
+#### Alfresco Api Service
+
+Provides access to initialized **AlfrescoJSApi** instance.
+
+```ts
+
+export class MyComponent implements OnInit {
+
+    constructor(private apiService: AlfrescoApiService) {   
+    }
+
+    ngOnInit() {
+        let nodeId = 'some-node-id';
+        let params = {};
+        this.getAlfrescoApi().nodes
+            .getNodeChildren(nodeId, params)
+            .then(result => console.log(result));
+    }
+}
+```
+
+**Note for developers**: _the TypeScript declaration files for Alfresco JS API
+are still under development and some Alfresco APIs may not be accessed
+via your favourite IDE's intellisense or TypeScript compiler. 
+In case of any TypeScript type check errors you can still call any supported 
+Alfresco JS api by casting the instance to `any` type like the following:_
+
+```ts
+let apiService: any = this.authService.getAlfrescoApi();
+apiService.nodes.addNode('-root-', body, {});
+```
 
 #### Context Menu directive
 
@@ -88,49 +130,49 @@ export class MyComponent implements OnInit {
 }
 ```
 
-### Services
-
-- Authentication Service
-- Translation Service
-- Context Menu Service
-
 #### Authentication Service
 
 The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
 
-```javascript
-import { Component } from '@angular/core';
-import { bootstrap } from '@angular/platform-browser-dynamic';
-import { HTTP_PROVIDERS } from '@angular/http';
-
-import {
-    ALFRESCO_CORE_PROVIDERS,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService
-} from 'ng2-alfresco-core';
+```ts
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 @Component({
-    selector: 'my-app',
+    selector: 'alfresco-app-demo',
     template: `
                <div *ngIf="!authenticated" >
                     Authentication failed to ip {{ ecmHost }} with user: admin, admin
                </div>
                <div *ngIf="authenticated">
-                    Authentication successfull to ip {{ ecmHost }} with user: admin, admin, your token is {{ token }}
+                    <H5>ECM</H5>
+                    Authentication successfull to ip {{ ecmHost }} with user: admin, admin<br> 
+                    your token is {{ tokenEcm }}<br>
+                    <H5>BPM</H5>
+                    Authentication successfull to ip {{ bpmHost }} with user: admin, admin<br> 
+                    your token is {{ tokenBpm }}<br>
                </div>`
 })
 class MyDemoApp {
     authenticated: boolean = false;
 
-    ecmHost: string = 'http://127.0.0.1:8080';
+    public ecmHost: string = 'http://localhost:8080';
 
-    token: string;
+    public bpmHost: string = 'http://localhost:9999';
+
+    tokenBpm: string;
+
+    tokenEcm: string;
 
     constructor(public alfrescoAuthenticationService: AlfrescoAuthenticationService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
 
         alfrescoSettingsService.ecmHost = this.ecmHost;
-        alfrescoSettingsService.setProviders('ECM');
+        alfrescoSettingsService.bpmHost = this.bpmHost;
+
+        alfrescoSettingsService.setProviders('ALL');
     }
 
     ngOnInit() {
@@ -140,7 +182,8 @@ class MyDemoApp {
     login() {
         this.alfrescoAuthenticationService.login('admin', 'admin').subscribe(
             token => {
-                this.token = token.ticket;
+                this.tokenBpm = this.alfrescoAuthenticationService.getTicketBpm();
+                this.tokenEcm = this.alfrescoAuthenticationService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
@@ -149,17 +192,41 @@ class MyDemoApp {
             });
     }
 }
-bootstrap(MyDemoApp, [
-    HTTP_PROVIDERS,
-    ALFRESCO_CORE_PROVIDERS
-]);
 
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot()
+    ],
+    declarations: [MyDemoApp],
+    bootstrap: [MyDemoApp]
+})
+export class AppModule {
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
+#### Renditions Service
+
+* getRenditionsListByNodeId(nodeId: string)
+* createRendition(nodeId: string, encoding: string)
+* getRendition(nodeId: string, encoding: string)
+* isRenditionAvailable(nodeId: string, encoding: string)
 
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:
+
+```sh
+npm install
+npm run build
+```
+
+## Build from sources
+
+Alternatively you can build component from sources with the following commands:
+
 
 ```sh
 npm install
@@ -172,7 +239,7 @@ npm run build
 $ npm run build:w
 ```
 
-### Running unit tests
+## Running unit tests
 
 ```sh
 npm test
@@ -184,7 +251,7 @@ npm test
 npm test-browser
 ```
 
-This task rebuilds all the code, runs tslint, license checks and other quality check tools 
+This task rebuilds all the code, runs tslint, license checks and other quality check tools
 before performing unit testing. 
 
 ### Code coverage
@@ -192,3 +259,17 @@ before performing unit testing.
 ```sh
 npm run coverage
 ```
+
+## NPM scripts
+
+| Command | Description |
+| --- | --- |
+| npm run build | Build component |
+| npm run build:w | Build component and keep watching the changes |
+| npm run test | Run unit tests in the console |
+| npm run test-browser | Run unit tests in the browser
+| npm run coverage | Run unit tests and display code coverage report |
+
+## License
+
+[Apache Version 2.0](https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE)

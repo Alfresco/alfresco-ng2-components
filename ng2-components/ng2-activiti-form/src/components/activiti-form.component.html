@@ -4,23 +4,43 @@
     </div>
     <div *ngIf="hasForm()">
         <div class="mdl-card mdl-shadow--2dp activiti-form-container">
-            <div *ngIf="isTitleEnabled()" class="mdl-card__title">
-                <h2 class="mdl-card__title-text">{{form.taskName}}</h2>
+            <div class="mdl-card__title">
+                <i class="material-icons">{{ form.isValid ? 'event_available' : 'event_busy' }}</i>
+                <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
             </div>
             <div class="mdl-card__media">
                 <div *ngIf="form.hasTabs()">
-                    <tabs-widget [tabs]="form.tabs"></tabs-widget>
+                    <tabs-widget [tabs]="form.tabs" (formTabChanged)="checkVisibility($event);"></tabs-widget>
                 </div>
 
                 <div *ngIf="!form.hasTabs() && form.hasFields()">
-                    <container-widget *ngFor="let field of form.fields" [content]="field" (formValueChanged)="checkVisibility($event);"></container-widget>
+                    <div *ngFor="let field of form.fields">
+                        <div [ngSwitch]="field.type">
+                            <div *ngSwitchCase="'container'">
+                                <container-widget [content]="field" (formValueChanged)="checkVisibility($event)"></container-widget>
+                            </div>
+                            <div *ngSwitchCase="'group'">
+                                <container-widget [content]="field" (formValueChanged)="checkVisibility($event)"></container-widget>
+                            </div>
+                            <div *ngSwitchCase="'dynamic-table'">
+                                <dynamic-table-widget [content]="field"></dynamic-table-widget>
+                            </div>
+                            <div *ngSwitchCase="'readonly'">
+                                <display-value-widget [field]="field.field" (fieldChanged)="checkVisibility($event)"></display-value-widget>
+                            </div>
+                            <div *ngSwitchDefault>
+                                <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div *ngIf="form.hasOutcomes()" class="mdl-card__actions mdl-card--border">
                 <button *ngFor="let outcome of form.outcomes"
                         alfresco-mdl-button
+                        [disabled]="!isOutcomeButtonEnabled(outcome)"
                         [class.mdl-button--colored]="!outcome.isSystem"
-                        [class.activiti-form-hide-button]="!isOutcomeButtonEnabled(outcome)"
+                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome)"
                         (click)="onOutcomeClicked(outcome, $event)">
                     {{outcome.name}}
                 </button>
@@ -38,13 +58,15 @@
 For debugging and data visualisation purposes,
 will be removed during future revisions
 -->
-<div class="activiti-form-debug-container">
+<div  *ngIf="showDebugButton" class="activiti-form-debug-container">
 
-    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [class.is-checked]="debugMode">
-        <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="debugMode">
-        <span class="mdl-switch__label"></span>
-        <span class="debug-toggle-text">Debug mode</span>
-    </label>
+    <div style="float: right">
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [class.is-checked]="debugMode">
+            <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="debugMode">
+            <span class="mdl-switch__label"></span>
+            <span class="debug-toggle-text">Debug mode</span>
+        </label>
+    </div>
 
     <div *ngIf="debugMode && hasForm()">
         <h4>Values</h4>

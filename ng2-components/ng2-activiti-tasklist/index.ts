@@ -15,10 +15,73 @@
  * limitations under the License.
  */
 
-import { ActivitiTaskList } from './src/components/activiti-tasklist.component';
-import { ActivitiTaskDetails } from './src/components/activiti-task-details.component';
-import { ActivitiFilters } from './src/components/activiti-filters.component';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule } from 'ng2-alfresco-datatable';
+import { ActivitiFormModule } from 'ng2-activiti-form';
+import { ActivitiPeopleService } from './src/services/activiti-people.service';
+import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
 
-export * from './src/components/activiti-tasklist.component';
+import {
+    ActivitiApps,
+    ActivitiTaskList,
+    ActivitiTaskDetails,
+    ActivitiFilters,
+    NoTaskDetailsTemplateComponent,
+    ActivitiChecklist,
+    ActivitiComments,
+    ActivitiPeople,
+    ActivitiTaskHeader,
+    ActivitiStartTaskButton,
+    ActivitiPeopleSearch
+} from './src/components/index';
 
-export const ALFRESCO_TASKLIST_DIRECTIVES: [any] = [ActivitiFilters, ActivitiTaskList, ActivitiTaskDetails];
+export * from './src/components/index';
+export * from './src/services/activiti-tasklist.service';
+export * from  './src/models/index';
+
+export const ACTIVITI_TASKLIST_DIRECTIVES: any[] = [
+    NoTaskDetailsTemplateComponent,
+    ActivitiApps,
+    ActivitiFilters,
+    ActivitiTaskList,
+    ActivitiTaskDetails,
+    ActivitiChecklist,
+    ActivitiComments,
+    ActivitiPeople,
+    ActivitiTaskHeader,
+    ActivitiStartTaskButton,
+    ActivitiPeopleSearch
+];
+
+export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
+    ActivitiTaskListService,
+    ActivitiPeopleService
+];
+
+@NgModule({
+    imports: [
+        CoreModule,
+        DataTableModule,
+        ActivitiFormModule
+    ],
+    declarations: [
+        ...ACTIVITI_TASKLIST_DIRECTIVES
+    ],
+    providers: [
+        ...ACTIVITI_TASKLIST_PROVIDERS
+    ],
+    exports: [
+        ...ACTIVITI_TASKLIST_DIRECTIVES
+    ]
+})
+export class ActivitiTaskListModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: ActivitiTaskListModule,
+            providers: [
+                ...ACTIVITI_TASKLIST_PROVIDERS
+            ]
+        };
+    }
+}
