@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
@@ -34,6 +34,7 @@ describe('ActivitiProcessInstanceTasks', () => {
     let componentHandler: any;
     let component: ActivitiProcessInstanceTasks;
     let fixture: ComponentFixture<ActivitiProcessInstanceTasks>;
+    let debugElement: DebugElement;
     let service: ActivitiProcessService;
     let getProcessTasksSpy: jasmine.Spy;
 
@@ -59,6 +60,7 @@ describe('ActivitiProcessInstanceTasks', () => {
 
         fixture = TestBed.createComponent(ActivitiProcessInstanceTasks);
         component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
         service = fixture.debugElement.injector.get(ActivitiProcessService);
         getProcessTasksSpy = spyOn(service, 'getProcessTasks').and.returnValue(Observable.of([new TaskDetailsModel(taskDetailsMock)]));
 
@@ -181,7 +183,8 @@ describe('ActivitiProcessInstanceTasks', () => {
         it('should close the task details dialog when close button clicked', () => {
             component.clickTask({}, new TaskDetailsModel(taskDetailsMock));
             fixture.detectChanges();
-            component.cancelDialog();
+            let closeButton: DebugElement = debugElement.query(By.css('[data-automation-id="button-task-close"]'));
+            closeButton.triggerEventHandler('click', null);
             expect(closeSpy).toHaveBeenCalled();
         });
 
