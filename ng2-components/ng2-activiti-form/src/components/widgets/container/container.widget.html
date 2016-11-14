@@ -20,7 +20,7 @@
                             <number-widget [field]="field" (fieldChanged)="fieldChanged($event);"></number-widget>
                         </div>
                         <div *ngSwitchCase="'text'">
-                            <text-widget [field]="field" (fieldChanged)="fieldChanged($event);"></text-widget>
+                            <form-field [field]="field"></form-field>
                         </div>
                         <div *ngSwitchCase="'multi-line-text'">
                             <multiline-text-widget [field]="field" (fieldChanged)="fieldChanged($event);"></multiline-text-widget>
