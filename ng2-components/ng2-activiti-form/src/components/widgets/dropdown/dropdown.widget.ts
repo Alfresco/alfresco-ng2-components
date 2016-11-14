@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -80,7 +81,7 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
                 this.handleError
             );
     }
-    
+
     getOptionValue(option: FormFieldOption): string {
         let optionValue: string = '';
         if (option.id === 'empty') {
@@ -90,7 +91,11 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
         }
         return optionValue;
     }
-    
+
+    checkVisibility() {
+        this.visibilityService.refreshVisibility(this.field.form);
+    }
+
     handleError(error: any) {
         console.error(error);
     }
