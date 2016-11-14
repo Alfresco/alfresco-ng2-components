@@ -1,22 +1,17 @@
 language: node_js
 dist: trusty
-sudo: required
+sudo: false
 
 node_js:
   - "5"
 
 addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
 
 
 before_install:
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 env:
   matrix:
     - MODULE=ng2-alfresco-core
@@ -37,31 +32,33 @@ env:
 
 before_script:
   - if ([ "$MODULE" != "ng2-alfresco-core" ]); then
-        (cd ng2-components/ng2-alfresco-core; npm install; npm link);
+        (cd ng2-components/ng2-alfresco-core; if [ ! -d "dist" ]; then npm install; fi; npm link);
     fi
   - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; npm install; npm link);
+        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "dist" ]; then npm install; fi; npm link);
     fi
   - if ([ "$MODULE" == "ng2-activiti-tasklist" ] || [ "$MODULE" == "ng2-activiti-processlist" ]); then
-        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; npm install; npm link);
+        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; if [ ! -d "dist" ]; then npm install; fi; npm link);
     fi
   - if ([ "$MODULE" == "ng2-activiti-processlist" ]); then
-        (cd ng2-components/ng2-activiti-tasklist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; npm link ng2-activiti-form; npm install; npm link);
+        (cd ng2-components/ng2-activiti-tasklist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; npm link ng2-activiti-form; if [ ! -d "dist" ]; then npm install; fi; npm link);
     fi
   - if ([ "$MODULE" == "ng2-activiti-analytics" ]); then
-        (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; npm install; npm link);
+        (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; if [ ! -d "dist" ]; then npm install; fi; npm link);
     fi
   - cd ng2-components/$MODULE;
-  - npm run travis
   - npm install;
-  - ls -ltrh ./node_modules/
 script: npm run test
 # Send coverage data to Coveralls
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+   - if ([ "$TRAVIS_BRANCH" == "development" ] || [ "$TRAVIS_BRANCH" == "master" ]); then
+         bash <(curl -s https://codecov.io/bash)
+    fi
 
 cache:
   directories:
+  - ./node_modules/material-design-lite
+  - ./node_modules/material-design-icons
   - demo-shell-ng2/node_modules
   - ng2-components/ng2-activiti-form/node_modules
   - ng2-components/ng2-activiti-processlist/node_modules
