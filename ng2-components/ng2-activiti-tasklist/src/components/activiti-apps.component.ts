@@ -77,7 +77,7 @@ export class ActivitiApps implements OnInit {
 
     ngOnInit() {
         if (!this.isValidType()) {
-            throw( new Error(`LayoutType property allowed values: ${ActivitiApps.LAYOUT_LIST} - ${ActivitiApps.LAYOUT_GRID}`));
+            this.setDefaultLayoutType();
         }
 
         this.apps$.subscribe((app: any) => {
@@ -134,6 +134,13 @@ export class ActivitiApps implements OnInit {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Assign the default value to LayoutType
+     */
+    setDefaultLayoutType(): void {
+        this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
 
     /**
