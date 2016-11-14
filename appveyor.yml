@@ -52,3 +52,21 @@ test_script:
 
 # Don't actually build.
 build: off
+
+cache:
+  - node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-form\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-processlist\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-tasklist\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-core\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-datatable\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-documentlist\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-login\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-search\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-upload\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-viewer\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-webscript\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-tag\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-analytics\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-userinfo\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-diagrams\node_modules
