@@ -21,15 +21,21 @@ import { DropdownWidget } from './dropdown.widget';
 import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldOption } from './../core/form-field-option';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { EcmModelService } from '../../../services/ecm-model.service';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 describe('DropdownWidget', () => {
 
     let formService: FormService;
     let widget: DropdownWidget;
+    let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
         formService = new FormService(null, null);
-        widget = new DropdownWidget(formService);
+        visibilityService = new WidgetVisibilityService(null, null, null);
+        widget = new DropdownWidget(formService, visibilityService);
         widget.field = new FormFieldModel(new FormModel());
     });
 
@@ -104,45 +110,74 @@ describe('DropdownWidget', () => {
         let fixture: ComponentFixture<DropdownWidget>;
         let element: HTMLElement;
         let componentHandler;
+        let stubFormService;
+        let fakeOptionList: FormFieldOption[] = [{ id: 'opt_1', name: 'option_1' }, {
+            id: 'opt_2',
+            name: 'option_2'
+        }, { id: 'opt_3', name: 'option_3' }];
 
         beforeEach(async(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [DropdownWidget]
+                declarations: [DropdownWidget],
+                providers: [FormService, EcmModelService, WidgetVisibilityService]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(DropdownWidget);
-                dateWidget = fixture.componentInstance;
+                dropDownWidget = fixture.componentInstance;
                 element = fixture.nativeElement;
             });
         }));
 
-        beforeEach(() => {
-            spyOn(dateWidget, 'setupMaterialTextField').and.stub();
-            dateWidget.field = new FormFieldModel(new FormModel(), {
-                id: 'date-field-id',
+        beforeEach(async(() => {
+            stubFormService = fixture.debugElement.injector.get(FormService);
+            visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
+            spyOn(visibilityService, 'refreshVisibility').and.stub();
+            spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
+            dropDownWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
                 name: 'date-name',
-                value: '9-9-9999',
-                type: 'date',
-                readOnly: 'false'
+                type: 'dropdown',
+                readOnly: 'false',
+                restUrl: 'fake-rest-url'
             });
-            dateWidget.field.isVisible = true;
+            dropDownWidget.field.isVisible = true;
             fixture.detectChanges();
-        });
+        }));
 
         afterEach(() => {
             fixture.destroy();
             TestBed.resetTestingModule();
         });
 
-        it('should show visible date widget', async(() => {
+        it('should show visible dropdown widget', async(() => {
+            expect(element.querySelector('#dropdown-id')).toBeDefined();
+            expect(element.querySelector('#dropdown-id')).not.toBeNull();
+            expect(element.querySelector('#opt_1')).not.toBeNull();
+            expect(element.querySelector('#opt_2')).not.toBeNull();
+            expect(element.querySelector('#opt_3')).not.toBeNull();
+        }));
+
+        it('should select the default value', async(() => {
+            dropDownWidget.field.value = 'option_2';
+            fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('#date-field-id')).toBeDefined();
-                    expect(element.querySelector('#date-field-id')).not.toBeNull();
-                    let dateElement: any = element.querySelector('#date-field-id');
-                    expect(dateElement.value).toEqual('9-9-9999');
+                    let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                    expect(dropDownElement).not.toBeNull();
+                    expect(element.querySelector('#opt_2')).not.toBeNull();
+                    expect(dropDownElement.value).toBe('option_2');
+                });
+        }));
+
+        it('should be not visibile when isVisible is false', async(() => {
+            dropDownWidget.field.isVisible = false;
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                    expect(dropDownElement).toBeNull();
                 });
         }));
 

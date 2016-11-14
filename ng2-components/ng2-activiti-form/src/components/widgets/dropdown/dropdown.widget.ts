@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -28,16 +29,17 @@ import { FormFieldOption } from './../core/form-field-option';
 })
 export class DropdownWidget extends WidgetComponent implements OnInit {
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService,
+                private visibilityService: WidgetVisibilityService) {
         super();
     }
 
     ngOnInit() {
         if (this.field && this.field.restUrl) {
-            if (this.field.form.processDefinitionId) {
-                this.getValuesByProcessDefinitionId();
-            } else {
+            if (this.field.form.taskId) {
                 this.getValuesByTaskId();
+            } else {
+                this.getValuesByProcessDefinitionId();
             }
         }
     }
@@ -88,6 +90,10 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
             optionValue = option.name;
         }
         return optionValue;
+    }
+
+    checkVisibility() {
+        this.visibilityService.refreshVisibility(this.field.form);
     }
 
     handleError(error: any) {
