@@ -234,7 +234,7 @@ export class FormFieldModel extends FormWidgetModel {
                 if (this.value === 'empty' || this.value === '') {
                     this.form.values[this.id] = {};
                 } else {
-                    let entry: FormFieldOption[] = this.options.filter(opt => opt.id === this.value);
+                    let entry: FormFieldOption[] = this.options.filter(opt => opt.name === this.value);
                     if (entry.length > 0) {
                         this.form.values[this.id] = entry[0];
                     }
