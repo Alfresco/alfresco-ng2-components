@@ -33,7 +33,7 @@ declare var moment: any;
 @Injectable()
 export class ActivitiProcessService {
 
-    constructor(public authService: AlfrescoAuthenticationService) {
+    constructor(public authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -41,13 +41,13 @@ export class ActivitiProcessService {
      * @returns {Observable<any>}
      */
     getDeployedApplications(name: string): Observable<AppDefinitionRepresentationModel> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.appsApi.getAppDefinitions())
+        return Observable.fromPromise((this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => response.data.find((p: AppDefinitionRepresentationModel) => p.name === name))
             .catch(this.handleError);
     }
 
     getProcessInstances(requestNode: ProcessFilterRequestRepresentation): Observable<ProcessInstance[]> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.processApi.getProcessInstances(requestNode))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessInstances(requestNode))
             .map((res: any) => {
                 if (requestNode.processDefinitionKey) {
                     return res.data.filter(p => p.processDefinitionKey === requestNode.processDefinitionKey);
@@ -155,7 +155,7 @@ export class ActivitiProcessService {
     }
 
     getProcess(id: string): Observable<ProcessInstance> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.processApi.getProcessInstance(id))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessInstance(id))
             .catch(this.handleError);
     }
 
@@ -166,7 +166,7 @@ export class ActivitiProcessService {
         } : {
             processInstanceId: id
         };
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.taskApi.listTasks(taskOpts))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.listTasks(taskOpts))
             .map(this.extractData)
             .map(tasks => tasks.map((task: any) => {
                 task.created =  moment(task.created, 'YYYY-MM-DD').format();
@@ -181,7 +181,7 @@ export class ActivitiProcessService {
      * @returns {<Comment[]>}
      */
     getProcessInstanceComments(id: string): Observable<Comment[]> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.commentsApi.getProcessInstanceComments(id))
+        return Observable.fromPromise(this.apiService.getInstance().activiti.commentsApi.getProcessInstanceComments(id))
             .map(res => res)
             .map((response: any) => {
                 let comments: Comment[] = [];
@@ -206,7 +206,7 @@ export class ActivitiProcessService {
      */
     addProcessInstanceComment(id: string, message: string): Observable<Comment> {
         return Observable.fromPromise(
-            this.authService.getAlfrescoApi().activiti.commentsApi.addProcessInstanceComment({message: message}, id)
+            this.apiService.getInstance().activiti.commentsApi.addProcessInstanceComment({message: message}, id)
             )
             .map((response: Comment) => {
                 return new Comment(response.id, response.message, response.created, response.createdBy);
@@ -222,7 +222,7 @@ export class ActivitiProcessService {
             latest: true
         };
         return Observable.fromPromise(
-            this.authService.getAlfrescoApi().activiti.processApi.getProcessDefinitions(opts)
+            this.apiService.getInstance().activiti.processApi.getProcessDefinitions(opts)
             )
             .map(this.extractData)
             .map(processDefs => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd)))
@@ -238,7 +238,7 @@ export class ActivitiProcessService {
             startRequest.values = startFormValues;
         }
         return Observable.fromPromise(
-            this.authService.getAlfrescoApi().activiti.processApi.startNewProcessInstance(startRequest)
+            this.apiService.getInstance().activiti.processApi.startNewProcessInstance(startRequest)
             )
             .map((pd) => new ProcessInstance(pd))
             .catch(this.handleError);
@@ -246,17 +246,17 @@ export class ActivitiProcessService {
 
     cancelProcess(processInstanceId: string): Observable<void> {
         return Observable.fromPromise(
-            this.authService.getAlfrescoApi().activiti.processApi.deleteProcessInstance(processInstanceId)
+            this.apiService.getInstance().activiti.processApi.deleteProcessInstance(processInstanceId)
             )
             .catch(this.handleError);
     }
 
     private callApiGetUserProcessInstanceFilters(filterOpts) {
-        return this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts);
+        return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts);
     }
 
     private callApiAddFilter(filter: FilterRepresentationModel) {
-        return this.authService.getAlfrescoApi().activiti.userFiltersApi.createUserProcessInstanceFilter(filter);
+        return this.apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter);
     }
 
     private extractData(res: any) {
