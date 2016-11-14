@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 declare let componentHandler: any;
 
@@ -32,7 +32,24 @@ declare let componentHandler: any;
 export class ActivitiTaskList implements OnInit, OnChanges {
 
     @Input()
-    taskFilter: FilterRepresentationModel;
+    appId: string;
+
+    @Input()
+    processDefinitionId: string;
+
+    @Input()
+    state: string;
+
+    @Input()
+    assignment: string;
+
+    @Input()
+    sort: string;
+
+    @Input()
+    name: string;
+
+    requestNode: TaskQueryRequestRepresentationModel;
 
     @Input()
     data: DataTableAdapter;
@@ -70,29 +87,20 @@ export class ActivitiTaskList implements OnInit, OnChanges {
             );
         }
 
-        if (this.taskFilter) {
-            let requestNode = this.convertTaskUserToTaskQuery(this.taskFilter);
-            this.load(new TaskQueryRequestRepresentationModel(requestNode));
-        }
+        this.requestNode = this.createRequestNode();
+        this.load(this.requestNode);
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let taskFilter = changes['taskFilter'];
-        if (taskFilter && taskFilter.currentValue) {
-            let requestNode = this.convertTaskUserToTaskQuery(taskFilter.currentValue);
-            this.load(new TaskQueryRequestRepresentationModel(requestNode));
-            return;
-        }
+        this.requestNode = this.createRequestNode();
+        this.load(this.requestNode);
     }
 
     public reload() {
-        if (this.taskFilter) {
-            let requestNode = this.convertTaskUserToTaskQuery(this.taskFilter);
-            this.load(new TaskQueryRequestRepresentationModel(requestNode));
-        }
+        this.load(this.requestNode);
     }
 
-    public load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.activiti.getTotalTasks(requestNode).subscribe(
             (res) => {
                 requestNode.size = res.total;
@@ -191,14 +199,14 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         return tasks;
     }
 
-    private convertTaskUserToTaskQuery(userTask: FilterRepresentationModel) {
+    private createRequestNode() {
         let requestNode = {
-            appDefinitionId: userTask.appId,
-            processDefinitionId: userTask.filter.processDefinitionId,
-            text: userTask.filter.name,
-            assignment: userTask.filter.assignment,
-            state: userTask.filter.state,
-            sort: userTask.filter.sort
+            appDefinitionId: this.appId,
+            processDefinitionId: this.processDefinitionId,
+            text: this.name,
+            assignment: this.assignment,
+            state: this.state,
+            sort: this.sort
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
