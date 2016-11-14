@@ -19,12 +19,14 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { ActivitiForm } from './src/components/activiti-form.component';
+import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { ActivitiStartForm } from './src/components/activiti-start-form.component';
 import { FormService } from './src/services/form.service';
 import { EcmModelService } from './src/services/ecm-model.service';
 import { NodeService } from './src/services/node.service';
 import { WidgetVisibilityService } from './src/services/widget-visibility.service';
 import { ActivitiAlfrescoContentService } from './src/services/activiti-alfresco.service';
+import { FormRenderingService } from './src/services/form-rendering.service';
 import { HttpModule } from '@angular/http';
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 
@@ -38,6 +40,7 @@ export * from  './src/services/node.service';
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     ActivitiForm,
     ActivitiStartForm,
+    FormFieldComponent,
     ...WIDGET_DIRECTIVES
 ];
 
@@ -46,7 +49,8 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
     EcmModelService,
     NodeService,
     WidgetVisibilityService,
-    ActivitiAlfrescoContentService
+    ActivitiAlfrescoContentService,
+    FormRenderingService
 ];
 
 @NgModule({
@@ -56,6 +60,9 @@ export const ACTIVITI_FORM_PROVIDERS: any[] = [
     ],
     declarations: [
         ...ACTIVITI_FORM_DIRECTIVES
+    ],
+    entryComponents: [
+        ...WIDGET_DIRECTIVES
     ],
     providers: [
         ...ACTIVITI_FORM_PROVIDERS

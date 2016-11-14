@@ -20,6 +20,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 
 import { ActivitiStartForm } from './activiti-start-form.component';
+import { FormFieldComponent } from './form-field/form-field.component';
 import { WIDGET_DIRECTIVES } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
@@ -43,6 +44,7 @@ describe('ActivitiStartForm', () => {
             imports: [ CoreModule ],
             declarations: [
                 ActivitiStartForm,
+                FormFieldComponent,
                 ...WIDGET_DIRECTIVES
             ],
             providers: [
