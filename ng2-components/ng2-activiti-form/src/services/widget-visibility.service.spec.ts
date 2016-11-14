@@ -363,10 +363,11 @@ describe('WidgetVisibilityService', () => {
             expect(formValue).toBe('field_with_condition_value');
         });
 
-        it('should return undefined if the field value is not in the form', () => {
+        it('should return empty string if the field value is not in the form', () => {
             let formValue = service.searchForm(stubFormWithFields, 'FIELD_MYSTERY');
 
-            expect(formValue).toBeUndefined();
+            expect(formValue).not.toBeUndefined();
+            expect(formValue).toBe('');
         });
 
         it('should search in the form if element value is not in form values', () => {
@@ -376,10 +377,11 @@ describe('WidgetVisibilityService', () => {
             expect(value).toBe('field_with_condition_value');
         });
 
-        it('should return undefined if the element is not present anywhere', () => {
+        it('should return empty string if the element is not present anywhere', () => {
             let formValue = service.getFormValue(fakeFormWithField, 'FIELD_MYSTERY');
 
-            expect(formValue).toBeUndefined();
+            expect(formValue).not.toBeUndefined();
+            expect(formValue).toBe('');
         });
 
         it('should retrieve the value for the right field when it is a value', () => {
@@ -443,10 +445,11 @@ describe('WidgetVisibilityService', () => {
             expect(leftValue).toBe('value_2');
         });
 
-        it('should return undefined for a value that is not on variable or form', () => {
+        it('should return empty string for a value that is not on variable or form', () => {
             let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-            expect(leftValue).toBeUndefined();
+            expect(leftValue).not.toBeUndefined();
+            expect(leftValue).toBe('');
         });
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
@@ -467,11 +470,12 @@ describe('WidgetVisibilityService', () => {
             expect(isVisible).toBeTruthy();
         });
 
-        it('should return undefined for a value that is not on variable or form', () => {
+        it('should return empty string for a value that is not on variable or form', () => {
             visibilityObjTest.rightFormFieldId = 'NO_FIELD_FORM';
             let rightValue = service.getRightValue(fakeFormWithField, visibilityObjTest);
 
-            expect(rightValue).toBeUndefined();
+            expect(rightValue).not.toBeUndefined();
+            expect(rightValue).toBe('');
         });
 
         it('should evaluate the visibility for the field with single visibility condition between form values', () => {
