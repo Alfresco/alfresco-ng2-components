@@ -84,7 +84,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        filterList.appId = '1';
+        filterList.appId = 1;
         spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         filterList.onError.subscribe((err) => {

@@ -26,7 +26,7 @@ import { TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { taskDetailsMock } from './../assets/task-details.mock';
-import { ProcessInstance } from './../models/process-instance';
+import { ProcessInstance } from './../models/process-instance.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 describe('ActivitiProcessInstanceTasks', () => {

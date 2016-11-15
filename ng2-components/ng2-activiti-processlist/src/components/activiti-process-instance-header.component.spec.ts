@@ -23,7 +23,7 @@ import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { exampleProcess } from './../assets/activiti-process.model.mock';
-import { ProcessInstance } from './../models/process-instance';
+import { ProcessInstance } from './../models/process-instance.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 describe('ActivitiProcessInstanceHeader', () => {

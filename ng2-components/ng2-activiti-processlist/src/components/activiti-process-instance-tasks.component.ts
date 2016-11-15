@@ -21,7 +21,7 @@ import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { Observable, Observer } from 'rxjs/Rx';
 import { DatePipe } from '@angular/common';
-import { ProcessInstance } from '../models/process-instance';
+import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;

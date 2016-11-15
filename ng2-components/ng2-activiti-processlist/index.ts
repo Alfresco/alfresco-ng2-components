@@ -34,6 +34,9 @@ import { ActivitiProcessService } from './src/services/activiti-process.service'
 export * from './src/components/activiti-processlist.component';
 export * from './src/components/activiti-process-instance-details.component';
 
+// models
+export * from './src/models/index';
+
 // services
 export * from './src/services/activiti-process.service';
 
