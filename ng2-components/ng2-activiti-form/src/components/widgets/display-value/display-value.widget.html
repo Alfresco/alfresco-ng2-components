@@ -3,6 +3,7 @@
         <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id">
             <input type="checkbox"
                    [attr.id]="field.id"
+                   [checked]="field.value"
                    [(ngModel)]="value"
                    class="mdl-checkbox__input"
                    disabled>
