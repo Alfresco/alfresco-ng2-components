@@ -163,12 +163,12 @@ describe('FormFieldModel', () => {
             id: 'dropdown-2',
             type: FormFieldTypes.DROPDOWN,
             options: [
-                { id: 'opt1', value: 'Option 1' },
-                { id: 'opt2', value: 'Option 2' }
+                { id: 'opt1', name: 'Option 1' },
+                { id: 'opt2', name: 'Option 2' }
             ]
         });
 
-        field.value = 'opt2';
+        field.value = 'Option 2';
         expect(form.values['dropdown-2']).toEqual(field.options[1]);
     });
 
