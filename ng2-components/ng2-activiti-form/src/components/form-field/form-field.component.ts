@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, ViewContainerRef, Input, ComponentRef, ComponentFactoryResolver/*,Output, EventEmitter, Injector*/ } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, Input, ComponentRef, ComponentFactoryResolver/*,Injector*/ } from '@angular/core';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetComponent } from './../widgets/widget.component';
-import { FormFieldModel/*, FormWidgetModel*/ } from './../widgets/core/index';
+import { FormFieldModel } from './../widgets/core/index';
 
 @Component({
     selector: 'form-field',
