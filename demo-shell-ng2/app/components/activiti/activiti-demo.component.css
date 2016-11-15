@@ -12,3 +12,7 @@
     padding: 10px 10px 10px 10px;
     border: solid 2px rgb(31,188,210);
 }
+
+.mdl-layout__header {
+    z-index: 1;
+}
