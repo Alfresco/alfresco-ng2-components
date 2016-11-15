@@ -47,6 +47,7 @@ before_script:
         (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; if [ ! -d "dist" ]; then npm install; fi; npm link);
     fi
   - cd ng2-components/$MODULE;
+  - npm run travis;
   - npm install;
 script: npm run test
 # Send coverage data to Coveralls
