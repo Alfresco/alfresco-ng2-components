@@ -17,41 +17,104 @@
 
 import { Injectable, Type } from '@angular/core';
 
-import { TextWidget } from './../components/widgets/text/text.widget';
+import {
+    FormFieldModel,
+    UnknownWidget,
+    TextWidget,
+    MultilineTextWidget,
+    NumberWidget,
+    CheckboxWidget,
+    DropdownWidget,
+    DateWidget,
+    AmountWidget,
+    RadioButtonsWidget,
+    HyperlinkWidget,
+    DisplayValueWidget,
+    DisplayTextWidget,
+    TypeaheadWidget,
+    PeopleWidget,
+    FunctionalGroupWidget,
+    DynamicTableWidget,
+    AttachWidget,
+    UploadWidget
+} from './../components/widgets/index';
 
 @Injectable()
 export class FormRenderingService {
 
-    private types: { [key: string]: Type<{}> } = {
-        'text': TextWidget
+    private types: { [key: string]: ComponentTypeResolver } = {
+        'text': DefaultTypeResolver.fromType(TextWidget),
+        'integer': DefaultTypeResolver.fromType(NumberWidget),
+        'multi-line-text': DefaultTypeResolver.fromType(MultilineTextWidget),
+        'boolean': DefaultTypeResolver.fromType(CheckboxWidget),
+        'dropdown': DefaultTypeResolver.fromType(DropdownWidget),
+        'date': DefaultTypeResolver.fromType(DateWidget),
+        'amount': DefaultTypeResolver.fromType(AmountWidget),
+        'radio-buttons': DefaultTypeResolver.fromType(RadioButtonsWidget),
+        'hyperlink': DefaultTypeResolver.fromType(HyperlinkWidget),
+        'readonly': DefaultTypeResolver.fromType(DisplayValueWidget),
+        'readonly-text': DefaultTypeResolver.fromType(DisplayTextWidget),
+        'typeahead': DefaultTypeResolver.fromType(TypeaheadWidget),
+        'people': DefaultTypeResolver.fromType(PeopleWidget),
+        'functional-group': DefaultTypeResolver.fromType(FunctionalGroupWidget),
+        'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidget)
     };
 
-    getComponentType(fieldType: string): Type<{}> {
-        if (fieldType) {
-            return this.types[fieldType] || null;
-        }
-        return null;
+    constructor() {
+        this.types['upload'] = (field: FormFieldModel): Type<{}> => {
+            if (field) {
+                let params = field.params;
+                if (params && params.link) {
+                    return AttachWidget;
+                }
+                return UploadWidget;
+            }
+            return null;
+        };
     }
 
-    setComponentType(fieldType: string, componentType: Type<{}>, override: boolean = false) {
+    getComponentTypeResolver(fieldType: string, defaultValue: Type<{}> = UnknownWidget): ComponentTypeResolver {
+        if (fieldType) {
+            return this.types[fieldType] || DefaultTypeResolver.fromType(defaultValue);
+        }
+        return DefaultTypeResolver.fromType(defaultValue);
+    }
+
+    setComponentTypeResolver(fieldType: string, resolver: ComponentTypeResolver, override: boolean = false) {
         if (!fieldType) {
             throw new Error(`fieldType is null or not defined`);
         }
 
-        if (!componentType) {
-            throw new Error(`componentType is null or not defined`);
+        if (!resolver) {
+            throw new Error(`resolver is null or not defined`);
         }
 
         let existing = this.types[fieldType];
         if (existing && !override) {
-            throw new Error(`componentType is already mapped, use override option if you intend replacing existing mapping.`);
+            throw new Error(`already mapped, use override option if you intend replacing existing mapping.`);
         }
 
-        this.types[fieldType] = componentType;
+        this.types[fieldType] = resolver;
     }
 
-    constructor() {
-        this.setComponentType('xx', TextWidget);
+    resolveComponentType(field: FormFieldModel, defaultValue: Type<{}> = UnknownWidget): Type<{}> {
+        if (field) {
+            let resolver = this.getComponentTypeResolver(field.type, defaultValue);
+            return resolver(field);
+        }
+        return defaultValue;
     }
 
+}
+
+export interface ComponentTypeResolver {
+    (field: FormFieldModel): Type<{}>;
+}
+
+export class DefaultTypeResolver {
+    static fromType(type: Type<{}>): ComponentTypeResolver {
+        return (field: FormFieldModel) => {
+            return type;
+        };
+    }
 }

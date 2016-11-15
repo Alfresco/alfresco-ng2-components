@@ -48,7 +48,7 @@ export class FormFieldComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
-            let componentType = this.formRenderingService.getComponentType(this.field.type);
+            let componentType = this.formRenderingService.resolveComponentType(this.field);
             if (componentType) {
                 let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
                 this.componentRef = this.container.createComponent(factory/*, 0, this.injector*/);
