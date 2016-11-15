@@ -23,11 +23,8 @@
                      <div *ngSwitchCase="'dynamic-table'">
                          <dynamic-table-widget [content]="field"></dynamic-table-widget>
                      </div>
-                     <div *ngSwitchCase="'readonly'">
-                        <display-value-widget [field]="field.field" (fieldChanged)="tabChanged($event);"></display-value-widget>
-                     </div>
                      <div *ngSwitchDefault>
-                        <span>UNKNOWN WIDGET TYPE: {{field.type}}</span>
+                        <form-field [field]="field.field"></form-field>
                     </div>
                  </div>
              </div>
