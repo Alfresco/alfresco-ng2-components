@@ -1,8 +1,4 @@
 # Test against this version of Node.js
-branches:
-  only:
-    - master
-
 environment:
   nodejs_version: "5"
 
@@ -36,6 +32,7 @@ install:
   - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
   - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-activiti-form && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
   - IF %COMPONENT_NAME% EQU ng2-alfresco-webscript (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm install && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-analytics (cd ng2-components/ng2-activiti-diagrams && npm link link ng2-alfresco-core && npm install && npm link && cd ../../)
   - cd ng2-components/%COMPONENT_NAME%
   - IF %COMPONENT_NAME% NEQ ng2-alfresco-core (npm link ng2-alfresco-core)
   - IF %COMPONENT_NAME% EQU ng2-alfresco-documentlist (npm link ng2-alfresco-datatable)
@@ -55,3 +52,21 @@ test_script:
 
 # Don't actually build.
 build: off
+
+cache:
+  - node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-form\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-processlist\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-tasklist\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-core\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-datatable\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-documentlist\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-login\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-search\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-upload\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-viewer\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-webscript\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-tag\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-analytics\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-alfresco-userinfo\node_modules
+  - C:\projects\alfresco-ng2-components\ng2-components\ng2-activiti-diagrams\node_modules
