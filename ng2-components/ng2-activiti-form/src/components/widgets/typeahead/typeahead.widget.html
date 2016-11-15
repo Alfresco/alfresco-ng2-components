@@ -1,6 +1,6 @@
 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label typeahead-widget"
      [class.is-dirty]="value"
-     [class.typeahead-widget__invalid]="!field.isValid" id="typehead-div">
+     [class.typeahead-widget__invalid]="!field.isValid" id="typehead-div" *ngIf="field.isVisible">
     <input class="mdl-textfield__input"
            type="text"
            [attr.id]="field.id"
@@ -14,6 +14,7 @@
 <div class="typeahead-autocomplete mdl-shadow--2dp" *ngIf="options.length > 0 && popupVisible">
     <ul>
         <li *ngFor="let item of options"
+            [attr.id]="field.id +'-'+item.id"
             class="mdl-menu__item"
             (click)="onItemClick(item, $event)">
             {{item.name}}
