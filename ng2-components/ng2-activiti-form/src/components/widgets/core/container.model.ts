@@ -16,23 +16,20 @@
  */
 
 import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
 
 export class ContainerModel extends FormWidgetModel {
 
     field: FormFieldModel;
-    children: FormFieldModel[] = [];
 
     get isVisible(): boolean {
         return this.field.isVisible;
     }
 
-    constructor(form: FormModel, json?: any) {
-        super(form, json);
-
-        if (json) {
-            this.field = new FormFieldModel(form, json);
+    constructor(field: FormFieldModel) {
+        if (field) {
+            super(field.form, field.json);
+            this.field = field;
         }
     }
 

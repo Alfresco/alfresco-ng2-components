@@ -667,13 +667,13 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'LEFT_FORM_FIELD_ID';
-            let contModel = new ContainerModel(fakeFormWithField, {
+            let contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
                 id: 'fake-container-id',
                 type: FormFieldTypes.GROUP,
                 name: 'fake-container-name',
                 isVisible: true,
                 visibilityCondition: visibilityObjTest
-            });
+            }));
 
             fakeFormWithField.fields.push(contModel);
             service.refreshVisibility(fakeFormWithField);
@@ -684,13 +684,13 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            let contModel = new ContainerModel(fakeFormWithField, {
+            let contModel = new ContainerModel(new FormFieldModel(fakeFormWithField, {
                 id: 'fake-container-id',
                 type: FormFieldTypes.GROUP,
                 name: 'fake-container-name',
                 isVisible: true,
                 visibilityCondition: visibilityObjTest
-            });
+            }));
             service.refreshEntityVisibility(contModel.field);
             expect(contModel.isVisible).toBeFalsy();
         });

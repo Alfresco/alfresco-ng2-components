@@ -81,6 +81,7 @@ export class WidgetComponent implements AfterViewInit {
 
     /** @deprecated use onFieldChanged instead */
     checkVisibility(field: FormFieldModel) {
+        console.log('checkVisibility is deprecated, use onFieldChanged instead');
         this.fieldChanged.emit(field);
     }
 

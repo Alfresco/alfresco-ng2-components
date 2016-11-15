@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, ViewContainerRef, Input, ComponentRef, ComponentFactoryResolver, Output, EventEmitter/*, Injector*/ } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, Input, ComponentRef, ComponentFactoryResolver/*,Output, EventEmitter, Injector*/ } from '@angular/core';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetComponent } from './../widgets/widget.component';
@@ -23,7 +23,11 @@ import { FormFieldModel/*, FormWidgetModel*/ } from './../widgets/core/index';
 
 @Component({
     selector: 'form-field',
-    template: `<div #container></div>`
+    template: `
+        <div [hidden]="!field.isVisible">
+            <div #container></div>
+        </div>
+    `
 })
 export class FormFieldComponent implements OnInit {
 
@@ -32,10 +36,6 @@ export class FormFieldComponent implements OnInit {
 
     @Input()
     field: FormFieldModel = null;
-
-    /** @deprecated component handles visibilty itself */
-    @Output()
-    fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
     private componentRef: ComponentRef<{}>;
 
@@ -54,12 +54,10 @@ export class FormFieldComponent implements OnInit {
                 this.componentRef = this.container.createComponent(factory/*, 0, this.injector*/);
                 let instance = <WidgetComponent>this.componentRef.instance;
                 instance.field = this.field;
-                instance.fieldChanged.subscribe(args => {
-                    if (this.field && this.field.form) {
-                        this.visibilityService.refreshVisibility(this.field.form);
+                instance.fieldChanged.subscribe(field => {
+                    if (field && field.form) {
+                        this.visibilityService.refreshVisibility(field.form);
                     }
-                    /** @deprecated */
-                    this.fieldChanged.emit(args);
                 });
             }
         }

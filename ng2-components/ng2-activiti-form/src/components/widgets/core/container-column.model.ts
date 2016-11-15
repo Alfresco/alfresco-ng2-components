@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { FormFieldModel } from './../core/form-field.model';
+import { FormFieldModel } from './form-field.model';
 
 export class ContainerColumnModel {
 

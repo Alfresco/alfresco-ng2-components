@@ -53,12 +53,12 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle underlying group container', () => {
-        let container = new ContainerWidgetModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
             }
-        });
+        }));
 
         let widget = new ContainerWidget();
         widget.content = container;
@@ -71,9 +71,9 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only collapsible container', () => {
-        let container = new ContainerWidgetModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP
-        });
+        }));
 
         let widget = new ContainerWidget();
         widget.content = container;
@@ -84,12 +84,12 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only group container', () => {
-        let container = new ContainerWidgetModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
             }
-        });
+        }));
 
         let widget = new ContainerWidget();
         widget.content = container;
@@ -134,18 +134,18 @@ describe('ContainerWidget', () => {
         beforeEach(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
-            fakeContainerVisible = new ContainerWidgetModel(new FormModel(fakeFormJson), {
+            fakeContainerVisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-1',
                 name: 'fake-cont-1-name',
                 type: FormFieldTypes.GROUP
-            });
-            fakeContainerInvisible = new ContainerWidgetModel(new FormModel(fakeFormJson), {
+            }));
+            fakeContainerInvisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-2',
                 name: 'fake-cont-2-name',
                 type: FormFieldTypes.GROUP
-            });
+            }));
             fakeContainerVisible.field.isVisible = true;
             fakeContainerInvisible.field.isVisible = false;
         });

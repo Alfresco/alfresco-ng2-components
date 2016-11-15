@@ -53,7 +53,7 @@ describe('TabModel', () => {
         model.fields = [];
         expect(model.hasContent()).toBeFalsy();
 
-        model.fields = [new ContainerModel(null, null)];
+        model.fields = [new ContainerModel(null)];
         expect(model.hasContent()).toBeTruthy();
     });
 

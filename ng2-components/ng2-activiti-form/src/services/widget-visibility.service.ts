@@ -44,7 +44,8 @@ export class WidgetVisibilityService {
     }
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
-        element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition);
+        let visible = this.evaluateVisibility(element.form, element.visibilityCondition);
+        element.isVisible = visible;
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
