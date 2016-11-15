@@ -119,18 +119,19 @@ export class WidgetVisibilityService {
     }
 
     searchForm(form: FormModel, name: string) {
-        let res;
+        let fieldValue = '';
         form.json.fields.forEach(columns => {
-            for (let i in columns.fields) {
-                if (columns.fields.hasOwnProperty(i)) {
-                    res = columns.fields[i].find(field => field.id === name);
-                    if (res) {
-                        return res.value;
+                for (let i in columns.fields) {
+                    if (columns.fields.hasOwnProperty(i)) {
+                        let field = columns.fields[i].find(field => field.id === name);
+                        if (field) {
+                            fieldValue = field.value;
+                        }
                     }
                 }
             }
-        });
-        return res ? res.value : res;
+        );
+        return fieldValue;
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
@@ -212,7 +213,7 @@ export class WidgetVisibilityService {
 
     private getRequestOptions(): RequestOptions {
         let headers = this.getHeaders();
-        return new RequestOptions({headers: headers});
+        return new RequestOptions({ headers: headers });
     }
 
     private handleError(error: Response) {
