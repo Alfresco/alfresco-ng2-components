@@ -6,10 +6,11 @@ Please ask before on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-
 -->
 
 **Type of issue:**  (check with "[x]")
+```
 - [ ] New feature request
 - [ ] Bug  
 - [ ] Support request
-
+```
 **Current behavior:**
 <!-- Describe the current behavior. -->
 
