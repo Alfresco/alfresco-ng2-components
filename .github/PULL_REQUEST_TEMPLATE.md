@@ -27,8 +27,10 @@
 <!-- link to the open issue, ignore this if there are no issues open -->
 
 **This PR introduces a breaking change:** (check one with "x")
+```
 - [ ] Yes
 - [ ] No
+```
 
 <!-- Please describe the reason to introduce a breaking change, and what exactly breaks -->
 
