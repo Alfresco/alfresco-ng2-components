@@ -16,7 +16,7 @@
  */
 
 import { TextEditorComponent } from './text.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
+import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 describe('TextEditorComponent', () => {
 

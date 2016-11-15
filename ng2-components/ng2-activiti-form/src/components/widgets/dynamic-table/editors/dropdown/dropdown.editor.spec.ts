@@ -17,14 +17,8 @@
 
 import { Observable } from 'rxjs/Rx';
 import { DropdownEditorComponent } from './dropdown.editor';
-import {
-    DynamicTableModel,
-    DynamicTableRow,
-    DynamicTableColumn,
-    DynamicTableColumnOption,
-    FormFieldModel,
-    FormModel
-} from './../../../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../dynamic-table.widget.model';
+import { FormFieldModel, FormModel } from './../../../core/index';
 import { FormService } from './../../../../../services/form.service';
 
 describe('DropdownEditorComponent', () => {

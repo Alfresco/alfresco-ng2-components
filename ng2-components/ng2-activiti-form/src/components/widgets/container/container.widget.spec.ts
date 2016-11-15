@@ -16,8 +16,8 @@
  */
 
 import { ContainerWidget } from './container.widget';
+import { ContainerWidgetModel } from './container.widget.model';
 import { FormModel } from './../core/form.model';
-import { ContainerModel } from './../core/container.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
@@ -53,7 +53,7 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle underlying group container', () => {
-        let container = new ContainerModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormModel(), {
             type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
@@ -71,7 +71,7 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only collapsible container', () => {
-        let container = new ContainerModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormModel(), {
             type: FormFieldTypes.GROUP
         });
 
@@ -84,7 +84,7 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only group container', () => {
-        let container = new ContainerModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
@@ -117,8 +117,8 @@ describe('ContainerWidget', () => {
         let containerWidgetComponent: ContainerWidget;
         let fixture: ComponentFixture<ContainerWidget>;
         let element: HTMLElement;
-        let fakeContainerVisible: ContainerModel;
-        let fakeContainerInvisible: ContainerModel;
+        let fakeContainerVisible: ContainerWidgetModel;
+        let fakeContainerInvisible: ContainerWidgetModel;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
@@ -134,13 +134,13 @@ describe('ContainerWidget', () => {
         beforeEach(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
-            fakeContainerVisible = new ContainerModel(new FormModel(fakeFormJson), {
+            fakeContainerVisible = new ContainerWidgetModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-1',
                 name: 'fake-cont-1-name',
                 type: FormFieldTypes.GROUP
             });
-            fakeContainerInvisible = new ContainerModel(new FormModel(fakeFormJson), {
+            fakeContainerInvisible = new ContainerWidgetModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-2',
                 name: 'fake-cont-2-name',

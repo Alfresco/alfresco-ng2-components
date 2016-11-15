@@ -17,7 +17,7 @@
 
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 
 @Component({
     moduleId: module.id,

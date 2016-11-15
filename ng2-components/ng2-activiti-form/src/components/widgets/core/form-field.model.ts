@@ -37,6 +37,7 @@ import {
 
 declare var moment: any;
 
+// Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
 
     private _value: string;

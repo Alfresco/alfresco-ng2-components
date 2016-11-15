@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { CellEditorComponent } from './../cell.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
+import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 @Component({
     moduleId: module.id,

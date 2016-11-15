@@ -16,7 +16,7 @@
  */
 
 import { Input } from '@angular/core';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../dynamic-table.widget.model';
 
 export abstract class CellEditorComponent {
 

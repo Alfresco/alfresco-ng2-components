@@ -20,8 +20,7 @@ import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
-import { DynamicTableColumn } from './../core/dynamic-table-column';
-import { DynamicTableRow } from './../core/dynamic-table-row';
+import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 
 @Component({
     moduleId: module.id,
