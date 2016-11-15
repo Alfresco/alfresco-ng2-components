@@ -125,7 +125,7 @@ export class FormModel {
             if (field instanceof ContainerModel) {
                 let container = <ContainerModel> field;
                 result.push(container.field);
-                result.push(...container.children);
+                result.push(...container.field.fields);
             }
         }
 
@@ -172,11 +172,11 @@ export class FormModel {
                 if (field.params) {
                     let originalField = field.params['field'];
                     if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
-                        result.push(new ContainerModel(this, field));
+                        result.push(new ContainerModel(new FormFieldModel(this, field)));
                     }
                 }
             } else {
-                result.push(new ContainerModel(this, field));
+                result.push(new ContainerModel(new FormFieldModel(this, field)));
             }
         }
 

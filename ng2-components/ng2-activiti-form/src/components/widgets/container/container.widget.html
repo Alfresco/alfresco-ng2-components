@@ -1,3 +1,4 @@
+<div>{{content?.isVisible}}</div>
 <div class="container-widget">
     <div *ngIf="content?.isGroup() && content?.isVisible" class="container-widget__header">
         <h4 class="container-widget__header-text" id="container-header"
@@ -15,7 +16,7 @@
         <div *ngFor="let col of content.columns" class="mdl-cell mdl-cell--{{col.size}}-col">
             <div class="mdl-grid" *ngIf="col.hasFields()">
                 <div *ngFor="let field of col.fields" class="mdl-cell mdl-cell--12-col">
-                    <form-field [field]="field" [hidden]="!field.isVisible"></form-field>
+                    <form-field [field]="field"></form-field>
                 </div>
             </div>
         </div>

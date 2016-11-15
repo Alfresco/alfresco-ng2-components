@@ -17,52 +17,26 @@
 
 import { ContainerWidgetModel } from './container.widget.model';
 import { FormModel } from './../core/form.model';
+import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from './../core/form-field-types';
 
 describe('ContainerWidgetModel', () => {
 
     it('should store the form reference', () => {
         let form = new FormModel();
-        let model = new ContainerWidgetModel(form);
+        let field = new FormFieldModel(form);
+        let model = new ContainerWidgetModel(field);
         expect(model.form).toBe(form);
     });
 
-    it('should store original json', () => {
-        let json = {};
-        let model = new ContainerWidgetModel(null, json);
-        expect(model.json).toBe(json);
-    });
-
-    it('should have 1 column layout by default', () => {
-        let container = new ContainerWidgetModel(null, null);
-        expect(container.numberOfColumns).toBe(1);
-    });
-
     it('should be expanded by default', () => {
-        let container = new ContainerWidgetModel(null, null);
+        let container = new ContainerWidgetModel(null);
         expect(container.isExpanded).toBeTruthy();
     });
 
-    /*
-    it('should setup with json config', () => {
-        let json = {
-            fieldType: '<type>',
-            id: '<id>',
-            name: '<name>',
-            type: '<type>',
-            tab: '<tab>',
-            numberOfColumns: 2,
-            params: {}
-        };
-        let container = new ContainerWidgetModel(null, json);
-        Object.keys(json).forEach(key => {
-            expect(container[key]).toEqual(json[key]);
-        });
-    });
-    */
-
     it('should wrap fields into columns on setup', () => {
         let form = new FormModel();
+
         let json = {
             fieldType: '<type>',
             id: '<id>',
@@ -83,7 +57,10 @@ describe('ContainerWidgetModel', () => {
                 '3': null
             }
         };
-        let container = new ContainerWidgetModel(form, json);
+
+        let field = new FormFieldModel(form, json);
+
+        let container = new ContainerWidgetModel(field);
         expect(container.columns.length).toBe(3);
 
         let col1 = container.columns[0];
@@ -100,47 +77,47 @@ describe('ContainerWidgetModel', () => {
     });
 
     it('should allow collapsing only when of a group type', () => {
-        let container = new ContainerWidgetModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
             }
-        });
+        }));
 
         expect(container.isCollapsible()).toBeFalsy();
-        container = new ContainerWidgetModel(new FormModel(), {
+        container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
             }
-        });
+        }));
         expect(container.isCollapsible()).toBeTruthy();
     });
 
     it('should allow collapsing only when explicitly defined in params', () => {
-        let container = new ContainerWidgetModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {}
-        });
+        }));
         expect(container.isCollapsible()).toBeFalsy();
 
-        container = new ContainerWidgetModel(new FormModel(), {
+        container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
             }
-        });
+        }));
         expect(container.isCollapsible()).toBeTruthy();
     });
 
     it('should be collapsed by default', () => {
-        let container = new ContainerWidgetModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type:  FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true,
                 collapseByDefault: true
             }
-        });
+        }));
         expect(container.isCollapsedByDefault()).toBeTruthy();
     });
 

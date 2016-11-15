@@ -17,19 +17,14 @@
 
 import { ContainerModel } from './container.model';
 import { FormModel } from './form.model';
+import { FormFieldModel } from './form-field.model';
 
 describe('ContainerModel', () => {
 
     it('should store the form reference', () => {
         let form = new FormModel();
-        let model = new ContainerModel(form);
+        let model = new ContainerModel(new FormFieldModel(form));
         expect(model.form).toBe(form);
-    });
-
-    it('should store original json', () => {
-        let json = {};
-        let model = new ContainerModel(null, json);
-        expect(model.json).toBe(json);
     });
 
 });

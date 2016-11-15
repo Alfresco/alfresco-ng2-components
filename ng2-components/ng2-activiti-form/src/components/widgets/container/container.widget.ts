@@ -37,7 +37,7 @@ export class ContainerWidget extends WidgetComponent implements OnInit, AfterVie
 
     ngOnInit() {
         if (this.field) {
-            this.content = new ContainerWidgetModel(this.field.form, this.field.json);
+            this.content = new ContainerWidgetModel(this.field);
         }
     }
 
