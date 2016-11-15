@@ -43,6 +43,7 @@ export class FormModel {
 
     readOnly: boolean = false;
     tabs: TabModel[] = [];
+    /** Stores root containers */
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
 
