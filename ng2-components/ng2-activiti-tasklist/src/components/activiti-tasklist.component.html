@@ -1,5 +1,5 @@
-<div *ngIf="!taskFilter">{{ 'TASK_FILTERS.MESSAGES.NONE' | translate }}</div>
-<div *ngIf="taskFilter">
+<div *ngIf="!requestNode">{{ 'TASK_FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="requestNode">
     <div *ngIf="!isTaskListEmpty()">
         <alfresco-datatable
                 [data]="data"
