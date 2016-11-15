@@ -41,7 +41,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     appName: string;
@@ -88,7 +88,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
      * @param appId
      * @param appName
      */
-    getFilters(appId?: string, appName?: string) {
+    getFilters(appId?: number, appName?: string) {
         if (appName) {
             this.getFiltersByAppName(appName);
         } else {
@@ -100,7 +100,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
      * Return the filter list filtered by appId
      * @param appId - optional
      */
-    getFiltersByAppId(appId?: string) {
+    getFiltersByAppId(appId?: number) {
         this.activiti.getProcessFilters(appId).subscribe(
             (res: FilterRepresentationModel[]) => {
                 this.resetFilter();

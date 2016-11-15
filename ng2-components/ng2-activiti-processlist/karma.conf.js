@@ -48,6 +48,9 @@ module.exports = function (config) {
       { pattern: 'node_modules/ng2-activiti-tasklist/dist/**/*.*', included: false, served: true, watched: false },
       { pattern: 'node_modules/ng2-activiti-form/dist/**/*.*', included: false, served: true, watched: false },
 
+      // library dependencies
+      { pattern: 'node_modules/moment/moment.js', included: true, watched: false },
+
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
       {pattern: 'dist/**/*.js.map', included: false, watched: false}
