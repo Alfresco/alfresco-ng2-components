@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { ContainerModel, FormFieldModel } from './../core/index';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { ContainerModel } from './../core/index';
+import { WidgetComponent } from './../widget.component';
 
 @Component({
     moduleId: module.id,
@@ -24,17 +25,19 @@ import { ContainerModel, FormFieldModel } from './../core/index';
     templateUrl: './container.widget.html',
     styleUrls: ['./container.widget.css']
 })
-export class ContainerWidget implements AfterViewInit {
+export class ContainerWidget extends WidgetComponent implements OnInit, AfterViewInit {
 
-    @Input()
     content: ContainerModel;
-
-    @Output()
-    formValueChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
     onExpanderClicked() {
         if (this.content && this.content.isCollapsible()) {
             this.content.isExpanded = !this.content.isExpanded;
+        }
+    }
+
+    ngOnInit() {
+        if (this.field) {
+            this.content = new ContainerModel(this.field.form, this.field.json);
         }
     }
 
@@ -50,9 +53,4 @@ export class ContainerWidget implements AfterViewInit {
         }
         return false;
     }
-
-    fieldChanged(field: FormFieldModel) {
-        this.formValueChanged.emit(field);
-    }
-
 }

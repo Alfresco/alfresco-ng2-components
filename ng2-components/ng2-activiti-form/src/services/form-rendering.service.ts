@@ -36,7 +36,8 @@ import {
     FunctionalGroupWidget,
     DynamicTableWidget,
     AttachWidget,
-    UploadWidget
+    UploadWidget,
+    ContainerWidget
 } from './../components/widgets/index';
 
 @Injectable()
@@ -57,7 +58,9 @@ export class FormRenderingService {
         'typeahead': DefaultTypeResolver.fromType(TypeaheadWidget),
         'people': DefaultTypeResolver.fromType(PeopleWidget),
         'functional-group': DefaultTypeResolver.fromType(FunctionalGroupWidget),
-        'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidget)
+        'dynamic-table': DefaultTypeResolver.fromType(DynamicTableWidget),
+        'container': DefaultTypeResolver.fromType(ContainerWidget),
+        'group': DefaultTypeResolver.fromType(ContainerWidget)
     };
 
     constructor() {

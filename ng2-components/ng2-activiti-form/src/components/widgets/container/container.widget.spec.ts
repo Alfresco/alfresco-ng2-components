@@ -103,14 +103,14 @@ describe('ContainerWidget', () => {
         let widget = new ContainerWidget();
         let fakeForm = new FormModel();
         let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-        widget.formValueChanged.subscribe(field => {
+        widget.fieldChanged.subscribe(field => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
             expect(field.value).toBe('fakeValue');
             done();
         });
 
-        widget.fieldChanged(fakeField);
+        widget.onFieldChanged(fakeField);
     });
 
     describe('when template is ready', () => {
@@ -180,7 +180,7 @@ describe('ContainerWidget', () => {
         it('should hide header when it becomes not visible', async(() => {
             containerWidgetComponent.content = fakeContainerVisible;
             fixture.detectChanges();
-            containerWidgetComponent.formValueChanged.subscribe((res) => {
+            containerWidgetComponent.fieldChanged.subscribe((res) => {
                 containerWidgetComponent.content.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable()
@@ -189,12 +189,12 @@ describe('ContainerWidget', () => {
                         expect(element.querySelector('#container-header-label')).toBeNull();
                     });
             });
-            containerWidgetComponent.fieldChanged(null);
+            containerWidgetComponent.onFieldChanged(null);
         }));
 
         it('should show header when it becomes visible', async(() => {
             containerWidgetComponent.content = fakeContainerInvisible;
-            containerWidgetComponent.formValueChanged.subscribe((res) => {
+            containerWidgetComponent.fieldChanged.subscribe((res) => {
                 containerWidgetComponent.content.field.isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
@@ -205,7 +205,7 @@ describe('ContainerWidget', () => {
                         expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-2-name');
                     });
             });
-            containerWidgetComponent.fieldChanged(null);
+            containerWidgetComponent.onFieldChanged(null);
         }));
 
     });
