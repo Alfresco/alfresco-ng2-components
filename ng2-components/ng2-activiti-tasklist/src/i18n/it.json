@@ -1,31 +1,34 @@
 {
-  "TASK_LIST": {
-    "MESSAGES": {
-      "NONE": "Nessuna lista tasks trovata."
-    }
-  },
-  "TASK_DETAILS": {
-    "LABELS": {
-      "ASSIGNEE": "Assegnatario",
-      "DUE": "Scadenza",
-      "FORM": "Form",
-      "PEOPLE": "Persone",
-      "COMMENTS": "Commenti",
-      "CHECKLIST": "Checklist"
+    "TASK_LIST": {
+        "MESSAGES": {
+            "NONE": "Nessuna lista tasks trovata."
+        }
     },
-    "MESSAGES": {
-      "NONE": "Nessun dettaglio task trovato."
+    "TASK_DETAILS": {
+        "LABELS": {
+            "ASSIGNEE": "Assegnatario",
+            "DUE": "Scadenza",
+            "FORM": "Form",
+            "PEOPLE": "Persone",
+            "COMMENTS": "Commenti",
+            "CHECKLIST": "Checklist"
+        },
+        "MESSAGES": {
+            "NONE": "Nessun dettaglio task trovato."
+        },
+        "FORM": {
+            "NONE": "Nessuna form."
+        },
+        "DUE": {
+            "NONE": "Nessuna data di scadenza."
+        }
     },
-    "FORM": {
-      "NONE": "Nessuna form."
+    "TASK_FILTERS": {
+        "MESSAGES": {
+            "NONE": "Nessun filtro task selezionato."
+        }
     },
-    "DUE": {
-      "NONE": "Nessuna data di scadenza."
+    "PEOPLE": {
+        "DIALOG_CLOSE": "CHIUDI"
     }
-  },
-  "TASK_FILTERS": {
-    "MESSAGES": {
-      "NONE": "Nessun filtro task selezionato."
-    }
-  }
 }
