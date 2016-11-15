@@ -22,7 +22,6 @@ import { TabModel } from './tab.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
-import { DynamicTableModel } from './dynamic-table.model';
 
 export class FormModel {
 
@@ -123,14 +122,10 @@ export class FormModel {
         for (let i = 0; i < this.fields.length; i++) {
             let field = this.fields[i];
 
-            if (field.type === FormFieldTypes.CONTAINER || field.type === FormFieldTypes.GROUP) {
+            if (field instanceof ContainerModel) {
                 let container = <ContainerModel> field;
-                result.push(...container.getFormFields());
-            }
-
-            if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
-                let dynamicTable = <DynamicTableModel> field;
-                result.push(dynamicTable.field);
+                result.push(container.field);
+                result.push(...container.children);
             }
         }
 
@@ -159,7 +154,7 @@ export class FormModel {
         this.validateForm();
     }
 
-    // Activiti supports 2 types of root fields: 'container' and 'dynamic-table'.
+    // Activiti supports 3 types of root fields: container|group|dynamic-table
     private parseRootFields(json: any): FormWidgetModel[] {
         let fields = [];
 
@@ -172,18 +167,16 @@ export class FormModel {
         let result: FormWidgetModel[] = [];
 
         for (let field of fields) {
-            if (field.type === FormFieldTypes.CONTAINER || field.type === FormFieldTypes.GROUP ) {
-                result.push(new ContainerModel(this, field));
-            } else if (field.type === FormFieldTypes.DYNAMIC_TABLE) {
-                result.push(new DynamicTableModel(this, field));
-            } else if (field.type === FormFieldTypes.DISPLAY_VALUE) {
+            if (field.type === FormFieldTypes.DISPLAY_VALUE) {
                 // workaround for dynamic table on a completed/readonly form
                 if (field.params) {
                     let originalField = field.params['field'];
                     if (originalField.type === FormFieldTypes.DYNAMIC_TABLE) {
-                        result.push(new DynamicTableModel(this, field));
+                        result.push(new ContainerModel(this, field));
                     }
                 }
+            } else {
+                result.push(new ContainerModel(this, field));
             }
         }
 

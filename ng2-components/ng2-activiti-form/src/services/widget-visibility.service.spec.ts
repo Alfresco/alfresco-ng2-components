@@ -620,6 +620,7 @@ describe('WidgetVisibilityService', () => {
             expect(res).toBe('value_1');
         });
 
+        /*
         it('should refresh the visibility for field', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
@@ -637,6 +638,7 @@ describe('WidgetVisibilityService', () => {
             expect(column0.fields[2].isVisible).toBeTruthy();
             expect(column1.fields[0].isVisible).toBeTruthy();
         });
+        */
 
         it('should refresh the visibility for tab in forms', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';

@@ -16,7 +16,7 @@
  */
 
 import { BooleanEditorComponent } from './boolean.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../../core/index';
+import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 describe('BooleanEditorComponent', () => {
 

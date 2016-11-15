@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicRowValidationSummary } from './../../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicRowValidationSummary } from './../dynamic-table.widget.model';
 
 @Component({
     moduleId: module.id,

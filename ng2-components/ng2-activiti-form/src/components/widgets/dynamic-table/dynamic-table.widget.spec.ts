@@ -16,7 +16,8 @@
  */
 
 import { DynamicTableWidget } from './dynamic-table.widget';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, FormModel, FormFieldTypes } from './../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
+import { FormModel, FormFieldTypes } from './../core/index';
 
 describe('DynamicTableWidget', () => {
 

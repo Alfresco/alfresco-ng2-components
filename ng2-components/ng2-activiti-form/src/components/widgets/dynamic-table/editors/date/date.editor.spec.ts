@@ -17,7 +17,7 @@
 
 import { ElementRef } from '@angular/core';
 import { DateEditorComponent } from './date.editor';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 describe('DateEditorComponent', () => {
 

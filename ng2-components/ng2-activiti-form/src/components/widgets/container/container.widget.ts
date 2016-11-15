@@ -16,7 +16,7 @@
  */
 
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { ContainerModel } from './../core/index';
+import { ContainerWidgetModel } from './container.widget.model';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
@@ -27,7 +27,7 @@ import { WidgetComponent } from './../widget.component';
 })
 export class ContainerWidget extends WidgetComponent implements OnInit, AfterViewInit {
 
-    content: ContainerModel;
+    content: ContainerWidgetModel;
 
     onExpanderClicked() {
         if (this.content && this.content.isCollapsible()) {
@@ -37,7 +37,7 @@ export class ContainerWidget extends WidgetComponent implements OnInit, AfterVie
 
     ngOnInit() {
         if (this.field) {
-            this.content = new ContainerModel(this.field.form, this.field.json);
+            this.content = new ContainerWidgetModel(this.field.form, this.field.json);
         }
     }
 
