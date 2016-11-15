@@ -1,76 +1,79 @@
 {
-  "TASK_LIST": {
-    "MESSAGES": {
-      "NONE": "No tasks list found."
-    }
-  },
-  "TASK_DETAILS": {
-    "LABELS": {
-      "ASSIGNEE": "Assignee",
-      "DUE": "Due",
-      "FORM": "Form",
-      "PEOPLE": "People",
-      "COMMENTS": "Comments",
-      "CHECKLIST": "Checklist"
+    "TASK_LIST": {
+        "MESSAGES": {
+            "NONE": "No tasks list found."
+        }
     },
-    "BUTTON": {
-      "COMPLETE": "Complete"
-    },
-    "MESSAGES": {
-      "NONE": "No task details found."
-    },
-    "FORM": {
-      "NONE": "No form."
-    },
-    "DUE": {
-      "NONE": "No due date."
-    },
-    "ASSIGNEE": {
-      "NONE": "No assignee."
-    },
-    "PEOPLE": {
-      "NONE": "No people involved."
-    },
-    "COMMENTS": {
-      "NONE": "No comments.",
-      "ADD": "Add a comment",
-      "DIALOG": {
-        "TITLE": "New comment",
+    "TASK_DETAILS": {
         "LABELS": {
-          "MESSAGE": "Message"
+            "ASSIGNEE": "Assignee",
+            "DUE": "Due",
+            "FORM": "Form",
+            "PEOPLE": "People",
+            "COMMENTS": "Comments",
+            "CHECKLIST": "Checklist"
         },
         "BUTTON": {
-          "ADD": "Add Comment",
-          "CANCEL": "Cancel"
+            "COMPLETE": "Complete"
+        },
+        "MESSAGES": {
+            "NONE": "No task details found."
+        },
+        "FORM": {
+            "NONE": "No form."
+        },
+        "DUE": {
+            "NONE": "No due date."
+        },
+        "ASSIGNEE": {
+            "NONE": "No assignee."
+        },
+        "PEOPLE": {
+            "NONE": "No people involved."
+        },
+        "COMMENTS": {
+            "NONE": "No comments.",
+            "ADD": "Add a comment",
+            "DIALOG": {
+                "TITLE": "New comment",
+                "LABELS": {
+                    "MESSAGE": "Message"
+                },
+                "BUTTON": {
+                    "ADD": "Add Comment",
+                    "CANCEL": "Cancel"
+                }
+            }
+        },
+        "CHECKLIST": {
+            "NONE": "No checklist."
+        },
+        "ERROR": {
+            "TITLE": "Something went wrong",
+            "DESCRIPTION": "Could not complete the specified action. Please try again or check that you have permission.",
+            "CLOSE": "Close"
         }
-      }
     },
-    "CHECKLIST": {
-      "NONE": "No checklist."
+    "TASK_FILTERS": {
+        "MESSAGES": {
+            "NONE": "No task filter selected."
+        }
     },
-    "ERROR": {
-      "TITLE": "Something went wrong",
-      "DESCRIPTION": "Could not complete the specified action. Please try again or check that you have permission.",
-      "CLOSE": "Close"
+    "START_TASK": {
+        "BUTTON": "Start Task",
+        "DIALOG": {
+            "TITLE": "Start Task",
+            "LABEL": {
+                "NAME": "Name",
+                "DESCRIPTION": "Description"
+            },
+            "ACTION": {
+                "START": "Start",
+                "CANCEL": "Cancel"
+            }
+        }
+    },
+    "PEOPLE": {
+        "DIALOG_CLOSE": "CLOSE"
     }
-  },
-  "TASK_FILTERS": {
-    "MESSAGES": {
-      "NONE": "No task filter selected."
-    }
-  },
-  "START_TASK": {
-    "BUTTON": "Start Task",
-    "DIALOG": {
-      "TITLE": "Start Task",
-      "LABEL": {
-        "NAME": "Name",
-        "DESCRIPTION": "Description"
-      },
-      "ACTION": {
-        "START": "Start",
-        "CANCEL": "Cancel"
-      }
-    }
-  }
 }
