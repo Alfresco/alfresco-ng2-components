@@ -140,7 +140,7 @@ Follow the 3 steps below:
 The component shows the list of all the tasks filter by the FilterParamRepresentationModel passed in input.
 
 ```html
-<activiti-tasklist [taskFilter]="taskFilterModel"></activiti-tasklist>
+<activiti-tasklist [appId]="'1'" [state]="'open'" [assignment]="'assignee'"></activiti-tasklist>
 ```
 
 Usage example of this component :
@@ -151,22 +151,24 @@ Usage example of this component :
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { FilterRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<activiti-tasklist [taskFilter]="filterRepresentationModel"
-                                               [data]="dataTasks"
-                                               #activititasklist></activiti-tasklist>`
+    template: `<activiti-tasklist [appId]="appId" [state]="state" [assignment]="assignment" [data]="dataTasks"></activiti-tasklist>`
 })
 class MyDemoApp {
 
     dataTasks: ObjectDataTableAdapter;
 
-    filterRepresentationModel: FilterRepresentationModel;
+    appId: string = '1';
+
+    assignment: string = 'assignee';
+
+    state: string = 'open';
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
         settingsService.bpmHost = 'http://localhost:9999';
@@ -185,17 +187,6 @@ class MyDemoApp {
             ]
         );
         this.dataTasks.setSorting(new DataSorting('started', 'desc'));
-
-        this.filterRepresentationModel = new FilterRepresentationModel({
-            appId: '3003',
-            filter: {
-                processDefinitionKey: null,
-                assignment: 'involved',
-                name: null,
-                state: 'running',
-                sort: 'created-desc'
-            }
-        });
     }
 }
 
