@@ -15,9 +15,12 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { DisplayValueWidget } from './display-value.widget';
 import { FormService } from '../../../services/form.service';
+import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
@@ -670,4 +673,78 @@ describe('DisplayValueWidget', () => {
         expect(widget.getCellValue(row, column)).toBe(expected);
     });
 
+    describe('UI check', () => {
+        let widgetUI: DisplayValueWidget;
+        let fixture: ComponentFixture<DisplayValueWidget>;
+        let element: HTMLElement;
+        let componentHandler;
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [DisplayValueWidget],
+                providers: [
+                    EcmModelService,
+                    FormService
+                ]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(DisplayValueWidget);
+                widgetUI = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        beforeEach(() => {
+            spyOn(widgetUI, 'setupMaterialTextField').and.stub();
+        });
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should show the checkbox on when [BOOLEAN] field is true', async(() => {
+            widgetUI.field = new FormFieldModel(null, {
+                id: 'fake-checkbox-id',
+                type: FormFieldTypes.DISPLAY_VALUE,
+                value: 'true',
+                params: {
+                    field: {
+                        type: FormFieldTypes.BOOLEAN
+                    }
+                }
+            });
+            fixture.detectChanges();
+
+            fixture.whenStable()
+                .then(() => {
+                    let elWidget: any = element.querySelector('#fake-checkbox-id');
+                    expect(elWidget).toBeDefined();
+                    expect(elWidget.checked).toBeTruthy();
+                });
+        }));
+
+        it('should show the checkbox off when [BOOLEAN] field is false', async(() => {
+            widgetUI.field = new FormFieldModel(null, {
+                id: 'fake-checkbox-id',
+                type: FormFieldTypes.DISPLAY_VALUE,
+                value: 'false',
+                params: {
+                    field: {
+                        type: FormFieldTypes.BOOLEAN
+                    }
+                }
+            });
+            fixture.detectChanges();
+
+            fixture.whenStable()
+                .then(() => {
+                    let elWidget: any = element.querySelector('#fake-checkbox-id');
+                    expect(elWidget).toBeDefined();
+                    expect(elWidget.checked).toBeFalsy();
+                });
+        }));
+    });
 });
