@@ -4,10 +4,9 @@
         <header class="mdl-layout__header">
             <div class="mdl-button-padding mdl-layout__header-row">
 
-                <div *ngIf="isLoggedIn()">
-                    <ng2-alfresco-userinfo class="user-profile" [menuOpenType]="left">
-                    </ng2-alfresco-userinfo>
-                </div>
+
+                <ng2-alfresco-userinfo class="user-profile" [menuOpenType]="left">
+                </ng2-alfresco-userinfo>
 
 
                 <!-- Title -->
@@ -20,7 +19,8 @@
 
                 <!-- Navigation. We hide it in small screens. -->
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <a class="mdl-navigation__link" data-automation-id="files" href="" routerLink="/files">DocumentList</a>
+                    <a class="mdl-navigation__link" data-automation-id="files" href=""
+                       routerLink="/files">DocumentList</a>
                     <a class="mdl-navigation__link" data-automation-id="datatable" href="" routerLink="/datatable">DataTable</a>
                     <a class="mdl-navigation__link" data-automation-id="uploader" href="" routerLink="/uploader">Uploader</a>
                     <a class="mdl-navigation__link" data-automation-id="activiti" href="" routerLink="/activiti">Activiti</a>
@@ -66,10 +66,12 @@
             <span class="mdl-layout-title">Components List</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="" routerLink="/files" (click)="hideDrawer()">DocumentList Demo</a>
-                <a class="mdl-navigation__link" href="" routerLink="/datatable" (click)="hideDrawer()">DataTable Demo</a>
+                <a class="mdl-navigation__link" href="" routerLink="/datatable" (click)="hideDrawer()">DataTable
+                    Demo</a>
                 <a class="mdl-navigation__link" href="" routerLink="/uploader" (click)="hideDrawer()">Uploader Demo</a>
                 <a class="mdl-navigation__link" href="" routerLink="/login" (click)="hideDrawer()">Login Demo</a>
-                <a class="mdl-navigation__link" href="" routerLink="/activiti" (click)="hideDrawer()">Activiti Components Demo</a>
+                <a class="mdl-navigation__link" href="" routerLink="/activiti" (click)="hideDrawer()">Activiti
+                    Components Demo</a>
                 <a class="mdl-navigation__link" href="" routerLink="/webscript" (click)="hideDrawer()">Webscript</a>
                 <a class="mdl-navigation__link" href="" routerLink="/tag" (click)="hideDrawer()">Tag</a>
                 <a class="mdl-navigation__link" href="" routerLink="/settings" (click)="hideDrawer()">Settings</a>
