@@ -1,4 +1,8 @@
 # Test against this version of Node.js
+branches:
+  only:
+    - master
+    
 environment:
   nodejs_version: "5"
 
