@@ -88,7 +88,7 @@ describe('AlfrescoAuthentication', () => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketBpm()).toBeNull();
-                expect(authService.getAlfrescoApi().bpmAuth.isLoggedIn()).toBeFalsy();
+                expect(authService.alfrescoApi.bpmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
@@ -187,7 +187,7 @@ describe('AlfrescoAuthentication', () => {
             authService.login('fake-username', 'fake-password').subscribe(() => {
                 expect(authService.isLoggedIn()).toBe(true);
                 expect(authService.getTicketEcm()).toBeNull();
-                expect(authService.getAlfrescoApi().ecmAuth.isLoggedIn()).toBeFalsy();
+                expect(authService.alfrescoApi.ecmAuth.isLoggedIn()).toBeFalsy();
                 done();
             });
 
@@ -258,19 +258,19 @@ describe('AlfrescoAuthentication', () => {
         it('should host ecm url change be reflected in the api configuration', () => {
             settingsService.ecmHost = '127.99.99.99';
 
-            expect(authService.getAlfrescoApi().config.hostEcm).toBe('127.99.99.99');
+            expect(authService.alfrescoApi.config.hostEcm).toBe('127.99.99.99');
         });
 
         it('should host bpm url change be reflected in the api configuration', () => {
             settingsService.bpmHost = '127.99.99.99';
 
-            expect(authService.getAlfrescoApi().config.hostBpm).toBe('127.99.99.99');
+            expect(authService.alfrescoApi.config.hostBpm).toBe('127.99.99.99');
         });
 
         it('should host bpm provider change be reflected in the api configuration', () => {
             settingsService.setProviders('ECM');
 
-            expect(authService.getAlfrescoApi().config.provider).toBe('ECM');
+            expect(authService.alfrescoApi.config.provider).toBe('ECM');
         });
 
     });

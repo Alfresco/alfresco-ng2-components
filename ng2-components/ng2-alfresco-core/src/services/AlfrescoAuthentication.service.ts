@@ -221,8 +221,4 @@ export class AlfrescoAuthenticationService {
         console.error('Error when logging in', error);
         return Observable.throw(error || 'Server error');
     }
-
-    getAlfrescoApi(): any {
-        return this.alfrescoApi;
-    }
 }
