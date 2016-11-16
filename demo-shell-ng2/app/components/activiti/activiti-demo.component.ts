@@ -31,7 +31,7 @@ import {
 } from 'ng2-alfresco-datatable';
 
 import { FormRenderingService } from 'ng2-activiti-form';
-import { CustomEditorComponent } from './custom-editor/custom-editor.component';
+import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
 declare let __moduleName: string;
 declare var componentHandler;
@@ -111,6 +111,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
+
+        // Uncomment this line to map 'custom_stencil_01' to local editor component
+        formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
     }
 
     ngOnInit() {
