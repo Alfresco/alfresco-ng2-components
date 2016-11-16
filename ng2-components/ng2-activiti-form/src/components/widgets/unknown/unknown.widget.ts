@@ -15,10 +15,17 @@
  * limitations under the License.
  */
 
-export interface DynamicTableRow {
+import { Component } from '@angular/core';
+import { WidgetComponent } from './../widget.component';
 
-    isNew: boolean;
-    selected: boolean;
-    value: any;
-
+@Component({
+    selector: 'unknown-widget',
+    template: `
+        <div>
+            <i class="material-icons">error_outline</i>
+            <span style="color: red">Unknown type: {{field.type}}</span>
+        </div>
+    `
+})
+export class UnknownWidget extends WidgetComponent {
 }

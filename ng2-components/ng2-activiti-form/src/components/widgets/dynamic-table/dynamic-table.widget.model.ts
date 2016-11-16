@@ -15,11 +15,9 @@
  * limitations under the License.
  */
 
-import { FormWidgetModel } from './form-widget.model';
-import { FormModel } from './form.model';
-import { FormFieldModel } from './form-field.model';
-import { DynamicTableColumn } from './dynamic-table-column';
-import { DynamicTableRow } from './dynamic-table-row';
+import { FormWidgetModel } from './../core/form-widget.model';
+import { FormModel } from './../core/form.model';
+import { FormFieldModel } from './../core/form-field.model';
 
 export class DynamicTableModel extends FormWidgetModel {
 
@@ -284,4 +282,42 @@ export class NumberCellValidator implements CellValidator {
         }
         return true;
     }
+}
+
+// maps to: com.activiti.model.editor.form.ColumnDefinitionRepresentation
+export interface DynamicTableColumn {
+
+    id: string;
+    name: string;
+    type: string;
+    value: any;
+    optionType: string;
+    options: DynamicTableColumnOption[];
+    restResponsePath: string;
+    restUrl: string;
+    restIdProperty: string;
+    restLabelProperty: string;
+    amountCurrency: string;
+    amountEnableFractions: boolean;
+    required: boolean;
+    editable: boolean;
+    sortable: boolean;
+    visible: boolean;
+
+    // TODO: com.activiti.domain.idm.EndpointConfiguration.EndpointConfigurationRepresentation
+    endpoint: any;
+    // TODO: com.activiti.model.editor.form.RequestHeaderRepresentation
+    requestHeaders: any;
+}
+
+// maps to: com.activiti.model.editor.form.OptionRepresentation
+export interface DynamicTableColumnOption {
+    id: string;
+    name: string;
+}
+
+export interface DynamicTableRow {
+    isNew: boolean;
+    selected: boolean;
+    value: any;
 }

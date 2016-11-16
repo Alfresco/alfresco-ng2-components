@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { UnknownWidget } from './unknown/unknown.widget';
 import { TabsWidget } from './tabs/tabs.widget';
 import { ContainerWidget } from './container/container.widget';
 
@@ -50,6 +51,7 @@ export * from './tabs/tabs.widget';
 export * from './container/container.widget';
 
 // primitives
+export * from './unknown/unknown.widget';
 export * from './text/text.widget';
 export * from './number/number.widget';
 export * from './checkbox/checkbox.widget';
@@ -76,6 +78,7 @@ export * from './dynamic-table/editors/boolean/boolean.editor';
 export * from './dynamic-table/editors/text/text.editor';
 
 export const WIDGET_DIRECTIVES: any[] = [
+    UnknownWidget,
     TabsWidget,
     ContainerWidget,
     TextWidget,

@@ -19,7 +19,7 @@ import { FormModel } from './form.model';
 import { TabModel } from './tab.model';
 import { ContainerModel } from './container.model';
 import { FormOutcomeModel } from './form-outcome.model';
-import { FormValues } from './form-values';
+// import { FormValues } from './form-values';
 import { FormFieldTypes } from './form-field-types';
 
 describe('FormModel', () => {
@@ -197,6 +197,7 @@ describe('FormModel', () => {
         expect(tab2.fields[0].id).toBe('field2');
     });
 
+    /*
     it('should apply external data', () => {
         let data: FormValues = {
             field1: 'one',
@@ -259,6 +260,7 @@ describe('FormModel', () => {
         expect(field3.id).toBe('field3');
         expect(field3.value).toBe('original-value');
     });
+    */
 
     it('should create standard form outcomes', () => {
         let json = {

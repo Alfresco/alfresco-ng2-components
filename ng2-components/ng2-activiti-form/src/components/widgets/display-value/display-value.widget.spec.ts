@@ -24,8 +24,7 @@ import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
-import { DynamicTableRow } from './../core/dynamic-table-row';
-import { DynamicTableColumn } from './../core/dynamic-table-column';
+import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 
 describe('DisplayValueWidget', () => {
 

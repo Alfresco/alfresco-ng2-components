@@ -30,6 +30,9 @@ import {
     DataSorting
 } from 'ng2-alfresco-datatable';
 
+import { FormRenderingService } from 'ng2-activiti-form';
+import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
+
 declare let __moduleName: string;
 declare var componentHandler;
 
@@ -87,7 +90,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute, private formRenderingService: FormRenderingService) {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
             [
@@ -105,6 +108,12 @@ export class ActivitiDemoComponent implements AfterViewChecked {
             ]
         );
         this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
+
+        // Uncomment this line to replace all 'text' field editors with custom component
+        // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
+
+        // Uncomment this line to map 'custom_stencil_01' to local editor component
+        formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
     }
 
     ngOnInit() {
