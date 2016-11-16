@@ -72,7 +72,7 @@ export class FormRenderingService {
                 }
                 return UploadWidget;
             }
-            return null;
+            return UnknownWidget;
         };
     }
 
