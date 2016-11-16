@@ -50,21 +50,9 @@ describe('ActivitiTaskList', () => {
         data: []
     };
 
-    let fakeGlobalTaskPromise = new Promise(function (resolve, reject) {
-        resolve(fakeGlobalTask);
-    });
-
-    let fakeGlobalTotalTasksPromise = new Promise(function (resolve, reject) {
-        resolve(fakeGlobalTotalTasks);
-    });
-
     let fakeErrorTaskList = {
         error: 'wrong request'
     };
-
-    let fakeErrorTaskPromise = new Promise(function (resolve, reject) {
-        reject(fakeErrorTaskList);
-    });
 
     let componentHandler: any;
     let component: ActivitiTaskList;
@@ -124,10 +112,10 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should return the filtered task list when the input parameters are passed', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
         component.state = 'open';
-        component.processDefinitionKey = null,
+        component.processDefinitionKey = null;
         component.assignment = 'fake-assignee';
         component.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
@@ -142,8 +130,8 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
         component.assignment = 'fake-assignee';
@@ -165,11 +153,12 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should throw an exception when the response is wrong', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeErrorTaskPromise));
+        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.throw(fakeErrorTaskList));
         component.state = 'open';
         component.assignment = 'fake-assignee';
         component.onError.subscribe( (err) => {
             expect(err).toBeDefined();
+            expect(err.error).toBe('wrong request');
             done();
         });
 
@@ -177,8 +166,8 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should reload tasks when reload() is called', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
         component.state = 'open';
         component.assignment = 'fake-assignee';
         component.ngOnInit();
@@ -210,8 +199,8 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should reload the task list when the input parameters changes', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
 
         component.data = new ObjectDataTableAdapter(
             [],
