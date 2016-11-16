@@ -202,13 +202,11 @@ describe('ActivitiTaskListService', () => {
         service.getTasks(fakeFilter).subscribe(
                 res => {
                 expect(res).toBeDefined();
-                expect(res.size).toEqual(1);
-                expect(res.total).toEqual(1);
-                expect(res.data.length).toEqual(1);
-                expect(res.data[0].name).toEqual('FakeNameTask');
-                expect(res.data[0].assignee.email).toEqual('fake-email@dom.com');
-                expect(res.data[0].assignee.firstName).toEqual('firstName');
-                expect(res.data[0].assignee.lastName).toEqual('lastName');
+                expect(res.length).toEqual(1);
+                expect(res[0].name).toEqual('FakeNameTask');
+                expect(res[0].assignee.email).toEqual('fake-email@dom.com');
+                expect(res[0].assignee.firstName).toEqual('firstName');
+                expect(res[0].assignee.lastName).toEqual('lastName');
                 done();
             }
         );

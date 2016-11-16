@@ -35,7 +35,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     appId: string;
 
     @Input()
-    processDefinitionId: string;
+    processDefinitionKey: string;
 
     @Input()
     state: string;
@@ -81,23 +81,29 @@ export class ActivitiTaskList implements OnInit, OnChanges {
 
     ngOnInit() {
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter(
-                [],
-                this.defaultSchemaColumn
-            );
+            this.data = this.initDefaultSchemaColumns();
         }
-
-        this.requestNode = this.createRequestNode();
-        this.load(this.requestNode);
+        this.reload();
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.reload();
+    }
+
+    public reload() {
         this.requestNode = this.createRequestNode();
         this.load(this.requestNode);
     }
 
-    public reload() {
-        this.load(this.requestNode);
+    /**
+     * Return an initDefaultSchemaColumns instance with the default Schema Column
+     * @returns {ObjectDataTableAdapter}
+     */
+    initDefaultSchemaColumns(): ObjectDataTableAdapter {
+        return new ObjectDataTableAdapter(
+            [],
+            this.defaultSchemaColumn
+        );
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
@@ -106,7 +112,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
                 requestNode.size = res.total;
                 this.activiti.getTasks(requestNode).subscribe(
                     (response) => {
-                        let taskRow = this.createDataRow(response.data);
+                        let taskRow = this.createDataRow(response);
                         this.renderTasks(taskRow);
                         this.selectFirstTask();
                         this.onSuccess.emit(response);
@@ -202,7 +208,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     private createRequestNode() {
         let requestNode = {
             appDefinitionId: this.appId,
-            processDefinitionId: this.processDefinitionId,
+            processDefinitionKey: this.processDefinitionKey,
             text: this.name,
             assignment: this.assignment,
             state: this.state,
