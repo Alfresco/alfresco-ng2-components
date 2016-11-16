@@ -15,8 +15,20 @@
  * limitations under the License.
  */
 
-describe('Placeholder', () => {
-    it('test placeholder', () => {
-        expect(true).toBe(true);
-    });
-});
+export class ProcessFilterRequestRepresentation {
+    processDefinitionId: string;
+    appDefinitionId: string;
+    state: string;
+    sort: string;
+    page: number;
+    size: number;
+
+    constructor(obj?: any) {
+        this.processDefinitionId = obj && obj.processDefinitionId || null;
+        this.appDefinitionId = obj && obj.appDefinitionId || null;
+        this.state = obj && obj.state || null;
+        this.sort = obj && obj.sort || null;
+        this.page = obj && obj.page || 0;
+        this.size = obj && obj.size || 25;
+    }
+}

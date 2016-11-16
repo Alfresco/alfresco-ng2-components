@@ -24,13 +24,7 @@ import { ActivitiProcessService } from '../services/activiti-process.service';
 @Component({
     moduleId: module.id,
     selector: 'activiti-process-instance-list',
-    styles: [
-        `
-              :host h1 {
-                  font-size:22px
-              }
-          `
-    ],
+    styleUrls: [ './activiti-processlist.component.css' ],
     templateUrl: './activiti-processlist.component.html'
 })
 export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
@@ -93,7 +87,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         );
     }
 
-    load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (processInstances) => {

@@ -21,7 +21,7 @@ import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
 import { ActivitiComments } from './activiti-comments.component';
-import { ProcessInstance } from '../models/process-instance';
+import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
 
@@ -61,9 +61,8 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
 
     /**
      * Constructor
-     * @param auth
-     * @param translate
-     * @param activitiProcess
+     * @param translate Translation service
+     * @param activitiProcess   Process service
      */
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
