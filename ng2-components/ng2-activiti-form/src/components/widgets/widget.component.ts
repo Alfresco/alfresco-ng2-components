@@ -29,6 +29,7 @@ export class WidgetComponent implements AfterViewInit {
     @Input()
     field: FormFieldModel;
 
+    /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     @Output()
     fieldChanged: EventEmitter<FormFieldModel> = new EventEmitter<FormFieldModel>();
 
@@ -79,13 +80,15 @@ export class WidgetComponent implements AfterViewInit {
         return false;
     }
 
-    /** @deprecated use onFieldChanged instead */
+    /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     checkVisibility(field: FormFieldModel) {
-        console.log('checkVisibility is deprecated, use onFieldChanged instead');
+        console.log('WidgetComponent.checkVisibility was used only to trigger visibility engine, components should do that internally if needed');
         this.fieldChanged.emit(field);
     }
 
+    /** @deprecated used only to trigger visibility engine, components should do that internally if needed */
     onFieldChanged(field: FormFieldModel) {
+        console.log('WidgetComponent.onFieldChanged was used only to trigger visibility engine, components should do that internally if needed');
         this.fieldChanged.emit(field);
     }
 
