@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild, ViewContainerRef, Input, ComponentRef, ComponentFactoryResolver/*,Injector*/ } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, Input, ComponentRef, ComponentFactoryResolver } from '@angular/core';
 import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormRenderingService } from './../../services/form-rendering.service';
 import { WidgetComponent } from './../widgets/widget.component';
@@ -24,7 +24,7 @@ import { FormFieldModel } from './../widgets/core/index';
 @Component({
     selector: 'form-field',
     template: `
-        <div [hidden]="!field.isVisible">
+        <div [hidden]="!field?.isVisible">
             <div #container></div>
         </div>
     `
@@ -37,13 +37,12 @@ export class FormFieldComponent implements OnInit {
     @Input()
     field: FormFieldModel = null;
 
-    private componentRef: ComponentRef<{}>;
+    componentRef: ComponentRef<{}>;
 
     constructor(
         private formRenderingService: FormRenderingService,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private visibilityService: WidgetVisibilityService
-        /*,private injector: Injector*/) {
+        private visibilityService: WidgetVisibilityService) {
     }
 
     ngOnInit() {
@@ -51,10 +50,11 @@ export class FormFieldComponent implements OnInit {
             let componentType = this.formRenderingService.resolveComponentType(this.field);
             if (componentType) {
                 let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-                this.componentRef = this.container.createComponent(factory/*, 0, this.injector*/);
+                this.componentRef = this.container.createComponent(factory);
                 let instance = <WidgetComponent>this.componentRef.instance;
                 instance.field = this.field;
                 instance.fieldChanged.subscribe(field => {
+                    console.log('WidgetComponent.fieldChanged was used only to trigger visibility engine, components should do that internally if needed');
                     if (field && field.form) {
                         this.visibilityService.refreshVisibility(field.form);
                     }
