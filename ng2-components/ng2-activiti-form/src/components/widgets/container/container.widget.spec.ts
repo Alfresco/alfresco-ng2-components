@@ -38,6 +38,15 @@ describe('ContainerWidget', () => {
         window['componentHandler'] = componentHandler;
     });
 
+    it('should wrap field with model instance', () => {
+        let field = new FormFieldModel(null);
+        let container = new ContainerWidget();
+        container.field = field;
+        container.ngOnInit();
+        expect(container.content).toBeDefined();
+        expect(container.content.field).toBe(field);
+    });
+
     it('should upgrade MDL content on view init', () => {
         let container = new ContainerWidget();
         container.ngAfterViewInit();
