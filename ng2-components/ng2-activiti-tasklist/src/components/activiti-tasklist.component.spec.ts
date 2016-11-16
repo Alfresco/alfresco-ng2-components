@@ -26,23 +26,24 @@ import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 
 describe('ActivitiTaskList', () => {
 
-    let fakeGlobalTask = {
-        size: 2, total: 2, start: 0,
-        data: [
-            {
-                id: 14, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name', description: null, category: null,
-                assignee: {
-                    id: 1, firstName: null, lastName: 'Administrator', email: 'admin'
-                }
-            },
-            {
-                id: 2, name: '', description: null, category: null,
-                assignee: {
-                    id: 1, firstName: null, lastName: 'Administrator', email: 'admin'
-                }
+    let fakeGlobalTask = [
+        {
+            id: 14, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name',
+            processDefinitionId: 'fakeprocess:5:7507',
+            processDefinitionKey: 'fakeprocess',
+            processDefinitionName: 'Fake Process Name',
+            description: null, category: null,
+            assignee: {
+                id: 1, firstName: null, lastName: 'Administrator', email: 'admin'
             }
-        ]
-    };
+        },
+        {
+            id: 2, name: '', description: null, category: null,
+            assignee: {
+                id: 1, firstName: null, lastName: 'Administrator', email: 'admin'
+            }
+        }
+    ];
 
     let fakeGlobalTotalTasks = {
         size: 2, total: 2, start: 0,
@@ -126,6 +127,7 @@ describe('ActivitiTaskList', () => {
         spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
         spyOn(component.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
         component.state = 'open';
+        component.processDefinitionKey = null,
         component.assignment = 'fake-assignee';
         component.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
@@ -136,7 +138,24 @@ describe('ActivitiTaskList', () => {
             expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
             done();
         });
+        component.ngOnInit();
+    });
 
+    it('should return the filtered task list by processDefinitionKey', (done) => {
+        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.fromPromise(fakeGlobalTotalTasksPromise));
+        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.fromPromise(fakeGlobalTaskPromise));
+        component.state = 'open';
+        component.processDefinitionKey = 'fakeprocess';
+        component.assignment = 'fake-assignee';
+        component.onSuccess.subscribe( (res) => {
+            expect(res).toBeDefined();
+            expect(component.data).toBeDefined();
+            expect(component.isTaskListEmpty()).not.toBeTruthy();
+            expect(component.data.getRows().length).toEqual(2);
+            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            done();
+        });
         component.ngOnInit();
     });
 
