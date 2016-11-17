@@ -110,7 +110,6 @@ Usage example of this component :
 
 **main.ts**
 ```ts
-
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -150,8 +149,6 @@ export class AppModule {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
-
 ```
 
 ### Display form instance by task id
@@ -173,7 +170,7 @@ For an existing Task both form and values will be fetched and displayed.
 </activiti-form>
 ```
 
-Only form definition will be fetched
+Only form definition will be fetched.
 
 ### Display form definition by form name
 
@@ -184,8 +181,11 @@ Only form definition will be fetched
 </activiti-form>
 ```
 
-### Display form definition by ECM nodeId, in this case the metadata of the node are showed in an activiti Form. If there are no form 
-definied in activiti for the type of the node, a new form will be automaticaly created in activiti.
+### Display form definition by ECM nodeId
+
+In this case the metadata of the node are showed in an activiti Form. 
+If there is no form definied in activiti for the type of the node, 
+a new form will be automaticaly created in Activiti.
 
 ```html
 <activiti-form 
@@ -193,7 +193,9 @@ definied in activiti for the type of the node, a new form will be automaticaly c
 </activiti-form>
 ```
 
-### Display form definition by form name, and store the form field as metadata. The param nameNode is optional.
+### Display form definition by form name, and store the form field as metadata. 
+
+The param nameNode is optional.
 
 ```html
 <activiti-form 
@@ -204,8 +206,10 @@ definied in activiti for the type of the node, a new form will be automaticaly c
 </activiti-form>
 ```
 
-### Display form definition by ECM nodeId, in this case the metadata of the node are showed in an activiti Form, and store the form field
-  as metadata. The param nameNode is optional.
+### Display form definition by ECM nodeId
+
+In this case the metadata of the node are showed in an activiti Form, 
+and store the form field as metadata. The param nameNode is optional.
 
 ```html
 <activiti-form 
@@ -323,6 +327,10 @@ There are two additional functions that can be of a great value when controlling
 
 **Please note that if `event.preventDefault()` is not called then default outcome behaviour 
 will also be executed after your custom code.**
+
+## Extensibility and customisation
+
+Please refer to [Form Extensibility and Customisation](docs/extensibility.md).
 
 ## Build from sources
 
