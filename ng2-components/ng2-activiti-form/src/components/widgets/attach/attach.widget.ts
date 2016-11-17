@@ -35,7 +35,6 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     selectedFolderSiteName: string;
     selectedFolderAccountId: string;
     fileName: string;
-    hasFile: boolean;
     selectedFolderNodes: [ExternalContent];
     selectedFile: ExternalContent;
 
@@ -54,10 +53,6 @@ export class AttachWidget extends WidgetComponent implements OnInit {
 
     ngOnInit() {
         if (this.field) {
-            if (this.field.value) {
-                this.hasFile = true;
-            }
-
             let params = this.field.params;
 
             if (params &&
@@ -149,7 +144,10 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     reset() {
         this.field.value = null;
         this.field.json.value = null;
-        this.hasFile = false;
+    }
+
+    hasFile(): boolean {
+        return this.field && this.field.value;
     }
 
 }

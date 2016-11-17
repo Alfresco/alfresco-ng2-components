@@ -42,24 +42,23 @@ describe('AttachWidget', () => {
     });
 
     it('should require field value to check file', () => {
-        widget.hasFile = false;
         widget.field = null;
         widget.ngOnInit();
-        expect(widget.hasFile).toBeFalsy();
+        expect(widget.hasFile()).toBeFalsy();
 
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: null
         });
         widget.ngOnInit();
-        expect(widget.hasFile).toBeFalsy();
+        expect(widget.hasFile()).toBeFalsy();
 
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: [{ name: 'file' }]
         });
         widget.ngOnInit();
-        expect(widget.hasFile).toBeTruthy();
+        expect(widget.hasFile()).toBeTruthy();
     });
 
     it('should setup with form field', () => {
@@ -116,19 +115,20 @@ describe('AttachWidget', () => {
         expect(widget.selectedFile).toBe(node);
         expect(widget.field.value).toEqual([link]);
         expect(widget.field.json.value).toEqual([link]);
+        expect(widget.hasFile()).toBeTruthy();
     });
 
     it('should reset', () => {
-        widget.hasFile = true;
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: [{ name: 'filename' }]
         });
 
         widget.reset();
-        expect(widget.hasFile).toBeFalsy();
+        expect(widget.hasFile()).toBeFalsy();
         expect(widget.field.value).toBeNull();
         expect(widget.field.json.value).toBeNull();
+        expect(widget.hasFile()).toBeFalsy();
     });
 
     it('should close dialog on cancel', () => {
