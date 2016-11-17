@@ -229,7 +229,7 @@ describe('ObjectDataTableAdapter', () => {
         expect(rows[1].getValue('id')).toBe(1);
     });
 
-    it('should sort by first column if no sortable found', () => {
+    it('should be sorting undefined if no sortable found', () => {
         let adapter = new ObjectDataTableAdapter(
             [
                 { id: 2, name: 'abs' },
@@ -241,12 +241,7 @@ describe('ObjectDataTableAdapter', () => {
             ]
         );
 
-        expect(adapter.getSorting()).toEqual(
-            jasmine.objectContaining({
-                key: 'id',
-                direction: 'asc'
-            })
-        );
+        expect(adapter.getSorting()).toBeUndefined();
     });
 
     it('should sort asc and desc', () => {
