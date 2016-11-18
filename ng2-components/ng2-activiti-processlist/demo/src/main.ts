@@ -63,34 +63,35 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
             <section class="mdl-layout__tab-panel" id="processes">
                 <div class="page-content">
-                    <div class="page-content">
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--2-col task-column">
-                                <span>Process Filters</span>
-                                <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
-                                <activiti-process-instance-filters
-                                            [appId]="appId"
-                                            (filterClick)="onProcessFilterClick($event)"
-                                            (onSuccess)="onSuccessProcessFilterList($event)"
-                                            #activitiprocessfilter></activiti-process-instance-filters>
-                            </div>
-                            <div class="mdl-cell mdl-cell--3-col task-column">
-                                <span>Process List</span>
-                                <activiti-process-instance-list
-                                            [filter]="processFilter"
-                                            [data]="dataProcesses"
-                                            (rowClick)="onProcessRowClick($event)"
-                                            (onSuccess)="onSuccessProcessList($event)"
-                                            #activitiprocesslist></activiti-process-instance-list>
-                            </div>
-                            <div class="mdl-cell mdl-cell--7-col task-column">
-                                <span>Process Details</span>
-                                <activiti-process-instance-details
-                                            [processInstanceId]="currentProcessInstanceId"
-                                            (taskFormCompleted)="taskFormCompleted()"
-                                            (processCancelled)="processCancelled()"
-                                            #activitiprocessdetails></activiti-process-instance-details>
-                            </div>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col task-column">
+                            <span>Process Filters</span>
+                            <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
+                            <activiti-process-instance-filters
+                                        [appId]="appId"
+                                        (filterClick)="onProcessFilterClick($event)"
+                                        (onSuccess)="onSuccessProcessFilterList($event)"
+                                        #activitiprocessfilter></activiti-process-instance-filters>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column">
+                            <span>Process List</span>
+                            <activiti-process-instance-list *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
+                                       [processDefinitionKey]="processFilter.filter.processDefinitionKey"
+                                       [name]="processFilter.filter.name"
+                                       [state]="processFilter.filter.state"
+                                       [sort]="processFilter.filter.sort"
+                                       [data]="dataProcesses"
+                                        (rowClick)="onProcessRowClick($event)"
+                                        (onSuccess)="onSuccessProcessList($event)"
+                                        #activitiprocesslist></activiti-process-instance-list>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column">
+                            <span>Process Details</span>
+                            <activiti-process-instance-details
+                                        [processInstanceId]="currentProcessInstanceId"
+                                        (taskFormCompleted)="taskFormCompleted()"
+                                        (processCancelled)="processCancelled()"
+                                        #activitiprocessdetails></activiti-process-instance-details>
                         </div>
                     </div>
                 </div>
