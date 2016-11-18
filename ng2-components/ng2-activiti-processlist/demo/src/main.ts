@@ -22,7 +22,7 @@ import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-ac
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -144,11 +144,12 @@ class MyDemoApp implements OnInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
+                {type: 'text', key: 'id', title: 'Id'},
                 {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+                {type: 'text', key: 'started', title: 'Started', sortable: true},
+                {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
             ]
         );
-        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
     }
 
     public updateTicket(): void {
@@ -195,7 +196,7 @@ class MyDemoApp implements OnInit {
     }
 
     onSuccessProcessList(event: any) {
-        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
+        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentId();
     }
 
     onProcessRowClick(processInstanceId) {

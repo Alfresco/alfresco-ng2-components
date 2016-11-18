@@ -27,7 +27,7 @@ import {
 } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -159,7 +159,6 @@ class MyDemoApp implements OnInit {
                 {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
             ]
         );
-        this.dataTasks.setSorting(new DataSorting('started', 'desc'));
     }
 
     public updateTicket(): void {
@@ -209,7 +208,7 @@ class MyDemoApp implements OnInit {
     onSuccessTaskList(event: FilterRepresentationModel) {
         this.currentTaskId = this.activititasklist.getCurrentId();
     }
-main
+
     onTaskRowClick(taskId) {
         this.currentTaskId = taskId;
     }

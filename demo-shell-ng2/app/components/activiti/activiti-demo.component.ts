@@ -81,9 +81,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     taskSchemaColumns: any [] = [];
     processSchemaColumns: any [] = [];
 
-    taskFilter: any;
+    taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: any;
+    processFilter: FilterRepresentationModel;
 
     sub: Subscription;
 
@@ -103,11 +103,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column'},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden'}
             ]
         );
-        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
@@ -163,10 +162,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     onSuccessTaskList(event: FilterRepresentationModel) {
-        this.currentTaskId = this.activititasklist.getCurrentTaskId();
+        this.currentTaskId = this.activititasklist.getCurrentId();
     }
 
-    onProcessFilterClick(event: any) {
+    onProcessFilterClick(event: FilterRepresentationModel) {
         this.processFilter = event;
     }
 
@@ -175,7 +174,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     onSuccessProcessList(event: any) {
-        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
+        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentId();
     }
 
     onTaskRowClick(taskId) {
