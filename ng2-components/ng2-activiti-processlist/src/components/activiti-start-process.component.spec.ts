@@ -92,15 +92,14 @@ describe('ActivitiStartProcessButton', () => {
             expect(selectElement.children.length).toBe(3);
         });
 
-        it('should display the correct process def details', (done) => {
+        it('should display the correct process def details', async(() => {
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 let optionEl: HTMLOptionElement = debugElement.queryAll(By.css('select option'))[1].nativeElement;
                 expect(optionEl.value).toBe('my:process1');
                 expect(optionEl.textContent.trim()).toBe('My Process 1');
-                done();
             });
-        });
+        }));
 
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
