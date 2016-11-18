@@ -137,7 +137,7 @@ Follow the 3 steps below:
 
 ## Basic usage example Activiti Task List
 
-The component shows the list of all the tasks filter by the FilterParamRepresentationModel passed in input.
+This component renders a list containing all the tasks matched by the parameters specified.
 
 ```html
 <activiti-tasklist [appId]="'1'" [state]="'open'" [assignment]="'assignee'"></activiti-tasklist>
@@ -218,22 +218,16 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-| `taskFilter` | { FilterParamRepresentationModel } required) FilterParamRepresentationModel object that is passed to the task list API  to filter the task list. |
-
-Example:
-
-```json
-{
-    appId: '3003',
-    filter:{
-        processDefinitionKey: null,
-        name:null,
-        assignment: 'involved',
-        state:'running',
-        sort: 'created-desc'
-    }
-}
-```
+|`appId`| { appId } The id of the app. |
+|`processDefinitionKey`| { processDefinitionKey } The processDefinitionKey of the process. |
+|`assignment`| { assignment } The assignment of the process.
+Possible values are:
+assignee : where the current user is the assignee
+candidate: where the current user is a task candidate
+group_x: where the task is assigned to a group where the current user is a member of. The groups can be fetched through the profile REST endpoint
+no value: where the current user is involved |
+|`state`| { state } Define state of the processes. Possible values are: completed, active |
+|`sort`| { sort } Define the sort of the processes. Possible values are created-desc, created-asc, due-desc, due-asc |
 
 | Name | Description |
 | --- | --- |
