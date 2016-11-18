@@ -61,6 +61,14 @@ describe('ActivitiProcessService', () => {
 
         let getProcessInstances: jasmine.Spy;
 
+        let filter: ProcessFilterRequestRepresentation = new ProcessFilterRequestRepresentation({
+            processDefinitionId: '1',
+            appDefinitionId: '1',
+            page: 1,
+            sort: 'created-asc',
+            state: 'completed'
+        });
+
         beforeEach(() => {
             getProcessInstances = spyOn(alfrescoApi.activiti.processApi, 'getProcessInstances')
                 .and
@@ -68,13 +76,13 @@ describe('ActivitiProcessService', () => {
         });
 
         it('should return the correct number of instances', async(() => {
-            service.getProcessInstances(null).subscribe((instances) => {
+            service.getProcessInstances(filter).subscribe((instances) => {
                 expect(instances.length).toBe(1);
             });
         }));
 
         it('should return the correct instance data', async(() => {
-            service.getProcessInstances(null).subscribe((instances) => {
+            service.getProcessInstances(filter).subscribe((instances) => {
                 let instance = instances[0];
                 expect(instance.id).toBe(exampleProcess.id);
                 expect(instance.name).toBe(exampleProcess.name);
@@ -83,27 +91,11 @@ describe('ActivitiProcessService', () => {
         }));
 
         it('should call service to fetch process instances', () => {
-            service.getProcessInstances(null);
+            service.getProcessInstances(filter);
             expect(getProcessInstances).toHaveBeenCalled();
         });
 
-        it('should call service with default parameters if no filter specified', () => {
-            service.getProcessInstances(null);
-            expect(getProcessInstances).toHaveBeenCalledWith(new ProcessFilterRequestRepresentation({
-                page: 0,
-                sort: 'created-desc',
-                state: 'all'
-            }));
-        });
-
         it('should call service with supplied parameters', () => {
-            let filter: ProcessFilterRequestRepresentation = new ProcessFilterRequestRepresentation({
-                processDefinitionId: '1',
-                appDefinitionId: '1',
-                page: 1,
-                sort: 'created-asc',
-                state: 'completed'
-            });
             service.getProcessInstances(filter);
             expect(getProcessInstances).toHaveBeenCalledWith(filter);
         });
