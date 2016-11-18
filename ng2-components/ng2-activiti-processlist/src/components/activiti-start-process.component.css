@@ -20,6 +20,17 @@
     top: 4px;
 }
 
+.mdl-card {
+    width: 100%;
+    min-height: initial;
+    margin-bottom: 20px;
+}
+
+.mdl-card .mdl-dialog__content {
+    width: 100%;
+    padding: 20px;
+}
+
 .mdl-dialog {
     width: -moz-fit-content;
     width: -webkit-fit-content;
