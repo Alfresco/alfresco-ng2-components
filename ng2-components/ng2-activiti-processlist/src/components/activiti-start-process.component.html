@@ -3,6 +3,9 @@
 <dialog class="mdl-dialog" #dialog>
     <h4 class="mdl-dialog__title">{{'START_PROCESS.DIALOG.TITLE'|translate}}</h4>
     <div class="mdl-dialog__content">
+        <div class="mdl-card mdl-shadow--2dp error-message" *ngIf="errorMessageId">
+            <div class="mdl-card__supporting-text">{{errorMessageId|translate}}</div>
+        </div>
         <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
             <select name="processDefinition" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" id="processDefinition" required>
                 <option value="" selected="selected">{{'START_PROCESS.DIALOG.TYPE_PLACEHOLDER'|translate}}</option>

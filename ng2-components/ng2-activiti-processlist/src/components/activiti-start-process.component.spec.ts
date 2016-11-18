@@ -102,6 +102,16 @@ describe('ActivitiStartProcessButton', () => {
             });
         });
 
+        it('should indicate an error to the user if process defs cannot be loaded', async(() => {
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+                let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
+                expect(errorEl).not.toBeNull('Expected error message to be present');
+                expect(errorEl.nativeElement.innerText).toBe('START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+            });
+        }));
+
     });
 
     describe('input changes', () => {
@@ -173,6 +183,29 @@ describe('ActivitiStartProcessButton', () => {
             component.startProcess();
             fixture.whenStable().then(() => {
                 expect(emitSpy).toHaveBeenCalledWith(newProcess);
+            });
+        }));
+
+        it('should throw start event error when process cannot be started', async(() => {
+            let errorSpy = spyOn(component.start, 'error');
+            let error = { message: 'My error' };
+            startProcessSpy = startProcessSpy.and.returnValue(Observable.throw(error));
+            component.onProcessDefChange('my:process1');
+            component.startProcess();
+            fixture.whenStable().then(() => {
+                expect(errorSpy).toHaveBeenCalledWith(error);
+            });
+        }));
+
+        it('should indicate an error to the user if process cannot be started', async(() => {
+            startProcessSpy = startProcessSpy.and.returnValue(Observable.throw({}));
+            component.onProcessDefChange('my:process1');
+            component.startProcess();
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+                let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
+                expect(errorEl).not.toBeNull();
+                expect(errorEl.nativeElement.innerText).toBe('START_PROCESS.ERROR.START');
             });
         }));
 

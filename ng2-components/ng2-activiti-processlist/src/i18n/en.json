@@ -52,6 +52,10 @@
                 "START": "Start",
                 "CANCEL": "Cancel"
             }
+        },
+        "ERROR": {
+          "LOAD_PROCESS_DEFS": "Could not load process definitions, please check you have access.",
+          "START": "Could start new process instance, please check you have permission."
         }
     }
 }
