@@ -149,8 +149,8 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should return a currentId null when the taskList is empty', () => {
-        component.selectFirstTask();
-        expect(component.getCurrentTaskId()).toBeNull();
+        component.selectFirst();
+        expect(component.getCurrentId()).toBeNull();
     });
 
     it('should throw an exception when the response is wrong', (done) => {
@@ -192,7 +192,7 @@ describe('ActivitiTaskList', () => {
 
         component.rowClick.subscribe(taskId => {
             expect(taskId).toEqual(999);
-            expect(component.getCurrentTaskId()).toEqual(999);
+            expect(component.getCurrentId()).toEqual(999);
             done();
         });
 
@@ -219,7 +219,7 @@ describe('ActivitiTaskList', () => {
             expect(component.isListEmpty()).toBeTruthy();
         });
 
-        it('should reload the process list when the appId parameter changes', (done) => {
+        it('should reload the list when the appId parameter changes', (done) => {
             const appId = '1';
             let change = new SimpleChange(null, appId);
 
@@ -236,7 +236,7 @@ describe('ActivitiTaskList', () => {
             component.ngOnChanges({'appId': change});
         });
 
-        it('should reload the process list when the processDefinitionKey parameter changes', (done) => {
+        it('should reload the list when the processDefinitionKey parameter changes', (done) => {
             const processDefinitionKey = 'fakeprocess';
             let change = new SimpleChange(null, processDefinitionKey);
 
@@ -253,7 +253,7 @@ describe('ActivitiTaskList', () => {
             component.ngOnChanges({'processDefinitionKey': change});
         });
 
-        it('should reload the process list when the state parameter changes', (done) => {
+        it('should reload the list when the state parameter changes', (done) => {
             const state = 'open';
             let change = new SimpleChange(null, state);
 
@@ -270,7 +270,7 @@ describe('ActivitiTaskList', () => {
             component.ngOnChanges({'state': change});
         });
 
-        it('should reload the process list when the sort parameter changes', (done) => {
+        it('should reload the list when the sort parameter changes', (done) => {
             const sort = 'desc';
             let change = new SimpleChange(null, sort);
 
@@ -304,7 +304,7 @@ describe('ActivitiTaskList', () => {
             component.ngOnChanges({'name': change});
         });
 
-        it('should reload the process list when the assignment parameter changes', (done) => {
+        it('should reload the list when the assignment parameter changes', (done) => {
             const assignment = 'assignee';
             let change = new SimpleChange(null, assignment);
 
