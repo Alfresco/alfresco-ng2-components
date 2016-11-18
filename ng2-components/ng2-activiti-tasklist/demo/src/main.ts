@@ -80,8 +80,8 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
                             <span>Task List</span>
-                            <activiti-tasklist *ngIf="taskFilter && taskFilter.hasFilter()" [appId]="taskFilter.appId"
-                                           [processDefinitionId]="taskFilter.filter.processDefinitionId"
+                            <activiti-tasklist *ngIf="taskFilter?.hasFilter()" [appId]="taskFilter.appId"
+                                           [processDefinitionKey]="taskFilter.filter.processDefinitionKey"
                                            [name]="taskFilter.filter.name"
                                            [assignment]="taskFilter.filter.assignment"
                                            [state]="taskFilter.filter.state"
@@ -207,9 +207,9 @@ class MyDemoApp implements OnInit {
     }
 
     onSuccessTaskList(event: FilterRepresentationModel) {
-        this.currentTaskId = this.activititasklist.getCurrentTaskId();
+        this.currentTaskId = this.activititasklist.getCurrentId();
     }
-
+main
     onTaskRowClick(taskId) {
         this.currentTaskId = taskId;
     }
