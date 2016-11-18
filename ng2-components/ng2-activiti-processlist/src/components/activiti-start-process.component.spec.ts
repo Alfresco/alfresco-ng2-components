@@ -107,7 +107,7 @@ describe('ActivitiStartProcessButton', () => {
             fixture.whenStable().then(() => {
                 let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
                 expect(errorEl).not.toBeNull('Expected error message to be present');
-                expect(errorEl.nativeElement.innerText).toBe('START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+                expect(errorEl.nativeElement.innerText.trim()).toBe('START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
             });
         }));
 
@@ -204,7 +204,7 @@ describe('ActivitiStartProcessButton', () => {
                 fixture.detectChanges();
                 let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
                 expect(errorEl).not.toBeNull();
-                expect(errorEl.nativeElement.innerText).toBe('START_PROCESS.ERROR.START');
+                expect(errorEl.nativeElement.innerText.trim()).toBe('START_PROCESS.ERROR.START');
             });
         }));
 
