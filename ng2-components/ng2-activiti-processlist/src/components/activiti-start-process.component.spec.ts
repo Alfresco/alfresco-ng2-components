@@ -212,6 +212,8 @@ describe('ActivitiStartProcessButton', () => {
 
     describe('start forms', () => {
 
+        let startBtn;
+
         describe('without start form', () => {
 
             beforeEach(async(() => {
@@ -220,15 +222,23 @@ describe('ActivitiStartProcessButton', () => {
                 fixture.detectChanges();
                 component.onProcessDefChange('my:process1');
                 fixture.whenStable();
+                startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
             }));
 
-            it('should indicate start form is missing', async(() => {
-                expect(component.isStartFormMissingOrValid()).toBe(true);
+            it('should have start button disabled when name not filled out', async(() => {
+                component.name = '';
+                fixture.detectChanges();
+                expect(startBtn.properties['disabled']).toBe(true);
+            }));
+
+            it('should have start button disabled when name not filled out', async(() => {
+                component.onProcessDefChange('');
+                fixture.detectChanges();
+                expect(startBtn.properties['disabled']).toBe(true);
             }));
 
             it('should enable start button when name and process filled out', async(() => {
                 fixture.detectChanges();
-                let startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
                 expect(startBtn.properties['disabled']).toBe(false);
             }));
 
@@ -243,6 +253,7 @@ describe('ActivitiStartProcessButton', () => {
                 component.onProcessDefChange('my:process1');
                 fixture.detectChanges();
                 fixture.whenStable();
+                startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
             });
 
             it('should initialize start form', () => {
@@ -254,14 +265,9 @@ describe('ActivitiStartProcessButton', () => {
                 expect(getStartFormDefinitionSpy).toHaveBeenCalled();
             });
 
-            it('should indicate start form is invalid', async(() => {
-                expect(component.isStartFormMissingOrValid()).toBe(false);
-            }));
-
             it('should leave start button disabled when mandatory fields not filled out', async(() => {
                 component.name = 'My new process';
                 fixture.detectChanges();
-                let startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
                 expect(startBtn.properties['disabled']).toBe(true);
             }));
 
