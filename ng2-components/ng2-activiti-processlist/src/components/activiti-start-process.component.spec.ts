@@ -277,6 +277,8 @@ describe('ActivitiStartProcessButton', () => {
 
     describe('cancel dialog', () => {
 
+        let dialogPolyfill: any;
+
         let setupDialog = (definitions?: any) => {
             if (definitions) {
                 getDefinitionsSpy.and.returnValue(Observable.of(definitions));
@@ -291,6 +293,12 @@ describe('ActivitiStartProcessButton', () => {
             let closeButton: DebugElement = debugElement.query(By.css('[data-automation-id="btn-close"]'));
             closeButton.triggerEventHandler('click', null);
         };
+
+        beforeEach(() => {
+            dialogPolyfill = { registerDialog: (widget) => widget.showModal = () => {} };
+            dialogPolyfill.registerDialog = spyOn(dialogPolyfill, 'registerDialog').and.callThrough();
+            window['dialogPolyfill'] = dialogPolyfill;
+        });
 
         it('should close dialog when cancel button clicked', async(() => {
             let closeSpy = spyOn(component.dialog.nativeElement, 'close');
@@ -320,6 +328,13 @@ describe('ActivitiStartProcessButton', () => {
                 expect(component.startForm.data['upload']).toBeUndefined();
             });
         }));
+
+        it('should register dialog via polyfill', () => {
+            fixture.detectChanges();
+            component.dialog.nativeElement.showModal = null;
+            component.showDialog();
+            expect(dialogPolyfill.registerDialog).toHaveBeenCalledWith(component.dialog.nativeElement);
+        });
 
     });
 
