@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
@@ -108,7 +109,7 @@ describe('ActivitiTaskList', () => {
     it('should return an empty task list when no input parameters are passed', () => {
         component.ngOnInit();
         expect(component.data).toBeDefined();
-        expect(component.isTaskListEmpty()).toBeTruthy();
+        expect(component.isListEmpty()).toBeTruthy();
     });
 
     it('should return the filtered task list when the input parameters are passed', (done) => {
@@ -120,7 +121,7 @@ describe('ActivitiTaskList', () => {
         component.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
-            expect(component.isTaskListEmpty()).not.toBeTruthy();
+            expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
@@ -138,7 +139,7 @@ describe('ActivitiTaskList', () => {
         component.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
-            expect(component.isTaskListEmpty()).not.toBeTruthy();
+            expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
@@ -174,7 +175,7 @@ describe('ActivitiTaskList', () => {
         component.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
-            expect(component.isTaskListEmpty()).not.toBeTruthy();
+            expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
             expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
             expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
@@ -198,29 +199,126 @@ describe('ActivitiTaskList', () => {
         component.onRowClick(rowEvent);
     });
 
-    it('should reload the task list when the input parameters changes', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+    describe('component changes', () => {
 
-        component.data = new ObjectDataTableAdapter(
-            [],
-            [
-                {type: 'text', key: 'fake-id', title: 'Name'}
-            ]
-        );
-        component.state = 'open';
-        component.assignment = 'fake-assignee';
-        component.onSuccess.subscribe( (res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isTaskListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
-            done();
+        beforeEach(() => {
+            spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+            spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+
+            component.data = new ObjectDataTableAdapter(
+                [],
+                [
+                    {type: 'text', key: 'fake-id', title: 'Name'}
+                ]
+            );
         });
 
-        component.ngOnChanges({});
-    });
+        it('should NOT reload the process list when no parameters changed', () => {
+            expect(component.isListEmpty()).toBeTruthy();
+            component.ngOnChanges({});
+            expect(component.isListEmpty()).toBeTruthy();
+        });
 
+        it('should reload the process list when the appId parameter changes', (done) => {
+            const appId = '1';
+            let change = new SimpleChange(null, appId);
+
+            component.onSuccess.subscribe( (res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                done();
+            });
+
+            component.ngOnChanges({'appId': change});
+        });
+
+        it('should reload the process list when the processDefinitionKey parameter changes', (done) => {
+            const processDefinitionKey = 'fakeprocess';
+            let change = new SimpleChange(null, processDefinitionKey);
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                done();
+            });
+
+            component.ngOnChanges({'processDefinitionKey': change});
+        });
+
+        it('should reload the process list when the state parameter changes', (done) => {
+            const state = 'open';
+            let change = new SimpleChange(null, state);
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                done();
+            });
+
+            component.ngOnChanges({'state': change});
+        });
+
+        it('should reload the process list when the sort parameter changes', (done) => {
+            const sort = 'desc';
+            let change = new SimpleChange(null, sort);
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                done();
+            });
+
+            component.ngOnChanges({'sort': change});
+        });
+
+        it('should reload the process list when the name parameter changes', (done) => {
+            const name = 'FakeTaskName';
+            let change = new SimpleChange(null, name);
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                done();
+            });
+
+            component.ngOnChanges({'name': change});
+        });
+
+        it('should reload the process list when the assignment parameter changes', (done) => {
+            const assignment = 'assignee';
+            let change = new SimpleChange(null, assignment);
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(component.data).toBeDefined();
+                expect(component.isListEmpty()).not.toBeTruthy();
+                expect(component.data.getRows().length).toEqual(2);
+                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                done();
+            });
+
+            component.ngOnChanges({'assignment': change});
+        });
+    });
 });

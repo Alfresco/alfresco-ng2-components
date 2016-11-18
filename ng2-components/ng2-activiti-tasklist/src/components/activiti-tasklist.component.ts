@@ -87,7 +87,35 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.reload();
+        if (this.isPropertyChanged(changes)) {
+            this.reload();
+        }
+    }
+
+    private isPropertyChanged(changes: SimpleChanges): boolean {
+        let changed: boolean = false;
+
+        let appId = changes['appId'];
+        let processDefinitionKey = changes['processDefinitionKey'];
+        let state = changes['state'];
+        let sort = changes['sort'];
+        let name = changes['name'];
+        let assignment = changes['assignment'];
+
+        if (appId && appId.currentValue) {
+            changed = true;
+        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
+            changed = true;
+        } else if (state && state.currentValue) {
+            changed = true;
+        } else if (sort && sort.currentValue) {
+            changed = true;
+        } else if (name && name.currentValue) {
+            changed = true;
+        } else if (assignment && assignment.currentValue) {
+            changed = true;
+        }
+        return changed;
     }
 
     public reload() {
@@ -156,7 +184,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
      * Select the first task of a tasklist if present
      */
     selectFirstTask() {
-        if (!this.isTaskListEmpty()) {
+        if (!this.isListEmpty()) {
             this.currentTaskId = this.data.getRows()[0].getValue('id');
         } else {
             this.currentTaskId = null;
@@ -175,7 +203,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
      * Check if the tasks list is empty
      * @returns {ObjectDataTableAdapter|boolean}
      */
-    isTaskListEmpty(): boolean {
+    isListEmpty(): boolean {
         return this.data === undefined || (this.data && this.data.getRows() && this.data.getRows().length === 0);
     }
 
