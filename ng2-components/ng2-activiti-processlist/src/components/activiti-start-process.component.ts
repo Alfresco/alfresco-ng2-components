@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, OnInit, ViewChild, DebugElement, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -26,23 +26,23 @@ declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
-    selector: 'activiti-start-process-instance',
+    selector: 'activiti-start-process',
     moduleId: module.id,
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessButton implements OnInit, OnChanges {
+export class ActivitiStartProcessInstance implements OnInit, OnChanges {
 
     @Input()
     appId: string;
 
+    @Input()
+    showStartButton: boolean = true;
+
     @Output()
     start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
-    @ViewChild('dialog')
-    dialog: DebugElement;
-
-    @ViewChild('startForm')
+    @ViewChild(ActivitiStartForm)
     startForm: ActivitiStartForm;
 
     processDefinitions: ProcessDefinitionRepresentation[] = [];
@@ -86,13 +86,6 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
         );
     }
 
-    public showDialog() {
-        if (!this.dialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.dialog.nativeElement);
-        }
-        this.dialog.nativeElement.showModal();
-    }
-
     public startProcess() {
         if (this.currentProcessDef.id && this.name) {
             this.resetErrorMessage();
@@ -101,7 +94,6 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
                 (res) => {
                     this.name = '';
                     this.start.emit(res);
-                    this.cancel();
                 },
                 (err) => {
                     this.errorMessageId = 'START_PROCESS.ERROR.START';
@@ -109,11 +101,6 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
                 }
             );
         }
-    }
-
-    public cancel() {
-        this.reset();
-        this.dialog.nativeElement.close();
     }
 
     onProcessDefChange(processDefinitionId) {
@@ -147,7 +134,7 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
         this.errorMessageId = '';
     }
 
-    private reset() {
+    public reset() {
         this.resetSelectedProcessDefinition();
         this.name = '';
         if (this.startForm) {
