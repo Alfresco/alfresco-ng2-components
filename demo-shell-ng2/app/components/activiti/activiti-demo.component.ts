@@ -188,6 +188,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.currentProcessInstanceId = processInstanceId;
     }
 
+    navigateStartProcess() {
+        this.changeTab('processes', 'start-process');
+    }
+
     onStartProcessInstance() {
         this.activitiStartProcess.reset();
         this.activitiprocesslist.reload();
