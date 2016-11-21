@@ -69,7 +69,11 @@ export class DateWidget extends WidgetComponent implements OnInit, AfterViewChec
 
     onDateChanged() {
         if (this.field.value) {
-            this.datePicker.time = moment(this.field.value, this.DATE_FORMAT);
+            let value = moment(this.field.value, this.DATE_FORMAT);
+            if (!value.isValid()) {
+                value = moment();
+            }
+            this.datePicker.time = value;
         }
         this.checkVisibility(this.field);
     }
