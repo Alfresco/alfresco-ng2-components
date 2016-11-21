@@ -196,24 +196,6 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 |`processDefinitionKey`| { processDefinitionKey } The processDefinitionKey of the process. |
 |`state`| { state } Define state of the processes. Possible values are running, completed and all |
 |`sort`| { sort } Define sort of the processes. Possible values are created-desc, created-asc, ended-desc, ended-asc |
-
-Example:
-
-
-```json
-{
-    appId: '3003',
-    filter:{
-        processDefinitionKey: null,
-        name:null,
-        state:'running',
-        sort: 'created-desc'
-    }
-}
-```
-
-| Name | Description |
-| --- | --- |
 |`schemaColumn`| {any} List of columns to display in the process instances datatable |
 
 Example:
