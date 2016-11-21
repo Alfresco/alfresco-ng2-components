@@ -8,6 +8,7 @@
             <a id="apps-header" href="#apps" class="mdl-layout__tab is-active">APPS</a>
             <a id="tasks-header" href="#tasks" class="mdl-layout__tab">TASK LIST</a>
             <a id="processes-header" href="#processes" class="mdl-layout__tab">PROCESS LIST</a>
+            <a id="start-process-header" href="#start-process" class="mdl-layout__tab">START PROCESS</a>
             <a id="report-header" href="#report" class="mdl-layout__tab">ANALYTICS</a>
         </div>
     </header>
@@ -64,7 +65,6 @@
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
                             <span>Process Filters</span>
-                            <activiti-start-process-instance [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process-instance>
                             <activiti-process-instance-filters [appId]="appId"
                                     (filterClick)="onProcessFilterClick($event)" (onSuccess)="onSuccessProcessFilterList($event)"
                                     #activitiprocessfilter></activiti-process-instance-filters>
@@ -83,6 +83,21 @@
                         <div class="mdl-cell mdl-cell--7-col task-column">
                             <span>Process Details</span>
                             <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (activitiprocesslist)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- START PROCESS COMPONENT -->
+        <section class="mdl-layout__tab-panel" id="start-process">
+            <div class="page-content">
+                <div class="page-content">
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--12-col task-column">
+                            <span>Start Process</span>
+                            <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
                         </div>
                     </div>
                 </div>
