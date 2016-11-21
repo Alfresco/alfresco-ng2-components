@@ -153,9 +153,14 @@ describe('ActivitiProcessInstanceListComponent', () => {
     });
 
     it('should reload processes when reload() is called', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.throw('Fake server error'));
+        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
+        component.data = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'fake-id', title: 'Name'}
+            ]
+        );
         component.state = 'open';
-        component.ngOnInit();
         component.onSuccess.subscribe( (res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();

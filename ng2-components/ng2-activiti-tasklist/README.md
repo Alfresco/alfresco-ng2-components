@@ -291,6 +291,26 @@ This can be changed by adding the following custom html template:
 </activiti-task-details>    
 ```
 
+## Basic usage example Activiti Apps
+
+The component shows all the available apps.
+
+```html
+<activiti-apps [layoutType]="'GRID'"></activiti-filters>
+```
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| `appClick` |  Invoked when an app is clicked |
+
+#### Options
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. |
+
 ## Basic usage example Activiti Filter
 
 The component shows all the available filters.
