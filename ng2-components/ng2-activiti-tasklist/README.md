@@ -228,9 +228,6 @@ group_x: where the task is assigned to a group where the current user is a membe
 no value: where the current user is involved |
 |`state`| { state } Define state of the processes. Possible values are: completed, active |
 |`sort`| { sort } Define the sort of the processes. Possible values are created-desc, created-asc, due-desc, due-asc |
-
-| Name | Description |
-| --- | --- |
 | `schemaColumn` | { any[] } optional) JSON object that represent the number and the type of the columns that you want show |
 
 Example:
