@@ -108,10 +108,10 @@ Follow the 3 steps below:
 
 ### Activiti Process Instance List
 
-This component renders a list containing all the process instances matched by the filter specified.
+This component renders a list containing all the process instances matched by the parameters specified.
 
 ```html
-<activiti-process-instance-list [filter]="processFilterModel"></activiti-tasklist>
+<activiti-process-instance-list [appId]="'1'" [state]="'open'"></activiti-tasklist>
 ```
 
 Usage example of this component :
@@ -130,14 +130,16 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<activiti-process-instance-list [filter]="filterRepresentationModel" [data]="dataProcesses"
+    template: `<activiti-process-instance-list [appId]="appId" [state]="state" [data]="dataProcesses"
              #activitiprocesslist></activiti-process-instance-list>`
 })
 class MyDemoApp {
 
     dataProcesses: ObjectDataTableAdapter;
 
-    filterRepresentationModel: FilterRepresentationModel;
+    appId: string = '1';
+
+    state: string = 'open';
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
         settingsService.bpmHost = 'http://localhost:9999';
@@ -190,25 +192,10 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-|`filter`| { UserProcessInstanceFilterRepresentationModel } (required) UserProcessInstanceFilterRepresentationModel object that is passed to the process instance list API to filter the returned list. |
-
-Example:
-
-
-```json
-{
-    appId: '3003',
-    filter:{
-        processDefinitionKey: null,
-        name:null,
-        state:'running',
-        sort: 'created-desc'
-    }
-}
-```
-
-| Name | Description |
-| --- | --- |
+|`appId`| { appId } The id of the app. |
+|`processDefinitionKey`| { processDefinitionKey } The processDefinitionKey of the process. |
+|`state`| { state } Define state of the processes. Possible values are running, completed and all |
+|`sort`| { sort } Define sort of the processes. Possible values are created-desc, created-asc, ended-desc, ended-asc |
 |`schemaColumn`| {any} List of columns to display in the process instances datatable |
 
 Example:

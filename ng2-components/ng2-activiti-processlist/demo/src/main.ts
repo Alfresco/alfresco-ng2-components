@@ -22,7 +22,7 @@ import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-ac
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -63,34 +63,35 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
             <section class="mdl-layout__tab-panel" id="processes">
                 <div class="page-content">
-                    <div class="page-content">
-                        <div class="mdl-grid">
-                            <div class="mdl-cell mdl-cell--2-col task-column">
-                                <span>Process Filters</span>
-                                <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
-                                <activiti-process-instance-filters
-                                            [appId]="appId"
-                                            (filterClick)="onProcessFilterClick($event)"
-                                            (onSuccess)="onSuccessProcessFilterList($event)"
-                                            #activitiprocessfilter></activiti-process-instance-filters>
-                            </div>
-                            <div class="mdl-cell mdl-cell--3-col task-column">
-                                <span>Process List</span>
-                                <activiti-process-instance-list
-                                            [filter]="processFilter"
-                                            [data]="dataProcesses"
-                                            (rowClick)="onProcessRowClick($event)"
-                                            (onSuccess)="onSuccessProcessList($event)"
-                                            #activitiprocesslist></activiti-process-instance-list>
-                            </div>
-                            <div class="mdl-cell mdl-cell--7-col task-column">
-                                <span>Process Details</span>
-                                <activiti-process-instance-details
-                                            [processInstanceId]="currentProcessInstanceId"
-                                            (taskFormCompleted)="taskFormCompleted()"
-                                            (processCancelled)="processCancelled()"
-                                            #activitiprocessdetails></activiti-process-instance-details>
-                            </div>
+                    <div class="mdl-grid">
+                        <div class="mdl-cell mdl-cell--2-col task-column">
+                            <span>Process Filters</span>
+                            <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
+                            <activiti-process-instance-filters
+                                        [appId]="appId"
+                                        (filterClick)="onProcessFilterClick($event)"
+                                        (onSuccess)="onSuccessProcessFilterList($event)"
+                                        #activitiprocessfilter></activiti-process-instance-filters>
+                        </div>
+                        <div class="mdl-cell mdl-cell--3-col task-column">
+                            <span>Process List</span>
+                            <activiti-process-instance-list *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
+                                       [processDefinitionKey]="processFilter.filter.processDefinitionKey"
+                                       [name]="processFilter.filter.name"
+                                       [state]="processFilter.filter.state"
+                                       [sort]="processFilter.filter.sort"
+                                       [data]="dataProcesses"
+                                        (rowClick)="onProcessRowClick($event)"
+                                        (onSuccess)="onSuccessProcessList($event)"
+                                        #activitiprocesslist></activiti-process-instance-list>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column">
+                            <span>Process Details</span>
+                            <activiti-process-instance-details
+                                        [processInstanceId]="currentProcessInstanceId"
+                                        (taskFormCompleted)="taskFormCompleted()"
+                                        (processCancelled)="processCancelled()"
+                                        #activitiprocessdetails></activiti-process-instance-details>
                         </div>
                     </div>
                 </div>
@@ -143,11 +144,12 @@ class MyDemoApp implements OnInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
+                {type: 'text', key: 'id', title: 'Id'},
                 {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+                {type: 'text', key: 'started', title: 'Started', sortable: true},
+                {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
             ]
         );
-        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
     }
 
     public updateTicket(): void {
@@ -194,7 +196,7 @@ class MyDemoApp implements OnInit {
     }
 
     onSuccessProcessList(event: any) {
-        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
+        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentId();
     }
 
     onProcessRowClick(processInstanceId) {

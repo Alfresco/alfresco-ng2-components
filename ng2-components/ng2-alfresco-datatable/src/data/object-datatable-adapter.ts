@@ -74,8 +74,6 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
             let sortable = this._columns.filter(c => c.sortable);
             if (sortable.length > 0) {
                 this.sort(sortable[0].key, 'asc');
-            } else {
-                this.sort(this._columns[0].key, 'asc');
             }
         }
     }

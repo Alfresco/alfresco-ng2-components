@@ -1,12 +1,12 @@
 <div *ngIf="!requestNode">{{ 'TASK_FILTERS.MESSAGES.NONE' | translate }}</div>
 <div *ngIf="requestNode">
-    <div *ngIf="!isTaskListEmpty()">
+    <div *ngIf="!isListEmpty()">
         <alfresco-datatable
                 [data]="data"
                 (rowClick)="onRowClick($event)">
         </alfresco-datatable>
     </div>
-    <div *ngIf="isTaskListEmpty()">
+    <div *ngIf="isListEmpty()">
         {{ 'TASK_LIST.MESSAGES.NONE' | translate }}
     </div>
 </div>

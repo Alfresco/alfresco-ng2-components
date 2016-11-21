@@ -46,15 +46,15 @@ export class ActivitiProcessService {
             .catch(this.handleError);
     }
 
-    getProcessInstances(requestNode?: ProcessFilterRequestRepresentation): Observable<ProcessInstance[]> {
-        requestNode = requestNode || new ProcessFilterRequestRepresentation({
-                page: 0,
-                sort: 'created-desc',
-                state: 'all'
-            });
+    getProcessInstances(requestNode: ProcessFilterRequestRepresentation): Observable<ProcessInstance[]> {
         return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.processApi.getProcessInstances(requestNode))
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map((res: any) => {
+                if (requestNode.processDefinitionKey) {
+                    return res.data.filter(p => p.processDefinitionKey === requestNode.processDefinitionKey);
+                } else {
+                    return res.data;
+                }
+            }).catch(this.handleError);
     }
 
     getProcessFilters(appId: number): Observable<FilterRepresentationModel[]> {

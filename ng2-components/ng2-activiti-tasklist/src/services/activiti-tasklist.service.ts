@@ -69,10 +69,14 @@ export class ActivitiTaskListService {
      * @param filter - TaskFilterRepresentationModel
      * @returns {any}
      */
-    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<any> {
+    getTasks(requestNode: TaskQueryRequestRepresentationModel): Observable<TaskDetailsModel[]> {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
             .map((res: any) => {
-                return res;
+                if (requestNode.processDefinitionKey) {
+                    return res.data.filter(p => p.processDefinitionKey === requestNode.processDefinitionKey);
+                } else {
+                    return res.data;
+                }
             }).catch(this.handleError);
     }
 

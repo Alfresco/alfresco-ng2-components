@@ -35,7 +35,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     appId: string;
 
     @Input()
-    processDefinitionId: string;
+    processDefinitionKey: string;
 
     @Input()
     state: string;
@@ -63,7 +63,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
-    currentTaskId: string;
+    currentInstanceId: string;
 
     private defaultSchemaColumn: any[] = [
         {type: 'text', key: 'id', title: 'Id'},
@@ -81,23 +81,57 @@ export class ActivitiTaskList implements OnInit, OnChanges {
 
     ngOnInit() {
         if (!this.data) {
-            this.data = new ObjectDataTableAdapter(
-                [],
-                this.defaultSchemaColumn
-            );
+            this.data = this.initDefaultSchemaColumns();
         }
-
-        this.requestNode = this.createRequestNode();
-        this.load(this.requestNode);
+        this.reload();
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (this.isPropertyChanged(changes)) {
+            this.reload();
+        }
+    }
+
+    private isPropertyChanged(changes: SimpleChanges): boolean {
+        let changed: boolean = false;
+
+        let appId = changes['appId'];
+        let processDefinitionKey = changes['processDefinitionKey'];
+        let state = changes['state'];
+        let sort = changes['sort'];
+        let name = changes['name'];
+        let assignment = changes['assignment'];
+
+        if (appId && appId.currentValue) {
+            changed = true;
+        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
+            changed = true;
+        } else if (state && state.currentValue) {
+            changed = true;
+        } else if (sort && sort.currentValue) {
+            changed = true;
+        } else if (name && name.currentValue) {
+            changed = true;
+        } else if (assignment && assignment.currentValue) {
+            changed = true;
+        }
+        return changed;
+    }
+
+    public reload() {
         this.requestNode = this.createRequestNode();
         this.load(this.requestNode);
     }
 
-    public reload() {
-        this.load(this.requestNode);
+    /**
+     * Return an initDefaultSchemaColumns instance with the default Schema Column
+     * @returns {ObjectDataTableAdapter}
+     */
+    initDefaultSchemaColumns(): ObjectDataTableAdapter {
+        return new ObjectDataTableAdapter(
+            [],
+            this.defaultSchemaColumn
+        );
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
@@ -106,9 +140,9 @@ export class ActivitiTaskList implements OnInit, OnChanges {
                 requestNode.size = res.total;
                 this.activiti.getTasks(requestNode).subscribe(
                     (response) => {
-                        let taskRow = this.createDataRow(response.data);
-                        this.renderTasks(taskRow);
-                        this.selectFirstTask();
+                        let instancesRow = this.createDataRow(response);
+                        this.renderInstances(instancesRow);
+                        this.selectFirst();
                         this.onSuccess.emit(response);
                     }, (error) => {
                         console.error(error);
@@ -122,55 +156,57 @@ export class ActivitiTaskList implements OnInit, OnChanges {
 
     /**
      * Create an array of ObjectDataRow
-     * @param tasks
+     * @param instances
      * @returns {ObjectDataRow[]}
      */
-    private createDataRow(tasks: any[]): ObjectDataRow[] {
-        let taskRows: ObjectDataRow[] = [];
-        tasks.forEach((row) => {
-            taskRows.push(new ObjectDataRow({
+    private createDataRow(instances: any[]): ObjectDataRow[] {
+        let instancesRows: ObjectDataRow[] = [];
+        instances.forEach((row) => {
+            instancesRows.push(new ObjectDataRow({
                 id: row.id,
                 name: row.name,
                 created: row.created
             }));
         });
-        return taskRows;
+        return instancesRows;
     }
 
     /**
-     * The method call the adapter data table component for render the task list
-     * @param tasks
+     * Render the instances list
+     *
+     * @param instances
      */
-    private renderTasks(tasks: any[]) {
-        tasks = this.optimizeTaskName(tasks);
-        this.data.setRows(tasks);
+    private renderInstances(instances: any[]) {
+        instances = this.optimizeNames(instances);
+        this.data.setRows(instances);
     }
 
     /**
-     * Select the first task of a tasklist if present
+     * Select the first instance of a list if present
      */
-    selectFirstTask() {
-        if (!this.isTaskListEmpty()) {
-            this.currentTaskId = this.data.getRows()[0].getValue('id');
+    selectFirst() {
+        if (!this.isListEmpty()) {
+            this.currentInstanceId = this.data.getRows()[0].getValue('id');
         } else {
-            this.currentTaskId = null;
+            this.currentInstanceId = null;
         }
     }
 
     /**
-     * Return the current task
+     * Return the current id
      * @returns {string}
      */
-    getCurrentTaskId(): string {
-        return this.currentTaskId;
+    getCurrentId(): string {
+        return this.currentInstanceId;
     }
 
     /**
-     * Check if the tasks list is empty
+     * Check if the list is empty
      * @returns {ObjectDataTableAdapter|boolean}
      */
-    isTaskListEmpty(): boolean {
-        return this.data === undefined || (this.data && this.data.getRows() && this.data.getRows().length === 0);
+    isListEmpty(): boolean {
+        return this.data === undefined ||
+            (this.data && this.data.getRows() && this.data.getRows().length === 0);
     }
 
     /**
@@ -179,30 +215,30 @@ export class ActivitiTaskList implements OnInit, OnChanges {
      */
     onRowClick(event: DataRowEvent) {
         let item = event;
-        this.currentTaskId = item.value.getValue('id');
-        this.rowClick.emit(this.currentTaskId);
+        this.currentInstanceId = item.value.getValue('id');
+        this.rowClick.emit(this.currentInstanceId);
     }
 
     /**
-     * Optimize task name field
-     * @param tasks
+     * Optimize name field
+     * @param istances
      * @returns {any[]}
      */
-    private optimizeTaskName(tasks: any[]) {
-        tasks = tasks.map(t => {
+    private optimizeNames(istances: any[]) {
+        istances = istances.map(t => {
             t.obj.name = t.obj.name || 'Nameless task';
             if (t.obj.name.length > 50) {
                 t.obj.name = t.obj.name.substring(0, 50) + '...';
             }
             return t;
         });
-        return tasks;
+        return istances;
     }
 
     private createRequestNode() {
         let requestNode = {
             appDefinitionId: this.appId,
-            processDefinitionId: this.processDefinitionId,
+            processDefinitionKey: this.processDefinitionKey,
             text: this.name,
             assignment: this.assignment,
             state: this.state,
