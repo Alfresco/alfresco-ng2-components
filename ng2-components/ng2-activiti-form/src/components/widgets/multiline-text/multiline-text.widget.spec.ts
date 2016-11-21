@@ -22,7 +22,7 @@ describe('MultilineTextWidget', () => {
     let widget: MultilineTextWidget;
 
     beforeEach(() => {
-        widget = new MultilineTextWidget(null);
+        widget = new MultilineTextWidget();
     });
 
     it('should exist', () => {

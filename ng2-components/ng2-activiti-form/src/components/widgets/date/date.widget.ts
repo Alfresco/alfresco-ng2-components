@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
-import { TextFieldWidgetComponent } from './../textfield-widget.component';
+import { WidgetComponent } from './../widget.component';
 
 @Component({
     moduleId: module.id,
@@ -24,14 +24,14 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.css']
 })
-export class DateWidget extends TextFieldWidgetComponent implements OnInit, AfterViewChecked {
+export class DateWidget extends WidgetComponent implements OnInit, AfterViewChecked {
 
     DATE_FORMAT: string = 'D-M-YYYY';
 
     datePicker: any;
 
-    constructor(elementRef: ElementRef) {
-        super(elementRef);
+    constructor(private elementRef: ElementRef) {
+        super();
     }
 
     ngOnInit() {
