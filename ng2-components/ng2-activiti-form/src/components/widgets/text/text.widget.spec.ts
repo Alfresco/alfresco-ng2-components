@@ -15,54 +15,21 @@
  * limitations under the License.
  */
 
-import { ElementRef } from '@angular/core';
 import { TextWidget } from './text.widget';
-import { FormFieldModel } from './../core/form-field.model';
-import { FormFieldTypes } from '../core/form-field-types';
 
 describe('TextWidget', () => {
 
     let widget: TextWidget;
-    let elementRef: ElementRef;
     let componentHandler;
 
     beforeEach(() => {
-        elementRef = new ElementRef(null);
-        widget = new TextWidget(elementRef);
+        widget = new TextWidget();
 
         componentHandler =  jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
 
         window['componentHandler'] = componentHandler;
-    });
-
-    it('should upgrade material textfield', () => {
-        spyOn(widget, 'setupMaterialTextField').and.stub();
-
-        widget.field = new FormFieldModel(null, {
-            type: FormFieldTypes.TEXT,
-            value: '<text>'
-        });
-        widget.ngAfterViewInit();
-        expect(widget.setupMaterialTextField).toHaveBeenCalled();
-    });
-
-    it('should require mdl component handler to setup textfield', () => {
-        expect(widget.setupMaterialComponents(null)).toBeFalsy();
-    });
-
-    it('should require element reference to setup textfield', () => {
-        widget = new TextWidget(null);
-        expect(widget.setupMaterialComponents(componentHandler)).toBeFalsy();
-    });
-
-    it('should require field value to setup textfield', () => {
-        widget.field = new FormFieldModel(null, {
-            type: FormFieldTypes.TEXT,
-            value: null
-        });
-        expect(widget.setupMaterialComponents(componentHandler)).toBeFalsy();
     });
 
 });

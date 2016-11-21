@@ -1,5 +1,6 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label amount-widget"
+<div class="mdl-textfield mdl-js-textfield amount-widget"
      [class.amount-widget__invalid]="!field.isValid">
+    <label [attr.for]="field.id">{{field.name}}</label>
     <input class="mdl-textfield__input"
            type="text"
            pattern="-?[0-9]*(\.[0-9]+)?"
@@ -7,7 +8,7 @@
            [attr.required]="isRequired()"
            [(ngModel)]="field.value"
            (ngModelChange)="checkVisibility(field)"
-           [disabled]="field.readOnly">
-    <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}, {{currency}}</label>
+           [disabled]="field.readOnly"
+           placeholder="{{field.placeholder}}">
     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>

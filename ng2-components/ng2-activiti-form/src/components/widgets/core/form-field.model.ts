@@ -54,6 +54,7 @@ export class FormFieldModel extends FormWidgetModel {
     overrideId: boolean;
     tab: string;
     colspan: number = 1;
+    placeholder: string = null;
     minLength: number = 0;
     maxLength: number = 0;
     minValue: string;
@@ -156,6 +157,10 @@ export class FormFieldModel extends FormWidgetModel {
             this.enableFractions = <boolean>json.enableFractions;
             this.currency = json.currency;
             this._value = this.parseValue(json);
+
+            if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
+                this.placeholder = json.placeholder;
+            }
 
             // <container>
             this.numberOfColumns = <number> json.numberOfColumns;

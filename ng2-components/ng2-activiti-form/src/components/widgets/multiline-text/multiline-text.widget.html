@@ -1,5 +1,6 @@
-<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label multiline-text-widget"
+<div class="mdl-textfield mdl-js-textfield multiline-text-widget"
      [class.multiline-text-widget__invalid]="!field.isValid">
+    <label [attr.for]="field.id">{{field.name}}</label>
     <textarea class="mdl-textfield__input"
               type="text"
               rows= "3"
@@ -7,9 +8,9 @@
               [attr.required]="isRequired()"
               [(ngModel)]="field.value"
               (ngModelChange)="checkVisibility(field)"
-              [disabled]="field.readOnly">
+              [disabled]="field.readOnly"
+              placeholder="{{field.placeholder}}">
     </textarea>
-    <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
     <span *ngIf="field.validationSummary" class="mdl-textfield__error">{{field.validationSummary}}</span>
 </div>
 
