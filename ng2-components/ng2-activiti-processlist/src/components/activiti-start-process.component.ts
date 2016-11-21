@@ -18,6 +18,8 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, DebugElement, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
+import { ProcessInstance } from './../models/process-instance.model';
+import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
@@ -35,7 +37,7 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     appId: string;
 
     @Output()
-    start: EventEmitter<any> = new EventEmitter<any>();
+    start: EventEmitter<ProcessInstance> = new EventEmitter<ProcessInstance>();
 
     @ViewChild('dialog')
     dialog: DebugElement;
@@ -43,11 +45,13 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     @ViewChild('startForm')
     startForm: ActivitiStartForm;
 
-    processDefinitions: any[] = [];
+    processDefinitions: ProcessDefinitionRepresentation[] = [];
 
     name: string;
 
-    currentProcessDef: any;
+    currentProcessDef: ProcessDefinitionRepresentation = new ProcessDefinitionRepresentation();
+
+    errorMessageId: string = '';
 
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
@@ -70,13 +74,14 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
     }
 
     public load(appId: string) {
-        this.reset();
-        this.activitiProcess.getProcessDefinitions(this.appId).subscribe(
-            (res: any[]) => {
+        this.resetSelectedProcessDefinition();
+        this.resetErrorMessage();
+        this.activitiProcess.getProcessDefinitions(appId).subscribe(
+            (res) => {
                 this.processDefinitions = res;
             },
-            (err) => {
-                console.log(err);
+            () => {
+                this.errorMessageId = 'START_PROCESS.ERROR.LOAD_PROCESS_DEFS';
             }
         );
     }
@@ -90,30 +95,36 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
 
     public startProcess() {
         if (this.currentProcessDef.id && this.name) {
+            this.resetErrorMessage();
             let formValues = this.startForm ? this.startForm.form.values : undefined;
             this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, formValues).subscribe(
-                (res: any) => {
+                (res) => {
                     this.name = '';
                     this.start.emit(res);
                     this.cancel();
                 },
                 (err) => {
-                    console.log(err);
+                    this.errorMessageId = 'START_PROCESS.ERROR.START';
+                    this.start.error(err);
                 }
             );
         }
     }
 
     public cancel() {
+        this.reset();
         this.dialog.nativeElement.close();
     }
 
-    onChange(processDefinitionId) {
+    onProcessDefChange(processDefinitionId) {
         let processDef = this.processDefinitions.find((processDefinition) => {
             return processDefinition.id === processDefinitionId;
         });
-        let clone = JSON.parse(JSON.stringify(processDef));
-        this.currentProcessDef = clone;
+        if (processDef) {
+            this.currentProcessDef = JSON.parse(JSON.stringify(processDef));
+        } else {
+            this.resetSelectedProcessDefinition();
+        }
     }
 
     hasStartForm() {
@@ -128,7 +139,20 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
         return this.currentProcessDef.id && this.name && this.isStartFormMissingOrValid();
     }
 
-    reset() {
-        this.currentProcessDef = {};
+    private resetSelectedProcessDefinition() {
+        this.currentProcessDef = new ProcessDefinitionRepresentation();
+    }
+
+    private resetErrorMessage(): void {
+        this.errorMessageId = '';
+    }
+
+    private reset() {
+        this.resetSelectedProcessDefinition();
+        this.name = '';
+        if (this.startForm) {
+            this.startForm.data = {};
+        }
+        this.resetErrorMessage();
     }
 }
