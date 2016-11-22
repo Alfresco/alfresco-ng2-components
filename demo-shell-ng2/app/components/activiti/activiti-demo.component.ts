@@ -22,7 +22,11 @@ import {
     ActivitiApps,
     ActivitiTaskList
 } from 'ng2-activiti-tasklist';
-import { ActivitiProcessInstanceListComponent, ActivitiStartProcessInstance } from 'ng2-activiti-processlist';
+import {
+    ActivitiProcessInstanceListComponent,
+    ActivitiStartProcessInstance,
+    ProcessInstance
+} from 'ng2-activiti-processlist';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
@@ -35,6 +39,8 @@ import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custo
 
 declare let __moduleName: string;
 declare var componentHandler;
+
+const currentProcessIdNew = '__NEW__';
 
 @Component({
     moduleId: __moduleName,
@@ -189,13 +195,17 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     navigateStartProcess() {
-        this.changeTab('processes', 'start-process');
+        this.currentProcessInstanceId = currentProcessIdNew;
     }
 
-    onStartProcessInstance() {
+    onStartProcessInstance(instance: ProcessInstance) {
+        this.currentProcessInstanceId = instance.id;
+        this.activitiprocesslist.reload(false);
         this.activitiStartProcess.reset();
-        this.activitiprocesslist.reload();
-        this.changeTab('start-process', 'processes');
+    }
+
+    isStartProcessMode() {
+        return this.currentProcessInstanceId === currentProcessIdNew;
     }
 
     processCancelled(data: any) {
