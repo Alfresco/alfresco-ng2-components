@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { TextFieldWidgetComponent } from './../textfield-widget.component';
+import { Component, OnInit } from '@angular/core';
+import { WidgetComponent } from './../widget.component';
 
 @Component({
     moduleId: module.id,
@@ -24,15 +24,11 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
     templateUrl: './amount.widget.html',
     styleUrls: ['./amount.widget.css']
 })
-export class AmountWidget extends TextFieldWidgetComponent implements OnInit {
+export class AmountWidget extends WidgetComponent implements OnInit {
 
     static DEFAULT_CURRENCY: string = '$';
 
     currency: string = AmountWidget.DEFAULT_CURRENCY;
-
-    constructor(elementRef: ElementRef) {
-        super(elementRef);
-    }
 
     ngOnInit() {
         if (this.field && this.field.currency) {

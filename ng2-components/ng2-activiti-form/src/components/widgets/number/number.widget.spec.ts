@@ -22,7 +22,7 @@ describe('NumberWidget', () => {
     let widget: NumberWidget;
 
     beforeEach(() => {
-        widget = new NumberWidget(null);
+        widget = new NumberWidget();
     });
 
     it('should exist', () => {

@@ -23,7 +23,7 @@ describe('AmountWidget', () => {
     let widget: AmountWidget;
 
     beforeEach(() => {
-        widget = new AmountWidget(null);
+        widget = new AmountWidget();
     });
 
     it('should setup currentcy from field', () => {
