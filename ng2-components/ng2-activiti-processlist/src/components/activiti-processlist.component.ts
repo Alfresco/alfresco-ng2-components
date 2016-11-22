@@ -109,9 +109,9 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         return changed;
     }
 
-    public reload() {
+    public reload(emit?: boolean) {
         this.requestNode = this.createRequestNode();
-        this.load(this.requestNode);
+        this.load(this.requestNode, emit);
     }
 
     /**
@@ -125,14 +125,17 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         );
     }
 
-    private load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load(requestNode: TaskQueryRequestRepresentationModel, emit?: boolean) {
+        emit = emit !== false;
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (response) => {
                     let instancesRow = this.createDataRow(response);
                     this.renderInstances(instancesRow);
                     this.selectFirst();
-                    this.onSuccess.emit(response);
+                    if (emit) {
+                        this.onSuccess.emit(response);
+                    }
                 },
                 error => {
                     this.onError.emit(error);
@@ -206,18 +209,18 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
     /**
      * Optimize name field
-     * @param istances
+     * @param instances
      * @returns {any[]}
      */
-    private optimizeNames(istances: any[]) {
-        istances = istances.map(t => {
+    private optimizeNames(instances: any[]) {
+        instances = instances.map(t => {
             t.obj.name = t.obj.name || 'No name';
             if (t.obj.name.length > 50) {
                 t.obj.name = t.obj.name.substring(0, 50) + '...';
             }
             return t;
         });
-        return istances;
+        return instances;
     }
 
     private createRequestNode() {
