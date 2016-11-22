@@ -16,19 +16,21 @@
  */
 
 import { SimpleChange } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule } from 'ng2-alfresco-datatable';
-import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
+import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
+
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule, ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+
 import { TranslationMock } from './../assets/translation.service.mock';
+import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 
 describe('ActivitiProcessInstanceListComponent', () => {
 
     let fakeGlobalProcesses = [
-        {
+        new ProcessInstance({
             id: 1, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name',
             processDefinitionId: 'fakeprocess:5:7507',
             processDefinitionKey: 'fakeprocess',
@@ -38,14 +40,14 @@ describe('ActivitiProcessInstanceListComponent', () => {
             startedBy: {
                 id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
             }
-        },
-        {
+        }),
+        new ProcessInstance({
             id: 2, name: '', description: null, category: null,
             started: '2015-11-09T12:37:25.184+0000',
             startedBy: {
                 id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
             }
-        }
+        })
     ];
 
     let componentHandler: any;
@@ -102,6 +104,17 @@ describe('ActivitiProcessInstanceListComponent', () => {
         expect(component.isListEmpty()).toBeTruthy();
     });
 
+    it('should emit onSuccess event when process instances loaded', fakeAsync(() => {
+        let emitSpy = spyOn(component.onSuccess, 'emit');
+        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = null;
+        fixture.detectChanges();
+        tick();
+        expect(emitSpy).toHaveBeenCalledWith(fakeGlobalProcesses);
+    }));
+
     it('should return the process instances list', (done) => {
         spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
@@ -152,6 +165,19 @@ describe('ActivitiProcessInstanceListComponent', () => {
         fixture.detectChanges();
     });
 
+    it('should emit onSuccess event when reload() called', fakeAsync(() => {
+        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = null;
+        fixture.detectChanges();
+        tick();
+        let emitSpy = spyOn(component.onSuccess, 'emit');
+        component.reload();
+        tick();
+        expect(emitSpy).toHaveBeenCalledWith(fakeGlobalProcesses);
+    }));
+
     it('should reload processes when reload() is called', (done) => {
         spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.data = new ObjectDataTableAdapter(
@@ -172,6 +198,19 @@ describe('ActivitiProcessInstanceListComponent', () => {
         });
         component.reload();
     });
+
+    it('should avoid emitting onSuccess event when reload() called with emit=false', fakeAsync(() => {
+        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = null;
+        fixture.detectChanges();
+        tick();
+        let emitSpy = spyOn(component.onSuccess, 'emit');
+        component.reload(false);
+        tick();
+        expect(emitSpy).not.toHaveBeenCalled();
+    }));
 
     it('should emit row click event', (done) => {
         let row = new ObjectDataRow({
