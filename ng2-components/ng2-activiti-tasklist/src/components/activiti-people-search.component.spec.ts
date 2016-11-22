@@ -48,7 +48,7 @@ describe('Activiti People Search', () => {
     let element: HTMLElement;
     let componentHandler;
     let userArray = [fakeUser, fakeSecondUser];
-    let searchInput;
+    let searchInput: any;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({

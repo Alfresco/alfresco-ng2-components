@@ -188,7 +188,7 @@ export class UploadDragAreaComponent {
             componentHandler.upgradeAllRegistered();
         }
 
-        let messageTranslate, actionTranslate: any;
+        let messageTranslate: any, actionTranslate: any;
         messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
 
