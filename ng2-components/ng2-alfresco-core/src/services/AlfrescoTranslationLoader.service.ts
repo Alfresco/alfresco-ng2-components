@@ -19,54 +19,81 @@ import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { TranslateLoader } from 'ng2-translate/ng2-translate';
+import { ComponentTranslationModel } from '../models/component.model';
 
 @Injectable()
 export class AlfrescoTranslationLoader implements TranslateLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';
-    private _componentList: string[] = [];
+    private _componentList: ComponentTranslationModel[] = [];
+    private queue: string[] = [];
 
     constructor(private http: Http) {
     }
 
-    addComponentList(name: string) {
-        this._componentList.push(name);
+    addComponentList(nameInput: string, pathInput: string) {
+        this._componentList.push(new ComponentTranslationModel({name: nameInput, path: pathInput}));
     }
 
-    existComponent(name: string) {
-        return this._componentList.indexOf(name) >= 0;
+    existComponent(name: string): boolean {
+        return this._componentList.find(x => x.name === name) ? true : false;
+    }
+
+    getComponentToFetch(lang: string) {
+        let observableBatch = [];
+        this._componentList.forEach((component) => {
+            if (!this.queue.find(x => x === component.name)) {
+                this.queue.push(component.name);
+                observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
+                    .map((res: Response) => {
+                        component.json = res.json();
+                    })
+                    .catch((/*err: any, source: Observable<any>, caught: Observable<any>*/) => {
+                        // Empty Observable just to go ahead
+                        return Observable.of('');
+                    }));
+            }
+        });
+        return observableBatch;
+    }
+
+    getFullTranslationJSON() {
+        let fullTranslation: string = '';
+        let cloneList = this._componentList.slice(0);
+        cloneList.reverse().forEach((component) => {
+            if (component.json !== undefined && component.json !== null) {
+                fullTranslation += JSON.stringify(component.json);
+            }
+        });
+        if (fullTranslation !== '') {
+            return JSON.parse(fullTranslation.replace(/}{/g, ','));
+        }
     }
 
     getTranslation(lang: string): Observable<any> {
-        let self = this;
-        let observableBatch = [];
-        this._componentList.forEach((component) => {
-            observableBatch.push(this.http.get(`${component}/${self.prefix}/${lang}${self.suffix}`)
-                .map((res: Response) => res.json())
-                .catch( (/*err: any, source: Observable<any>, caught: Observable<any>*/)  =>  {
-                    // Empty Observable just to go ahead
-                    return Observable.of('');
-                }));
-        });
+        let observableBatch = this.getComponentToFetch(lang);
 
         return Observable.create(observer => {
-            Observable.forkJoin(observableBatch).subscribe(
-                (translations: any[]) => {
-                    let multiLanguage: any = '';
-                    translations.forEach((translate) => {
-                        if (translate !== '') {
-                            multiLanguage += JSON.stringify(translate);
+            if (observableBatch.length > 0) {
+                Observable.forkJoin(observableBatch).subscribe(
+                    () => {
+                        let fullTranslation  = this.getFullTranslationJSON();
+                        if (fullTranslation) {
+                            observer.next(fullTranslation);
                         }
-                    });
-                    if (multiLanguage !== '') {
-                        observer.next(JSON.parse(multiLanguage.replace(/}{/g, ',')));
-                    }
-                    observer.complete();
-                },
-                (err: any) => {
+                        observer.complete();
+                    },
+                    (err: any) => {
                         console.error(err);
-                });
+                    });
+            } else {
+                let fullTranslation  = this.getFullTranslationJSON();
+                if (fullTranslation) {
+                    observer.next(fullTranslation);
+                }
+                observer.complete();
+            }
         });
     }
 }
