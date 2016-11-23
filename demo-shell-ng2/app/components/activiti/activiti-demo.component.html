@@ -64,7 +64,7 @@
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
                             <span>Process Filters</span>
-                            <activiti-start-process-instance [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process-instance>
+                            <button type="button" (click)="navigateStartProcess()" class="mdl-button" data-automation-id="btn-start-process">Start Process</button>
                             <activiti-process-instance-filters [appId]="appId"
                                     (filterClick)="onProcessFilterClick($event)" (onSuccess)="onSuccessProcessFilterList($event)"
                                     #activitiprocessfilter></activiti-process-instance-filters>
@@ -80,9 +80,13 @@
                                                (rowClick)="onProcessRowClick($event)" (onSuccess)="onSuccessProcessList($event)"
                                                             #activitiprocesslist></activiti-process-instance-list>
                         </div>
-                        <div class="mdl-cell mdl-cell--7-col task-column">
+                        <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="!isStartProcessMode()">
                             <span>Process Details</span>
                             <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (activitiprocesslist)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
+                            <span>Start Process</span>
+                            <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
                         </div>
                     </div>
                 </div>

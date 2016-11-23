@@ -19,6 +19,8 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
+
+import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 
 @Component({
@@ -53,7 +55,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    onSuccess: EventEmitter<any> = new EventEmitter<any>();
+    onSuccess: EventEmitter<ProcessInstance[]> = new EventEmitter<ProcessInstance[]>();
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
@@ -206,18 +208,18 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
     /**
      * Optimize name field
-     * @param istances
+     * @param instances
      * @returns {any[]}
      */
-    private optimizeNames(istances: any[]) {
-        istances = istances.map(t => {
+    private optimizeNames(instances: any[]) {
+        instances = instances.map(t => {
             t.obj.name = t.obj.name || 'No name';
             if (t.obj.name.length > 50) {
                 t.obj.name = t.obj.name.substring(0, 50) + '...';
             }
             return t;
         });
-        return istances;
+        return instances;
     }
 
     private createRequestNode() {

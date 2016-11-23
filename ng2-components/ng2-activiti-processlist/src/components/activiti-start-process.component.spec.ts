@@ -24,14 +24,14 @@ import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 
 import { TranslationMock } from './../assets/translation.service.mock';
 import { newProcess, fakeProcessDefs, fakeProcessDefWithForm, taskFormMock } from './../assets/activiti-start-process.component.mock';
-import { ActivitiStartProcessButton } from './activiti-start-process.component';
+import { ActivitiStartProcessInstance } from './activiti-start-process.component';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 
-describe('ActivitiStartProcessButton', () => {
+describe('ActivitiStartProcessInstance', () => {
 
     let componentHandler: any;
-    let component: ActivitiStartProcessButton;
-    let fixture: ComponentFixture<ActivitiStartProcessButton>;
+    let component: ActivitiStartProcessInstance;
+    let fixture: ComponentFixture<ActivitiStartProcessInstance>;
     let processService: ActivitiProcessService;
     let formService: FormService;
     let getDefinitionsSpy: jasmine.Spy;
@@ -43,7 +43,7 @@ describe('ActivitiStartProcessButton', () => {
         TestBed.configureTestingModule({
             imports: [ CoreModule, ActivitiFormModule ],
             declarations: [
-                ActivitiStartProcessButton
+                ActivitiStartProcessInstance
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
@@ -55,7 +55,7 @@ describe('ActivitiStartProcessButton', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiStartProcessButton);
+        fixture = TestBed.createComponent(ActivitiStartProcessInstance);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
         processService = fixture.debugElement.injector.get(ActivitiProcessService);
@@ -148,7 +148,6 @@ describe('ActivitiStartProcessButton', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
-            component.showDialog();
             fixture.detectChanges();
         });
 
@@ -218,7 +217,6 @@ describe('ActivitiStartProcessButton', () => {
 
             beforeEach(async(() => {
                 component.name = 'My new process';
-                component.showDialog();
                 fixture.detectChanges();
                 component.onProcessDefChange('my:process1');
                 fixture.whenStable();
@@ -248,7 +246,6 @@ describe('ActivitiStartProcessButton', () => {
 
             beforeEach(() => {
                 getDefinitionsSpy.and.returnValue(Observable.of(fakeProcessDefWithForm));
-                component.showDialog();
                 fixture.detectChanges();
                 component.onProcessDefChange('my:process1');
                 fixture.detectChanges();
@@ -271,69 +268,6 @@ describe('ActivitiStartProcessButton', () => {
                 expect(startBtn.properties['disabled']).toBe(true);
             }));
 
-        });
-
-    });
-
-    describe('cancel dialog', () => {
-
-        let dialogPolyfill: any;
-
-        let setupDialog = (definitions?: any) => {
-            if (definitions) {
-                getDefinitionsSpy.and.returnValue(Observable.of(definitions));
-            }
-            component.showDialog();
-            fixture.detectChanges();
-            component.onProcessDefChange('my:process1');
-            fixture.detectChanges();
-        };
-
-        let clickCancelButton = () => {
-            let closeButton: DebugElement = debugElement.query(By.css('[data-automation-id="btn-close"]'));
-            closeButton.triggerEventHandler('click', null);
-        };
-
-        beforeEach(() => {
-            dialogPolyfill = { registerDialog: (widget) => widget.showModal = () => {} };
-            dialogPolyfill.registerDialog = spyOn(dialogPolyfill, 'registerDialog').and.callThrough();
-            window['dialogPolyfill'] = dialogPolyfill;
-        });
-
-        it('should close dialog when cancel button clicked', async(() => {
-            let closeSpy = spyOn(component.dialog.nativeElement, 'close');
-            component.showDialog();
-            fixture.detectChanges();
-            clickCancelButton();
-            expect(closeSpy).toHaveBeenCalled();
-        }));
-
-        it('should clear processId and name when dialog cancelled', async(() => {
-            setupDialog();
-            clickCancelButton();
-            expect(component.currentProcessDef.id).toBeNull();
-            expect(component.name).toBe('');
-        }));
-
-        it('should clear form values when dialog cancelled', async(() => {
-            setupDialog(fakeProcessDefWithForm);
-            fixture.whenStable().then(() => {
-                component.startForm.data = {
-                    language: 'fr',
-                    upload: {}
-                };
-                fixture.detectChanges();
-                clickCancelButton();
-                expect(component.startForm.data['language']).toBeUndefined();
-                expect(component.startForm.data['upload']).toBeUndefined();
-            });
-        }));
-
-        it('should register dialog via polyfill', () => {
-            fixture.detectChanges();
-            component.dialog.nativeElement.showModal = null;
-            component.showDialog();
-            expect(dialogPolyfill.registerDialog).toHaveBeenCalledWith(component.dialog.nativeElement);
         });
 
     });
