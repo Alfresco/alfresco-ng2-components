@@ -111,9 +111,9 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         return changed;
     }
 
-    public reload(emit?: boolean) {
+    public reload() {
         this.requestNode = this.createRequestNode();
-        this.load(this.requestNode, emit);
+        this.load(this.requestNode);
     }
 
     /**
@@ -127,17 +127,14 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         );
     }
 
-    private load(requestNode: TaskQueryRequestRepresentationModel, emit?: boolean) {
-        emit = emit !== false;
+    private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (response) => {
                     let instancesRow = this.createDataRow(response);
                     this.renderInstances(instancesRow);
                     this.selectFirst();
-                    if (emit) {
-                        this.onSuccess.emit(response);
-                    }
+                    this.onSuccess.emit(response);
                 },
                 error => {
                     this.onError.emit(error);

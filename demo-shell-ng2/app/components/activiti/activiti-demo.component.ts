@@ -200,7 +200,6 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     onStartProcessInstance(instance: ProcessInstance) {
         this.currentProcessInstanceId = instance.id;
-        this.activitiprocesslist.reload(false);
         this.activitiStartProcess.reset();
     }
 
