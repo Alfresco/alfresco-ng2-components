@@ -29,6 +29,7 @@
 }
 
 :host .login-card-wide.mdl-card {
+    align-self: center;
     margin: auto;
     border-radius: 8px;
     background-color: #ffffff;
