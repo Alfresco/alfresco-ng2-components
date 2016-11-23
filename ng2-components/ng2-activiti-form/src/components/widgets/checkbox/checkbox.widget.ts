@@ -17,6 +17,7 @@
 
 import { Component } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -24,5 +25,13 @@ import { WidgetComponent } from './../widget.component';
     templateUrl: './checkbox.widget.html'
 })
 export class CheckboxWidget extends WidgetComponent {
+
+    constructor(private visibilityService: WidgetVisibilityService) {
+        super();
+    }
+
+    onChange() {
+        this.visibilityService.refreshVisibility(this.field.form);
+    }
 
 }

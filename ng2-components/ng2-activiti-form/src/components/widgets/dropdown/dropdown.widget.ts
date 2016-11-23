@@ -84,7 +84,7 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
 
     getOptionValue(option: FormFieldOption): string {
         let optionValue: string = '';
-        if (option.id === 'empty') {
+        if (option.id === 'empty' || option.name !== this.field.value) {
             optionValue = option.id;
         } else {
             optionValue = option.name;

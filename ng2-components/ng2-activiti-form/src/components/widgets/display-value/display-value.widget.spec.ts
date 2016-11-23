@@ -25,15 +25,18 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 describe('DisplayValueWidget', () => {
 
     let widget: DisplayValueWidget;
     let formService: FormService;
+    let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
         formService = new FormService(null, null);
-        widget = new DisplayValueWidget(formService);
+        visibilityService = new WidgetVisibilityService(null, null, null);
+        widget = new DisplayValueWidget(formService, visibilityService);
     });
 
     it('should require field to setup default value', () => {
@@ -686,7 +689,8 @@ describe('DisplayValueWidget', () => {
                 declarations: [DisplayValueWidget],
                 providers: [
                     EcmModelService,
-                    FormService
+                    FormService,
+                    WidgetVisibilityService
                 ]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(DisplayValueWidget);

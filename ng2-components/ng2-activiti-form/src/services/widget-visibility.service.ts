@@ -19,7 +19,13 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
+import {
+    FormModel,
+    FormFieldModel,
+    TabModel,
+    ContainerModel,
+    ContainerColumnModel
+} from '../components/widgets/core/index';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 
@@ -96,43 +102,68 @@ export class WidgetVisibilityService {
     }
 
     getFormValue(form: FormModel, field: string) {
-        let value = this.getValue(form.values, field);
-        value = value && value.id ? value.id : value;
+        let value = this.getFieldValue(form.values, field);
         return value ? value : this.searchForm(form, field);
     }
 
-    getValue(values: any, fieldName: string) {
-        return this.getFieldValue(values, fieldName) ||
-            this.getDropDownName(values, fieldName);
-    }
-
     getFieldValue(valueList: any, fieldName: string) {
-        return valueList[fieldName];
-    }
-
-    getDropDownName(valueList: any, fieldName: string) {
-        let dropDownFilterByName;
+        let dropDownFilterByName, valueFound = '';
         if (fieldName && fieldName.indexOf('_LABEL') > 0) {
             dropDownFilterByName = fieldName.substring(0, fieldName.length - 6);
+            if (valueList[dropDownFilterByName]) {
+                valueFound = valueList[dropDownFilterByName].name;
+            }
+        } else if (valueList[fieldName] && valueList[fieldName].id) {
+            valueFound = valueList[fieldName].id;
+        } else {
+            valueFound = valueList[fieldName];
         }
-        return ( dropDownFilterByName && valueList[dropDownFilterByName] ) ?
-            valueList[dropDownFilterByName].name : dropDownFilterByName;
+        return valueFound;
     }
 
     searchForm(form: FormModel, name: string) {
         let fieldValue = '';
-        form.json.fields.forEach(columns => {
-                for (let i in columns.fields) {
-                    if (columns.fields.hasOwnProperty(i)) {
-                        let field = columns.fields[i].find(field => field.id === name);
-                        if (field) {
-                            fieldValue = field.value;
+        form.fields.forEach((containerModel: ContainerModel) => {
+            containerModel.field.columns.forEach((containerColumnModel: ContainerColumnModel) => {
+                let fieldFound = containerColumnModel.fields.find(field => this.findFieldByValue(field, name));
+                if (fieldFound) {
+                    if (name.indexOf('_LABEL') > 0) {
+                        if (fieldFound.value && fieldFound.value.name) {
+                            fieldValue = fieldFound.value.name;
+                        } else if (fieldFound.options) {
+                            let option = fieldFound.options.find(option => option.id === fieldFound.value);
+                            if (option) {
+                                fieldValue = option.name;
+                            } else {
+                                fieldValue = fieldFound.value;
+                            }
                         }
+                    } else if (fieldFound.value && fieldFound.value && fieldFound.value.id) {
+                        fieldValue = fieldFound.value.id;
+                    } else {
+                        fieldValue = fieldFound.value;
                     }
                 }
-            }
-        );
+            });
+        });
         return fieldValue;
+    }
+
+    findFieldByValue(field: FormFieldModel, fieldToFind: string) {
+        let isFound = false;
+        switch (field.fieldType) {
+            case 'RestFieldRepresentation' :
+                if (fieldToFind.indexOf('_LABEL') > 0) {
+                    isFound = (fieldToFind.substring(0, fieldToFind.length - 6) === field.name);
+                } else {
+                    isFound = (field.name === fieldToFind);
+                }
+                break;
+            default:
+                isFound = (field.name === fieldToFind);
+                break;
+        }
+        return isFound;
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
@@ -221,5 +252,4 @@ export class WidgetVisibilityService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
-
 }
