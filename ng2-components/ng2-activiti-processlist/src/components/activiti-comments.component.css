@@ -4,4 +4,16 @@
 
 .activiti-label {
     font-weight: bolder;
+    vertical-align: top;
 }
+
+.activiti-label.mdl-badge[data-badge]:after {
+    right: -27px;
+    top: -2px;
+}
+
+.activiti-label + .icon {
+    position: relative;
+    top: -2px;
+}
+
