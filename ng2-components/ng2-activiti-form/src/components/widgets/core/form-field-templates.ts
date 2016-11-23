@@ -15,16 +15,6 @@
  * limitations under the License.
  */
 
-export * from './form-field-metadata';
-export * from './form-values';
-export * from './form-field-types';
-export * from './form-field-option';
-export * from './form-field-templates';
-export * from './form-widget.model';
-export * from './form-field.model';
-export * from './form.model';
-export * from './container.model';
-export * from './tab.model';
-export * from './form-outcome.model';
-export * from './form-outcome-event.model';
-export * from './form-field-validator';
+export interface FormFieldTemplates {
+     [key: string]: string;
+}

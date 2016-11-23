@@ -22,6 +22,7 @@ import { TabModel } from './tab.model';
 import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
+import { FormFieldTemplates } from './form-field-templates';
 
 export class FormModel {
 
@@ -45,6 +46,7 @@ export class FormModel {
     /** Stores root containers */
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
+    customFieldTemplates: FormFieldTemplates = {};
 
     values: FormValues = {};
 
@@ -73,6 +75,7 @@ export class FormModel {
             this.taskId = json.taskId;
             this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
             this.processDefinitionId = json.processDefinitionId;
+            this.customFieldTemplates = json.customFieldTemplates || {};
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
