@@ -199,19 +199,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
         component.reload();
     });
 
-    it('should avoid emitting onSuccess event when reload() called with emit=false', fakeAsync(() => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
-        component.appId = '1';
-        component.state = 'open';
-        component.processDefinitionKey = null;
-        fixture.detectChanges();
-        tick();
-        let emitSpy = spyOn(component.onSuccess, 'emit');
-        component.reload(false);
-        tick();
-        expect(emitSpy).not.toHaveBeenCalled();
-    }));
-
     it('should emit row click event', (done) => {
         let row = new ObjectDataRow({
             id: 999
