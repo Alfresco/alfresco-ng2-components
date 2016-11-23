@@ -251,5 +251,4 @@ describe('DynamicTableWidget', () => {
         let actual = widget.getCellValue(row, column);
         expect(actual).toBe('GBP 100');
     });
-
 });
