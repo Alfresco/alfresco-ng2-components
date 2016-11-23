@@ -19,10 +19,8 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiFormModule } from './../../../index';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormFieldComponent } from './form-field.component';
-// import { WidgetVisibilityService } from './../../services/widget-visibility.service';
 import { FormRenderingService } from './../../services/form-rendering.service';
-// import { WidgetComponent } from './../widgets/widget.component';
-import { FormFieldModel, FormFieldTypes } from './../widgets/core/index';
+import { FormModel, FormFieldModel, FormFieldTypes } from './../widgets/core/index';
 import { TextWidget, CheckboxWidget } from './../widgets/index';
 
 describe('FormFieldComponent', () => {
@@ -30,9 +28,9 @@ describe('FormFieldComponent', () => {
     let fixture: ComponentFixture<FormFieldComponent>;
     let component: FormFieldComponent;
     let componentHandler: any;
+    let form: FormModel;
 
     let formRenderingService: FormRenderingService;
-    // let visibilityService: WidgetVisibilityService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -51,10 +49,11 @@ describe('FormFieldComponent', () => {
         fixture = TestBed.createComponent(FormFieldComponent);
         component = fixture.componentInstance;
         formRenderingService = fixture.debugElement.injector.get(FormRenderingService);
+        form = new FormModel();
     });
 
     it('should create default component instance', () => {
-        let field = new FormFieldModel(null, {
+        let field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT
         });
 
@@ -66,7 +65,7 @@ describe('FormFieldComponent', () => {
     });
 
     it('should create custom component instance', () => {
-        let field = new FormFieldModel(null, {
+        let field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT
         });
 
@@ -86,7 +85,7 @@ describe('FormFieldComponent', () => {
     });
 
     it('should require component type to be resolved', () => {
-        let field = new FormFieldModel(null, {
+        let field = new FormFieldModel(form, {
             type: FormFieldTypes.TEXT
         });
 
