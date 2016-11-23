@@ -17,7 +17,7 @@
 
 import {
     Component,
-    OnInit, OnDestroy
+    OnInit, OnDestroy,
     ViewChild,
     ViewContainerRef,
     Input,
