@@ -28,6 +28,7 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiServ
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { FormModel, FormFieldModel, TabModel, ContainerModel, FormFieldTypes } from '../components/widgets/core/index';
+import { FormService } from './form.service';
 
 declare let jasmine: any;
 
@@ -43,7 +44,8 @@ describe('WidgetVisibilityService', () => {
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
-                WidgetVisibilityService
+                WidgetVisibilityService,
+                FormService
             ]
         });
         service = TestBed.get(WidgetVisibilityService);
@@ -537,7 +539,7 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should determine visibility for dropdown on label condition', () => {
-            let dropdownValue = service.getDropDownName(formTest.values, 'dropdown_LABEL');
+            let dropdownValue = service.getFieldValue(formTest.values, 'dropdown_LABEL');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
@@ -545,7 +547,7 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should be able to get the value for a dropdown filtered with Label', () => {
-            let dropdownValue = service.getValue(formTest.values, 'dropdown_LABEL');
+            let dropdownValue = service.getFieldValue(formTest.values, 'dropdown_LABEL');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
@@ -553,7 +555,7 @@ describe('WidgetVisibilityService', () => {
         });
 
         it('should be able to get the value for a standard field', () => {
-            let dropdownValue = service.getValue(formTest.values, 'test_2');
+            let dropdownValue = service.getFieldValue(formTest.values, 'test_2');
 
             expect(dropdownValue).not.toBeNull();
             expect(dropdownValue).toBeDefined();
