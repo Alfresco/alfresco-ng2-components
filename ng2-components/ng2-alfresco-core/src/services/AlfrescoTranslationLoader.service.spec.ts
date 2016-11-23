@@ -19,18 +19,25 @@ import { TranslateLoader } from 'ng2-translate/ng2-translate';
 import { AlfrescoTranslationLoader } from '../services/AlfrescoTranslationLoader.service';
 import { AlfrescoTranslationService } from '../services/AlfrescoTranslation.service';
 import { Injector } from '@angular/core';
-import { XHRBackend, HttpModule } from '@angular/http';
+import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {
     TranslateModule
 } from 'ng2-translate/ng2-translate';
 import {getTestBed, TestBed} from '@angular/core/testing';
 
+let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
+
+const mockBackendResponse = (connection: MockConnection, response: string) => {
+    connection.mockRespond(new Response(new ResponseOptions({body: response})));
+};
+
 describe('TranslateLoader', () => {
     let injector: Injector;
     let backend: MockBackend;
     let alfrescoTranslationService: AlfrescoTranslationService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
+    let customLoader;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -47,6 +54,7 @@ describe('TranslateLoader', () => {
         backend = injector.get(XHRBackend);
         alfrescoTranslationService = injector.get(AlfrescoTranslationService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
+        customLoader = alfrescoTranslationService.translate.currentLoader;
     });
 
     it('should be able to provide any TranslateLoader', () => {
@@ -54,4 +62,22 @@ describe('TranslateLoader', () => {
         expect(alfrescoTranslationService.translate.currentLoader).toBeDefined();
         expect(alfrescoTranslationService.translate.currentLoader instanceof AlfrescoTranslationLoader).toBeTruthy();
     });
+
+    it('should add the component to the list', () => {
+        customLoader.addComponentList('login', 'path/login');
+        expect(customLoader.existComponent('login')).toBeTruthy();
+    });
+
+    it('should return the Json tranlation ', () => {
+        customLoader.addComponentList('login', 'path/login');
+        customLoader.getTranslation('en').subscribe(
+            (response) => {
+                expect(response).toBeDefined();
+                expect(response).toEqual(JSON.parse(componentJson1));
+            }
+        );
+
+        mockBackendResponse(connection, componentJson1);
+    });
+
 });
