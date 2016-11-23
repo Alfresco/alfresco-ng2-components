@@ -52,7 +52,7 @@ export class ActivitiPeople {
     constructor(private translate: AlfrescoTranslationService,
                 private peopleService: ActivitiPeopleService) {
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
         }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }

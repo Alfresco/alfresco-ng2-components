@@ -57,7 +57,7 @@ export class ActivitiStartProcessButton implements OnInit, OnChanges {
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
         }
     }
 
