@@ -3,8 +3,8 @@
     "LOGO": "Alfresco",
     "LABEL": {
       "LOGIN": "Login",
-      "USERNAME": "Custom Username",
-      "PASSWORD": "Custom Password",
+      "USERNAME": "Username",
+      "PASSWORD": "Password",
       "REMEMBER": "Remember"
     },
     "MESSAGES": {
