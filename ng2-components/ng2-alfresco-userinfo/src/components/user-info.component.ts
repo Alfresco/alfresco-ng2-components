@@ -61,7 +61,7 @@ export class UserInfoComponent implements AfterViewChecked, OnInit {
                 private authService: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService) {
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-alfresco-userinfo/src');
+            translate.addTranslationFolder('ng2-alfresco-userinfo', 'node_modules/ng2-alfresco-userinfo/dist/src');
         }
 
         authService.loginSubject.subscribe((response) => {

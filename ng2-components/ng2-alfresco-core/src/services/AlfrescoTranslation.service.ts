@@ -29,13 +29,16 @@ export class AlfrescoTranslationService {
         translate.setDefaultLang(this.userLang);
     }
 
-    addTranslationFolder(name: string = '') {
+    addTranslationFolder(name: string = '', path: string = '') {
         let loader = <AlfrescoTranslationLoader> this.translate.currentLoader;
         if (!loader.existComponent(name)) {
-            loader.addComponentList(name);
-            this.translate.getTranslation(this.userLang);
+            loader.addComponentList(name, path);
+            this.translate.getTranslation(this.userLang).subscribe(
+                () => {
+                    this.translate.use(this.userLang);
+                }
+            );
         }
-        this.translate.use(this.userLang);
     }
 
     use(lang: string): Observable<any> {
