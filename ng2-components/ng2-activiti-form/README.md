@@ -328,9 +328,10 @@ There are two additional functions that can be of a great value when controlling
 **Please note that if `event.preventDefault()` is not called then default outcome behaviour 
 will also be executed after your custom code.**
 
-## Extensibility and customisation
+## See also
 
-Please refer to [Form Extensibility and Customisation](docs/extensibility.md).
+- [Form Stencils with Angular 2](docs/stencils.md)
+- [Form Extensibility and Customisation](docs/extensibility.md).
 
 ## Build from sources
 
