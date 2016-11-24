@@ -49,7 +49,7 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
                     .map((res: Response) => {
                         component.json = res.json();
                     })
-                    .catch((/*err: any, source: Observable<any>, caught: Observable<any>*/) => {
+                    .catch(() => {
                         // Empty Observable just to go ahead
                         return Observable.of('');
                     }));
