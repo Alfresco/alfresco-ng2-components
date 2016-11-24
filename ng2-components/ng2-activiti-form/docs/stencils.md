@@ -89,7 +89,7 @@ The TypeScript version of the code above is:
 ```ts
 import { OnInit } from '@angular/core';
 
-class Component1 implements OnInit {
+class SampleClass1 implements OnInit {
 
   constructor() {
     console.log('ctor called');
@@ -102,9 +102,10 @@ class Component1 implements OnInit {
 }
 ```
 
+### Mapping template with component class
 
 In order to map **form runtime template** with the corresponding component class
-you will need registering both parts with `adf.registerComponent` api:
+you will need registering both parts with `adf.registerComponent(identifier, class)` api:
 
 ```js
 if (adf) {
