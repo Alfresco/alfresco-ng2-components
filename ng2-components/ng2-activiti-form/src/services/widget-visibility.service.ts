@@ -125,20 +125,10 @@ export class WidgetVisibilityService {
         let fieldValue = '';
         form.fields.forEach((containerModel: ContainerModel) => {
             containerModel.field.columns.forEach((containerColumnModel: ContainerColumnModel) => {
-                let fieldFound = containerColumnModel.fields.find(field => this.findFieldByValue(field, name));
+                let fieldFound = containerColumnModel.fields.find(field => this.isSearchedField(field, name));
                 if (fieldFound) {
-                    if (name.indexOf('_LABEL') > 0) {
-                        if (fieldFound.value && fieldFound.value.name) {
-                            fieldValue = fieldFound.value.name;
-                        } else if (fieldFound.options) {
-                            let option = fieldFound.options.find(option => option.id === fieldFound.value);
-                            if (option) {
-                                fieldValue = option.name;
-                            } else {
-                                fieldValue = fieldFound.value;
-                            }
-                        }
-                    } else if (fieldFound.value && fieldFound.value && fieldFound.value.id) {
+                    fieldValue = this.getObjectValue(fieldFound);
+                    if (!fieldValue && fieldFound.value && fieldFound.value.id) {
                         fieldValue = fieldFound.value.id;
                     } else {
                         fieldValue = fieldFound.value;
@@ -149,21 +139,32 @@ export class WidgetVisibilityService {
         return fieldValue;
     }
 
-    findFieldByValue(field: FormFieldModel, fieldToFind: string) {
-        let isFound = false;
-        switch (field.fieldType) {
-            case 'RestFieldRepresentation' :
-                if (fieldToFind.indexOf('_LABEL') > 0) {
-                    isFound = (fieldToFind.substring(0, fieldToFind.length - 6) === field.name);
-                } else {
-                    isFound = (field.name === fieldToFind);
-                }
-                break;
-            default:
-                isFound = (field.name === fieldToFind);
-                break;
+    private getObjectValue(field: FormFieldModel) {
+        let value = '';
+        if (field.value && field.value.name) {
+            value = field.value.name;
+        } else if (field.options) {
+            let option = field.options.find(option => option.id === field.value);
+            if (option) {
+                value = option.name;
+            } else {
+                value = field.value;
+            }
         }
-        return isFound;
+        return value;
+    }
+
+    private isSearchedField(field: FormFieldModel, fieldToFind: string) {
+        let forrmattedFieldName = this.removeLabel(field, fieldToFind);
+        return field.name === forrmattedFieldName;
+    }
+
+    private removeLabel(field: FormFieldModel, fieldToFind) {
+        let formattedFieldName = fieldToFind;
+        if (field.fieldType === 'RestFieldRepresentation' && fieldToFind.indexOf('_LABEL') > 0) {
+            formattedFieldName = fieldToFind.substring(0, fieldToFind.length - 6);
+        }
+        return formattedFieldName;
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
