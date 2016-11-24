@@ -40,12 +40,12 @@
     </div>
     <div *ngSwitchCase="'dynamic-table'">
         <div class="display-value-widget__dynamic-table">
-            <div>{{field.name}}</div>
+            <div class="is-disabled">{{field.name}}</div>
             <table class="mdl-data-table mdl-js-data-table">
                 <thead>
                     <tr>
                         <th *ngFor="let column of visibleColumns"
-                            class="mdl-data-table__cell--non-numeric">
+                            class="mdl-data-table__cell--non-numeric is-disabled">
                             {{column.name}}
                         </th>
                     </tr>
@@ -53,7 +53,7 @@
                 <tbody>
                     <tr *ngFor="let row of rows">
                         <td *ngFor="let column of visibleColumns"
-                            class="mdl-data-table__cell--non-numeric">
+                            class="mdl-data-table__cell--non-numeric is-disabled">
                             {{ getCellValue(row, column) }}
                         </td>
                     </tr>
