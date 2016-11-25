@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
@@ -52,7 +52,7 @@ describe('ActivitiProcessInstanceTasks', () => {
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 ActivitiProcessService
             ],
-            schemas: [ NO_ERRORS_SCHEMA ]
+            schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
     }));
 
@@ -103,16 +103,13 @@ describe('ActivitiProcessInstanceTasks', () => {
         expect(listEl).toBeNull();
     });
 
-    it('should call service to get tasks on init', () => {
-        component.processInstanceDetails = exampleProcessInstance;
-        fixture.detectChanges();
-        expect(getProcessTasksSpy).toHaveBeenCalled();
-    });
-
     it('should display active tasks', () => {
-        component.processInstanceDetails = exampleProcessInstance;
+        let change = new SimpleChange(null, exampleProcessInstance);
         fixture.detectChanges();
+        component.ngOnChanges({ 'processInstanceDetails': change });
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            component.ngOnChanges({ 'processInstanceDetails': change });
             let listEl = fixture.debugElement.query(By.css('[data-automation-id="active-tasks"]'));
             expect(listEl).not.toBeNull();
             expect(listEl.queryAll(By.css('li')).length).toBe(1);
@@ -120,9 +117,11 @@ describe('ActivitiProcessInstanceTasks', () => {
     });
 
     it('should display completed tasks', () => {
-        component.processInstanceDetails = exampleProcessInstance;
+        let change = new SimpleChange(null, exampleProcessInstance);
         fixture.detectChanges();
+        component.ngOnChanges({ 'processInstanceDetails': change });
         fixture.whenStable().then(() => {
+            fixture.detectChanges();
             let listEl = fixture.debugElement.query(By.css('[data-automation-id="completed-tasks"]'));
             expect(listEl).not.toBeNull();
             expect(listEl.queryAll(By.css('li')).length).toBe(1);
