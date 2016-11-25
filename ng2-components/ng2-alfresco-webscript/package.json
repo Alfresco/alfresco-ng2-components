@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-webscript",
   "description": "Alfresco webscript executor",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Alfresco Software, Ltd.",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -45,9 +45,9 @@
     "zone.js": "^0.6.23",
 
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "^0.4.0",
-    "ng2-alfresco-core": "0.4.0",
-    "ng2-alfresco-datatable": "0.4.0"
+    "alfresco-js-api": "^0.5.0",
+    "ng2-alfresco-core": "0.5.0",
+    "ng2-alfresco-datatable": "0.5.0"
   },
   "devDependencies": {
     "@types/node": "^6.0.42",
