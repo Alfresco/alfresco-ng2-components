@@ -27,7 +27,7 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
     private prefix: string = 'i18n';
     private suffix: string = '.json';
     private _componentList: ComponentTranslationModel[] = [];
-    private queue: string[] = [];
+    private queue: string [][] = [];
 
     constructor(private http: Http) {
     }
@@ -43,11 +43,11 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
     getComponentToFetch(lang: string) {
         let observableBatch = [];
         this._componentList.forEach((component) => {
-            if (!this.queue.find(x => x === component.name)) {
-                this.queue.push(component.name);
+            if (!this.isComponentInQueue(lang, component.name)) {
+                this.queue[lang].push(component.name);
                 observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
                     .map((res: Response) => {
-                        component.json = res.json();
+                        component.json[lang] = res.json();
                     })
                     .catch(() => {
                         // Empty Observable just to go ahead
@@ -58,12 +58,22 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
         return observableBatch;
     }
 
-    getFullTranslationJSON() {
+    init(lang:string) {
+        if (this.queue[lang] === undefined) {
+            this.queue[lang] = [];
+        }
+    }
+
+    isComponentInQueue(lang:string, name: string) {
+        return this.queue[lang].find(x => x === name) ? true : false;
+    }
+
+    getFullTranslationJSON(lang: string) {
         let fullTranslation: string = '';
         let cloneList = this._componentList.slice(0);
         cloneList.reverse().forEach((component) => {
-            if (component.json !== undefined && component.json !== null) {
-                fullTranslation += JSON.stringify(component.json);
+            if (component.json && component.json[lang]) {
+                fullTranslation += JSON.stringify(component.json[lang]);
             }
         });
         if (fullTranslation !== '') {
@@ -78,7 +88,7 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
             if (observableBatch.length > 0) {
                 Observable.forkJoin(observableBatch).subscribe(
                     () => {
-                        let fullTranslation  = this.getFullTranslationJSON();
+                        let fullTranslation  = this.getFullTranslationJSON(lang);
                         if (fullTranslation) {
                             observer.next(fullTranslation);
                         }
@@ -88,11 +98,10 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
                         console.error(err);
                     });
             } else {
-                let fullTranslation  = this.getFullTranslationJSON();
+                let fullTranslation  = this.getFullTranslationJSON(lang);
                 if (fullTranslation) {
                     observer.next(fullTranslation);
                 }
-                observer.complete();
             }
         });
     }

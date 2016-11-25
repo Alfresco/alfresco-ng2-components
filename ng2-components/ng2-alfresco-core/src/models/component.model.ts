@@ -18,11 +18,11 @@
 export class ComponentTranslationModel {
     name: string;
     path: string;
-    json: string;
+    json: string [];
 
     constructor(obj?: any) {
         this.name = obj && obj.name;
         this.path = obj && obj.path;
-        this.json = obj && obj.json || null;
+        this.json = obj && obj.json || [];
     }
 }
