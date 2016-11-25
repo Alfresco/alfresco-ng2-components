@@ -71,7 +71,7 @@
 <dialog class="mdl-dialog task-details-dialog" #dialog>
     <h4 class="mdl-dialog__title">{{ 'DETAILS.TASKS.TASK_DETAILS' | translate }}</h4>
     <div class="mdl-dialog__content">
-        <activiti-task-details [taskId]="selectedTaskId" (formCompleted)="taskFormCompleted()" #taskdetails></activiti-task-details>
+        <activiti-task-details [taskId]="selectedTaskId" (formCompleted)="onTaskFormCompleted()" #taskdetails></activiti-task-details>
     </div>
     <div class="mdl-dialog__actions">
         <button type="button" (click)="closeDialog()" class="mdl-button close" data-automation-id="button-task-close">{{ 'DETAILS.TASKS.TASK_CLOSE' | translate }}</button>
