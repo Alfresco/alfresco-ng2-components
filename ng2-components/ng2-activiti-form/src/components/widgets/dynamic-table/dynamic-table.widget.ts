@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -25,18 +26,25 @@ import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../cor
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.css']
 })
-export class DynamicTableWidget extends WidgetComponent {
+export class DynamicTableWidget extends WidgetComponent implements OnInit {
 
     ERROR_MODEL_NOT_FOUND = 'Table model not found';
 
-    @Input()
     content: DynamicTableModel;
 
     editMode: boolean = false;
     editRow: DynamicTableRow = null;
 
-    constructor(private elementRef: ElementRef) {
+    constructor(private elementRef: ElementRef,
+                private visibilityService: WidgetVisibilityService) {
         super();
+    }
+
+    ngOnInit() {
+        if (this.field) {
+            this.content = new DynamicTableModel(this.field.form, this.field.json);
+            this.visibilityService.refreshVisibility(this.field.form);
+        }
     }
 
     isValid() {

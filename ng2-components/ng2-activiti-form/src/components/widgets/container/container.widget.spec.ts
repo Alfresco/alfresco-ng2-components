@@ -16,13 +16,14 @@
  */
 
 import { ContainerWidget } from './container.widget';
+import { ContainerWidgetModel } from './container.widget.model';
 import { FormModel } from './../core/form.model';
-import { ContainerModel } from './../core/container.model';
 import { FormFieldTypes } from './../core/form-field-types';
 import { FormFieldModel } from './../core/form-field.model';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { WIDGET_DIRECTIVES } from '../index';
+import { FormFieldComponent } from './../../form-field/form-field.component';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 
 describe('ContainerWidget', () => {
@@ -35,6 +36,15 @@ describe('ContainerWidget', () => {
         ]);
 
         window['componentHandler'] = componentHandler;
+    });
+
+    it('should wrap field with model instance', () => {
+        let field = new FormFieldModel(null);
+        let container = new ContainerWidget();
+        container.field = field;
+        container.ngOnInit();
+        expect(container.content).toBeDefined();
+        expect(container.content.field).toBe(field);
     });
 
     it('should upgrade MDL content on view init', () => {
@@ -52,12 +62,12 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle underlying group container', () => {
-        let container = new ContainerModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP,
             params: {
                 allowCollapse: true
             }
-        });
+        }));
 
         let widget = new ContainerWidget();
         widget.content = container;
@@ -70,9 +80,9 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only collapsible container', () => {
-        let container = new ContainerModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.GROUP
-        });
+        }));
 
         let widget = new ContainerWidget();
         widget.content = container;
@@ -83,12 +93,12 @@ describe('ContainerWidget', () => {
     });
 
     it('should toggle only group container', () => {
-        let container = new ContainerModel(new FormModel(), {
+        let container = new ContainerWidgetModel(new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.CONTAINER,
             params: {
                 allowCollapse: true
             }
-        });
+        }));
 
         let widget = new ContainerWidget();
         widget.content = container;
@@ -102,27 +112,27 @@ describe('ContainerWidget', () => {
         let widget = new ContainerWidget();
         let fakeForm = new FormModel();
         let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-        widget.formValueChanged.subscribe(field => {
+        widget.fieldChanged.subscribe(field => {
             expect(field).not.toBe(null);
             expect(field.id).toBe('fakeField');
             expect(field.value).toBe('fakeValue');
             done();
         });
 
-        widget.fieldChanged(fakeField);
+        widget.onFieldChanged(fakeField);
     });
 
     describe('when template is ready', () => {
         let containerWidgetComponent: ContainerWidget;
         let fixture: ComponentFixture<ContainerWidget>;
         let element: HTMLElement;
-        let fakeContainerVisible: ContainerModel;
-        let fakeContainerInvisible: ContainerModel;
+        let fakeContainerVisible: ContainerWidgetModel;
+        let fakeContainerInvisible: ContainerWidgetModel;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [WIDGET_DIRECTIVES]
+                declarations: [FormFieldComponent, WIDGET_DIRECTIVES]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(ContainerWidget);
                 containerWidgetComponent = fixture.componentInstance;
@@ -133,18 +143,18 @@ describe('ContainerWidget', () => {
         beforeEach(() => {
             componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
             window['componentHandler'] = componentHandler;
-            fakeContainerVisible = new ContainerModel(new FormModel(fakeFormJson), {
+            fakeContainerVisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-1',
                 name: 'fake-cont-1-name',
                 type: FormFieldTypes.GROUP
-            });
-            fakeContainerInvisible = new ContainerModel(new FormModel(fakeFormJson), {
+            }));
+            fakeContainerInvisible = new ContainerWidgetModel(new FormFieldModel(new FormModel(fakeFormJson), {
                 fieldType: FormFieldTypes.GROUP,
                 id: 'fake-cont-id-2',
                 name: 'fake-cont-2-name',
                 type: FormFieldTypes.GROUP
-            });
+            }));
             fakeContainerVisible.field.isVisible = true;
             fakeContainerInvisible.field.isVisible = false;
         });
@@ -179,7 +189,7 @@ describe('ContainerWidget', () => {
         it('should hide header when it becomes not visible', async(() => {
             containerWidgetComponent.content = fakeContainerVisible;
             fixture.detectChanges();
-            containerWidgetComponent.formValueChanged.subscribe((res) => {
+            containerWidgetComponent.fieldChanged.subscribe((res) => {
                 containerWidgetComponent.content.field.isVisible = false;
                 fixture.detectChanges();
                 fixture.whenStable()
@@ -188,12 +198,12 @@ describe('ContainerWidget', () => {
                         expect(element.querySelector('#container-header-label')).toBeNull();
                     });
             });
-            containerWidgetComponent.fieldChanged(null);
+            containerWidgetComponent.onFieldChanged(null);
         }));
 
         it('should show header when it becomes visible', async(() => {
             containerWidgetComponent.content = fakeContainerInvisible;
-            containerWidgetComponent.formValueChanged.subscribe((res) => {
+            containerWidgetComponent.fieldChanged.subscribe((res) => {
                 containerWidgetComponent.content.field.isVisible = true;
                 fixture.detectChanges();
                 fixture.whenStable()
@@ -204,7 +214,7 @@ describe('ContainerWidget', () => {
                         expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-2-name');
                     });
             });
-            containerWidgetComponent.fieldChanged(null);
+            containerWidgetComponent.onFieldChanged(null);
         }));
 
     });

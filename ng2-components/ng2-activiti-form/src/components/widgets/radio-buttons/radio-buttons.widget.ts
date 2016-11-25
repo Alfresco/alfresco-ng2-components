@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -28,16 +29,17 @@ import { FormFieldOption } from './../core/form-field-option';
 })
 export class RadioButtonsWidget extends WidgetComponent implements OnInit {
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService,
+                private visibilityService: WidgetVisibilityService) {
         super();
     }
 
     ngOnInit() {
         if (this.field && this.field.restUrl) {
-            if (this.field.form.processDefinitionId) {
-                this.getOptionsByProcessDefinitionId();
-            } else {
+            if (this.field.form.taskId) {
                 this.getOptionsByTaskId();
+            } else {
+                this.getOptionsByProcessDefinitionId();
             }
         }
     }
@@ -74,7 +76,11 @@ export class RadioButtonsWidget extends WidgetComponent implements OnInit {
 
     onOptionClick(optionSelected: any) {
         this.field.value = optionSelected;
-        this.checkVisibility(this.field);
+        this.checkVisibility();
+    }
+
+    checkVisibility() {
+        this.visibilityService.refreshVisibility(this.field.form);
     }
 
     handleError(error: any) {

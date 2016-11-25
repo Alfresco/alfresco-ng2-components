@@ -21,11 +21,13 @@ import {
     DynamicTableModel,
     DynamicTableRow,
     DynamicTableColumn,
-    DynamicTableColumnOption,
-    FormFieldModel,
-    FormModel
-} from './../../../core/index';
+    DynamicTableColumnOption
+} from './../../dynamic-table.widget.model';
+import { FormFieldModel, FormModel } from './../../../core/index';
 import { FormService } from './../../../../../services/form.service';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { EcmModelService } from '../../../../../services/ecm-model.service';
 
 describe('DropdownEditorComponent', () => {
 
@@ -48,8 +50,8 @@ describe('DropdownEditorComponent', () => {
             ]
         };
 
-        table = new DynamicTableModel(null);
         form = new FormModel({ taskId: '<task-id>' });
+        table = new DynamicTableModel(form, null);
         table.field = new FormFieldModel(form, { id: '<field-id>' });
         table.rows.push(row);
         table.columns.push(column);
@@ -132,7 +134,7 @@ describe('DropdownEditorComponent', () => {
         expect(component.value).toBe(row.value[column.id]);
     });
 
-    it('should handle REST error', () => {
+    it('should handle REST error gettig options with task id', () => {
         column.optionType = 'rest';
         const error = 'error';
 
@@ -145,10 +147,155 @@ describe('DropdownEditorComponent', () => {
         expect(component.handleError).toHaveBeenCalledWith(error);
     });
 
+    it('should handle REST error getting option with processDefinitionId', () => {
+        column.optionType = 'rest';
+        let procForm = new FormModel ({processDefinitionId: '<process-definition-id>'});
+        let procTable = new DynamicTableModel(procForm, null);
+        procTable.field = new FormFieldModel(form, { id: '<field-id>' });
+        component.table = procTable;
+        const error = 'error';
+
+        spyOn(formService, 'getRestFieldValuesColumnByProcessId').and.returnValue(
+            Observable.throw(error)
+        );
+        spyOn(component, 'handleError').and.stub();
+
+        component.ngOnInit();
+        expect(component.handleError).toHaveBeenCalledWith(error);
+    });
+
     it('should update row on value change', () => {
         let event = { target: { value: 'two' } };
         component.onValueChanged(row, column, event);
         expect(row.value[column.id]).toBe(column.options[1]);
+    });
+
+    describe('when template is ready', () => {
+        let dropDownEditorComponent: DropdownEditorComponent;
+        let fixture: ComponentFixture<DropdownEditorComponent>;
+        let element: HTMLElement;
+        let componentHandler;
+        let stubFormService;
+        let fakeOptionList: DynamicTableColumnOption[] = [{
+            id: 'opt_1',
+            name: 'option_1'
+        }, {
+            id: 'opt_2',
+            name: 'option_2'
+        }, { id: 'opt_3', name: 'option_3' }];
+        let dynamicTable: DynamicTableModel;
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [DropdownEditorComponent],
+                providers: [FormService, EcmModelService]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(DropdownEditorComponent);
+                dropDownEditorComponent = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        describe('and dropdown is populated via taskId', () => {
+
+            beforeEach(async(() => {
+                stubFormService = fixture.debugElement.injector.get(FormService);
+                spyOn(stubFormService, 'getRestFieldValuesColumn').and.returnValue(Observable.of(fakeOptionList));
+                row = <DynamicTableRow> { value: { dropdown: 'one' } };
+                column = <DynamicTableColumn> {
+                    id: 'column-id',
+                    optionType: 'rest',
+                    options: [
+                        <DynamicTableColumnOption> { id: '1', name: 'one' },
+                        <DynamicTableColumnOption> { id: '2', name: 'two' }
+                    ]
+                };
+                form = new FormModel({ taskId: '<task-id>' });
+                dynamicTable = new DynamicTableModel(form, null);
+                dynamicTable.field = new FormFieldModel(form, { id: '<field-id>' });
+                dynamicTable.rows.push(row);
+                dynamicTable.columns.push(column);
+                dropDownEditorComponent.table = dynamicTable;
+                dropDownEditorComponent.column = column;
+                dropDownEditorComponent.row = row;
+                dropDownEditorComponent.table.field = new FormFieldModel(form, {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown',
+                    readOnly: 'false',
+                    restUrl: 'fake-rest-url'
+                });
+                dropDownEditorComponent.table.field.isVisible = true;
+                fixture.detectChanges();
+            }));
+
+            it('should show visible dropdown widget', async(() => {
+                expect(element.querySelector('#column-id')).toBeDefined();
+                expect(element.querySelector('#column-id')).not.toBeNull();
+                expect(element.querySelector('#opt_1')).not.toBeNull();
+                expect(element.querySelector('#opt_2')).not.toBeNull();
+                expect(element.querySelector('#opt_3')).not.toBeNull();
+            }));
+        });
+
+        describe('and dropdown is populated via processDefinitionId', () => {
+
+            beforeEach(async(() => {
+                stubFormService = fixture.debugElement.injector.get(FormService);
+                spyOn(stubFormService, 'getRestFieldValuesColumnByProcessId').and.returnValue(Observable.of(fakeOptionList));
+                row = <DynamicTableRow> {  value: { dropdown: 'one' } };
+                column = <DynamicTableColumn> {
+                    id: 'column-id',
+                    optionType: 'rest',
+                    options: [
+                        <DynamicTableColumnOption> { id: '1', name: 'one' },
+                        <DynamicTableColumnOption> { id: '2', name: 'two' }
+                    ]
+                };
+                form = new FormModel({ processDefinitionId: '<proc-id>' });
+                dynamicTable = new DynamicTableModel(form, null);
+                dynamicTable.field = new FormFieldModel(form, { id: '<field-id>' });
+                dynamicTable.rows.push(row);
+                dynamicTable.columns.push(column);
+                dropDownEditorComponent.table = dynamicTable;
+                dropDownEditorComponent.column = column;
+                dropDownEditorComponent.row = row;
+                dropDownEditorComponent.table.field = new FormFieldModel(form, {
+                    id: 'dropdown-id',
+                    name: 'date-name',
+                    type: 'dropdown',
+                    readOnly: 'false',
+                    restUrl: 'fake-rest-url'
+                });
+                dropDownEditorComponent.table.field.isVisible = true;
+                fixture.detectChanges();
+            }));
+
+            it('should show visible dropdown widget', async(() => {
+                expect(element.querySelector('#column-id')).toBeDefined();
+                expect(element.querySelector('#column-id')).not.toBeNull();
+                expect(element.querySelector('#opt_1')).not.toBeNull();
+                expect(element.querySelector('#opt_2')).not.toBeNull();
+                expect(element.querySelector('#opt_3')).not.toBeNull();
+            }));
+
+            it('should show visible dropdown widget', async(() => {
+                expect(element.querySelector('#column-id')).toBeDefined();
+                expect(element.querySelector('#column-id')).not.toBeNull();
+                expect(element.querySelector('#opt_1')).not.toBeNull();
+                expect(element.querySelector('#opt_2')).not.toBeNull();
+                expect(element.querySelector('#opt_3')).not.toBeNull();
+            }));
+        });
+
     });
 
 });

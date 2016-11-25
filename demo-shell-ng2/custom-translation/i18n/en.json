@@ -1,0 +1,24 @@
+{
+    "title": "Welcome",
+
+    "DOCUMENT_LIST": {
+        "COLUMNS": {
+            "DISPLAY_NAME": "Display name",
+            "CREATED_BY": "Created by",
+            "CREATED_ON": "Created on"
+        },
+        "ACTIONS": {
+            "FOLDER": {
+                "SYSTEM_1": "System folder action 1",
+                "CUSTOM": "Custom folder action",
+                "DELETE": "Delete"
+            },
+            "DOCUMENT": {
+                "DOWNLOAD": "Download",
+                "DELETE": "Delete",
+                "SYSTEM_2": "System document action 2",
+                "CUSTOM": "Custom action"
+            }
+        }
+    }
+}

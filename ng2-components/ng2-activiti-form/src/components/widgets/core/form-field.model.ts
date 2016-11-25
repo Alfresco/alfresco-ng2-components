@@ -20,6 +20,7 @@ import { FormFieldOption } from './form-field-option';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldMetadata } from './form-field-metadata';
 import { FormModel } from './form.model';
+import { ContainerColumnModel } from './container-column.model';
 import { WidgetVisibilityModel } from '../../../models/widget-visibility.model';
 import {
     FormFieldValidator,
@@ -37,6 +38,7 @@ import {
 
 declare var moment: any;
 
+// Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {
 
     private _value: string;
@@ -52,6 +54,7 @@ export class FormFieldModel extends FormWidgetModel {
     overrideId: boolean;
     tab: string;
     colspan: number = 1;
+    placeholder: string = null;
     minLength: number = 0;
     maxLength: number = 0;
     minValue: string;
@@ -73,7 +76,12 @@ export class FormFieldModel extends FormWidgetModel {
     enableFractions: boolean = false;
     currency: string = null;
 
-    // advanced members
+    // container model members
+    numberOfColumns: number = 1;
+    fields: FormFieldModel[] = [];
+    columns: ContainerColumnModel[] = [];
+
+    // util members
     emptyOption: FormFieldOption;
     validationSummary: string;
     validators: FormFieldValidator[] = [];
@@ -149,6 +157,34 @@ export class FormFieldModel extends FormWidgetModel {
             this.enableFractions = <boolean>json.enableFractions;
             this.currency = json.currency;
             this._value = this.parseValue(json);
+
+            if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
+                this.placeholder = json.placeholder;
+            }
+
+            // <container>
+            this.numberOfColumns = <number> json.numberOfColumns;
+
+            let columnSize: number = 12;
+            if (this.numberOfColumns > 1) {
+                columnSize = 12 / this.numberOfColumns;
+            }
+
+            for (let i = 0; i < this.numberOfColumns; i++) {
+                let col = new ContainerColumnModel();
+                col.size = columnSize;
+                this.columns.push(col);
+            }
+
+            if (json.fields) {
+                Object.keys(json.fields).map(key => {
+                    let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
+                    let col = this.columns[parseInt(key, 10) - 1];
+                    col.fields = fields;
+                    this.fields.push(...fields);
+                });
+            }
+            // </container>
         }
 
         if (this.hasEmptyValue && this.options && this.options.length > 0) {

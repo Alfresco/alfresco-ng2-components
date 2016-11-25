@@ -70,6 +70,10 @@ export class FilterRepresentationModel {
         this.filter = new FilterParamRepresentationModel(obj.filter);
         this.index = obj && obj.index;
     }
+
+    hasFilter() {
+        return this.filter ? true : false;
+    }
 }
 
 /**

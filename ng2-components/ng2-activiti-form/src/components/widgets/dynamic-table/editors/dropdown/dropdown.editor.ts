@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CellEditorComponent } from './../cell.editor';
-import { DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../../core/index';
+import { DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../dynamic-table.widget.model';
 import { FormService } from './../../../../../services/form.service';
 
 @Component({
@@ -39,10 +39,10 @@ export class DropdownEditorComponent extends CellEditorComponent implements OnIn
         let field = this.table.field;
         if (field) {
             if (this.column.optionType === 'rest') {
-                if (this.table.form && this.table.form.processDefinitionId) {
-                    this.getValuesByProcessDefinitionId(field);
-                } else {
+                if (this.table.form && this.table.form.taskId) {
                     this.getValuesByTaskId(field);
+                } else {
+                    this.getValuesByProcessDefinitionId(field);
                 }
             } else {
                 this.options = this.column.options || [];

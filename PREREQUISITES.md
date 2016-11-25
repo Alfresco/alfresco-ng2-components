@@ -6,6 +6,7 @@ The [Angular 2](https://angular.io/) based application development framework req
 - [Download and install Activiti](https://www.alfresco.com/products/bpm/alfresco-activiti/trial)
 - [Node.js](https://nodejs.org/en/) JavaScript runtime.
 - [npm](https://www.npmjs.com/) package manager for JavaScript.
+- local nginx proxy to avoid cross-origin browser restrictions (see below)
 - (If you use ECM and BPM together) Make sure your user has the same username and password in both system
 
 *Note: Default username for activiti is "admin@app.activiti.com" and "admin" for Alfresco, and also the default password are different. Change them to be equal.*
@@ -25,26 +26,39 @@ $ node -v
 v5.12.0
 ```
 
-## Configure Nginx
+## Installing nginx
 
-To correctly configure Nginx use the following file [nginx.conf](/nginx.conf).
-This will put Activiti, Alfresco and the app dev framework under the same domain.
+Most Linux distributions will come with nginx available to install via your
+package manager and on Mac OS you can use [Homebrew](http://brew.sh/).
+
+If you want to install manually however you can follow the instructions on the
+[download page](http://nginx.org/en/download.html). See also the specific information for
+[windows users](http://nginx.org/en/docs/windows.html).
+
+### Start nginx
+
+Start nginx using the supplied configuration in [nginx.conf](nginx.conf)
+
+    nginx -c nginx.conf
+
+### Review nginx configuration
+
+To correctly configure nginx use the following file [nginx.conf](/nginx.conf).
+This will host Activiti, Alfresco and the app dev framework under the same origin.
 
 * ECM : http://localhost:8888/alfresco/
 * BPM : http://localhost:8888/activiti/
 
-To make everything work, you have to change the address of the ECM and BPM. In the demo app you can do that clicking on the top left menu and changing the bottom left options: ECM host and BPM host. 
+To make everything work, you have to change the address of the ECM and BPM. In the demo app you can do that clicking on the top right settings menu and changing the bottom left options: *ECM host* and *BPM host*.
 
 This configuration assumes few things:
 
 * Port mapping:
-  * Nginx entry point: 8888
-  * Demo Shell: 3000
-  * Alfresco: 8080
-  * Activiti: 9999
+  * nginx entry point: 0.0.0.0:8888
+  * Demo Shell: locathost:3000
+  * Alfresco: locathost:8080
+  * Activiti: locathost:9999
 
 All those values can be modified at their respective `location` directive on the [nginx.conf](/nginx.conf) file.
 
-It also need to be compiled with the [Headers More](https://www.nginx.com/resources/wiki/modules/headers_more/) module , which add more control over sending headers to the backend.
-
-If you want to know more on how to install and configure Nginx to work with the Application Development Framework can be found [here](https://community.alfresco.com/community/application-development-framework/blog/2016/09/28/adf-development-set-up-with-nginx-proxy)
+If you want to know more on how to install and configure nginx to work with the Application Development Framework can be found [here](https://community.alfresco.com/community/application-development-framework/blog/2016/09/28/adf-development-set-up-with-nginx-proxy)

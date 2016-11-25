@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
-import { DynamicTableColumn } from './../core/dynamic-table-column';
-import { DynamicTableRow } from './../core/dynamic-table-row';
+import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -29,7 +29,7 @@ import { DynamicTableRow } from './../core/dynamic-table-row';
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']
 })
-export class DisplayValueWidget extends WidgetComponent implements OnInit {
+export class DisplayValueWidget extends WidgetComponent implements OnInit, AfterViewChecked {
 
     value: any;
     fieldType: string;
@@ -46,14 +46,15 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     // upload/attach
     hasFile: boolean = false;
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService,
+                private visibilityService: WidgetVisibilityService) {
         super();
     }
 
     ngOnInit() {
         if (this.field) {
             this.value = this.field.value;
-
+            this.visibilityService.refreshEntityVisibility(this.field);
             if (this.field.params) {
                 let originalField = this.field.params['field'];
                 if (originalField && originalField.type) {
@@ -124,7 +125,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                                 this.visibleColumns = this.columns.filter(col => col.visible);
                             }
                             if (json.value) {
-                                this.rows = json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
+                                this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
                             }
                             break;
                         default:
@@ -134,6 +135,10 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                 }
             }
         }
+    }
+
+    ngAfterViewChecked() {
+        this.visibilityService.refreshVisibility(this.field.form);
     }
 
     loadRadioButtonValue() {
@@ -147,10 +152,10 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     }
 
     loadRestFieldValue() {
-        if (this.field.form.processDefinitionId) {
-            this.getValuesByProcessDefinitionId();
-        } else {
+        if (this.field.form.taskId) {
             this.getValuesByTaskId();
+        } else {
+            this.getValuesByProcessDefinitionId();
         }
     }
 
@@ -164,6 +169,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                 (result: FormFieldOption[]) => {
                     let options = result || [];
                     let toSelect = options.find(item => item.id === this.field.value);
+                    this.field.options = options;
                     if (toSelect) {
                         this.value = toSelect.name;
                     } else {
@@ -184,6 +190,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                 (result: FormFieldOption[]) => {
                     let options = result || [];
                     let toSelect = options.find(item => item.id === this.field.value);
+                    this.field.options = options;
                     if (toSelect) {
                         this.value = toSelect.name;
                     } else {

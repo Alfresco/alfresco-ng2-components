@@ -35,6 +35,7 @@ import { AnalyticsModule } from 'ng2-activiti-analytics';
 
 import { AppComponent } from './app.component';
 import { routing } from './app.routes';
+import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 
 import {
     DataTableDemoComponent,
@@ -68,7 +69,8 @@ import {
         ActivitiTaskListModule.forRoot(),
         ActivitiProcessListModule.forRoot(),
         UserInfoComponentModule.forRoot(),
-        AnalyticsModule.forRoot()
+        AnalyticsModule.forRoot(),
+        CustomEditorsModule
     ],
     declarations: [
         AppComponent,

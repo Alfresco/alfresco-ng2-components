@@ -21,7 +21,7 @@ import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { Observable, Observer } from 'rxjs/Rx';
 import { DatePipe } from '@angular/common';
-import { ProcessInstance } from '../models/process-instance';
+import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;
@@ -41,7 +41,7 @@ export class ActivitiProcessInstanceTasks implements OnInit {
     showRefreshButton: boolean = true;
 
     @Output()
-    taskFormCompletedEmitter = new EventEmitter();
+    taskFormCompleted = new EventEmitter();
 
     activeTasks: TaskDetailsModel[] = [];
     completedTasks: TaskDetailsModel[] = [];
@@ -70,7 +70,7 @@ export class ActivitiProcessInstanceTasks implements OnInit {
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
         }
 
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
@@ -191,10 +191,10 @@ export class ActivitiProcessInstanceTasks implements OnInit {
         }
     }
 
-    public taskFormCompleted() {
+    public onTaskFormCompleted() {
         this.closeDialog();
         this.load(this.processInstanceDetails.id);
-        this.taskFormCompletedEmitter.emit(this.processInstanceDetails.id);
+        this.taskFormCompleted.emit(this.processInstanceDetails.id);
     }
 
     public onRefreshClicked() {

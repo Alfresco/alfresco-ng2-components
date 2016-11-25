@@ -67,6 +67,12 @@ describe('ActivitiApps', () => {
         window['componentHandler'] = componentHandler;
     });
 
+    it('should define layoutType with the default value', () => {
+        component.layoutType = '';
+        fixture.detectChanges();
+        expect(component.isGrid()).toBe(true);
+    });
+
     it('should load apps on init', () => {
         fixture.detectChanges();
         expect(getAppsSpy).toHaveBeenCalled();

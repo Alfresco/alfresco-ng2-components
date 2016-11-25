@@ -16,7 +16,7 @@
  */
 
 import { RowEditorComponent } from './row.editor';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicRowValidationSummary } from './../../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicRowValidationSummary } from './../dynamic-table.widget.model';
 
 describe('RowEditorComponent', () => {
 

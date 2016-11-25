@@ -47,7 +47,7 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
     constructor(private translate: AlfrescoTranslationService) {
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-tasklist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
         }
 
         this.searchUser

@@ -16,6 +16,7 @@
         "LABELS": {
             "STARTED_BY": "Started by",
             "STARTED": "Started",
+            "ENDED": "Ended",
             "COMMENTS": "Comments",
             "START_FORM": "Start Form",
             "TASKS_ACTIVE": "Active Tasks",
@@ -51,6 +52,10 @@
                 "START": "Start",
                 "CANCEL": "Cancel"
             }
+        },
+        "ERROR": {
+          "LOAD_PROCESS_DEFS": "Could not load process definitions, please check you have access.",
+          "START": "Could start new process instance, please check you have permission."
         }
     }
 }

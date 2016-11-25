@@ -137,10 +137,10 @@ Follow the 3 steps below:
 
 ## Basic usage example Activiti Task List
 
-The component shows the list of all the tasks filter by the FilterParamRepresentationModel passed in input.
+This component renders a list containing all the tasks matched by the parameters specified.
 
 ```html
-<activiti-tasklist [taskFilter]="taskFilterModel"></activiti-tasklist>
+<activiti-tasklist [appId]="'1'" [state]="'open'" [assignment]="'assignee'"></activiti-tasklist>
 ```
 
 Usage example of this component :
@@ -151,22 +151,24 @@ Usage example of this component :
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { FilterRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
+import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<activiti-tasklist [taskFilter]="filterRepresentationModel"
-                                               [data]="dataTasks"
-                                               #activititasklist></activiti-tasklist>`
+    template: `<activiti-tasklist [appId]="appId" [state]="state" [assignment]="assignment" [data]="dataTasks"></activiti-tasklist>`
 })
 class MyDemoApp {
 
     dataTasks: ObjectDataTableAdapter;
 
-    filterRepresentationModel: FilterRepresentationModel;
+    appId: string = '1';
+
+    assignment: string = 'assignee';
+
+    state: string = 'open';
 
     constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
         settingsService.bpmHost = 'http://localhost:9999';
@@ -185,17 +187,6 @@ class MyDemoApp {
             ]
         );
         this.dataTasks.setSorting(new DataSorting('started', 'desc'));
-
-        this.filterRepresentationModel = new FilterRepresentationModel({
-            appId: '3003',
-            filter: {
-                processDefinitionKey: null,
-                assignment: 'involved',
-                name: null,
-                state: 'running',
-                sort: 'created-desc'
-            }
-        });
     }
 }
 
@@ -227,25 +218,16 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-| `taskFilter` | { FilterParamRepresentationModel } required) FilterParamRepresentationModel object that is passed to the task list API  to filter the task list. |
-
-Example:
-
-```json
-{
-    appId: '3003',
-    filter:{
-        processDefinitionKey: null,
-        name:null,
-        assignment: 'involved',
-        state:'running',
-        sort: 'created-desc'
-    }
-}
-```
-
-| Name | Description |
-| --- | --- |
+|`appId`| { appId } The id of the app. |
+|`processDefinitionKey`| { processDefinitionKey } The processDefinitionKey of the process. |
+|`assignment`| { assignment } The assignment of the process.
+Possible values are:
+assignee : where the current user is the assignee
+candidate: where the current user is a task candidate
+group_x: where the task is assigned to a group where the current user is a member of. The groups can be fetched through the profile REST endpoint
+no value: where the current user is involved |
+|`state`| { state } Define state of the processes. Possible values are: completed, active |
+|`sort`| { sort } Define the sort of the processes. Possible values are created-desc, created-asc, due-desc, due-asc |
 | `schemaColumn` | { any[] } optional) JSON object that represent the number and the type of the columns that you want show |
 
 Example:
@@ -308,6 +290,26 @@ This can be changed by adding the following custom html template:
     </no-task-details-template>
 </activiti-task-details>    
 ```
+
+## Basic usage example Activiti Apps
+
+The component shows all the available apps.
+
+```html
+<activiti-apps [layoutType]="'GRID'"></activiti-filters>
+```
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| `appClick` |  Invoked when an app is clicked |
+
+#### Options
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. |
 
 ## Basic usage example Activiti Filter
 

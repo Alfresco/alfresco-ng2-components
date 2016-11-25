@@ -1,0 +1,25 @@
+{
+  "LOGIN": {
+    "LABEL": {
+      "LOGIN": "Autenticazione",
+      "USERNAME": "Nome utente",
+      "PASSWORD": "Password",
+      "REMEMBER": "Ricordami"
+    },
+    "MESSAGES": {
+      "USERNAME-REQUIRED": "Campo obbligatorio",
+      "USERNAME-MIN": "Inserire un nome utente di minimo 4 caratteri.",
+      "PASSWORD-REQUIRED": "Campo obbligatorio",
+      "LOGIN-ERROR-CREDENTIALS": "Nome utente o password non validi",
+      "LOGIN-ERROR-PROVIDERS": "Providers non può essere nullo",
+      "LOGIN-SUCCESS": "Login effettuata con successo"
+    },
+    "BUTTON": {
+      "LOGIN": "Accedi"
+    },
+    "ACTION": {
+      "HELP": "BISOGNO DI AIUTO?",
+      "REGISTER": "REGISTRATI"
+    }
+  }
+}

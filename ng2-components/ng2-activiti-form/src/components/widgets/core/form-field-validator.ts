@@ -103,11 +103,18 @@ export class NumberFieldValidator implements FormFieldValidator {
         if (this.isSupported(field)) {
             if (field.value === null ||
                 field.value === undefined ||
-                field.value === '' ||
-                NumberFieldValidator.isNumber(field.value)) {
+                field.value === '') {
                 return true;
             }
-            field.validationSummary = 'Input must be a number';
+            let valueStr = '' + field.value;
+            let pattern = new RegExp(/^-?\d+$/);
+            if (field.enableFractions) {
+                pattern = new RegExp(/^-?[0-9]+(\.[0-9]{1,2})?$/);
+            }
+            if (valueStr.match(pattern)) {
+                return true;
+            }
+            field.validationSummary = 'Incorrect number format';
             return false;
         }
         return true;

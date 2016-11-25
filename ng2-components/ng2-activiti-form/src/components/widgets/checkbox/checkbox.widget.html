@@ -5,7 +5,7 @@
            class="mdl-checkbox__input"
            [checked]="field.value"
            [(ngModel)]="field.value"
-           (ngModelChange)="checkVisibility(field)"
+           (ngModelChange)="onChange()"
            [disabled]="field.readOnly">
     <span class="mdl-checkbox__label">{{field.name}}</span>
 </label>

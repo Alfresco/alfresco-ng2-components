@@ -143,7 +143,7 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
 
         if (translate) {
-            translate.addTranslationFolder('node_modules/ng2-alfresco-documentlist/dist/src');
+            translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/dist/src');
         }
     }
 

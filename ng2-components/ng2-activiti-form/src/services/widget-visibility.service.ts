@@ -19,7 +19,13 @@ import { Injectable } from '@angular/core';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { FormModel, FormFieldModel, TabModel } from '../components/widgets/core/index';
+import {
+    FormModel,
+    FormFieldModel,
+    TabModel,
+    ContainerModel,
+    ContainerColumnModel
+} from '../components/widgets/core/index';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 
@@ -44,7 +50,8 @@ export class WidgetVisibilityService {
     }
 
     refreshEntityVisibility(element: FormFieldModel | TabModel) {
-        element.isVisible = this.evaluateVisibility(element.form, element.visibilityCondition);
+        let visible = this.evaluateVisibility(element.form, element.visibilityCondition);
+        element.isVisible = visible;
     }
 
     evaluateVisibility(form: FormModel, visibilityObj: WidgetVisibilityModel): boolean {
@@ -95,42 +102,71 @@ export class WidgetVisibilityService {
     }
 
     getFormValue(form: FormModel, field: string) {
-        let value = this.getValue(form.values, field);
-        value = value && value.id ? value.id : value;
+        let value = this.getFieldValue(form.values, field);
         return value ? value : this.searchForm(form, field);
     }
 
-    getValue(values: any, fieldName: string) {
-        return this.getFieldValue(values, fieldName) ||
-            this.getDropDownName(values, fieldName);
-    }
-
     getFieldValue(valueList: any, fieldName: string) {
-        return valueList[fieldName];
-    }
-
-    getDropDownName(valueList: any, fieldName: string) {
-        let dropDownFilterByName;
+        let dropDownFilterByName, valueFound = '';
         if (fieldName && fieldName.indexOf('_LABEL') > 0) {
             dropDownFilterByName = fieldName.substring(0, fieldName.length - 6);
+            if (valueList[dropDownFilterByName]) {
+                valueFound = valueList[dropDownFilterByName].name;
+            }
+        } else if (valueList[fieldName] && valueList[fieldName].id) {
+            valueFound = valueList[fieldName].id;
+        } else {
+            valueFound = valueList[fieldName];
         }
-        return ( dropDownFilterByName && valueList[dropDownFilterByName] ) ?
-            valueList[dropDownFilterByName].name : dropDownFilterByName;
+        return valueFound;
     }
 
     searchForm(form: FormModel, name: string) {
-        let res;
-        form.json.fields.forEach(columns => {
-            for (let i in columns.fields) {
-                if (columns.fields.hasOwnProperty(i)) {
-                    res = columns.fields[i].find(field => field.id === name);
-                    if (res) {
-                        return res.value;
+        let fieldValue = '';
+        form.fields.forEach((containerModel: ContainerModel) => {
+            containerModel.field.columns.forEach((containerColumnModel: ContainerColumnModel) => {
+                let fieldFound = containerColumnModel.fields.find(field => this.isSearchedField(field, name));
+                if (fieldFound) {
+                    fieldValue = this.getObjectValue(fieldFound);
+                    if (!fieldValue) {
+                        if (fieldFound.value && fieldFound.value.id) {
+                            fieldValue = fieldFound.value.id;
+                        } else {
+                            fieldValue = fieldFound.value;
+                        }
                     }
                 }
-            }
+            });
         });
-        return res ? res.value : res;
+        return fieldValue;
+    }
+
+    private getObjectValue(field: FormFieldModel) {
+        let value = '';
+        if (field.value && field.value.name) {
+            value = field.value.name;
+        } else if (field.options) {
+            let option = field.options.find(option => option.id === field.value);
+            if (option) {
+                value = option.name;
+            } else {
+                value = field.value;
+            }
+        }
+        return value;
+    }
+
+    private isSearchedField(field: FormFieldModel, fieldToFind: string) {
+        let forrmattedFieldName = this.removeLabel(field, fieldToFind);
+        return field.name ? field.name.toUpperCase() === forrmattedFieldName.toUpperCase() : false;
+    }
+
+    private removeLabel(field: FormFieldModel, fieldToFind) {
+        let formattedFieldName = fieldToFind || '';
+        if (field.fieldType === 'RestFieldRepresentation' && fieldToFind.indexOf('_LABEL') > 0) {
+            formattedFieldName = fieldToFind.substring(0, fieldToFind.length - 6);
+        }
+        return formattedFieldName;
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {
@@ -212,12 +248,11 @@ export class WidgetVisibilityService {
 
     private getRequestOptions(): RequestOptions {
         let headers = this.getHeaders();
-        return new RequestOptions({headers: headers});
+        return new RequestOptions({ headers: headers });
     }
 
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
-
 }

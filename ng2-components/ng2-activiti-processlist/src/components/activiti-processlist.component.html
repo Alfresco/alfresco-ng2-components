@@ -1,5 +1,5 @@
-<div *ngIf="!filter">{{ 'FILTERS.MESSAGES.NONE' | translate }}</div>
-<div *ngIf="filter">
+<div *ngIf="!requestNode">{{ 'FILTERS.MESSAGES.NONE' | translate }}</div>
+<div *ngIf="requestNode">
     <div *ngIf="!isListEmpty()">
         <alfresco-datatable
             [data]="data"

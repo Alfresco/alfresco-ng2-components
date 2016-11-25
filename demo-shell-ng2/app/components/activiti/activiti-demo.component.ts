@@ -22,7 +22,11 @@ import {
     ActivitiApps,
     ActivitiTaskList
 } from 'ng2-activiti-tasklist';
-import { ActivitiProcessInstanceListComponent } from 'ng2-activiti-processlist';
+import {
+    ActivitiProcessInstanceListComponent,
+    ActivitiStartProcessInstance,
+    ProcessInstance
+} from 'ng2-activiti-processlist';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
@@ -30,8 +34,13 @@ import {
     DataSorting
 } from 'ng2-alfresco-datatable';
 
+import { FormRenderingService } from 'ng2-activiti-form';
+import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
+
 declare let __moduleName: string;
 declare var componentHandler;
+
+const currentProcessIdNew = '__NEW__';
 
 @Component({
     moduleId: __moduleName,
@@ -62,6 +71,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     @ViewChild('activitiprocessdetails')
     activitiprocessdetails: any;
 
+    @ViewChild(ActivitiStartProcessInstance)
+    activitiStartProcess: ActivitiStartProcessInstance;
+
     @ViewChild('tabmain')
     tabMain: any;
 
@@ -78,16 +90,16 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     taskSchemaColumns: any [] = [];
     processSchemaColumns: any [] = [];
 
-    taskFilter: any;
+    taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: any;
+    processFilter: FilterRepresentationModel;
 
     sub: Subscription;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private route: ActivatedRoute, private formRenderingService: FormRenderingService) {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
             [
@@ -100,11 +112,16 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column'},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden'}
             ]
         );
-        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
+
+        // Uncomment this line to replace all 'text' field editors with custom component
+        // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
+
+        // Uncomment this line to map 'custom_stencil_01' to local editor component
+        formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
     }
 
     ngOnInit() {
@@ -154,10 +171,10 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     onSuccessTaskList(event: FilterRepresentationModel) {
-        this.currentTaskId = this.activititasklist.getCurrentTaskId();
+        this.currentTaskId = this.activititasklist.getCurrentId();
     }
 
-    onProcessFilterClick(event: any) {
+    onProcessFilterClick(event: FilterRepresentationModel) {
         this.processFilter = event;
     }
 
@@ -166,7 +183,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     onSuccessProcessList(event: any) {
-        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentProcessId();
+        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentId();
     }
 
     onTaskRowClick(taskId) {
@@ -177,8 +194,17 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.currentProcessInstanceId = processInstanceId;
     }
 
-    onStartProcessInstance() {
-        this.activitiprocesslist.reload();
+    navigateStartProcess() {
+        this.currentProcessInstanceId = currentProcessIdNew;
+    }
+
+    onStartProcessInstance(instance: ProcessInstance) {
+        this.currentProcessInstanceId = instance.id;
+        this.activitiStartProcess.reset();
+    }
+
+    isStartProcessMode() {
+        return this.currentProcessInstanceId === currentProcessIdNew;
     }
 
     processCancelled(data: any) {
@@ -195,7 +221,7 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     }
 
     onFormCompleted(form) {
-        this.activititasklist.load(this.taskFilter);
+        this.activititasklist.reload();
         this.currentTaskId = null;
     }
 

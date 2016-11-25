@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef } from '@angular/core';
-import { TextFieldWidgetComponent } from './../textfield-widget.component';
+import { Component } from '@angular/core';
+import { WidgetComponent } from './../widget.component';
 
 @Component({
     moduleId: module.id,
@@ -24,10 +24,5 @@ import { TextFieldWidgetComponent } from './../textfield-widget.component';
     templateUrl: './text.widget.html',
     styleUrls: ['./text.widget.css']
 })
-export class TextWidget extends TextFieldWidgetComponent {
-
-    constructor(elementRef: ElementRef) {
-        super(elementRef);
-    }
-
+export class TextWidget extends WidgetComponent {
 }

@@ -87,7 +87,7 @@ export class UploadButtonComponent {
 
     constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        translate.addTranslationFolder('node_modules/ng2-alfresco-upload/dist/src');
+        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/dist/src');
     }
 
     ngOnChanges(changes) {
@@ -214,7 +214,7 @@ export class UploadButtonComponent {
             componentHandler.upgradeAllRegistered();
         }
 
-        let messageTranslate, actionTranslate: any;
+        let messageTranslate: any, actionTranslate: any;
         messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
 

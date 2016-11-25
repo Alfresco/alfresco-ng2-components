@@ -15,10 +15,6 @@
  * limitations under the License.
  */
 
-export interface DynamicTableRow {
-
-    isNew: boolean;
-    selected: boolean;
-    value: any;
-
+export interface FormFieldTemplates {
+     [key: string]: string;
 }

@@ -1,39 +1,38 @@
+**Please check if the PR fulfills these requirements**
+- [ ] The commit message follows our [guidelines](https://github.com/Alfresco/alfresco-ng2-components/wiki/Commit-format)
+- [ ] Tests for the changes have been added (for bug fixes / features)
+- [ ] Docs have been added / updated (for bug fixes / features)
+
 <!--
  Before submitting your PR, please check that your code follows our contribution guidelines:
  https://github.com/Alfresco/alfresco-ng2-components/wiki/Code-contribution-acceptance-criteria
- 
- Check also that your commit messages follow our commit message format guidelines:
- https://github.com/Alfresco/alfresco-ng2-components/wiki/Commit-format
  -->
 
-**Type of contribution:** (check one with "x")
+**What kind of change does this PR introduce?** (check one with "x")
 ```
 [ ] Bugfix
 [ ] Feature
-[ ] Code formatting 
-[ ] Code Refactoring
+[ ] Code style update (formatting, local variables)
+[ ] Refactoring (no functional changes, no api changes)
 [ ] Build related changes
 [ ] Documentation
 [ ] Other... Please describe:
 ```
-**This PR adds the following feature:** 
-<!-- you can ignore this line in the case of a bugfix -->
 
-**Current behavior:** 
+**What is the current behavior?** (You can also link to an open issue here)
 
-**New behavior:**
 
-**This PR fixes the following issue:** 
-<!-- link to the open issue, ignore this if there are no issues open -->
 
-**This PR introduces a breaking change:** (check one with "x")
+**What is the new behavior?**
+
+
+
+**Does this PR introduce a breaking change?** (check one with "x")
 ```
-- [ ] Yes
-- [ ] No
+[ ] Yes
+[ ] No
 ```
 
-<!-- Please describe the reason to introduce a breaking change, and what exactly breaks -->
+If this PR contains a breaking change, please describe the impact and migration path for existing applications: ...
 
-
-**More information:**
-
+**Other information**:

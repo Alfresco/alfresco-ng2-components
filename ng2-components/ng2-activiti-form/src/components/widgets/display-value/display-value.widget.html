@@ -1,8 +1,9 @@
 <div [ngSwitch]="fieldType" class="display-value-widget">
     <div *ngSwitchCase="'boolean'">
-        <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id">
+        <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id" *ngIf="field?.isVisible">
             <input type="checkbox"
                    [attr.id]="field.id"
+                   [checked]="field.value"
                    [(ngModel)]="value"
                    class="mdl-checkbox__input"
                    disabled>
@@ -10,41 +11,46 @@
         </label>
     </div>
     <div *ngSwitchCase="'text'"
-         class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label text-widget">
-        <input class="mdl-textfield__input"
+         class="mdl-textfield mdl-js-textfield text-widget">
+        <label *ngIf="field?.isVisible" [attr.for]="field.id">{{field.name}}</label>
+        <input
+               *ngIf="field?.isVisible"
+               class="mdl-textfield__input"
                type="text"
                [attr.id]="field.id"
                [value]="value"
                disabled>
-        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
     </div>
     <div *ngSwitchCase="'multi-line-text'"
-         class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label multiline-text-widget">
+         class="mdl-textfield mdl-js-textfield multiline-text-widget">
         <textarea class="mdl-textfield__input"
                   type="text"
-                  rows= "3"
+                  rows="3"
                   [value]="value"
                   [attr.id]="field.id"
-                  disabled>
+                  disabled
+                  *ngIf="field?.isVisible">
         </textarea>
-        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+        <label *ngIf="field?.isVisible" class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
     </div>
     <div *ngSwitchCase="'hyperlink'" class="hyperlink-widget">
-        <div>
-            <span>{{field.name}}</span>
-        </div>
-        <div>
-            <a [href]="linkUrl" target="_blank" rel="nofollow">{{linkText}}</a>
+        <div *ngIf="field?.isVisible">
+            <div>
+                <span>{{field.name}}</span>
+            </div>
+            <div>
+                <a [href]="linkUrl" target="_blank" rel="nofollow">{{linkText}}</a>
+            </div>
         </div>
     </div>
     <div *ngSwitchCase="'dynamic-table'">
-        <div class="display-value-widget__dynamic-table">
+        <div class="display-value-widget__dynamic-table" *ngIf="field?.isVisible">
             <div>{{field.name}}</div>
             <table class="mdl-data-table mdl-js-data-table">
                 <thead>
                     <tr>
                         <th *ngFor="let column of visibleColumns"
-                            class="mdl-data-table__cell--non-numeric">
+                            class="mdl-data-table__cell--non-numeric is-disabled">
                             {{column.name}}
                         </th>
                     </tr>
@@ -52,7 +58,7 @@
                 <tbody>
                     <tr *ngFor="let row of rows">
                         <td *ngFor="let column of visibleColumns"
-                            class="mdl-data-table__cell--non-numeric">
+                            class="mdl-data-table__cell--non-numeric is-disabled">
                             {{ getCellValue(row, column) }}
                         </td>
                     </tr>
@@ -61,7 +67,7 @@
         </div>
     </div>
     <div *ngSwitchCase="'upload'">
-        <div class="upload-widget">
+        <div class="upload-widget" *ngIf="field?.isVisible">
             <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
             <div>
                 <i *ngIf="hasFile" class="material-icons upload-widget__icon">attachment</i>
@@ -70,14 +76,15 @@
         </div>
     </div>
     <div *ngSwitchDefault
-         class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label text-widget">
-        <input class="mdl-textfield__input"
-               type="text"
-               [attr.id]="field.id"
-               [value]="value"
-               (ngModelChange)="checkVisibility(field)"
-               disabled>
-        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+         class="mdl-textfield mdl-js-textfield text-widget is-disabled is-dirty is-upgraded">
+        <label *ngIf="field?.isVisible" [attr.for]="field.id">{{field.name}}</label>
+        <input
+            *ngIf="field?.isVisible"
+            class="mdl-textfield__input"
+            type="text"
+            [attr.id]="field.id"
+            [value]="value"
+            disabled>
     </div>
 </div>
 

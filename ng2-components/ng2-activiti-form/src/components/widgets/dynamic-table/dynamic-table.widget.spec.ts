@@ -16,16 +16,20 @@
  */
 
 import { DynamicTableWidget } from './dynamic-table.widget';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, FormModel, FormFieldTypes } from './../core/index';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
+import { FormModel, FormFieldTypes } from './../core/index';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 describe('DynamicTableWidget', () => {
 
     let widget: DynamicTableWidget;
     let table: DynamicTableModel;
+    let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
         table = new DynamicTableModel(null);
-        widget = new DynamicTableWidget(null);
+        visibilityService = new WidgetVisibilityService(null, null, null);
+        widget = new DynamicTableWidget(null, visibilityService);
         widget.content = table;
     });
 
@@ -91,8 +95,8 @@ describe('DynamicTableWidget', () => {
     });
 
     it('should move selection down', () => {
-        let row1 = <DynamicTableRow> { };
-        let row2 = <DynamicTableRow> { };
+        let row1 = <DynamicTableRow> {};
+        let row2 = <DynamicTableRow> {};
         widget.content.rows.push(...[row1, row2]);
         widget.content.selectedRow = row1;
 
@@ -247,5 +251,4 @@ describe('DynamicTableWidget', () => {
         let actual = widget.getCellValue(row, column);
         expect(actual).toBe('GBP 100');
     });
-
 });

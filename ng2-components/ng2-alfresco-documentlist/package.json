@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-documentlist",
   "description": "Alfresco Angular2 Document List Component",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "npm install rimraf && rimraf dist node_modules typings",
@@ -65,16 +65,10 @@
     "systemjs": "0.19.27",
     "zone.js": "^0.6.23",
 
-    "intl": "1.2.4",
-    "dialog-polyfill": "^0.4.3",
-    "element.scrollintoviewifneeded-polyfill": "^1.0.1",
-    "material-design-icons": "2.2.3",
-    "material-design-lite": "1.2.1",
-
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "^0.4.0",
-    "ng2-alfresco-core": "0.4.0",
-    "ng2-alfresco-datatable": "0.4.0"
+    "alfresco-js-api": "^0.5.0",
+    "ng2-alfresco-core": "0.5.0",
+    "ng2-alfresco-datatable": "0.5.0"
   },
   "devDependencies": {
     "@types/node": "^6.0.42",

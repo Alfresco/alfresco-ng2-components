@@ -1,10 +1,10 @@
-<button type="button" (click)="showDialog()" class="mdl-button">{{'START_PROCESS.BUTTON'|translate}}</button>
-
-<dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">{{'START_PROCESS.DIALOG.TITLE'|translate}}</h4>
-    <div class="mdl-dialog__content">
+<div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__supporting-text">
+        <div class="mdl-card mdl-shadow--2dp error-message" *ngIf="errorMessageId">
+            <div class="mdl-card__supporting-text">{{errorMessageId|translate}}</div>
+        </div>
         <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
-            <select name="processDefinition" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onChange($event)" id="processDefinition">
+            <select name="processDefinition" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" id="processDefinition" required>
                 <option value="" selected="selected">{{'START_PROCESS.DIALOG.TYPE_PLACEHOLDER'|translate}}</option>
                 <option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
                     {{processDef.name}}
@@ -14,19 +14,17 @@
         </div>
         <br>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" [(ngModel)]="name" id="processName" />
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="name" id="processName" required />
             <label class="mdl-textfield__label" for="processName">{{'START_PROCESS.DIALOG.LABEL.NAME'|translate}}</label>
         </div>
         <activiti-start-form *ngIf="hasStartForm()" [processDefinitionId]="currentProcessDef.id"
-                       (formSaved)='onFormSaved($event)'
-                       (formCompleted)='onFormCompleted($event)'
-                       (formLoaded)='onFormLoaded($event)'
-                       (onError)='onFormError($event)'
-                       #startForm>
+                             (formSaved)='onFormSaved($event)'
+                             (formCompleted)='onFormCompleted($event)'
+                             (formLoaded)='onFormLoaded($event)'
+                             (onError)='onFormError($event)'>
         </activiti-start-form>
     </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" [disabled]="!validateForm()" (click)="startProcess()" class="mdl-button">{{'START_PROCESS.DIALOG.ACTION.START'|translate}}</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">{{'START_PROCESS.DIALOG.ACTION.CANCEL'|translate}}</button>
+    <div class="mdl-card__actions mdl-card--border" *ngIf="showStartButton">
+        <button type="button" [disabled]="!validateForm()" (click)="startProcess()" class="mdl-button" data-automation-id="btn-start">{{'START_PROCESS.DIALOG.ACTION.START'|translate}}</button>
     </div>
-</dialog>
+</div>

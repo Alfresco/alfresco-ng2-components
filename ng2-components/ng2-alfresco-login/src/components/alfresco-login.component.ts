@@ -83,7 +83,7 @@ export class AlfrescoLoginComponent implements OnInit {
                 public settingsService: AlfrescoSettingsService,
                 private translate: AlfrescoTranslationService) {
 
-        translate.addTranslationFolder('node_modules/ng2-alfresco-login/dist/src');
+        translate.addTranslationFolder('ng2-alfresco-login', 'node_modules/ng2-alfresco-login/dist/src');
 
         this.initFormError();
         this.initFormFieldsMessages();

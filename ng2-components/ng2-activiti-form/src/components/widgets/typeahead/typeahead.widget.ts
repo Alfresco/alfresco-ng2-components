@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormService } from './../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -33,15 +34,16 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
     value: string;
     options: FormFieldOption[] = [];
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService,
+                private visibilityService: WidgetVisibilityService) {
         super();
     }
 
     ngOnInit() {
-        if (this.field.form.processDefinitionId) {
-            this.getValuesByProcessDefinitionId();
-        } else {
+        if (this.field.form.taskId) {
             this.getValuesByTaskId();
+        } else {
+            this.getValuesByProcessDefinitionId();
         }
     }
 
@@ -55,7 +57,6 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                 (result: FormFieldOption[]) => {
                     let options = result || [];
                     this.field.options = options;
-                    this.field.updateForm();
 
                     let fieldValue = this.field.value;
                     if (fieldValue) {
@@ -64,6 +65,8 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                             this.value = toSelect.name;
                         }
                     }
+                    this.field.updateForm();
+                    this.visibilityService.refreshEntityVisibility(this.field);
                 },
                 this.handleError
             );
@@ -79,7 +82,6 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                 (result: FormFieldOption[]) => {
                     let options = result || [];
                     this.field.options = options;
-                    this.field.updateForm();
 
                     let fieldValue = this.field.value;
                     if (fieldValue) {
@@ -88,6 +90,8 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                             this.value = toSelect.name;
                         }
                     }
+                    this.field.updateForm();
+                    this.visibilityService.refreshEntityVisibility(this.field);
                 },
                 this.handleError
             );
@@ -113,7 +117,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
     onBlur() {
         setTimeout(() => {
             this.flushValue();
-            this.checkVisibility(this.field);
+            this.checkVisibility();
         }, 200);
     }
 
@@ -141,7 +145,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
         if (item) {
             this.field.value = item.id;
             this.value = item.name;
-            this.checkVisibility(this.field);
+            this.checkVisibility();
         }
         if (event) {
             event.preventDefault();
@@ -150,6 +154,10 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
 
     handleError(error: any) {
         console.error(error);
+    }
+
+    checkVisibility() {
+        this.visibilityService.refreshVisibility(this.field.form);
     }
 
 }

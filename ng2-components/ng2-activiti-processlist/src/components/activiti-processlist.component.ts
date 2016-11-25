@@ -15,28 +15,38 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataRowEvent, DataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
-import { TaskQueryRequestRepresentationModel, FilterRepresentationModel } from 'ng2-activiti-tasklist';
+import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
+
+import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 
 @Component({
     moduleId: module.id,
     selector: 'activiti-process-instance-list',
-    styles: [
-        `
-              :host h1 {
-                  font-size:22px
-              }
-          `
-    ],
+    styleUrls: [ './activiti-processlist.component.css' ],
     templateUrl: './activiti-processlist.component.html'
 })
 export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
     @Input()
-    filter: FilterRepresentationModel;
+    appId: string;
+
+    @Input()
+    processDefinitionKey: string;
+
+    @Input()
+    state: string;
+
+    @Input()
+    sort: string;
+
+    @Input()
+    name: string;
+
+    requestNode: TaskQueryRequestRepresentationModel;
 
     @Input()
     data: DataTableAdapter;
@@ -45,16 +55,15 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     rowClick: EventEmitter<string> = new EventEmitter<string>();
 
     @Output()
-    onSuccess: EventEmitter<any> = new EventEmitter<any>();
+    onSuccess: EventEmitter<ProcessInstance[]> = new EventEmitter<ProcessInstance[]>();
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
-    errorMessage: string;
-    currentProcessInstanceId: string;
+    currentInstanceId: string;
 
     private defaultSchemaColumn: any[] = [
-        {type: 'text', key: 'id', title: 'Id', sortable: true},
+        {type: 'text', key: 'id', title: 'Id'},
         {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
         {type: 'text', key: 'started', title: 'Started', sortable: true},
         {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
@@ -62,7 +71,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
     constructor(private processService: ActivitiProcessService, private translate: AlfrescoTranslationService) {
         if (translate !== null) {
-            translate.addTranslationFolder('node_modules/ng2-activiti-processlist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
         }
     }
 
@@ -74,12 +83,37 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let filter = changes['filter'];
-        if (filter && filter.currentValue) {
-            let requestNode = this.convertProcessInstanceToTaskQuery(filter.currentValue);
-            this.load(requestNode);
-            return;
+        if (this.isPropertyChanged(changes)) {
+            this.reload();
         }
+    }
+
+    private isPropertyChanged(changes: SimpleChanges): boolean {
+        let changed: boolean = false;
+
+        let appId = changes['appId'];
+        let processDefinitionKey = changes['processDefinitionKey'];
+        let state = changes['state'];
+        let sort = changes['sort'];
+        let name = changes['name'];
+
+        if (appId && appId.currentValue) {
+            changed = true;
+        } else if (processDefinitionKey && processDefinitionKey.currentValue) {
+            changed = true;
+        } else if (state && state.currentValue) {
+            changed = true;
+        } else if (sort && sort.currentValue) {
+            changed = true;
+        } else if (name && name.currentValue) {
+            changed = true;
+        }
+        return changed;
+    }
+
+    public reload() {
+        this.requestNode = this.createRequestNode();
+        this.load(this.requestNode);
     }
 
     /**
@@ -93,65 +127,64 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         );
     }
 
-    load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load(requestNode: TaskQueryRequestRepresentationModel) {
         this.processService.getProcessInstances(requestNode)
             .subscribe(
-                (processInstances) => {
-                    let processRow = this.createDataRow(processInstances);
-                    this.renderProcessInstances(processRow);
-                    this.selectFirstProcess();
-                    this.onSuccess.emit(processInstances);
+                (response) => {
+                    let instancesRow = this.createDataRow(response);
+                    this.renderInstances(instancesRow);
+                    this.selectFirst();
+                    this.onSuccess.emit(response);
                 },
                 error => {
-                    this.errorMessage = <any>error;
                     this.onError.emit(error);
                 });
     }
 
     /**
      * Create an array of ObjectDataRow
-     * @param processes
+     * @param instances
      * @returns {ObjectDataRow[]}
      */
-    private createDataRow(processes: any[]): ObjectDataRow[] {
-        let processRows: ObjectDataRow[] = [];
-        processes.forEach((row) => {
-            processRows.push(new ObjectDataRow({
+    private createDataRow(instances: any[]): ObjectDataRow[] {
+        let instancesRows: ObjectDataRow[] = [];
+        instances.forEach((row) => {
+            instancesRows.push(new ObjectDataRow({
                 id: row.id,
                 name: row.name,
                 started: row.started
             }));
         });
-        return processRows;
+        return instancesRows;
     }
 
     /**
-     * Render the process list
+     * Render the instances list
      *
-     * @param processInstances
+     * @param instances
      */
-    private renderProcessInstances(processInstances: any[]) {
-        processInstances = this.optimizeProcessNames(processInstances);
-        this.data.setRows(processInstances);
+    private renderInstances(instances: any[]) {
+        instances = this.optimizeNames(instances);
+        this.data.setRows(instances);
     }
 
     /**
-     * Select the first process of a process list if present
+     * Select the first instance of a list if present
      */
-    private selectFirstProcess() {
+    selectFirst() {
         if (!this.isListEmpty()) {
-            this.currentProcessInstanceId = this.data.getRows()[0].getValue('id');
+            this.currentInstanceId = this.data.getRows()[0].getValue('id');
         } else {
-            this.currentProcessInstanceId = null;
+            this.currentInstanceId = null;
         }
     }
 
     /**
-     * Return the current process
+     * Return the current id
      * @returns {string}
      */
-    getCurrentProcessId(): string {
-        return this.currentProcessInstanceId;
+    getCurrentId(): string {
+        return this.currentInstanceId;
     }
 
     /**
@@ -169,40 +202,33 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
      */
     onRowClick(event: DataRowEvent) {
         let item = event;
-        this.currentProcessInstanceId = item.value.getValue('id');
-        this.rowClick.emit(this.currentProcessInstanceId);
+        this.currentInstanceId = item.value.getValue('id');
+        this.rowClick.emit(this.currentInstanceId);
     }
 
     /**
-     * Optimize process name field
-     * @param tasks
+     * Optimize name field
+     * @param instances
      * @returns {any[]}
      */
-    private optimizeProcessNames(tasks: any[]) {
-        tasks = tasks.map(t => {
+    private optimizeNames(instances: any[]) {
+        instances = instances.map(t => {
             t.obj.name = t.obj.name || 'No name';
             if (t.obj.name.length > 50) {
                 t.obj.name = t.obj.name.substring(0, 50) + '...';
             }
             return t;
         });
-        return tasks;
+        return instances;
     }
 
-    public reload() {
-        if (this.filter) {
-            let requestNode = this.convertProcessInstanceToTaskQuery(this.filter);
-            this.load(requestNode);
-        }
-    }
-
-    private convertProcessInstanceToTaskQuery(processFilter: FilterRepresentationModel) {
+    private createRequestNode() {
         let requestNode = {
-            appDefinitionId: processFilter.appId,
-            processDefinitionKey: processFilter.filter.processDefinitionKey,
-            text: processFilter.filter.name,
-            state: processFilter.filter.state,
-            sort: processFilter.filter.sort
+            appDefinitionId: this.appId,
+            processDefinitionKey: this.processDefinitionKey,
+            text: this.name,
+            state: this.state,
+            sort: this.sort
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }

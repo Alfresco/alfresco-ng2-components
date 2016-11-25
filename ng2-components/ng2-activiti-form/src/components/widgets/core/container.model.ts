@@ -16,95 +16,21 @@
  */
 
 import { FormWidgetModel } from './form-widget.model';
-import { FormFieldMetadata } from './form-field-metadata';
-import { ContainerColumnModel } from './container-column.model';
-import { FormFieldTypes } from './form-field-types';
-import { FormModel } from './form.model';
 import { FormFieldModel } from './form-field.model';
 
 export class ContainerModel extends FormWidgetModel {
 
     field: FormFieldModel;
-    numberOfColumns: number = 1;
-    params: FormFieldMetadata = {};
-
-    columns: ContainerColumnModel[] = [];
-    isExpanded: boolean = true;
 
     get isVisible(): boolean {
         return this.field.isVisible;
     }
 
-    isGroup(): boolean {
-        return this.type === FormFieldTypes.GROUP;
-    }
-
-    isCollapsible(): boolean {
-        let allowCollapse = false;
-
-        if (this.isGroup() && this.params['allowCollapse']) {
-            allowCollapse = <boolean> this.params['allowCollapse'];
-        }
-
-        return allowCollapse;
-    }
-
-    isCollapsedByDefault(): boolean {
-        let collapseByDefault = false;
-
-        if (this.isCollapsible() && this.params['collapseByDefault']) {
-            collapseByDefault = <boolean> this.params['collapseByDefault'];
-        }
-
-        return collapseByDefault;
-    }
-
-    constructor(form: FormModel, json?: any) {
-        super(form, json);
-
-        if (json) {
-            this.field = new FormFieldModel(form, json);
-            this.numberOfColumns = <number> json.numberOfColumns;
-            this.params = <FormFieldMetadata> json.params || {};
-
-            let columnSize: number = 12;
-            if (this.numberOfColumns > 1) {
-                columnSize = 12 / this.numberOfColumns;
-            }
-
-            for (let i = 0; i < this.numberOfColumns; i++) {
-                let col = new ContainerColumnModel();
-                col.size = columnSize;
-                this.columns.push(col);
-            }
-
-            if (json.fields) {
-                Object.keys(json.fields).map(key => {
-                    let fields = (json.fields[key] || []).map(f => new FormFieldModel(form, f));
-                    let col = this.columns[parseInt(key, 10) - 1];
-                    col.fields = fields;
-                });
-            }
-
-            this.isExpanded = !this.isCollapsedByDefault();
+    constructor(field: FormFieldModel) {
+        if (field) {
+            super(field.form, field.json);
+            this.field = field;
         }
     }
 
-    getFormFields(): FormFieldModel[] {
-        let result: FormFieldModel[] = [];
-
-        if (this.field) {
-            result.push(this.field);
-        }
-
-        for (let j = 0; j < this.columns.length; j++) {
-            let column = this.columns[j];
-            for (let k = 0; k < column.fields.length; k++) {
-                let field = column.fields[k];
-                result.push(field);
-            }
-        }
-
-        return result;
-    }
 }

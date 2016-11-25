@@ -23,22 +23,28 @@ import { AlfrescoTranslationLoader } from './AlfrescoTranslationLoader.service';
 @Injectable()
 export class AlfrescoTranslationService {
     userLang: string = 'en';
+    customLoader: AlfrescoTranslationLoader;
 
     constructor(public translate: TranslateService) {
         this.userLang = translate.getBrowserLang() || 'en';
         translate.setDefaultLang(this.userLang);
+        this.customLoader = <AlfrescoTranslationLoader> this.translate.currentLoader;
+        this.customLoader.init(this.userLang);
     }
 
-    addTranslationFolder(name: string = '') {
-        let loader = <AlfrescoTranslationLoader> this.translate.currentLoader;
-        if (!loader.existComponent(name)) {
-            loader.addComponentList(name);
-            this.translate.getTranslation(this.userLang);
+    addTranslationFolder(name: string = '', path: string = '') {
+        if (!this.customLoader.existComponent(name)) {
+            this.customLoader.addComponentList(name, path);
+            this.translate.getTranslation(this.userLang).subscribe(
+                () => {
+                    this.translate.use(this.userLang);
+                }
+            );
         }
-        this.translate.use(this.userLang);
     }
 
     use(lang: string): Observable<any> {
+        this.customLoader.init(lang);
         return this.translate.use(lang);
     }
 

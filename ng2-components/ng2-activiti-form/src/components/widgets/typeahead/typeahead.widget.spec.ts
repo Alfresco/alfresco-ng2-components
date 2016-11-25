@@ -21,16 +21,23 @@ import { FormService } from '../../../services/form.service';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldOption } from '../core/form-field-option';
+import { CoreModule } from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { EcmModelService } from '../../../services/ecm-model.service';
+import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { FormFieldTypes } from '../core/form-field-types';
 
 describe('TypeaheadWidget', () => {
 
     let formService: FormService;
     let widget: TypeaheadWidget;
+    let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
         formService = new FormService(null, null);
-        widget = new TypeaheadWidget(formService);
-        widget.field = new FormFieldModel(new FormModel());
+        visibilityService = new WidgetVisibilityService(null, null, null);
+        widget = new TypeaheadWidget(formService, visibilityService);
+        widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
     });
 
     it('should request field values from service', () => {
@@ -53,7 +60,17 @@ describe('TypeaheadWidget', () => {
         expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
     });
 
-    it('should handle error when requesting fields', () => {
+    it('should handle error when requesting fields with task id', () => {
+        const taskId = '<form-id>';
+        const fieldId = '<field-id>';
+
+        let form = new FormModel({
+            taskId: taskId
+        });
+
+        widget.field = new FormFieldModel(form, {
+            id: fieldId
+        });
         const err = 'Error';
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.throw(err));
         spyOn(widget, 'handleError').and.callThrough();
@@ -61,6 +78,27 @@ describe('TypeaheadWidget', () => {
         widget.ngOnInit();
 
         expect(formService.getRestFieldValues).toHaveBeenCalled();
+        expect(widget.handleError).toHaveBeenCalledWith(err);
+    });
+
+    it('should handle error when requesting fields with process id', () => {
+        const processDefinitionId = '<process-id>';
+        const fieldId = '<field-id>';
+
+        let form = new FormModel({
+            processDefinitionId: processDefinitionId
+        });
+
+        widget.field = new FormFieldModel(form, {
+            id: fieldId
+        });
+        const err = 'Error';
+        spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.throw(err));
+        spyOn(widget, 'handleError').and.callThrough();
+
+        widget.ngOnInit();
+
+        expect(formService.getRestFieldValuesByProcessId).toHaveBeenCalled();
         expect(widget.handleError).toHaveBeenCalledWith(err);
     });
 
@@ -143,7 +181,7 @@ describe('TypeaheadWidget', () => {
             id: '1',
             name: 'name'
         };
-
+        spyOn(visibilityService, 'refreshVisibility').and.stub();
         widget.onItemClick(option, null);
         expect(widget.field.value).toBe(option.id);
         expect(widget.value).toBe(option.name);
@@ -157,7 +195,6 @@ describe('TypeaheadWidget', () => {
             ]);
             observer.complete();
         }));
-
         widget.field.value = '2';
         widget.ngOnInit();
 
@@ -310,9 +347,9 @@ describe('TypeaheadWidget', () => {
 
     it('should emit field change event on item click', () => {
         let event = jasmine.createSpyObj('event', ['preventDefault']);
-        let fakeField = new FormFieldModel(new FormModel(), {id: 'fakeField', value: 'fakeValue'});
+        let fakeField = new FormFieldModel(new FormModel(), { id: 'fakeField', value: 'fakeValue' });
         widget.field = fakeField;
-        let item = {id: 'fake-id-opt', name: 'fake-name-opt'};
+        let item = { id: 'fake-id-opt', name: 'fake-name-opt' };
         widget.onItemClick(item, event);
 
         widget.fieldChanged.subscribe((field) => {
@@ -324,7 +361,7 @@ describe('TypeaheadWidget', () => {
 
     it('should emit field change event on blur', (done) => {
         spyOn(widget, 'flushValue').and.stub();
-        let fakeField = new FormFieldModel(new FormModel(), {id: 'fakeField', value: 'fakeValue'});
+        let fakeField = new FormFieldModel(new FormModel(), { id: 'fakeField', value: 'fakeValue' });
         widget.field = fakeField;
         widget.onBlur();
 
@@ -336,5 +373,123 @@ describe('TypeaheadWidget', () => {
             });
             done();
         }, 200);
+    });
+
+    describe('when template is ready', () => {
+        let typeaheadWidget: TypeaheadWidget;
+        let fixture: ComponentFixture<TypeaheadWidget>;
+        let element: HTMLElement;
+        let componentHandler;
+        let stubFormService;
+        let fakeOptionList: FormFieldOption[] = [{
+            id: '1',
+            name: 'Fake Name 1 '
+        }, {
+            id: '2',
+            name: 'Fake Name 2'
+        }, { id: '3', name: 'Fake Name 3' }];
+
+        beforeEach(async(() => {
+            componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+            window['componentHandler'] = componentHandler;
+            TestBed.configureTestingModule({
+                imports: [CoreModule],
+                declarations: [TypeaheadWidget],
+                providers: [FormService, EcmModelService, WidgetVisibilityService]
+            }).compileComponents().then(() => {
+                fixture = TestBed.createComponent(TypeaheadWidget);
+                typeaheadWidget = fixture.componentInstance;
+                element = fixture.nativeElement;
+            });
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        describe('and typeahead is populated via taskId', () => {
+
+            beforeEach(async(() => {
+                stubFormService = fixture.debugElement.injector.get(FormService);
+                visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
+                spyOn(visibilityService, 'refreshVisibility').and.stub();
+                spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
+                typeaheadWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                    id: 'typeahead-id',
+                    name: 'typeahead-name',
+                    type: FormFieldTypes.TYPEAHEAD,
+                    readOnly: false
+                });
+                typeaheadWidget.field.isVisible = true;
+                fixture.detectChanges();
+            }));
+
+            it('should show visible typeahead widget', async(() => {
+                expect(element.querySelector('#typeahead-id')).toBeDefined();
+                expect(element.querySelector('#typeahead-id')).not.toBeNull();
+            }));
+
+            it('should show typeahead options', async(() => {
+                typeaheadWidget.value = 'F';
+                typeaheadWidget.onKeyUp(null);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#typeahead-id-1')).toBeDefined();
+                    expect(element.querySelector('#typeahead-id-1')).not.toBeNull();
+                    expect(element.querySelector('#typeahead-id-2')).toBeDefined();
+                    expect(element.querySelector('#typeahead-id-2')).not.toBeNull();
+                    expect(element.querySelector('#typeahead-id-3')).toBeDefined();
+                    expect(element.querySelector('#typeahead-id-3')).not.toBeNull();
+                });
+            }));
+
+            it('should hide not visibile typeahead', async(() => {
+                typeaheadWidget.field.isVisible = false;
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#typeahead-id')).toBeNull();
+                });
+            }));
+
+        });
+
+        describe('and typeahead is populated via processDefinitionId', () => {
+
+            beforeEach(async(() => {
+                stubFormService = fixture.debugElement.injector.get(FormService);
+                visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
+                spyOn(visibilityService, 'refreshVisibility').and.stub();
+                spyOn(stubFormService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.of(fakeOptionList));
+                typeaheadWidget.field = new FormFieldModel(new FormModel({ processDefinitionId: 'fake-process-id' }), {
+                    id: 'typeahead-id',
+                    name: 'typeahead-name',
+                    type: FormFieldTypes.TYPEAHEAD,
+                    readOnly: 'false'
+                });
+                typeaheadWidget.field.emptyOption = { id: 'empty', name: 'Choose one...' };
+                typeaheadWidget.field.isVisible = true;
+                fixture.detectChanges();
+            }));
+
+            it('should show visible typeahead widget', async(() => {
+                expect(element.querySelector('#typeahead-id')).toBeDefined();
+                expect(element.querySelector('#typeahead-id')).not.toBeNull();
+            }));
+
+            it('should show typeahead options', async(() => {
+                typeaheadWidget.value = 'F';
+                typeaheadWidget.onKeyUp(null);
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    expect(element.querySelector('#typeahead-id-1')).toBeDefined();
+                    expect(element.querySelector('#typeahead-id-1')).not.toBeNull();
+                    expect(element.querySelector('#typeahead-id-2')).toBeDefined();
+                    expect(element.querySelector('#typeahead-id-2')).not.toBeNull();
+                    expect(element.querySelector('#typeahead-id-3')).toBeDefined();
+                    expect(element.querySelector('#typeahead-id-3')).not.toBeNull();
+                });
+            }));
+        });
     });
 });
