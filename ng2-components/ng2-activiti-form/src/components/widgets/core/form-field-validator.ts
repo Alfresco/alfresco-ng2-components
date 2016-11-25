@@ -106,11 +106,12 @@ export class NumberFieldValidator implements FormFieldValidator {
                 field.value === '') {
                 return true;
             }
+            let valueStr = '' + field.value;
             let pattern = new RegExp(/^-?\d+$/);
             if (field.enableFractions) {
                 pattern = new RegExp(/^-?[0-9]+(\.[0-9]{1,2})?$/);
             }
-            if (field.value.match(pattern)) {
+            if (valueStr.match(pattern)) {
                 return true;
             }
             field.validationSummary = 'Incorrect number format';
