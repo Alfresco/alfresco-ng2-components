@@ -24,6 +24,7 @@ export * from './form-widget.model';
 export * from './form-field.model';
 export * from './form.model';
 export * from './container.model';
+export * from './container-column.model';
 export * from './tab.model';
 export * from './form-outcome.model';
 export * from './form-outcome-event.model';

@@ -1,5 +1,5 @@
 <div class="dynamic-table-widget"
-    [class.dynamic-table-widget__invalid]="!isValid()">
+    [class.dynamic-table-widget__invalid]="!isValid()" *ngIf="field?.isVisible">
      <div class="dynamic-table-widget__label">{{content.name}}</div>
 
      <div *ngIf="!editMode">

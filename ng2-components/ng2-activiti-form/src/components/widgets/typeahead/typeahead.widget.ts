@@ -57,7 +57,6 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                 (result: FormFieldOption[]) => {
                     let options = result || [];
                     this.field.options = options;
-                    this.field.updateForm();
 
                     let fieldValue = this.field.value;
                     if (fieldValue) {
@@ -66,6 +65,8 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                             this.value = toSelect.name;
                         }
                     }
+                    this.field.updateForm();
+                    this.visibilityService.refreshEntityVisibility(this.field);
                 },
                 this.handleError
             );
@@ -81,7 +82,6 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                 (result: FormFieldOption[]) => {
                     let options = result || [];
                     this.field.options = options;
-                    this.field.updateForm();
 
                     let fieldValue = this.field.value;
                     if (fieldValue) {
@@ -90,6 +90,8 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                             this.value = toSelect.name;
                         }
                     }
+                    this.field.updateForm();
+                    this.visibilityService.refreshEntityVisibility(this.field);
                 },
                 this.handleError
             );
