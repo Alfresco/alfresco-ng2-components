@@ -54,6 +54,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
     ngOnInit() {
         if (this.field) {
             this.value = this.field.value;
+            this.visibilityService.refreshEntityVisibility(this.field);
             if (this.field.params) {
                 let originalField = this.field.params['field'];
                 if (originalField && originalField.type) {
