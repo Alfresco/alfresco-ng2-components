@@ -7,7 +7,7 @@
   "typings": "./dist/index.d.ts",
   "scripts": {
     "clean": "adf clean",
-    "build": "adf tslint && adf remove dist && tsc && npm run copy-dist && npm run license-check",
+    "build": "adf tslint && adf remove dist && npm run tsc && npm run copy-dist && npm run license-check",
     "build:w": "adf tslint && adf remove dist && npm run watch-task",
     "watch-task": "concurrently \"npm run tsc:w\" \"npm run copy-dist:w\" \"npm run license-check\"",
     "license-check": "adf check license dist",
