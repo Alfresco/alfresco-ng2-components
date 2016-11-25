@@ -16,6 +16,8 @@
  */
 
 import { AlfrescoTranslationService } from '../services/AlfrescoTranslation.service';
+import { TranslateLoader } from 'ng2-translate/ng2-translate';
+import { AlfrescoTranslationLoader } from '../services/AlfrescoTranslationLoader.service';
 import { Injector } from '@angular/core';
 import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
@@ -36,7 +38,10 @@ describe('AlfrescoTranslationService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpModule, TranslateModule.forRoot()],
+            imports: [HttpModule, TranslateModule.forRoot({
+                provide: TranslateLoader,
+                useClass: AlfrescoTranslationLoader
+            })],
             providers: [
                 AlfrescoTranslationService,
                 {provide: XHRBackend, useClass: MockBackend}
@@ -46,6 +51,7 @@ describe('AlfrescoTranslationService', () => {
         backend = injector.get(XHRBackend);
         alfrescoTranslationService = injector.get(AlfrescoTranslationService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
+        alfrescoTranslationService.addTranslationFolder('fake-name', 'fake-path');
     });
 
     it('is defined', () => {
@@ -53,12 +59,20 @@ describe('AlfrescoTranslationService', () => {
         expect(alfrescoTranslationService instanceof AlfrescoTranslationService).toBeTruthy();
     });
 
-    it('should be able to get translations', () => {
-        alfrescoTranslationService.use('en');
+    it('should be able to get translations of the KEY: TEST', () => {
         alfrescoTranslationService.get('TEST').subscribe((res: string) => {
             expect(res).toEqual('This is a test');
         });
 
         mockBackendResponse(connection, '{"TEST": "This is a test", "TEST2": "This is another test"}');
     });
+
+    it('should be able to get translations of the KEY: TEST2', () => {
+        alfrescoTranslationService.get('TEST2').subscribe((res: string) => {
+            expect(res).toEqual('This is another test');
+        });
+
+        mockBackendResponse(connection, '{"TEST": "This is a test", "TEST2": "This is another test"}');
+    });
+
 });
