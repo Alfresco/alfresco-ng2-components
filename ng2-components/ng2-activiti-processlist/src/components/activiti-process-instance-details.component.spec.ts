@@ -72,12 +72,6 @@ describe('ActivitiProcessInstanceDetails', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    it('should load task details when processInstanceId specified', () => {
-        component.processInstanceId = '123';
-        fixture.detectChanges();
-        expect(getProcessSpy).toHaveBeenCalled();
-    });
-
     it('should not load task details when no processInstanceId is specified', () => {
         fixture.detectChanges();
         expect(getProcessSpy).not.toHaveBeenCalled();
@@ -89,8 +83,8 @@ describe('ActivitiProcessInstanceDetails', () => {
     });
 
     it('should display a header when the processInstanceId is provided', async(() => {
-        component.processInstanceId = '123';
         fixture.detectChanges();
+        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123') });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
@@ -116,11 +110,6 @@ describe('ActivitiProcessInstanceDetails', () => {
         it('should fetch new process details when processInstanceId changed', () => {
             component.ngOnChanges({ 'processInstanceId': change });
             expect(getProcessSpy).toHaveBeenCalledWith('456');
-        });
-
-        it('should reload tasks list when processInstanceId changed', () => {
-            component.ngOnChanges({ 'processInstanceId': change });
-            expect(component.tasksList.load).toHaveBeenCalled();
         });
 
         it('should NOT fetch new process details when empty changeset made', () => {
