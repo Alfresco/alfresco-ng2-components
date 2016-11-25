@@ -128,10 +128,12 @@ export class WidgetVisibilityService {
                 let fieldFound = containerColumnModel.fields.find(field => this.isSearchedField(field, name));
                 if (fieldFound) {
                     fieldValue = this.getObjectValue(fieldFound);
-                    if (!fieldValue && fieldFound.value && fieldFound.value.id) {
-                        fieldValue = fieldFound.value.id;
-                    } else {
-                        fieldValue = fieldFound.value;
+                    if (!fieldValue) {
+                        if (fieldFound.value && fieldFound.value.id) {
+                            fieldValue = fieldFound.value.id;
+                        } else {
+                            fieldValue = fieldFound.value;
+                        }
                     }
                 }
             });
@@ -156,7 +158,7 @@ export class WidgetVisibilityService {
 
     private isSearchedField(field: FormFieldModel, fieldToFind: string) {
         let forrmattedFieldName = this.removeLabel(field, fieldToFind);
-        return field.name === forrmattedFieldName;
+        return field.name.toUpperCase() === forrmattedFieldName.toUpperCase();
     }
 
     private removeLabel(field: FormFieldModel, fieldToFind) {

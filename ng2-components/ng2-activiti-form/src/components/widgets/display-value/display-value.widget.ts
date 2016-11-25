@@ -175,7 +175,6 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                     } else {
                         this.value = this.field.value;
                     }
-                    this.visibilityService.refreshEntityVisibility(this.field);
                 },
                 error => {
                     console.log(error);
@@ -197,7 +196,6 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                     } else {
                         this.value = this.field.value;
                     }
-                    this.visibilityService.refreshEntityVisibility(this.field);
                 },
                 error => {
                     console.log(error);
