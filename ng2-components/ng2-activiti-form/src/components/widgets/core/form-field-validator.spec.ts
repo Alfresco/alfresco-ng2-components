@@ -158,6 +158,9 @@ describe('FormFieldValidator', () => {
             expect(NumberFieldValidator.isNumber('1')).toBeTruthy();
             expect(NumberFieldValidator.isNumber('1.0')).toBeTruthy();
             expect(NumberFieldValidator.isNumber('-1')).toBeTruthy();
+            expect(NumberFieldValidator.isNumber(1)).toBeTruthy();
+            expect(NumberFieldValidator.isNumber(0)).toBeTruthy();
+            expect(NumberFieldValidator.isNumber(-1)).toBeTruthy();
         });
 
         it('should not verify number', () => {
@@ -172,6 +175,24 @@ describe('FormFieldValidator', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.NUMBER,
                 value: null
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should allow number value', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.NUMBER,
+                value: 44
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should allow zero number value', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.NUMBER,
+                value: 0
             });
 
             expect(validator.validate(field)).toBeTruthy();
