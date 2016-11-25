@@ -76,7 +76,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         if (this.translate) {
-            this.translate.addTranslationFolder('node_modules/ng2-alfresco-search/dist/src');
+            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
         }
     }
 
