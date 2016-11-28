@@ -121,15 +121,20 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         if (!col) {
             throw new Error(this.ERR_COL_NOT_FOUND);
         }
-        let value = row.getValue(col.key);
+        let dataRow: ShareDataRow = <ShareDataRow> row;
+        let value: any = row.getValue(col.key);
+        if (dataRow.cache[col.key] !== undefined) {
+            return dataRow.cache[col.key];
+        }
 
         if (col.type === 'date') {
             let datePipe = new DatePipe('en-US');
             let format = col.format || this.DEFAULT_DATE_FORMAT;
             try {
-                return datePipe.transform(value, format);
+                return dataRow.cacheValue(col.key, datePipe.transform(value, format));
             } catch (err) {
                 console.error(`Error parsing date ${value} to format ${format}`);
+                return 'Error';
             }
         }
 
@@ -174,7 +179,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
         }
 
-        return value;
+        return dataRow.cacheValue(col.key, value);
     }
 
     getSorting(): DataSorting {
@@ -308,6 +313,7 @@ export class ShareDataRow implements DataRow {
 
     static ERR_OBJECT_NOT_FOUND: string = 'Object source not found';
 
+    cache: { [key: string]: any } = {};
     isSelected: boolean = false;
 
     get node(): NodeMinimalEntry {
@@ -320,7 +326,15 @@ export class ShareDataRow implements DataRow {
         }
     }
 
+    cacheValue(key: string, value: any): any {
+        this.cache[key] = value;
+        return value;
+    }
+
     getValue(key: string): any {
+        if (this.cache[key] !== undefined) {
+            return this.cache[key];
+        }
         return ObjectUtils.getValue(this.obj.entry, key);
     }
 
