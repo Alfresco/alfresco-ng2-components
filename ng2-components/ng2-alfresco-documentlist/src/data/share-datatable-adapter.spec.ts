@@ -203,8 +203,8 @@ describe('ShareDataTableAdapter', () => {
         spyOn(console, 'error').and.stub();
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(dateValue);
-        expect(console.error).toHaveBeenCalledWith(`Error parsing date ${value} to format ${col.format}`);
+        expect(value).toBe('Error');
+        expect(console.error).toHaveBeenCalled();
     });
 
     it('should generate fallback icon for a file thumbnail with unknown mime type', () => {
