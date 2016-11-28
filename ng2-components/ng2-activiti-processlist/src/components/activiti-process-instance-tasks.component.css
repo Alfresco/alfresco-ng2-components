@@ -22,9 +22,14 @@
 }
 
 .task-details-dialog {
-    width: 600px;
+    width: 800px;
 }
 
 .process-tasks-refresh {
     float: right;
+}
+
+.mdl-dialog__content.form__size {
+    height: 400px;
+    overflow-y: auto;
 }
