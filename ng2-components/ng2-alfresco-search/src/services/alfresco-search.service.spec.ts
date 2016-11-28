@@ -25,7 +25,7 @@ declare let jasmine: any;
 describe('AlfrescoSearchService', () => {
 
     let service: AlfrescoSearchService;
-    let authenticationService: AlfrescoAuthenticationService;
+    let apiService: AlfrescoApiService;
     let injector: ReflectiveInjector;
 
     beforeEach(() => {
@@ -36,8 +36,8 @@ describe('AlfrescoSearchService', () => {
             AlfrescoAuthenticationService
         ]);
         service = injector.get(AlfrescoSearchService);
-        authenticationService = injector.get(AlfrescoAuthenticationService);
-        spyOn(authenticationService, 'getAlfrescoApi').and.returnValue(fakeApi);
+        apiService = injector.get(AlfrescoApiService);
+        spyOn(apiService, 'getInstance').and.returnValue(fakeApi);
     });
 
     it('should call search API with no additional options', (done) => {

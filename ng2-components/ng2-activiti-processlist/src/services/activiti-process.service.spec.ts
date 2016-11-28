@@ -43,6 +43,7 @@ describe('ActivitiProcessService', () => {
     let service: ActivitiProcessService;
     let authenticationService: AlfrescoAuthenticationService;
     let injector: ReflectiveInjector;
+    let apiService: AlfrescoApiService;
     let alfrescoApi: AlfrescoApi;
 
     beforeEach(() => {
@@ -54,7 +55,8 @@ describe('ActivitiProcessService', () => {
         ]);
         service = injector.get(ActivitiProcessService);
         authenticationService = injector.get(AlfrescoAuthenticationService);
-        alfrescoApi = authenticationService.getAlfrescoApi();
+        apiService = injector.get(AlfrescoApiService);
+        alfrescoApi = apiService.getInstance();
     });
 
     describe('process instances', () => {
