@@ -22,7 +22,6 @@ import {
     Output,
     EventEmitter,
     AfterContentInit,
-    AfterViewChecked,
     TemplateRef,
     NgZone,
     ViewChild,
@@ -41,15 +40,13 @@ import {
     ImageResolver
 } from './../data/share-datatable-adapter';
 
-declare var componentHandler;
-
 @Component({
     moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html'
 })
-export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
+export class DocumentList implements OnInit, AfterContentInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -196,16 +193,8 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         return false;
     }
 
-    ngAfterViewChecked() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
-
     isMobile(): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
     }
 
     getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
