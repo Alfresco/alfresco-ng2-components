@@ -19,7 +19,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
-import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
     moduleId: module.id,
@@ -81,21 +80,17 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
                 this.handleError
             );
     }
-
-    getOptionValue(option: FormFieldOption, fieldValue: string): string {
+    
+    getOptionValue(option: FormFieldOption): string {
         let optionValue: string = '';
-        if (option.id === 'empty' || option.name !== fieldValue) {
+        if (option.id === 'empty') {
             optionValue = option.id;
         } else {
             optionValue = option.name;
         }
         return optionValue;
     }
-
-    checkVisibility() {
-        this.visibilityService.refreshVisibility(this.field.form);
-    }
-
+    
     handleError(error: any) {
         console.error(error);
     }
