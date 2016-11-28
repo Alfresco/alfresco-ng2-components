@@ -272,11 +272,6 @@ describe('DocumentList', () => {
         expect(documentList.executeContentAction).not.toHaveBeenCalled();
     });
 
-    it('should upgrade material design components', () => {
-        documentList.ngAfterViewChecked();
-        expect(componentHandler.upgradeAllRegistered).toHaveBeenCalled();
-    });
-
     it('should subscribe to context action handler', () => {
         spyOn(documentList, 'displayFolderContent').and.stub();
         spyOn(documentList, 'contextActionCallback').and.stub();
