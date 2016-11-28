@@ -183,8 +183,13 @@ Only form definition will be fetched.
 
 ### Display form definition by ECM nodeId
 
+<<<<<<< HEAD
 In this case the metadata of the node are showed in an activiti Form.
 If there is no form definied in activiti for the type of the node,
+=======
+In this case the metadata of the node are showed in an activiti Form. 
+If there is no form definied in activiti for the type of the node, 
+>>>>>>> origin/dev-denys--build-scripts
 a new form will be automaticaly created in Activiti.
 
 ```html
@@ -193,7 +198,11 @@ a new form will be automaticaly created in Activiti.
 </activiti-form>
 ```
 
+<<<<<<< HEAD
 ### Display form definition by form name, and store the form field as metadata.
+=======
+### Display form definition by form name, and store the form field as metadata. 
+>>>>>>> origin/dev-denys--build-scripts
 
 The param nameNode is optional.
 
@@ -208,7 +217,11 @@ The param nameNode is optional.
 
 ### Display form definition by ECM nodeId
 
+<<<<<<< HEAD
 In this case the metadata of the node are showed in an activiti Form,
+=======
+In this case the metadata of the node are showed in an activiti Form, 
+>>>>>>> origin/dev-denys--build-scripts
 and store the form field as metadata. The param nameNode is optional.
 
 ```html

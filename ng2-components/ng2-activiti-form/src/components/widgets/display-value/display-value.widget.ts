@@ -21,7 +21,10 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
+<<<<<<< HEAD
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+=======
+>>>>>>> origin/dev-denys--build-scripts
 
 @Component({
     moduleId: module.id,

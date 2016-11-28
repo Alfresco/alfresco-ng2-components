@@ -18,7 +18,10 @@
 import { DynamicTableWidget } from './dynamic-table.widget';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { FormModel, FormFieldTypes } from './../core/index';
+<<<<<<< HEAD
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+=======
+>>>>>>> origin/dev-denys--build-scripts
 
 describe('DynamicTableWidget', () => {
 

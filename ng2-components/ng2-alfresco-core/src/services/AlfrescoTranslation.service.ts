@@ -33,8 +33,14 @@ export class AlfrescoTranslationService {
     }
 
     addTranslationFolder(name: string = '', path: string = '') {
+<<<<<<< HEAD
         if (!this.customLoader.existComponent(name)) {
             this.customLoader.addComponentList(name, path);
+=======
+        let loader = <AlfrescoTranslationLoader> this.translate.currentLoader;
+        if (!loader.existComponent(name)) {
+            loader.addComponentList(name, path);
+>>>>>>> origin/dev-denys--build-scripts
             this.translate.getTranslation(this.userLang).subscribe(
                 () => {
                     this.translate.use(this.userLang);

@@ -18,11 +18,19 @@
 export class ComponentTranslationModel {
     name: string;
     path: string;
+<<<<<<< HEAD
     json: string [];
+=======
+    json: string;
+>>>>>>> origin/dev-denys--build-scripts
 
     constructor(obj?: any) {
         this.name = obj && obj.name;
         this.path = obj && obj.path;
+<<<<<<< HEAD
         this.json = obj && obj.json || [];
+=======
+        this.json = obj && obj.json || null;
+>>>>>>> origin/dev-denys--build-scripts
     }
 }

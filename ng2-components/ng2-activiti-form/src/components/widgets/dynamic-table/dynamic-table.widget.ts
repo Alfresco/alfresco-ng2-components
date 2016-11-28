@@ -18,7 +18,10 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
+<<<<<<< HEAD
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+=======
+>>>>>>> origin/dev-denys--build-scripts
 
 @Component({
     moduleId: module.id,
@@ -43,7 +46,10 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     ngOnInit() {
         if (this.field) {
             this.content = new DynamicTableModel(this.field.form, this.field.json);
+<<<<<<< HEAD
             this.visibilityService.refreshVisibility(this.field.form);
+=======
+>>>>>>> origin/dev-denys--build-scripts
         }
     }
 

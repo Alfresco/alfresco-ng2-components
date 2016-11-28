@@ -10,14 +10,22 @@ _Note: it is assumed you are familiar with Alfresco Activiti form definition str
 
 ## How components and widgets are rendred on a Form
 
+<<<<<<< HEAD
 All form field editors (aka widgets) on a Form are rendered by means of `FormFieldComponent`
+=======
+All form field editors (aka widgets) on a Form are rendered by means of `FormFieldComponent` 
+>>>>>>> origin/dev-denys--build-scripts
 that takes an instance of a `FormFieldModel`:
 
 ```html
 <form-field [field]="field"></form-field>
 ```
 
+<<<<<<< HEAD
 This component depends on `FormRenderingService` service to map `FormFieldModel` to UI component
+=======
+This component depends on `FormRenderingService` service to map `FormFieldModel` to UI component 
+>>>>>>> origin/dev-denys--build-scripts
 based on field type or metadata information.
 
 ### Component type resolvers
@@ -80,7 +88,11 @@ Stencil Name | Field Type | Component Type |
 | Typeahead | typeahead | TypeaheadWidget |
 | People | people | PeopleWidget |
 | Group of people | functional-group | FunctionalGroupWidget |
+<<<<<<< HEAD
 | Dynamic table | dynamic-table | DynamicTableWidget |
+=======
+| Dynamic table | dynamic-table | DynamicTableWidget | 
+>>>>>>> origin/dev-denys--build-scripts
 | N/A | container | ContainerWidget (layout component) |
 | Header | group | ContainerWidget |
 | Attach | upload | AttachWidget or UploadWidget (based on metadata) |
