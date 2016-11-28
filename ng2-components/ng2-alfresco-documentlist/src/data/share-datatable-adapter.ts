@@ -131,7 +131,8 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
             let datePipe = new DatePipe('en-US');
             let format = col.format || this.DEFAULT_DATE_FORMAT;
             try {
-                return dataRow.cacheValue(col.key, datePipe.transform(value, format));
+                let result = datePipe.transform(value, format);
+                return dataRow.cacheValue(col.key, result);
             } catch (err) {
                 console.error(`Error parsing date ${value} to format ${format}`);
                 return 'Error';
