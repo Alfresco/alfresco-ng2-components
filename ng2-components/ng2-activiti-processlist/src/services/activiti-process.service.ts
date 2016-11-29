@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { ProcessInstance, ProcessDefinitionRepresentation } from '../models/index';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import {
@@ -33,7 +33,7 @@ declare var moment: any;
 @Injectable()
 export class ActivitiProcessService {
 
-    constructor(public authService: AlfrescoAuthenticationService, public apiService: AlfrescoApiService) {
+    constructor(public apiService: AlfrescoApiService) {
     }
 
     /**
