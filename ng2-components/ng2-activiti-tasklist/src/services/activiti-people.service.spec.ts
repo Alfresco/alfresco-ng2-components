@@ -19,7 +19,8 @@ import { ReflectiveInjector } from '@angular/core';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
 import { ActivitiPeopleService } from './activiti-people.service';
@@ -42,7 +43,7 @@ const secondInvolvedUser: User = new User({
 
 const fakeInvolveUserList: User[] = [firstInvolvedUser, secondInvolvedUser];
 
-describe('Activiti People Search Service', () => {
+describe('ActivitiPeopleService', () => {
 
     let service, injector, apiService;
 
@@ -51,7 +52,8 @@ describe('Activiti People Search Service', () => {
             AlfrescoSettingsService,
             AlfrescoApiService,
             AlfrescoAuthenticationService,
-            ActivitiPeopleService
+            ActivitiPeopleService,
+            StorageService
         ]);
     });
 

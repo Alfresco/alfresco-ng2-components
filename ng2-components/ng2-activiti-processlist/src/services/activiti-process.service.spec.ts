@@ -20,7 +20,8 @@ import { async } from '@angular/core/testing';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { AlfrescoApi } from 'alfresco-js-api';
@@ -51,7 +52,8 @@ describe('ActivitiProcessService', () => {
             ActivitiProcessService,
             AlfrescoApiService,
             AlfrescoAuthenticationService,
-            AlfrescoSettingsService
+            AlfrescoSettingsService,
+            StorageService
         ]);
         service = injector.get(ActivitiProcessService);
         authenticationService = injector.get(AlfrescoAuthenticationService);

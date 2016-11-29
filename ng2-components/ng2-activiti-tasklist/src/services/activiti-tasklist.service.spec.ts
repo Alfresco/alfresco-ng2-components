@@ -19,7 +19,8 @@ import { ReflectiveInjector } from '@angular/core';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -137,7 +138,8 @@ describe('ActivitiTaskListService', () => {
             ActivitiTaskListService,
             AlfrescoSettingsService,
             AlfrescoApiService,
-            AlfrescoAuthenticationService
+            AlfrescoAuthenticationService,
+            StorageService
         ]);
     });
 

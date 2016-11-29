@@ -18,12 +18,12 @@
 import { ReflectiveInjector } from '@angular/core';
 import { BpmUserService } from '../services/bpm-user.service';
 // import { BpmUserModel } from '../models/bpm-user.model';
-import { AlfrescoAuthenticationService, AlfrescoApiService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoApiService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
 
 declare let jasmine: any;
 
-describe('Bpm User service', () => {
+describe('BpmUserService', () => {
 
     let service, injector, authService, apiService;
 
@@ -32,7 +32,8 @@ describe('Bpm User service', () => {
             AlfrescoSettingsService,
             AlfrescoApiService,
             AlfrescoAuthenticationService,
-            BpmUserService
+            BpmUserService,
+            StorageService
         ]);
     });
 
