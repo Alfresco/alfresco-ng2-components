@@ -114,7 +114,6 @@ import { NgModule, Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule }  from 'ng2-alfresco-datatable';
 import { DocumentListModule, DocumentList } from 'ng2-alfresco-documentlist';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
@@ -133,7 +132,8 @@ class DocumentListDemo {
     @ViewChild(DocumentList)
     documentList: DocumentList;
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = 'http://localhost:8080';
 
         this.authService.login('admin', 'admin').subscribe(
@@ -151,7 +151,6 @@ class DocumentListDemo {
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        DataTableModule,
         DocumentListModule.forRoot()
     ],
     declarations: [DocumentListDemo],
@@ -169,24 +168,25 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `navigate` | boolean | true | Toggles navigation to folder content or file preview |
-| `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
-| `thumbnails` | boolean | false | Show document thumbnails rather than icons |
-| `fallbackThubnail` | string |  | Fallback image for row ehre thubnail is missing|
-| `multiselect` | boolean | false | Toggles multiselect mode |
-| `contentActions` | boolean | false | Toggles content actions for each row |
-| `contextMenuActions` | boolean | false | Toggles context menus for each row |
-| `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
-| `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
+| rootPath | string | -root- | Root node path, i.e. `-root-`, `-shared-`, `-my-`, etc. |
+| navigate | boolean | true | Toggles navigation to folder content or file preview |
+| navigationMode | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
+| thumbnails | boolean | false | Show document thumbnails rather than icons |
+| fallbackThubnail | string |  | Fallback image for row ehre thubnail is missing|
+| multiselect | boolean | false | Toggles multiselect mode |
+| contentActions | boolean | false | Toggles content actions for each row |
+| contextMenuActions | boolean | false | Toggles context menus for each row |
+| rowFilter | RowFilter | | Custom row filter, [see more](#custom-row-filter).
+| imageResolver | ImageResolver | | Custom image resolver, [see more](#custom-image-resolver).
 
 ### Events
 
 | Name | Description |
 | --- | --- |
-| `nodeClick` | Emitted when user clicks the node |
-| `nodeDblClick` | Emitted when user double-clicks the node |
-| `folderChange` | Emitted upon display folder changed |
-| `preview` | Emitted when document preview is requested either with single or double click |
+| nodeClick | Emitted when user clicks the node |
+| nodeDblClick | Emitted when user double-clicks the node |
+| folderChange | Emitted upon display folder changed |
+| preview | Emitted when document preview is requested either with single or double click |
 
 
 _For a complete example source code please refer to 
@@ -278,13 +278,13 @@ HTML attributes:
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
-| `title` | string | | Column title |
-| `sr-title` | string | | Screen reader title, used only when `title` is empty |
-| `key` | string | | Column source key, example: `createdByUser.displayName` |
-| `sortable` | boolean | false | Toggle sorting ability via column header clicks |
-| `class`| string | | CSS class list, example: `full-width ellipsis-cell` |
-| `type` | string | text | Column type, text\|date\|number |
-| `format` | string | | Value format pattern |
+| title | string | | Column title |
+| sr-title | string | | Screen reader title, used only when `title` is empty |
+| key | string | | Column source key, example: `createdByUser.displayName` |
+| sortable | boolean | false | Toggle sorting ability via column header clicks |
+| class | string | | CSS class list, example: `full-width ellipsis-cell` |
+| type | string | text | Column type, text\|date\|number |
+| format | string | | Value format pattern |
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
@@ -414,24 +414,12 @@ into context menu items like shown below:
 Enabling context menu is very simple:
 
 ```ts
-import {
-    CONTEXT_MENU_DIRECTIVES,
-    CONTEXT_MENU_PROVIDERS
-} from 'ng2-alfresco-core';
-
-import {
-    DOCUMENT_LIST_DIRECTIVES,
-    DOCUMENT_LIST_PROVIDERS
-} from 'ng2-alfresco-documentlist';
-
 @Component({
     selector: 'my-view',
     template: `
         <alfresco-document-list>...</alfresco-document-list>
         <context-menu-holder></context-menu-holder>
-    `,
-    directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    providers: [DOCUMENT_LIST_PROVIDERS, CONTEXT_MENU_PROVIDERS]
+    `
 })
 export class MyView {
 }
@@ -691,9 +679,7 @@ You register custom handler called `my-handler` that will be executing `myDocume
 function each time upon being invoked.
 
 ```ts
-import {
-    DocumentActionsService
-} from 'ng2-alfresco-documentlist';
+import { DocumentActionsService } from 'ng2-alfresco-documentlist';
 
 export class MyView {
 
@@ -745,7 +731,7 @@ npm run build
 ### Build the files and keep watching for changes
 
 ```sh
-$ npm run build:w
+npm run build:w
 ```
 
 ## Running unit tests

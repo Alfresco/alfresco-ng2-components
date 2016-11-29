@@ -63,7 +63,12 @@ export class DocumentListService {
     }
 
     private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
-        let nodeId = '-root-';
+        let rootPath = '-root-';
+
+        if (opts && opts.rootPath) {
+            rootPath = opts.rootPath;
+        }
+
         let params: any = {
             relativePath: folder,
             include: ['path', 'properties']
@@ -78,7 +83,7 @@ export class DocumentListService {
             }
         }
 
-        return this.apiService.getInstance().nodes.getNodeChildren(nodeId, params);
+        return this.apiService.getInstance().nodes.getNodeChildren(rootPath, params);
     }
 
     deleteNode(nodeId: string): Observable<any> {
