@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
@@ -30,7 +30,7 @@ declare let componentHandler: any;
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })
-export class UserInfoComponent implements AfterViewChecked, OnInit {
+export class UserInfoComponent implements OnInit {
 
     @Input()
     ecmBackgroundImage: string;
@@ -67,13 +67,6 @@ export class UserInfoComponent implements AfterViewChecked, OnInit {
         authService.loginSubject.subscribe((response) => {
             this.getUserInfo();
         });
-    }
-
-    ngAfterViewChecked() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
     }
 
     ngOnInit() {
