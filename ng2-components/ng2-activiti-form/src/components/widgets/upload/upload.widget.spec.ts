@@ -16,7 +16,7 @@
  */
 
 import { UploadWidget } from './upload.widget';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService, StorageService } from 'ng2-alfresco-core';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 
@@ -28,7 +28,7 @@ describe('UploadWidget', () => {
 
     beforeEach(() => {
         settingsService = new AlfrescoSettingsService();
-        authService = new AlfrescoAuthenticationService(settingsService, new AlfrescoApiService());
+        authService = new AlfrescoAuthenticationService(settingsService, new AlfrescoApiService(), new StorageService());
         widget = new UploadWidget(settingsService, authService);
     });
 

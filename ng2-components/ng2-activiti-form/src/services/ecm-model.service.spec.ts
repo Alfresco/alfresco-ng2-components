@@ -19,7 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { EcmModelService } from './ecm-model.service';
 import { Observable } from 'rxjs/Rx';
@@ -39,7 +40,8 @@ describe('EcmModelService', () => {
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
-                EcmModelService
+                EcmModelService,
+                StorageService
             ]
         });
         service = TestBed.get(EcmModelService);

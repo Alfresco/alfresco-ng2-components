@@ -24,7 +24,7 @@ import {
     fakeFormJson
 } from './assets/widget-visibility.service.mock';
 import { WidgetVisibilityService } from './widget-visibility.service';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService, StorageService } from 'ng2-alfresco-core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { FormModel, FormFieldModel, TabModel, ContainerModel, FormFieldTypes } from '../components/widgets/core/index';
@@ -45,7 +45,8 @@ describe('WidgetVisibilityService', () => {
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
                 WidgetVisibilityService,
-                FormService
+                FormService,
+                StorageService
             ]
         });
         service = TestBed.get(WidgetVisibilityService);

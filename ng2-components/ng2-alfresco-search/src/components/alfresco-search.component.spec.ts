@@ -29,7 +29,8 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoTranslationService,
-    CoreModule
+    CoreModule,
+    StorageService
 } from 'ng2-alfresco-core';
 
 describe('AlfrescoSearchComponent', () => {
@@ -110,7 +111,8 @@ describe('AlfrescoSearchComponent', () => {
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
-                AlfrescoContentService
+                AlfrescoContentService,
+                StorageService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AlfrescoSearchComponent);
@@ -140,6 +142,7 @@ describe('AlfrescoSearchComponent', () => {
             AlfrescoAuthenticationService,
             AlfrescoSettingsService,
             AlfrescoApiService,
+            StorageService,
             { provide: ActivatedRoute, useValue: { params: Observable.from([{}]) } }
         ]);
         let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, null, injector.get(ActivatedRoute));
