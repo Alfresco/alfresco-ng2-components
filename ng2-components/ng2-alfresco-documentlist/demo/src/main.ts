@@ -19,7 +19,6 @@ import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule }  from 'ng2-alfresco-datatable';
 import { DocumentListModule, DocumentList } from 'ng2-alfresco-documentlist';
 
 import {
@@ -217,7 +216,6 @@ class DocumentListDemo implements OnInit {
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        DataTableModule,
         DocumentListModule.forRoot()
     ],
     declarations: [ DocumentListDemo ],

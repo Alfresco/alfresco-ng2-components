@@ -57,6 +57,18 @@ export class DocumentList implements OnInit, AfterContentInit {
     baseComponentPath = module.id.replace('/components/document-list.js', '');
 
     @Input()
+    set rootPath(value: string) {
+        this.data.rootPath = value || this.data.DEFAULT_ROOT_PATH;
+    }
+
+    get rootPath(): string {
+        if (this.data) {
+            return this.data.rootPath;
+        }
+        return null;
+    }
+
+    @Input()
     fallbackThubnail: string = this.baseComponentPath + '/img/ft_ic_miscellaneous.svg';
 
     @Input()

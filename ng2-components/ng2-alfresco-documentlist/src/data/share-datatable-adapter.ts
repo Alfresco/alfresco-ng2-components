@@ -31,6 +31,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     ERR_ROW_NOT_FOUND: string = 'Row not found';
     ERR_COL_NOT_FOUND: string = 'Column not found';
 
+    DEFAULT_ROOT_PATH: string = '-root-';
     DEFAULT_DATE_FORMAT: string = 'medium';
     DEFAULT_PAGE_SIZE: number = 20;
     MIN_PAGE_SIZE: number = 5;
@@ -52,6 +53,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     thumbnails: boolean = false;
     dataLoaded: DataLoadedEventEmitter;
+    rootPath: string = this.DEFAULT_ROOT_PATH;
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,
@@ -207,7 +209,8 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
             this.documentListService
                 .getFolder(path, {
                     maxItems: this._maxItems,
-                    skipCount: this._skipCount
+                    skipCount: this._skipCount,
+                    rootPath: this.rootPath
                 })
                 .subscribe(val => {
                     this.loadPage(<NodePaging>val);

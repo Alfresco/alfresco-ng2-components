@@ -80,6 +80,7 @@ export const DOCUMENT_LIST_PROVIDERS: any[] = [
         ...DOCUMENT_LIST_PROVIDERS
     ],
     exports: [
+        DataTableModule,
         ...DOCUMENT_LIST_DIRECTIVES
     ]
 })
