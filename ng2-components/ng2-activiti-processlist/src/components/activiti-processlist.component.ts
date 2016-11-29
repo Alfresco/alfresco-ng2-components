@@ -79,7 +79,9 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         if (!this.data) {
             this.data = this.initDefaultSchemaColumns();
         }
-        this.reload();
+        if (this.appId) {
+            this.reload();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

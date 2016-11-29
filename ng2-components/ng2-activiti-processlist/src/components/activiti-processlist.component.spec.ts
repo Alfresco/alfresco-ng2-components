@@ -154,16 +154,16 @@ describe('ActivitiProcessInstanceListComponent', () => {
         expect(component.getCurrentId()).toBeNull();
     });
 
-    it('should throw an exception when the response is wrong', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.throw('Fake server error'));
+    it('should throw an exception when the response is wrong', fakeAsync(() => {
+        let emitSpy: jasmine.Spy = spyOn(component.onError, 'emit');
+        let fakeError = 'Fake server error';
+        spyOn(service, 'getProcessInstances').and.returnValue(Observable.throw(fakeError));
+        component.appId = '1';
         component.state = 'open';
-        component.onError.subscribe( (err) => {
-            expect(err).toBeDefined();
-            expect(err).toBe('Fake server error');
-            done();
-        });
         fixture.detectChanges();
-    });
+        tick();
+        expect(emitSpy).toHaveBeenCalledWith(fakeError);
+    }));
 
     it('should emit onSuccess event when reload() called', fakeAsync(() => {
         spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
