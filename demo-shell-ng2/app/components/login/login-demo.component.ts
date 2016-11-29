@@ -18,6 +18,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { StorageService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -40,7 +41,7 @@ export class LoginDemoComponent implements OnInit {
     isECM: boolean = true;
     isBPM: boolean = false;
 
-    constructor(public router: Router) {
+    constructor(public router: Router, private storage: StorageService) {
         this.customValidation = {
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
@@ -52,8 +53,8 @@ export class LoginDemoComponent implements OnInit {
         this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
 
-        if (localStorage.getItem('providers')) {
-            this.providers = localStorage.getItem('providers');
+        if (this.storage.hasItem('providers')) {
+            this.providers = this.storage.getItem('providers');
         }
 
         this.setProviders();
@@ -91,7 +92,7 @@ export class LoginDemoComponent implements OnInit {
             this.providers = '';
         }
 
-        localStorage.setItem('providers', this.providers);
+        this.storage.setItem('providers', this.providers);
     }
 
     toggleBPM(checked) {
@@ -105,7 +106,7 @@ export class LoginDemoComponent implements OnInit {
             this.providers = '';
         }
 
-        localStorage.setItem('providers', this.providers);
+        this.storage.setItem('providers', this.providers);
     }
 
     toggleCSRF() {

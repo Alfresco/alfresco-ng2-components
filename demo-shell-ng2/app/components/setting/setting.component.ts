@@ -16,9 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import {
-    AlfrescoSettingsService
-} from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 
 declare let __moduleName: string;
 
@@ -33,7 +31,8 @@ export class SettingComponent {
     ecmHost: string;
     bpmHost: string;
 
-    constructor(public alfrescoSettingsService: AlfrescoSettingsService) {
+    constructor(public alfrescoSettingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
         this.ecmHost = this.alfrescoSettingsService.ecmHost;
         this.bpmHost = this.alfrescoSettingsService.bpmHost;
     }
@@ -42,14 +41,14 @@ export class SettingComponent {
         console.log((<HTMLInputElement>event.target).value);
         this.ecmHost = (<HTMLInputElement>event.target).value;
         this.alfrescoSettingsService.ecmHost = this.ecmHost;
-        localStorage.setItem(`ecmHost`, this.ecmHost);
+        this.storage.setItem(`ecmHost`, this.ecmHost);
     }
 
     public onChangeBPMHost(event: KeyboardEvent): void {
         console.log((<HTMLInputElement>event.target).value);
         this.bpmHost = (<HTMLInputElement>event.target).value;
         this.alfrescoSettingsService.bpmHost = this.bpmHost;
-        localStorage.setItem(`bpmHost`, this.bpmHost);
+        this.storage.setItem(`bpmHost`, this.bpmHost);
     }
 
 }

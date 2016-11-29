@@ -18,13 +18,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { StorageService } from './storage.service';
 import { AlfrescoApiService } from './AlfrescoApi.service';
 import * as alfrescoApi from  'alfresco-js-api';
 import { AlfrescoApi } from  'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
 
 /**
- * The AlfrescoAuthenticationService provide the login service and store the ticket in the localStorage
+ * The AlfrescoAuthenticationService provide the login service and store the ticket in the Storage
  */
 @Injectable()
 export class AlfrescoAuthenticationService {
@@ -41,7 +42,8 @@ export class AlfrescoAuthenticationService {
      * @param apiService
      */
     constructor(private settingsService: AlfrescoSettingsService,
-                private apiService: AlfrescoApiService) {
+                private apiService: AlfrescoApiService,
+                private storage: StorageService) {
         this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
             provider: this.settingsService.getProviders(),
             ticketEcm: this.getTicketEcm(),
@@ -107,7 +109,7 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
-     * The method remove the ticket from the local storage
+     * The method remove the ticket from the Storage
      *
      * @returns {Observable<R>|Observable<T>}
      */
@@ -133,47 +135,39 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
-     * Remove the login ticket from localStorage
+     * Remove the login ticket from Storage
      */
     public removeTicket(): void {
-        localStorage.removeItem('ticket-ECM');
-        localStorage.removeItem('ticket-BPM');
+        this.storage.removeItem('ticket-ECM');
+        this.storage.removeItem('ticket-BPM');
     }
 
     /**
-     * The method return the ECM ticket stored in the localStorage
+     * The method return the ECM ticket stored in the Storage
      * @returns ticket
      */
-    public getTicketEcm(): string {
-        if (localStorage.getItem('ticket-ECM')) {
-            return localStorage.getItem('ticket-ECM');
-        } else {
-            return null;
-        }
+    public getTicketEcm(): string | null {
+        return this.storage.getItem('ticket-ECM');
     }
 
     /**
-     * The method return the BPM ticket stored in the localStorage
+     * The method return the BPM ticket stored in the Storage
      * @returns ticket
      */
-    public getTicketBpm(): string {
-        if (localStorage.getItem('ticket-BPM')) {
-            return localStorage.getItem('ticket-BPM');
-        } else {
-            return null;
-        }
+    public getTicketBpm(): string | null {
+        return this.storage.getItem('ticket-BPM');
     }
 
-    public getTicketEcmBase64(): string {
-        if (localStorage.getItem('ticket-ECM')) {
-            return 'Basic ' + btoa(localStorage.getItem('ticket-ECM'));
-        } else {
-            return null;
+    public getTicketEcmBase64(): string | null {
+        let ticket = this.storage.getItem('ticket-ECM');
+        if (ticket) {
+            return 'Basic ' + btoa(ticket);
         }
+        return null;
     }
 
     /**
-     * The method save the ECM and BPM ticket in the localStorage
+     * The method save the ECM and BPM ticket in the Storage
      */
     public saveTickets() {
         this.saveTicketEcm();
@@ -181,20 +175,20 @@ export class AlfrescoAuthenticationService {
     }
 
     /**
-     * The method save the ECM ticket in the localStorage
+     * The method save the ECM ticket in the Storage
      */
     public saveTicketEcm(): void {
         if (this.alfrescoApi && this.alfrescoApi.getTicketEcm()) {
-            localStorage.setItem('ticket-ECM', this.alfrescoApi.getTicketEcm());
+            this.storage.setItem('ticket-ECM', this.alfrescoApi.getTicketEcm());
         }
     }
 
     /**
-     * The method save the BPM ticket in the localStorage
+     * The method save the BPM ticket in the Storage
      */
     public saveTicketBpm(): void {
         if (this.alfrescoApi && this.alfrescoApi.getTicketBpm()) {
-            localStorage.setItem('ticket-BPM', this.alfrescoApi.getTicketBpm());
+            this.storage.setItem('ticket-BPM', this.alfrescoApi.getTicketBpm());
         }
     }
 

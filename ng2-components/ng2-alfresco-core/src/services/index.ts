@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './storage.service';
 export * from './AlfrescoApi.service';
 export * from './AlfrescoSettings.service';
 export * from './AlfrescoTranslationLoader.service';

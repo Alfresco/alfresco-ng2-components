@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
 import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
@@ -68,21 +68,21 @@ import { UploadModule } from 'ng2-alfresco-upload';
                         <span class="mdl-switch__label">Multiple File Upload</span>
                     </label>
                 </p>
-                
+
                 <p style="width:250px;margin: 20px;">
                     <label for="switch-folder-upload" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
                         <input type="checkbox" id="switch-folder-upload" class="mdl-switch__input" (change)="toggleFolder()">
                         <span class="mdl-switch__label">Folder Upload</span>
                     </label>
                 </p>
-                
+
                 <p style="width:250px;margin: 20px;">
                     <label for="switch-accepted-file-type" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
                         <input type="checkbox" id="switch-accepted-file-type" class="mdl-switch__input" (change)="toggleAcceptedFilesType()">
                         <span class="mdl-switch__label">Filter extension</span>
                     </label>
                 </p>
-                
+
                 <p style="width:250px;margin: 20px;">
                     <label for="switch-versioning" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
                         <input type="checkbox" id="switch-versioning" class="mdl-switch__input" (change)="toggleVersioning()">
@@ -114,7 +114,9 @@ export class MyDemoApp implements OnInit {
 
     ticket: string;
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
 
@@ -124,7 +126,7 @@ export class MyDemoApp implements OnInit {
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-ECM', this.ticket);
+        this.storage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {

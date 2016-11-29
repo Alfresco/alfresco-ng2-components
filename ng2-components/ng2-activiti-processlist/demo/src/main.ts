@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
@@ -133,7 +133,9 @@ class MyDemoApp implements OnInit {
 
     dataProcesses: ObjectDataTableAdapter;
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
         settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');
 
@@ -153,7 +155,7 @@ class MyDemoApp implements OnInit {
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-BPM', this.ticket);
+        this.storage.setItem('ticket-BPM', this.ticket);
     }
 
     public updateHost(): void {
