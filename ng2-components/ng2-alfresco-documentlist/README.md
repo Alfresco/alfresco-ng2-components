@@ -168,25 +168,25 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| rootPath | string | -root- | Root node path, i.e. `-root-`, `-shared-`, `-my-`, etc. |
-| navigate | boolean | true | Toggles navigation to folder content or file preview |
-| navigationMode | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
-| thumbnails | boolean | false | Show document thumbnails rather than icons |
-| fallbackThubnail | string |  | Fallback image for row ehre thubnail is missing|
-| multiselect | boolean | false | Toggles multiselect mode |
-| contentActions | boolean | false | Toggles content actions for each row |
-| contextMenuActions | boolean | false | Toggles context menus for each row |
-| rowFilter | RowFilter | | Custom row filter, [see more](#custom-row-filter).
-| imageResolver | ImageResolver | | Custom image resolver, [see more](#custom-image-resolver).
+| `rootPath` | string | -root- | Root node path, i.e. `-root-`, `-shared-`, `-my-`, etc. |
+| `navigate` | boolean | true | Toggles navigation to folder content or file preview |
+| `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
+| `thumbnails` | boolean | false | Show document thumbnails rather than icons |
+| `fallbackThubnail` | string |  | Fallback image for row ehre thubnail is missing|
+| `multiselect` | boolean | false | Toggles multiselect mode |
+| `contentActions` | boolean | false | Toggles content actions for each row |
+| `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
+| `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
 ### Events
 
 | Name | Description |
 | --- | --- |
-| nodeClick | Emitted when user clicks the node |
-| nodeDblClick | Emitted when user double-clicks the node |
-| folderChange | Emitted upon display folder changed |
-| preview | Emitted when document preview is requested either with single or double click |
+| `nodeClick` | Emitted when user clicks the node |
+| `nodeDblClick` | Emitted when user double-clicks the node |
+| `folderChange` | Emitted upon display folder changed |
+| `preview` | Emitted when document preview is requested either with single or double click |
 
 
 _For a complete example source code please refer to 
@@ -278,13 +278,13 @@ HTML attributes:
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
-| title | string | | Column title |
-| sr-title | string | | Screen reader title, used only when `title` is empty |
-| key | string | | Column source key, example: `createdByUser.displayName` |
-| sortable | boolean | false | Toggle sorting ability via column header clicks |
-| class | string | | CSS class list, example: `full-width ellipsis-cell` |
-| type | string | text | Column type, text\|date\|number |
-| format | string | | Value format pattern |
+| `title` | string | | Column title |
+| `sr-title` | string | | Screen reader title, used only when `title` is empty |
+| `key` | string | | Column source key, example: `createdByUser.displayName` |
+| `sortable` | boolean | false | Toggle sorting ability via column header clicks |
+| `class` | string | | CSS class list, example: `full-width ellipsis-cell` |
+| `type` | string | text | Column type, text\|date\|number |
+| `format` | string | | Value format pattern |
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
@@ -452,10 +452,10 @@ DocumentList emits the following events:
 
 | Name | Description |
 | --- | --- |
-| nodeClick | emitted when user clicks a list node |
-| nodeDblClick | emitted when user double-clicks list node |
-| folderChange | emitted once current display folder has changed |
-| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
+| `nodeClick` | emitted when user clicks a list node |
+| `nodeDblClick` | emitted when user double-clicks list node |
+| `folderChange` | emitted once current display folder has changed |
+| `preview` | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 
 ## Advanced usage and customization
 

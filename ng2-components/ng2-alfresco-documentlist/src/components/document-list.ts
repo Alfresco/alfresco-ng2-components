@@ -61,6 +61,13 @@ export class DocumentList implements OnInit, AfterContentInit {
         this.data.rootPath = value || this.data.DEFAULT_ROOT_PATH;
     }
 
+    get rootPath(): string {
+        if (this.data) {
+            return this.data.rootPath;
+        }
+        return null;
+    }
+
     @Input()
     fallbackThubnail: string = this.baseComponentPath + '/img/ft_ic_miscellaneous.svg';
 

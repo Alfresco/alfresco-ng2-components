@@ -47,6 +47,14 @@ describe('DocumentList', () => {
         window['componentHandler'] = componentHandler;
     });
 
+    it('should update root path', () => {
+        let adapter = documentList.data;
+        expect(adapter.rootPath).toBe(adapter.DEFAULT_ROOT_PATH);
+
+        documentList.rootPath = '-shared-';
+        expect(adapter.rootPath).toBe('-shared-');
+    });
+
     it('should setup default columns', () => {
         spyOn(documentList, 'setupDefaultColumns').and.callThrough();
 
