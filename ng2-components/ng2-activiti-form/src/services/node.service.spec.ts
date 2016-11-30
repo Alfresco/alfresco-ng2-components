@@ -16,11 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService
-} from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { NodeService } from './node.service';
 import { NodeMetadata } from '../models/node-metadata.model';
 import { HttpModule } from '@angular/http';
@@ -34,12 +30,9 @@ describe('NodeService', () => {
 
     beforeAll(() => {
         TestBed.configureTestingModule({
-            imports: [HttpModule],
+            imports: [ HttpModule, CoreModule ],
             providers: [
-                AlfrescoAuthenticationService,
-                AlfrescoSettingsService,
                 NodeService,
-                AlfrescoApiService,
                 EcmModelService
             ]
         });

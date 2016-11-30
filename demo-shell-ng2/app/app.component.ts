@@ -21,7 +21,8 @@ import { Router } from '@angular/router';
 import {
     AlfrescoTranslationService,
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService
+    AlfrescoSettingsService,
+    StorageService
 } from 'ng2-alfresco-core';
 
 declare var document: any;
@@ -40,7 +41,8 @@ export class AppComponent {
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
                 public alfrescoSettingsService: AlfrescoSettingsService,
-                private translate: AlfrescoTranslationService) {
+                private translate: AlfrescoTranslationService,
+                private storage: StorageService) {
         this.setEcmHost();
         this.setBpmHost();
         this.setProvider();
@@ -103,26 +105,26 @@ export class AppComponent {
     }
 
     private setEcmHost() {
-        if (localStorage.getItem(`ecmHost`)) {
-            this.alfrescoSettingsService.ecmHost = localStorage.getItem(`ecmHost`);
-            this.ecmHost = localStorage.getItem(`ecmHost`);
+        if (this.storage.hasItem(`ecmHost`)) {
+            this.alfrescoSettingsService.ecmHost = this.storage.getItem(`ecmHost`);
+            this.ecmHost = this.storage.getItem(`ecmHost`);
         } else {
             this.alfrescoSettingsService.ecmHost = this.ecmHost;
         }
     }
 
     private setBpmHost() {
-        if (localStorage.getItem(`bpmHost`)) {
-            this.alfrescoSettingsService.bpmHost = localStorage.getItem(`bpmHost`);
-            this.bpmHost = localStorage.getItem(`bpmHost`);
+        if (this.storage.hasItem(`bpmHost`)) {
+            this.alfrescoSettingsService.bpmHost = this.storage.getItem(`bpmHost`);
+            this.bpmHost = this.storage.getItem(`bpmHost`);
         } else {
             this.alfrescoSettingsService.bpmHost = this.bpmHost;
         }
     }
 
     private setProvider() {
-        if (localStorage.getItem(`providers`)) {
-            this.alfrescoSettingsService.setProviders(localStorage.getItem(`providers`));
+        if (this.storage.hasItem(`providers`)) {
+            this.alfrescoSettingsService.setProviders(this.storage.getItem(`providers`));
         }
     }
 }
