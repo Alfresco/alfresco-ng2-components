@@ -118,6 +118,9 @@ export class DocumentList implements OnInit, AfterContentInit {
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
+
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
@@ -130,11 +133,15 @@ export class DocumentList implements OnInit, AfterContentInit {
     @Input()
     set currentFolderPath(value: string) {
         if (value !== this._path) {
-            this._path = value || this.DEFAULT_ROOT_FOLDER;
-            this.displayFolderContent(this._path);
-            this.folderChange.emit({
-                path: this.currentFolderPath
-            });
+            const path = value || this.DEFAULT_ROOT_FOLDER;
+            this.displayFolderContent(path)
+                .then(() => {
+                    this._path = path;
+                    this.folderChange.emit({ path: path });
+                })
+                .catch(err => {
+                    this.error.emit(err);
+                });
         }
     }
 
@@ -260,14 +267,17 @@ export class DocumentList implements OnInit, AfterContentInit {
         }
     }
 
-    displayFolderContent(path: string) {
-        this.data.loadPath(path);
+    displayFolderContent(path: string): Promise<any> {
+        return this.data.loadPath(path);
     }
 
     reload() {
         this.ngZone.run(() => {
             if (this.currentFolderPath) {
-                this.displayFolderContent(this.currentFolderPath);
+                this.displayFolderContent(this.currentFolderPath)
+                    .catch(err => {
+                        this.error.emit(err);
+                    });
             }
         });
     }

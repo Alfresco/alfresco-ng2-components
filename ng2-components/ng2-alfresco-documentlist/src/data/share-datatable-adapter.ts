@@ -203,21 +203,29 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         this.setSorting(sorting);
     }
 
-    loadPath(path: string) {
-        if (path && this.documentListService) {
-            this.currentPath = path;
-            this.documentListService
-                .getFolder(path, {
-                    maxItems: this._maxItems,
-                    skipCount: this._skipCount,
-                    rootPath: this.rootPath
-                })
-                .subscribe(val => {
-                    this.loadPage(<NodePaging>val);
-                    this.dataLoaded.emit(null);
-                },
-                error => console.error(error));
-        }
+    loadPath(path: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (path && this.documentListService) {
+                this.documentListService
+                    .getFolder(path, {
+                        maxItems: this._maxItems,
+                        skipCount: this._skipCount,
+                        rootPath: this.rootPath
+                    })
+                    .subscribe(val => {
+                        this.currentPath = path;
+                        this.loadPage(<NodePaging>val);
+                        this.dataLoaded.emit(null);
+                        resolve(true);
+                    },
+                    error => {
+                        reject(error);
+                    });
+            } else {
+                resolve(false);
+            }
+        });
+
     }
 
     setFilter(filter: RowFilter) {

@@ -7,3 +7,11 @@
         margin: 0;
     }
 }
+
+.error-message {
+    text-align: left;
+}
+
+.error-message--text {
+    color: #d50000;
+}

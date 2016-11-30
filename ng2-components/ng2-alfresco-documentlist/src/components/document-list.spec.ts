@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-import { NgZone } from '@angular/core';
-import { DataColumn } from 'ng2-alfresco-datatable';
+import { NgZone, TemplateRef } from '@angular/core';
+import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
 import { DocumentList } from './document-list';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
 import { NodeMinimalEntry } from '../models/document-library.model';
+import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 
 describe('DocumentList', () => {
 
@@ -204,23 +205,14 @@ describe('DocumentList', () => {
     });
 
     it('should display folder content for new folder path', () => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
         let newPath = '/some/new/path';
         documentList.currentFolderPath = newPath;
         expect(documentList.displayFolderContent).toHaveBeenCalledWith(newPath);
     });
 
-    it('should not display folder content for same path', () => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
-        documentList.currentFolderPath = '/test';
-        expect(documentList.displayFolderContent).toHaveBeenCalledTimes(1);
-
-        documentList.currentFolderPath = '/test';
-        expect(documentList.displayFolderContent).toHaveBeenCalledTimes(1);
-    });
-
     it('should reset to default path', () => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
         documentList.currentFolderPath = null;
 
         expect(documentList.currentFolderPath).toBe(documentList.DEFAULT_ROOT_FOLDER);
@@ -228,7 +220,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit folder changed event', (done) => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
         documentList.folderChange.subscribe(e => {
             done();
         });
@@ -237,7 +229,7 @@ describe('DocumentList', () => {
     });
 
     it('should emit folder changed event with folder details', (done) => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
 
         let path = '/path';
 
@@ -247,20 +239,6 @@ describe('DocumentList', () => {
         });
 
         documentList.currentFolderPath = path;
-    });
-
-    it('should emit folder changed event only once', () => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
-        let path = '/new/path';
-        let calls = 0;
-        documentList.folderChange.subscribe(e => {
-            calls++;
-        });
-
-        documentList.currentFolderPath = path;
-        documentList.currentFolderPath = path;
-        documentList.currentFolderPath = path;
-        expect(calls).toBe(1);
     });
 
     it('should execute context action on callback', () => {
@@ -499,5 +477,88 @@ describe('DocumentList', () => {
         documentList.ngOnInit();
         expect(documentList.isMobile).toHaveBeenCalled();
         expect(documentList.navigationMode).toBe(DocumentList.SINGLE_CLICK_NAVIGATION);
+    });
+
+    it('should emit error on wrong path', (done) => {
+        let raised = false;
+        documentList.error.subscribe(err => raised = true);
+        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.reject(false));
+
+        documentList.currentFolderPath = 'wrong-path';
+        setTimeout(() => {
+            expect(raised).toBeTruthy();
+            done();
+        }, 0);
+    });
+
+    it('should require dataTable to check empty template', () => {
+        documentList.dataTable = null;
+        expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
+    });
+
+    it('should check [empty folder] template ', () => {
+        documentList.emptyFolderTemplate = <TemplateRef<any>> {};
+        documentList.dataTable = new DataTableComponent();
+        expect(documentList.dataTable).toBeDefined();
+        expect(documentList.isEmptyTemplateDefined()).toBeTruthy();
+
+        documentList.emptyFolderTemplate = null;
+        expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
+    });
+
+    it('should set root path for underlying adapter', () => {
+        documentList.rootPath = 'test';
+        expect(documentList.data.rootPath).toBe('test');
+    });
+
+    it('should set default root path for underlying adapter', () => {
+        documentList.rootPath = null;
+        expect(documentList.data.rootPath).toBe(documentList.data.DEFAULT_ROOT_PATH);
+    });
+
+    it('should fetch root path from underlying adapter', () => {
+        documentList.data.rootPath = 'test';
+        expect(documentList.rootPath).toBe('test');
+    });
+
+    it('should not fetch root path when adapter missing', () => {
+        documentList.data = null;
+        expect(documentList.rootPath).toBeNull();
+    });
+
+    it('should set row filter for underlying adapter', () => {
+        let filter = <RowFilter> {};
+        spyOn(documentList.data, 'setFilter').and.callThrough();
+
+        documentList.rowFilter = filter;
+        expect(documentList.data.setFilter).toHaveBeenCalledWith(filter);
+    });
+
+    it('should set image resolver for underlying adapter', () => {
+        let resolver = <ImageResolver> {};
+        spyOn(documentList.data, 'setImageResolver').and.callThrough();
+
+        documentList.imageResolver = resolver;
+        expect(documentList.data.setImageResolver).toHaveBeenCalledWith(resolver);
+    });
+
+    it('should emit [nodeClick] event on row click', () => {
+        let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = <DataRowEvent> { value: row };
+
+        spyOn(documentList, 'onNodeClick').and.callThrough();
+        documentList.onRowClick(event);
+        expect(documentList.onNodeClick).toHaveBeenCalledWith(node);
+    });
+
+    it('should emit [nodeDblClick] event on row double-click', () => {
+        let node = new NodeMinimalEntry();
+        let row = new ShareDataRow(node);
+        let event = <DataRowEvent> { value: row };
+
+        spyOn(documentList, 'onNodeDblClick').and.callThrough();
+        documentList.onRowDblClick(event);
+        expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
 });

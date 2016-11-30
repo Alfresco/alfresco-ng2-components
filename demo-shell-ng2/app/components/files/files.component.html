@@ -7,11 +7,18 @@
             [currentFolderPath]="currentPath"
             [target]="documentList">
         </alfresco-document-list-breadcrumb>
+        <div *ngIf="errorMessage" class="error-message">
+            <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">highlight_off</i>
+            </button>
+            <span class="error-message--text">{{errorMessage}}</span>
+        </div>
         <alfresco-document-list
                 #documentList
                 [currentFolderPath]="currentPath"
                 [contextMenuActions]="true"
                 [contentActions]="true"
+                (error)="onNavigationError($event)"
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChanged($event)">
             <!--
@@ -116,6 +123,9 @@
         </li>
         <li>
             <button (click)="documentList.currentFolderPath = '/'">Go to root</button>
+        </li>
+        <li>
+            <button (click)="documentList.currentFolderPath = '!@£$%^&*()'">Go to the wrong path</button>
         </li>
         <li>
             <button (click)="fileDialog.toggleShowDialog()">Show/Hide File Dialog</button>
