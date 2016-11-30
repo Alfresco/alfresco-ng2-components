@@ -36,7 +36,20 @@
             "TASK_CLOSE": "Close"
         },
         "COMMENTS": {
-            "NONE": "No comments."
+            "NONE": "No comments.",
+            "BUTTON": {
+                "ADD": "Add a comment"
+            },
+            "ADD_DIALOG": {
+                "TITLE": "New comment",
+                "LABEL": {
+                    "MESSAGE": "Message"
+                },
+                "BUTTON": {
+                    "ADD": "Add Comment",
+                    "CANCEL": "Cancel"
+                }
+            }
         },
         "VARIABLES": {
             "NONE": "No variables set.",

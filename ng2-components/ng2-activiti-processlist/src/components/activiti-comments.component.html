@@ -2,7 +2,7 @@
       [attr.data-badge]="comments?.length">{{ 'DETAILS.LABELS.COMMENTS' |translate }}</span>
 <div id="addComment" (click)="showDialog()" class="icon material-icons">add</div>
 <div class="mdl-tooltip" for="addComment">
-    Add a comment
+    {{ 'DETAILS.COMMENTS.BUTTON.ADD' |translate }}
 </div>
 
 <div class="menu-container" *ngIf="comments?.length > 0">
@@ -21,15 +21,15 @@
 
 
 <dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">New comment</h4>
+<h4 class="mdl-dialog__title">{{ 'DETAILS.COMMENTS.ADD_DIALOG.TITLE' |translate }}</h4>
     <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <textarea class="mdl-textfield__input" type="text" [(ngModel)]="message" rows="1" id="commentText"></textarea>
-            <label class="mdl-textfield__label" for="commentText">Message</label>
+            <label class="mdl-textfield__label" for="commentText">{{ 'DETAILS.COMMENTS.ADD_DIALOG.LABEL.MESSAGE' |translate }}</label>
         </div>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="add()" class="mdl-button">Add Comment</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
+        <button type="button" (click)="add()" class="mdl-button">{{ 'DETAILS.COMMENTS.ADD_DIALOG.BUTTON.ADD' |translate }}</button>
+        <button type="button" (click)="cancel()" class="mdl-button close">{{ 'DETAILS.COMMENTS.ADD_DIALOG.BUTTON.CANCEL' |translate }}</button>
     </div>
 </dialog>
