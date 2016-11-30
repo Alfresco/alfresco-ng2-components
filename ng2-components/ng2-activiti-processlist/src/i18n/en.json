@@ -37,6 +37,23 @@
         },
         "COMMENTS": {
             "NONE": "No comments."
+        },
+        "VARIABLES": {
+            "NONE": "No variables set.",
+            "BUTTON": {
+                "ADD": "Set a variable"
+            },
+            "ADD_DIALOG": {
+                "TITLE": "Set process variable",
+                "LABEL": {
+                    "NAME": "Name",
+                    "VALUE": "Value"
+                },
+                "BUTTON": {
+                    "SET": "Set",
+                    "CANCEL": "Cancel"
+                }
+            }
         }
     },
     "START_PROCESS": {

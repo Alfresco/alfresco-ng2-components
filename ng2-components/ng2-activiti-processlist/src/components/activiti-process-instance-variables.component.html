@@ -1,0 +1,31 @@
+<div id="setVariableBtn" (click)="showDialog()" class="icon material-icons">add</div>
+<div class="mdl-tooltip" for="setVariableBtn">
+    {{ 'DETAILS.VARIABLES.BUTTON.ADD' |translate }}
+</div>
+
+
+<div *ngIf="!isListEmpty()">
+    <alfresco-datatable [data]="data"></alfresco-datatable>
+</div>
+<div *ngIf="isListEmpty()" data-automation-id="variables-none">
+    {{ 'DETAILS.VARIABLES.NONE' | translate }}
+</div>
+
+
+<dialog class="mdl-dialog" #dialog>
+    <h4 class="mdl-dialog__title">{{ 'DETAILS.VARIABLES.ADD_DIALOG.TITLE' |translate }}</h4>
+    <div class="mdl-dialog__content">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="variableName">{{ 'DETAILS.VARIABLES.ADD_DIALOG.LABEL.NAME' |translate }}</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="variableName" id="variableName" />
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="variableValue">{{ 'DETAILS.VARIABLES.ADD_DIALOG.LABEL.VALUE' |translate }}</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="variableValue" id="variableValue" />
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="add()" class="mdl-button">{{ 'DETAILS.VARIABLES.ADD_DIALOG.BUTTON.SET' |translate }}</button>
+        <button type="button" (click)="cancel()" class="mdl-button close">{{ 'DETAILS.VARIABLES.ADD_DIALOG.BUTTON.CANCEL' |translate }}</button>
+    </div>
+</dialog>

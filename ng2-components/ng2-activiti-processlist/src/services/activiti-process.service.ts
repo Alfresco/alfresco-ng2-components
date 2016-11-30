@@ -18,6 +18,7 @@
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { ProcessInstance, ProcessDefinitionRepresentation } from '../models/index';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
+import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
 import {
     AppDefinitionRepresentationModel,
     Comment,
@@ -247,6 +248,21 @@ export class ActivitiProcessService {
     cancelProcess(processInstanceId: string): Observable<void> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.deleteProcessInstance(processInstanceId)
+            )
+            .catch(this.handleError);
+    }
+
+    getProcessInstanceVariables(processDefinitionId: string): Observable<ProcessInstanceVariable[]> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.processInstanceVariablesApi.getProcessInstanceVariables(processDefinitionId)
+            )
+            .map((processVars: any[]) => processVars.map((pd) => new ProcessInstanceVariable(pd)))
+            .catch(this.handleError);
+    }
+
+    createOrUpdateProcessInstanceVariables(processDefinitionId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processDefinitionId, variables)
             )
             .catch(this.handleError);
     }
