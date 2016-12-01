@@ -163,10 +163,8 @@ class MyDemoApp implements OnInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                {type: 'text', key: 'id', title: 'Id'},
                 {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', sortable: true},
-                {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
+                {type: 'text', key: 'started', title: 'Started', sortable: true, cssClass: 'hidden'}
             ]
         );
     }
