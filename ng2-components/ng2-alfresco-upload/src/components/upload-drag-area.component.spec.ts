@@ -113,16 +113,12 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         expect(component._showUndoNotificationBar).toHaveBeenCalled();
     });
 
-    it('should upload a file when dropped', done => {
+    it('should upload a file when dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.onSuccess = null;
 
         fixture.detectChanges();
         spyOn(component._uploaderService, 'uploadFilesInTheQueue');
-        spyOn(component, '_showUndoNotificationBar').and.callFake( () => {
-            expect(component._showUndoNotificationBar).toHaveBeenCalled();
-            done();
-        });
 
         let itemEntity = {
             fullPath: '/folder-fake/file-fake.png',
