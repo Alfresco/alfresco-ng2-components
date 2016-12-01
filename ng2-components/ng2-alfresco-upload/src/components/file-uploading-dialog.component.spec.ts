@@ -75,6 +75,11 @@ describe('Test ng2-alfresco-upload FileUploadDialog', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should render completed upload 1 when an element is added to Observer', () => {
         component._uploaderService.updateFileCounterStream(1);
         fixture.detectChanges();

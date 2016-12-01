@@ -95,6 +95,11 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should render upload-single-file button as default', () => {
         component.multipleFiles = false;
         let compiled = fixture.debugElement.nativeElement;
