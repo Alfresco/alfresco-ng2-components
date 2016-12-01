@@ -2,6 +2,10 @@
     padding: 8px;
 }
 
+.dynamic-table-widget__buttons {
+    margin-top: 10px;
+}
+
 .dynamic-table-widget__row-selected,
 .dynamic-table-widget__row-selected:hover {
     background-color: #eef !important;
