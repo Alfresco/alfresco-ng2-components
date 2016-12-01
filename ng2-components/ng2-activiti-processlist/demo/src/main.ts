@@ -74,7 +74,7 @@ const currentProcessIdNew = '__NEW__';
                 <div class="page-content">
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
-                            <span>Process Filters</span>
+                            <h2>Process Filters</h2>
                             <button type="button" (click)="navigateStartProcess()"
                                     class="mdl-button" data-automation-id="btn-start-process">Start Process</button>
                             <activiti-process-instance-filters
@@ -83,7 +83,7 @@ const currentProcessIdNew = '__NEW__';
                                         (onSuccess)="onSuccessProcessFilterList($event)"></activiti-process-instance-filters>
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
-                            <span>Process List</span>
+                            <h2>Process List</h2>
                             <activiti-process-instance-list *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                                        [processDefinitionKey]="processFilter.filter.processDefinitionKey"
                                        [name]="processFilter.filter.name"
@@ -94,7 +94,7 @@ const currentProcessIdNew = '__NEW__';
                                         (onSuccess)="onSuccessProcessList($event)"></activiti-process-instance-list>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="!isStartProcessMode()">
-                            <span>Process Details</span>
+                            <h2>Process Details</h2>
                             <activiti-process-instance-details
                                         [processInstanceId]="currentProcessInstanceId"
                                         (taskFormCompleted)="taskFormCompleted()"
@@ -104,7 +104,7 @@ const currentProcessIdNew = '__NEW__';
                                         [processInstanceId]="currentProcessInstanceId"></activiti-process-instance-variables>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
-                            <span>Start Process</span>
+                            <h2>Start Process</h2>
                             <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
                         </div>
                     </div>
@@ -113,7 +113,14 @@ const currentProcessIdNew = '__NEW__';
 
         </main>
     </div>
-`
+`,
+    styles: [`
+        h2 {
+            font-size: 14px;
+            line-height: 20px;
+            margin: 10px 0;
+        }
+        `]
 })
 class MyDemoApp implements OnInit {
 
