@@ -4,28 +4,18 @@
 
         <!-- TABS -->
 
-        <div class="mdl-layout__tab-bar mdl-js-ripple-effect" #tabheader>
-            <a id="apps-header" href="#apps" class="mdl-layout__tab is-active">APPS</a>
-            <a id="tasks-header" href="#tasks" class="mdl-layout__tab">TASK LIST</a>
-            <a id="processes-header" href="#processes" class="mdl-layout__tab">PROCESS LIST</a>
-            <a id="report-header" href="#report" class="mdl-layout__tab">ANALYTICS</a>
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+            <a id="tasks-header" href="#tasks" class="mdl-layout__tab is-active">TASKS</a>
+            <a id="processes-header" href="#processes" class="mdl-layout__tab">PROCESSES</a>
+            <a id="report-header" href="#report" class="mdl-layout__tab">REPORTS</a>
         </div>
     </header>
 
-    <main class="mdl-layout__content activiti" #tabmain>
-
-        <!--  APPPS COMPONENT -->
-
-        <section class="mdl-layout__tab-panel is-active" id="apps">
-            <div class="page-content">
-                <activiti-apps [layoutType]="layoutType" (appClick)="onAppClick($event)" #activitiapps></activiti-apps>
-            </div>
-        </section>
-
+    <main class="mdl-layout__content activiti">
 
         <!--  TASKS COMPONENT -->
 
-        <section class="mdl-layout__tab-panel" id="tasks">
+        <section class="mdl-layout__tab-panel is-active" id="tasks">
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">

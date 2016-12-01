@@ -24,6 +24,7 @@ import {
     SearchComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
+    ActivitiAppsView,
     WebscriptComponent,
     TagComponent,
     AboutComponent,
@@ -42,7 +43,11 @@ export const appRoutes: Routes = [
     { path: 'uploader', component: UploadButtonComponent },
     { path: 'login', component: LoginDemoComponent },
     { path: 'search', component: SearchComponent },
-    { path: 'activiti', component: ActivitiDemoComponent },
+
+    { path: 'activiti', component: ActivitiAppsView },
+    { path: 'activiti/apps', component: ActivitiAppsView },
+    { path: 'activiti/apps/:appId/tasks', component: ActivitiDemoComponent },
+
     { path: 'activiti/appId/:appId', component: ActivitiDemoComponent },
     { path: 'activiti/tasks/:id', component: FormViewer },
     { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
