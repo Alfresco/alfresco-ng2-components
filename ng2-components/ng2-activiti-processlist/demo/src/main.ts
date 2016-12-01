@@ -115,6 +115,9 @@ const currentProcessIdNew = '__NEW__';
     </div>
 `,
     styles: [`
+        header {
+            min-height: 48px;
+        }
         h2 {
             font-size: 14px;
             line-height: 20px;
