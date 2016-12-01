@@ -23,3 +23,4 @@ export * from './AlfrescoTranslation.service';
 export * from './AlfrescoAuthentication.service';
 export * from './AlfrescoContent.service';
 export * from './renditions.service';
+export * from './auth-guard.service';

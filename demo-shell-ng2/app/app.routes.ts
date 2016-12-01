@@ -17,6 +17,7 @@
 
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'ng2-alfresco-core';
 
 import {
     FilesComponent,
@@ -36,23 +37,76 @@ import {
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
 
 export const appRoutes: Routes = [
-    { path: 'home', component: FilesComponent },
-    { path: 'files', component: FilesComponent },
-    { path: 'datatable', component: DataTableDemoComponent },
-    { path: '', component: LoginDemoComponent },
-    { path: 'uploader', component: UploadButtonComponent },
     { path: 'login', component: LoginDemoComponent },
-    { path: 'search', component: SearchComponent },
-
-    { path: 'activiti', component: ActivitiAppsView },
-    { path: 'activiti/apps', component: ActivitiAppsView },
-    { path: 'activiti/apps/:appId/tasks', component: ActivitiDemoComponent },
-
-    { path: 'activiti/appId/:appId', component: ActivitiDemoComponent },
-    { path: 'activiti/tasks/:id', component: FormViewer },
-    { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
-    { path: 'webscript', component: WebscriptComponent },
-    { path: 'tag', component: TagComponent },
+    {
+        path: '',
+        component: LoginDemoComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'home',
+        component: FilesComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'files',
+        component: FilesComponent,
+        canActivate: [AuthGuard]
+    },
+    { path: 'datatable', component: DataTableDemoComponent },
+    {
+        path: 'uploader',
+        component: UploadButtonComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'search',
+        component: SearchComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'activiti',
+        component: ActivitiAppsView,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'activiti/apps',
+        component: ActivitiAppsView,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'activiti/apps/:appId/tasks',
+        component: ActivitiDemoComponent,
+        canActivate: [AuthGuard]
+    },
+    // TODO: check if neeeded
+    {
+        path: 'activiti/appId/:appId',
+        component: ActivitiDemoComponent,
+        canActivate: [AuthGuard]
+    },
+    // TODO: check if needed
+    {
+        path: 'activiti/tasks/:id',
+        component: FormViewer,
+        canActivate: [AuthGuard]
+    },
+    // TODO: check if needed
+    {
+        path: 'activiti/tasksnode/:id',
+        component: FormNodeViewer,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'webscript',
+        component: WebscriptComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'tag',
+        component: TagComponent,
+        canActivate: [AuthGuard]
+    },
     { path: 'about', component: AboutComponent },
     { path: 'settings', component: SettingComponent }
 ];
