@@ -15,12 +15,19 @@
  * limitations under the License.
  */
 
-import { Input, NgModule, Component, OnInit, ViewChild } from '@angular/core';
+import { DebugElement, Input, NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
+import {
+    ActivitiProcessListModule,
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
+    ActivitiProcessInstanceListComponent,
+    ActivitiStartProcessInstance,
+    ProcessInstance
+} from 'ng2-activiti-processlist';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
@@ -73,8 +80,7 @@ const currentProcessIdNew = '__NEW__';
                             <activiti-process-instance-filters
                                         [appId]="appId"
                                         (filterClick)="onProcessFilterClick($event)"
-                                        (onSuccess)="onSuccessProcessFilterList($event)"
-                                        #activitiprocessfilter></activiti-process-instance-filters>
+                                        (onSuccess)="onSuccessProcessFilterList($event)"></activiti-process-instance-filters>
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
                             <span>Process List</span>
@@ -85,16 +91,17 @@ const currentProcessIdNew = '__NEW__';
                                        [sort]="processFilter.filter.sort"
                                        [data]="dataProcesses"
                                         (rowClick)="onProcessRowClick($event)"
-                                        (onSuccess)="onSuccessProcessList($event)"
-                                        #activitiprocesslist></activiti-process-instance-list>
+                                        (onSuccess)="onSuccessProcessList($event)"></activiti-process-instance-list>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="!isStartProcessMode()">
                             <span>Process Details</span>
                             <activiti-process-instance-details
                                         [processInstanceId]="currentProcessInstanceId"
                                         (taskFormCompleted)="taskFormCompleted()"
-                                        (processCancelled)="processCancelled()"
-                                        #activitiprocessdetails></activiti-process-instance-details>
+                                        (processCancelled)="processCancelled()"></activiti-process-instance-details>
+                            <h2>Process Variables</h2>
+                            <activiti-process-instance-variables
+                                        [processInstanceId]="currentProcessInstanceId"></activiti-process-instance-variables>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
                             <span>Start Process</span>
@@ -117,19 +124,19 @@ class MyDemoApp implements OnInit {
     ticket: string;
 
     @ViewChild('tabmain')
-    tabMain: any;
+    tabMain: DebugElement;
 
     @ViewChild('tabheader')
-    tabHeader: any;
+    tabHeader: DebugElement;
 
-    @ViewChild('activitiprocessfilter')
-    activitiprocessfilter: any;
+    @ViewChild(ActivitiProcessFilters)
+    activitiprocessfilter: ActivitiProcessFilters;
 
-    @ViewChild('activitiprocesslist')
-    activitiprocesslist: any;
+    @ViewChild(ActivitiProcessInstanceListComponent)
+    activitiprocesslist: ActivitiProcessInstanceListComponent;
 
-    @ViewChild('activitiprocessdetails')
-    activitiprocessdetails: any;
+    @ViewChild(ActivitiProcessInstanceDetails)
+    activitiprocessdetails: ActivitiProcessInstanceDetails;
 
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;

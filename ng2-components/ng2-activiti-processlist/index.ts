@@ -34,6 +34,7 @@ import { ActivitiProcessService } from './src/services/activiti-process.service'
 
 // components
 export * from './src/components/activiti-processlist.component';
+export * from './src/components/activiti-filters.component';
 export * from './src/components/activiti-process-instance-details.component';
 export * from './src/components/activiti-start-process.component';
 export * from './src/components/activiti-start-process-dialog.component';

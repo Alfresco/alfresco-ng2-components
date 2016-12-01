@@ -153,7 +153,9 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
     }
 
     private resetVariables() {
-        this.data.setRows([]);
+        if (this.data) {
+            this.data.setRows([]);
+        }
     }
 
     public showDialog() {
