@@ -4,6 +4,12 @@
     }
 }
 
+@media screen and (max-width: 1024px) {
+    .mdl-layout__header {
+         display: block;
+    }
+}
+
 .mdl-layout-title {
     font-size: 17px;
 }
@@ -14,4 +20,8 @@
 
 .mdl-button-padding {
     padding-left: 20px;
+}
+
+.hide {
+    display: none !important;
 }
