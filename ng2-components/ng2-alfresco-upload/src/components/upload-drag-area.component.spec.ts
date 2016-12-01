@@ -61,6 +61,11 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should show an folder non supported error in console when the file type is empty', () => {
         component.showUdoNotificationBar = false;
         spyOn(console, 'error');
@@ -199,6 +204,10 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakePromise);
         spyOn(component, 'onFilesEntityDropped').and.callFake( () => {
             expect(component.onFilesEntityDropped).toHaveBeenCalledWith(itemEntity);
+        });
+
+        spyOn(component, '_showUndoNotificationBar').and.callFake( () => {
+            expect(component._showUndoNotificationBar).toHaveBeenCalled();
             done();
         });
 
