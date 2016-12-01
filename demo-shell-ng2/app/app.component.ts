@@ -72,10 +72,12 @@ export class AppComponent {
             .subscribe(
                 () => {
                     this.router.navigate(['/login']);
+                    this.hideDrawer();
                 },
                 ($event: any) => {
                     if ($event && $event.response && $event.response.status === 401) {
                         this.router.navigate(['/login']);
+                        this.hideDrawer();
                     } else {
                         console.error('An unknown error occurred while logging out', $event);
                     }
@@ -95,6 +97,7 @@ export class AppComponent {
 
     changeLanguage(lang: string) {
         this.translate.use(lang);
+        this.hideDrawer();
     }
 
     hideDrawer() {
