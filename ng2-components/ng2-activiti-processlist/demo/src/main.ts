@@ -24,6 +24,8 @@ import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
 import { AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
+const currentProcessIdNew = '__NEW__';
+
 @Component({
     selector: 'alfresco-app-demo',
     template: `
@@ -66,7 +68,8 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
                             <span>Process Filters</span>
-                            <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
+                            <button type="button" (click)="navigateStartProcess()"
+                                    class="mdl-button" data-automation-id="btn-start-process">Start Process</button>
                             <activiti-process-instance-filters
                                         [appId]="appId"
                                         (filterClick)="onProcessFilterClick($event)"
@@ -85,13 +88,17 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
                                         (onSuccess)="onSuccessProcessList($event)"
                                         #activitiprocesslist></activiti-process-instance-list>
                         </div>
-                        <div class="mdl-cell mdl-cell--7-col task-column">
+                        <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="!isStartProcessMode()">
                             <span>Process Details</span>
                             <activiti-process-instance-details
                                         [processInstanceId]="currentProcessInstanceId"
                                         (taskFormCompleted)="taskFormCompleted()"
                                         (processCancelled)="processCancelled()"
                                         #activitiprocessdetails></activiti-process-instance-details>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
+                            <span>Start Process</span>
+                            <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
                         </div>
                     </div>
                 </div>
@@ -123,6 +130,9 @@ class MyDemoApp implements OnInit {
 
     @ViewChild('activitiprocessdetails')
     activitiprocessdetails: any;
+
+    @ViewChild(ActivitiStartProcessInstance)
+    activitiStartProcess: ActivitiStartProcessInstance;
 
     @Input()
     appId: number;
@@ -187,6 +197,19 @@ class MyDemoApp implements OnInit {
         this.currentProcessInstanceId = null;
 
         this.changeTab('apps', 'processes');
+    }
+
+    navigateStartProcess() {
+        this.currentProcessInstanceId = currentProcessIdNew;
+    }
+
+    onStartProcessInstance(instance: ProcessInstance) {
+        this.currentProcessInstanceId = instance.id;
+        this.activitiStartProcess.reset();
+    }
+
+    isStartProcessMode() {
+        return this.currentProcessInstanceId === currentProcessIdNew;
     }
 
     onProcessFilterClick(event: any) {
