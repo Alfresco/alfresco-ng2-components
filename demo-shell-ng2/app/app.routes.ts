@@ -17,9 +17,10 @@
 
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from 'ng2-alfresco-core';
+import { AuthGuard, AuthGuardEcm, AuthGuardBpm } from 'ng2-alfresco-core';
 
 import {
+    HomeComponent,
     FilesComponent,
     DataTableDemoComponent,
     SearchComponent,
@@ -40,72 +41,76 @@ export const appRoutes: Routes = [
     { path: 'login', component: LoginDemoComponent },
     {
         path: '',
-        component: LoginDemoComponent,
+        component: HomeComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'home',
-        component: FilesComponent,
+        component: HomeComponent,
         canActivate: [AuthGuard]
     },
     {
         path: 'files',
         component: FilesComponent,
+        canActivate: [AuthGuardEcm]
+    },
+    {
+        path: 'datatable',
+        component: DataTableDemoComponent,
         canActivate: [AuthGuard]
     },
-    { path: 'datatable', component: DataTableDemoComponent },
     {
         path: 'uploader',
         component: UploadButtonComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardEcm]
     },
     {
         path: 'search',
         component: SearchComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardEcm]
     },
     {
         path: 'activiti',
         component: ActivitiAppsView,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardBpm]
     },
     {
         path: 'activiti/apps',
         component: ActivitiAppsView,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardBpm]
     },
     {
         path: 'activiti/apps/:appId/tasks',
         component: ActivitiDemoComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardBpm]
     },
     // TODO: check if neeeded
     {
         path: 'activiti/appId/:appId',
         component: ActivitiDemoComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardBpm]
     },
     // TODO: check if needed
     {
         path: 'activiti/tasks/:id',
         component: FormViewer,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardBpm]
     },
     // TODO: check if needed
     {
         path: 'activiti/tasksnode/:id',
         component: FormNodeViewer,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardBpm]
     },
     {
         path: 'webscript',
         component: WebscriptComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardEcm]
     },
     {
         path: 'tag',
         component: TagComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuardEcm]
     },
     { path: 'about', component: AboutComponent },
     { path: 'settings', component: SettingComponent }

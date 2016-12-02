@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export { HomeComponent } from './home/home.component';
 export { DataTableDemoComponent } from './datatable/datatable-demo.component';
 export { SearchComponent } from './search/search.component';
 export { SearchBarComponent } from './search/search-bar.component';
