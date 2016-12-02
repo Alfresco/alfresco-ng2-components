@@ -1,6 +1,11 @@
 :host {
     width: 100%;
 }
+
+.application-title {
+    color: white;
+}
+
 .logo {
     position: absolute;
     right: 20px;
