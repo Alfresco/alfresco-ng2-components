@@ -56,6 +56,7 @@
     "alfresco"
   ],
   "dependencies": {
+    "@angular/router": "3.0.0",
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
     "@angular/core": "2.0.0",

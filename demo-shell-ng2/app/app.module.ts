@@ -38,6 +38,7 @@ import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 
 import {
+    HomeComponent,
     DataTableDemoComponent,
     SearchComponent,
     SearchBarComponent,
@@ -75,6 +76,7 @@ import {
     ],
     declarations: [
         AppComponent,
+        HomeComponent,
         SearchBarComponent,
         DataTableDemoComponent,
         SearchComponent,

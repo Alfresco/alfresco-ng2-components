@@ -17,13 +17,13 @@
 
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
-                <a class="mdl-navigation__link" data-automation-id="files" href=""
-                   routerLink="/files">DocumentList</a>
-                <a class="mdl-navigation__link" data-automation-id="datatable" href="" routerLink="/datatable">DataTable</a>
-                <a class="mdl-navigation__link" data-automation-id="uploader" href="" routerLink="/uploader">Uploader</a>
+                <a class="mdl-navigation__link" data-automation-id="files" href="" routerLink="/">Home</a>
+                <a class="mdl-navigation__link" data-automation-id="files" href="" routerLink="/files">DocumentList</a>
+                <!--<a class="mdl-navigation__link" data-automation-id="datatable" href="" routerLink="/datatable">DataTable</a>-->
+                <!--<a class="mdl-navigation__link" data-automation-id="uploader" href="" routerLink="/uploader">Uploader</a>-->
                 <a class="mdl-navigation__link" data-automation-id="activiti" href="" routerLink="/activiti">Activiti</a>
-                <a class="mdl-navigation__link" data-automation-id="webscript" href="" routerLink="/webscript">Webscript</a>
-                <a class="mdl-navigation__link" data-automation-id="tag" href="" routerLink="/tag">Tag</a>
+                <!--<a class="mdl-navigation__link" data-automation-id="webscript" href="" routerLink="/webscript">Webscript</a>-->
+                <!--<a class="mdl-navigation__link" data-automation-id="tag" href="" routerLink="/tag">Tag</a>-->
                 <a class="mdl-navigation__link" data-automation-id="login" href="" routerLink="/login">Login</a>
                 <a class="mdl-navigation__link" data-automation-id="settings" href="" routerLink="/settings">Settings</a>
             </nav>
@@ -60,6 +60,7 @@
         </nav>
         <span class="mdl-layout-title">Components</span>
         <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="" routerLink="/" (click)="hideDrawer()">Home</a>
             <a class="mdl-navigation__link" href="" routerLink="/files" (click)="hideDrawer()">DocumentList</a>
             <a class="mdl-navigation__link" href="" routerLink="/datatable" (click)="hideDrawer()">DataTable</a>
             <a class="mdl-navigation__link" href="" routerLink="/uploader" (click)="hideDrawer()">Uploader</a>

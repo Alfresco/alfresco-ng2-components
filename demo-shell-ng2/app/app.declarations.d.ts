@@ -15,14 +15,5 @@
  * limitations under the License.
  */
 
-export * from './storage.service';
-export * from './AlfrescoApi.service';
-export * from './AlfrescoSettings.service';
-export * from './AlfrescoTranslationLoader.service';
-export * from './AlfrescoTranslation.service';
-export * from './AlfrescoAuthentication.service';
-export * from './AlfrescoContent.service';
-export * from './renditions.service';
-export * from './auth-guard.service';
-export * from './auth-guard-ecm.service';
-export * from './auth-guard-bpm.service';
+declare var module: any;
+declare let __moduleName: string;

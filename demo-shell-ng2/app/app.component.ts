@@ -65,7 +65,7 @@ export class AppComponent {
     }
 
     isLoginPage(): boolean {
-        return location.pathname === '/login' || location.pathname === '/' || location.pathname === '/settings';
+        return location.pathname === '/login' || location.pathname === '/settings';
     }
 
     onLogout(event) {
