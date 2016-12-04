@@ -43,8 +43,14 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
     @Output()
     error: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('dialog')
-    dialog: DebugElement;
+    @ViewChild('addDialog')
+    addDialog: DebugElement;
+
+    @ViewChild('editDialog')
+    editDialog: DebugElement;
+
+    @ViewChild('errorDialog')
+    errorDialog: DebugElement;
 
     private defaultSchemaColumn: any[] = [
         {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
@@ -54,6 +60,7 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
 
     variableName: string;
     variableValue: string;
+    variableScope: string;
 
     /**
      * Constructor
@@ -158,40 +165,113 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
         }
     }
 
-    public showDialog() {
-        if (!this.dialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.dialog.nativeElement);
+    private polyfillDialog(dialog: DebugElement) {
+        if (!dialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(dialog.nativeElement);
         }
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
-        }
+    }
+
+    public showAddDialog() {
+        this.resetForm();
+        this.polyfillDialog(this.addDialog);
+        this.addDialog.nativeElement.showModal();
+    }
+
+    public showEditDialog(row: ObjectDataRow) {
+        this.variableName = row.getValue('name');
+        this.variableValue = row.getValue('value');
+        this.variableScope = row.getValue('scope');
+        this.polyfillDialog(this.editDialog);
+        this.editDialog.nativeElement.showModal();
+    }
+
+    public showErrorDialog() {
+        this.polyfillDialog(this.errorDialog);
+        this.errorDialog.nativeElement.showModal();
     }
 
     public add() {
         this.activitiProcess.createOrUpdateProcessInstanceVariables(this.processInstanceId, [new ProcessInstanceVariable({
             name: this.variableName,
             value: this.variableValue,
-            scope: 'global'
+            scope: this.variableScope
         })]).subscribe(
             (res: ProcessInstanceVariable[]) => {
                 this.getProcessInstanceVariables(this.processInstanceId);
                 this.resetForm();
             },
             (err) => {
+                this.showErrorDialog();
                 this.error.emit(err);
             }
         );
-        this.cancel();
+        this.closeAddDialog();
     }
 
-    public cancel() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
+    public edit() {
+        this.activitiProcess.createOrUpdateProcessInstanceVariables(this.processInstanceId, [new ProcessInstanceVariable({
+            name: this.variableName,
+            value: this.variableValue,
+            scope: this.variableScope
+        })]).subscribe(
+            (res: ProcessInstanceVariable[]) => {
+                this.getProcessInstanceVariables(this.processInstanceId);
+                this.resetForm();
+            },
+            (err) => {
+                this.showErrorDialog();
+                this.error.emit(err);
+            }
+        );
+        this.closeEditDialog();
+    }
+
+    public closeAddDialog() {
+        this.addDialog.nativeElement.close();
+    }
+
+    public closeEditDialog() {
+        this.editDialog.nativeElement.close();
+    }
+
+    public closeErrorDialog() {
+        this.errorDialog.nativeElement.close();
     }
 
     private resetForm() {
         this.variableName = '';
         this.variableValue = '';
+        this.variableScope = 'global';
+    }
+
+    private onDeleteVariable(row: ObjectDataRow) {
+        this.activitiProcess.deleteProcessInstanceVariable(this.processInstanceId, row.getValue('name')).subscribe(() => {
+            this.getProcessInstanceVariables(this.processInstanceId);
+        },
+        (err) => {
+            this.showErrorDialog();
+            this.error.emit(err);
+        });
+    }
+
+    onExecuteRowAction(event) {
+        let row: ObjectDataRow = event.args.row;
+        let action = event.args.action;
+        if (action && action.id === 'delete') {
+            this.onDeleteVariable(row);
+        }
+        if (action && action.id === 'edit') {
+            this.showEditDialog(row);
+        }
+    }
+
+    onShowRowActionsMenu(event) {
+        event.args.actions = [{
+            id: 'delete',
+            title: 'Delete'
+        }, {
+            id: 'edit',
+            title: 'Edit'
+        }];
     }
 }

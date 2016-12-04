@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataTableModule, ObjectDataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
 
 import { ActivitiProcessInstanceVariables } from './activiti-process-instance-variables.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
@@ -35,6 +35,7 @@ describe('ActivitiProcessInstanceVariables', () => {
     let fixture: ComponentFixture<ActivitiProcessInstanceVariables>;
     let getVariablesSpy: jasmine.Spy;
     let createOrUpdateProcessInstanceVariablesSpy: jasmine.Spy;
+    let deleteProcessInstanceVariableSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -69,6 +70,7 @@ describe('ActivitiProcessInstanceVariables', () => {
             value: 'Test3'
         }]));
         createOrUpdateProcessInstanceVariablesSpy = spyOn(service, 'createOrUpdateProcessInstanceVariables').and.returnValue(Observable.of({id: 123, message: 'Test'}));
+        deleteProcessInstanceVariableSpy = spyOn(service, 'deleteProcessInstanceVariable').and.returnValue(Observable.of());
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -176,7 +178,7 @@ describe('ActivitiProcessInstanceVariables', () => {
         });
     });
 
-    describe('Add comment', () => {
+    describe('Add variable', () => {
 
         beforeEach(async(() => {
             component.processInstanceId = '123';
@@ -185,14 +187,14 @@ describe('ActivitiProcessInstanceVariables', () => {
         }));
 
         it('should display a dialog to the user when the Add button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog')).nativeElement;
+            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog.add-dialog')).nativeElement;
             let showSpy: jasmine.Spy = spyOn(dialogEl, 'showModal');
-            component.showDialog();
+            component.showAddDialog();
             expect(showSpy).toHaveBeenCalled();
         });
 
-        it('should call service to add a comment', () => {
-            component.showDialog();
+        it('should call service to add a variable', () => {
+            component.showAddDialog();
             component.variableName = 'Test var';
             component.variableValue = 'Test 222';
             component.add();
@@ -210,7 +212,7 @@ describe('ActivitiProcessInstanceVariables', () => {
         it('should emit an error when an error occurs adding the variable', () => {
             let emitSpy = spyOn(component.error, 'emit');
             createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Observable.throw({}));
-            component.showDialog();
+            component.showAddDialog();
             component.variableName = 'Test var';
             component.variableValue = 'Test 222';
             component.add();
@@ -218,10 +220,142 @@ describe('ActivitiProcessInstanceVariables', () => {
         });
 
         it('should close add dialog when close button clicked', () => {
-            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog')).nativeElement;
+            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog.add-dialog')).nativeElement;
             let closeSpy: jasmine.Spy = spyOn(dialogEl, 'close');
-            component.showDialog();
-            component.cancel();
+            component.showAddDialog();
+            component.closeAddDialog();
+            expect(closeSpy).toHaveBeenCalled();
+        });
+
+    });
+
+    describe('Edit variable', () => {
+
+        let fakeVariable = {
+            name: 'fakeVar',
+            value: 'my value 4',
+            scope: 'global'
+        };
+
+        beforeEach(async(() => {
+            component.processInstanceId = '123';
+            fixture.detectChanges();
+            fixture.whenStable();
+        }));
+
+        it('should display a dialog to the user when the Edit action clicked', () => {
+            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog.edit-dialog')).nativeElement;
+            let showSpy: jasmine.Spy = spyOn(dialogEl, 'showModal');
+            component.onExecuteRowAction({
+                args: {
+                    row: new ObjectDataRow(fakeVariable),
+                    action: {
+                        id: 'edit'
+                    }
+                }
+            });
+            expect(showSpy).toHaveBeenCalled();
+        });
+
+        it('should call service to edit a variable', () => {
+            component.showEditDialog(new ObjectDataRow(fakeVariable));
+            component.variableValue = 'Test 222';
+            component.edit();
+            let serviceArgs = createOrUpdateProcessInstanceVariablesSpy.calls.mostRecent().args;
+            let sentProcessId = serviceArgs[0];
+            let sentProcesses = serviceArgs[1];
+            expect(serviceArgs.length).toBe(2);
+            expect(sentProcessId).toBe('123');
+            expect(sentProcesses.length).toBe(1);
+            expect(sentProcesses[0].name).toBe(fakeVariable.name);
+            expect(sentProcesses[0].value).toBe('Test 222');
+            expect(sentProcesses[0].scope).toBe(fakeVariable.scope);
+        });
+
+        it('should emit an error when an error occurs editing the variable', () => {
+            let emitSpy = spyOn(component.error, 'emit');
+            createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Observable.throw({}));
+            component.showEditDialog(new ObjectDataRow(fakeVariable));
+            component.variableName = 'Test var';
+            component.variableValue = 'Test 222';
+            component.edit();
+            expect(emitSpy).toHaveBeenCalled();
+        });
+
+        it('should close edit dialog when close button clicked', () => {
+            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog.edit-dialog')).nativeElement;
+            let closeSpy: jasmine.Spy = spyOn(dialogEl, 'close');
+            component.showEditDialog(new ObjectDataRow(fakeVariable));
+            component.closeEditDialog();
+            expect(closeSpy).toHaveBeenCalled();
+        });
+
+    });
+
+    describe('Delete variable', () => {
+
+        let fakeVariable = {
+            name: 'fakeVar',
+            value: 'my value 4',
+            scope: 'global'
+        };
+
+        let deleteAction = {
+            id: 'delete'
+        };
+
+        beforeEach(async(() => {
+            component.processInstanceId = '123';
+            fixture.detectChanges();
+            fixture.whenStable();
+        }));
+
+        it('should call service to delete the variable', () => {
+            component.variableValue = 'Test 222';
+            component.onExecuteRowAction({
+                args: {
+                    row: new ObjectDataRow(fakeVariable),
+                    action: deleteAction
+                }
+            });
+            let serviceArgs = deleteProcessInstanceVariableSpy.calls.mostRecent().args;
+            let sentProcessId = serviceArgs[0];
+            let sentVariableName = serviceArgs[1];
+            expect(serviceArgs.length).toBe(2);
+            expect(sentProcessId).toBe('123');
+            expect(sentVariableName).toBe(fakeVariable.name);
+        });
+
+        it('should emit an error when an error occurs deleting the variable', () => {
+            let emitSpy = spyOn(component.error, 'emit');
+            deleteProcessInstanceVariableSpy.and.returnValue(Observable.throw({}));
+            component.onExecuteRowAction({
+                args: {
+                    row: new ObjectDataRow(fakeVariable),
+                    action: deleteAction
+                }
+            });
+            expect(emitSpy).toHaveBeenCalled();
+        });
+
+        it('should display error dialog when an error is triggered', () => {
+            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog.error-dialog')).nativeElement;
+            let showSpy: jasmine.Spy = spyOn(dialogEl, 'showModal');
+            deleteProcessInstanceVariableSpy.and.returnValue(Observable.throw({}));
+            component.onExecuteRowAction({
+                args: {
+                    row: new ObjectDataRow(fakeVariable),
+                    action: deleteAction
+                }
+            });
+            expect(showSpy).toHaveBeenCalled();
+        });
+
+        it('should close error dialog when close button clicked', () => {
+            let dialogEl = fixture.debugElement.query(By.css('.mdl-dialog.error-dialog')).nativeElement;
+            let closeSpy: jasmine.Spy = spyOn(dialogEl, 'close');
+            component.showErrorDialog();
+            component.closeErrorDialog();
             expect(closeSpy).toHaveBeenCalled();
         });
 

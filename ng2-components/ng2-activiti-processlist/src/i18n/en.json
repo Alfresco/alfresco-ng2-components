@@ -56,16 +56,28 @@
             "BUTTON": {
                 "ADD": "Set a variable"
             },
+            "DIALOG": {
+                "BUTTON": {
+                    "SET": "Set",
+                    "OK": "OK",
+                    "CANCEL": "Cancel",
+                    "CLOSE": "Close"
+                }
+            },
             "ADD_DIALOG": {
                 "TITLE": "Set process variable",
                 "LABEL": {
                     "NAME": "Name",
-                    "VALUE": "Value"
-                },
-                "BUTTON": {
-                    "SET": "Set",
-                    "CANCEL": "Cancel"
+                    "VALUE": "Value",
+                    "SCOPE": "Scope"
                 }
+            },
+            "EDIT_DIALOG": {
+                "TITLE": "Edit process variable"
+            },
+            "ERROR_DIALOG": {
+                "TITLE": "Sorry, an error occurred",
+                "DESCRIPTION": "Could not perform the requested operation, please check that you have permission."
             }
         }
     },

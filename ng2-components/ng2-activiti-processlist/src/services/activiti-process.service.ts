@@ -267,6 +267,13 @@ export class ActivitiProcessService {
             .catch(this.handleError);
     }
 
+    deleteProcessInstanceVariable(processDefinitionId: string, variableName: string): Observable<void> {
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.processInstanceVariablesApi.deleteProcessInstanceVariable(processDefinitionId, variableName)
+            )
+            .catch(this.handleError);
+    }
+
     private callApiGetUserProcessInstanceFilters(filterOpts) {
         return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts);
     }
