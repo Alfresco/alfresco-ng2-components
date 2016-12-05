@@ -68,7 +68,7 @@ describe('TranslateLoader', () => {
         expect(customLoader.existComponent('login')).toBeTruthy();
     });
 
-    it('should return the Json tranlation ', () => {
+    it('should return the Json translation ', () => {
         customLoader.addComponentList('login', 'path/login');
         customLoader.getTranslation('en').subscribe(
             (response) => {
