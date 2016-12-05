@@ -40,7 +40,6 @@ export * from './boundary-events/index';
 export * from './intermediate-catching-events/index';
 export * from './structural/index';
 export * from './swimlanes/index';
-export * from '../models/diagram-metric.model';
 
 export const DIAGRAM_DIRECTIVES: any[] = [
     DiagramComponent,
