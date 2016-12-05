@@ -25,7 +25,10 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
+<<<<<<< HEAD
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+=======
+>>>>>>> origin/dev-denys--build-scripts
 
 describe('DisplayValueWidget', () => {
 
@@ -689,8 +692,12 @@ describe('DisplayValueWidget', () => {
                 declarations: [DisplayValueWidget],
                 providers: [
                     EcmModelService,
+<<<<<<< HEAD
                     FormService,
                     WidgetVisibilityService
+=======
+                    FormService
+>>>>>>> origin/dev-denys--build-scripts
                 ]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(DisplayValueWidget);

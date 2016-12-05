@@ -111,10 +111,14 @@ describe('DropdownWidget', () => {
         let element: HTMLElement;
         let componentHandler;
         let stubFormService;
+<<<<<<< HEAD
+        let fakeOptionList: FormFieldOption[] = [{ id: 'opt_1', name: 'option_1' }, {
+=======
         let fakeOptionList: FormFieldOption[] = [{
             id: 'opt_1',
             name: 'option_1'
         }, {
+>>>>>>> origin/dev-denys--build-scripts
             id: 'opt_2',
             name: 'option_2'
         }, { id: 'opt_3', name: 'option_3' }];
@@ -133,6 +137,59 @@ describe('DropdownWidget', () => {
             });
         }));
 
+<<<<<<< HEAD
+        beforeEach(async(() => {
+            stubFormService = fixture.debugElement.injector.get(FormService);
+            visibilityService = fixture.debugElement.injector.get(WidgetVisibilityService);
+            spyOn(visibilityService, 'refreshVisibility').and.stub();
+            spyOn(stubFormService, 'getRestFieldValues').and.returnValue(Observable.of(fakeOptionList));
+            dropDownWidget.field = new FormFieldModel(new FormModel({ taskId: 'fake-task-id' }), {
+                id: 'dropdown-id',
+                name: 'date-name',
+                type: 'dropdown',
+                readOnly: 'false',
+                restUrl: 'fake-rest-url'
+            });
+            dropDownWidget.field.isVisible = true;
+            fixture.detectChanges();
+        }));
+
+        afterEach(() => {
+            fixture.destroy();
+            TestBed.resetTestingModule();
+        });
+
+        it('should show visible dropdown widget', async(() => {
+            expect(element.querySelector('#dropdown-id')).toBeDefined();
+            expect(element.querySelector('#dropdown-id')).not.toBeNull();
+            expect(element.querySelector('#opt_1')).not.toBeNull();
+            expect(element.querySelector('#opt_2')).not.toBeNull();
+            expect(element.querySelector('#opt_3')).not.toBeNull();
+        }));
+
+        it('should select the default value', async(() => {
+            dropDownWidget.field.value = 'option_2';
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                    expect(dropDownElement).not.toBeNull();
+                    expect(element.querySelector('#opt_2')).not.toBeNull();
+                    expect(dropDownElement.value).toBe('option_2');
+                });
+        }));
+
+        it('should be not visibile when isVisible is false', async(() => {
+            dropDownWidget.field.isVisible = false;
+            fixture.detectChanges();
+            fixture.whenStable()
+                .then(() => {
+                    let dropDownElement: HTMLSelectElement = <HTMLSelectElement> element.querySelector('#dropdown-id');
+                    expect(dropDownElement).toBeNull();
+                });
+        }));
+
+=======
         describe('and dropdown is populated via taskId', () => {
 
             beforeEach(async(() => {
@@ -260,5 +317,6 @@ describe('DropdownWidget', () => {
                     });
             }));
         });
+>>>>>>> origin/dev-denys--build-scripts
     });
 });

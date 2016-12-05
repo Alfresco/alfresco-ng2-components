@@ -2,7 +2,7 @@
 branches:
   only:
     - master
-
+    
 environment:
   nodejs_version: "5"
 

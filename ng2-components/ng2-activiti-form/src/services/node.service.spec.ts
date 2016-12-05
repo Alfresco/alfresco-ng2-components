@@ -28,7 +28,7 @@ describe('NodeService', () => {
 
     let service: NodeService;
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ HttpModule, CoreModule ],
             providers: [

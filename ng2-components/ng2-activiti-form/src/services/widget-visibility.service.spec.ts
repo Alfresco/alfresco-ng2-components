@@ -37,7 +37,7 @@ describe('WidgetVisibilityService', () => {
     let booleanResult: boolean;
     let stubFormWithFields = new FormModel(fakeFormJson);
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [ HttpModule, CoreModule ],
             providers: [

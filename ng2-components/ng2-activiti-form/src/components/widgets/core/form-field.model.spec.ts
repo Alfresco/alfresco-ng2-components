@@ -168,7 +168,7 @@ describe('FormFieldModel', () => {
             ]
         });
 
-        field.value = 'opt2';
+        field.value = 'Option 2';
         expect(form.values['dropdown-2']).toEqual(field.options[1]);
     });
 

@@ -123,6 +123,7 @@ export class WidgetVisibilityService {
 
     searchForm(form: FormModel, name: string) {
         let fieldValue = '';
+<<<<<<< HEAD
         form.fields.forEach((containerModel: ContainerModel) => {
             containerModel.field.columns.forEach((containerColumnModel: ContainerColumnModel) => {
                 let fieldFound = containerColumnModel.fields.find(field => this.isSearchedField(field, name));
@@ -167,6 +168,20 @@ export class WidgetVisibilityService {
             formattedFieldName = fieldToFind.substring(0, fieldToFind.length - 6);
         }
         return formattedFieldName;
+=======
+        form.json.fields.forEach(columns => {
+                for (let i in columns.fields) {
+                    if (columns.fields.hasOwnProperty(i)) {
+                        let field = columns.fields[i].find(field => field.id === name);
+                        if (field) {
+                            fieldValue = field.value;
+                        }
+                    }
+                }
+            }
+        );
+        return fieldValue;
+>>>>>>> origin/dev-denys--build-scripts
     }
 
     getVariableValue(form: FormModel, name: string, processVarList: TaskProcessVariableModel[]) {

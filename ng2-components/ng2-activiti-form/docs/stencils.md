@@ -18,6 +18,7 @@ Where `<activiti-app-root>` should be replaced with a valid url pointing to your
 ```html
 <script src="http://localhost:9999/activiti-app/app/rest/script-files/controllers"></script>
 ```
+<<<<<<< HEAD
 - `/app/rest/script-files/controllers`
     provides all stencil controllers stored within Activiti
 
@@ -27,16 +28,36 @@ Where `<activiti-app-root>` should be replaced with a valid url pointing to your
 
 - `runtime.adf.js`
     provides API for stencil management and registration,
+=======
+- `/app/rest/script-files/controllers`  
+    provides all stencil controllers stored within Activiti
+
+- `runtime.ng1.js`  
+    provides a compatibility layer for controllers created with Angular 1  
+    (this is to avoid runtime errors when loading Angular 1 code into `<activiti-form>` component)
+
+- `runtime.adf.js`  
+    provides API for stencil management and registration, 
+>>>>>>> origin/dev-denys--build-scripts
     i.e. mapping html templates with corresponding controller classes
 
 ## Creating new stencil
 
+<<<<<<< HEAD
 Create a new stencil and add a new item called `ng2 component 01`.
 
 The internal identifier in this case should be `ng2_component_01`.
 This value will be used as field type when form gets rendered.
 
 ## Form runtime template
+=======
+Create a new stencil and add a new item called `ng2 component 01`.  
+
+The internal identifier in this case should be `ng2_component_01`. 
+This value will be used as field type when form gets rendered.
+
+## Form runtime template 
+>>>>>>> origin/dev-denys--build-scripts
 
 This should be a valid Angular 2 component template that you want to render in `<activiti-form>` component:
 
@@ -64,7 +85,11 @@ This can be any html layout to be rendered as a component placeholder in Activit
 This field should contain JavaScript code for Angular 2 component class.
 
 _Note: If you are using TypeScript then you should be putting transpiled JavaScript code here,
+<<<<<<< HEAD
 you can try official [TypeScript playground](http://www.typescriptlang.org/play/)
+=======
+you can try official [TypeScript playground](http://www.typescriptlang.org/play/) 
+>>>>>>> origin/dev-denys--build-scripts
 to see how TS code gets transpiled into JS._
 
 ### JavaScript code
@@ -76,7 +101,11 @@ var SampleClass1 = (function () {
         console.log('ng2_component_01 ctor');
     }
     SampleClass1.prototype.ngOnInit = function () {
+<<<<<<< HEAD
       console.log('OnInit called');
+=======
+      console.log('OnInit called');  
+>>>>>>> origin/dev-denys--build-scripts
     };
     return SampleClass1;
 }());
@@ -102,7 +131,11 @@ class SampleClass1 implements OnInit {
 }
 ```
 
+<<<<<<< HEAD
 ### Mapping template with component class
+=======
+### Mapping template with component class 
+>>>>>>> origin/dev-denys--build-scripts
 
 In order to map **form runtime template** with the corresponding component class
 you will need registering both parts with `adf.registerComponent(identifier, class)` api:
@@ -122,7 +155,11 @@ var SampleClass1 = (function () {
         console.log('ng2_component_01 ctor');
     }
     SampleClass1.prototype.ngOnInit = function () {
+<<<<<<< HEAD
       console.log('OnInit called');
+=======
+      console.log('OnInit called');  
+>>>>>>> origin/dev-denys--build-scripts
     };
     return SampleClass1;
 }());
