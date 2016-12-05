@@ -1,6 +1,6 @@
 <raphael-circle [center]="center" [radius]="circleRadiusInner" [strokeWidth]="options.strokeWidth" [stroke]="options.stroke"
                 [fillColors]="options.fillColors" [fillOpacity]="options.fillOpacity"></raphael-circle>
-<raphael-circle [center]="center" [radius]="circleRadiusOuter" [strokeWidth]="options.strokeWidth" [stroke]="options.stroke"
+<raphael-circle [elementId]="data.id" [center]="center" [radius]="circleRadiusOuter" [strokeWidth]="options.strokeWidth" [stroke]="options.stroke"
                 [fillColors]="options.fillColors" [fillOpacity]="options.fillOpacity"></raphael-circle>
 <diagram-container-icon-event [data]="data" [type]="data.eventDefinition.type" [fillColor]="signalFillColor"></diagram-container-icon-event>
 <diagram-tooltip [data]="data"></diagram-tooltip>

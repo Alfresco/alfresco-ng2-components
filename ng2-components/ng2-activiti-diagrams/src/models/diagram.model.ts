@@ -54,6 +54,7 @@ export class DiagramElementModel {
     y: string;
     properties: DiagramElementPropertyModel[] = [];
     dataType: string = '';
+    eventDefinition: DiagramEventDefinitionModel;
 
     constructor(obj?: any) {
         if (obj) {
@@ -71,6 +72,9 @@ export class DiagramElementModel {
                 });
             }
             this.dataType = obj.dataType || '';
+            if (obj.eventDefinition) {
+                this.eventDefinition = new DiagramEventDefinitionModel(obj.eventDefinition);
+            }
         }
     }
 }
@@ -121,6 +125,18 @@ export class DiagramWayPointModel {
         if (obj) {
             this.x = obj.x;
             this.y = obj.y;
+        }
+    }
+}
+
+export class DiagramEventDefinitionModel {
+    timeCycle: string;
+    type: string;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.timeCycle = obj.timeCycle;
+            this.type = obj.type;
         }
     }
 }
