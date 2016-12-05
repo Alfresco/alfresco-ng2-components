@@ -1,4 +1,5 @@
-<raphael-circle [center]="center" [radius]="options.radius" [strokeWidth]="options.strokeWidth" [stroke]="options.stroke"
+<raphael-circle [elementId]="data.id" [center]="center" [radius]="options.radius" [strokeWidth]="options.strokeWidth" [stroke]="options.stroke"
                 [fillColors]="options.fillColors" [fillOpacity]="options.fillOpacity"></raphael-circle>
 <diagram-container-icon-event [data]="data" [type]="data.eventDefinition && data.eventDefinition.type"
                               [fillColor]="iconFillColor"></diagram-container-icon-event>
+<diagram-tooltip [data]="data"></diagram-tooltip>

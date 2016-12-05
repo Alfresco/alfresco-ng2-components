@@ -2,9 +2,4 @@
               [stroke]="options.stroke" [strokeWidth]="options.strokeWidth"
               [fillColors]="options.fillColors" [fillOpacity]="options.fillOpacity"></raphael-rect>
 <raphael-text [text]="data.name" [position]="textPosition"></raphael-text>
-<div class="mdl-tooltip mdl-tooltip--large" [attr.for]="data.id">
-    <div>
-        <h6 class="mdl-tooltip-header__message"><span>{{data.name}}</span></h6>
-        <span class="mdl-tooltip-body__message">0 hours</span>
-    </div>
-</div>
+<diagram-tooltip [data]="data"></diagram-tooltip>

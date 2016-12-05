@@ -11,9 +11,11 @@
     background: black;
     color: white;
     margin-top: 0px;
+    margin-bottom: 3px;
     width:100%;
 }
 
 .mdl-tooltip-body__message {
     color: black;
+    text-align: center;
 }
