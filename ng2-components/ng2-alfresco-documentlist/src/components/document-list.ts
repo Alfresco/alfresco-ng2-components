@@ -129,10 +129,6 @@ export class DocumentList implements OnInit, AfterContentInit {
 
     private _path = this.DEFAULT_ROOT_FOLDER;
 
-    get currentFolderPath(): string {
-        return this._path;
-    }
-
     @Input()
     set currentFolderPath(value: string) {
         if (value !== this._path) {
@@ -146,6 +142,10 @@ export class DocumentList implements OnInit, AfterContentInit {
                     this.error.emit(err);
                 });
         }
+    }
+
+    get currentFolderPath(): string {
+        return this._path;
     }
 
     errorMessage;
