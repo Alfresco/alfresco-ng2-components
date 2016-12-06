@@ -18,6 +18,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
     selector: 'search-bar',
@@ -51,10 +52,12 @@ export class SearchBarComponent {
         }]);
     }
 
-    onFileClicked(event) {
-        if (event.value.entry.isFile) {
-            this.fileNodeId = event.value.entry.id;
+    onItemClicked(event: MinimalNodeEntity) {
+        if (event.entry.isFile) {
+            this.fileNodeId = event.entry.id;
             this.fileShowed = true;
+        } else if (event.entry.isFolder) {
+            this.router.navigate(['/files', event.entry.id]);
         }
     }
 

@@ -55,6 +55,11 @@ export const appRoutes: Routes = [
         canActivate: [AuthGuardEcm]
     },
     {
+        path: 'files/:id',
+        component: FilesComponent,
+        canActivate: [AuthGuardEcm]
+    },
+    {
         path: 'datatable',
         component: DataTableDemoComponent,
         canActivate: [AuthGuard]

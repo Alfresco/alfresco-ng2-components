@@ -214,7 +214,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
         });
 
-        it('should emit file select when file item clicked', (done) => {
+        it('should emit fileSelect event when file item clicked', (done) => {
 
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
@@ -231,7 +231,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             });
         });
 
-        it('should not emit preview if a non-file item is clicked', (done) => {
+        it('should emit fileSelect event if when folder item clicked', (done) => {
 
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(folderResult));
@@ -240,7 +240,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 (<any> element.querySelector('#result_row_0')).click();
-                expect(component.fileSelect.emit).not.toHaveBeenCalled();
+                expect(component.fileSelect.emit).toHaveBeenCalled();
                 done();
             });
 

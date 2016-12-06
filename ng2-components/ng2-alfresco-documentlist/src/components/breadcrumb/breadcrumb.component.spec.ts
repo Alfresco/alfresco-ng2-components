@@ -87,7 +87,7 @@ describe('DocumentListBreadcrumb', () => {
 
     it('should update document list on click', (done) => {
         let documentList = new DocumentList(null, null, null);
-        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
 
         let node = <PathNode> { name: 'name', path: '/path' };
         component.target = documentList;
