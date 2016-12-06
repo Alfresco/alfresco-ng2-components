@@ -22,6 +22,7 @@ export class DiagramModel {
     diagramWidth: string;
     elements: DiagramElementModel[] = [];
     flows: DiagramFlowElementModel[] = [];
+    pools: DiagramPoolElementModel[] = [];
 
     constructor(obj?: any) {
         if (obj) {
@@ -37,6 +38,11 @@ export class DiagramModel {
             if (obj.flows) {
                 obj.flows.forEach((flow: DiagramFlowElementModel) => {
                     this.flows.push(new DiagramFlowElementModel(flow));
+                });
+            }
+            if (obj.pools) {
+                obj.pools.forEach((pool: DiagramPoolElementModel) => {
+                    this.pools.push(new DiagramPoolElementModel(pool));
                 });
             }
         }
@@ -55,17 +61,19 @@ export class DiagramElementModel {
     properties: DiagramElementPropertyModel[] = [];
     dataType: string = '';
     eventDefinition: DiagramEventDefinitionModel;
+    taskType: string = '';
 
     constructor(obj?: any) {
         if (obj) {
-            this.height = obj.height;
-            this.id = obj.id;
-            this.name = obj.name;
-            this.type = obj.type;
-            this.width = obj.width;
-            this.value = obj.value;
-            this.x = obj.x;
-            this.y = obj.y;
+            this.height = obj.height || '';
+            this.id = obj.id || '';
+            this.name = obj.name || '';
+            this.type = obj.type || '';
+            this.width = obj.width || '';
+            this.value = obj.value || '';
+            this.x = obj.x || '';
+            this.y = obj.y || '';
+            this.taskType = obj.taskType || '';
             if (obj.properties) {
                 obj.properties.forEach((property: DiagramElementPropertyModel) => {
                     this.properties.push(new DiagramElementPropertyModel(property));
@@ -137,6 +145,54 @@ export class DiagramEventDefinitionModel {
         if (obj) {
             this.timeCycle = obj.timeCycle;
             this.type = obj.type;
+        }
+    }
+}
+
+export class DiagramPoolElementModel {
+    height: string;
+    id: string;
+    name: string;
+    properties: any;
+    lanes: DiagramLaneElementModel[] = [];
+    width: string;
+    x: number;
+    y: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.height = obj.height;
+            this.id = obj.id;
+            this.name = obj.name;
+            this.properties = obj.properties;
+            this.width = obj.width;
+            this.x = obj.x;
+            this.y = obj.y;
+            if (obj.lanes) {
+                obj.lanes.forEach((lane: DiagramLaneElementModel) => {
+                    this.lanes.push(new DiagramLaneElementModel(lane));
+                });
+            }
+        }
+    }
+}
+
+export class DiagramLaneElementModel {
+    height: number;
+    id: string;
+    name: string;
+    width: number;
+    x: number;
+    y: number;
+
+    constructor(obj?: any) {
+        if (obj) {
+            this.height = obj.height;
+            this.id = obj.id;
+            this.name = obj.name;
+            this.width = obj.width;
+            this.x = obj.x;
+            this.y = obj.y;
         }
     }
 }
