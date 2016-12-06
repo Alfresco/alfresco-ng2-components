@@ -87,6 +87,9 @@ export class DocumentList implements OnInit, AfterContentInit {
     contentActions: boolean = false;
 
     @Input()
+    contentMenuActions: boolean = true;
+
+    @Input()
     contextMenuActions: boolean = false;
 
     @Input()

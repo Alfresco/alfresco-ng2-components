@@ -20,6 +20,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
 import { DocumentList } from './src/components/document-list';
+import { DocumentMenuAction } from './src/components/document-menu-action';
 import { ContentColumn } from './src/components/content-column';
 import { ContentColumnList } from './src/components/content-column-list';
 import { ContentAction } from './src/components/content-action';
@@ -54,6 +55,7 @@ export * from './src/models/document-library.model';
 
 export const DOCUMENT_LIST_DIRECTIVES: any[] = [
     DocumentList,
+    DocumentMenuAction,
     ContentColumn,
     ContentColumnList,
     ContentAction,

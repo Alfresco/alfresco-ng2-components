@@ -1,3 +1,7 @@
+<alfresco-document-menu-action *ngIf="contentMenuActions"
+        [currentFolderPath]="currentFolderPath"
+        (onSuccess)="reload()">
+</alfresco-document-menu-action>
 <alfresco-datatable
     [data]="data"
     [actions]="contentActions"
