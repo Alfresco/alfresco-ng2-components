@@ -23,10 +23,7 @@ import {
     ObjectDataColumn
 } from 'ng2-alfresco-datatable';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'datatable-demo',
     templateUrl: './datatable-demo.component.html'
 })

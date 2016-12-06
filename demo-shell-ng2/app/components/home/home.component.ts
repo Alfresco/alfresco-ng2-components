@@ -18,7 +18,6 @@
 import { Component } from '@angular/core';
 
 @Component({
-    moduleId: __moduleName,
     selector: 'home-view',
     templateUrl: './home.component.html'
 })

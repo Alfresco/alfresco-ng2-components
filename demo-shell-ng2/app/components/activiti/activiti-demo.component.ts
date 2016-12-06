@@ -32,13 +32,11 @@ import {
 import { FormRenderingService } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 const currentProcessIdNew = '__NEW__';
 
 @Component({
-    moduleId: __moduleName,
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.css']

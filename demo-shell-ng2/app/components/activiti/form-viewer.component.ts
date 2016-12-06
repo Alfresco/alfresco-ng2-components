@@ -19,11 +19,9 @@ import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 @Component({
-    moduleId: __moduleName,
     selector: 'form-viewer',
     templateUrl: './form-viewer.component.html',
     styleUrls: ['./form-viewer.component.css']
