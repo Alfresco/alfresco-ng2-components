@@ -22,7 +22,6 @@ import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.servi
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-search',
     styleUrls: ['./alfresco-search.component.css'],
     templateUrl: './alfresco-search.component.html'

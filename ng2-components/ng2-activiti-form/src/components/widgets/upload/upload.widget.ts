@@ -20,7 +20,6 @@ import { WidgetComponent } from './../widget.component';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
 @Component({
-    moduleId: module.id,
     selector: 'upload-widget',
     templateUrl: './upload.widget.html',
     styleUrls: ['./upload.widget.css']

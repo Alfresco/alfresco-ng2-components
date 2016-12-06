@@ -33,7 +33,6 @@ import { UploadService } from '../services/upload.service';
  */
 @Component({
     selector: 'file-uploading-dialog',
-    moduleId: module.id,
     templateUrl: './file-uploading-dialog.component.html',
     styleUrls: ['./file-uploading-dialog.component.css'],
     host: {'[class.dialog-show]': 'toggleShowDialog'}

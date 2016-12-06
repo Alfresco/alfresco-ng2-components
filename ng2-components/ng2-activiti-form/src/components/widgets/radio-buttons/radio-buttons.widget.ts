@@ -22,7 +22,6 @@ import { FormFieldOption } from './../core/form-field-option';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'radio-buttons-widget',
     templateUrl: './radio-buttons.widget.html',
     styleUrls: ['./radio-buttons.widget.css']

@@ -21,7 +21,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 
 @Component({
     selector: 'activiti-task-header',
-    moduleId: module.id,
     templateUrl: './activiti-task-header.component.html',
     styleUrls: ['./activiti-task-header.component.css']
 })

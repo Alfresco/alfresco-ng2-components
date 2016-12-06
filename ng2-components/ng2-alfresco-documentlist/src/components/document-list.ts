@@ -41,7 +41,6 @@ import {
 } from './../data/share-datatable-adapter';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html'

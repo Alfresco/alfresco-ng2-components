@@ -23,7 +23,6 @@ import { Observer, Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'activiti-checklist',
-    moduleId: module.id,
     templateUrl: './activiti-checklist.component.html',
     styleUrls: ['./activiti-checklist.component.css'],
     providers: [ActivitiTaskListService]

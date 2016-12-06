@@ -47,7 +47,6 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  * @returns {ActivitiForm} .
  */
 @Component({
-    moduleId: module.id,
     selector: 'activiti-start-form',
     templateUrl: './activiti-start-form.component.html',
     styleUrls: ['./activiti-form.component.css']

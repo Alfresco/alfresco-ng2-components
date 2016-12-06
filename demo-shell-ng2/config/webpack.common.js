@@ -3,23 +3,41 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var helpers = require('./helpers');
 
+var alfrescoLibs = [
+    helpers.root('node_modules', 'alfresco-js-api'),
+    helpers.root('node_modules', 'ng2-activiti-analytics'),
+    helpers.root('node_modules', 'ng2-activiti-diagrams'),
+    helpers.root('node_modules', 'ng2-activiti-form'),
+    helpers.root('node_modules', 'ng2-activiti-processlist'),
+    helpers.root('node_modules', 'ng2-activiti-tasklist'),
+    helpers.root('node_modules', 'ng2-alfresco-core'),
+    helpers.root('node_modules', 'ng2-alfresco-datatable'),
+    helpers.root('node_modules', 'ng2-alfresco-documentlist'),
+    helpers.root('node_modules', 'ng2-alfresco-login'),
+    helpers.root('node_modules', 'ng2-alfresco-search'),
+    helpers.root('node_modules', 'ng2-alfresco-tag'),
+    helpers.root('node_modules', 'ng2-alfresco-upload'),
+    helpers.root('node_modules', 'ng2-alfresco-userinfo'),
+    helpers.root('node_modules', 'ng2-alfresco-viewer'),
+    helpers.root('node_modules', 'ng2-alfresco-webscript')
+];
+
 module.exports = {
   entry: {
-    // 'polyfills': './src/polyfills.ts',
     'polyfills': './app/polyfills.ts',
-    // 'vendor': './src/vendor.ts',
     'vendor': './app/vendor.ts',
-    // 'app': './src/main.ts'
     'app': './app/main.ts'
   },
 
   resolve: {
     extensions: ['', '.ts', '.js'],
     modules: [
-      // helpers.root('src'),
       helpers.root('app'),
       helpers.root('node_modules')
-    ]
+    ],
+    alias: {
+        'alfresco-js-api': helpers.root('node_modules', 'alfresco-js-api', 'alfresco-js-api.js')
+    }
   },
 
   module: {
@@ -32,7 +50,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: [
-          helpers.root('node_modules', 'angular2-webpack-lib')
+          ...alfrescoLibs
         ],
         loader: 'angular2-template-loader',
       },
@@ -47,18 +65,16 @@ module.exports = {
       {
         test: /\.css$/,
         exclude: [
-          // helpers.root('src', 'app'),
           helpers.root('app'),
-          helpers.root('node_modules', 'angular2-webpack-lib')
+          ...alfrescoLibs
         ],
         loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
       },
       {
         test: /\.css$/,
         include: [
-          // helpers.root('src', 'app'),
           helpers.root('app'),
-          helpers.root('node_modules', 'angular2-webpack-lib')
+          ...alfrescoLibs
         ],
         loader: 'raw'
       }
@@ -71,7 +87,6 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      // template: 'src/index.html'
       template: 'index.html'
     })
   ],

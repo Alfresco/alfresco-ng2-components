@@ -20,7 +20,6 @@ import { ContainerWidgetModel } from './container.widget.model';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'container-widget',
     templateUrl: './container.widget.html',
     styleUrls: ['./container.widget.css']

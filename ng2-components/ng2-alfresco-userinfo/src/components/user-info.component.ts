@@ -26,7 +26,6 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
-    moduleId: module.id,
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })

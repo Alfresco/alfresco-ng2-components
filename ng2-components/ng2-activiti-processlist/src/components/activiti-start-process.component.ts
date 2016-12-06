@@ -27,7 +27,6 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-start-process',
-    moduleId: module.id,
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })

@@ -25,7 +25,6 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-tasklist',
-    moduleId: module.id,
     templateUrl: './activiti-tasklist.component.html',
     styleUrls: ['./activiti-tasklist.component.css']
 })

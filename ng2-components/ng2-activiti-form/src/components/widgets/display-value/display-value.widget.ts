@@ -24,7 +24,6 @@ import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'display-value-widget',
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']

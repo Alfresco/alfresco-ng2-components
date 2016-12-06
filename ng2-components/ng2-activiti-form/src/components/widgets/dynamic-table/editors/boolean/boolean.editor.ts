@@ -20,7 +20,6 @@ import { CellEditorComponent } from './../cell.editor';
 import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 @Component({
-    moduleId: module.id,
     selector: 'alf-boolean-editor',
     templateUrl: './boolean.editor.html',
     styleUrls: ['./boolean.editor.css']

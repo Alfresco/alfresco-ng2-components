@@ -25,7 +25,6 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-people-search',
-    moduleId: module.id,
     templateUrl: './activiti-people-search.component.html',
     styleUrls: ['./activiti-people-search.component.css']
 })

@@ -20,7 +20,6 @@ import { FormGroup, Validators } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.css']

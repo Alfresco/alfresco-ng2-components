@@ -24,7 +24,6 @@ import {
 import { DocumentList } from '../document-list';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-document-list-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.css']

@@ -26,7 +26,6 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-filters',
-    moduleId: module.id,
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css'],
     providers: [ActivitiTaskListService]

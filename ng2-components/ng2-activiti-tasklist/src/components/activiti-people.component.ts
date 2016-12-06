@@ -23,7 +23,6 @@ import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 @Component({
     selector: 'activiti-people',
-    moduleId: module.id,
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })

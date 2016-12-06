@@ -19,7 +19,6 @@ import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
-    moduleId: module.id,
     selector: 'date-widget',
     templateUrl: './date.widget.html',
     styleUrls: ['./date.widget.css']

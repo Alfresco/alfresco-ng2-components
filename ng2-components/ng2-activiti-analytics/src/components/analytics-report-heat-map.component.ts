@@ -21,7 +21,6 @@ import { AnalyticsService } from '../services/analytics.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
-    moduleId: module.id,
     selector: 'analytics-report-heat-map',
     templateUrl: './analytics-report-heat-map.component.html'
 })

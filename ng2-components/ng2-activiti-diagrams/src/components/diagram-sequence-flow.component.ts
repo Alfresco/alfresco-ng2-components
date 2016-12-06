@@ -18,7 +18,6 @@
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'diagram-sequence-flow',
     templateUrl: './diagram-sequence-flow.component.html'
 })

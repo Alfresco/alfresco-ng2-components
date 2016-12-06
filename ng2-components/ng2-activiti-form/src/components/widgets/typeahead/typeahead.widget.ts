@@ -22,7 +22,6 @@ import { FormFieldOption } from './../core/form-field-option';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'typeahead-widget',
     templateUrl: './typeahead.widget.html',
     styleUrls: ['./typeahead.widget.css']

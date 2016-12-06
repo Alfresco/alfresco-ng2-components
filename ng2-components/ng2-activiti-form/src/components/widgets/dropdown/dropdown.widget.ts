@@ -22,7 +22,6 @@ import { FormFieldOption } from './../core/form-field-option';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'dropdown-widget',
     templateUrl: './dropdown.widget.html',
     styleUrls: ['./dropdown.widget.css']

@@ -19,7 +19,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { CellEditorComponent } from './../cell.editor';
 
 @Component({
-    moduleId: module.id,
     selector: 'alf-date-editor',
     templateUrl: './date.editor.html',
     styleUrls: ['./date.editor.css']
