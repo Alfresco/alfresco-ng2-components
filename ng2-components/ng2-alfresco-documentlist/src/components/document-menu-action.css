@@ -71,4 +71,15 @@
 
 .mdl-menu__item-icon {
     margin-right: 32px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.mdl-menu--bottom-left {
+    width: 200px;
+}
+
+.mdl-menu__text {
+    float: right;
+    margin-right: 22px;
 }

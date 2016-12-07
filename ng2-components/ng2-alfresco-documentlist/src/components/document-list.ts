@@ -122,6 +122,9 @@ export class DocumentList implements OnInit, AfterContentInit {
     preview: EventEmitter<any> = new EventEmitter();
 
     @Output()
+    success: EventEmitter<any> = new EventEmitter();
+
+    @Output()
     error: EventEmitter<any> = new EventEmitter();
 
     @ViewChild(DataTableComponent)
@@ -401,5 +404,14 @@ export class DocumentList implements OnInit, AfterContentInit {
             let action = (<ContentActionModel> args.action);
             this.executeContentAction(node, action);
         }
+    }
+
+    onActionMenuError(event) {
+        this.error.emit(event);
+    }
+
+    onActionMenuSuccess(event) {
+        this.reload();
+        this.success.emit(event);
     }
 }

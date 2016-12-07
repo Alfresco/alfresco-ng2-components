@@ -1,22 +1,21 @@
 <div class="container">
     <div class="action">
         <button id="actions" class="mdl-button mdl-js-button mdl-button--raised">
-            <i class="material-icons">add</i> Create...
+            <i class="material-icons">add</i> {{ 'BUTTON.ACTION_CREATE' | translate }}
         </button>
         <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
             [attr.for]="'actions'">
             <li class="mdl-menu__item"
                 (click)="showDialog()" >
                 <i class="material-icons mdl-menu__item-icon">folder</i>
-                New Folder
+                <span class="mdl-menu__text">{{ 'BUTTON.ACTION_NEW_FOLDER' | translate }}</span>
             </li>
         </ul>
     </div>
-    <div>{{message}}</div>
 </div>
 
 <dialog class="mdl-dialog" #dialog>
-    <h4 class="mdl-dialog__title">New folder</h4>
+    <h4 class="mdl-dialog__title">{{ 'BUTTON.ACTION_NEW_FOLDER' | translate }}</h4>
     <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input
@@ -30,7 +29,7 @@
         </div>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="createFolder(name.value)" class="mdl-button">Create</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">Cancel</button>
+        <button type="button" (click)="createFolder(name.value)" class="mdl-button">{{ 'BUTTON.CREATE' | translate }}</button>
+        <button type="button" (click)="cancel()" class="mdl-button close">{{ 'BUTTON.CANCEL' | translate }}</button>
     </div>
 </dialog>

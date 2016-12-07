@@ -78,10 +78,11 @@ export class DocumentMenuAction implements OnInit {
                 error => {
                     let errorMessagePlaceholder = this.getErrorMessage(error.response);
                     if (errorMessagePlaceholder) {
-                        this.onError.emit({value: errorMessagePlaceholder});
                         this.message = this.formatString(errorMessagePlaceholder, [name]);
+                        this.onError.emit({message: this.message});
                         console.log(this.message);
                     } else {
+                        this.onError.emit(error);
                         console.log(error);
                     }
                 }
