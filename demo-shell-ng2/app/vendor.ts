@@ -11,3 +11,6 @@ import 'rxjs';
 
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...
+
+import 'ng2-activiti-form/stencils/runtime.ng1';
+import 'ng2-activiti-form/stencils/runtime.adf';
