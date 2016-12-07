@@ -164,6 +164,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | ---           | ---         | ---          | ---         | ---
 | `providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL |
 | `disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call |
+| `backgroundImageUrl`         | *string*    |   alfresco background     | Provide the path of the image with you want to customize the login page background |
+| `logoImageUrl`         | *string*    |   alfresco logo     |Provide the path of the image with you want to customize the login page logo|
+
 
  
 ## Custom logo and background
