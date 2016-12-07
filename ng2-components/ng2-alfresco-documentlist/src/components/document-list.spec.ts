@@ -567,4 +567,49 @@ describe('DocumentList', () => {
         documentList.onRowDblClick(event);
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
     });
+
+    describe('navigate by folder ID', () => {
+
+        it('should load folder by ID on init', () => {
+
+            documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+
+            let loadbyIdSpy: jasmine.Spy = spyOn(documentList.data, 'loadById').and.returnValue(Promise.resolve());
+
+            documentList.ngOnInit();
+            expect(loadbyIdSpy).toHaveBeenCalled();
+            expect(documentList.currentFolderPath).toBe('/');
+        });
+
+        it('should load folder by ID on changes', () => {
+
+            let newNodeId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+
+            documentList.ngOnChanges({currentFolderId: new SimpleChange(null, newNodeId)});
+
+            let loadbyPathSpy: jasmine.Spy = spyOn(documentList.data, 'loadPath').and.returnValue(Promise.resolve());
+
+            documentList.ngOnInit();
+            expect(loadbyPathSpy).toHaveBeenCalled();
+            expect(documentList.currentFolderPath).toBe('/');
+        });
+
+    });
+
+    describe('configure root folder', () => {
+
+        it('should re-load folder when rootFolderId changed', () => {
+
+            let newRootFolder = '-new-';
+
+            documentList.ngOnChanges({rootFolderId: new SimpleChange(null, newRootFolder)});
+
+            let loadbyPathSpy: jasmine.Spy = spyOn(documentList.data, 'loadPath').and.returnValue(Promise.resolve());
+
+            documentList.ngOnInit();
+            expect(loadbyPathSpy).toHaveBeenCalled();
+            expect(documentList.currentFolderPath).toBe('/');
+        });
+
+    });
 });
