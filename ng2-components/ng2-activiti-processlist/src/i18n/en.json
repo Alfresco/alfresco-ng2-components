@@ -36,7 +36,49 @@
             "TASK_CLOSE": "Close"
         },
         "COMMENTS": {
-            "NONE": "No comments."
+            "NONE": "No comments.",
+            "BUTTON": {
+                "ADD": "Add a comment"
+            },
+            "ADD_DIALOG": {
+                "TITLE": "New comment",
+                "LABEL": {
+                    "MESSAGE": "Message"
+                },
+                "BUTTON": {
+                    "ADD": "Add Comment",
+                    "CANCEL": "Cancel"
+                }
+            }
+        },
+        "VARIABLES": {
+            "NONE": "No variables set.",
+            "BUTTON": {
+                "ADD": "Set a variable"
+            },
+            "DIALOG": {
+                "BUTTON": {
+                    "SET": "Set",
+                    "OK": "OK",
+                    "CANCEL": "Cancel",
+                    "CLOSE": "Close"
+                }
+            },
+            "ADD_DIALOG": {
+                "TITLE": "Set process variable",
+                "LABEL": {
+                    "NAME": "Name",
+                    "VALUE": "Value",
+                    "SCOPE": "Scope"
+                }
+            },
+            "EDIT_DIALOG": {
+                "TITLE": "Edit process variable"
+            },
+            "ERROR_DIALOG": {
+                "TITLE": "Sorry, an error occurred",
+                "DESCRIPTION": "Could not perform the requested operation, please check that you have permission."
+            }
         }
     },
     "START_PROCESS": {

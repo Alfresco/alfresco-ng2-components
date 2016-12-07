@@ -56,8 +56,8 @@
                             <span>Process Filters</span>
                             <button type="button" (click)="navigateStartProcess()" class="mdl-button" data-automation-id="btn-start-process">Start Process</button>
                             <activiti-process-instance-filters [appId]="appId"
-                                    (filterClick)="onProcessFilterClick($event)" (onSuccess)="onSuccessProcessFilterList($event)"
-                                    #activitiprocessfilter></activiti-process-instance-filters>
+                                    (filterClick)="onProcessFilterClick($event)"
+                                    (onSuccess)="onSuccessProcessFilterList($event)"></activiti-process-instance-filters>
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
                             <span>Process List</span>
@@ -67,12 +67,14 @@
                                     [state]="processFilter.filter.state"
                                     [sort]="processFilter.filter.sort"
                                     [data]="dataProcesses"
-                                               (rowClick)="onProcessRowClick($event)" (onSuccess)="onSuccessProcessList($event)"
-                                                            #activitiprocesslist></activiti-process-instance-list>
+                                    (rowClick)="onProcessRowClick($event)"
+                                    (onSuccess)="onSuccessProcessList($event)"></activiti-process-instance-list>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="!isStartProcessMode()">
                             <span>Process Details</span>
-                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId" (activitiprocesslist)="taskFormCompleted()" (processCancelled)="processCancelled()" #activitiprocessdetails></activiti-process-instance-details>
+                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId"
+                                    (activitiprocesslist)="taskFormCompleted()"
+                                    (processCancelled)="processCancelled()"></activiti-process-instance-details>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
                             <span>Start Process</span>

@@ -54,6 +54,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
     let fixture: ComponentFixture<ActivitiProcessInstanceListComponent>;
     let component: ActivitiProcessInstanceListComponent;
     let service: ActivitiProcessService;
+    let getProcessInstancesSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -70,6 +71,8 @@ describe('ActivitiProcessInstanceListComponent', () => {
             fixture = TestBed.createComponent(ActivitiProcessInstanceListComponent);
             component = fixture.componentInstance;
             service = fixture.debugElement.injector.get(ActivitiProcessService);
+
+            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
 
             componentHandler = jasmine.createSpyObj('componentHandler', [
                 'upgradeAllRegistered',
@@ -106,7 +109,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
     it('should emit onSuccess event when process instances loaded', fakeAsync(() => {
         let emitSpy = spyOn(component.onSuccess, 'emit');
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -116,7 +118,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     }));
 
     it('should return the process instances list', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -133,7 +134,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     });
 
     it('should return the process instances list filtered by processDefinitionKey', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
@@ -157,7 +157,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
     it('should throw an exception when the response is wrong', fakeAsync(() => {
         let emitSpy: jasmine.Spy = spyOn(component.onError, 'emit');
         let fakeError = 'Fake server error';
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.throw(fakeError));
+        getProcessInstancesSpy.and.returnValue(Observable.throw(fakeError));
         component.appId = '1';
         component.state = 'open';
         fixture.detectChanges();
@@ -166,7 +166,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     }));
 
     it('should emit onSuccess event when reload() called', fakeAsync(() => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -179,7 +178,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     }));
 
     it('should reload processes when reload() is called', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.data = new ObjectDataTableAdapter(
             [],
             [
@@ -217,7 +215,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     describe('component changes', () => {
 
         beforeEach(() => {
-            spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
             component.data = new ObjectDataTableAdapter(
                 [],
                 [

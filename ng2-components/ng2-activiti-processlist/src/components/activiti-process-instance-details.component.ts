@@ -36,13 +36,13 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
     @Input()
     processInstanceId: string;
 
-    @ViewChild('activitiprocessheader')
+    @ViewChild(ActivitiProcessInstanceHeader)
     processInstanceHeader: ActivitiProcessInstanceHeader;
 
-    @ViewChild('activitiprocesstasks')
+    @ViewChild(ActivitiProcessInstanceTasks)
     tasksList: ActivitiProcessInstanceTasks;
 
-    @ViewChild('activitiprocesscomments')
+    @ViewChild(ActivitiComments)
     commentsList: ActivitiComments;
 
     @Input()

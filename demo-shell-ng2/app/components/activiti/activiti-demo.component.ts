@@ -15,9 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewInit, ViewChild, Input, ElementRef } from '@angular/core';
-import { FilterRepresentationModel, ActivitiApps, ActivitiTaskList } from 'ng2-activiti-tasklist';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
+    ActivitiApps,
+    ActivitiFilters,
+    ActivitiTaskDetails,
+    ActivitiTaskList,
+    FilterRepresentationModel
+} from 'ng2-activiti-tasklist';
+import {
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
     ActivitiProcessInstanceListComponent,
     ActivitiStartProcessInstance,
     ProcessInstance
@@ -45,26 +53,26 @@ const currentProcessIdNew = '__NEW__';
 })
 export class ActivitiDemoComponent implements AfterViewInit {
 
-    @ViewChild('activitiapps')
+    @ViewChild(ActivitiApps)
     activitiapps: ActivitiApps;
 
-    @ViewChild('activitifilter')
-    activitifilter: any;
-
-    @ViewChild('activitidetails')
-    activitidetails: any;
+    @ViewChild(ActivitiFilters)
+    activitifilter: ActivitiFilters;
 
     @ViewChild(ActivitiTaskList)
     activititasklist: ActivitiTaskList;
 
-    @ViewChild('activitiprocessfilter')
-    activitiprocessfilter: any;
+    @ViewChild(ActivitiTaskDetails)
+    activitidetails: ActivitiTaskDetails;
+
+    @ViewChild(ActivitiProcessFilters)
+    activitiprocessfilter: ActivitiProcessFilters;
 
     @ViewChild(ActivitiProcessInstanceListComponent)
     activitiprocesslist: ActivitiProcessInstanceListComponent;
 
-    @ViewChild('activitiprocessdetails')
-    activitiprocessdetails: any;
+    @ViewChild(ActivitiProcessInstanceDetails)
+    activitiprocessdetails: ActivitiProcessInstanceDetails;
 
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;

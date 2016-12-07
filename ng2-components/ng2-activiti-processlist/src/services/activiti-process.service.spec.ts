@@ -37,6 +37,7 @@ import {
 } from '../assets/activiti-process.service.mock';
 import { exampleProcess } from '../assets/activiti-process.model.mock';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
+import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ActivitiProcessService } from './activiti-process.service';
 
 describe('ActivitiProcessService', () => {
@@ -680,5 +681,124 @@ describe('ActivitiProcessService', () => {
             }));
 
         });
+    });
+
+    describe('process variables', () => {
+
+        let getVariablesSpy: jasmine.Spy;
+        let createOrUpdateProcessInstanceVariablesSpy: jasmine.Spy;
+        let deleteProcessInstanceVariableSpy: jasmine.Spy;
+
+        beforeEach(() => {
+            getVariablesSpy = spyOn(alfrescoApi.activiti.processInstanceVariablesApi, 'getProcessInstanceVariables').and.returnValue(Promise.resolve([{
+                name: 'var1',
+                value: 'Test1'
+            }, {
+                name: 'var3',
+                value: 'Test3'
+            }]));
+
+            createOrUpdateProcessInstanceVariablesSpy = spyOn(alfrescoApi.activiti.processInstanceVariablesApi,
+                'createOrUpdateProcessInstanceVariables').and.returnValue(Promise.resolve({}));
+
+            deleteProcessInstanceVariableSpy = spyOn(alfrescoApi.activiti.processInstanceVariablesApi,
+                'deleteProcessInstanceVariable').and.returnValue(Promise.resolve());
+        });
+
+        describe('get variables', () => {
+
+            it('should call service to fetch variables', () => {
+                service.getProcessInstanceVariables(null);
+                expect(getVariablesSpy).toHaveBeenCalled();
+            });
+
+            it('should pass on any error that is returned by the API', async(() => {
+                getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(fakeError));
+                service.getProcessInstanceVariables(null).subscribe(
+                    () => {},
+                    (res) => {
+                        expect(res).toBe(fakeError);
+                    }
+                );
+            }));
+
+            it('should return a default error if no data is returned by the API', async(() => {
+                getVariablesSpy = getVariablesSpy.and.returnValue(Promise.reject(null));
+                service.getProcessInstanceVariables(null).subscribe(
+                    () => {},
+                    (res) => {
+                        expect(res).toBe('Server error');
+                    }
+                );
+            }));
+
+        });
+
+        describe('create or update variables', () => {
+
+            let updatedVariables = [new ProcessInstanceVariable({
+                name: 'var1',
+                value: 'Test1'
+            }), new ProcessInstanceVariable({
+                name: 'var3',
+                value: 'Test3'
+            })];
+
+            it('should call service to create or update variables', () => {
+                service.createOrUpdateProcessInstanceVariables('123', updatedVariables);
+                expect(createOrUpdateProcessInstanceVariablesSpy).toHaveBeenCalled();
+            });
+
+            it('should pass on any error that is returned by the API', async(() => {
+                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(fakeError));
+                service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
+                    () => {},
+                    (res) => {
+                        expect(res).toBe(fakeError);
+                    }
+                );
+            }));
+
+            it('should return a default error if no data is returned by the API', async(() => {
+                createOrUpdateProcessInstanceVariablesSpy = createOrUpdateProcessInstanceVariablesSpy.and.returnValue(Promise.reject(null));
+                service.createOrUpdateProcessInstanceVariables('123', updatedVariables).subscribe(
+                    () => {},
+                    (res) => {
+                        expect(res).toBe('Server error');
+                    }
+                );
+            }));
+
+        });
+
+        describe('delete variables', () => {
+
+            it('should call service to delete variables', () => {
+                service.deleteProcessInstanceVariable('123', 'myVar');
+                expect(deleteProcessInstanceVariableSpy).toHaveBeenCalled();
+            });
+
+            it('should pass on any error that is returned by the API', async(() => {
+                deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(fakeError));
+                service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
+                    () => {},
+                    (res) => {
+                        expect(res).toBe(fakeError);
+                    }
+                );
+            }));
+
+            it('should return a default error if no data is returned by the API', async(() => {
+                deleteProcessInstanceVariableSpy = deleteProcessInstanceVariableSpy.and.returnValue(Promise.reject(null));
+                service.deleteProcessInstanceVariable('123', 'myVar').subscribe(
+                    () => {},
+                    (res) => {
+                        expect(res).toBe('Server error');
+                    }
+                );
+            }));
+
+        });
+
     });
 });

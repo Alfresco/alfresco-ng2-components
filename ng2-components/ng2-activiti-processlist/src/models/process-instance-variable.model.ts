@@ -15,7 +15,14 @@
  * limitations under the License.
  */
 
-export * from './process-definition.model';
-export * from './process-instance.model';
-export * from './process-instance-filter.model';
-export * from './process-instance-variable.model';
+export class ProcessInstanceVariable {
+    name: string;
+    scope: string;
+    value: any;
+
+    constructor(obj?: any) {
+        this.name = obj && obj.name !== undefined ? obj.name : null;
+        this.scope = obj && obj.scope !== undefined ? obj.scope : null;
+        this.value = obj && obj.value !== undefined ? obj.value : null;
+    }
+}
