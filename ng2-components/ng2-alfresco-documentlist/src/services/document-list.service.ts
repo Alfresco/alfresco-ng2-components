@@ -91,6 +91,20 @@ export class DocumentListService {
     }
 
     /**
+     * Create a new folder in the path.
+     * @param name
+     * @param path
+     * @returns {any}
+     */
+    createFolder(name: string, path: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, path))
+            .map(res => {
+                return res;
+            })
+            .catch(this.handleError);
+    }
+
+    /**
      * Gets the folder node with the content.
      * @param folder Path to folder.
      * @param opts Options.
