@@ -54,7 +54,7 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
         polyline.element.attr({'stroke-width': this.SEQUENCEFLOW_STROKE});
         polyline.element.attr({'stroke': '#585858'});
 
-        polyline.element.id = this.flow.id;
+        polyline.element.node.id = this.flow.id;
 
         let lastLineIndex = polyline.getLinesCount() - 1;
         let line = polyline.getLine(lastLineIndex);
