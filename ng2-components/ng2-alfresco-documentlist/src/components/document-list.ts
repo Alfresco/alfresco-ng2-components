@@ -56,17 +56,17 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    DEFAULT_ROOT_FOLDER: string = '/';
+    DEFAULT_FOLDER_PATH: string = '/';
 
     @Input()
-    set rootPath(value: string) {
+    set rootFolderId(value: string) {
         this.data.rootFolderId = value || this.data.DEFAULT_ROOT_ID;
     }
 
     @Input()
     currentFolderId: string = null;
 
-    get rootPath(): string {
+    get rootFolderId(): string {
         if (this.data) {
             return this.data.rootFolderId;
         }
@@ -132,7 +132,7 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
-    private _path = this.DEFAULT_ROOT_FOLDER;
+    private _path = this.DEFAULT_FOLDER_PATH;
 
     @Input()
     set currentFolderPath(value: string) {
@@ -237,12 +237,22 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
                     this.error.emit(err);
                 });
         } else if (changes['currentFolderPath']) {
-            const path = changes['currentFolderPath'].currentValue || this.DEFAULT_ROOT_FOLDER;
+            const path = changes['currentFolderPath'].currentValue || this.DEFAULT_FOLDER_PATH;
             this.currentFolderPath = path;
             this.loadFolderByPath(path)
                 .then(() => {
                     this._path = path;
                     this.folderChange.emit({ path: path });
+                })
+                .catch(err => {
+                    this.error.emit(err);
+                });
+        } else if (changes['rootFolderId']) {
+            // this.currentFolderPath = this.DEFAULT_FOLDER_PATH;
+            this.loadFolderByPath(this.currentFolderPath)
+                .then(() => {
+                    this._path = this.currentFolderPath;
+                    this.folderChange.emit({ path: this.currentFolderPath });
                 })
                 .catch(err => {
                     this.error.emit(err);

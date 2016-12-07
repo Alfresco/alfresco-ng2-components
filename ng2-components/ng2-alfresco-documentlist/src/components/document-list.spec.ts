@@ -48,11 +48,11 @@ describe('DocumentList', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    it('should update root path', () => {
+    it('should update root folder ID', () => {
         let adapter = documentList.data;
         expect(adapter.rootFolderId).toBe(adapter.DEFAULT_ROOT_ID);
 
-        documentList.rootPath = '-shared-';
+        documentList.rootFolderId = '-shared-';
         expect(adapter.rootFolderId).toBe('-shared-');
     });
 
@@ -217,8 +217,8 @@ describe('DocumentList', () => {
         documentList.currentFolderPath = null;
         documentList.ngOnChanges({currentFolderPath: new SimpleChange('', null)});
 
-        expect(documentList.currentFolderPath).toBe(documentList.DEFAULT_ROOT_FOLDER);
-        expect(documentList.loadFolderByPath).toHaveBeenCalledWith(documentList.DEFAULT_ROOT_FOLDER);
+        expect(documentList.currentFolderPath).toBe(documentList.DEFAULT_FOLDER_PATH);
+        expect(documentList.loadFolderByPath).toHaveBeenCalledWith(documentList.DEFAULT_FOLDER_PATH);
     });
 
     it('should emit folder changed event', (done) => {
@@ -512,24 +512,24 @@ describe('DocumentList', () => {
         expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
     });
 
-    it('should set root path for underlying adapter', () => {
-        documentList.rootPath = 'test';
+    it('should set root folder ID for underlying adapter', () => {
+        documentList.rootFolderId = 'test';
         expect(documentList.data.rootFolderId).toBe('test');
     });
 
-    it('should set default root path for underlying adapter', () => {
-        documentList.rootPath = null;
+    it('should set default root folder ID for underlying adapter', () => {
+        documentList.rootFolderId = null;
         expect(documentList.data.rootFolderId).toBe(documentList.data.DEFAULT_ROOT_ID);
     });
 
-    it('should fetch root path from underlying adapter', () => {
+    it('should fetch root folder ID from underlying adapter', () => {
         documentList.data.rootFolderId = 'test';
-        expect(documentList.rootPath).toBe('test');
+        expect(documentList.rootFolderId).toBe('test');
     });
 
-    it('should not fetch root path when adapter missing', () => {
+    it('should not fetch root folder ID when adapter missing', () => {
         documentList.data = null;
-        expect(documentList.rootPath).toBeNull();
+        expect(documentList.rootFolderId).toBeNull();
     });
 
     it('should set row filter for underlying adapter', () => {

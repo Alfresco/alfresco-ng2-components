@@ -34,6 +34,7 @@ import { FormService } from 'ng2-activiti-form';
 })
 export class FilesComponent implements OnInit {
     currentPath: string = '/Sites/swsdp/documentLibrary';
+    rootFolderId: string = '-root-';
     currentFolderId: string = null;
 
     errorMessage: string = null;
