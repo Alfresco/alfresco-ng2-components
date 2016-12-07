@@ -87,10 +87,10 @@ export class DocumentList implements OnInit, AfterContentInit {
     contentActions: boolean = false;
 
     @Input()
-    contentMenuActions: boolean = true;
+    contextMenuActions: boolean = false;
 
     @Input()
-    contextMenuActions: boolean = false;
+    creationMenuActions: boolean = true;
 
     @Input()
     pageSize: number = DocumentList.DEFAULT_PAGE_SIZE;

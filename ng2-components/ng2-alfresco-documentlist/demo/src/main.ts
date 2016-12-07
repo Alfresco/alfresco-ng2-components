@@ -48,6 +48,7 @@ import {
                 [currentFolderPath]="currentPath"
                 [contextMenuActions]="true"
                 [contentActions]="true"
+                [creationMenuActions]="true"
                 (folderChange)="onFolderChanged($event)">
             <!--
             <empty-folder-content>

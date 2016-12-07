@@ -100,6 +100,7 @@ Follow the 3 steps below:
     [currentFolderPath]="currentPath"
     [contextMenuActions]="true"
     [contentActions]="true"
+    [creationMenuActions]="true"
     [multiselect]="true"
     (folderChange)="onFolderChanged($event)">
 </alfresco-document-list>
@@ -124,6 +125,7 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfr
                     [currentFolderPath]="'/'"
                     [contextMenuActions]="true"
                     [contentActions]="true"
+                    [creationMenuActions]="true"
                     [multiselect]="true">
                </alfresco-document-list>`
 })
@@ -176,6 +178,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `multiselect` | boolean | false | Toggles multiselect mode |
 | `contentActions` | boolean | false | Toggles content actions for each row |
 | `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `creationMenuActions` | boolean | true | Toggles the creation menu actions|
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
