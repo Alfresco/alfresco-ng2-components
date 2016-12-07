@@ -56,7 +56,16 @@ module.exports = {
       },
       {
         test: /\.html$/,
+        exclude: alfrescoLibs,
         loader: 'html'
+      },
+      {
+        test: /\.html$/,
+        include: alfrescoLibs,
+        loader: 'html',
+        query: {
+            interpolate: true
+        }
       },
       {
         test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,

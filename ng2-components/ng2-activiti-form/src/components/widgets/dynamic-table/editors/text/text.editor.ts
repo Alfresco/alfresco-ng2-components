@@ -15,16 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { CellEditorComponent } from './../cell.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { DynamicTableRow, DynamicTableColumn, DynamicTableModel } from './../../dynamic-table.widget.model';
 
 @Component({
     selector: 'alf-text-editor',
     templateUrl: './text.editor.html',
     styleUrls: ['./text.editor.css']
 })
-export class TextEditorComponent extends CellEditorComponent implements OnInit {
+export class TextEditorComponent implements OnInit {
+
+    @Input()
+    table: DynamicTableModel;
+
+    @Input()
+    row: DynamicTableRow;
+
+    @Input()
+    column: DynamicTableColumn;
 
     displayName: string;
 

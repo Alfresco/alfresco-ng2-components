@@ -32,28 +32,13 @@ declare let componentHandler: any;
 export class UserInfoComponent implements OnInit {
 
     @Input()
-    ecmBackgroundImage: string;
-
-    @Input()
-    bpmBackgroundImage: string;
-
-    @Input()
     menuOpenType: string = 'right';
 
-    @Input()
-    fallBackThumbnailImage: string;
-
-    private baseComponentPath = module.id.replace('components/user-info.component.js', '');
-
     ecmUser: EcmUserModel;
-
     bpmUser: BpmUserModel;
 
-    anonymousImageUrl: string = this.baseComponentPath + 'img/anonymous.gif';
-
-    bpmUserImage: any;
-
-    ecmUserImage: any;
+    bpmUserImage: string;
+    ecmUserImage: string;
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
@@ -86,7 +71,7 @@ export class UserInfoComponent implements OnInit {
             this.ecmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
                         this.ecmUser = <EcmUserModel> res;
-                        this.getEcmAvatar();
+                        this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
                     }
                 );
         }
@@ -99,13 +84,6 @@ export class UserInfoComponent implements OnInit {
                     this.bpmUser = <BpmUserModel> res;
                 });
             this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
-        }
-    }
-
-    onImageLoadingError(event) {
-        if (event) {
-            let element = <any> event.target;
-            element.src = this.fallBackThumbnailImage || this.anonymousImageUrl;
         }
     }
 
@@ -125,20 +103,8 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
-    private getEcmAvatar() {
-        this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
-    }
-
     getUserAvatar() {
         return this.ecmUserImage || this.bpmUserImage;
-    }
-
-    getBpmUserAvatar() {
-        return this.bpmUserImage;
-    }
-
-    getEcmUserAvatar() {
-        return this.ecmUserImage;
     }
 
     formatValue(value: string) {

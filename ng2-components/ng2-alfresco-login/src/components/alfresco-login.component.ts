@@ -33,15 +33,10 @@ declare let componentHandler: any;
 })
 export class AlfrescoLoginComponent implements OnInit {
 
-    baseComponentPath = module.id.replace('/alfresco-login.component.js', '');
-
     isPasswordShow: boolean = false;
 
     @Input()
     logoImageUrl: string;
-
-    @Input()
-    backgroundImageUrl: string;
 
     @Input()
     providers: string;

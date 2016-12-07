@@ -130,8 +130,6 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
 
-            component.baseComponentPath = 'http://localhost';
-
             let thumbnailService = fixture.debugElement.injector.get(AlfrescoThumbnailService);
             spyOn(thumbnailService, 'getMimeTypeIcon').and.returnValue('fake-type-icon.svg');
             spyOn(thumbnailService, 'getMimeTypeKey').and.returnValue('FAKE_TYPE');
@@ -140,7 +138,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                 fixture.detectChanges();
                 let imgEl = <any> element.querySelector('#result_row_0 img');
                 expect(imgEl).not.toBeNull();
-                expect(imgEl.src).toBe('http://localhost/img/fake-type-icon.svg');
+                expect(imgEl.src).toBe('../img/fake-type-icon.svg');
                 expect(imgEl.alt).toBe('SEARCH.ICONS.FAKE_TYPE');
                 done();
             });

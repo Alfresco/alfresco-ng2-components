@@ -53,8 +53,6 @@ export class DocumentList implements OnInit, AfterContentInit {
 
     DEFAULT_ROOT_FOLDER: string = '/';
 
-    baseComponentPath = module.id.replace('/components/document-list.js', '');
-
     @Input()
     set rootPath(value: string) {
         this.data.rootPath = value || this.data.DEFAULT_ROOT_PATH;
@@ -68,7 +66,7 @@ export class DocumentList implements OnInit, AfterContentInit {
     }
 
     @Input()
-    fallbackThubnail: string = this.baseComponentPath + '/img/ft_ic_miscellaneous.svg';
+    fallbackThubnail: string = require('./../img/ft_ic_miscellaneous.svg');
 
     @Input()
     navigate: boolean = true;
@@ -155,7 +153,7 @@ export class DocumentList implements OnInit, AfterContentInit {
         private ngZone: NgZone,
         private translate: AlfrescoTranslationService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
+        this.data = new ShareDataTableAdapter(this.documentListService, './..', []);
 
         if (translate) {
             translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/dist/src');
