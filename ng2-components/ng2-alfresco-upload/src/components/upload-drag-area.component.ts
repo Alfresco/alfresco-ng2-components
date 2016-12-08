@@ -35,6 +35,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  */
 @Component({
     selector: 'alfresco-upload-drag-area',
+    moduleId: module.id,
     templateUrl: './upload-drag-area.component.html',
     styleUrls: ['./upload-drag-area.component.css']
 })
