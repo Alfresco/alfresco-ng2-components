@@ -23,6 +23,7 @@ import { ExternalContentLink } from '../core/external-content-link';
 import { FormFieldModel } from '../core/form-field.model';
 
 @Component({
+    moduleId: module.id,
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
     styleUrls: ['./attach.widget.css']

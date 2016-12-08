@@ -21,6 +21,7 @@ import { FormService } from '../../../services/form.service';
 import { GroupModel } from './../core/group.model';
 
 @Component({
+    moduleId: module.id,
     selector: 'functional-group-widget',
     templateUrl: './functional-group.widget.html',
     styleUrls: ['./functional-group.widget.css']

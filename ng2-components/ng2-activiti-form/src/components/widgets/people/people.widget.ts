@@ -22,6 +22,7 @@ import { GroupModel } from '../core/group.model';
 import { GroupUserModel } from '../core/group-user.model';
 
 @Component({
+    moduleId: module.id,
     selector: 'people-widget',
     templateUrl: './people.widget.html',
     styleUrls: ['./people.widget.css']

@@ -19,6 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
+    moduleId: module.id,
     selector: 'amount-widget',
     templateUrl: './amount.widget.html',
     styleUrls: ['./amount.widget.css']

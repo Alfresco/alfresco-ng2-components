@@ -19,6 +19,7 @@ import { Component, Input, OnInit, ElementRef } from '@angular/core';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 @Component({
+    moduleId: module.id,
     selector: 'alf-date-editor',
     templateUrl: './date.editor.html',
     styleUrls: ['./date.editor.css']

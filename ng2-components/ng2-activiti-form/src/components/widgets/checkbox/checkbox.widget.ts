@@ -20,6 +20,7 @@ import { WidgetComponent } from './../widget.component';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'checkbox-widget',
     templateUrl: './checkbox.widget.html'
 })

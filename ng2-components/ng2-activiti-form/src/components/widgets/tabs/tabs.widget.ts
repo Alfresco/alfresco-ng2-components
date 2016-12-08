@@ -19,6 +19,7 @@ import { Component, Input, AfterViewInit, AfterContentChecked, EventEmitter, Out
 import { TabModel, FormFieldModel } from './../core/index';
 
 @Component({
+    moduleId: module.id,
     selector: 'tabs-widget',
     templateUrl: './tabs.widget.html'
 })

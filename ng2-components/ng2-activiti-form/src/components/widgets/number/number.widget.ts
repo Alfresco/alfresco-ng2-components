@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
+    moduleId: module.id,
     selector: 'number-widget',
     templateUrl: './number.widget.html',
     styleUrls: ['./number.widget.css']

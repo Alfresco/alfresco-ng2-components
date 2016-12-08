@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
+    moduleId: module.id,
     selector: 'unknown-widget',
     template: `
         <div>
