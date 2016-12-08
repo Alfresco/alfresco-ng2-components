@@ -25,6 +25,7 @@ import { Observable } from 'rxjs/Observable';
 declare let componentHandler: any;
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-filters',
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css'],

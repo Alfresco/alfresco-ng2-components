@@ -22,6 +22,7 @@ import { Comment } from '../models/comment.model';
 import { Observer, Observable } from 'rxjs/Rx';
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-comments',
     templateUrl: './activiti-comments.component.html',
     styleUrls: ['./activiti-comments.component.css'],

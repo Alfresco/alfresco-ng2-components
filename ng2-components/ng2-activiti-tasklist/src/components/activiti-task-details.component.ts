@@ -24,6 +24,7 @@ import { FormService, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-task-details',
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css']

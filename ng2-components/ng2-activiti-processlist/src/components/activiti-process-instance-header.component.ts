@@ -24,6 +24,7 @@ import { DatePipe } from '@angular/common';
 declare let componentHandler: any;
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-process-instance-header',
     templateUrl: './activiti-process-instance-header.component.html',
     styleUrls: ['./activiti-process-instance-header.component.css']

@@ -23,6 +23,7 @@ import { SearchTermValidator } from './../forms/search-term-validator';
 import { Observable, Subject } from 'rxjs/Rx';
 
 @Component({
+    moduleId: module.id,
     selector: 'alfresco-search-control',
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css']

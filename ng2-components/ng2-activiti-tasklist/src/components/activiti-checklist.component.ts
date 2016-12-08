@@ -22,6 +22,7 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { Observer, Observable } from 'rxjs/Rx';
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-checklist',
     templateUrl: './activiti-checklist.component.html',
     styleUrls: ['./activiti-checklist.component.css'],

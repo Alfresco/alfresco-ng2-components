@@ -24,6 +24,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 declare let componentHandler: any;
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-people-search',
     templateUrl: './activiti-people-search.component.html',
     styleUrls: ['./activiti-people-search.component.css']

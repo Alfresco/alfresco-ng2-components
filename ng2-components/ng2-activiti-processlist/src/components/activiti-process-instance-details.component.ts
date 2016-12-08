@@ -26,6 +26,7 @@ import { ProcessInstance } from '../models/process-instance.model';
 declare let componentHandler: any;
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-process-instance-details',
     templateUrl: './activiti-process-instance-details.component.html',
     styleUrls: ['./activiti-process-instance-details.component.css']

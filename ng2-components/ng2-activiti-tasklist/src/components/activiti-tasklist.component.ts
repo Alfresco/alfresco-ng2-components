@@ -24,6 +24,7 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 declare let componentHandler: any;
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-tasklist',
     templateUrl: './activiti-tasklist.component.html',
     styleUrls: ['./activiti-tasklist.component.css']
