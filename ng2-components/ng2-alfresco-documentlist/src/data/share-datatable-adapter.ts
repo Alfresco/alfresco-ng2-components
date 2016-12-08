@@ -56,7 +56,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     rootPath: string = this.DEFAULT_ROOT_PATH;
 
     constructor(private documentListService: DocumentListService,
-                basePath: string,
+                private basePath: string,
                 schema: DataColumn[]) {
         this.dataLoaded = new DataLoadedEventEmitter();
         this.rows = [];
@@ -313,7 +313,17 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     }
 
     getImagePath(id: string): any {
-        return require(`./../img/${id}`);
+        let result = null;
+        try {
+            // webpack
+            result = require(`${this.basePath}/img/${id}`);
+        } catch (e) {
+            // system.js
+            if (module && module.id) {
+                result = `${this.basePath}/img/${id}`;
+            }
+        }
+        return result;
     }
 
     private resetPagination() {

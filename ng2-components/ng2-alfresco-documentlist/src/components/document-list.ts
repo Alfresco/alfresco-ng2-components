@@ -69,7 +69,7 @@ export class DocumentList implements OnInit, AfterContentInit {
     }
 
     @Input()
-    fallbackThubnail: string = require('./../img/ft_ic_miscellaneous.svg');
+    fallbackThubnail: string = null;
 
     @Input()
     navigate: boolean = true;
@@ -156,11 +156,33 @@ export class DocumentList implements OnInit, AfterContentInit {
         private ngZone: NgZone,
         private translate: AlfrescoTranslationService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, './..', []);
+        let rootPath = './..';
+        if (module && module.id) {
+            rootPath = module.id.replace('/components/document-list.js', '');
+        }
+
+        this.data = new ShareDataTableAdapter(this.documentListService, rootPath, []);
 
         if (translate) {
             translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/dist/src');
         }
+
+        this.fallbackThubnail = this.resolveIconPath('ft_ic_miscellaneous.svg');
+    }
+
+    resolveIconPath(icon: string): string {
+        let result = null;
+        try {
+            // webpack
+            result = require(`./../img/${icon}`);
+        } catch (e) {
+            // system.js
+            if (module && module.id) {
+                let baseComponentPath = module.id.replace('/components/document-list.js', '');
+                result = `${baseComponentPath}/img/${icon}`;
+            }
+        }
+        return result;
     }
 
     getContextActions(node: MinimalNodeEntity) {

@@ -22,8 +22,8 @@ import { Observer, Observable } from 'rxjs/Rx';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'activiti-people',
+    moduleId: module.id,
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
