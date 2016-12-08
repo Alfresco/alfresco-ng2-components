@@ -22,6 +22,7 @@ import { DiagramColorService } from '../services/diagram-color.service';
 import { RaphaelService } from './raphael/raphael.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'activiti-diagram',
     templateUrl: './diagram.component.html'
 })

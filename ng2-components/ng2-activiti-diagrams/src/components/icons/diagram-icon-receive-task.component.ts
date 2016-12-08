@@ -19,6 +19,7 @@ import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/cor
 import { DiagramColorService } from '../../services/diagram-color.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'diagram-icon-receive-task',
     templateUrl: './diagram-icon-receive-task.component.html'
 })
