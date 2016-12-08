@@ -1,7 +1,7 @@
 copylib() {
     echo $1
     rm -rf node_modules/$1
-    rsync -a ../ng2-components/$1/ node_modules/$1 --exclude node_modules
+    rsync -a ../ng2-components/$1/ node_modules/$1 --exclude node_modules --exclude coverage
 }
 
 for LIB in \
