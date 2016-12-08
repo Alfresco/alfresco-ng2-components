@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var helpers = require('./helpers');
+var path = require('path');
 
 var alfrescoLibs = [
     helpers.root('node_modules', 'alfresco-js-api'),
@@ -40,6 +41,12 @@ module.exports = {
     }
   },
 
+  resolveLoader: {
+      alias: {
+          'systemjs-loader': helpers.root('config', 'loaders', 'system.js')
+      }
+  },
+
   module: {
     loaders: [
       {
@@ -52,7 +59,7 @@ module.exports = {
         include: [
           ...alfrescoLibs
         ],
-        loader: 'angular2-template-loader',
+        loaders: ['angular2-template-loader', 'systemjs-loader']
       },
       {
         test: /\.html$/,

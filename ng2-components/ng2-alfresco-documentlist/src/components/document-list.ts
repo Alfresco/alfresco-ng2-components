@@ -40,7 +40,10 @@ import {
     ImageResolver
 } from './../data/share-datatable-adapter';
 
+declare var module: any;
+
 @Component({
+    moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html'
