@@ -25,6 +25,7 @@ import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-a
 declare let componentHandler: any;
 
 @Component({
+    moduleId: module.id,
     selector: 'ng2-alfresco-userinfo',
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
