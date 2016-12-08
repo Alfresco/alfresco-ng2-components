@@ -24,8 +24,8 @@ import { Observable, Observer } from 'rxjs/Rx';
 declare let componentHandler: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'activiti-process-instance-filters',
+    moduleId: module.id,
     templateUrl: './activiti-filters.component.html',
     styleUrls: ['activiti-filters.component.css']
 })

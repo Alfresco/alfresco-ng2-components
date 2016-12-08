@@ -124,8 +124,23 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     getMimeTypeIcon(node: any): string {
         if (node.entry.content && node.entry.content.mimeType) {
             let icon = this.alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
-            return require(`./../img/${icon}`);
+            return this.resolveIconPath(icon);
         }
+    }
+
+    resolveIconPath(icon: string): string {
+        let result = null;
+        try {
+            // webpack
+            result = require(`./../img/${icon}`);
+        } catch (e) {
+            // system.js
+            if (module && module.id) {
+                let baseComponentPath = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
+                result = `${baseComponentPath}/img/${icon}`;
+            }
+        }
+        return result;
     }
 
     /**
