@@ -20,6 +20,7 @@ import { WidgetComponent } from './../widget.component';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+    moduleId: module.id,
     selector: 'checkbox-widget',
     templateUrl: './checkbox.widget.html'
 })

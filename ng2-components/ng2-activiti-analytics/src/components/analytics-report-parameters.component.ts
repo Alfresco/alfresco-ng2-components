@@ -23,6 +23,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
+    moduleId: module.id,
     selector: 'analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']

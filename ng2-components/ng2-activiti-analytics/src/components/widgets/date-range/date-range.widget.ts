@@ -28,6 +28,7 @@ function dateCheck(c: AbstractControl) {
 }
 
 @Component({
+    moduleId: module.id,
     selector: 'date-range-widget',
     templateUrl: './date-range.widget.html',
     styleUrls: ['./date-range.widget.css']
