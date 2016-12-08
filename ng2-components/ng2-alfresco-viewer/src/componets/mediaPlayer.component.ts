@@ -18,6 +18,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+    moduleId: module.id,
     selector: 'media-player',
     templateUrl: './mediaPlayer.component.html',
     styleUrls: ['./mediaPlayer.component.css']
