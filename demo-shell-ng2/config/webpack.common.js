@@ -59,7 +59,7 @@ module.exports = {
         include: [
           ...alfrescoLibs
         ],
-        loaders: ['angular2-template-loader', 'systemjs-loader']
+        loaders: ['angular2-template-loader', 'source-map-loader', 'systemjs-loader']
       },
       {
         test: /\.html$/,
