@@ -157,9 +157,11 @@ export class DocumentList implements OnInit, AfterContentInit {
         private translate: AlfrescoTranslationService) {
 
         let rootPath = './..';
-        if (module && module.id) {
-            rootPath = module.id.replace('/components/document-list.js', '');
-        }
+        try {
+            if (module && module.id) {
+                rootPath = module.id.replace('/components/document-list.js', '');
+            }
+        } catch (e) {}
 
         this.data = new ShareDataTableAdapter(this.documentListService, rootPath, []);
 
@@ -171,18 +173,17 @@ export class DocumentList implements OnInit, AfterContentInit {
     }
 
     resolveIconPath(icon: string): string {
-        let result = null;
         try {
             // webpack
-            result = require(`./../img/${icon}`);
+            return require(`./../img/${icon}`);
         } catch (e) {
             // system.js
             if (module && module.id) {
                 let baseComponentPath = module.id.replace('/components/document-list.js', '');
-                result = `${baseComponentPath}/img/${icon}`;
+                return `${baseComponentPath}/img/${icon}`;
             }
         }
-        return result;
+        return null;
     }
 
     getContextActions(node: MinimalNodeEntity) {

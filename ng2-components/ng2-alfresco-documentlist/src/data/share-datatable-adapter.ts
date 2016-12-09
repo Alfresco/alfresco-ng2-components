@@ -313,17 +313,16 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     }
 
     getImagePath(id: string): any {
-        let result = null;
         try {
             // webpack
-            result = require(`${this.basePath}/img/${id}`);
+            return require(`./../img/${id}`);
         } catch (e) {
             // system.js
             if (module && module.id) {
-                result = `${this.basePath}/img/${id}`;
+                return `${this.basePath}/img/${id}`;
             }
         }
-        return result;
+        return null;
     }
 
     private resetPagination() {
