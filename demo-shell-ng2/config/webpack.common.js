@@ -106,6 +106,11 @@ module.exports = {
   },
 
   plugins: [
+
+    new webpack.ProvidePlugin({
+      'dialogPolyfill': 'dialog-polyfill/dialog-polyfill'
+    }),
+
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor', 'polyfills']
     }),
