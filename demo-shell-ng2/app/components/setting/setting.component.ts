@@ -18,10 +18,7 @@
 import { Component } from '@angular/core';
 import { AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'alfresco-setting-demo',
     templateUrl: './setting.component.html',
     styleUrls: ['./setting.component.css']

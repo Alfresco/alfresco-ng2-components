@@ -20,10 +20,7 @@ import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { StorageService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'login-demo',
     templateUrl: './login-demo.component.html',
     styleUrls: ['./login-demo.component.css']

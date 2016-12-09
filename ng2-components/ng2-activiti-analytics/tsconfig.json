@@ -16,7 +16,8 @@
         "noImplicitUseStrict": false,
         "noFallthroughCasesInSwitch": true,
         "outDir": "dist",
-        "types": ["core-js", "jasmine", "node"]
+        "lib": ["es7", "dom"],
+        "types": ["jasmine", "node"]
     },
     "exclude": [
         "demo",

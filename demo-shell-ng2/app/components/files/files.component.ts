@@ -27,10 +27,7 @@ import {
 } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']

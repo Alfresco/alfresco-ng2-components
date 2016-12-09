@@ -154,7 +154,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
                 let node = (<ShareDataRow> row).node;
 
                 if (node.entry.isFolder) {
-                    return `${this.basePath}/img/ft_ic_folder.svg`;
+                    return this.getImagePath('ft_ic_folder.svg');
                 }
 
                 if (node.entry.isFile) {
@@ -171,13 +171,13 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
                         if (mimeType) {
                             let icon = this.documentListService.getMimeTypeIcon(mimeType);
                             if (icon) {
-                                return `${this.basePath}/img/${icon}`;
+                                return this.getImagePath(icon);
                             }
                         }
                     }
                 }
 
-                return `${this.basePath}/img/ft_ic_miscellaneous.svg`;
+                return this.getImagePath('ft_ic_miscellaneous.svg');
             }
 
         }
@@ -310,6 +310,19 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         }
 
         this.rows = rows;
+    }
+
+    getImagePath(id: string): any {
+        try {
+            // webpack
+            return require(`./../img/${id}`);
+        } catch (e) {
+            // system.js
+            if (module && module.id) {
+                return `${this.basePath}/img/${id}`;
+            }
+        }
+        return null;
     }
 
     private resetPagination() {
