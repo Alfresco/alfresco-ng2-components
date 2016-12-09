@@ -4,7 +4,9 @@
 
 .typeahead-autocomplete {
     background-color: #fff;
-    position: absolute;
+    position: relative;
+    max-height: 200px;
+    overflow-y: auto;
     z-index: 5;
     color: #555;
     margin: -15px 0 0 0;
