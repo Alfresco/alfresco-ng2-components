@@ -3,6 +3,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var helpers = require('./helpers');
 var path = require('path');
+var fs = require('fs');
 
 var alfrescoLibs = [
     helpers.root('node_modules', 'alfresco-js-api'),
@@ -21,7 +22,11 @@ var alfrescoLibs = [
     helpers.root('node_modules', 'ng2-alfresco-userinfo'),
     helpers.root('node_modules', 'ng2-alfresco-viewer'),
     helpers.root('node_modules', 'ng2-alfresco-webscript')
-];
+].map((entry) => fs.realpathSync(entry));
+
+// console.dir(alfrescoLibs);
+
+const rootPath = helpers.root('node_modules');
 
 module.exports = {
   entry: {
@@ -38,13 +43,16 @@ module.exports = {
     ],
     alias: {
         'alfresco-js-api': helpers.root('node_modules', 'alfresco-js-api', 'dist', 'alfresco-js-api.js')
-    }
+    },
+    root: rootPath,
+    fallback: rootPath
   },
 
   resolveLoader: {
       alias: {
           'systemjs-loader': helpers.root('config', 'loaders', 'system.js')
-      }
+      },
+      fallback: rootPath
   },
 
   module: {
