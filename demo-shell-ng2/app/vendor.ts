@@ -17,9 +17,8 @@ import '../public/css/material.orange-blue.min.css';
 import 'material-design-lite/material.min';
 import 'material-design-icons/iconfont/material-icons.css';
 
-// etc
+// Flags
 import 'flag-icon-css/css/flag-icon.min.css';
-import 'md-date-time-picker/dist/css/mdDateTimePicker.css';
 
 // Polyfill(s) for dialogs
 import 'dialog-polyfill/dialog-polyfill';
@@ -31,3 +30,11 @@ import '../public/css/muli-font.css';
 
 import 'ng2-activiti-form/stencils/runtime.ng1';
 import 'ng2-activiti-form/stencils/runtime.adf';
+
+require('script!../public/js/Polyline.js');
+import 'chart.js';
+
+import 'md-date-time-picker/dist/css/mdDateTimePicker.css';
+// import 'md-date-time-picker/dist/js/mdDateTimePicker.min.js';
+require('script!md-date-time-picker/dist/js/mdDateTimePicker.min.js');
+
