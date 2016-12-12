@@ -59,6 +59,9 @@ module.exports = webpackMerge(commonConfig, {
     // Reference: https://github.com/kevlened/copy-webpack-plugin
     new CopyWebpackPlugin([
         {
+            from: 'favicon-96x96.png'
+        },
+        {
             from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
             to: 'pdf.worker.js'
         },

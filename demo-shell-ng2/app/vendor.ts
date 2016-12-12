@@ -48,7 +48,7 @@ let pdfjsLib = require('pdfjs-dist');
 
 // Setting worker path to worker bundle.
 if (process.env.ENV === 'production') {
-  pdfjsLib.PDFJS.workerSrc = '../../dist/pdf.worker.js';
+  pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
 } else {
   pdfjsLib.PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
 }
