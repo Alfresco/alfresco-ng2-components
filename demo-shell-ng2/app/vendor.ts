@@ -37,16 +37,13 @@ import 'chart.js';
 require('script!moment/min/moment.min.js');
 
 import 'md-date-time-picker/dist/css/mdDateTimePicker.css';
-// import 'md-date-time-picker/dist/js/mdDateTimePicker.min.js';
 require('script!md-date-time-picker/dist/js/mdDateTimePicker.min.js');
 require('script!md-date-time-picker/dist/js/draggabilly.pkgd.min.js');
-require('script!element.scrollintoviewifneeded-polyfill/index.js');
 
 require('pdfjs-dist/web/compatibility.js');
 
-let pdfjsLib = require('pdfjs-dist');
-
 // Setting worker path to worker bundle.
+let pdfjsLib = require('pdfjs-dist');
 if (process.env.ENV === 'production') {
   pdfjsLib.PDFJS.workerSrc = './pdf.worker.js';
 } else {

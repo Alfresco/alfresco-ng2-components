@@ -14,7 +14,6 @@
 
 To correctly use this demo check that on your machine is running Node version 6.9.2 LTS or higher.
 
-
 ```sh
 npm install
 ```
