@@ -22,8 +22,24 @@ module.exports = webpackMerge(commonConfig, {
   },
 
   plugins: [
+    // Define env variables to help with builds
+    // Reference: https://webpack.github.io/docs/list-of-plugins.html#defineplugin
+    new webpack.DefinePlugin({
+      'process.env': {
+        'ENV': JSON.stringify(ENV)
+      }
+    }),
+
+    // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
+    // Only emit files when there are no errors
     new webpack.NoErrorsPlugin(),
+
+    // Reference: http://webpack.github.io/docs/list-of-plugins.html#dedupeplugin
+    // Dedupe modules in the output
     new webpack.optimize.DedupePlugin(),
+
+    // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
+    // Minify all javascript, switch loaders to minimizing mode
     new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
       mangle: {
         keep_fnames: true
@@ -33,15 +49,36 @@ module.exports = webpackMerge(commonConfig, {
         warnings: false
       }
     }),
+
+    // Extract css files
+    // Reference: https://github.com/webpack/extract-text-webpack-plugin
+    // Disabled when in test mode or not in build mode
     new ExtractTextPlugin('[name].[hash].css'),
-    new CopyWebpackPlugin([{
-        from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
-        to: 'pdf.worker.js'
-    }]),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'ENV': JSON.stringify(ENV)
-      }
-    })
+
+    // Copy assets from the public folder
+    // Reference: https://github.com/kevlened/copy-webpack-plugin
+    new CopyWebpackPlugin([
+        {
+            from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
+            to: 'pdf.worker.js'
+        },
+        {
+            context: 'custom-translation',
+            from: '**/*.json',
+            to: 'i18n/custom-translation'
+        },
+        // Copy i18n folders for all modules with ng2-alfresco- prefix
+        {
+            context: 'node_modules',
+            from: 'ng2-alfresco-*/dist/src/i18n/*.json',
+            to: 'node_modules'
+        },
+        // Copy i18n folders for all modules with ng2-activiti- prefix
+        {
+            context: 'node_modules',
+            from: 'ng2-activiti-*/dist/src/i18n/*.json',
+            to: 'node_modules'
+        }
+    ])
   ]
 });
