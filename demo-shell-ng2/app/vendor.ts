@@ -33,6 +33,7 @@ import 'ng2-activiti-form/stencils/runtime.adf';
 
 require('script!../public/js/Polyline.js');
 import 'chart.js';
+require('script!raphael/raphael.min.js');
 
 require('script!moment/min/moment.min.js');
 
