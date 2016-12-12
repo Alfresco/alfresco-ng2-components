@@ -19,10 +19,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'search-bar',
     templateUrl: './search-bar.component.html'
 })

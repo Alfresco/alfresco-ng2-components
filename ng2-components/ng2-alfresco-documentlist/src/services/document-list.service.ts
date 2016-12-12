@@ -18,10 +18,11 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApi, NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
+import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoAuthenticationService,
-    AlfrescoContentService
+    AlfrescoContentService,
+    AlfrescoApiService
 } from 'ng2-alfresco-core';
 
 @Injectable()
@@ -58,15 +59,16 @@ export class DocumentListService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
     };
 
-    constructor(private authService: AlfrescoAuthenticationService, private contentService: AlfrescoContentService) {
-    }
-
-    private getAlfrescoApi(): AlfrescoApi {
-        return this.authService.getAlfrescoApi();
+    constructor(private authService: AlfrescoAuthenticationService, private contentService: AlfrescoContentService, private apiService: AlfrescoApiService) {
     }
 
     private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
-        let nodeId = '-root-';
+        let rootPath = '-root-';
+
+        if (opts && opts.rootPath) {
+            rootPath = opts.rootPath;
+        }
+
         let params: any = {
             relativePath: folder,
             include: ['path', 'properties']
@@ -81,11 +83,25 @@ export class DocumentListService {
             }
         }
 
-        return this.getAlfrescoApi().nodes.getNodeChildren(nodeId, params);
+        return this.apiService.getInstance().nodes.getNodeChildren(rootPath, params);
     }
 
     deleteNode(nodeId: string): Observable<any> {
-        return Observable.fromPromise(this.getAlfrescoApi().nodes.deleteNode(nodeId));
+        return Observable.fromPromise(this.apiService.getInstance().nodes.deleteNode(nodeId));
+    }
+
+    /**
+     * Create a new folder in the path.
+     * @param name
+     * @param path
+     * @returns {any}
+     */
+    createFolder(name: string, path: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, path))
+            .map(res => {
+                return res;
+            })
+            .catch(this.handleError);
     }
 
     /**

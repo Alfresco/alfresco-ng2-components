@@ -15,22 +15,23 @@
  * limitations under the License.
  */
 
-import { Input } from '@angular/core';
-import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../dynamic-table.widget.model';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AppDefinitionRepresentationModel } from 'ng2-activiti-tasklist';
 
-export abstract class CellEditorComponent {
+@Component({
+    selector: 'activiti-apps-view',
+    template: `
+        <activiti-apps (appClick)="onAppClicked($event)"></activiti-apps>
+    `
+})
+export class ActivitiAppsView {
 
-    @Input()
-    table: DynamicTableModel;
-
-    @Input()
-    row: DynamicTableRow;
-
-    @Input()
-    column: DynamicTableColumn;
-
-    handleError(error: any) {
-        console.error(error);
+    constructor(private router: Router, private route: ActivatedRoute) {
     }
+
+     onAppClicked(app: AppDefinitionRepresentationModel) {
+         this.router.navigate(['/activiti/apps', app.id || 0, 'tasks']);
+     }
 
 }

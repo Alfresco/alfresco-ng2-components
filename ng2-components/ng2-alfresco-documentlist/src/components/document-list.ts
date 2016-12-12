@@ -22,7 +22,6 @@ import {
     Output,
     EventEmitter,
     AfterContentInit,
-    AfterViewChecked,
     TemplateRef,
     NgZone,
     ViewChild,
@@ -41,7 +40,7 @@ import {
     ImageResolver
 } from './../data/share-datatable-adapter';
 
-declare var componentHandler;
+declare var module: any;
 
 @Component({
     moduleId: module.id,
@@ -49,7 +48,7 @@ declare var componentHandler;
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html'
 })
-export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit {
+export class DocumentList implements OnInit, AfterContentInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -57,10 +56,20 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     DEFAULT_ROOT_FOLDER: string = '/';
 
-    baseComponentPath = module.id.replace('/components/document-list.js', '');
+    @Input()
+    set rootPath(value: string) {
+        this.data.rootPath = value || this.data.DEFAULT_ROOT_PATH;
+    }
+
+    get rootPath(): string {
+        if (this.data) {
+            return this.data.rootPath;
+        }
+        return null;
+    }
 
     @Input()
-    fallbackThubnail: string = this.baseComponentPath + '/img/ft_ic_miscellaneous.svg';
+    fallbackThubnail: string = null;
 
     @Input()
     navigate: boolean = true;
@@ -76,6 +85,9 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
 
     @Input()
     contentActions: boolean = false;
+
+    @Input()
+    contentMenuActions: boolean = true;
 
     @Input()
     contextMenuActions: boolean = false;
@@ -109,24 +121,31 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
 
+    @Output()
+    error: EventEmitter<any> = new EventEmitter();
+
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
     private _path = this.DEFAULT_ROOT_FOLDER;
 
-    get currentFolderPath(): string {
-        return this._path;
-    }
-
     @Input()
     set currentFolderPath(value: string) {
         if (value !== this._path) {
-            this._path = value || this.DEFAULT_ROOT_FOLDER;
-            this.displayFolderContent(this._path);
-            this.folderChange.emit({
-                path: this.currentFolderPath
-            });
+            const path = value || this.DEFAULT_ROOT_FOLDER;
+            this.displayFolderContent(path)
+                .then(() => {
+                    this._path = path;
+                    this.folderChange.emit({ path: path });
+                })
+                .catch(err => {
+                    this.error.emit(err);
+                });
         }
+    }
+
+    get currentFolderPath(): string {
+        return this._path;
     }
 
     errorMessage;
@@ -140,11 +159,34 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         private ngZone: NgZone,
         private translate: AlfrescoTranslationService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
+        let rootPath = './..';
+        try {
+            if (module && module.id) {
+                rootPath = module.id.replace('/components/document-list.js', '');
+            }
+        } catch (e) {}
+
+        this.data = new ShareDataTableAdapter(this.documentListService, rootPath, []);
 
         if (translate) {
             translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/dist/src');
         }
+
+        this.fallbackThubnail = this.resolveIconPath('ft_ic_miscellaneous.svg');
+    }
+
+    resolveIconPath(icon: string): string {
+        try {
+            // webpack
+            return require(`./../img/${icon}`);
+        } catch (e) {
+            // system.js
+            if (module && module.id) {
+                let baseComponentPath = module.id.replace('/components/document-list.js', '');
+                return `${baseComponentPath}/img/${icon}`;
+            }
+        }
+        return null;
     }
 
     getContextActions(node: MinimalNodeEntity) {
@@ -196,16 +238,8 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         return false;
     }
 
-    ngAfterViewChecked() {
-        // workaround for MDL issues with dynamic components
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-    }
-
     isMobile(): boolean {
         return !!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
     }
 
     getNodeActions(node: MinimalNodeEntity): ContentActionModel[] {
@@ -259,14 +293,17 @@ export class DocumentList implements OnInit, AfterViewChecked, AfterContentInit 
         }
     }
 
-    displayFolderContent(path: string) {
-        this.data.loadPath(path);
+    displayFolderContent(path: string): Promise<any> {
+        return this.data.loadPath(path);
     }
 
     reload() {
         this.ngZone.run(() => {
             if (this.currentFolderPath) {
-                this.displayFolderContent(this.currentFolderPath);
+                this.displayFolderContent(this.currentFolderPath)
+                    .catch(err => {
+                        this.error.emit(err);
+                    });
             }
         });
     }

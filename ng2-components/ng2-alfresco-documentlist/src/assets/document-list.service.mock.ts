@@ -22,7 +22,8 @@ import { DocumentListService } from './../services/document-list.service';
 import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
-    AlfrescoContentService
+    AlfrescoContentService,
+    AlfrescoApiService
 } from 'ng2-alfresco-core';
 
 export class DocumentListServiceMock extends DocumentListService {
@@ -34,9 +35,10 @@ export class DocumentListServiceMock extends DocumentListService {
     constructor(
         settings?: AlfrescoSettingsService,
         authService?: AlfrescoAuthenticationService,
-        contentService?: AlfrescoContentService
+        contentService?: AlfrescoContentService,
+        apiService?: AlfrescoApiService
     ) {
-        super(authService, contentService);
+        super(authService, contentService, apiService);
     }
 
     getFolder(folder: string) {

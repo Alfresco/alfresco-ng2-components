@@ -19,7 +19,8 @@ import { TestBed } from '@angular/core/testing';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { EcmModelService } from './ecm-model.service';
 import { Observable } from 'rxjs/Rx';
@@ -30,7 +31,7 @@ declare let jasmine: any;
 
 describe('EcmModelService', () => {
 
-    let service;
+    let service: EcmModelService;
 
     beforeAll(() => {
         TestBed.configureTestingModule({
@@ -39,7 +40,8 @@ describe('EcmModelService', () => {
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
-                EcmModelService
+                EcmModelService,
+                StorageService
             ]
         });
         service = TestBed.get(EcmModelService);
@@ -86,11 +88,11 @@ describe('EcmModelService', () => {
 
         let typeName = 'typeTest';
 
-        service.createEcmType(typeName, service.MODEL_NAME, service.TYPE_MODEL).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + service.MODEL_NAME + '/types')).toBeTruthy();
+        service.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(typeName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).title).toEqual(typeName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(service.TYPE_MODEL);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(EcmModelService.TYPE_MODEL);
             done();
         });
 
@@ -106,11 +108,11 @@ describe('EcmModelService', () => {
         let typeName = 'typeTest:testName@#$*!';
         let cleanName = 'testName';
 
-        service.createEcmType(typeName, service.MODEL_NAME, service.TYPE_MODEL).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + service.MODEL_NAME + '/types')).toBeTruthy();
+        service.createEcmType(typeName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('versions/1/cmm/' + EcmModelService.MODEL_NAME + '/types')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(cleanName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).title).toEqual(typeName);
-            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(service.TYPE_MODEL);
+            expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).parentName).toEqual(EcmModelService.TYPE_MODEL);
             done();
         });
 
@@ -131,8 +133,8 @@ describe('EcmModelService', () => {
             }
         };
 
-        service.addPropertyToAType(service.MODEL_NAME, typeName, formFields).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + service.MODEL_NAME + '/types/' + typeName + '?select=props')).toBeTruthy();
+        service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + typeName + '?select=props')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(typeName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([{
                 name: 'test',
@@ -172,8 +174,8 @@ describe('EcmModelService', () => {
             }
         };
 
-        service.addPropertyToAType(service.MODEL_NAME, typeName, formFields).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + service.MODEL_NAME + '/types/' + cleanName + '?select=props')).toBeTruthy();
+        service.addPropertyToAType(EcmModelService.MODEL_NAME, typeName, formFields).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('1/cmm/' + EcmModelService.MODEL_NAME + '/types/' + cleanName + '?select=props')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).name).toEqual(cleanName);
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).properties).toEqual([{
                 name: 'test',
@@ -204,7 +206,7 @@ describe('EcmModelService', () => {
 
     it('Should create ECM model', (done) => {
 
-        service.createEcmModel(service.MODEL_NAME, service.MODEL_NAMESPACE).subscribe(() => {
+        service.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(() => {
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).status).toEqual('DRAFT');
             done();
@@ -219,8 +221,8 @@ describe('EcmModelService', () => {
 
     it('Should activate ECM model', (done) => {
 
-        service.activeEcmModel(service.MODEL_NAME).subscribe(() => {
-            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm/' + service.MODEL_NAME + '?select=status')).toBeTruthy();
+        service.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(() => {
+            expect(jasmine.Ajax.requests.mostRecent().url.endsWith('alfresco/versions/1/cmm/' + EcmModelService.MODEL_NAME + '?select=status')).toBeTruthy();
             expect(JSON.parse(jasmine.Ajax.requests.mostRecent().params).status).toEqual('ACTIVE');
             done();
         });

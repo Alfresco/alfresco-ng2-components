@@ -15,14 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewChecked, ViewChild, Input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
-    AppDefinitionRepresentationModel,
-    FilterRepresentationModel,
     ActivitiApps,
-    ActivitiTaskList
+    ActivitiFilters,
+    ActivitiTaskDetails,
+    ActivitiTaskList,
+    FilterRepresentationModel
 } from 'ng2-activiti-tasklist';
 import {
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
     ActivitiProcessInstanceListComponent,
     ActivitiStartProcessInstance,
     ProcessInstance
@@ -37,48 +40,40 @@ import {
 import { FormRenderingService } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
-declare let __moduleName: string;
 declare var componentHandler;
 
 const currentProcessIdNew = '__NEW__';
 
 @Component({
-    moduleId: __moduleName,
     selector: 'activiti-demo',
     templateUrl: './activiti-demo.component.html',
     styleUrls: ['./activiti-demo.component.css']
 })
-export class ActivitiDemoComponent implements AfterViewChecked {
+export class ActivitiDemoComponent implements AfterViewInit {
 
-    @ViewChild('activitiapps')
+    @ViewChild(ActivitiApps)
     activitiapps: ActivitiApps;
 
-    @ViewChild('activitifilter')
-    activitifilter: any;
-
-    @ViewChild('activitidetails')
-    activitidetails: any;
+    @ViewChild(ActivitiFilters)
+    activitifilter: ActivitiFilters;
 
     @ViewChild(ActivitiTaskList)
     activititasklist: ActivitiTaskList;
 
-    @ViewChild('activitiprocessfilter')
-    activitiprocessfilter: any;
+    @ViewChild(ActivitiTaskDetails)
+    activitidetails: ActivitiTaskDetails;
+
+    @ViewChild(ActivitiProcessFilters)
+    activitiprocessfilter: ActivitiProcessFilters;
 
     @ViewChild(ActivitiProcessInstanceListComponent)
     activitiprocesslist: ActivitiProcessInstanceListComponent;
 
-    @ViewChild('activitiprocessdetails')
-    activitiprocessdetails: any;
+    @ViewChild(ActivitiProcessInstanceDetails)
+    activitiprocessdetails: ActivitiProcessInstanceDetails;
 
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;
-
-    @ViewChild('tabmain')
-    tabMain: any;
-
-    @ViewChild('tabheader')
-    tabHeader: any;
 
     @Input()
     appId: number;
@@ -99,7 +94,9 @@ export class ActivitiDemoComponent implements AfterViewChecked {
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
 
-    constructor(private route: ActivatedRoute, private formRenderingService: FormRenderingService) {
+    constructor(private elementRef: ElementRef,
+                private route: ActivatedRoute,
+                private formRenderingService: FormRenderingService) {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
             [
@@ -126,32 +123,21 @@ export class ActivitiDemoComponent implements AfterViewChecked {
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            this.appId = params['appId'];
+            let applicationId = params['appId'];
+            if (applicationId && applicationId !== '0') {
+                this.appId = params['appId'];
+            }
+
+            this.taskFilter = null;
+            this.currentTaskId = null;
+            this.processFilter = null;
+            this.currentProcessInstanceId = null;
         });
         this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
 
     ngOnDestroy() {
         this.sub.unsubscribe();
-    }
-
-    onAppClick(app: AppDefinitionRepresentationModel) {
-        this.appId = app.id;
-        this.taskFilter = null;
-        this.currentTaskId = null;
-
-        this.processFilter = null;
-        this.currentProcessInstanceId = null;
-
-        this.changeTab('apps', 'tasks');
-    }
-
-    changeTab(origin: string, destination: string) {
-        this.tabMain.nativeElement.children[origin].classList.remove('is-active');
-        this.tabMain.nativeElement.children[destination].classList.add('is-active');
-
-        this.tabHeader.nativeElement.children[`${origin}-header`].classList.remove('is-active');
-        this.tabHeader.nativeElement.children[`${destination}-header`].classList.add('is-active');
     }
 
     onTaskFilterClick(event: FilterRepresentationModel) {
@@ -225,11 +211,17 @@ export class ActivitiDemoComponent implements AfterViewChecked {
         this.currentTaskId = null;
     }
 
-    ngAfterViewChecked() {
+    ngAfterViewInit() {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
+
+        // Load Activiti stencil controllers
+        let s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.src = 'http://localhost:9999/activiti-app/app/rest/script-files/controllers';
+        this.elementRef.nativeElement.appendChild(s);
     }
 
 }

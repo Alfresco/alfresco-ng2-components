@@ -29,8 +29,6 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 })
 export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
-    baseComponentPath = module.id.replace('/components/alfresco-search.component.js', '');
-
     @Input()
     searchTerm: string = '';
 
@@ -93,8 +91,23 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     getMimeTypeIcon(node: any): string {
         if (node.entry.content && node.entry.content.mimeType) {
             let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
-            return `${this.baseComponentPath}/img/${icon}`;
+            return this.resolveIconPath(icon);
         }
+    }
+
+    private resolveIconPath(icon: string): string {
+        let result = null;
+        try {
+            // webpack
+            result = require(`./../img/${icon}`);
+        } catch (e) {
+            // system.js
+            if (module && module.id) {
+                let baseComponentPath = module.id.replace('/components/alfresco-search.component.js', '');
+                result = `${baseComponentPath}/img/${icon}`;
+            }
+        }
+        return result;
     }
 
     /**

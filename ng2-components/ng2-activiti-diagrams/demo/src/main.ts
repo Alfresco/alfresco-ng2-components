@@ -19,7 +19,7 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 @Component({
@@ -50,7 +50,9 @@ export class DiagramDemoComponent {
 
     ticket: string;
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
         settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');
 
@@ -60,7 +62,7 @@ export class DiagramDemoComponent {
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-BPM', this.ticket);
+        this.storage.setItem('ticket-BPM', this.ticket);
     }
 
     public updateHost(): void {

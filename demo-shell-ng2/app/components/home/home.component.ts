@@ -15,28 +15,11 @@
  * limitations under the License.
  */
 
-import { CellEditorComponent } from './cell.editor';
+import { Component } from '@angular/core';
 
-describe('CellEditorComponent', () => {
-
-    class CustomEditor extends CellEditorComponent {
-        onError(error: any) {
-            this.handleError(error);
-        }
-    }
-
-    let component: CustomEditor;
-
-    beforeEach(() => {
-        component = new CustomEditor();
-    });
-
-    it('should handle error', () => {
-        const error = 'error';
-        spyOn(console, 'error').and.stub();
-
-        component.onError(error);
-        expect(console.error).toHaveBeenCalledWith(error);
-    });
-
-});
+@Component({
+    selector: 'home-view',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
+})
+export class HomeComponent {}

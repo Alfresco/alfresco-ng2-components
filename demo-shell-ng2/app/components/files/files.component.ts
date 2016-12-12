@@ -27,10 +27,7 @@ import {
 } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
@@ -38,6 +35,7 @@ declare let __moduleName: string;
 export class FilesComponent implements OnInit {
     currentPath: string = '/Sites/swsdp/documentLibrary';
 
+    errorMessage: string = null;
     fileNodeId: any;
     fileShowed: boolean = false;
     multipleFileUpload: boolean = false;
@@ -118,6 +116,16 @@ export class FilesComponent implements OnInit {
 
     viewActivitiForm(event?: any) {
         this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
+    }
+
+    onNavigationError(err: any) {
+        if (err) {
+            this.errorMessage = err.message || 'Navigation error';
+        }
+    }
+
+    resetError() {
+        this.errorMessage = null;
     }
 
     private setupBpmActions(actions: any[]) {

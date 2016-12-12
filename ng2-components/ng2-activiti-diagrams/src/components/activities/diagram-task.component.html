@@ -1,4 +1,5 @@
-<raphael-rect [leftCorner]="rectLeftCorner" [width]="data.width" [height]="data.height" [radius]="options.radius"
+<raphael-rect [elementId]="data.id" [leftCorner]="rectLeftCorner" [width]="data.width" [height]="data.height" [radius]="options.radius"
               [stroke]="options.stroke" [strokeWidth]="options.strokeWidth"
               [fillColors]="options.fillColors" [fillOpacity]="options.fillOpacity"></raphael-rect>
 <raphael-text [text]="data.name" [position]="textPosition"></raphael-text>
+<diagram-tooltip [data]="data"></diagram-tooltip>

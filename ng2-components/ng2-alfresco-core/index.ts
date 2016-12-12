@@ -22,13 +22,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 import {
+    StorageService,
     AlfrescoApiService,
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    RenditionsService
+    RenditionsService,
+    AuthGuard,
+    AuthGuardEcm,
+    AuthGuardBpm
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -39,6 +43,7 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
+    StorageService,
     AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
@@ -46,6 +51,9 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
     RenditionsService,
+    AuthGuard,
+    AuthGuardEcm,
+    AuthGuardBpm,
     ...CONTEXT_MENU_PROVIDERS
 ];
 

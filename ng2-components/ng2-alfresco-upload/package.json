@@ -53,6 +53,7 @@
     "alfresco"
   ],
   "dependencies": {
+    "@angular/router": "3.0.0",
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
     "@angular/core": "2.0.0",
@@ -72,7 +73,6 @@
   },
   "devDependencies": {
     "@types/node": "^6.0.42",
-    "@types/core-js": "^0.9.32",
     "@types/jasmine": "^2.2.33",
     "concurrently": "^2.2.0",
     "cpx": "1.3.1",

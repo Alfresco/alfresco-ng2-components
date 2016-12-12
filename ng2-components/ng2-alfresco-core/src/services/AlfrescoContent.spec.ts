@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import {ReflectiveInjector} from '@angular/core';
-import {AlfrescoSettingsService} from './AlfrescoSettings.service';
-import {AlfrescoAuthenticationService} from './AlfrescoAuthentication.service';
-import {AlfrescoContentService} from './AlfrescoContent.service';
+import { ReflectiveInjector } from '@angular/core';
+import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
+import { AlfrescoContentService } from './AlfrescoContent.service';
 import { AlfrescoApiService } from './AlfrescoApi.service';
+import { StorageService } from './storage.service';
 
 describe('AlfrescoContentService', () => {
 
@@ -32,7 +33,8 @@ describe('AlfrescoContentService', () => {
             AlfrescoApiService,
             AlfrescoContentService,
             AlfrescoAuthenticationService,
-            AlfrescoSettingsService
+            AlfrescoSettingsService,
+            StorageService
         ]);
         spyOn(localStorage, 'getItem').and.callFake(function (key) {
             return 'myTicket';

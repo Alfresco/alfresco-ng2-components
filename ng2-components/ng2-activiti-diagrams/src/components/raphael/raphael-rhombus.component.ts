@@ -43,6 +43,9 @@ export class RaphaelRhombusDirective extends RaphaelBase implements OnInit {
     @Input()
     fillOpacity: any;
 
+    @Input()
+    elementId: string;
+
     @Output()
     onError = new EventEmitter();
 
@@ -54,11 +57,12 @@ export class RaphaelRhombusDirective extends RaphaelBase implements OnInit {
     ngOnInit() {
         console.log(this.elementRef);
         let opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
-        this.draw(this.center, this.width, this.height, opts);
+        let elementDraw = this.draw(this.center, this.width, this.height, opts);
+        elementDraw.node.id = this.elementId;
     }
 
     public draw(center: Point, width: number, height: number, opts?: any) {
-        this.paper.path('M' + center.x + ' ' + (center.y + (height / 2)) +
+        return this.paper.path('M' + center.x + ' ' + (center.y + (height / 2)) +
             'L' + (center.x + (width / 2)) + ' ' + (center.y + height) +
             'L' + (center.x + width) + ' ' + (center.y + (height / 2)) +
             'L' + (center.x + (width / 2)) + ' ' + center.y + 'z'

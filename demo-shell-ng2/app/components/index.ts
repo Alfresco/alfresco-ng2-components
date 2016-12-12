@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export { HomeComponent } from './home/home.component';
 export { DataTableDemoComponent } from './datatable/datatable-demo.component';
 export { SearchComponent } from './search/search.component';
 export { SearchBarComponent } from './search/search-bar.component';
@@ -27,3 +28,4 @@ export { AboutComponent } from './about/about.component';
 export { FilesComponent } from './files/files.component';
 export { FormNodeViewer } from './activiti/form-node-viewer.component';
 export { SettingComponent } from './setting/setting.component';
+export { ActivitiAppsView } from './activiti/apps.view';

@@ -19,7 +19,7 @@ import { NgModule, Component, Input, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
 import { TagModule } from 'ng2-alfresco-tag';
 
 @Component({
@@ -41,7 +41,7 @@ import { TagModule } from 'ng2-alfresco-tag';
               <div class="mdl-cell mdl-cell--4-col"><alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list></div>
               <div class="mdl-cell mdl-cell--4-col">List Tags ECM <alfresco-tag-list></alfresco-tag-list></div>
               <div class="mdl-cell mdl-cell--4-col">
-                    Tag list By Node ID 
+                    Tag list By Node ID
                     <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
               </div>
             </div>
@@ -60,7 +60,8 @@ class TagDemo implements OnInit {
     ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -88,7 +89,7 @@ class TagDemo implements OnInit {
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-ECM', this.ticket);
+        this.storage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {

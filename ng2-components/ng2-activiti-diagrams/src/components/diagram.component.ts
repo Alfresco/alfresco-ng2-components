@@ -20,6 +20,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DiagramsService } from '../services/diagrams.service';
 import { DiagramColorService } from '../services/diagram-color.service';
 import { RaphaelService } from './raphael/raphael.service';
+import { DiagramModel, DiagramElementModel } from '../models/diagram.model';
 
 @Component({
     moduleId: module.id,
@@ -34,6 +35,12 @@ export class DiagramComponent {
     metricPercentages: any;
 
     @Input()
+    metricColor: any;
+
+    @Input()
+    metricType: string = '';
+
+    @Input()
     width: number = 1000;
 
     @Input()
@@ -45,7 +52,7 @@ export class DiagramComponent {
     @Output()
     onError = new EventEmitter();
 
-    private diagram: any;
+    private diagram: DiagramModel;
     private elementRef: ElementRef;
 
     constructor(elementRef: ElementRef,
@@ -65,14 +72,15 @@ export class DiagramComponent {
 
     ngOnChanges(changes: SimpleChanges) {
         this.reset();
-        this.diagramColorService.setTotalColors(this.metricPercentages);
+        this.diagramColorService.setTotalColors(this.metricColor);
         this.getProcessDefinitionModel(this.processDefinitionId);
     }
 
     getProcessDefinitionModel(processDefinitionId: string) {
         this.diagramsService.getProcessDefinitionModel(processDefinitionId).subscribe(
             (res: any) => {
-                this.diagram = res;
+                this.diagram = new DiagramModel(res);
+                this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
                 this.onSuccess.emit(res);
             },
             (err: any) => {
@@ -80,6 +88,19 @@ export class DiagramComponent {
                 console.log(err);
             }
         );
+    }
+
+    setMetricValueToDiagramElement(diagram: DiagramModel, metrics: any, metricType: string) {
+        for (let key in metrics) {
+            if (metrics.hasOwnProperty(key)) {
+                let foundElement: DiagramElementModel = diagram.elements.find(
+                    (element: DiagramElementModel) => element.id === key);
+                if (foundElement) {
+                    foundElement.value = metrics[key];
+                    foundElement.dataType = metricType;
+                }
+            }
+        }
     }
 
     reset() {

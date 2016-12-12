@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { CellEditorComponent } from './../cell.editor';
-import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
+import { Component, Input } from '@angular/core';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 
 @Component({
     moduleId: module.id,
@@ -25,7 +24,16 @@ import { DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widge
     templateUrl: './boolean.editor.html',
     styleUrls: ['./boolean.editor.css']
 })
-export class BooleanEditorComponent extends CellEditorComponent {
+export class BooleanEditorComponent {
+
+    @Input()
+    table: DynamicTableModel;
+
+    @Input()
+    row: DynamicTableRow;
+
+    @Input()
+    column: DynamicTableColumn;
 
     onValueChanged(row: DynamicTableRow, column: DynamicTableColumn, event: any) {
         let value: boolean = (<HTMLInputElement>event.target).checked;

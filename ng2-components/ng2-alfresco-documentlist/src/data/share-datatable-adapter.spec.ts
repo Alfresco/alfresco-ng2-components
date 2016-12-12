@@ -203,8 +203,8 @@ describe('ShareDataTableAdapter', () => {
         spyOn(console, 'error').and.stub();
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(dateValue);
-        expect(console.error).toHaveBeenCalledWith(`Error parsing date ${value} to format ${col.format}`);
+        expect(value).toBe('Error');
+        expect(console.error).toHaveBeenCalled();
     });
 
     it('should generate fallback icon for a file thumbnail with unknown mime type', () => {
@@ -322,7 +322,7 @@ describe('ShareDataTableAdapter', () => {
         expect(value).toBeNull();
     });
 
-    it('should log load error', () => {
+    it('should log load error', (done) => {
         let error = 'My Error';
         documentListService.getFolderReject = true;
         documentListService.getFolderRejectError = error;
@@ -331,10 +331,10 @@ describe('ShareDataTableAdapter', () => {
         spyOn(documentListService, 'getFolder').and.callThrough();
 
         let adapter = new ShareDataTableAdapter(documentListService, null, null);
-        adapter.loadPath('/some/path');
-
-        expect(documentListService.getFolder).toHaveBeenCalled();
-        expect(console.error).toHaveBeenCalledWith(error);
+        adapter.loadPath('/some/path').catch(err => {
+            expect(err).toBe(error);
+            done();
+        });
     });
 
     it('should generate file icon path based on mime type', () => {

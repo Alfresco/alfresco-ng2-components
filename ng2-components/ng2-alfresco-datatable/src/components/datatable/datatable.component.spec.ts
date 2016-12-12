@@ -172,13 +172,13 @@ describe('DataTable', () => {
         let handler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered']);
         window['componentHandler'] = handler;
 
-        dataTable.ngAfterViewChecked();
+        dataTable.ngOnInit();
         expect(handler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
     it('should upgrade MDL components only when component handler present', () => {
         expect(window['componentHandler']).toBeNull();
-        dataTable.ngAfterViewChecked();
+        dataTable.ngOnInit();
     });
 
     it('should invert "select all" status', () => {

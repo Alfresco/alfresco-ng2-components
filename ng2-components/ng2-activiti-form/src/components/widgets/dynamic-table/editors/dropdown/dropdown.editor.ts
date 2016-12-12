@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, OnInit } from '@angular/core';
-import { CellEditorComponent } from './../cell.editor';
-import { DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../dynamic-table.widget.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../dynamic-table.widget.model';
 import { FormService } from './../../../../../services/form.service';
 
 @Component({
@@ -26,14 +25,21 @@ import { FormService } from './../../../../../services/form.service';
     templateUrl: './dropdown.editor.html',
     styleUrls: ['./dropdown.editor.css']
 })
-export class DropdownEditorComponent extends CellEditorComponent implements OnInit {
+export class DropdownEditorComponent implements OnInit {
 
     value: any = null;
     options: DynamicTableColumnOption[] = [];
 
-    constructor(private formService: FormService) {
-        super();
-    }
+    @Input()
+    table: DynamicTableModel;
+
+    @Input()
+    row: DynamicTableRow;
+
+    @Input()
+    column: DynamicTableColumn;
+
+    constructor(private formService: FormService) {}
 
     ngOnInit() {
         let field = this.table.field;
@@ -89,5 +95,9 @@ export class DropdownEditorComponent extends CellEditorComponent implements OnIn
         let value: any = (<HTMLInputElement>event.target).value;
         value = column.options.find(opt => opt.name === value);
         row.value[column.id] = value;
+    }
+
+    handleError(error: any) {
+        console.error(error);
     }
 }
