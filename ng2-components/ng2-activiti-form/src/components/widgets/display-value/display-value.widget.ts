@@ -22,6 +22,7 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Component({
     moduleId: module.id,
@@ -33,6 +34,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
 
     value: any;
     fieldType: string;
+    id: any;
 
     // hyperlink
     linkUrl: string;
@@ -47,7 +49,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
     hasFile: boolean = false;
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private settingsService: AlfrescoSettingsService) {
         super();
     }
 
@@ -81,6 +84,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                             let files = this.field.value || [];
                             if (files.length > 0) {
                                 this.value = decodeURI(files[0].name);
+                                this.id = files[0].id;
                                 this.hasFile = true;
                             } else {
                                 this.value = null;
@@ -125,7 +129,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                                 this.visibleColumns = this.columns.filter(col => col.visible);
                             }
                             if (json.value) {
-                                this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
+                                this.rows = json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
                             }
                             break;
                         default:

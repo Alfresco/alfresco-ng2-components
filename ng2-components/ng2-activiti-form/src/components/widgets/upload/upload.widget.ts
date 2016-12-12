@@ -17,7 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { FormService } from '../../../services/form.service';
 
 @Component({
     moduleId: module.id,
@@ -31,8 +31,7 @@ export class UploadWidget extends WidgetComponent implements OnInit {
     fileName: string;
     displayText: string;
 
-    constructor(private settingsService: AlfrescoSettingsService,
-                private authService: AlfrescoAuthenticationService) {
+    constructor(private formService: FormService) {
         super();
     }
 
@@ -64,35 +63,15 @@ export class UploadWidget extends WidgetComponent implements OnInit {
 
             let file = files[0];
 
-            this.hasFile = true;
-            this.fileName = encodeURI(file.name);
-            this.displayText = file.name;
-
-            let formData: FormData = new FormData();
-            formData.append('file', file, this.fileName);
-
-            let xhr: XMLHttpRequest = new XMLHttpRequest();
-
-            xhr.withCredentials = true;
-
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        let jsonFile = JSON.parse(xhr.response);
-                        console.log(jsonFile);
-                        this.field.value = [jsonFile];
-                        this.field.json.value = [jsonFile];
-                    } else {
-                        console.error(xhr.response);
-                        window.alert('Error uploading file. See console output for more details.');
-                    }
-                }
-            };
-
-            let url = `${this.settingsService.bpmHost}/activiti-app/app/rest/content/raw`;
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Authorization', this.authService.getTicketBpm());
-            xhr.send(formData);
+            this.formService.createTemporaryRawRelatedContent(file)
+                .subscribe((response: any) => {
+                    console.log(response);
+                    this.field.value = [response];
+                    this.field.json.value = [response];
+                }, (error: any) => {
+                    console.error(error);
+                    window.alert('Error uploading file. See console output for more details.');
+                });
         }
     }
 
