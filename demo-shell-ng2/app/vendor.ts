@@ -34,7 +34,23 @@ import 'ng2-activiti-form/stencils/runtime.adf';
 require('script!../public/js/Polyline.js');
 import 'chart.js';
 
+require('script!moment/min/moment.min.js');
+
 import 'md-date-time-picker/dist/css/mdDateTimePicker.css';
 // import 'md-date-time-picker/dist/js/mdDateTimePicker.min.js';
 require('script!md-date-time-picker/dist/js/mdDateTimePicker.min.js');
+require('script!md-date-time-picker/dist/js/draggabilly.pkgd.min.js');
+require('script!element.scrollintoviewifneeded-polyfill/index.js');
 
+require('pdfjs-dist/web/compatibility.js');
+
+let pdfjsLib = require('pdfjs-dist');
+
+// Setting worker path to worker bundle.
+if (process.env.ENV === 'production') {
+  pdfjsLib.PDFJS.workerSrc = '../../dist/pdf.worker.js';
+} else {
+  pdfjsLib.PDFJS.workerSrc = '../../node_modules/pdfjs-dist/build/pdf.worker.js';
+}
+
+require('pdfjs-dist/web/pdf_viewer.js');
