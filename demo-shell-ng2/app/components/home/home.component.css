@@ -1,0 +1,25 @@
+.home-cards {
+    float: left;
+    margin: 10px 10px 10px 10px;
+}
+
+.mdl-card__supporting-text {
+    display: block;
+    overflow-y: auto;
+    height: 400px;
+}
+
+.demo-card-square.mdl-card {
+    width: 320px;
+    height: 380px;
+}
+
+.demo-card-square > .mdl-card__title {
+    color: #fff;
+    background-color: #a1ce6d;
+}
+
+.mdl-card__title {
+    cursor: pointer;
+    height: 70px;
+}
