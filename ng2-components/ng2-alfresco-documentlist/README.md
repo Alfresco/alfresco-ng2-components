@@ -210,6 +210,23 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 Parent folder button is not displayed when breadcrumb is enabled.
 
+### Creation Menu Action
+
+DocumentList provides simple creation menu actions that provide the action to create a new folder.
+
+```html
+<alfresco-document-menu-action 
+    [currentFolderPath]="currentFolderPath">
+</alfresco-document-menu-action>
+```
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
+
+When the "New Folder" button is pressed a dialog appear.
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
+
+
 ### Custom columns
 
 It is possible to reorder, extend or completely redefine data columns displayed by the component.

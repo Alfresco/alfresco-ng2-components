@@ -1,7 +1,7 @@
 <alfresco-document-menu-action *ngIf="creationMenuActions"
                                [currentFolderPath]="currentFolderPath"
-                               (onSuccess)="onActionMenuSuccess($event)"
-                               (onError)="onActionMenuError($event)">
+                               (success)="onActionMenuSuccess($event)"
+                               (error)="onActionMenuError($event)">
 </alfresco-document-menu-action>
 <alfresco-datatable
     [data]="data"
