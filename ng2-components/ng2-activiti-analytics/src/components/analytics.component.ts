@@ -46,7 +46,7 @@ export class AnalyticsComponent implements OnChanges {
 
     reportParamQuery = new ReportQuery();
 
-    reports: any[];
+    reports: Chart[];
 
     public barChartOptions: any = {
         responsive: true,
@@ -106,5 +106,9 @@ export class AnalyticsComponent implements OnChanges {
          */
         let clone = JSON.parse(JSON.stringify(report));
         report.datasets = clone.datasets;
+    }
+
+    public editReport(report: Chart) {
+        console.log(report);
     }
 }

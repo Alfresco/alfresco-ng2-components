@@ -63,6 +63,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
+    private isEditable: boolean = false;
 
     constructor(private translate: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
@@ -209,5 +210,25 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
         if (this.reportParamsSub) {
             this.reportParamsSub.unsubscribe();
         }
+    }
+
+    public editEnable() {
+        this.isEditable =  true;
+    }
+
+    public editDisable() {
+        this.isEditable = false;
+    }
+
+    public editTitle() {
+        this.reportParamsSub = this.analyticsService.updateReport(this.reportParameters.id, this.reportParameters.name).subscribe(
+            (res: ReportParametersModel) => {
+                this.editDisable();
+            },
+            (err: any) => {
+                console.log(err);
+                this.onError.emit(err);
+            }
+        );
     }
 }
