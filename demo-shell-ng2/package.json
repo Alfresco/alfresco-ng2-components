@@ -124,7 +124,8 @@
     "webpack-merge": "^0.14.0",
     "source-map-loader": "^0.1.5",
     "script-loader": "^0.7.0",
-    "copy-webpack-plugin": "^4.0.1"
+    "copy-webpack-plugin": "^4.0.1",
+    "glob": "^7.1.1"
   },
   "license-check-config": {
     "src": [
