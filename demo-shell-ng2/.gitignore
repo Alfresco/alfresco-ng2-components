@@ -6,6 +6,7 @@ app/**/*.js.map
 !app/js/Polyline.js
 .idea
 dist/
+coverage/
 
 # docker files
 docker-compose.yml
