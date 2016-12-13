@@ -23,3 +23,26 @@
     cursor: pointer;
     height: 70px;
 }
+
+.home--card__icon {
+    padding-top: 2px;
+    margin-right: 4px;
+}
+
+.home--feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.home--feature-list__icon {
+    float: left;
+}
+
+.home--feature-list__text {
+    padding-top: 2px;
+}
+
+span.home--feature-list__text:before {
+    content: '';
+    padding-left: 4px;
+}
