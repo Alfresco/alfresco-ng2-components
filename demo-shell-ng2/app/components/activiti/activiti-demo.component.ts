@@ -109,8 +109,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column'},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden'}
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
             ]
         );
 

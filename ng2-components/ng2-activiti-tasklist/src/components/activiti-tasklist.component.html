@@ -2,8 +2,8 @@
 <div *ngIf="requestNode">
     <div *ngIf="!isListEmpty()">
         <alfresco-datatable
-                [data]="data"
-                (rowClick)="onRowClick($event)">
+            [data]="data"
+            (rowClick)="onRowClick($event)">
         </alfresco-datatable>
     </div>
     <div *ngIf="isListEmpty()">
