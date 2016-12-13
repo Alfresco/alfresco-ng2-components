@@ -222,7 +222,7 @@ DocumentList provides simple creation menu actions that provide the action to cr
 
 ![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
 
-When the "New Folder" button is pressed a dialog appear.
+When the "New Folder" button is pressed the dialog appears.
 
 ![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
 
