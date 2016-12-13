@@ -33,9 +33,6 @@ module.exports = {
       helpers.root('app'),
       helpers.root('node_modules')
     ],
-    alias: {
-        'alfresco-js-api': helpers.root('node_modules', 'alfresco-js-api', 'dist', 'alfresco-js-api.js')
-    },
     root: rootPath,
     fallback: rootPath
   },
