@@ -178,7 +178,7 @@ export class AnalyticsService {
             .catch(this.handleError);
     }
 
-    updateReport(reportId: number, name: string): Observable<any> {
+    public updateReport(reportId: number, name: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
             .map((res: any) => {
                 console.log('upload');
