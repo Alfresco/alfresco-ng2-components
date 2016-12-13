@@ -24,7 +24,7 @@
                         <activiti-filters [appId]="appId" (filterClick)="onTaskFilterClick($event)" (onSuccess)="onSuccessTaskFilterList($event)"
                                           #activitifilter></activiti-filters>
                     </div>
-                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp">
+                    <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column">
                         <span>Task List</span>
                         <activiti-tasklist *ngIf="taskFilter?.hasFilter()" [appId]="taskFilter.appId"
                                            [processDefinitionKey]="taskFilter.filter.processDefinitionKey"
@@ -59,7 +59,7 @@
                                     (filterClick)="onProcessFilterClick($event)"
                                     (onSuccess)="onSuccessProcessFilterList($event)"></activiti-process-instance-filters>
                         </div>
-                        <div class="mdl-cell mdl-cell--3-col task-column">
+                        <div class="mdl-cell mdl-cell--3-col task-column list-column">
                             <span>Process List</span>
                             <activiti-process-instance-list *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                                     [processDefinitionKey]="processFilter.filter.processDefinitionKey"

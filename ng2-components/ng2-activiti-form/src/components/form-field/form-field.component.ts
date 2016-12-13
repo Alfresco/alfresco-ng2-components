@@ -81,7 +81,6 @@ export class FormFieldComponent implements OnInit, OnDestroy {
                     let instance = <WidgetComponent>this.componentRef.instance;
                     instance.field = this.field;
                     instance.fieldChanged.subscribe(field => {
-                        console.log('WidgetComponent.fieldChanged was used only to trigger visibility engine, components should do that internally if needed');
                         if (field && field.form) {
                             this.visibilityService.refreshVisibility(field.form);
                         }

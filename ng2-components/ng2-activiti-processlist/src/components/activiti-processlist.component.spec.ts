@@ -31,7 +31,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
     let fakeGlobalProcesses = [
         new ProcessInstance({
-            id: 1, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name',
+            id: 1, name: 'process-name',
             processDefinitionId: 'fakeprocess:5:7507',
             processDefinitionKey: 'fakeprocess',
             processDefinitionName: 'Fake Process Name',
@@ -126,8 +126,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         fixture.detectChanges();
@@ -142,8 +141,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         fixture.detectChanges();
@@ -190,7 +188,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
             expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
             done();
         });
@@ -238,7 +235,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -255,7 +251,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -272,7 +267,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -289,7 +283,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -306,7 +299,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });

@@ -26,7 +26,7 @@ import { ActivitiProcessService } from '../services/activiti-process.service';
 @Component({
     selector: 'activiti-process-instance-list',
     moduleId: module.id,
-    styleUrls: [ './activiti-processlist.component.css' ],
+    styleUrls: ['./activiti-processlist.component.css'],
     templateUrl: './activiti-processlist.component.html'
 })
 export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
@@ -69,7 +69,8 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
     ];
 
-    constructor(private processService: ActivitiProcessService, private translate: AlfrescoTranslationService) {
+    constructor(private processService: ActivitiProcessService,
+                private translate: AlfrescoTranslationService) {
         if (translate !== null) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
         }
@@ -216,9 +217,6 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     private optimizeNames(instances: any[]) {
         instances = instances.map(t => {
             t.obj.name = t.obj.name || 'No name';
-            if (t.obj.name.length > 50) {
-                t.obj.name = t.obj.name.substring(0, 50) + '...';
-            }
             return t;
         });
         return instances;
