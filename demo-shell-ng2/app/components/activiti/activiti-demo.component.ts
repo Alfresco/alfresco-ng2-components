@@ -187,6 +187,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     onStartProcessInstance(instance: ProcessInstance) {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
+        this.activitiprocesslist.reload();
     }
 
     isStartProcessMode() {
