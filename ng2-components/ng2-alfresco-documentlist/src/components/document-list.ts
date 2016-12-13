@@ -19,7 +19,9 @@ import {
     Component,
     OnInit,
     Input,
+    OnChanges,
     Output,
+    SimpleChanges,
     EventEmitter,
     AfterContentInit,
     TemplateRef,
@@ -48,22 +50,25 @@ declare var module: any;
     styleUrls: ['./document-list.css'],
     templateUrl: './document-list.html'
 })
-export class DocumentList implements OnInit, AfterContentInit {
+export class DocumentList implements OnInit, OnChanges, AfterContentInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    DEFAULT_ROOT_FOLDER: string = '/';
+    DEFAULT_FOLDER_PATH: string = '/';
 
     @Input()
-    set rootPath(value: string) {
-        this.data.rootPath = value || this.data.DEFAULT_ROOT_PATH;
+    set rootFolderId(value: string) {
+        this.data.rootFolderId = value || this.data.DEFAULT_ROOT_ID;
     }
 
-    get rootPath(): string {
+    @Input()
+    currentFolderId: string = null;
+
+    get rootFolderId(): string {
         if (this.data) {
-            return this.data.rootPath;
+            return this.data.rootFolderId;
         }
         return null;
     }
@@ -127,21 +132,11 @@ export class DocumentList implements OnInit, AfterContentInit {
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
-    private _path = this.DEFAULT_ROOT_FOLDER;
+    private _path = this.DEFAULT_FOLDER_PATH;
 
     @Input()
     set currentFolderPath(value: string) {
-        if (value !== this._path) {
-            const path = value || this.DEFAULT_ROOT_FOLDER;
-            this.displayFolderContent(path)
-                .then(() => {
-                    this._path = path;
-                    this.folderChange.emit({ path: path });
-                })
-                .catch(err => {
-                    this.error.emit(err);
-                });
-        }
+        this._path = value;
     }
 
     get currentFolderPath(): string {
@@ -220,12 +215,48 @@ export class DocumentList implements OnInit, AfterContentInit {
         if (this.isMobile()) {
             this.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
         }
+
+        this.loadFolder();
     }
 
     ngAfterContentInit() {
         let columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
             this.setupDefaultColumns();
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
+            let folderId = changes['currentFolderId'].currentValue;
+            this.loadFolderById(folderId)
+                .then(() => {
+                    this._path = null;
+                })
+                .catch(err => {
+                    this.error.emit(err);
+                });
+        } else if (changes['currentFolderPath']) {
+            const path = changes['currentFolderPath'].currentValue || this.DEFAULT_FOLDER_PATH;
+            this.currentFolderPath = path;
+            this.loadFolderByPath(path)
+                .then(() => {
+                    this._path = path;
+                    this.folderChange.emit({ path: path });
+                })
+                .catch(err => {
+                    this.error.emit(err);
+                });
+        } else if (changes['rootFolderId']) {
+            // this.currentFolderPath = this.DEFAULT_FOLDER_PATH;
+            this.loadFolderByPath(this.currentFolderPath)
+                .then(() => {
+                    this._path = this.currentFolderPath;
+                    this.folderChange.emit({ path: this.currentFolderPath });
+                })
+                .catch(err => {
+                    this.error.emit(err);
+                });
         }
     }
 
@@ -277,6 +308,9 @@ export class DocumentList implements OnInit, AfterContentInit {
     performNavigation(node: MinimalNodeEntity): boolean {
         if (node && node.entry && node.entry.isFolder) {
             this.currentFolderPath = this.getNodePath(node);
+            this.currentFolderId = null;
+            this.loadFolder();
+            this.folderChange.emit({ path: this.currentFolderPath });
             return true;
         }
         return false;
@@ -293,19 +327,32 @@ export class DocumentList implements OnInit, AfterContentInit {
         }
     }
 
-    displayFolderContent(path: string): Promise<any> {
+    loadFolderByPath(path: string): Promise<any> {
         return this.data.loadPath(path);
+    }
+
+    loadFolderById(id: string): Promise<any> {
+        return this.data.loadById(id);
     }
 
     reload() {
         this.ngZone.run(() => {
-            if (this.currentFolderPath) {
-                this.displayFolderContent(this.currentFolderPath)
-                    .catch(err => {
-                        this.error.emit(err);
-                    });
-            }
+            this.loadFolder();
         });
+    }
+
+    public loadFolder() {
+        if (this.currentFolderId) {
+            this.loadFolderById(this.currentFolderId)
+                .catch(err => {
+                    this.error.emit(err);
+                });
+        } else if (this.currentFolderPath) {
+            this.loadFolderByPath(this.currentFolderPath)
+                .catch(err => {
+                    this.error.emit(err);
+                });
+        }
     }
 
     /**

@@ -83,8 +83,11 @@ export class DocumentListBreadcrumb {
                 }
             });
 
+            this.currentFolderPath = route.path;
+
             if (this.target) {
                 this.target.currentFolderPath = route.path;
+                this.target.loadFolder();
             }
         }
     }

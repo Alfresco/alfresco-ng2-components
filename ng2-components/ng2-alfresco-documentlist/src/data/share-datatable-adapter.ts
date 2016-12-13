@@ -31,7 +31,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     ERR_ROW_NOT_FOUND: string = 'Row not found';
     ERR_COL_NOT_FOUND: string = 'Column not found';
 
-    DEFAULT_ROOT_PATH: string = '-root-';
+    DEFAULT_ROOT_ID: string = '-root-';
     DEFAULT_DATE_FORMAT: string = 'medium';
     DEFAULT_PAGE_SIZE: number = 20;
     MIN_PAGE_SIZE: number = 5;
@@ -53,7 +53,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     thumbnails: boolean = false;
     dataLoaded: DataLoadedEventEmitter;
-    rootPath: string = this.DEFAULT_ROOT_PATH;
+    rootFolderId: string = this.DEFAULT_ROOT_ID;
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,
@@ -210,7 +210,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
                     .getFolder(path, {
                         maxItems: this._maxItems,
                         skipCount: this._skipCount,
-                        rootPath: this.rootPath
+                        rootFolderId: this.rootFolderId
                     })
                     .subscribe(val => {
                         this.currentPath = path;
@@ -221,6 +221,30 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
                     error => {
                         reject(error);
                     });
+            } else {
+                resolve(false);
+            }
+        });
+
+    }
+
+    loadById(id: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (id && this.documentListService) {
+                this.documentListService
+                    .getFolder(null, {
+                        maxItems: this._maxItems,
+                        skipCount: this._skipCount,
+                        rootFolderId: id
+                    })
+                    .subscribe(val => {
+                            this.loadPage(<NodePaging>val);
+                            this.dataLoaded.emit(null);
+                            resolve(true);
+                        },
+                        error => {
+                            reject(error);
+                        });
             } else {
                 resolve(false);
             }

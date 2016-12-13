@@ -5,7 +5,7 @@
             (onSuccess)="documentList.reload()">
         <alfresco-document-list-breadcrumb
             [currentFolderPath]="currentPath"
-            [target]="documentList">
+            (pathChanged)="onBreadcrumbPathChanged($event)" *ngIf="!currentFolderId">
         </alfresco-document-list-breadcrumb>
         <div *ngIf="errorMessage" class="error-message">
             <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
@@ -15,7 +15,9 @@
         </div>
         <alfresco-document-list
                 #documentList
+                [rootFolderId]="rootFolderId"
                 [currentFolderPath]="currentPath"
+                [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 (error)="onNavigationError($event)"

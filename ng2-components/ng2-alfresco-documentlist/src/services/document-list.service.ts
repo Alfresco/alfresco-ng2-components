@@ -30,6 +30,8 @@ export class DocumentListService {
 
     static DEFAULT_MIME_TYPE_ICON: string = 'ft_ic_miscellaneous.svg';
 
+    static ROOT_ID = '-root-';
+
     mimeTypeIcons: any = {
         'image/png': 'ft_ic_raster_image.svg',
         'image/jpeg': 'ft_ic_raster_image.svg',
@@ -63,16 +65,20 @@ export class DocumentListService {
     }
 
     private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
-        let rootPath = '-root-';
 
-        if (opts && opts.rootPath) {
-            rootPath = opts.rootPath;
+        let rootNodeId = DocumentListService.ROOT_ID;
+        if (opts && opts.rootFolderId) {
+            rootNodeId = opts.rootFolderId;
         }
 
         let params: any = {
-            relativePath: folder,
+            includeSource: true,
             include: ['path', 'properties']
         };
+
+        if (folder) {
+            params.relativePath = folder;
+        }
 
         if (opts) {
             if (opts.maxItems) {
@@ -83,7 +89,7 @@ export class DocumentListService {
             }
         }
 
-        return this.apiService.getInstance().nodes.getNodeChildren(rootPath, params);
+        return this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params);
     }
 
     deleteNode(nodeId: string): Observable<any> {
@@ -105,7 +111,7 @@ export class DocumentListService {
     }
 
     /**
-     * Gets the folder node with the content.
+     * Gets the folder node with the specified relative name path below the root node.
      * @param folder Path to folder.
      * @param opts Options.
      * @returns {Observable<NodePaging>} Folder entity.

@@ -168,7 +168,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `rootPath` | string | -root- | Root node path, i.e. `-root-`, `-shared-`, `-my-`, etc. |
+| `rootFolderId` | string | -root- | Root node ID, i.e. `-root-`, `-shared-`, `-my-`, etc. or a fixed node ID |
+| `currentFolderPath` | string | null | Initial path of displayed folder below the root node, e.g. "/Sites/swsdp/documentLibrary" |
+| `currentFolderId` | string | null | Initial node ID of displayed folder, if given  |
 | `navigate` | boolean | true | Toggles navigation to folder content or file preview |
 | `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | `thumbnails` | boolean | false | Show document thumbnails rather than icons |

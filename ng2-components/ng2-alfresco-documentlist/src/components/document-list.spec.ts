@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgZone, TemplateRef } from '@angular/core';
+import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
 import { DocumentList } from './document-list';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
@@ -48,12 +48,12 @@ describe('DocumentList', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    it('should update root path', () => {
+    it('should update root folder ID', () => {
         let adapter = documentList.data;
-        expect(adapter.rootPath).toBe(adapter.DEFAULT_ROOT_PATH);
+        expect(adapter.rootFolderId).toBe(adapter.DEFAULT_ROOT_ID);
 
-        documentList.rootPath = '-shared-';
-        expect(adapter.rootPath).toBe('-shared-');
+        documentList.rootFolderId = '-shared-';
+        expect(adapter.rootFolderId).toBe('-shared-');
     });
 
     it('should setup default columns', () => {
@@ -163,7 +163,7 @@ describe('DocumentList', () => {
         let node = new FolderNode('<display name>');
 
         spyOn(documentList, 'getNodePath').and.returnValue(path);
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve(true));
 
         documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(node);
@@ -173,31 +173,31 @@ describe('DocumentList', () => {
 
     it('should not display folder content when no target node provided', () => {
         expect(documentList.navigate).toBe(true);
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'loadFolderByPath').and.stub();
 
         documentList.onNodeClick(null);
-        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+        expect(documentList.loadFolderByPath).not.toHaveBeenCalled();
 
     });
 
     it('should display folder content only on folder node click', () => {
         expect(documentList.navigate).toBe(true);
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'loadFolderByPath').and.stub();
 
         let node = new FileNode();
         documentList.onNodeClick(node);
 
-        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+        expect(documentList.loadFolderByPath).not.toHaveBeenCalled();
     });
 
     it('should not display folder content on click when navigation is off', () => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'loadFolderByPath').and.stub();
 
         let node = new FolderNode('<display name>');
         documentList.navigate = false;
         documentList.onNodeClick(node);
 
-        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+        expect(documentList.loadFolderByPath).not.toHaveBeenCalled();
     });
 
     it('should require node to get path', () => {
@@ -205,31 +205,35 @@ describe('DocumentList', () => {
     });
 
     it('should display folder content for new folder path', () => {
-        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
         let newPath = '/some/new/path';
         documentList.currentFolderPath = newPath;
-        expect(documentList.displayFolderContent).toHaveBeenCalledWith(newPath);
+        documentList.ngOnChanges({currentFolderPath: new SimpleChange(null, newPath)});
+        expect(documentList.loadFolderByPath).toHaveBeenCalledWith(newPath);
     });
 
     it('should reset to default path', () => {
-        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
         documentList.currentFolderPath = null;
+        documentList.ngOnChanges({currentFolderPath: new SimpleChange('', null)});
 
-        expect(documentList.currentFolderPath).toBe(documentList.DEFAULT_ROOT_FOLDER);
-        expect(documentList.displayFolderContent).toHaveBeenCalledWith(documentList.DEFAULT_ROOT_FOLDER);
+        expect(documentList.currentFolderPath).toBe(documentList.DEFAULT_FOLDER_PATH);
+        expect(documentList.loadFolderByPath).toHaveBeenCalledWith(documentList.DEFAULT_FOLDER_PATH);
     });
 
     it('should emit folder changed event', (done) => {
-        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
         documentList.folderChange.subscribe(e => {
             done();
         });
 
-        documentList.currentFolderPath = '/some/new/path';
+        let newPath = '/some/new/path';
+        documentList.currentFolderPath = newPath;
+        documentList.ngOnChanges({currentFolderPath: new SimpleChange(null, newPath)});
     });
 
     it('should emit folder changed event with folder details', (done) => {
-        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.resolve());
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
 
         let path = '/path';
 
@@ -239,6 +243,7 @@ describe('DocumentList', () => {
         });
 
         documentList.currentFolderPath = path;
+        documentList.ngOnChanges({currentFolderPath: new SimpleChange(null, path)});
     });
 
     it('should execute context action on callback', () => {
@@ -259,7 +264,7 @@ describe('DocumentList', () => {
     });
 
     it('should subscribe to context action handler', () => {
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve(true));
         spyOn(documentList, 'contextActionCallback').and.stub();
         let value = {};
         documentList.ngOnInit();
@@ -384,16 +389,16 @@ describe('DocumentList', () => {
     });
 
     it('should display folder content on reload', () => {
-        spyOn(documentList, 'displayFolderContent').and.callThrough();
+        spyOn(documentList, 'loadFolderByPath').and.callThrough();
         documentList.reload();
-        expect(documentList.displayFolderContent).toHaveBeenCalled();
+        expect(documentList.loadFolderByPath).toHaveBeenCalled();
     });
 
     it('should require path to display folder content', () => {
         spyOn(documentListService, 'getFolder').and.callThrough();
 
-        documentList.displayFolderContent(null);
-        documentList.displayFolderContent('');
+        documentList.loadFolderByPath(null);
+        documentList.loadFolderByPath('');
 
         expect(documentListService.getFolder).not.toHaveBeenCalled();
     });
@@ -464,11 +469,11 @@ describe('DocumentList', () => {
         });
         expect(documentList.currentFolderPath).toBeNull();
 
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'loadFolderByPath').and.stub();
 
         documentList.reload();
 
-        expect(documentList.displayFolderContent).not.toHaveBeenCalled();
+        expect(documentList.loadFolderByPath).not.toHaveBeenCalled();
     });
 
     it('should enforce single-click on mobile browser', () => {
@@ -482,9 +487,10 @@ describe('DocumentList', () => {
     it('should emit error on wrong path', (done) => {
         let raised = false;
         documentList.error.subscribe(err => raised = true);
-        spyOn(documentList, 'displayFolderContent').and.returnValue(Promise.reject(false));
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.reject(false));
 
         documentList.currentFolderPath = 'wrong-path';
+        documentList.ngOnChanges({currentFolderPath: new SimpleChange(null, documentList.currentFolderPath)});
         setTimeout(() => {
             expect(raised).toBeTruthy();
             done();
@@ -506,24 +512,24 @@ describe('DocumentList', () => {
         expect(documentList.isEmptyTemplateDefined()).toBeFalsy();
     });
 
-    it('should set root path for underlying adapter', () => {
-        documentList.rootPath = 'test';
-        expect(documentList.data.rootPath).toBe('test');
+    it('should set root folder ID for underlying adapter', () => {
+        documentList.rootFolderId = 'test';
+        expect(documentList.data.rootFolderId).toBe('test');
     });
 
-    it('should set default root path for underlying adapter', () => {
-        documentList.rootPath = null;
-        expect(documentList.data.rootPath).toBe(documentList.data.DEFAULT_ROOT_PATH);
+    it('should set default root folder ID for underlying adapter', () => {
+        documentList.rootFolderId = null;
+        expect(documentList.data.rootFolderId).toBe(documentList.data.DEFAULT_ROOT_ID);
     });
 
-    it('should fetch root path from underlying adapter', () => {
-        documentList.data.rootPath = 'test';
-        expect(documentList.rootPath).toBe('test');
+    it('should fetch root folder ID from underlying adapter', () => {
+        documentList.data.rootFolderId = 'test';
+        expect(documentList.rootFolderId).toBe('test');
     });
 
-    it('should not fetch root path when adapter missing', () => {
+    it('should not fetch root folder ID when adapter missing', () => {
         documentList.data = null;
-        expect(documentList.rootPath).toBeNull();
+        expect(documentList.rootFolderId).toBeNull();
     });
 
     it('should set row filter for underlying adapter', () => {
@@ -560,5 +566,50 @@ describe('DocumentList', () => {
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onRowDblClick(event);
         expect(documentList.onNodeDblClick).toHaveBeenCalledWith(node);
+    });
+
+    describe('navigate by folder ID', () => {
+
+        it('should load folder by ID on init', () => {
+
+            documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+
+            let loadbyIdSpy: jasmine.Spy = spyOn(documentList.data, 'loadById').and.returnValue(Promise.resolve());
+
+            documentList.ngOnInit();
+            expect(loadbyIdSpy).toHaveBeenCalled();
+            expect(documentList.currentFolderPath).toBe('/');
+        });
+
+        it('should load folder by ID on changes', () => {
+
+            let newNodeId = '1d26e465-dea3-42f3-b415-faa8364b9692';
+
+            documentList.ngOnChanges({currentFolderId: new SimpleChange(null, newNodeId)});
+
+            let loadbyPathSpy: jasmine.Spy = spyOn(documentList.data, 'loadPath').and.returnValue(Promise.resolve());
+
+            documentList.ngOnInit();
+            expect(loadbyPathSpy).toHaveBeenCalled();
+            expect(documentList.currentFolderPath).toBe('/');
+        });
+
+    });
+
+    describe('configure root folder', () => {
+
+        it('should re-load folder when rootFolderId changed', () => {
+
+            let newRootFolder = '-new-';
+
+            documentList.ngOnChanges({rootFolderId: new SimpleChange(null, newRootFolder)});
+
+            let loadbyPathSpy: jasmine.Spy = spyOn(documentList.data, 'loadPath').and.returnValue(Promise.resolve());
+
+            documentList.ngOnInit();
+            expect(loadbyPathSpy).toHaveBeenCalled();
+            expect(documentList.currentFolderPath).toBe('/');
+        });
+
     });
 });
