@@ -71,7 +71,12 @@
     </div>
     <div *ngSwitchCase="'upload'">
         <div class="upload-widget" *ngIf="field?.isVisible">
-            <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
+            <div>
+                <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
+            </div>
+            <div>
+                <img *ngIf="hasFile" class="img-upload-widget" src="{{settingsService.bpmHost}}/activiti-app/app/rest/content/{{id}}/raw">
+            </div>
             <div>
                 <i *ngIf="hasFile" class="material-icons upload-widget__icon">attachment</i>
                 <span *ngIf="hasFile" class="upload-widget__file">{{value}}</span>

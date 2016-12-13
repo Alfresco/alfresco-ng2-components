@@ -8,8 +8,8 @@
 
 .display-value-widget__dynamic-table .is-disabled {
     background-color: transparent;
-    border-bottom: 1px dotted rgba(0,0,0,.12);
-    color: rgba(0,0,0,.26);
+    border-bottom: 1px dotted rgba(0, 0, 0, .12);
+    color: rgba(0, 0, 0, .26);
 }
 
 .display-value-widget__dynamic-table table {
@@ -23,21 +23,30 @@
 
 
 .upload-widget {
-    width:100%;
+    width: 100%;
     word-break: break-all;
 }
 
 .upload-widget__icon {
     float: left;
-    color: rgba(0,0,0,.26);
+    color: rgba(0, 0, 0, .26);
 }
 
 .upload-widget__file {
     float: left;
     margin-top: 4px;
-    color: rgba(0,0,0,.26);
+    color: rgba(0, 0, 0, .26);
 }
 
 .upload-widget__label {
-    color: rgba(0,0,0,.26);
+    color: rgba(0, 0, 0, .26);
+}
+
+.img-upload-widget {
+    width: 100px;
+    height: 100px;
+    padding: 2px;
+    border: 1px solid rgba(117, 117, 117, 0.57);
+    box-shadow: 1px 1px 2px #dddddd;
+    background-color: #ffffff;
 }
