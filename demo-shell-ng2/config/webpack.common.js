@@ -4,29 +4,21 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var helpers = require('./helpers');
 var path = require('path');
 var fs = require('fs');
-
-var alfrescoLibs = [
-    helpers.root('node_modules', 'alfresco-js-api'),
-    helpers.root('node_modules', 'ng2-activiti-analytics'),
-    helpers.root('node_modules', 'ng2-activiti-diagrams'),
-    helpers.root('node_modules', 'ng2-activiti-form'),
-    helpers.root('node_modules', 'ng2-activiti-processlist'),
-    helpers.root('node_modules', 'ng2-activiti-tasklist'),
-    helpers.root('node_modules', 'ng2-alfresco-core'),
-    helpers.root('node_modules', 'ng2-alfresco-datatable'),
-    helpers.root('node_modules', 'ng2-alfresco-documentlist'),
-    helpers.root('node_modules', 'ng2-alfresco-login'),
-    helpers.root('node_modules', 'ng2-alfresco-search'),
-    helpers.root('node_modules', 'ng2-alfresco-tag'),
-    helpers.root('node_modules', 'ng2-alfresco-upload'),
-    helpers.root('node_modules', 'ng2-alfresco-userinfo'),
-    helpers.root('node_modules', 'ng2-alfresco-viewer'),
-    helpers.root('node_modules', 'ng2-alfresco-webscript')
-].map((entry) => fs.realpathSync(entry));
-
-// console.dir(alfrescoLibs);
+var glob = require('glob');
 
 const rootPath = helpers.root('node_modules');
+
+let pattern = '+(alfresco-js-api|ng2-alfresco|ng2-activiti)*';
+let options = {
+    cwd: rootPath,
+    realpath: true
+};
+
+let alfrescoLibs = glob.sync(pattern, options);
+// console.dir(alfrescoLibs);
+
+// Uncomment if you need all node_modules folders for Alfresco components
+// let alfrescoLibsModules = alfrescoLibs.map(p => path.join(p, 'node_modules'));
 
 module.exports = {
   entry: {
@@ -50,7 +42,8 @@ module.exports = {
 
   resolveLoader: {
       alias: {
-          'systemjs-loader': helpers.root('config', 'loaders', 'system.js')
+          'systemjs-loader': helpers.root('config', 'loaders', 'system.js'),
+          'debug-loader': helpers.root('config', 'loaders', 'debug.js')
       },
       fallback: rootPath
   },
