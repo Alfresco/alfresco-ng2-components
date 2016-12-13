@@ -16,6 +16,12 @@
     width: 100%;
 }
 
+.display-value-dynamic-table-widget__table-container {
+    overflow-y: auto;
+    width: 100%;
+}
+
+
 .upload-widget {
     width:100%;
     word-break: break-all;
