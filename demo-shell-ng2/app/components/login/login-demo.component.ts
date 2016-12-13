@@ -31,10 +31,10 @@ export class LoginDemoComponent implements OnInit {
     alfrescologin: any;
 
     providers: string = 'ECM';
-    disableCsrf: boolean = false;
     blackListUsername: string;
     customValidation: any;
 
+    disableCsrf: boolean = false;
     isECM: boolean = true;
     isBPM: boolean = false;
 
@@ -54,10 +54,10 @@ export class LoginDemoComponent implements OnInit {
             this.providers = this.storage.getItem('providers');
         }
 
-        this.setProviders();
+        this.initProviders();
     }
 
-    setProviders() {
+    initProviders() {
         if (this.providers === 'BPM') {
             this.isECM = false;
             this.isBPM = true;
@@ -78,37 +78,39 @@ export class LoginDemoComponent implements OnInit {
         console.log($event);
     }
 
-    toggleECM(checked) {
-        if (checked && this.providers === 'BPM') {
-            this.providers = 'ALL';
-        } else if (checked) {
-            this.providers = 'ECM';
-        } else if (!checked && this.providers === 'ALL') {
-            this.providers = 'BPM';
-        } else if (!checked && this.providers === 'ECM') {
-            this.providers = '';
-        }
-
-        this.storage.setItem('providers', this.providers);
+    toggleECM() {
+        this.isECM = !this.isECM;
+        this.storage.setItem('providers', this.updateProvider());
     }
 
-    toggleBPM(checked) {
-        if (checked && this.providers === 'ECM') {
-            this.providers = 'ALL';
-        } else if (checked) {
-            this.providers = 'BPM';
-        } else if (!checked && this.providers === 'ALL') {
-            this.providers = 'ECM';
-        } else if (!checked && this.providers === 'BPM') {
-            this.providers = '';
-        }
-
-        this.storage.setItem('providers', this.providers);
+    toggleBPM() {
+        this.isBPM = !this.isBPM;
+        this.storage.setItem('providers', this.updateProvider());
     }
 
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;
     }
+
+    updateProvider(){
+        if (this.isBPM && this.isECM) {
+            this.providers = 'ALL';
+            return this.providers;
+        }
+
+        if (this.isECM) {
+            this.providers = 'ECM';
+            return this.providers;
+        }
+
+        if (this.isBPM) {
+            this.providers = 'BPM';
+            return this.providers;
+        }
+
+        this.providers = '';
+        return this.providers;
+    };
 
     validateForm(event: any) {
         let values = event.values;
