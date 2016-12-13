@@ -145,7 +145,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     /**
      * Select the first filter of a list if present
      */
-    private selectFirstFilter() {
+    public selectFirstFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         } else {
