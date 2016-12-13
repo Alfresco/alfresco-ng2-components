@@ -18,6 +18,7 @@
 import { RaphaelCircleDirective } from './raphael-circle.component';
 import { RaphaelRectDirective } from './raphael-rect.component';
 import { RaphaelTextDirective } from './raphael-text.component';
+import { RaphaelMultilineTextDirective } from './raphael-multiline-text.component';
 import { RaphaelFlowArrowDirective } from './raphael-flow-arrow.component';
 import { RaphaelCrossDirective } from './raphael-cross.component';
 import { RaphaelPlusDirective } from './raphael-plus.component';
@@ -34,6 +35,7 @@ import { RAPHAEL_ICONS_DIRECTIVES } from './icons/index';
 export * from './raphael-circle.component';
 export * from './raphael-rect.component';
 export * from './raphael-text.component';
+export * from './raphael-multiline-text.component';
 export * from './raphael-flow-arrow.component';
 export * from './raphael-cross.component';
 export * from './raphael-plus.component';
@@ -45,6 +47,7 @@ export const RAPHAEL_DIRECTIVES: any[] = [
     RaphaelCircleDirective,
     RaphaelRectDirective,
     RaphaelTextDirective,
+    RaphaelMultilineTextDirective,
     RaphaelFlowArrowDirective,
     RaphaelCrossDirective,
     RaphaelPlusDirective,
