@@ -116,7 +116,7 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValuesNoApp(): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getProcessDefinitionsValuesNoApp())
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
                 res.forEach((opt) => {
