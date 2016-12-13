@@ -43,10 +43,10 @@ export class DocumentMenuAction implements OnInit {
     currentFolderPath: string;
 
     @Output()
-    onSuccess = new EventEmitter();
+    success = new EventEmitter();
 
     @Output()
-    onError = new EventEmitter();
+    error = new EventEmitter();
 
     @ViewChild('dialog')
     dialog: any;
@@ -73,15 +73,16 @@ export class DocumentMenuAction implements OnInit {
                 res => {
                     let relativeDir = this.currentFolderPath;
                     console.log(relativeDir);
-                    this.onSuccess.emit({value: relativeDir});
+                    this.success.emit({value: relativeDir});
                 },
                 error => {
                     let errorMessagePlaceholder = this.getErrorMessage(error.response);
                     if (errorMessagePlaceholder) {
-                        this.onError.emit({value: errorMessagePlaceholder});
                         this.message = this.formatString(errorMessagePlaceholder, [name]);
+                        this.error.emit({message: this.message});
                         console.log(this.message);
                     } else {
+                        this.error.emit(error);
                         console.log(error);
                     }
                 }

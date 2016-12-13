@@ -21,6 +21,7 @@
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 (error)="onNavigationError($event)"
+                (success)="resetError()"
                 (preview)="showFile($event)"
                 (folderChange)="onFolderChanged($event)">
             <!--

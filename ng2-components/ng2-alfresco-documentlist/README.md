@@ -100,6 +100,7 @@ Follow the 3 steps below:
     [currentFolderPath]="currentPath"
     [contextMenuActions]="true"
     [contentActions]="true"
+    [creationMenuActions]="true"
     [multiselect]="true"
     (folderChange)="onFolderChanged($event)">
 </alfresco-document-list>
@@ -124,6 +125,7 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfr
                     [currentFolderPath]="'/'"
                     [contextMenuActions]="true"
                     [contentActions]="true"
+                    [creationMenuActions]="true"
                     [multiselect]="true">
                </alfresco-document-list>`
 })
@@ -178,6 +180,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `multiselect` | boolean | false | Toggles multiselect mode |
 | `contentActions` | boolean | false | Toggles content actions for each row |
 | `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `creationMenuActions` | boolean | true | Toggles the creation menu actions|
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
@@ -208,6 +211,23 @@ DocumentList provides simple breadcrumb element to indicate the current position
 ![Breadcrumb](docs/assets/breadcrumb.png)
 
 Parent folder button is not displayed when breadcrumb is enabled.
+
+### Creation Menu Action
+
+DocumentList provides simple creation menu actions that provide the action to create a new folder.
+
+```html
+<alfresco-document-menu-action 
+    [currentFolderPath]="currentFolderPath">
+</alfresco-document-menu-action>
+```
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
+
+When the "New Folder" button is pressed the dialog appears.
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
+
 
 ### Custom columns
 

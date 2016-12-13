@@ -92,10 +92,10 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     contentActions: boolean = false;
 
     @Input()
-    contentMenuActions: boolean = true;
+    contextMenuActions: boolean = false;
 
     @Input()
-    contextMenuActions: boolean = false;
+    creationMenuActions: boolean = true;
 
     @Input()
     pageSize: number = DocumentList.DEFAULT_PAGE_SIZE;
@@ -125,6 +125,9 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
 
     @Output()
     preview: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    success: EventEmitter<any> = new EventEmitter();
 
     @Output()
     error: EventEmitter<any> = new EventEmitter();
@@ -471,5 +474,14 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
             let action = (<ContentActionModel> args.action);
             this.executeContentAction(node, action);
         }
+    }
+
+    onActionMenuError(event) {
+        this.error.emit(event);
+    }
+
+    onActionMenuSuccess(event) {
+        this.reload();
+        this.success.emit(event);
     }
 }
