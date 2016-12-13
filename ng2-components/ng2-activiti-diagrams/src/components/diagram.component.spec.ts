@@ -273,7 +273,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake User task');
 
@@ -302,7 +302,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Manual task');
 
@@ -331,7 +331,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Service task');
 
@@ -376,7 +376,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Camel task');
 
@@ -405,7 +405,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Mule task');
 
@@ -430,7 +430,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
@@ -460,7 +460,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
 
@@ -490,7 +490,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
 
@@ -520,7 +520,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
 
@@ -550,7 +550,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Receive task');
 
@@ -579,7 +579,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Script task');
 
@@ -608,7 +608,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
 
