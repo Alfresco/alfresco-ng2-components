@@ -36,7 +36,7 @@ import {
     ObjectDataTableAdapter,
     DataSorting
 } from 'ng2-alfresco-datatable';
-
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormRenderingService } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
@@ -96,6 +96,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
+                private apiService: AlfrescoApiService,
                 private formRenderingService: FormRenderingService) {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
@@ -153,6 +154,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onStartTaskSuccess(event: any) {
+        this.activitifilter.selectFirstFilter();
+        this.taskFilter = this.activitifilter.getCurrentFilter();
         this.activititasklist.reload();
     }
 
@@ -218,11 +221,18 @@ export class ActivitiDemoComponent implements AfterViewInit {
             componentHandler.upgradeAllRegistered();
         }
 
-        // Load Activiti stencil controllers
-        let s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = 'http://localhost:9999/activiti-app/app/rest/script-files/controllers';
-        this.elementRef.nativeElement.appendChild(s);
+        this.loadStencilScriptsInPageFromActiviti();
+    }
+
+    loadStencilScriptsInPageFromActiviti() {
+        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(function (response) {
+            if (response) {
+                let s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = response;
+                this.elementRef.nativeElement.appendChild(s);
+            }
+        });
     }
 
 }
