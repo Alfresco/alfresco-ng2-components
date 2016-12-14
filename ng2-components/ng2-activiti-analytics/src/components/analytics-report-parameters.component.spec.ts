@@ -317,7 +317,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/process-definitions?appId=1').andReturn({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/api/enterprise/process-definitions').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
