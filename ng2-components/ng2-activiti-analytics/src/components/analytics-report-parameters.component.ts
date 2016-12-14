@@ -48,6 +48,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     onError = new EventEmitter();
 
     @Output()
+    onEdit = new EventEmitter();
+
+    @Output()
     onFormValueChanged = new EventEmitter();
 
     onDropdownChanged = new EventEmitter();
@@ -224,6 +227,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
         this.reportParamsSub = this.analyticsService.updateReport(this.reportParameters.id, this.reportParameters.name).subscribe(
             (res: ReportParametersModel) => {
                 this.editDisable();
+                this.onEdit.emit(this.reportParameters.name);
             },
             (err: any) => {
                 console.log(err);

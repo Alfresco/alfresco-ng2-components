@@ -42,6 +42,9 @@ export class AnalyticsComponent implements OnChanges {
     onSuccess = new EventEmitter();
 
     @Output()
+    editReport = new EventEmitter();
+
+    @Output()
     onError = new EventEmitter();
 
     reportParamQuery = new ReportQuery();
@@ -108,7 +111,7 @@ export class AnalyticsComponent implements OnChanges {
         report.datasets = clone.datasets;
     }
 
-    public editReport(report: Chart) {
-        console.log(report);
+    public onEditReport(name: string) {
+        this.editReport.emit(name);
     }
 }
