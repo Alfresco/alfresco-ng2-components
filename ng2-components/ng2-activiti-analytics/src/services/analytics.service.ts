@@ -16,9 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { Response, Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Response } from '@angular/http';
 import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
 import { Chart, PieChart, TableChart, BarChart, HeatMapChart, MultiBarChart } from '../models/chart.model';
 
@@ -26,7 +26,7 @@ import { Chart, PieChart, TableChart, BarChart, HeatMapChart, MultiBarChart } fr
 export class AnalyticsService {
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private http: Http,
+                public apiService: AlfrescoApiService,
                 private alfrescoSettingsService: AlfrescoSettingsService) {
     }
 
@@ -35,14 +35,10 @@ export class AnalyticsService {
      * @returns {Observable<any>}
      */
     getReportList(): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/reports`;
-        let options = this.getRequestOptions();
-        return this.http
-            .get(url, options)
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
             .map((res: any) => {
                 let reports: ReportParametersModel[] = [];
-                let body = res.json();
-                body.forEach((report: ReportParametersModel) => {
+                res.forEach((report: ReportParametersModel) => {
                     let reportModel = new ReportParametersModel(report);
                     reports.push(reportModel);
                 });
@@ -51,13 +47,9 @@ export class AnalyticsService {
     }
 
     getReportParams(reportId: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}`;
-        let options = this.getRequestOptions();
-        return this.http
-            .get(url, options)
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportParams(reportId))
             .map((res: any) => {
-                let body = res.json();
-                return new ReportParametersModel(body);
+                return new ReportParametersModel(res);
             }).catch(this.handleError);
     }
 
@@ -72,7 +64,7 @@ export class AnalyticsService {
             }
         } else if (type === 'dateInterval') {
             return this.getDateIntervalValues();
-        } else if (type === 'task') {
+        } else if (type === 'task' && reportId && processDefinitionId) {
             return this.getTasksByProcessDefinitionId(reportId, processDefinitionId);
         } else {
             return Observable.create(observer => {
@@ -124,14 +116,10 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValuesNoApp(): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/process-definitions`;
-        let options = this.getRequestOptions();
-        return this.http
-            .get(url, options)
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getProcessDefinitions())
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
-                let body = res.json();
-                body.forEach((opt) => {
+                res.forEach((opt) => {
                     paramOptions.push(new ParameterValueModel(opt));
                 });
                 return paramOptions;
@@ -139,17 +127,10 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions`;
-        let params: URLSearchParams;
-        params = new URLSearchParams();
-        params.set('appDefinitionId', appId);
-        let options = this.getRequestOptions(params);
-        return this.http
-            .get(url, options)
+        return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(appId))
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
-                let body = res.json();
-                body.data.forEach((opt) => {
+                res.data.forEach((opt) => {
                     paramOptions.push(new ParameterValueModel(opt));
                 });
                 return paramOptions;
@@ -157,42 +138,21 @@ export class AnalyticsService {
     }
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
-        if (reportId && processDefinitionId) {
-            let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}/tasks`;
-            let params: URLSearchParams;
-            if (processDefinitionId) {
-                params = new URLSearchParams();
-                params.set('processDefinitionId', processDefinitionId);
-            }
-            let options = this.getRequestOptions(params);
-            return this.http
-                .get(url, options)
-                .map((res: any) => {
-                    let paramOptions: ParameterValueModel[] = [];
-                    let body = res.json();
-                    body.forEach((opt) => {
-                        paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
-                    });
-                    return paramOptions;
-                }).catch(this.handleError);
-        } else {
-            return Observable.create(observer => {
-                observer.next(null);
-                observer.complete();
-            });
-        }
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getTasksByProcessDefinitionId(reportId, processDefinitionId))
+            .map((res: any) => {
+                let paramOptions: ParameterValueModel[] = [];
+                res.forEach((opt) => {
+                    paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
+                });
+                return paramOptions;
+            }).catch(this.handleError);
     }
 
     getReportsByParams(reportId: number, paramsQuery: any): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/report-params/${reportId}`;
-        let body = paramsQuery ? JSON.stringify(paramsQuery) : {};
-        let options = this.getRequestOptions();
-        return this.http
-            .post(url, body, options)
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportsByParams(reportId, paramsQuery))
             .map((res: any) => {
                 let elements: Chart[] = [];
-                let bodyRes = res.json();
-                bodyRes.elements.forEach((chartData) => {
+                res.elements.forEach((chartData) => {
                     if (chartData.type === 'pieChart') {
                         elements.push(new PieChart(chartData));
                     } else if (chartData.type === 'table') {
@@ -213,31 +173,17 @@ export class AnalyticsService {
     }
 
     public createDefaultReports(): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/reporting/default-reports`;
-        let options = this.getRequestOptions();
-        let body = {};
-        return this.http
-            .post(url, body, options)
-            .map((res: any) => {
-                return res;
-            }).catch(this.handleError);
-    }
-
-    public getHeaders(): Headers {
-        return new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': this.authService.getTicketBpm()
-        });
-    }
-
-    public getRequestOptions(param?: any): RequestOptions {
-        let headers = this.getHeaders();
-        return new RequestOptions({ headers: headers, withCredentials: true, search: param });
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.createDefaultReports())
+            .map(this.toJson)
+            .catch(this.handleError);
     }
 
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
+    }
+
+    toJson(res: any) {
+        return res || {};
     }
 }
