@@ -30,6 +30,7 @@ import {
     ActivitiStartProcessInstance,
     ProcessInstance
 } from 'ng2-activiti-processlist';
+import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
@@ -74,6 +75,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;
+
+    @ViewChild(AnalyticsReportListComponent)
+    analyticsreportlist: AnalyticsReportListComponent;
 
     @Input()
     appId: number;
@@ -181,6 +185,10 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onProcessRowClick(processInstanceId) {
         this.currentProcessInstanceId = processInstanceId;
+    }
+
+    onEditReport(name: string) {
+        this.analyticsreportlist.reload();
     }
 
     navigateStartProcess() {

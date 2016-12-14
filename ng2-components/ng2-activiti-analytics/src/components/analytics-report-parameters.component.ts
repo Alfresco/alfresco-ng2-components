@@ -48,6 +48,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     onError = new EventEmitter();
 
     @Output()
+    onEdit = new EventEmitter();
+
+    @Output()
     onFormValueChanged = new EventEmitter();
 
     onDropdownChanged = new EventEmitter();
@@ -63,6 +66,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
+    private isEditable: boolean = false;
 
     constructor(private translate: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
@@ -209,5 +213,26 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
         if (this.reportParamsSub) {
             this.reportParamsSub.unsubscribe();
         }
+    }
+
+    public editEnable() {
+        this.isEditable =  true;
+    }
+
+    public editDisable() {
+        this.isEditable = false;
+    }
+
+    public editTitle() {
+        this.reportParamsSub = this.analyticsService.updateReport(this.reportParameters.id, this.reportParameters.name).subscribe(
+            (res: ReportParametersModel) => {
+                this.editDisable();
+                this.onEdit.emit(this.reportParameters.name);
+            },
+            (err: any) => {
+                console.log(err);
+                this.onError.emit(err);
+            }
+        );
     }
 }

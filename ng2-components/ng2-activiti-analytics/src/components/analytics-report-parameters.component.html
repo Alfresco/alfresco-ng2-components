@@ -1,7 +1,18 @@
 <div class="col-md-6">
     <div *ngIf="reportParameters">
         <form [formGroup]="reportForm" novalidate>
-        <h4>{{reportParameters.name}}</h4>
+        <div *ngIf="isEditable">
+            <input
+                    type="text"
+                    class="mdl-textfield__input large"
+                    id="reportName"
+                    data-automation-id="reportName"
+                    [value]="reportParameters.name"
+                    (input)="reportParameters.name=$event.target.value"
+                    (blur)="editTitle($event)"
+                    />
+        </div>
+        <h4 *ngIf="!isEditable" (click)="editEnable()">{{reportParameters.name}}</h4>
         <div *ngFor="let field of reportParameters.definition.parameters">
             <div [ngSwitch]="field.type">
                 <div *ngSwitchCase="'integer'">
