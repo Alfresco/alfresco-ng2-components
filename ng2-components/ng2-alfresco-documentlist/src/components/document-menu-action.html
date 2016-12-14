@@ -23,13 +23,14 @@
                     class="mdl-textfield__input"
                     id="name"
                     required
-                    value="Untitled folder"
+                    [(ngModel)]="folderName"
+                    placeholder="Folder name"
                     data-automation-id="name"
                     autocapitalize="none" #name/>
         </div>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" (click)="createFolder(name.value)" class="mdl-button">{{ 'BUTTON.CREATE' | translate }}</button>
-        <button type="button" (click)="cancel()" class="mdl-button close">{{ 'BUTTON.CANCEL' | translate }}</button>
+        <button type="button" [disabled]="isFolderNameEmpty()" (click)="createFolder(folderName)" class="mdl-button">{{ 'BUTTON.CREATE' | translate }}</button>
+        <button type="button" (click)="cancel()" class="mdl-button close">{{ 'BUTTON.CANCEL' | translate}}</button>
     </div>
 </dialog>
