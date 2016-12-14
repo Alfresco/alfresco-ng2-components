@@ -29,7 +29,6 @@ import { ActivitiProcessInstanceVariables } from './src/components/activiti-proc
 import { ActivitiComments } from './src/components/activiti-comments.component';
 import { ActivitiProcessInstanceDetails } from './src/components/activiti-process-instance-details.component';
 import { ActivitiStartProcessInstance } from './src/components/activiti-start-process.component';
-import { ActivitiStartProcessInstanceDialog } from './src/components/activiti-start-process-dialog.component';
 import { ActivitiProcessService } from './src/services/activiti-process.service';
 
 // components
@@ -37,7 +36,6 @@ export * from './src/components/activiti-processlist.component';
 export * from './src/components/activiti-filters.component';
 export * from './src/components/activiti-process-instance-details.component';
 export * from './src/components/activiti-start-process.component';
-export * from './src/components/activiti-start-process-dialog.component';
 
 // models
 export * from './src/models/index';
@@ -53,8 +51,7 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ActivitiProcessInstanceTasks,
     ActivitiProcessInstanceVariables,
     ActivitiComments,
-    ActivitiStartProcessInstance,
-    ActivitiStartProcessInstanceDialog
+    ActivitiStartProcessInstance
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [
