@@ -87,7 +87,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             component.onSuccessReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-status');
-                expect(element.querySelector('h1').innerHTML).toEqual('Fake Task overview status');
+                expect(element.querySelector('h4').innerHTML).toEqual('Fake Task overview status');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(4);
                 expect(dropDown[0].innerHTML).toEqual('Choose One');
