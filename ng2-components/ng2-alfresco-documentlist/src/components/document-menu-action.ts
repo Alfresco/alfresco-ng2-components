@@ -55,6 +55,8 @@ export class DocumentMenuAction implements OnInit {
 
     message: string;
 
+    folderName: string = '';
+
     constructor(
         private documentListService: DocumentListService,
         private translate: AlfrescoTranslationService) {
@@ -72,7 +74,7 @@ export class DocumentMenuAction implements OnInit {
             .subscribe(
                 res => {
                     let relativeDir = this.currentFolderPath;
-                    console.log(relativeDir);
+                    this.folderName = '';
                     this.success.emit({value: relativeDir});
                 },
                 error => {
@@ -127,5 +129,9 @@ export class DocumentMenuAction implements OnInit {
             message = message.replace(new RegExp('\\{' + i + '\\}', 'gm'), keys[i]);
         }
         return message;
+    }
+
+    isFolderNameEmpty() {
+        return this.folderName === '' ? true : false;
     }
 }
