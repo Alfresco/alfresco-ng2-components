@@ -1,10 +1,9 @@
-<div class="content-grid mdl-grid content-layout login-content alfresco-login__container"
-    style="background-image: url(${require(`./background.svg`)})">
+<div class="content-grid mdl-grid content-layout login-content"
+     [style.background-image]="'url(' + (backgroundImageUrl || baseComponentPath + '/../assets/images/background.svg') + ')'">
     <div class="login-card-wide mdl-card mdl-shadow--4dp">
         <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
-                <img *ngIf="logoImageUrl" class="center" [src]="logoImageUrl" alt="{{'LOGIN.LOGO' | translate }}">
-                <img *ngIf="!logoImageUrl" class="center" src="./../assets/images/alfresco-logo.svg" alt="{{'LOGIN.LOGO' | translate }}">
+                <img class="center" [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'" alt="{{'LOGIN.LOGO' | translate }}">
             </div>
             <div class="mdl-card__supporting-text">
                 <div>
@@ -46,7 +45,6 @@
                             <span id="password-required" class="mdl-textfield__error" style="visibility: visible" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
                 </div>
-                <ng-content></ng-content>
                 <br>
                 <button type="submit" id="login-button" tabindex="3"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"

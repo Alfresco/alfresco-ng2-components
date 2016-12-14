@@ -21,6 +21,8 @@ import { User } from '../models/user.model';
 import { Observer, Observable } from 'rxjs/Rx';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
+let dialogPolyfill: any;
+
 @Component({
     selector: 'activiti-people',
     moduleId: module.id,
@@ -52,7 +54,7 @@ export class ActivitiPeople {
     constructor(private translate: AlfrescoTranslationService,
                 private peopleService: ActivitiPeopleService) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }

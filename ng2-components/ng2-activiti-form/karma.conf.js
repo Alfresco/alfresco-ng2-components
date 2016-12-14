@@ -34,24 +34,29 @@ module.exports = function (config) {
 
       'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
       'node_modules/moment/min/moment.min.js',
-      'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.min.js',
-      'node_modules/md-date-time-picker/dist/js/draggabilly.pkgd.min.js',
+      'node_modules/md-date-time-picker/dist/js/mdDateTimePicker.js',
+
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
 
       'karma-test-shim.js',
 
       // paths loaded via module imports
-      {pattern: 'dist/**/*.js', included: false, watched: true},
-      {pattern: 'dist/**/*.html', included: true, served: true, watched: true},
-      {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
 
       // ng2-components
-      { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-core/src/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-core/src/**/*.js.map', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-core/index.js', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools
+
+      {pattern: './index.ts', included: false, watched: true},
+      {pattern: './index.js', included: false, watched: true},
       {pattern: 'src/**/*.ts', included: false, watched: false},
-      {pattern: 'dist/**/*.js.map', included: false, watched: false}
+      {pattern: 'src/**/*.js', included: false, watched: true},
+      {pattern: 'src/**/*.js.map', included: false, watched: false},
+      {pattern: 'src/**/*.html', included: true, served: true, watched: true},
+      {pattern: 'src/**/*.css', included: true, served: true, watched: true}
+
     ],
 
     exclude: [
@@ -99,7 +104,7 @@ module.exports = function (config) {
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'dist/**/!(*spec|index|*mock|*model).js': 'coverage'
+      'src/**/!(*spec|index|*mock|*model).js': 'coverage'
     },
 
     coverageReporter: {

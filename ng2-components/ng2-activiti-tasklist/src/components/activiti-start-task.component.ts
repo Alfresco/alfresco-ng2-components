@@ -53,7 +53,7 @@ export class ActivitiStartTaskButton {
                 private taskService: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 

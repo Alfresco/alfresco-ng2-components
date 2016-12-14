@@ -5,7 +5,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
 __karma__.loaded = function() {};
 
-var builtPath = '/base/dist/';
+var builtPath = '/base/src/';
 
 function isJsFile(path) {
     return path.slice(-3) == '.js';
@@ -29,7 +29,7 @@ var paths = {
 };
 
 var map = {
-    'app': 'base/dist',
+    'app': 'base/src',
     // angular bundles
     '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
     '@angular/common': 'npm:@angular/common/bundles/common.umd.js',

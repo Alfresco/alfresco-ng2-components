@@ -1,13 +1,16 @@
 <div id="userinfo_container" *ngIf="isLoggedIn()">
     <div *ngIf="ecmUser || bpmUser">
         <div class="button-profile" id="user-profile" data-automation-id="user-profile">
-            <img *ngIf="getUserAvatar()" [src]="getUserAvatar()" (error)="bpmUserImage = null; ecmUserImage = null;" id="logged-user-img" class="profile-image" alt="user-info-profile-button">
-            <img *ngIf="!getUserAvatar()" src="./anonymous.gif" id="logged-user-img" class="profile-image" alt="user-info-profile-button">
+            <img id="logged-user-img"
+                 [src]="getUserAvatar()"
+                 alt="user-info-profile-button"
+                 (error)="onImageLoadingError($event)"
+                 class="profile-image"/>
         </div>
         <div mdl id="user-profile-lists" class="user-profile-list-mdl mdl-menu mdl-js-menu mdl-js-ripple-effect"
-            [class.mdl-menu--bottom-left]="menuOpenType === 'left'? true : false"
-            [class.mdl-menu--bottom-right]="menuOpenType === 'right'? true : false"
-            for="user-profile" (click)="stopClosing($event)">
+             [class.mdl-menu--bottom-left]="menuOpenType === 'left'? true : false"
+             [class.mdl-menu--bottom-right]="menuOpenType === 'right'? true : false"
+             for="user-profile" (click)="stopClosing($event)">
             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect menu-container__items">
                 <div id="tab-bar-env" class="mdl-tabs__tab-bar" [hidden]="!(ecmUser && bpmUser)">
                     <a href="#ecm-panel" id="ecm-tab" class="mdl-tabs__tab is-active">ECM</a>
@@ -16,22 +19,27 @@
                 <div class="mdl-tabs__panel" [class.is-active]="ecmUser?true:false" id="ecm-panel">
                     <div class="detail-user-profile-list-mdl mdl-list" *ngIf="ecmUser">
                         <div class="demo-card-wide mdl-card">
-                            <div class="card-title__option mdl-card__title user-info__ecm-background" id="ecm-background-image"
-                                style="background-image: url(${require(`./ecm-background.png`)})">
-                                <img *ngIf="ecmUserImage" [src]="ecmUserImage" (error)="ecmUserImage = null" class="profile-picture" id="ecm-user-detail-image" alt="ecm-profile-image">
-                                <img *ngIf="!ecmUserImage" src="./anonymous.gif" class="profile-picture" id="ecm-user-detail-image" alt="ecm-profile-image">
+                            <div class="card-title__option mdl-card__title"
+                                 id="ecm-background-image"
+                                 [style.background-image]="'url(' + ( ecmBackgroundImage || baseComponentPath + '/../assets/images/ecm-background.png')+')'">
+                                <img class="profile-picture"
+                                     id="ecm-user-detail-image"
+                                     alt="ecm-profile-image"
+                                     (error)="onImageLoadingError($event)"
+                                     [src]="getEcmUserAvatar()"/>
                                 <h2 class="mdl-card__title-text" id="ecm-username">{{getUserNameHeaderFor('ECM')}}</h2>
                             </div>
                             <div class="mdl-card__supporting-text">
                                 <li class="mdl-list__item mdl-list__item--two-line">
                                     <span class="mdl-list__item-primary-content">
-                                        <span id="ecm-full-name" class="truncate-long-names">
-                                            {{ formatValue(ecmUser.firstName) }} {{ formatValue(ecmUser.lastName) }}
-                                        </span>
-                                        <span id="ecm-email" class="mdl-list__item-sub-title">{{ecmUser.email}}</span>
+                                    <span id="ecm-full-name" class="truncate-long-names">
+                                        {{ formatValue(ecmUser.firstName) }} {{ formatValue(ecmUser.lastName) }}
+                                    </span>
+                                    <span id="ecm-email" class="mdl-list__item-sub-title">{{ecmUser.email}}</span>
                                     </span>
                                     <span id="ecm-job-title" class="mdl-list__item-secondary-content custom-role-style">
-                                        <span class="role-label-user">{{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}</span>
+                                        <span
+                                            class="role-label-user">{{ 'USER_PROFILE.LABELS.ECM.JOB_TITLE' | translate }}</span>
                                         {{ecmUser.jobTitle?ecmUser.jobTitle:'N/A'}}
                                     </span>
                                 </li>
@@ -42,24 +50,28 @@
                 <div class="mdl-tabs__panel" [class.is-active]="bpmUser && !ecmUser?true:false" id="bpm-panel">
                     <div class="detail-user-profile-list-mdl mdl-list" *ngIf="bpmUser">
                         <div class="demo-card-wide mdl-card">
-                            <div class="card-title__option mdl-card__title user-info__bpm-background" id="bpm-background-image"
-                                style="background-image: url(${require(`./bpm-background.png`)})">
-                                <img *ngIf="bpmUserImage" [src]="bpmUserImage" class="profile-picture" (error)="bpmUserImage = null" id="bpm-user-detail-image" alt="bpm-profile-image">
-                                <img *ngIf="!bpmUserImage" src="./anonymous.gif" class="profile-picture" id="bpm-user-detail-image" alt="bpm-profile-image">
+                            <div class="card-title__option mdl-card__title"
+                                 id="bpm-background-image"
+                                 [style.background-image]="'url(' + (bpmBackgroundImage || baseComponentPath + '/../assets/images/bpm-background.png')+')'">
+                                <img class="profile-picture"
+                                     id="bpm-user-detail-image"
+                                     alt="bpm-profile-image"
+                                     (error)="onImageLoadingError($event)"
+                                     [src]="getBpmUserAvatar()"/>
                                 <h2 class="mdl-card__title-text" id="bpm-username">{{getUserNameHeaderFor('BPM')}}</h2>
                             </div>
                             <div class="mdl-card__supporting-text">
                                 <li class="mdl-list__item mdl-list__item--two-line">
-                                    <span class="mdl-list__item-primary-content">
-                                        <span id="bpm-full-name" class="truncate-long-names">
-                                            {{ formatValue(bpmUser.firstName) }} {{ formatValue(bpmUser.lastName) }}
-                                        </span>
-                                        <span id="bpm-email" class="mdl-list__item-sub-title">{{bpmUser.email}}</span>
-                                    </span>
+                            <span class="mdl-list__item-primary-content">
+                            <span id="bpm-full-name" class="truncate-long-names">
+                                {{ formatValue(bpmUser.firstName) }} {{ formatValue(bpmUser.lastName) }}
+                            </span>
+                            <span id="bpm-email" class="mdl-list__item-sub-title">{{bpmUser.email}}</span>
+                            </span>
                                     <span id="bpm-tenant" class="mdl-list__item-secondary-content custom-role-style">
-                                        <span class="role-label-user">{{ 'USER_PROFILE.LABELS.BPM.TENANT' | translate }}</span>
-                                        {{bpmUser.tenantName}}
-                                    </span>
+                                <span class="role-label-user">{{ 'USER_PROFILE.LABELS.BPM.TENANT' | translate }}</span>
+                                {{bpmUser.tenantName}}
+                            </span>
                                 </li>
                             </div>
                         </div>

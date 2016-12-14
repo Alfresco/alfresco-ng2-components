@@ -17,13 +17,15 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import {
-    CoreModule
+    CoreModule,
+    AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './index';
 import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
 import { DiagramComponent } from './index';
 import { DebugElement } from '@angular/core';
+import { TranslationMock } from '../assets/translation.service.mock';
 import * as diagramsEventsMock from '../assets/diagramEvents.mock';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
 import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
@@ -56,7 +58,8 @@ describe('Test ng2-activiti-diagrams ', () => {
             ],
             providers: [
                 ...DIAGRAM_PROVIDERS,
-                ...RAPHAEL_PROVIDERS
+                ...RAPHAEL_PROVIDERS,
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));

@@ -52,7 +52,7 @@ export class RaphaelIconBoxPublishDirective extends RaphaelBase implements OnIni
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         this.draw(this.position);
     }
 

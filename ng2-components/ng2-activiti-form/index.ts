@@ -34,8 +34,8 @@ export * from './src/components/activiti-form.component';
 export * from './src/components/activiti-start-form.component';
 export * from './src/services/form.service';
 export * from './src/components/widgets/index';
-export * from  './src/services/ecm-model.service';
-export * from  './src/services/node.service';
+export * from './src/services/ecm-model.service';
+export * from './src/services/node.service';
 export * from './src/services/form-rendering.service';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [

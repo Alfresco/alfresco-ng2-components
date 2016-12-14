@@ -55,7 +55,7 @@ export class RaphaelCircleDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         let opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
         let drawElement = this.draw(this.center, this.radius, opts);
         drawElement.node.id = this.elementId;

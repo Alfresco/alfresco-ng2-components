@@ -49,7 +49,7 @@ export class RaphaelPentagonDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         let opts = {
             'stroke-width': this.strokeWidth,
             'fill': this.fillColors,

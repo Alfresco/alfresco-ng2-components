@@ -18,6 +18,8 @@
 import { Component, Input, AfterViewInit, AfterContentChecked, EventEmitter, Output } from '@angular/core';
 import { TabModel, FormFieldModel } from './../core/index';
 
+declare var componentHandler: any;
+
 @Component({
     moduleId: module.id,
     selector: 'tabs-widget',

@@ -4,8 +4,9 @@
   "version": "0.5.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "clean": "npm install rimraf && rimraf dist node_modules typings dist",
+    "clean": "npm install rimraf && npm run clean-build  && rimraf dist node_modules typings dist",
     "start": "webpack-dev-server --inline --progress --port 3000",
+    "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
     "test": "karma start",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "aws": "node app.js",
@@ -57,13 +58,11 @@
     "@angular/platform-browser": "~2.2.0",
     "@angular/platform-browser-dynamic": "~2.2.0",
     "@angular/router": "~3.2.0",
-
     "systemjs": "0.19.40",
     "core-js": "^2.4.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "^0.6.26",
-
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.2.1",
     "ng2-translate": "2.5.0",
@@ -93,19 +92,18 @@
     "element.scrollintoviewifneeded-polyfill": "^1.0.1"
   },
   "devDependencies": {
-    "license-check": "1.1.5",
-    "mime": "^1.3.4",
-    "tslint": "3.15.1",
-
     "@types/jasmine": "^2.5.35",
     "@types/node": "^6.0.45",
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^2.2.4",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "glob": "^7.1.1",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.15.0",
+    "intl": "^1.2.5",
     "jasmine-core": "^2.4.1",
     "karma": "^1.2.0",
     "karma-jasmine": "^1.0.2",
@@ -113,19 +111,20 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
+    "license-check": "1.1.5",
+    "mime": "^1.3.4",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.7",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.2",
+    "script-loader": "^0.7.0",
+    "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
+    "tslint": "3.15.1",
     "typescript": "2.0.3",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0",
-    "source-map-loader": "^0.1.5",
-    "script-loader": "^0.7.0",
-    "copy-webpack-plugin": "^4.0.1",
-    "glob": "^7.1.1"
+    "webpack-merge": "^0.14.0"
   },
   "license-check-config": {
     "src": [

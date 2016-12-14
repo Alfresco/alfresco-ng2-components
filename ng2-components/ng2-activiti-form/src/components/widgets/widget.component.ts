@@ -18,6 +18,8 @@
 import { Input, AfterViewInit, Output, EventEmitter, ElementRef } from '@angular/core';
 import { FormFieldModel } from './core/index';
 
+declare var componentHandler: any;
+
 /**
  * Base widget component.
  */

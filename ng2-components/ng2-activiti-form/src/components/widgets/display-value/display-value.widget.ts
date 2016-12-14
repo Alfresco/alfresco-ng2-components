@@ -23,6 +23,7 @@ import { FormFieldOption } from './../core/form-field-option';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import * as moment from 'moment';
 
 @Component({
     moduleId: module.id,

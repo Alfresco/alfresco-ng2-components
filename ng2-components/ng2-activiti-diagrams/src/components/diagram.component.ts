@@ -61,7 +61,7 @@ export class DiagramComponent {
                 private raphaelService: RaphaelService,
                 private diagramsService: DiagramsService) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/dist/src');
+            translate.addTranslationFolder('ng2-activiti-diagrams', 'node_modules/ng2-activiti-diagrams/src');
         }
         this.elementRef = elementRef;
     }

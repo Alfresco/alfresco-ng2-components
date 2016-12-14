@@ -83,7 +83,7 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
         }
 
         if (this.translate) {
-            this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/dist/src');
+            this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
         }
     }
 

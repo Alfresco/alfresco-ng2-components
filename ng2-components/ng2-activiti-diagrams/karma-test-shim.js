@@ -5,7 +5,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
 __karma__.loaded = function() {};
 
-var builtPath = '/base/dist/';
+var builtPath = '/base/src/';
 
 function isJsFile(path) {
     return path.slice(-3) == '.js';
@@ -29,7 +29,7 @@ var paths = {
 };
 
 var map = {
-    'app': 'base/dist',
+    'app': 'base/src',
     // angular bundles
     '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
     '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
@@ -52,17 +52,20 @@ var map = {
     // other libraries
     'rxjs': 'npm:rxjs',
     'ng2-translate': 'npm:ng2-translate',
+    'ng2-charts' : 'npm:ng2-charts',
+
+    'raphael':'npm:raphael/raphael.js',
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
-    'ng2-activiti-diagrams': 'npm:ng2-activiti-diagrams/dist',
-    'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist'
+    'ng2-alfresco-core': 'npm:ng2-alfresco-core'
 };
 
 var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
     'rxjs': {  defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
+    'ng2-charts': { defaultExtension: 'js' },
+
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-    'ng2-activiti-diagrams': { main: './index.js', defaultExtension: 'js'},
     'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'}
 };
 

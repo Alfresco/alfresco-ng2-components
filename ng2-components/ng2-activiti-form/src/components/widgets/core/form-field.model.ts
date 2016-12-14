@@ -35,8 +35,7 @@ import {
     MinDateFieldValidator,
     MaxDateFieldValidator
 } from './form-field-validator';
-
-declare var moment: any;
+import * as moment from 'moment';
 
 // Maps to FormFieldRepresentation
 export class FormFieldModel extends FormWidgetModel {

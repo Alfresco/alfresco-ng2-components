@@ -15,10 +15,23 @@
  * limitations under the License.
  */
 
-declare var module: any;
-declare var moment: any;
-declare let mdDateTimePicker: any;
+import { Observable } from 'rxjs/Rx';
+import { EventEmitter } from '@angular/core';
 
-// MDL
-declare var componentHandler: any;
-declare let dialogPolyfill: any;
+export interface LangChangeEvent {
+    lang: string;
+    translations: any;
+}
+
+export class TranslationMock {
+
+    public onLangChange: EventEmitter<LangChangeEvent> = new EventEmitter<LangChangeEvent>();
+
+    addTranslationFolder() {
+
+    }
+
+    public get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
+        return Observable.of(key);
+    }
+}

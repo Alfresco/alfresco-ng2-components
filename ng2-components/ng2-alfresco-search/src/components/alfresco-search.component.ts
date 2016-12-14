@@ -71,7 +71,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     ngOnInit(): void {
         if (this.translate !== null) {
-            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
+            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
         }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -105,18 +105,8 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     }
 
     private resolveIconPath(icon: string): string {
-        let result = null;
-        try {
-            // webpack
-            result = require(`./../img/${icon}`);
-        } catch (e) {
-            // system.js
-            if (module && module.id) {
-                let baseComponentPath = module.id.replace('/components/alfresco-search.component.js', '');
-                result = `${baseComponentPath}/img/${icon}`;
-            }
-        }
-        return result;
+        let baseComponentPath = module.id.replace('/components/alfresco-search.component.js', '');
+        return `${baseComponentPath}/../assets/images/${icon}`;
     }
 
     /**

@@ -103,10 +103,9 @@ import { UploadModule } from 'ng2-alfresco-upload';
 })
 export class MyDemoApp implements OnInit {
 
-    authenticated: boolean;
-
     public ecmHost: string = 'http://localhost:8080';
 
+    authenticated: boolean;
     multipleFileUpload: boolean = false;
     folderUpload: boolean = false;
     acceptedFilesTypeShow: boolean = false;

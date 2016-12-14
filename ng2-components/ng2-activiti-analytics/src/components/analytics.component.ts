@@ -69,7 +69,7 @@ export class AnalyticsComponent implements OnChanges {
                 private analyticsService: AnalyticsService) {
         console.log('AnalyticsComponent');
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/dist/src');
+            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 

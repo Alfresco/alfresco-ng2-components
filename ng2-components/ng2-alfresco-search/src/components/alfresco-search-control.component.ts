@@ -103,7 +103,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
         this.setupFocusEventHandlers();
 
-        this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
+        this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
     }
 
     ngOnDestroy(): void {

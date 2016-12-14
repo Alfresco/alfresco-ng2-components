@@ -19,6 +19,8 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ContainerWidgetModel } from './container.widget.model';
 import { WidgetComponent } from './../widget.component';
 
+declare var componentHandler: any;
+
 @Component({
     moduleId: module.id,
     selector: 'container-widget',
