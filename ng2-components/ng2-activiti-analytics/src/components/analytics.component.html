@@ -4,7 +4,7 @@
 
     <div *ngIf="reports">
         <div *ngFor="let report of reports">
-            <h2>{{report.title}}</h2>
+            <h4>{{report.title}}</h4>
             <div [ngSwitch]="report.type">
                 <div *ngSwitchCase="'pie'">
                     <div class="col-md-6">

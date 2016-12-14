@@ -1,7 +1,7 @@
 <div class="col-md-6">
     <div *ngIf="reportParameters">
         <form [formGroup]="reportForm" novalidate>
-        <h1>{{reportParameters.name}}</h1>
+        <h4>{{reportParameters.name}}</h4>
         <div *ngFor="let field of reportParameters.definition.parameters">
             <div [ngSwitch]="field.type">
                 <div *ngSwitchCase="'integer'">
