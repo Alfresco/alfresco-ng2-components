@@ -225,11 +225,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     loadStencilScriptsInPageFromActiviti() {
-        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(function (response) {
+        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
                 let s = document.createElement('script');
                 s.type = 'text/javascript';
-                s.src = response;
+                s.text = response;
                 this.elementRef.nativeElement.appendChild(s);
             }
         });
