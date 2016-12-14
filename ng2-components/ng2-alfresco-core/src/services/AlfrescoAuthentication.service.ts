@@ -140,6 +140,7 @@ export class AlfrescoAuthenticationService {
     public removeTicket(): void {
         this.storage.removeItem('ticket-ECM');
         this.storage.removeItem('ticket-BPM');
+        this.alfrescoApi.setTicket(undefined, undefined);
     }
 
     /**
