@@ -22,10 +22,10 @@ import { ProcessInstanceVariable } from './../models/process-instance-variable.m
 import {
     AppDefinitionRepresentationModel,
     Comment,
-    FilterRepresentationModel,
     TaskDetailsModel,
     User
 } from 'ng2-activiti-tasklist';
+import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { Injectable }     from '@angular/core';
 import { Observable }     from 'rxjs/Observable';
 
@@ -58,15 +58,15 @@ export class ActivitiProcessService {
             }).catch(this.handleError);
     }
 
-    getProcessFilters(appId: number): Observable<FilterRepresentationModel[]> {
+    getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
         let filterOpts = appId ? {
             appId: appId
         } : {};
         return Observable.fromPromise(this.callApiGetUserProcessInstanceFilters(filterOpts))
             .map((response: any) => {
-                let filters: FilterRepresentationModel[] = [];
-                response.data.forEach((filter: FilterRepresentationModel) => {
-                    let filterModel = new FilterRepresentationModel(filter);
+                let filters: FilterProcessRepresentationModel[] = [];
+                response.data.forEach((filter: FilterProcessRepresentationModel) => {
+                    let filterModel = new FilterProcessRepresentationModel(filter);
                     filters.push(filterModel);
                 });
                 if (response && response.data && response.data.length === 0) {
@@ -82,8 +82,8 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {FilterRepresentationModel[]}
      */
-    private createDefaultFilters(appId: number): FilterRepresentationModel[] {
-        let filters: FilterRepresentationModel[] = [];
+    private createDefaultFilters(appId: number): FilterProcessRepresentationModel[] {
+        let filters: FilterProcessRepresentationModel[] = [];
 
         let involvedTasksFilter = this.getRunningFilterInstance(appId);
         this.addFilter(involvedTasksFilter);
@@ -103,10 +103,10 @@ export class ActivitiProcessService {
     /**
      * Return a static Running filter instance
      * @param appId
-     * @returns {FilterRepresentationModel}
+     * @returns {FilterProcessRepresentationModel}
      */
-    private getRunningFilterInstance(appId: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    private getRunningFilterInstance(appId: number): FilterProcessRepresentationModel {
+        return new FilterProcessRepresentationModel({
             'name': 'Running',
             'appId': appId,
             'recent': true,
@@ -118,10 +118,10 @@ export class ActivitiProcessService {
     /**
      * Return a static Completed filter instance
      * @param appId
-     * @returns {FilterRepresentationModel}
+     * @returns {FilterProcessRepresentationModel}
      */
-    private getCompletedFilterInstance(appId: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    private getCompletedFilterInstance(appId: number): FilterProcessRepresentationModel {
+        return new FilterProcessRepresentationModel({
             'name': 'Completed',
             'appId': appId,
             'recent': false,
@@ -133,10 +133,10 @@ export class ActivitiProcessService {
     /**
      * Return a static All filter instance
      * @param appId
-     * @returns {FilterRepresentationModel}
+     * @returns {FilterProcessRepresentationModel}
      */
-    private getAllFilterInstance(appId: number): FilterRepresentationModel {
-        return new FilterRepresentationModel({
+    private getAllFilterInstance(appId: number): FilterProcessRepresentationModel {
+        return new FilterProcessRepresentationModel({
             'name': 'All',
             'appId': appId,
             'recent': true,
@@ -147,10 +147,11 @@ export class ActivitiProcessService {
 
     /**
      * Add a filter
-     * @param filter - FilterRepresentationModel
-     * @returns {FilterRepresentationModel}
+     * @param filter - FilterProcessRepresentationModel
+     * @returns {FilterProcessRepresentationModel}
      */
-    addFilter(filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+    addFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
+        delete filter.filter.assignment;
         return Observable.fromPromise(this.callApiAddFilter(filter))
             .catch(this.handleError);
     }
@@ -278,7 +279,7 @@ export class ActivitiProcessService {
         return this.apiService.getInstance().activiti.userFiltersApi.getUserProcessInstanceFilters(filterOpts);
     }
 
-    private callApiAddFilter(filter: FilterRepresentationModel) {
+    private callApiAddFilter(filter: FilterProcessRepresentationModel) {
         return this.apiService.getInstance().activiti.userFiltersApi.createUserProcessInstanceFilter(filter);
     }
 
