@@ -117,18 +117,24 @@
 
 <div class="p-10">
     <ul>
-        <li>Current path: {{documentList.currentFolderPath}}</li>
+        <li>Current path: {{currentPath}}</li>
         <li>
-            <button (click)="documentList.currentFolderPath = '/Sites/swsdp/documentLibrary';">Go to Document Library</button>
+            <button (click)="currentPath = '/'">Go to root</button>
         </li>
         <li>
-            <button (click)="documentList.currentFolderPath = '/Sites/swsdp/documentLibrary/Agency Files/Contracts'">Go to agency contracts</button>
+            <button (click)="currentPath = '/Sites'">Go to Sites</button>
         </li>
         <li>
-            <button (click)="documentList.currentFolderPath = '/'">Go to root</button>
+            <button (click)="currentPath = '/Sites/swsdp';">Go to Web Site Design Project site</button>
         </li>
         <li>
-            <button (click)="documentList.currentFolderPath = '!@£$%^&*()'">Go to the wrong path</button>
+            <button (click)="currentPath = '/Sites/swsdp/documentLibrary';">Go to Document Library</button>
+        </li>
+        <li>
+            <button (click)="currentPath = '/Sites/swsdp/documentLibrary/Agency Files/Contracts'">Go to Agency Contracts</button>
+        </li>
+        <li>
+            <button (click)="currentPath = '!@£$%^&*()'">Go to the wrong path</button>
         </li>
         <li>
             <button (click)="fileDialog.toggleShowDialog()">Show/Hide File Dialog</button>
