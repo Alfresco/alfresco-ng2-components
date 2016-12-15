@@ -48,7 +48,6 @@ export class UserInfoComponent implements OnInit {
         if (translate) {
             translate.addTranslationFolder('ng2-alfresco-userinfo', 'node_modules/ng2-alfresco-userinfo/dist/src');
         }
-
         authService.loginSubject.subscribe((response) => {
             this.getUserInfo();
         });
@@ -75,6 +74,9 @@ export class UserInfoComponent implements OnInit {
                         this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
                     }
                 );
+        } else {
+            this.ecmUser = null;
+            this.ecmUserImage = null;
         }
     }
 
@@ -85,6 +87,9 @@ export class UserInfoComponent implements OnInit {
                     this.bpmUser = <BpmUserModel> res;
                 });
             this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+        } else {
+            this.bpmUser = null;
+            this.bpmUserImage = null;
         }
     }
 
