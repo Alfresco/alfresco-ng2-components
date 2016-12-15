@@ -1,5 +1,6 @@
 npm-debug.log
 .idea
+demo/localTestFile.pdf
 
 coverage/
 demo/
@@ -7,18 +8,12 @@ node_modules
 typings/
 fonts/
 
-
 /.editorconfig
 /.travis.yml
-*.ts
-!*.d.ts
-!*.js
-!*.js.map
 /*.json
-*.spec.js
-*.tgz
-/.npmignore
 /karma-test-shim.js
 /karma.conf.js
-/make.js
-/package/
+/gulpfile.ts
+/.npmignore
+
+*.tgz

@@ -22,7 +22,7 @@
     "build.umd": "gulp build.prod --color --env-config prod --build-type prod",
     "reinstall": "npm cache clean && npm install"
   },
-  "main": "bundles/ng2-alfresco-search.js",
+  "main": "./index.js",
   "module": "./index.js",
   "typings": "./index.d.ts",
   "repository": {
