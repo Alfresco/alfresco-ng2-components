@@ -16,10 +16,10 @@
  */
 
 export class DiagramModel {
-    diagramBeginX: string;
-    diagramBeginY: string;
-    diagramHeight: string;
-    diagramWidth: string;
+    diagramBeginX: number;
+    diagramBeginY: number;
+    diagramHeight: number;
+    diagramWidth: number;
     elements: DiagramElementModel[] = [];
     flows: DiagramFlowElementModel[] = [];
     pools: DiagramPoolElementModel[] = [];

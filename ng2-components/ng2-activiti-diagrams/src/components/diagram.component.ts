@@ -25,6 +25,7 @@ import { DiagramModel, DiagramElementModel } from '../models/diagram.model';
 @Component({
     moduleId: module.id,
     selector: 'activiti-diagram',
+    styleUrls: ['./diagram.component.css'],
     templateUrl: './diagram.component.html'
 })
 export class DiagramComponent {
@@ -52,6 +53,9 @@ export class DiagramComponent {
     @Output()
     onError = new EventEmitter();
 
+    PADDING_WIDTH: number = 60;
+    PADDING_HEIGHT: number = 60;
+
     private diagram: DiagramModel;
     private elementRef: ElementRef;
 
@@ -66,10 +70,6 @@ export class DiagramComponent {
         this.elementRef = elementRef;
     }
 
-    ngOnInit() {
-        this.raphaelService.setting(this.width, this.height);
-    }
-
     ngOnChanges(changes: SimpleChanges) {
         this.reset();
         this.diagramColorService.setTotalColors(this.metricColor);
@@ -80,6 +80,7 @@ export class DiagramComponent {
         this.diagramsService.getProcessDefinitionModel(processDefinitionId).subscribe(
             (res: any) => {
                 this.diagram = new DiagramModel(res);
+                this.raphaelService.setting(this.diagram.diagramWidth + this.PADDING_WIDTH, this.diagram.diagramHeight + this.PADDING_HEIGHT);
                 this.setMetricValueToDiagramElement(this.diagram, this.metricPercentages, this.metricType);
                 this.onSuccess.emit(res);
             },
