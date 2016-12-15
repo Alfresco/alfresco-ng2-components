@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "npm install rimraf && rimraf dist node_modules typings dist",
     "start": "webpack-dev-server --inline --progress --port 3000",
+    "start:dist": "wsrv -s dist/ -p 3000 -a 0.0.0.0",
     "test": "karma start",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "aws": "node app.js",
@@ -125,7 +126,8 @@
     "source-map-loader": "^0.1.5",
     "script-loader": "^0.7.0",
     "copy-webpack-plugin": "^4.0.1",
-    "glob": "^7.1.1"
+    "glob": "^7.1.1",
+    "wsrv": "^0.1.6"
   },
   "license-check-config": {
     "src": [
