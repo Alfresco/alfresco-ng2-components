@@ -62,7 +62,7 @@ export class DocumentMenuAction implements OnInit {
         private translate: AlfrescoTranslationService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/dist/src');
+            translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
         }
     }
 

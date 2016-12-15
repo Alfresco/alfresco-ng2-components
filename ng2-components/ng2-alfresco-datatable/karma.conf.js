@@ -33,22 +33,23 @@ module.exports = function (config) {
       {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: false},
 
       'node_modules/alfresco-js-api/dist/alfresco-js-api.js',
+
       {pattern: 'node_modules/ng2-translate/**/*.js', included: false, watched: false},
-      {pattern: 'node_modules/ng2-translate/**/*.js.map', included: false, watched: false},
 
       'karma-test-shim.js',
 
       // paths loaded via module imports
-      {pattern: 'dist/**/*.js', included: false, watched: true},
-      {pattern: 'dist/**/*.html', included: true, served: true, watched: true},
-      {pattern: 'dist/**/*.css', included: true, served: true, watched: true},
+      {pattern: 'src/**/*.js', included: false, watched: true},
+      {pattern: 'src/**/*.html', included: true, served: true, watched: true},
+      {pattern: 'src/**/*.css', included: true, served: true, watched: true},
 
       // ng2-components
-      { pattern: 'node_modules/ng2-alfresco-core/dist/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-core/src/**/*.js', included: false, served: true, watched: false },
+      { pattern: 'node_modules/ng2-alfresco-core/index.js', included: false, served: true, watched: false },
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
-      {pattern: 'dist/**/*.js.map', included: false, watched: false}
+      {pattern: 'src/**/*.js.map', included: false, watched: false}
     ],
 
     exclude: [
@@ -96,7 +97,7 @@ module.exports = function (config) {
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'dist/**/!(*spec|index|*mock|*model|*interface).js': 'coverage'
+      'src/**/!(*spec|index|*mock|*model).js': 'coverage'
     },
 
     coverageReporter: {

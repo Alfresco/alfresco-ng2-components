@@ -52,7 +52,7 @@ export class RaphaelIconGoogleDrivePublishDirective extends RaphaelBase implemen
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         this.draw(this.position);
     }
 

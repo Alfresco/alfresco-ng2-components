@@ -17,6 +17,9 @@
 
 import { Component, Input, OnInit, ElementRef } from '@angular/core';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
+import * as moment from 'moment';
+
+declare let mdDateTimePicker: any;
 
 @Component({
     moduleId: module.id,

@@ -25,28 +25,43 @@ import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-a
 declare let componentHandler: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'ng2-alfresco-userinfo',
+    moduleId: module.id,
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })
 export class UserInfoComponent implements OnInit {
 
     @Input()
+    ecmBackgroundImage: string;
+
+    @Input()
+    bpmBackgroundImage: string;
+
+    @Input()
     menuOpenType: string = 'right';
 
+    @Input()
+    fallBackThumbnailImage: string;
+
+    private baseComponentPath = module.id.replace('components/user-info.component.js', '');
+
     ecmUser: EcmUserModel;
+
     bpmUser: BpmUserModel;
 
-    bpmUserImage: string;
-    ecmUserImage: string;
+    anonymousImageUrl: string = this.baseComponentPath + '/../assets/images/anonymous.gif';
+
+    bpmUserImage: any;
+
+    ecmUserImage: any;
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
                 private authService: AlfrescoAuthenticationService,
                 private translate: AlfrescoTranslationService) {
         if (translate) {
-            translate.addTranslationFolder('ng2-alfresco-userinfo', 'node_modules/ng2-alfresco-userinfo/dist/src');
+            translate.addTranslationFolder('ng2-alfresco-userinfo', 'node_modules/ng2-alfresco-userinfo/src');
         }
 
         authService.loginSubject.subscribe((response) => {
@@ -72,7 +87,7 @@ export class UserInfoComponent implements OnInit {
             this.ecmUserService.getCurrentUserInfo()
                 .subscribe((res) => {
                         this.ecmUser = <EcmUserModel> res;
-                        this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
+                        this.getEcmAvatar();
                     }
                 );
         }
@@ -85,6 +100,13 @@ export class UserInfoComponent implements OnInit {
                     this.bpmUser = <BpmUserModel> res;
                 });
             this.bpmUserImage = this.bpmUserService.getCurrentUserProfileImage();
+        }
+    }
+
+    onImageLoadingError(event) {
+        if (event) {
+            let element = <any> event.target;
+            element.src = this.fallBackThumbnailImage || this.anonymousImageUrl;
         }
     }
 
@@ -104,8 +126,20 @@ export class UserInfoComponent implements OnInit {
         }
     }
 
+    private getEcmAvatar() {
+        this.ecmUserImage = this.ecmUserService.getUserProfileImage(this.ecmUser.avatarId);
+    }
+
     getUserAvatar() {
         return this.ecmUserImage || this.bpmUserImage;
+    }
+
+    getBpmUserAvatar() {
+        return this.bpmUserImage;
+    }
+
+    getEcmUserAvatar() {
+        return this.ecmUserImage;
     }
 
     formatValue(value: string) {

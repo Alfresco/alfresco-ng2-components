@@ -73,14 +73,28 @@ module.exports = webpackMerge(commonConfig, {
         // Copy i18n folders for all modules with ng2-alfresco- prefix
         {
             context: 'node_modules',
-            from: 'ng2-alfresco-*/dist/src/i18n/*.json',
+            from: 'ng2-alfresco-*/src/i18n/*.json',
             to: 'node_modules'
         },
         // Copy i18n folders for all modules with ng2-activiti- prefix
         {
             context: 'node_modules',
-            from: 'ng2-activiti-*/dist/src/i18n/*.json',
+            from: 'ng2-activiti-*/src/i18n/*.json',
             to: 'node_modules'
+        },
+        // Copy asstes folders for all modules with ng2-activiti- prefix
+        {
+            context: 'node_modules',
+            from: 'ng2-activiti-*/src/assets/images/*.*',
+            to: 'assets/images',
+            flatten : true
+        },
+        // Copy asstes folders for all modules with ng2-alfresco- prefix
+        {
+            context: 'node_modules',
+            from: 'ng2-alfresco-*/src/assets/images/*.*',
+            to: 'assets/images',
+            flatten : true
         }
     ])
   ]

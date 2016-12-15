@@ -72,7 +72,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder ) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/dist/src');
+            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 

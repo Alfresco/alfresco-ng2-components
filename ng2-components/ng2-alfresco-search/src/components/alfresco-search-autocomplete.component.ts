@@ -75,7 +75,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         if (this.translate) {
-            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
+            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
         }
     }
 
@@ -132,18 +132,8 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     }
 
     resolveIconPath(icon: string): string {
-        let result = null;
-        try {
-            // webpack
-            result = require(`./../img/${icon}`);
-        } catch (e) {
-            // system.js
-            if (module && module.id) {
-                let baseComponentPath = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
-                result = `${baseComponentPath}/img/${icon}`;
-            }
-        }
-        return result;
+        let baseComponentPath = module.id.replace('/components/alfresco-search.component.js', '');
+        return `${baseComponentPath}/../assets/images/${icon}`;
     }
 
     /**

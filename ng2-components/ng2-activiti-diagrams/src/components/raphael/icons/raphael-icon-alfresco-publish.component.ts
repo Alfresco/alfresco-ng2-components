@@ -52,7 +52,7 @@ export class RaphaelIconAlfrescoPublishDirective extends RaphaelBase implements 
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         this.draw(this.position);
     }
 

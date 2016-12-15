@@ -52,7 +52,7 @@ export class RaphaelCrossDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         let opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
         this.draw(this.center, this.width, this.height, opts);
     }

@@ -11,7 +11,7 @@
         // map tells the System loader where to look for things
         map: {
             // our app is within the app folder
-            app: 'dist',
+            app: 'src',
             // angular bundles
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
             '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
@@ -27,9 +27,9 @@
             'ng2-charts': 'npm:ng2-charts',
             'ng2-translate': 'npm:ng2-translate',
             'alfresco-js-api': 'npm:alfresco-js-api/dist',
-            'ng2-alfresco-core': 'npm:ng2-alfresco-core/dist',
-            'ng2-activiti-diagrams': 'npm:ng2-activiti-diagrams/dist',
-            'ng2-activiti-analytics': 'npm:ng2-activiti-analytics/dist'
+            'ng2-alfresco-core': 'npm:ng2-alfresco-core',
+            'ng2-activiti-diagrams': 'npm:ng2-activiti-diagrams',
+            'ng2-activiti-analytics': 'npm:ng2-activiti-analytics'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -40,6 +40,7 @@
             rxjs: {
                 defaultExtension: 'js'
             },
+            'moment': 'npm:moment/min/moment.min.js',
             'ng2-translate': { defaultExtension: 'js' },
             'ng2-charts': { main: 'ng2-charts.js', defaultExtension: 'js'},
             'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},

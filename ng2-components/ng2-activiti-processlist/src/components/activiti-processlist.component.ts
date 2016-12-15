@@ -72,7 +72,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     constructor(private processService: ActivitiProcessService,
                 private translate: AlfrescoTranslationService) {
         if (translate !== null) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
     }
 

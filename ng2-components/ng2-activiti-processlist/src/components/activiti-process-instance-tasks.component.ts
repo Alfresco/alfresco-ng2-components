@@ -70,7 +70,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
 
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();

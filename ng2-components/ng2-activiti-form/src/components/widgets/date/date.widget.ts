@@ -17,6 +17,10 @@
 
 import { Component, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
+import * as moment from 'moment';
+
+declare let mdDateTimePicker: any;
+declare var componentHandler: any;
 
 @Component({
     moduleId: module.id,

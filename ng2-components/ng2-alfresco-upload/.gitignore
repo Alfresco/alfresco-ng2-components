@@ -13,3 +13,7 @@ demo/**/*.d.ts
 index.js
 index.js.map
 !systemjs.config.js
+*.tgz
+/package/
+/bundles/
+index.d.ts

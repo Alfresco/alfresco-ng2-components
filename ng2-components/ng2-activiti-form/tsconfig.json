@@ -3,18 +3,35 @@
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
+        "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "sourceMap": true,
+        "skipLibCheck": true,
+        "noLib": false,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noFallthroughCasesInSwitch": true,
         "removeComments": true,
         "declaration": true,
-        "outDir": "dist",
-        "types": ["core-js", "jasmine"]
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
         "demo",
-        "dist",
         "node_modules",
-        "dist"
-    ]
+        "dist",
+        "tools",
+        "gulpfile.ts",
+        "gulpfile.d.ts"
+    ],
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true
+    }
 }

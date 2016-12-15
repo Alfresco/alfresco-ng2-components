@@ -57,6 +57,10 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
     ...CONTEXT_MENU_PROVIDERS
 ];
 
+export function createTranslateLoader(http: Http) {
+    return new AlfrescoTranslationLoader(http);
+}
+
 @NgModule({
     imports: [
         CommonModule,
@@ -65,10 +69,9 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
         HttpModule,
         TranslateModule.forRoot({
             provide: TranslateLoader,
-            useFactory: (http) => new AlfrescoTranslationLoader(http),
+            useFactory: (createTranslateLoader),
             deps: [Http]
-        })
-    ],
+        })    ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES

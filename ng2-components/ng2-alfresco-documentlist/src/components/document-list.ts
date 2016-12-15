@@ -58,6 +58,11 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
 
     DEFAULT_FOLDER_PATH: string = '/';
 
+    baseComponentPath = module.id.replace('/components/document-list.js', '');
+
+    @Input()
+    fallbackThubnail: string = this.baseComponentPath + '/../assets/images/ft_ic_miscellaneous.svg';
+
     @Input()
     set rootFolderId(value: string) {
         this.data.rootFolderId = value || this.data.DEFAULT_ROOT_ID;
@@ -72,9 +77,6 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
         }
         return null;
     }
-
-    @Input()
-    fallbackThubnail: string = null;
 
     @Input()
     navigate: boolean = true;
@@ -157,34 +159,11 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
         private ngZone: NgZone,
         private translate: AlfrescoTranslationService) {
 
-        let rootPath = './..';
-        try {
-            if (module && module.id) {
-                rootPath = module.id.replace('/components/document-list.js', '');
-            }
-        } catch (e) {}
-
-        this.data = new ShareDataTableAdapter(this.documentListService, rootPath, []);
+        this.data = new ShareDataTableAdapter(this.documentListService, './..', []);
 
         if (translate) {
-            translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/dist/src');
+            translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
         }
-
-        this.fallbackThubnail = this.resolveIconPath('ft_ic_miscellaneous.svg');
-    }
-
-    resolveIconPath(icon: string): string {
-        try {
-            // webpack
-            return require(`./../img/${icon}`);
-        } catch (e) {
-            // system.js
-            if (module && module.id) {
-                let baseComponentPath = module.id.replace('/components/document-list.js', '');
-                return `${baseComponentPath}/img/${icon}`;
-            }
-        }
-        return null;
     }
 
     getContextActions(node: MinimalNodeEntity) {

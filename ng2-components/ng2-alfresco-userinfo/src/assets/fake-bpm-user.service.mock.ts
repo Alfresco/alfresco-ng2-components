@@ -83,7 +83,7 @@ export var fakeBpmEditedUser: BpmUserModel = {
     lastUpdate: 'fake-update-date',
     latestSyncTimeStamp: 'fake-timestamp',
     password: 'fake-password',
-    pictureId: 'src/assets/bpmImg.gif',
+    pictureId: 'src/assets/images/bpmImg.gif',
     status: 'fake-status',
     tenantId: 'fake-tenant-id',
     tenantName: 'fake-tenant-name',

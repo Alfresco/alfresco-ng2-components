@@ -19,8 +19,8 @@ import { Component, HostListener } from '@angular/core';
 import { ContextMenuService } from './context-menu.service';
 
 @Component({
-    selector:'context-menu-holder',
-    styles:[
+    selector: 'context-menu-holder',
+    styles: [
         `
         .menu-container {
             background: #fff;
@@ -62,10 +62,9 @@ import { ContextMenuService } from './context-menu.service';
 export class ContextMenuHolderComponent {
     links = [];
     isShown = false;
-    private mouseLocation: { left: number, top: number } = { left: 0, top: 0 };
+    private mouseLocation: { left: number, top: number } = {left: 0, top: 0};
 
-    constructor(
-        private _contextMenuService: ContextMenuService) {
+    constructor(private _contextMenuService: ContextMenuService) {
         _contextMenuService.show.subscribe(e => this.showMenu(e.event, e.obj));
     }
 

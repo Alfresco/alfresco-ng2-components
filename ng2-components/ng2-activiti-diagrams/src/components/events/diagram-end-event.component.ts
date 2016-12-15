@@ -37,7 +37,6 @@ export class DiagramEndEventComponent {
                 private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
-        console.log(this.elementRef);
 
         this.options.radius = 14;
         this.options.strokeWidth = 4;

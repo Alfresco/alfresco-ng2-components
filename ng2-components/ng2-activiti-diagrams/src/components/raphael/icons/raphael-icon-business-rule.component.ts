@@ -52,7 +52,7 @@ export class RaphaelIconBusinessRuleDirective extends RaphaelBase implements OnI
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         this.draw(this.position);
     }
 

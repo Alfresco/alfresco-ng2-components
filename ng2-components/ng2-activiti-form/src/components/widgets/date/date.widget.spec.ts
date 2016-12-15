@@ -21,6 +21,7 @@ import { FormFieldModel } from './../core/form-field.model';
 import { FormModel } from './../core/form.model';
 import { CoreModule } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import * as moment from 'moment';
 
 describe('DateWidget', () => {
 

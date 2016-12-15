@@ -27,6 +27,8 @@ function dateCheck(c: AbstractControl) {
     return result ? {'greaterThan': true} : null;
 }
 
+declare let mdDateTimePicker: any;
+
 @Component({
     moduleId: module.id,
     selector: 'date-range-widget',
