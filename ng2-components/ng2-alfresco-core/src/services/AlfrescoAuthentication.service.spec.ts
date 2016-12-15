@@ -144,6 +144,32 @@ describe('AlfrescoAuthentication', () => {
             });
         });
 
+        it('ticket should be deleted only after logout request is accepted', (done) => {
+
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                let logoutPromise = authService.logout();
+
+                expect(authService.getTicketEcm()).toBe('fake-post-ticket');
+
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    'status': 204
+                });
+
+                logoutPromise.subscribe(() => {
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.isEcmLoggedIn()).toBe(false);
+                    done();
+                });
+
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 201,
+                contentType: 'application/json',
+                responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+            });
+        });
+
         it('should return false if the user is not logged in', () => {
             expect(authService.isLoggedIn()).toBe(false);
             expect(authService.isEcmLoggedIn()).toBe(false);
@@ -197,6 +223,30 @@ describe('AlfrescoAuthentication', () => {
 
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 403
+            });
+        });
+
+        it('ticket should be deleted only after logout request is accepted', (done) => {
+
+            authService.login('fake-username', 'fake-password').subscribe(() => {
+                let logoutPromise = authService.logout();
+
+                expect(authService.getTicketBpm()).toBe('Basic ZmFrZS11c2VybmFtZTpmYWtlLXBhc3N3b3Jk');
+
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    'status': 200
+                });
+
+                logoutPromise.subscribe(() => {
+                    expect(authService.isLoggedIn()).toBe(false);
+                    expect(authService.isBpmLoggedIn()).toBe(false);
+                    done();
+                });
+
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200
             });
         });
 
