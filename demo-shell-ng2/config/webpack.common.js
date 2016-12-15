@@ -5,6 +5,7 @@ var helpers = require('./helpers');
 var path = require('path');
 var fs = require('fs');
 var glob = require('glob');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const rootPath = helpers.root('node_modules');
 
@@ -108,7 +109,13 @@ plugins: [
     new webpack.ProvidePlugin({
         'dialogPolyfill': 'dialog-polyfill/dialog-polyfill'
     }),
-
+ 
+    new CopyWebpackPlugin([
+       {
+        from: 'versions.json'
+       }
+   ]),
+        
     new webpack.optimize.CommonsChunkPlugin({
         name: ['app', 'vendor', 'polyfills']
     }),
