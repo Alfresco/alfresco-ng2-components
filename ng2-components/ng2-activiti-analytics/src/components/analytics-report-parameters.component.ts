@@ -96,6 +96,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        this.isEditable = false;
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getReportParams(reportId.currentValue);
