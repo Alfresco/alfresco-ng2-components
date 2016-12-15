@@ -22,9 +22,15 @@ import { AlfrescoContentService } from './AlfrescoContent.service';
 import { AlfrescoApiService } from './AlfrescoApi.service';
 import { StorageService } from './storage.service';
 
+declare let jasmine: any;
+
 describe('AlfrescoContentService', () => {
 
-    let injector, contentService: AlfrescoContentService, authService: AlfrescoAuthenticationService, node;
+    let injector, contentService: AlfrescoContentService;
+    let authService: AlfrescoAuthenticationService;
+    let settingsService: AlfrescoSettingsService;
+    let storage: StorageService;
+    let node: any;
 
     const nodeId = 'fake-node-id';
 
@@ -36,29 +42,56 @@ describe('AlfrescoContentService', () => {
             AlfrescoSettingsService,
             StorageService
         ]);
-        spyOn(localStorage, 'getItem').and.callFake(function (key) {
-            return 'myTicket';
-        });
 
-        contentService = injector.get(AlfrescoContentService);
         authService = injector.get(AlfrescoAuthenticationService);
-        authService.login('fake-username', 'fake-password');
+        settingsService = injector.get(AlfrescoSettingsService);
+        contentService = injector.get(AlfrescoContentService);
+        storage = injector.get(StorageService);
+        storage.clear();
 
         node = {
             entry: {
                 id: nodeId
             }
         };
+
+        jasmine.Ajax.install();
     });
 
-    it('should return a valid content URL', () => {
-        expect(contentService.getContentUrl(node)).toBe('http://localhost:8080/alfresco/api/' +
-            '-default-/public/alfresco/versions/1/nodes/fake-node-id/content?attachment=false&alf_ticket=myTicket');
+    afterEach(() => {
+        jasmine.Ajax.uninstall();
     });
 
-    it('should return a valid thumbnail URL', () => {
-        expect(contentService.getDocumentThumbnailUrl(node))
-            .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco' +
-                '/versions/1/nodes/fake-node-id/renditions/doclib/content?attachment=false&alf_ticket=myTicket');
+    beforeEach(() => {
+        settingsService.setProviders('ECM');
+    });
+
+    it('should return a valid content URL', (done) => {
+        authService.login('fake-username', 'fake-password').subscribe(() => {
+            expect(contentService.getContentUrl(node)).toBe('http://localhost:8080/alfresco/api/' +
+                '-default-/public/alfresco/versions/1/nodes/fake-node-id/content?attachment=false&alf_ticket=fake-post-ticket');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 201,
+            contentType: 'application/json',
+            responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+        });
+    });
+
+    it('should return a valid thumbnail URL', (done) => {
+        authService.login('fake-username', 'fake-password').subscribe(() => {
+            expect(contentService.getDocumentThumbnailUrl(node))
+                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco' +
+                    '/versions/1/nodes/fake-node-id/renditions/doclib/content?attachment=false&alf_ticket=fake-post-ticket');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 201,
+            contentType: 'application/json',
+            responseText: JSON.stringify({'entry': {'id': 'fake-post-ticket', 'userId': 'admin'}})
+        });
     });
 });
