@@ -30,6 +30,7 @@ import {
     ActivitiStartProcessInstance,
     ProcessInstance
 } from 'ng2-activiti-processlist';
+import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
@@ -74,6 +75,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     @ViewChild(ActivitiStartProcessInstance)
     activitiStartProcess: ActivitiStartProcessInstance;
+
+    @ViewChild(AnalyticsReportListComponent)
+    analyticsreportlist: AnalyticsReportListComponent;
 
     @Input()
     appId: number;
@@ -183,6 +187,10 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentProcessInstanceId = processInstanceId;
     }
 
+    onEditReport(name: string) {
+        this.analyticsreportlist.reload();
+    }
+
     navigateStartProcess() {
         this.currentProcessInstanceId = currentProcessIdNew;
     }
@@ -225,11 +233,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     loadStencilScriptsInPageFromActiviti() {
-        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(function (response) {
+        this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
                 let s = document.createElement('script');
                 s.type = 'text/javascript';
-                s.src = response;
+                s.text = response;
                 this.elementRef.nativeElement.appendChild(s);
             }
         });

@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build  && rimraf dist node_modules typings dist",
     "start": "webpack-dev-server --inline --progress --port 3000",
+    "start:dist": "wsrv -s dist/ -p 3000 -a 0.0.0.0",
     "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
     "test": "karma start",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
@@ -124,7 +125,12 @@
     "typescript": "2.0.3",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0"
+    "webpack-merge": "^0.14.0",
+    "source-map-loader": "^0.1.5",
+    "script-loader": "^0.7.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "glob": "^7.1.1",
+    "wsrv": "^0.1.6"
   },
   "license-check-config": {
     "src": [

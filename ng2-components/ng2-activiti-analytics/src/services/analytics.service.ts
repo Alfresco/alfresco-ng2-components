@@ -178,6 +178,13 @@ export class AnalyticsService {
             .catch(this.handleError);
     }
 
+    public updateReport(reportId: number, name: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
+            .map((res: any) => {
+                console.log('upload');
+            }).catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

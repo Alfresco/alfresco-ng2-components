@@ -57,13 +57,21 @@ export class AnalyticsReportListComponent implements  OnInit {
             this.reports.push(report);
         });
 
-        this.getReportListByAppId();
+        this.getReportList();
     }
 
     /**
-     * Get the report list by app id
+     * Reload the component
      */
-    getReportListByAppId() {
+    reload() {
+        this.reset();
+        this.getReportList();
+    }
+
+    /**
+     * Get the report list
+     */
+    getReportList() {
         this.analyticsService.getReportList().subscribe(
             (res: ReportParametersModel[]) => {
                 if (res && res.length === 0) {
@@ -106,6 +114,15 @@ export class AnalyticsReportListComponent implements  OnInit {
      */
     isReportsEmpty(): boolean {
         return this.reports === undefined || (this.reports && this.reports.length === 0);
+    }
+
+    /**
+     * Reset the list
+     */
+    private reset() {
+        if (!this.isReportsEmpty()) {
+            this.reports = [];
+        }
     }
 
     /**

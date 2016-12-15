@@ -134,6 +134,10 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
         }
     }
 
+    hasStartFormDefined(): boolean {
+        return this.processInstanceDetails && this.processInstanceDetails.startFormDefined === true;
+    }
+
     getUserFullName(user: any) {
         if (user) {
             return (user.firstName && user.firstName !== 'null'
