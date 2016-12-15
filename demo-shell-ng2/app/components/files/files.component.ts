@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Optional, ViewChild } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import {
     DocumentActionsService,
@@ -27,17 +27,17 @@ import {
 } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'files-component',
     templateUrl: './files.component.html',
     styleUrls: ['./files.component.css']
 })
 export class FilesComponent implements OnInit {
     currentPath: string = '/Sites/swsdp/documentLibrary';
+    rootFolderId: string = '-root-';
+    currentFolderId: string = null;
 
+    errorMessage: string = null;
     fileNodeId: any;
     fileShowed: boolean = false;
     multipleFileUpload: boolean = false;
@@ -53,7 +53,8 @@ export class FilesComponent implements OnInit {
     constructor(private documentActions: DocumentActionsService,
                 public auth: AlfrescoAuthenticationService,
                 private formService: FormService,
-                private router: Router) {
+                private router: Router,
+                @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 
@@ -84,6 +85,12 @@ export class FilesComponent implements OnInit {
         }
     }
 
+    onBreadcrumbPathChanged(event?: any) {
+        if (event) {
+            this.currentPath = event.value;
+        }
+    }
+
     toggleMultipleFileUpload() {
         this.multipleFileUpload = !this.multipleFileUpload;
         return this.multipleFileUpload;
@@ -106,18 +113,33 @@ export class FilesComponent implements OnInit {
     }
 
     ngOnInit() {
-      if ( this.auth.isBpmLoggedIn() ) {
-          this.formService.getProcessDefinitions().subscribe(
-              defs => this.setupBpmActions(defs || []),
-              err => console.log(err)
-          );
-      } else {
-          console.log('You are not logged in');
-      }
+        if (this.route) {
+            this.route.params.forEach((params: Params) => {
+                this.currentFolderId = params.hasOwnProperty('id') ? params['id'] : null;
+            });
+        }
+        if (this.auth.isBpmLoggedIn()) {
+            this.formService.getProcessDefinitions().subscribe(
+                defs => this.setupBpmActions(defs || []),
+                err => console.log(err)
+            );
+        } else {
+            console.log('You are not logged in');
+        }
     }
 
     viewActivitiForm(event?: any) {
         this.router.navigate(['/activiti/tasksnode', event.value.entry.id]);
+    }
+
+    onNavigationError(err: any) {
+        if (err) {
+            this.errorMessage = err.message || 'Navigation error';
+        }
+    }
+
+    resetError() {
+        this.errorMessage = null;
     }
 
     private setupBpmActions(actions: any[]) {

@@ -21,3 +21,31 @@
 .dropdown-widget__invalid .mdl-textfield__error {
     visibility: visible !important;
 }
+
+.large {
+    font-size: x-large;
+    margin-top: 24px;
+    margin-left: 12px;
+}
+
+.icon-small i {
+    float: left;
+    margin-right: 10px;
+    display: none;
+    position: absolute;
+}
+
+.icon-small h4 {
+    clear: left;
+    margin-left: 26px;
+    padding-top: 12px;
+}
+
+.icon-small:hover {
+    color: rgb(68,138,255);
+    cursor: pointer;
+}
+
+.icon-small:hover .material-icons {
+    display: block;
+}

@@ -72,7 +72,7 @@ export class ReportParameterDetailsModel {
     name: string;
     nameKey: string;
     type: string;
-    value: string;
+    value: any;
     options: ParameterValueModel[];
     dependsOn: string;
 

@@ -19,10 +19,7 @@ import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
-declare let __moduleName: string;
-
 @Component({
-    moduleId: __moduleName,
     selector: 'about-page',
     templateUrl: './about.component.html'
 })

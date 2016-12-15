@@ -20,14 +20,15 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoApiService,
     AlfrescoSettingsService,
-    AlfrescoContentService
+    AlfrescoContentService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { EcmUserService } from '../services/ecm-user.service';
 import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
 
 declare let jasmine: any;
 
-describe('Ecm User service', () => {
+describe('EcmUserService', () => {
 
     let service, injector, authService, contentService, apiService;
 
@@ -37,7 +38,8 @@ describe('Ecm User service', () => {
             AlfrescoApiService,
             AlfrescoAuthenticationService,
             AlfrescoContentService,
-            EcmUserService
+            EcmUserService,
+            StorageService
         ]);
     });
 

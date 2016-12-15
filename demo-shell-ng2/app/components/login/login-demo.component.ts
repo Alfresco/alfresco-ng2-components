@@ -18,11 +18,9 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
-
-declare let __moduleName: string;
+import { StorageService } from 'ng2-alfresco-core';
 
 @Component({
-    moduleId: __moduleName,
     selector: 'login-demo',
     templateUrl: './login-demo.component.html',
     styleUrls: ['./login-demo.component.css']
@@ -33,14 +31,14 @@ export class LoginDemoComponent implements OnInit {
     alfrescologin: any;
 
     providers: string = 'ECM';
-    disableCsrf: boolean = false;
     blackListUsername: string;
     customValidation: any;
 
+    disableCsrf: boolean = false;
     isECM: boolean = true;
     isBPM: boolean = false;
 
-    constructor(public router: Router) {
+    constructor(public router: Router, private storage: StorageService) {
         this.customValidation = {
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
@@ -52,14 +50,14 @@ export class LoginDemoComponent implements OnInit {
         this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
 
-        if (localStorage.getItem('providers')) {
-            this.providers = localStorage.getItem('providers');
+        if (this.storage.hasItem('providers')) {
+            this.providers = this.storage.getItem('providers');
         }
 
-        this.setProviders();
+        this.initProviders();
     }
 
-    setProviders() {
+    initProviders() {
         if (this.providers === 'BPM') {
             this.isECM = false;
             this.isBPM = true;
@@ -80,37 +78,39 @@ export class LoginDemoComponent implements OnInit {
         console.log($event);
     }
 
-    toggleECM(checked) {
-        if (checked && this.providers === 'BPM') {
-            this.providers = 'ALL';
-        } else if (checked) {
-            this.providers = 'ECM';
-        } else if (!checked && this.providers === 'ALL') {
-            this.providers = 'BPM';
-        } else if (!checked && this.providers === 'ECM') {
-            this.providers = '';
-        }
-
-        localStorage.setItem('providers', this.providers);
+    toggleECM() {
+        this.isECM = !this.isECM;
+        this.storage.setItem('providers', this.updateProvider());
     }
 
-    toggleBPM(checked) {
-        if (checked && this.providers === 'ECM') {
-            this.providers = 'ALL';
-        } else if (checked) {
-            this.providers = 'BPM';
-        } else if (!checked && this.providers === 'ALL') {
-            this.providers = 'ECM';
-        } else if (!checked && this.providers === 'BPM') {
-            this.providers = '';
-        }
-
-        localStorage.setItem('providers', this.providers);
+    toggleBPM() {
+        this.isBPM = !this.isBPM;
+        this.storage.setItem('providers', this.updateProvider());
     }
 
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;
     }
+
+    updateProvider(){
+        if (this.isBPM && this.isECM) {
+            this.providers = 'ALL';
+            return this.providers;
+        }
+
+        if (this.isECM) {
+            this.providers = 'ECM';
+            return this.providers;
+        }
+
+        if (this.isBPM) {
+            this.providers = 'BPM';
+            return this.providers;
+        }
+
+        this.providers = '';
+        return this.providers;
+    };
 
     validateForm(event: any) {
         let values = event.values;

@@ -190,6 +190,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
             });
 
             let reportParamQuery = new ReportQuery({status: 'All'});
+            component.reportId = 1;
             component.showReport(reportParamQuery);
 
             jasmine.Ajax.requests.mostRecent().respondWith({
@@ -214,6 +215,7 @@ describe('Test ng2-activiti-analytics Report ', () => {
             });
 
             let reportParamQuery = new ReportQuery({status: 'All'});
+            component.reportId = 1;
             component.showReport(reportParamQuery);
 
             jasmine.Ajax.requests.mostRecent().respondWith({

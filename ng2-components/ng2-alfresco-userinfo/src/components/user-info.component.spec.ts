@@ -125,6 +125,7 @@ describe('User info component', () => {
         expect(res).toEqual('fake-value');
     });
 
+    /*
     it('should return the anonymous avatar when users do not have images', () => {
         let event = <any> {
             target: {
@@ -134,6 +135,7 @@ describe('User info component', () => {
         userInfoComp.onImageLoadingError(event);
         expect(event.target.src).toContain('src/img/anonymous.gif');
     });
+    */
 
     describe('when user is logged on ecm', () => {
 
@@ -204,7 +206,7 @@ describe('User info component', () => {
         describe('and has no image', () => {
 
             beforeEach(async(() => {
-                userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
+                // userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
                 spyOn(stubContent, 'getContentUrl').and.returnValue('wrongImage.gif');
                 fixture.detectChanges();
                 jasmine.Ajax.requests.mostRecent().respondWith({
@@ -250,7 +252,7 @@ describe('User info component', () => {
         });
 
         beforeEach(async(() => {
-            userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
+            // userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
             fixture.detectChanges();
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
@@ -329,7 +331,7 @@ describe('User info component', () => {
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             spyOn(stubContent, 'getContentUrl').and.returnValue('src/assets/ecmImg.gif');
-            userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
+            // userInfoComp.anonymousImageUrl = userInfoComp.anonymousImageUrl.replace('/base/dist', '');
             jasmine.Ajax.install();
             fakeBpmUser.firstName = 'fake-bpm-first-name';
             fakeBpmUser.lastName = 'fake-bpm-last-name';

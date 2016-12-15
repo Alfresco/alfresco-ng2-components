@@ -1,6 +1,6 @@
 <div class="search-results-container">
     <h1>Search results</h1>
-    <alfresco-search [resultType]="'cm:content'" (preview)="onFileClicked($event)"></alfresco-search>
+    <alfresco-search (navigate)="onNavigateItem($event)"></alfresco-search>
 </div>
 
 <alfresco-viewer [(showViewer)]="fileShowed" [fileNodeId]="fileNodeId" [overlayMode]="true">

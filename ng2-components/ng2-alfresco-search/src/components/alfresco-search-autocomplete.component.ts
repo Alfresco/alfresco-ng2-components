@@ -19,6 +19,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, 
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
     moduleId: module.id,
@@ -27,8 +28,6 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
     styleUrls: ['./alfresco-search-autocomplete.component.css']
 })
 export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
-
-    baseComponentPath = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
 
     @Input()
     searchTerm: string = '';
@@ -123,11 +122,28 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getMimeTypeIcon(node: any): string {
+    getMimeTypeIcon(node: MinimalNodeEntity): string {
         if (node.entry.content && node.entry.content.mimeType) {
             let icon = this.alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
-            return `${this.baseComponentPath}/img/${icon}`;
+            return this.resolveIconPath(icon);
+        } else if (node.entry.isFolder) {
+            return 'ft_ic_folder.svg';
         }
+    }
+
+    resolveIconPath(icon: string): string {
+        let result = null;
+        try {
+            // webpack
+            result = require(`./../img/${icon}`);
+        } catch (e) {
+            // system.js
+            if (module && module.id) {
+                let baseComponentPath = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
+                result = `${baseComponentPath}/img/${icon}`;
+            }
+        }
+        return result;
     }
 
     /**
@@ -135,7 +151,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      * @param node Node to get URL for.
      * @returns {string} URL address.
      */
-    getMimeTypeKey(node: any): string {
+    getMimeTypeKey(node: MinimalNodeEntity): string {
         if (node.entry.content && node.entry.content.mimeType) {
             return 'SEARCH.ICONS.' + this.alfrescoThumbnailService.getMimeTypeKey(node.entry.content.mimeType);
         } else {
@@ -148,13 +164,9 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
         firstResult.focus();
     }
 
-    onItemClick(node): void {
+    onItemClick(node: MinimalNodeEntity): void {
         if (node && node.entry) {
-            if (node.entry.isFile) {
-                this.fileSelect.emit({
-                    value: node
-                });
-            }
+            this.fileSelect.emit(node);
         }
     }
 
@@ -166,12 +178,10 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
         this.searchFocus.emit($event);
     }
 
-    onRowEnter(node): void {
+    onRowEnter(node: MinimalNodeEntity): void {
         if (node && node.entry) {
             if (node.entry.isFile) {
-                this.fileSelect.emit({
-                    value: node
-                });
+                this.fileSelect.emit(node);
             }
         }
     }

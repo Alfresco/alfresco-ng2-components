@@ -16,20 +16,18 @@
  */
 
 import { UploadWidget } from './upload.widget';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
+import { FormService } from '../../../services/form.service';
 
 describe('UploadWidget', () => {
 
     let widget: UploadWidget;
-    let settingsService: AlfrescoSettingsService;
-    let authService: AlfrescoAuthenticationService;
+    let formService: FormService;
 
     beforeEach(() => {
-        settingsService = new AlfrescoSettingsService();
-        authService = new AlfrescoAuthenticationService(settingsService, new AlfrescoApiService());
-        widget = new UploadWidget(settingsService, authService);
+        formService = new FormService(null, null);
+        widget = new UploadWidget(formService);
     });
 
     it('should setup with field data', () => {
@@ -39,7 +37,7 @@ describe('UploadWidget', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: [
-                { name: encodedFileName }
+                {name: encodedFileName}
             ]
         });
 
@@ -73,7 +71,7 @@ describe('UploadWidget', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.UPLOAD,
             value: [
-                { name: 'filename' }
+                {name: 'filename'}
             ]
         });
         widget.reset();

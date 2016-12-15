@@ -16,9 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { FormModel } from '../components/widgets/core/form.model';
 
 @Injectable()
@@ -29,8 +28,7 @@ export class EcmModelService {
     public static TYPE_MODEL: string = 'cm:folder';
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private http: Http,
-                public alfrescoSettingsService: AlfrescoSettingsService) {
+                public apiService: AlfrescoApiService) {
     }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
@@ -126,71 +124,39 @@ export class EcmModelService {
     }
 
     public activeEcmModel(modelName: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}?select=status`;
-        let options = this.getRequestOptions();
-        let body = {status: 'ACTIVE'};
-
-        return this.http
-            .put(url, body, options)
+        return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.activateCustomModel(modelName))
             .map(this.toJson)
             .catch(this.handleError);
     }
 
     public createEcmModel(modelName: string, nameSpace: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
-        let options = this.getRequestOptions();
-        let body = {
-            status: 'DRAFT', namespaceUri: modelName, namespacePrefix: nameSpace, name: modelName, description: '', author: ''
-        };
-
-        return this.http
-            .post(url, body, options)
+        return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.createCustomModel('DRAFT', '', modelName, modelName, nameSpace))
             .map(this.toJson)
             .catch(this.handleError);
     }
 
     public getEcmModels(): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm`;
-        let options = this.getRequestOptions();
-
-        return this.http
-            .get(url, options)
+        return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.getAllCustomModel())
             .map(this.toJson)
             .catch(this.handleError);
     }
 
     public getEcmType(modelName: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
-        let options = this.getRequestOptions();
-
-        return this.http
-            .get(url, options)
+        return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.getAllCustomType(modelName))
             .map(this.toJson)
             .catch(this.handleError);
     }
 
     public createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
         let name = this.cleanNameType(typeName);
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types`;
-        let options = this.getRequestOptions();
 
-        let body = {
-            name: name,
-            parentName: parentType,
-            title: typeName,
-            description: ''
-        };
-
-        return this.http
-            .post(url, body, options)
+        return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.createCustomType(modelName, name, parentType, typeName, ''))
             .map(this.toJson)
             .catch(this.handleError);
     }
 
     public addPropertyToAType(modelName: string, typeName: string, formFields: any) {
         let name = this.cleanNameType(typeName);
-        let url = `${this.alfrescoSettingsService.ecmHost}/alfresco/api/-default-/private/alfresco/versions/1/cmm/${modelName}/types/${name}?select=props`;
-        let options = this.getRequestOptions();
 
         let properties = [];
         if (formFields && formFields.values) {
@@ -209,15 +175,10 @@ export class EcmModelService {
             }
         }
 
-        let body = {
-            name: name,
-            properties: properties
-        };
-
-        return this.http
-            .put(url, body, options)
+        return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.addPropertyToType(modelName, name, properties))
             .map(this.toJson)
             .catch(this.handleError);
+
     }
 
     public cleanNameType(name: string): string {
@@ -228,23 +189,9 @@ export class EcmModelService {
         return cleanName.replace(/[^a-zA-Z ]/g, '');
     }
 
-    public getHeaders(): Headers {
-        return new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': this.authService.getTicketEcmBase64()
-        });
-    }
-
-    public getRequestOptions(): RequestOptions {
-        let headers = this.getHeaders();
-        return new RequestOptions({headers: headers});
-    }
-
-    toJson(res: Response) {
+    toJson(res: any) {
         if (res) {
-            let body = res.json();
-            return body || {};
+            return res || {};
         }
         return {};
     }

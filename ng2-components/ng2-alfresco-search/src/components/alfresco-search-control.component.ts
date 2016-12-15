@@ -72,7 +72,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     liveSearchRoot: string = '-root-';
 
     @Input()
-    liveSearchResultType: string = 'cm:content';
+    liveSearchResultType: string = null;
 
     @Input()
     liveSearchResultSort: string = null;
@@ -171,9 +171,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     onFileClicked(event): void {
-        this.fileSelect.emit({
-            value: event.value
-        });
+        this.fileSelect.emit(event);
     }
 
     onSearchFocus($event): void {

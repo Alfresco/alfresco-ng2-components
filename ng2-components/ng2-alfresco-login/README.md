@@ -168,28 +168,45 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `logoImageUrl`         | *string*    |   alfresco logo     |Provide the path of the image with you want to customize the login page logo|
 
 
- 
+
+## Extra content
+
+You can put additional html content between `alfresco-login` tags to get it rendered as part of the login dialog.
+This becomes handy in case you need extending it with custom input fields handled by your application or parent component:
+
+```html
+<alfresco-login ...>
+    <div>
+        <div>You extra content</div>
+    </div>
+</alfresco-login>
+```
+
+Here's an example of custom content:
+
+<img src="assets/login-extra-content.png" height="400" />
+
 ## Custom logo and background
 
 It is possible changing logo and background images to custom values.
 
 ```html
-<alfresco-login 
+<alfresco-login 
     [backgroundImageUrl]="'http://images.freeimages.com/images/previews/638/wood-wall-for-background-1634466.jpg'"
-    [logoImageUrl]="'http://images.freeimages.com/images/previews/eac/honeybee-with-a-house-1633609.jpg'" >
+    [logoImageUrl]="'http://images.freeimages.com/images/previews/eac/honeybee-with-a-house-1633609.jpg'">
 </alfresco-login>
 ```
 
 Should give you something like the following:
 
-![custom login](assets/custom-login.png)
+<img src="assets/custom-login.png" width="600" />
 
 Alternatively you can bind to your component properties and provide values dynamically if needed:
 
 ```html
-<alfresco-login 
+<alfresco-login
     [backgroundImageUrl]="myCustomBackground"
-    [logoImageUrl]="myCustomLogo" >
+    [logoImageUrl]="myCustomLogo">
 </alfresco-login>
 ```
 
@@ -199,9 +216,12 @@ If needed it is possible customize the validation rules of the login
 form. You can add/modify the default rules of the login form.
 
 **MyCustomLogin.component.html**
+
 ```html
-<alfresco-login [fieldsValidation]="customValidation"
-#alfrescologin></alfresco-login>
+<alfresco-login 
+    [fieldsValidation]="customValidation"
+    #alfrescologin>
+</alfresco-login>
 ```
 
 **MyCustomLogin.component.ts**
@@ -236,14 +256,17 @@ This allows for example having custom form validation scenarios and/or additiona
 Alternatively you may want just running additional code without suppressing default one.
 
 **MyCustomLogin.component.html**
+
 ```html
-<alfresco-login (executeSubmit)="validateForm($event)" 
-#alfrescologin></alfresco-login>
+<alfresco-login 
+    (executeSubmit)="validateForm($event)" 
+    #alfrescologin>
+</alfresco-login>
 ```
 
 **MyCustomLogin.component.ts**
-```ts
 
+```ts
 export class MyCustomLogin {
 
     validateForm(event: any) {
@@ -276,7 +299,7 @@ npm run build
 ### Build the files and keep watching for changes
 
 ```sh
-$ npm run build:w
+npm run build:w
 ```
     
 ## Running unit tests

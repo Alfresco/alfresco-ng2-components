@@ -11,7 +11,7 @@
         <div (click)="selectApp(app)" [ngClass]="['mdl-card mdl-cell',  getTheme(app)]" *ngFor="let app of appList">
             <div class="logo"><i class="material-icons">{{getBackgroundIcon(app)}}</i></div>
             <div class="mdl-card__title">
-                <h1 class="mdl-card__title-text">{{app.name}}</h1>
+                <h1 class="mdl-card__title-text application-title">{{app.name}}</h1>
             </div>
             <div class="mdl-card__supporting-text">
                 <p>{{app.description}}</p>

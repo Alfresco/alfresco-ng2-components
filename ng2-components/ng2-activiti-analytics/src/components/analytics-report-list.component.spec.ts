@@ -82,7 +82,25 @@ describe('Test ng2-activiti-analytics Report list', () => {
         });
 
         it('should return the default reports when the report list is empty', (done) => {
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/reports').andReturn({
+                status: 200,
+                contentType: 'json',
+                responseText: []
+            });
+
             fixture.detectChanges();
+
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/default-reports').andReturn({
+                status: 200,
+                contentType: 'json',
+                responseText: []
+            });
+
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/reports').andReturn({
+                status: 200,
+                contentType: 'json',
+                responseText: reportList
+            });
 
             component.onSuccess.subscribe(() => {
                 fixture.detectChanges();
@@ -96,23 +114,6 @@ describe('Test ng2-activiti-analytics Report list', () => {
                 done();
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: []
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: []
-            });
-
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: reportList
-            });
         });
 
         it('Report render the report list relative to a single app', (done) => {

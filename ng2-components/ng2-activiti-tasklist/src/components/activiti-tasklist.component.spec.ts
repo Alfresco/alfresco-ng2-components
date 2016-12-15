@@ -29,7 +29,7 @@ describe('ActivitiTaskList', () => {
 
     let fakeGlobalTask = [
         {
-            id: 14, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name',
+            id: 14, name: 'task-name',
             processDefinitionId: 'fakeprocess:5:7507',
             processDefinitionKey: 'fakeprocess',
             processDefinitionName: 'Fake Process Name',
@@ -123,8 +123,7 @@ describe('ActivitiTaskList', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         component.ngOnInit();
@@ -141,8 +140,7 @@ describe('ActivitiTaskList', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         component.ngOnInit();
@@ -177,8 +175,7 @@ describe('ActivitiTaskList', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         component.reload();
@@ -228,8 +225,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -245,8 +241,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -262,8 +257,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -279,8 +273,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -296,8 +289,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -313,8 +305,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 

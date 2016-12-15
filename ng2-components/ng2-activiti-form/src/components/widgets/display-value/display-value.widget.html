@@ -14,12 +14,12 @@
          class="mdl-textfield mdl-js-textfield text-widget">
         <label *ngIf="field?.isVisible" [attr.for]="field.id">{{field.name}}</label>
         <input
-               *ngIf="field?.isVisible"
-               class="mdl-textfield__input"
-               type="text"
-               [attr.id]="field.id"
-               [value]="value"
-               disabled>
+            *ngIf="field?.isVisible"
+            class="mdl-textfield__input"
+            type="text"
+            [attr.id]="field.id"
+            [value]="value"
+            disabled>
     </div>
     <div *ngSwitchCase="'multi-line-text'"
          class="mdl-textfield mdl-js-textfield multiline-text-widget">
@@ -44,31 +44,39 @@
         </div>
     </div>
     <div *ngSwitchCase="'dynamic-table'">
+
         <div class="display-value-widget__dynamic-table" *ngIf="field?.isVisible">
             <div>{{field.name}}</div>
-            <table class="mdl-data-table mdl-js-data-table">
-                <thead>
+            <div class="display-value-dynamic-table-widget__table-container">
+                <table class="mdl-data-table mdl-js-data-table">
+                    <thead>
                     <tr>
                         <th *ngFor="let column of visibleColumns"
                             class="mdl-data-table__cell--non-numeric is-disabled">
                             {{column.name}}
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     <tr *ngFor="let row of rows">
                         <td *ngFor="let column of visibleColumns"
                             class="mdl-data-table__cell--non-numeric is-disabled">
                             {{ getCellValue(row, column) }}
                         </td>
                     </tr>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div *ngSwitchCase="'upload'">
         <div class="upload-widget" *ngIf="field?.isVisible">
-            <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
+            <div>
+                <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
+            </div>
+            <div>
+                <img *ngIf="hasFile" class="img-upload-widget" src="{{settingsService.bpmHost}}/activiti-app/app/rest/content/{{id}}/raw">
+            </div>
             <div>
                 <i *ngIf="hasFile" class="material-icons upload-widget__icon">attachment</i>
                 <span *ngIf="hasFile" class="upload-widget__file">{{value}}</span>

@@ -18,7 +18,7 @@
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
@@ -55,7 +55,8 @@ class MyDemoApp {
     ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
 
@@ -65,7 +66,7 @@ class MyDemoApp {
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-ECM', this.ticket);
+        this.storage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {

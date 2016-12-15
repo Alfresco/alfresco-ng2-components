@@ -42,7 +42,7 @@ describe('ActivitiFilters', () => {
     });
 
     beforeEach(() => {
-        let activitiService = new ActivitiTaskListService(null);
+        let activitiService = new ActivitiTaskListService(null, null);
         filterList = new ActivitiFilters(null, null, activitiService);
     });
 
