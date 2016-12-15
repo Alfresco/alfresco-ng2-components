@@ -171,6 +171,8 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     onFileClicked(event): void {
+        this.liveSearchTerm = '';
+        this.searchActive = false;
         this.fileSelect.emit(event);
     }
 

@@ -63,6 +63,8 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     queryParamName = 'q';
 
+    baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
+
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService,
@@ -100,13 +102,12 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
             let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
             return this.resolveIconPath(icon);
         } else if (node.entry.isFolder) {
-            return 'ft_ic_folder.svg';
+            return `${this.baseComponentPath}/../assets/images/ft_ic_folder.svg`;
         }
     }
 
     private resolveIconPath(icon: string): string {
-        let baseComponentPath = module.id.replace('/components/alfresco-search.component.js', '');
-        return `${baseComponentPath}/../assets/images/${icon}`;
+        return `${this.baseComponentPath}/../assets/images/${icon}`;
     }
 
     /**
