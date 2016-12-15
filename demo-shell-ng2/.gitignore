@@ -5,6 +5,7 @@ app/**/*.js
 app/**/*.js.map
 !app/js/Polyline.js
 .idea
+versions.json
 dist/
 coverage/
 
