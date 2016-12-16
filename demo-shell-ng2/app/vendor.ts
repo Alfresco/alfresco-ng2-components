@@ -10,45 +10,32 @@ import '@angular/router';
 import 'rxjs';
 
 //Alfresco
-import 'ng2-alfresco-core'
-import 'ng2-alfresco-datatable'
-import 'ng2-activiti-diagrams'
-import 'ng2-activiti-analytics'
-import 'ng2-activiti-form'
-import 'ng2-activiti-processlist'
-import 'ng2-activiti-tasklist'
-import 'ng2-alfresco-documentlist'
-import 'ng2-alfresco-login'
-import 'ng2-alfresco-search'
-import 'ng2-alfresco-tag'
-import 'ng2-alfresco-upload'
-import 'ng2-alfresco-viewer'
-import 'ng2-alfresco-webscript'
-import 'ng2-alfresco-userinfo'
-
-// Other vendors for example jQuery, Lodash or Bootstrap
-// You can import js, ts, css, sass, ...
-
-// Google Material Design Lite
-import '../public/css/material.orange-blue.min.css';
-import 'material-design-lite/material.min';
-import 'material-design-icons/iconfont/material-icons.css';
-
-// Flags
-import 'flag-icon-css/css/flag-icon.min.css';
+import 'ng2-alfresco-core';
+import 'ng2-alfresco-datatable';
+import 'ng2-activiti-diagrams';
+import 'ng2-activiti-analytics';
+import 'ng2-activiti-form';
+import 'ng2-activiti-processlist';
+import 'ng2-activiti-tasklist';
+import 'ng2-alfresco-documentlist';
+import 'ng2-alfresco-login';
+import 'ng2-alfresco-search';
+import 'ng2-alfresco-tag';
+import 'ng2-alfresco-upload';
+import 'ng2-alfresco-viewer';
+import 'ng2-alfresco-webscript';
+import 'ng2-alfresco-userinfo';
 
 // Polyfill(s) for dialogs
 import 'dialog-polyfill/dialog-polyfill';
 import 'dialog-polyfill/dialog-polyfill.css';
 
-// app content
-import '../public/css/app.css';
-import '../public/css/muli-font.css';
+// Flags
+import 'flag-icon-css/css/flag-icon.min.css';
 
 import 'ng2-activiti-form/stencils/runtime.ng1';
 import 'ng2-activiti-form/stencils/runtime.adf';
 
-require('script!../public/js/Polyline.js');
 import 'chart.js';
 require('script!raphael/raphael.min.js');
 
