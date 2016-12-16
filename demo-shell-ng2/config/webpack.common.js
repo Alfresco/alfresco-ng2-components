@@ -47,14 +47,14 @@ module.exports = {
     },
     module: {
         preLoaders: [
-        {
-            test: /\.js$/,
-            include: [
-                ...alfrescoLibs
-    ],
-        loader: 'source-map-loader'
-    }
-],
+            {
+                test: /\.js$/,
+                include: [
+                    ...alfrescoLibs
+                ],
+                loader: 'source-map-loader'
+            }
+        ],
         loaders: [
             {
                 test: /\.ts$/,
@@ -65,68 +65,66 @@ module.exports = {
                 test: /\.js$/,
                 include: [
                     ...alfrescoLibs
-        ],
-        loaders: ['angular2-template-loader', 'source-map-loader', 'systemjs-loader']
+                ],
+                loaders: ['angular2-template-loader', 'source-map-loader', 'systemjs-loader']
+            },
+            {
+                test: /\.html$/,
+                exclude: alfrescoLibs,
+                loader: 'html'
+            },
+            {
+                test: /\.html$/,
+                include: alfrescoLibs,
+                loader: 'html',
+                query: {
+                    interpolate: true
+                }
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                loader: 'file?name=assets/[name].[hash].[ext]'
+            },
+            {
+                test: /\.css$/,
+                exclude: [
+                    helpers.root('app'),
+                    ...alfrescoLibs
+                ],
+                loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
+            },
+            {
+                test: /\.css$/,
+                include: [
+                    helpers.root('app'),
+                    ...alfrescoLibs
+                ],
+                loader: 'raw'
+            }
+        ]
     },
-{
-    test: /\.html$/,
-        exclude: alfrescoLibs,
-    loader: 'html'
-},
-{
-    test: /\.html$/,
-        include: alfrescoLibs,
-    loader: 'html',
-    query: {
-    interpolate: true
-}
-},
-{
-    test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-        loader: 'file?name=assets/[name].[hash].[ext]'
-},
-{
-    test: /\.css$/,
-        exclude: [
-    helpers.root('app'),
-    ...alfrescoLibs
-],
-    loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
-},
-{
-    test: /\.css$/,
-        include: [
-    helpers.root('app'),
-    ...alfrescoLibs
-],
-    loader: 'raw'
-}
-]
-},
 
-plugins: [
+    plugins: [
 
-    new webpack.ProvidePlugin({
-        'dialogPolyfill': 'dialog-polyfill/dialog-polyfill'
-    }),
- 
-    new CopyWebpackPlugin([
-       {
-        from: 'versions.json'
-       }
-   ]),
-        
-    new webpack.optimize.CommonsChunkPlugin({
-        name: ['app', 'vendor', 'polyfills']
-    }),
+        new webpack.ProvidePlugin({
+            'dialogPolyfill': 'dialog-polyfill/dialog-polyfill'
+        }),
 
-    new HtmlWebpackPlugin({
-        template: 'index.html'
-    })
-],
+        new CopyWebpackPlugin([
+            { from: 'versions.json' }
+        ]),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ['app', 'vendor', 'polyfills']
+        }),
+
+        new HtmlWebpackPlugin({
+            template: 'index.html'
+        })
+    ],
 
     node: {
-    fs: 'empty',
+        fs: 'empty',
         module: false
-}
+    }
 };
