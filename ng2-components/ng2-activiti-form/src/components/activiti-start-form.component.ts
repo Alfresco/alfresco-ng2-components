@@ -103,6 +103,7 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
 
     loadForm() {
         if (this.processDefinitionId) {
+            this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(this.processDefinitionId);
             return;
         }

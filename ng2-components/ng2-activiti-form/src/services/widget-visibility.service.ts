@@ -231,6 +231,10 @@ export class WidgetVisibilityService {
         return;
     }
 
+    cleanProcessVariable() {
+        this.processVarList = [];
+    }
+
     getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
             .map(res => {
