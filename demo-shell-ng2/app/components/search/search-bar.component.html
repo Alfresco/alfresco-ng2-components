@@ -7,7 +7,7 @@
                          (fileSelect)="onItemClicked($event)">
 </alfresco-search-control>
 
-<alfresco-viewer [(showViewer)]="fileShowed"
+<alfresco-viewer *ngIf="fileShowed" [(showViewer)]="fileShowed"
                  [fileNodeId]="fileNodeId"
                  [overlayMode]="true">
     <div class="mdl-spinner mdl-js-spinner is-active"></div>
