@@ -40,12 +40,14 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
 
     metricForm: FormGroup;
     currentMetric: string;
+    currentMetricColors: string;
+    metricType: string;
 
     constructor(private translate: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/dist/src');
+            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 
@@ -64,11 +66,17 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
 
     onMetricChanges(field: any) {
         if (field.value === 'totalCount') {
-            this.currentMetric = this.report.totalCountsPercentages;
+            this.currentMetric = this.report.totalCountValues;
+            this.currentMetricColors = this.report.totalCountsPercentages;
+            this.metricType = 'times';
         } else if (field.value === 'totalTime') {
-            this.currentMetric = this.report.totalTimePercentages;
+            this.currentMetric = this.report.totalTimeValues;
+            this.currentMetricColors = this.report.totalTimePercentages;
+            this.metricType = 'hours';
         } else if (field.value === 'avgTime') {
-            this.currentMetric = this.report.avgTimePercentages;
+            this.currentMetric = this.report.avgTimeValues;
+            this.currentMetricColors = this.report.avgTimePercentages;
+            this.metricType = 'hours';
         }
     }
 

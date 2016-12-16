@@ -12,5 +12,11 @@
         "ft_ic_archive": "Archive file",
         "ft_ic_presentation": "Presentation file",
         "ft_ic_spreadsheet": "Spreadsheet file"
+    },
+    "BUTTON": {
+        "ACTION_CREATE": "Create...",
+        "ACTION_NEW_FOLDER": "New Folder",
+        "CREATE": "Create",
+        "CANCEL": "Cancel"
     }
 }

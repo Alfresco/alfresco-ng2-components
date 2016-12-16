@@ -1,6 +1,12 @@
-@media only screen and (max-width: 640px) {
-    .mdl-layout__header.header-search-expanded .mdl-layout-title {
-        display: none;
+@media screen and (max-width: 1024px) {
+    .mdl-layout__header {
+         display: block;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .mdl-layout__header {
+         display: block;
     }
 }
 
@@ -14,4 +20,8 @@
 
 .mdl-button-padding {
     padding-left: 20px;
+}
+
+.hide {
+    display: none !important;
 }

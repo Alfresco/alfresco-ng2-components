@@ -100,6 +100,7 @@ Follow the 3 steps below:
     [currentFolderPath]="currentPath"
     [contextMenuActions]="true"
     [contentActions]="true"
+    [creationMenuActions]="true"
     [multiselect]="true"
     (folderChange)="onFolderChanged($event)">
 </alfresco-document-list>
@@ -114,7 +115,6 @@ import { NgModule, Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule }  from 'ng2-alfresco-datatable';
 import { DocumentListModule, DocumentList } from 'ng2-alfresco-documentlist';
 import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 
@@ -125,6 +125,7 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfr
                     [currentFolderPath]="'/'"
                     [contextMenuActions]="true"
                     [contentActions]="true"
+                    [creationMenuActions]="true"
                     [multiselect]="true">
                </alfresco-document-list>`
 })
@@ -133,7 +134,8 @@ class DocumentListDemo {
     @ViewChild(DocumentList)
     documentList: DocumentList;
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
         settingsService.ecmHost = 'http://localhost:8080';
 
         this.authService.login('admin', 'admin').subscribe(
@@ -151,7 +153,6 @@ class DocumentListDemo {
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        DataTableModule,
         DocumentListModule.forRoot()
     ],
     declarations: [DocumentListDemo],
@@ -169,6 +170,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
+| `rootFolderId` | string | -root- | Root node ID, i.e. `-root-`, `-shared-`, `-my-`, etc. or a fixed node ID |
+| `currentFolderPath` | string | null | Initial path of displayed folder below the root node, e.g. "/Sites/swsdp/documentLibrary" |
+| `currentFolderId` | string | null | Initial node ID of displayed folder, if given  |
 | `navigate` | boolean | true | Toggles navigation to folder content or file preview |
 | `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | `thumbnails` | boolean | false | Show document thumbnails rather than icons |
@@ -176,6 +180,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `multiselect` | boolean | false | Toggles multiselect mode |
 | `contentActions` | boolean | false | Toggles content actions for each row |
 | `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `creationMenuActions` | boolean | true | Toggles the creation menu actions|
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
@@ -206,6 +211,23 @@ DocumentList provides simple breadcrumb element to indicate the current position
 ![Breadcrumb](docs/assets/breadcrumb.png)
 
 Parent folder button is not displayed when breadcrumb is enabled.
+
+### Creation Menu Action
+
+DocumentList provides simple creation menu actions that provide the action to create a new folder.
+
+```html
+<alfresco-document-menu-action 
+    [currentFolderPath]="currentFolderPath">
+</alfresco-document-menu-action>
+```
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-1.png)
+
+When the "New Folder" button is pressed the dialog appears.
+
+![Creation Menu Action](docs/assets/document-list-creation-menu-actions-2.png)
+
 
 ### Custom columns
 
@@ -282,7 +304,7 @@ HTML attributes:
 | `sr-title` | string | | Screen reader title, used only when `title` is empty |
 | `key` | string | | Column source key, example: `createdByUser.displayName` |
 | `sortable` | boolean | false | Toggle sorting ability via column header clicks |
-| `class`| string | | CSS class list, example: `full-width ellipsis-cell` |
+| `class` | string | | CSS class list, example: `full-width ellipsis-cell` |
 | `type` | string | text | Column type, text\|date\|number |
 | `format` | string | | Value format pattern |
 
@@ -414,24 +436,12 @@ into context menu items like shown below:
 Enabling context menu is very simple:
 
 ```ts
-import {
-    CONTEXT_MENU_DIRECTIVES,
-    CONTEXT_MENU_PROVIDERS
-} from 'ng2-alfresco-core';
-
-import {
-    DOCUMENT_LIST_DIRECTIVES,
-    DOCUMENT_LIST_PROVIDERS
-} from 'ng2-alfresco-documentlist';
-
 @Component({
     selector: 'my-view',
     template: `
         <alfresco-document-list>...</alfresco-document-list>
         <context-menu-holder></context-menu-holder>
-    `,
-    directives: [DOCUMENT_LIST_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    providers: [DOCUMENT_LIST_PROVIDERS, CONTEXT_MENU_PROVIDERS]
+    `
 })
 export class MyView {
 }
@@ -464,10 +474,10 @@ DocumentList emits the following events:
 
 | Name | Description |
 | --- | --- |
-| nodeClick | emitted when user clicks a list node |
-| nodeDblClick | emitted when user double-clicks list node |
-| folderChange | emitted once current display folder has changed |
-| preview | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
+| `nodeClick` | emitted when user clicks a list node |
+| `nodeDblClick` | emitted when user double-clicks list node |
+| `folderChange` | emitted once current display folder has changed |
+| `preview` | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 
 ## Advanced usage and customization
 
@@ -691,9 +701,7 @@ You register custom handler called `my-handler` that will be executing `myDocume
 function each time upon being invoked.
 
 ```ts
-import {
-    DocumentActionsService
-} from 'ng2-alfresco-documentlist';
+import { DocumentActionsService } from 'ng2-alfresco-documentlist';
 
 export class MyView {
 
@@ -745,7 +753,7 @@ npm run build
 ### Build the files and keep watching for changes
 
 ```sh
-$ npm run build:w
+npm run build:w
 ```
 
 ## Running unit tests

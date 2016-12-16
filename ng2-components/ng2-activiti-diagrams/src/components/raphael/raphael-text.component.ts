@@ -43,7 +43,7 @@ export class RaphaelTextDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         if (this.text === null || this.text === undefined) {
             this.text = '';
         }

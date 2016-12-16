@@ -9,8 +9,8 @@ fonts/
 
 /.editorconfig
 /.travis.yml
-/*.js
 /*.json
-/*.ts
-/*.js.map
+/karma-test-shim.js
+/karma.conf.js
+/gulpfile.ts
 /.npmignore

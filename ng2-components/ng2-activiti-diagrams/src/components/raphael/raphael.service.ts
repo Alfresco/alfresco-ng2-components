@@ -17,12 +17,14 @@
 
 import { Injectable } from '@angular/core';
 
+declare let Raphael: any;
+
 @Injectable()
 export class RaphaelService {
 
     paper: any;
     width: number = 300;
-    height: number = 400 ;
+    height: number = 400;
     private ctx: any;
 
     constructor() {

@@ -60,7 +60,7 @@ export class UploadDragAreaComponent {
 
     constructor(private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/dist/src');
+        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
     }
 
     ngOnChanges(changes) {
@@ -111,16 +111,11 @@ export class UploadDragAreaComponent {
      * @param item - FileEntity
      */
     onFilesEntityDropped(item: any): void {
-        let self = this;
-        item.file(function (file: any) {
-            self._uploaderService.addToQueue([file]);
+        item.file( (file: any) => {
+            this._uploaderService.addToQueue([file]);
             let path = item.fullPath.replace(item.name, '');
-            let filePath = self.currentFolderPath + path;
-            self._uploaderService.uploadFilesInTheQueue(filePath, self.onSuccess);
-            let latestFilesAdded = self._uploaderService.getQueue();
-            if (self.showUdoNotificationBar) {
-                self._showUndoNotificationBar(latestFilesAdded);
-            }
+            let filePath = this.currentFolderPath + path;
+            this._uploaderService.uploadFilesInTheQueue(filePath, this.onSuccess);
         });
     }
 
@@ -136,14 +131,17 @@ export class UploadDragAreaComponent {
             this._uploaderService.createFolder(relativePath, folder.name)
                 .subscribe(
                     message => {
-                        let self = this;
                         this.onSuccess.emit({
                             value: 'Created folder'
                         });
                         let dirReader = folder.createReader();
-                        dirReader.readEntries(function (entries: any) {
+                        dirReader.readEntries((entries: any) => {
                             for (let i = 0; i < entries.length; i++) {
-                                self._traverseFileTree(entries[i]);
+                                this._traverseFileTree(entries[i]);
+                            }
+                            if (this.showUdoNotificationBar) {
+                                let latestFilesAdded = this._uploaderService.getQueue();
+                                this._showUndoNotificationBar(latestFilesAdded);
                             }
                         });
                     },
@@ -168,12 +166,10 @@ export class UploadDragAreaComponent {
      */
     private _traverseFileTree(item: any): void {
         if (item.isFile) {
-            let self = this;
-            self.onFilesEntityDropped(item);
+            this.onFilesEntityDropped(item);
         } else {
             if (item.isDirectory) {
-                let self = this;
-                self.onFolderEntityDropped(item);
+                this.onFolderEntityDropped(item);
             }
         }
     }

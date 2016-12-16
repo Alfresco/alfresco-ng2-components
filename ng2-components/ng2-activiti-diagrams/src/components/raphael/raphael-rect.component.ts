@@ -20,7 +20,7 @@ import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
 
-@Directive({selector: 'raphael-rect'})
+@Directive({ selector: 'raphael-rect' })
 export class RaphaelRectDirective extends RaphaelBase implements OnInit {
     @Input()
     paper: any;
@@ -49,6 +49,9 @@ export class RaphaelRectDirective extends RaphaelBase implements OnInit {
     @Input()
     fillOpacity: any;
 
+    @Input()
+    elementId: string;
+
     @Output()
     onError = new EventEmitter();
 
@@ -58,9 +61,15 @@ export class RaphaelRectDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
-        let opts = {'stroke-width': this.strokeWidth, 'fill': this.fillColors, 'stroke': this.stroke, 'fill-opacity': this.fillOpacity};
-        this.draw(this.leftCorner, this.width, this.height, this.radius, opts);
+
+        let opts = {
+            'stroke-width': this.strokeWidth,
+            'fill': this.fillColors,
+            'stroke': this.stroke,
+            'fill-opacity': this.fillOpacity
+        };
+        let elementDraw = this.draw(this.leftCorner, this.width, this.height, this.radius, opts);
+        elementDraw.node.id = this.elementId;
     }
 
     public draw(leftCorner: Point, width: number, height: number, radius: number, opts: any) {

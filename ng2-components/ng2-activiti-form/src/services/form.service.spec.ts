@@ -16,11 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService
-} from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormService } from './form.service';
 import { EcmModelService } from './ecm-model.service';
 import { FormDefinitionModel } from '../models/form-definition.model';
@@ -34,10 +30,8 @@ describe('FormService', () => {
 
     beforeAll(() => {
         TestBed.configureTestingModule({
-            imports: [HttpModule],
+            imports: [HttpModule, CoreModule],
             providers: [
-                AlfrescoAuthenticationService,
-                AlfrescoSettingsService,
                 EcmModelService,
                 AlfrescoApiService,
                 FormService

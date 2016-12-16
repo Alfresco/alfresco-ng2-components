@@ -225,7 +225,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-| `preview` | Emitted when a file result is clicked/selected |
+| `navigate` | Emitted when a search result is clicked or double-clicked |
 | `resultsLoad` | Emitted when search results have fully loaded |
 
 #### Options
@@ -237,6 +237,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `resultType` | {boolean}  | (optional)  | (none) | Node type to filter search results by, e.g. 'cm:content'. |
 | `maxResults` | {boolean}  | (optional)  |  20  | Maximum number of results to show in the search. |
 | `resultSort` | {boolean}  | (optional)  | (none) | Criteria to sort search results by, must be one of "name" , "modifiedAt" or   "createdAt" |
+| `navigationMode` | {string}  | (optional)  | "dblclick" | Event used to initiate a navigation action to a specific result, one of "click" or "dblclick" |
 
 ### Build from sources
 

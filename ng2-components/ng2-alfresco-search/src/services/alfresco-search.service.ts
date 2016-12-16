@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 
 /**
  * Internal service used by Document List component.
@@ -25,7 +25,7 @@ import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 @Injectable()
 export class AlfrescoSearchService {
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(public authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -42,7 +42,7 @@ export class AlfrescoSearchService {
     }
 
     private getQueryNodesPromise(term: string, opts: SearchOptions) {
-        return this.authService.getAlfrescoApi().core.queriesApi.findNodes(term, opts);
+        return this.apiService.getInstance().core.queriesApi.findNodes(term, opts);
     }
 
     private handleError(error: any): Observable<any> {

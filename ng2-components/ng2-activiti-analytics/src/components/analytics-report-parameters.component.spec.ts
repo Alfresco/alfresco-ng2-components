@@ -87,7 +87,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
             component.onSuccessReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-status');
-                expect(element.querySelector('h1').innerHTML).toEqual('Fake Task overview status');
+                expect(element.querySelector('h4').innerHTML).toEqual('Fake Task overview status');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(4);
                 expect(dropDown[0].innerHTML).toEqual('Choose One');
@@ -280,21 +280,22 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId);
-            component.ngOnChanges({ 'reportId': change });
-
-            jasmine.Ajax.requests.first().respondWith({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsNoApp
             });
+
+            let reportId = 1;
+            let change = new SimpleChange(null, reportId);
+            component.ngOnChanges({ 'reportId': change });
+
         });
 
         it('Should render a dropdown with all the process definition when the definition parameter type is \'processDefinition\' and the' +
@@ -310,22 +311,24 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 done();
             });
 
-            let appId = 1;
-            component.appId = appId;
-            let change = new SimpleChange(null, appId);
-            component.ngOnChanges({ 'appId': change });
-
-            jasmine.Ajax.requests.first().respondWith({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/api/enterprise/process-definitions').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
             });
+
+            let appId = 1;
+            component.appId = appId;
+            component.reportId = 1;
+            let change = new SimpleChange(null, appId);
+            component.ngOnChanges({ 'appId': change });
+
         });
 
         it('Should load the task list when a process definition is selected', () => {
@@ -355,21 +358,22 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 done();
             });
 
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId);
-            component.ngOnChanges({ 'reportId': change });
-
-            jasmine.Ajax.requests.first().respondWith({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/report-params/1').andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.requests.mostRecent().respondWith({
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/app/rest/reporting/process-definitions').andReturn({
                 status: 404,
                 contentType: 'json',
                 responseText: []
             });
+
+            let reportId = 1;
+            let change = new SimpleChange(null, reportId);
+            component.ngOnChanges({ 'reportId': change });
+
         });
 
         it('Should emit an error with a 404 response when the report parameters response is not found', (done) => {

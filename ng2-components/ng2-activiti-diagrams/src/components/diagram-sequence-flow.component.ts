@@ -32,6 +32,6 @@ export class DiagramSequenceFlowComponent {
     constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
-        console.log(this.elementRef);
+
     }
 }

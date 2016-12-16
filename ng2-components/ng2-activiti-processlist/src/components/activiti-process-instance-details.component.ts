@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
@@ -31,18 +31,18 @@ declare let componentHandler: any;
     templateUrl: './activiti-process-instance-details.component.html',
     styleUrls: ['./activiti-process-instance-details.component.css']
 })
-export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
+export class ActivitiProcessInstanceDetails implements OnChanges {
 
     @Input()
     processInstanceId: string;
 
-    @ViewChild('activitiprocessheader')
+    @ViewChild(ActivitiProcessInstanceHeader)
     processInstanceHeader: ActivitiProcessInstanceHeader;
 
-    @ViewChild('activitiprocesstasks')
+    @ViewChild(ActivitiProcessInstanceTasks)
     tasksList: ActivitiProcessInstanceTasks;
 
-    @ViewChild('activitiprocesscomments')
+    @ViewChild(ActivitiComments)
     commentsList: ActivitiComments;
 
     @Input()
@@ -68,13 +68,7 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
-        }
-    }
-
-    ngOnInit() {
-        if (this.processInstanceId) {
-            this.load(this.processInstanceId);
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
     }
 
@@ -102,11 +96,6 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
             this.activitiProcess.getProcess(processId).subscribe(
                 (res: ProcessInstance) => {
                     this.processInstanceDetails = res;
-                    if (this.processInstanceDetails) {
-                        if (this.tasksList) {
-                            this.tasksList.load(this.processInstanceDetails.id);
-                        }
-                    }
                 }
             );
         }

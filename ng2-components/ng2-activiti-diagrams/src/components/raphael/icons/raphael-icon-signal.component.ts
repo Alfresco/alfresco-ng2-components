@@ -52,7 +52,7 @@ export class RaphaelIconSignalDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         this.draw(this.position);
     }
 

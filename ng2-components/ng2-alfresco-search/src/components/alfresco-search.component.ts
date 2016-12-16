@@ -20,6 +20,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
     moduleId: module.id,
@@ -29,7 +30,8 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 })
 export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
-    baseComponentPath = module.id.replace('/components/alfresco-search.component.js', '');
+    static SINGLE_CLICK_NAVIGATION: string = 'click';
+    static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
     @Input()
     searchTerm: string = '';
@@ -46,8 +48,11 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     @Input()
     resultType: string = null;
 
+    @Input()
+    navigationMode: string = AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
+
     @Output()
-    preview: EventEmitter<any> = new EventEmitter();
+    navigate: EventEmitter<MinimalNodeEntity> = new EventEmitter<MinimalNodeEntity>();
 
     @Output()
     resultsLoad = new EventEmitter();
@@ -58,6 +63,8 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     queryParamName = 'q';
 
+    baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
+
     constructor(private alfrescoSearchService: AlfrescoSearchService,
                 private translate: AlfrescoTranslationService,
                 private _alfrescoThumbnailService: AlfrescoThumbnailService,
@@ -66,7 +73,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     ngOnInit(): void {
         if (this.translate !== null) {
-            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
+            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
         }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -93,8 +100,14 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     getMimeTypeIcon(node: any): string {
         if (node.entry.content && node.entry.content.mimeType) {
             let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
-            return `${this.baseComponentPath}/img/${icon}`;
+            return this.resolveIconPath(icon);
+        } else if (node.entry.isFolder) {
+            return `${this.baseComponentPath}/../assets/images/ft_ic_folder.svg`;
         }
+    }
+
+    private resolveIconPath(icon: string): string {
+        return `${this.baseComponentPath}/../assets/images/${icon}`;
     }
 
     /**
@@ -141,14 +154,17 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     }
 
     onItemClick(node, event?: Event): void {
-        if (event) {
-            event.preventDefault();
+        if (this.navigate && this.navigationMode === AlfrescoSearchComponent.SINGLE_CLICK_NAVIGATION) {
+            if (node && node.entry) {
+                this.navigate.emit(node);
+            }
         }
-        if (node && node.entry) {
-            if (node.entry.isFile) {
-                this.preview.emit({
-                    value: node
-                });
+    }
+
+    onItemDblClick(node: MinimalNodeEntity) {
+        if (this.navigate && this.navigationMode === AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION) {
+            if (node && node.entry) {
+                this.navigate.emit(node);
             }
         }
     }

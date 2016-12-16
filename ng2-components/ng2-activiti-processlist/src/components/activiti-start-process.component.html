@@ -13,15 +13,15 @@
             <label class="mdl-textfield__label" for="processDefinition">{{'START_PROCESS.DIALOG.LABEL.TYPE'|translate}}</label>
         </div>
         <br>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" alfresco-mdl-textfield>
             <input class="mdl-textfield__input" type="text" [(ngModel)]="name" id="processName" required />
             <label class="mdl-textfield__label" for="processName">{{'START_PROCESS.DIALOG.LABEL.NAME'|translate}}</label>
         </div>
         <activiti-start-form *ngIf="hasStartForm()" [processDefinitionId]="currentProcessDef.id"
-                             (formSaved)='onFormSaved($event)'
-                             (formCompleted)='onFormCompleted($event)'
-                             (formLoaded)='onFormLoaded($event)'
-                             (onError)='onFormError($event)'>
+                             (formSaved)="onFormSaved($event)"
+                             (formCompleted)="onFormCompleted($event)"
+                             (formLoaded)="onFormLoaded($event)"
+                             (onError)="onFormError($event)">
         </activiti-start-form>
     </div>
     <div class="mdl-card__actions mdl-card--border" *ngIf="showStartButton">

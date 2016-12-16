@@ -18,6 +18,7 @@
 import { FormWidgetModel } from './../core/form-widget.model';
 import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
+import * as moment from 'moment';
 
 export class DynamicTableModel extends FormWidgetModel {
 
@@ -61,7 +62,7 @@ export class DynamicTableModel extends FormWidgetModel {
             }
 
             if (json.value) {
-                this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
+                this.rows = json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
             }
         }
 

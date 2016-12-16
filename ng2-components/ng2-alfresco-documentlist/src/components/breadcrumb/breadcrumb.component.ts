@@ -33,10 +33,6 @@ export class DocumentListBreadcrumb {
 
     private _currentFolderPath: string = '/';
 
-    get currentFolderPath(): string {
-        return this._currentFolderPath;
-    }
-
     @Input()
     set currentFolderPath(val: string) {
         if (this._currentFolderPath !== val) {
@@ -52,6 +48,10 @@ export class DocumentListBreadcrumb {
                 route: this.route
             });
         }
+    }
+
+    get currentFolderPath(): string {
+        return this._currentFolderPath;
     }
 
     @Input()
@@ -83,8 +83,11 @@ export class DocumentListBreadcrumb {
                 }
             });
 
+            this.currentFolderPath = route.path;
+
             if (this.target) {
                 this.target.currentFolderPath = route.path;
+                this.target.loadFolder();
             }
         }
     }

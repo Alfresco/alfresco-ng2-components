@@ -18,16 +18,19 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApi, NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
+import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
 import {
     AlfrescoAuthenticationService,
-    AlfrescoContentService
+    AlfrescoContentService,
+    AlfrescoApiService
 } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentListService {
 
     static DEFAULT_MIME_TYPE_ICON: string = 'ft_ic_miscellaneous.svg';
+
+    static ROOT_ID = '-root-';
 
     mimeTypeIcons: any = {
         'image/png': 'ft_ic_raster_image.svg',
@@ -58,19 +61,24 @@ export class DocumentListService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
     };
 
-    constructor(private authService: AlfrescoAuthenticationService, private contentService: AlfrescoContentService) {
-    }
-
-    private getAlfrescoApi(): AlfrescoApi {
-        return this.authService.getAlfrescoApi();
+    constructor(private authService: AlfrescoAuthenticationService, private contentService: AlfrescoContentService, private apiService: AlfrescoApiService) {
     }
 
     private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
-        let nodeId = '-root-';
+
+        let rootNodeId = DocumentListService.ROOT_ID;
+        if (opts && opts.rootFolderId) {
+            rootNodeId = opts.rootFolderId;
+        }
+
         let params: any = {
-            relativePath: folder,
+            includeSource: true,
             include: ['path', 'properties']
         };
+
+        if (folder) {
+            params.relativePath = folder;
+        }
 
         if (opts) {
             if (opts.maxItems) {
@@ -81,15 +89,29 @@ export class DocumentListService {
             }
         }
 
-        return this.getAlfrescoApi().nodes.getNodeChildren(nodeId, params);
+        return this.apiService.getInstance().nodes.getNodeChildren(rootNodeId, params);
     }
 
     deleteNode(nodeId: string): Observable<any> {
-        return Observable.fromPromise(this.getAlfrescoApi().nodes.deleteNode(nodeId));
+        return Observable.fromPromise(this.apiService.getInstance().nodes.deleteNode(nodeId));
     }
 
     /**
-     * Gets the folder node with the content.
+     * Create a new folder in the path.
+     * @param name
+     * @param path
+     * @returns {any}
+     */
+    createFolder(name: string, path: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, path))
+            .map(res => {
+                return res;
+            })
+            .catch(this.handleError);
+    }
+
+    /**
+     * Gets the folder node with the specified relative name path below the root node.
      * @param folder Path to folder.
      * @param opts Options.
      * @returns {Observable<NodePaging>} Folder entity.

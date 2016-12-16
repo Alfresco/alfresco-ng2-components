@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
+import * as moment from 'moment';
 
 @Component({
     moduleId: module.id,
@@ -29,10 +31,11 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']
 })
-export class DisplayValueWidget extends WidgetComponent implements OnInit, AfterViewChecked {
+export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
     value: any;
     fieldType: string;
+    id: any;
 
     // hyperlink
     linkUrl: string;
@@ -47,7 +50,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
     hasFile: boolean = false;
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private settingsService: AlfrescoSettingsService) {
         super();
     }
 
@@ -81,6 +85,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                             let files = this.field.value || [];
                             if (files.length > 0) {
                                 this.value = decodeURI(files[0].name);
+                                this.id = files[0].id;
                                 this.hasFile = true;
                             } else {
                                 this.value = null;
@@ -125,7 +130,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                                 this.visibleColumns = this.columns.filter(col => col.visible);
                             }
                             if (json.value) {
-                                this.rows = json.value.map(obj => <DynamicTableRow> { selected: false, value: obj });
+                                this.rows = json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
                             }
                             break;
                         default:
@@ -134,11 +139,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                     }
                 }
             }
+            this.visibilityService.refreshVisibility(this.field.form);
         }
-    }
-
-    ngAfterViewChecked() {
-        this.visibilityService.refreshVisibility(this.field.form);
     }
 
     loadRadioButtonValue() {

@@ -19,7 +19,7 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
 import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
@@ -74,7 +74,9 @@ export class AppComponent {
     public disableCsrf: boolean = false;
 
     constructor(public auth: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
+
         settingsService.ecmHost = this.ecmHost;
         settingsService.bpmHost = this.bpmHost;
     }
@@ -131,6 +133,7 @@ export class AppComponent {
     declarations: [AppComponent],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
 
 platformBrowserDynamic().bootstrapModule(AppModule);

@@ -21,6 +21,8 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
 import { Comment } from '../models/comment.model';
 import { Observer, Observable } from 'rxjs/Rx';
 
+let dialogPolyfill: any;
+
 @Component({
     selector: 'activiti-comments',
     moduleId: module.id,
@@ -58,7 +60,7 @@ export class ActivitiComments implements OnInit, OnChanges {
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
 
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();

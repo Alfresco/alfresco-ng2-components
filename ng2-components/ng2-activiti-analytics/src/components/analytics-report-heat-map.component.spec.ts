@@ -33,9 +33,13 @@ describe('Test ng2-activiti-analytics-report-heat-map', () => {
     let debug: DebugElement;
     let element: HTMLElement;
 
-    let totalCountPerc = {'sid-fake-id': 0, 'fake-start-event': 100};
-    let totalTimePerc = {'sid-fake-id': 10, 'fake-start-event': 30};
-    let avgTimePercentages = {'sid-fake-id': 5, 'fake-start-event': 50};
+    let totalCountPerc = { 'sid-fake-id': 0, 'fake-start-event': 100 };
+    let totalTimePerc = { 'sid-fake-id': 10, 'fake-start-event': 30 };
+    let avgTimePercentages = { 'sid-fake-id': 5, 'fake-start-event': 50 };
+
+    let totalCountValues = { 'sid-fake-id': 2, 'fake-start-event': 3 };
+    let totalTimeValues = { 'sid-fake-id': 1, 'fake-start-event': 4 };
+    let avgTimeValues = { 'sid-fake-id': 4, 'fake-start-event': 5 };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -65,7 +69,10 @@ describe('Test ng2-activiti-analytics-report-heat-map', () => {
 
         component.report = {
             totalCountsPercentages: totalCountPerc,
+            totalCountValues: totalCountValues,
             totalTimePercentages: totalTimePerc,
+            totalTimeValues: totalTimeValues,
+            avgTimeValues: avgTimeValues,
             avgTimePercentages: avgTimePercentages
         };
     });
@@ -81,7 +88,7 @@ describe('Test ng2-activiti-analytics-report-heat-map', () => {
         });
 
         it('should render the dropdown with the metric options', async(() => {
-            component.report = {totalCountsPercentages: {'sid-fake-id': 10, 'fake-start-event': 30}};
+            component.report = { totalCountsPercentages: { 'sid-fake-id': 10, 'fake-start-event': 30 } };
 
             component.onSuccess.subscribe(() => {
                 fixture.whenStable().then(() => {
@@ -106,21 +113,24 @@ describe('Test ng2-activiti-analytics-report-heat-map', () => {
         }));
 
         it('should change the currentmetric width totalCount', async(() => {
-            let field = {value: 'totalCount'};
+            let field = { value: 'totalCount' };
             component.onMetricChanges(field);
-            expect(component.currentMetric).toEqual(totalCountPerc);
+            expect(component.currentMetric).toEqual(totalCountValues);
+            expect(component.currentMetricColors).toEqual(totalCountPerc);
         }));
 
         it('should change the currentmetric width totalTime', async(() => {
-            let field = {value: 'totalTime'};
+            let field = { value: 'totalTime' };
             component.onMetricChanges(field);
-            expect(component.currentMetric).toEqual(totalTimePerc);
+            expect(component.currentMetric).toEqual(totalTimeValues);
+            expect(component.currentMetricColors).toEqual(totalTimePerc);
         }));
 
         it('should change the currentmetric width avgTime', async(() => {
-            let field = {value: 'avgTime'};
+            let field = { value: 'avgTime' };
             component.onMetricChanges(field);
-            expect(component.currentMetric).toEqual(avgTimePercentages);
+            expect(component.currentMetric).toEqual(avgTimeValues);
+            expect(component.currentMetricColors).toEqual(avgTimePercentages);
         }));
 
     });

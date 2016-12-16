@@ -85,15 +85,18 @@ describe('DocumentListBreadcrumb', () => {
         component.onRoutePathClick(node, null);
     });
 
-    it('should update document list on click', () => {
+    it('should update document list on click', (done) => {
         let documentList = new DocumentList(null, null, null);
-        spyOn(documentList, 'displayFolderContent').and.stub();
+        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
 
         let node = <PathNode> { name: 'name', path: '/path' };
         component.target = documentList;
 
         component.onRoutePathClick(node, null);
-        expect(documentList.currentFolderPath).toBe(node.path);
+        setTimeout(() => {
+            expect(documentList.currentFolderPath).toBe(node.path);
+            done();
+        }, 0);
     });
 
     it('should do nothing for same path', () => {

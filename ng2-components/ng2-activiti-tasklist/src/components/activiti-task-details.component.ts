@@ -15,7 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges, DebugElement } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+    ViewChild,
+    Output,
+    EventEmitter,
+    TemplateRef,
+    OnChanges,
+    SimpleChanges,
+    DebugElement
+} from '@angular/core';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -96,7 +107,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -131,8 +142,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      */
     hasFormKey() {
         return (this.taskDetails
-            && this.taskDetails.formKey
-            && this.taskDetails.formKey !== 'null');
+        && this.taskDetails.formKey
+        && this.taskDetails.formKey !== 'null');
     }
 
     isTaskActive() {
@@ -150,6 +161,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
             this.activitiTaskList.getTaskDetails(taskId).subscribe(
                 (res: TaskDetailsModel) => {
                     this.taskDetails = res;
+
+                    if (this.taskDetails.name === 'null') {
+                        this.taskDetails.name = 'No name';
+                    }
 
                     let endDate: any = res.endDate;
                     this.readOnlyForm = !!(endDate && !isNaN(endDate.getTime()));

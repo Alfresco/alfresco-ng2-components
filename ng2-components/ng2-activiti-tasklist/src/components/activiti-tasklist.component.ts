@@ -75,7 +75,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     constructor(private translate: AlfrescoTranslationService,
                 public activiti: ActivitiTaskListService) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -226,10 +226,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
      */
     private optimizeNames(istances: any[]) {
         istances = istances.map(t => {
-            t.obj.name = t.obj.name || 'Nameless task';
-            if (t.obj.name.length > 50) {
-                t.obj.name = t.obj.name.substring(0, 50) + '...';
-            }
+            t.obj.name = t.obj.name || 'No name';
             return t;
         });
         return istances;

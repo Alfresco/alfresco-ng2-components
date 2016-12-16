@@ -19,14 +19,14 @@ import { Directive, Input, HostListener } from '@angular/core';
 import { ContextMenuService } from './context-menu.service';
 
 @Directive({
-    selector:'[context-menu]'
+    selector: '[context-menu]'
 })
 export class ContextMenuDirective {
     @Input('context-menu')
     links: any[];
 
-    constructor(
-        private _contextMenuService: ContextMenuService) {}
+    constructor(private _contextMenuService: ContextMenuService) {
+    }
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(event?: MouseEvent) {

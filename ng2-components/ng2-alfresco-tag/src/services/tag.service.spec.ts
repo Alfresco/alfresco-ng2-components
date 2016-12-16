@@ -19,7 +19,8 @@ import { ReflectiveInjector } from '@angular/core';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
@@ -34,7 +35,8 @@ describe('Tag service', () => {
             AlfrescoSettingsService,
             AlfrescoApiService,
             AlfrescoAuthenticationService,
-            TagService
+            TagService,
+            StorageService
         ]);
     });
 

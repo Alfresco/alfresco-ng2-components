@@ -16,14 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { NodeMetadata } from '../models/node-metadata.model';
 
 @Injectable()
 export class NodeService {
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -32,7 +32,7 @@ export class NodeService {
      * @returns NodeMetadata
      */
     public getNodeMetadata(nodeId: string): Observable<NodeMetadata> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().nodes.getNodeInfo(nodeId)).map(this.cleanMetadataFromSemicolon);
+        return Observable.fromPromise(this.apiService.getInstance().nodes.getNodeInfo(nodeId)).map(this.cleanMetadataFromSemicolon);
     }
 
     /**
@@ -71,7 +71,7 @@ export class NodeService {
         };
 
         // TODO: requires update to alfresco-js-api typings
-        let apiService: any = this.authService.getAlfrescoApi();
+        let apiService: any = this.apiService.getInstance();
         return Observable.fromPromise(apiService.nodes.addNode('-root-', body, {}));
     }
 

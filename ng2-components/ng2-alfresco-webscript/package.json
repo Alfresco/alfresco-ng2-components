@@ -3,16 +3,12 @@
   "description": "Alfresco webscript executor",
   "version": "0.5.0",
   "author": "Alfresco Software, Ltd.",
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
   "scripts": {
-    "clean": "npm install rimraf && rimraf dist node_modules typings",
-    "build": "npm run tslint && rimraf dist && tsc && npm run copy-dist && license-check",
-    "build:w": "npm run tslint && rimraf dist && npm run watch-task",
-    "watch-task": "concurrently \"npm run tsc:w\"  \"npm run copy-dist:w\"  \"license-check\"",
-    "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'src/{,**/}**.ts'",
-    "copy-dist": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src",
-    "copy-dist:w": "cpx \"./src/**/*.{html,css,json,png,jpg,gif,svg}\" ./dist/src -w",
+    "clean": "npm install rimraf && npm run clean-build && rimraf dist node_modules typings",
+    "clean-build": "rimraf index.js index.js.map index.d.ts'src/{,**/}**.js' 'src/{,**/}**.js.map' 'src/{,**/}**.d.ts' bundles",
+    "build": "npm run clean-build && npm run tslint && rimraf dist && tsc && license-check && npm run build.umd",
+    "build:w": "npm run clean-build && npm run tslint && rimraf dist && tsc:w && license-check npm run build.umd",
+    "tslint": "tslint -c tslint.json 'src/{,**/}**.ts' 'index.ts'  -e '{,**/}**.d.ts' -e './gulpfile.ts'",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "pretest": "npm run build",
@@ -21,8 +17,14 @@
     "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run build",
-    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable"
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable",
+    "gulp": "gulp",
+    "build.umd": "gulp build.prod --color --env-config prod --build-type prod",
+    "reinstall": "npm cache clean && npm install"
   },
+  "main": "./index.js",
+  "module": "./index.js",
+  "typings": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"
@@ -31,6 +33,7 @@
     "url": "https://github.com/Alfresco/alfresco-ng2-components/issues"
   },
   "dependencies": {
+    "@angular/router": "3.0.0",
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
     "@angular/core": "2.0.0",
@@ -43,18 +46,32 @@
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.27",
     "zone.js": "^0.6.23",
-
     "ng2-translate": "2.5.0",
     "alfresco-js-api": "^0.5.0",
     "ng2-alfresco-core": "0.5.0",
     "ng2-alfresco-datatable": "0.5.0"
   },
   "devDependencies": {
-    "@types/node": "^6.0.42",
-    "@types/core-js": "^0.9.32",
     "@types/jasmine": "^2.2.33",
+    "@types/node": "^6.0.42",
     "concurrently": "^2.2.0",
     "cpx": "^1.3.1",
+    "cssnano": "^3.8.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cached": "^1.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-filter": "^4.0.0",
+    "gulp-inline-ng2-template": "^4.0.0",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.2.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-template": "^4.0.0",
+    "gulp-typescript": "^3.1.3",
+    "gulp-uglify": "^2.0.0",
+    "intl": "^1.2.5",
     "jasmine-ajax": "^3.2.0",
     "jasmine-core": "2.4.1",
     "karma": "~0.13.22",
@@ -68,7 +85,10 @@
     "material-design-lite": "^1.1.3",
     "remap-istanbul": "^0.6.3",
     "rimraf": "2.5.2",
+    "run-sequence": "^1.2.2",
+    "systemjs-builder": "^0.15.34",
     "traceur": "^0.0.91",
+    "ts-node": "^1.7.0",
     "tslint": "^3.8.1",
     "typescript": "^2.0.3",
     "wsrv": "^0.1.5"
@@ -79,7 +99,7 @@
   ],
   "license-check-config": {
     "src": [
-     "./dist/**/*.js"
+      "./src/**/*.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": false,

@@ -30,6 +30,9 @@ import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEve
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
+declare let dialogPolyfill: any;
+declare var componentHandler: any;
+
 /**
  * @Input
  * ActivitiForm can show 4 types of forms searching by 4 type of params:

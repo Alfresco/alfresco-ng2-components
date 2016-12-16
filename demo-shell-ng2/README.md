@@ -10,28 +10,42 @@
     </a>
 </p>
 
-### Node
-To correctly use this demo check that on your machine is running Node version 5.0.0 or higher.
+## Installing
 
-#### Local build
-
-1 Install dependencies
+To correctly use this demo check that on your machine is running Node version 6.9.2 LTS or higher.
 
 ```sh
 npm install
 ```
 
-2 Fast build and watch for dev purposes
+## Development build
 
 ```sh
 npm start
 ```
 
->`start` script also includes live reload and watchers for all the `.ts` files.
-TypeScript watchers are also configured for `node_modules` folder within demo shell
-and provide live reload for all the component libraries as well.
+This command compiles and starts the project in watch mode. 
+Browser will automatically reload upon changes.
+Upon start you can navigate to `http://localhost:3000` with your preferred browser.
 
-#### Development branch build
+## Production build
+
+```sh
+npm run build
+```
+
+This command builds broject in `production` mode. 
+All output is placed to `dist` folder and can be served your preferred web server.
+You should need no additional files outside the `dist` folder.
+
+In order to quickly test the output you can use the [wsrv](https://www.npmjs.com/package/wsrv) tool (lightweight web server):
+
+```sh
+npm install -g wsrv
+wsrv -s -o dist/
+```
+
+## Development branch build
 
 If you want to run the demo shell with the latest change from the development branch, use the following command from the /script folder:
 
@@ -40,7 +54,7 @@ If you want to run the demo shell with the latest change from the development br
 ./start-linked.sh -install
 ```
 
-###Multi-language
+## Multi-language
 To support a new language you need to create your language file (.json) and add it to `i18n/` folder.
 
 ```json

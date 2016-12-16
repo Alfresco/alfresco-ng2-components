@@ -1,3 +1,15 @@
-:host h1 {
-    font-size:22px
+alfresco-datatable >>> .column-header {
+    color: #232323;
+    font-size: 15px;
+}
+
+alfresco-datatable >>> .data-cell {
+    cursor: pointer !important;
+}
+
+alfresco-datatable >>> .cell-value{
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }

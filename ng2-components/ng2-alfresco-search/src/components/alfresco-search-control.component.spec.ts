@@ -66,7 +66,7 @@ describe('AlfrescoSearchControlComponent', () => {
         spyOn(translationService, 'addTranslationFolder');
         fixture.detectChanges();
         expect(translationService.addTranslationFolder)
-            .toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
+            .toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
     });
 
     it('should emit searchChange when search term input changed', (done) => {
@@ -348,6 +348,22 @@ describe('AlfrescoSearchControlComponent', () => {
             });
         });
 
-    });
+        it('should set un-active  the search after file/folder is clicked', () => {
+            component.searchActive = true;
+            component.onFileClicked({
+                value: 'node12345'
+            });
 
+            expect(component.searchActive).toBe(false);
+        });
+
+        it('should reset the search term after file/folder is clicked', () => {
+            component.liveSearchTerm = 'test';
+            component.onFileClicked({
+                value: 'node12345'
+            });
+
+            expect(component.liveSearchTerm).toBe('');
+        });
+    });
 });

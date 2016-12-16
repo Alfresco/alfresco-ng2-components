@@ -3,14 +3,17 @@ npm-debug.log
 demo/localTestFile.pdf
 
 coverage/
+demo/
 node_modules
 typings/
 fonts/
 
 /.editorconfig
 /.travis.yml
-/*.js
 /*.json
-/*.ts
-/*.js.map
+/karma-test-shim.js
+/karma.conf.js
+/gulpfile.ts
 /.npmignore
+
+*.tgz

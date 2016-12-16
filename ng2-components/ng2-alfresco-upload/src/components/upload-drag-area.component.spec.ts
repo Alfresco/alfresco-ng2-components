@@ -61,6 +61,11 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         fixture.detectChanges();
     });
 
+    afterEach(() => {
+        fixture.destroy();
+        TestBed.resetTestingModule();
+    });
+
     it('should show an folder non supported error in console when the file type is empty', () => {
         component.showUdoNotificationBar = false;
         spyOn(console, 'error');
@@ -113,16 +118,12 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         expect(component._showUndoNotificationBar).toHaveBeenCalled();
     });
 
-    it('should upload a file when dropped', done => {
+    it('should upload a file when dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.onSuccess = null;
 
         fixture.detectChanges();
         spyOn(component._uploaderService, 'uploadFilesInTheQueue');
-        spyOn(component, '_showUndoNotificationBar').and.callFake( () => {
-            expect(component._showUndoNotificationBar).toHaveBeenCalled();
-            done();
-        });
 
         let itemEntity = {
             fullPath: '/folder-fake/file-fake.png',
@@ -203,6 +204,10 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakePromise);
         spyOn(component, 'onFilesEntityDropped').and.callFake( () => {
             expect(component.onFilesEntityDropped).toHaveBeenCalledWith(itemEntity);
+        });
+
+        spyOn(component, '_showUndoNotificationBar').and.callFake( () => {
+            expect(component._showUndoNotificationBar).toHaveBeenCalled();
             done();
         });
 
