@@ -96,16 +96,16 @@ describe('ActivitiTaskDetails', () => {
         expect(fixture.nativeElement.innerText).toBe('TASK_DETAILS.MESSAGES.NONE');
     });
 
-    it('should display a form when the task has an associated form', async(() => {
+    it('should display a form when the task has an associated form', () => {
         component.taskId = '123';
         fixture.detectChanges();
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css('activiti-form'))).not.toBeNull();
         });
-    }));
+    });
 
-    it('should not display a form when the task does not have an associated form', async((done) => {
+    it('should not display a form when the task does not have an associated form', async(() => {
         component.taskId = '123';
         taskDetailsMock.formKey = undefined;
         fixture.detectChanges();
