@@ -169,8 +169,7 @@ describe('ContainerWidget', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('#container-header')).toBeDefined();
-                    expect(element.querySelector('#container-header')).not.toBeNull();
+                    expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(false);
                     expect(element.querySelector('#container-header-label')).toBeDefined();
                     expect(element.querySelector('#container-header-label').innerHTML).toContain('fake-cont-1-name');
                 });
@@ -181,8 +180,7 @@ describe('ContainerWidget', () => {
             fixture.detectChanges();
             fixture.whenStable()
                 .then(() => {
-                    expect(element.querySelector('#container-header')).toBeNull();
-                    expect(element.querySelector('#container-header-label')).toBeNull();
+                    expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(true);
                 });
         });
 
@@ -194,8 +192,7 @@ describe('ContainerWidget', () => {
                 fixture.detectChanges();
                 fixture.whenStable()
                     .then(() => {
-                        expect(element.querySelector('#container-header')).toBeNull();
-                        expect(element.querySelector('#container-header-label')).toBeNull();
+                        expect(element.querySelector('.container-widget__header').classList.contains('hidden')).toBe(true);
                     });
             });
             containerWidgetComponent.onFieldChanged(null);

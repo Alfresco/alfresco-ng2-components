@@ -1,6 +1,6 @@
-<div [ngSwitch]="fieldType" class="display-value-widget">
+<div [ngSwitch]="fieldType" class="display-value-widget" *ngIf="field?.isVisible">
     <div *ngSwitchCase="'boolean'">
-        <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id" *ngIf="field?.isVisible">
+        <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id" >
             <input type="checkbox"
                    [attr.id]="field.id"
                    [checked]="field.value"
@@ -12,9 +12,8 @@
     </div>
     <div *ngSwitchCase="'text'"
          class="mdl-textfield mdl-js-textfield text-widget">
-        <label *ngIf="field?.isVisible" [attr.for]="field.id">{{field.name}}</label>
+        <label [attr.for]="field.id">{{field.name}}</label>
         <input
-            *ngIf="field?.isVisible"
             class="mdl-textfield__input"
             type="text"
             [attr.id]="field.id"
@@ -28,13 +27,12 @@
                   rows="3"
                   [value]="value"
                   [attr.id]="field.id"
-                  disabled
-                  *ngIf="field?.isVisible">
+                  disabled>
         </textarea>
-        <label *ngIf="field?.isVisible" class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
+        <label class="mdl-textfield__label" [attr.for]="field.id">{{field.name}}</label>
     </div>
     <div *ngSwitchCase="'hyperlink'" class="hyperlink-widget">
-        <div *ngIf="field?.isVisible">
+        <div>
             <div>
                 <span>{{field.name}}</span>
             </div>
@@ -45,7 +43,7 @@
     </div>
     <div *ngSwitchCase="'dynamic-table'">
 
-        <div class="display-value-widget__dynamic-table" *ngIf="field?.isVisible">
+        <div class="display-value-widget__dynamic-table">
             <div>{{field.name}}</div>
             <div class="display-value-dynamic-table-widget__table-container">
                 <table class="mdl-data-table mdl-js-data-table">
@@ -70,7 +68,7 @@
         </div>
     </div>
     <div *ngSwitchCase="'upload'">
-        <div class="upload-widget" *ngIf="field?.isVisible">
+        <div class="upload-widget">
             <div>
                 <label class="upload-widget__label" [attr.for]="field.id">{{field.name}}</label>
             </div>
@@ -85,9 +83,8 @@
     </div>
     <div *ngSwitchDefault
          class="mdl-textfield mdl-js-textfield text-widget is-disabled is-dirty is-upgraded">
-        <label *ngIf="field?.isVisible" [attr.for]="field.id">{{field.name}}</label>
+        <label [attr.for]="field.id">{{field.name}}</label>
         <input
-            *ngIf="field?.isVisible"
             class="mdl-textfield__input"
             type="text"
             [attr.id]="field.id"
