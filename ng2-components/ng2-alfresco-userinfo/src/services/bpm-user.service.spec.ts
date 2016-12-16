@@ -17,7 +17,6 @@
 
 import { ReflectiveInjector } from '@angular/core';
 import { BpmUserService } from '../services/bpm-user.service';
-// import { BpmUserModel } from '../models/bpm-user.model';
 import { AlfrescoAuthenticationService, AlfrescoApiService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
 

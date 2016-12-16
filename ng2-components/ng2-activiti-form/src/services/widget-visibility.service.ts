@@ -232,11 +232,15 @@ export class WidgetVisibilityService {
     }
 
     getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
+        return Observable.fromPromise(this.callApiGetTaskProcessVariables(taskId))
             .map((response: TaskProcessVariableModel[]) => {
                 this.processVarList = response;
             })
             .catch(this.handleError);
+    }
+
+    callApiGetTaskProcessVariables(taskId: string) {
+        return this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId);
     }
 
     private handleError() {
