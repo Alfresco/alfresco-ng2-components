@@ -38,7 +38,7 @@ import 'material-design-icons/iconfont/material-icons.css';
 import 'flag-icon-css/css/flag-icon.min.css';
 
 // Polyfill(s) for dialogs
-import 'dialog-polyfill/dialog-polyfill';
+require('script!dialog-polyfill/dialog-polyfill');
 import 'dialog-polyfill/dialog-polyfill.css';
 
 // app content

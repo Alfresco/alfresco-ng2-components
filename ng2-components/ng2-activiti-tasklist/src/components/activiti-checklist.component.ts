@@ -21,7 +21,7 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
 import { TaskDetailsModel } from '../models/task-details.model';
 import { Observer, Observable } from 'rxjs/Rx';
 
-let dialogPolyfill: any;
+declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-checklist',

@@ -106,10 +106,6 @@ module.exports = {
 
     plugins: [
 
-        new webpack.ProvidePlugin({
-            'dialogPolyfill': 'dialog-polyfill/dialog-polyfill'
-        }),
-
         new CopyWebpackPlugin([
             { from: 'versions.json' }
         ]),
