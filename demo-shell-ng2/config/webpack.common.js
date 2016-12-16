@@ -18,8 +18,8 @@ let options = {
 let alfrescoLibs = glob.sync(pattern, options);
 // console.dir(alfrescoLibs);
 
-// Uncomment if you need all node_modules folders for Alfresco components
-// let alfrescoLibsModules = alfrescoLibs.map(p => path.join(p, 'node_modules'));
+let alfrescoLibsModules = alfrescoLibs.map(p => path.join(p, 'node_modules'));
+let alfrescoLibsSources = alfrescoLibs.map(p => path.join(p, 'src'));
 
 module.exports = {
     entry: {
@@ -109,6 +109,11 @@ module.exports = {
         new webpack.ProvidePlugin({
             'dialogPolyfill': 'dialog-polyfill/dialog-polyfill'
         }),
+
+        new webpack.WatchIgnorePlugin([
+            ...alfrescoLibsModules,
+            ...alfrescoLibsSources
+        ]),
 
         new CopyWebpackPlugin([
             {
