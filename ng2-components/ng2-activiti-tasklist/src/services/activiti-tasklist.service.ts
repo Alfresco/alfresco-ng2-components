@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import {AlfrescoAuthenticationService, AlfrescoApiService} from 'ng2-alfresco-core';
-import {Observable} from 'rxjs/Rx';
-import {FilterRepresentationModel} from '../models/filter.model';
-import {TaskQueryRequestRepresentationModel} from '../models/filter.model';
-import {Comment} from '../models/comment.model';
-import {User} from '../models/user.model';
-import {TaskDetailsModel} from '../models/task-details.model';
+import { Injectable } from '@angular/core';
+import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { FilterRepresentationModel } from '../models/filter.model';
+import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { Comment } from '../models/comment.model';
+import { User } from '../models/user.model';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { Form } from '../models/form.model';
 
 @Injectable()
 export class ActivitiTaskListService {
@@ -126,6 +127,31 @@ export class ActivitiTaskListService {
                 });
                 return checklists;
             }).catch(this.handleError);
+    }
+
+    /**
+     * Retrive all the form shared with this user
+     * @returns {TaskDetailsModel}
+     */
+    getFormList(): Observable<Form []> {
+        let opts = {
+            'filter': 'myReusableForms', // String | filter
+            'sort': 'modifiedDesc', // String | sort
+            'modelType': 2 // Integer | modelType
+        };
+
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts)).map(res => res)
+            .map((response: any) => {
+                let forms: Form[] = [];
+                response.data.forEach((form) => {
+                    forms.push(new Form(form.id, form.name));
+                });
+                return forms;
+            }).catch(this.handleError);
+    }
+
+    attachFormToATask(taskId: string, formId: number): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, {'formId': formId}));
     }
 
     /**

@@ -65,7 +65,8 @@
             "TITLE": "Start Task",
             "LABEL": {
                 "NAME": "Name",
-                "DESCRIPTION": "Description"
+                "DESCRIPTION": "Description",
+                "ATTACHFORM" : "Attach a Form"
             },
             "ACTION": {
                 "START": "Start",

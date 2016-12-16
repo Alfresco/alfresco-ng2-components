@@ -23,6 +23,7 @@ import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { ActivitiStartTaskButton } from './activiti-start-task.component';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { Observable } from 'rxjs/Rx';
 
 declare let jasmine: any;
 
@@ -30,6 +31,7 @@ describe('Activiti Start Task Component', () => {
 
     let activitiStartTaskButton: ActivitiStartTaskButton;
     let fixture: ComponentFixture<ActivitiStartTaskButton>;
+    let service: ActivitiTaskListService;
     let element: HTMLElement;
     let startTaskButton: HTMLElement;
 
@@ -51,6 +53,7 @@ describe('Activiti Start Task Component', () => {
 
     beforeEach(() => {
         jasmine.Ajax.install();
+        service = fixture.debugElement.injector.get(ActivitiTaskListService);
     });
 
     afterEach(() => {
@@ -78,6 +81,49 @@ describe('Activiti Start Task Component', () => {
         let cancelButton = <HTMLElement> element.querySelector('#button-cancel');
         cancelButton.click();
         expect(element.querySelector('#start-task-dialog').getAttribute('open')).toBeNull();
+    });
+
+    it('should attach a task when a form id slected', () => {
+        let attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(Observable.of());
+        spyOn(service, 'createNewTask').and.callFake(
+            function() {
+                return Observable.create(observer => {
+                    observer.next({ id: 'task-id'});
+                    observer.complete();
+                });
+            });
+
+        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+
+        activitiStartTaskButton.name = 'fake-name';
+        activitiStartTaskButton.formId = '123';
+        startTaskButton.click();
+        createTaskButton.click();
+        expect(attachFormToATask).toHaveBeenCalled();
+    });
+
+    it('should not attach a task when a form id is not slected', () => {
+        let attachFormToATask = spyOn(service, 'attachFormToATask').and.returnValue(Observable.of());
+        spyOn(service, 'createNewTask').and.callFake(
+            function() {
+                return Observable.create(observer => {
+                    observer.next({ id: 'task-id'});
+                    observer.complete();
+                });
+            });
+
+        let createTaskButton = <HTMLElement> element.querySelector('#button-start');
+
+        activitiStartTaskButton.name = 'fake-name';
+        startTaskButton.click();
+        createTaskButton.click();
+        expect(attachFormToATask).not.toHaveBeenCalled();
+    });
+
+    it('should load form when dialogs open', () => {
+        let loadForms = spyOn(service, 'getFormList').and.returnValue(Observable.of());
+        startTaskButton.click();
+        expect(loadForms).toHaveBeenCalled();
     });
 
     it('should create new task when start is clicked', () => {
