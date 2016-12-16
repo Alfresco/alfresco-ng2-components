@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
@@ -31,7 +31,7 @@ import * as moment from 'moment';
     templateUrl: './display-value.widget.html',
     styleUrls: ['./display-value.widget.css']
 })
-export class DisplayValueWidget extends WidgetComponent implements OnInit, AfterViewChecked {
+export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
     value: any;
     fieldType: string;
@@ -139,11 +139,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit, After
                     }
                 }
             }
+            this.visibilityService.refreshVisibility(this.field.form);
         }
-    }
-
-    ngAfterViewChecked() {
-        this.visibilityService.refreshVisibility(this.field.form);
     }
 
     loadRadioButtonValue() {
