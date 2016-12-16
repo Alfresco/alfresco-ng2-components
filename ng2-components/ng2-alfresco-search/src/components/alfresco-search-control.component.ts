@@ -111,7 +111,6 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     private onSearchTermChange(value: string): void {
-        this.setAutoCompleteDisplayed(true);
         this.liveSearchTerm = value;
         this.searchControl.setValue(value, true);
         this.searchValid = this.searchControl.valid;
@@ -171,8 +170,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     onFileClicked(event): void {
-        this.liveSearchTerm = '';
-        this.searchActive = false;
+        this.setAutoCompleteDisplayed(false);
         this.fileSelect.emit(event);
     }
 
