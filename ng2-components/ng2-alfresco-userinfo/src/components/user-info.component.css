@@ -20,11 +20,14 @@
     padding: 0px 0;
 }
 
-.user-profile-list-mdl{
-    max-height: 450px;
-    min-width: 450px;
-    overflow: auto;
-    padding:0px;
+@media only screen
+and (min-device-width: 480px) {
+    .user-profile-list-mdl{
+        max-height: 450px;
+        min-width: 450px;
+        overflow: auto;
+        padding:0px;
+    }
 }
 
 .header-profile{

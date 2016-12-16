@@ -111,7 +111,110 @@ module.exports = {
         }),
 
         new CopyWebpackPlugin([
-            { from: 'versions.json' }
+            {
+                from: 'versions.json'
+            },{
+                context: 'node_modules',
+                from: 'element.scrollintoviewifneeded-polyfill/index.js',
+                to: 'js/element.scrollintoviewifneeded-polyfill.js',
+                flatten: true
+            },{
+                context: 'node_modules',
+                from: 'classlist-polyfill/src/index.js',
+                to: 'js/classlist-polyfill.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from: 'intl/dist/Intl.min.js',
+                to: 'js/Intl.min.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from: 'web-animations-js/web-animations.min.js',
+                to: 'js/web-animations.min.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from: 'core-js/client/shim.min.js',
+                to: 'js/shim.min.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from:  'es6-shim/es6-shim.min.js',
+                to: 'js/es6-shim.min.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from:  'es5-shim/es5-shim.min.js',
+                to: 'js/es5-shim.min.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from:  'systemjs/dist/system-polyfills.js',
+                to: 'js/system-polyfills.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from:  'material-design-lite/material.min.js',
+                to: 'js/material.min.js',
+                flatten: true
+            }, {
+                context: 'node_modules',
+                from:  'material-design-lite/material.min.js',
+                to: 'js/material.min.js',
+                flatten: true
+            }, {
+                context: 'public',
+                from: 'css/app.css',
+                to: 'css/app.css',
+                flatten: true
+            },  {
+                context: 'public',
+                from: 'css/material.orange-blue.min.css',
+                to: 'css/material.orange-blue.min.css',
+                flatten: true
+            },  {
+                context: 'node_modules',
+                from: 'material-design-icons/iconfont/',
+                to: 'css/iconfont/',
+                flatten: true
+            },  {
+                context: 'node_modules',
+                from: 'flag-icon-css/css/flag-icon.min.css',
+                to: 'css/flag-icon.min.css',
+                flatten: true
+            }, {
+                context: 'public',
+                from: 'fonts',
+                to: 'css',
+                flatten: true
+            }, {
+                context: 'public',
+                from: 'js/typedarray.js',
+                to: 'js/typedarray.js',
+                flatten: true
+            }, {
+                context: 'public',
+                from: 'js/Blob.js',
+                to: 'js/Blob.js',
+                flatten: true
+            }, {
+                context: 'public',
+                from: 'js/formdata.js',
+                to: 'js/formdata.js',
+                flatten: true
+            }, {
+                context: 'public',
+                from: 'js/promisePolyfill.js',
+                to: 'js/promisePolyfill.js',
+                flatten: true
+            }, {
+                context: 'public',
+                from: 'css/muli-font.css',
+                to: 'css/muli-font.css',
+                flatten: true
+            }
+
         ]),
 
         new webpack.optimize.CommonsChunkPlugin({
