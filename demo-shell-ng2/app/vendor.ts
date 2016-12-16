@@ -32,6 +32,8 @@ import 'dialog-polyfill/dialog-polyfill.css';
 
 // Flags
 import 'flag-icon-css/css/flag-icon.min.css';
+import '../public/css/app.css';
+import '../public/css/muli-font.css';
 
 import 'ng2-activiti-form/stencils/runtime.ng1';
 import 'ng2-activiti-form/stencils/runtime.adf';
