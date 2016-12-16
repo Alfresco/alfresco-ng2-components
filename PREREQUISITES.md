@@ -3,7 +3,7 @@
 The [Angular 2](https://angular.io/) based application development framework requires the following:
 
 - An Alfresco Platform Repository (version [201609 Early Access](https://community.alfresco.com/docs/DOC-6372-alfresco-community-edition-file-list-201609-ea) or newer) 
-- [Enable cors on Alfresco One](/ALFRESCOCORS.md).
+- [Enable cors on Alfresco One](/ALFRESCOCORS.md)
 - [Download and install Activiti](https://www.alfresco.com/products/bpm/alfresco-activiti/trial)
 - [Node.js](https://nodejs.org/en/) JavaScript runtime.
 - [npm](https://www.npmjs.com/) package manager for JavaScript.
