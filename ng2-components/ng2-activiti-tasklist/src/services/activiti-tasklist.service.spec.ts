@@ -513,4 +513,20 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
+    it('should claim a task', (done) => {
+        let taskId = '111';
+
+        service.claimTask(taskId).subscribe(
+            (res: any) => {
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({})
+        });
+    });
+
 });

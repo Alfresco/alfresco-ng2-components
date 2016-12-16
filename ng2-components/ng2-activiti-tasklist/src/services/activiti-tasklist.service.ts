@@ -232,6 +232,15 @@ export class ActivitiTaskListService {
             }).catch(this.handleError);
     }
 
+    /**
+     * Claim a task
+     * @param id - taskId
+     */
+    claimTask(taskId: string): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.claimTask(taskId))
+            .catch(this.handleError);
+    }
+
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
         return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
     }

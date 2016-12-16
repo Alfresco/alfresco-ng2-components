@@ -144,7 +144,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
                     ? user.firstName + ' ' : '') +
                 user.lastName;
         }
-        return '';
+        return 'Nobody';
     }
 
     getFormatDate(value, format: string) {
