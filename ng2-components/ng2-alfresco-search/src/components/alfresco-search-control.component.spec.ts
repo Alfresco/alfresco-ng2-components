@@ -351,7 +351,7 @@ describe('AlfrescoSearchControlComponent', () => {
             });
         });
 
-        it('should set un-active  the search after file/folder is clicked', () => {
+        it('should set deactivate the search after file/folder is clicked', () => {
             component.searchActive = true;
             component.onFileClicked({
                 value: 'node12345'
@@ -360,13 +360,13 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(component.searchActive).toBe(false);
         });
 
-        it('should reset the search term after file/folder is clicked', () => {
+        it('should NOT reset the search term after file/folder is clicked', () => {
             component.liveSearchTerm = 'test';
             component.onFileClicked({
                 value: 'node12345'
             });
 
-            expect(component.liveSearchTerm).toBe('');
+            expect(component.liveSearchTerm).toBe('test');
         });
     });
 });
