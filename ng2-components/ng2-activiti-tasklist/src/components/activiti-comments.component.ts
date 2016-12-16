@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, Input, Output, ViewChild, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
@@ -30,7 +30,7 @@ let dialogPolyfill: any;
     styleUrls: ['./activiti-comments.component.css'],
     providers: [ActivitiTaskListService]
 })
-export class ActivitiComments implements OnInit, OnChanges {
+export class ActivitiComments implements OnChanges {
 
     @Input()
     taskId: string;
@@ -64,13 +64,9 @@ export class ActivitiComments implements OnInit, OnChanges {
         }
 
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
-    }
-
-    ngOnInit() {
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
-        this.getTaskComments(this.taskId);
     }
 
     ngOnChanges(changes: SimpleChanges) {
