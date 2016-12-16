@@ -16,6 +16,7 @@
  */
 
 import { ReflectiveInjector } from '@angular/core';
+import { AlfrescoApi } from 'alfresco-js-api';
 import {
     formTest,
     fakeTaskProcessVariableModels,
@@ -33,11 +34,13 @@ import { TaskProcessVariableModel } from '../models/task-process-variable.model'
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { FormModel, FormFieldModel, TabModel, ContainerModel, FormFieldTypes } from '../components/widgets/core/index';
 
-declare let AlfrescoApi: any;
 declare let jasmine: any;
 
 describe('WidgetVisibilityService', () => {
     let service, injector;
+    let authenticationService: AlfrescoAuthenticationService;
+    let apiService: AlfrescoApiService;
+    let alfrescoApi: AlfrescoApi;
     let booleanResult: boolean;
     let stubFormWithFields = new FormModel(fakeFormJson);
 
@@ -53,6 +56,9 @@ describe('WidgetVisibilityService', () => {
 
     beforeEach(() => {
         service = injector.get(WidgetVisibilityService);
+        authenticationService = injector.get(AlfrescoAuthenticationService);
+        apiService = injector.get(AlfrescoApiService);
+        alfrescoApi = apiService.getInstance();
         jasmine.Ajax.install();
     });
 
@@ -195,7 +201,7 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest = new WidgetVisibilityModel();
         });
 
-        fit('should return the process variables for task', (done) => {
+        it('should return the process variables for task', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
                 (res) => {
                     expect(res).toBeDefined();
@@ -209,7 +215,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: JSON.stringify(fakeTaskProcessVariableModels)
+                responseText: fakeTaskProcessVariableModels
             });
         });
 
@@ -226,7 +232,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: JSON.stringify(fakeTaskProcessVariableModels)
+                responseText: fakeTaskProcessVariableModels
             });
         });
 
@@ -241,7 +247,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: JSON.stringify(fakeTaskProcessVariableModels)
+                responseText: fakeTaskProcessVariableModels
             });
         });
 
@@ -259,7 +265,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: JSON.stringify(fakeTaskProcessVariableModels)
+                responseText: fakeTaskProcessVariableModels
             });
         });
 
@@ -277,7 +283,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: JSON.stringify(fakeTaskProcessVariableModels)
+                responseText: fakeTaskProcessVariableModels
             });
         });
 
@@ -296,7 +302,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: JSON.stringify(fakeTaskProcessVariableModels)
+                responseText: fakeTaskProcessVariableModels
             });
         });
 
@@ -320,7 +326,7 @@ describe('WidgetVisibilityService', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: JSON.stringify(fakeTaskProcessVariableModels)
+                responseText: fakeTaskProcessVariableModels
             });
         });
 
@@ -448,11 +454,10 @@ describe('WidgetVisibilityService', () => {
             expect(leftValue).toBe('value_2');
         });
 
-        it('should return empty string for a value that is not on variable or form', () => {
+        it('should return undefined for a value that is not on variable or form', () => {
             let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-            expect(leftValue).not.toBeUndefined();
-            expect(leftValue).toBe('');
+            expect(leftValue).toBeUndefined();
         });
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
