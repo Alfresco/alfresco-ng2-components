@@ -28,18 +28,17 @@ describe('ActivitiForm', () => {
     let componentHandler: any;
     let formService: FormService;
     let formComponent: ActivitiForm;
-    let visibilityService:  WidgetVisibilityService;
+    let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
 
     beforeEach(() => {
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
         ]);
-        visibilityService =  jasmine.createSpyObj('WidgetVisibilityService', [
-            'refreshVisibility', 'getTaskProcessVariable'
-        ]);
         window['componentHandler'] = componentHandler;
 
+        visibilityService = new WidgetVisibilityService(null);
+        spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null);
         nodeService = new NodeService(null, null);
         formComponent = new ActivitiForm(formService, visibilityService, null, nodeService);
@@ -139,6 +138,7 @@ describe('ActivitiForm', () => {
 
     it('should get form by task id on load', () => {
         spyOn(formComponent, 'getFormByTaskId').and.stub();
+        spyOn(visibilityService, 'getTaskProcessVariable').and.returnValue(Observable.of({}));
         const taskId = '123';
 
         formComponent.taskId = taskId;
@@ -218,7 +218,7 @@ describe('ActivitiForm', () => {
         spyOn(formComponent, 'getFormDefinitionByFormId').and.stub();
         spyOn(formComponent, 'getFormDefinitionByFormName').and.stub();
 
-        formComponent.ngOnChanges({ 'tag': new SimpleChange(null, 'hello world')});
+        formComponent.ngOnChanges({ 'tag': new SimpleChange(null, 'hello world') });
 
         expect(formComponent.getFormByTaskId).not.toHaveBeenCalled();
         expect(formComponent.getFormDefinitionByFormId).not.toHaveBeenCalled();
@@ -521,10 +521,10 @@ describe('ActivitiForm', () => {
 
     it('should complete form form and raise corresponding event', () => {
         spyOn(formService, 'completeTaskForm').and.callFake(() => {
-             return Observable.create(observer => {
-                 observer.next();
-                 observer.complete();
-             });
+            return Observable.create(observer => {
+                observer.next();
+                observer.complete();
+            });
         });
 
         const outcome = 'complete';
@@ -572,17 +572,17 @@ describe('ActivitiForm', () => {
     });
 
     /*
-    it('should update the visibility when the container raise the change event', (valueChanged) => {
-        spyOn(formComponent, 'checkVisibility').and.callThrough();
-        let widget = new ContainerWidget();
-        let fakeForm = new FormModel();
-        let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
-        widget.formValueChanged.subscribe(field => { valueChanged(); });
-        widget.fieldChanged(fakeField);
+     it('should update the visibility when the container raise the change event', (valueChanged) => {
+     spyOn(formComponent, 'checkVisibility').and.callThrough();
+     let widget = new ContainerWidget();
+     let fakeForm = new FormModel();
+     let fakeField = new FormFieldModel(fakeForm, {id: 'fakeField', value: 'fakeValue'});
+     widget.formValueChanged.subscribe(field => { valueChanged(); });
+     widget.fieldChanged(fakeField);
 
-        expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
-    });
-    */
+     expect(formComponent.checkVisibility).toHaveBeenCalledWith(fakeField);
+     });
+     */
 
     it('should prevent default outcome execution', () => {
 

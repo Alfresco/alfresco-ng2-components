@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { HttpModule } from '@angular/http';
-import { TestBed } from '@angular/core/testing';
+import { ReflectiveInjector } from '@angular/core';
+import { AlfrescoApi } from 'alfresco-js-api';
 import {
     formTest,
     fakeTaskProcessVariableModels,
@@ -24,31 +24,41 @@ import {
     fakeFormJson
 } from './assets/widget-visibility.service.mock';
 import { WidgetVisibilityService } from './widget-visibility.service';
-import { CoreModule } from 'ng2-alfresco-core';
+import {
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService,
+    StorageService
+} from 'ng2-alfresco-core';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { FormModel, FormFieldModel, TabModel, ContainerModel, FormFieldTypes } from '../components/widgets/core/index';
-import { FormService } from './form.service';
 
 declare let jasmine: any;
 
 describe('WidgetVisibilityService', () => {
-    let service: WidgetVisibilityService;
+    let service, injector;
+    let authenticationService: AlfrescoAuthenticationService;
+    let apiService: AlfrescoApiService;
+    let alfrescoApi: AlfrescoApi;
     let booleanResult: boolean;
     let stubFormWithFields = new FormModel(fakeFormJson);
 
-    beforeAll(() => {
-        TestBed.configureTestingModule({
-            imports: [ HttpModule, CoreModule ],
-            providers: [
-                WidgetVisibilityService,
-                FormService
-            ]
-        });
-        service = TestBed.get(WidgetVisibilityService);
+    beforeEach(() => {
+        injector = ReflectiveInjector.resolveAndCreate([
+            WidgetVisibilityService,
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoAuthenticationService,
+            StorageService
+        ]);
     });
 
     beforeEach(() => {
+        service = injector.get(WidgetVisibilityService);
+        authenticationService = injector.get(AlfrescoAuthenticationService);
+        apiService = injector.get(AlfrescoApiService);
+        alfrescoApi = apiService.getInstance();
         jasmine.Ajax.install();
     });
 
@@ -193,7 +203,7 @@ describe('WidgetVisibilityService', () => {
 
         it('should return the process variables for task', (done) => {
             service.getTaskProcessVariable('9999').subscribe(
-                (res: TaskProcessVariableModel[]) => {
+                (res) => {
                     expect(res).toBeDefined();
                     expect(res.length).toEqual(3);
                     expect(res[0].id).toEqual('TEST_VAR_1');
@@ -444,11 +454,10 @@ describe('WidgetVisibilityService', () => {
             expect(leftValue).toBe('value_2');
         });
 
-        it('should return empty string for a value that is not on variable or form', () => {
+        it('should return undefined for a value that is not on variable or form', () => {
             let leftValue = service.getLeftValue(fakeFormWithField, visibilityObjTest);
 
-            expect(leftValue).not.toBeUndefined();
-            expect(leftValue).toBe('');
+            expect(leftValue).toBeUndefined();
         });
 
         it('should evaluate the visibility for the field with single visibility condition between two field values', () => {
@@ -620,30 +629,30 @@ describe('WidgetVisibilityService', () => {
         });
 
         /*
-        it('should refresh the visibility for field', () => {
-            visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
-            visibilityObjTest.operator = '!=';
-            visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
+         it('should refresh the visibility for field', () => {
+         visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
+         visibilityObjTest.operator = '!=';
+         visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
 
-            let container = <ContainerModel> fakeFormWithField.fields[0];
-            let column0 = container.columns[0];
-            let column1 = container.columns[1];
+         let container = <ContainerModel> fakeFormWithField.fields[0];
+         let column0 = container.columns[0];
+         let column1 = container.columns[1];
 
-            column0.fields[0].visibilityCondition = visibilityObjTest;
-            service.refreshVisibility(fakeFormWithField);
+         column0.fields[0].visibilityCondition = visibilityObjTest;
+         service.refreshVisibility(fakeFormWithField);
 
-            expect(column0.fields[0].isVisible).toBeFalsy();
-            expect(column0.fields[1].isVisible).toBeTruthy();
-            expect(column0.fields[2].isVisible).toBeTruthy();
-            expect(column1.fields[0].isVisible).toBeTruthy();
-        });
-        */
+         expect(column0.fields[0].isVisible).toBeFalsy();
+         expect(column0.fields[1].isVisible).toBeTruthy();
+         expect(column0.fields[2].isVisible).toBeTruthy();
+         expect(column1.fields[0].isVisible).toBeTruthy();
+         });
+         */
 
         it('should refresh the visibility for tab in forms', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            let tab = new TabModel(fakeFormWithField, {id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true});
+            let tab = new TabModel(fakeFormWithField, { id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true });
             tab.visibilityCondition = visibilityObjTest;
             fakeFormWithField.tabs.push(tab);
             service.refreshVisibility(fakeFormWithField);
@@ -655,7 +664,7 @@ describe('WidgetVisibilityService', () => {
             visibilityObjTest.leftFormFieldId = 'FIELD_TEST';
             visibilityObjTest.operator = '!=';
             visibilityObjTest.rightFormFieldId = 'RIGHT_FORM_FIELD_ID';
-            let tab = new TabModel(fakeFormWithField, {id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true});
+            let tab = new TabModel(fakeFormWithField, { id: 'fake-tab-id', title: 'fake-tab-title', isVisible: true });
             tab.visibilityCondition = visibilityObjTest;
             service.refreshEntityVisibility(tab);
 
