@@ -87,7 +87,7 @@ export class UploadService {
     /**
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
-    public uploadFilesInTheQueue(directory: string, elementEmit: EventEmitter<any>): void {
+    public uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
         let filesToUpload = this.queue.filter((uploadingFileModel) => {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
@@ -105,7 +105,7 @@ export class UploadService {
         filesToUpload.forEach((uploadingFileModel: FileModel) => {
             uploadingFileModel.setUploading();
 
-            let promiseUpload = this.apiService.getInstance().upload.uploadFile(uploadingFileModel.file, directory, null, null, opts)
+            let promiseUpload = this.apiService.getInstance().upload.uploadFile(uploadingFileModel.file, directory, rootId, null, opts)
                 .on('progress', (progress: any) => {
                     uploadingFileModel.setProgres(progress);
                     this.updateFileListStream(this.queue);

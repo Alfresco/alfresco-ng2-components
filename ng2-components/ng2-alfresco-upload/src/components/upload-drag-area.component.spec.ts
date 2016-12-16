@@ -99,7 +99,7 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
 
         component.onFilesDropped(filesList);
         expect(component._uploaderService.addToQueue).toHaveBeenCalledWith(filesList);
-        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('/root-fake-/sites-fake/folder-fake', null);
+        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
     it('should show the loading messages in the notification bar when the files are dropped', () => {
@@ -114,7 +114,7 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
-        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('/root-fake-/sites-fake/folder-fake', null);
+        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
         expect(component._showUndoNotificationBar).toHaveBeenCalled();
     });
 
@@ -138,7 +138,31 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
 
         component.onFilesEntityDropped(itemEntity);
         expect(component._uploaderService.uploadFilesInTheQueue)
-            .toHaveBeenCalledWith('/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+            .toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
+    });
+
+    it('should upload a file with a custom root folder ID when dropped', () => {
+        component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
+        component.rootFolderId = '-my-';
+        component.onSuccess = null;
+
+        fixture.detectChanges();
+        spyOn(component._uploaderService, 'uploadFilesInTheQueue');
+
+        let itemEntity = {
+            fullPath: '/folder-fake/file-fake.png',
+            isDirectory: false,
+            isFile: true,
+            name: 'file-fake.png',
+            file: (callbackFile) => {
+                let fileFake = new File(['fakefake'], 'file-fake.png', {type: 'image/png'});
+                callbackFile(fileFake);
+            }
+        };
+
+        component.onFilesEntityDropped(itemEntity);
+        expect(component._uploaderService.uploadFilesInTheQueue)
+            .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
     });
 
     it('should throws an exception and show it in the notification bar when the folder already exist', done => {

@@ -47,6 +47,14 @@ export class FilesComponent implements OnInit {
 
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
+    get uploadRootFolderId(): string {
+        return this.currentFolderId || this.rootFolderId;
+    }
+
+    get uploadFolderPath(): string {
+        return this.currentFolderId ? '/' : this.currentPath;
+    }
+
     @ViewChild(DocumentList)
     documentList: DocumentList;
 

@@ -88,7 +88,7 @@ describe('Test ng2-alfresco-upload', () => {
             service.setOptions(options, false);
             let filesFake = [{name: 'fake-name', size: 10}];
             service.addToQueue(filesFake);
-            service.uploadFilesInTheQueue('fake-dir', emitter);
+            service.uploadFilesInTheQueue('-root-', 'fake-dir', emitter);
 
             let request = jasmine.Ajax.requests.mostRecent();
             expect(request.url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
@@ -111,7 +111,7 @@ describe('Test ng2-alfresco-upload', () => {
             service.setOptions(options, false);
             let filesFake = [{name: 'fake-name', size: 10}];
             service.addToQueue(filesFake);
-            service.uploadFilesInTheQueue('', emitter);
+            service.uploadFilesInTheQueue('-root-', '', emitter);
             expect(jasmine.Ajax.requests.mostRecent().url)
                 .toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/children?autoRename=true');
 
@@ -132,7 +132,7 @@ describe('Test ng2-alfresco-upload', () => {
             service.setOptions(options, false);
             let filesFake = [{name: 'fake-name', size: 10}];
             service.addToQueue(filesFake);
-            service.uploadFilesInTheQueue('', emitter);
+            service.uploadFilesInTheQueue('-root-', '', emitter);
 
             let file = service.getQueue();
             file[0].emitAbort();
@@ -148,7 +148,7 @@ describe('Test ng2-alfresco-upload', () => {
             service.setOptions(options, false);
             let filesFake = [{name: 'fake-name', size: 10}];
             service.addToQueue(filesFake);
-            service.uploadFilesInTheQueue('', emitter);
+            service.uploadFilesInTheQueue('-root-', '', emitter);
 
             let file = service.getQueue();
             file[0].emitError();
@@ -169,7 +169,7 @@ describe('Test ng2-alfresco-upload', () => {
                 expect(file[0].progress).toEqual(fakeProgress);
                 done();
             });
-            service.uploadFilesInTheQueue('', null);
+            service.uploadFilesInTheQueue('-root-', '', null);
 
             let file = service.getQueue();
 
@@ -231,11 +231,34 @@ describe('Test ng2-alfresco-upload', () => {
             service.setOptions(options, enableVersioning);
             let filesFake = [{name: 'fake-name', size: 10}];
             service.addToQueue(filesFake);
-            service.uploadFilesInTheQueue('', emitter);
+            service.uploadFilesInTheQueue('-root-', '', emitter);
 
             console.log(jasmine.Ajax.requests.mostRecent().url);
             expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
             expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
+        });
+
+        it('should use custom root folder ID given to the service', (done) => {
+            let emitter = new EventEmitter();
+
+            emitter.subscribe(e => {
+                expect(e.value).toBe('File uploaded');
+                done();
+            });
+            service.setOptions(options, false);
+            let filesFake = [{name: 'fake-name', size: 10}];
+            service.addToQueue(filesFake);
+            service.uploadFilesInTheQueue('123', 'fake-dir', emitter);
+
+            let request = jasmine.Ajax.requests.mostRecent();
+            expect(request.url).toBe('http://127.0.0.1:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/123/children?autoRename=true');
+            expect(request.method).toBe('POST');
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'text/plain',
+                responseText: 'File uploaded'
+            });
         });
     });
 });

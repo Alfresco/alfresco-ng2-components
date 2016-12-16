@@ -41,6 +41,8 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
 })
 export class UploadDragAreaComponent {
 
+    private static DEFAULT_ROOT_ID: string = '-root-';
+
     @ViewChild('undoNotificationBar')
     undoNotificationBar: any;
 
@@ -51,7 +53,10 @@ export class UploadDragAreaComponent {
     versioning: boolean = false;
 
     @Input()
-    currentFolderPath: string = '/Sites/swsdp/documentLibrary';
+    currentFolderPath: string = '/';
+
+    @Input()
+    rootFolderId: string = UploadDragAreaComponent.DEFAULT_ROOT_ID;
 
     @Output()
     onSuccess = new EventEmitter();
@@ -77,7 +82,7 @@ export class UploadDragAreaComponent {
         if (files.length) {
             if (this.checkValidity(files)) {
                 this._uploaderService.addToQueue(files);
-                this._uploaderService.uploadFilesInTheQueue(this.currentFolderPath, this.onSuccess);
+                this._uploaderService.uploadFilesInTheQueue(this.rootFolderId, this.currentFolderPath, this.onSuccess);
                 let latestFilesAdded = this._uploaderService.getQueue();
                 if (this.showUdoNotificationBar) {
                     this._showUndoNotificationBar(latestFilesAdded);
@@ -115,7 +120,7 @@ export class UploadDragAreaComponent {
             this._uploaderService.addToQueue([file]);
             let path = item.fullPath.replace(item.name, '');
             let filePath = this.currentFolderPath + path;
-            this._uploaderService.uploadFilesInTheQueue(filePath, this.onSuccess);
+            this._uploaderService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);
         });
     }
 
