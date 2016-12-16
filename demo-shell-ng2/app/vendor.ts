@@ -27,7 +27,7 @@ import 'ng2-alfresco-webscript';
 import 'ng2-alfresco-userinfo';
 
 // Polyfill(s) for dialogs
-import 'dialog-polyfill/dialog-polyfill';
+require('script!dialog-polyfill/dialog-polyfill');
 import 'dialog-polyfill/dialog-polyfill.css';
 
 // Flags
