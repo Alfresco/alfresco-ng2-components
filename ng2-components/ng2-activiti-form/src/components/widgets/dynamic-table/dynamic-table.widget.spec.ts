@@ -28,7 +28,7 @@ describe('DynamicTableWidget', () => {
 
     beforeEach(() => {
         table = new DynamicTableModel(null);
-        visibilityService = new WidgetVisibilityService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null);
         widget = new DynamicTableWidget(null, visibilityService);
         widget.content = table;
     });

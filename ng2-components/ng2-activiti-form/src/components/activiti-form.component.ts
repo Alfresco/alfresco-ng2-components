@@ -280,7 +280,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     loadForm() {
         if (this.taskId) {
             this.getFormByTaskId(this.taskId);
-            this.visibilityService.getTaskProcessVariable(this.taskId);
+            this.visibilityService.getTaskProcessVariable(this.taskId).subscribe();
             return;
         }
 
@@ -411,7 +411,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, {id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
+            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 

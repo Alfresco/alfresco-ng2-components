@@ -38,7 +38,7 @@ describe('DisplayValueWidget', () => {
     beforeEach(() => {
         settingsService = new AlfrescoSettingsService();
         formService = new FormService(null, null);
-        visibilityService = new WidgetVisibilityService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null);
         widget = new DisplayValueWidget(formService, visibilityService, settingsService);
     });
 
