@@ -35,8 +35,11 @@ describe('AlfrescoSearchControlComponent', () => {
 
     let fixture: ComponentFixture<AlfrescoSearchControlComponent>;
     let component: AlfrescoSearchControlComponent, element: HTMLElement;
+    let componentHandler;
 
     beforeEach(async(() => {
+        componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
+        window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
             imports: [
                 CoreModule
