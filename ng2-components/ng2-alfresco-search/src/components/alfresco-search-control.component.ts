@@ -111,7 +111,6 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     private onSearchTermChange(value: string): void {
-        this.setAutoCompleteDisplayed(true);
         this.liveSearchTerm = value;
         this.searchControl.setValue(value, true);
         this.searchValid = this.searchControl.valid;
