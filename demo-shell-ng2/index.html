@@ -5,15 +5,36 @@
     <title>Demo Application - Angular 2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link href="css/app.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet" type="text/css">
 
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for Safari (pre-10.x) -->
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
+    <!--[if lt IE 7]>
+    <script src="js/dialog-polyfill.js"></script>
 
-    <!-- Polyfill(s) for older browsers -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js"></script>
+    <script src=js/shim.min.js></script>
+    <script src=//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js></script>
+    <script src=js/element.scrollintoviewifneeded-polyfill.js></script>
+    <script src=js/classlist-polyfill.js></script>
+    <script src=js/Intl.min.js></script>
+    <script src=js/web-animations.min.js></script>
+    <script src=js/typedarray.js></script>
+    <script src=js/Blob.js></script>
+    <script src=js/formdata.js></script>
+    <script src=https://npmcdn.com/angular2/es6/dev/src/testing/shims_for_IE.js></script>
+    <script src=js/es6-shim.min.js></script>
+    <script src=js/es5-shim.min.js></script>
+    <script src=js/system-polyfills.js></script>
+    <![endif]-->
+    <link href=css/flag-icon.min.css rel="stylesheet" type="text/css/">
+    <link href=css/muli-font.csss rel="stylesheet" type="text/css/">
+
+    <!-- Google Material Design Lite -->
+    <link href="css/material.orange-blue.min.css" rel="stylesheet">
+    <script src="js/material.min.js"></script>
+    <link href="css/iconfont/material-icons.css" rel="stylesheet">
+
 
     <style>
         .main_header_adf .mdl-layout__drawer-button {
@@ -24,13 +45,14 @@
 </head>
 <!-- 3. Display the application -->
 <body>
-    <alfresco-app>
-        <div id="loader-container" class="loader-container">
-            <div class="loader-item">
-                <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-                <div id="loader-text" class="loader-text">Loading Demo Shell..</div>
-            </div >
-        </div>
-    </alfresco-app>
+<alfresco-app>
+    <div id="loader-container" class="loader-container">
+        <div class="loader-item">
+            <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <div id="loader-text" class="loader-text">Loading Demo Shell..</div>
+        </div >
+    </div>
+</alfresco-app>
 </body>
 </html>
+
