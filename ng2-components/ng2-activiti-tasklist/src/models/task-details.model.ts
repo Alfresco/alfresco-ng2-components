@@ -61,7 +61,7 @@ export class TaskDetailsModel {
         this.id = obj && obj.id || null;
         this.name = obj && obj.name || null;
         this.priority = obj && obj.priority;
-        this.assignee = new User(obj.assignee);
+        this.assignee = obj.assignee ? new User(obj.assignee) : null;
         this.adhocTaskCanBeReassigned = obj && obj.adhocTaskCanBeReassigned;
         this.category = obj && obj.category || null;
         this.created = obj && obj.created || null;

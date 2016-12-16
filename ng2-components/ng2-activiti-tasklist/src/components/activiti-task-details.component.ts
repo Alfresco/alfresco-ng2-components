@@ -178,6 +178,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         }
     }
 
+    isAssignedToMe(): boolean {
+        return this.taskDetails.assignee ? true : false;
+    }
+
     /**
      * Retrieve the next open task
      * @param processInstanceId
@@ -242,5 +246,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     closeErrorDialog(): void {
         this.errorDialog.nativeElement.close();
+    }
+
+    onClaimTask(taskId: string) {
+        this.loadDetails(taskId);
     }
 }

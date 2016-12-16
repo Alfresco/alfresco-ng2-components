@@ -24,9 +24,11 @@ import { ActivitiTaskHeader } from './activiti-task-header.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 describe('ActivitiTaskHeader', () => {
 
+    let service: ActivitiTaskListService;
     let componentHandler: any;
     let component: ActivitiTaskHeader;
     let fixture: ComponentFixture<ActivitiTaskHeader>;
@@ -40,7 +42,8 @@ describe('ActivitiTaskHeader', () => {
                 ActivitiTaskHeader
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock }
+                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                ActivitiTaskListService
             ]
         }).compileComponents();
     }));
@@ -49,6 +52,7 @@ describe('ActivitiTaskHeader', () => {
 
         fixture = TestBed.createComponent(ActivitiTaskHeader);
         component = fixture.componentInstance;
+        service = fixture.debugElement.injector.get(ActivitiTaskListService);
 
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 
@@ -76,6 +80,13 @@ describe('ActivitiTaskHeader', () => {
         fixture.detectChanges();
         let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-assignee"] .activiti-task-header__value'));
         expect(valueEl.nativeElement.innerText).toBe('TASK_DETAILS.ASSIGNEE.NONE');
+    });
+
+    it('should display the claim button if no assignee', () => {
+        component.taskDetails.assignee = null;
+        fixture.detectChanges();
+        let valueEl = fixture.debugElement.query(By.css('[data-automation-id="header-claim-button"]'));
+        expect(valueEl.nativeElement.innerText).toBe('TASK_DETAILS.BUTTON.CLAIM');
     });
 
     it('should display due date', () => {
