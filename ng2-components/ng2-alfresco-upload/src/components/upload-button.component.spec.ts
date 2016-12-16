@@ -121,7 +121,7 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
     });
 
-    it('should call uploadFile with the default folder', () => {
+    it('should call uploadFile with the default root folder', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
         component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
@@ -129,7 +129,19 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
         fixture.detectChanges();
 
         component.onFilesAdded(fakeEvent);
-        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('/root-fake-/sites-fake/folder-fake', null);
+        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+    });
+
+    it('should call uploadFile with a custom root folder', () => {
+        component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
+        component.rootFolderId = '-my-';
+        component.onSuccess = null;
+        component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+
+        fixture.detectChanges();
+
+        component.onFilesAdded(fakeEvent);
+        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
     it('should create a folder and emit an File uploaded event', (done) => {
