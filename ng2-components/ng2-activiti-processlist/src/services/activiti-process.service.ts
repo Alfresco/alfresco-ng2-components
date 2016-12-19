@@ -231,11 +231,14 @@ export class ActivitiProcessService {
             .catch(this.handleError);
     }
 
-    startProcess(processDefinitionId: string, name: string, startFormValues?: any): Observable<ProcessInstance> {
+    startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any): Observable<ProcessInstance> {
         let startRequest: any = {
             name: name,
             processDefinitionId: processDefinitionId
         };
+        if (outcome) {
+            startRequest.outcome = outcome;
+        }
         if (startFormValues) {
             startRequest.values = startFormValues;
         }

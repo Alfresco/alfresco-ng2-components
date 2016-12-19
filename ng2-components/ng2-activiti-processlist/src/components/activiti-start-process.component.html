@@ -18,13 +18,10 @@
             <label class="mdl-textfield__label" for="processName">{{'START_PROCESS.DIALOG.LABEL.NAME'|translate}}</label>
         </div>
         <activiti-start-form *ngIf="hasStartForm()" [processDefinitionId]="currentProcessDef.id"
-                             (formSaved)="onFormSaved($event)"
-                             (formCompleted)="onFormCompleted($event)"
-                             (formLoaded)="onFormLoaded($event)"
-                             (onError)="onFormError($event)">
+                             (outcomeClick)="onOutcomeClick($event)">
         </activiti-start-form>
     </div>
-    <div class="mdl-card__actions mdl-card--border" *ngIf="showStartButton">
+    <div class="mdl-card__actions mdl-card--border" *ngIf="!hasStartForm()">
         <button type="button" [disabled]="!validateForm()" (click)="startProcess()" class="mdl-button" data-automation-id="btn-start">{{'START_PROCESS.DIALOG.ACTION.START'|translate}}</button>
     </div>
 </div>

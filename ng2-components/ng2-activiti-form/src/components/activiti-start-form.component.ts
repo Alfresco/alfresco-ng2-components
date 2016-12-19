@@ -21,7 +21,9 @@ import {
     SimpleChanges,
     Input,
     ViewChild,
-    ElementRef
+    ElementRef,
+    Output,
+    EventEmitter
 } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
@@ -61,10 +63,13 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     processId: string;
 
     @Input()
-    showOutcomeButtons: boolean = false;
+    showOutcomeButtons: boolean = true;
 
     @Input()
     showRefreshButton: boolean = true;
+
+    @Output()
+    outcomeClick: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
@@ -145,5 +150,6 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     }
 
     completeTaskForm(outcome?: string) {
+        this.outcomeClick.emit(outcome);
     }
 }
