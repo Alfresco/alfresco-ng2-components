@@ -28,6 +28,7 @@ import { ActivitiProcessInstanceDetails } from './activiti-process-instance-deta
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { exampleProcess } from './../assets/activiti-process.model.mock';
+import { ProcessInstance } from '../models/process-instance.model';
 
 describe('ActivitiProcessInstanceDetails', () => {
 
@@ -126,6 +127,15 @@ describe('ActivitiProcessInstanceDetails', () => {
             component.ngOnChanges({ 'processInstanceId': nullChange });
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('DETAILS.MESSAGES.NONE');
+        });
+
+        it('should display cancel button if process is running', () => {
+            component.processInstanceDetails = new ProcessInstance({
+                ended : null
+            });
+            fixture.detectChanges();
+            let buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
+            expect(buttonEl).not.toBeNull();
         });
     });
 
