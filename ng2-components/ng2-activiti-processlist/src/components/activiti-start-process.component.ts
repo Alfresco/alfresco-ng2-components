@@ -115,7 +115,7 @@ export class ActivitiStartProcessInstance implements OnChanges {
     }
 
     isStartFormMissingOrValid() {
-        if (this.startForm && this.startForm.form && this.startForm.form.isValid) {
+        if (this.startForm && this.startForm.form.isValid) {
             return !this.startForm || this.startForm.form.isValid;
         } else {
             return false;

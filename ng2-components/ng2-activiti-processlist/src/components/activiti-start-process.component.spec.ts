@@ -254,7 +254,8 @@ describe('ActivitiStartProcessInstance', () => {
 
             beforeEach(() => {
                 getDefinitionsSpy.and.returnValue(Observable.of(fakeProcessDefWithForm));
-                fixture.detectChanges();
+                let change = new SimpleChange(null, '123');
+                component.ngOnChanges({ 'appId': change });
                 component.onProcessDefChange('my:process1');
                 fixture.detectChanges();
                 fixture.whenStable();
