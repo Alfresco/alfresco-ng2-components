@@ -205,6 +205,7 @@ describe('DisplayValueWidget', () => {
     it('should setup [DROPDOWN] field with REST config', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.DISPLAY_VALUE,
+            restUrl: 'http://test.com',
             params: {
                 field: {
                     type: FormFieldTypes.DROPDOWN

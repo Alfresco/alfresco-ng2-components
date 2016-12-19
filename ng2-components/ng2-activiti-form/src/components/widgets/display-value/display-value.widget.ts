@@ -96,7 +96,11 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             this.loadRestFieldValue();
                             break;
                         case FormFieldTypes.DROPDOWN:
-                            this.loadRestFieldValue();
+                            if (this.field.restUrl) {
+                                this.loadRestFieldValue();
+                            } else {
+                                this.value = this.field.value;
+                            }
                             break;
                         case FormFieldTypes.RADIO_BUTTONS:
                             if (this.field.restUrl) {
@@ -207,6 +211,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     }
 
     getCellValue(row: DynamicTableRow, column: DynamicTableColumn): any {
+
         let result = row.value[column.id];
 
         if (column.type === 'Dropdown') {
