@@ -45,7 +45,8 @@ export class ActivitiComments implements OnInit, OnChanges {
 
     comments: Comment [] = [];
 
-    private commentObserver: Observer<Comment>;
+    commentObserver: Observer<Comment>;
+
     comment$: Observable<Comment>;
 
     message: string;
@@ -62,18 +63,15 @@ export class ActivitiComments implements OnInit, OnChanges {
             translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
 
-        this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();
-
+        this.comment$ = new Observable<Comment>(observer => {
+            this.commentObserver = observer;
+        }).share();
     }
 
     ngOnInit() {
         this.comment$.subscribe((comment: Comment) => {
             this.comments.push(comment);
         });
-        if (this.processInstanceId) {
-            this.getProcessComments(this.processInstanceId);
-            return;
-        }
     }
 
     ngOnChanges(changes: SimpleChanges) {

@@ -24,7 +24,7 @@
 
 <!-- START FORM -->
 
-<div *ngIf="activeTasks?.length === 0" data-automation-id="active-tasks-none">
+<div *ngIf="activeTasks?.length === 0" data-automation-id="active-tasks-none" class="no-results">
     {{ 'DETAILS.TASKS.NO_ACTIVE' | translate }}
 </div>
 
@@ -64,7 +64,7 @@
     </ul>
 </div>
 
-<div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none">
+<div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none" class="no-results">
     {{ 'DETAILS.TASKS.NO_COMPLETED' | translate }}
 </div>
 

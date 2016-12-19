@@ -75,16 +75,16 @@ describe('ActivitiProcessInstanceComments', () => {
     });
 
     it('should load comments when processInstanceId specified', () => {
-        component.processInstanceId = '123';
-        fixture.detectChanges();
+        let change = new SimpleChange(null, '123');
+        component.ngOnChanges({ 'processInstanceId': change });
         expect(getCommentsSpy).toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
         getCommentsSpy.and.returnValue(Observable.throw({}));
-        component.processInstanceId = '123';
-        fixture.detectChanges();
+        let change = new SimpleChange(null, '123');
+        component.ngOnChanges({ 'processInstanceId': change });
         expect(emitSpy).toHaveBeenCalled();
     });
 
@@ -93,9 +93,9 @@ describe('ActivitiProcessInstanceComments', () => {
         expect(getCommentsSpy).not.toHaveBeenCalled();
     });
 
-    it('should display comments when the process has comments', async(() => {
-        component.processInstanceId = '123';
-        fixture.detectChanges();
+    fit('should display comments when the process has comments', async(() => {
+        let change = new SimpleChange(null, '123');
+        component.ngOnChanges({ 'processInstanceId': change });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.queryAll(By.css('ul.mdl-list li')).length).toBe(3);

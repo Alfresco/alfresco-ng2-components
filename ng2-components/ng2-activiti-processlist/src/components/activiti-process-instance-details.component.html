@@ -1,13 +1,14 @@
 <div *ngIf="!processInstanceDetails">{{ 'DETAILS.MESSAGES.NONE'|translate }}</div>
 <div *ngIf="processInstanceDetails">
     <h2 class="mdl-card__title-text">{{processInstanceDetails.name}}</h2>
-    <activiti-process-instance-header [processInstance]="processInstanceDetails" (processCancelled)="bubbleProcessCancelled()"></activiti-process-instance-header>
-    <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--8-col">
-            <activiti-process-instance-tasks [processInstanceDetails]="processInstanceDetails" (taskFormCompleted)="bubbleTaskFormCompleted()"></activiti-process-instance-tasks>
+    <activiti-process-instance-header [processInstance]="processInstanceDetails"></activiti-process-instance-header>
+    <div class="mdl-card mdl-shadow--2dp activiti-process-container">
+        <div class="mdl-cell mdl-cell--12-col">
+            <activiti-process-instance-tasks [processInstanceDetails]="processInstanceDetails"
+                                             (taskFormCompleted)="bubbleTaskFormCompleted()"></activiti-process-instance-tasks>
         </div>
-        <div class="mdl-cell mdl-cell--4-col">
-            <activiti-process-instance-comments [processInstanceId]="processInstanceDetails.id"></activiti-process-instance-comments>
-        </div>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="isRunning()">
+        <button type="button" (click)="cancelProcess()" class="mdl-button">{{ 'DETAILS.BUTTON.CANCEL' | translate }}</button>
     </div>
 </div>

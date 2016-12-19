@@ -52,7 +52,7 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
     showRefreshButton: boolean = true;
 
     @Output()
-    processCancelled: EventEmitter<string> = new EventEmitter<string>();
+    processCancelled: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     taskFormCompleted: EventEmitter<any> = new EventEmitter<any>();
@@ -101,11 +101,20 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
         }
     }
 
-    bubbleProcessCancelled(data: any) {
-        this.processCancelled.emit(data);
-    }
-
     bubbleTaskFormCompleted(data: any) {
         this.taskFormCompleted.emit(data);
+    }
+
+    isRunning(): boolean {
+        return this.processInstanceDetails && !this.processInstanceDetails.ended;
+    }
+
+    cancelProcess() {
+        this.activitiProcess.cancelProcess(this.processInstanceId).subscribe(
+            (data) => {
+                this.processCancelled.emit(data);
+            }, (err) => {
+                console.error(err);
+            });
     }
 }

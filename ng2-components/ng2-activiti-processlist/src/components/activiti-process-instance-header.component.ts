@@ -35,9 +35,6 @@ export class ActivitiProcessInstanceHeader {
     processInstance: ProcessInstance;
 
     @Output()
-    processCancelled: EventEmitter<any> = new EventEmitter();
-
-    @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(private translate: AlfrescoTranslationService,
@@ -68,15 +65,5 @@ export class ActivitiProcessInstanceHeader {
 
     isRunning(): boolean {
         return this.processInstance && !this.processInstance.ended;
-    }
-
-    cancelProcess() {
-        this.activitiProcess.cancelProcess(this.processInstance.id).subscribe(
-            (res) => {
-                this.processCancelled.emit(res);
-            }, (err) => {
-                console.error(err);
-                this.onError.emit(err);
-            });
     }
 }

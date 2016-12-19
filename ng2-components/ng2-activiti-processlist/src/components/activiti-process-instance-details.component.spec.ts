@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
+import { ActivitiFormModule, FormModel, FormService } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
 import { ActivitiProcessInstanceDetails } from './activiti-process-instance-details.component';
@@ -140,12 +140,6 @@ describe('ActivitiProcessInstanceDetails', () => {
         it('should emit a task form completed event when task form completed', () => {
             let emitSpy: jasmine.Spy = spyOn(component.taskFormCompleted, 'emit');
             component.bubbleTaskFormCompleted(new FormModel());
-            expect(emitSpy).toHaveBeenCalled();
-        });
-
-        it('should emit a outcome execution event when task form outcome executed', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.processCancelled, 'emit');
-            component.bubbleProcessCancelled(new FormOutcomeEvent(new FormOutcomeModel(new FormModel())));
             expect(emitSpy).toHaveBeenCalled();
         });
 

@@ -3,9 +3,13 @@
 }
 
 .activiti-task-header__label {
-     font-weight: bold;
+    font-weight: bold;
 }
 
 .activiti-task-header__value {
-    color: rgb(68,138,255);
+    color: rgb(68, 138, 255);
+}
+
+.material-icons {
+    cursor: pointer;
 }
