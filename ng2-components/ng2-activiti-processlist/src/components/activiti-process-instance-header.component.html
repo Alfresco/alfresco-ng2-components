@@ -9,7 +9,7 @@
             <span class="activiti-process-header__value">{{getFormatDate(processInstance.started, 'medium')}}</span>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-process-instance-comments *ngIf="processInstance.id" [processInstanceId]="processInstance.id"></activiti-process-instance-comments>
+            <activiti-process-instance-comments [processInstanceId]="processInstance?.id"></activiti-process-instance-comments>
         </div>
         <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="!isRunning()">
             <span class="activiti-label">{{ 'DETAILS.LABELS.ENDED' | translate }}</span>:
