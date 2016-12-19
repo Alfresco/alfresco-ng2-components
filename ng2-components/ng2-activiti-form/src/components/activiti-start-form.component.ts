@@ -39,8 +39,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  *
  * @Input
  * {processDefinitionId} string: The process definition ID
- * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, as yet these don't do anything so this
- * is false by default
+ * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, this is now always active to show form outcomes
  *  @Output
  *  {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
  *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.

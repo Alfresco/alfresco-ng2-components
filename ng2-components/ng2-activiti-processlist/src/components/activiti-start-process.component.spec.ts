@@ -171,7 +171,7 @@ describe('ActivitiStartProcessInstance', () => {
             component.onProcessDefChange('my:process1');
             component.startProcess();
             fixture.whenStable().then(() => {
-                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined);
+                expect(startProcessSpy).toHaveBeenCalledWith('my:process1', 'My new process', undefined, undefined);
             });
         }));
 
@@ -262,10 +262,10 @@ describe('ActivitiStartProcessInstance', () => {
                 expect(getStartFormDefinitionSpy).toHaveBeenCalled();
             });
 
-            it('should leave start button disabled when mandatory fields not filled out', async(() => {
+            it('should not show the start process button', async(() => {
                 component.name = 'My new process';
                 fixture.detectChanges();
-                expect(startBtn.properties['disabled']).toBe(true);
+                expect(startBtn).toBeNull();
             }));
 
         });

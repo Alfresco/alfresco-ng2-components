@@ -102,7 +102,7 @@ describe('ActivitiStartForm', () => {
         component.ngOnInit();
     });
 
-    it('should not show outcome buttons by default', () => {
+    it('should show outcome buttons by default', () => {
         getStartFormSpy.and.returnValue(Observable.of({
             id: '1',
             processDefinitionName: 'my:process',
@@ -114,7 +114,7 @@ describe('ActivitiStartForm', () => {
         component.processDefinitionId = exampleId1;
         component.ngOnInit();
         fixture.detectChanges();
-        expect(component.outcomesContainer).not.toBeTruthy();
+        expect(component.outcomesContainer).toBeTruthy();
     });
 
     it('should show outcome buttons if showOutcomeButtons is true', () => {
