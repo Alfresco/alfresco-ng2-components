@@ -18,7 +18,7 @@
             <i class="material-icons">mode_edit</i>
             <h4 (click)="editEnable()">{{reportParameters.name}}</h4>
             </span>
-        </div>
+        </div><hr>
         <div *ngFor="let field of reportParameters.definition.parameters">
             <div [ngSwitch]="field.type">
                 <div *ngSwitchCase="'integer'">

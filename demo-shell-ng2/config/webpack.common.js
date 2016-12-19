@@ -18,9 +18,6 @@ let options = {
 let alfrescoLibs = glob.sync(pattern, options);
 // console.dir(alfrescoLibs);
 
-let alfrescoLibsModules = alfrescoLibs.map(p => path.join(p, 'node_modules'));
-let alfrescoLibsSources = alfrescoLibs.map(p => path.join(p, 'src'));
-
 module.exports = {
     entry: {
         'polyfills': './app/polyfills.ts',
@@ -106,10 +103,7 @@ module.exports = {
 
     plugins: [
 
-        new webpack.WatchIgnorePlugin([
-            ...alfrescoLibsModules,
-            ...alfrescoLibsSources
-        ]),
+        new webpack.WatchIgnorePlugin([ new RegExp('^((?!(ng2-activiti|ng2-alfresco|demo-shell-ng2)).)((?!(src|app)).)*$')]),
 
         new CopyWebpackPlugin([
             {

@@ -78,18 +78,22 @@ export class AppComponent {
         this.auth.logout()
             .subscribe(
                 () => {
-                    this.router.navigate(['/login']);
-                    this.hideDrawer();
+                    this.navigateToLogin();
                 },
-                ($event: any) => {
-                    if ($event && $event.response && $event.response.status === 401) {
-                        this.router.navigate(['/login']);
-                        this.hideDrawer();
+                (error: any) => {
+                    if (error && error.response && error.response.status === 401) {
+                        this.navigateToLogin();
                     } else {
-                        console.error('An unknown error occurred while logging out', $event);
+                        console.error('An unknown error occurred while logging out', error);
+                        this.navigateToLogin();
                     }
                 }
             );
+    }
+
+    navigateToLogin(){
+        this.router.navigate(['/login']);
+        this.hideDrawer();
     }
 
     onToggleSearch(event) {

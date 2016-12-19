@@ -1,12 +1,12 @@
 @media screen and (max-width: 1024px) {
     .mdl-layout__header {
-         display: block;
+        display: block;
     }
 }
 
 @media screen and (max-width: 1024px) {
     .mdl-layout__header {
-         display: block;
+        display: block;
     }
 }
 
@@ -24,4 +24,12 @@
 
 .hide {
     display: none !important;
+}
+
+.mdl-navigation__link {
+    cursor: pointer;
+}
+
+.mdl-navigation__link label {
+    cursor: pointer;
 }

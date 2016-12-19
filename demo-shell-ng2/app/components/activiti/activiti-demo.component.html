@@ -19,13 +19,15 @@
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
-                        <span>Task Filters</span>
+                        <span><h5>Task Filters</h5></span>
+                        <hr>
                         <activiti-start-task [appId]="appId" (onSuccess)="onStartTaskSuccess($event)"></activiti-start-task>
                         <activiti-filters [appId]="appId" (filterClick)="onTaskFilterClick($event)" (onSuccess)="onSuccessTaskFilterList($event)"
                                           #activitifilter></activiti-filters>
                     </div>
                     <div class="mdl-cell mdl-cell--3-col task-column mdl-shadow--2dp list-column">
-                        <span>Task List</span>
+                        <span><h5>Task List</h5></span>
+                        <hr>
                         <activiti-tasklist *ngIf="taskFilter?.hasFilter()" [appId]="taskFilter.appId"
                                            [processDefinitionKey]="taskFilter.filter.processDefinitionKey"
                                            [name]="taskFilter.filter.name"
@@ -37,7 +39,8 @@
                                            #activititasklist></activiti-tasklist>
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
-                        <span>Task Details</span>
+                        <span><h5>Task Details</h5></span>
+                        <hr>
                         <activiti-task-details [taskId]="currentTaskId" (formCompleted)="onFormCompleted($event)"
                                                #activitidetails></activiti-task-details>
                     </div>
@@ -52,15 +55,17 @@
             <div class="page-content">
                 <div class="page-content">
                     <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--2-col task-column">
-                            <span>Process Filters</span>
+                        <div class="mdl-cell mdl-cell--2-col task-column  mdl-shadow--2dp">
+                            <span><h5>Process Filters</h5></span>
+                            <hr>
                             <button type="button" (click)="navigateStartProcess()" class="mdl-button" data-automation-id="btn-start-process">Start Process</button>
                             <activiti-process-instance-filters [appId]="appId"
                                     (filterClick)="onProcessFilterClick($event)"
                                     (onSuccess)="onSuccessProcessFilterList($event)"></activiti-process-instance-filters>
                         </div>
-                        <div class="mdl-cell mdl-cell--3-col task-column list-column">
-                            <span>Process List</span>
+                        <div class="mdl-cell mdl-cell--3-col task-column list-column  mdl-shadow--2dp">
+                            <span><h5>Process List</h5></span>
+                            <hr>
                             <activiti-process-instance-list *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                                     [processDefinitionKey]="processFilter.filter.processDefinitionKey"
                                     [name]="processFilter.filter.name"
@@ -70,14 +75,16 @@
                                     (rowClick)="onProcessRowClick($event)"
                                     (onSuccess)="onSuccessProcessList($event)"></activiti-process-instance-list>
                         </div>
-                        <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="!isStartProcessMode()">
-                            <span>Process Details</span>
+                        <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp"  *ngIf="!isStartProcessMode()">
+                            <span><h5>Process Details</h5></span>
+                            <hr>
                             <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId"
                                     (activitiprocesslist)="taskFormCompleted()"
                                     (processCancelled)="processCancelled()"></activiti-process-instance-details>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
                             <span>Start Process</span>
+                            <hr>
                             <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
                         </div>
                     </div>
@@ -92,6 +99,8 @@
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
+                        <span><h5>Report List</h5></span>
+                        <hr>
                         <analytics-report-list
                                 (reportClick)="onReportClick($event)"
                                 #analyticsreportlist >
