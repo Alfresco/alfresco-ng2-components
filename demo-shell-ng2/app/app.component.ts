@@ -52,7 +52,7 @@ export class AppComponent {
                 translate.addTranslationFolder('custom', 'i18n/custom-translation');
                 translate.addTranslationFolder('ng2-alfresco-login', 'i18n/custom-translation/alfresco-login');
             } else {
-                translate.addTranslationFolder('custom', 'custom-translation/');
+                translate.addTranslationFolder('custom', 'custom-translation');
                 translate.addTranslationFolder('ng2-alfresco-login', 'custom-translation/alfresco-login');
             }
         }

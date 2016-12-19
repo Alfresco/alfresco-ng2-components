@@ -77,7 +77,6 @@ import {
     declarations: [
         AppComponent,
         HomeComponent,
-        SearchBarComponent,
         DataTableDemoComponent,
         SearchComponent,
         SearchBarComponent,
