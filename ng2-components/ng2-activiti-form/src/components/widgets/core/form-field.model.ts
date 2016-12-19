@@ -317,11 +317,23 @@ export class FormFieldModel extends FormWidgetModel {
                 this.form.values[this.id] = this.enableFractions ? parseFloat(this.value) : parseInt(this.value, 10);
                 break;
             default:
-                if (!FormFieldTypes.isReadOnlyType(this.type)) {
+                if (!FormFieldTypes.isReadOnlyType(this.type) && !this.isInvalidFieldType(this.type)) {
                     this.form.values[this.id] = this.value;
                 }
         }
 
         this.form.onFormFieldChanged(this);
+    }
+
+    /**
+     * Skip the invalid field type
+     * @param type
+     */
+    isInvalidFieldType(type: string) {
+        if (type === 'container') {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -202,7 +202,7 @@ describe('ActivitiProcessService', () => {
                 type: 'ford',
                 color: 'red'
             };
-            service.startProcess(processDefId, processName, formParams);
+            service.startProcess(processDefId, processName, null, formParams);
             expect(startNewProcessInstance).toHaveBeenCalledWith({
                 name: processName,
                 processDefinitionId: processDefId,

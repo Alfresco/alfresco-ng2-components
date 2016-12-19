@@ -86,11 +86,11 @@ export class ActivitiStartProcessInstance implements OnInit, OnChanges {
         );
     }
 
-    public startProcess() {
+    public startProcess(outcome?: string) {
         if (this.currentProcessDef.id && this.name) {
             this.resetErrorMessage();
             let formValues = this.startForm ? this.startForm.form.values : undefined;
-            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, formValues).subscribe(
+            this.activitiProcess.startProcess(this.currentProcessDef.id, this.name, outcome, formValues).subscribe(
                 (res) => {
                     this.name = '';
                     this.start.emit(res);
@@ -132,6 +132,10 @@ export class ActivitiStartProcessInstance implements OnInit, OnChanges {
 
     private resetErrorMessage(): void {
         this.errorMessageId = '';
+    }
+
+    public onOutcomeClick(outcome: string) {
+        this.startProcess(outcome);
     }
 
     public reset() {

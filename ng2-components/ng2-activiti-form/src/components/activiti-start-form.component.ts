@@ -21,7 +21,9 @@ import {
     SimpleChanges,
     Input,
     ViewChild,
-    ElementRef
+    ElementRef,
+    Output,
+    EventEmitter
 } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
@@ -37,8 +39,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  *
  * @Input
  * {processDefinitionId} string: The process definition ID
- * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, as yet these don't do anything so this
- * is false by default
+ * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, this is now always active to show form outcomes
  *  @Output
  *  {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
  *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
@@ -61,10 +62,13 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     processId: string;
 
     @Input()
-    showOutcomeButtons: boolean = false;
+    showOutcomeButtons: boolean = true;
 
     @Input()
     showRefreshButton: boolean = true;
+
+    @Output()
+    outcomeClick: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
@@ -145,5 +149,6 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     }
 
     completeTaskForm(outcome?: string) {
+        this.outcomeClick.emit(outcome);
     }
 }
