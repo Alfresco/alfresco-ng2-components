@@ -93,9 +93,10 @@ describe('ActivitiProcessInstanceComments', () => {
         expect(getCommentsSpy).not.toHaveBeenCalled();
     });
 
-    fit('should display comments when the process has comments', async(() => {
+    it('should display comments when the process has comments', async(() => {
         let change = new SimpleChange(null, '123');
         component.ngOnChanges({ 'processInstanceId': change });
+
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.queryAll(By.css('ul.mdl-list li')).length).toBe(3);

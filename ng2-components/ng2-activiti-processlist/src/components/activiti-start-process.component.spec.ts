@@ -75,25 +75,30 @@ describe('ActivitiStartProcessInstance', () => {
     describe('process definitions list', () => {
 
         it('should call service to fetch process definitions', () => {
-            fixture.detectChanges();
+            let change = new SimpleChange(null, '123');
+            component.ngOnChanges({ 'appId': change });
+
             expect(getDefinitionsSpy).toHaveBeenCalled();
         });
 
         it('should call service to fetch process definitions with appId when provided', () => {
-            let appId = '123';
-            component.appId = appId;
-            fixture.detectChanges();
-            expect(getDefinitionsSpy).toHaveBeenCalledWith(appId);
+            let change = new SimpleChange(null, '123');
+            component.ngOnChanges({ 'appId': change });
+
+            expect(getDefinitionsSpy).toHaveBeenCalledWith('123');
         });
 
         it('should display the correct number of processes in the select list', () => {
-            fixture.detectChanges();
+            component.ngOnChanges({});
+
             let selectElement = debugElement.query(By.css('select'));
             expect(selectElement.children.length).toBe(3);
         });
 
         it('should display the correct process def details', async(() => {
-            fixture.detectChanges();
+            let change = new SimpleChange(null, '123');
+            component.ngOnChanges({ 'appId': change });
+
             fixture.whenStable().then(() => {
                 let optionEl: HTMLOptionElement = debugElement.queryAll(By.css('select option'))[1].nativeElement;
                 expect(optionEl.value).toBe('my:process1');
@@ -103,7 +108,9 @@ describe('ActivitiStartProcessInstance', () => {
 
         it('should indicate an error to the user if process defs cannot be loaded', async(() => {
             getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.throw({}));
-            fixture.detectChanges();
+            let change = new SimpleChange(null, '123');
+            component.ngOnChanges({ 'appId': change });
+
             fixture.whenStable().then(() => {
                 let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
                 expect(errorEl).not.toBeNull('Expected error message to be present');
@@ -148,7 +155,7 @@ describe('ActivitiStartProcessInstance', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
-            fixture.detectChanges();
+            component.ngOnChanges({});
         });
 
         it('should call service to start process if required fields provided', async(() => {
