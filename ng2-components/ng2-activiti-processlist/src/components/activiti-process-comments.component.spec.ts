@@ -23,7 +23,7 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 
-import { ActivitiComments } from './activiti-comments.component';
+import { ActivitiProcessComments } from './activiti-process-comments.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 
@@ -31,8 +31,8 @@ describe('ActivitiProcessInstanceComments', () => {
 
     let componentHandler: any;
     let service: ActivitiProcessService;
-    let component: ActivitiComments;
-    let fixture: ComponentFixture<ActivitiComments>;
+    let component: ActivitiProcessComments;
+    let fixture: ComponentFixture<ActivitiProcessComments>;
     let getCommentsSpy: jasmine.Spy;
     let addCommentSpy: jasmine.Spy;
 
@@ -43,7 +43,7 @@ describe('ActivitiProcessInstanceComments', () => {
                 ActivitiFormModule
             ],
             declarations: [
-                ActivitiComments
+                ActivitiProcessComments
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },
@@ -54,7 +54,7 @@ describe('ActivitiProcessInstanceComments', () => {
 
     beforeEach(() => {
 
-        fixture = TestBed.createComponent(ActivitiComments);
+        fixture = TestBed.createComponent(ActivitiProcessComments);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiProcessService);
 

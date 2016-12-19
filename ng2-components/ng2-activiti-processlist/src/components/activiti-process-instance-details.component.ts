@@ -20,7 +20,6 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
-import { ActivitiComments } from './activiti-comments.component';
 import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
@@ -41,9 +40,6 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
 
     @ViewChild(ActivitiProcessInstanceTasks)
     tasksList: ActivitiProcessInstanceTasks;
-
-    @ViewChild(ActivitiComments)
-    commentsList: ActivitiComments;
 
     @Input()
     showTitle: boolean = true;

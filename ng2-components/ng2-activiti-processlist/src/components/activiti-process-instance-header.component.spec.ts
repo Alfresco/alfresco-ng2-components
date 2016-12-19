@@ -25,6 +25,7 @@ import { TranslationMock } from './../assets/translation.service.mock';
 import { exampleProcess } from './../assets/activiti-process.model.mock';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
+import { ActivitiProcessComments } from './activiti-process-comments.component';
 
 describe('ActivitiProcessInstanceHeader', () => {
 
@@ -38,7 +39,8 @@ describe('ActivitiProcessInstanceHeader', () => {
                 CoreModule
             ],
             declarations: [
-                ActivitiProcessInstanceHeader
+                ActivitiProcessInstanceHeader,
+                ActivitiProcessComments
             ],
             providers: [
                 { provide: AlfrescoTranslationService, useClass: TranslationMock },

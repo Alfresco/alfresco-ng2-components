@@ -28,11 +28,11 @@ declare let dialogPolyfill: any;
 @Component({
     selector: 'activiti-process-instance-comments',
     moduleId: module.id,
-    templateUrl: './activiti-comments.component.html',
-    styleUrls: ['./activiti-comments.component.css'],
+    templateUrl: './activiti-process-comments.component.html',
+    styleUrls: ['./activiti-process-comments.component.css'],
     providers: [ActivitiProcessService]
 })
-export class ActivitiComments implements OnChanges {
+export class ActivitiProcessComments implements OnChanges {
 
     @Input()
     processInstanceId: string;
