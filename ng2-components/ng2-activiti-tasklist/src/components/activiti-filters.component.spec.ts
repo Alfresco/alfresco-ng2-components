@@ -48,6 +48,9 @@ describe('ActivitiFilters', () => {
 
     it('should return the filter task list', (done) => {
         spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        const appId = '1';
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
 
         filterList.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
@@ -70,7 +73,8 @@ describe('ActivitiFilters', () => {
         spyOn(filterList.activiti, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
         spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        filterList.appName = 'test';
+        let change = new SimpleChange(null, 'test');
+        filterList.ngOnChanges({ 'appName': change });
 
         filterList.onSuccess.subscribe((res) => {
             let deployApp: any = filterList.activiti.getDeployedApplications;
@@ -83,8 +87,11 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        filterList.appId = '1';
         spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
 
         filterList.onError.subscribe((err) => {
             expect(err).toBeDefined();
@@ -95,8 +102,11 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        filterList.appName = 'fake-app';
         spyOn(filterList.activiti, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = 'fake-app';
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appName': change });
 
         filterList.onError.subscribe((err) => {
             expect(err).toBeDefined();

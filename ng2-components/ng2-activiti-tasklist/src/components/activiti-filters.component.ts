@@ -75,8 +75,6 @@ export class ActivitiFilters implements OnInit, OnChanges {
         this.filter$.subscribe((filter: FilterRepresentationModel) => {
             this.filters.push(filter);
         });
-
-        this.getFilters(this.appId, this.appName);
     }
 
     ngOnChanges(changes: SimpleChanges) {
