@@ -155,7 +155,8 @@ describe('ActivitiStartProcessInstance', () => {
 
         beforeEach(() => {
             component.name = 'My new process';
-            component.ngOnChanges({});
+            let change = new SimpleChange(null, '123');
+            component.ngOnChanges({ 'appId': change });
         });
 
         it('should call service to start process if required fields provided', async(() => {
