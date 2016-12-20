@@ -20,9 +20,7 @@
             "es2015",
             "dom"
         ],
-        "typeRoots": [
-            "node_modules/@types"
-        ],
+        "types": ["core-js", "jasmine", "node"],
         "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
