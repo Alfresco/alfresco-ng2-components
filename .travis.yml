@@ -48,8 +48,8 @@ before_script:
     fi
   - cd ng2-components/$MODULE;
   - npm run travis;
-  - npm install;
-script: npm run test
+#npm insall run install, build and tests
+script: npm install
 # Send coverage data to Coveralls
 after_success:
    - if ([ "$TRAVIS_BRANCH" == "development" ] || [ "$TRAVIS_BRANCH" == "master" ]); then
