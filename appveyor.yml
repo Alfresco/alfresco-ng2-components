@@ -1,7 +1,7 @@
 # Test against this version of Node.js
 
 environment:
-  nodejs_version: "6"
+  nodejs_version: "5"
 
   matrix:
   - COMPONENT_NAME: ng2-alfresco-core
