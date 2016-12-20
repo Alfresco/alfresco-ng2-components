@@ -52,9 +52,7 @@ before_script:
 script: npm run test
 # Send coverage data to Coveralls
 after_success:
-   - if ([ "$TRAVIS_BRANCH" == "development" ] || [ "$TRAVIS_BRANCH" == "master" ]); then
-         bash <(curl -s https://codecov.io/bash)
-    fi
+  bash <(curl -s https://codecov.io/bash)
 
 cache:
   directories:
