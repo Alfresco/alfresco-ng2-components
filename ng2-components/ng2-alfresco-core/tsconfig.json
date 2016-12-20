@@ -20,6 +20,9 @@
             "es2015",
             "dom"
         ],
+        "types": [
+            "node"
+        ],
         "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
