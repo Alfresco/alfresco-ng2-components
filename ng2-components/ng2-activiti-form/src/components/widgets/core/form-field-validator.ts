@@ -39,7 +39,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.RADIO_BUTTONS,
         FormFieldTypes.UPLOAD,
         FormFieldTypes.AMOUNT,
-        FormFieldTypes.DYNAMIC_TABLE
+        FormFieldTypes.DYNAMIC_TABLE,
+        FormFieldTypes.DATE
     ];
 
     isSupported(field: FormFieldModel): boolean {
