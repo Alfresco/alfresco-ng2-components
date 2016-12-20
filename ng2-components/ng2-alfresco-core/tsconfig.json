@@ -20,9 +20,8 @@
             "es2015",
             "dom"
         ],
-        "types": [
-            "mocha",
-            "node"
+        "typeRoots": [
+            "node_modules/@types"
         ],
         "suppressImplicitAnyIndexErrors": true
     },
