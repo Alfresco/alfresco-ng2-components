@@ -52,7 +52,7 @@ before_script:
 script: npm run test
 # Send coverage data to Coveralls
 after_success:
-  bash <(curl -s https://codecov.io/bash)
+  bash <(curl -s https://codecov.io/bash) -X gcov
 
 cache:
   directories:
