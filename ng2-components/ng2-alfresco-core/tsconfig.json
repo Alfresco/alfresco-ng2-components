@@ -21,6 +21,7 @@
             "dom"
         ],
         "types": [
+            "mocha",
             "node"
         ],
         "suppressImplicitAnyIndexErrors": true
