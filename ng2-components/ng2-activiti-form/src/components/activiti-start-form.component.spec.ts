@@ -108,6 +108,7 @@ describe('ActivitiStartForm', () => {
         }));
         component.processDefinitionId = exampleId1;
         component.ngOnInit();
+        component.ngOnChanges({ processDefinitionId: new SimpleChange(exampleId1, exampleId2) });
         fixture.detectChanges();
         expect(component.outcomesContainer).toBeTruthy();
     });
