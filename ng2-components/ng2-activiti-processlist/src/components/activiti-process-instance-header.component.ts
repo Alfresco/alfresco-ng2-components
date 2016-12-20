@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges  } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance.model';
-import { DatePipe } from '@angular/common';
 
 declare let componentHandler: any;
 
@@ -28,7 +27,7 @@ declare let componentHandler: any;
     templateUrl: './activiti-process-instance-header.component.html',
     styleUrls: ['./activiti-process-instance-header.component.css']
 })
-export class ActivitiProcessInstanceHeader {
+export class ActivitiProcessInstanceHeader implements OnChanges {
 
     @Input()
     processInstance: ProcessInstance;
@@ -43,22 +42,8 @@ export class ActivitiProcessInstanceHeader {
         }
     }
 
-    getStartedByFullName(): string {
-        if (this.processInstance && this.processInstance.startedBy) {
-            return (this.processInstance.startedBy.firstName && this.processInstance.startedBy.firstName !== 'null'
-                    ? this.processInstance.startedBy.firstName + ' ' : '') +
-                this.processInstance.startedBy.lastName;
-        }
-        return '';
-    }
-
-    getFormatDate(value, format: string) {
-        let datePipe = new DatePipe('en-US');
-        try {
-            return datePipe.transform(value, format);
-        } catch (err) {
-            console.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
-        }
+    ngOnChanges(changes: SimpleChanges) {
+        this.processInstance = new ProcessInstance(changes['processInstance'].currentValue);
     }
 
     isRunning(): boolean {

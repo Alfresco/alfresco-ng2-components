@@ -2,18 +2,18 @@
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-started-by">
             <span class="activiti-label">{{ 'DETAILS.LABELS.STARTED_BY' | translate }}</span>:
-            <span class="activiti-process-header__value">{{getStartedByFullName()}}</span>
+            <span class="activiti-process-header__value">{{processInstance.startedByFullName}}</span>
         </div>
         <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-started">
             <span class="activiti-label">{{ 'DETAILS.LABELS.STARTED' | translate }}</span>:
-            <span class="activiti-process-header__value">{{getFormatDate(processInstance.started, 'medium')}}</span>
+            <span class="activiti-process-header__value">{{processInstance.startedFormatDate}}</span>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
             <activiti-process-instance-comments [processInstanceId]="processInstance?.id"></activiti-process-instance-comments>
         </div>
         <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="!isRunning()">
             <span class="activiti-label">{{ 'DETAILS.LABELS.ENDED' | translate }}</span>:
-            <span class="activiti-process-header__value">{{getFormatDate(processInstance.ended, 'medium')}}</span>
+            <span class="activiti-process-header__value">{{processInstance.endedFormatDate }}</span>
         </div>
     </div>
 </div>
