@@ -9,6 +9,7 @@ import * as Builder from 'systemjs-builder';
 var autoprefixer = require('autoprefixer');
 import * as cssnano from 'cssnano';
 import * as filter from 'gulp-filter';
+import * as sourcemaps from 'gulp-sourcemaps';
 
 var APP_SRC = `.`;
 var CSS_PROD_BUNDLE = 'main.css';
@@ -282,6 +283,7 @@ gulp.task('build.js.prod', () => {
     let result = gulp.src(src)
         .pipe(plugins.plumber())
         .pipe(plugins.inlineNg2Template(INLINE_OPTIONS))
+        .pipe(sourcemaps.init())
         .pipe(tsProject())
         .once('error', function (e: any) {
             this.once('finish', () => process.exit(1));
@@ -289,6 +291,7 @@ gulp.task('build.js.prod', () => {
 
     return result.js
         .pipe(plugins.template())
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('src'))
         .on('error', (e: any) => {
             console.log(e);
