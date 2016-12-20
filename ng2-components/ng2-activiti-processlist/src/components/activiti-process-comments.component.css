@@ -16,3 +16,7 @@
     position: relative;
     top: -2px;
 }
+
+.material-icons {
+    cursor: pointer;
+}

@@ -17,7 +17,7 @@
 
 import {
     Component,
-    OnInit, AfterViewChecked, OnChanges,
+    AfterViewChecked, OnChanges,
     SimpleChanges,
     Input,
     ViewChild,
@@ -53,7 +53,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
     templateUrl: './activiti-start-form.component.html',
     styleUrls: ['./activiti-form.component.css']
 })
-export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
+export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked, OnChanges {
 
     @Input()
     processDefinitionId: string;
@@ -77,14 +77,6 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
                 formService: FormService,
                 visibilityService: WidgetVisibilityService) {
         super(formService, visibilityService, null, null);
-    }
-
-    ngOnInit() {
-        if (this.processId) {
-            this.loadStartForm(this.processId);
-        }else {
-            this.loadForm();
-        }
 
         if (this.translate) {
             this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
@@ -94,21 +86,15 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     ngOnChanges(changes: SimpleChanges) {
         let processDefinitionId = changes['processDefinitionId'];
         if (processDefinitionId && processDefinitionId.currentValue) {
+            this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(processDefinitionId.currentValue);
             return;
         }
 
         let processId = changes['processId'];
-        if (processId  && processId.currentValue) {
-            this.loadStartForm(processId.currentValue);
-            return;
-        }
-    }
-
-    loadForm() {
-        if (this.processDefinitionId) {
+        if (processId && processId.currentValue) {
             this.visibilityService.cleanProcessVariable();
-            this.getStartFormDefinition(this.processDefinitionId);
+            this.loadStartForm(processId.currentValue);
             return;
         }
     }

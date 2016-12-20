@@ -89,6 +89,10 @@ export class ActivitiDemoComponent implements AfterViewInit {
     taskSchemaColumns: any [] = [];
     processSchemaColumns: any [] = [];
 
+    processTabActivie: boolean = false;
+
+    reportsTabActivie: boolean = false;
+
     taskFilter: FilterRepresentationModel;
     report: any;
     processFilter: FilterRepresentationModel;
@@ -230,6 +234,14 @@ export class ActivitiDemoComponent implements AfterViewInit {
         }
 
         this.loadStencilScriptsInPageFromActiviti();
+    }
+
+    activeProcess() {
+        this.processTabActivie = true;
+    }
+
+    activeReports() {
+        this.reportsTabActivie = true;
     }
 
     loadStencilScriptsInPageFromActiviti() {

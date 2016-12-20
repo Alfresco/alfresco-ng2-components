@@ -21,14 +21,17 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
-import { ActivitiProcessInstanceListComponent } from './src/components/activiti-processlist.component';
-import { ActivitiProcessFilters } from './src/components/activiti-filters.component';
-import { ActivitiProcessInstanceHeader } from './src/components/activiti-process-instance-header.component';
-import { ActivitiProcessInstanceTasks } from './src/components/activiti-process-instance-tasks.component';
-import { ActivitiProcessInstanceVariables } from './src/components/activiti-process-instance-variables.component';
-import { ActivitiComments } from './src/components/activiti-comments.component';
-import { ActivitiProcessInstanceDetails } from './src/components/activiti-process-instance-details.component';
-import { ActivitiStartProcessInstance } from './src/components/activiti-start-process.component';
+import {
+    ActivitiProcessInstanceListComponent,
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceHeader,
+    ActivitiProcessInstanceTasks,
+    ActivitiProcessInstanceVariables,
+    ActivitiProcessComments,
+    ActivitiProcessInstanceDetails,
+    ActivitiStartProcessInstance
+} from './src/components/index';
+
 import { ActivitiProcessService } from './src/services/activiti-process.service';
 
 // components
@@ -50,7 +53,7 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ActivitiProcessInstanceHeader,
     ActivitiProcessInstanceTasks,
     ActivitiProcessInstanceVariables,
-    ActivitiComments,
+    ActivitiProcessComments,
     ActivitiStartProcessInstance
 ];
 

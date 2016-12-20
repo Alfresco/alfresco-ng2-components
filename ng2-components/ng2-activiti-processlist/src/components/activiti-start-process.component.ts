@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ProcessInstance } from './../models/process-instance.model';
@@ -31,7 +31,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-start-process.component.html',
     styleUrls: ['./activiti-start-process.component.css']
 })
-export class ActivitiStartProcessInstance implements OnInit, OnChanges {
+export class ActivitiStartProcessInstance implements OnChanges {
 
     @Input()
     appId: string;
@@ -59,10 +59,6 @@ export class ActivitiStartProcessInstance implements OnInit, OnChanges {
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
-    }
-
-    ngOnInit() {
-        this.load(this.appId);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -119,7 +115,11 @@ export class ActivitiStartProcessInstance implements OnInit, OnChanges {
     }
 
     isStartFormMissingOrValid() {
-        return !this.startForm || this.startForm.form.isValid;
+        if (this.startForm && this.startForm.form && this.startForm.form.isValid) {
+            return !this.startForm || this.startForm.form.isValid;
+        } else {
+            return false;
+        }
     }
 
     validateForm() {

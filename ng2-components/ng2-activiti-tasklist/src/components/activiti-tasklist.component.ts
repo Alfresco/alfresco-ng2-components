@@ -83,7 +83,6 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         if (!this.data) {
             this.data = this.initDefaultSchemaColumns();
         }
-        this.reload();
     }
 
     ngOnChanges(changes: SimpleChanges) {

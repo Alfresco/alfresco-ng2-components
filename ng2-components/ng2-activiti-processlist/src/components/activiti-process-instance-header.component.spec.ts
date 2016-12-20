@@ -18,12 +18,18 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import {
+    AlfrescoTranslationService,
+    CoreModule,
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
+    AlfrescoApiService } from 'ng2-alfresco-core';
 
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { exampleProcess } from './../assets/activiti-process.model.mock';
 import { ProcessInstance } from './../models/process-instance.model';
+import { ActivitiProcessComments } from './activiti-process-comments.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
 describe('ActivitiProcessInstanceHeader', () => {
@@ -38,11 +44,15 @@ describe('ActivitiProcessInstanceHeader', () => {
                 CoreModule
             ],
             declarations: [
-                ActivitiProcessInstanceHeader
+                ActivitiProcessInstanceHeader,
+                ActivitiProcessComments
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
-                ActivitiProcessService
+                AlfrescoSettingsService,
+                AlfrescoAuthenticationService,
+                AlfrescoApiService,
+                ActivitiProcessService,
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));
@@ -88,13 +98,6 @@ describe('ActivitiProcessInstanceHeader', () => {
         let formValueEl = fixture.debugElement.query(By.css('[data-automation-id="header-started"] .activiti-process-header__value'));
         expect(formValueEl).not.toBeNull();
         expect(formValueEl.nativeElement.innerText).toBe('Nov 10, 2016, 3:37:30 AM');
-    });
-
-    it('should display cancel button if process is running', () => {
-        component.processInstance.ended = null;
-        fixture.detectChanges();
-        let buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
-        expect(buttonEl).not.toBeNull();
     });
 
     it('should display ended date if process is ended', () => {

@@ -280,7 +280,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     loadForm() {
         if (this.taskId) {
             this.getFormByTaskId(this.taskId);
-            this.visibilityService.getTaskProcessVariable(this.taskId).subscribe();
             return;
         }
 
@@ -295,6 +294,22 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
+    loadFormPorcessVariable(taskId) {
+        this.formService.getTask(taskId).subscribe(
+            task => {
+                if (this.isAProcessTask(task)) {
+                    this.visibilityService.getTaskProcessVariable(taskId).subscribe();
+                }
+            },
+            (error) => {
+                this.handleError(error);
+            });
+    }
+
+    isAProcessTask(taskRepresentation) {
+        return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
+    }
+
     setupMaterialComponents(): boolean {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
@@ -305,6 +320,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     getFormByTaskId(taskId: string) {
+        this.loadFormPorcessVariable(this.taskId);
         let data = this.data;
         this.formService
             .getTaskForm(taskId)
@@ -411,7 +427,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
+            new FormOutcomeModel(form, {id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
         ];
     }
 

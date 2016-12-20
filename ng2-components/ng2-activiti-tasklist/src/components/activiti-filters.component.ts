@@ -75,8 +75,6 @@ export class ActivitiFilters implements OnInit, OnChanges {
         this.filter$.subscribe((filter: FilterRepresentationModel) => {
             this.filters.push(filter);
         });
-
-        this.getFilters(this.appId, this.appName);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -86,10 +84,12 @@ export class ActivitiFilters implements OnInit, OnChanges {
             return;
         }
         let appName = changes['appName'];
-        if (appName && appName.currentValue) {
+        if (appName && appName !== null && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
             return;
         }
+
+        this.getFiltersByAppId();
     }
 
     /**

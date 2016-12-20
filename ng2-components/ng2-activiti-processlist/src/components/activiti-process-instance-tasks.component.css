@@ -36,3 +36,14 @@
     height: 400px;
     overflow-y: auto;
 }
+
+.no-results {
+    margin-left: 9px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 18px;
+    color: rgba(0, 0, 0, .54);
+    display: block;
+    padding: 12px;
+}
