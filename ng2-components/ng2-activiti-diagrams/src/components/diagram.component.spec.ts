@@ -17,13 +17,15 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import {
-    CoreModule
+    CoreModule,
+    AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './index';
 import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
 import { DiagramComponent } from './index';
 import { DebugElement } from '@angular/core';
+import { TranslationMock } from '../assets/translation.service.mock';
 import * as diagramsEventsMock from '../assets/diagramEvents.mock';
 import * as diagramsActivitiesMock from '../assets/diagramActivities.mock';
 import * as diagramsGatewaysMock from '../assets/diagramGateways.mock';
@@ -56,7 +58,8 @@ describe('Test ng2-activiti-diagrams ', () => {
             ],
             providers: [
                 ...DIAGRAM_PROVIDERS,
-                ...RAPHAEL_PROVIDERS
+                ...RAPHAEL_PROVIDERS,
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));
@@ -74,6 +77,7 @@ describe('Test ng2-activiti-diagrams ', () => {
     });
 
     describe('Diagrams component Events: ', () => {
+
         beforeEach(() => {
             jasmine.Ajax.install();
             component.processDefinitionId = 'fakeprocess:24:38399';
@@ -91,6 +95,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let event: any = element.querySelector('diagram-start-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -113,6 +120,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-timer > raphael-icon-timer');
                     expect(iconEvent).not.toBeNull();
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -136,6 +146,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-signal > raphael-icon-signal');
                     expect(iconEvent).not.toBeNull();
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -158,6 +171,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-message > raphael-icon-message');
                     expect(iconEvent).not.toBeNull();
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -180,6 +196,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconEvent: any = element.querySelector('diagram-start-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -198,6 +217,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).toBeDefined();
                     let event: any = element.querySelector('diagram-end-event > diagram-event > raphael-circle');
                     expect(event).not.toBeNull();
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -220,6 +242,9 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconEvent: any = element.querySelector('diagram-end-event > diagram-event >' +
                         ' diagram-container-icon-event > div > div > diagram-icon-error > raphael-icon-error');
                     expect(iconEvent).not.toBeNull();
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -251,12 +276,16 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-user-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-user-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake User task');
 
                     let iconTask: any = element.querySelector('diagram-user-task > diagram-icon-user-task > raphael-icon-user');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -276,12 +305,16 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-manual-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-manual-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Manual task');
 
                     let iconTask: any = element.querySelector('diagram-manual-task > diagram-icon-manual-task > raphael-icon-manual');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -301,12 +334,16 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-service-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-service-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Service task');
 
                     let iconTask: any = element.querySelector('diagram-service-task > diagram-icon-service-task > raphael-icon-service');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -342,12 +379,16 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-camel-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-camel-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Camel task');
 
                     let iconTask: any = element.querySelector('diagram-camel-task > diagram-icon-camel-task > raphael-icon-camel');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -367,7 +408,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-mule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-mule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Mule task');
 
@@ -392,13 +433,17 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-alfresco-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Alfresco Publish task');
 
                     let iconTask: any = element.querySelector('diagram-alfresco-publish-task > diagram-icon-alfresco-publish-task >' +
                         ' raphael-icon-alfresco-publish');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -418,13 +463,17 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-google-drive-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Google Drive Publish task');
 
                     let iconTask: any = element.querySelector('diagram-google-drive-publish-task >' +
                         ' diagram-icon-google-drive-publish-task > raphael-icon-google-drive-publish');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -444,13 +493,17 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-rest-call-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Rest Call task');
 
                     let iconTask: any = element.querySelector('diagram-rest-call-task > diagram-icon-rest-call-task >' +
                         ' raphael-icon-rest-call');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -470,13 +523,17 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-box-publish-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Box Publish task');
 
                     let iconTask: any = element.querySelector('diagram-box-publish-task >' +
                         ' diagram-icon-box-publish-task > raphael-icon-box-publish');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -496,12 +553,16 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-receive-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-receive-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Receive task');
 
                     let iconTask: any = element.querySelector('diagram-receive-task > diagram-icon-receive-task > raphael-icon-receive');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -521,12 +582,16 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-script-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-script-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake Script task');
 
                     let iconTask: any = element.querySelector('diagram-script-task > diagram-icon-script-task > raphael-icon-script');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -546,12 +611,16 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let task: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-rect');
                     expect(task).not.toBeNull();
 
-                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-text');
+                    let taskText: any = element.querySelector('diagram-business-rule-task > diagram-task > raphael-multiline-text');
                     expect(taskText).not.toBeNull();
                     expect(taskText.attributes[1].value).toEqual('Fake BusinessRule task');
 
                     let iconTask: any = element.querySelector('diagram-business-rule-task > diagram-icon-business-rule-task > raphael-icon-business-rule');
                     expect(iconTask).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].name);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -586,6 +655,10 @@ describe('Test ng2-activiti-diagrams ', () => {
 
                     let shape1: any = element.querySelector('diagram-exclusive-gateway > raphael-cross');
                     expect(shape1).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -607,6 +680,10 @@ describe('Test ng2-activiti-diagrams ', () => {
 
                     let shape1: any = element.querySelector('diagram-inclusive-gateway > raphael-circle');
                     expect(shape1).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -628,6 +705,10 @@ describe('Test ng2-activiti-diagrams ', () => {
 
                     let shape1: any = element.querySelector('diagram-parallel-gateway > raphael-plus');
                     expect(shape1).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -659,6 +740,10 @@ describe('Test ng2-activiti-diagrams ', () => {
 
                     let shape2: any = element.querySelector('diagram-event-gateway > raphael-pentagon');
                     expect(shape2).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -689,7 +774,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -700,6 +785,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -718,7 +807,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -729,6 +818,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -747,7 +840,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -758,6 +851,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -776,7 +873,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-intermediate-catching-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -787,6 +884,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-intermediate-catching-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -817,7 +918,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -828,6 +929,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-timer');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -846,7 +951,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -857,6 +962,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -875,7 +984,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -886,6 +995,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -904,7 +1017,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -915,6 +1028,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -933,7 +1050,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-boundary-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -944,6 +1061,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-boundary-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -974,7 +1095,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -1003,7 +1124,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -1014,6 +1135,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-error');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -1032,7 +1157,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -1043,6 +1168,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-signal');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -1061,7 +1190,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -1072,6 +1201,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -1090,7 +1223,7 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-throw-event');
                     expect(shape).not.toBeNull();
-                    expect(shape.children.length).toBe(3);
+                    expect(shape.children.length).toBe(4);
 
                     let outerCircle = shape.children[0];
                     expect(outerCircle.localName).toEqual('raphael-circle');
@@ -1101,6 +1234,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     let iconShape: any = element.querySelector('diagram-throw-event > diagram-container-icon-event >' +
                         ' div > div > diagram-icon-message');
                     expect(iconShape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -1131,6 +1268,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -1149,6 +1290,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-event-subprocess > raphael-rect');
                     expect(shape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.elements[0].id);
+                    expect(tooltip.textContent).toContain(res.elements[0].type);
                 });
             });
             component.ngOnChanges();
@@ -1238,6 +1383,10 @@ describe('Test ng2-activiti-diagrams ', () => {
                     expect(res).not.toBeNull();
                     let shape: any = element.querySelector('diagram-sequence-flow > raphael-flow-arrow');
                     expect(shape).not.toBeNull();
+
+                    let tooltip: any = element.querySelector('diagram-tooltip > div');
+                    expect(tooltip.textContent).toContain(res.flows[0].id);
+                    expect(tooltip.textContent).toContain(res.flows[0].type);
                 });
             });
             component.ngOnChanges();

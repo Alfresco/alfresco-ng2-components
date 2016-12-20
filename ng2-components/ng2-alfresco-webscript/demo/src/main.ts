@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService  } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
 import { DataTableModule }  from 'ng2-alfresco-datatable';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 
@@ -54,23 +54,17 @@ import { WebScriptModule } from 'ng2-alfresco-webscript';
 class WebscriptDemo implements OnInit {
 
     currentPath: string = '/';
-
     authenticated: boolean;
-
     ecmHost: string = 'http://127.0.0.1:8080';
-
     scriptPath: string = 'sample/folder/Company%20Home';
-
     contextRoot: string = 'alfresco';
-
     servicePath: string = 'service';
-
     scriptArgs: string = '';
-
     ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -81,7 +75,7 @@ class WebscriptDemo implements OnInit {
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-ECM', this.ticket);
+        this.storage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {

@@ -15,14 +15,23 @@
  * limitations under the License.
  */
 
-import { Input, NgModule, Component, OnInit, ViewChild } from '@angular/core';
+import { DebugElement, Input, NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
-import { ActivitiProcessListModule } from 'ng2-activiti-processlist';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import {
+    ActivitiProcessListModule,
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceDetails,
+    ActivitiProcessInstanceListComponent,
+    ActivitiStartProcessInstance,
+    ProcessInstance
+} from 'ng2-activiti-processlist';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+
+const currentProcessIdNew = '__NEW__';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -65,16 +74,16 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
                 <div class="page-content">
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column">
-                            <span>Process Filters</span>
-                            <activiti-start-process-instance [appId]="appId"></activiti-start-process-instance>
+                            <h2>Process Filters</h2>
+                            <button type="button" (click)="navigateStartProcess()"
+                                    class="mdl-button" data-automation-id="btn-start-process">Start Process</button>
                             <activiti-process-instance-filters
                                         [appId]="appId"
                                         (filterClick)="onProcessFilterClick($event)"
-                                        (onSuccess)="onSuccessProcessFilterList($event)"
-                                        #activitiprocessfilter></activiti-process-instance-filters>
+                                        (onSuccess)="onSuccessProcessFilterList($event)"></activiti-process-instance-filters>
                         </div>
                         <div class="mdl-cell mdl-cell--3-col task-column">
-                            <span>Process List</span>
+                            <h2>Process List</h2>
                             <activiti-process-instance-list *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
                                        [processDefinitionKey]="processFilter.filter.processDefinitionKey"
                                        [name]="processFilter.filter.name"
@@ -82,16 +91,21 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
                                        [sort]="processFilter.filter.sort"
                                        [data]="dataProcesses"
                                         (rowClick)="onProcessRowClick($event)"
-                                        (onSuccess)="onSuccessProcessList($event)"
-                                        #activitiprocesslist></activiti-process-instance-list>
+                                        (onSuccess)="onSuccessProcessList($event)"></activiti-process-instance-list>
                         </div>
-                        <div class="mdl-cell mdl-cell--7-col task-column">
-                            <span>Process Details</span>
+                        <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="!isStartProcessMode()">
+                            <h2>Process Details</h2>
                             <activiti-process-instance-details
                                         [processInstanceId]="currentProcessInstanceId"
                                         (taskFormCompleted)="taskFormCompleted()"
-                                        (processCancelled)="processCancelled()"
-                                        #activitiprocessdetails></activiti-process-instance-details>
+                                        (processCancelled)="processCancelled()"></activiti-process-instance-details>
+                            <h2>Process Variables</h2>
+                            <activiti-process-instance-variables
+                                        [processInstanceId]="currentProcessInstanceId"></activiti-process-instance-variables>
+                        </div>
+                        <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
+                            <h2>Start Process</h2>
+                            <activiti-start-process [appId]="appId" (start)="onStartProcessInstance($event)"></activiti-start-process>
                         </div>
                     </div>
                 </div>
@@ -99,7 +113,17 @@ import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
         </main>
     </div>
-`
+`,
+    styles: [`
+        header {
+            min-height: 48px;
+        }
+        h2 {
+            font-size: 14px;
+            line-height: 20px;
+            margin: 10px 0;
+        }
+        `]
 })
 class MyDemoApp implements OnInit {
 
@@ -110,19 +134,22 @@ class MyDemoApp implements OnInit {
     ticket: string;
 
     @ViewChild('tabmain')
-    tabMain: any;
+    tabMain: DebugElement;
 
     @ViewChild('tabheader')
-    tabHeader: any;
+    tabHeader: DebugElement;
 
-    @ViewChild('activitiprocessfilter')
-    activitiprocessfilter: any;
+    @ViewChild(ActivitiProcessFilters)
+    activitiprocessfilter: ActivitiProcessFilters;
 
-    @ViewChild('activitiprocesslist')
-    activitiprocesslist: any;
+    @ViewChild(ActivitiProcessInstanceListComponent)
+    activitiprocesslist: ActivitiProcessInstanceListComponent;
 
-    @ViewChild('activitiprocessdetails')
-    activitiprocessdetails: any;
+    @ViewChild(ActivitiProcessInstanceDetails)
+    activitiprocessdetails: ActivitiProcessInstanceDetails;
+
+    @ViewChild(ActivitiStartProcessInstance)
+    activitiStartProcess: ActivitiStartProcessInstance;
 
     @Input()
     appId: number;
@@ -133,7 +160,9 @@ class MyDemoApp implements OnInit {
 
     dataProcesses: ObjectDataTableAdapter;
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
+                private storage: StorageService) {
         settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');
 
@@ -144,16 +173,14 @@ class MyDemoApp implements OnInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                {type: 'text', key: 'id', title: 'Id'},
                 {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', sortable: true},
-                {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
+                {type: 'text', key: 'started', title: 'Started', sortable: true, cssClass: 'hidden'}
             ]
         );
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-BPM', this.ticket);
+        this.storage.setItem('ticket-BPM', this.ticket);
     }
 
     public updateHost(): void {
@@ -185,6 +212,19 @@ class MyDemoApp implements OnInit {
         this.currentProcessInstanceId = null;
 
         this.changeTab('apps', 'processes');
+    }
+
+    navigateStartProcess() {
+        this.currentProcessInstanceId = currentProcessIdNew;
+    }
+
+    onStartProcessInstance(instance: ProcessInstance) {
+        this.currentProcessInstanceId = instance.id;
+        this.activitiStartProcess.reset();
+    }
+
+    isStartProcessMode() {
+        return this.currentProcessInstanceId === currentProcessIdNew;
     }
 
     onProcessFilterClick(event: any) {

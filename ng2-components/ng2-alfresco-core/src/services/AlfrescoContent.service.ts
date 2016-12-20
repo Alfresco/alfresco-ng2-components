@@ -18,11 +18,12 @@
 import { Injectable } from '@angular/core';
 
 import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
+import { AlfrescoApiService } from './AlfrescoApi.service';
 
 @Injectable()
 export class AlfrescoContentService {
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(public authService: AlfrescoAuthenticationService, public apiService: AlfrescoApiService) {
     }
 
     /**
@@ -31,7 +32,7 @@ export class AlfrescoContentService {
      * @returns {string} URL address.
      */
     getDocumentThumbnailUrl(document: any): string {
-        return this.authService.getAlfrescoApi().content.getDocumentThumbnailUrl(document.entry.id);
+        return this.apiService.getInstance().content.getDocumentThumbnailUrl(document.entry.id);
     }
 
     /**
@@ -40,6 +41,6 @@ export class AlfrescoContentService {
      * @returns {string} URL address.
      */
     getContentUrl(document: any): string {
-        return this.authService.getAlfrescoApi().content.getContentUrl(document.entry.id);
+        return this.apiService.getInstance().content.getContentUrl(document.entry.id);
     }
 }

@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector, SimpleChange } from '@angular/core';
+import { DebugElement, ReflectiveInjector, SimpleChange } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
@@ -29,7 +30,8 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoTranslationService,
-    CoreModule
+    CoreModule,
+    StorageService
 } from 'ng2-alfresco-core';
 
 describe('AlfrescoSearchComponent', () => {
@@ -110,7 +112,8 @@ describe('AlfrescoSearchComponent', () => {
                 AlfrescoSettingsService,
                 AlfrescoApiService,
                 AlfrescoAuthenticationService,
-                AlfrescoContentService
+                AlfrescoContentService,
+                StorageService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AlfrescoSearchComponent);
@@ -140,6 +143,7 @@ describe('AlfrescoSearchComponent', () => {
             AlfrescoAuthenticationService,
             AlfrescoSettingsService,
             AlfrescoApiService,
+            StorageService,
             { provide: ActivatedRoute, useValue: { params: Observable.from([{}]) } }
         ]);
         let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, null, injector.get(ActivatedRoute));
@@ -151,7 +155,7 @@ describe('AlfrescoSearchComponent', () => {
         let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
         spyOn(translationService, 'addTranslationFolder');
         fixture.detectChanges();
-        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
+        expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
     });
 
     describe('Search results', () => {
@@ -253,44 +257,91 @@ describe('AlfrescoSearchComponent', () => {
         });
     });
 
-    describe('search result actions', () => {
+    describe('search result interactions', () => {
 
-        it('should emit preview when file item clicked', (done) => {
+        let debugElement: DebugElement;
+        let searchService: AlfrescoSearchService;
+        let querySpy: jasmine.Spy;
+        let emitSpy: jasmine.Spy;
+        const rowSelector = '[data-automation-id="search_result_table"] tbody tr';
 
-            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(result));
+        beforeEach(() => {
+            debugElement = fixture.debugElement;
+            searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
+            querySpy = spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
+            emitSpy = spyOn(component.navigate, 'emit');
+        });
 
-            component.resultsLoad.subscribe(() => {
-                fixture.detectChanges();
-                (<HTMLTableRowElement> element.querySelector('#result_row_0')).click();
+        describe('click results', () => {
+
+            beforeEach(() => {
+                component.navigationMode = AlfrescoSearchComponent.SINGLE_CLICK_NAVIGATION;
             });
 
-            component.searchTerm = 'searchTerm';
-            component.ngOnInit();
+            it('should emit navigation event when file item clicked', (done) => {
 
-            component.preview.subscribe(() => {
-                done();
+                component.resultsLoad.subscribe(() => {
+                    fixture.detectChanges();
+                    debugElement.query(By.css(rowSelector)).triggerEventHandler('click', {});
+                    expect(emitSpy).toHaveBeenCalled();
+                    done();
+                });
+
+                component.searchTerm = 'searchTerm';
+                component.ngOnInit();
+            });
+
+            it('should emit navigation event when non-file item is clicked', (done) => {
+
+                querySpy.and.returnValue(Promise.resolve(folderResult));
+
+                component.resultsLoad.subscribe(() => {
+                    fixture.detectChanges();
+                    debugElement.query(By.css(rowSelector)).triggerEventHandler('click', {});
+                    expect(emitSpy).toHaveBeenCalled();
+                    done();
+                });
+
+                component.searchTerm = 'searchTerm';
+                component.ngOnInit();
             });
         });
 
-        it('should not emit preview when non-file item is clicked', (done) => {
+        describe('double click results', () => {
 
-            let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
-            spyOn(searchService, 'getQueryNodesPromise')
-                .and.returnValue(Promise.resolve(folderResult));
-
-            spyOn(component.preview, 'emit');
-            component.resultsLoad.subscribe(() => {
-                fixture.detectChanges();
-                (<HTMLTableRowElement> element.querySelector('#result_row_0')).click();
-                expect(component.preview.emit).not.toHaveBeenCalled();
-                done();
+            beforeEach(() => {
+                component.navigationMode = AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION;
             });
 
-            component.searchTerm = 'searchTerm';
-            component.ngOnInit();
+            it('should emit navigation event when file item clicked', (done) => {
+
+                component.resultsLoad.subscribe(() => {
+                    fixture.detectChanges();
+                    debugElement.query(By.css(rowSelector)).triggerEventHandler('dblclick', {});
+                    expect(emitSpy).toHaveBeenCalled();
+                    done();
+                });
+
+                component.searchTerm = 'searchTerm';
+                component.ngOnInit();
+            });
+
+            it('should emit navigation event when non-file item is clicked', (done) => {
+
+                querySpy.and.returnValue(Promise.resolve(folderResult));
+
+                component.resultsLoad.subscribe(() => {
+                    fixture.detectChanges();
+                    debugElement.query(By.css(rowSelector)).triggerEventHandler('dblclick', {});
+                    expect(emitSpy).toHaveBeenCalled();
+                    done();
+                });
+
+                component.searchTerm = 'searchTerm';
+                component.ngOnInit();
+            });
         });
+
     });
 
 });

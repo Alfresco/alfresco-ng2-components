@@ -42,7 +42,7 @@ export class DiagramEventComponent {
                 private diagramColorService: DiagramColorService) {}
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         this.center.x = this.data.x + (this.data.width / 2);
         this.center.y = this.data.y + (this.data.height / 2);
     }

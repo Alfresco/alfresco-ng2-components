@@ -13,3 +13,7 @@
 .mdl-tooltip {
     will-change: unset;
 }
+
+.material-icons {
+    cursor: pointer;
+}

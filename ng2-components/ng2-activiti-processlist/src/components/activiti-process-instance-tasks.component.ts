@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
@@ -32,7 +32,7 @@ declare let dialogPolyfill: any;
     templateUrl: './activiti-process-instance-tasks.component.html',
     styleUrls: ['./activiti-process-instance-tasks.component.css']
 })
-export class ActivitiProcessInstanceTasks implements OnInit {
+export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
 
     @Input()
     processInstanceDetails: ProcessInstance;
@@ -70,7 +70,7 @@ export class ActivitiProcessInstanceTasks implements OnInit {
     constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
 
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
@@ -84,9 +84,12 @@ export class ActivitiProcessInstanceTasks implements OnInit {
         this.completedTask$.subscribe((task: TaskDetailsModel) => {
             this.completedTasks.push(task);
         });
+    }
 
-        if (this.processInstanceDetails && this.processInstanceDetails.id) {
-            this.load(this.processInstanceDetails.id);
+    ngOnChanges(changes: SimpleChanges) {
+        let processInstanceDetails = changes['processInstanceDetails'];
+        if (processInstanceDetails && processInstanceDetails.currentValue) {
+            this.load(processInstanceDetails.currentValue.id);
         }
     }
 
@@ -131,13 +134,17 @@ export class ActivitiProcessInstanceTasks implements OnInit {
         }
     }
 
+    hasStartFormDefined(): boolean {
+        return this.processInstanceDetails && this.processInstanceDetails.startFormDefined === true;
+    }
+
     getUserFullName(user: any) {
         if (user) {
             return (user.firstName && user.firstName !== 'null'
                     ? user.firstName + ' ' : '') +
                 user.lastName;
         }
-        return '';
+        return 'Nobody';
     }
 
     getFormatDate(value, format: string) {
@@ -151,7 +158,6 @@ export class ActivitiProcessInstanceTasks implements OnInit {
 
     public clickTask($event: any, task: TaskDetailsModel) {
         this.selectedTaskId = task.id;
-        this.taskdetails.loadDetails(task.id);
         this.showDialog();
     }
 
@@ -189,6 +195,7 @@ export class ActivitiProcessInstanceTasks implements OnInit {
         if (this.dialog) {
             this.dialog.nativeElement.close();
         }
+        this.selectedTaskId = null;
     }
 
     public onTaskFormCompleted() {

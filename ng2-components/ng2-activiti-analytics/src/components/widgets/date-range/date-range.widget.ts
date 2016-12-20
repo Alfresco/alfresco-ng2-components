@@ -27,6 +27,8 @@ function dateCheck(c: AbstractControl) {
     return result ? {'greaterThan': true} : null;
 }
 
+declare let mdDateTimePicker: any;
+
 @Component({
     moduleId: module.id,
     selector: 'date-range-widget',
@@ -54,15 +56,9 @@ export class DateRangeWidget extends WidgetComponent {
 
     debug: boolean = false;
 
-    dialogStart: any = new mdDateTimePicker.default({
-        type: 'date',
-        future: moment().add(21, 'years')
-    });
+    dialogStart: any;
 
-    dialogEnd: any = new mdDateTimePicker.default({
-        type: 'date',
-        future: moment().add(21, 'years')
-    });
+    dialogEnd: any;
 
     constructor(public elementRef: ElementRef,
                 private formBuilder: FormBuilder) {
@@ -72,26 +68,39 @@ export class DateRangeWidget extends WidgetComponent {
     ngOnInit() {
         this.initForm();
         this.addAccessibilityLabelToDatePicker();
-        this.initSartDateDialog();
-        this.initEndDateDialog();
     }
 
     initForm() {
-        let today = moment().format('YYYY-MM-DD');
+        let startDateForm = this.field.value ? this.field.value.startDate : '' ;
+        let startDate = this.convertToMomentDate(startDateForm);
+        let endDateForm = this.field.value ? this.field.value.endDate : '' ;
+        let endDate = this.convertToMomentDate(endDateForm);
 
-        let startDateControl = new FormControl(today);
+        let startDateControl = new FormControl(startDate);
         startDateControl.setValidators(Validators.required);
         this.dateRange.addControl('startDate', startDateControl);
 
-        let endDateControl = new FormControl(today);
+        let endDateControl = new FormControl(endDate);
         endDateControl.setValidators(Validators.required);
         this.dateRange.addControl('endDate', endDateControl);
 
         this.dateRange.setValidators(dateCheck);
         this.dateRange.valueChanges.subscribe(data => this.onGroupValueChanged(data));
+
+        this.initSartDateDialog(startDate);
+        this.initEndDateDialog(endDate);
     }
 
-    initSartDateDialog() {
+    initSartDateDialog(date: string) {
+        let settings: any = {
+            type: 'date',
+            past: moment().subtract(100, 'years'),
+            future: moment().add(100, 'years')
+        };
+
+        settings.init = moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI);
+
+        this.dialogStart = new mdDateTimePicker.default(settings);
         this.dialogStart.trigger = this.startElement.nativeElement;
 
         let startDateButton = document.getElementById('startDateButton');
@@ -130,7 +139,16 @@ export class DateRangeWidget extends WidgetComponent {
         return span;
     }
 
-    initEndDateDialog() {
+    initEndDateDialog(date: string) {
+        let settings: any = {
+            type: 'date',
+            past: moment().subtract(100, 'years'),
+            future: moment().add(100, 'years')
+        };
+
+        settings.init = moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI);
+
+        this.dialogEnd = new mdDateTimePicker.default(settings);
         this.dialogEnd.trigger = this.endElement.nativeElement;
 
         let endDateButton = document.getElementById('endDateButton');
@@ -164,14 +182,22 @@ export class DateRangeWidget extends WidgetComponent {
 
     onGroupValueChanged(data: any) {
         if (this.dateRange.valid) {
-            let dateStart = this.convertMomentDate(this.dateRange.controls['startDate'].value);
-            let endStart = this.convertMomentDate(this.dateRange.controls['endDate'].value);
+            let dateStart = this.convertToMomentDateWithTime(this.dateRange.controls['startDate'].value);
+            let endStart = this.convertToMomentDateWithTime(this.dateRange.controls['endDate'].value);
             this.dateRangeChanged.emit({startDate: dateStart, endDate: endStart});
         }
     }
 
-    public convertMomentDate(date: string) {
+    public convertToMomentDateWithTime(date: string) {
         return moment(date, DateRangeWidget.FORMAT_DATE_ACTIVITI, true).format(DateRangeWidget.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+    }
+
+    private convertToMomentDate(date: string) {
+        if (date) {
+            return moment(date).format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
+        } else {
+            return moment().format(DateRangeWidget.FORMAT_DATE_ACTIVITI);
+        }
     }
 
     ngOnDestroy() {

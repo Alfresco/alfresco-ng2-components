@@ -19,7 +19,8 @@ import { ReflectiveInjector } from '@angular/core';
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    StorageService
 } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -137,7 +138,8 @@ describe('ActivitiTaskListService', () => {
             ActivitiTaskListService,
             AlfrescoSettingsService,
             AlfrescoApiService,
-            AlfrescoAuthenticationService
+            AlfrescoAuthenticationService,
+            StorageService
         ]);
     });
 
@@ -508,6 +510,22 @@ describe('ActivitiTaskListService', () => {
                 assignee: fakeUser,
                 created: '2016-07-15T11:19:17.440+0000'
             })
+        });
+    });
+
+    it('should claim a task', (done) => {
+        let taskId = '111';
+
+        service.claimTask(taskId).subscribe(
+            (res: any) => {
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({})
         });
     });
 

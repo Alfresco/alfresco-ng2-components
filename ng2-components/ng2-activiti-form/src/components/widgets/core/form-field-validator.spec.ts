@@ -134,6 +134,30 @@ describe('FormFieldValidator', () => {
             expect(validator.validate(field)).toBeFalsy();
         });
 
+        it('should succeed for date', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: '2016-12-31',
+                required: true
+            });
+
+            expect(validator.validate(field)).toBeTruthy();
+        });
+
+        it('should fail for date', () => {
+            let field = new FormFieldModel(new FormModel(), {
+                type: FormFieldTypes.DATE,
+                value: null,
+                required: true
+            });
+
+            field.value = null;
+            expect(validator.validate(field)).toBeFalsy();
+
+            field.value = '';
+            expect(validator.validate(field)).toBeFalsy();
+        });
+
         it('should succeed for text', () => {
             let field = new FormFieldModel(new FormModel(), {
                 type: FormFieldTypes.TEXT,

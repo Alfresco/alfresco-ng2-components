@@ -1,3 +1,10 @@
 :host {
     width: 100%;
 }
+
+.activiti-process-container {
+    width: 100%;
+    min-height: 100px;
+    overflow: visible;
+    padding: 10px;
+}

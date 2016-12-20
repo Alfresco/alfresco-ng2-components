@@ -21,6 +21,8 @@ import { ActivitiTaskListService } from './../services/activiti-tasklist.service
 import { TaskDetailsModel } from '../models/task-details.model';
 import { Observer, Observable } from 'rxjs/Rx';
 
+declare let dialogPolyfill: any;
+
 @Component({
     selector: 'activiti-checklist',
     moduleId: module.id,
@@ -55,9 +57,9 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
-        this.task$ = new Observable<TaskDetailsModel>(observer =>  this.taskObserver = observer).share();
+        this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
     }
 
     ngOnInit() {

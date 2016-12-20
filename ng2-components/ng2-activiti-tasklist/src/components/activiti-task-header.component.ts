@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
 @Component({
     selector: 'activiti-task-header',
@@ -33,13 +34,29 @@ export class ActivitiTaskHeader {
     @Input()
     taskDetails: TaskDetailsModel;
 
-    constructor(private translate: AlfrescoTranslationService) {
+    @Output()
+    claim: EventEmitter<any> = new EventEmitter<any>();
+
+    constructor(private translate: AlfrescoTranslationService,
+                private activitiTaskService: ActivitiTaskListService) {
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
     public hasAssignee(): boolean {
         return (this.taskDetails && this.taskDetails.assignee) ? true : false;
+    }
+
+    isAssignedToMe(): boolean {
+        return this.taskDetails.assignee ? true : false;
+    }
+
+    claimTask(taskId: string) {
+        this.activitiTaskService.claimTask(taskId).subscribe(
+            (res: any) => {
+                console.log('Task claimed');
+                this.claim.emit(taskId);
+            });
     }
 }

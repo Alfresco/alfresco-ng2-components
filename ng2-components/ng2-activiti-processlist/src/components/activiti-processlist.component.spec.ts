@@ -31,7 +31,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
     let fakeGlobalProcesses = [
         new ProcessInstance({
-            id: 1, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name',
+            id: 1, name: 'process-name',
             processDefinitionId: 'fakeprocess:5:7507',
             processDefinitionKey: 'fakeprocess',
             processDefinitionName: 'Fake Process Name',
@@ -54,6 +54,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
     let fixture: ComponentFixture<ActivitiProcessInstanceListComponent>;
     let component: ActivitiProcessInstanceListComponent;
     let service: ActivitiProcessService;
+    let getProcessInstancesSpy: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -70,6 +71,8 @@ describe('ActivitiProcessInstanceListComponent', () => {
             fixture = TestBed.createComponent(ActivitiProcessInstanceListComponent);
             component = fixture.componentInstance;
             service = fixture.debugElement.injector.get(ActivitiProcessService);
+
+            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
 
             componentHandler = jasmine.createSpyObj('componentHandler', [
                 'upgradeAllRegistered',
@@ -106,7 +109,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
 
     it('should emit onSuccess event when process instances loaded', fakeAsync(() => {
         let emitSpy = spyOn(component.onSuccess, 'emit');
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -116,7 +118,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     }));
 
     it('should return the process instances list', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -125,15 +126,13 @@ describe('ActivitiProcessInstanceListComponent', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         fixture.detectChanges();
     });
 
     it('should return the process instances list filtered by processDefinitionKey', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
@@ -142,8 +141,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         fixture.detectChanges();
@@ -154,19 +152,18 @@ describe('ActivitiProcessInstanceListComponent', () => {
         expect(component.getCurrentId()).toBeNull();
     });
 
-    it('should throw an exception when the response is wrong', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.throw('Fake server error'));
+    it('should throw an exception when the response is wrong', fakeAsync(() => {
+        let emitSpy: jasmine.Spy = spyOn(component.onError, 'emit');
+        let fakeError = 'Fake server error';
+        getProcessInstancesSpy.and.returnValue(Observable.throw(fakeError));
+        component.appId = '1';
         component.state = 'open';
-        component.onError.subscribe( (err) => {
-            expect(err).toBeDefined();
-            expect(err).toBe('Fake server error');
-            done();
-        });
         fixture.detectChanges();
-    });
+        tick();
+        expect(emitSpy).toHaveBeenCalledWith(fakeError);
+    }));
 
     it('should emit onSuccess event when reload() called', fakeAsync(() => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = null;
@@ -179,7 +176,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     }));
 
     it('should reload processes when reload() is called', (done) => {
-        spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
         component.data = new ObjectDataTableAdapter(
             [],
             [
@@ -192,7 +188,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
             expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
             done();
         });
@@ -217,7 +212,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
     describe('component changes', () => {
 
         beforeEach(() => {
-            spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
             component.data = new ObjectDataTableAdapter(
                 [],
                 [
@@ -241,7 +235,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -258,7 +251,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -275,7 +267,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -292,7 +283,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
@@ -309,7 +299,6 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
                 expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });

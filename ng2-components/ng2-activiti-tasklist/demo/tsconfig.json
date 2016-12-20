@@ -3,11 +3,10 @@
         "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
+        "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "sourceMap": true,
-        "removeComments": true,
-        "declaration": true,
+        "skipLibCheck": true,
         "noLib": false,
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
@@ -15,12 +14,19 @@
         "noImplicitReturns": false,
         "noImplicitUseStrict": false,
         "noFallthroughCasesInSwitch": true,
-        "outDir": "dist",
-        "types": ["core-js", "jasmine", "node"]
+        "removeComments": true,
+        "declaration": true,
+        "lib": [
+            "es2015",
+            "dom"
+        ],
+        "suppressImplicitAnyIndexErrors": true
     },
     "exclude": [
-        "demo",
-        "node_modules",
-        "dist"
-    ]
+        "node_modules"
+    ],
+    "angularCompilerOptions": {
+        "strictMetadataEmit": false,
+        "skipTemplateCodegen": true
+    }
 }

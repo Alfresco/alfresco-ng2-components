@@ -35,7 +35,7 @@ describe('TypeaheadWidget', () => {
 
     beforeEach(() => {
         formService = new FormService(null, null);
-        visibilityService = new WidgetVisibilityService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null);
         widget = new TypeaheadWidget(formService, visibilityService);
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
     });

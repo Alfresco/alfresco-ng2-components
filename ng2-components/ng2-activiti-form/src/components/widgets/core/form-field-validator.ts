@@ -17,6 +17,7 @@
 
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
+import * as moment from 'moment';
 
 export interface FormFieldValidator {
 
@@ -38,7 +39,8 @@ export class RequiredFieldValidator implements FormFieldValidator {
         FormFieldTypes.RADIO_BUTTONS,
         FormFieldTypes.UPLOAD,
         FormFieldTypes.AMOUNT,
-        FormFieldTypes.DYNAMIC_TABLE
+        FormFieldTypes.DYNAMIC_TABLE,
+        FormFieldTypes.DATE
     ];
 
     isSupported(field: FormFieldModel): boolean {
@@ -161,8 +163,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            this.supportedTypes.indexOf(field.type) > -1 &&
-            !!field.minValue;
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.minValue;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -195,8 +196,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            this.supportedTypes.indexOf(field.type) > -1 &&
-            !!field.maxValue;
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.maxValue;
     }
 
     validate(field: FormFieldModel): boolean {
@@ -338,8 +338,7 @@ export class RegExFieldValidator implements FormFieldValidator {
 
     isSupported(field: FormFieldModel): boolean {
         return field &&
-            this.supportedTypes.indexOf(field.type) > -1 &&
-            !!field.regexPattern;
+            this.supportedTypes.indexOf(field.type) > -1 && !!field.regexPattern;
     }
 
     validate(field: FormFieldModel): boolean {

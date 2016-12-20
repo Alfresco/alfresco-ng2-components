@@ -19,6 +19,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
+import { Form } from '../models/form.model';
 
 declare let componentHandler: any;
 declare let dialogPolyfill: any;
@@ -40,6 +41,10 @@ export class ActivitiStartTaskButton {
     @ViewChild('dialog')
     dialog: any;
 
+    forms: Form [];
+
+    formId: string;
+
     name: string;
     description: string;
 
@@ -53,7 +58,7 @@ export class ActivitiStartTaskButton {
                 private taskService: ActivitiTaskListService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -68,12 +73,20 @@ export class ActivitiStartTaskButton {
                     this.onSuccess.emit(res);
                     this.closeDialog();
                     this.resetForm();
+                    this.attachForm(res.id);
                 },
                 (err) => {
                     window.alert('An error occurred while trying to add the task');
                     console.log(err);
                 }
             );
+        }
+    }
+
+    private attachForm(taskId: string) {
+        if (this.formId && taskId) {
+            this.taskService.attachFormToATask(taskId, Number(this.formId));
+            this.formId = null;
         }
     }
 
@@ -85,9 +98,22 @@ export class ActivitiStartTaskButton {
         if (!this.dialog.nativeElement.showModal) {
             dialogPolyfill.registerDialog(this.dialog.nativeElement);
         }
+
+        this.loadFormsTask();
+
         if (this.dialog) {
             this.dialog.nativeElement.showModal();
         }
+    }
+
+    private loadFormsTask() {
+        this.taskService.getFormList().subscribe((res: Form[]) => {
+                this.forms = res;
+            },
+            (err) => {
+                window.alert('An error occurred while trying to get the forms');
+                console.log(err);
+            });
     }
 
     private closeDialog() {

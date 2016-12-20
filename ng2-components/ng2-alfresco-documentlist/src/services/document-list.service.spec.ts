@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-/*
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoContentService , AlfrescoApiService} from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService, StorageService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { FileNode } from '../assets/document-library.model.mock';
 import { ReflectiveInjector } from '@angular/core';
 import { DocumentListService } from './document-list.service';
-import { HTTP_PROVIDERS } from '@angular/http';
+
+declare let jasmine: any;
 
 describe('DocumentListService', () => {
 
@@ -28,20 +28,84 @@ describe('DocumentListService', () => {
     let service: DocumentListService;
     let settingsService: AlfrescoSettingsService;
     let authService: AlfrescoAuthenticationService;
-    let contentService: AlfrescoContentService;
+    let alfrescoApiService: AlfrescoApiService;
+
+    let fakeEntryNode = {
+        'entry': {
+            'aspectNames': ['cm:auditable'],
+            'createdAt': '2016-12-06T15:58:32.408+0000',
+            'isFolder': true,
+            'isFile': false,
+            'createdByUser': {'id': 'admin', 'displayName': 'Administrator'},
+            'modifiedAt': '2016-12-06T15:58:32.408+0000',
+            'modifiedByUser': {'id': 'admin', 'displayName': 'Administrator'},
+            'name': 'fake-name',
+            'id': '2214733d-a920-4dbe-af95-4230345fae82',
+            'nodeType': 'cm:folder',
+            'parentId': 'ed7ab80e-b398-4bed-b38d-139ae4cc592a'
+        }
+    };
+
+    let fakeAlreadyExist = {
+        'error': {
+            'errorKey': 'Duplicate child name not allowed: empty',
+            'statusCode': 409,
+            'briefSummary': '11060002 Duplicate child name not' +
+            ' allowed: empty',
+            'stackTrace': 'For security reasons the stack trace is no longer displayed, but the property is kept for previous versions.',
+            'descriptionURL': 'https://api-explorer.alfresco.com'
+        }
+    };
+
+    let fakeFolder = {
+        'list': {
+            'pagination': {'count': 1, 'hasMoreItems': false, 'totalItems': 1, 'skipCount': 0, 'maxItems': 20},
+            'entries': [{
+                'entry': {
+                    'createdAt': '2016-12-06T13:03:14.880+0000',
+                    'path': {
+                        'name': '/Company Home/Sites/swsdp/documentLibrary/empty',
+                        'isComplete': true,
+                        'elements': [{
+                            'id': 'ed7ab80e-b398-4bed-b38d-139ae4cc592a',
+                            'name': 'Company Home'
+                        }, {'id': '99e1368f-e816-47fc-a8bf-3b358feaf31e', 'name': 'Sites'}, {
+                            'id': 'b4cff62a-664d-4d45-9302-98723eac1319',
+                            'name': 'swsdp'
+                        }, {
+                            'id': '8f2105b4-daaf-4874-9e8a-2152569d109b',
+                            'name': 'documentLibrary'
+                        }, {'id': '17fa78d2-4d6b-4a46-876b-4b0ea07f7f32', 'name': 'empty'}]
+                    },
+                    'isFolder': true,
+                    'isFile': false,
+                    'createdByUser': {'id': 'admin', 'displayName': 'Administrator'},
+                    'modifiedAt': '2016-12-06T13:03:14.880+0000',
+                    'modifiedByUser': {'id': 'admin', 'displayName': 'Administrator'},
+                    'name': 'fake-name',
+                    'id': 'aac546f6-1525-46ff-bf6b-51cb85f3cda7',
+                    'nodeType': 'cm:folder',
+                    'parentId': '17fa78d2-4d6b-4a46-876b-4b0ea07f7f32'
+                }
+            }]
+        }
+    };
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
-            HTTP_PROVIDERS,
             AlfrescoApiService,
             AlfrescoAuthenticationService,
-            AlfrescoSettingsService
+            AlfrescoSettingsService,
+            AlfrescoApiService,
+            AlfrescoContentService,
+            DocumentListService,
+            StorageService
         ]);
 
         settingsService = injector.get(AlfrescoSettingsService);
         authService = injector.get(AlfrescoAuthenticationService);
-        contentService = new AlfrescoContentService(authService);
-        service = new DocumentListService(authService, contentService);
+        alfrescoApiService = injector.get(AlfrescoApiService);
+        service = injector.get(DocumentListService);
         jasmine.Ajax.install();
     });
 
@@ -54,20 +118,8 @@ describe('DocumentListService', () => {
     });
 
     it('should require content service to get thumbnail url', () => {
-        service = new DocumentListService(authService, null);
         let file = new FileNode();
-        expect(service.getDocumentThumbnailUrl(file)).toBeNull();
-    });
-
-    it('should resolve thumbnail url via content service', () => {
-        let url = 'http://<address>';
-        spyOn(contentService, 'getDocumentThumbnailUrl').and.returnValue(url);
-
-        let file = new FileNode();
-        let thumbnailUrl = service.getDocumentThumbnailUrl(file);
-
-        expect(thumbnailUrl).toBe(url);
-        expect(contentService.getDocumentThumbnailUrl).toHaveBeenCalledWith(file);
+        expect(service.getDocumentThumbnailUrl(file)).not.toBeNull();
     });
 
     it('should resolve fallback icon for mime type', () => {
@@ -81,60 +133,72 @@ describe('DocumentListService', () => {
         expect(service.getMimeTypeIcon('missing/type')).toBe(DocumentListService.DEFAULT_MIME_TYPE_ICON);
     });
 
-    it('Delete node should perform request against the server', (done) => {
-        service.deleteNode('fake-node-id').subscribe(e => {
-            expect(jasmine.Ajax.requests.mostRecent().url)
-                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/fake-node-id');
-            expect(jasmine.Ajax.requests.mostRecent().method)
-                .toBe('DELETE');
-            done();
-        });
+    it('should create a folder in the path', () => {
+        service.createFolder('fake-name', 'fake-path').subscribe(
+            res => {
+                expect(res).toBeDefined();
+                expect(res.entry).toBeDefined();
+                expect(res.entry.isFolder).toBeTruthy();
+                expect(res.entry.name).toEqual('fake-name');
+                expect(res.entry.nodeType).toEqual('cm:folder');
+            }
+        );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200
+            status: 200,
+            contentType: 'json',
+            responseText: fakeEntryNode
         });
     });
 
-    it('Get folder should perform request against the server', (done) => {
-        service.getFolder('fake-node-id').subscribe(e => {
-            expect(jasmine.Ajax.requests.mostRecent().url)
-                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/' +
-                    'children?include=path%2Cproperties&relativePath=fake-node-id');
-            expect(jasmine.Ajax.requests.mostRecent().method)
-                .toBe('GET');
-            done();
-        });
+    it('should emit an error when the folder already exist', () => {
+        service.createFolder('fake-name', 'fake-path').subscribe(
+            res => {
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200
-        });
-    });
-
-    it('Get folder should perform request against the server with options', (done) => {
-        service.getFolder('fake-node-id', {maxItems: 10}).subscribe(e => {
-            expect(jasmine.Ajax.requests.mostRecent().url)
-                .toBe('http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-/' +
-                    'children?maxItems=10&include=path%2Cproperties&relativePath=fake-node-id');
-            expect(jasmine.Ajax.requests.mostRecent().method)
-                .toBe('GET');
-            done();
-        });
-
-        jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 200
-        });
-    });
-
-    it('Get folder should perform error catch', (done) => {
-        service.getFolder('fake-node-id', {maxItems: 10}).subscribe(() => {
             },
-            () => {
-                done();
-            });
+            err => {
+                expect(err).toBeDefined();
+                expect(err.status).toEqual(409);
+                expect(err.response).toBeDefined();
+            }
+        );
 
         jasmine.Ajax.requests.mostRecent().respondWith({
-            'status': 403
+            status: 409,
+            contentType: 'json',
+            responseText: fakeAlreadyExist
+        });
+    });
+
+    it('should return the folder info', () => {
+        service.getFolder('/fake-root/fake-name').subscribe(
+            res => {
+                expect(res).toBeDefined();
+                expect(res.list).toBeDefined();
+                expect(res.list.entries).toBeDefined();
+                expect(res.list.entries.length).toBe(1);
+                expect(res.list.entries[0].entry.isFolder).toBeTruthy();
+                expect(res.list.entries[0].entry.name).toEqual('fake-name');
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 200,
+            contentType: 'json',
+            responseText: fakeFolder
+        });
+    });
+
+    it('should delete the folder', () => {
+        service.deleteNode('fake-id').subscribe(
+            res => {
+                expect(res).toBeNull();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            status: 204,
+            contentType: 'json'
         });
     });
 });
-*/

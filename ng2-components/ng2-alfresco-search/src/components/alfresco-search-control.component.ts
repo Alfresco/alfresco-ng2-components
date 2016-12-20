@@ -72,7 +72,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     liveSearchRoot: string = '-root-';
 
     @Input()
-    liveSearchResultType: string = 'cm:content';
+    liveSearchResultType: string = null;
 
     @Input()
     liveSearchResultSort: string = null;
@@ -103,7 +103,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
         this.setupFocusEventHandlers();
 
-        this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/dist/src');
+        this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
     }
 
     ngOnDestroy(): void {
@@ -111,7 +111,6 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     private onSearchTermChange(value: string): void {
-        this.setAutoCompleteDisplayed(true);
         this.liveSearchTerm = value;
         this.searchControl.setValue(value, true);
         this.searchValid = this.searchControl.valid;
@@ -171,9 +170,8 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     }
 
     onFileClicked(event): void {
-        this.fileSelect.emit({
-            value: event.value
-        });
+        this.setAutoCompleteDisplayed(false);
+        this.fileSelect.emit(event);
     }
 
     onSearchFocus($event): void {

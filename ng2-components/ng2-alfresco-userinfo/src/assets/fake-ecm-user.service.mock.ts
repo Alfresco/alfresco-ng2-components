@@ -113,7 +113,7 @@ export class FakeEcmUserService {
 
     getUserProfileImage(avatarId: string) {
         if (avatarId) {
-            return 'src/assets/ecmImg.gif';
+            return 'src/assets/images/ecmImg.gif';
         }
     };
 

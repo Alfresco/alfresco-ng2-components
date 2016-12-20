@@ -30,6 +30,9 @@ import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEve
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
+declare let dialogPolyfill: any;
+declare var componentHandler: any;
+
 /**
  * @Input
  * ActivitiForm can show 4 types of forms searching by 4 type of params:
@@ -146,7 +149,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     debugMode: boolean = false;
 
     constructor(protected formService: FormService,
-                private visibilityService: WidgetVisibilityService,
+                public visibilityService: WidgetVisibilityService,
                 private ecmModelService: EcmModelService,
                 private nodeService: NodeService) {
     }
@@ -277,7 +280,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     loadForm() {
         if (this.taskId) {
             this.getFormByTaskId(this.taskId);
-            this.visibilityService.getTaskProcessVariable(this.taskId);
             return;
         }
 
@@ -292,6 +294,22 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
+    loadFormPorcessVariable(taskId) {
+        this.formService.getTask(taskId).subscribe(
+            task => {
+                if (this.isAProcessTask(task)) {
+                    this.visibilityService.getTaskProcessVariable(taskId).subscribe();
+                }
+            },
+            (error) => {
+                this.handleError(error);
+            });
+    }
+
+    isAProcessTask(taskRepresentation) {
+        return taskRepresentation.processDefinitionId && taskRepresentation.processDefinitionDeploymentId !== 'null';
+    }
+
     setupMaterialComponents(): boolean {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
@@ -302,6 +320,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     getFormByTaskId(taskId: string) {
+        this.loadFormPorcessVariable(this.taskId);
         let data = this.data;
         this.formService
             .getTaskForm(taskId)

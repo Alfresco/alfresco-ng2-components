@@ -14,10 +14,12 @@
             "CHECKLIST": "Checklist"
         },
         "BUTTON": {
-            "COMPLETE": "Complete"
+            "COMPLETE": "Complete",
+            "CLAIM": "Claim"
         },
         "MESSAGES": {
-            "NONE": "No task details found."
+            "NONE": "No task details found.",
+            "CLAIM": "To work on this task, you need to claim it first. You can do that by pressing the Claim button above."
         },
         "FORM": {
             "NONE": "No form."
@@ -65,7 +67,8 @@
             "TITLE": "Start Task",
             "LABEL": {
                 "NAME": "Name",
-                "DESCRIPTION": "Description"
+                "DESCRIPTION": "Description",
+                "ATTACHFORM" : "Attach a Form"
             },
             "ACTION": {
                 "START": "Start",

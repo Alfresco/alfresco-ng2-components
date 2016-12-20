@@ -143,7 +143,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     saveTaskForm(taskId: string, formValues: FormValues): Observable<any> {
-        let body = JSON.stringify({ values: formValues });
+        let body = JSON.stringify({values: formValues});
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.saveTaskForm(taskId, body))
             .catch(this.handleError);
@@ -157,7 +157,7 @@ export class FormService {
      * @returns {Observable<any>}
      */
     completeTaskForm(taskId: string, formValues: FormValues, outcome?: string): Observable<any> {
-        let data: any = { values: formValues };
+        let data: any = {values: formValues};
         if (outcome) {
             data.outcome = outcome;
         }
@@ -228,6 +228,15 @@ export class FormService {
             this.apiService.getInstance().activiti.processApi.getProcessDefinitionStartForm(processId))
             .map(this.toJson)
             .catch(this.handleError);
+    }
+
+    /**
+     * Save File
+     * @param file file
+     * @returns {Observable<any>}
+     */
+    createTemporaryRawRelatedContent(file: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createTemporaryRawRelatedContent(file));
     }
 
     getRestFieldValues(taskId: string, field: string): Observable<any> {

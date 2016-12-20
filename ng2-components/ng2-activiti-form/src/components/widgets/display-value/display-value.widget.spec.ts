@@ -26,17 +26,20 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('DisplayValueWidget', () => {
 
     let widget: DisplayValueWidget;
     let formService: FormService;
     let visibilityService: WidgetVisibilityService;
+    let settingsService: AlfrescoSettingsService;
 
     beforeEach(() => {
+        settingsService = new AlfrescoSettingsService();
         formService = new FormService(null, null);
-        visibilityService = new WidgetVisibilityService(null, null, null);
-        widget = new DisplayValueWidget(formService, visibilityService);
+        visibilityService = new WidgetVisibilityService(null);
+        widget = new DisplayValueWidget(formService, visibilityService, settingsService);
     });
 
     it('should require field to setup default value', () => {
@@ -47,7 +50,7 @@ describe('DisplayValueWidget', () => {
 
     it('should take field value on init', () => {
         let value = '<value>';
-        widget.field = new FormFieldModel(null, { value: value });
+        widget.field = new FormFieldModel(null, {value: value});
         widget.field.params = null;
         widget.ngOnInit();
         expect(widget.value).toBe(value);
@@ -83,7 +86,7 @@ describe('DisplayValueWidget', () => {
         expect(widget.value).toBeFalsy();
     });
 
-    it ('should setup [FUNCTIONAL-GROUP] field', () => {
+    it('should setup [FUNCTIONAL-GROUP] field', () => {
         let groupName: '<group>';
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.DISPLAY_VALUE,
@@ -147,7 +150,7 @@ describe('DisplayValueWidget', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.DISPLAY_VALUE,
             value: [
-                { name: 'file1' }
+                {name: 'file1'}
             ],
             params: {
                 field: {
@@ -202,6 +205,7 @@ describe('DisplayValueWidget', () => {
     it('should setup [DROPDOWN] field with REST config', () => {
         widget.field = new FormFieldModel(null, {
             type: FormFieldTypes.DISPLAY_VALUE,
+            restUrl: 'http://test.com',
             params: {
                 field: {
                     type: FormFieldTypes.DROPDOWN
@@ -234,8 +238,8 @@ describe('DisplayValueWidget', () => {
             restUrl: null,
             value: '2',
             options: [
-                { id: '1', name: 'option 1' },
-                { id: '2', name: 'option 2' }
+                {id: '1', name: 'option 1'},
+                {id: '2', name: 'option 2'}
             ],
             params: {
                 field: {
@@ -253,8 +257,8 @@ describe('DisplayValueWidget', () => {
             restUrl: null,
             value: '100',
             options: [
-                { id: '1', name: 'option 1' },
-                { id: '2', name: 'option 2' }
+                {id: '1', name: 'option 1'},
+                {id: '2', name: 'option 2'}
             ],
             params: {
                 field: {
@@ -301,23 +305,23 @@ describe('DisplayValueWidget', () => {
     it('should setup rest field values with REST options', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(
             Observable.create(observer => {
-                 observer.next([
-                    { id: '1', name: 'option 1' },
-                    { id: '2', name: 'option 2' }
-                 ]);
-                 observer.complete();
+                observer.next([
+                    {id: '1', name: 'option 1'},
+                    {id: '2', name: 'option 2'}
+                ]);
+                observer.complete();
             })
         );
 
-        let form = new FormModel({ taskId: '<id>' });
+        let form = new FormModel({taskId: '<id>'});
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
             restUrl: '<url>',
             value: '2',
             options: [
-                { id: '1', name: 'option 1' },
-                { id: '2', name: 'option 2' }
+                {id: '1', name: 'option 1'},
+                {id: '2', name: 'option 2'}
             ],
             params: {
                 field: {
@@ -333,15 +337,15 @@ describe('DisplayValueWidget', () => {
     it('should not setup rest field values with missing REST option', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(
             Observable.create(observer => {
-                 observer.next([
-                    { id: '1', name: 'option 1' },
-                    { id: '2', name: 'option 2' }
-                 ]);
-                 observer.complete();
-             })
+                observer.next([
+                    {id: '1', name: 'option 1'},
+                    {id: '2', name: 'option 2'}
+                ]);
+                observer.complete();
+            })
         );
 
-        let form = new FormModel({ taskId: '<id>' });
+        let form = new FormModel({taskId: '<id>'});
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
@@ -361,12 +365,12 @@ describe('DisplayValueWidget', () => {
     it('should not setup rest field values with no REST response', () => {
         spyOn(formService, 'getRestFieldValues').and.returnValue(
             Observable.create(observer => {
-                 observer.next(null);
-                 observer.complete();
-             })
+                observer.next(null);
+                observer.complete();
+            })
         );
 
-        let form = new FormModel({ taskId: '<id>' });
+        let form = new FormModel({taskId: '<id>'});
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
@@ -391,7 +395,7 @@ describe('DisplayValueWidget', () => {
 
         spyOn(console, 'log').and.stub();
 
-        let form = new FormModel({ taskId: '<id>' });
+        let form = new FormModel({taskId: '<id>'});
 
         widget.field = new FormFieldModel(form, {
             type: FormFieldTypes.DISPLAY_VALUE,
@@ -538,8 +542,7 @@ describe('DisplayValueWidget', () => {
             type: FormFieldTypes.DISPLAY_VALUE,
             value: value,
             params: {
-                field: {
-                }
+                field: {}
             }
         });
         widget.ngOnInit();
@@ -547,7 +550,7 @@ describe('DisplayValueWidget', () => {
     });
 
     it('should setup [DYNAMIC_TABLE] field', () => {
-        let columns = [{ id: '1', visible: false }, { id: '2', visible: true }];
+        let columns = [{id: '1', visible: false}, {id: '2', visible: true}];
         let rows = [{}, {}];
 
         widget.field = new FormFieldModel(null, {
@@ -592,32 +595,32 @@ describe('DisplayValueWidget', () => {
 
     it('should retrieve default cell value', () => {
         const value = '<value>';
-        let row = <DynamicTableRow> { value: { key: value } };
-        let column = <DynamicTableColumn> { id: 'key' };
+        let row = <DynamicTableRow> {value: {key: value}};
+        let column = <DynamicTableColumn> {id: 'key'};
 
         expect(widget.getCellValue(row, column)).toBe(value);
     });
 
     it('should retrieve dropdown cell value', () => {
-        const value = { id: '1', name: 'one' };
-        let row = <DynamicTableRow> { value: { key: value } };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Dropdown' };
+        const value = {id: '1', name: 'one'};
+        let row = <DynamicTableRow> {value: {key: value}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Dropdown'};
 
         expect(widget.getCellValue(row, column)).toBe(value.name);
     });
 
     it('should fallback to empty cell value for dropdown', () => {
-        let row = <DynamicTableRow> { value: {} };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Dropdown' };
+        let row = <DynamicTableRow> {value: {}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Dropdown'};
 
         expect(widget.getCellValue(row, column)).toBe('');
     });
 
     it('should retrieve boolean cell value', () => {
-        let row1 = <DynamicTableRow> { value: { key: true } };
-        let row2 = <DynamicTableRow> { value: { key: 'positive' } };
-        let row3 = <DynamicTableRow> { value: { key: null } };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Boolean' };
+        let row1 = <DynamicTableRow> {value: {key: true}};
+        let row2 = <DynamicTableRow> {value: {key: 'positive'}};
+        let row3 = <DynamicTableRow> {value: {key: null}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Boolean'};
 
         expect(widget.getCellValue(row1, column)).toBe(true);
         expect(widget.getCellValue(row2, column)).toBe(true);
@@ -626,30 +629,30 @@ describe('DisplayValueWidget', () => {
 
     it('should retrieve date cell value', () => {
         const value = '2016-10-04T00:00:00.000Z';
-        let row = <DynamicTableRow> { value: { key: value } };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Date' };
+        let row = <DynamicTableRow> {value: {key: value}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Date'};
 
         expect(widget.getCellValue(row, column)).toBe('4-10-2016');
     });
 
     it('should fallback to empty cell value for date', () => {
-        let row = <DynamicTableRow> { value: {} };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Date' };
+        let row = <DynamicTableRow> {value: {}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Date'};
 
         expect(widget.getCellValue(row, column)).toBe('');
     });
 
     it('should retrieve empty text cell value', () => {
-        let row = <DynamicTableRow> { value: {} };
-        let column = <DynamicTableColumn> { id: 'key' };
+        let row = <DynamicTableRow> {value: {}};
+        let column = <DynamicTableColumn> {id: 'key'};
 
         expect(widget.getCellValue(row, column)).toBe('');
     });
 
     it('should prepend default amount currency', () => {
         const value = '10';
-        let row = <DynamicTableRow> { value: { key: value } };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Amount' };
+        let row = <DynamicTableRow> {value: {key: value}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Amount'};
 
         const expected = `$ ${value}`;
         expect(widget.getCellValue(row, column)).toBe(expected);
@@ -658,8 +661,8 @@ describe('DisplayValueWidget', () => {
     it('should prepend custom amount currency', () => {
         const value = '10';
         const currency = 'GBP';
-        let row = <DynamicTableRow> { value: { key: value } };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Amount', amountCurrency: currency };
+        let row = <DynamicTableRow> {value: {key: value}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Amount', amountCurrency: currency};
 
         const expected = `${currency} ${value}`;
         expect(widget.getCellValue(row, column)).toBe(expected);
@@ -668,8 +671,8 @@ describe('DisplayValueWidget', () => {
     it('should use zero for missing amount', () => {
         const value = null;
         const currency = 'GBP';
-        let row = <DynamicTableRow> { value: { key: value } };
-        let column = <DynamicTableColumn> { id: 'key', type: 'Amount', amountCurrency: currency };
+        let row = <DynamicTableRow> {value: {key: value}};
+        let column = <DynamicTableColumn> {id: 'key', type: 'Amount', amountCurrency: currency};
 
         const expected = `${currency} 0`;
         expect(widget.getCellValue(row, column)).toBe(expected);

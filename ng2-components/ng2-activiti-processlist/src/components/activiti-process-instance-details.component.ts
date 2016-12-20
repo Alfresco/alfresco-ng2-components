@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
-import { ActivitiComments } from './activiti-comments.component';
 import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
@@ -31,19 +30,16 @@ declare let componentHandler: any;
     templateUrl: './activiti-process-instance-details.component.html',
     styleUrls: ['./activiti-process-instance-details.component.css']
 })
-export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
+export class ActivitiProcessInstanceDetails implements OnChanges {
 
     @Input()
     processInstanceId: string;
 
-    @ViewChild('activitiprocessheader')
+    @ViewChild(ActivitiProcessInstanceHeader)
     processInstanceHeader: ActivitiProcessInstanceHeader;
 
-    @ViewChild('activitiprocesstasks')
+    @ViewChild(ActivitiProcessInstanceTasks)
     tasksList: ActivitiProcessInstanceTasks;
-
-    @ViewChild('activitiprocesscomments')
-    commentsList: ActivitiComments;
 
     @Input()
     showTitle: boolean = true;
@@ -52,7 +48,7 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
     showRefreshButton: boolean = true;
 
     @Output()
-    processCancelled: EventEmitter<string> = new EventEmitter<string>();
+    processCancelled: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
     taskFormCompleted: EventEmitter<any> = new EventEmitter<any>();
@@ -68,13 +64,7 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
-        }
-    }
-
-    ngOnInit() {
-        if (this.processInstanceId) {
-            this.load(this.processInstanceId);
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
     }
 
@@ -102,21 +92,25 @@ export class ActivitiProcessInstanceDetails implements OnInit, OnChanges {
             this.activitiProcess.getProcess(processId).subscribe(
                 (res: ProcessInstance) => {
                     this.processInstanceDetails = res;
-                    if (this.processInstanceDetails) {
-                        if (this.tasksList) {
-                            this.tasksList.load(this.processInstanceDetails.id);
-                        }
-                    }
                 }
             );
         }
     }
 
-    bubbleProcessCancelled(data: any) {
-        this.processCancelled.emit(data);
-    }
-
     bubbleTaskFormCompleted(data: any) {
         this.taskFormCompleted.emit(data);
+    }
+
+    isRunning(): boolean {
+        return this.processInstanceDetails && !this.processInstanceDetails.ended;
+    }
+
+    cancelProcess() {
+        this.activitiProcess.cancelProcess(this.processInstanceId).subscribe(
+            (data) => {
+                this.processCancelled.emit(data);
+            }, (err) => {
+                console.error(err);
+            });
     }
 }

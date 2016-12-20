@@ -24,11 +24,11 @@
 
 <!-- START FORM -->
 
-<div *ngIf="activeTasks?.length === 0" data-automation-id="active-tasks-none">
+<div *ngIf="activeTasks?.length === 0" data-automation-id="active-tasks-none" class="no-results">
     {{ 'DETAILS.TASKS.NO_ACTIVE' | translate }}
 </div>
 
-<div *ngIf="processInstanceDetails && processInstanceDetails.startFormDefined">
+<div *ngIf="hasStartFormDefined()">
     <span class="activiti-label">{{ 'DETAILS.LABELS.START_FORM'|translate }}</span>
 
     <!--IF START TASK COMPLETED -->
@@ -64,13 +64,13 @@
     </ul>
 </div>
 
-<div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none">
+<div *ngIf="completedTasks?.length === 0" data-automation-id="completed-tasks-none" class="no-results">
     {{ 'DETAILS.TASKS.NO_COMPLETED' | translate }}
 </div>
 
 <dialog class="mdl-dialog task-details-dialog" #dialog>
     <h4 class="mdl-dialog__title">{{ 'DETAILS.TASKS.TASK_DETAILS' | translate }}</h4>
-    <div class="mdl-dialog__content">
+    <div class="mdl-dialog__content form__size">
         <activiti-task-details [taskId]="selectedTaskId" (formCompleted)="onTaskFormCompleted()" #taskdetails></activiti-task-details>
     </div>
     <div class="mdl-dialog__actions">
@@ -78,9 +78,9 @@
     </div>
 </dialog>
 
-<dialog class="mdl-dialog task-details-dialog" #startDialog>
+<dialog *ngIf="hasStartFormDefined()" class="mdl-dialog task-details-dialog" #startDialog>
     <h4 class="mdl-dialog__title">{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
-    <div class="mdl-dialog__content">
+    <div class="mdl-dialog__content form__size">
         <activiti-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails?.processDefinitionId"
                              [showOutcomeButtons]="false" [showRefreshButton]="false">
         </activiti-start-form>

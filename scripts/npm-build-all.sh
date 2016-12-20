@@ -5,8 +5,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 build_project() {
     cd $1
     echo "====== build project: $2 ====="
-    npm update
-    npm install --cache-min 9999999
     npm run build
 }
 

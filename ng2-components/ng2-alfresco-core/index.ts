@@ -22,13 +22,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 import {
+    StorageService,
     AlfrescoApiService,
     AlfrescoSettingsService,
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    RenditionsService
+    RenditionsService,
+    AuthGuard,
+    AuthGuardEcm,
+    AuthGuardBpm
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -39,6 +43,7 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
+    StorageService,
     AlfrescoApiService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
@@ -46,8 +51,15 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
     AlfrescoTranslationLoader,
     AlfrescoTranslationService,
     RenditionsService,
+    AuthGuard,
+    AuthGuardEcm,
+    AuthGuardBpm,
     ...CONTEXT_MENU_PROVIDERS
 ];
+
+export function createTranslateLoader(http: Http) {
+    return new AlfrescoTranslationLoader(http);
+}
 
 @NgModule({
     imports: [
@@ -57,10 +69,9 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
         HttpModule,
         TranslateModule.forRoot({
             provide: TranslateLoader,
-            useFactory: (http) => new AlfrescoTranslationLoader(http),
+            useFactory: (createTranslateLoader),
             deps: [Http]
-        })
-    ],
+        })    ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES

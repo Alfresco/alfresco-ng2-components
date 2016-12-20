@@ -15,19 +15,20 @@
  * limitations under the License.
  */
 
-import {Injectable} from '@angular/core';
-import {AlfrescoAuthenticationService} from 'ng2-alfresco-core';
-import {Observable} from 'rxjs/Rx';
-import {FilterRepresentationModel} from '../models/filter.model';
-import {TaskQueryRequestRepresentationModel} from '../models/filter.model';
-import {Comment} from '../models/comment.model';
-import {User} from '../models/user.model';
-import {TaskDetailsModel} from '../models/task-details.model';
+import { Injectable } from '@angular/core';
+import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { FilterRepresentationModel } from '../models/filter.model';
+import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { Comment } from '../models/comment.model';
+import { User } from '../models/user.model';
+import { TaskDetailsModel } from '../models/task-details.model';
+import { Form } from '../models/form.model';
 
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(public authService: AlfrescoAuthenticationService) {
+    constructor(public authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -35,7 +36,7 @@ export class ActivitiTaskListService {
      * @returns {Observable<any>}
      */
     getDeployedApplications(name?: string): Observable<any> {
-        return Observable.fromPromise(this.authService.getAlfrescoApi().activiti.appsApi.getAppDefinitions())
+        return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => {
                 if (name) {
                     return response.data.find(p => p.name === name);
@@ -126,6 +127,31 @@ export class ActivitiTaskListService {
                 });
                 return checklists;
             }).catch(this.handleError);
+    }
+
+    /**
+     * Retrive all the form shared with this user
+     * @returns {TaskDetailsModel}
+     */
+    getFormList(): Observable<Form []> {
+        let opts = {
+            'filter': 'myReusableForms', // String | filter
+            'sort': 'modifiedDesc', // String | sort
+            'modelType': 2 // Integer | modelType
+        };
+
+        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts)).map(res => res)
+            .map((response: any) => {
+                let forms: Form[] = [];
+                response.data.forEach((form) => {
+                    forms.push(new Form(form.id, form.name));
+                });
+                return forms;
+            }).catch(this.handleError);
+    }
+
+    attachFormToATask(taskId: string, formId: number): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, {'formId': formId}));
     }
 
     /**
@@ -232,48 +258,57 @@ export class ActivitiTaskListService {
             }).catch(this.handleError);
     }
 
+    /**
+     * Claim a task
+     * @param id - taskId
+     */
+    claimTask(taskId: string): Observable<TaskDetailsModel> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.claimTask(taskId))
+            .catch(this.handleError);
+    }
+
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.listTasks(requestNode);
+        return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
     }
 
     private callApiTaskFilters(appId?: string) {
         if (appId) {
-            return this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
         } else {
-            return this.authService.getAlfrescoApi().activiti.userFiltersApi.getUserTaskFilters();
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters();
         }
     }
 
     private callApiTaskDetails(id: string) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.getTask(id);
+        return this.apiService.getInstance().activiti.taskApi.getTask(id);
     }
 
     private callApiTaskComments(id: string) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.getTaskComments(id);
+        return this.apiService.getInstance().activiti.taskApi.getTaskComments(id);
     }
 
     private callApiAddTaskComment(id: string, message: string) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.addTaskComment({message: message}, id);
+        return this.apiService.getInstance().activiti.taskApi.addTaskComment({message: message}, id);
     }
 
     private callApiAddTask(task: TaskDetailsModel) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.addSubtask(task.parentTaskId, task);
+        return this.apiService.getInstance().activiti.taskApi.addSubtask(task.parentTaskId, task);
     }
 
     private callApiAddFilter(filter: FilterRepresentationModel) {
-        return this.authService.getAlfrescoApi().activiti.userFiltersApi.createUserTaskFilter(filter);
+        return this.apiService.getInstance().activiti.userFiltersApi.createUserTaskFilter(filter);
     }
 
     private callApiTaskChecklist(id: string) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.getChecklist(id);
+        return this.apiService.getInstance().activiti.taskApi.getChecklist(id);
     }
 
     private callApiCompleteTask(id: string) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.completeTask(id);
+        return this.apiService.getInstance().activiti.taskApi.completeTask(id);
     }
 
     private callApiCreateTask(task: TaskDetailsModel) {
-        return this.authService.getAlfrescoApi().activiti.taskApi.createNewTask(task);
+        return this.apiService.getInstance().activiti.taskApi.createNewTask(task);
     }
 
     private handleError(error: any) {

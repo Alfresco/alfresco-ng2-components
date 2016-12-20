@@ -21,13 +21,14 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
+import { ActivitiFormModule, FormModel, FormService } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
 import { ActivitiProcessInstanceDetails } from './activiti-process-instance-details.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { exampleProcess } from './../assets/activiti-process.model.mock';
+import { ProcessInstance } from '../models/process-instance.model';
 
 describe('ActivitiProcessInstanceDetails', () => {
 
@@ -72,12 +73,6 @@ describe('ActivitiProcessInstanceDetails', () => {
         window['componentHandler'] = componentHandler;
     });
 
-    it('should load task details when processInstanceId specified', () => {
-        component.processInstanceId = '123';
-        fixture.detectChanges();
-        expect(getProcessSpy).toHaveBeenCalled();
-    });
-
     it('should not load task details when no processInstanceId is specified', () => {
         fixture.detectChanges();
         expect(getProcessSpy).not.toHaveBeenCalled();
@@ -89,8 +84,8 @@ describe('ActivitiProcessInstanceDetails', () => {
     });
 
     it('should display a header when the processInstanceId is provided', async(() => {
-        component.processInstanceId = '123';
         fixture.detectChanges();
+        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123') });
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
@@ -118,11 +113,6 @@ describe('ActivitiProcessInstanceDetails', () => {
             expect(getProcessSpy).toHaveBeenCalledWith('456');
         });
 
-        it('should reload tasks list when processInstanceId changed', () => {
-            component.ngOnChanges({ 'processInstanceId': change });
-            expect(component.tasksList.load).toHaveBeenCalled();
-        });
-
         it('should NOT fetch new process details when empty changeset made', () => {
             component.ngOnChanges({});
             expect(getProcessSpy).not.toHaveBeenCalled();
@@ -138,6 +128,15 @@ describe('ActivitiProcessInstanceDetails', () => {
             fixture.detectChanges();
             expect(fixture.nativeElement.innerText).toBe('DETAILS.MESSAGES.NONE');
         });
+
+        it('should display cancel button if process is running', () => {
+            component.processInstanceDetails = new ProcessInstance({
+                ended : null
+            });
+            fixture.detectChanges();
+            let buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
+            expect(buttonEl).not.toBeNull();
+        });
     });
 
     describe('events', () => {
@@ -151,12 +150,6 @@ describe('ActivitiProcessInstanceDetails', () => {
         it('should emit a task form completed event when task form completed', () => {
             let emitSpy: jasmine.Spy = spyOn(component.taskFormCompleted, 'emit');
             component.bubbleTaskFormCompleted(new FormModel());
-            expect(emitSpy).toHaveBeenCalled();
-        });
-
-        it('should emit a outcome execution event when task form outcome executed', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.processCancelled, 'emit');
-            component.bubbleProcessCancelled(new FormOutcomeEvent(new FormOutcomeModel(new FormModel())));
             expect(emitSpy).toHaveBeenCalled();
         });
 

@@ -13,8 +13,13 @@
             "COMMENTS": "Commenti",
             "CHECKLIST": "Checklist"
         },
+        "BUTTON": {
+            "COMPLETE": "Completa",
+            "CLAIM": "Richiedi"
+        },
         "MESSAGES": {
-            "NONE": "Nessun dettaglio task trovato."
+            "NONE": "Nessun dettaglio task trovato.",
+            "CLAIM": "Per lavorare con questo task, hai bisogno di richiederlo prima. Per richiedere il task basta premere il tasto Richiedi"
         },
         "FORM": {
             "NONE": "Nessuna form."

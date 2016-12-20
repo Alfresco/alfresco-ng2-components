@@ -22,9 +22,28 @@
 }
 
 .task-details-dialog {
-    width: 600px;
+    position: fixed;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 40%;
 }
 
 .process-tasks-refresh {
     float: right;
+}
+
+.mdl-dialog__content.form__size {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.no-results {
+    margin-left: 9px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 18px;
+    color: rgba(0, 0, 0, .54);
+    display: block;
+    padding: 12px;
 }

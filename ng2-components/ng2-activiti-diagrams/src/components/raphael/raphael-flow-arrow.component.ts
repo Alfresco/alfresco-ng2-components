@@ -18,6 +18,9 @@
 import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
+import { Polyline } from './polyline';
+
+declare let Raphael: any;
 
 @Directive({selector: 'raphael-flow-arrow'})
 export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
@@ -39,7 +42,7 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+
         this.draw(this.flow);
     }
 
@@ -54,7 +57,7 @@ export class RaphaelFlowArrowDirective extends RaphaelBase implements OnInit {
         polyline.element.attr({'stroke-width': this.SEQUENCEFLOW_STROKE});
         polyline.element.attr({'stroke': '#585858'});
 
-        polyline.element.id = this.flow.id;
+        polyline.element.node.id = this.flow.id;
 
         let lastLineIndex = polyline.getLinesCount() - 1;
         let line = polyline.getLine(lastLineIndex);

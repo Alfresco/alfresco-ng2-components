@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 /**
@@ -83,7 +83,7 @@ export class WebscriptComponent {
      * Constructor
      * @param authService
      */
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
 
     }
 
@@ -93,7 +93,7 @@ export class WebscriptComponent {
         }
 
         return new Promise((resolve, reject) => {
-            this.authService.getAlfrescoApi().webScript.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((webScriptdata) => {
+            this.apiService.getInstance().webScript.executeWebScript('GET', this.scriptPath, this.scriptArgs, this.contextRoot, this.servicePath).then((webScriptdata) => {
 
                 this.data = webScriptdata;
 

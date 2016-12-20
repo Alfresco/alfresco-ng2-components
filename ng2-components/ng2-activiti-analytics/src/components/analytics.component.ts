@@ -42,11 +42,14 @@ export class AnalyticsComponent implements OnChanges {
     onSuccess = new EventEmitter();
 
     @Output()
+    editReport = new EventEmitter();
+
+    @Output()
     onError = new EventEmitter();
 
     reportParamQuery = new ReportQuery();
 
-    reports: any[];
+    reports: Chart[];
 
     public barChartOptions: any = {
         responsive: true,
@@ -69,7 +72,7 @@ export class AnalyticsComponent implements OnChanges {
                 private analyticsService: AnalyticsService) {
         console.log('AnalyticsComponent');
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/dist/src');
+            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 
@@ -106,5 +109,9 @@ export class AnalyticsComponent implements OnChanges {
          */
         let clone = JSON.parse(JSON.stringify(report));
         report.datasets = clone.datasets;
+    }
+
+    public onEditReport(name: string) {
+        this.editReport.emit(name);
     }
 }

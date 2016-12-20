@@ -17,6 +17,8 @@
 
 import { Input, AfterViewInit, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 
+let componentHandler: any;
+
 /**
  * Base widget component.
  */

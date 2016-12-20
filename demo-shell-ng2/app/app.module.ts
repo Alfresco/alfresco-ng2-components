@@ -38,11 +38,13 @@ import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 
 import {
+    HomeComponent,
     DataTableDemoComponent,
     SearchComponent,
     SearchBarComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
+    ActivitiAppsView,
     FormViewer,
     WebscriptComponent,
     TagComponent,
@@ -74,12 +76,13 @@ import {
     ],
     declarations: [
         AppComponent,
-        SearchBarComponent,
+        HomeComponent,
         DataTableDemoComponent,
         SearchComponent,
         SearchBarComponent,
         LoginDemoComponent,
         ActivitiDemoComponent,
+        ActivitiAppsView,
         FormViewer,
         WebscriptComponent,
         TagComponent,

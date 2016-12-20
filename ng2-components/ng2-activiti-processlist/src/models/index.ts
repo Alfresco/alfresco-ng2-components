@@ -18,3 +18,4 @@
 export * from './process-definition.model';
 export * from './process-instance.model';
 export * from './process-instance-filter.model';
+export * from './process-instance-variable.model';

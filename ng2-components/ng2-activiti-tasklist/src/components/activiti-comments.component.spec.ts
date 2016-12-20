@@ -75,16 +75,19 @@ describe('ActivitiTaskDetails', () => {
     });
 
     it('should load comments when taskId specified', () => {
-        component.taskId = '123';
-        fixture.detectChanges();
+        let change = new SimpleChange(null, '123');
+        component.ngOnChanges({ 'taskId': change });
+
         expect(getCommentsSpy).toHaveBeenCalled();
     });
 
     it('should emit an error when an error occurs loading comments', () => {
         let emitSpy = spyOn(component.error, 'emit');
         getCommentsSpy.and.returnValue(Observable.throw({}));
-        component.taskId = '123';
-        fixture.detectChanges();
+
+        let change = new SimpleChange(null, '123');
+        component.ngOnChanges({ 'taskId': change });
+
         expect(emitSpy).toHaveBeenCalled();
     });
 
@@ -94,8 +97,9 @@ describe('ActivitiTaskDetails', () => {
     });
 
     it('should display comments when the task has comments', async(() => {
-        component.taskId = '123';
-        fixture.detectChanges();
+        let change = new SimpleChange(null, '123');
+        component.ngOnChanges({ 'taskId': change });
+
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             expect(fixture.debugElement.queryAll(By.css('ul.mdl-list li')).length).toBe(3);

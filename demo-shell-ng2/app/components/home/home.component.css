@@ -1,0 +1,48 @@
+.home-cards {
+    float: left;
+    margin: 10px 10px 10px 10px;
+}
+
+.mdl-card__supporting-text {
+    display: block;
+    overflow-y: auto;
+    height: 400px;
+}
+
+.demo-card-square.mdl-card {
+    width: 320px;
+    height: 380px;
+}
+
+.demo-card-square > .mdl-card__title {
+    color: #fff;
+    background-color: rgb(158, 158, 158);
+}
+
+.mdl-card__title {
+    cursor: pointer;
+    height: 70px;
+}
+
+.home--card__icon {
+    padding-top: 2px;
+    margin-right: 4px;
+}
+
+.home--feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.home--feature-list__icon {
+    float: left;
+}
+
+.home--feature-list__text {
+    padding-top: 2px;
+}
+
+span.home--feature-list__text:before {
+    content: '';
+    padding-left: 4px;
+}

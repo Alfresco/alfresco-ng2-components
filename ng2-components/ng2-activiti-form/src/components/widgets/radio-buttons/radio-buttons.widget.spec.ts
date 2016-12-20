@@ -36,7 +36,7 @@ describe('RadioButtonsWidget', () => {
 
     beforeEach(() => {
         formService = new FormService(null, null);
-        visibilityService = new WidgetVisibilityService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null);
         widget = new RadioButtonsWidget(formService, visibilityService);
         widget.field = new FormFieldModel(new FormModel(), { restUrl: '<url>' });
     });

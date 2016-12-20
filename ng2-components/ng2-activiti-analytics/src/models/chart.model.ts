@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import * as moment from 'moment';
+
 export class Chart {
     id: string;
     type: string;
@@ -76,7 +78,7 @@ export class LineChart extends Chart {
 export class BarChart extends Chart {
     title: string;
     titleKey: string;
-    labels: string[] = [];
+    labels: any = [];
     datasets: any[] = [];
     data: any[] = [];
     xAxisType: string;

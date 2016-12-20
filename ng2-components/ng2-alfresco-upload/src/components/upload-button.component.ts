@@ -53,6 +53,8 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
 })
 export class UploadButtonComponent {
 
+    private static DEFAULT_ROOT_ID: string = '-root-';
+
     @ViewChild('undoNotificationBar')
     undoNotificationBar: any;
 
@@ -72,7 +74,10 @@ export class UploadButtonComponent {
     acceptedFilesType: string = '*';
 
     @Input()
-    currentFolderPath: string = '/Sites/swsdp/documentLibrary';
+    currentFolderPath: string = '/';
+
+    @Input()
+    rootFolderId: string = UploadButtonComponent.DEFAULT_ROOT_ID;
 
     @Output()
     onSuccess = new EventEmitter();
@@ -87,7 +92,7 @@ export class UploadButtonComponent {
 
     constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
         this.translate = translate;
-        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/dist/src');
+        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
     }
 
     ngOnChanges(changes) {
@@ -151,7 +156,7 @@ export class UploadButtonComponent {
     private uploadFiles(path: string, files: any[]) {
         if (files.length) {
             let latestFilesAdded = this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(path, this.onSuccess);
+            this._uploaderService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
             if (this.showUdoNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
             }

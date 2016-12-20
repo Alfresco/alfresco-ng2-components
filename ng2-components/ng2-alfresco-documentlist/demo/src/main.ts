@@ -18,17 +18,14 @@
 import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule }  from 'ng2-alfresco-datatable';
-import { DocumentListModule, DocumentList } from 'ng2-alfresco-documentlist';
-
+import { DocumentListModule, DocumentList, DocumentActionsService } from 'ng2-alfresco-documentlist';
 import {
+    CoreModule,
+    StorageService,
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
-
-import { DocumentActionsService } from 'ng2-alfresco-documentlist';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -51,6 +48,7 @@ import { DocumentActionsService } from 'ng2-alfresco-documentlist';
                 [currentFolderPath]="currentPath"
                 [contextMenuActions]="true"
                 [contentActions]="true"
+                [creationMenuActions]="true"
                 (folderChange)="onFolderChanged($event)">
             <!--
             <empty-folder-content>
@@ -151,8 +149,11 @@ class DocumentListDemo implements OnInit {
     @ViewChild(DocumentList)
     documentList: DocumentList;
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService,
-                translation: AlfrescoTranslationService, private documentActions: DocumentActionsService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
+                private translation: AlfrescoTranslationService,
+                private documentActions: DocumentActionsService,
+                private storage: StorageService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -166,7 +167,7 @@ class DocumentListDemo implements OnInit {
     }
 
     public updateTicket(): void {
-        localStorage.setItem('ticket-ECM', this.ticket);
+        this.storage.setItem('ticket-ECM', this.ticket);
     }
 
     public updateHost(): void {
@@ -217,7 +218,6 @@ class DocumentListDemo implements OnInit {
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        DataTableModule,
         DocumentListModule.forRoot()
     ],
     declarations: [ DocumentListDemo ],

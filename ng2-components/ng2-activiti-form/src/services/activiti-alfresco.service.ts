@@ -17,9 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
+import { AlfrescoApi } from  'alfresco-js-api';
 
 @Injectable()
 export class ActivitiAlfrescoContentService {
@@ -27,7 +28,7 @@ export class ActivitiAlfrescoContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    constructor(private authService: AlfrescoAuthenticationService) {
+    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -38,7 +39,7 @@ export class ActivitiAlfrescoContentService {
      * @returns {null}
      */
     getAlfrescoNodes(accountId: string, folderId: string): Observable<[ExternalContent]> {
-        let apiService: any = this.authService.getAlfrescoApi();
+        let apiService: AlfrescoApi = this.apiService.getInstance();
         let accountShortId = accountId.replace('alfresco-', '');
         return Observable.fromPromise(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
             .map(this.toJsonArray)
@@ -54,7 +55,7 @@ export class ActivitiAlfrescoContentService {
      * @returns {null}
      */
     linkAlfrescoNode(accountId: string, node: ExternalContent, siteId: string): Observable<ExternalContentLink> {
-        let apiService: any = this.authService.getAlfrescoApi();
+        let apiService: AlfrescoApi = this.apiService.getInstance();
         return Observable.fromPromise(apiService.activiti.contentApi.createTemporaryRelatedContent({
             link: true,
             name: node.title,

@@ -15,8 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { CellEditorComponent } from './../cell.editor';
+import { Component, Input, OnInit, ElementRef } from '@angular/core';
+import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
+import * as moment from 'moment';
+
+declare let mdDateTimePicker: any;
 
 @Component({
     moduleId: module.id,
@@ -24,7 +27,7 @@ import { CellEditorComponent } from './../cell.editor';
     templateUrl: './date.editor.html',
     styleUrls: ['./date.editor.css']
 })
-export class DateEditorComponent extends CellEditorComponent implements OnInit {
+export class DateEditorComponent implements OnInit {
 
     DATE_FORMAT: string = 'DD-MM-YYYY';
 
@@ -32,9 +35,16 @@ export class DateEditorComponent extends CellEditorComponent implements OnInit {
     settings: any;
     value: any;
 
-    constructor(private elementRef: ElementRef) {
-        super();
-    }
+    @Input()
+    table: DynamicTableModel;
+
+    @Input()
+    row: DynamicTableRow;
+
+    @Input()
+    column: DynamicTableColumn;
+
+    constructor(private elementRef: ElementRef) {}
 
     ngOnInit() {
         this.settings = {

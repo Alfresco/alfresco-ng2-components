@@ -17,11 +17,13 @@
 
 import {
     Component,
-    OnInit, AfterViewChecked, OnChanges,
+    AfterViewChecked, OnChanges,
     SimpleChanges,
     Input,
     ViewChild,
-    ElementRef
+    ElementRef,
+    Output,
+    EventEmitter
 } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
@@ -37,8 +39,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
  *
  * @Input
  * {processDefinitionId} string: The process definition ID
- * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, as yet these don't do anything so this
- * is false by default
+ * {showOutcomeButtons} boolean: Whether form outcome buttons should be shown, this is now always active to show form outcomes
  *  @Output
  *  {formLoaded} EventEmitter - This event is fired when the form is loaded, it pass all the value in the form.
  *  {formSaved} EventEmitter - This event is fired when the form is saved, it pass all the value in the form.
@@ -52,7 +53,7 @@ import { WidgetVisibilityService }  from './../services/widget-visibility.servic
     templateUrl: './activiti-start-form.component.html',
     styleUrls: ['./activiti-form.component.css']
 })
-export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
+export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked, OnChanges {
 
     @Input()
     processDefinitionId: string;
@@ -61,10 +62,13 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     processId: string;
 
     @Input()
-    showOutcomeButtons: boolean = false;
+    showOutcomeButtons: boolean = true;
 
     @Input()
     showRefreshButton: boolean = true;
+
+    @Output()
+    outcomeClick: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
@@ -73,37 +77,24 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
                 formService: FormService,
                 visibilityService: WidgetVisibilityService) {
         super(formService, visibilityService, null, null);
-    }
-
-    ngOnInit() {
-        if (this.processId) {
-            this.loadStartForm(this.processId);
-        }else {
-            this.loadForm();
-        }
 
         if (this.translate) {
-            this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/dist/src');
+            this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         let processDefinitionId = changes['processDefinitionId'];
         if (processDefinitionId && processDefinitionId.currentValue) {
+            this.visibilityService.cleanProcessVariable();
             this.getStartFormDefinition(processDefinitionId.currentValue);
             return;
         }
 
         let processId = changes['processId'];
-        if (processId  && processId.currentValue) {
+        if (processId && processId.currentValue) {
+            this.visibilityService.cleanProcessVariable();
             this.loadStartForm(processId.currentValue);
-            return;
-        }
-    }
-
-    loadForm() {
-        if (this.processDefinitionId) {
-            this.getStartFormDefinition(this.processDefinitionId);
             return;
         }
     }
@@ -144,5 +135,6 @@ export class ActivitiStartForm extends ActivitiForm implements OnInit, AfterView
     }
 
     completeTaskForm(outcome?: string) {
+        this.outcomeClick.emit(outcome);
     }
 }

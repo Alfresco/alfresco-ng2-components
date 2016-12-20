@@ -58,7 +58,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
-            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/dist/src');
+            translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
     }
 
@@ -145,7 +145,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     /**
      * Select the first filter of a list if present
      */
-    private selectFirstFilter() {
+    public selectFirstFilter() {
         if (!this.isFilterListEmpty()) {
             this.currentFilter = this.filters[0];
         } else {

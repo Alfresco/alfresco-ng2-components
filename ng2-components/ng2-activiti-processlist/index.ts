@@ -21,21 +21,24 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
-import { ActivitiProcessInstanceListComponent } from './src/components/activiti-processlist.component';
-import { ActivitiProcessFilters } from './src/components/activiti-filters.component';
-import { ActivitiProcessInstanceHeader } from './src/components/activiti-process-instance-header.component';
-import { ActivitiProcessInstanceTasks } from './src/components/activiti-process-instance-tasks.component';
-import { ActivitiComments } from './src/components/activiti-comments.component';
-import { ActivitiProcessInstanceDetails } from './src/components/activiti-process-instance-details.component';
-import { ActivitiStartProcessInstance } from './src/components/activiti-start-process.component';
-import { ActivitiStartProcessInstanceDialog } from './src/components/activiti-start-process-dialog.component';
+import {
+    ActivitiProcessInstanceListComponent,
+    ActivitiProcessFilters,
+    ActivitiProcessInstanceHeader,
+    ActivitiProcessInstanceTasks,
+    ActivitiProcessInstanceVariables,
+    ActivitiProcessComments,
+    ActivitiProcessInstanceDetails,
+    ActivitiStartProcessInstance
+} from './src/components/index';
+
 import { ActivitiProcessService } from './src/services/activiti-process.service';
 
 // components
 export * from './src/components/activiti-processlist.component';
+export * from './src/components/activiti-filters.component';
 export * from './src/components/activiti-process-instance-details.component';
 export * from './src/components/activiti-start-process.component';
-export * from './src/components/activiti-start-process-dialog.component';
 
 // models
 export * from './src/models/index';
@@ -49,9 +52,9 @@ export const ACTIVITI_PROCESSLIST_DIRECTIVES: [any] = [
     ActivitiProcessInstanceDetails,
     ActivitiProcessInstanceHeader,
     ActivitiProcessInstanceTasks,
-    ActivitiComments,
-    ActivitiStartProcessInstance,
-    ActivitiStartProcessInstanceDialog
+    ActivitiProcessInstanceVariables,
+    ActivitiProcessComments,
+    ActivitiStartProcessInstance
 ];
 
 export const ACTIVITI_PROCESSLIST_PROVIDERS: [any] = [

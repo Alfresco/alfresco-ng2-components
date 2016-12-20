@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit,
-    Input,
-    Output,
-    EventEmitter,
-    AfterViewChecked,
-    TemplateRef
-} from '@angular/core';
-
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
 import {
     DataTableAdapter,
     DataRow,
@@ -42,7 +33,7 @@ declare var componentHandler;
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })
-export class DataTableComponent implements OnInit, AfterViewChecked {
+export class DataTableComponent implements OnInit {
 
     @Input()
     data: DataTableAdapter;
@@ -79,9 +70,7 @@ export class DataTableComponent implements OnInit, AfterViewChecked {
         if (!this.data) {
             this.data = new ObjectDataTableAdapter([], []);
         }
-    }
 
-    ngAfterViewChecked() {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();

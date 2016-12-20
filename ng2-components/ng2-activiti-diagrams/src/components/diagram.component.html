@@ -1,4 +1,4 @@
-<div *ngIf="diagram">
+<div *ngIf="diagram" class="diagram">
     <div *ngFor="let element of diagram.elements">
         <div [ngSwitch]="element.type">
             <div *ngSwitchCase="'StartEvent'">

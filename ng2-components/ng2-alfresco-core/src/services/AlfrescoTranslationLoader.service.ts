@@ -58,13 +58,13 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
         return observableBatch;
     }
 
-    init(lang:string) {
+    init(lang: string) {
         if (this.queue[lang] === undefined) {
             this.queue[lang] = [];
         }
     }
 
-    isComponentInQueue(lang:string, name: string) {
+    isComponentInQueue(lang: string, name: string) {
         return this.queue[lang].find(x => x === name) ? true : false;
     }
 
@@ -88,7 +88,7 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
             if (observableBatch.length > 0) {
                 Observable.forkJoin(observableBatch).subscribe(
                     () => {
-                        let fullTranslation  = this.getFullTranslationJSON(lang);
+                        let fullTranslation = this.getFullTranslationJSON(lang);
                         if (fullTranslation) {
                             observer.next(fullTranslation);
                         }
@@ -98,7 +98,7 @@ export class AlfrescoTranslationLoader implements TranslateLoader {
                         console.error(err);
                     });
             } else {
-                let fullTranslation  = this.getFullTranslationJSON(lang);
+                let fullTranslation = this.getFullTranslationJSON(lang);
                 if (fullTranslation) {
                     observer.next(fullTranslation);
                 }

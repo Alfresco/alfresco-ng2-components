@@ -29,7 +29,7 @@ describe('ActivitiTaskList', () => {
 
     let fakeGlobalTask = [
         {
-            id: 14, name: 'fake-long-name-fake-long-name-fake-long-name-fak50-long-name',
+            id: 14, name: 'task-name',
             processDefinitionId: 'fakeprocess:5:7507',
             processDefinitionKey: 'fakeprocess',
             processDefinitionName: 'Fake Process Name',
@@ -69,7 +69,7 @@ describe('ActivitiTaskList', () => {
                 ActivitiTaskList
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                {provide: AlfrescoTranslationService, useClass: TranslationMock},
                 ActivitiTaskListService
             ]
         }).compileComponents();
@@ -115,37 +115,44 @@ describe('ActivitiTaskList', () => {
     it('should return the filtered task list when the input parameters are passed', (done) => {
         spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
         spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
-        component.state = 'open';
-        component.processDefinitionKey = null;
-        component.assignment = 'fake-assignee';
-        component.onSuccess.subscribe( (res) => {
+
+        let state = new SimpleChange(null, 'open');
+        let processDefinitionKey = new SimpleChange(null, null);
+        let assignment = new SimpleChange(null, 'fake-assignee');
+
+        component.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         component.ngOnInit();
+        component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
+        fixture.detectChanges();
     });
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
         spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
         spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
-        component.state = 'open';
-        component.processDefinitionKey = 'fakeprocess';
-        component.assignment = 'fake-assignee';
-        component.onSuccess.subscribe( (res) => {
+
+        let state = new SimpleChange(null, 'open');
+        let processDefinitionKey = new SimpleChange(null, 'fakeprocess');
+        let assignment = new SimpleChange(null, 'fake-assignee');
+
+        component.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
+
         component.ngOnInit();
+        component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
+        fixture.detectChanges();
     });
 
     it('should return a currentId null when the taskList is empty', () => {
@@ -155,15 +162,19 @@ describe('ActivitiTaskList', () => {
 
     it('should throw an exception when the response is wrong', (done) => {
         spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.throw(fakeErrorTaskList));
-        component.state = 'open';
-        component.assignment = 'fake-assignee';
-        component.onError.subscribe( (err) => {
+
+        let state = new SimpleChange(null, 'open');
+        let assignment = new SimpleChange(null, 'fake-assignee');
+
+        component.onError.subscribe((err) => {
             expect(err).toBeDefined();
             expect(err.error).toBe('wrong request');
             done();
         });
 
         component.ngOnInit();
+        component.ngOnChanges({'state': state, 'assignment': assignment});
+        fixture.detectChanges();
     });
 
     it('should reload tasks when reload() is called', (done) => {
@@ -172,13 +183,12 @@ describe('ActivitiTaskList', () => {
         component.state = 'open';
         component.assignment = 'fake-assignee';
         component.ngOnInit();
-        component.onSuccess.subscribe( (res) => {
+        component.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-            expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
             done();
         });
         component.reload();
@@ -223,13 +233,12 @@ describe('ActivitiTaskList', () => {
             const appId = '1';
             let change = new SimpleChange(null, appId);
 
-            component.onSuccess.subscribe( (res) => {
+            component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -245,8 +254,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -262,8 +270,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -279,8 +286,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -296,8 +302,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 
@@ -313,8 +318,7 @@ describe('ActivitiTaskList', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[0].getValue('name')).toEqual('fake-long-name-fake-long-name-fake-long-name-fak50...');
-                expect(component.data.getRows()[1].getValue('name')).toEqual('Nameless task');
+                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
                 done();
             });
 

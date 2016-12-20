@@ -1,10 +1,13 @@
 <div class="col-md-6">
     <analytics-report-parameters [appId]="appId" [reportId]="reportId"
-                                 (onFormValueChanged)="reset()" (onSuccess)="showReport($event)"></analytics-report-parameters>
+                                 (onFormValueChanged)="reset()"
+                                 (onSuccess)="showReport($event)"
+                                 (onEdit)="onEditReport($event)">
+    </analytics-report-parameters>
 
     <div *ngIf="reports">
         <div *ngFor="let report of reports">
-            <h2>{{report.title}}</h2>
+            <h4>{{report.title}}</h4>
             <div [ngSwitch]="report.type">
                 <div *ngSwitchCase="'pie'">
                     <div class="col-md-6">

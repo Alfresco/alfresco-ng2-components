@@ -16,9 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Response, Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import {
     FormModel,
     FormFieldModel,
@@ -28,15 +27,14 @@ import {
 } from '../components/widgets/core/index';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
+import * as moment from 'moment';
 
 @Injectable()
 export class WidgetVisibilityService {
 
     private processVarList: TaskProcessVariableModel[];
 
-    constructor(private http: Http,
-                private alfrescoSettingsService: AlfrescoSettingsService,
-                private authService: AlfrescoAuthenticationService) {
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     public refreshVisibility(form: FormModel) {
@@ -79,10 +77,14 @@ export class WidgetVisibilityService {
     }
 
     getLeftValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
+        let leftValue = '';
         if (visibilityObj.leftRestResponseId && visibilityObj.leftRestResponseId !== 'null') {
-            return this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
+            leftValue = this.getVariableValue(form, visibilityObj.leftRestResponseId, this.processVarList);
+        } else {
+            leftValue = this.getFormValue(form, visibilityObj.leftFormFieldId);
+            leftValue = leftValue ? leftValue : this.getVariableValue(form, visibilityObj.leftFormFieldId, this.processVarList);
         }
-        return this.getFormValue(form, visibilityObj.leftFormFieldId);
+        return leftValue;
     }
 
     getRightValue(form: FormModel, visibilityObj: WidgetVisibilityModel) {
@@ -229,30 +231,26 @@ export class WidgetVisibilityService {
         return;
     }
 
+    cleanProcessVariable() {
+        this.processVarList = [];
+    }
+
     getTaskProcessVariable(taskId: string): Observable<TaskProcessVariableModel[]> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/task-forms/${taskId}/variables`;
-        let options = this.getRequestOptions();
-        return this.http
-            .get(url, options)
-            .map((response: Response) => this.processVarList = <TaskProcessVariableModel[]> response.json())
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskFormsApi.getTaskFormVariables(taskId))
+            .map(res => {
+                let jsonRes = this.toJson(res);
+                this.processVarList = <TaskProcessVariableModel[]>jsonRes;
+                return jsonRes;
+            })
             .catch(this.handleError);
     }
 
-    private getHeaders(): Headers {
-        return new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': this.authService.getTicketBpm()
-        });
+    toJson(res: any) {
+        return res || {};
     }
 
-    private getRequestOptions(): RequestOptions {
-        let headers = this.getHeaders();
-        return new RequestOptions({ headers: headers });
-    }
-
-    private handleError(error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+    private handleError() {
+        console.error('Error while performing a call');
+        return Observable.throw('Error while performing a call - Server error');
     }
 }

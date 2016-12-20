@@ -1,0 +1,66 @@
+<div id="setVariableBtn" (click)="showAddDialog()" class="icon material-icons">add</div>
+<div class="mdl-tooltip" for="setVariableBtn">
+    {{ 'DETAILS.VARIABLES.BUTTON.ADD' |translate }}
+</div>
+
+
+<div *ngIf="!isListEmpty()">
+    <alfresco-datatable [data]="data" [actions]="true" (showRowActionsMenu)="onShowRowActionsMenu($event)"
+                        (executeRowAction)="onExecuteRowAction($event)"></alfresco-datatable>
+</div>
+<div *ngIf="isListEmpty()" data-automation-id="variables-none">
+    {{ 'DETAILS.VARIABLES.NONE' | translate }}
+</div>
+
+
+<dialog class="mdl-dialog add-dialog" #addDialog>
+    <h4 class="mdl-dialog__title">{{ 'DETAILS.VARIABLES.ADD_DIALOG.TITLE' |translate }}</h4>
+    <div class="mdl-dialog__content">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="addVariableName">{{ 'DETAILS.VARIABLES.ADD_DIALOG.LABEL.NAME' |translate }}</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="variableName" id="addVariableName" [readonly]="editMode" />
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="addVariableValue">{{ 'DETAILS.VARIABLES.ADD_DIALOG.LABEL.VALUE' |translate }}</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="variableValue" id="addVariableValue" />
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="add()" class="mdl-button">{{ 'DETAILS.VARIABLES.DIALOG.BUTTON.SET' |translate }}</button>
+        <button type="button" (click)="closeAddDialog()" class="mdl-button close">{{ 'DETAILS.VARIABLES.DIALOG.BUTTON.CANCEL' |translate }}</button>
+    </div>
+</dialog>
+
+
+<dialog class="mdl-dialog edit-dialog" #editDialog>
+    <h4 class="mdl-dialog__title">{{ 'DETAILS.VARIABLES.EDIT_DIALOG.TITLE' |translate }}</h4>
+    <div class="mdl-dialog__content">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="editVariableName">{{ 'DETAILS.VARIABLES.ADD_DIALOG.LABEL.NAME' |translate }}</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="variableName" id="editVariableName" [readonly]="true" />
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="editVariableValue">{{ 'DETAILS.VARIABLES.ADD_DIALOG.LABEL.VALUE' |translate }}</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="variableValue" id="editVariableValue" />
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label class="mdl-textfield__label" for="editVariableScope">{{ 'DETAILS.VARIABLES.ADD_DIALOG.LABEL.SCOPE' |translate }}</label>
+            <input class="mdl-textfield__input" type="text" [(ngModel)]="variableName" id="editVariableScope" [readonly]="true" />
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="edit()" class="mdl-button">{{ 'DETAILS.VARIABLES.DIALOG.BUTTON.SET' |translate }}</button>
+        <button type="button" (click)="closeEditDialog()" class="mdl-button close">{{ 'DETAILS.VARIABLES.DIALOG.BUTTON.CANCEL' |translate }}</button>
+    </div>
+</dialog>
+
+
+<dialog class="mdl-dialog error-dialog" #errorDialog>
+    <h4 class="mdl-dialog__title">{{ 'DETAILS.VARIABLES.ERROR_DIALOG.TITLE' |translate }}</h4>
+    <div class="mdl-dialog__content">
+        <p>{{ 'DETAILS.VARIABLES.ERROR_DIALOG.DESCRIPTION' |translate }}</p>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" (click)="closeErrorDialog()" class="mdl-button close">{{ 'DETAILS.VARIABLES.DIALOG.BUTTON.OK' |translate }}</button>
+    </div>
+</dialog>
