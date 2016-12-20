@@ -166,4 +166,12 @@ describe('ActivitiFilters', () => {
         expect(filterList.getCurrentFilter()).toBe(filter);
     });
 
+    it('should load Default list when no appid or taskid are provided', () => {
+        spyOn(filterList, 'getFiltersByAppId').and.stub();
+
+        let change = new SimpleChange(null, null);
+        filterList.ngOnChanges({ 'appName': change });
+
+        expect(filterList.getFiltersByAppId).toHaveBeenCalled();
+    });
 });

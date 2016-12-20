@@ -84,10 +84,12 @@ export class ActivitiFilters implements OnInit, OnChanges {
             return;
         }
         let appName = changes['appName'];
-        if (appName && appName.currentValue) {
+        if (appName && appName !== null && appName.currentValue) {
             this.getFiltersByAppName(appName.currentValue);
             return;
         }
+
+        this.getFiltersByAppId();
     }
 
     /**
