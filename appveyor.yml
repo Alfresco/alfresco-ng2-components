@@ -1,7 +1,4 @@
 # Test against this version of Node.js
-branches:
-  only:
-    - master
 
 environment:
   nodejs_version: "5"
@@ -44,10 +41,10 @@ install:
   - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (npm link ng2-alfresco-datatable && npm link ng2-activiti-form)
   - IF %COMPONENT_NAME% EQU ng2-alfresco-webscript (npm link ng2-alfresco-datatable)
   - IF %COMPONENT_NAME% EQU ng2-activiti-analytics (npm link ng2-activiti-diagrams)
-  - npm install
 
 # Post-install test scripts.
 test_script:
+  - npm install
   # Output useful info for debugging.
   - node --version
   - npm --version
