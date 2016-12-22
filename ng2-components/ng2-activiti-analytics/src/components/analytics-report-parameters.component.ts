@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges, OnDestroy, AfterViewChecked } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel, ReportQuery, ParameterValueModel, ReportParameterDetailsModel } from '../models/report.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
+
+declare var componentHandler;
 
 @Component({
     moduleId: module.id,
@@ -28,7 +30,7 @@ import * as moment from 'moment';
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']
 })
-export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
+export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
 
     public static FORMAT_DATE_ACTIVITI: string =  'YYYY-MM-DD';
 
@@ -235,5 +237,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
                 this.onError.emit(err);
             }
         );
+    }
+
+    ngAfterViewChecked() {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
     }
 }
