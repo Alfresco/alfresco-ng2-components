@@ -12,10 +12,13 @@
                 <div *ngSwitchCase="'pie'">
                     <div class="col-md-6">
                         <div *ngIf="!report.hasData()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
-                        <base-chart *ngIf="report.hasData()" class="chart"
-                                    [data]="report.data"
-                                    [labels]="report.labels"
-                                    [chartType]="report.type"></base-chart>
+                        <div *ngIf="report.hasData()">
+                            <div *ngIf="report.hasZeroValues()">{{'ANALYTICS.MESSAGES.ZERO-DATA-FOUND' | translate}}</div>
+                            <base-chart *ngIf="!report.hasZeroValues()" class="chart"
+                                        [data]="report.data"
+                                        [labels]="report.labels"
+                                        [chartType]="report.type"></base-chart>
+                        </div>
                     </div>
                 </div>
                 <div *ngSwitchCase="'table'">
