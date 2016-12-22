@@ -8,10 +8,7 @@
 <div class="menu-container" *ngIf="comments?.length > 0">
     <ul class='mdl-list'>
         <li class="mdl-list__item" *ngFor="let comment of comments">
-            <span class="mdl-list__item-primary-content">
-            <i class="material-icons mdl-list__item-icon">comment</i>
-            {{comment.message}}
-            </span>
+            <span class="mdl-list__item-primary-content"><i class="material-icons mdl-list__item-icon">comment</i>{{comment.message}}</span>
         </li>
     </ul>
 </div>

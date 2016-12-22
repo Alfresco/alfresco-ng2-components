@@ -17,3 +17,11 @@
 .material-icons {
     cursor: pointer;
 }
+
+.mdl-list__item {
+    word-wrap: break-word;
+}
+
+.mdl-list__item .mdl-list__item-primary-content {
+    overflow: auto;
+}
