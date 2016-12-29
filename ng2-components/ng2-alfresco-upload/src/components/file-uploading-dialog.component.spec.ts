@@ -15,42 +15,33 @@
  * limitations under the License.
  */
 
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { FileUploadingDialogComponent } from './file-uploading-dialog.component';
 import { FileUploadingListComponent } from './file-uploading-list.component';
-import { DebugElement, ReflectiveInjector }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule
-} from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
-describe('Test ng2-alfresco-upload FileUploadDialog', () => {
+describe('FileUploadingDialogComponent', () => {
 
-    let injector;
-    let component: any;
+    let component: FileUploadingDialogComponent;
     let fixture: ComponentFixture<FileUploadingDialogComponent>;
     let debug: DebugElement;
     let element: any;
     let file: FileModel;
+    let uploadService: UploadService;
 
     beforeEach(async(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            UploadService
-        ]);
-
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
-            declarations: [FileUploadingDialogComponent, FileUploadingListComponent],
+            declarations: [
+                FileUploadingDialogComponent,
+                FileUploadingListComponent
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
                 UploadService
             ]
         }).compileComponents();
@@ -66,6 +57,7 @@ describe('Test ng2-alfresco-upload FileUploadDialog', () => {
         file = new FileModel(fileFake);
 
         fixture = TestBed.createComponent(FileUploadingDialogComponent);
+        uploadService = TestBed.get(UploadService);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -81,14 +73,14 @@ describe('Test ng2-alfresco-upload FileUploadDialog', () => {
     });
 
     it('should render completed upload 1 when an element is added to Observer', () => {
-        component._uploaderService.updateFileCounterStream(1);
+        uploadService.updateFileCounterStream(1);
         fixture.detectChanges();
 
         expect(element.querySelector('#total-upload-completed').innerText).toEqual('1');
     });
 
     it('should render dialog box with css class show when an element is added to Observer', () => {
-        component._uploaderService.addToQueue([file]);
+        uploadService.addToQueue([file]);
         component.filesUploadingList = [file];
 
         fixture.detectChanges();

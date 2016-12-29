@@ -17,7 +17,7 @@
 
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '../services/upload.service';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 declare let componentHandler: any;
@@ -61,16 +61,16 @@ export class UploadDragAreaComponent {
     @Output()
     onSuccess = new EventEmitter();
 
-    translate: AlfrescoTranslationService;
-
-    constructor(private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
-        this.translate = translate;
-        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+    constructor(private uploadService: UploadService,
+                private translateService: AlfrescoTranslateService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+        }
     }
 
     ngOnChanges(changes) {
         let formFields = this.createFormFields();
-        this._uploaderService.setOptions(formFields, this.versioning);
+        this.uploadService.setOptions(formFields, this.versioning);
     }
 
     /**
@@ -81,17 +81,17 @@ export class UploadDragAreaComponent {
     onFilesDropped(files: File[]): void {
         if (files.length) {
             if (this.checkValidity(files)) {
-                this._uploaderService.addToQueue(files);
-                this._uploaderService.uploadFilesInTheQueue(this.rootFolderId, this.currentFolderPath, this.onSuccess);
-                let latestFilesAdded = this._uploaderService.getQueue();
+                this.uploadService.addToQueue(files);
+                this.uploadService.uploadFilesInTheQueue(this.rootFolderId, this.currentFolderPath, this.onSuccess);
+                let latestFilesAdded = this.uploadService.getQueue();
                 if (this.showUdoNotificationBar) {
-                    this._showUndoNotificationBar(latestFilesAdded);
+                    this.showUndoNotificationBar(latestFilesAdded);
                 }
             } else {
                 let errorMessage: any;
-                errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
+                errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
                 if (this.showUdoNotificationBar) {
-                    this._showErrorNotificationBar(errorMessage.value);
+                    this.showErrorNotificationBar(errorMessage.value);
                 } else {
                     console.error(errorMessage.value);
                 }
@@ -117,10 +117,10 @@ export class UploadDragAreaComponent {
      */
     onFilesEntityDropped(item: any): void {
         item.file( (file: any) => {
-            this._uploaderService.addToQueue([file]);
+            this.uploadService.addToQueue([file]);
             let path = item.fullPath.replace(item.name, '');
             let filePath = this.currentFolderPath + path;
-            this._uploaderService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);
+            this.uploadService.uploadFilesInTheQueue(this.rootFolderId, filePath, this.onSuccess);
         });
     }
 
@@ -133,7 +133,7 @@ export class UploadDragAreaComponent {
             let relativePath = folder.fullPath.replace(folder.name, '');
             relativePath = this.currentFolderPath + relativePath;
 
-            this._uploaderService.createFolder(relativePath, folder.name)
+            this.uploadService.createFolder(relativePath, folder.name)
                 .subscribe(
                     message => {
                         this.onSuccess.emit({
@@ -145,8 +145,8 @@ export class UploadDragAreaComponent {
                                 this._traverseFileTree(entries[i]);
                             }
                             if (this.showUdoNotificationBar) {
-                                let latestFilesAdded = this._uploaderService.getQueue();
-                                this._showUndoNotificationBar(latestFilesAdded);
+                                let latestFilesAdded = this.uploadService.getQueue();
+                                this.showUndoNotificationBar(latestFilesAdded);
                             }
                         });
                     },
@@ -154,7 +154,7 @@ export class UploadDragAreaComponent {
                         let errorMessagePlaceholder = this.getErrorMessage(error.response);
                         let errorMessage = this.formatString(errorMessagePlaceholder, [folder.name]);
                         if (this.showUdoNotificationBar) {
-                            this._showErrorNotificationBar(errorMessage);
+                            this.showErrorNotificationBar(errorMessage);
                         } else {
                             console.error(errorMessage);
                         }
@@ -184,14 +184,14 @@ export class UploadDragAreaComponent {
      *
      * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
-    private _showUndoNotificationBar(latestFilesAdded: FileModel[]) {
+    showUndoNotificationBar(latestFilesAdded: FileModel[]) {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
 
         let messageTranslate: any, actionTranslate: any;
-        messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
-        actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
+        messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
+        actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
         this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
             message: messageTranslate.value,
@@ -210,7 +210,7 @@ export class UploadDragAreaComponent {
      * @param Error message
      * @private
      */
-    private _showErrorNotificationBar(errorMessage: string) {
+    showErrorNotificationBar(errorMessage: string) {
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
@@ -229,7 +229,7 @@ export class UploadDragAreaComponent {
     private getErrorMessage(response: any): string {
         if (response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
             let errorMessage: any;
-            errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;
         }
     }

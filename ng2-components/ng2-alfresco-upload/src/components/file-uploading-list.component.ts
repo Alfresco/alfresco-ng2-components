@@ -40,7 +40,6 @@ export class FileUploadingListComponent {
     filesUploadingList: FileModel [];
 
     constructor(public el: ElementRef) {
-        console.log('filesUploadingList constructor', el);
     }
 
     /**

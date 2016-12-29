@@ -16,10 +16,10 @@
  */
 
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import 'rxjs/Rx';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import 'rxjs/Rx';
 
 declare let componentHandler: any;
 
@@ -88,16 +88,17 @@ export class UploadButtonComponent {
     @Output()
     createFolder = new EventEmitter();
 
-    translate: AlfrescoTranslationService;
-
-    constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
-        this.translate = translate;
-        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+    constructor(public el: ElementRef,
+                private uploadService: UploadService,
+                private translateService: AlfrescoTranslateService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+        }
     }
 
     ngOnChanges(changes) {
         let formFields = this.createFormFields();
-        this._uploaderService.setOptions(formFields, this.versioning);
+        this.uploadService.setOptions(formFields, this.versioning);
     }
 
     /**
@@ -125,7 +126,7 @@ export class UploadButtonComponent {
             let directoryName = this.getDirectoryName(directoryPath);
             let absolutePath = this.currentFolderPath + this.getDirectoryPath(directoryPath);
 
-            this._uploaderService.createFolder(absolutePath, directoryName)
+            this.uploadService.createFolder(absolutePath, directoryName)
                 .subscribe(
                     res => {
                         let relativeDir = this.currentFolderPath + '/' + directoryPath;
@@ -155,8 +156,8 @@ export class UploadButtonComponent {
      */
     private uploadFiles(path: string, files: any[]) {
         if (files.length) {
-            let latestFilesAdded = this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
+            let latestFilesAdded = this.uploadService.addToQueue(files);
+            this.uploadService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
             if (this.showUdoNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
             }
@@ -220,8 +221,8 @@ export class UploadButtonComponent {
         }
 
         let messageTranslate: any, actionTranslate: any;
-        messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
-        actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
+        messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
+        actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
         if (this.undoNotificationBar.nativeElement.MaterialSnackbar) {
             this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
@@ -245,7 +246,7 @@ export class UploadButtonComponent {
     private getErrorMessage(response: any): string {
         if (response.body && response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
             let errorMessage: any;
-            errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;
         }
     }

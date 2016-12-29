@@ -17,7 +17,7 @@
 
 import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { FileModel } from '../models/file.model';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 /**
@@ -52,14 +52,16 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     private counterSubscription: any;
 
     constructor(private cd: ChangeDetectorRef,
-                translate: AlfrescoTranslationService,
-                private _uploaderService: UploadService) {
-        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+                translateService: AlfrescoTranslateService,
+                private uploadService: UploadService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+        }
     }
 
     ngOnInit() {
-        if (this._uploaderService.filesUpload$) {
-            this.listSubscription = this._uploaderService.filesUpload$.subscribe((fileList: FileModel[]) => {
+        if (this.uploadService.filesUpload$) {
+            this.listSubscription = this.uploadService.filesUpload$.subscribe((fileList: FileModel[]) => {
                 this.filesUploadingList = fileList;
                 if (this.filesUploadingList.length > 0) {
                     this.isDialogActive = true;
@@ -67,8 +69,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
                 }
             });
         }
-        if (this._uploaderService.totalCompleted$) {
-            this.counterSubscription = this._uploaderService.totalCompleted$.subscribe((total: number) => {
+        if (this.uploadService.totalCompleted$) {
+            this.counterSubscription = this.uploadService.totalCompleted$.subscribe((total: number) => {
                 this.totalCompleted = total;
                 this.cd.detectChanges();
             });
