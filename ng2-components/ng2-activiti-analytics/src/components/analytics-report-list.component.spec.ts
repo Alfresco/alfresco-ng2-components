@@ -43,7 +43,7 @@ describe('Test ng2-activiti-analytics Report list', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 AnalyticsReportListComponent

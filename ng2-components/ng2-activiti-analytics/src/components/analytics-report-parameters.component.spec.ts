@@ -16,17 +16,14 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import {
-    CoreModule
-} from 'ng2-alfresco-core';
+import { DebugElement, SimpleChange } from '@angular/core';
+import * as moment from 'moment';
+import { CoreModule } from 'ng2-alfresco-core';
 
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
-import * as moment from 'moment';
-import { DebugElement, SimpleChange } from '@angular/core';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 
 declare let jasmine: any;
@@ -44,7 +41,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 AnalyticsReportParametersComponent,

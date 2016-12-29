@@ -44,8 +44,8 @@ describe('Test ng2-activiti-analytics-report-heat-map', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DiagramsModule
+                CoreModule.forRoot(),
+                DiagramsModule.forRoot()
             ],
             declarations: [
                 AnalyticsReportHeatMapComponent,

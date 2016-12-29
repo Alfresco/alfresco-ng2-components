@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges, OnDestroy, AfterViewChecked } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel, ReportQuery, ParameterValueModel, ReportParameterDetailsModel } from '../models/report.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -70,11 +70,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private paramOpts;
     private isEditable: boolean = false;
 
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslateService,
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder ) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 

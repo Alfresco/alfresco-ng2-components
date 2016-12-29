@@ -16,11 +16,9 @@
  */
 
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Observer, Observable } from 'rxjs/Rx';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
     moduleId: module.id,
@@ -46,8 +44,7 @@ export class AnalyticsReportListComponent implements  OnInit {
 
     reports: ReportParametersModel[] = [];
 
-    constructor(private auth: AlfrescoAuthenticationService,
-                private analyticsService: AnalyticsService) {
+    constructor(private analyticsService: AnalyticsService) {
 
         this.report$ = new Observable<ReportParametersModel>(observer => this.reportObserver = observer).share();
     }

@@ -16,9 +16,7 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import {
-    CoreModule
-} from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
@@ -59,8 +57,8 @@ describe('Test ng2-activiti-analytics Report ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DiagramsModule
+                CoreModule.forRoot(),
+                DiagramsModule.forRoot()
             ],
             declarations: [
                 ...ANALYTICS_DIRECTIVES,

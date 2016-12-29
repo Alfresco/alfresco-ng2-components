@@ -16,18 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
 import { Chart, PieChart, TableChart, BarChart, HeatMapChart, MultiBarChart } from '../models/chart.model';
 
 @Injectable()
 export class AnalyticsService {
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                public apiService: AlfrescoApiService,
-                private alfrescoSettingsService: AlfrescoSettingsService) {
+    constructor(public apiService: AlfrescoApiService) {
     }
 
     /**
