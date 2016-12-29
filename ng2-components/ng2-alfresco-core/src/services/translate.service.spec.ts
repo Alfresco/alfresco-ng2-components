@@ -15,48 +15,46 @@
  * limitations under the License.
  */
 
-import { AlfrescoTranslationService } from '../services/AlfrescoTranslation.service';
-import { TranslateLoader } from 'ng2-translate/ng2-translate';
-import { AlfrescoTranslationLoader } from '../services/AlfrescoTranslationLoader.service';
+import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { Injector } from '@angular/core';
 import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
-import {
-    TranslateModule
-} from 'ng2-translate/ng2-translate';
-import {getTestBed, TestBed} from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
+
+import { AlfrescoTranslateService } from './translate.service';
+import { AlfrescoTranslateLoader } from './translate-loader.service';
 
 const mockBackendResponse = (connection: MockConnection, response: string) => {
     connection.mockRespond(new Response(new ResponseOptions({body: response})));
 };
 
-describe('AlfrescoTranslationService', () => {
+describe('AlfrescoTranslateService', () => {
     let injector: Injector;
     let backend: MockBackend;
-    let alfrescoTranslationService: AlfrescoTranslationService;
+    let alfrescoTranslationService: AlfrescoTranslateService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpModule, TranslateModule.forRoot({
                 provide: TranslateLoader,
-                useClass: AlfrescoTranslationLoader
+                useClass: AlfrescoTranslateLoader
             })],
             providers: [
-                AlfrescoTranslationService,
+                AlfrescoTranslateService,
                 {provide: XHRBackend, useClass: MockBackend}
             ]
         });
         injector = getTestBed();
         backend = injector.get(XHRBackend);
-        alfrescoTranslationService = injector.get(AlfrescoTranslationService);
+        alfrescoTranslationService = injector.get(AlfrescoTranslateService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
         alfrescoTranslationService.addTranslationFolder('fake-name', 'fake-path');
     });
 
     it('is defined', () => {
-        expect(AlfrescoTranslationService).toBeDefined();
-        expect(alfrescoTranslationService instanceof AlfrescoTranslationService).toBeTruthy();
+        expect(AlfrescoTranslateService).toBeDefined();
+        expect(alfrescoTranslationService instanceof AlfrescoTranslateService).toBeTruthy();
     });
 
     it('should be able to get translations of the KEY: TEST', () => {
