@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormModel } from '../components/widgets/core/form.model';
 
 @Injectable()
@@ -27,8 +27,7 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                public apiService: AlfrescoApiService) {
+    constructor(public apiService: AlfrescoApiService) {
     }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {

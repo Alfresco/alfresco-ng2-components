@@ -40,7 +40,7 @@ describe('ActivitiForm', () => {
         visibilityService = new WidgetVisibilityService(null);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
         formService = new FormService(null, null);
-        nodeService = new NodeService(null, null);
+        nodeService = new NodeService(null);
         formComponent = new ActivitiForm(formService, visibilityService, null, nodeService);
     });
 

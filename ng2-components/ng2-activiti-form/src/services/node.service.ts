@@ -16,14 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { NodeMetadata } from '../models/node-metadata.model';
 
 @Injectable()
 export class NodeService {
 
-    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     /**
