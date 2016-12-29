@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { SettingsService } from './settings.service';
 import { StorageService } from './storage.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { AuthService } from './auth.service';
@@ -24,7 +24,7 @@ import { AuthService } from './auth.service';
 /** @deprecated AlfrescoAuthenticationService is deprecated. Use AuthService instead */
 @Injectable()
 export class AlfrescoAuthenticationService extends AuthService {
-    constructor(settingsService: AlfrescoSettingsService,
+    constructor(settingsService: SettingsService,
                 apiService: AlfrescoApiService,
                 storage: StorageService) {
         super(settingsService, apiService, storage);

@@ -29,3 +29,4 @@ export * from './auth-guard-bpm.service';
 
 export * from './auth.service';
 export * from './content.service';
+export * from './settings.service';

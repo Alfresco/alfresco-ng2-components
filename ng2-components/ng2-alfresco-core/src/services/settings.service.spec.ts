@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { SettingsService } from './settings.service';
 
 describe('AlfrescoSettingsService', () => {
 
-    let service: AlfrescoSettingsService;
+    let service: SettingsService;
 
     beforeEach(() => {
-        service = new AlfrescoSettingsService();
+        service = new SettingsService();
     });
 
     it('should have default ECM host', () => {
-        expect(service.ecmHost).toBe(AlfrescoSettingsService.DEFAULT_ECM_ADDRESS);
+        expect(service.ecmHost).toBe(SettingsService.DEFAULT_ECM_ADDRESS);
     });
 
     it('should change host ECM', () => {
@@ -37,7 +37,7 @@ describe('AlfrescoSettingsService', () => {
     });
 
     it('should have default BPM host', () => {
-        expect(service.bpmHost).toBe(AlfrescoSettingsService.DEFAULT_BPM_ADDRESS);
+        expect(service.bpmHost).toBe(SettingsService.DEFAULT_BPM_ADDRESS);
     });
 
     it('should change host BPM', () => {

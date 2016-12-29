@@ -16,7 +16,7 @@
  */
 
 import { ReflectiveInjector } from '@angular/core';
-import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { SettingsService } from './settings.service';
 import { AuthService } from './auth.service';
 import { ContentService } from './content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -28,7 +28,7 @@ describe('ContentService', () => {
 
     let injector, contentService: ContentService;
     let authService: AuthService;
-    let settingsService: AlfrescoSettingsService;
+    let settingsService: SettingsService;
     let storage: StorageService;
     let node: any;
 
@@ -39,12 +39,12 @@ describe('ContentService', () => {
             AlfrescoApiService,
             ContentService,
             AuthService,
-            AlfrescoSettingsService,
+            SettingsService,
             StorageService
         ]);
 
         authService = injector.get(AuthService);
-        settingsService = injector.get(AlfrescoSettingsService);
+        settingsService = injector.get(SettingsService);
         contentService = injector.get(ContentService);
         storage = injector.get(StorageService);
         storage.clear();

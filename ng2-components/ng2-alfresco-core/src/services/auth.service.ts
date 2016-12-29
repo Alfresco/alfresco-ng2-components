@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoSettingsService } from './AlfrescoSettings.service';
+import { SettingsService } from './settings.service';
 import { StorageService } from './storage.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import * as alfrescoApi from  'alfresco-js-api';
@@ -31,7 +31,7 @@ export class AuthService {
     loginSubject: Subject<any> = new Subject<any>();
     logoutSubject: Subject<any> = new Subject<any>();
 
-    constructor(private settingsService: AlfrescoSettingsService,
+    constructor(private settingsService: SettingsService,
                 private apiService: AlfrescoApiService,
                 private storage: StorageService) {
         this.alfrescoApi = <AlfrescoApi>new alfrescoApi({

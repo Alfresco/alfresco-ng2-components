@@ -16,63 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { SettingsService } from './settings.service';
 
+/** @deprecated AlfrescoSettingsService is deprecated. Use SettingsService instead */
 @Injectable()
-export class AlfrescoSettingsService {
+export class AlfrescoSettingsService extends SettingsService {
 
-    static DEFAULT_ECM_ADDRESS: string = 'http://' + window.location.hostname + ':8080';
-    static DEFAULT_BPM_ADDRESS: string = 'http://' + window.location.hostname + ':9999';
-    static DEFAULT_CSRF_CONFIG: boolean = false;
-
-    static DEFAULT_BPM_CONTEXT_PATH: string = '/activiti-app';
-
-    private _ecmHost: string = AlfrescoSettingsService.DEFAULT_ECM_ADDRESS;
-    private _bpmHost: string = AlfrescoSettingsService.DEFAULT_BPM_ADDRESS;
-    private _csrfDisabled: boolean = AlfrescoSettingsService.DEFAULT_CSRF_CONFIG;
-
-    private _bpmContextPath = AlfrescoSettingsService.DEFAULT_BPM_CONTEXT_PATH;
-
-    private providers: string = 'ALL'; // ECM, BPM , ALL
-
-    public bpmHostSubject: Subject<string> = new Subject<string>();
-    public ecmHostSubject: Subject<string> = new Subject<string>();
-    public csrfSubject: Subject<boolean> = new Subject<boolean>();
-    public providerSubject: Subject<string> = new Subject<string>();
-
-    public get ecmHost(): string {
-        return this._ecmHost;
-    }
-
-    public set csrfDisabled(csrfDisabled: boolean) {
-        this.csrfSubject.next(csrfDisabled);
-        this._csrfDisabled = csrfDisabled;
-    }
-
-    public set ecmHost(ecmHostUrl: string) {
-        this.ecmHostSubject.next(ecmHostUrl);
-        this._ecmHost = ecmHostUrl;
-    }
-
-    public get bpmHost(): string {
-        return this._bpmHost;
-    }
-
-    public set bpmHost(bpmHostUrl: string) {
-        this.bpmHostSubject.next(bpmHostUrl);
-        this._bpmHost = bpmHostUrl;
-    }
-
-    public getBPMApiBaseUrl(): string {
-        return this._bpmHost + this._bpmContextPath;
-    }
-
-    public getProviders(): string {
-        return this.providers;
-    }
-
-    public setProviders(providers: string) {
-        this.providerSubject.next(providers);
-        this.providers = providers;
+    constructor() {
+        super();
+        console.log('Warning: AlfrescoSettingsService is deprecated. Use SettingsService instead.');
     }
 }
