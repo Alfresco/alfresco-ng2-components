@@ -27,7 +27,7 @@ describe('EcmModelService', () => {
 
     let service: EcmModelService;
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot()
