@@ -17,13 +17,13 @@
 
 import { Injectable } from '@angular/core';
 
-import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
+import { AuthService } from './auth.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
 export class AlfrescoContentService {
 
-    constructor(public authService: AlfrescoAuthenticationService, public apiService: AlfrescoApiService) {
+    constructor(public authService: AuthService, public apiService: AlfrescoApiService) {
     }
 
     /**

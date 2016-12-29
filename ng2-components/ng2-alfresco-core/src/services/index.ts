@@ -26,3 +26,4 @@ export * from './renditions.service';
 export * from './auth-guard.service';
 export * from './auth-guard-ecm.service';
 export * from './auth-guard-bpm.service';
+export * from './auth.service';

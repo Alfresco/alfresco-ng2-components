@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 import {
+    AuthService,
     StorageService,
     AlfrescoApiService,
     AlfrescoSettingsService,
@@ -43,6 +44,7 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
+    AuthService,
     StorageService,
     AlfrescoApiService,
     AlfrescoAuthenticationService,
