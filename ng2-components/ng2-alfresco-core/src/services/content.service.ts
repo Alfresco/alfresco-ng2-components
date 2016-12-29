@@ -18,15 +18,30 @@
 import { Injectable } from '@angular/core';
 
 import { AuthService } from './auth.service';
-import { ContentService } from './content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 
-/** @deprecated AlfrescoContentService is deprecated. Use ContentService instead */
 @Injectable()
-export class AlfrescoContentService extends ContentService {
+export class ContentService {
 
-    constructor(authService: AuthService, apiService: AlfrescoApiService) {
-        super(authService, apiService);
-        console.log('Warning: AlfrescoContentService is deprecated. Use ContentService instead.');
+    constructor(public authService: AuthService,
+                public apiService: AlfrescoApiService) {
+    }
+
+    /**
+     * Get thumbnail URL for the given document node.
+     * @param document Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getDocumentThumbnailUrl(document: any): string {
+        return this.apiService.getInstance().content.getDocumentThumbnailUrl(document.entry.id);
+    }
+
+    /**
+     * Get content URL for the given node.
+     * @param document Node to get URL for.
+     * @returns {string} URL address.
+     */
+    getContentUrl(document: any): string {
+        return this.apiService.getInstance().content.getContentUrl(document.entry.id);
     }
 }

@@ -23,6 +23,7 @@ import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 import {
     AuthService,
+    ContentService,
     StorageService,
     AlfrescoApiService,
     AlfrescoSettingsService,
@@ -45,6 +46,7 @@ export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
     AuthService,
+    ContentService,
     StorageService,
     AlfrescoApiService,
     AlfrescoAuthenticationService,

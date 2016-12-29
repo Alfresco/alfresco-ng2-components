@@ -18,15 +18,15 @@
 import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 import { AuthService } from './auth.service';
-import { AlfrescoContentService } from './AlfrescoContent.service';
+import { ContentService } from './content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 
 declare let jasmine: any;
 
-describe('AlfrescoContentService', () => {
+describe('ContentService', () => {
 
-    let injector, contentService: AlfrescoContentService;
+    let injector, contentService: ContentService;
     let authService: AuthService;
     let settingsService: AlfrescoSettingsService;
     let storage: StorageService;
@@ -37,7 +37,7 @@ describe('AlfrescoContentService', () => {
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoApiService,
-            AlfrescoContentService,
+            ContentService,
             AuthService,
             AlfrescoSettingsService,
             StorageService
@@ -45,7 +45,7 @@ describe('AlfrescoContentService', () => {
 
         authService = injector.get(AuthService);
         settingsService = injector.get(AlfrescoSettingsService);
-        contentService = injector.get(AlfrescoContentService);
+        contentService = injector.get(ContentService);
         storage = injector.get(StorageService);
         storage.clear();
 
