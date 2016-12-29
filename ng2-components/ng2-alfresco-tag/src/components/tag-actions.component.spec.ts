@@ -18,12 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TagActionsComponent } from '../components/tag-actions.component';
 import { DebugElement }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule
-} from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
@@ -38,13 +33,12 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
-            declarations: [TagActionsComponent],
+            declarations: [
+                TagActionsComponent
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
                 TagService
             ]
         }).compileComponents();

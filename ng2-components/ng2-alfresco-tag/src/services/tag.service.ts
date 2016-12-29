@@ -17,7 +17,6 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 
 /**
@@ -32,7 +31,7 @@ export class TagService {
      * Constructor
      * @param apiService
      */
-    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     getTagsByNodeId(nodeId: string): any {
