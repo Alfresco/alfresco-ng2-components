@@ -16,10 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { FilterRepresentationModel } from '../models/filter.model';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 import { User } from '../models/user.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -28,7 +27,7 @@ import { Form } from '../models/form.model';
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(public authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -271,7 +270,7 @@ export class ActivitiTaskListService {
         return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
     }
 
-    private callApiTaskFilters(appId?: string) {
+    callApiTaskFilters(appId?: string) {
         if (appId) {
             return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
         } else {

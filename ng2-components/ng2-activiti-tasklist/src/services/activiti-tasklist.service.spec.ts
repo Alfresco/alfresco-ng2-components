@@ -15,16 +15,11 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService
-} from 'ng2-alfresco-core';
+import { TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { FilterRepresentationModel, AppDefinitionRepresentationModel } from '../models/filter.model';
+import { FilterRepresentationModel, AppDefinitionRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 
 declare let AlfrescoApi: any;
@@ -131,20 +126,18 @@ describe('ActivitiTaskListService', () => {
         resolve(fakeAppFilter);
     });
 
-    let service, injector;
+    let service: ActivitiTaskListService;
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            ActivitiTaskListService,
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            StorageService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(ActivitiTaskListService);
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                ActivitiTaskListService
+            ]
+        });
+        service = TestBed.get(ActivitiTaskListService);
         jasmine.Ajax.install();
     });
 
@@ -173,7 +166,7 @@ describe('ActivitiTaskListService', () => {
     it('should call the api withthe appId', (done) => {
         spyOn(service, 'callApiTaskFilters').and.returnValue((fakeAppPromise));
 
-        let appId = 1;
+        let appId = '1';
         service.getTaskListFilters(appId).subscribe(
             (res) => {
                 expect(service.callApiTaskFilters).toHaveBeenCalledWith(appId);
@@ -183,7 +176,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should return the app filter by id', (done) => {
-        let appId = 1;
+        let appId = '1';
         service.getTaskListFilters(appId).subscribe(
             (res) => {
                 expect(res).toBeDefined();
@@ -201,7 +194,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should return the task list filtered', (done) => {
-        service.getTasks(fakeFilter).subscribe(
+        service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 res => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(1);
@@ -221,7 +214,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should throw an exception when the response is wrong', () => {
-        service.getTasks(fakeFilter).subscribe(
+        service.getTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
             (res) => {
             },
             (err: any) => {
@@ -237,7 +230,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should return the task details ', (done) => {
-        service.getTaskDetails(999).subscribe(
+        service.getTaskDetails('999').subscribe(
             (res: TaskDetailsModel) => {
                 expect(res).toBeDefined();
                 expect(res.id).toEqual('999');
@@ -259,7 +252,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should return the tasks comments ', (done) => {
-        service.getTaskComments(999).subscribe(
+        service.getTaskComments('999').subscribe(
             (res: Comment[]) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
@@ -277,7 +270,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should return the tasks checklists ', (done) => {
-        service.getTaskChecklist(999).subscribe(
+        service.getTaskChecklist('999').subscribe(
             (res: TaskDetailsModel[]) => {
                 expect(res).toBeDefined();
                 expect(res.length).toEqual(2);
@@ -333,7 +326,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should add a comment task ', (done) => {
-        service.addTaskComment(999, 'fake-comment-message').subscribe(
+        service.addTaskComment('999', 'fake-comment-message').subscribe(
             (res: Comment) => {
                 expect(res).toBeDefined();
                 expect(res.id).not.toEqual('');
@@ -358,7 +351,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should complete the task ', (done) => {
-        service.completeTask(999).subscribe(
+        service.completeTask('999').subscribe(
             (res: any) => {
                 expect(res).toBeDefined();
                 done();
@@ -373,7 +366,7 @@ describe('ActivitiTaskListService', () => {
     });
 
     it('should return the total number of tasks', (done) => {
-        service.getTotalTasks(fakeFilter).subscribe(
+        service.getTotalTasks(<TaskQueryRequestRepresentationModel>fakeFilter).subscribe(
                 res => {
                 expect(res).toBeDefined();
                 expect(res.size).toEqual(1);
@@ -408,7 +401,7 @@ describe('ActivitiTaskListService', () => {
 
     it('should return the default filters', () => {
         spyOn(service, 'addFilter');
-        let filters = service.createDefaultFilter();
+        let filters = service.createDefaultFilter(null);
         expect(service.addFilter).toHaveBeenCalledTimes(4);
         expect(filters).toBeDefined();
         expect(filters.length).toEqual(4);
