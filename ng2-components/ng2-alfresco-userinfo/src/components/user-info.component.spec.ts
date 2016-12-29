@@ -22,9 +22,9 @@ import { BpmUserModel } from '../models/bpm-user.model';
 import { TranslationMock } from '../assets/translation.service.mock';
 import {
     CoreModule,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoTranslationService
+    AuthService,
+    ContentService,
+    AlfrescoTranslateService
 } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
@@ -73,25 +73,32 @@ describe('User info component', () => {
     let userInfoComp: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
     let element: HTMLElement;
-    let stubAuthService: AlfrescoAuthenticationService;
-    let stubContent: AlfrescoContentService;
+    let stubAuthService: AuthService;
+    let stubContent: ContentService;
     let componentHandler;
 
     beforeEach(async(() => {
         componentHandler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered', 'upgradeElement']);
         window['componentHandler'] = componentHandler;
         TestBed.configureTestingModule({
-            imports: [CoreModule],
-            declarations: [UserInfoComponent],
-            providers: [EcmUserService,
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                UserInfoComponent
+            ],
+            providers: [
+                EcmUserService,
                 BpmUserService,
-                AlfrescoAuthenticationService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                {provide: AlfrescoTranslateService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(UserInfoComponent);
             userInfoComp = fixture.componentInstance;
             element = fixture.nativeElement;
+
+            stubAuthService = TestBed.get(AuthService);
+            stubContent = TestBed.get(ContentService);
         });
     }));
 
@@ -138,8 +145,6 @@ describe('User info component', () => {
     describe('when user is logged on ecm', () => {
 
         beforeEach(() => {
-            stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
-            stubContent = fixture.debugElement.injector.get(AlfrescoContentService);
             spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
         });
@@ -242,7 +247,6 @@ describe('User info component', () => {
         let fakeBpmUserForTest;
 
         beforeEach(() => {
-            stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
             jasmine.Ajax.install();
@@ -323,8 +327,6 @@ describe('User info component', () => {
     describe('when user is logged on bpm and ecm', () => {
 
         beforeEach(async(() => {
-            stubAuthService = fixture.debugElement.injector.get(AlfrescoAuthenticationService);
-            stubContent = fixture.debugElement.injector.get(AlfrescoContentService);
             spyOn(stubAuthService, 'isEcmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isBpmLoggedIn').and.returnValue(true);
             spyOn(stubAuthService, 'isLoggedIn').and.returnValue(true);
