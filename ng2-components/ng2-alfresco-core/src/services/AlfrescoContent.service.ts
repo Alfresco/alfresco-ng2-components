@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 
 import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
-import { AlfrescoApiService } from './AlfrescoApi.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
 export class AlfrescoContentService {

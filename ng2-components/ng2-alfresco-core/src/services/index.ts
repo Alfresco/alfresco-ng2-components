@@ -16,7 +16,7 @@
  */
 
 export * from './storage.service';
-export * from './AlfrescoApi.service';
+export * from './alfresco-api.service';
 export * from './AlfrescoSettings.service';
 export * from './AlfrescoTranslationLoader.service';
 export * from './AlfrescoTranslation.service';

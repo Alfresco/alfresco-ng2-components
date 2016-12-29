@@ -19,7 +19,7 @@ import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 import { AlfrescoAuthenticationService } from './AlfrescoAuthentication.service';
 import { AlfrescoContentService } from './AlfrescoContent.service';
-import { AlfrescoApiService } from './AlfrescoApi.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
 
 declare let jasmine: any;

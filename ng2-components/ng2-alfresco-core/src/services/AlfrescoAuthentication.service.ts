@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSettingsService } from './AlfrescoSettings.service';
 import { StorageService } from './storage.service';
-import { AlfrescoApiService } from './AlfrescoApi.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import * as alfrescoApi from  'alfresco-js-api';
 import { AlfrescoApi } from  'alfresco-js-api';
 import { Subject } from 'rxjs/Subject';
