@@ -15,14 +15,9 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { async } from '@angular/core/testing';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService
-} from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { AlfrescoApi } from 'alfresco-js-api';
 import {
@@ -43,22 +38,20 @@ import { ActivitiProcessService } from './activiti-process.service';
 describe('ActivitiProcessService', () => {
 
     let service: ActivitiProcessService;
-    let authenticationService: AlfrescoAuthenticationService;
-    let injector: ReflectiveInjector;
     let apiService: AlfrescoApiService;
     let alfrescoApi: AlfrescoApi;
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            ActivitiProcessService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
-            StorageService
-        ]);
-        service = injector.get(ActivitiProcessService);
-        authenticationService = injector.get(AlfrescoAuthenticationService);
-        apiService = injector.get(AlfrescoApiService);
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                ActivitiProcessService
+            ]
+        });
+        service = TestBed.get(ActivitiProcessService);
+        apiService = TestBed.get(AlfrescoApiService);
         alfrescoApi = apiService.getInstance();
     });
 
