@@ -16,10 +16,10 @@
  */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
     moduleId: module.id,
@@ -70,14 +70,14 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
 
-    constructor(private alfrescoSearchService: AlfrescoSearchService,
-                private translate: AlfrescoTranslationService,
-                private alfrescoThumbnailService: AlfrescoThumbnailService) {
+    constructor(private searchService: AlfrescoSearchService,
+                private translateService: AlfrescoTranslateService,
+                private thumbnailService: AlfrescoThumbnailService) {
     }
 
     ngOnInit(): void {
-        if (this.translate) {
-            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+        if (this.translateService) {
+            this.translateService.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
         }
     }
 
@@ -102,7 +102,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
             orderBy: this.resultSort
         };
         if (searchTerm !== null && searchTerm !== '') {
-            this.alfrescoSearchService
+            this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
@@ -126,7 +126,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      */
     getMimeTypeIcon(node: MinimalNodeEntity): string {
         if (node.entry.content && node.entry.content.mimeType) {
-            let icon = this.alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
+            let icon = this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
             return this.resolveIconPath(icon);
         } else if (node.entry.isFolder) {
             return `${this.baseComponentPath}/../assets/images/ft_ic_folder.svg`;
@@ -144,7 +144,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
      */
     getMimeTypeKey(node: MinimalNodeEntity): string {
         if (node.entry.content && node.entry.content.mimeType) {
-            return 'SEARCH.ICONS.' + this.alfrescoThumbnailService.getMimeTypeKey(node.entry.content.mimeType);
+            return 'SEARCH.ICONS.' + this.thumbnailService.getMimeTypeKey(node.entry.content.mimeType);
         } else {
             return '';
         }

@@ -17,7 +17,7 @@
 
 import { ReflectiveInjector }    from '@angular/core';
 import { AlfrescoThumbnailService } from './alfresco-thumbnail.service';
-import { AlfrescoApiService, AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, AuthService, ContentService, SettingsService, StorageService } from 'ng2-alfresco-core';
 
 describe('AlfrescoThumbnailService', () => {
 
@@ -27,9 +27,9 @@ describe('AlfrescoThumbnailService', () => {
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoContentService,
-            AlfrescoSettingsService,
+            AuthService,
+            ContentService,
+            SettingsService,
             AlfrescoThumbnailService,
             StorageService
         ]);
