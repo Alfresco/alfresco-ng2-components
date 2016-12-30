@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
 import { AnalyticsService } from '../services/analytics.service';
-import { DebugElement }    from '@angular/core';
 
 declare let jasmine: any;
 
-describe('Test ng2-activiti-analytics-report-heat-map', () => {
+describe('AnalyticsReportHeatMapComponent', () => {
 
     let componentHandler: any;
     let component: any;
@@ -55,6 +56,11 @@ describe('Test ng2-activiti-analytics-report-heat-map', () => {
                 AnalyticsService
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslateService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+
     }));
 
     beforeEach(() => {
