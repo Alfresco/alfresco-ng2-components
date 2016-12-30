@@ -30,7 +30,7 @@ describe('FormService', () => {
     let service: FormService;
     let apiService: AlfrescoApiService;
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot()
