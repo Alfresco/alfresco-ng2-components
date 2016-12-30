@@ -27,7 +27,7 @@ import {
     SimpleChanges,
     DebugElement
 } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -101,13 +101,12 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      * @param activitiForm Form service
      * @param activitiTaskList Task service
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslateService,
                 private activitiForm: FormService,
                 private activitiTaskList: ActivitiTaskListService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 

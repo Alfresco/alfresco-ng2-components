@@ -17,12 +17,11 @@
 
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiTaskList } from './activiti-tasklist.component';
 import { Observable } from 'rxjs/Rx';
 import { ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { TranslationMock } from './../assets/translation.service.mock';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 
 describe('ActivitiTaskList', () => {
@@ -58,27 +57,33 @@ describe('ActivitiTaskList', () => {
     let componentHandler: any;
     let component: ActivitiTaskList;
     let fixture: ComponentFixture<ActivitiTaskList>;
+    let taskListService: ActivitiTaskListService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                CoreModule.forRoot(),
                 DataTableModule
             ],
             declarations: [
                 ActivitiTaskList
             ],
             providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
                 ActivitiTaskListService
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslateService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
 
         fixture = TestBed.createComponent(ActivitiTaskList);
         component = fixture.componentInstance;
+
+        taskListService = TestBed.get(ActivitiTaskListService);
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -113,8 +118,8 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should return the filtered task list when the input parameters are passed', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
 
         let state = new SimpleChange(null, 'open');
         let processDefinitionKey = new SimpleChange(null, null);
@@ -134,8 +139,8 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should return the filtered task list by processDefinitionKey', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
 
         let state = new SimpleChange(null, 'open');
         let processDefinitionKey = new SimpleChange(null, 'fakeprocess');
@@ -161,7 +166,7 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should throw an exception when the response is wrong', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.throw(fakeErrorTaskList));
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.throw(fakeErrorTaskList));
 
         let state = new SimpleChange(null, 'open');
         let assignment = new SimpleChange(null, 'fake-assignee');
@@ -178,8 +183,8 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should reload tasks when reload() is called', (done) => {
-        spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
-        spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+        spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+        spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
         component.state = 'open';
         component.assignment = 'fake-assignee';
         component.ngOnInit();
@@ -212,8 +217,8 @@ describe('ActivitiTaskList', () => {
     describe('component changes', () => {
 
         beforeEach(() => {
-            spyOn(component.activiti, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
-            spyOn(component.activiti, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
+            spyOn(taskListService, 'getTotalTasks').and.returnValue(Observable.of(fakeGlobalTotalTasks));
+            spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
 
             component.data = new ObjectDataTableAdapter(
                 [],

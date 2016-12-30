@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, ViewChild, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Comment } from '../models/comment.model';
 import { Observer, Observable } from 'rxjs/Rx';
@@ -56,11 +56,11 @@ export class ActivitiComments implements OnChanges {
      * @param translate Translation service
      * @param activitiTaskList Task service
      */
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslateService,
                 private activitiTaskList: ActivitiTaskListService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
 
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();

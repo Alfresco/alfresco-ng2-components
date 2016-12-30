@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-import {
-    CoreModule,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
 import { SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { ActivitiChecklist } from './activiti-checklist.component';
-import { TranslationMock } from '../assets/translation.service.mock';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TaskDetailsModel } from '../models/task-details.model';
 
 declare let jasmine: any;
@@ -33,7 +30,7 @@ const fakeTaskDetail = new TaskDetailsModel({
     name: 'fake-check-name'
 });
 
-describe('Activiti Checklist Component', () => {
+describe('ActivitiChecklist', () => {
 
     let checklistComponent: ActivitiChecklist;
     let fixture: ComponentFixture<ActivitiChecklist>;
@@ -42,15 +39,24 @@ describe('Activiti Checklist Component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
-            declarations: [ActivitiChecklist],
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                ActivitiChecklist
+            ],
             providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                ActivitiTaskListService]
+                ActivitiTaskListService
+            ]
         }).compileComponents().then(() => {
+            let translateService = TestBed.get(AlfrescoTranslateService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+
             fixture = TestBed.createComponent(ActivitiChecklist);
             checklistComponent = fixture.componentInstance;
             element = fixture.nativeElement;
+
             fixture.detectChanges();
         });
     }));

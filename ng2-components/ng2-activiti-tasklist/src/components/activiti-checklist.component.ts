@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { Observer, Observable } from 'rxjs/Rx';
@@ -53,11 +53,11 @@ export class ActivitiChecklist implements OnInit, OnChanges {
      * @param auth
      * @param translate
      */
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslateService,
                 private activitiTaskList: ActivitiTaskListService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
     }
