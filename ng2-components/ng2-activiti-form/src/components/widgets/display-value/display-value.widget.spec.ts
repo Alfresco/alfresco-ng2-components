@@ -26,20 +26,17 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('DisplayValueWidget', () => {
 
     let widget: DisplayValueWidget;
     let formService: FormService;
     let visibilityService: WidgetVisibilityService;
-    let settingsService: AlfrescoSettingsService;
 
     beforeEach(() => {
-        settingsService = new AlfrescoSettingsService();
         formService = new FormService(null, null);
         visibilityService = new WidgetVisibilityService(null);
-        widget = new DisplayValueWidget(formService, visibilityService, settingsService);
+        widget = new DisplayValueWidget(formService, visibilityService);
     });
 
     it('should require field to setup default value', () => {
