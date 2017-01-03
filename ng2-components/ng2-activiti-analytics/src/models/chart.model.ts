@@ -236,7 +236,20 @@ export class PieChart extends Chart {
         this.data.push(data);
     }
 
-    hasData() {
+    hasData(): boolean {
         return this.data && this.data.length > 0 ? true : false;
+    }
+
+    hasZeroValues(): boolean {
+        let isZeroValues: boolean = false;
+        if (this.hasData()) {
+            isZeroValues = true;
+            this.data.forEach((value) => {
+                if (value.toString() !== '0') {
+                    isZeroValues = false;
+                }
+            });
+        }
+        return isZeroValues;
     }
 }
