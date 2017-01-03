@@ -1,7 +1,6 @@
 <div class="container">
     <alfresco-upload-drag-area
-            [rootFolderId]="uploadRootFolderId"
-            [currentFolderPath]="uploadFolderPath"
+            [rootFolderId]="documentList.currentFolderId"
             [versioning] = "versioning"
             (onSuccess)="documentList.reload()">
         <alfresco-document-list-breadcrumb
@@ -21,15 +20,7 @@
                 [contentActions]="true"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
-                (preview)="showFile($event)"
-                (folderChange)="onFolderChanged($event)">
-            <!--
-            <empty-folder-content>
-                <template>
-                    <h1>Sorry, no content here</h1>
-                </template>
-            </empty-folder-content>
-            -->
+                (preview)="showFile($event)">
             <content-columns>
                 <content-column key="$thumbnail" type="image"></content-column>
                 <content-column
@@ -147,8 +138,7 @@
 </div>
 <div *ngIf="!acceptedFilesTypeShow">
     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                            [rootFolderId]="uploadRootFolderId"
-                            [currentFolderPath]="uploadFolderPath"
+                            [rootFolderId]="documentList.currentFolderId"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
                             [versioning] = "versioning"
@@ -158,9 +148,8 @@
 </div>
 <div *ngIf="acceptedFilesTypeShow">
     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                            [rootFolderId]="uploadRootFolderId"
-                            [currentFolderPath]="uploadFolderPath"
-                            acceptedFilesType="{{acceptedFilesType}}"
+                            [rootFolderId]="documentList.currentFolderId"
+                            [acceptedFilesType]="acceptedFilesType"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
                             [versioning] = "versioning"

@@ -43,18 +43,7 @@ export class FilesComponent implements OnInit {
     folderUpload: boolean = false;
     acceptedFilesTypeShow: boolean = false;
     versioning: boolean = false;
-
     acceptedFilesType: string = '.jpg,.pdf,.js';
-
-    get uploadRootFolderId(): string {
-        return this.currentFolderId;
-    }
-
-    // TODO: fix
-    get uploadFolderPath(): string {
-        // return this.currentFolderId ? '/' : this.currentPath;
-        return null;
-    }
 
     @ViewChild(DocumentList)
     documentList: DocumentList;
@@ -85,13 +74,6 @@ export class FilesComponent implements OnInit {
             this.fileShowed = true;
         } else {
             this.fileShowed = false;
-        }
-    }
-
-    onFolderChanged(event?: any) {
-        if (event) {
-            // this.currentPath = event.path;
-            console.log(event);
         }
     }
 
