@@ -15,13 +15,8 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService
-} from 'ng2-alfresco-core';
+import { TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
 import { ActivitiPeopleService } from './activiti-people.service';
 
@@ -45,28 +40,18 @@ const fakeInvolveUserList: User[] = [firstInvolvedUser, secondInvolvedUser];
 
 describe('ActivitiPeopleService', () => {
 
-    let service, injector, apiService;
+    let service: ActivitiPeopleService;
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            ActivitiPeopleService,
-            StorageService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(ActivitiPeopleService);
-        apiService = injector.get(AlfrescoApiService);
-    });
-
-    it('can instantiate service with authorization', () => {
-        expect(apiService).not.toBeNull('authorization should be provided');
-        let serviceApi = new ActivitiPeopleService(null, apiService);
-
-        expect(serviceApi instanceof ActivitiPeopleService).toBe(true, 'new service should be ok');
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                ActivitiPeopleService
+            ]
+        });
+        service = TestBed.get(ActivitiPeopleService);
     });
 
     describe('when user is logged in', () => {

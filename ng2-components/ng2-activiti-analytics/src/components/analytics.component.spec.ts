@@ -16,9 +16,10 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import {
-    CoreModule
-} from 'ng2-alfresco-core';
+import { DebugElement, SimpleChange } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
@@ -26,11 +27,9 @@ import { AnalyticsComponent } from '../components/analytics.component';
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
 import { Chart } from '../models/chart.model';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportQuery } from '../models/report.model';
-import { DebugElement, SimpleChange } from '@angular/core';
 import * as analyticMock from '../assets/analyticsComponent.mock';
 
 export const ANALYTICS_DIRECTIVES: any[] = [
@@ -47,7 +46,7 @@ export const ANALYTICS_PROVIDERS: any[] = [
 declare let jasmine: any;
 declare let mdDateTimePicker: any;
 
-describe('Test ng2-activiti-analytics Report ', () => {
+describe('AnalyticsComponent', () => {
 
     let component: any;
     let fixture: ComponentFixture<AnalyticsComponent>;
@@ -59,8 +58,8 @@ describe('Test ng2-activiti-analytics Report ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DiagramsModule
+                CoreModule.forRoot(),
+                DiagramsModule.forRoot()
             ],
             declarations: [
                 ...ANALYTICS_DIRECTIVES,
@@ -70,6 +69,10 @@ describe('Test ng2-activiti-analytics Report ', () => {
                 ...ANALYTICS_PROVIDERS
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslateService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {

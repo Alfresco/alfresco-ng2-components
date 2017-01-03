@@ -16,16 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AuthService, SettingsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class DiagramsService {
 
-    constructor(private authService: AlfrescoAuthenticationService,
+    constructor(private authService: AuthService,
                 private http: Http,
-                private alfrescoSettingsService: AlfrescoSettingsService) {
+                private alfrescoSettingsService: SettingsService) {
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {

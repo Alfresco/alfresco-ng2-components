@@ -123,7 +123,7 @@ describe('RadioButtonsWidget', () => {
         expect(console.error).toHaveBeenCalledWith('Err');
     });
 
-    it('should update the field value when an option is selected', () => {
+    xit('should update the field value when an option is selected', () => {
         spyOn(widget, 'checkVisibility').and.stub();
         widget.onOptionClick('fake-opt');
 

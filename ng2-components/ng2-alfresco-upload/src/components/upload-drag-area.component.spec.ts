@@ -16,44 +16,40 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { UploadDragAreaComponent } from './upload-drag-area.component';
+import { EventEmitter } from '@angular/core';
 import { DebugElement }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    AlfrescoTranslationService,
-    CoreModule
-} from 'ng2-alfresco-core';
+import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
+
+import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
-import { EventEmitter } from '@angular/core';
 
-describe('Test ng2-alfresco-upload UploadDragArea', () => {
+describe('UploadDragAreaComponent', () => {
 
-    let component: any;
+    let component: UploadDragAreaComponent;
     let fixture: ComponentFixture<UploadDragAreaComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
+    let uploadService: UploadService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
-            declarations: [UploadDragAreaComponent],
+            declarations: [
+                UploadDragAreaComponent
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
                 UploadService,
-                { provide: AlfrescoTranslationService, useClass: TranslationMock }
+                { provide: AlfrescoTranslateService, useClass: TranslationMock }
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(UploadDragAreaComponent);
+        uploadService = TestBed.get(UploadService);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -77,45 +73,45 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
     });
 
     it('should show an folder non supported error in the notification bar when the file type is empty', () => {
-        component._showErrorNotificationBar = jasmine.createSpy('_showErrorNotificationBar');
+        component.showErrorNotificationBar = jasmine.createSpy('_showErrorNotificationBar');
         component.showUdoNotificationBar = true;
 
         let fileFake = new File([''], 'folder-fake', {type: ''});
         component.onFilesDropped([fileFake]);
 
-        expect(component._showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
+        expect(component.showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
     });
 
     it('should upload the list of files dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
         component.showUdoNotificationBar = false;
-        component._uploaderService.addToQueue = jasmine.createSpy('addToQueue');
-        component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+        uploadService.addToQueue = jasmine.createSpy('addToQueue');
+        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
-        let fileFake = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
-        expect(component._uploaderService.addToQueue).toHaveBeenCalledWith(filesList);
-        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.addToQueue).toHaveBeenCalledWith(filesList);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
     it('should show the loading messages in the notification bar when the files are dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
         component.showUdoNotificationBar = true;
-        component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
-        component._showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
+        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+        component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
 
         fixture.detectChanges();
-        let fileFake = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
+        let fileFake = <File> {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
         let filesList = [fileFake];
 
         component.onFilesDropped(filesList);
-        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
-        expect(component._showUndoNotificationBar).toHaveBeenCalled();
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(component.showUndoNotificationBar).toHaveBeenCalled();
     });
 
     it('should upload a file when dropped', () => {
@@ -123,7 +119,7 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         component.onSuccess = null;
 
         fixture.detectChanges();
-        spyOn(component._uploaderService, 'uploadFilesInTheQueue');
+        spyOn(uploadService, 'uploadFilesInTheQueue');
 
         let itemEntity = {
             fullPath: '/folder-fake/file-fake.png',
@@ -137,7 +133,7 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(component._uploaderService.uploadFilesInTheQueue)
+        expect(uploadService.uploadFilesInTheQueue)
             .toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
     });
 
@@ -147,7 +143,7 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         component.onSuccess = null;
 
         fixture.detectChanges();
-        spyOn(component._uploaderService, 'uploadFilesInTheQueue');
+        spyOn(uploadService, 'uploadFilesInTheQueue');
 
         let itemEntity = {
             fullPath: '/folder-fake/file-fake.png',
@@ -161,7 +157,7 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         };
 
         component.onFilesEntityDropped(itemEntity);
-        expect(component._uploaderService.uploadFilesInTheQueue)
+        expect(uploadService.uploadFilesInTheQueue)
             .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
     });
 
@@ -182,9 +178,9 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         let fakePromise = new Promise(function (resolve, reject) {
             reject(fakeRest);
         });
-        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakePromise);
-        spyOn(component, '_showErrorNotificationBar').and.callFake( () => {
-            expect(component._showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakePromise);
+        spyOn(component, 'showErrorNotificationBar').and.callFake( () => {
+            expect(component.showErrorNotificationBar).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             done();
         });
 
@@ -225,13 +221,13 @@ describe('Test ng2-alfresco-upload UploadDragArea', () => {
         let fakePromise = new Promise(function (resolve, reject) {
             resolve(fakeRest);
         });
-        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakePromise);
+        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakePromise);
         spyOn(component, 'onFilesEntityDropped').and.callFake( () => {
             expect(component.onFilesEntityDropped).toHaveBeenCalledWith(itemEntity);
         });
 
-        spyOn(component, '_showUndoNotificationBar').and.callFake( () => {
-            expect(component._showUndoNotificationBar).toHaveBeenCalled();
+        spyOn(component, 'showUndoNotificationBar').and.callFake( () => {
+            expect(component.showUndoNotificationBar).toHaveBeenCalled();
             done();
         });
 

@@ -24,7 +24,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { DocumentListService } from './../services/document-list.service';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ContentActionModel } from './../models/content-action.model';
 
 declare let dialogPolyfill: any;
@@ -59,10 +59,10 @@ export class DocumentMenuAction implements OnInit {
 
     constructor(
         private documentListService: DocumentListService,
-        private translate: AlfrescoTranslationService) {
+        private translateService: AlfrescoTranslateService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
         }
     }
 
@@ -112,7 +112,7 @@ export class DocumentMenuAction implements OnInit {
     private getErrorMessage(response: any): string {
         if (response.body && response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
             let errorMessage: any;
-            errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;
         }
     }

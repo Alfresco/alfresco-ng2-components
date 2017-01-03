@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
 import { IconModel } from '../models/icon.model';
@@ -65,11 +65,11 @@ export class ActivitiApps implements OnInit {
      * @param translate Translate service
      * @param activitiTaskList Task service
      */
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslateService,
                 private activitiTaskList: ActivitiTaskListService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
 
         this.apps$ = new Observable<AppDefinitionRepresentationModel>(observer =>  this.appsObserver = observer).share();

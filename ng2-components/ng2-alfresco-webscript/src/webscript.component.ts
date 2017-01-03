@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 /**
@@ -79,12 +79,7 @@ export class WebscriptComponent {
 
     showError: boolean = false;
 
-    /**
-     * Constructor
-     * @param authService
-     */
-    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
-
+    constructor(private apiService: AlfrescoApiService) {
     }
 
     ngOnChanges(changes) {

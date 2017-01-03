@@ -17,7 +17,7 @@
 
 import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
-describe('Test ng2-alfresco-upload FileDraggableDirective', () => {
+describe('FileDraggableDirective', () => {
 
     let component;
 

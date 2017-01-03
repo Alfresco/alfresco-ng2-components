@@ -20,14 +20,13 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 
 import { ActivitiComments } from './activiti-comments.component';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { TranslationMock } from './../assets/translation.service.mock';
 
-describe('ActivitiTaskDetails', () => {
+describe('ActivitiComments', () => {
 
     let componentHandler: any;
     let service: ActivitiTaskListService;
@@ -39,32 +38,32 @@ describe('ActivitiTaskDetails', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                ActivitiFormModule
+                CoreModule.forRoot(),
+                ActivitiFormModule.forRoot()
             ],
             declarations: [
                 ActivitiComments
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 ActivitiTaskListService
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslateService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
-
         fixture = TestBed.createComponent(ActivitiComments);
         component = fixture.componentInstance;
         service = fixture.debugElement.injector.get(ActivitiTaskListService);
 
-        getCommentsSpy = spyOn(service, 'getTaskComments').and.returnValue(Observable.of([{
-            message: 'Test1'
-        }, {
-            message: 'Test2'
-        }, {
-            message: 'Test3'
-        }]));
+        getCommentsSpy = spyOn(service, 'getTaskComments').and.returnValue(Observable.of([
+            { message: 'Test1' },
+            { message: 'Test2' },
+            { message: 'Test3'}
+        ]));
         addCommentSpy = spyOn(service, 'addTaskComment').and.returnValue(Observable.of({id: 123, message: 'Test'}));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [

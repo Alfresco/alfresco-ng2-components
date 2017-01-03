@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { DiagramsService } from '../services/diagrams.service';
 import { DiagramColorService } from '../services/diagram-color.service';
 import { RaphaelService } from './raphael/raphael.service';
@@ -60,12 +60,12 @@ export class DiagramComponent {
     private elementRef: ElementRef;
 
     constructor(elementRef: ElementRef,
-                private translate: AlfrescoTranslationService,
+                private translateService: AlfrescoTranslateService,
                 private diagramColorService: DiagramColorService,
                 private raphaelService: RaphaelService,
                 private diagramsService: DiagramsService) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-diagrams', 'node_modules/ng2-activiti-diagrams/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-diagrams', 'node_modules/ng2-activiti-diagrams/src');
         }
         this.elementRef = elementRef;
     }

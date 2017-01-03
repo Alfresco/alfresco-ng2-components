@@ -195,7 +195,7 @@ export class UploadService {
         }
     }
 
-    private updateFileCounterStream(total: number) {
+    updateFileCounterStream(total: number) {
         if (this.totalCompletedObserver) {
             this.totalCompletedObserver.next(total);
         }

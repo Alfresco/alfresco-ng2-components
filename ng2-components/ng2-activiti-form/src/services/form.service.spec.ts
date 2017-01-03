@@ -20,20 +20,23 @@ import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormService } from './form.service';
 import { EcmModelService } from './ecm-model.service';
 import { FormDefinitionModel } from '../models/form-definition.model';
-import { HttpModule, Response, ResponseOptions } from '@angular/http';
+import { Response, ResponseOptions } from '@angular/http';
 
 declare let jasmine: any;
 
 describe('FormService', () => {
 
-    let responseBody: any, service: FormService, apiService: AlfrescoApiService;
+    let responseBody: any;
+    let service: FormService;
+    let apiService: AlfrescoApiService;
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpModule, CoreModule],
+            imports: [
+                CoreModule.forRoot()
+            ],
             providers: [
                 EcmModelService,
-                AlfrescoApiService,
                 FormService
             ]
         });

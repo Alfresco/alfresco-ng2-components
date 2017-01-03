@@ -16,9 +16,8 @@
  */
 
 export * from './storage.service';
-export * from './AlfrescoApi.service';
+export * from './alfresco-api.service';
 export * from './AlfrescoSettings.service';
-export * from './AlfrescoTranslationLoader.service';
 export * from './AlfrescoTranslation.service';
 export * from './AlfrescoAuthentication.service';
 export * from './AlfrescoContent.service';
@@ -26,3 +25,9 @@ export * from './renditions.service';
 export * from './auth-guard.service';
 export * from './auth-guard-ecm.service';
 export * from './auth-guard-bpm.service';
+
+export * from './auth.service';
+export * from './content.service';
+export * from './settings.service';
+export * from './translate.service';
+export * from './translate-loader.service';

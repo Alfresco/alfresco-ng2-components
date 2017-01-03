@@ -16,7 +16,7 @@
  */
 
 import { ReflectiveInjector } from '@angular/core';
-import { AlfrescoApiService } from './AlfrescoApi.service';
+import { AlfrescoApiService } from './alfresco-api.service';
 import { RenditionsService } from './renditions.service';
 import {
     fakeRedition,

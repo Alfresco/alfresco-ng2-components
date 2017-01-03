@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoApiService, StorageService, AlfrescoContentService } from 'ng2-alfresco-core';
+import { SettingsService, AuthService, AlfrescoApiService, StorageService, ContentService } from 'ng2-alfresco-core';
 import { FileNode } from '../assets/document-library.model.mock';
 import { ReflectiveInjector } from '@angular/core';
 import { DocumentListService } from './document-list.service';
@@ -26,8 +26,8 @@ describe('DocumentListService', () => {
 
     let injector;
     let service: DocumentListService;
-    let settingsService: AlfrescoSettingsService;
-    let authService: AlfrescoAuthenticationService;
+    let settingsService: SettingsService;
+    let authService: AuthService;
     let alfrescoApiService: AlfrescoApiService;
 
     let fakeEntryNode = {
@@ -94,16 +94,16 @@ describe('DocumentListService', () => {
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
+            AuthService,
+            SettingsService,
             AlfrescoApiService,
-            AlfrescoContentService,
+            ContentService,
             DocumentListService,
             StorageService
         ]);
 
-        settingsService = injector.get(AlfrescoSettingsService);
-        authService = injector.get(AlfrescoAuthenticationService);
+        settingsService = injector.get(SettingsService);
+        authService = injector.get(AuthService);
         alfrescoApiService = injector.get(AlfrescoApiService);
         service = injector.get(DocumentListService);
         jasmine.Ajax.install();

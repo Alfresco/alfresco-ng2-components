@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { ContentService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { EcmUserModel } from '../models/ecm-user.model';
 /**
  *
@@ -30,8 +30,7 @@ import { EcmUserModel } from '../models/ecm-user.model';
 export class EcmUserService {
 
     constructor(private apiService: AlfrescoApiService,
-                private authService: AlfrescoAuthenticationService,
-                private contentService: AlfrescoContentService) {
+                private contentService: ContentService) {
     }
 
     /**

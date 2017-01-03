@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
 import { Observer, Observable } from 'rxjs/Rx';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
@@ -51,10 +51,10 @@ export class ActivitiPeople {
      * @param translate
      * @param people service
      */
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslateService,
                 private peopleService: ActivitiPeopleService) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
         this.peopleSearch$ = new Observable<User[]>(observer => this.peopleSearchObserver = observer).share();
     }

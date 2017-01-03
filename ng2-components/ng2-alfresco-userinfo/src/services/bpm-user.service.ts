@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
@@ -29,8 +29,7 @@ import { BpmUserModel } from '../models/bpm-user.model';
 @Injectable()
 export class BpmUserService {
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private alfrescoJsApi: AlfrescoApiService) {
+    constructor(private alfrescoJsApi: AlfrescoApiService) {
     }
 
     /**

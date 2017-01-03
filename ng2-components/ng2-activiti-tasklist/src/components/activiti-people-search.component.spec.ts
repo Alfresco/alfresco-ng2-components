@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    CoreModule,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
-import { ActivitiPeopleSearch } from './activiti-people-search.component';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { User } from '../models/user.model';
 
 declare let jasmine: any;
 
@@ -41,7 +37,7 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('Activiti People Search', () => {
+describe('ActivitiPeopleSearch', () => {
 
     let activitiPeopleSearchComponent: ActivitiPeopleSearch;
     let fixture: ComponentFixture<ActivitiPeopleSearch>;
@@ -52,11 +48,18 @@ describe('Activiti People Search', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
-            declarations: [ActivitiPeopleSearch],
-            providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}]
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                ActivitiPeopleSearch
+            ]
         }).compileComponents().then(() => {
+
+            let translateService = TestBed.get(AlfrescoTranslateService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+
             fixture = TestBed.createComponent(ActivitiPeopleSearch);
             activitiPeopleSearchComponent = fixture.componentInstance;
             element = fixture.nativeElement;

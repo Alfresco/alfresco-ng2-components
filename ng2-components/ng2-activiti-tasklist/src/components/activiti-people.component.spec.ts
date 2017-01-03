@@ -15,15 +15,12 @@
  * limitations under the License.
  */
 
-import {
-    CoreModule,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiPeople } from './activiti-people.component';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
-import { TranslationMock } from '../assets/translation.service.mock';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { User } from '../models/user.model';
 
 declare let jasmine: any;
@@ -42,7 +39,7 @@ const fakeUserToInvolve: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('Activiti People Component', () => {
+describe('ActivitiPeople', () => {
 
     let activitiPeopleComponent: ActivitiPeople;
     let fixture: ComponentFixture<ActivitiPeople>;
@@ -51,12 +48,21 @@ describe('Activiti People Component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
-            declarations: [ActivitiPeople, ActivitiPeopleSearch],
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                ActivitiPeople,
+                ActivitiPeopleSearch
+            ],
             providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                ActivitiPeopleService]
+                ActivitiPeopleService
+            ]
         }).compileComponents().then(() => {
+            let translateService = TestBed.get(AlfrescoTranslateService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+
             fixture = TestBed.createComponent(ActivitiPeople);
             activitiPeopleComponent = fixture.componentInstance;
             element = fixture.nativeElement;

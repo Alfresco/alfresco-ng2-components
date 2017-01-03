@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChan
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
@@ -65,15 +65,15 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
 
-    constructor(private alfrescoSearchService: AlfrescoSearchService,
-                private translate: AlfrescoTranslationService,
-                private _alfrescoThumbnailService: AlfrescoThumbnailService,
+    constructor(private searchService: AlfrescoSearchService,
+                private translateService: AlfrescoTranslateService,
+                private thumbnailService: AlfrescoThumbnailService,
                 @Optional() private route: ActivatedRoute) {
     }
 
-    ngOnInit(): void {
-        if (this.translate !== null) {
-            this.translate.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
+    ngOnInit() {
+        if (this.translateService !== null) {
+            this.translateService.addTranslationFolder('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
         }
         if (this.route) {
             this.route.params.forEach((params: Params) => {
@@ -85,7 +85,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: SimpleChanges) {
         if (changes['searchTerm']) {
             this.searchTerm = changes['searchTerm'].currentValue;
             this.displaySearchResults(this.searchTerm);
@@ -99,7 +99,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      */
     getMimeTypeIcon(node: any): string {
         if (node.entry.content && node.entry.content.mimeType) {
-            let icon = this._alfrescoThumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
+            let icon = this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
             return this.resolveIconPath(icon);
         } else if (node.entry.isFolder) {
             return `${this.baseComponentPath}/../assets/images/ft_ic_folder.svg`;
@@ -117,7 +117,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      */
     getMimeTypeKey(node: any): string {
         if (node.entry.content && node.entry.content.mimeType) {
-            return 'SEARCH.ICONS.' + this._alfrescoThumbnailService.getMimeTypeKey(node.entry.content.mimeType);
+            return 'SEARCH.ICONS.' + this.thumbnailService.getMimeTypeKey(node.entry.content.mimeType);
         } else {
             return '';
         }
@@ -127,8 +127,8 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
      * Loads and displays search results
      * @param searchTerm Search query entered by user
      */
-    private displaySearchResults(searchTerm): void {
-        if (searchTerm && this.alfrescoSearchService) {
+    private displaySearchResults(searchTerm) {
+        if (searchTerm && this.searchService) {
             let searchOpts: SearchOptions = {
                 include: ['path'],
                 rootNodeId: this.rootNodeId,
@@ -136,7 +136,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                 maxItems: this.maxResults,
                 orderBy: this.resultSort
             };
-            this.alfrescoSearchService
+            this.searchService
                 .getNodeQueryResults(searchTerm, searchOpts)
                 .subscribe(
                     results => {
@@ -153,7 +153,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
         }
     }
 
-    onItemClick(node, event?: Event): void {
+    onItemClick(node, event?: Event) {
         if (this.navigate && this.navigationMode === AlfrescoSearchComponent.SINGLE_CLICK_NAVIGATION) {
             if (node && node.entry) {
                 this.navigate.emit(node);

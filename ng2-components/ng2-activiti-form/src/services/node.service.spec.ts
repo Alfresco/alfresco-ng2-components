@@ -19,7 +19,6 @@ import { TestBed } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { NodeService } from './node.service';
 import { NodeMetadata } from '../models/node-metadata.model';
-import { HttpModule } from '@angular/http';
 import { EcmModelService } from './ecm-model.service';
 
 declare let jasmine: any;
@@ -28,9 +27,11 @@ describe('NodeService', () => {
 
     let service: NodeService;
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ HttpModule, CoreModule ],
+            imports: [
+                CoreModule.forRoot()
+            ],
             providers: [
                 NodeService,
                 EcmModelService

@@ -25,11 +25,11 @@ import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.servi
 import { TranslationMock } from './../assets/translation.service.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoTranslationService,
+    AuthService,
+    ContentService,
+    AlfrescoTranslateService,
     CoreModule,
     StorageService
 } from 'ng2-alfresco-core';
@@ -107,12 +107,12 @@ describe('AlfrescoSearchComponent', () => {
             declarations: [ AlfrescoSearchComponent ], // declare the test component
             providers: [
                 AlfrescoSearchService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                {provide: AlfrescoTranslateService, useClass: TranslationMock},
                 AlfrescoThumbnailService,
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoApiService,
-                AlfrescoAuthenticationService,
-                AlfrescoContentService,
+                AuthService,
+                ContentService,
                 StorageService
             ]
         }).compileComponents().then(() => {
@@ -140,8 +140,8 @@ describe('AlfrescoSearchComponent', () => {
     it('should have a null search term if no query param provided via RouteParams', () => {
         let injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoSearchService,
-            AlfrescoAuthenticationService,
-            AlfrescoSettingsService,
+            AuthService,
+            SettingsService,
             AlfrescoApiService,
             StorageService,
             { provide: ActivatedRoute, useValue: { params: Observable.from([{}]) } }
@@ -152,7 +152,7 @@ describe('AlfrescoSearchComponent', () => {
     });
 
     it('should setup i18n folder', () => {
-        let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
+        let translationService = fixture.debugElement.injector.get(AlfrescoTranslateService);
         spyOn(translationService, 'addTranslationFolder');
         fixture.detectChanges();
         expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');

@@ -16,25 +16,23 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import {
-    CoreModule
-} from 'ng2-alfresco-core';
+import { DebugElement, SimpleChange } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import * as moment from 'moment';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 
 import { AnalyticsReportParametersComponent } from '../components/analytics-report-parameters.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
-
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportParametersModel } from '../models/report.model';
-import * as moment from 'moment';
-import { DebugElement, SimpleChange } from '@angular/core';
 import * as analyticParamsMock from '../assets/analyticsParamsReportComponent.mock';
 
 declare let jasmine: any;
 declare let mdDateTimePicker: any;
 
-describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
+describe('AnalyticsReportParametersComponent', () => {
 
-    let component: any;
+    let component: AnalyticsReportParametersComponent;
     let fixture: ComponentFixture<AnalyticsReportParametersComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
@@ -44,7 +42,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 AnalyticsReportParametersComponent,
@@ -54,6 +52,15 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 AnalyticsService
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslateService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(() => {
@@ -62,10 +69,6 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         fixture.detectChanges();
-        componentHandler = jasmine.createSpyObj('componentHandler', [
-            'upgradeAllRegistered'
-        ]);
-        window['componentHandler'] = componentHandler;
     });
 
     describe('Rendering tests', () => {
@@ -323,9 +326,9 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
             });
 
-            let appId = 1;
+            let appId = '1';
             component.appId = appId;
-            component.reportId = 1;
+            component.reportId = '1';
             let change = new SimpleChange(null, appId);
             component.ngOnChanges({ 'appId': change });
 
@@ -341,7 +344,7 @@ describe('Test ng2-analytics-report-parameters Report Parameters ', () => {
                 expect(res[1].name).toEqual('Fake task name 2');
             });
 
-            component.reportId = 100;
+            component.reportId = '100';
             component.reportParameters = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
             component.onProcessDefinitionChanges(analyticParamsMock.fieldProcessDef);
 

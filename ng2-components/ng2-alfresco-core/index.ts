@@ -22,17 +22,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 import {
+    AuthService,
+    ContentService,
+    SettingsService,
     StorageService,
     AlfrescoApiService,
-    AlfrescoSettingsService,
-    AlfrescoTranslationLoader,
-    AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
+    AlfrescoTranslateLoader,
+    AlfrescoTranslateService,
     RenditionsService,
     AuthGuard,
     AuthGuardEcm,
-    AuthGuardBpm
+    AuthGuardBpm,
+
+    /** @deprecated */ AlfrescoSettingsService,
+    /** @deprecated */ AlfrescoTranslationService,
+    /** @deprecated */ AlfrescoAuthenticationService,
+    /** @deprecated */ AlfrescoContentService
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -43,22 +48,27 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
+    AuthService,
+    ContentService,
+    SettingsService,
     StorageService,
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoSettingsService,
-    AlfrescoTranslationLoader,
-    AlfrescoTranslationService,
+    AlfrescoTranslateLoader,
+    AlfrescoTranslateService,
     RenditionsService,
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
-    ...CONTEXT_MENU_PROVIDERS
+    ...CONTEXT_MENU_PROVIDERS,
+
+    /** @deprecated */ AlfrescoAuthenticationService,
+    /** @deprecated */ AlfrescoContentService,
+    /** @deprecated */ AlfrescoSettingsService,
+    /** @deprecated */ AlfrescoTranslationService
 ];
 
 export function createTranslateLoader(http: Http) {
-    return new AlfrescoTranslationLoader(http);
+    return new AlfrescoTranslateLoader(http);
 }
 
 @NgModule({
@@ -71,7 +81,8 @@ export function createTranslateLoader(http: Http) {
             provide: TranslateLoader,
             useFactory: (createTranslateLoader),
             deps: [Http]
-        })    ],
+        })
+    ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES

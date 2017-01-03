@@ -16,39 +16,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { AlfrescoTranslationLoader } from './AlfrescoTranslationLoader.service';
+import { AlfrescoTranslateService } from './translate.service';
 
+/** @deprecated AlfrescoTranslationService is deprecated. Use AlfrescoTranslateService instead */
 @Injectable()
-export class AlfrescoTranslationService {
-    userLang: string = 'en';
-    customLoader: AlfrescoTranslationLoader;
+export class AlfrescoTranslationService extends AlfrescoTranslateService {
 
-    constructor(public translate: TranslateService) {
-        this.userLang = translate.getBrowserLang() || 'en';
-        translate.setDefaultLang(this.userLang);
-        this.customLoader = <AlfrescoTranslationLoader> this.translate.currentLoader;
-        this.customLoader.init(this.userLang);
+    constructor(translate: TranslateService) {
+        super(translate);
+        console.log('Warning: AlfrescoTranslationService is deprecated. Use AlfrescoTranslateService instead.');
     }
 
-    addTranslationFolder(name: string = '', path: string = '') {
-        if (!this.customLoader.existComponent(name)) {
-            this.customLoader.addComponentList(name, path);
-            this.translate.getTranslation(this.userLang).subscribe(
-                () => {
-                    this.translate.use(this.userLang);
-                }
-            );
-        }
-    }
-
-    use(lang: string): Observable<any> {
-        this.customLoader.init(lang);
-        return this.translate.use(lang);
-    }
-
-    get(key: string|Array<string>, interpolateParams?: Object): Observable<string|any> {
-        return this.translate.get(key, interpolateParams);
-    }
 }

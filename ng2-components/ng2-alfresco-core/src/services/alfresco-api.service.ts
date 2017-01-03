@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import * as alfrescoApi from  'alfresco-js-api';
 import { AlfrescoApi } from  'alfresco-js-api';
 
 @Injectable()
@@ -29,6 +30,18 @@ export class AlfrescoApiService {
 
     public setInstance(value: AlfrescoApi) {
         this._instance = value;
+    }
+
+    constructor() {
+        this._instance = <AlfrescoApi>new alfrescoApi({
+            provider: 'ALL',
+            ticketEcm: null,
+            ticketBpm: null,
+            hostEcm: 'http://localhost:8080',
+            hostBpm: 'http://localhost:9999',
+            contextRoot: 'alfresco',
+            disableCsrf: true
+        });
     }
 
 }

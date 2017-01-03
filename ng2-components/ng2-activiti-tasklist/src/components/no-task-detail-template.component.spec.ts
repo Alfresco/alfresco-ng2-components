@@ -24,7 +24,7 @@ describe('NoTaskDetailsTemplateComponent', () => {
     let detailsComponent: ActivitiTaskDetails;
 
     beforeEach(() => {
-        detailsComponent = new ActivitiTaskDetails(null, null, null, null);
+        detailsComponent = new ActivitiTaskDetails(null, null, null);
         component = new NoTaskDetailsTemplateComponent(detailsComponent);
     });
 

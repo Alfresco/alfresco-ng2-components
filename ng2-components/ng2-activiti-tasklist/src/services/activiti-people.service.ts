@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { User } from '../models/user.model';
@@ -24,8 +24,7 @@ import { User } from '../models/user.model';
 @Injectable()
 export class ActivitiPeopleService {
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private alfrescoJsApi: AlfrescoApiService) {
+    constructor(private alfrescoJsApi: AlfrescoApiService) {
     }
 
     getWorkflowUsers(taskId: string, searchWord: string): Observable<User[]> {

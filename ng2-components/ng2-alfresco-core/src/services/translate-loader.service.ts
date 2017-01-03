@@ -22,7 +22,7 @@ import { TranslateLoader } from 'ng2-translate/ng2-translate';
 import { ComponentTranslationModel } from '../models/component.model';
 
 @Injectable()
-export class AlfrescoTranslationLoader implements TranslateLoader {
+export class AlfrescoTranslateLoader implements TranslateLoader {
 
     private prefix: string = 'i18n';
     private suffix: string = '.json';

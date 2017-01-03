@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import { AlfrescoApi } from 'alfresco-js-api';
+import { TestBed } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import {
     formTest,
     fakeTaskProcessVariableModels,
@@ -24,41 +24,28 @@ import {
     fakeFormJson
 } from './assets/widget-visibility.service.mock';
 import { WidgetVisibilityService } from './widget-visibility.service';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService
-} from 'ng2-alfresco-core';
-import { TaskProcessVariableModel } from '../models/task-process-variable.model';
-import { WidgetVisibilityModel } from '../models/widget-visibility.model';
-import { FormModel, FormFieldModel, TabModel, ContainerModel, FormFieldTypes } from '../components/widgets/core/index';
+import { TaskProcessVariableModel } from './../models/task-process-variable.model';
+import { WidgetVisibilityModel } from './../models/widget-visibility.model';
+import { FormModel, FormFieldModel, TabModel, ContainerModel, FormFieldTypes } from './../components/widgets/core/index';
 
 declare let jasmine: any;
 
 describe('WidgetVisibilityService', () => {
-    let service, injector;
-    let authenticationService: AlfrescoAuthenticationService;
-    let apiService: AlfrescoApiService;
-    let alfrescoApi: AlfrescoApi;
+
+    let service: WidgetVisibilityService;
     let booleanResult: boolean;
     let stubFormWithFields = new FormModel(fakeFormJson);
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            WidgetVisibilityService,
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            StorageService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(WidgetVisibilityService);
-        authenticationService = injector.get(AlfrescoAuthenticationService);
-        apiService = injector.get(AlfrescoApiService);
-        alfrescoApi = apiService.getInstance();
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                WidgetVisibilityService
+            ]
+        });
+        service = TestBed.get(WidgetVisibilityService);
         jasmine.Ajax.install();
     });
 

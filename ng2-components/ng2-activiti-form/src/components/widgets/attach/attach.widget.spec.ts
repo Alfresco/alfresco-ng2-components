@@ -30,7 +30,7 @@ describe('AttachWidget', () => {
     let dialogPolyfill: any;
 
     beforeEach(() => {
-        contentService = new ActivitiAlfrescoContentService(null, null);
+        contentService = new ActivitiAlfrescoContentService(null);
         widget = new AttachWidget(contentService);
 
         dialogPolyfill = {

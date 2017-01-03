@@ -43,7 +43,7 @@ describe('ActivitiFilters', () => {
     });
 
     beforeEach(() => {
-        activitiService = new ActivitiProcessService(null, null);
+        activitiService = new ActivitiProcessService(null);
         filterList = new ActivitiProcessFilters(null, activitiService);
     });
 

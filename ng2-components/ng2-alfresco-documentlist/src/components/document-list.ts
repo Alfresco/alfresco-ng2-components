@@ -31,7 +31,7 @@ import {
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity } from 'alfresco-js-api';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
@@ -157,12 +157,12 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     constructor(
         private documentListService: DocumentListService,
         private ngZone: NgZone,
-        private translate: AlfrescoTranslationService) {
+        private translateService: AlfrescoTranslateService) {
 
         this.data = new ShareDataTableAdapter(this.documentListService, './..', []);
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
         }
     }
 

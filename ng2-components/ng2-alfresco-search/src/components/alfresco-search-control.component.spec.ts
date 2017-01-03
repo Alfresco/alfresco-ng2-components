@@ -22,11 +22,11 @@ import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.servi
 import { TranslationMock } from './../assets/translation.service.mock';
 import { result } from './../assets/alfresco-search.component.mock';
 import {
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoApiService,
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoTranslationService,
+    AuthService,
+    ContentService,
+    AlfrescoTranslateService,
     CoreModule
 } from 'ng2-alfresco-core';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
@@ -49,12 +49,12 @@ describe('AlfrescoSearchControlComponent', () => {
                 AlfrescoSearchAutocompleteComponent
             ],
             providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
+                {provide: AlfrescoTranslateService, useClass: TranslationMock},
                 AlfrescoThumbnailService,
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoApiService,
-                AlfrescoAuthenticationService,
-                AlfrescoContentService,
+                AuthService,
+                ContentService,
                 AlfrescoSearchService
             ]
         }).compileComponents().then(() => {
@@ -65,7 +65,7 @@ describe('AlfrescoSearchControlComponent', () => {
     }));
 
     it('should setup i18n folder', () => {
-        let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
+        let translationService = fixture.debugElement.injector.get(AlfrescoTranslateService);
         spyOn(translationService, 'addTranslationFolder');
         fixture.detectChanges();
         expect(translationService.addTranslationFolder)
