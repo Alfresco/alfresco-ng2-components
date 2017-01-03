@@ -97,12 +97,10 @@ Follow the 3 steps below:
 ```html
 <alfresco-document-list
     #documentList
-    [currentFolderPath]="currentPath"
+    [currentFolderId]="'-my-'"
     [contextMenuActions]="true"
     [contentActions]="true"
-    [creationMenuActions]="true"
-    [multiselect]="true"
-    (folderChange)="onFolderChanged($event)">
+    [creationMenuActions]="true">
 </alfresco-document-list>
 ```
 
@@ -120,14 +118,15 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfr
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-document-list
-                    #documentList
-                    [currentFolderPath]="'/'"
-                    [contextMenuActions]="true"
-                    [contentActions]="true"
-                    [creationMenuActions]="true"
-                    [multiselect]="true">
-               </alfresco-document-list>`
+    template: `
+        <alfresco-document-list
+            #documentList
+            [currentFolderPath]="'-my-'"
+            [contextMenuActions]="true"
+            [contentActions]="true"
+            [creationMenuActions]="true">
+        </alfresco-document-list>
+    `
 })
 class DocumentListDemo {
 
@@ -162,17 +161,13 @@ export class AppModule {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
-
 ```
 
 ### Properties
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `rootFolderId` | string | -root- | Root node ID, i.e. `-root-`, `-shared-`, `-my-`, etc. or a fixed node ID |
-| `currentFolderPath` | string | null | Initial path of displayed folder below the root node, e.g. "/Sites/swsdp/documentLibrary" |
-| `currentFolderId` | string | null | Initial node ID of displayed folder, if given  |
+| `currentFolderId` | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
 | `navigate` | boolean | true | Toggles navigation to folder content or file preview |
 | `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | `thumbnails` | boolean | false | Show document thumbnails rather than icons |
@@ -193,7 +188,6 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `folderChange` | Emitted upon display folder changed |
 | `preview` | Emitted when document preview is requested either with single or double click |
 
-
 _For a complete example source code please refer to 
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
 repository._
@@ -204,7 +198,8 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 ```html
 <alfresco-document-list-breadcrumb
-    [target]="documentList">
+    [target]="documentList"
+    [folderNode]="documentList.folderNode">
 </alfresco-document-list-breadcrumb>
 ```
 
