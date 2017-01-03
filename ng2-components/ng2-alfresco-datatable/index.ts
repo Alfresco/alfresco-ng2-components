@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 export * from './src/data/index';
@@ -39,10 +39,14 @@ export const ALFRESCO_DATATABLE_DIRECTIVES: [any] = [
     declarations: [
         ...ALFRESCO_DATATABLE_DIRECTIVES
     ],
-    providers: [
-    ],
     exports: [
         ...ALFRESCO_DATATABLE_DIRECTIVES
     ]
 })
-export class DataTableModule {}
+export class DataTableModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: DataTableModule
+        };
+    }
+}
