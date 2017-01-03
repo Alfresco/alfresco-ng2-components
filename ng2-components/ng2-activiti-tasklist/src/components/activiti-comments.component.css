@@ -18,10 +18,14 @@
     cursor: pointer;
 }
 
-.mdl-list__item {
+.list-wrap {
     word-wrap: break-word;
+    -moz-hyphens:auto;
+    -webkit-hyphens:auto;
+    -o-hyphens:auto;
+    hyphens:auto;
 }
 
-.mdl-list__item .mdl-list__item-primary-content {
+.hide-long-names {
     overflow: auto;
 }

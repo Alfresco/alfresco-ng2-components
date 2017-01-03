@@ -20,3 +20,15 @@
 .material-icons {
     cursor: pointer;
 }
+
+.list-wrap {
+    word-wrap: break-word;
+    -moz-hyphens:auto;
+    -webkit-hyphens:auto;
+    -o-hyphens:auto;
+    hyphens:auto;
+}
+
+.hide-long-names {
+    overflow: auto;
+}
