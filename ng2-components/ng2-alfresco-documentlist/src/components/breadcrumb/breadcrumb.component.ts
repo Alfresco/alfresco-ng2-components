@@ -15,12 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
 import { DocumentList } from '../document-list';
 
 @Component({
@@ -29,95 +25,48 @@ import { DocumentList } from '../document-list';
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.css']
 })
-export class DocumentListBreadcrumb {
-
-    private _currentFolderPath: string = '/';
+export class DocumentListBreadcrumb implements OnChanges {
 
     @Input()
-    set currentFolderPath(val: string) {
-        if (this._currentFolderPath !== val) {
-            if (val) {
-                this._currentFolderPath = val;
-                this.route = this.parsePath(val);
-            } else {
-                this._currentFolderPath = this.rootFolder.path;
-                this.route = [ this.rootFolder ];
-            }
-            this.pathChanged.emit({
-                value: this._currentFolderPath,
-                route: this.route
-            });
-        }
-    }
-
-    get currentFolderPath(): string {
-        return this._currentFolderPath;
-    }
+    folderNode: MinimalNodeEntryEntity;
 
     @Input()
     target: DocumentList;
 
-    private rootFolder: PathNode = {
-        name: 'Root',
-        path: '/'
-    };
-
-    route: PathNode[] = [ this.rootFolder ];
+    route: PathElementEntity[] = [];
 
     @Output()
     navigate: EventEmitter<any> = new EventEmitter();
 
-    @Output()
-    pathChanged: EventEmitter<any> = new EventEmitter();
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['folderNode']) {
 
-    onRoutePathClick(route: PathNode, e?: Event) {
+            let node: MinimalNodeEntryEntity = changes['folderNode'].currentValue;
+            if (node) {
+                // see https://github.com/Alfresco/alfresco-js-api/issues/139
+                let route = <PathElementEntity[]> (node.path.elements || []);
+                route.push(<PathElementEntity> {
+                    id: node.id,
+                    name: node.name
+                });
+                this.route = route;
+            }
+        }
+    }
+
+    onRoutePathClick(route: PathElementEntity, e?: Event) {
         if (e) {
             e.preventDefault();
         }
 
         if (route) {
             this.navigate.emit({
-                value: {
-                    name: route.name,
-                    path: route.path
-                }
+                value: route
             });
 
-            this.currentFolderPath = route.path;
-
             if (this.target) {
-                this.target.currentFolderPath = route.path;
-                this.target.loadFolder();
+                this.target.loadFolderByNodeId(route.id);
             }
         }
     }
-
-    private parsePath(path: string): PathNode[] {
-        let parts = path.split('/').filter(val => val ? true : false);
-
-        let result = [
-            this.rootFolder
-        ];
-
-        let parentPath: string = this.rootFolder.path;
-
-        for (let i = 0; i < parts.length; i++) {
-            if (!parentPath.endsWith('/')) {
-                parentPath += '/';
-            }
-            parentPath += parts[i];
-
-            result.push({
-                name: parts[i],
-                path: parentPath
-            });
-        }
-
-        return result;
-    };
-}
-
-export interface PathNode {
-    name: string;
-    path: string;
 }

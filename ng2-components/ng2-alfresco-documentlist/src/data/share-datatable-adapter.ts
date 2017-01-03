@@ -17,11 +17,7 @@
 
 import { DatePipe } from '@angular/common';
 import { ObjectUtils } from 'ng2-alfresco-core';
-import {
-    PaginationProvider, DataLoadedEventEmitter,
-    DataTableAdapter,
-    DataRow, DataColumn, DataSorting
-} from 'ng2-alfresco-datatable';
+import { PaginationProvider, DataLoadedEventEmitter, DataTableAdapter, DataRow, DataColumn, DataSorting } from 'ng2-alfresco-datatable';
 
 import { NodePaging, NodeMinimalEntry } from './../models/document-library.model';
 import { DocumentListService } from './../services/document-list.service';
@@ -31,7 +27,6 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     ERR_ROW_NOT_FOUND: string = 'Row not found';
     ERR_COL_NOT_FOUND: string = 'Column not found';
 
-    DEFAULT_ROOT_ID: string = '-root-';
     DEFAULT_DATE_FORMAT: string = 'medium';
     DEFAULT_PAGE_SIZE: number = 20;
     MIN_PAGE_SIZE: number = 5;
@@ -40,7 +35,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     private rows: DataRow[];
     private columns: DataColumn[];
     private page: NodePaging;
-    private currentPath: string;
+    private folderNodeId: string;
 
     private filter: RowFilter;
     private imageResolver: ImageResolver;
@@ -53,7 +48,6 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     thumbnails: boolean = false;
     dataLoaded: DataLoadedEventEmitter;
-    rootFolderId: string = this.DEFAULT_ROOT_ID;
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,
@@ -83,7 +77,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     set skipCount(value: number) {
         if (value !== this._skipCount) {
             this._skipCount = value > 0 ? value : 0;
-            this.loadPath(this.currentPath);
+            this.loadById(this.folderNodeId);
         }
     }
 
@@ -94,7 +88,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
     set maxItems(value: number) {
         if (value !== this._maxItems) {
             this._maxItems = value > this.MIN_PAGE_SIZE ? value : this.MIN_PAGE_SIZE;
-            this.loadPath(this.currentPath);
+            this.loadById(this.folderNodeId);
         }
     }
 
@@ -203,17 +197,17 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         this.setSorting(sorting);
     }
 
-    loadPath(path: string): Promise<any> {
+    loadById(id: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            if (path && this.documentListService) {
+            if (id && this.documentListService) {
                 this.documentListService
-                    .getFolder(path, {
+                    .getFolder(null, {
                         maxItems: this._maxItems,
                         skipCount: this._skipCount,
-                        rootFolderId: this.rootFolderId
+                        rootFolderId: id
                     })
                     .subscribe(val => {
-                        this.currentPath = path;
+                        this.folderNodeId = id;
                         this.loadPage(<NodePaging>val);
                         this.dataLoaded.emit(null);
                         resolve(true);
@@ -228,35 +222,11 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     }
 
-    loadById(id: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (id && this.documentListService) {
-                this.documentListService
-                    .getFolder(null, {
-                        maxItems: this._maxItems,
-                        skipCount: this._skipCount,
-                        rootFolderId: id
-                    })
-                    .subscribe(val => {
-                            this.loadPage(<NodePaging>val);
-                            this.dataLoaded.emit(null);
-                            resolve(true);
-                        },
-                        error => {
-                            reject(error);
-                        });
-            } else {
-                resolve(false);
-            }
-        });
-
-    }
-
     setFilter(filter: RowFilter) {
         this.filter = filter;
 
-        if (this.filter && this.currentPath) {
-            this.loadPath(this.currentPath);
+        if (this.filter && this.folderNodeId) {
+            this.loadById(this.folderNodeId);
         }
     }
 

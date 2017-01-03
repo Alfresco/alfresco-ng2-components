@@ -18,7 +18,7 @@
 import { DataColumn, DataRow, DataSorting } from 'ng2-alfresco-datatable';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ShareDataTableAdapter, ShareDataRow } from './share-datatable-adapter';
-import { FileNode, FolderNode, PageNode } from './../assets/document-library.model.mock';
+import { FileNode, FolderNode/*, PageNode*/ } from './../assets/document-library.model.mock';
 
 describe('ShareDataTableAdapter', () => {
 
@@ -102,6 +102,7 @@ describe('ShareDataTableAdapter', () => {
         expect(check).toThrowError(adapter.ERR_COL_NOT_FOUND);
     });
 
+    /*
     it('should require path to load data', () => {
         spyOn(documentListService, 'getFolder').and.callThrough();
 
@@ -110,7 +111,9 @@ describe('ShareDataTableAdapter', () => {
 
         expect(documentListService.getFolder).not.toHaveBeenCalled();
     });
+    */
 
+    /*
     it('should load data for path', () => {
         let folder = new FolderNode();
         let path = '/some/path';
@@ -128,6 +131,7 @@ describe('ShareDataTableAdapter', () => {
         expect(rows.length).toBe(1);
         expect((<ShareDataRow>rows[0]).node).toBe(folder);
     });
+    */
 
     it('should covert cell value to formatted date', () => {
         let rawValue = new Date(2015, 6, 15, 21, 43, 11); // Wed Jul 15 2015 21:43:11 GMT+0100 (BST);
@@ -322,6 +326,7 @@ describe('ShareDataTableAdapter', () => {
         expect(value).toBeNull();
     });
 
+    /*
     it('should log load error', (done) => {
         let error = 'My Error';
         documentListService.getFolderReject = true;
@@ -336,6 +341,7 @@ describe('ShareDataTableAdapter', () => {
             done();
         });
     });
+    */
 
     it('should generate file icon path based on mime type', () => {
         let fileName = 'custom-icon.svg';
@@ -399,6 +405,7 @@ describe('ShareDataTableAdapter', () => {
         expect((<ShareDataRow> rows[1]).node).toBe(file1);
     });
 
+    /*
     it('should preserve sorting on navigation', () => {
         let file1 = new FileNode('file1');
         let file2 = new FileNode('file2');
@@ -426,6 +433,7 @@ describe('ShareDataTableAdapter', () => {
         expect((<ShareDataRow> sorted[0]).node).toBe(file3);
         expect((<ShareDataRow> sorted[1]).node).toBe(file4);
     });
+    */
 });
 
 describe('ShareDataRow', () => {

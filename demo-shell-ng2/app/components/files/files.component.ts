@@ -33,9 +33,8 @@ import { FormService } from 'ng2-activiti-form';
     styleUrls: ['./files.component.css']
 })
 export class FilesComponent implements OnInit {
-    currentPath: string = '/Sites/swsdp/documentLibrary';
-    rootFolderId: string = '-root-';
-    currentFolderId: string = null;
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    currentFolderId: string = '-my-';
 
     errorMessage: string = null;
     fileNodeId: any;
@@ -48,11 +47,13 @@ export class FilesComponent implements OnInit {
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
     get uploadRootFolderId(): string {
-        return this.currentFolderId || this.rootFolderId;
+        return this.currentFolderId;
     }
 
+    // TODO: fix
     get uploadFolderPath(): string {
-        return this.currentFolderId ? '/' : this.currentPath;
+        // return this.currentFolderId ? '/' : this.currentPath;
+        return null;
     }
 
     @ViewChild(DocumentList)
@@ -89,13 +90,8 @@ export class FilesComponent implements OnInit {
 
     onFolderChanged(event?: any) {
         if (event) {
-            this.currentPath = event.path;
-        }
-    }
-
-    onBreadcrumbPathChanged(event?: any) {
-        if (event) {
-            this.currentPath = event.value;
+            // this.currentPath = event.path;
+            console.log(event);
         }
     }
 
@@ -123,7 +119,9 @@ export class FilesComponent implements OnInit {
     ngOnInit() {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                this.currentFolderId = params.hasOwnProperty('id') ? params['id'] : null;
+                if (params['id']) {
+                    this.currentFolderId = params['id'];
+                }
             });
         }
         if (this.auth.isBpmLoggedIn()) {

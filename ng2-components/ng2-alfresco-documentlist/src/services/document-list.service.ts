@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
+import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AuthService, ContentService, AlfrescoApiService } from 'ng2-alfresco-core';
 
 @Injectable()
@@ -119,6 +119,17 @@ export class DocumentListService {
             .map(res => <NodePaging> res)
             // .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
+    }
+
+    getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
+        let opts: any = {
+            includeSource: true,
+            include: ['path', 'properties']
+        };
+
+        // see https://github.com/Alfresco/alfresco-js-api/issues/140
+        let nodes: any = this.apiService.getInstance().nodes;
+        return nodes.getNodeInfo(nodeId, opts);
     }
 
     /**
