@@ -29,6 +29,7 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
+import { FormOutcomeModel } from './widgets/core/index';
 
 /**
  * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.
@@ -131,7 +132,17 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
             );
     }
 
+    /** @override */
+    isOutcomeButtonVisible(outcome: FormOutcomeModel): boolean {
+        if (outcome && outcome.name === FormOutcomeModel.SAVE_ACTION) {
+            return false;
+        }
+        return super.isOutcomeButtonVisible(outcome);
+    }
+
+    /** @override */
     saveTaskForm() {
+        // do nothing
     }
 
     completeTaskForm(outcome?: string) {
