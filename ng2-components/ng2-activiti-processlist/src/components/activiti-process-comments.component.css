@@ -23,6 +23,7 @@
 
 .list-wrap {
     word-wrap: break-word;
+    word-break: break-all;
     -moz-hyphens:auto;
     -webkit-hyphens:auto;
     -o-hyphens:auto;
