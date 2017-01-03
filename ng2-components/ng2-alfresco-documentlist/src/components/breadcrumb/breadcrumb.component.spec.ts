@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
+import { PathElementEntity } from 'alfresco-js-api';
 import { DocumentListBreadcrumb } from './breadcrumb.component';
-// import { DocumentList } from '../document-list';
+import { DocumentList } from '../document-list';
 
 describe('DocumentListBreadcrumb', () => {
 
@@ -32,98 +33,34 @@ describe('DocumentListBreadcrumb', () => {
         expect(component.currentFolderPath).toBe(path);
     });
 
-    it('should init with root folder by default', () => {
-        expect(component.route.length).toBe(1);
-        expect(component.route[0]).toEqual(
-            jasmine.objectContaining({
-                name: 'Root',
-                path: '/'
-            })
-        );
-    });
-
-    it('should fallback to default root for invalid path', () => {
-        component.currentFolderPath = null;
-        expect(component.currentFolderPath).toBe('/');
-
-        expect(component.route.length).toBe(1);
-        expect(component.route[0]).toEqual(
-            jasmine.objectContaining({
-                name: 'Root',
-                path: '/'
-            })
-        );
-    });
-
-    it('should parse the route', () => {
-        component.currentFolderPath = '/some/path';
-
-        expect(component.route.length).toBe(3);
-        expect(component.route).toEqual(
-            jasmine.objectContaining([
-                { name: 'Root', path: '/' },
-                { name: 'some', path: '/some' },
-                { name: 'path', path: '/some/path' }
-            ])
-        );
-    });
-
     it('should prevent default click behavior', () => {
         let event = jasmine.createSpyObj('event', ['preventDefault']);
         component.onRoutePathClick(null, event);
         expect(event.preventDefault).toHaveBeenCalled();
     });
 
-    /*
     it('should emit navigation event', (done) => {
-        let node = <PathNode> { name: 'name', path: '/path' };
+        let node = <PathElementEntity> { id: '-id-', name: 'name' };
         component.navigate.subscribe(val => {
-            expect(val.value.name).toBe(node.name);
-            expect(val.value.path).toBe(node.path);
+            expect(val.value).toBe(node);
             done();
         });
 
         component.onRoutePathClick(node, null);
     });
-    */
 
-    /*
     it('should update document list on click', (done) => {
         let documentList = new DocumentList(null, null, null);
-        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
+        spyOn(documentList, 'loadFolderByNodeId').and.stub();
 
-        let node = <PathNode> { name: 'name', path: '/path' };
+        let node = <PathElementEntity> { id: '-id-', name: 'name' };
         component.target = documentList;
 
         component.onRoutePathClick(node, null);
         setTimeout(() => {
-            expect(documentList.currentFolderPath).toBe(node.path);
+            expect(documentList.loadFolderByNodeId).toHaveBeenCalledWith(node.id);
             done();
         }, 0);
-    });
-    */
-
-    it('should do nothing for same path', () => {
-        let called = 0;
-
-        component.pathChanged.subscribe(() => called++);
-
-        component.currentFolderPath = '/';
-        component.currentFolderPath = '/';
-
-        expect(called).toBe(0);
-    });
-
-    it('should emit path changed event', (done) => {
-        let path = '/some/path';
-
-        component.pathChanged.subscribe(e => {
-            expect(e.value).toBe(path);
-            expect(e.route).toBe(component.route);
-            done();
-        });
-
-        component.currentFolderPath = path;
     });
 
 });

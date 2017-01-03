@@ -270,7 +270,8 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
             this.folderNode = node;
             this.currentFolderId = node.id;
             this.data.loadById(node.id).catch(err => this.error.emit(err));
-        });
+        })
+        .catch(err => this.error.emit(err));
     }
 
     /**
