@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit,
-    Input,
-    Output,
-    EventEmitter,
-    ViewChild
-} from '@angular/core';
-import { DocumentListService } from './../services/document-list.service';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { MinimalNodeEntity } from 'alfresco-js-api';
+import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 
 declare let dialogPolyfill: any;
@@ -37,10 +31,10 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
     styleUrls: ['./document-menu-action.css'],
     templateUrl: './document-menu-action.html'
 })
-export class DocumentMenuAction implements OnInit {
+export class DocumentMenuAction {
 
     @Input()
-    currentFolderPath: string;
+    folderId: string;
 
     @Output()
     success = new EventEmitter();
@@ -66,16 +60,14 @@ export class DocumentMenuAction implements OnInit {
         }
     }
 
-    ngOnInit() {}
-
     public createFolder(name: string) {
         this.cancel();
-        this.documentListService.createFolder(name, this.currentFolderPath)
+        this.documentListService.createFolder(name, this.folderId)
             .subscribe(
-                res => {
-                    let relativeDir = this.currentFolderPath;
+                (res: MinimalNodeEntity) => {
                     this.folderName = '';
-                    this.success.emit({value: relativeDir});
+                    console.log(res.entry);
+                    this.success.emit({node: res.entry});
                 },
                 error => {
                     let errorMessagePlaceholder = this.getErrorMessage(error.response);

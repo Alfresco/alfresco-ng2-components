@@ -96,15 +96,12 @@ export class DocumentListService {
 
     /**
      * Create a new folder in the path.
-     * @param name
-     * @param path
+     * @param name Folder name
+     * @param parentId Parent folder ID
      * @returns {any}
      */
-    createFolder(name: string, path: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, path))
-            .map(res => {
-                return res;
-            })
+    createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
             .catch(this.handleError);
     }
 
