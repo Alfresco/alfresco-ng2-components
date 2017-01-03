@@ -179,6 +179,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                     } else {
                         this.value = this.field.value;
                     }
+                    this.visibilityService.refreshVisibility(this.field.form);
                 },
                 error => {
                     console.log(error);
@@ -191,20 +192,21 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
         this.formService
             .getRestFieldValues(this.field.form.taskId, this.field.id)
             .subscribe(
-                (result: FormFieldOption[]) => {
-                    let options = result || [];
-                    let toSelect = options.find(item => item.id === this.field.value);
-                    this.field.options = options;
-                    if (toSelect) {
-                        this.value = toSelect.name;
-                    } else {
-                        this.value = this.field.value;
-                    }
-                },
-                error => {
-                    console.log(error);
+            (result: FormFieldOption[]) => {
+                let options = result || [];
+                let toSelect = options.find(item => item.id === this.field.value);
+                this.field.options = options;
+                if (toSelect) {
+                    this.value = toSelect.name;
+                } else {
                     this.value = this.field.value;
                 }
+                this.visibilityService.refreshVisibility(this.field.form);
+            },
+            error => {
+                console.log(error);
+                this.value = this.field.value;
+            }
             );
     }
 
