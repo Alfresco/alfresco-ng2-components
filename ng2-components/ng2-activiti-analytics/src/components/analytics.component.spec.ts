@@ -151,7 +151,7 @@ describe('AnalyticsComponent', () => {
                 expect(res[0].datasets[0].data[1]).toEqual(1);
 
                 expect(res[1]).toBeDefined();
-                expect(res[1].type).toEqual('table');
+                expect(res[1].type).toEqual('masterDetailTable');
                 expect(res[1].datasets).toBeDefined();
                 expect(res[1].datasets.length).toEqual(2);
                 expect(res[1].datasets[0][0]).toEqual('fake 1 user task');
