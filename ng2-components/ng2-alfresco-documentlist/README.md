@@ -193,7 +193,7 @@ _For a complete example source code please refer to
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
 repository._
 
-### Breadcrumb
+### Breadcrumb Component
 
 DocumentList provides simple breadcrumb element to indicate the current position within a navigation hierarchy.
 
@@ -206,7 +206,12 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 ![Breadcrumb](docs/assets/breadcrumb.png)
 
-Parent folder button is not displayed when breadcrumb is enabled.
+#### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `target` | DocumentList | DocumentList component to operate with. Upon clicks will instruct the given component to update. |
+| `folderNode` | MinimalNodeEntryEntity | Active node, builds UI based on `folderNode.path.elements` collection. |
 
 ### Creation Menu Action
 
