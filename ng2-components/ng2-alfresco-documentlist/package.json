@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build && rimraf dist node_modules typings",
     "clean-build": "rimraf index.js index.js.map index.d.ts'src/{,**/}**.js' 'src/{,**/}**.js.map' 'src/{,**/}**.d.ts' bundles",
-    "build": "npm run clean-build && npm run tslint && rimraf dist && tsc && license-check && npm run build.umd",
-    "build:w": "npm run clean-build && npm run tslint && rimraf dist && tsc:w && license-check npm run build.umd",
+    "build": "npm run clean-build && npm run tslint && rimraf dist && npm run tsc && license-check &&  npm run build.umd",
+    "build:w": "npm run clean-build && npm run tslint && rimraf dist && npm run tsc:w && license-check && npm run build.umd",
     "tslint": "tslint -c tslint.json 'src/{,**/}**.ts' 'index.ts'  -e '{,**/}**.d.ts' -e './gulpfile.ts'",
     "tsc": "tsc",
     "tsc:w": "tsc -w",

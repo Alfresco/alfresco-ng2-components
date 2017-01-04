@@ -18,16 +18,14 @@
 import { Injectable } from '@angular/core';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentListService } from './document-list.service';
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { ContentService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(
-        private documentListService?: DocumentListService,
-        private contentService?: AlfrescoContentService
-    ) {
+    constructor(private documentListService?: DocumentListService,
+                private contentService?: ContentService) {
         this.setupActionHandlers();
     }
 

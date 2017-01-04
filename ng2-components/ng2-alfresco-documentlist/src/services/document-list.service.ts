@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
+import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AuthService, ContentService, AlfrescoApiService } from 'ng2-alfresco-core';
 
 @Injectable()
@@ -96,15 +96,12 @@ export class DocumentListService {
 
     /**
      * Create a new folder in the path.
-     * @param name
-     * @param path
+     * @param name Folder name
+     * @param parentId Parent folder ID
      * @returns {any}
      */
-    createFolder(name: string, path: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, path))
-            .map(res => {
-                return res;
-            })
+    createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
             .catch(this.handleError);
     }
 
@@ -119,6 +116,17 @@ export class DocumentListService {
             .map(res => <NodePaging> res)
             // .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
+    }
+
+    getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
+        let opts: any = {
+            includeSource: true,
+            include: ['path', 'properties']
+        };
+
+        // see https://github.com/Alfresco/alfresco-js-api/issues/140
+        let nodes: any = this.apiService.getInstance().nodes;
+        return nodes.getNodeInfo(nodeId, opts);
     }
 
     /**
