@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
-import { Chart, PieChart, TableChart, BarChart, HeatMapChart, MultiBarChart } from '../models/chart.model';
+import { Chart, PieChart, TableChart, BarChart, HeatMapChart, MultiBarChart, DetailsTableChart } from '../models/chart.model';
 
 @Injectable()
 export class AnalyticsService {
@@ -158,7 +158,7 @@ export class AnalyticsService {
                     } else if (chartData.type === 'processDefinitionHeatMap') {
                         elements.push(new HeatMapChart(chartData));
                     } else if (chartData.type === 'masterDetailTable') {
-                        elements.push(new TableChart(chartData));
+                        elements.push(new DetailsTableChart(chartData));
                     } else if (chartData.type === 'barChart') {
                         elements.push(new BarChart(chartData));
                     } else if (chartData.type === 'multiBarChart') {

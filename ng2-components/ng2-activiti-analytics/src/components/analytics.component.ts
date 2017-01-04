@@ -51,6 +51,8 @@ export class AnalyticsComponent implements OnChanges {
 
     reports: Chart[];
 
+    showDetails: boolean = false;
+
     public barChartOptions: any = {
         responsive: true,
         scales: {
@@ -113,5 +115,13 @@ export class AnalyticsComponent implements OnChanges {
 
     public onEditReport(name: string) {
         this.editReport.emit(name);
+    }
+
+    toggleDetailsTable() {
+        this.showDetails = !this.showDetails;
+    }
+
+    isShowDetails(): boolean {
+        return this.showDetails;
     }
 }

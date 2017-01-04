@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { AlfrescoContentService } from 'ng2-alfresco-core';
+import { ContentService } from 'ng2-alfresco-core';
 import { ContentActionHandler } from '../models/content-action.model';
 import { DocumentActionsService } from './document-actions.service';
 import { DocumentListServiceMock } from '../assets/document-list.service.mock';
@@ -26,11 +26,11 @@ describe('DocumentActionsService', () => {
 
     let service: DocumentActionsService;
     let documentListService: DocumentListService;
-    let contentService: AlfrescoContentService;
+    let contentService: ContentService;
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
-        contentService = new AlfrescoContentService(null, null);
+        contentService = new ContentService(null, null);
         service = new DocumentActionsService(documentListService, contentService);
     });
 

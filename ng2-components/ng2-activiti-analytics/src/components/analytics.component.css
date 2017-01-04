@@ -23,3 +23,7 @@
 .dropdown-widget__invalid .mdl-textfield__error {
     visibility: visible !important;
 }
+
+.analytics-row__entry {
+    cursor: pointer;
+}

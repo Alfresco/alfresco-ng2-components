@@ -1,11 +1,10 @@
-<ol data-automation-id="breadcrumb" class="breadcrumb">
-    <li *ngFor="let r of route; let last = last" [class.active]="last" [ngSwitch]="last">
-        <span *ngSwitchCase="true">{{r.name}}</span>
-        <a *ngSwitchDefault
-           href="#"
-           [attr.data-automation-id]="'breadcrumb_' + r.name"
-           (click)="onRoutePathClick(r, $event)">
-            {{r.name}}
-        </a>
-    </li>
-</ol>
+<div>
+    <ol *ngIf="folderNode" data-automation-id="breadcrumb" class="breadcrumb">
+        <li *ngFor="let r of route; let last = last" [class.active]="last" [ngSwitch]="last">
+            <span *ngSwitchCase="true">{{r.name}}</span>
+            <a *ngSwitchDefault href="#" [attr.data-automation-id]="'breadcrumb_' + r.name" (click)="onRoutePathClick(r, $event)">
+                {{r.name}}
+            </a>
+        </li>
+    </ol>
+</div>

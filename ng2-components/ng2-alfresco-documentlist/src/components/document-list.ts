@@ -15,32 +15,14 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    EventEmitter,
-    AfterContentInit,
-    TemplateRef,
-    NgZone,
-    ViewChild,
-    HostListener
-} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
-import { MinimalNodeEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
-import {
-    ShareDataTableAdapter,
-    ShareDataRow,
-    RowFilter,
-    ImageResolver
-} from './../data/share-datatable-adapter';
+import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 
 declare var module: any;
 
@@ -56,27 +38,10 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    DEFAULT_FOLDER_PATH: string = '/';
-
     baseComponentPath = module.id.replace('/components/document-list.js', '');
 
     @Input()
     fallbackThubnail: string = this.baseComponentPath + '/../assets/images/ft_ic_miscellaneous.svg';
-
-    @Input()
-    set rootFolderId(value: string) {
-        this.data.rootFolderId = value || this.data.DEFAULT_ROOT_ID;
-    }
-
-    @Input()
-    currentFolderId: string = null;
-
-    get rootFolderId(): string {
-        if (this.data) {
-            return this.data.rootFolderId;
-        }
-        return null;
-    }
 
     @Input()
     navigate: boolean = true;
@@ -137,16 +102,12 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
-    private _path = this.DEFAULT_FOLDER_PATH;
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    @Input()
+    currentFolderId: string = null;
 
     @Input()
-    set currentFolderPath(value: string) {
-        this._path = value;
-    }
-
-    get currentFolderPath(): string {
-        return this._path;
-    }
+    folderNode: MinimalNodeEntryEntity = null;
 
     errorMessage;
     actions: ContentActionModel[] = [];
@@ -209,36 +170,10 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
-            let folderId = changes['currentFolderId'].currentValue;
-            this.loadFolderById(folderId)
-                .then(() => {
-                    this._path = null;
-                })
-                .catch(err => {
-                    this.error.emit(err);
-                });
-        } else if (changes['currentFolderPath']) {
-            const path = changes['currentFolderPath'].currentValue || this.DEFAULT_FOLDER_PATH;
-            this.currentFolderPath = path;
-            this.loadFolderByPath(path)
-                .then(() => {
-                    this._path = path;
-                    this.folderChange.emit({ path: path });
-                })
-                .catch(err => {
-                    this.error.emit(err);
-                });
-        } else if (changes['rootFolderId']) {
-            // this.currentFolderPath = this.DEFAULT_FOLDER_PATH;
-            this.loadFolderByPath(this.currentFolderPath)
-                .then(() => {
-                    this._path = this.currentFolderPath;
-                    this.folderChange.emit({ path: this.currentFolderPath });
-                })
-                .catch(err => {
-                    this.error.emit(err);
-                });
+        if (changes['folderNode'] && changes['folderNode'].currentValue) {
+            this.loadFolder();
+        } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
+            this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
         }
     }
 
@@ -289,10 +224,12 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
 
     performNavigation(node: MinimalNodeEntity): boolean {
         if (node && node.entry && node.entry.isFolder) {
-            this.currentFolderPath = this.getNodePath(node);
-            this.currentFolderId = null;
+
+            this.currentFolderId = node.entry.id;
+            this.folderNode = node.entry;
+
             this.loadFolder();
-            this.folderChange.emit({ path: this.currentFolderPath });
+            this.folderChange.emit({ node: node.entry });
             return true;
         }
         return false;
@@ -309,10 +246,6 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
         }
     }
 
-    loadFolderByPath(path: string): Promise<any> {
-        return this.data.loadPath(path);
-    }
-
     loadFolderById(id: string): Promise<any> {
         return this.data.loadById(id);
     }
@@ -323,31 +256,22 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
         });
     }
 
-    public loadFolder() {
-        if (this.currentFolderId) {
-            this.loadFolderById(this.currentFolderId)
-                .catch(err => {
-                    this.error.emit(err);
-                });
-        } else if (this.currentFolderPath) {
-            this.loadFolderByPath(this.currentFolderPath)
-                .catch(err => {
-                    this.error.emit(err);
-                });
+    loadFolder() {
+        let nodeId = this.folderNode ? this.folderNode.id : this.currentFolderId;
+        if (nodeId) {
+            this.loadFolderById(nodeId)
+                .catch(err => this.error.emit(err));
         }
     }
 
-    /**
-     * Gets a path for a given node.
-     * @param node
-     * @returns {string}
-     */
-    getNodePath(node: MinimalNodeEntity): string {
-        if (node) {
-            let pathWithCompanyHome = node.entry.path.name;
-            return pathWithCompanyHome.replace('/Company Home', '') + '/' + node.entry.name;
-        }
-        return null;
+    // gets folder node and its content
+    loadFolderByNodeId(nodeId: string) {
+        this.documentListService.getFolderNode(nodeId).then(node => {
+            this.folderNode = node;
+            this.currentFolderId = node.id;
+            this.data.loadById(node.id).catch(err => this.error.emit(err));
+        })
+        .catch(err => this.error.emit(err));
     }
 
     /**

@@ -41,7 +41,17 @@
                             <tr>
                                 <th *ngFor="let label of report.labels">{{label | translate}}</th>
                             </tr>
-                            <tr *ngFor="let rows of report.datasets" style="text-align: center;">
+                            <tr *ngFor="let rows of report.datasets" class="analytics-row__entry" style="text-align: center;">
+                                <td *ngFor="let row of rows" (click)="toggleDetailsTable()">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div [attr.id]="'chart-master-detail-' + report.id" *ngIf="isShowDetails()">
+                        <table class="table table-responsive table-condensed" style="width: 100%">
+                            <tr>
+                                <th *ngFor="let label of report.detailsTable.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.detailsTable.datasets" style="text-align: center;">
                                 <td *ngFor="let row of rows">{{row | translate }}</td>
                             </tr>
                         </table>
