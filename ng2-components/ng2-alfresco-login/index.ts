@@ -41,7 +41,7 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
 export class LoginModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: CoreModule
+            ngModule: LoginModule
         };
     }
 }
