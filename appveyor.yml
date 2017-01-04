@@ -1,4 +1,9 @@
 # Test against this version of Node.js
+branches:
+  only:
+    - master
+    - development
+    - dev-build-test
 
 environment:
   nodejs_version: "5"
