@@ -49,6 +49,9 @@ export class Chart {
             case 'processDefinitionHeatMap':
                 chartType = 'HeatMap';
                 break;
+           case 'masterDetailTable':
+                chartType = 'masterDetailTable';
+                break;
             default:
                 chartType = 'table';
                 break;
@@ -188,6 +191,22 @@ export class TableChart extends Chart {
 
     hasDatasets() {
         return this.datasets && this.datasets.length > 0 ? true : false;
+    }
+}
+
+export class DetailsTableChart extends TableChart {
+    detailsTable: any;
+    showDetails: boolean = false;
+
+    constructor(obj?: any) {
+        super(obj);
+        if (obj.detailTables) {
+            this.detailsTable = new TableChart(obj.detailTables[0]);
+        }
+    }
+
+    hasDetailsTable() {
+        return this.detailsTable ? true : false;
     }
 }
 
