@@ -168,6 +168,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `currentFolderId` | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
+| `folderNode` | `MinimalNodeEntryEntity` | null | Currently displayed folder node | 
 | `navigate` | boolean | true | Toggles navigation to folder content or file preview |
 | `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | `thumbnails` | boolean | false | Show document thumbnails rather than icons |

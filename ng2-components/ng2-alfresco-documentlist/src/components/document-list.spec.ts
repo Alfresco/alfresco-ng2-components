@@ -189,35 +189,6 @@ describe('DocumentList', () => {
         expect(documentList.loadFolder).not.toHaveBeenCalled();
     });
 
-    /*
-    it('should emit folder changed event', (done) => {
-        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
-        documentList.folderChange.subscribe(e => {
-            done();
-        });
-
-        let newPath = '/some/new/path';
-        documentList.currentFolderPath = newPath;
-        documentList.ngOnChanges({currentFolderPath: new SimpleChange(null, newPath)});
-    });
-    */
-
-    /*
-    it('should emit folder changed event with folder details', (done) => {
-        spyOn(documentList, 'loadFolderByPath').and.returnValue(Promise.resolve());
-
-        let path = '/path';
-
-        documentList.folderChange.subscribe(e => {
-            expect(e.path).toBe(path);
-            done();
-        });
-
-        documentList.currentFolderPath = path;
-        documentList.ngOnChanges({currentFolderPath: new SimpleChange(null, path)});
-    });
-    */
-
     it('should execute context action on callback', () => {
         let action = {
             node: {},
