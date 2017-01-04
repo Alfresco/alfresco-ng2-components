@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
+import { SettingsService, StorageService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-setting-demo',
@@ -28,23 +28,23 @@ export class SettingComponent {
     ecmHost: string;
     bpmHost: string;
 
-    constructor(public alfrescoSettingsService: AlfrescoSettingsService,
+    constructor(public settingsService: SettingsService,
                 private storage: StorageService) {
-        this.ecmHost = this.alfrescoSettingsService.ecmHost;
-        this.bpmHost = this.alfrescoSettingsService.bpmHost;
+        this.ecmHost = this.settingsService.ecmHost;
+        this.bpmHost = this.settingsService.bpmHost;
     }
 
     public onChangeECMHost(event: KeyboardEvent): void {
         console.log((<HTMLInputElement>event.target).value);
         this.ecmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
+        this.settingsService.ecmHost = this.ecmHost;
         this.storage.setItem(`ecmHost`, this.ecmHost);
     }
 
     public onChangeBPMHost(event: KeyboardEvent): void {
         console.log((<HTMLInputElement>event.target).value);
         this.bpmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.bpmHost = this.bpmHost;
+        this.settingsService.bpmHost = this.bpmHost;
         this.storage.setItem(`bpmHost`, this.bpmHost);
     }
 

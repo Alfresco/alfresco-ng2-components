@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DocumentListModule, DocumentList, DocumentActionsService } from 'ng2-alfresco-documentlist';
-import { CoreModule, StorageService, SettingsService, AuthService, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { CoreModule, StorageService, SettingsService, AuthService, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -129,7 +129,7 @@ class DocumentListDemo implements OnInit {
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                private translateService: AlfrescoTranslateService,
+                private translateService: AlfrescoTranslationService,
                 private documentActions: DocumentActionsService,
                 private storage: StorageService) {
 

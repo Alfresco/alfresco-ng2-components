@@ -21,7 +21,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
 import { CoreModule } from 'ng2-alfresco-core';
 import { LoginModule } from 'ng2-alfresco-login';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, SettingsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -93,7 +93,7 @@ class UserInfoDemo implements OnInit {
     public disableCsrf: boolean = false;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService) {
+                private settingsService: SettingsService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.bpmHost = this.bpmHost;
     }

@@ -20,7 +20,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
     AlfrescoTranslationService,
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService
+    SettingsService
 } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
@@ -80,7 +80,7 @@ export class AlfrescoLoginComponent implements OnInit {
      */
     constructor(private _fb: FormBuilder,
                 public authService: AlfrescoAuthenticationService,
-                public settingsService: AlfrescoSettingsService,
+                public settingsService: SettingsService,
                 private translate: AlfrescoTranslationService) {
 
         translate.addTranslationFolder('ng2-alfresco-login', 'node_modules/ng2-alfresco-login/src');

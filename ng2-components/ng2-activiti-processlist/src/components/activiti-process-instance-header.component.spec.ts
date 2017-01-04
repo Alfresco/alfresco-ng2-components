@@ -22,7 +22,7 @@ import {
     AlfrescoTranslationService,
     CoreModule,
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoApiService } from 'ng2-alfresco-core';
 
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
@@ -48,7 +48,7 @@ describe('ActivitiProcessInstanceHeader', () => {
                 ActivitiProcessComments
             ],
             providers: [
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
                 ActivitiProcessService,

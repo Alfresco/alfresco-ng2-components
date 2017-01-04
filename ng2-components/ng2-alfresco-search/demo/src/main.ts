@@ -23,7 +23,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
 
 import {
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoAuthenticationService,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
@@ -58,7 +58,7 @@ class SearchDemo implements OnInit {
     ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService,
+                private settingsService: SettingsService,
                 translation: AlfrescoTranslationService) {
 
         settingsService.ecmHost = this.ecmHost;

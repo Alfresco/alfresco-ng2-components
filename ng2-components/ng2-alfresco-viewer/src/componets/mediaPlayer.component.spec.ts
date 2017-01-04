@@ -20,7 +20,7 @@ import { MediaPlayerComponent } from './mediaPlayer.component';
 import { DebugElement }    from '@angular/core';
 import {
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
@@ -39,7 +39,7 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
             ],
             declarations: [MediaPlayerComponent],
             providers: [
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService
             ]

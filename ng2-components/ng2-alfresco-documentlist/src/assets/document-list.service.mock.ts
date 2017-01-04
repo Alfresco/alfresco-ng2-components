@@ -20,7 +20,7 @@ import { NodePaging } from './../models/document-library.model';
 import { PageNode } from './document-library.model.mock';
 import { DocumentListService } from './../services/document-list.service';
 import {
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoApiService
@@ -33,7 +33,7 @@ export class DocumentListServiceMock extends DocumentListService {
     getFolderRejectError: string = 'Error';
 
     constructor(
-        settings?: AlfrescoSettingsService,
+        settings?: SettingsService,
         authService?: AlfrescoAuthenticationService,
         contentService?: AlfrescoContentService,
         apiService?: AlfrescoApiService

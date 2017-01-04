@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement }    from '@angular/core';
 import {
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
@@ -43,7 +43,7 @@ describe('AlfrescoLogin', () => {
             ],
             declarations: [AlfrescoLoginComponent],
             providers: [
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService,
                 {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},

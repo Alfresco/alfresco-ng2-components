@@ -20,7 +20,7 @@ import { NotSupportedFormat } from './notSupportedFormat.component';
 import { DebugElement }    from '@angular/core';
 import {
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
+    SettingsService,
     AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
@@ -39,7 +39,7 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             ],
             declarations: [NotSupportedFormat],
             providers: [
-                AlfrescoSettingsService,
+                SettingsService,
                 AlfrescoAuthenticationService,
                 AlfrescoApiService
             ]

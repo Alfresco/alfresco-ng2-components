@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import {
     AlfrescoTranslationService,
     AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
+    SettingsService,
     StorageService
 } from 'ng2-alfresco-core';
 
@@ -40,7 +40,7 @@ export class AppComponent {
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,
-                public alfrescoSettingsService: AlfrescoSettingsService,
+                public settingsService: SettingsService,
                 private translate: AlfrescoTranslationService,
                 private storage: StorageService) {
         this.setEcmHost();
@@ -118,25 +118,25 @@ export class AppComponent {
 
     private setEcmHost() {
         if (this.storage.hasItem(`ecmHost`)) {
-            this.alfrescoSettingsService.ecmHost = this.storage.getItem(`ecmHost`);
+            this.settingsService.ecmHost = this.storage.getItem(`ecmHost`);
             this.ecmHost = this.storage.getItem(`ecmHost`);
         } else {
-            this.alfrescoSettingsService.ecmHost = this.ecmHost;
+            this.settingsService.ecmHost = this.ecmHost;
         }
     }
 
     private setBpmHost() {
         if (this.storage.hasItem(`bpmHost`)) {
-            this.alfrescoSettingsService.bpmHost = this.storage.getItem(`bpmHost`);
+            this.settingsService.bpmHost = this.storage.getItem(`bpmHost`);
             this.bpmHost = this.storage.getItem(`bpmHost`);
         } else {
-            this.alfrescoSettingsService.bpmHost = this.bpmHost;
+            this.settingsService.bpmHost = this.bpmHost;
         }
     }
 
     private setProvider() {
         if (this.storage.hasItem(`providers`)) {
-            this.alfrescoSettingsService.setProviders(this.storage.getItem(`providers`));
+            this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
     }
 }
