@@ -17,7 +17,7 @@
 
 import { SettingsService } from './settings.service';
 
-describe('AlfrescoSettingsService', () => {
+describe('SettingsService', () => {
 
     let service: SettingsService;
 

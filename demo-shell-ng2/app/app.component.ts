@@ -20,8 +20,8 @@ import { Router } from '@angular/router';
 
 import {
     AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
+    AuthService,
+    SettingsService,
     StorageService
 } from 'ng2-alfresco-core';
 
@@ -38,9 +38,9 @@ export class AppComponent {
     ecmHost: string = 'http://' + window.location.hostname + ':8080';
     bpmHost: string = 'http://' + window.location.hostname + ':9999';
 
-    constructor(public auth: AlfrescoAuthenticationService,
+    constructor(public authService: AuthService,
                 public router: Router,
-                public alfrescoSettingsService: AlfrescoSettingsService,
+                public settingsService: SettingsService,
                 private translate: AlfrescoTranslationService,
                 private storage: StorageService) {
         this.setEcmHost();
@@ -60,11 +60,11 @@ export class AppComponent {
 
     isLoggedIn(): boolean {
         this.redirectToLoginPageIfNotLoggedIn();
-        return this.auth.isLoggedIn();
+        return this.authService.isLoggedIn();
     }
 
     redirectToLoginPageIfNotLoggedIn(): void {
-        if (!this.isLoginPage() && !this.auth.isLoggedIn()) {
+        if (!this.isLoginPage() && !this.authService.isLoggedIn()) {
             this.router.navigate(['/login']);
         }
     }
@@ -75,7 +75,7 @@ export class AppComponent {
 
     onLogout(event) {
         event.preventDefault();
-        this.auth.logout()
+        this.authService.logout()
             .subscribe(
                 () => {
                     this.navigateToLogin();
@@ -118,25 +118,25 @@ export class AppComponent {
 
     private setEcmHost() {
         if (this.storage.hasItem(`ecmHost`)) {
-            this.alfrescoSettingsService.ecmHost = this.storage.getItem(`ecmHost`);
+            this.settingsService.ecmHost = this.storage.getItem(`ecmHost`);
             this.ecmHost = this.storage.getItem(`ecmHost`);
         } else {
-            this.alfrescoSettingsService.ecmHost = this.ecmHost;
+            this.settingsService.ecmHost = this.ecmHost;
         }
     }
 
     private setBpmHost() {
         if (this.storage.hasItem(`bpmHost`)) {
-            this.alfrescoSettingsService.bpmHost = this.storage.getItem(`bpmHost`);
+            this.settingsService.bpmHost = this.storage.getItem(`bpmHost`);
             this.bpmHost = this.storage.getItem(`bpmHost`);
         } else {
-            this.alfrescoSettingsService.bpmHost = this.bpmHost;
+            this.settingsService.bpmHost = this.bpmHost;
         }
     }
 
     private setProvider() {
         if (this.storage.hasItem(`providers`)) {
-            this.alfrescoSettingsService.setProviders(this.storage.getItem(`providers`));
+            this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
     }
 }

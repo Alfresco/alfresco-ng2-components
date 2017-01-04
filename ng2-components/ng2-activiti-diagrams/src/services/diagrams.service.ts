@@ -25,11 +25,11 @@ export class DiagramsService {
 
     constructor(private authService: AuthService,
                 private http: Http,
-                private alfrescoSettingsService: SettingsService) {
+                private settingsService: SettingsService) {
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions/${processDefinitionId}/model-json`;
+        let url = `${this.settingsService.getBPMApiBaseUrl()}/app/rest/process-definitions/${processDefinitionId}/model-json`;
         let options = this.getRequestOptions();
         return this.http
             .get(url, options)

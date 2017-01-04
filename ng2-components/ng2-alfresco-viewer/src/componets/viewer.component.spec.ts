@@ -25,8 +25,8 @@ import { ViewerComponent } from './viewer.component';
 import { EventMock } from '../assets/event.mock';
 import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
+    AuthService,
+    SettingsService,
     AlfrescoApiService,
     CoreModule
 } from 'ng2-alfresco-core';
@@ -53,8 +53,8 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
                 ImgViewerComponent
             ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
+                SettingsService,
+                AuthService,
                 AlfrescoApiService,
                 RenderingQueueServices
             ]

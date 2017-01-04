@@ -18,7 +18,7 @@
 import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, SettingsService, AuthService, StorageService } from 'ng2-alfresco-core';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 
 @Component({
@@ -49,8 +49,8 @@ export class FormDemoComponent implements OnInit {
 
     ticket: string;
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService,
+    constructor(private authService: AuthService,
+                private settingsService: SettingsService,
                 private storage: StorageService) {
         settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');

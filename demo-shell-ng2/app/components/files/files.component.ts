@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { AuthService } from 'ng2-alfresco-core';
 import {
     DocumentActionsService,
     DocumentList,
@@ -49,7 +49,7 @@ export class FilesComponent implements OnInit {
     documentList: DocumentList;
 
     constructor(private documentActions: DocumentActionsService,
-                public auth: AlfrescoAuthenticationService,
+                public authService: AuthService,
                 private formService: FormService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute) {
@@ -106,7 +106,7 @@ export class FilesComponent implements OnInit {
                 }
             });
         }
-        if (this.auth.isBpmLoggedIn()) {
+        if (this.authService.isBpmLoggedIn()) {
             this.formService.getProcessDefinitions().subscribe(
                 defs => this.setupBpmActions(defs || []),
                 err => console.log(err)
