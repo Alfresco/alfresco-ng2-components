@@ -26,7 +26,7 @@ import {
     ActivitiTaskList
 } from 'ng2-activiti-tasklist';
 import { CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoAuthenticationService, SettingsService, StorageService } from 'ng2-alfresco-core';
+import { AuthService, SettingsService, StorageService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 @Component({
@@ -144,7 +144,7 @@ class MyDemoApp implements OnInit {
 
     dataTasks: ObjectDataTableAdapter;
 
-    constructor(private authService: AlfrescoAuthenticationService,
+    constructor(private authService: AuthService,
                 private settingsService: SettingsService,
                 private storage: StorageService) {
         settingsService.bpmHost = this.host;

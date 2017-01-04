@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoAuthenticationService,
+    AuthService,
     SettingsService,
     AlfrescoApiService,
     CoreModule
@@ -44,9 +44,9 @@ describe('AlfrescoLogin', () => {
             declarations: [AlfrescoLoginComponent],
             providers: [
                 SettingsService,
-                AlfrescoAuthenticationService,
+                AuthService,
                 AlfrescoApiService,
-                {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
+                {provide: AuthService, useClass: AuthenticationMock},
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();

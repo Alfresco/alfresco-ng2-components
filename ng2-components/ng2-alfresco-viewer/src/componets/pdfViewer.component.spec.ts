@@ -21,7 +21,7 @@ import { PdfViewerComponent } from './pdfViewer.component';
 import { EventMock } from '../assets/event.mock';
 import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoAuthenticationService,
+    AuthService,
     SettingsService,
     AlfrescoApiService,
     CoreModule
@@ -42,7 +42,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             declarations: [PdfViewerComponent],
             providers: [
                 SettingsService,
-                AlfrescoAuthenticationService,
+                AuthService,
                 AlfrescoApiService,
                 RenderingQueueServices
             ]

@@ -21,7 +21,7 @@ import { PageNode } from './document-library.model.mock';
 import { DocumentListService } from './../services/document-list.service';
 import {
     SettingsService,
-    AlfrescoAuthenticationService,
+    AuthService,
     AlfrescoContentService,
     AlfrescoApiService
 } from 'ng2-alfresco-core';
@@ -34,7 +34,7 @@ export class DocumentListServiceMock extends DocumentListService {
 
     constructor(
         settings?: SettingsService,
-        authService?: AlfrescoAuthenticationService,
+        authService?: AuthService,
         contentService?: AlfrescoContentService,
         apiService?: AlfrescoApiService
     ) {

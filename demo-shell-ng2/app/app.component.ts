@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 
 import {
     AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
+    AuthService,
     SettingsService,
     StorageService
 } from 'ng2-alfresco-core';
@@ -38,7 +38,7 @@ export class AppComponent {
     ecmHost: string = 'http://' + window.location.hostname + ':8080';
     bpmHost: string = 'http://' + window.location.hostname + ':9999';
 
-    constructor(public auth: AlfrescoAuthenticationService,
+    constructor(public authService: AuthService,
                 public router: Router,
                 public settingsService: SettingsService,
                 private translate: AlfrescoTranslationService,
@@ -60,11 +60,11 @@ export class AppComponent {
 
     isLoggedIn(): boolean {
         this.redirectToLoginPageIfNotLoggedIn();
-        return this.auth.isLoggedIn();
+        return this.authService.isLoggedIn();
     }
 
     redirectToLoginPageIfNotLoggedIn(): void {
-        if (!this.isLoginPage() && !this.auth.isLoggedIn()) {
+        if (!this.isLoginPage() && !this.authService.isLoggedIn()) {
             this.router.navigate(['/login']);
         }
     }
@@ -75,7 +75,7 @@ export class AppComponent {
 
     onLogout(event) {
         event.preventDefault();
-        this.auth.logout()
+        this.authService.logout()
             .subscribe(
                 () => {
                     this.navigateToLogin();

@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MediaPlayerComponent } from './mediaPlayer.component';
 import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoAuthenticationService,
+    AuthService,
     SettingsService,
     AlfrescoApiService,
     CoreModule
@@ -40,7 +40,7 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
             declarations: [MediaPlayerComponent],
             providers: [
                 SettingsService,
-                AlfrescoAuthenticationService,
+                AuthService,
                 AlfrescoApiService
             ]
         }).compileComponents();

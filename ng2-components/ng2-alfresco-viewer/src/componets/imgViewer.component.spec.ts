@@ -19,7 +19,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ImgViewerComponent } from './imgViewer.component';
 import { DebugElement }    from '@angular/core';
 import {
-    AlfrescoAuthenticationService,
+    AuthService,
     SettingsService,
     AlfrescoApiService,
     CoreModule
@@ -40,7 +40,7 @@ describe('Test ng2-alfresco-viewer Img viewer component ', () => {
             declarations: [ImgViewerComponent],
             providers: [
                 SettingsService,
-                AlfrescoAuthenticationService,
+                AuthService,
                 AlfrescoApiService
             ]
         }).compileComponents();

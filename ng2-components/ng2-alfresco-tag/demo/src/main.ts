@@ -19,7 +19,7 @@ import { NgModule, Component, Input, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, SettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, SettingsService, AuthService, StorageService } from 'ng2-alfresco-core';
 import { TagModule } from 'ng2-alfresco-tag';
 
 @Component({
@@ -59,7 +59,7 @@ class TagDemo implements OnInit {
 
     ticket: string;
 
-    constructor(private authService: AlfrescoAuthenticationService,
+    constructor(private authService: AuthService,
                 private settingsService: SettingsService,
                 private storage: StorageService) {
 

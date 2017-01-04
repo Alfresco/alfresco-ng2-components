@@ -24,7 +24,7 @@ import { SearchModule } from 'ng2-alfresco-search';
 
 import {
     SettingsService,
-    AlfrescoAuthenticationService,
+    AuthService,
     AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 
@@ -57,7 +57,7 @@ class SearchDemo implements OnInit {
 
     ticket: string;
 
-    constructor(private authService: AlfrescoAuthenticationService,
+    constructor(private authService: AuthService,
                 private settingsService: SettingsService,
                 translation: AlfrescoTranslationService) {
 

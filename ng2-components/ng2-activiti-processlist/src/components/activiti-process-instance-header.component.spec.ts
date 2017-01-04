@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import {
     AlfrescoTranslationService,
     CoreModule,
-    AlfrescoAuthenticationService,
+    AuthService,
     SettingsService,
     AlfrescoApiService } from 'ng2-alfresco-core';
 
@@ -49,7 +49,7 @@ describe('ActivitiProcessInstanceHeader', () => {
             ],
             providers: [
                 SettingsService,
-                AlfrescoAuthenticationService,
+                AuthService,
                 AlfrescoApiService,
                 ActivitiProcessService,
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
