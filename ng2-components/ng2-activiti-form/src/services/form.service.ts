@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FormValues } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
@@ -31,7 +31,8 @@ export class FormService {
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
     constructor(private ecmModelService: EcmModelService,
-                private apiService: AlfrescoApiService) {
+                private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     /**
@@ -271,11 +272,10 @@ export class FormService {
                     if (xhr.status === 200) {
                         let json = JSON.parse(xhr.response);
                         let data: GroupModel[] = (json.data || []).map(item => <GroupModel> item);
-                        // console.log(json);
                         observer.next(data);
                         observer.complete();
                     } else {
-                        console.error(xhr.response);
+                        this.logService.error(xhr.response);
                         Observable.throw(new Error(xhr.response));
                     }
                 }
@@ -303,11 +303,10 @@ export class FormService {
                     if (xhr.status === 200) {
                         let json = JSON.parse(xhr.response);
                         let data: GroupUserModel[] = (json.data || []).map(item => <GroupUserModel> item);
-                        // console.log(json);
                         observer.next(data);
                         observer.complete();
                     } else {
-                        console.error(xhr.response);
+                        this.logService.error(xhr.response);
                         Observable.throw(new Error(xhr.response));
                     }
                 }
@@ -354,7 +353,7 @@ export class FormService {
             errMsg = (error.message) ? error.message :
                 error.status ? `${error.status} - ${error.statusText}` : FormService.GENERIC_ERROR_MESSAGE;
         }
-        console.error(errMsg);
+        this.logService.error(errMsg);
         return Observable.throw(errMsg);
     }
 }

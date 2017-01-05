@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { SettingsService, StorageService } from 'ng2-alfresco-core';
+import { SettingsService, StorageService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-setting-demo',
@@ -28,24 +28,31 @@ export class SettingComponent {
     ecmHost: string;
     bpmHost: string;
 
-    constructor(public settingsService: SettingsService,
-                private storage: StorageService) {
+    constructor(private settingsService: SettingsService,
+                private storage: StorageService,
+                private logService: LogService) {
         this.ecmHost = this.settingsService.ecmHost;
         this.bpmHost = this.settingsService.bpmHost;
     }
 
     public onChangeECMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.ecmHost = (<HTMLInputElement>event.target).value;
-        this.settingsService.ecmHost = this.ecmHost;
-        this.storage.setItem(`ecmHost`, this.ecmHost);
+        let value = (<HTMLInputElement>event.target).value.trim();
+        if (value) {
+            this.logService.info(`ECM host: ${value}`);
+            this.ecmHost = value;
+            this.settingsService.ecmHost = value;
+            this.storage.setItem(`ecmHost`, value);
+        }
     }
 
     public onChangeBPMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.bpmHost = (<HTMLInputElement>event.target).value;
-        this.settingsService.bpmHost = this.bpmHost;
-        this.storage.setItem(`bpmHost`, this.bpmHost);
+        let value = (<HTMLInputElement>event.target).value.trim();
+        if (value) {
+            this.logService.info(`BPM host: ${value}`);
+            this.bpmHost = value;
+            this.settingsService.bpmHost = value;
+            this.storage.setItem(`bpmHost`, value);
+        }
     }
 
 }

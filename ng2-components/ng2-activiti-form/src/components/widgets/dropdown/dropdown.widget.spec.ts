@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
+import { CoreModule } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { DropdownWidget } from './dropdown.widget';
 import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldOption } from './../core/form-field-option';
-import { CoreModule } from 'ng2-alfresco-core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
@@ -33,9 +33,9 @@ describe('DropdownWidget', () => {
     let visibilityService: WidgetVisibilityService;
 
     beforeEach(() => {
-        formService = new FormService(null, null);
-        visibilityService = new WidgetVisibilityService(null);
-        widget = new DropdownWidget(formService, visibilityService);
+        formService = new FormService(null, null, null);
+        visibilityService = new WidgetVisibilityService(null, null);
+        widget = new DropdownWidget(formService, visibilityService, null);
         widget.field = new FormFieldModel(new FormModel());
     });
 
@@ -72,12 +72,6 @@ describe('DropdownWidget', () => {
         );
         widget.ngOnInit();
         expect(formService.getRestFieldValues).toHaveBeenCalledWith(taskId, fieldId);
-    });
-
-    it('should log error to console by default', () => {
-        spyOn(console, 'error').and.stub();
-        widget.handleError('Err');
-        expect(console.error).toHaveBeenCalledWith('Err');
     });
 
     it('should preserve empty option when loading fields', () => {

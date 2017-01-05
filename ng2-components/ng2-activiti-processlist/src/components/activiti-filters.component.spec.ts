@@ -44,7 +44,7 @@ describe('ActivitiFilters', () => {
 
     beforeEach(() => {
         activitiService = new ActivitiProcessService(null);
-        filterList = new ActivitiProcessFilters(null, activitiService);
+        filterList = new ActivitiProcessFilters(null, activitiService, null);
     });
 
     it('should return the filter task list', (done) => {

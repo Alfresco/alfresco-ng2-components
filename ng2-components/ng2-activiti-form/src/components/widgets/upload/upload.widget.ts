@@ -16,6 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 
@@ -31,7 +32,8 @@ export class UploadWidget extends WidgetComponent implements OnInit {
     fileName: string;
     displayText: string;
 
-    constructor(private formService: FormService) {
+    constructor(private formService: FormService,
+                private logService: LogService) {
         super();
     }
 
@@ -60,16 +62,14 @@ export class UploadWidget extends WidgetComponent implements OnInit {
     onFileChanged(event: any) {
         let files = event.target.files;
         if (files && files.length > 0) {
-
             let file = files[0];
-
             this.formService.createTemporaryRawRelatedContent(file)
                 .subscribe((response: any) => {
-                    console.log(response);
+                    this.logService.info(response);
                     this.field.value = [response];
                     this.field.json.value = [response];
                 }, (error: any) => {
-                    console.error(error);
+                    this.logService.error(error);
                     window.alert('Error uploading file. See console output for more details.');
                 });
         }

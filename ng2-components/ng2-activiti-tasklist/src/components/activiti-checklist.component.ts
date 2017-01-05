@@ -16,10 +16,10 @@
  */
 
 import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { Observer, Observable } from 'rxjs/Rx';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
-import { Observer, Observable } from 'rxjs/Rx';
 
 declare let dialogPolyfill: any;
 
@@ -54,7 +54,8 @@ export class ActivitiChecklist implements OnInit, OnChanges {
      * @param translate
      */
     constructor(private translateService: AlfrescoTranslateService,
-                private activitiTaskList: ActivitiTaskListService) {
+                private activitiTaskList: ActivitiTaskListService,
+                private logService: LogService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
@@ -86,7 +87,7 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    console.log(err);
+                    this.logService.error(err);
                 }
             );
         } else {
@@ -110,7 +111,7 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                 this.checklist.push(res);
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
             }
         );
 

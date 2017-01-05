@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiPeople } from './activiti-people.component';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
@@ -45,6 +45,7 @@ describe('ActivitiPeople', () => {
     let fixture: ComponentFixture<ActivitiPeople>;
     let element: HTMLElement;
     let componentHandler;
+    let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -59,6 +60,8 @@ describe('ActivitiPeople', () => {
                 ActivitiPeopleService
             ]
         }).compileComponents().then(() => {
+            logService = TestBed.get(LogService);
+
             let translateService = TestBed.get(AlfrescoTranslateService);
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
@@ -216,9 +219,8 @@ describe('ActivitiPeople', () => {
         });
 
         it('should log error message when search fails', async(() => {
-            console.log = jasmine.createSpy('log');
             activitiPeopleComponent.peopleSearch$.subscribe(() => {
-                expect(console.log).toHaveBeenCalledWith('Could not load users');
+                expect(logService.error).toHaveBeenCalledWith('Could not load users');
             });
             activitiPeopleComponent.searchUser('fake-search');
             jasmine.Ajax.requests.mostRecent().respondWith({

@@ -16,13 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { SettingsService } from './settings.service';
 import { StorageService } from './storage.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import * as alfrescoApi from  'alfresco-js-api';
 import { AlfrescoApi } from  'alfresco-js-api';
-import { Subject } from 'rxjs/Subject';
+import { LogService } from './log.service';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +33,8 @@ export class AuthService {
 
     constructor(private settingsService: SettingsService,
                 private apiService: AlfrescoApiService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
         this.alfrescoApi = <AlfrescoApi>new alfrescoApi({
             provider: this.settingsService.getProviders(),
             ticketEcm: this.getTicketEcm(),
@@ -103,7 +104,7 @@ export class AuthService {
      *
      * @returns {Observable<R>|Observable<T>}
      */
-    public logout() {
+    logout() {
         return Observable.fromPromise(this.callApiLogout())
             .map(res => <any> res)
             .do(response => {
@@ -127,7 +128,7 @@ export class AuthService {
     /**
      * Remove the login ticket from Storage
      */
-    public removeTicket(): void {
+    removeTicket(): void {
         this.storage.removeItem('ticket-ECM');
         this.storage.removeItem('ticket-BPM');
         this.alfrescoApi.setTicket(undefined, undefined);
@@ -137,7 +138,7 @@ export class AuthService {
      * The method return the ECM ticket stored in the Storage
      * @returns ticket
      */
-    public getTicketEcm(): string | null {
+    getTicketEcm(): string | null {
         return this.storage.getItem('ticket-ECM');
     }
 
@@ -145,11 +146,11 @@ export class AuthService {
      * The method return the BPM ticket stored in the Storage
      * @returns ticket
      */
-    public getTicketBpm(): string | null {
+    getTicketBpm(): string | null {
         return this.storage.getItem('ticket-BPM');
     }
 
-    public getTicketEcmBase64(): string | null {
+    getTicketEcmBase64(): string | null {
         let ticket = this.storage.getItem('ticket-ECM');
         if (ticket) {
             return 'Basic ' + btoa(ticket);
@@ -160,7 +161,7 @@ export class AuthService {
     /**
      * The method save the ECM and BPM ticket in the Storage
      */
-    public saveTickets() {
+    saveTickets() {
         this.saveTicketEcm();
         this.saveTicketBpm();
     }
@@ -168,7 +169,7 @@ export class AuthService {
     /**
      * The method save the ECM ticket in the Storage
      */
-    public saveTicketEcm(): void {
+    saveTicketEcm(): void {
         if (this.alfrescoApi && this.alfrescoApi.getTicketEcm()) {
             this.storage.setItem('ticket-ECM', this.alfrescoApi.getTicketEcm());
         }
@@ -177,7 +178,7 @@ export class AuthService {
     /**
      * The method save the BPM ticket in the Storage
      */
-    public saveTicketBpm(): void {
+    saveTicketBpm(): void {
         if (this.alfrescoApi && this.alfrescoApi.getTicketBpm()) {
             this.storage.setItem('ticket-BPM', this.alfrescoApi.getTicketBpm());
         }
@@ -186,14 +187,14 @@ export class AuthService {
     /**
      * The method return true if user is logged in on ecm provider
      */
-    public isEcmLoggedIn() {
+    isEcmLoggedIn() {
         return this.alfrescoApi.ecmAuth && !!this.alfrescoApi.ecmAuth.isLoggedIn();
     }
 
     /**
      * The method return true if user is logged in on bpm provider
      */
-    public isBpmLoggedIn() {
+    isBpmLoggedIn() {
         return this.alfrescoApi.bpmAuth && !!this.alfrescoApi.bpmAuth.isLoggedIn();
     }
 
@@ -202,8 +203,8 @@ export class AuthService {
      * @param error
      * @returns {ErrorObservable}
      */
-    public handleError(error: any): Observable<any> {
-        console.error('Error when logging in', error);
+    handleError(error: any): Observable<any> {
+        this.logService.error('Error when logging in', error);
         return Observable.throw(error || 'Server error');
     }
 }

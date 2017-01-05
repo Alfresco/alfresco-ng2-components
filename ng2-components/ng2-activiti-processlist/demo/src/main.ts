@@ -19,7 +19,7 @@ import { DebugElement, Input, NgModule, Component, OnInit, ViewChild } from '@an
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppDefinitionRepresentationModel, ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, LogService } from 'ng2-alfresco-core';
 import {
     ActivitiProcessListModule,
     ActivitiProcessFilters,
@@ -162,7 +162,8 @@ class MyDemoApp implements OnInit {
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
         settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');
 
@@ -195,12 +196,12 @@ class MyDemoApp implements OnInit {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.log(ticket);
                 this.ticket = this.authService.getTicketBpm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }

@@ -17,9 +17,10 @@
 
 import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { TranslateLoader } from 'ng2-translate/ng2-translate';
 import { ComponentTranslationModel } from '../models/component.model';
+import { LogService } from './log.service';
 
 @Injectable()
 export class AlfrescoTranslateLoader implements TranslateLoader {
@@ -29,7 +30,8 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
     private _componentList: ComponentTranslationModel[] = [];
     private queue: string [][] = [];
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private logService: LogService) {
     }
 
     addComponentList(nameInput: string, pathInput: string) {
@@ -95,7 +97,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
                         observer.complete();
                     },
                     (err: any) => {
-                        console.error(err);
+                        this.logService.error(err);
                     });
             } else {
                 let fullTranslation = this.getFullTranslationJSON(lang);

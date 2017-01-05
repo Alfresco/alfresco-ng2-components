@@ -17,6 +17,7 @@
 
 import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent, FormFieldTypes } from './widgets/index';
 import { FormService } from './../services/form.service';
@@ -30,6 +31,7 @@ describe('ActivitiForm', () => {
     let formComponent: ActivitiForm;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
+    let logService: LogService;
 
     beforeEach(() => {
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -37,11 +39,12 @@ describe('ActivitiForm', () => {
         ]);
         window['componentHandler'] = componentHandler;
 
-        visibilityService = new WidgetVisibilityService(null);
+        logService = new LogService();
+        visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
-        formService = new FormService(null, null);
+        formService = new FormService(null, null, logService);
         nodeService = new NodeService(null);
-        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService);
+        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService, logService);
     });
 
     it('should upgrade MDL content on view checked', () => {
@@ -558,13 +561,6 @@ describe('ActivitiForm', () => {
         formComponent.completeTaskForm('complete');
 
         expect(formService.completeTaskForm).not.toHaveBeenCalled();
-    });
-
-    it('should log error to console by default', () => {
-        const error = 'Error';
-        spyOn(console, 'log').and.stub();
-        formComponent.handleError(error);
-        expect(console.log).toHaveBeenCalledWith(error);
     });
 
     it('should complete form form and raise corresponding event', () => {

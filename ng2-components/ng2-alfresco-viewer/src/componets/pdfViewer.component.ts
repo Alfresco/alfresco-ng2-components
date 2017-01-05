@@ -16,6 +16,7 @@
  */
 
 import { Component, Input, HostListener } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { RenderingQueueServices } from '../services/rendering-queue.services';
 
 declare let PDFJS: any;
@@ -43,9 +44,7 @@ export class PdfViewerComponent {
     displayPage: number;
     totalPages: number;
     laodingPercent: number;
-
     pdfViewer: any;
-
     currentScaleMode: string = 'auto';
     currentScale: number;
 
@@ -54,7 +53,8 @@ export class PdfViewerComponent {
     MIN_SCALE: number = 0.25;
     MAX_SCALE: number = 10.0;
 
-    constructor(private renderingQueueServices: RenderingQueueServices) {
+    constructor(private renderingQueueServices: RenderingQueueServices,
+                private logService: LogService) {
     }
 
     ngOnChanges(changes) {
@@ -179,7 +179,7 @@ export class PdfViewerComponent {
 
                     break;
                 default:
-                    console.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
+                    this.logService.error('pdfViewSetScale: \'' + scaleMode + '\' is an unknown zoom value.');
                     return;
             }
 

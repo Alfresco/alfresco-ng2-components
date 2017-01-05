@@ -16,8 +16,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 import { User } from '../models/user.model';
@@ -27,7 +27,8 @@ import { Form } from '../models/form.model';
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     /**
@@ -311,7 +312,7 @@ export class ActivitiTaskListService {
     }
 
     private handleError(error: any) {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 

@@ -21,7 +21,7 @@ import { Injectable } from '@angular/core';
 export class LogService {
 
     get assert(): (message?: any, ...optionalParams: any[]) => void {
-        return console.error.bind(console);
+        return console.assert.bind(console);
     }
 
     get error(): (message?: any, ...optionalParams: any[]) => void {
@@ -29,11 +29,11 @@ export class LogService {
     }
 
     get group(): (message?: any, ...optionalParams: any[]) => void {
-        return console.error.bind(console);
+        return console.group.bind(console);
     }
 
     get groupEnd(): (message?: any, ...optionalParams: any[]) => void {
-        return console.error.bind(console);
+        return console.groupEnd.bind(console);
     }
 
     get info(): (message?: any, ...optionalParams: any[]) => void {
@@ -47,5 +47,17 @@ export class LogService {
     get warn(): (message?: any, ...optionalParams: any[]) => void {
         return console.warn.bind(console);
     }
+
+}
+
+export class LogServiceMock {
+
+    assert(message?: any, ...optionalParams: any[]) {}
+    error(message?: any, ...optionalParams: any[]) {}
+    group(message?: any, ...optionalParams: any[]) {}
+    groupEnd(message?: any, ...optionalParams: any[]) {}
+    info(message?: any, ...optionalParams: any[]) {}
+    log(message?: any, ...optionalParams: any[]) {}
+    warn(message?: any, ...optionalParams: any[]) {}
 
 }

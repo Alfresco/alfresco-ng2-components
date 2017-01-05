@@ -16,6 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
@@ -30,7 +31,8 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 export class RadioButtonsWidget extends WidgetComponent implements OnInit {
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private logService: LogService) {
         super();
     }
 
@@ -84,7 +86,7 @@ export class RadioButtonsWidget extends WidgetComponent implements OnInit {
     }
 
     handleError(error: any) {
-        console.error(error);
+        this.logService.error(error);
     }
 
 }

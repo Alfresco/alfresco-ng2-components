@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 /**
  * @returns {TagService} .
@@ -31,7 +31,8 @@ export class TagService {
      * Constructor
      * @param apiService
      */
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     getTagsByNodeId(nodeId: string): any {
@@ -59,7 +60,7 @@ export class TagService {
     }
 
     private handleError(error: any) {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 }

@@ -33,7 +33,7 @@ import {
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
-    LogService,
+    LogService, LogServiceMock,
 
     /** @deprecated */ AlfrescoSettingsService,
     /** @deprecated */ AlfrescoTranslationService,
@@ -49,7 +49,7 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
-    LogService,
+    LogService, LogServiceMock,
     AuthService,
     ContentService,
     SettingsService,
@@ -69,8 +69,8 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
     /** @deprecated */ AlfrescoTranslationService
 ];
 
-export function createTranslateLoader(http: Http) {
-    return new AlfrescoTranslateLoader(http);
+export function createTranslateLoader(http: Http, logService: LogService) {
+    return new AlfrescoTranslateLoader(http, logService);
 }
 
 @NgModule({
@@ -82,7 +82,7 @@ export function createTranslateLoader(http: Http) {
         TranslateModule.forRoot({
             provide: TranslateLoader,
             useFactory: (createTranslateLoader),
-            deps: [Http]
+            deps: [Http, LogService]
         })
     ],
     declarations: [

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
@@ -51,9 +51,9 @@ export class DocumentMenuAction {
 
     folderName: string = '';
 
-    constructor(
-        private documentListService: DocumentListService,
-        private translateService: AlfrescoTranslateService) {
+    constructor(private documentListService: DocumentListService,
+                private translateService: AlfrescoTranslateService,
+                private logService: LogService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
@@ -66,7 +66,7 @@ export class DocumentMenuAction {
             .subscribe(
                 (res: MinimalNodeEntity) => {
                     this.folderName = '';
-                    console.log(res.entry);
+                    this.logService.info(res.entry);
                     this.success.emit({node: res.entry});
                 },
                 error => {
@@ -74,10 +74,10 @@ export class DocumentMenuAction {
                     if (errorMessagePlaceholder) {
                         this.message = this.formatString(errorMessagePlaceholder, [name]);
                         this.error.emit({message: this.message});
-                        console.log(this.message);
+                        this.logService.error(this.message);
                     } else {
                         this.error.emit(error);
-                        console.log(error);
+                        this.logService.error(error);
                     }
                 }
             );

@@ -16,9 +16,8 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { EventEmitter } from '@angular/core';
-import { DebugElement }    from '@angular/core';
-import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
+import { EventEmitter, DebugElement } from '@angular/core';
+import { AlfrescoTranslateService, CoreModule, LogService } from 'ng2-alfresco-core';
 
 import { UploadDragAreaComponent } from './upload-drag-area.component';
 import { TranslationMock } from '../assets/translation.service.mock';
@@ -31,6 +30,7 @@ describe('UploadDragAreaComponent', () => {
     let debug: DebugElement;
     let element: HTMLElement;
     let uploadService: UploadService;
+    let logService: LogService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -48,6 +48,7 @@ describe('UploadDragAreaComponent', () => {
     }));
 
     beforeEach(() => {
+        logService = TestBed.get(LogService);
         fixture = TestBed.createComponent(UploadDragAreaComponent);
         uploadService = TestBed.get(UploadService);
 
@@ -64,12 +65,12 @@ describe('UploadDragAreaComponent', () => {
 
     it('should show an folder non supported error in console when the file type is empty', () => {
         component.showUdoNotificationBar = false;
-        spyOn(console, 'error');
+        spyOn(logService, 'error');
 
         let fileFake = new File([''], 'folder-fake', {type: ''});
         component.onFilesDropped([fileFake]);
 
-        expect(console.error).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
+        expect(logService.error).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
     });
 
     it('should show an folder non supported error in the notification bar when the file type is empty', () => {

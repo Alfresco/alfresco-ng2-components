@@ -26,8 +26,8 @@ describe('UploadWidget', () => {
     let formService: FormService;
 
     beforeEach(() => {
-        formService = new FormService(null, null);
-        widget = new UploadWidget(formService);
+        formService = new FormService(null, null, null);
+        widget = new UploadWidget(formService, null);
     });
 
     it('should setup with field data', () => {

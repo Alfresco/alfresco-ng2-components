@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance.model';
 import { DatePipe } from '@angular/common';
 
@@ -36,7 +36,8 @@ export class ActivitiProcessInstanceHeader {
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private translate: AlfrescoTranslationService) {
+    constructor(private translate: AlfrescoTranslateService,
+                private logService: LogService) {
 
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
@@ -57,7 +58,7 @@ export class ActivitiProcessInstanceHeader {
         try {
             return datePipe.transform(value, format);
         } catch (err) {
-            console.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
+            this.logService.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
         }
     }
 

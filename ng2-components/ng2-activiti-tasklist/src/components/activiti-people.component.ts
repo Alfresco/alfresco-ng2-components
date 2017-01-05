@@ -16,9 +16,9 @@
  */
 
 import { Component, Input, ViewChild } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
-import { User } from '../models/user.model';
 import { Observer, Observable } from 'rxjs/Rx';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { User } from '../models/user.model';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
 declare let dialogPolyfill: any;
@@ -52,7 +52,8 @@ export class ActivitiPeople {
      * @param people service
      */
     constructor(private translateService: AlfrescoTranslateService,
-                private peopleService: ActivitiPeopleService) {
+                private peopleService: ActivitiPeopleService,
+                private logService: LogService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
@@ -79,14 +80,14 @@ export class ActivitiPeople {
         this.peopleService.getWorkflowUsers(this.taskId, searchedWord)
             .subscribe((users) => {
                 this.peopleSearchObserver.next(users);
-            }, error => console.log('Could not load users'));
+            }, error => this.logService.error('Could not load users'));
     }
 
     involveUser(user: User) {
         this.peopleService.involveUserWithTask(this.taskId, user.id.toString())
             .subscribe(() => {
                 this.people.push(user);
-            }, error => console.error('Impossible to involve user with task'));
+            }, error => this.logService.error('Impossible to involve user with task'));
     }
 
     removeInvolvedUser(user: User) {
@@ -95,7 +96,7 @@ export class ActivitiPeople {
                 this.people = this.people.filter((involvedUser) => {
                     return involvedUser.id !== user.id;
                 });
-            }, error => console.error('Impossible to remove involved user from task'));
+            }, error => this.logService.error('Impossible to remove involved user from task'));
     }
 
     getDisplayUser(user: User): string {

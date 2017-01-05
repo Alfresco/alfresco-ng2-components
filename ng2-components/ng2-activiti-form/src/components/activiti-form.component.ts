@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit, AfterViewChecked, OnChanges,
-    SimpleChanges,
-    Input,
-    Output,
-    EventEmitter
-} from '@angular/core';
+import { Component, OnInit, AfterViewChecked, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
@@ -149,9 +143,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     debugMode: boolean = false;
 
     constructor(protected formService: FormService,
-                public visibilityService: WidgetVisibilityService,
+                protected visibilityService: WidgetVisibilityService,
                 private ecmModelService: EcmModelService,
-                private nodeService: NodeService) {
+                private nodeService: NodeService,
+                private logService: LogService) {
     }
 
     hasForm(): boolean {
@@ -357,7 +352,6 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 id => {
                     this.formService.getFormDefinitionById(id).subscribe(
                         form => {
-                            // console.log('Get Form By Form definition Name', form);
                             this.form = this.parseForm(form);
                             this.formLoaded.emit(this.form);
                         },
@@ -405,7 +399,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     handleError(err: any): any {
-        console.log(err);
+        this.logService.error(err);
         this.onError.emit(err);
     }
 

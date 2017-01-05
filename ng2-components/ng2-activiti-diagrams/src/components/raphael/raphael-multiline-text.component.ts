@@ -16,6 +16,7 @@
  */
 
 import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { Point } from './models/point';
 import { RaphaelBase } from './raphael-base';
 import { RaphaelService } from './raphael.service';
@@ -43,19 +44,20 @@ export class RaphaelMultilineTextDirective extends RaphaelBase implements OnInit
     TEXT_PADDING = 3;
 
     constructor(public elementRef: ElementRef,
-                raphaelService: RaphaelService) {
+                raphaelService: RaphaelService,
+                private logService: LogService) {
         super(elementRef, raphaelService);
     }
 
     ngOnInit() {
-        console.log(this.elementRef);
+        this.logService.log(this.elementRef);
         if (this.text === null || this.text === undefined) {
             this.text = '';
         }
         this.draw(this.position, this.text);
     }
 
-    public draw(position: Point, text: string) {
+    draw(position: Point, text: string) {
         let textPaper = this.paper.text(position.x + this.TEXT_PADDING, position.y + this.TEXT_PADDING, text).attr({
             'text-anchor': 'middle',
             'font-family': 'Arial',

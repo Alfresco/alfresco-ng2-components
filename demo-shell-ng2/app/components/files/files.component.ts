@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthService } from 'ng2-alfresco-core';
+import { AuthService, LogService } from 'ng2-alfresco-core';
 import {
     DocumentActionsService,
     DocumentList,
@@ -49,8 +49,9 @@ export class FilesComponent implements OnInit {
     documentList: DocumentList;
 
     constructor(private documentActions: DocumentActionsService,
-                public authService: AuthService,
+                private authService: AuthService,
                 private formService: FormService,
+                private logService: LogService,
                 private router: Router,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
@@ -109,10 +110,10 @@ export class FilesComponent implements OnInit {
         if (this.authService.isBpmLoggedIn()) {
             this.formService.getProcessDefinitions().subscribe(
                 defs => this.setupBpmActions(defs || []),
-                err => console.log(err)
+                err => this.logService.error(err)
             );
         } else {
-            console.log('You are not logged in');
+            this.logService.warn('You are not logged in to BPM');
         }
     }
 

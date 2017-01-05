@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, SettingsService, AuthService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, SettingsService, AuthService, StorageService, LogService } from 'ng2-alfresco-core';
 import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
@@ -103,19 +103,18 @@ import { UploadModule } from 'ng2-alfresco-upload';
 })
 export class MyDemoApp implements OnInit {
 
-    public ecmHost: string = 'http://localhost:8080';
-
+    ecmHost: string = 'http://localhost:8080';
     authenticated: boolean;
     multipleFileUpload: boolean = false;
     folderUpload: boolean = false;
     acceptedFilesTypeShow: boolean = false;
     versioning: boolean = false;
-
     ticket: string;
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
 
@@ -124,32 +123,32 @@ export class MyDemoApp implements OnInit {
         }
     }
 
-    public updateTicket(): void {
+    updateTicket(): void {
         this.storage.setItem('ticket-ECM', this.ticket);
     }
 
-    public updateHost(): void {
+    updateHost(): void {
         this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
 
-    public customMethod(event: Object): void {
-        console.log('File uploaded');
+    customMethod(event: Object): void {
+        this.logService.info('File uploaded');
     }
 
-    public ngOnInit(): void {
+    ngOnInit(): void {
         this.login();
     }
 
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }

@@ -16,42 +16,41 @@
  */
 
 import { Component } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-webscript-demo',
     template: `
-
-                <label for="script-path"><b>Insert a scriptPath</b></label><br>
-                <input id="script-path" type="text" size="48"  [(ngModel)]="scriptPath"><br>
-                <label for="context-root"><b>Insert a contextRoot</b></label><br>
-                <input id="context-root" type="text" size="48"  [(ngModel)]="contextRoot"><br>
-                <label for="service-path"><b>Insert a servicePath</b></label><br>
-                <input id="service-path" type="text" size="48"  [(ngModel)]="servicePath"><br>
-            <alfresco-webscript-get [scriptPath]="scriptPath"
-                           [scriptArgs]="scriptArgs"
-                           [contextRoot]="contextRoot"
-                           [servicePath]="servicePath"
-                           [contentType]="'HTML'"
-                           (onSuccess)= "logData($event)"></alfresco-webscript-get>
+        <label for="script-path"><b>Insert a scriptPath</b></label><br>
+        <input id="script-path" type="text" size="48" [(ngModel)]="scriptPath"><br>
+        <label for="context-root"><b>Insert a contextRoot</b></label><br>
+        <input id="context-root" type="text" size="48" [(ngModel)]="contextRoot"><br>
+        <label for="service-path"><b>Insert a servicePath</b></label><br>
+        <input id="service-path" type="text" size="48" [(ngModel)]="servicePath"><br>
+        <alfresco-webscript-get
+            [scriptPath]="scriptPath"
+            [scriptArgs]="scriptArgs"
+            [contextRoot]="contextRoot"
+            [servicePath]="servicePath"
+            [contentType]="'HTML'"
+            (onSuccess)= "logData($event)">
+        </alfresco-webscript-get>
     `
 })
 export class WebscriptComponent {
 
     currentPath: string = '/';
-
     authenticated: boolean;
-
     host: string = 'http://127.0.0.1:8080';
-
     scriptPath: string = 'sample/folder/Company%20Home';
-
     contextRoot: string = 'alfresco';
-
     servicePath: string = 'service';
-
     scriptArgs: string = '';
 
+    constructor(private logService: LogService) {
+    }
+
     logData(data) {
-        console.log(data);
+        this.logService.log(data);
     }
 }

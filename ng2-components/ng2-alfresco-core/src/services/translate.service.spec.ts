@@ -23,6 +23,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 
 import { AlfrescoTranslateService } from './translate.service';
 import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { LogService } from './log.service';
 
 const mockBackendResponse = (connection: MockConnection, response: string) => {
     connection.mockRespond(new Response(new ResponseOptions({body: response})));
@@ -36,12 +37,16 @@ describe('AlfrescoTranslateService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpModule, TranslateModule.forRoot({
-                provide: TranslateLoader,
-                useClass: AlfrescoTranslateLoader
-            })],
+            imports: [
+                HttpModule,
+                TranslateModule.forRoot({
+                    provide: TranslateLoader,
+                    useClass: AlfrescoTranslateLoader
+                })
+            ],
             providers: [
                 AlfrescoTranslateService,
+                LogService,
                 {provide: XHRBackend, useClass: MockBackend}
             ]
         });

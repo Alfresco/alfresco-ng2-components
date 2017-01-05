@@ -24,6 +24,7 @@ import { FilterRepresentationModel } from '../models/filter.model';
 describe('ActivitiFilters', () => {
 
     let filterList: ActivitiFilters;
+    let activitiService: ActivitiTaskListService;
 
     let fakeGlobalFilter = [];
     fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeInvolvedTasks', filter: { state: 'open', assignment: 'fake-involved'}}));
@@ -42,12 +43,12 @@ describe('ActivitiFilters', () => {
     });
 
     beforeEach(() => {
-        let activitiService = new ActivitiTaskListService(null);
-        filterList = new ActivitiFilters(null, activitiService);
+        activitiService = new ActivitiTaskListService(null, null);
+        filterList = new ActivitiFilters(null, activitiService, null);
     });
 
     it('should return the filter task list', (done) => {
-        spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
         const appId = '1';
         let change = new SimpleChange(null, appId);
         filterList.ngOnChanges({ 'appId': change });
@@ -70,14 +71,14 @@ describe('ActivitiFilters', () => {
             resolve({});
         });
 
-        spyOn(filterList.activiti, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
-        spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
         let change = new SimpleChange(null, 'test');
         filterList.ngOnChanges({ 'appName': change });
 
         filterList.onSuccess.subscribe((res) => {
-            let deployApp: any = filterList.activiti.getDeployedApplications;
+            let deployApp: any = activitiService.getDeployedApplications;
             expect(deployApp.calls.count()).toEqual(1);
             expect(res).toBeDefined();
             done();
@@ -87,7 +88,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(filterList.activiti, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(activitiService, 'getTaskListFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = '1';
         let change = new SimpleChange(null, appId);
@@ -102,7 +103,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        spyOn(filterList.activiti, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+        spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
 
         const appId = 'fake-app';
         let change = new SimpleChange(null, appId);

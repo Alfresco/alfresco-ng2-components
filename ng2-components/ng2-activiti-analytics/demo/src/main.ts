@@ -18,51 +18,49 @@
 import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { CoreModule, SettingsService, AuthService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, SettingsService, AuthService, StorageService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsModule } from 'ng2-activiti-analytics';
 
 @Component({
     selector: 'alfresco-app-demo',
     template: `
-    <label for="ticket"><b>Insert a valid ticket:</b></label><br>
-    <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
-    <label for="host"><b>Insert the ip of your Activiti instance:</b></label><br>
-    <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
-    <div *ngIf="!authenticated" style="color:#FF2323">
-        Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
-        operations.
-    </div>
-    <hr>
+        <label for="ticket"><b>Insert a valid ticket:</b></label><br>
+        <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+        <label for="host"><b>Insert the ip of your Activiti instance:</b></label><br>
+        <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+        <div *ngIf="!authenticated" style="color:#FF2323">
+            Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
+            operations.
+        </div>
+        <hr>
 
-    <div class="page-content">
-        <label for="appId"><b>Insert the appId:</b></label><br>
-        <input id="appId" size="10" type="text" [(ngModel)]="appId">
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
-                <analytics-report-list (reportClick)="onReportClick($event)"></analytics-report-list>
-            </div>
-            <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <activiti-analytics [appId]="appId" *ngIf="report" [reportId]="report.id"></activiti-analytics>
+        <div class="page-content">
+            <label for="appId"><b>Insert the appId:</b></label><br>
+            <input id="appId" size="10" type="text" [(ngModel)]="appId">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
+                    <analytics-report-list (reportClick)="onReportClick($event)"></analytics-report-list>
+                </div>
+                <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
+                    <activiti-analytics [appId]="appId" *ngIf="report" [reportId]="report.id"></activiti-analytics>
+                </div>
             </div>
         </div>
-    </div>`
+    `
 })
 
 export class AnalyticsDemoComponent implements OnInit {
 
     appId: number;
-
     report: any;
-
     authenticated: boolean;
-
     host: string = 'http://localhost:9999';
-
     ticket: string;
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
         settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');
 
@@ -91,12 +89,12 @@ export class AnalyticsDemoComponent implements OnInit {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.log(ticket);
                 this.ticket = this.authService.getTicketBpm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }

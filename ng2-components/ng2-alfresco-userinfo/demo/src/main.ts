@@ -19,9 +19,8 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AuthService, SettingsService, LogService } from 'ng2-alfresco-core';
 import { LoginModule } from 'ng2-alfresco-login';
-import { AuthService, SettingsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -74,26 +73,21 @@ import { AuthService, SettingsService } from 'ng2-alfresco-core';
 })
 class UserInfoDemo implements OnInit {
 
-    public ecmHost: string = 'http://localhost:8080';
-
-    public bpmHost: string = 'http://localhost:9999';
-
-    public userToLogin: string = 'admin';
-
-    public password: string = 'admin';
-
-    public loginErrorMessage: string;
-
-    public providers: string = 'BPM';
+    ecmHost: string = 'http://localhost:8080';
+    bpmHost: string = 'http://localhost:9999';
+    userToLogin: string = 'admin';
+    password: string = 'admin';
+    loginErrorMessage: string;
+    providers: string = 'BPM';
 
     private authenticated: boolean;
-
     private token: any;
 
-    public disableCsrf: boolean = false;
+    disableCsrf: boolean = false;
 
     constructor(private authService: AuthService,
-                private settingsService: SettingsService) {
+                private settingsService: SettingsService,
+                private logService: LogService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.bpmHost = this.bpmHost;
     }
@@ -110,12 +104,12 @@ class UserInfoDemo implements OnInit {
         this.settingsService.setProviders(this.providers);
         this.authService.login(user, password).subscribe(
             token => {
-                console.log(token);
+                this.logService.info(token);
                 this.token = token;
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
                 this.loginErrorMessage = error;
             });

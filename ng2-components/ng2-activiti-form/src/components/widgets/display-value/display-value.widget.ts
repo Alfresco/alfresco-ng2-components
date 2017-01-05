@@ -17,6 +17,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
@@ -49,7 +50,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
     hasFile: boolean = false;
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private logService: LogService) {
         super();
     }
 
@@ -182,7 +184,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                     this.visibilityService.refreshVisibility(this.field.form);
                 },
                 error => {
-                    console.log(error);
+                    this.logService.error(error);
                     this.value = this.field.value;
                 }
             );
@@ -192,21 +194,21 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
         this.formService
             .getRestFieldValues(this.field.form.taskId, this.field.id)
             .subscribe(
-            (result: FormFieldOption[]) => {
-                let options = result || [];
-                let toSelect = options.find(item => item.id === this.field.value);
-                this.field.options = options;
-                if (toSelect) {
-                    this.value = toSelect.name;
-                } else {
+                (result: FormFieldOption[]) => {
+                    let options = result || [];
+                    let toSelect = options.find(item => item.id === this.field.value);
+                    this.field.options = options;
+                    if (toSelect) {
+                        this.value = toSelect.name;
+                    } else {
+                        this.value = this.field.value;
+                    }
+                    this.visibilityService.refreshVisibility(this.field.form);
+                },
+                error => {
+                    this.logService.error(error);
                     this.value = this.field.value;
                 }
-                this.visibilityService.refreshVisibility(this.field.form);
-            },
-            error => {
-                console.log(error);
-                this.value = this.field.value;
-            }
             );
     }
 

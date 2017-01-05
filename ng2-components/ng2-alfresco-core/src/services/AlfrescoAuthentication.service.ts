@@ -16,6 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
+import { LogService } from './log.service';
 import { SettingsService } from './settings.service';
 import { StorageService } from './storage.service';
 import { AlfrescoApiService } from './alfresco-api.service';
@@ -26,8 +27,9 @@ import { AuthService } from './auth.service';
 export class AlfrescoAuthenticationService extends AuthService {
     constructor(settingsService: SettingsService,
                 apiService: AlfrescoApiService,
-                storage: StorageService) {
-        super(settingsService, apiService, storage);
-        console.log('Warning: AlfrescoAuthenticationService is deprecated. Use AuthService instead.');
+                storage: StorageService,
+                logService: LogService) {
+        super(settingsService, apiService, storage, logService);
+        logService.warn('Warning: AlfrescoAuthenticationService is deprecated. Use AuthService instead.');
     }
 }

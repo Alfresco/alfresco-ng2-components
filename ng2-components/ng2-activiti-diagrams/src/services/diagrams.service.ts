@@ -16,16 +16,17 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AuthService, SettingsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
+import { AuthService, SettingsService, LogService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DiagramsService {
 
     constructor(private authService: AuthService,
                 private http: Http,
-                private settingsService: SettingsService) {
+                private settingsService: SettingsService,
+                private logService: LogService) {
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
@@ -53,7 +54,7 @@ export class DiagramsService {
     }
 
     private handleError(error: Response) {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
 }

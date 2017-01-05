@@ -16,10 +16,10 @@
  */
 
 import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ActivitiProcessService } from './../services/activiti-process.service';
-import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { Observable, Observer } from 'rxjs/Rx';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
+import { ActivitiProcessService } from './../services/activiti-process.service';
 
 declare let componentHandler: any;
 
@@ -53,8 +53,9 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    constructor(private translate: AlfrescoTranslationService,
-                private activiti: ActivitiProcessService) {
+    constructor(private translate: AlfrescoTranslateService,
+                private activiti: ActivitiProcessService,
+                private logService: LogService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translate) {
@@ -111,7 +112,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                 this.onSuccess.emit(res);
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -128,7 +129,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
                 this.selectFirstFilter();
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             });
     }

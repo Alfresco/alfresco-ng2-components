@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService } from './alfresco-api.service';
+import { LogService } from './log.service';
 
 /**
  * RenditionsService
@@ -27,7 +28,8 @@ import { AlfrescoApiService } from './alfresco-api.service';
 @Injectable()
 export class RenditionsService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
 
     }
 
@@ -75,7 +77,7 @@ export class RenditionsService {
     }
 
     private handleError(error: any): Observable<any> {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 }
