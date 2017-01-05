@@ -25,7 +25,7 @@ import { WIDGET_DIRECTIVES } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
 import { WidgetVisibilityService } from './../services/widget-visibility.service';
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
 import { TranslationMock } from './../assets/translation.service.mock';
 
 describe('ActivitiStartForm', () => {
@@ -41,14 +41,14 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
+            imports: [CoreModule.forRoot()],
             declarations: [
                 ActivitiStartForm,
                 FormFieldComponent,
                 ...WIDGET_DIRECTIVES
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                { provide: AlfrescoTranslateService, useClass: TranslationMock },
                 EcmModelService,
                 FormService,
                 WidgetVisibilityService

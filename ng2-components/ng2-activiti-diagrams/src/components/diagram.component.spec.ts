@@ -16,10 +16,7 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import {
-    CoreModule,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './index';
 import { RAPHAEL_DIRECTIVES, RAPHAEL_PROVIDERS } from './raphael/index';
@@ -50,7 +47,7 @@ describe('Test ng2-activiti-diagrams ', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 ...DIAGRAM_DIRECTIVES,
@@ -59,7 +56,7 @@ describe('Test ng2-activiti-diagrams ', () => {
             providers: [
                 ...DIAGRAM_PROVIDERS,
                 ...RAPHAEL_PROVIDERS,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                {provide: AlfrescoTranslateService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));

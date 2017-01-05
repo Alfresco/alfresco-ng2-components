@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
 
@@ -70,7 +70,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     ];
 
     constructor(private processService: ActivitiProcessService,
-                private translate: AlfrescoTranslationService) {
+                private translate: AlfrescoTranslateService) {
         if (translate !== null) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }

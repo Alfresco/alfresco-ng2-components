@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule, ObjectDataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
 
 import { ActivitiProcessInstanceVariables } from './activiti-process-instance-variables.component';
@@ -40,14 +40,14 @@ describe('ActivitiProcessInstanceVariables', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule
+                CoreModule.forRoot(),
+                DataTableModule.forRoot()
             ],
             declarations: [
                 ActivitiProcessInstanceVariables
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
+                { provide: AlfrescoTranslateService, useClass: TranslationMock },
                 ActivitiProcessService
             ]
         }).compileComponents();
