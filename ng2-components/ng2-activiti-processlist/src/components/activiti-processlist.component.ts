@@ -17,7 +17,7 @@
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow, DataSorting } from 'ng2-alfresco-datatable';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 
 import { ProcessInstance } from '../models/process-instance.model';
@@ -168,7 +168,23 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
      */
     private renderInstances(instances: any[]) {
         instances = this.optimizeNames(instances);
+        this.setDatatableSorting();
         this.data.setRows(instances);
+    }
+
+    /**
+     * Sort the datatable rows based on current value of 'sort' property
+     */
+    private setDatatableSorting() {
+        if (!this.sort) {
+            return;
+        }
+        let sortingParams: string[] = this.sort.split('-');
+        if (sortingParams.length === 2) {
+            let sortColumn = sortingParams[0] === 'created' ? 'started' : sortingParams[0];
+            let sortOrder = sortingParams[1];
+            this.data.setSorting(new DataSorting(sortColumn, sortOrder));
+        }
     }
 
     /**
