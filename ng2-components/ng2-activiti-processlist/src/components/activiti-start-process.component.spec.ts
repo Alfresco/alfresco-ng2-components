@@ -231,6 +231,8 @@ describe('ActivitiStartProcessInstance', () => {
 
             beforeEach(async(() => {
                 component.name = 'My new process';
+                let change = new SimpleChange(null, '123');
+                component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
                 component.onProcessDefChange('my:process1');
                 fixture.whenStable();
@@ -243,14 +245,15 @@ describe('ActivitiStartProcessInstance', () => {
                 expect(startBtn.properties['disabled']).toBe(true);
             }));
 
-            it('should have start button disabled when name not filled out', async(() => {
+            it('should have start button disabled when no process is selected', async(() => {
                 component.onProcessDefChange('');
                 fixture.detectChanges();
                 expect(startBtn.properties['disabled']).toBe(true);
             }));
 
-            xit('should enable start button when name and process filled out', async(() => {
+            it('should enable start button when name and process filled out', async(() => {
                 fixture.detectChanges();
+                startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
                 expect(startBtn.properties['disabled']).toBe(false);
             }));
 
