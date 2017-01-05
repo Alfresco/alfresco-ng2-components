@@ -33,6 +33,7 @@ import {
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
+    LogService,
 
     /** @deprecated */ AlfrescoSettingsService,
     /** @deprecated */ AlfrescoTranslationService,
@@ -48,6 +49,7 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
+    LogService,
     AuthService,
     ContentService,
     SettingsService,
