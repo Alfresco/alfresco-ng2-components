@@ -40,7 +40,7 @@ export class BpmUserService {
     getCurrentUserInfo(): Observable<BpmUserModel> {
         return Observable.fromPromise(this.alfrescoJsApi.getInstance().activiti.profileApi.getProfile())
             .map((data) => <BpmUserModel> data)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getCurrentUserProfileImage(): string {

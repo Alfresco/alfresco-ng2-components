@@ -47,7 +47,7 @@ export class EcmModelService {
                         });
                     }
                 },
-                this.handleError
+                err => this.handleError(err)
             );
         });
 
@@ -72,10 +72,10 @@ export class EcmModelService {
                                 observer.complete();
                             });
                         },
-                        this.handleError
+                        err => this.handleError(err)
                     );
                 },
-                this.handleError
+                err => this.handleError(err)
             );
         });
     }
@@ -95,7 +95,7 @@ export class EcmModelService {
                         observer.complete();
                     }
                 },
-                this.handleError
+                err => this.handleError(err)
             );
         });
     }
@@ -111,9 +111,9 @@ export class EcmModelService {
                             observer.next(typeCreated);
                             observer.complete();
                         },
-                        this.handleError);
+                        err => this.handleError(err));
                 },
-                this.handleError);
+                err => this.handleError(err));
         });
     }
 
@@ -126,25 +126,25 @@ export class EcmModelService {
     public activeEcmModel(modelName: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.activateCustomModel(modelName))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     public createEcmModel(modelName: string, nameSpace: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.createCustomModel('DRAFT', '', modelName, modelName, nameSpace))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     public getEcmModels(): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.getAllCustomModel())
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     public getEcmType(modelName: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.getAllCustomType(modelName))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     public createEcmType(typeName: string, modelName: string, parentType: string): Observable<any> {
@@ -152,7 +152,7 @@ export class EcmModelService {
 
         return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.createCustomType(modelName, name, parentType, typeName, ''))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     public addPropertyToAType(modelName: string, typeName: string, formFields: any) {
@@ -177,11 +177,11 @@ export class EcmModelService {
 
         return Observable.fromPromise(this.apiService.getInstance().core.customModelApi.addPropertyToType(modelName, name, properties))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
 
     }
 
-    public cleanNameType(name: string): string {
+    cleanNameType(name: string): string {
         let cleanName = name;
         if (name.indexOf(':') !== -1) {
             cleanName = name.split(':')[1];
