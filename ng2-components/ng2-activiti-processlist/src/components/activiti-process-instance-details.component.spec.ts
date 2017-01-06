@@ -21,7 +21,7 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
-import { ActivitiFormModule, FormModel, FormService } from 'ng2-activiti-form';
+import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
 import { ActivitiProcessInstanceDetails } from './activiti-process-instance-details.component';
@@ -137,22 +137,6 @@ describe('ActivitiProcessInstanceDetails', () => {
             let buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
             expect(buttonEl).not.toBeNull();
         });
-    });
-
-    describe('events', () => {
-
-        beforeEach(async(() => {
-            component.processInstanceId = '123';
-            fixture.detectChanges();
-            fixture.whenStable();
-        }));
-
-        it('should emit a task form completed event when task form completed', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.taskFormCompleted, 'emit');
-            component.bubbleTaskFormCompleted(new FormModel());
-            expect(emitSpy).toHaveBeenCalled();
-        });
-
     });
 
 });

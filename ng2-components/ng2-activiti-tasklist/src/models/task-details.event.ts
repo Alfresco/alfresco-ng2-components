@@ -15,9 +15,26 @@
  * limitations under the License.
  */
 
-export * from './comment.model';
-export * from './filter.model';
-export * from './icon.model';
-export * from './user.model';
-export * from './task-details.model';
-export * from './task-details.event';
+import { TaskDetailsModel } from './task-details.model';
+
+export class TaskDetailsEvent {
+
+    private _value: TaskDetailsModel;
+    private _defaultPrevented: boolean = false;
+
+    get value(): TaskDetailsModel {
+        return this._value;
+    }
+
+    get defaultPrevented() {
+        return this._defaultPrevented;
+    }
+
+    constructor(value: TaskDetailsModel) {
+        this._value = value;
+    }
+
+    preventDefault() {
+        this._defaultPrevented = true;
+    }
+}

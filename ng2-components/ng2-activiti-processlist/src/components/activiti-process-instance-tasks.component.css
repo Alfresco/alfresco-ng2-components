@@ -47,3 +47,7 @@
     display: block;
     padding: 12px;
 }
+
+.process-tasks__task-item {
+    cursor: pointer;
+}

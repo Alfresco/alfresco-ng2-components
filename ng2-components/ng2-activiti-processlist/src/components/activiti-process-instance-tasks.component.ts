@@ -20,7 +20,7 @@ import { DatePipe } from '@angular/common';
 import { Observable, Observer } from 'rxjs/Rx';
 import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
-import { TaskDetailsModel } from 'ng2-activiti-tasklist';
+import { TaskDetailsModel, TaskDetailsEvent } from 'ng2-activiti-tasklist';
 import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
@@ -40,9 +40,6 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
     @Input()
     showRefreshButton: boolean = true;
 
-    @Output()
-    taskFormCompleted = new EventEmitter();
-
     activeTasks: TaskDetailsModel[] = [];
     completedTasks: TaskDetailsModel[] = [];
 
@@ -53,9 +50,6 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
     completedTask$: Observable<TaskDetailsModel>;
 
     message: string;
-
-    selectedTaskId: string;
-
     processId: string;
 
     @ViewChild('dialog')
@@ -66,6 +60,9 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
 
     @ViewChild('taskdetails')
     taskdetails: any;
+
+    @Output()
+    taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
     constructor(private translate: AlfrescoTranslateService,
                 private activitiProcess: ActivitiProcessService,
@@ -94,12 +91,12 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
         }
     }
 
-    public load(processId: string) {
+    load(processId: string) {
         this.loadActive(processId);
         this.loadCompleted(processId);
     }
 
-    public loadActive(processId: string) {
+    loadActive(processId: string) {
         this.activeTasks = [];
         if (processId) {
             this.activitiProcess.getProcessTasks(processId, null).subscribe(
@@ -117,7 +114,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
         }
     }
 
-    public loadCompleted(processId: string) {
+    loadCompleted(processId: string) {
         this.completedTasks = [];
         if (processId) {
             this.activitiProcess.getProcessTasks(processId, 'completed').subscribe(
@@ -157,17 +154,17 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
         }
     }
 
-    public clickTask($event: any, task: TaskDetailsModel) {
-        this.selectedTaskId = task.id;
-        this.showDialog();
+    clickTask($event: any, task: TaskDetailsModel) {
+        let args = new TaskDetailsEvent(task);
+        this.taskClick.emit(args);
     }
 
-    public clickStartTask() {
+    clickStartTask() {
         this.processId = this.processInstanceDetails.id;
         this.showStartDialog();
     }
 
-    public showStartDialog() {
+    showStartDialog() {
         if (!this.startDialog.nativeElement.showModal) {
             dialogPolyfill.registerDialog(this.startDialog.nativeElement);
         }
@@ -177,35 +174,13 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
         }
     }
 
-    public showDialog() {
-        if (!this.dialog.nativeElement.showModal) {
-            dialogPolyfill.registerDialog(this.dialog.nativeElement);
-        }
-        if (this.dialog) {
-            this.dialog.nativeElement.showModal();
-        }
-    }
-
-    public closeSartDialog() {
+    closeSartDialog() {
         if (this.startDialog) {
             this.startDialog.nativeElement.close();
         }
     }
 
-    private closeDialog() {
-        if (this.dialog) {
-            this.dialog.nativeElement.close();
-        }
-        this.selectedTaskId = null;
-    }
-
-    public onTaskFormCompleted() {
-        this.closeDialog();
-        this.load(this.processInstanceDetails.id);
-        this.taskFormCompleted.emit(this.processInstanceDetails.id);
-    }
-
-    public onRefreshClicked() {
+    onRefreshClicked() {
         this.load(this.processInstanceDetails.id);
     }
 }

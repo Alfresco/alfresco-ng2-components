@@ -5,9 +5,9 @@
         <!-- TABS -->
 
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a id="tasks-header" href="#tasks" class="mdl-layout__tab is-active">TASKS</a>
-            <a id="processes-header" href="#processes" class="mdl-layout__tab" (click)="activeProcess()">PROCESSES</a>
-            <a id="report-header" href="#report" class="mdl-layout__tab" (click)="activeReports()">REPORTS</a>
+            <a id="tasks-header" href="#tasks" class="mdl-layout__tab" [class.is-active]="activeTab === 'tasks'" (click)="activeTab = 'tasks'">TASKS</a>
+            <a id="processes-header" href="#processes" class="mdl-layout__tab" [class.is-active]="activeTab === 'processes'" (click)="activeTab = 'processes'">PROCESSES</a>
+            <a id="report-header" href="#report" class="mdl-layout__tab" [class.is-active]="activeTab === 'reports'" (click)="activeTab = 'reports'">REPORTS</a>
         </div>
     </header>
 
@@ -15,7 +15,7 @@
 
         <!--  TASKS COMPONENT -->
 
-        <section class="mdl-layout__tab-panel is-active" id="tasks">
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'tasks'" id="tasks">
             <div class="page-content">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--2-col task-column mdl-shadow--2dp">
@@ -52,8 +52,8 @@
 
         <!--  PROCESS COMPONENT -->
 
-        <section class="mdl-layout__tab-panel" id="processes">
-            <div class="page-content" *ngIf="processTabActivie">
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'processes'" id="processes">
+            <div class="page-content" *ngIf="activeTab === 'processes'">
                 <div class="page-content">
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--2-col task-column  mdl-shadow--2dp">
@@ -81,9 +81,11 @@
                         <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp" *ngIf="!isStartProcessMode()">
                             <span><h5>Process Details</h5></span>
                             <hr>
-                            <activiti-process-instance-details [processInstanceId]="currentProcessInstanceId"
-                                                               (activitiprocesslist)="taskFormCompleted()"
-                                                               (processCancelled)="processCancelled()"></activiti-process-instance-details>
+                            <activiti-process-instance-details
+                                [processInstanceId]="currentProcessInstanceId"
+                                (processCancelled)="processCancelled()"
+                                (taskClick)="onProcessDetailsTaskClick($event)">
+                            </activiti-process-instance-details>
                         </div>
                         <div class="mdl-cell mdl-cell--7-col task-column" *ngIf="isStartProcessMode()">
                             <span>Start Process</span>
@@ -98,8 +100,8 @@
 
         <!--  ANALYTICS COMPONENT -->
 
-        <section class="mdl-layout__tab-panel" id="report">
-            <div class="page-content" *ngIf="reportsTabActivie">
+        <section class="mdl-layout__tab-panel" [class.is-active]="activeTab === 'reports'" id="report">
+            <div class="page-content" *ngIf="activeTab === 'reports'">
                 <div class="mdl-grid">
                     <div class="mdl-cell mdl-cell--4-col task-column mdl-shadow--2dp">
                         <span><h5>Report List</h5></span>
