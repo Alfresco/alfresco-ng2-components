@@ -86,9 +86,41 @@ describe('AlfrescoSearchControlComponent', () => {
         fixture.detectChanges();
         fixture.componentInstance.searchChange.subscribe(e => {
             expect(e.value).toBe('customSearchTerm211');
+            expect(e.valid).toBe(true);
             done();
         });
         component.searchControl.setValue('customSearchTerm211', true);
+        fixture.detectChanges();
+    });
+
+    it('should update FAYT search when user inputs a valid term', (done) => {
+        fixture.componentInstance.searchChange.subscribe(() => {
+            expect(fixture.componentInstance.liveSearchTerm).toBe('customSearchTerm');
+            done();
+        });
+        fixture.detectChanges();
+        fixture.componentInstance.searchTerm = 'customSearchTerm';
+        fixture.detectChanges();
+    });
+
+    it('should NOT update FAYT term when user inputs a search term less than 3 characters', (done) => {
+        fixture.componentInstance.searchChange.subscribe(() => {
+            expect(fixture.componentInstance.liveSearchTerm).toBe('');
+            done();
+        });
+        fixture.detectChanges();
+        fixture.componentInstance.searchTerm = 'cu';
+        fixture.detectChanges();
+    });
+
+    it('should still fire an event when user inputs a search term less than 3 characters', (done) => {
+        fixture.componentInstance.searchChange.subscribe((e) => {
+            expect(e.value).toBe('cu');
+            expect(e.valid).toBe(false);
+            done();
+        });
+        fixture.detectChanges();
+        fixture.componentInstance.searchTerm = 'cu';
         fixture.detectChanges();
     });
 
