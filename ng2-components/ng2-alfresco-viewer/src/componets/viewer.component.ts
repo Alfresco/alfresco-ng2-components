@@ -18,7 +18,7 @@
 import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     moduleId: module.id,
@@ -47,20 +47,16 @@ export class ViewerComponent {
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     urlFileContent: string;
-
     otherMenu: any;
-
     displayName: string;
-
     extension: string;
-
     mimeType: string;
-
     loaded: boolean = false;
 
     constructor(private apiService: AlfrescoApiService,
                 private element: ElementRef,
-                @Inject(DOCUMENT) private document) {
+                @Inject(DOCUMENT) private document,
+                private logService: LogService) {
     }
 
     ngOnChanges(changes) {
@@ -87,7 +83,7 @@ export class ViewerComponent {
                         resolve();
                     }, function (error) {
                         reject(error);
-                        console.log('This node does not exist');
+                        this.logService.error('This node does not exist');
                     });
                 }
             });

@@ -18,11 +18,8 @@
 import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { RenditionsService } from './renditions.service';
-import {
-    fakeRedition,
-    fakeReditionCreated,
-    fakeReditionsList
-} from '../assets/renditionsService.mock';
+import { LogService } from './log.service';
+import { fakeRedition, fakeReditionCreated, fakeReditionsList } from '../assets/renditionsService.mock';
 
 declare let jasmine: any;
 declare let AlfrescoApi: any;
@@ -33,7 +30,8 @@ describe('RenditionsService', () => {
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
             AlfrescoApiService,
-            RenditionsService
+            RenditionsService,
+            LogService
         ]);
     });
 

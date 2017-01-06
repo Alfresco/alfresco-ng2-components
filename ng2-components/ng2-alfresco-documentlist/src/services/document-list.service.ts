@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AuthService, ContentService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AuthService, ContentService, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentListService {
@@ -59,7 +59,8 @@ export class DocumentListService {
 
     constructor(private authService: AuthService,
                 private contentService: ContentService,
-                private apiService: AlfrescoApiService) {
+                private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
@@ -114,7 +115,6 @@ export class DocumentListService {
     getFolder(folder: string, opts?: any) {
         return Observable.fromPromise(this.getNodesPromise(folder, opts))
             .map(res => <NodePaging> res)
-            // .do(data => console.log('Node data', data)) // eyeball results in the console
             .catch(this.handleError);
     }
 
@@ -149,7 +149,7 @@ export class DocumentListService {
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 }

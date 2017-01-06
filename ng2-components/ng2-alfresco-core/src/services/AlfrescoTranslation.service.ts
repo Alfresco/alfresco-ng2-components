@@ -18,14 +18,16 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { AlfrescoTranslateService } from './translate.service';
+import { LogService } from './log.service';
 
 /** @deprecated AlfrescoTranslationService is deprecated. Use AlfrescoTranslateService instead */
 @Injectable()
 export class AlfrescoTranslationService extends AlfrescoTranslateService {
 
-    constructor(translate: TranslateService) {
+    constructor(translate: TranslateService,
+                logService: LogService) {
         super(translate);
-        console.log('Warning: AlfrescoTranslationService is deprecated. Use AlfrescoTranslateService instead.');
+        logService.warn('Warning: AlfrescoTranslationService is deprecated. Use AlfrescoTranslateService instead.');
     }
 
 }

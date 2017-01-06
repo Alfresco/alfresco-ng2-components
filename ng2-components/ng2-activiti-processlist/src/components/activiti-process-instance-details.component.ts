@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
@@ -60,8 +60,9 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
      * @param translate Translation service
      * @param activitiProcess   Process service
      */
-    constructor(private translate: AlfrescoTranslationService,
-                private activitiProcess: ActivitiProcessService) {
+    constructor(private translate: AlfrescoTranslateService,
+                private activitiProcess: ActivitiProcessService,
+                private logService: LogService) {
 
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
@@ -110,7 +111,7 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
             (data) => {
                 this.processCancelled.emit(data);
             }, (err) => {
-                console.error(err);
+                this.logService.error(err);
             });
     }
 }

@@ -19,7 +19,7 @@ import { NgModule, Component, Input, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, SettingsService, AuthService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, SettingsService, AuthService, StorageService, LogService } from 'ng2-alfresco-core';
 import { TagModule } from 'ng2-alfresco-tag';
 
 @Component({
@@ -54,14 +54,13 @@ class TagDemo implements OnInit {
     nodeId: string = '74cd8a96-8a21-47e5-9b3b-a1b3e296787d';
 
     authenticated: boolean;
-
     ecmHost: string = 'http://127.0.0.1:8080';
-
     ticket: string;
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -78,12 +77,12 @@ class TagDemo implements OnInit {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }
@@ -98,7 +97,7 @@ class TagDemo implements OnInit {
     }
 
     logData(data) {
-        console.log(data);
+        this.logService.info(data);
     }
 }
 

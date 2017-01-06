@@ -19,7 +19,7 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, SettingsService, AuthService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, SettingsService, AuthService, StorageService, LogService } from 'ng2-alfresco-core';
 import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
@@ -61,41 +61,37 @@ import { LoginModule } from 'ng2-alfresco-login';
 })
 export class AppComponent {
 
-    public ecmHost: string = 'http://localhost:8080';
+    ecmHost: string = 'http://localhost:8080';
+    bpmHost: string = 'http://localhost:9999';
+    ticket: string;
+    status: string = '';
+    providers: string = 'ECM';
+    disableCsrf: boolean = false;
 
-    public bpmHost: string = 'http://localhost:9999';
-
-    public ticket: string;
-
-    public status: string = '';
-
-    public providers: string = 'ECM';
-
-    public disableCsrf: boolean = false;
-
-    constructor(public authService: AuthService,
+    constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.bpmHost = this.bpmHost;
     }
 
-    public updateEcmHost(): void {
+    updateEcmHost(): void {
         this.settingsService.ecmHost = this.ecmHost;
     }
 
-    public updateBpmHost(): void {
+    updateBpmHost(): void {
         this.settingsService.bpmHost = this.bpmHost;
     }
 
     mySuccessMethod($event) {
-        console.log('Success Login EventEmitt called with: ' + $event.value);
+        this.logService.info('Success Login EventEmitt called with: ' + $event.value);
         this.status = $event.value;
     }
 
     myErrorMethod($event) {
-        console.log('Error Login EventEmitt called with: ' + $event.value);
+        this.logService.error('Error Login EventEmitt called with: ' + $event.value);
         this.status = $event.value;
     }
 

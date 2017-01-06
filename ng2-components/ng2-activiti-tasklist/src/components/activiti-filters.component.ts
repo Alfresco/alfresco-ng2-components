@@ -16,11 +16,10 @@
  */
 
 import { Component, Output, EventEmitter, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { Observer, Observable } from 'rxjs/Rx';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterRepresentationModel } from '../models/filter.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
 
@@ -56,7 +55,8 @@ export class ActivitiFilters implements OnInit, OnChanges {
     filters: FilterRepresentationModel [] = [];
 
     constructor(private translateService: AlfrescoTranslateService,
-                public activiti: ActivitiTaskListService) {
+                private activiti: ActivitiTaskListService,
+                private logService: LogService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
         if (translateService) {
@@ -113,7 +113,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                 this.onSuccess.emit(res);
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -130,7 +130,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                 this.selectFirstFilter();
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             });
     }

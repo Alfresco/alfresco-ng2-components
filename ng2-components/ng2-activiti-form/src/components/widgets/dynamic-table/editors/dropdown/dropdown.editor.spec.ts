@@ -39,7 +39,7 @@ describe('DropdownEditorComponent', () => {
     let row: DynamicTableRow;
 
     beforeEach(() => {
-        formService = new FormService(null, null);
+        formService = new FormService(null, null, null);
 
         row = <DynamicTableRow> { value: { dropdown: 'one' } };
         column = <DynamicTableColumn> {
@@ -56,7 +56,7 @@ describe('DropdownEditorComponent', () => {
         table.rows.push(row);
         table.columns.push(column);
 
-        component = new DropdownEditorComponent(formService);
+        component = new DropdownEditorComponent(formService, null);
         component.table = table;
         component.row = row;
         component.column = column;

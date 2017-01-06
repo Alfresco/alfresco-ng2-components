@@ -36,7 +36,7 @@ describe('PeopleWidget', () => {
         ]);
         window['componentHandler'] = componentHandler;
 
-        formService = new FormService(null, null);
+        formService = new FormService(null, null, null);
         elementRef = new ElementRef(null);
         widget = new PeopleWidget(formService, elementRef);
         widget.field = new FormFieldModel(new FormModel());

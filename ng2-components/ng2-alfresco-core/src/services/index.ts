@@ -26,6 +26,7 @@ export * from './auth-guard.service';
 export * from './auth-guard-ecm.service';
 export * from './auth-guard-bpm.service';
 
+export * from './log.service';
 export * from './auth.service';
 export * from './content.service';
 export * from './settings.service';

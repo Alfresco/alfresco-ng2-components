@@ -28,10 +28,10 @@ import {
     SettingsService,
     AlfrescoApiService,
     AuthService,
-    ContentService,
     AlfrescoTranslateService,
     CoreModule,
-    StorageService
+    StorageService,
+    LogService
 } from 'ng2-alfresco-core';
 
 describe('AlfrescoSearchComponent', () => {
@@ -102,18 +102,13 @@ describe('AlfrescoSearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [ AlfrescoSearchComponent ], // declare the test component
             providers: [
                 AlfrescoSearchService,
                 {provide: AlfrescoTranslateService, useClass: TranslationMock},
-                AlfrescoThumbnailService,
-                SettingsService,
-                AlfrescoApiService,
-                AuthService,
-                ContentService,
-                StorageService
+                AlfrescoThumbnailService
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AlfrescoSearchComponent);
@@ -123,9 +118,7 @@ describe('AlfrescoSearchComponent', () => {
     }));
 
     it('should not have a search term by default', () => {
-        let search = new AlfrescoSearchComponent(null, null, null, null);
-        expect(search).toBeDefined();
-        expect(search.searchTerm).toBe('');
+        expect(component.searchTerm).toBe('');
     });
 
     it('should take the provided search term from query param provided via RouteParams', () => {
@@ -144,6 +137,7 @@ describe('AlfrescoSearchComponent', () => {
             SettingsService,
             AlfrescoApiService,
             StorageService,
+            LogService,
             { provide: ActivatedRoute, useValue: { params: Observable.from([{}]) } }
         ]);
         let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, null, injector.get(ActivatedRoute));

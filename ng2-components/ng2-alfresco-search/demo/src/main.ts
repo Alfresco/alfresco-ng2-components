@@ -19,13 +19,13 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, LogService } from 'ng2-alfresco-core';
 import { SearchModule } from 'ng2-alfresco-search';
 
 import {
     SettingsService,
     AuthService,
-    AlfrescoTranslationService
+    AlfrescoTranslateService
 } from 'ng2-alfresco-core';
 
 @Component({
@@ -50,16 +50,14 @@ import {
 class SearchDemo implements OnInit {
 
     authenticated: boolean;
-
-    public searchTerm: string = 'test';
-
-    public ecmHost: string = 'http://localhost:8080';
-
+    searchTerm: string = 'test';
+    ecmHost: string = 'http://localhost:8080';
     ticket: string;
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                translation: AlfrescoTranslationService) {
+                translation: AlfrescoTranslateService,
+                private logService: LogService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -79,18 +77,18 @@ class SearchDemo implements OnInit {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }
 
     searchTermChange(event) {
-        console.log('Search term changed', event);
+        this.logService.info('Search term changed', event);
         this.searchTerm = event.value;
     }
 }

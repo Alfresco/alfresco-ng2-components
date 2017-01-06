@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
+import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
+
 import { TypeaheadWidget } from './typeahead.widget';
 import { FormService } from '../../../services/form.service';
 import { FormModel } from '../core/form.model';
 import { FormFieldModel } from '../core/form-field.model';
 import { FormFieldOption } from '../core/form-field-option';
-import { CoreModule } from 'ng2-alfresco-core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -32,11 +33,13 @@ describe('TypeaheadWidget', () => {
     let formService: FormService;
     let widget: TypeaheadWidget;
     let visibilityService: WidgetVisibilityService;
+    let logService: LogServiceMock;
 
     beforeEach(() => {
-        formService = new FormService(null, null);
-        visibilityService = new WidgetVisibilityService(null);
-        widget = new TypeaheadWidget(formService, visibilityService);
+        logService = new LogServiceMock();
+        formService = new FormService(null, null, logService);
+        visibilityService = new WidgetVisibilityService(null, logService);
+        widget = new TypeaheadWidget(formService, visibilityService, logService);
         widget.field = new FormFieldModel(new FormModel({ taskId: 'task-id' }));
     });
 
@@ -73,7 +76,7 @@ describe('TypeaheadWidget', () => {
         });
         const err = 'Error';
         spyOn(formService, 'getRestFieldValues').and.returnValue(Observable.throw(err));
-        spyOn(widget, 'handleError').and.callThrough();
+        spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();
 
@@ -94,18 +97,12 @@ describe('TypeaheadWidget', () => {
         });
         const err = 'Error';
         spyOn(formService, 'getRestFieldValuesByProcessId').and.returnValue(Observable.throw(err));
-        spyOn(widget, 'handleError').and.callThrough();
+        spyOn(widget, 'handleError').and.stub();
 
         widget.ngOnInit();
 
         expect(formService.getRestFieldValuesByProcessId).toHaveBeenCalled();
         expect(widget.handleError).toHaveBeenCalledWith(err);
-    });
-
-    it('should log error to console by default', () => {
-        spyOn(console, 'error').and.stub();
-        widget.handleError('Err');
-        expect(console.error).toHaveBeenCalledWith('Err');
     });
 
     it('should show popup on key up', () => {

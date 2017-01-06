@@ -15,17 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    AfterViewChecked, OnChanges,
-    SimpleChanges,
-    Input,
-    ViewChild,
-    ElementRef,
-    Output,
-    EventEmitter
-} from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { Component, AfterViewChecked, OnChanges, SimpleChanges, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
@@ -74,10 +65,11 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translate: AlfrescoTranslateService,
                 formService: FormService,
-                visibilityService: WidgetVisibilityService) {
-        super(formService, visibilityService, null, null);
+                visibilityService: WidgetVisibilityService,
+                logService: LogService) {
+        super(formService, visibilityService, null, null, logService);
 
         if (this.translate) {
             this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');

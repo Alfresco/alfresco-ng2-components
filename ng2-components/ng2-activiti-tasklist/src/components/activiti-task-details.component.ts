@@ -15,19 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnInit,
-    ViewChild,
-    Output,
-    EventEmitter,
-    TemplateRef,
-    OnChanges,
-    SimpleChanges,
-    DebugElement
-} from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges, DebugElement} from '@angular/core';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -103,7 +92,8 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      */
     constructor(private translateService: AlfrescoTranslateService,
                 private activitiForm: FormService,
-                private activitiTaskList: ActivitiTaskListService) {
+                private activitiTaskList: ActivitiTaskListService,
+                private logService: LogService) {
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
@@ -201,7 +191,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     this.reset();
                 }
             }, (error) => {
-                console.error(error);
+                this.logService.error(error);
                 this.onError.emit(error);
             });
     }

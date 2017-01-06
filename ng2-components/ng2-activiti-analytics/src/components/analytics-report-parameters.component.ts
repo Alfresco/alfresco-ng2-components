@@ -16,11 +16,11 @@
  */
 
 import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges, OnDestroy, AfterViewChecked } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
-import { AnalyticsService } from '../services/analytics.service';
-import { ReportParametersModel, ReportQuery, ParameterValueModel, ReportParameterDetailsModel } from '../models/report.model';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AnalyticsService } from '../services/analytics.service';
+import { ReportParametersModel, ReportQuery, ParameterValueModel, ReportParameterDetailsModel } from '../models/report.model';
 
 declare var componentHandler;
 
@@ -72,7 +72,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     constructor(private translateService: AlfrescoTranslateService,
                 private analyticsService: AnalyticsService,
-                private formBuilder: FormBuilder ) {
+                private formBuilder: FormBuilder,
+                private logService: LogService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
@@ -148,7 +149,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 }
             },
             (err: any) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -162,7 +163,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                     this.onSuccessParamOpt.emit(opts);
                 },
                 (err: any) => {
-                    console.log(err);
+                    this.logService.error(err);
                     this.onError.emit(err);
                 }
             );
@@ -233,7 +234,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.onEdit.emit(this.reportParameters.name);
             },
             (err: any) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             }
         );

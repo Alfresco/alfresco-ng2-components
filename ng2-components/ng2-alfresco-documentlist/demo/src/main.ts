@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { DocumentListModule, DocumentList, DocumentActionsService } from 'ng2-alfresco-documentlist';
-import { CoreModule, StorageService, SettingsService, AuthService, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { CoreModule, StorageService, SettingsService, AuthService, AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -129,9 +129,10 @@ class DocumentListDemo implements OnInit {
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
-                private translateService: AlfrescoTranslationService,
+                private translateService: AlfrescoTranslateService,
                 private documentActions: DocumentActionsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -174,13 +175,13 @@ class DocumentListDemo implements OnInit {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
                 this.documentList.reload();
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }

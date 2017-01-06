@@ -17,14 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import {
-    AlfrescoTranslationService,
-    CoreModule,
-    AuthService,
-    SettingsService,
-    AlfrescoApiService } from 'ng2-alfresco-core';
-
+import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { exampleProcess } from './../assets/activiti-process.model.mock';
@@ -41,18 +34,15 @@ describe('ActivitiProcessInstanceHeader', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 ActivitiProcessInstanceHeader,
                 ActivitiProcessComments
             ],
             providers: [
-                SettingsService,
-                AuthService,
-                AlfrescoApiService,
                 ActivitiProcessService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}
+                {provide: AlfrescoTranslateService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));

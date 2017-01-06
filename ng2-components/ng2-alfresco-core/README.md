@@ -56,6 +56,7 @@ npm install --save ng2-alfresco-core
 
 ### Services
 
+- **LogService**, log service implementation
 - **AlfrescoApiService**, provides access to Alfresco JS API instance
 - **AlfrescoAuthenticationService**, main authentication APIs
 - **AlfrescoTranslationService**, various i18n-related APIs

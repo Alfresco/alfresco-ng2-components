@@ -111,11 +111,4 @@ export class WidgetComponent implements AfterViewInit {
         }
         return null;
     }
-
-    protected handleError(error: any) {
-        if (error) {
-            console.log(error);
-        }
-    }
-
 }

@@ -17,9 +17,8 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { Observer, Observable } from 'rxjs/Rx';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
 
 /**
@@ -33,18 +32,16 @@ export class UploadService {
 
     private formFields: Object = {};
     private queue: FileModel[] = [];
-
     private versioning: boolean = false;
-
     private filesUploadObserverProgressBar: Observer<FileModel[]>;
     private totalCompletedObserver: Observer<number>;
 
-    public totalCompleted: number = 0;
-
+    totalCompleted: number = 0;
     filesUpload$: Observable<FileModel[]>;
     totalCompleted$: Observable<any>;
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
         this.filesUpload$ = new Observable<FileModel[]>(observer => this.filesUploadObserverProgressBar = observer).share();
         this.totalCompleted$ = new Observable<number>(observer => this.totalCompletedObserver = observer).share();
     }
@@ -56,7 +53,7 @@ export class UploadService {
      * @param {boolean} - versioning true to indicate that a major version should be created
      *
      */
-    public setOptions(options: any, versioning: boolean): void {
+    setOptions(options: any, versioning: boolean): void {
         this.formFields = options.formFields != null ? options.formFields : this.formFields;
         this.versioning = versioning != null ? versioning : this.versioning;
     }
@@ -87,7 +84,7 @@ export class UploadService {
     /**
      * Pick all the files in the queue that are not been uploaded yet and upload it into the directory folder.
      */
-    public uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
+    uploadFilesInTheQueue(rootId: string, directory: string, elementEmit: EventEmitter<any>): void {
         let filesToUpload = this.queue.filter((uploadingFileModel) => {
             return !uploadingFileModel.uploading && !uploadingFileModel.done && !uploadingFileModel.abort && !uploadingFileModel.error;
         });
@@ -169,8 +166,8 @@ export class UploadService {
             .map(res => {
                 return res;
             })
-            .do(data => console.log('Node data', data)) // eyeball results in the console
-            .catch(this.handleError);
+            .do(data => this.logService.info('Node data', data)) // eyeball results in the console
+            .catch((err) => this.handleError(err));
     }
 
     private callApiCreateFolder(relativePath: string, name: string) {
@@ -185,7 +182,7 @@ export class UploadService {
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 

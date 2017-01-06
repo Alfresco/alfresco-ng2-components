@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoApiService, LogService, LogServiceMock } from 'ng2-alfresco-core';
 import { FormService } from './form.service';
 import { EcmModelService } from './ecm-model.service';
 import { FormDefinitionModel } from '../models/form-definition.model';
@@ -29,6 +29,7 @@ describe('FormService', () => {
     let responseBody: any;
     let service: FormService;
     let apiService: AlfrescoApiService;
+    let logService: LogService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -37,11 +38,13 @@ describe('FormService', () => {
             ],
             providers: [
                 EcmModelService,
-                FormService
+                FormService,
+                { provide: LogService, useClass: LogServiceMock }
             ]
         });
         service = TestBed.get(FormService);
         apiService = TestBed.get(AlfrescoApiService);
+        logService = TestBed.get(LogService);
     });
 
     beforeEach(() => {
@@ -270,34 +273,34 @@ describe('FormService', () => {
     });
 
     it('should handle error with generic message', () => {
-        spyOn(console, 'error').and.stub();
+        spyOn(logService, 'error').and.stub();
 
         service.handleError(null);
-        expect(console.error).toHaveBeenCalledWith(FormService.UNKNOWN_ERROR_MESSAGE);
+        expect(logService.error).toHaveBeenCalledWith(FormService.UNKNOWN_ERROR_MESSAGE);
     });
 
     it('should handle error with error message', () => {
-        spyOn(console, 'error').and.stub();
+        spyOn(logService, 'error').and.stub();
 
         const message = '<error>';
         service.handleError({message: message});
 
-        expect(console.error).toHaveBeenCalledWith(message);
+        expect(logService.error).toHaveBeenCalledWith(message);
     });
 
     it('should handle error with detailed message', () => {
-        spyOn(console, 'error').and.stub();
+        spyOn(logService, 'error').and.stub();
         service.handleError({
             status: '400',
             statusText: 'Bad request'
         });
-        expect(console.error).toHaveBeenCalledWith('400 - Bad request');
+        expect(logService.error).toHaveBeenCalledWith('400 - Bad request');
     });
 
     it('should handle error with generic message', () => {
-        spyOn(console, 'error').and.stub();
+        spyOn(logService, 'error').and.stub();
         service.handleError({});
-        expect(console.error).toHaveBeenCalledWith(FormService.GENERIC_ERROR_MESSAGE);
+        expect(logService.error).toHaveBeenCalledWith(FormService.GENERIC_ERROR_MESSAGE);
     });
 
     it('should get all the forms with modelType=2', (done) => {

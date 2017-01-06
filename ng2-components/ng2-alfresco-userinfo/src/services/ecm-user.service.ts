@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { ContentService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { ContentService, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { EcmUserModel } from '../models/ecm-user.model';
 /**
  *
@@ -30,7 +30,8 @@ import { EcmUserModel } from '../models/ecm-user.model';
 export class EcmUserService {
 
     constructor(private apiService: AlfrescoApiService,
-                private contentService: ContentService) {
+                private contentService: ContentService,
+                private logService: LogService) {
     }
 
     /**
@@ -68,7 +69,7 @@ export class EcmUserService {
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 

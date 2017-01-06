@@ -21,6 +21,7 @@ import { AuthService } from './auth.service';
 import { ContentService } from './content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 import { StorageService } from './storage.service';
+import { LogService } from './log.service';
 
 declare let jasmine: any;
 
@@ -40,7 +41,8 @@ describe('ContentService', () => {
             ContentService,
             AuthService,
             SettingsService,
-            StorageService
+            StorageService,
+            LogService
         ]);
 
         authService = injector.get(AuthService);

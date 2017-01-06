@@ -18,7 +18,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
-import { StorageService } from 'ng2-alfresco-core';
+import { StorageService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'login-demo',
@@ -38,7 +38,9 @@ export class LoginDemoComponent implements OnInit {
     isECM: boolean = true;
     isBPM: boolean = false;
 
-    constructor(public router: Router, private storage: StorageService) {
+    constructor(private router: Router,
+                private storage: StorageService,
+                private logService: LogService) {
         this.customValidation = {
             username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             password: ['', Validators.required]
@@ -75,7 +77,7 @@ export class LoginDemoComponent implements OnInit {
     }
 
     onError($event) {
-        console.log($event);
+        this.logService.error($event);
     }
 
     toggleECM() {
@@ -92,7 +94,7 @@ export class LoginDemoComponent implements OnInit {
         this.disableCsrf = !this.disableCsrf;
     }
 
-    updateProvider(){
+    updateProvider() {
         if (this.isBPM && this.isECM) {
             this.providers = 'ALL';
             return this.providers;

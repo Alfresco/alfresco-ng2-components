@@ -17,11 +17,7 @@
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {
-    AlfrescoTranslationService,
-    AuthService,
-    SettingsService
-} from 'ng2-alfresco-core';
+import { AlfrescoTranslateService, AuthService, SettingsService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
@@ -79,11 +75,14 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param translate
      */
     constructor(private _fb: FormBuilder,
-                public authService: AuthService,
-                public settingsService: SettingsService,
-                private translate: AlfrescoTranslationService) {
+                private authService: AuthService,
+                private settingsService: SettingsService,
+                private translateService: AlfrescoTranslateService,
+                private logService: LogService) {
 
-        translate.addTranslationFolder('ng2-alfresco-login', 'node_modules/ng2-alfresco-login/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-login', 'node_modules/ng2-alfresco-login/src');
+        }
 
         this.initFormError();
         this.initFormFieldsMessages();
@@ -160,9 +159,9 @@ export class AlfrescoLoginComponent implements OnInit {
                     this.enableError();
                     this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
                     this.onError.emit(err);
-                    console.log(err);
+                    this.logService.error(err);
                 },
-                () => console.log('Login done')
+                () => this.logService.info('Login done')
             );
     }
 
@@ -175,7 +174,7 @@ export class AlfrescoLoginComponent implements OnInit {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
             this.enableError();
             let messageProviders: any;
-            messageProviders = this.translate.get(this.errorMsg);
+            messageProviders = this.translateService.get(this.errorMsg);
             this.onError.emit(messageProviders.value);
             return false;
         }

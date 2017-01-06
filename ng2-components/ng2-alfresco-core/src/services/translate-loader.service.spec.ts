@@ -23,6 +23,7 @@ import {getTestBed, TestBed} from '@angular/core/testing';
 
 import { AlfrescoTranslateLoader } from './translate-loader.service';
 import { AlfrescoTranslateService } from './translate.service';
+import { LogService } from './log.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
 
@@ -39,12 +40,16 @@ describe('TranslateLoader', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpModule, TranslateModule.forRoot({
-                provide: TranslateLoader,
-                useClass: AlfrescoTranslateLoader
-            })],
+            imports: [
+                HttpModule,
+                TranslateModule.forRoot({
+                    provide: TranslateLoader,
+                    useClass: AlfrescoTranslateLoader
+                })
+            ],
             providers: [
                 AlfrescoTranslateService,
+                LogService,
                 {provide: XHRBackend, useClass: MockBackend}
             ]
         });

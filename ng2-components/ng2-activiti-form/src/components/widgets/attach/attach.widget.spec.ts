@@ -16,6 +16,7 @@
  */
 
 import { Observable } from 'rxjs/Rx';
+import { LogServiceMock } from 'ng2-alfresco-core';
 import { AttachWidget } from './attach.widget';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { FormFieldModel } from './../core/form-field.model';
@@ -28,10 +29,12 @@ describe('AttachWidget', () => {
     let widget: AttachWidget;
     let contentService: ActivitiAlfrescoContentService;
     let dialogPolyfill: any;
+    let logService: LogServiceMock;
 
     beforeEach(() => {
-        contentService = new ActivitiAlfrescoContentService(null);
-        widget = new AttachWidget(contentService);
+        logService = new LogServiceMock();
+        contentService = new ActivitiAlfrescoContentService(null, logService);
+        widget = new AttachWidget(contentService, logService);
 
         dialogPolyfill = {
             registerDialog(obj: any) {
@@ -268,9 +271,9 @@ describe('AttachWidget', () => {
             Observable.throw(error)
         );
 
-        spyOn(console, 'log').and.stub();
+        spyOn(logService, 'error').and.stub();
         widget.getExternalContentNodes();
-        expect(console.log).toHaveBeenCalledWith(error);
+        expect(logService.error).toHaveBeenCalledWith(error);
     });
 
     it('should register dialog via polyfill', () => {

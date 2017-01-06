@@ -16,11 +16,11 @@
  */
 
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { DatePipe } from '@angular/common';
+import { Observable, Observer } from 'rxjs/Rx';
+import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
-import { Observable, Observer } from 'rxjs/Rx';
-import { DatePipe } from '@angular/common';
 import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
@@ -67,8 +67,9 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
     @ViewChild('taskdetails')
     taskdetails: any;
 
-    constructor(private translate: AlfrescoTranslationService,
-                private activitiProcess: ActivitiProcessService) {
+    constructor(private translate: AlfrescoTranslateService,
+                private activitiProcess: ActivitiProcessService,
+                private logService: LogService) {
         if (translate) {
             translate.addTranslationFolder('ng2-activiti-processlist', 'node_modules/ng2-activiti-processlist/src');
         }
@@ -108,7 +109,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    console.log(err);
+                    this.logService.error(err);
                 }
             );
         } else {
@@ -126,7 +127,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    console.log(err);
+                    this.logService.error(err);
                 }
             );
         } else {
@@ -152,7 +153,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
         try {
             return datePipe.transform(value, format);
         } catch (err) {
-            console.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
+            this.logService.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
         }
     }
 

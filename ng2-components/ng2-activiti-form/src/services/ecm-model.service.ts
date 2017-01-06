@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FormModel } from '../components/widgets/core/form.model';
 
 @Injectable()
@@ -27,7 +27,8 @@ export class EcmModelService {
     public static MODEL_NAME: string = 'activitiFormsModel';
     public static TYPE_MODEL: string = 'cm:folder';
 
-    constructor(public apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     public createEcmTypeForActivitiForm(formName: string, form: FormModel): Observable<any> {
@@ -62,10 +63,10 @@ export class EcmModelService {
         return Observable.create(observer => {
             this.createEcmModel(EcmModelService.MODEL_NAME, EcmModelService.MODEL_NAMESPACE).subscribe(
                 model => {
-                    console.log('model created', model);
+                    this.logService.info('model created', model);
                     this.activeEcmModel(EcmModelService.MODEL_NAME).subscribe(
                         modelActive => {
-                            console.log('model active', modelActive);
+                            this.logService.info('model active', modelActive);
                             this.createEcmTypeWithProperties(formName, form).subscribe(typeCreated => {
                                 observer.next(typeCreated);
                                 observer.complete();
@@ -83,7 +84,7 @@ export class EcmModelService {
         return Observable.create(observer => {
             this.searchEcmType(formName, EcmModelService.MODEL_NAME).subscribe(
                 ecmType => {
-                    console.log('custom types', ecmType);
+                    this.logService.info('custom types', ecmType);
                     if (!ecmType) {
                         this.createEcmTypeWithProperties(formName, form).subscribe(typeCreated => {
                             observer.next(typeCreated);
@@ -103,10 +104,10 @@ export class EcmModelService {
         return Observable.create(observer => {
             this.createEcmType(formName, EcmModelService.MODEL_NAME, EcmModelService.TYPE_MODEL).subscribe(
                 typeCreated => {
-                    console.log('type Created', typeCreated);
+                    this.logService.info('type Created', typeCreated);
                     this.addPropertyToAType(EcmModelService.MODEL_NAME, formName, form).subscribe(
                         properyAdded => {
-                            console.log('property Added', properyAdded);
+                            this.logService.info('property Added', properyAdded);
                             observer.next(typeCreated);
                             observer.complete();
                         },
@@ -196,6 +197,6 @@ export class EcmModelService {
     }
 
     handleError(err: any): any {
-        console.log(err);
+        this.logService.error(err);
     }
 }

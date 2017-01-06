@@ -226,7 +226,6 @@ describe('UploadService', () => {
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
-        console.log(jasmine.Ajax.requests.mostRecent().url);
         expect(jasmine.Ajax.requests.mostRecent().url.endsWith('autoRename=true')).toBe(false);
         expect(jasmine.Ajax.requests.mostRecent().params.has('majorVersion')).toBe(true);
     });
