@@ -329,6 +329,30 @@ The component shows all the available filters.
 
 No options
 
+## Basic usage example Activiti Checklist
+
+The component shows the checklist task functionality.
+
+```html
+<activiti-checklist></activiti-checklist>
+```
+
+#### Options
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `taskId` | {string} | required | The id of the parent task which sub tasks are attached on. |
+| `readOnlyForm` | {boolean} | optional | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
+| `assignee` | {string} | required | The assignee id where the subtasks are assigned to. |
+
+## Basic usage example Activiti Checklist
+
+The component shows all the available filters.
+
+```html
+<activiti-checklist [readOnly]="false" [taskId]="taskId" [assignee]="taskAssignee.id" #activitichecklist></activiti-checklist>
+```
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:

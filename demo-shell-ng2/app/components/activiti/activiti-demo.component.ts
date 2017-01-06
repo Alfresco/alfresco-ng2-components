@@ -122,6 +122,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
             ]
         );
+        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);

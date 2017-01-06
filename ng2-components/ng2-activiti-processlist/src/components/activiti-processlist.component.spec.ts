@@ -21,7 +21,7 @@ import { Observable } from 'rxjs/Rx';
 import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
 
 import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule, ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataTableModule, ObjectDataRow, DataRowEvent, ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 import { TranslationMock } from './../assets/translation.service.mock';
 import { ProcessInstance } from '../models/process-instance.model';
@@ -275,7 +275,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
         });
 
         it('should reload the list when the sort parameter changes', (done) => {
-            const sort = 'desc';
+            const sort = 'created-desc';
             let change = new SimpleChange(null, sort);
 
             component.onSuccess.subscribe((res) => {
@@ -287,6 +287,21 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 done();
             });
 
+            component.ngOnChanges({'sort': change});
+        });
+
+        it('should sort the list when the sort parameter changes', (done) => {
+            const sort = 'created-asc';
+            let change = new SimpleChange(null, sort);
+            let sortSpy = spyOn(component.data, 'setSorting');
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(sortSpy).toHaveBeenCalledWith(new DataSorting('started', 'asc'));
+                done();
+            });
+
+            component.sort = sort;
             component.ngOnChanges({'sort': change});
         });
 

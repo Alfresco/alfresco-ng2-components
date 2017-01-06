@@ -38,6 +38,9 @@ export class ActivitiChecklist implements OnInit, OnChanges {
     @Input()
     readOnly: boolean = false;
 
+    @Input()
+    assignee: string;
+
     @ViewChild('dialog')
     dialog: any;
 
@@ -105,7 +108,11 @@ export class ActivitiChecklist implements OnInit, OnChanges {
     }
 
     public add() {
-        let newTask = new TaskDetailsModel({name: this.taskName, parentTaskId: this.taskId, assignee: {id: '1'}});
+        let newTask = new TaskDetailsModel({
+            name: this.taskName,
+            parentTaskId: this.taskId,
+            assignee: { id: this.assignee }
+        });
         this.activitiTaskList.addTask(newTask).subscribe(
             (res: TaskDetailsModel) => {
                 this.checklist.push(res);
@@ -114,7 +121,6 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                 this.logService.error(err);
             }
         );
-
         this.cancel();
     }
 
