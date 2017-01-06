@@ -20,7 +20,6 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TaskDetailsModel } from 'ng2-activiti-tasklist';
 import { Observable, Observer } from 'rxjs/Rx';
-import { DatePipe } from '@angular/common';
 import { ProcessInstance } from '../models/process-instance.model';
 
 declare let componentHandler: any;
@@ -87,9 +86,11 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let processInstanceDetails = changes['processInstanceDetails'];
-        if (processInstanceDetails && processInstanceDetails.currentValue) {
-            this.load(processInstanceDetails.currentValue.id);
+        this. processInstanceDetails = new ProcessInstance(changes['processInstanceDetails'].currentValue);
+
+        let processInstanceChangeDetails = changes['processInstanceDetails'];
+        if (processInstanceChangeDetails && processInstanceChangeDetails.currentValue) {
+            this.load(processInstanceChangeDetails.currentValue.id);
         }
     }
 
@@ -104,7 +105,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
             this.activitiProcess.getProcessTasks(processId, null).subscribe(
                 (res: TaskDetailsModel[]) => {
                     res.forEach((task) => {
-                        this.taskObserver.next(task);
+                        this.taskObserver.next(new TaskDetailsModel(task));
                     });
                 },
                 (err) => {
@@ -122,7 +123,7 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
             this.activitiProcess.getProcessTasks(processId, 'completed').subscribe(
                 (res: TaskDetailsModel[]) => {
                     res.forEach((task) => {
-                        this.completedTaskObserver.next(task);
+                        this.completedTaskObserver.next(new TaskDetailsModel(task));
                     });
                 },
                 (err) => {
@@ -138,22 +139,20 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
         return this.processInstanceDetails && this.processInstanceDetails.startFormDefined === true;
     }
 
-    getUserFullName(user: any) {
-        if (user) {
-            return (user.firstName && user.firstName !== 'null'
-                    ? user.firstName + ' ' : '') +
-                user.lastName;
-        }
-        return 'Nobody';
+    getUserTaskFullName(task: TaskDetailsModel) {
+        return task.assigneeFullName;
     }
 
-    getFormatDate(value, format: string) {
-        let datePipe = new DatePipe('en-US');
-        try {
-            return datePipe.transform(value, format);
-        } catch (err) {
-            console.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
-        }
+    getProcessInstanceStartedByFullName(processInstanceDetails: ProcessInstance) {
+        return processInstanceDetails.startedByFullName;
+    }
+
+    getProcessInstanceFormatStartDate(processInstanceDetails: ProcessInstance) {
+        return processInstanceDetails.startedFormatDate;
+    }
+
+    getFormatDate(task: TaskDetailsModel) {
+        return task.createdFormatDate;
     }
 
     public clickTask($event: any, task: TaskDetailsModel) {

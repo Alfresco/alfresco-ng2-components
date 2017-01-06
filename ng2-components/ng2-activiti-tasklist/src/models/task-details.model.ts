@@ -23,6 +23,7 @@
  * @returns {TaskDetailsModel} .
  */
 import { User } from './user.model';
+import { DatePipe } from '@angular/common';
 
 export class TaskDetailsModel {
     id: string;
@@ -56,6 +57,8 @@ export class TaskDetailsModel {
     processInstanceName: string;
     processInstanceStartUserId: string;
     taskDefinitionKey: string;
+    assigneeFullName: string;
+    createdFormatDate: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
@@ -89,5 +92,27 @@ export class TaskDetailsModel {
         this.processInstanceName = obj && obj.processInstanceName || null;
         this.processInstanceStartUserId = obj && obj.processInstanceStartUserId || null;
         this.taskDefinitionKey = obj && obj.taskDefinitionKey || null;
+
+        this.assigneeFullName = this.getUserFullName(this.assignee) || null;
+        this.createdFormatDate = this.getFormatDate(this.created, 'mediumDate') || null;
     }
+
+    getUserFullName(user: any) {
+        if (user) {
+            return (user.firstName && user.firstName !== 'null'
+                    ? user.firstName + ' ' : '') +
+                user.lastName;
+        }
+        return 'Nobody';
+    }
+
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            console.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
+        }
+    }
+
 }

@@ -16,7 +16,7 @@
             <span class="mdl-list__item-primary-content" (click)="clickTask($event, task)">
                 <i class="material-icons mdl-list__item-icon">assignment</i>
                 <span>{{task.name}}</span>
-                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}</span>
+                <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user: getUserTaskFullName(task), created: getFormatDate(task) } }}</span>
             </span>
         </li>
     </ul>
@@ -39,7 +39,7 @@
                     <i class="material-icons mdl-list__item-icon">assignment</i>
                     <span>{{ 'DETAILS.LABELS.START_FORM'|translate }}</span>
                 <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:
-                    getUserFullName(processInstanceDetails.startedBy), created: getFormatDate(processInstanceDetails.started, 'mediumDate') } }}</span>
+                    getProcessInstanceStartedByFullName(processInstanceDetails), created: getProcessInstanceFormatStartDate(processInstanceDetails, 'mediumDate') } }}</span>
                 </span>
             </li>
         </ul>
@@ -58,7 +58,7 @@
                 <i class="material-icons mdl-list__item-icon">assignment</i>
                 <span>{{task.name}}</span>
                 <span class="mdl-list__item-sub-title">{{ 'DETAILS.LABELS.TASK_SUBTITLE' | translate:{user:
-                    getUserFullName(task.assignee), created: getFormatDate(task.created, 'mediumDate') } }}</span>
+                    getUserTaskFullName(task), created: getFormatDate(task) } }}</span>
             </span>
         </li>
     </ul>

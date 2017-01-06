@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { DatePipe } from '@angular/common';
 
 export class ProcessInstance {
 
@@ -35,6 +36,9 @@ export class ProcessInstance {
     public suspended: boolean;
     public tenantId: string;
     public variables: any;
+    public startedByFullName: string;
+    public startedFormatDate: string;
+    public endedFormatDate: string;
 
     constructor(data?: any) {
         this.businessKey = data && data.businessKey !== undefined ? data.businessKey : null;
@@ -55,6 +59,28 @@ export class ProcessInstance {
         this.suspended = data && data.suspended !== undefined ? data.suspended : null;
         this.tenantId = data && data.tenantId !== undefined ? data.tenantId : null;
         this.variables = data && data.variables !== undefined ? data.variables : null;
+
+        this.startedByFullName = this.getUserFullName(this.startedBy) || null;
+        this.startedFormatDate = this.getFormatDate(this.started, 'mediumDate') || null;
+        this.endedFormatDate = this.getFormatDate(this.ended, 'mediumDate') || null;
+    }
+
+    getUserFullName(user: any) {
+        if (user) {
+            return (user.firstName && user.firstName !== 'null'
+                    ? user.firstName + ' ' : '') +
+                user.lastName;
+        }
+        return 'Nobody';
+    }
+
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            console.error(`ProcessListInstanceTask: error parsing date ${value} to format ${format}`);
+        }
     }
 
 }
