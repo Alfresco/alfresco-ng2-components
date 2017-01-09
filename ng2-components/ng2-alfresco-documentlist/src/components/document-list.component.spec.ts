@@ -17,7 +17,8 @@
 
 import { NgZone, SimpleChange, TemplateRef } from '@angular/core';
 import { DataTableComponent, DataColumn, DataRowEvent } from 'ng2-alfresco-datatable';
-import { DocumentList } from './document-list';
+
+import { DocumentListComponent } from './document-list.component';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
@@ -27,14 +28,14 @@ import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatabl
 describe('DocumentList', () => {
 
     let documentListService: DocumentListServiceMock;
-    let documentList: DocumentList;
+    let documentList: DocumentListComponent;
     let eventMock: any;
     let componentHandler;
 
     beforeEach(() => {
         documentListService = new DocumentListServiceMock();
         let zone = new NgZone(false);
-        documentList = new DocumentList(documentListService, zone, null);
+        documentList = new DocumentListComponent(documentListService, zone, null);
 
         eventMock = {
             preventDefault: function () {
@@ -154,7 +155,7 @@ describe('DocumentList', () => {
 
         spyOn(documentList, 'loadFolder').and.returnValue(Promise.resolve(true));
 
-        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(node);
 
         expect(documentList.loadFolder).toHaveBeenCalled();
@@ -227,7 +228,7 @@ describe('DocumentList', () => {
             expect(e.value).toBe(file);
             done();
         });
-        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(file);
     });
 
@@ -237,7 +238,7 @@ describe('DocumentList', () => {
             expect(e.value).toBe(file);
             done();
         });
-        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(file);
     });
 
@@ -245,7 +246,7 @@ describe('DocumentList', () => {
         let folder = new FolderNode();
         spyOn(documentList, 'performNavigation').and.stub();
 
-        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(folder);
         expect(documentList.performNavigation).toHaveBeenCalled();
     });
@@ -254,7 +255,7 @@ describe('DocumentList', () => {
         let folder = new FolderNode();
         spyOn(documentList, 'performNavigation').and.stub();
 
-        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
         expect(documentList.performNavigation).toHaveBeenCalled();
     });
@@ -263,7 +264,7 @@ describe('DocumentList', () => {
         let folder = new FolderNode();
         spyOn(documentList, 'performNavigation').and.stub();
 
-        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
 
         expect(documentList.performNavigation).not.toHaveBeenCalled();
@@ -274,7 +275,7 @@ describe('DocumentList', () => {
         spyOn(documentList, 'performNavigation').and.stub();
 
         documentList.navigate = false;
-        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
 
         expect(documentList.performNavigation).not.toHaveBeenCalled();
@@ -300,13 +301,13 @@ describe('DocumentList', () => {
         file.entry = null;
         let called = false;
 
-        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.preview.subscribe(val => called = true);
 
         documentList.onNodeClick(file);
         expect(called).toBeFalsy();
 
-        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(file);
         expect(called).toBeFalsy();
     });
@@ -316,10 +317,10 @@ describe('DocumentList', () => {
         folder.entry = null;
         spyOn(documentList, 'performNavigation').and.stub();
 
-        documentList.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         documentList.onNodeClick(folder);
 
-        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.onNodeDblClick(folder);
 
         expect(documentList.performNavigation).not.toHaveBeenCalled();
@@ -391,10 +392,10 @@ describe('DocumentList', () => {
 
     it('should enforce single-click on mobile browser', () => {
         spyOn(documentList, 'isMobile').and.returnValue(true);
-        documentList.navigationMode = DocumentList.DOUBLE_CLICK_NAVIGATION;
+        documentList.navigationMode = DocumentListComponent.DOUBLE_CLICK_NAVIGATION;
         documentList.ngOnInit();
         expect(documentList.isMobile).toHaveBeenCalled();
-        expect(documentList.navigationMode).toBe(DocumentList.SINGLE_CLICK_NAVIGATION);
+        expect(documentList.navigationMode).toBe(DocumentListComponent.SINGLE_CLICK_NAVIGATION);
     });
 
     it('should emit error on wrong folder id', (done) => {

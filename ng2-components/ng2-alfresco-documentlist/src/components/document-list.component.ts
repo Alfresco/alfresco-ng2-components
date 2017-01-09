@@ -29,10 +29,10 @@ declare var module: any;
 @Component({
     moduleId: module.id,
     selector: 'alfresco-document-list',
-    styleUrls: ['./document-list.css'],
-    templateUrl: './document-list.html'
+    styleUrls: ['./document-list.component.css'],
+    templateUrl: './document-list.component.html'
 })
-export class DocumentList implements OnInit, OnChanges, AfterContentInit {
+export class DocumentListComponent implements OnInit, OnChanges, AfterContentInit {
 
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
@@ -47,7 +47,7 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     navigate: boolean = true;
 
     @Input()
-    navigationMode: string = DocumentList.DOUBLE_CLICK_NAVIGATION; // click|dblclick
+    navigationMode: string = DocumentListComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
     @Input()
     thumbnails: boolean = false;
@@ -65,7 +65,7 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
     creationMenuActions: boolean = true;
 
     @Input()
-    pageSize: number = DocumentList.DEFAULT_PAGE_SIZE;
+    pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
 
     @Input()
     set rowFilter(value: RowFilter) {
@@ -156,7 +156,7 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
 
         // Automatically enforce single-click navigation for mobile browsers
         if (this.isMobile()) {
-            this.navigationMode = DocumentList.SINGLE_CLICK_NAVIGATION;
+            this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         }
 
         this.loadFolder();
@@ -309,7 +309,7 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
             value: node
         });
 
-        if (this.navigate && this.navigationMode === DocumentList.SINGLE_CLICK_NAVIGATION) {
+        if (this.navigate && this.navigationMode === DocumentListComponent.SINGLE_CLICK_NAVIGATION) {
             if (node && node.entry) {
                 if (node.entry.isFile) {
                     this.onPreviewFile(node);
@@ -332,7 +332,7 @@ export class DocumentList implements OnInit, OnChanges, AfterContentInit {
             value: node
         });
 
-        if (this.navigate && this.navigationMode === DocumentList.DOUBLE_CLICK_NAVIGATION) {
+        if (this.navigate && this.navigationMode === DocumentListComponent.DOUBLE_CLICK_NAVIGATION) {
             if (node && node.entry) {
                 if (node.entry.isFile) {
                     this.onPreviewFile(node);

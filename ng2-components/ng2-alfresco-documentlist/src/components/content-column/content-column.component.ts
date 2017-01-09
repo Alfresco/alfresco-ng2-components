@@ -16,14 +16,15 @@
  */
 
 import { Component, OnInit, Input } from '@angular/core';
-import { ContentColumnList } from './content-column-list';
 import { DataColumn } from 'ng2-alfresco-datatable';
+
+import { ContentColumnListComponent } from './content-column-list.component';
 
 @Component({
     selector: 'content-column',
     template: ''
 })
-export class ContentColumn implements OnInit, DataColumn {
+export class ContentColumnComponent implements OnInit, DataColumn {
 
     @Input()
     key: string;
@@ -49,7 +50,7 @@ export class ContentColumn implements OnInit, DataColumn {
     @Input('class')
     cssClass: string;
 
-    constructor(private list: ContentColumnList) {}
+    constructor(private list: ContentColumnListComponent) {}
 
     ngOnInit() {
         if (!this.srTitle && this.key === '$thumbnail') {

@@ -19,26 +19,26 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
 
-import { DocumentList } from './src/components/document-list';
-import { DocumentMenuAction } from './src/components/document-menu-action';
-import { ContentColumn } from './src/components/content-column';
-import { ContentColumnList } from './src/components/content-column-list';
-import { ContentAction } from './src/components/content-action';
-import { ContentActionList } from './src/components/content-action-list';
-import { EmptyFolderContent } from './src/components/empty-folder-content';
-import { DocumentListBreadcrumb } from './src/components/breadcrumb/breadcrumb.component';
+import { DocumentListComponent } from './src/components/document-list.component';
+import { DocumentMenuActionComponent } from './src/components/document-menu-action.component';
+import { ContentColumnComponent } from './src/components/content-column/content-column.component';
+import { ContentColumnListComponent } from './src/components/content-column/content-column-list.component';
+import { ContentActionComponent } from './src/components/content-action/content-action.component';
+import { ContentActionListComponent } from './src/components/content-action/content-action-list.component';
+import { EmptyFolderContentComponent } from './src/components/empty-folder/empty-folder-content.component';
+import { DocumentListBreadcrumbComponent } from './src/components/breadcrumb/breadcrumb.component';
 
 import { FolderActionsService } from './src/services/folder-actions.service';
 import { DocumentActionsService } from './src/services/document-actions.service';
 import { DocumentListService } from './src/services/document-list.service';
 
 // components
-export * from './src/components/document-list';
-export * from './src/components/content-column';
-export * from './src/components/content-column-list';
-export * from './src/components/content-action';
-export * from './src/components/content-action-list';
-export * from './src/components/empty-folder-content';
+export * from './src/components/document-list.component';
+export * from './src/components/content-column/content-column.component';
+export * from './src/components/content-column/content-column-list.component';
+export * from './src/components/content-action/content-action.component';
+export * from './src/components/content-action/content-action-list.component';
+export * from './src/components/empty-folder/empty-folder-content.component';
 export * from './src/components/breadcrumb/breadcrumb.component';
 
 // data
@@ -54,14 +54,14 @@ export * from './src/models/content-action.model';
 export * from './src/models/document-library.model';
 
 export const DOCUMENT_LIST_DIRECTIVES: any[] = [
-    DocumentList,
-    DocumentMenuAction,
-    ContentColumn,
-    ContentColumnList,
-    ContentAction,
-    ContentActionList,
-    EmptyFolderContent,
-    DocumentListBreadcrumb
+    DocumentListComponent,
+    DocumentMenuActionComponent,
+    ContentColumnComponent,
+    ContentColumnListComponent,
+    ContentActionComponent,
+    ContentActionListComponent,
+    EmptyFolderContentComponent,
+    DocumentListBreadcrumbComponent
 ];
 
 export const DOCUMENT_LIST_PROVIDERS: any[] = [

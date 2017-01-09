@@ -15,26 +15,19 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit,
-    OnChanges,
-    Input,
-    Output,
-    EventEmitter
-} from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-import { ContentActionModel } from './../models/content-action.model';
-import { ContentActionList } from './content-action-list';
-import { DocumentActionsService } from '../services/document-actions.service';
-import { FolderActionsService } from '../services/folder-actions.service';
-import { ContentActionHandler } from '../models/content-action.model';
+import { ContentActionListComponent } from './content-action-list.component';
+import { ContentActionModel } from './../../models/content-action.model';
+import { DocumentActionsService } from '../../services/document-actions.service';
+import { FolderActionsService } from '../../services/folder-actions.service';
+import { ContentActionHandler } from '../../models/content-action.model';
 
 @Component({
     selector: 'content-action',
     template: ''
 })
-export class ContentAction implements OnInit, OnChanges {
+export class ContentActionComponent implements OnInit, OnChanges {
 
     @Input()
     title: string = 'Action';
@@ -54,7 +47,7 @@ export class ContentAction implements OnInit, OnChanges {
     model: ContentActionModel;
 
     constructor(
-        private list: ContentActionList,
+        private list: ContentActionListComponent,
         private documentActions: DocumentActionsService,
         private folderActions: FolderActionsService) {
         this.model = new ContentActionModel();

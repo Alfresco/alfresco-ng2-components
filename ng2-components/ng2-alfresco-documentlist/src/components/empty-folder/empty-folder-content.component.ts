@@ -15,23 +15,18 @@
  * limitations under the License.
  */
 
-import {
-    Directive,
-    ContentChild,
-    TemplateRef,
-    AfterContentInit
-} from '@angular/core';
-import { DocumentList } from './document-list';
+import { Directive, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
+import { DocumentListComponent } from './../document-list.component';
 
 @Directive({
     selector: 'empty-folder-content'
 })
-export class EmptyFolderContent implements AfterContentInit {
+export class EmptyFolderContentComponent implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;
 
-    constructor(private documentList: DocumentList) {
+    constructor(private documentList: DocumentListComponent) {
     }
 
     ngAfterContentInit() {

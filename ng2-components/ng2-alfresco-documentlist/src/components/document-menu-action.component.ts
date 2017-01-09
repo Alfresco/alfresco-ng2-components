@@ -18,6 +18,7 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
+
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 
@@ -28,10 +29,10 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
 @Component({
     moduleId: module.id,
     selector: 'alfresco-document-menu-action',
-    styleUrls: ['./document-menu-action.css'],
-    templateUrl: './document-menu-action.html'
+    styleUrls: ['./document-menu-action.component.css'],
+    templateUrl: './document-menu-action.component.html'
 })
-export class DocumentMenuAction {
+export class DocumentMenuActionComponent {
 
     @Input()
     folderId: string;

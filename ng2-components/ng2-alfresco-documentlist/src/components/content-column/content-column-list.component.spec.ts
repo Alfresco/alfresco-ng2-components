@@ -17,19 +17,19 @@
 
 import { DataColumn } from 'ng2-alfresco-datatable';
 
-import { DocumentList } from './document-list';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
-import { ContentColumnList } from './content-column-list';
+import { DocumentListComponent } from './../document-list.component';
+import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
+import { ContentColumnListComponent } from './content-column-list.component';
 
 describe('ContentColumnList', () => {
 
-    let documentList: DocumentList;
-    let columnList: ContentColumnList;
+    let documentList: DocumentListComponent;
+    let columnList: ContentColumnListComponent;
 
     beforeEach(() => {
         let service = new DocumentListServiceMock();
-        documentList = new DocumentList(service, null, null);
-        columnList = new ContentColumnList(documentList);
+        documentList = new DocumentListComponent(service, null, null);
+        columnList = new ContentColumnListComponent(documentList);
     });
 
     it('should register column within parent document list', () => {
@@ -45,7 +45,7 @@ describe('ContentColumnList', () => {
     });
 
     it('should require document list instance to register action', () => {
-        columnList = new ContentColumnList(null);
+        columnList = new ContentColumnListComponent(null);
         let col = <DataColumn> {};
         expect(columnList.registerColumn(col)).toBeFalsy();
     });

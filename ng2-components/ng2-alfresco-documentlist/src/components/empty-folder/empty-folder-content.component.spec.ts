@@ -15,21 +15,22 @@
  * limitations under the License.
  */
 
-import { EmptyFolderContent } from './empty-folder-content';
-import { DocumentList } from './document-list';
-import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { DataTableComponent } from 'ng2-alfresco-datatable';
+
+import { EmptyFolderContentComponent } from './empty-folder-content.component';
+import { DocumentListComponent } from './../document-list.component';
+import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
 
 describe('EmptyFolderContent', () => {
 
-    let emptyFolderContent: EmptyFolderContent;
-    let documentList: DocumentList;
+    let emptyFolderContent: EmptyFolderContentComponent;
+    let documentList: DocumentListComponent;
 
     beforeEach(() => {
         let documentListService = new DocumentListServiceMock();
-        documentList = new DocumentList(documentListService, null, null);
+        documentList = new DocumentListComponent(documentListService, null, null);
         documentList.dataTable = new DataTableComponent();
-        emptyFolderContent = new EmptyFolderContent(documentList);
+        emptyFolderContent = new EmptyFolderContentComponent(documentList);
     });
 
     it('is defined', () => {

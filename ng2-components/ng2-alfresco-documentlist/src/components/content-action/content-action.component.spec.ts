@@ -17,19 +17,19 @@
 
 import { EventEmitter } from '@angular/core';
 
-import { DocumentList } from './document-list';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
-import { ContentActionList } from './content-action-list';
-import { ContentAction } from './content-action';
-import { DocumentActionsService } from '../services/document-actions.service';
-import { FolderActionsService } from '../services/folder-actions.service';
-import { ContentActionHandler } from '../models/content-action.model';
-import { FileNode } from '../assets/document-library.model.mock';
+import { DocumentListComponent } from './../document-list.component';
+import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
+import { ContentActionListComponent } from './content-action-list.component';
+import { ContentActionComponent } from './content-action.component';
+import { DocumentActionsService } from './../../services/document-actions.service';
+import { FolderActionsService } from './../../services/folder-actions.service';
+import { ContentActionHandler } from './../../models/content-action.model';
+import { FileNode } from './../../assets/document-library.model.mock';
 
 describe('ContentAction', () => {
 
-    let documentList: DocumentList;
-    let actionList: ContentActionList;
+    let documentList: DocumentListComponent;
+    let actionList: ContentActionListComponent;
     let documentActions: DocumentActionsService;
     let folderActions: FolderActionsService;
 
@@ -38,21 +38,21 @@ describe('ContentAction', () => {
         documentActions = new DocumentActionsService(null, null);
         folderActions = new FolderActionsService(null);
 
-        documentList = new DocumentList(documentServiceMock, null, null);
-        actionList = new ContentActionList(documentList);
+        documentList = new DocumentListComponent(documentServiceMock, null, null);
+        actionList = new ContentActionListComponent(documentList);
     });
 
     it('should register within parent actions list', () => {
         spyOn(actionList, 'registerAction').and.stub();
 
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         action.ngOnInit();
 
         expect(actionList.registerAction).toHaveBeenCalled();
     });
 
     it('should setup and register model', () => {
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         action.target = 'document';
         action.title = '<title>';
         action.icon = '<icon>';
@@ -73,7 +73,7 @@ describe('ContentAction', () => {
         let handler = function() {};
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
 
-        let action = new ContentAction(actionList, documentActions, null);
+        let action = new ContentActionComponent(actionList, documentActions, null);
         action.target = 'document';
         action.handler = '<handler>';
         action.ngOnInit();
@@ -89,7 +89,7 @@ describe('ContentAction', () => {
         let handler = function() {};
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
 
-        let action = new ContentAction(actionList, null, folderActions);
+        let action = new ContentActionComponent(actionList, null, folderActions);
         action.target = 'folder';
         action.handler = '<handler>';
         action.ngOnInit();
@@ -105,7 +105,7 @@ describe('ContentAction', () => {
         spyOn(folderActions, 'getHandler').and.stub();
         spyOn(documentActions, 'getHandler').and.stub();
 
-        let action = new ContentAction(actionList, documentActions, folderActions);
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
         action.handler = '<handler>';
 
         action.ngOnInit();
@@ -125,7 +125,7 @@ describe('ContentAction', () => {
     it('should be case insensitive for document target', () => {
         spyOn(documentActions, 'getHandler').and.stub();
 
-        let action = new ContentAction(actionList, documentActions, null);
+        let action = new ContentActionComponent(actionList, documentActions, null);
         action.target = 'DoCuMeNt';
         action.handler = '<handler>';
 
@@ -136,7 +136,7 @@ describe('ContentAction', () => {
     it('should be case insensitive for folder target', () => {
         spyOn(folderActions, 'getHandler').and.stub();
 
-        let action = new ContentAction(actionList, null, folderActions);
+        let action = new ContentActionComponent(actionList, null, folderActions);
         action.target = 'FoLdEr';
         action.handler = '<handler>';
 
@@ -152,7 +152,7 @@ describe('ContentAction', () => {
             done();
         });
 
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         action.target = 'document';
         action.execute = emitter;
 
@@ -165,7 +165,7 @@ describe('ContentAction', () => {
 
     it('should sync localizable fields with model', () => {
 
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         action.title = 'title1';
         action.ngOnInit();
 
@@ -178,25 +178,25 @@ describe('ContentAction', () => {
     });
 
     it('should not find document action handler with missing service', () => {
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         expect(action.getSystemHandler('document', 'name')).toBeNull();
     });
 
     it('should not find folder action handler with missing service', () => {
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         expect(action.getSystemHandler('folder', 'name')).toBeNull();
     });
 
     it('should find document action handler via service', () => {
         let handler = <ContentActionHandler> function (obj: any, target?: any) {};
-        let action = new ContentAction(actionList, documentActions, null);
+        let action = new ContentActionComponent(actionList, documentActions, null);
         spyOn(documentActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('document', 'name')).toBe(handler);
     });
 
     it('should find folder action handler via service', () => {
         let handler = <ContentActionHandler> function (obj: any, target?: any) {};
-        let action = new ContentAction(actionList, null, folderActions);
+        let action = new ContentActionComponent(actionList, null, folderActions);
         spyOn(folderActions, 'getHandler').and.returnValue(handler);
         expect(action.getSystemHandler('folder', 'name')).toBe(handler);
     });
@@ -205,7 +205,7 @@ describe('ContentAction', () => {
         spyOn(folderActions, 'getHandler').and.stub();
         spyOn(documentActions, 'getHandler').and.stub();
 
-        let action = new ContentAction(actionList, documentActions, folderActions);
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
 
         expect(action.getSystemHandler('unknown', 'name')).toBeNull();
         expect(folderActions.getHandler).not.toHaveBeenCalled();
@@ -214,7 +214,7 @@ describe('ContentAction', () => {
     });
 
     it('should wire model with custom event handler', (done) => {
-        let action = new ContentAction(actionList, documentActions, folderActions);
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
         let file = new FileNode();
 
         let handler = new EventEmitter();
@@ -230,7 +230,7 @@ describe('ContentAction', () => {
     });
 
     it('should allow registering model without handler', () => {
-        let action = new ContentAction(actionList, documentActions, folderActions);
+        let action = new ContentActionComponent(actionList, documentActions, folderActions);
 
         spyOn(actionList, 'registerAction').and.callThrough();
         action.execute = null;
@@ -241,7 +241,7 @@ describe('ContentAction', () => {
     });
 
     it('should register on init', () => {
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         spyOn(action, 'register').and.callThrough();
 
         action.ngOnInit();
@@ -249,10 +249,10 @@ describe('ContentAction', () => {
     });
 
     it('should require action list to register action with', () => {
-        let action = new ContentAction(actionList, null, null);
+        let action = new ContentActionComponent(actionList, null, null);
         expect(action.register()).toBeTruthy();
 
-        action = new ContentAction(null, null, null);
+        action = new ContentActionComponent(null, null, null);
         expect(action.register()).toBeFalsy();
     });
 });
