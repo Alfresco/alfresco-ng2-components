@@ -16,15 +16,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { SettingsService } from './settings.service';
 import { LogService } from './log.service';
 
 /** @deprecated AlfrescoSettingsService is deprecated. Use SettingsService instead */
 @Injectable()
-export class AlfrescoSettingsService extends SettingsService {
+export class AlfrescoSettingsService {
 
     constructor(logService: LogService) {
-        super();
-        logService.warn('Warning: AlfrescoSettingsService is deprecated. Use SettingsService instead.');
+        logService.error('ERROR: AlfrescoSettingsService is deprecated. Use SettingsService instead.');
     }
 }

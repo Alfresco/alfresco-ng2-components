@@ -22,7 +22,7 @@ import { DocumentListService } from './../services/document-list.service';
 import {
     SettingsService,
     AuthService,
-    AlfrescoContentService,
+    ContentService,
     AlfrescoApiService,
     LogService
 } from 'ng2-alfresco-core';
@@ -36,7 +36,7 @@ export class DocumentListServiceMock extends DocumentListService {
     constructor(
         settings?: SettingsService,
         authService?: AuthService,
-        contentService?: AlfrescoContentService,
+        contentService?: ContentService,
         apiService?: AlfrescoApiService,
         logService?: LogService,
     ) {

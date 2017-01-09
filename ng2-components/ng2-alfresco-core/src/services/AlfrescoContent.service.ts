@@ -18,17 +18,15 @@
 import { Injectable } from '@angular/core';
 import { LogService } from './log.service';
 import { AuthService } from './auth.service';
-import { ContentService } from './content.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 
 /** @deprecated AlfrescoContentService is deprecated. Use ContentService instead */
 @Injectable()
-export class AlfrescoContentService extends ContentService {
+export class AlfrescoContentService {
 
     constructor(authService: AuthService,
                 apiService: AlfrescoApiService,
                 logService: LogService) {
-        super(authService, apiService);
-        logService.warn('Warning: AlfrescoContentService is deprecated. Use ContentService instead.');
+        logService.error('ERROR: AlfrescoContentService is deprecated. Use ContentService instead.');
     }
 }

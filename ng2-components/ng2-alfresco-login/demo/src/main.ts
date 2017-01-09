@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -32,14 +32,14 @@ import { LoginModule } from 'ng2-alfresco-login';
 
         <p style="width:120px;margin: 20px;">
         <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-            <input type="checkbox" id="switch1" class="mdl-switch__input" checked
+            <input type="checkbox" id="switch1" class="mdl-switch__input" [checked]="isECM"
              (click)="toggleECM(ecm.checked)" #ecm>
             <span class="mdl-switch__label">ECM</span>
         </label>
         </p>
         <p style="width:120px;margin: 20px;">
             <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                <input type="checkbox" id="switch2" class="mdl-switch__input"
+                <input type="checkbox" id="switch2" class="mdl-switch__input" [checked]="isBPM"
                  (click)="toggleBPM(bpm.checked)" #bpm>
                 <span class="mdl-switch__label">BPM</span>
             </label>
@@ -59,14 +59,16 @@ import { LoginModule } from 'ng2-alfresco-login';
                        (onSuccess)="mySuccessMethod($event)"
                        (onError)="myErrorMethod($event)"></alfresco-login>`
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     ecmHost: string = 'http://localhost:8080';
     bpmHost: string = 'http://localhost:9999';
     ticket: string;
     status: string = '';
-    providers: string = 'ECM';
+    providers: string = 'ALL';
     disableCsrf: boolean = false;
+    isECM: boolean = true;
+    isBPM: boolean = false;
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
@@ -75,6 +77,11 @@ export class AppComponent {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.bpmHost = this.bpmHost;
+    }
+
+    ngOnInit() {
+        this.settingsService.setProviders(this.providers);
+        this.initProviders();
     }
 
     updateEcmHost(): void {
@@ -95,25 +102,48 @@ export class AppComponent {
         this.status = $event.value;
     }
 
-    toggleECM(checked) {
-        if (checked && this.providers === 'BPM') {
-            this.providers = 'ALL';
-        } else if (checked) {
-            this.providers = 'ECM';
-        } else if (!checked && this.providers === 'ALL') {
-            this.providers = 'BPM';
+    initProviders() {
+        if (this.providers === 'BPM') {
+            this.isECM = false;
+            this.isBPM = true;
+        } else if (this.providers === 'ECM') {
+            this.isECM = true;
+            this.isBPM = false;
+        } else if (this.providers === 'ALL') {
+            this.isECM = true;
+            this.isBPM = true;
         }
     }
 
-    toggleBPM(checked) {
-        if (checked && this.providers === 'ECM') {
-            this.providers = 'ALL';
-        } else if (checked) {
-            this.providers = 'BPM';
-        } else if (!checked && this.providers === 'ALL') {
-            this.providers = 'ECM';
-        }
+    toggleECM() {
+        this.isECM = !this.isECM;
+        this.settingsService.setProviders(this.updateProvider());
     }
+
+    toggleBPM() {
+        this.isBPM = !this.isBPM;
+        this.settingsService.setProviders(this.updateProvider());
+    }
+
+    updateProvider() {
+        if (this.isBPM && this.isECM) {
+            this.providers = 'ALL';
+            return this.providers;
+        }
+
+        if (this.isECM) {
+            this.providers = 'ECM';
+            return this.providers;
+        }
+
+        if (this.isBPM) {
+            this.providers = 'BPM';
+            return this.providers;
+        }
+
+        this.providers = '';
+        return this.providers;
+    };
 
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;

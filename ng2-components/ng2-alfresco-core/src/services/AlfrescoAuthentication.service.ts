@@ -20,16 +20,14 @@ import { LogService } from './log.service';
 import { SettingsService } from './settings.service';
 import { StorageService } from './storage.service';
 import { AlfrescoApiService } from './alfresco-api.service';
-import { AuthService } from './auth.service';
 
 /** @deprecated AlfrescoAuthenticationService is deprecated. Use AuthService instead */
 @Injectable()
-export class AlfrescoAuthenticationService extends AuthService {
+export class AlfrescoAuthenticationService {
     constructor(settingsService: SettingsService,
                 apiService: AlfrescoApiService,
                 storage: StorageService,
                 logService: LogService) {
-        super(settingsService, apiService, storage, logService);
-        logService.warn('Warning: AlfrescoAuthenticationService is deprecated. Use AuthService instead.');
+        logService.error('ERROR: AlfrescoAuthenticationService is deprecated. Use AuthService instead.');
     }
 }
