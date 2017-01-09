@@ -137,6 +137,17 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
         // do nothing
     }
 
+    /** @override */
+    onRefreshClicked() {
+        if (this.processDefinitionId) {
+            this.visibilityService.cleanProcessVariable();
+            this.getStartFormDefinition(this.processDefinitionId);
+        } else if (this.processId) {
+            this.visibilityService.cleanProcessVariable();
+            this.loadStartForm(this.processId);
+        }
+    }
+
     completeTaskForm(outcome?: string) {
         this.outcomeClick.emit(outcome);
     }
