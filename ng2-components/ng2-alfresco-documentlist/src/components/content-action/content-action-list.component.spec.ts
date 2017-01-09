@@ -15,20 +15,20 @@
  * limitations under the License.
  */
 
-import { DocumentList } from './document-list';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
-import { ContentActionModel } from './../models/content-action.model';
-import { ContentActionList } from './content-action-list';
+import { DocumentListComponent } from './../document-list.component';
+import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
+import { ContentActionModel } from './../../models/content-action.model';
+import { ContentActionListComponent } from './content-action-list.component';
 
 describe('ContentColumnList', () => {
 
-    let documentList: DocumentList;
-    let actionList: ContentActionList;
+    let documentList: DocumentListComponent;
+    let actionList: ContentActionListComponent;
 
     beforeEach(() => {
         let documentListService = new DocumentListServiceMock();
-        documentList = new DocumentList(documentListService, null, null);
-        actionList = new ContentActionList(documentList);
+        documentList = new DocumentListComponent(documentListService, null, null);
+        actionList = new ContentActionListComponent(documentList);
     });
 
     it('should register action', () => {
@@ -42,7 +42,7 @@ describe('ContentColumnList', () => {
     });
 
     it('should require document list instance to register action', () => {
-        actionList = new ContentActionList(null);
+        actionList = new ContentActionListComponent(null);
         let action = new ContentActionModel();
         expect(actionList.registerAction(action)).toBeFalsy();
     });

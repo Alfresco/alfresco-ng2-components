@@ -17,7 +17,7 @@
 
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { MinimalNodeEntryEntity, PathElementEntity } from 'alfresco-js-api';
-import { DocumentList } from '../document-list';
+import { DocumentListComponent } from '../document-list.component';
 
 @Component({
     moduleId: module.id,
@@ -25,13 +25,13 @@ import { DocumentList } from '../document-list';
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.css']
 })
-export class DocumentListBreadcrumb implements OnChanges {
+export class DocumentListBreadcrumbComponent implements OnChanges {
 
     @Input()
     folderNode: MinimalNodeEntryEntity;
 
     @Input()
-    target: DocumentList;
+    target: DocumentListComponent;
 
     route: PathElementEntity[] = [];
 

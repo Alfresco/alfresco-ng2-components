@@ -16,17 +16,17 @@
  */
 
 import { Component } from '@angular/core';
-import { DocumentList } from './document-list';
 import { DataColumn } from 'ng2-alfresco-datatable';
+
+import { DocumentListComponent } from './../document-list.component';
 
 @Component({
     selector: 'content-columns',
     template: ''
 })
-export class ContentColumnList {
+export class ContentColumnListComponent {
 
-    constructor(
-        private documentList: DocumentList) {
+    constructor(private documentList: DocumentListComponent) {
     }
 
     /**

@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-import { DocumentList } from './document-list';
-import { ContentColumn } from './content-column';
-import { DocumentListServiceMock } from '../assets/document-list.service.mock';
-import { ContentColumnList } from './content-column-list';
+import { DocumentListComponent } from './../document-list.component';
+import { ContentColumnComponent } from './content-column.component';
+import { DocumentListServiceMock } from './../../assets/document-list.service.mock';
+import { ContentColumnListComponent } from './content-column-list.component';
 
 describe('ContentColumn', () => {
 
-    let documentList: DocumentList;
-    let columnList: ContentColumnList;
+    let documentList: DocumentListComponent;
+    let columnList: ContentColumnListComponent;
 
     beforeEach(() => {
         let service = new DocumentListServiceMock();
-        documentList = new DocumentList(service, null, null);
-        columnList = new ContentColumnList(documentList);
+        documentList = new DocumentListComponent(service, null, null);
+        columnList = new ContentColumnListComponent(documentList);
     });
 
     it('should register model within parent column list', () => {
         spyOn(columnList, 'registerColumn').and.callThrough();
 
-        let column = new ContentColumn(columnList);
+        let column = new ContentColumnComponent(columnList);
         column.ngOnInit();
 
         expect(columnList.registerColumn).toHaveBeenCalled();
@@ -45,7 +45,7 @@ describe('ContentColumn', () => {
     });
 
     it('should setup screen reader title for thumbnail column', () => {
-        let column = new ContentColumn(columnList);
+        let column = new ContentColumnComponent(columnList);
         column.key = '$thumbnail';
         column.ngOnInit();
 
@@ -53,7 +53,7 @@ describe('ContentColumn', () => {
     });
 
     it('should register on init', () => {
-        let column = new ContentColumn(columnList);
+        let column = new ContentColumnComponent(columnList);
         spyOn(column, 'register').and.callThrough();
 
         column.ngOnInit();
@@ -61,10 +61,10 @@ describe('ContentColumn', () => {
     });
 
     it('should require action list to register action with', () => {
-        let column = new ContentColumn(columnList);
+        let column = new ContentColumnComponent(columnList);
         expect(column.register()).toBeTruthy();
 
-        column = new ContentColumn(null);
+        column = new ContentColumnComponent(null);
         expect(column.register()).toBeFalsy();
     });
 

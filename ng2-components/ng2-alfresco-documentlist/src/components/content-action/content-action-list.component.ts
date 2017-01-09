@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
-import {DocumentList} from './document-list';
-import {ContentActionModel} from './../models/content-action.model';
+import { Component } from '@angular/core';
+
+import { DocumentListComponent } from './../document-list.component';
+import { ContentActionModel } from './../../models/content-action.model';
 
 @Component({
     selector: 'content-actions',
     template: ''
 })
-export class ContentActionList {
+export class ContentActionListComponent {
 
-    constructor(
-        private documentList: DocumentList) {
+    constructor(private documentList: DocumentListComponent) {
     }
 
     /**

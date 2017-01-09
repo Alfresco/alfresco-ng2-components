@@ -131,7 +131,7 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfr
 class DocumentListDemo {
 
     @ViewChild(DocumentList)
-    documentList: DocumentList;
+    documentList: DocumentListComponent;
 
     constructor(private authService: AlfrescoAuthenticationService, 
                 private settingsService: AlfrescoSettingsService) {
@@ -210,7 +210,7 @@ DocumentList provides simple breadcrumb element to indicate the current position
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `target` | DocumentList | DocumentList component to operate with. Upon clicks will instruct the given component to update. |
+| `target` | DocumentListComponent | DocumentList component to operate with. Upon clicks will instruct the given component to update. |
 | `folderNode` | MinimalNodeEntryEntity | Active node, builds UI based on `folderNode.path.elements` collection. |
 
 ### Creation Menu Action

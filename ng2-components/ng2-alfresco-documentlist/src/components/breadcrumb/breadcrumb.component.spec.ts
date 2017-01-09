@@ -16,15 +16,15 @@
  */
 
 import { PathElementEntity } from 'alfresco-js-api';
-import { DocumentListBreadcrumb } from './breadcrumb.component';
-import { DocumentList } from '../document-list';
+import { DocumentListBreadcrumbComponent } from './breadcrumb.component';
+import { DocumentListComponent } from '../document-list.component';
 
 describe('DocumentListBreadcrumb', () => {
 
     let component;
 
     beforeEach(() => {
-        component = new DocumentListBreadcrumb();
+        component = new DocumentListBreadcrumbComponent();
     });
 
     it('should set current path', () => {
@@ -50,7 +50,7 @@ describe('DocumentListBreadcrumb', () => {
     });
 
     it('should update document list on click', (done) => {
-        let documentList = new DocumentList(null, null, null);
+        let documentList = new DocumentListComponent(null, null, null);
         spyOn(documentList, 'loadFolderByNodeId').and.stub();
 
         let node = <PathElementEntity> { id: '-id-', name: 'name' };
