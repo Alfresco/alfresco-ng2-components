@@ -19,9 +19,9 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import {
     ActivitiApps,
     ActivitiFilters,
-    ActivitiTaskDetails,
     ActivitiTaskList,
-    FilterRepresentationModel
+    FilterRepresentationModel,
+    TaskDetailsEvent
 } from 'ng2-activiti-tasklist';
 import {
     ActivitiProcessFilters,
@@ -52,17 +52,11 @@ const currentProcessIdNew = '__NEW__';
 })
 export class ActivitiDemoComponent implements AfterViewInit {
 
-    @ViewChild(ActivitiApps)
-    activitiapps: ActivitiApps;
-
     @ViewChild(ActivitiFilters)
     activitifilter: ActivitiFilters;
 
     @ViewChild(ActivitiTaskList)
     activititasklist: ActivitiTaskList;
-
-    @ViewChild(ActivitiTaskDetails)
-    activitidetails: ActivitiTaskDetails;
 
     @ViewChild(ActivitiProcessFilters)
     activitiprocessfilter: ActivitiProcessFilters;
@@ -89,9 +83,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     taskSchemaColumns: any [] = [];
     processSchemaColumns: any [] = [];
 
-    processTabActivie: boolean = false;
-
-    reportsTabActivie: boolean = false;
+    activeTab: string = 'tasks'; // tasks|processes|reports
 
     taskFilter: FilterRepresentationModel;
     report: any;
@@ -219,10 +211,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.activitiprocesslist.reload();
     }
 
-    taskFormCompleted(data: any) {
-        this.activitiprocesslist.reload();
-    }
-
     onFormCompleted(form) {
         this.activititasklist.reload();
         this.currentTaskId = null;
@@ -237,14 +225,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.loadStencilScriptsInPageFromActiviti();
     }
 
-    activeProcess() {
-        this.processTabActivie = true;
-    }
-
-    activeReports() {
-        this.reportsTabActivie = true;
-    }
-
     loadStencilScriptsInPageFromActiviti() {
         this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
@@ -254,6 +234,12 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 this.elementRef.nativeElement.appendChild(s);
             }
         });
+    }
+
+    onProcessDetailsTaskClick(event: TaskDetailsEvent) {
+        event.preventDefault();
+        this.currentTaskId = event.value.id;
+        this.activeTab = 'tasks';
     }
 
 }

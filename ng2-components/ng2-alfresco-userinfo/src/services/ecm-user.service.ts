@@ -40,10 +40,8 @@ export class EcmUserService {
      */
     getUserInfo(userName: string): Observable<EcmUserModel> {
         return Observable.fromPromise(this.callApiGetPersonInfo(userName))
-            .map(
-                (data) => <EcmUserModel> data['entry']
-            )
-            .catch(this.handleError);
+            .map(data => <EcmUserModel> data['entry'])
+            .catch(err => this.handleError(err));
     }
 
     getCurrentUserInfo() {

@@ -17,12 +17,12 @@
 
 import { Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
+
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { ActivitiProcessInstanceHeader } from './activiti-process-instance-header.component';
 import { ActivitiProcessInstanceTasks } from './activiti-process-instance-tasks.component';
 import { ProcessInstance } from '../models/process-instance.model';
-
-declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-process-instance-details',
@@ -51,7 +51,7 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
     processCancelled: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
-    taskFormCompleted: EventEmitter<any> = new EventEmitter<any>();
+    taskClick: EventEmitter<TaskDetailsEvent> = new EventEmitter<TaskDetailsEvent>();
 
     processInstanceDetails: ProcessInstance;
 
@@ -98,10 +98,6 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
         }
     }
 
-    bubbleTaskFormCompleted(data: any) {
-        this.taskFormCompleted.emit(data);
-    }
-
     isRunning(): boolean {
         return this.processInstanceDetails && !this.processInstanceDetails.ended;
     }
@@ -113,5 +109,10 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
             }, (err) => {
                 this.logService.error(err);
             });
+    }
+
+    // bubbles (taskClick) event
+    onTaskClicked(event: TaskDetailsEvent) {
+        this.taskClick.emit(event);
     }
 }

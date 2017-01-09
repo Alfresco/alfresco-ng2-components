@@ -4,8 +4,10 @@
     <activiti-process-instance-header [processInstance]="processInstanceDetails"></activiti-process-instance-header>
     <div class="mdl-card mdl-shadow--2dp activiti-process-container">
         <div class="mdl-cell mdl-cell--12-col">
-            <activiti-process-instance-tasks [processInstanceDetails]="processInstanceDetails"
-                                             (taskFormCompleted)="bubbleTaskFormCompleted()"></activiti-process-instance-tasks>
+            <activiti-process-instance-tasks
+                [processInstanceDetails]="processInstanceDetails"
+                (taskClick)="onTaskClicked($event)">
+            </activiti-process-instance-tasks>
         </div>
     </div>
     <div class="mdl-cell mdl-cell--4-col" data-automation-id="header-status" *ngIf="isRunning()">
