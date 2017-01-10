@@ -86,7 +86,7 @@ export class AuthService {
                 this.loginSubject.next(response);
                 return {type: this.settingsService.getProviders(), ticket: response};
             })
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -112,7 +112,7 @@ export class AuthService {
                 this.logoutSubject.next(response);
                 return response;
             })
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
