@@ -41,7 +41,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     baseComponentPath = module.id.replace('/components/document-list.js', '');
 
     @Input()
-    fallbackThubnail: string = this.baseComponentPath + '/../assets/images/ft_ic_miscellaneous.svg';
+    fallbackThubnail: string = this.baseComponentPath + '/assets/images/ft_ic_miscellaneous.svg';
 
     @Input()
     navigate: boolean = true;
@@ -120,7 +120,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         private ngZone: NgZone,
         private translateService: AlfrescoTranslateService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, './..', []);
+        this.data = new ShareDataTableAdapter(this.documentListService, './', []);
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');

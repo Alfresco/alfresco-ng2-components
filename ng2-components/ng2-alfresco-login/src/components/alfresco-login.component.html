@@ -3,7 +3,8 @@
     <div class="login-card-wide mdl-card mdl-shadow--4dp">
         <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
-                <img class="center" [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'" alt="{{'LOGIN.LOGO' | translate }}">
+                <img class="center" [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'"
+                     alt="{{'LOGIN.LOGO' | translate }}">
             </div>
             <div class="mdl-card__supporting-text">
                 <div>

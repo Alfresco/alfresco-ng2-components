@@ -33,15 +33,15 @@ import { LoginModule } from 'ng2-alfresco-login';
 
                 <p style="width:120px;margin: 20px;">
                 <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                    <input type="checkbox" id="switch1" class="mdl-switch__input" checked
-                     (click)="toggleECM(ecm.checked)" #ecm>
+                    <input type="checkbox" id="switch1" class="mdl-switch__input" [checked]="isECM"
+                     (click)="toggleECM()" #ecm>
                     <span class="mdl-switch__label">ECM</span>
                 </label>
                 </p>
                 <p style="width:120px;margin: 20px;">
                     <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                        <input type="checkbox" id="switch2" class="mdl-switch__input"
-                         (click)="toggleBPM(bpm.checked)" #bpm>
+                        <input type="checkbox" id="switch2" class="mdl-switch__input" [checked]="isBPM"
+                         (click)="toggleBPM()" #bpm>
                         <span class="mdl-switch__label">BPM</span>
                     </label>
                 </p>
@@ -78,12 +78,14 @@ class UserInfoDemo implements OnInit {
     userToLogin: string = 'admin';
     password: string = 'admin';
     loginErrorMessage: string;
-    providers: string = 'BPM';
+    providers: string = 'ALL';
 
     private authenticated: boolean;
     private token: any;
 
     disableCsrf: boolean = false;
+    isECM: boolean = true;
+    isBPM: boolean = false;
 
     constructor(private authService: AuthService,
                 private settingsService: SettingsService,
@@ -94,6 +96,7 @@ class UserInfoDemo implements OnInit {
 
     ngOnInit() {
         this.settingsService.setProviders(this.providers);
+        this.initProviders();
     }
 
     logout() {
@@ -115,32 +118,59 @@ class UserInfoDemo implements OnInit {
             });
     }
 
-    isLoggedIn(): boolean {
-        return this.authService.isLoggedIn();
+    initProviders() {
+        if (this.providers === 'BPM') {
+            this.isECM = false;
+            this.isBPM = true;
+        } else if (this.providers === 'ECM') {
+            this.isECM = true;
+            this.isBPM = false;
+        } else if (this.providers === 'ALL') {
+            this.isECM = true;
+            this.isBPM = true;
+        }
     }
 
-    toggleECM(checked) {
-        if (checked && this.providers === 'BPM') {
+    toggleECM() {
+        this.isECM = !this.isECM;
+        this.settingsService.setProviders(this.updateProvider());
+    }
+
+    toggleBPM() {
+        this.isBPM = !this.isBPM;
+        this.settingsService.setProviders(this.updateProvider());
+    }
+
+    updateProvider() {
+        if (this.isBPM && this.isECM) {
             this.providers = 'ALL';
-        } else if (checked) {
+            return this.providers;
+        }
+
+        if (this.isECM) {
             this.providers = 'ECM';
-        } else {
-            this.providers = undefined;
+            return this.providers;
         }
-    }
 
-    toggleBPM(checked) {
-        if (checked && this.providers === 'ECM') {
-            this.providers = 'ALL';
-        } else if (checked) {
+        if (this.isBPM) {
             this.providers = 'BPM';
-        } else {
-            this.providers = undefined;
+            return this.providers;
         }
-    }
+
+        this.providers = '';
+        return this.providers;
+    };
 
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;
+    }
+
+    updateEcmHost(): void {
+        this.settingsService.ecmHost = this.ecmHost;
+    }
+
+    updateBpmHost(): void {
+        this.settingsService.bpmHost = this.bpmHost;
     }
 }
 

@@ -50,7 +50,7 @@ export class UserInfoComponent implements OnInit {
 
     bpmUser: BpmUserModel;
 
-    anonymousImageUrl: string = this.baseComponentPath + '/../assets/images/anonymous.gif';
+    anonymousImageUrl: string = this.baseComponentPath + '/assets/images/anonymous.gif';
 
     bpmUserImage: any;
 

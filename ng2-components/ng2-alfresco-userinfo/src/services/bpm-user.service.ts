@@ -29,7 +29,7 @@ import { BpmUserModel } from '../models/bpm-user.model';
 @Injectable()
 export class BpmUserService {
 
-    constructor(private alfrescoJsApi: AlfrescoApiService,
+    constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
     }
 
@@ -38,13 +38,13 @@ export class BpmUserService {
      * @param userName - the user name
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-        return Observable.fromPromise(this.alfrescoJsApi.getInstance().activiti.profileApi.getProfile())
+        return Observable.fromPromise(this.apiService.getInstance().activiti.profileApi.getProfile())
             .map((data) => <BpmUserModel> data)
             .catch(err => this.handleError(err));
     }
 
     getCurrentUserProfileImage(): string {
-        return this.alfrescoJsApi.getInstance().activiti.profileApi.getProfilePictureUrl();
+        return this.apiService.getInstance().activiti.profileApi.getProfilePictureUrl();
     }
 
     /**

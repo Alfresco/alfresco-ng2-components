@@ -127,6 +127,7 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param data
      */
     onValueChanged(data: any) {
+        this.success = false;
         this.disableError();
         for (let field in this.formError) {
             if (field) {
