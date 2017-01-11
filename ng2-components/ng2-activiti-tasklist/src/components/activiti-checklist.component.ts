@@ -16,7 +16,6 @@
  */
 
 import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
