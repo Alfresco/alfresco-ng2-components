@@ -161,7 +161,7 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should return a currentId null when the taskList is empty', () => {
-        component.selectFirst();
+        component.selectTask(null);
         expect(component.getCurrentId()).toBeNull();
     });
 

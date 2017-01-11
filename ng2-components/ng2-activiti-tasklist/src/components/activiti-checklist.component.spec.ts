@@ -51,7 +51,9 @@ describe('ActivitiChecklist', () => {
         }).compileComponents().then(() => {
             let translateService = TestBed.get(AlfrescoTranslateService);
             spyOn(translateService, 'addTranslationFolder').and.stub();
-            spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+            spyOn(translateService, 'get').and.callFake((key) => {
+                return Observable.of(key);
+            });
 
             fixture = TestBed.createComponent(ActivitiChecklist);
             checklistComponent = fixture.componentInstance;
@@ -129,7 +131,7 @@ describe('ActivitiChecklist', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: {id: 'fake-check-added-id', name: 'fake-check-added-name'}
+                responseText: { id: 'fake-check-added-id', name: 'fake-check-added-name' }
             });
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -149,7 +151,7 @@ describe('ActivitiChecklist', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 status: 200,
                 contentType: 'json',
-                responseText: {data: [{id: 'fake-check-changed-id', name: 'fake-check-changed-name'}]}
+                responseText: { data: [{ id: 'fake-check-changed-id', name: 'fake-check-changed-name' }] }
             });
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -173,6 +175,25 @@ describe('ActivitiChecklist', () => {
                 expect(element.querySelector('#checklist-none-message').textContent).toContain('TASK_DETAILS.CHECKLIST.NONE');
             });
         }));
+
+        it('should emit checklist task created event when the checklist is successfully added', (done) => {
+            checklistComponent.checklistTaskCreated.subscribe((taskAdded: TaskDetailsModel) => {
+                fixture.detectChanges();
+                expect(taskAdded.id).toEqual('fake-check-added-id');
+                expect(taskAdded.name).toEqual('fake-check-added-name');
+                expect(element.querySelector('#check-fake-check-added-id')).not.toBeNull();
+                expect(element.querySelector('#check-fake-check-added-id').textContent).toContain('fake-check-added-name');
+                done();
+            });
+            showChecklistDialog.click();
+            let addButtonDialog = <HTMLElement> element.querySelector('#add-check');
+            addButtonDialog.click();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: { id: 'fake-check-added-id', name: 'fake-check-added-name' }
+            });
+        });
     });
 
 });

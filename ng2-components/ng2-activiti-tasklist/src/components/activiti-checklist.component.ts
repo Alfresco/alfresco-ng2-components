@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { Observer, Observable } from 'rxjs/Rx';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { AlfrescoTranslateService } from 'ng2-alfresco-core';
 import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
+import { Observer, Observable } from 'rxjs/Rx';
 
 declare let dialogPolyfill: any;
 
@@ -40,6 +41,9 @@ export class ActivitiChecklist implements OnInit, OnChanges {
 
     @Input()
     assignee: string;
+
+    @Output()
+    checklistTaskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
 
     @ViewChild('dialog')
     dialog: any;
@@ -116,6 +120,7 @@ export class ActivitiChecklist implements OnInit, OnChanges {
         this.activitiTaskList.addTask(newTask).subscribe(
             (res: TaskDetailsModel) => {
                 this.checklist.push(res);
+                this.checklistTaskCreated.emit(res);
             },
             (err) => {
                 this.logService.error(err);

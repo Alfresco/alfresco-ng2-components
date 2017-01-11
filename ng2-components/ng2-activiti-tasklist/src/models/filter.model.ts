@@ -116,6 +116,7 @@ export class TaskQueryRequestRepresentationModel {
     sort: string;
     page: number;
     size: number;
+    landingTaskId: string;
 
     constructor(obj?: any) {
         this.appDefinitionId = obj && obj.appDefinitionId || null;
@@ -128,5 +129,6 @@ export class TaskQueryRequestRepresentationModel {
         this.sort = obj && obj.sort || null;
         this.page = obj && obj.page || 0;
         this.size = obj && obj.size || 25;
+        this.landingTaskId = obj && obj.landingTaskId || '';
     }
 }

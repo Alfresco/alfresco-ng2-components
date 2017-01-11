@@ -49,6 +49,9 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     @Input()
     name: string;
 
+    @Input()
+    landingTaskId: string;
+
     requestNode: TaskQueryRequestRepresentationModel;
 
     @Input()
@@ -142,7 +145,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
                     (response) => {
                         let instancesRow = this.createDataRow(response);
                         this.renderInstances(instancesRow);
-                        this.selectFirst();
+                        this.selectTask(requestNode.landingTaskId);
                         this.onSuccess.emit(response);
                     }, (error) => {
                         this.logService.error(error);
@@ -182,14 +185,22 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     }
 
     /**
-     * Select the first instance of a list if present
+     * Select the task given in input if present
      */
-    selectFirst() {
+    selectTask(taskIdToSelect: string) {
         if (!this.isListEmpty()) {
-            this.currentInstanceId = this.data.getRows()[0].getValue('id');
+            let dataRow = this.data.getRows().find(row => row.getValue('id') ===  taskIdToSelect);
+            this.currentInstanceId = dataRow ? dataRow.getValue('id') : this.selectFirst();
         } else {
             this.currentInstanceId = null;
         }
+    }
+
+    /**
+     * Select the first instance of a list if present
+     */
+    selectFirst() {
+        return this.data.getRows()[0].getValue('id');
     }
 
     /**
@@ -239,7 +250,8 @@ export class ActivitiTaskList implements OnInit, OnChanges {
             text: this.name,
             assignment: this.assignment,
             state: this.state,
-            sort: this.sort
+            sort: this.sort,
+            landingTaskId: this.landingTaskId
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }
