@@ -56,6 +56,12 @@ To view the complete list of all the components that you can use to build your c
 
 You can browse all the components at the following [page](http://devproducts.alfresco.com/).
 
+## Demo Application
+
+A separate application showcasing integration of components can be found [here](https://github.com/Alfresco/alfresco-ng2-components/tree/master/demo-shell-ng2).
+
+You will find examples of basic interaction for both BPM and ECM sets of widgets.
+
 ## Yeoman generators
 
 To speed up the development of your Alfresco Angular 2 application, or Alfresco Angular 2 component, use one of the Yeoman generators. 
