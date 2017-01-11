@@ -36,6 +36,7 @@
                                            [state]="taskFilter.filter.state"
                                            [sort]="taskFilter.filter.sort"
                                            [data]="dataTasks"
+                                           [landingTaskId]="currentTaskId"
                                            (rowClick)="onTaskRowClick($event)" (onSuccess)="onSuccessTaskList($event)"
                                            #activititasklist></activiti-tasklist>
                     </div>
@@ -43,6 +44,7 @@
                         <span><h5>Task Details</h5></span>
                         <hr>
                         <activiti-task-details [taskId]="currentTaskId" (formCompleted)="onFormCompleted($event)"
+                                               (taskCreated)="onTaskCreated($event)"
                                                #activitidetails></activiti-task-details>
                     </div>
                 </div>

@@ -27,6 +27,7 @@ import { ActivitiTaskDetails } from './activiti-task-details.component';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiPeopleService } from './../services/activiti-people.service';
 import { taskDetailsMock, taskFormMock, tasksMock, noDataMock } from './../assets/task-details.mock';
+import { TaskDetailsModel } from '../models/task-details.model';
 
 describe('ActivitiTaskDetails', () => {
 
@@ -244,6 +245,13 @@ describe('ActivitiTaskDetails', () => {
             component.onFormError({});
             component.closeErrorDialog();
             expect(closeSpy).toHaveBeenCalled();
+        });
+
+        it('should emit a task created event when checklist task is created', () => {
+            let emitSpy: jasmine.Spy = spyOn(component.taskCreated, 'emit');
+            let mockTask = new TaskDetailsModel(taskDetailsMock);
+            component.onChecklistTaskCreated(mockTask);
+            expect(emitSpy).toHaveBeenCalled();
         });
 
     });

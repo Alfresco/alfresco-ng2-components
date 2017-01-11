@@ -216,6 +216,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentTaskId = null;
     }
 
+    onTaskCreated(data: any) {
+        this.currentTaskId = data.parentTaskId;
+        this.activititasklist.reload();
+    }
+
     ngAfterViewInit() {
         // workaround for MDL issues with dynamic components
         if (componentHandler) {

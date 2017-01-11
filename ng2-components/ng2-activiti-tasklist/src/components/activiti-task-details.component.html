@@ -24,7 +24,7 @@
         </div>
         <div class="mdl-cell mdl-cell--4-col">
             <activiti-checklist [readOnly]="readOnlyForm" [taskId]="taskDetails.id" [assignee]="taskDetails?.assignee?.id"
-                                #activitichecklist></activiti-checklist>
+                                (checklistTaskCreated)="onChecklistTaskCreated($event)" #activitichecklist></activiti-checklist>
         </div>
     </div>
     <div *ngIf="isAssignedToMe()">

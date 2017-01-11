@@ -71,6 +71,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
+    taskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
+
+    @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     @Output()
@@ -222,6 +225,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
             this.taskFormName = form.name;
         }
         this.formLoaded.emit(form);
+    }
+
+    onChecklistTaskCreated(task: TaskDetailsModel) {
+        this.taskCreated.emit(task);
     }
 
     onFormError(error: any) {

@@ -218,17 +218,13 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-|`appId`| { appId } The id of the app. |
-|`processDefinitionKey`| { processDefinitionKey } The processDefinitionKey of the process. |
-|`assignment`| { assignment } The assignment of the process.
-Possible values are:
-assignee : where the current user is the assignee
-candidate: where the current user is a task candidate
-group_x: where the task is assigned to a group where the current user is a member of. The groups can be fetched through the profile REST endpoint
-no value: where the current user is involved |
-|`state`| { state } Define state of the processes. Possible values are: completed, active |
-|`sort`| { sort } Define the sort of the processes. Possible values are created-desc, created-asc, due-desc, due-asc |
-| `schemaColumn` | { any[] } optional) JSON object that represent the number and the type of the columns that you want show |
+|`appId`| { string } The id of the app. |
+|`processDefinitionKey`| { string } The processDefinitionKey of the process. |
+|`assignment`| { string } The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
+|`state`| { string } Define state of the processes. Possible values are: completed, active  |
+|`landingTaskId`| { string } Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
+|`sort`| { string } Define the sort of the processes. Possible values are : created-desc, created-asc, due-desc, due-asc |
+| `data` | { DataTableAdapter } (optional) JSON object that represent the number and the type of the columns that you want show |
 
 Example:
 
@@ -256,6 +252,7 @@ The component shows the details of the task id passed in input
 | `formLoaded` | Invoked when form is loaded or reloaded. |
 | `formSaved` | Invoked when form is submitted with `Save` or custom outcomes.  |
 | `formCompleted` | Invoked when form is submitted with `Complete` outcome.  |
+| `taskCreated` | Invoked when a checklist task is created.  |
 | `executeOutcome` | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 | `onError` | Invoked at any error |
 
