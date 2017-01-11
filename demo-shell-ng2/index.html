@@ -10,10 +10,10 @@
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for Safari (pre-10.x) -->
     <script src=js/Intl.min.js></script>
-    
+
     <!-- IE/FF -->
     <script src=js/element.scrollintoviewifneeded-polyfill.js></script>
-
+    
     <!--[if IE]>
     <script src=js/shim.min.js></script>
     <script src=//cdnjs.cloudflare.com/ajax/libs/dom4/1.8.3/dom4.js></script>
@@ -50,6 +50,31 @@
         .mdl-layout__header-row .mdl-navigation__link {
             color: rgb(255, 255, 255);
         }
+        
+        .loader-container {
+            display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -webkit-flex;     /* NEW - Chrome */
+            display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            -webkit-box-flex-direction: row;
+            -moz-box-flex-direction: row;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            height:100%;
+        }
+
+        .loader-item {
+            margin: auto;
+            max-height:100px;
+            max-width:300px;
+        }
+
+        .loader-text{
+            white-space: nowrap;
+            text-align: center;
+            position: relative;
+        }
+
     </style>
 </head>
 <!-- 3. Display the application -->
@@ -57,9 +82,14 @@
 <alfresco-app>
     <div id="loader-container" class="loader-container">
         <div class="loader-item">
-            <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <div id="loader-spin" class="mdl-progress mdl-js-progress mdl-progress__indeterminate is-upgraded"
+                 data-upgraded=",MaterialProgress">
+                <div class="progressbar bar bar1" style="width: 0%;"></div>
+                <div class="bufferbar bar bar2" style="width: 100%;"></div>
+                <div class="auxbar bar bar3" style="width: 0%;"></div>
+            </div>
             <div id="loader-text" class="loader-text">Loading Demo Shell..</div>
-        </div >
+        </div>
     </div>
 </alfresco-app>
 </body>
