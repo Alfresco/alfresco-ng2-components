@@ -196,7 +196,9 @@ export class ActivitiTaskList implements OnInit, OnChanges {
                 this.currentInstanceId = dataRow.getValue('id');
             }
         } else {
-            this.data.selectedRow = null;
+            if (this.data) {
+                this.data.selectedRow = null;
+            }
             this.currentInstanceId = null;
         }
     }

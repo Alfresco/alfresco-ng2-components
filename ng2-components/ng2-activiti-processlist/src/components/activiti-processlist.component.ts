@@ -195,7 +195,9 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
             this.data.selectedRow = row;
             this.currentInstanceId = row.getValue('id');
         } else {
-            this.data.selectedRow = null;
+            if (this.data) {
+                this.data.selectedRow = null;
+            }
             this.currentInstanceId = null;
         }
     }
