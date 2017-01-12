@@ -53,10 +53,6 @@ export class DataTableComponent implements OnInit {
     @Output()
     rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
-    noContentTemplate: TemplateRef<any>;
-
-    isSelectAllChecked: boolean = false;
-
     @Output()
     showRowContextMenu: EventEmitter<any> = new EventEmitter();
 
@@ -65,6 +61,13 @@ export class DataTableComponent implements OnInit {
 
     @Output()
     executeRowAction: EventEmitter<any> = new EventEmitter();
+
+    noContentTemplate: TemplateRef<any>;
+    isSelectAllChecked: boolean = false;
+
+    get selectedRow(): DataRow {
+        return this.data.selectedRow;
+    }
 
     ngOnInit() {
         if (!this.data) {
@@ -80,6 +83,10 @@ export class DataTableComponent implements OnInit {
     onRowClick(row: DataRow, e?: Event) {
         if (e) {
             e.preventDefault();
+        }
+
+        if (this.data) {
+            this.data.selectedRow = row;
         }
 
         this.rowClick.emit({

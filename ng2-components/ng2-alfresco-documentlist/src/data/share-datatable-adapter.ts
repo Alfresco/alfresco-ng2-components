@@ -48,6 +48,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     thumbnails: boolean = false;
     dataLoaded: DataLoadedEventEmitter;
+    selectedRow: DataRow;
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,

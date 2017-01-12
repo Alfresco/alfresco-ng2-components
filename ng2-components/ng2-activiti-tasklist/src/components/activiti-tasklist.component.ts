@@ -189,18 +189,16 @@ export class ActivitiTaskList implements OnInit, OnChanges {
      */
     selectTask(taskIdToSelect: string) {
         if (!this.isListEmpty()) {
-            let dataRow = this.data.getRows().find(row => row.getValue('id') ===  taskIdToSelect);
-            this.currentInstanceId = dataRow ? dataRow.getValue('id') : this.selectFirst();
+            let rows = this.data.getRows();
+            if (rows.length > 0) {
+                let dataRow = rows.find(row => row.getValue('id') ===  taskIdToSelect) || rows[0];
+                this.data.selectedRow = dataRow;
+                this.currentInstanceId = dataRow.getValue('id');
+            }
         } else {
+            this.data.selectedRow = null;
             this.currentInstanceId = null;
         }
-    }
-
-    /**
-     * Select the first instance of a list if present
-     */
-    selectFirst() {
-        return this.data.getRows()[0].getValue('id');
     }
 
     /**

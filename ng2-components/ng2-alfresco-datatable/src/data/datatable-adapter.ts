@@ -16,6 +16,7 @@
  */
 
 export interface DataTableAdapter {
+    selectedRow: DataRow;
     getRows(): Array<DataRow>;
     setRows(rows: Array<DataRow>): void;
     getColumns(): Array<DataColumn>;
