@@ -22,6 +22,7 @@ export class FormOutcomeModel extends FormWidgetModel {
 
     static SAVE_ACTION: string = 'Save';            // Activiti 'Save' action name
     static COMPLETE_ACTION: string = 'Complete';    // Activiti 'Complete' action name
+    static START_PROCESS_ACTION: string = 'Start Process';    // Activiti 'Start Process' action name
 
     isSystem: boolean = false;
 
