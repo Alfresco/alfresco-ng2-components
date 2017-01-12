@@ -42,14 +42,14 @@ export class AnalyticsService {
                     reports.push(reportModel);
                 });
                 return reports;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     getReportParams(reportId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportParams(reportId))
             .map((res: any) => {
                 return new ReportParametersModel(res);
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     getParamValuesByType(type: string, appId: string, reportId?: string, processDefinitionId?: string) {
@@ -122,7 +122,7 @@ export class AnalyticsService {
                     paramOptions.push(new ParameterValueModel(opt));
                 });
                 return paramOptions;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     getProcessDefinitionsValues(appId: string): Observable<any> {
@@ -133,7 +133,7 @@ export class AnalyticsService {
                     paramOptions.push(new ParameterValueModel(opt));
                 });
                 return paramOptions;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     getTasksByProcessDefinitionId(reportId: string, processDefinitionId: string): Observable<any> {
@@ -144,7 +144,7 @@ export class AnalyticsService {
                     paramOptions.push(new ParameterValueModel({ id: opt, name: opt }));
                 });
                 return paramOptions;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     getReportsByParams(reportId: number, paramsQuery: any): Observable<any> {
@@ -168,20 +168,20 @@ export class AnalyticsService {
                 });
 
                 return elements;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     createDefaultReports(): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.createDefaultReports())
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     updateReport(reportId: number, name: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
             .map((res: any) => {
                 this.logService.info('upload');
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     private handleError(error: Response) {

@@ -167,7 +167,7 @@ export class UploadService {
                 return res;
             })
             .do(data => this.logService.info('Node data', data)) // eyeball results in the console
-            .catch((err) => this.handleError(err));
+            .catch(err => this.handleError(err));
     }
 
     private callApiCreateFolder(relativePath: string, name: string) {

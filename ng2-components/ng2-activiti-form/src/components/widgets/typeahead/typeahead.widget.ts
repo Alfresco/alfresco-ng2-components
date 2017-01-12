@@ -70,7 +70,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                     this.field.updateForm();
                     this.visibilityService.refreshEntityVisibility(this.field);
                 },
-                this.handleError
+                err => this.handleError(err)
             );
     }
 
@@ -95,7 +95,7 @@ export class TypeaheadWidget extends WidgetComponent implements OnInit {
                     this.field.updateForm();
                     this.visibilityService.refreshEntityVisibility(this.field);
                 },
-                this.handleError
+                err => this.handleError(err)
             );
     }
 

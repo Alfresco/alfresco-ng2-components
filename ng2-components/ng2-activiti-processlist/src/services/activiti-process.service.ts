@@ -39,7 +39,7 @@ export class ActivitiProcessService {
     getDeployedApplications(name: string): Observable<AppDefinitionRepresentationModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.appsApi.getAppDefinitions())
             .map((response: any) => response.data.find((p: AppDefinitionRepresentationModel) => p.name === name))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getProcessInstances(requestNode: ProcessFilterRequestRepresentation): Observable<ProcessInstance[]> {
@@ -50,7 +50,7 @@ export class ActivitiProcessService {
                 } else {
                     return res.data;
                 }
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     getProcessFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
@@ -69,7 +69,7 @@ export class ActivitiProcessService {
                 }
                 return filters;
             })
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -148,12 +148,12 @@ export class ActivitiProcessService {
     addFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
         delete filter.filter.assignment;
         return Observable.fromPromise(this.callApiAddFilter(filter))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getProcess(id: string): Observable<ProcessInstance> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessInstance(id))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getProcessTasks(id: string, state?: string): Observable<TaskDetailsModel[]> {
@@ -169,7 +169,7 @@ export class ActivitiProcessService {
                 task.created =  moment(task.created, 'YYYY-MM-DD').format();
                 return task;
             }))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -192,7 +192,7 @@ export class ActivitiProcessService {
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -207,7 +207,7 @@ export class ActivitiProcessService {
             )
             .map((response: Comment) => {
                 return new Comment(response.id, response.message, response.created, response.createdBy);
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
 
     }
 
@@ -223,7 +223,7 @@ export class ActivitiProcessService {
             )
             .map(this.extractData)
             .map(processDefs => processDefs.map((pd) => new ProcessDefinitionRepresentation(pd)))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     startProcess(processDefinitionId: string, name: string, outcome?: string, startFormValues?: any): Observable<ProcessInstance> {
@@ -241,14 +241,14 @@ export class ActivitiProcessService {
             this.apiService.getInstance().activiti.processApi.startNewProcessInstance(startRequest)
             )
             .map((pd) => new ProcessInstance(pd))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     cancelProcess(processInstanceId: string): Observable<void> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.deleteProcessInstance(processInstanceId)
             )
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getProcessInstanceVariables(processDefinitionId: string): Observable<ProcessInstanceVariable[]> {
@@ -256,21 +256,21 @@ export class ActivitiProcessService {
             this.apiService.getInstance().activiti.processInstanceVariablesApi.getProcessInstanceVariables(processDefinitionId)
             )
             .map((processVars: any[]) => processVars.map((pd) => new ProcessInstanceVariable(pd)))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     createOrUpdateProcessInstanceVariables(processDefinitionId: string, variables: ProcessInstanceVariable[]): Observable<ProcessInstanceVariable[]> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processInstanceVariablesApi.createOrUpdateProcessInstanceVariables(processDefinitionId, variables)
             )
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     deleteProcessInstanceVariable(processDefinitionId: string, variableName: string): Observable<void> {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processInstanceVariablesApi.deleteProcessInstanceVariable(processDefinitionId, variableName)
             )
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private callApiGetUserProcessInstanceFilters(filterOpts) {

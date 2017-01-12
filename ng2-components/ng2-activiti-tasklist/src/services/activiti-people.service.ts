@@ -32,19 +32,19 @@ export class ActivitiPeopleService {
         let option = {excludeTaskId: taskId, filter: searchWord};
         return Observable.fromPromise(this.getWorkflowUserApi(option))
             .map((response: any) => <User[]> response.data || [])
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     involveUserWithTask(taskId: string, idToInvolve: string): Observable<User[]> {
         let node = {userId: idToInvolve};
         return Observable.fromPromise(this.involveUserToTaskApi(taskId, node))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     removeInvolvedUser(taskId: string, idToRemove: string): Observable<User[]> {
         let node = {userId: idToRemove};
         return Observable.fromPromise(this.removeInvolvedUserFromTaskApi(taskId, node))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private getWorkflowUserApi(options: any) {

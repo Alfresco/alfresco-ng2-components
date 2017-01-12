@@ -103,7 +103,7 @@ export class DocumentListService {
      */
     createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
-            .catch(this.handleError);
+            .catch(terr => this.handleError(err));
     }
 
     /**
@@ -115,7 +115,7 @@ export class DocumentListService {
     getFolder(folder: string, opts?: any) {
         return Observable.fromPromise(this.getNodesPromise(folder, opts))
             .map(res => <NodePaging> res)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {

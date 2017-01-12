@@ -237,14 +237,14 @@ export class WidgetVisibilityService {
                 this.processVarList = <TaskProcessVariableModel[]>jsonRes;
                 return jsonRes;
             })
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     toJson(res: any) {
         return res || {};
     }
 
-    private handleError() {
+    private handleError(err) {
         this.logService.error('Error while performing a call');
         return Observable.throw('Error while performing a call - Server error');
     }

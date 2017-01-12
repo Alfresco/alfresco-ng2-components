@@ -44,7 +44,7 @@ export class ActivitiAlfrescoContentService {
         let accountShortId = accountId.replace('alfresco-', '');
         return Observable.fromPromise(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
             .map(this.toJsonArray)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -63,7 +63,7 @@ export class ActivitiAlfrescoContentService {
             simpleType: node.simpleType,
             source: accountId,
             sourceId: node.id + '@' + siteId
-        })).map(this.toJson).catch(this.handleError);
+        })).map(this.toJson).catch(err => this.handleError(err));
     }
 
     toJson(res: any) {

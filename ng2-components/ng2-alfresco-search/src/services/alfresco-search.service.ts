@@ -39,7 +39,7 @@ export class AlfrescoSearchService {
     public getNodeQueryResults(term: string, options?: SearchOptions): Observable<any> {
         return Observable.fromPromise(this.getQueryNodesPromise(term, options))
             .map(res => <any> res)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private getQueryNodesPromise(term: string, opts: SearchOptions) {
