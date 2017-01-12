@@ -57,7 +57,7 @@ export class RadioButtonsWidget extends WidgetComponent implements OnInit {
                     this.field.options = result || [];
                     this.field.updateForm();
                 },
-                this.handleError
+                err => this.handleError(err)
             );
     }
 
@@ -72,7 +72,7 @@ export class RadioButtonsWidget extends WidgetComponent implements OnInit {
                     this.field.options = result || [];
                     this.field.updateForm();
                 },
-                this.handleError
+                err => this.handleError(err)
             );
     }
 

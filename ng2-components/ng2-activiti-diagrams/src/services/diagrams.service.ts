@@ -37,7 +37,7 @@ export class DiagramsService {
             .map((res: any) => {
                 let body = res.json();
                 return body;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     public getHeaders(): Headers {

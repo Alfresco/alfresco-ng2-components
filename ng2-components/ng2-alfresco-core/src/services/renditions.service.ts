@@ -63,17 +63,17 @@ export class RenditionsService {
 
     getRendition(nodeId: string, encoding: string) {
         return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRendition(nodeId, encoding))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getRenditionsListByNodeId(nodeId: string) {
         return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRenditions(nodeId))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     createRendition(nodeId: string, encoding: string) {
         return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, {id: encoding}))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private handleError(error: any): Observable<any> {

@@ -37,12 +37,12 @@ export class TagService {
 
     getTagsByNodeId(nodeId: string): any {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getAllTheTags() {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getTags())
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     addTag(nodeId: string, tagName: string): any {
@@ -51,12 +51,12 @@ export class TagService {
         tagBody.tag = tagName;
 
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     removeTag(nodeId: string, tag: string): any {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private handleError(error: any) {

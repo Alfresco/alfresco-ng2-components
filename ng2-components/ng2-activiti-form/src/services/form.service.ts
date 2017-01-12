@@ -49,10 +49,11 @@ export class FormService {
                             this.addFieldsToAForm(form.id, formDefinitionModel).subscribe(formData => {
                                 observer.next(formData);
                                 observer.complete();
-                            }, this.handleError);
+                            }, err => this.handleError(err));
                         },
-                        this.handleError);
-                }, this.handleError);
+                        err => this.handleError(err));
+                },
+                err => this.handleError(err));
         });
     }
 
@@ -88,9 +89,13 @@ export class FormService {
             'modelType': 2
         };
 
-        return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts)).map(function (forms: any) {
-            return forms.data.find(formdata => formdata.name === name);
-        }).catch(this.handleError);
+        return Observable.fromPromise(
+            this.apiService.getInstance().activiti.modelsApi.getModels(opts))
+            .map(function (forms: any) {
+                return forms.data.find(formdata => formdata.name === name);
+            })
+            .catch(err => this.handleError(err)
+        );
     }
 
     /**
@@ -112,7 +117,7 @@ export class FormService {
     getProcessDefinitions(): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.processApi.getProcessDefinitions({}))
             .map(this.toJsonArray)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -123,7 +128,7 @@ export class FormService {
     getTasks(): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.listTasks({}))
             .map(this.toJsonArray)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -134,7 +139,7 @@ export class FormService {
     getTask(taskId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTask(taskId))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -147,7 +152,7 @@ export class FormService {
         let body = JSON.stringify({values: formValues});
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.saveTaskForm(taskId, body))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -165,7 +170,7 @@ export class FormService {
         let body = JSON.stringify(data);
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.completeTaskForm(taskId, body))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -176,7 +181,7 @@ export class FormService {
     getTaskForm(taskId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.getTaskForm(taskId))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -187,7 +192,7 @@ export class FormService {
     getFormDefinitionById(formId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.editorApi.getForm(formId))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -204,7 +209,7 @@ export class FormService {
 
         return Observable.fromPromise(this.apiService.getInstance().activiti.modelsApi.getModels(opts))
             .map(this.getFormId)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -216,7 +221,7 @@ export class FormService {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.getProcessInstanceStartForm(processId))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -228,7 +233,7 @@ export class FormService {
         return Observable.fromPromise(
             this.apiService.getInstance().activiti.processApi.getProcessDefinitionStartForm(processId))
             .map(this.toJson)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
