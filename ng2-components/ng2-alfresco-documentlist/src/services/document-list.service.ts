@@ -103,7 +103,7 @@ export class DocumentListService {
      */
     createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
         return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
-            .catch(terr => this.handleError(err));
+            .catch(err => this.handleError(err));
     }
 
     /**
