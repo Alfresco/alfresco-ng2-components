@@ -108,8 +108,8 @@ export class FormModel {
 
                 let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
 
-                this.outcomes = [saveOutcome, startProcessOutcome].concat(
-                    customOutcomes.length > 0 ? customOutcomes : [completeOutcome]
+                this.outcomes = [saveOutcome].concat(
+                    customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
                 );
             }
         }
