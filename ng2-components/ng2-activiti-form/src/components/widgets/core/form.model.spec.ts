@@ -275,10 +275,10 @@ describe('FormModel', () => {
         expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
         expect(form.outcomes[0].isSystem).toBeTruthy();
 
-        expect(form.outcomes[1].id).toBe(FormModel.START_PROCESS_OUTCOME);
+        expect(form.outcomes[1].id).toBe(FormModel.COMPLETE_OUTCOME);
         expect(form.outcomes[1].isSystem).toBeTruthy();
 
-        expect(form.outcomes[2].id).toBe(FormModel.COMPLETE_OUTCOME);
+        expect(form.outcomes[2].id).toBe(FormModel.START_PROCESS_OUTCOME);
         expect(form.outcomes[2].isSystem).toBeTruthy();
     });
 
@@ -301,15 +301,12 @@ describe('FormModel', () => {
         };
 
         let form = new FormModel(json);
-        expect(form.outcomes.length).toBe(3);
+        expect(form.outcomes.length).toBe(2);
 
         expect(form.outcomes[0].id).toBe(FormModel.SAVE_OUTCOME);
         expect(form.outcomes[0].isSystem).toBeTruthy();
 
-        expect(form.outcomes[1].id).toBe(FormModel.START_PROCESS_OUTCOME);
-        expect(form.outcomes[1].isSystem).toBeTruthy();
-
-        expect(form.outcomes[2].id).toBe('custom-1');
-        expect(form.outcomes[2].isSystem).toBeFalsy();
+        expect(form.outcomes[1].id).toBe('custom-1');
+        expect(form.outcomes[1].isSystem).toBeFalsy();
     });
 });
