@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+export * from './filter-process.model';
 export * from './process-definition.model';
 export * from './process-instance.model';
 export * from './process-instance-filter.model';

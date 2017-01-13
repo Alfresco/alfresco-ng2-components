@@ -28,6 +28,7 @@ import {
     ActivitiProcessInstanceDetails,
     ActivitiProcessInstanceListComponent,
     ActivitiStartProcessInstance,
+    FilterProcessRepresentationModel,
     ProcessInstance
 } from 'ng2-activiti-processlist';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
@@ -87,7 +88,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: FilterRepresentationModel;
+    processFilter: FilterProcessRepresentationModel;
 
     sub: Subscription;
 
@@ -164,11 +165,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentTaskId = this.activititasklist.getCurrentId();
     }
 
-    onProcessFilterClick(event: FilterRepresentationModel) {
+    onProcessFilterClick(event: FilterProcessRepresentationModel) {
         this.processFilter = event;
     }
 
-    onSuccessProcessFilterList(event: any) {
+    onSuccessProcessFilterList() {
         this.processFilter = this.activitiprocessfilter.getCurrentFilter();
     }
 
