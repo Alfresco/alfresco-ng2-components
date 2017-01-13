@@ -74,7 +74,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     analyticsreportlist: AnalyticsReportListComponent;
 
     @Input()
-    appId: number;
+    appId: number = null;
 
     layoutType: string;
     currentTaskId: string;
