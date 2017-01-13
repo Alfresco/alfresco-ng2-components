@@ -244,6 +244,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     onProcessDetailsTaskClick(event: TaskDetailsEvent) {
         event.preventDefault();
         this.currentTaskId = event.value.id;
+        this.activititasklist.reload();
         this.activeTab = 'tasks';
     }
 
