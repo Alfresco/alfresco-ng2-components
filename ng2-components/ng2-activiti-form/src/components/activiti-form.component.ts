@@ -123,6 +123,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     @Input()
     showRefreshButton: boolean = true;
 
+    @Input()
+    showValidationIcon: boolean = true;
+
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
