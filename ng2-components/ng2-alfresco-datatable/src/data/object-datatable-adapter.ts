@@ -26,6 +26,8 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
     private _rows: DataRow[];
     private _columns: DataColumn[];
 
+    selectedRow: DataRow;
+
     static generateSchema(data: any[]) {
         let schema = [];
 
