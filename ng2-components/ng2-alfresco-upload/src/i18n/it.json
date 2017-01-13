@@ -6,6 +6,7 @@
       "CANCEL": "CANCELLA"
     },
     "MESSAGES": {
+      "SINGLE_COMPLETED": "caricamento completato",
       "COMPLETED": "caricamenti completati",
       "PROGRESS": "caricamento in corso...",
       "FOLDER_ALREADY_EXIST": "Cartella {0} già presente",
