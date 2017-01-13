@@ -15,7 +15,16 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, AfterViewChecked, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    AfterViewChecked,
+    OnChanges,
+    SimpleChanges,
+    Input,
+    Output,
+    EventEmitter
+} from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
@@ -79,6 +88,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     static SAVE_OUTCOME_ID: string = '$save';
     static COMPLETE_OUTCOME_ID: string = '$complete';
+    static START_PROCESS_OUTCOME_ID: string = '$startProcess';
     static CUSTOM_OUTCOME_ID: string = '$custom';
 
     @Input()
@@ -185,6 +195,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return this.showSaveButton;
             }
+            if (outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
+                return false;
+            }
             return true;
         }
         return false;
@@ -243,6 +256,11 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 }
 
                 if (outcome.id === ActivitiForm.COMPLETE_OUTCOME_ID) {
+                    this.completeTaskForm();
+                    return true;
+                }
+
+                if (outcome.id === ActivitiForm.START_PROCESS_OUTCOME_ID) {
                     this.completeTaskForm();
                     return true;
                 }
@@ -421,7 +439,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
      */
     getFormDefinitionOutcomes(form: FormModel): FormOutcomeModel[] {
         return [
-            new FormOutcomeModel(form, {id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true})
+            new FormOutcomeModel(form, { id: '$custom', name: FormOutcomeModel.SAVE_ACTION, isSystem: true })
         ];
     }
 

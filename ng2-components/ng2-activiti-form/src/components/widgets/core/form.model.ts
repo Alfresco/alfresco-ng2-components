@@ -29,6 +29,7 @@ export class FormModel {
     static UNSET_TASK_NAME: string = 'Nameless task';
     static SAVE_OUTCOME: string = '$save';
     static COMPLETE_OUTCOME: string = '$complete';
+    static START_PROCESS_OUTCOME: string = '$startProcess';
 
     readonly id: string;
     readonly name: string;
@@ -103,11 +104,12 @@ export class FormModel {
             if (json.fields) {
                 let saveOutcome = new FormOutcomeModel(this, { id: FormModel.SAVE_OUTCOME, name: 'Save', isSystem: true });
                 let completeOutcome = new FormOutcomeModel(this, {id: FormModel.COMPLETE_OUTCOME, name: 'Complete', isSystem: true });
+                let startProcessOutcome = new FormOutcomeModel(this, { id: FormModel.START_PROCESS_OUTCOME, name: 'Start Process', isSystem: true });
 
                 let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
 
                 this.outcomes = [saveOutcome].concat(
-                    customOutcomes.length > 0 ? customOutcomes : [completeOutcome]
+                    customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
                 );
             }
         }

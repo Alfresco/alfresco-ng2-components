@@ -15,7 +15,17 @@
  * limitations under the License.
  */
 
-import { Component, AfterViewChecked, OnChanges, SimpleChanges, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    AfterViewChecked,
+    OnChanges,
+    SimpleChanges,
+    Input,
+    ViewChild,
+    ElementRef,
+    Output,
+    EventEmitter
+} from '@angular/core';
 import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
@@ -124,8 +134,11 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
 
     /** @override */
     isOutcomeButtonVisible(outcome: FormOutcomeModel): boolean {
-        if (outcome && outcome.name === FormOutcomeModel.SAVE_ACTION) {
+        if (outcome && outcome.isSystem && ( outcome.name === FormOutcomeModel.SAVE_ACTION ||
+            outcome.name === FormOutcomeModel.COMPLETE_ACTION )) {
             return false;
+        } else if (outcome && outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
+            return true;
         }
         return super.isOutcomeButtonVisible(outcome);
     }
