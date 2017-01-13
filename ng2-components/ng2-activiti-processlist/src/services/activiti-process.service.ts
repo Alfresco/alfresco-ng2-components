@@ -146,7 +146,6 @@ export class ActivitiProcessService {
      * @returns {FilterProcessRepresentationModel}
      */
     addFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
-        delete filter.filter.assignment;
         return Observable.fromPromise(this.callApiAddFilter(filter))
             .catch(err => this.handleError(err));
     }

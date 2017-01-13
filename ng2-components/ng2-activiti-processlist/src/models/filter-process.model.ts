@@ -28,7 +28,7 @@ export class FilterProcessRepresentationModel {
     name: string;
     recent: boolean;
     icon: string;
-    filter: any;
+    filter: ProcessFilterParamRepresentationModel;
     index: number;
 
     constructor(obj?: any) {
@@ -42,5 +42,22 @@ export class FilterProcessRepresentationModel {
 
     hasFilter() {
         return this.filter ? true : false;
+    }
+}
+
+/**
+ *
+ * This object represent the parameters of a process filter.
+ *
+ *
+ * @returns {ProcessFilterParamRepresentationModel} .
+ */
+export class ProcessFilterParamRepresentationModel {
+    state: string;
+    sort: string;
+
+    constructor(obj?: any) {
+        this.state = obj && obj.state || null;
+        this.sort = obj && obj.sort || null;
     }
 }
