@@ -56,7 +56,7 @@
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.27",
     "zone.js": "^0.6.23",
-    "chart.js": "^2.1.4",
+    "chart.js": "2.3.0",
     "md-date-time-picker": "^2.2.0",
     "ng2-charts": "1.1.0",
     "moment": "2.15.1",
