@@ -238,6 +238,7 @@ The recommended set of properties can be found in the following table:
 | `showDebugButton` | boolean | false | Toggle debug options. |
 | `readOnly` | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
 | `showRefreshButton` | boolean | true | Toggle rendering of the `Refresh` button. |
+| `showValidationIcon` | boolean | true | Toggle rendering of the validation icon next form title. |
 | `saveMetadata` | boolean | false | Store the value of the form as metadata. |
 | `path` | string |  |  Path of the folder where to store the metadata. |
 | `nameNode` (optional) | string | true | Name to assign to the new node where the metadata are stored. |
