@@ -16,3 +16,21 @@
     padding-bottom: 0px;
     padding-left: 0px;
 }
+
+.mdl-chip-search-people{
+    margin: auto;
+    min-width: 60%;
+}
+
+.mdl-chip-search-people:hover{
+    background-color: #c1c1c1;
+    cursor: pointer; 
+}
+
+.mdl-chip-search-people img{
+    margin-left: -30px;
+}
+
+.mdl-chip-search-people__text{
+    padding-left: 10px;
+}

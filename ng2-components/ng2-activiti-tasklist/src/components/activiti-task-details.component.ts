@@ -61,6 +61,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     @Input()
     showFormRefreshButton: boolean = true;
 
+    @Input()
+    peopleIconImageUrl: string;
+
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
