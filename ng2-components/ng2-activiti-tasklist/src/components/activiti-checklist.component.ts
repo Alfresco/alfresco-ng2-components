@@ -120,6 +120,7 @@ export class ActivitiChecklist implements OnInit, OnChanges {
             (res: TaskDetailsModel) => {
                 this.checklist.push(res);
                 this.checklistTaskCreated.emit(res);
+                this.taskName = '';
             },
             (err) => {
                 this.logService.error(err);
@@ -132,5 +133,6 @@ export class ActivitiChecklist implements OnInit, OnChanges {
         if (this.dialog) {
             this.dialog.nativeElement.close();
         }
+        this.taskName = '';
     }
 }
