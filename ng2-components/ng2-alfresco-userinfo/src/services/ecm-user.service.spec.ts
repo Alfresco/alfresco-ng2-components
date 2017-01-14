@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreModule, AuthService, ContentService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { EcmUserService } from '../services/ecm-user.service';
 import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
 
@@ -25,8 +25,8 @@ declare let jasmine: any;
 describe('EcmUserService', () => {
 
     let service: EcmUserService;
-    let authService: AuthService;
-    let contentService: ContentService;
+    let authService: AlfrescoAuthenticationService;
+    let contentService: AlfrescoContentService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -38,8 +38,8 @@ describe('EcmUserService', () => {
             ]
         });
         service = TestBed.get(EcmUserService);
-        authService = TestBed.get(AuthService);
-        contentService = TestBed.get(ContentService);
+        authService = TestBed.get(AlfrescoAuthenticationService);
+        contentService = TestBed.get(AlfrescoContentService);
     });
 
     describe('when user is logged in', () => {

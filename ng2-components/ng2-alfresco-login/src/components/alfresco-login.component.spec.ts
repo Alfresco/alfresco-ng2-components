@@ -17,8 +17,8 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement }    from '@angular/core';
-import { AuthService, CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -38,8 +38,8 @@ describe('AlfrescoLogin', () => {
             ],
             declarations: [AlfrescoLoginComponent],
             providers: [
-                {provide: AuthService, useClass: AuthenticationMock},
-                {provide: AlfrescoTranslateService, useClass: TranslationMock}
+                {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));

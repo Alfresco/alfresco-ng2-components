@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
-import { CoreModule, AuthService, SettingsService, LogService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 import { LoginModule } from 'ng2-alfresco-login';
 
 @Component({
@@ -87,8 +87,8 @@ class UserInfoDemo implements OnInit {
     isECM: boolean = true;
     isBPM: boolean = false;
 
-    constructor(private authService: AuthService,
-                private settingsService: SettingsService,
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
                 private logService: LogService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.bpmHost = this.bpmHost;

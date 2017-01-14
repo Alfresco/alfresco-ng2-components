@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { ActivitiStartTaskButton } from './activiti-start-task.component';
 
@@ -43,7 +43,7 @@ describe('ActivitiStartTaskButton', () => {
                 ActivitiTaskListService
             ]
         }).compileComponents().then(() => {
-            let translateService = TestBed.get(AlfrescoTranslateService);
+            let translateService = TestBed.get(AlfrescoTranslationService);
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
 

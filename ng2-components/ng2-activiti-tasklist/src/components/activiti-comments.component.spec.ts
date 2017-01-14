@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 
 import { ActivitiComments } from './activiti-comments.component';
@@ -49,7 +49,7 @@ describe('ActivitiComments', () => {
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslateService);
+        let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));

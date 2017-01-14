@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@
 import { FormControl } from '@angular/forms';
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 declare let componentHandler: any;
 
@@ -45,7 +45,7 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
     userList: User[] = [];
 
-    constructor(private translateService: AlfrescoTranslateService) {
+    constructor(private translateService: AlfrescoTranslationService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }

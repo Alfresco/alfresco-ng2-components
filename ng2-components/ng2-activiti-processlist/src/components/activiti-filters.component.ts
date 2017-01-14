@@ -17,7 +17,7 @@
 
 import { Component, Output, EventEmitter, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FilterProcessRepresentationModel } from './../models/filter-process.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
@@ -53,7 +53,7 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
 
     filters: FilterProcessRepresentationModel [] = [];
 
-    constructor(private translate: AlfrescoTranslateService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activiti: ActivitiProcessService,
                 private logService: LogService) {
         this.filter$ = new Observable<FilterProcessRepresentationModel>(observer => this.filterObserver = observer).share();

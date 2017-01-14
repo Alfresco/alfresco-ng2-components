@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Form } from '../models/form.model';
@@ -54,7 +54,7 @@ export class ActivitiStartTaskButton {
      * @param translate
      * @param taskService
      */
-    constructor(private translateService: AlfrescoTranslateService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private taskService: ActivitiTaskListService,
                 private logService: LogService) {
 

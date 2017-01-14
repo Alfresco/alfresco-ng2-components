@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, SettingsService, AuthService, StorageService, LogService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService, LogService } from 'ng2-alfresco-core';
 import { DataTableModule }  from 'ng2-alfresco-datatable';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 
@@ -62,8 +62,8 @@ class WebscriptDemo implements OnInit {
     scriptArgs: string = '';
     ticket: string;
 
-    constructor(private authService: AuthService,
-                private settingsService: SettingsService,
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
                 private logService: LogService) {
 

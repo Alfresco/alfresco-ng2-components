@@ -18,14 +18,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
-import { AuthService, SettingsService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DiagramsService {
 
-    constructor(private authService: AuthService,
+    constructor(private authService: AlfrescoAuthenticationService,
                 private http: Http,
-                private settingsService: SettingsService,
+                private settingsService: AlfrescoSettingsService,
                 private logService: LogService) {
     }
 

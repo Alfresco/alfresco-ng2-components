@@ -21,18 +21,18 @@ import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 
-import { AlfrescoTranslateService } from './translate.service';
-import { AlfrescoTranslateLoader } from './translate-loader.service';
+import { AlfrescoTranslationService } from './alfresco-translation.service';
+import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
 import { LogService } from './log.service';
 
 const mockBackendResponse = (connection: MockConnection, response: string) => {
     connection.mockRespond(new Response(new ResponseOptions({body: response})));
 };
 
-describe('AlfrescoTranslateService', () => {
+describe('AlfrescoTranslationService', () => {
     let injector: Injector;
     let backend: MockBackend;
-    let alfrescoTranslationService: AlfrescoTranslateService;
+    let alfrescoTranslationService: AlfrescoTranslationService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
 
     beforeEach(() => {
@@ -45,21 +45,21 @@ describe('AlfrescoTranslateService', () => {
                 })
             ],
             providers: [
-                AlfrescoTranslateService,
+                AlfrescoTranslationService,
                 LogService,
                 {provide: XHRBackend, useClass: MockBackend}
             ]
         });
         injector = getTestBed();
         backend = injector.get(XHRBackend);
-        alfrescoTranslationService = injector.get(AlfrescoTranslateService);
+        alfrescoTranslationService = injector.get(AlfrescoTranslationService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
         alfrescoTranslationService.addTranslationFolder('fake-name', 'fake-path');
     });
 
     it('is defined', () => {
-        expect(AlfrescoTranslateService).toBeDefined();
-        expect(alfrescoTranslationService instanceof AlfrescoTranslateService).toBeTruthy();
+        expect(AlfrescoTranslationService).toBeDefined();
+        expect(alfrescoTranslationService instanceof AlfrescoTranslationService).toBeTruthy();
     });
 
     it('should be able to get translations of the KEY: TEST', () => {

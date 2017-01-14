@@ -17,17 +17,17 @@
 
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { SettingsService } from './settings.service';
+import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { StorageService } from './storage.service';
 import { LogService } from './log.service';
 import { AlfrescoApiService } from './alfresco-api.service';
 
 @Injectable()
-export class AuthService {
+export class AlfrescoAuthenticationService {
     loginSubject: Subject<any> = new Subject<any>();
     logoutSubject: Subject<any> = new Subject<any>();
 
-    constructor(private settingsService: SettingsService,
+    constructor(private settingsService: AlfrescoSettingsService,
                 public alfrescoApi: AlfrescoApiService,
                 private storage: StorageService,
                 private logService: LogService) {

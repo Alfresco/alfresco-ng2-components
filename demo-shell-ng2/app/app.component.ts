@@ -17,7 +17,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlfrescoTranslateService, AuthService, SettingsService, StorageService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
 
 declare var document: any;
 
@@ -32,10 +32,10 @@ export class AppComponent {
     ecmHost: string = 'http://' + window.location.hostname + ':8080';
     bpmHost: string = 'http://' + window.location.hostname + ':9999';
 
-    constructor(private authService: AuthService,
+    constructor(private authService: AlfrescoAuthenticationService,
                 private router: Router,
-                private settingsService: SettingsService,
-                private translateService: AlfrescoTranslateService,
+                private settingsService: AlfrescoSettingsService,
+                private translateService: AlfrescoTranslationService,
                 private storage: StorageService,
                 private logService: LogService) {
         this.setEcmHost();

@@ -17,8 +17,8 @@
 
 import { ReflectiveInjector } from '@angular/core';
 import {
-    AuthService,
-    SettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoSettingsService,
     AlfrescoApiService,
     StorageService,
     LogService
@@ -33,9 +33,9 @@ describe('Tag service', () => {
 
     beforeEach(() => {
         injector = ReflectiveInjector.resolveAndCreate([
-            SettingsService,
+            AlfrescoSettingsService,
             AlfrescoApiService,
-            AuthService,
+            AlfrescoAuthenticationService,
             TagService,
             StorageService,
             LogService

@@ -16,7 +16,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ContentService } from 'ng2-alfresco-core';
+import { AlfrescoContentService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class AlfrescoThumbnailService {
@@ -50,7 +50,7 @@ export class AlfrescoThumbnailService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet'
     };
 
-    constructor(public contentService: ContentService) {
+    constructor(public contentService: AlfrescoContentService) {
     }
 
     /**

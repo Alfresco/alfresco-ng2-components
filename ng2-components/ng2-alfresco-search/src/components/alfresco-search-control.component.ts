@@ -18,7 +18,7 @@
 import { FormControl, Validators } from '@angular/forms';
 import { Component, Input, Output, OnInit, OnDestroy, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchTermValidator } from './../forms/search-term-validator';
 
@@ -86,7 +86,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
-    constructor(private translateService: AlfrescoTranslateService) {
+    constructor(private translateService: AlfrescoTranslationService) {
 
         this.searchControl = new FormControl(
             this.searchTerm,

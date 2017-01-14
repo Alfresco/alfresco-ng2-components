@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { SettingsService, StorageService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-setting-demo',
@@ -28,7 +28,7 @@ export class SettingComponent {
     ecmHost: string;
     bpmHost: string;
 
-    constructor(private settingsService: SettingsService,
+    constructor(private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
                 private logService: LogService) {
         this.ecmHost = this.settingsService.ecmHost;

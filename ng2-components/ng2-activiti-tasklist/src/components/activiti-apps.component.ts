@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { AppDefinitionRepresentationModel } from '../models/filter.model';
 import { IconModel } from '../models/icon.model';
@@ -65,7 +65,7 @@ export class ActivitiApps implements OnInit {
      * @param translate Translate service
      * @param activitiTaskList Task service
      */
-    constructor(private translateService: AlfrescoTranslateService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private activitiTaskList: ActivitiTaskListService) {
 
         if (translateService) {

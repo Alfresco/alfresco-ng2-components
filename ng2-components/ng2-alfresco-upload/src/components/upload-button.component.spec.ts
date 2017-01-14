@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { UploadButtonComponent } from './upload-button.component';
 import { DebugElement }    from '@angular/core';
-import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 
@@ -73,7 +73,7 @@ describe('UploadButtonComponent', () => {
             ],
             providers: [
                 UploadService,
-                { provide: AlfrescoTranslateService, useClass: TranslationMock }
+                { provide: AlfrescoTranslationService, useClass: TranslationMock }
             ]
         }).compileComponents();
     }));

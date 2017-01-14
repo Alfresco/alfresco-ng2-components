@@ -17,7 +17,7 @@
 
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AlfrescoTranslateService, AuthService, SettingsService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
@@ -75,9 +75,9 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param translate
      */
     constructor(private _fb: FormBuilder,
-                private authService: AuthService,
-                private settingsService: SettingsService,
-                private translateService: AlfrescoTranslateService,
+                private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
+                private translateService: AlfrescoTranslationService,
                 private logService: LogService) {
 
         if (translateService) {

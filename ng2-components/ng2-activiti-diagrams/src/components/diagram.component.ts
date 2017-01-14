@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { DiagramsService } from '../services/diagrams.service';
 import { DiagramColorService } from '../services/diagram-color.service';
 import { RaphaelService } from './raphael/raphael.service';
@@ -59,7 +59,7 @@ export class DiagramComponent {
     private diagram: DiagramModel;
 
     constructor(private elementRef: ElementRef,
-                private translateService: AlfrescoTranslateService,
+                private translateService: AlfrescoTranslationService,
                 private diagramColorService: DiagramColorService,
                 private raphaelService: RaphaelService,
                 private diagramsService: DiagramsService,

@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class SettingsService {
+export class AlfrescoSettingsService {
 
     static DEFAULT_ECM_ADDRESS: string = 'http://' + window.location.hostname + ':8080';
     static DEFAULT_BPM_ADDRESS: string = 'http://' + window.location.hostname + ':9999';
@@ -27,11 +27,11 @@ export class SettingsService {
 
     static DEFAULT_BPM_CONTEXT_PATH: string = '/activiti-app';
 
-    private _ecmHost: string = SettingsService.DEFAULT_ECM_ADDRESS;
-    private _bpmHost: string = SettingsService.DEFAULT_BPM_ADDRESS;
-    private _csrfDisabled: boolean = SettingsService.DEFAULT_CSRF_CONFIG;
+    private _ecmHost: string = AlfrescoSettingsService.DEFAULT_ECM_ADDRESS;
+    private _bpmHost: string = AlfrescoSettingsService.DEFAULT_BPM_ADDRESS;
+    private _csrfDisabled: boolean = AlfrescoSettingsService.DEFAULT_CSRF_CONFIG;
 
-    private _bpmContextPath = SettingsService.DEFAULT_BPM_CONTEXT_PATH;
+    private _bpmContextPath = AlfrescoSettingsService.DEFAULT_BPM_CONTEXT_PATH;
 
     private providers: string = 'ALL'; // ECM, BPM , ALL
 
