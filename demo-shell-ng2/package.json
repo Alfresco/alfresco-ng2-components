@@ -73,7 +73,7 @@
     "pdfjs-dist": "1.5.404",
     "flag-icon-css": "2.3.0",
     "moment": "2.15.1",
-    "chart.js": "^2.1.4",
+    "chart.js": "2.3.0",
     "ng2-charts": "1.1.0",
     "raphael": "^2.2.6",
     "md-date-time-picker": "^2.2.0",
