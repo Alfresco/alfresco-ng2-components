@@ -8,5 +8,6 @@
         "**/*.js": { "when": "$(basename).ts"},
         "**/*.js.map": { "when": "$(basename)"},
         "**/*.d.ts": { "when": "$(basename).ts"}
-    }
+    },
+    "editor.renderIndentGuides": true
 }
