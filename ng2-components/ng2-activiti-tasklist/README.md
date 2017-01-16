@@ -267,6 +267,7 @@ The component shows the details of the task id passed in input
 | `showFormRefreshButton` | {boolean} | optional | Toggle rendering of the `Refresh` button. |
 | `showFormSaveButton` | {boolean} | optional | Toggle rendering of the `Save` outcome button. |
 | `showFormCompleteButton` | {boolean} | optional | Toggle rendering of the Form `Complete` outcome button |
+| `peopleIconImageUrl` | {string} | optional | Define a custom people icon image |
 
 ### Custom 'empty Activiti Task Details' template
 

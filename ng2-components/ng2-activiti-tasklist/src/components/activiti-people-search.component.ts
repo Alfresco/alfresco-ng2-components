@@ -32,6 +32,11 @@ declare let componentHandler: any;
 
 export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
+    baseComponentPath = module.id.replace('/activiti-people-search.component.js', '');
+
+    @Input()
+    iconImageUrl: string;
+
     @Input()
     results: Observable<User[]>;
 
@@ -81,6 +86,7 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     onRowClick(userClicked: User) {
         this.onRowClicked.emit(userClicked);
         this.userList = this.userList.filter((user) => {
+            this.searchUser.reset();
             return user.id !== userClicked.id;
         });
     }

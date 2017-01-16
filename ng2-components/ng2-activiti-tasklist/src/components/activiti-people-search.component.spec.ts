@@ -109,10 +109,11 @@ describe('ActivitiPeopleSearch', () => {
         searchInput.dispatchEvent(new Event('input'));
     });
 
-    it('should send an event when an user is clicked', async(() => {
+    it('should send an event when an user is clicked', (done) => {
         activitiPeopleSearchComponent.onRowClicked.subscribe((user) => {
             expect(user).toBeDefined();
             expect(user.firstName).toBe('fake-name');
+            done();
         });
         activitiPeopleSearchComponent.results = Observable.of(userArray);
         activitiPeopleSearchComponent.ngOnInit();
@@ -122,9 +123,9 @@ describe('ActivitiPeopleSearch', () => {
                 let userToSelect = <HTMLElement> element.querySelector('#user-1');
                 userToSelect.click();
             });
-    }));
+    });
 
-    it('should remove clicked user', async(() => {
+    it('should remove clicked user', (done) => {
         activitiPeopleSearchComponent.results = Observable.of(userArray);
         activitiPeopleSearchComponent.ngOnInit();
         fixture.detectChanges();
@@ -135,6 +136,7 @@ describe('ActivitiPeopleSearch', () => {
         fixture.whenStable()
             .then(() => {
                 expect(element.querySelector('#user-1')).toBeNull();
+                done();
             });
-    }));
+    });
 });
