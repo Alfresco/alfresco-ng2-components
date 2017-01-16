@@ -21,7 +21,7 @@
                         alfresco-mdl-button
                         [disabled]="!isOutcomeButtonEnabled(outcome)"
                         [class.mdl-button--colored]="!outcome.isSystem"
-                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome)"
+                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
                         (click)="onOutcomeClicked(outcome, $event)">
                     {{outcome.name}}
                 </button>

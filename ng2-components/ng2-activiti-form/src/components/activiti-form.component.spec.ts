@@ -101,35 +101,73 @@ describe('ActivitiForm', () => {
     });
 
     it('should not enable outcome button when model missing', () => {
-        expect(formComponent.isOutcomeButtonVisible(null)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(null, false)).toBeFalsy();
     });
 
     it('should enable custom outcome buttons', () => {
         let formModel = new FormModel();
+        formComponent.form = formModel;
         let outcome = new FormOutcomeModel(formModel, {id: 'action1', name: 'Action 1'});
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should allow controlling [complete] button visibility', () => {
         let formModel = new FormModel();
+        formComponent.form = formModel;
         let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
 
         formComponent.showSaveButton = true;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
         formComponent.showSaveButton = false;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
+    });
+
+    it('should show only [complete] button with readOnly form ', () => {
+        let formModel = new FormModel();
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+        let outcome = new FormOutcomeModel(formModel, {id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION});
+
+        formComponent.showCompleteButton = true;
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
+    });
+
+    it('should not show [save] button with readOnly form ', () => {
+        let formModel = new FormModel();
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+        let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
+
+        formComponent.showSaveButton = true;
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
+    });
+
+    it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
+        let formModel = new FormModel({selectedOutcome: 'custom-outcome'});
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+        let outcome = new FormOutcomeModel(formModel, {id: '$customoutome', name: 'custom-outcome'});
+
+        formComponent.showCompleteButton = true;
+        formComponent.showSaveButton = true;
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
+
+        outcome = new FormOutcomeModel(formModel, {id: '$customoutome2', name: 'custom-outcome2'});
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should allow controlling [save] button visibility', () => {
         let formModel = new FormModel();
+        formModel.readOnly = false;
+        formComponent.form = formModel;
         let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.COMPLETE_ACTION});
 
         formComponent.showCompleteButton = true;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
         formComponent.showCompleteButton = false;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should load form on refresh', () => {
