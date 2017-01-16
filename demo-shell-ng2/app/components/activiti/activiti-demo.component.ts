@@ -166,6 +166,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onProcessFilterClick(event: FilterProcessRepresentationModel) {
+        this.currentProcessInstanceId = null;
         this.processFilter = event;
     }
 
@@ -190,13 +191,16 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     navigateStartProcess() {
+        this.processFilter = null;
+        this.activitiprocessfilter.selectFilter(null);
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
     onStartProcessInstance(instance: ProcessInstance) {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.activitiprocesslist.reload();
+        this.processFilter = null;
+        this.activitiprocessfilter.selectFilter(null);
     }
 
     isStartProcessMode() {
