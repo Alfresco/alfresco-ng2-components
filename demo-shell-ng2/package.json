@@ -5,7 +5,7 @@
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build  && rimraf dist node_modules typings dist",
-    "start": "npm run server-versions && webpack-dev-server --inline --progress --port 3000 --max_old_space_size=4096 --max_new_space_size=4096",
+    "start": "npm run server-versions && webpack-dev-server --progress --max_old_space_size=4096 --max_new_space_size=4096",
     "start:dist": "wsrv -s dist/ -p 3000 -a 0.0.0.0",
     "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
     "test": "karma start",
