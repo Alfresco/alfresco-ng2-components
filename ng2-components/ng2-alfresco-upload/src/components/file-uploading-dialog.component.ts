@@ -46,7 +46,7 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     totalCompleted: number = 0;
 
-    totalCompletedMsg: string = 'FILE_UPLOAD.MESSAGES.SINGLE_COMPLETED'
+    totalCompletedMsg: string = 'FILE_UPLOAD.MESSAGES.SINGLE_COMPLETED';
 
     private _isDialogMinimized: boolean = false;
 
