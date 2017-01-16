@@ -1,7 +1,7 @@
 <div class="file-dialog" [ngClass]="{show: isDialogActive}">
     <div class="header">
         <div class="title">
-            <span id="total-upload-completed">{{totalCompleted}}</span> {{'FILE_UPLOAD.MESSAGES.COMPLETED' | translate}}
+            <span id="total-upload-completed">{{totalCompleted}}</span> {{ totalCompletedMsg | translate}}
         </div>
         <div class="buttons">
             <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}" (keyup.enter)="toggleDialogMinimize()" (click)="toggleDialogMinimize()" tabindex="0">

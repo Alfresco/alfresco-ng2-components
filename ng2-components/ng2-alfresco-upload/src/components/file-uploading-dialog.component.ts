@@ -46,6 +46,8 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
     totalCompleted: number = 0;
 
+    totalCompletedMsg: string = 'FILE_UPLOAD.MESSAGES.SINGLE_COMPLETED';
+
     private _isDialogMinimized: boolean = false;
 
     private listSubscription: any;
@@ -72,6 +74,9 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
         if (this.uploadService.totalCompleted$) {
             this.counterSubscription = this.uploadService.totalCompleted$.subscribe((total: number) => {
                 this.totalCompleted = total;
+                if (this.totalCompleted > 1) {
+                    this.totalCompletedMsg = 'FILE_UPLOAD.MESSAGES.COMPLETED';
+                }
                 this.cd.detectChanges();
             });
         }

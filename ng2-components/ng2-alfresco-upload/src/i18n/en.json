@@ -6,6 +6,7 @@
       "CANCEL": "CANCEL"
     },
     "MESSAGES": {
+      "SINGLE_COMPLETED": "upload complete",
       "COMPLETED": "uploads complete",
       "PROGRESS": "Upload in progress...",
       "FOLDER_ALREADY_EXIST": "The folder {0} already exist",
