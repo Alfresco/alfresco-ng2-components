@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, SettingsService, AuthService, StorageService, LogService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService, LogService } from 'ng2-alfresco-core';
 import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
@@ -111,8 +111,8 @@ export class MyDemoApp implements OnInit {
     versioning: boolean = false;
     ticket: string;
 
-    constructor(private authService: AuthService,
-                private settingsService: SettingsService,
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
                 private logService: LogService) {
         settingsService.ecmHost = this.ecmHost;

@@ -19,7 +19,7 @@ import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
-import { AuthService, ContentService, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentListService {
@@ -57,8 +57,8 @@ export class DocumentListService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
     };
 
-    constructor(private authService: AuthService,
-                private contentService: ContentService,
+    constructor(private authService: AlfrescoAuthenticationService,
+                private contentService: AlfrescoContentService,
                 private apiService: AlfrescoApiService,
                 private logService: LogService) {
     }

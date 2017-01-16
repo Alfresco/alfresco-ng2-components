@@ -18,7 +18,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
 import { ActivitiChecklist } from './activiti-checklist.component';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -49,7 +49,7 @@ describe('ActivitiChecklist', () => {
                 ActivitiTaskListService
             ]
         }).compileComponents().then(() => {
-            let translateService = TestBed.get(AlfrescoTranslateService);
+            let translateService = TestBed.get(AlfrescoTranslationService);
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService, 'get').and.callFake((key) => {
                 return Observable.of(key);

@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
@@ -43,7 +43,7 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     currentMetricColors: string;
     metricType: string;
 
-    constructor(private translateService: AlfrescoTranslateService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder) {
         if (translateService) {

@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ProcessInstance } from '../models/process-instance.model';
 import { DatePipe } from '@angular/common';
 
@@ -36,7 +36,7 @@ export class ActivitiProcessInstanceHeader {
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private translate: AlfrescoTranslateService,
+    constructor(private translate: AlfrescoTranslationService,
                 private logService: LogService) {
 
         if (translate) {

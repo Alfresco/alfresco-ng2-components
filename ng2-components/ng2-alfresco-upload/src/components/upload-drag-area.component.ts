@@ -16,7 +16,7 @@
  */
 
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
@@ -62,7 +62,7 @@ export class UploadDragAreaComponent {
     onSuccess = new EventEmitter();
 
     constructor(private uploadService: UploadService,
-                private translateService: AlfrescoTranslateService,
+                private translateService: AlfrescoTranslationService,
                 private logService: LogService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');

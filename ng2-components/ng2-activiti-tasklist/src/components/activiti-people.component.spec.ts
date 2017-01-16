@@ -17,7 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 import { ActivitiPeople } from './activiti-people.component';
 import { ActivitiPeopleSearch } from './activiti-people-search.component';
@@ -62,7 +62,7 @@ describe('ActivitiPeople', () => {
         }).compileComponents().then(() => {
             logService = TestBed.get(LogService);
 
-            let translateService = TestBed.get(AlfrescoTranslateService);
+            let translateService = TestBed.get(AlfrescoTranslationService);
             spyOn(translateService, 'addTranslationFolder').and.stub();
             spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
 

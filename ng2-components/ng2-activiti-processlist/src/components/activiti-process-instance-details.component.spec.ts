@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
@@ -50,7 +50,7 @@ describe('ActivitiProcessInstanceDetails', () => {
                 ActivitiProcessInstanceDetails
             ],
             providers: [
-                { provide: AlfrescoTranslateService, useClass: TranslationMock },
+                { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 ActivitiProcessService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]

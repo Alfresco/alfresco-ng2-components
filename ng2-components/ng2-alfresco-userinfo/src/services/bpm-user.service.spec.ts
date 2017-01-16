@@ -16,7 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import { CoreModule, AuthService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { BpmUserService } from '../services/bpm-user.service';
 // import { fakeBpmUser } from '../assets/fake-bpm-user.service.mock';
 
@@ -25,7 +25,7 @@ declare let jasmine: any;
 describe('BpmUserService', () => {
 
     let service: BpmUserService;
-    let authService: AuthService;
+    let authService: AlfrescoAuthenticationService;
     let apiService: AlfrescoApiService;
 
     beforeEach(() => {
@@ -38,7 +38,7 @@ describe('BpmUserService', () => {
             ]
         });
         service = TestBed.get(BpmUserService);
-        authService = TestBed.get(AuthService);
+        authService = TestBed.get(AlfrescoAuthenticationService);
         apiService = TestBed.get(AlfrescoApiService);
         jasmine.Ajax.install();
     });

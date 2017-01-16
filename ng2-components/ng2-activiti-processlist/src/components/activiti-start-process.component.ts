@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiStartForm } from 'ng2-activiti-form';
 import { ProcessInstance } from './../models/process-instance.model';
 import { ProcessDefinitionRepresentation } from './../models/process-definition.model';
@@ -53,7 +53,7 @@ export class ActivitiStartProcessInstance implements OnChanges {
 
     errorMessageId: string = '';
 
-    constructor(private translate: AlfrescoTranslateService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService) {
 
         if (translate) {

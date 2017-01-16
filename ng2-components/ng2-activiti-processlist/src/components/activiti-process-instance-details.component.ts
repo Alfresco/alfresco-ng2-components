@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
 
 import { ActivitiProcessService } from './../services/activiti-process.service';
@@ -60,7 +60,7 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
      * @param translate Translation service
      * @param activitiProcess   Process service
      */
-    constructor(private translate: AlfrescoTranslateService,
+    constructor(private translate: AlfrescoTranslationService,
                 private activitiProcess: ActivitiProcessService,
                 private logService: LogService) {
 

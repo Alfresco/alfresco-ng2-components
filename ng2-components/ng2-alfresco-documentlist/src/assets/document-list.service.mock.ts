@@ -20,9 +20,9 @@ import { NodePaging } from './../models/document-library.model';
 import { PageNode } from './document-library.model.mock';
 import { DocumentListService } from './../services/document-list.service';
 import {
-    SettingsService,
-    AuthService,
-    ContentService,
+    AlfrescoSettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
     AlfrescoApiService,
     LogService
 } from 'ng2-alfresco-core';
@@ -34,9 +34,9 @@ export class DocumentListServiceMock extends DocumentListService {
     getFolderRejectError: string = 'Error';
 
     constructor(
-        settings?: SettingsService,
-        authService?: AuthService,
-        contentService?: ContentService,
+        settings?: AlfrescoSettingsService,
+        authService?: AlfrescoAuthenticationService,
+        contentService?: AlfrescoContentService,
         apiService?: AlfrescoApiService,
         logService?: LogService,
     ) {

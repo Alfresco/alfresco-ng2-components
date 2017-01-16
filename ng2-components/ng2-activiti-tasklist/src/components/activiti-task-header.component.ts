@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 
@@ -37,7 +37,7 @@ export class ActivitiTaskHeader {
     @Output()
     claim: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private translateService: AlfrescoTranslateService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private activitiTaskService: ActivitiTaskListService,
                 private logService: LogService) {
         if (translateService) {

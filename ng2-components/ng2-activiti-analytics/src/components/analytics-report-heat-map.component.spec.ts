@@ -18,7 +18,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
-import { CoreModule, AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 import { AnalyticsReportHeatMapComponent } from '../components/analytics-report-heat-map.component';
 import { WIDGET_DIRECTIVES } from '../components/widgets/index';
@@ -57,7 +57,7 @@ describe('AnalyticsReportHeatMapComponent', () => {
             ]
         }).compileComponents();
 
-        let translateService = TestBed.get(AlfrescoTranslateService);
+        let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
         spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
 

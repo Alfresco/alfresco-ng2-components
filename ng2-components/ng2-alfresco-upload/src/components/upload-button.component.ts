@@ -17,7 +17,7 @@
 
 import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
@@ -90,7 +90,7 @@ export class UploadButtonComponent {
 
     constructor(private el: ElementRef,
                 private uploadService: UploadService,
-                private translateService: AlfrescoTranslateService,
+                private translateService: AlfrescoTranslationService,
                 private logService: LogService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');

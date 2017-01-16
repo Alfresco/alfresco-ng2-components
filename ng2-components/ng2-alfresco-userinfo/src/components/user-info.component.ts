@@ -16,7 +16,7 @@
  */
 
 import { Component, OnInit, Input } from '@angular/core';
-import { AlfrescoTranslateService, AuthService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { EcmUserModel } from './../models/ecm-user.model';
 import { BpmUserModel } from './../models/bpm-user.model';
 import { EcmUserService } from './../services/ecm-user.service';
@@ -58,8 +58,8 @@ export class UserInfoComponent implements OnInit {
 
     constructor(private ecmUserService: EcmUserService,
                 private bpmUserService: BpmUserService,
-                private authService: AuthService,
-                private translateService: AlfrescoTranslateService) {
+                private authService: AlfrescoAuthenticationService,
+                private translateService: AlfrescoTranslationService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-userinfo', 'node_modules/ng2-alfresco-userinfo/src');
         }

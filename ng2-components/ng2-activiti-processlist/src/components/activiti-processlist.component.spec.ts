@@ -20,7 +20,7 @@ import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core
 import { Observable } from 'rxjs/Rx';
 import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
 
-import { AlfrescoTranslateService, CoreModule } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule, ObjectDataRow, DataRowEvent, ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 import { TranslationMock } from './../assets/translation.service.mock';
@@ -65,7 +65,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
             declarations: [ ActivitiProcessInstanceListComponent ],
             providers: [
                 ActivitiProcessService,
-                {provide: AlfrescoTranslateService, useClass: TranslationMock}
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(ActivitiProcessInstanceListComponent);

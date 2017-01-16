@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges, DebugElement} from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -93,7 +93,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      * @param activitiForm Form service
      * @param activitiTaskList Task service
      */
-    constructor(private translateService: AlfrescoTranslateService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private activitiForm: FormService,
                 private activitiTaskList: ActivitiTaskListService,
                 private logService: LogService) {

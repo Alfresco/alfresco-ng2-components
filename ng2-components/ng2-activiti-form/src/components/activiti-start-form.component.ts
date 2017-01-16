@@ -26,7 +26,7 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
@@ -75,7 +75,7 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
-    constructor(private translate: AlfrescoTranslateService,
+    constructor(private translate: AlfrescoTranslationService,
                 formService: FormService,
                 visibilityService: WidgetVisibilityService,
                 logService: LogService) {

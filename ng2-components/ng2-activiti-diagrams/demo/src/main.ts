@@ -19,7 +19,7 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, SettingsService, AuthService, StorageService, LogService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService, LogService } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 @Component({
@@ -48,8 +48,8 @@ export class DiagramDemoComponent {
     host: string = 'http://localhost:9999';
     ticket: string;
 
-    constructor(private authService: AuthService,
-                private settingsService: SettingsService,
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
                 private logService: LogService) {
         settingsService.bpmHost = this.host;

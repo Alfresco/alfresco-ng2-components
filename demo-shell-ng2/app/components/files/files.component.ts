@@ -17,7 +17,7 @@
 
 import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, LogService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
 
@@ -43,7 +43,7 @@ export class FilesComponent implements OnInit {
     documentList: DocumentListComponent;
 
     constructor(private documentActions: DocumentActionsService,
-                private authService: AuthService,
+                private authService: AlfrescoAuthenticationService,
                 private formService: FormService,
                 private logService: LogService,
                 private router: Router,

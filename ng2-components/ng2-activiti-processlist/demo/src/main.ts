@@ -28,7 +28,7 @@ import {
     ActivitiStartProcessInstance,
     ProcessInstance
 } from 'ng2-activiti-processlist';
-import { AuthService, SettingsService, StorageService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 const currentProcessIdNew = '__NEW__';
@@ -160,8 +160,8 @@ class MyDemoApp implements OnInit {
 
     dataProcesses: ObjectDataTableAdapter;
 
-    constructor(private authService: AuthService,
-                private settingsService: SettingsService,
+    constructor(private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
                 private storage: StorageService,
                 private logService: LogService) {
         settingsService.bpmHost = this.host;

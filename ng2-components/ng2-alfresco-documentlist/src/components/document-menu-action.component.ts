@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
 import { DocumentListService } from './../services/document-list.service';
@@ -53,7 +53,7 @@ export class DocumentMenuActionComponent {
     folderName: string = '';
 
     constructor(private documentListService: DocumentListService,
-                private translateService: AlfrescoTranslateService,
+                private translateService: AlfrescoTranslationService,
                 private logService: LogService) {
 
         if (translateService) {

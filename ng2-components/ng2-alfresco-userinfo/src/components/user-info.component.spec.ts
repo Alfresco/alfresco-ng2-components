@@ -22,9 +22,9 @@ import { BpmUserModel } from '../models/bpm-user.model';
 import { TranslationMock } from '../assets/translation.service.mock';
 import {
     CoreModule,
-    AuthService,
-    ContentService,
-    AlfrescoTranslateService
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoTranslationService
 } from 'ng2-alfresco-core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
@@ -73,8 +73,8 @@ describe('User info component', () => {
     let userInfoComp: UserInfoComponent;
     let fixture: ComponentFixture<UserInfoComponent>;
     let element: HTMLElement;
-    let stubAuthService: AuthService;
-    let stubContent: ContentService;
+    let stubAuthService: AlfrescoAuthenticationService;
+    let stubContent: AlfrescoContentService;
     let componentHandler;
 
     beforeEach(async(() => {
@@ -90,15 +90,15 @@ describe('User info component', () => {
             providers: [
                 EcmUserService,
                 BpmUserService,
-                {provide: AlfrescoTranslateService, useClass: TranslationMock}
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(UserInfoComponent);
             userInfoComp = fixture.componentInstance;
             element = fixture.nativeElement;
 
-            stubAuthService = TestBed.get(AuthService);
-            stubContent = TestBed.get(ContentService);
+            stubAuthService = TestBed.get(AlfrescoAuthenticationService);
+            stubContent = TestBed.get(AlfrescoContentService);
         });
     }));
 

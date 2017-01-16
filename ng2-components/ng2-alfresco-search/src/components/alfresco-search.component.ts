@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChan
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
@@ -66,7 +66,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
 
     constructor(private searchService: AlfrescoSearchService,
-                private translateService: AlfrescoTranslateService,
+                private translateService: AlfrescoTranslationService,
                 private thumbnailService: AlfrescoThumbnailService,
                 @Optional() private route: ActivatedRoute) {
     }

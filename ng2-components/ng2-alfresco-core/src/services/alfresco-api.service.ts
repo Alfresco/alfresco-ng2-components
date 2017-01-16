@@ -18,7 +18,7 @@
 import { Injectable } from '@angular/core';
 import { AlfrescoApi } from  'alfresco-js-api';
 import * as alfrescoApi from  'alfresco-js-api';
-import { SettingsService } from './settings.service';
+import { AlfrescoSettingsService } from './alfresco-settings.service';
 import { StorageService } from './storage.service';
 
 @Injectable()
@@ -44,7 +44,7 @@ export class AlfrescoApiService {
         return this.alfrescoApi;
     }
 
-    constructor(private settingsService: SettingsService,
+    constructor(private settingsService: AlfrescoSettingsService,
                 private storage: StorageService) {
 
         this.provider = this.settingsService.getProviders();

@@ -22,23 +22,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 import {
-    AuthService,
-    ContentService,
-    SettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoSettingsService,
     StorageService,
     AlfrescoApiService,
     AlfrescoTranslateLoader,
-    AlfrescoTranslateService,
+    AlfrescoTranslationService,
     RenditionsService,
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
-    LogService, LogServiceMock,
-
-    /** @deprecated */ AlfrescoSettingsService,
-    /** @deprecated */ AlfrescoTranslationService,
-    /** @deprecated */ AlfrescoAuthenticationService,
-    /** @deprecated */ AlfrescoContentService
+    LogService, LogServiceMock
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -50,23 +45,18 @@ export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
     LogService, LogServiceMock,
-    AuthService,
-    ContentService,
-    SettingsService,
+    AlfrescoAuthenticationService,
+    AlfrescoContentService,
+    AlfrescoSettingsService,
     StorageService,
     AlfrescoApiService,
     AlfrescoTranslateLoader,
-    AlfrescoTranslateService,
+    AlfrescoTranslationService,
     RenditionsService,
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
-    ...CONTEXT_MENU_PROVIDERS,
-
-    /** @deprecated */ AlfrescoAuthenticationService,
-    /** @deprecated */ AlfrescoContentService,
-    /** @deprecated */ AlfrescoSettingsService,
-    /** @deprecated */ AlfrescoTranslationService
+    ...CONTEXT_MENU_PROVIDERS
 ];
 
 export function createTranslateLoader(http: Http, logService: LogService) {

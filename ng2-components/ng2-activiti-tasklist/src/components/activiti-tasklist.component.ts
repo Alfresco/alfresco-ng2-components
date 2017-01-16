@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -75,7 +75,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         {type: 'text', key: 'created', title: 'Created', sortable: true}
     ];
 
-    constructor(private translateService: AlfrescoTranslateService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private taskListService: ActivitiTaskListService,
                 private logService: LogService) {
         if (translateService) {

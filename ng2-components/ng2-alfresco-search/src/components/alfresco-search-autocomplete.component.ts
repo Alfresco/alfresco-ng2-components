@@ -16,7 +16,7 @@
  */
 
 import { Component, ElementRef, EventEmitter, Input, OnInit, OnChanges, Output, ViewChild } from '@angular/core';
-import { AlfrescoTranslateService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { MinimalNodeEntity } from 'alfresco-js-api';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
@@ -71,7 +71,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
     baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
 
     constructor(private searchService: AlfrescoSearchService,
-                private translateService: AlfrescoTranslateService,
+                private translateService: AlfrescoTranslationService,
                 private thumbnailService: AlfrescoThumbnailService) {
     }
 

@@ -21,8 +21,8 @@ import { ResponseOptions, Response, XHRBackend, HttpModule } from '@angular/http
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import {getTestBed, TestBed} from '@angular/core/testing';
 
-import { AlfrescoTranslateLoader } from './translate-loader.service';
-import { AlfrescoTranslateService } from './translate.service';
+import { AlfrescoTranslateLoader } from './alfresco-translate-loader.service';
+import { AlfrescoTranslationService } from './alfresco-translation.service';
 import { LogService } from './log.service';
 
 let componentJson1 = ' {"TEST": "This is a test", "TEST2": "This is another test"} ' ;
@@ -34,7 +34,7 @@ const mockBackendResponse = (connection: MockConnection, response: string) => {
 describe('TranslateLoader', () => {
     let injector: Injector;
     let backend: MockBackend;
-    let alfrescoTranslationService: AlfrescoTranslateService;
+    let alfrescoTranslationService: AlfrescoTranslationService;
     let connection: MockConnection; // this will be set when a new connection is emitted from the backend.
     let customLoader;
 
@@ -48,14 +48,14 @@ describe('TranslateLoader', () => {
                 })
             ],
             providers: [
-                AlfrescoTranslateService,
+                AlfrescoTranslationService,
                 LogService,
                 {provide: XHRBackend, useClass: MockBackend}
             ]
         });
         injector = getTestBed();
         backend = injector.get(XHRBackend);
-        alfrescoTranslationService = injector.get(AlfrescoTranslateService);
+        alfrescoTranslationService = injector.get(AlfrescoTranslationService);
         backend.connections.subscribe((c: MockConnection) => connection = c);
         customLoader = alfrescoTranslationService.translate.currentLoader;
     });

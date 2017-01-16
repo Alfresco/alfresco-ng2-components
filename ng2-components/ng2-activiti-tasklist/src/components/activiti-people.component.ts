@@ -17,7 +17,7 @@
 
 import { Component, Input, ViewChild } from '@angular/core';
 import { Observer, Observable } from 'rxjs/Rx';
-import { AlfrescoTranslateService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { User } from '../models/user.model';
 import { ActivitiPeopleService } from '../services/activiti-people.service';
 
@@ -51,7 +51,7 @@ export class ActivitiPeople {
      * @param translate
      * @param people service
      */
-    constructor(private translateService: AlfrescoTranslateService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private peopleService: ActivitiPeopleService,
                 private logService: LogService) {
         if (translateService) {
