@@ -98,8 +98,8 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
     });
 
-    it('should render validation min-length error when the username is lower than 4 characters', () => {
-        usernameInput.value = '123';
+    it('should render validation min-length error when the username is lower than 2 characters', () => {
+        usernameInput.value = '1';
         usernameInput.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
