@@ -42,7 +42,7 @@ export class LoginDemoComponent implements OnInit {
                 private storage: StorageService,
                 private logService: LogService) {
         this.customValidation = {
-            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
             password: ['', Validators.required]
         };
     }
