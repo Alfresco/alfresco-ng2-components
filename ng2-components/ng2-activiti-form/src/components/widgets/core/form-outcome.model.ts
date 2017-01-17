@@ -25,12 +25,14 @@ export class FormOutcomeModel extends FormWidgetModel {
     static START_PROCESS_ACTION: string = 'Start Process';    // Activiti 'Start Process' action name
 
     isSystem: boolean = false;
+    isSelected: boolean = false;
 
     constructor(form: FormModel, json?: any) {
         super(form, json);
 
         if (json) {
             this.isSystem = json.isSystem ? true : false;
+            this.isSelected = form && json.name === form.selectedOutcome ? true : false;
         }
     }
 }

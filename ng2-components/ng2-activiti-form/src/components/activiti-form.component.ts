@@ -190,10 +190,13 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         return false;
     }
 
-    isOutcomeButtonVisible(outcome: FormOutcomeModel): boolean {
+    isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
         if (outcome && outcome.name) {
             if (outcome.name === FormOutcomeModel.COMPLETE_ACTION) {
                 return this.showCompleteButton;
+            }
+            if (isFormReadOnly) {
+                return outcome.isSelected ;
             }
             if (outcome.name === FormOutcomeModel.SAVE_ACTION) {
                 return this.showSaveButton;

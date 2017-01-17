@@ -133,14 +133,14 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
     }
 
     /** @override */
-    isOutcomeButtonVisible(outcome: FormOutcomeModel): boolean {
+    isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
         if (outcome && outcome.isSystem && ( outcome.name === FormOutcomeModel.SAVE_ACTION ||
             outcome.name === FormOutcomeModel.COMPLETE_ACTION )) {
             return false;
         } else if (outcome && outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
             return true;
         }
-        return super.isOutcomeButtonVisible(outcome);
+        return super.isOutcomeButtonVisible(outcome, isFormReadOnly);
     }
 
     /** @override */

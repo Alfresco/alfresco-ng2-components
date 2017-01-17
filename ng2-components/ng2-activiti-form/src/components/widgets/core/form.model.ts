@@ -48,6 +48,7 @@ export class FormModel {
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
+    readonly selectedOutcome: string;
 
     values: FormValues = {};
 
@@ -77,6 +78,7 @@ export class FormModel {
             this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
             this.processDefinitionId = json.processDefinitionId;
             this.customFieldTemplates = json.customFieldTemplates || {};
+            this.selectedOutcome = json.selectedOutcome || {};
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
