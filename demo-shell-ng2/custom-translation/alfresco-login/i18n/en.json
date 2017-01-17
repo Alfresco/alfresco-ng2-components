@@ -15,7 +15,8 @@
             "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",
             "LOGIN-SUCCESS": "Login successful",
             "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
-            "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in alfresco-login component"
+            "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in alfresco-login component",
+            "LOGIN-ECM-LICENSE": "The ECM is in read-only mode"
         },
         "BUTTON": {
             "LOGIN": "SIGN IN"

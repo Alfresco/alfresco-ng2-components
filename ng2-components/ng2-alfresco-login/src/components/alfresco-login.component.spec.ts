@@ -310,6 +310,29 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
     });
 
+    it('should return ECOM read-oly error when error occurs', () => {
+        component.providers = 'ECM';
+        expect(component.success).toBe(false);
+        expect(component.error).toBe(false);
+
+        usernameInput.value = 'fake-username-ECM-access-error';
+        passwordInput.value = 'fake-password';
+
+        usernameInput.dispatchEvent(new Event('input'));
+        passwordInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+
+        element.querySelector('button').click();
+
+        fixture.detectChanges();
+
+        expect(component.error).toBe(true);
+        expect(component.success).toBe(false);
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
+    });
+
     it('should emit onSuccess event after the login has succeeded', () => {
         spyOn(component.onSuccess, 'emit');
         component.providers = 'ECM';
