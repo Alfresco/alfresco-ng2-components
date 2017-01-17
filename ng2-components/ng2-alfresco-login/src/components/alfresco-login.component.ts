@@ -157,13 +157,31 @@ export class AlfrescoLoginComponent implements OnInit {
                     this.onSuccess.emit({token: token, username: values.username, password: values.password});
                 },
                 (err: any) => {
+                    this.displayErrorMessage(err);
                     this.enableError();
-                    this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
                     this.onError.emit(err);
                     this.logService.error(err);
                 },
                 () => this.logService.info('Login done')
             );
+    }
+
+    /**
+     * Check and display the right error message in the UI
+     */
+    private displayErrorMessage(err: any): void {
+        if (err.error && err.error.crossDomain && err.error.message.indexOf('the network is offline, Origin is not allowed by' +
+                ' Access-Control-Allow-Origin') > 0) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CORS';
+            return;
+        }
+
+        if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') > 0) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
+            return;
+        }
+
+        this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
     }
 
     /**
