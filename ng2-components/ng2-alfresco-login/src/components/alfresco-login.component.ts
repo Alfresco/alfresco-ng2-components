@@ -171,13 +171,18 @@ export class AlfrescoLoginComponent implements OnInit {
      */
     private displayErrorMessage(err: any): void {
         if (err.error && err.error.crossDomain && err.error.message.indexOf('the network is offline, Origin is not allowed by' +
-                ' Access-Control-Allow-Origin') > 0) {
+                ' Access-Control-Allow-Origin') !== -1) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CORS';
             return;
         }
 
-        if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') > 0) {
+        if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') !== -1) {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
+            return;
+        }
+
+        if (err.status === 403 && err.message.indexOf('The system is currently in read-only mode') !== -1) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
             return;
         }
 

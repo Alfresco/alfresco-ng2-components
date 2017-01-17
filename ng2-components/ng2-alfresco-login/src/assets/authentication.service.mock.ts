@@ -39,7 +39,10 @@ export class AuthenticationMock /*extends AlfrescoAuthenticationService*/ {
             return Observable.throw({message: 'ERROR: Invalid CSRF-token', status: 403});
         }
 
-        return Observable.throw('Fake server error');
+        if (username === 'fake-username-ECM-access-error' && password === 'fake-password') {
+            return Observable.throw({message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode', status: 403});
+        }
 
+        return Observable.throw('Fake server error');
     }
 }
