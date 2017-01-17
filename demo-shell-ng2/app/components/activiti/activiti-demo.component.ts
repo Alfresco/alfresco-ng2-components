@@ -36,6 +36,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
     ObjectDataTableAdapter,
+    ObjectDataRow,
     DataSorting
 } from 'ng2-alfresco-datatable';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
@@ -144,7 +145,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onTaskFilterClick(event: FilterRepresentationModel) {
-        this.taskFilter = event;
+        if(event){
+            this.taskFilter = event;
+        }
     }
 
     onReportClick(event: any) {
@@ -191,16 +194,14 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     navigateStartProcess() {
-        this.processFilter = null;
-        this.activitiprocessfilter.selectFilter(null);
+        this.cleanProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
     onStartProcessInstance(instance: ProcessInstance) {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.processFilter = null;
-        this.activitiprocessfilter.selectFilter(null);
+        this.cleanProcessFilters();
     }
 
     isStartProcessMode() {
@@ -248,9 +249,21 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onProcessDetailsTaskClick(event: TaskDetailsEvent) {
         event.preventDefault();
-        this.currentTaskId = event.value.id;
-        this.activititasklist.reload();
         this.activeTab = 'tasks';
+        let processTaskDataRow = new ObjectDataRow({
+            id: event.value.id,
+            name: event.value.name || 'No name',
+            created: event.value.created
+        })
+        this.activitifilter.selectFilter(null);
+        this.dataTasks.setRows([processTaskDataRow]);
+        this.activititasklist.selectTask(event.value.id);
+        this.currentTaskId = event.value.id;
+    }
+
+    private cleanProcessFilters(){
+        this.processFilter = null;
+        this.activitiprocessfilter.selectFilter(null);
     }
 
 }
