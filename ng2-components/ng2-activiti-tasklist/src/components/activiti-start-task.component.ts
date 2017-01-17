@@ -43,7 +43,7 @@ export class ActivitiStartTaskButton {
 
     forms: Form [];
 
-    formId: string;
+    formId: string = '-1';
 
     name: string;
     description: string;

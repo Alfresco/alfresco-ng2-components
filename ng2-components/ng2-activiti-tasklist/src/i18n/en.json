@@ -66,6 +66,7 @@
         "DIALOG": {
             "TITLE": "Start Task",
             "LABEL": {
+                "NONE": "None",
                 "NAME": "Name",
                 "DESCRIPTION": "Description",
                 "ATTACHFORM" : "Attach a Form"
