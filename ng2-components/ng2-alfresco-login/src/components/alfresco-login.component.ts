@@ -262,7 +262,7 @@ export class AlfrescoLoginComponent implements OnInit {
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
             password: ['', Validators.required]
         });
     }
