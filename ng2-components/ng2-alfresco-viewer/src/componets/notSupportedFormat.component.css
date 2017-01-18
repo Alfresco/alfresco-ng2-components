@@ -1,6 +1,7 @@
 
 .viewer-download-text  {
     text-align: center;
+    word-wrap: break-word;
 }
 
 .viewer-margin-cloud-download{
@@ -18,5 +19,5 @@
 }
 
 .full_width{
-    width :100% !important;
+    width :95% !important;
 }
