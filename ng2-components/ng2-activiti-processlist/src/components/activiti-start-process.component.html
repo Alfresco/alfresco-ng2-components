@@ -5,7 +5,7 @@
         </div>
         <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
             <select name="processDefinition" [(ngModel)]="currentProcessDef.id" (ngModelChange)="onProcessDefChange($event)" id="processDefinition" required>
-                <option value="" selected="selected">{{'START_PROCESS.DIALOG.TYPE_PLACEHOLDER'|translate}}</option>
+                <option value="null">{{'START_PROCESS.DIALOG.TYPE_PLACEHOLDER'|translate}}</option>
                 <option *ngFor="let processDef of processDefinitions" [value]="processDef.id">
                     {{processDef.name}}
                 </option>
