@@ -32,6 +32,7 @@
     <tbody>
 
     <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
+        class="alfresco-datatable__row"
         [class.alfresco-datatable__row--selected]="selectedRow === row">
         <td *ngIf="multiselect">
             <label
