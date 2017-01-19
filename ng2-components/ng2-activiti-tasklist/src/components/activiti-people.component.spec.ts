@@ -111,9 +111,23 @@ describe('ActivitiPeople', () => {
         it('should close dialog when clicked on cancel', () => {
             activitiPeopleComponent.showDialog();
             expect(element.querySelector('#addPeople')).not.toBeNull();
-            activitiPeopleComponent.cancel();
+            activitiPeopleComponent.closeDialog();
             let dialogWindow = <HTMLElement> element.querySelector('#add-people-dialog');
             expect(dialogWindow.getAttribute('open')).toBeNull();
+        });
+
+        it('should reset search input when the dialog is closed', () => {
+            let userInputSearch: HTMLInputElement;
+            activitiPeopleComponent.showDialog();
+            expect(element.querySelector('#addPeople')).not.toBeNull();
+            userInputSearch = <HTMLInputElement> element.querySelector('#userSearchText');
+            userInputSearch.value = 'fake-search-value';
+            activitiPeopleComponent.closeDialog();
+            activitiPeopleComponent.showDialog();
+            userInputSearch = <HTMLInputElement> element.querySelector('#userSearchText');
+
+            expect(userInputSearch).not.toBeNull();
+            expect(userInputSearch.value).toBeFalsy();
         });
     });
 
