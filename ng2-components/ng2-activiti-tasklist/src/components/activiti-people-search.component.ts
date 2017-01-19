@@ -58,9 +58,11 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         this.searchUser
             .valueChanges
             .debounceTime(200)
-            .subscribe((event) => {
-                if (event) {
+            .subscribe((event: string) => {
+                if (event && event.trim()) {
                     this.onSearch.emit(event);
+                } else {
+                    this.userList = [];
                 }
             });
     }
@@ -97,9 +99,5 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
         let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
         let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
         return firstName + ' - ' + lastName;
-    }
-
-    cleanSearch() {
-        this.searchUser.reset();
     }
 }

@@ -34,6 +34,9 @@
         }
     },
     "PEOPLE": {
-        "DIALOG_CLOSE": "CHIUDI"
+        "DIALOG_CLOSE": "CHIUDI",
+        "SEARCH": {
+            "NO_USERS": "Nessun utente trovato"
+        }
     }
 }

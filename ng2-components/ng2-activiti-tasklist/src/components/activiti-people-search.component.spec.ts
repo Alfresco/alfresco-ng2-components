@@ -83,7 +83,7 @@ describe('ActivitiPeopleSearch', () => {
         fixture.whenStable()
             .then(() => {
                 expect(element.querySelector('#no-user-found')).not.toBeNull();
-                expect(element.querySelector('#no-user-found').textContent).toContain('No user found to involve');
+                expect(element.querySelector('#no-user-found').textContent).toContain('PEOPLE.SEARCH.NO_USERS');
             });
     });
 

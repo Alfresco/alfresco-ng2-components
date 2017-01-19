@@ -48,6 +48,9 @@ export class ActivitiPeople {
     @ViewChild('dialog')
     dialog: any;
 
+    @ViewChild('activitipeoplesearch')
+    activitipeoplesearch: any;
+
     private peopleSearchObserver: Observer<User[]>;
     peopleSearch$: Observable<User[]>;
 
@@ -74,10 +77,11 @@ export class ActivitiPeople {
         }
     }
 
-    public cancel() {
+    public closeDialog() {
         if (this.dialog) {
             this.dialog.nativeElement.close();
             this.peopleSearchObserver.next([]);
+            this.activitipeoplesearch.searchUser.reset();
         }
     }
 
