@@ -121,7 +121,7 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfr
     template: `
         <alfresco-document-list
             #documentList
-            [currentFolderPath]="'-my-'"
+            [currentFolderId]="'-my-'"
             [contextMenuActions]="true"
             [contentActions]="true"
             [creationMenuActions]="true">
@@ -180,6 +180,55 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
+
+#### Setting default folder
+
+You can set current folder path by assigning a value for `currentFolderId` property. 
+It can be either one of the well-known locations as **-root-**, **-shared-** or **-my-** or a node ID (guid).
+
+There may be scenarios when it is needed to set default path based on relative string value rather than node ID.
+For example when folder name or path is static but it's underlying ID is not (i.e. created manually by admin).
+In this case you can use `alfresco-js-api` to get node details based on it's relative path.
+
+Let's try setting default folder to `/Sites/swsdp/documentLibrary` without knowing it's ID beforehand.
+For the sake of simplicity example below shows only main points you may need paying attention to:
+ 
+```ts
+import { ChangeDetectorRef } from '@angular/core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+
+export class FilesComponent implements OnInit {
+
+    currentFolderId: string = '-my-';
+
+    constructor(private apiService: AlfrescoApiService,
+                private changeDetector: ChangeDetectorRef) {
+        // ...
+    }
+
+    ngOnInit() {
+        let nodes: any = this.apiService.getInstance().nodes;
+        nodes.getNodeInfo('-root-', {
+            includeSource: true,
+            include: ['path', 'properties'],
+            relativePath: '/Sites/swsdp/documentLibrary'
+        })
+        .then(node => {
+            console.log(node);
+            this.currentFolderId = node.id;
+            this.changeDetector.detectChanges();
+        });
+    }
+}
+```
+
+We've added `console.log(node)` for the `getNodeInfo` callback just for study and debug purposes. 
+It helps examining other valuable information you can have access to if needed:
+
+![documentLibrary](docs/assets/documentLibrary.png)
+
+**Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
+
 ### Events
 
 | Name | Description |
@@ -219,7 +268,7 @@ DocumentList provides simple creation menu actions that provide the action to cr
 
 ```html
 <alfresco-document-menu-action 
-    [currentFolderPath]="currentFolderPath">
+    [folderId]="folderId">
 </alfresco-document-menu-action>
 ```
 
