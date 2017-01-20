@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { TemplateRef } from '@angular/core';
+
 export interface DataTableAdapter {
     selectedRow: DataRow;
     getRows(): Array<DataRow>;
@@ -41,6 +43,7 @@ export interface DataColumn {
     title?: string;
     srTitle?: string;
     cssClass?: string;
+    template?: TemplateRef<any>;
 }
 
 export class DataSorting {

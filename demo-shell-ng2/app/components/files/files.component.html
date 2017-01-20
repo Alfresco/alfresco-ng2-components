@@ -28,6 +28,12 @@
                         key="name"
                         sortable="true"
                         class="full-width ellipsis-cell">
+                    <!-- Example of using custom column template -->
+                    <!--
+                    <template let-entry="$implicit">
+                        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
+                    </template>
+                    -->
                 </content-column>
                 <content-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
