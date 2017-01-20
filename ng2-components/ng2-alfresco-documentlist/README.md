@@ -180,8 +180,20 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
 
+### Events
 
-#### Setting default folder
+| Name | Description |
+| --- | --- |
+| `nodeClick` | Emitted when user clicks the node |
+| `nodeDblClick` | Emitted when user double-clicks the node |
+| `folderChange` | Emitted upon display folder changed |
+| `preview` | Emitted when document preview is requested either with single or double click |
+
+_For a complete example source code please refer to 
+[DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
+repository._
+
+### Setting default folder
 
 You can set current folder path by assigning a value for `currentFolderId` property. 
 It can be either one of the well-known locations as **-root-**, **-shared-** or **-my-** or a node ID (guid).
@@ -229,18 +241,74 @@ It helps examining other valuable information you can have access to if needed:
 
 **Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
 
-### Events
+### Calling DocumentList api directly
 
-| Name | Description |
-| --- | --- |
-| `nodeClick` | Emitted when user clicks the node |
-| `nodeDblClick` | Emitted when user double-clicks the node |
-| `folderChange` | Emitted upon display folder changed |
-| `preview` | Emitted when document preview is requested either with single or double click |
+Typically you will be binding DocumentList properties to your application/component class properties:
 
-_For a complete example source code please refer to 
-[DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
-repository._
+```html
+<alfresco-document-list [currentFolderId]="myStartFolder"></alfresco-document-list>
+```
+
+with the underlying class being implemented similar to the following one:
+
+```ts
+@Component(...)
+export class MyAppComponent {
+
+    myStartFolder: string = '-my-';
+    
+}
+```
+
+However there may scenarios that require you direct access to DocumentList apis. 
+You can get reference to the DocumentList instance by means of Angular **Component Interaction** API.
+See more details in [Parent calls a ViewChild](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-view-child) 
+section of the official docs.
+
+Here's an example of getting reference:
+
+```html
+<alfresco-document-list 
+    #documentList
+    [currentFolderId]="myStartFolder">
+</alfresco-document-list>
+```
+
+Note the `#documentList` ID we've just added to be able referencing this component later on.
+
+```ts
+import { ViewChild, AfterViewInit } from '@angular/core';
+import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+
+@Component(...)
+export class MyAppComponent implements AfterViewInit {
+
+    myStartFolder: string = '-my-';
+    
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
+
+    ngAfterViewInit() {
+        console.log(this.documentList);
+    }
+}
+```
+
+Example above should produce the following browser console output:
+
+![view-child](docs/assets/viewchild.png)
+
+Now you are able accessing DocumentList properties or calling methods directly.
+
+```ts
+// print currently displayed folder node object to console
+console.log(documentList.folderNode);
+```
+
+**Important note**:  
+It is important accessing child components at least at the `AfterViewInit` state. 
+Any UI click (buttons, links, etc.) event handlers are absolutely fine. This cannot be `ngOnInit` event though.
+You can get more details in [Component lifecycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html) article.
 
 ### Breadcrumb Component
 
