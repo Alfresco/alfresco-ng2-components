@@ -40,7 +40,7 @@ import {
     DataSorting
 } from 'ng2-alfresco-datatable';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
-import { FormRenderingService } from 'ng2-activiti-form';
+import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
 declare var componentHandler;
@@ -99,7 +99,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private apiService: AlfrescoApiService,
-                private formRenderingService: FormRenderingService) {
+                private formRenderingService: FormRenderingService,
+                private formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
             [
@@ -123,6 +124,14 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
         // Uncomment this line to map 'custom_stencil_01' to local editor component
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
+
+        formService.formLoaded.subscribe((e: FormEvent) => {
+            console.log(`Form loaded: ${e.form.id}`);
+        });
+
+        formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+            console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+        });
     }
 
     ngOnInit() {

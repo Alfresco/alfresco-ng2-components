@@ -37,6 +37,7 @@ export * from './src/components/widgets/index';
 export * from './src/services/ecm-model.service';
 export * from './src/services/node.service';
 export * from './src/services/form-rendering.service';
+export * from './src/events/index';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     ActivitiForm,
