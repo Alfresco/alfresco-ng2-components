@@ -30,6 +30,7 @@ describe('FormService', () => {
     let service: FormService;
     let apiService: AlfrescoApiService;
     let logService: LogService;
+    let bpmCli: any;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -44,6 +45,7 @@ describe('FormService', () => {
         });
         service = TestBed.get(FormService);
         apiService = TestBed.get(AlfrescoApiService);
+        bpmCli = apiService.getInstance().bpmAuth;
         logService = TestBed.get(LogService);
     });
 
@@ -372,6 +374,81 @@ describe('FormService', () => {
             contentType: 'application/json',
             responseText: JSON.stringify(responseBody)
         });
+    });
+
+    fit('should return the unsupported content when the file is an image', (done) => {
+        let contentId: number = 999;
+        responseBody = {
+            id: contentId,
+            name: 'fake-name.jpg',
+            created: '2017-01-23T12:12:53.219+0000',
+            createdBy: {id: 2, firstName: 'fake-admin', lastName: 'fake-last', 'email': 'fake-admin'},
+            relatedContent: false,
+            contentAvailable: true,
+            link: false,
+            mimeType: 'image/jpeg',
+            simpleType: 'image',
+            previewStatus: 'unsupported',
+            thumbnailStatus: 'unsupported'
+        };
+
+        service.getFileContent(contentId).subscribe(result => {
+            expect(result.id).toEqual(contentId);
+            expect(result.name).toEqual('fake-name.jpg');
+            expect(result.simpleType).toEqual('image');
+            expect(result.thumbnailStatus).toEqual('unsupported');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
+        });
+    });
+
+    fit('should return the supported content when the file is a pdf', (done) => {
+        let contentId: number = 888;
+        responseBody = {
+            id: contentId,
+            name: 'fake-name.pdf',
+            created: '2017-01-23T12:12:53.219+0000',
+            createdBy: {id: 2, firstName: 'fake-admin', lastName: 'fake-last', 'email': 'fake-admin'},
+            relatedContent: false,
+            contentAvailable: true,
+            link: false,
+            mimeType: 'application/pdf',
+            simpleType: 'pdf',
+            previewStatus: 'created',
+            thumbnailStatus: 'created'
+        };
+
+        service.getFileContent(contentId).subscribe(result => {
+            expect(result.id).toEqual(contentId);
+            expect(result.name).toEqual('fake-name.pdf');
+            expect(result.simpleType).toEqual('pdf');
+            expect(result.thumbnailStatus).toEqual('created');
+            done();
+        });
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify(responseBody)
+        });
+    });
+
+    fit('should return the raw content URL', () => {
+        let contentId: number = 999;
+        let contentRawUrl = service.getFileRawContentUrl(contentId);
+        expect(contentRawUrl).toEqual(`${bpmCli.basePath}/api/enterprise/content/${contentId}/raw`);
+    });
+
+    fit('should return the thumbnail URL', () => {
+        let contentId: number = 999;
+
+        let contentRawUrl = service.getContentThumbnailUrl(contentId);
+        expect(contentRawUrl).toEqual(`${bpmCli.basePath}/app/rest/content/${contentId}/rendition/thumbnail`);
     });
 
     it('should create a Form form a Node', (done) => {

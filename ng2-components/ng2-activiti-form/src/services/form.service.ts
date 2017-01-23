@@ -252,6 +252,21 @@ export class FormService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.contentApi.createTemporaryRawRelatedContent(file));
     }
 
+    getFileContent(contentId: number): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContent(contentId));
+    }
+
+    getFileRawContentUrl(contentId: number): string {
+        let alfrescoApi = this.apiService.getInstance();
+        return alfrescoApi.activiti.contentApi.getRawContentUrl(contentId);
+    }
+
+    getContentThumbnailUrl(contentId: number): string {
+        let alfrescoApi = this.apiService.getInstance();
+        return alfrescoApi.activiti.contentApi.getContentThumbnailUrl(contentId);
+    }
+
     getRestFieldValues(taskId: string, field: string): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
         return Observable.fromPromise(alfrescoApi.activiti.taskApi.getRestFieldValues(taskId, field));

@@ -19,6 +19,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
 import { ActivitiForm } from './src/components/activiti-form.component';
+import { ActivitiContent } from './src/components/activiti-content.component';
 import { FormFieldComponent } from './src/components/form-field/form-field.component';
 import { ActivitiStartForm } from './src/components/activiti-start-form.component';
 import { FormService } from './src/services/form.service';
@@ -31,6 +32,7 @@ import { HttpModule } from '@angular/http';
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 
 export * from './src/components/activiti-form.component';
+export * from './src/components/activiti-content.component';
 export * from './src/components/activiti-start-form.component';
 export * from './src/services/form.service';
 export * from './src/components/widgets/index';
@@ -41,6 +43,7 @@ export * from './src/events/index';
 
 export const ACTIVITI_FORM_DIRECTIVES: any[] = [
     ActivitiForm,
+    ActivitiContent,
     ActivitiStartForm,
     FormFieldComponent,
     ...WIDGET_DIRECTIVES

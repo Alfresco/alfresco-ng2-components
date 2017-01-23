@@ -1,0 +1,21 @@
+<div class="upload-widget" *ngIf="content">
+    <div class="mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--expand">
+            <div *ngIf="content.isThumbnailSupported()">
+                <img class="img-upload-widget" [src]="content.thumbnailUrl">
+            </div>
+            <div *ngIf="!content.isThumbnailSupported()">
+                <img class="img-upload-widget" [src]="previewnotavailable || baseComponentPath + '/../assets/images/preview-not-available.gif'">
+            </div>
+        </div>
+        <div class="mdl-card__supporting-text">{{content.name}}</div>
+        <div class="mdl-card__actions mdl-card--border">
+            <button (click)="openViewer(content)" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">zoom_in</i>
+            </button>
+            <a (click)="download($event)" [href]="content.contentRawUrl" target="_blank" [download]='content.name' class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">file_download</i>
+            </a>
+        </div>
+    </div>
+</div>
