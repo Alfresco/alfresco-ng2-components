@@ -24,6 +24,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { WIDGET_DIRECTIVES } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
+import { ActivitiContent } from './../../activiti-content.component';
 import { fakeFormJson } from '../../../services/assets/widget-visibility.service.mock';
 
 describe('ContainerWidget', () => {
@@ -132,7 +133,7 @@ describe('ContainerWidget', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [FormFieldComponent, WIDGET_DIRECTIVES]
+                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(ContainerWidget);
                 containerWidgetComponent = fixture.componentInstance;
