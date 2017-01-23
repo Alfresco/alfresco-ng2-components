@@ -37,19 +37,20 @@ export class LoginDemoComponent implements OnInit {
     disableCsrf: boolean = false;
     isECM: boolean = true;
     isBPM: boolean = false;
+    customMinLenght: number = 2;
 
     constructor(private router: Router,
                 private storage: StorageService,
                 private logService: LogService) {
         this.customValidation = {
-            username: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(this.customMinLenght)])],
             password: ['', Validators.required]
         };
     }
 
     ngOnInit() {
         this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
-        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN');
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {customMinLenght: this.customMinLenght});
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
 
         if (this.storage.hasItem('providers')) {
