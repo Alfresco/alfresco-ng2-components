@@ -35,7 +35,7 @@ describe('ContentColumn', () => {
         spyOn(columnList, 'registerColumn').and.callThrough();
 
         let column = new ContentColumnComponent(columnList);
-        column.ngOnInit();
+        column.ngAfterContentInit();
 
         expect(columnList.registerColumn).toHaveBeenCalled();
 
@@ -56,7 +56,7 @@ describe('ContentColumn', () => {
         let column = new ContentColumnComponent(columnList);
         spyOn(column, 'register').and.callThrough();
 
-        column.ngOnInit();
+        column.ngAfterContentInit();
         expect(column.register).toHaveBeenCalled();
     });
 

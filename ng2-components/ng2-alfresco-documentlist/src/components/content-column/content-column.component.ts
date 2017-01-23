@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ContentChild, TemplateRef, AfterContentInit } from '@angular/core';
 import { DataColumn } from 'ng2-alfresco-datatable';
 
 import { ContentColumnListComponent } from './content-column-list.component';
@@ -24,7 +24,7 @@ import { ContentColumnListComponent } from './content-column-list.component';
     selector: 'content-column',
     template: ''
 })
-export class ContentColumnComponent implements OnInit, DataColumn {
+export class ContentColumnComponent implements OnInit, AfterContentInit, DataColumn {
 
     @Input()
     key: string;
@@ -41,6 +41,9 @@ export class ContentColumnComponent implements OnInit, DataColumn {
     @Input()
     title: string = '';
 
+    @ContentChild(TemplateRef)
+    template: any;
+
     /**
      * Title to be used for screen readers.
      */
@@ -56,7 +59,9 @@ export class ContentColumnComponent implements OnInit, DataColumn {
         if (!this.srTitle && this.key === '$thumbnail') {
             this.srTitle = 'Thumbnail';
         }
+    }
 
+    ngAfterContentInit() {
         this.register();
     }
 

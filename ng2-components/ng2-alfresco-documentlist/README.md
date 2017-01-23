@@ -414,7 +414,7 @@ the binding value for the Site column to display location site will be `location
 
 ### Column definition
 
-HTML attributes:
+Properties:
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
@@ -425,9 +425,26 @@ HTML attributes:
 | `class` | string | | CSS class list, example: `full-width ellipsis-cell` |
 | `type` | string | text | Column type, text\|date\|number |
 | `format` | string | | Value format pattern |
+| `template` | `TemplateRef<any>` | | Column template |
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
+
+#### Column Template
+
+It is possible providing custom column/cell template that may contain other Angular components or HTML elmements:
+
+```html
+<content-column
+        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+        key="name"
+        sortable="true"
+        class="full-width ellipsis-cell">
+    <template let-entry="$implicit">
+        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
+    </template>
+</content-column>
+```
 
 ### Actions
 
