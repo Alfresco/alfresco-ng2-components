@@ -376,7 +376,7 @@ describe('FormService', () => {
         });
     });
 
-    fit('should return the unsupported content when the file is an image', (done) => {
+    it('should return the unsupported content when the file is an image', (done) => {
         let contentId: number = 999;
         responseBody = {
             id: contentId,
@@ -407,7 +407,7 @@ describe('FormService', () => {
         });
     });
 
-    fit('should return the supported content when the file is a pdf', (done) => {
+    it('should return the supported content when the file is a pdf', (done) => {
         let contentId: number = 888;
         responseBody = {
             id: contentId,
@@ -438,13 +438,13 @@ describe('FormService', () => {
         });
     });
 
-    fit('should return the raw content URL', () => {
+    it('should return the raw content URL', () => {
         let contentId: number = 999;
         let contentRawUrl = service.getFileRawContentUrl(contentId);
         expect(contentRawUrl).toEqual(`${bpmCli.basePath}/api/enterprise/content/${contentId}/raw`);
     });
 
-    fit('should return the thumbnail URL', () => {
+    it('should return the thumbnail URL', () => {
         let contentId: number = 999;
 
         let contentRawUrl = service.getContentThumbnailUrl(contentId);
