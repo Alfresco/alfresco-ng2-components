@@ -119,7 +119,7 @@ export class FormService {
     }
 
     /**
-     * Get Process Definition
+     * Get Process Definitions
      * @returns {Observable<any>}
      */
     getProcessDefinitions(): Observable<any> {
@@ -130,7 +130,6 @@ export class FormService {
 
     /**
      * Get All the Tasks
-     * @param taskId Task Id
      * @returns {Observable<any>}
      */
     getTasks(): Observable<any> {
@@ -204,7 +203,7 @@ export class FormService {
     }
 
     /**
-     * Returns form definition ID by a given name.
+     * Returns form definition by a given name.
      * @param name
      * @returns {Promise<T>|Promise<ErrorObservable>}
      */
@@ -336,7 +335,7 @@ export class FormService {
         });
     }
 
-    getFormId(res: any) {
+    getFormId(res: any): string {
         let result = null;
 
         if (res && res.data && res.data.length > 0) {
