@@ -9,7 +9,7 @@
         },
         "MESSAGES": {
             "USERNAME-REQUIRED": "Required",
-            "USERNAME-MIN": "Your username needs to be at least 4 characters.",
+            "USERNAME-MIN": "Your username needs to be at least {{minLenght}} characters.",
             "PASSWORD-REQUIRED": "Enter your password to sign in",
             "LOGIN-ERROR-CREDENTIALS": "You have entered an invalid username or password",
             "LOGIN-ERROR-PROVIDERS": "Providers cannot be undefined",

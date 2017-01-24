@@ -65,6 +65,8 @@ export class AlfrescoLoginComponent implements OnInit {
 
     formError: { [id: string]: string };
 
+    minLenght: number = 2;
+
     private _message: { [id: string]: { [id: string]: string } };
 
     /**
@@ -220,8 +222,14 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg
      */
-    public addCustomValidationError(field: string, ruleId: string, msg: string) {
-        this._message[field][ruleId] = msg;
+    public addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
+        if (params) {
+            this.translateService.get(msg, params).subscribe((res: string) => {
+                this._message[field][ruleId] = res;
+            });
+        } else {
+            this._message[field][ruleId] = msg;
+        }
     }
 
     /**
@@ -274,18 +282,21 @@ export class AlfrescoLoginComponent implements OnInit {
     private initFormFieldsMessagesDefault() {
         this._message = {
             'username': {
-                'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED',
-                'minlength': 'LOGIN.MESSAGES.USERNAME-MIN'
+                'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED'
             },
             'password': {
                 'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
             }
         };
+
+        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN',  {minLenght: this.minLenght}).subscribe((res: string) => {
+            this._message['username']['minlength'] = res;
+        });
     }
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLenght)])],
             password: ['', Validators.required]
         });
     }
