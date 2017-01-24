@@ -127,6 +127,19 @@ describe('ActivitiStartProcessInstance', () => {
             });
         }));
 
+        it('should show no process available message when no process definition is loaded', async(() => {
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([]));
+            let change = new SimpleChange(null, '123');
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                let noprocessElement: DebugElement = debugElement.query(By.css('#no-process-message'));
+                expect(noprocessElement).not.toBeNull('Expected no available process message to be present');
+                expect(noprocessElement.nativeElement.innerText.trim()).toBe('START_PROCESS.NO_PROCESS_DEFINITIONS');
+            });
+        }));
+
     });
 
     describe('input changes', () => {

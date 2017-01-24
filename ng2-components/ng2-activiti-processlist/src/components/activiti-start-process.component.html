@@ -1,4 +1,4 @@
-<div class="mdl-card mdl-shadow--2dp">
+<div *ngIf="processDefinitions.length > 0 || errorMessageId" class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__supporting-text">
         <div class="mdl-card mdl-shadow--2dp error-message" *ngIf="errorMessageId">
             <div class="mdl-card__supporting-text">{{errorMessageId|translate}}</div>
@@ -23,5 +23,12 @@
     </div>
     <div class="mdl-card__actions mdl-card--border" *ngIf="!hasStartForm()">
         <button type="button" [disabled]="!validateForm()" (click)="startProcess()" class="mdl-button" data-automation-id="btn-start">{{'START_PROCESS.DIALOG.ACTION.START'|translate}}</button>
+    </div>
+</div>
+<div *ngIf="processDefinitions.length === 0 && !errorMessageId" class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__supporting-text">
+        <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
+            <span id="no-process-message">{{'START_PROCESS.NO_PROCESS_DEFINITIONS' | translate}}</span>
+        </div>
     </div>
 </div>

@@ -83,6 +83,7 @@
     },
     "START_PROCESS": {
         "BUTTON": "Start Process",
+        "NO_PROCESS_DEFINITIONS": "You cannot start a process as there are no process definitions available",
         "DIALOG": {
             "TITLE": "Start Process",
             "LABEL": {
