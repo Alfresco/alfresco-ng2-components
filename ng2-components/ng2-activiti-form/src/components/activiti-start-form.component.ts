@@ -69,6 +69,9 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
     @Input()
     showRefreshButton: boolean = true;
 
+    @Input()
+    readOnlyForm: boolean = false;
+
     @Output()
     outcomeClick: EventEmitter<any> = new EventEmitter<any>();
 
@@ -112,6 +115,7 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
                     this.formName = form.name;
                     form.processDefinitionId = this.processDefinitionId;
                     this.form = this.parseForm(form);
+                    this.form.readOnly = this.readOnlyForm;
                     // this.form.processDefinitionId = this.processDefinitionId;
                     this.formLoaded.emit(this.form);
                 },
@@ -126,6 +130,7 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
                 form => {
                     this.formName = form.processDefinitionName;
                     this.form = this.parseForm(form);
+                    this.form.readOnly = this.readOnlyForm;
                     this.formLoaded.emit(this.form);
                 },
                 error => this.handleError(error)
