@@ -16,14 +16,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { MdSnackBar, MdSnackBarRef, MdDialog } from '@angular/material';
+import { MdSnackBar, MdSnackBarRef } from '@angular/material';
 
 @Injectable()
 export class NotificationService {
 
     static DEFAULT_DURATION_MESSAGE: number = 5000;
 
-    constructor(public snackbar: MdSnackBar, public dialog: MdDialog) {
+    constructor(public snackbar: MdSnackBar) {
     }
 
     public openSnackMessage(message: string, millisecondsDuration?: number): MdSnackBarRef<any> {
