@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import 'rxjs/Rx';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
 
@@ -55,9 +55,6 @@ export class UploadButtonComponent {
 
     private static DEFAULT_ROOT_ID: string = '-root-';
 
-    @ViewChild('undoNotificationBar')
-    undoNotificationBar: any;
-
     @Input()
     showUdoNotificationBar: boolean = true;
 
@@ -91,7 +88,8 @@ export class UploadButtonComponent {
     constructor(private el: ElementRef,
                 private uploadService: UploadService,
                 private translateService: AlfrescoTranslationService,
-                private logService: LogService) {
+                private logService: LogService,
+                private notificationService: NotificationService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
         }
@@ -217,26 +215,15 @@ export class UploadButtonComponent {
      * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
     private _showUndoNotificationBar(latestFilesAdded: FileModel[]) {
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
         let messageTranslate: any, actionTranslate: any;
         messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
         actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
-        if (this.undoNotificationBar.nativeElement.MaterialSnackbar) {
-            this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-                message: messageTranslate.value,
-                timeout: 3000,
-                actionHandler: function () {
-                    latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                        uploadingFileModel.emitAbort();
-                    });
-                },
-                actionText: actionTranslate.value
+        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).afterDismissed().subscribe(() => {
+            latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
+                uploadingFileModel.emitAbort();
             });
-        }
+        });
     }
 
     /**
@@ -258,16 +245,7 @@ export class UploadButtonComponent {
      * @private
      */
     private _showErrorNotificationBar(errorMessage: string) {
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
-        if (this.undoNotificationBar.nativeElement.MaterialSnackbar) {
-            this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-                message: errorMessage,
-                timeout: 3000
-            });
-        }
+        this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
     /**

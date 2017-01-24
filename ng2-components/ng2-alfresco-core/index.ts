@@ -33,7 +33,9 @@ import {
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
-    LogService, LogServiceMock
+    LogService,
+    LogServiceMock,
+    NotificationService
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -44,7 +46,9 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
-    LogService, LogServiceMock,
+    NotificationService,
+    LogService,
+    LogServiceMock,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,
