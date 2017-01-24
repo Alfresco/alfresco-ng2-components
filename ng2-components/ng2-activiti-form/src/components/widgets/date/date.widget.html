@@ -1,9 +1,9 @@
-<div class="mdl-grid" *ngIf="field?.isVisible" id="data-widget">
+<div class="mdl-grid mdl-grid__date-widget" *ngIf="field?.isVisible" id="data-widget">
     <div class="mdl-cell mdl-cell--11-col">
         <div class="mdl-textfield mdl-js-textfield date-widget"
              [class.date-widget__invalid]="!field.isValid">
             <label [attr.for]="field.id">{{field.name}}</label>
-            <input class="mdl-textfield__input"
+            <input class="mdl-textfield__input mdl-date__input"
                    type="text"
                    [attr.id]="field.id"
                    [attr.required]="isRequired()"
@@ -17,7 +17,7 @@
     </div>
     <div class="mdl-cell mdl-cell--1-col">
         <button
-            class="mdl-button mdl-js-button mdl-button--icon date-widget--button"
+            class="mdl-button mdl-js-button mdl-button--icon"
             (click)="datePicker.toggle()">
             <i class="material-icons">date_range</i>
         </button>
