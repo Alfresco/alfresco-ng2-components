@@ -50,3 +50,16 @@ export var exampleProcess = new ProcessInstance({
         email: 'bob@app.activiti.com'
     }
 });
+
+export var exampleProcessNoName = new ProcessInstance({
+    id: '123',
+    name: null,
+    started: '2016-11-10T03:37:30.010+0000',
+    startedBy: {
+        id: 1001,
+        firstName: 'Bob',
+        lastName: 'Jones',
+        email: 'bob@app.activiti.com'
+    },
+    processDefinitionName: 'My Process'
+});

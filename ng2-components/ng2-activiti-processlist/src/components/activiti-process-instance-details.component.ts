@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { DatePipe } from '@angular/common';
 import { Component, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsEvent } from 'ng2-activiti-tasklist';
@@ -114,5 +115,23 @@ export class ActivitiProcessInstanceDetails implements OnChanges {
     // bubbles (taskClick) event
     onTaskClicked(event: TaskDetailsEvent) {
         this.taskClick.emit(event);
+    }
+
+    getProcessNameOrDescription(dateFormat): string {
+        let name = '';
+        if (this.processInstanceDetails) {
+            name = this.processInstanceDetails.name ||
+                this.processInstanceDetails.processDefinitionName + ' - ' + this.getFormatDate(this.processInstanceDetails.started, dateFormat);
+        }
+        return name;
+    }
+
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            this.logService.error(`ProcessListInstanceHeader: error parsing date ${value} to format ${format}`);
+        }
     }
 }

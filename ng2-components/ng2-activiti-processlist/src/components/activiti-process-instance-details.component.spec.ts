@@ -27,7 +27,7 @@ import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 import { ActivitiProcessInstanceDetails } from './activiti-process-instance-details.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { exampleProcess } from './../assets/activiti-process.model.mock';
+import { exampleProcess, exampleProcessNoName } from './../assets/activiti-process.model.mock';
 import { ProcessInstance } from '../models/process-instance.model';
 
 describe('ActivitiProcessInstanceDetails', () => {
@@ -91,6 +91,18 @@ describe('ActivitiProcessInstanceDetails', () => {
             let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
             expect(headerEl).not.toBeNull();
             expect(headerEl.nativeElement.innerText).toBe('Process 123');
+        });
+    }));
+
+    it('should display default details when the process instance has no name', async(() => {
+        getProcessSpy = getProcessSpy.and.returnValue(Observable.of(exampleProcessNoName));
+        fixture.detectChanges();
+        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123') });
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
+            expect(headerEl).not.toBeNull();
+            expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
         });
     }));
 

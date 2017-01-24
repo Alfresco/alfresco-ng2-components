@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { DatePipe } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow, DataSorting } from 'ng2-alfresco-datatable';
@@ -154,7 +155,8 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
             instancesRows.push(new ObjectDataRow({
                 id: row.id,
                 name: row.name,
-                started: row.started
+                started: row.started,
+                processDefinitionName: row.processDefinitionName
             }));
         });
         return instancesRows;
@@ -236,10 +238,28 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
      */
     private optimizeNames(instances: any[]) {
         instances = instances.map(t => {
-            t.obj.name = t.obj.name || 'No name';
+            t.obj.name = this.getProcessNameOrDescription(t.obj, 'medium');
             return t;
         });
         return instances;
+    }
+
+    getProcessNameOrDescription(processInstance, dateFormat): string {
+        let name = '';
+        if (processInstance) {
+            name = processInstance.name ||
+                processInstance.processDefinitionName + ' - ' + this.getFormatDate(processInstance.started, dateFormat);
+        }
+        return name;
+    }
+
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            return '';
+        }
     }
 
     private createRequestNode() {
