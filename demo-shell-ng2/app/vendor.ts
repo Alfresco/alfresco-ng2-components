@@ -32,8 +32,12 @@ import 'dialog-polyfill/dialog-polyfill.css';
 
 // Flags
 import 'flag-icon-css/css/flag-icon.min.css';
+
 import '../public/css/app.css';
 import '../public/css/muli-font.css';
+
+// Load the Angular Material 2 stylesheet
+import '@angular/material/core/theming/prebuilt/deeppurple-amber.css'
 
 import 'ng2-activiti-form/stencils/runtime.ng1';
 import 'ng2-activiti-form/stencils/runtime.adf';

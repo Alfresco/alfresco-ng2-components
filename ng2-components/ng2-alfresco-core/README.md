@@ -57,6 +57,7 @@ npm install --save ng2-alfresco-core
 ### Services
 
 - **LogService**, log service implementation
+- **NotificationService**, Notification service implementation
 - **AlfrescoApiService**, provides access to Alfresco JS API instance
 - **AlfrescoAuthenticationService**, main authentication APIs
 - **AlfrescoTranslationService**, various i18n-related APIs
@@ -93,6 +94,43 @@ Alfresco JS api by casting the instance to `any` type like the following:_
 ```ts
 let apiService: any = this.authService.getAlfrescoApi();
 apiService.nodes.addNode('-root-', body, {});
+```
+
+#### Notification Service
+
+The Notification Service is implemented on top of the Angular 2 Material Design snackbar.
+Use this service to show a notification message, and optionaly get feedback from it.
+
+```ts
+import { NotificationService } from 'ng2-alfresco-core';
+
+export class MyComponent implements OnInit {
+
+    constructor(private notificationService: NotificationService) {   
+    }
+
+    ngOnInit() {
+          this.notificationService.openSnackMessage('test', 200000).afterDismissed().subscribe(() => {
+                    console.log('The snack-bar was dismissed');
+                });                        
+    }
+}
+```
+
+```ts
+import { NotificationService } from 'ng2-alfresco-core';
+
+export class MyComponent implements OnInit {
+
+    constructor(private notificationService: NotificationService) {   
+    }
+
+    ngOnInit() {
+         this.notificationService.openSnackMessageAction('Do you want to report this issue?', 'send', 200000).afterDismissed().subscribe(() => {
+                console.log('The snack-bar was dismissed');
+            });
+    }
+}
 ```
 
 #### Context Menu directive

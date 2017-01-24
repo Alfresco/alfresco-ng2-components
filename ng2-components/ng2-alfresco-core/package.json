@@ -62,6 +62,7 @@
     "@angular/http": "2.2.2",
     "@angular/platform-browser": "2.2.2",
     "@angular/platform-browser-dynamic": "2.2.2",
+    "@angular/material": "2.0.0-beta.1",
     "@angular/router": "3.2.2",
     "@angular/upgrade": "2.2.2",
     "alfresco-js-api": "^1.0.0",

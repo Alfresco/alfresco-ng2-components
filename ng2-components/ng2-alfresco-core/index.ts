@@ -20,6 +20,7 @@ import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
+import { MaterialModule } from '@angular/material';
 
 import {
     AlfrescoAuthenticationService,
@@ -33,7 +34,9 @@ import {
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
-    LogService, LogServiceMock
+    LogService,
+    LogServiceMock,
+    NotificationService
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -44,7 +47,9 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
-    LogService, LogServiceMock,
+    NotificationService,
+    LogService,
+    LogServiceMock,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,
@@ -69,6 +74,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
+        MaterialModule.forRoot(),
         TranslateModule.forRoot({
             provide: TranslateLoader,
             useFactory: (createTranslateLoader),
@@ -85,6 +91,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     exports: [
         CommonModule,
         FormsModule,
+        MaterialModule,
         ReactiveFormsModule,
         HttpModule,
         TranslateModule,
