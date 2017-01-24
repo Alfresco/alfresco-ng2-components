@@ -194,14 +194,15 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     navigateStartProcess() {
-        this.cleanProcessFilters();
+        this.resetProcessFilters();
+        this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
     onStartProcessInstance(instance: ProcessInstance) {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.cleanProcessFilters();
+        this.resetProcessFilters();
     }
 
     isStartProcessMode() {
@@ -254,15 +255,18 @@ export class ActivitiDemoComponent implements AfterViewInit {
             id: event.value.id,
             name: event.value.name || 'No name',
             created: event.value.created
-        })
+        });
         this.activitifilter.selectFilter(null);
         this.dataTasks.setRows([processTaskDataRow]);
         this.activititasklist.selectTask(event.value.id);
         this.currentTaskId = event.value.id;
     }
 
-    private cleanProcessFilters(){
+    private resetProcessFilters() {
         this.processFilter = null;
+    }
+
+    private reloadProcessFilters() {
         this.activitiprocessfilter.selectFilter(null);
     }
 
