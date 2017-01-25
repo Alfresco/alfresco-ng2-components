@@ -395,10 +395,10 @@ describe('AnalyticsReportParametersComponent', () => {
                 responseText: []
             });
         });
-    });
 
-    it('Should convert a string in number', () => {
-        let numberConvert = component.convertNumber('2');
-        expect(numberConvert).toEqual(2);
+        it('Should convert a string in number', () => {
+            let numberConvert = component.convertNumber('2');
+            expect(numberConvert).toEqual(2);
+        });
     });
 });

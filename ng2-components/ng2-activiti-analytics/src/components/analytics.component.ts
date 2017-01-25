@@ -19,7 +19,6 @@ import { Component, EventEmitter, OnChanges, Input, Output, SimpleChanges, ViewC
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportQuery } from '../models/report.model';
-import { Chart } from '../models/chart.model';
 import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({
@@ -31,48 +30,18 @@ import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 export class AnalyticsComponent implements OnChanges {
 
     @Input()
-    appId: string;
-
-    @Input()
     reportId: number;
 
     @Input()
     debug: boolean = false;
 
     @Output()
-    onSuccess = new EventEmitter();
-
-    @Output()
     editReport = new EventEmitter();
-
-    @Output()
-    onError = new EventEmitter();
 
     @ViewChild('analyticsgenerator')
     analyticsgenerator: AnalyticsGeneratorComponent;
 
-    reportParamQuery:ReportQuery = ReportQuery();
-
-    reports: Chart[];
-
-    showDetails: boolean = false;
-
-    public barChartOptions: any = {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1
-                }
-            }],
-            xAxes: [{
-                ticks: {
-                },
-                stacked: true
-            }]
-        }
-    };
+    reportParamQuery: ReportQuery = new ReportQuery();
 
     constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,

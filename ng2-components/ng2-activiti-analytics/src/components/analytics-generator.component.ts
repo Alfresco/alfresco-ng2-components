@@ -72,17 +72,14 @@ export class AnalyticsGeneratorComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let reportId = changes['reportId'];
-        if (reportId && reportId.currentValue) {
-            this.reportId = reportId;
-        }
         if (this.reportId && this.reportParamQuery) {
             this.generateReport(this.reportId, this.reportParamQuery);
+        } else {
+            this.reset();
         }
     }
 
     public generateReport(reportId, reportParamQuery) {
-        this.reset();
         this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe(
             (res: Chart[]) => {
                 this.reports = res;
