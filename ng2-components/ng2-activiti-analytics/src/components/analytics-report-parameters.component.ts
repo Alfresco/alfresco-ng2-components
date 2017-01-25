@@ -69,6 +69,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private reportParamsSub;
     private paramOpts;
     private isEditable: boolean = false;
+    private hideParameters: boolean = true;
 
     constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
@@ -245,5 +246,13 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
+    }
+
+    toggleParameters() {
+        this.hideParameters = !this.hideParameters;
+    }
+
+    isParametersHide() {
+        return this.hideParameters;
     }
 }

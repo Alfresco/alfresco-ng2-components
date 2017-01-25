@@ -1,0 +1,5 @@
+.chart {display: block; width: 100%;}
+
+.analytics-row__entry {
+    cursor: pointer;
+}
