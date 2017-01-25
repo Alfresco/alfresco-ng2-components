@@ -465,7 +465,7 @@ describe('DocumentList', () => {
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
         spyOn(documentList.data, 'loadById').and.returnValue(Promise.resolve());
-        documentList.ngOnInit();
+        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId)});
         expect(documentList.data.loadById).toHaveBeenCalled();
     });
 });

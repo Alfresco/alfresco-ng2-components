@@ -47,18 +47,18 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 })
 export class SearchComponent {
 
+    fileNodeId: any;
     fileShowed: boolean = false;
-    fileNodeId: string;
 
     constructor(public router: Router) {
     }
 
-    onNavigateItem(event: MinimalNodeEntity) {
-        if (event.entry.isFile) {
-            this.fileNodeId = event.entry.id;
+    showFile(event) {
+        if (event.value.entry.isFile) {
+            this.fileNodeId = event.value.entry.id;
             this.fileShowed = true;
-        } else if (event.entry.isFolder) {
-            this.router.navigate(['/files', event.entry.id]);
+        } else {
+            this.fileShowed = false;
         }
     }
 }

@@ -15,9 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    EventEmitter,
+    AfterContentInit,
+    TemplateRef,
+    NgZone,
+    ViewChild,
+    HostListener
+} from '@angular/core';
 import { Subject } from 'rxjs/Rx';
-import { MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging } from 'alfresco-js-api';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
@@ -81,6 +94,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    @Input()
+    currentFolderId: string = null;
+
+    @Input()
+    folderNode: MinimalNodeEntryEntity = null;
+
+    @Input()
+    node: NodePaging = null;
+
     @Output()
     nodeClick: EventEmitter<any> = new EventEmitter();
 
@@ -102,25 +125,17 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @ViewChild(DataTableComponent)
     dataTable: DataTableComponent;
 
-    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
-    @Input()
-    currentFolderId: string = null;
-
-    @Input()
-    folderNode: MinimalNodeEntryEntity = null;
-
     errorMessage;
     actions: ContentActionModel[] = [];
     emptyFolderTemplate: TemplateRef<any>;
     contextActionHandler: Subject<any> = new Subject();
     data: ShareDataTableAdapter;
 
-    constructor(
-        private documentListService: DocumentListService,
-        private ngZone: NgZone,
-        private translateService: AlfrescoTranslationService) {
+    constructor(private documentListService: DocumentListService,
+                private ngZone: NgZone,
+                private translateService: AlfrescoTranslationService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, './', []);
+        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
@@ -154,12 +169,13 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.data.maxItems = this.pageSize;
         this.contextActionHandler.subscribe(val => this.contextActionCallback(val));
 
-        // Automatically enforce single-click navigation for mobile browsers
+        this.enforceSingleClickNavigationForMobile();
+    }
+
+    private enforceSingleClickNavigationForMobile(): void {
         if (this.isMobile()) {
             this.navigationMode = DocumentListComponent.SINGLE_CLICK_NAVIGATION;
         }
-
-        this.loadFolder();
     }
 
     ngAfterContentInit() {
@@ -172,8 +188,17 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     ngOnChanges(changes: SimpleChanges) {
         if (changes['folderNode'] && changes['folderNode'].currentValue) {
             this.loadFolder();
-        } else if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
+            return;
+        }
+
+        if (changes['currentFolderId'] && changes['currentFolderId'].currentValue) {
             this.loadFolderByNodeId(changes['currentFolderId'].currentValue);
+            return;
+        }
+
+        if (changes['node'] && changes['node'].currentValue) {
+            this.data.loadByNode(changes['node'].currentValue);
+            return;
         }
     }
 
@@ -229,7 +254,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.folderNode = node.entry;
 
             this.loadFolder();
-            this.folderChange.emit({ node: node.entry });
+            this.folderChange.emit({node: node.entry});
             return true;
         }
         return false;
@@ -271,7 +296,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
             this.currentFolderId = node.id;
             this.data.loadById(node.id).catch(err => this.error.emit(err));
         })
-        .catch(err => this.error.emit(err));
+            .catch(err => this.error.emit(err));
     }
 
     /**

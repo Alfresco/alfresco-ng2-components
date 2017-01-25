@@ -13,3 +13,25 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.no-result-message {
+    height: 32px;
+    opacity: 0.26;
+    font-family: Muli, Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    line-height: 1.33;
+    letter-spacing: -1px;
+    color: #000000;
+}
+
+.no-result__empty_doc_lib {
+    width: 565px;
+    height: 161px;
+    object-fit: contain;
+    margin-top: 17px;
+}
+
+.empty_template {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

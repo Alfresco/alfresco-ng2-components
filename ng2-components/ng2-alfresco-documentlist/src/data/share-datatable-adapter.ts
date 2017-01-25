@@ -198,6 +198,11 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         this.setSorting(sorting);
     }
 
+    public loadByNode(node: NodePaging): void {
+        this.loadPage(node);
+        this.dataLoaded.emit(null);
+    }
+
     loadById(id: string): Promise<any> {
         return new Promise((resolve, reject) => {
             if (id && this.documentListService) {
@@ -208,14 +213,14 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
                         rootFolderId: id
                     })
                     .subscribe(val => {
-                        this.folderNodeId = id;
-                        this.loadPage(<NodePaging>val);
-                        this.dataLoaded.emit(null);
-                        resolve(true);
-                    },
-                    error => {
-                        reject(error);
-                    });
+                            this.folderNodeId = id;
+                            this.loadPage(<NodePaging>val);
+                            this.dataLoaded.emit(null);
+                            resolve(true);
+                        },
+                        error => {
+                            reject(error);
+                        });
             } else {
                 resolve(false);
             }
@@ -263,7 +268,7 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         }
     }
 
-    private loadPage(page: NodePaging) {
+    private  loadPage(page: NodePaging) {
         this.page = page;
         this.resetPagination();
 

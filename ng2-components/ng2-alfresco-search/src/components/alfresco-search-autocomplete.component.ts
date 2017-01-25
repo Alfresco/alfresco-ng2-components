@@ -68,7 +68,7 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
-    baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
+    baseComponentPath: string = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
 
     constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
@@ -128,13 +128,14 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
         if (node.entry.content && node.entry.content.mimeType) {
             let icon = this.thumbnailService.getMimeTypeIcon(node.entry.content.mimeType);
             return this.resolveIconPath(icon);
-        } else if (node.entry.isFolder) {
-            return `${this.baseComponentPath}/../assets/images/ft_ic_folder.svg`;
+        }
+        if (node.entry.isFolder) {
+            return `${this.baseComponentPath}/assets/images/ft_ic_folder.svg`;
         }
     }
 
     resolveIconPath(icon: string): string {
-        return `${this.baseComponentPath}/../assets/images/${icon}`;
+        return `${this.baseComponentPath}/assets/images/${icon}`;
     }
 
     /**

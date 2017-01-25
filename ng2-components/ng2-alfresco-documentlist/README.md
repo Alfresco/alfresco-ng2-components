@@ -165,10 +165,13 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 ### Properties
 
+The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They can not be used together, choose the one that suites more your use case.
+
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `currentFolderId` | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
 | `folderNode` | `MinimalNodeEntryEntity` | null | Currently displayed folder node | 
+| `node` | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
 | `navigate` | boolean | true | Toggles navigation to folder content or file preview |
 | `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | `thumbnails` | boolean | false | Show document thumbnails rather than icons |
