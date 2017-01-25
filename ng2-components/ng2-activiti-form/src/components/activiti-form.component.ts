@@ -15,21 +15,13 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit,
-    AfterViewChecked,
-    OnChanges,
-    SimpleChanges,
-    Input,
-    Output,
-    EventEmitter
-} from '@angular/core';
+import { Component, OnInit, AfterViewChecked, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { LogService } from 'ng2-alfresco-core';
 import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
+import { FormEvent, FormErrorEvent } from './../events/index';
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 
@@ -272,14 +264,14 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 }
 
                 if (outcome.id === ActivitiForm.CUSTOM_OUTCOME_ID) {
-                    this.formSaved.emit(this.form);
+                    this.onTaskSaved(this.form);
                     this.storeFormAsMetadata();
                     return true;
                 }
             } else {
                 // Note: Activiti is using NAME field rather than ID for outcomes
                 if (outcome.name) {
-                    this.formSaved.emit(this.form);
+                    this.onTaskSaved(this.form);
                     this.completeTaskForm(outcome.name);
                     return true;
                 }
@@ -345,8 +337,8 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
             .getTaskForm(taskId)
             .subscribe(
                 form => {
-                    this.form = new FormModel(form, data, this.readOnly);
-                    this.formLoaded.emit(this.form);
+                    this.form = new FormModel(form, data, this.readOnly, this.formService);
+                    this.onFormLoaded(this.form);
                 },
                 (error) => {
                     this.handleError(error);
@@ -361,7 +353,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 form => {
                     this.formName = form.name;
                     this.form = this.parseForm(form);
-                    this.formLoaded.emit(this.form);
+                    this.onFormLoaded(this.form);
                 },
                 (error) => {
                     this.handleError(error);
@@ -377,7 +369,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                     this.formService.getFormDefinitionById(id).subscribe(
                         form => {
                             this.form = this.parseForm(form);
-                            this.formLoaded.emit(this.form);
+                            this.onFormLoaded(this.form);
                         },
                         (error) => {
                             this.handleError(error);
@@ -396,12 +388,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 .saveTaskForm(this.form.taskId, this.form.values)
                 .subscribe(
                     () => {
-                        this.formSaved.emit(this.form);
+                        this.onTaskSaved(this.form);
                         this.storeFormAsMetadata();
                     },
-                    (error) => {
-                        this.handleError(error);
-                    }
+                    error => this.onTaskSavedError(this.form, error)
                 );
         }
     }
@@ -412,12 +402,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 .completeTaskForm(this.form.taskId, this.form.values, outcome)
                 .subscribe(
                     () => {
-                        this.formCompleted.emit(this.form);
+                        this.onTaskCompleted(this.form);
                         this.storeFormAsMetadata();
                     },
-                    (error) => {
-                        this.handleError(error);
-                    }
+                    error => this.onTaskCompletedError(this.form, error)
                 );
         }
     }
@@ -429,7 +417,7 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
 
     parseForm(json: any): FormModel {
         if (json) {
-            let form = new FormModel(json, this.data, this.readOnly);
+            let form = new FormModel(json, this.data, this.readOnly, this.formService);
             if (!json.fields) {
                 form.outcomes = this.getFormDefinitionOutcomes(form);
             }
@@ -495,5 +483,30 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
                 }
             );
         }
+    }
+
+    protected onFormLoaded(form: FormModel) {
+        this.formLoaded.emit(form);
+        this.formService.formLoaded.next(new FormEvent(form));
+    }
+
+    protected onTaskSaved(form: FormModel) {
+        this.formSaved.emit(form);
+        this.formService.taskSaved.next(new FormEvent(form));
+    }
+
+    protected onTaskSavedError(form: FormModel, error: any) {
+        this.handleError(error);
+        this.formService.taskSavedError.next(new FormErrorEvent(form, error));
+    }
+
+    protected onTaskCompleted(form: FormModel) {
+        this.formCompleted.emit(form);
+        this.formService.taskCompleted.next(new FormEvent(form));
+    }
+
+    protected onTaskCompletedError(form: FormModel, error: any) {
+        this.handleError(error);
+        this.formService.taskCompletedError.next(new FormErrorEvent(form, error));
     }
 }

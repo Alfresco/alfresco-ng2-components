@@ -16,19 +16,27 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FormValues } from './../components/widgets/core/index';
 import { FormDefinitionModel } from '../models/form-definition.model';
 import { EcmModelService } from './ecm-model.service';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { GroupUserModel } from './../components/widgets/core/group-user.model';
+import { FormEvent, FormErrorEvent, FormFieldEvent } from './../events/index';
 
 @Injectable()
 export class FormService {
 
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
+
+    formLoaded: Subject<FormEvent> = new Subject<FormEvent>();
+    formFieldValueChanged: Subject<FormFieldEvent> = new Subject<FormFieldEvent>();
+    taskCompleted: Subject<FormEvent> = new Subject<FormEvent>();
+    taskCompletedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
+    taskSaved: Subject<FormEvent> = new Subject<FormEvent>();
+    taskSavedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
 
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,
@@ -111,7 +119,7 @@ export class FormService {
     }
 
     /**
-     * Get Process Definition
+     * Get Process Definitions
      * @returns {Observable<any>}
      */
     getProcessDefinitions(): Observable<any> {
@@ -122,7 +130,6 @@ export class FormService {
 
     /**
      * Get All the Tasks
-     * @param taskId Task Id
      * @returns {Observable<any>}
      */
     getTasks(): Observable<any> {
@@ -196,7 +203,7 @@ export class FormService {
     }
 
     /**
-     * Returns form definition ID by a given name.
+     * Returns form definition by a given name.
      * @param name
      * @returns {Promise<T>|Promise<ErrorObservable>}
      */
@@ -328,7 +335,7 @@ export class FormService {
         });
     }
 
-    getFormId(res: any) {
+    getFormId(res: any): string {
         let result = null;
 
         if (res && res.data && res.data.length > 0) {

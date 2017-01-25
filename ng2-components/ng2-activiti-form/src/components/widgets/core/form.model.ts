@@ -23,6 +23,8 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldTemplates } from './form-field-templates';
+import { FormService } from './../../../services/form.service';
+import { FormFieldEvent } from './../../../events/index';
 
 export class FormModel {
 
@@ -66,7 +68,7 @@ export class FormModel {
         return this.outcomes && this.outcomes.length > 0;
     }
 
-    constructor(json?: any, data?: FormValues, readOnly: boolean = false) {
+    constructor(json?: any, data?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         this.readOnly = readOnly;
 
         if (json) {
@@ -120,6 +122,9 @@ export class FormModel {
 
     onFormFieldChanged(field: FormFieldModel) {
         this.validateField(field);
+        if (this.formService) {
+            this.formService.formFieldValueChanged.next(new FormFieldEvent(this, field));
+        }
     }
 
     // TODO: consider evaluating and caching once the form is loaded
