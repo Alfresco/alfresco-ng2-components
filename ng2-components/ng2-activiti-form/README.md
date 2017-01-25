@@ -390,28 +390,28 @@ class MyComponent {
 
 | Name | Params | Returns | Description |
 | --- | --- | --- | --- |
-| createFormFromANode | (formName: string) | Observable<any\> | Create a Form with a fields for each metadata properties |
-| createForm | (formName: string) | Observable<any\> | Create a Form |
-| addFieldsToAForm | (formId: string, formModel: FormDefinitionModel) | Observable<any\> | Add Fileds to A form |
-| searchFrom | (name: string) | Observable<any\> | Search For A Form by name |
-| getForms | n/a | Observable<any\> | Get All the forms |
-| getProcessDefinitions | n/a | Observable<any\> | Get Process Definitions |
-| getTasks | n/a | Observable<any\> | Get All the Tasks |
-| getTask | (taskId: string) | Observable<any\> | Get Task |
-| saveTaskForm | (taskId: string, formValues: FormValues) | Observable<any\> | Save Task Form |
-| completeTaskForm | (taskId: string, formValues: FormValues, outcome?: string) | Observable<any\> | Complete Task Form |
-| getTaskForm | (taskId: string) | Observable<any\> | Get Form related to a taskId |
-| getFormDefinitionById | (formId: string) | Observable<any\> | Get Form Definition |
-| getFormDefinitionByName | (name: string) | Observable<any\> | Returns form definition by a given name. |
-| getStartFormInstance | (processId: string) | Observable<any\> | Get start form instance for a given processId |
-| getStartFormDefinition | (processId: string) | Observable<any\> | Get start form definition for a given process |
-| createTemporaryRawRelatedContent | (file: any) | Observable<any\> | Save File |
-| getRestFieldValues | (taskId: string, field: string) | Observable<any\> |  |
-| getRestFieldValuesByProcessId | (processDefinitionId: string, field: string) | Observable<any\> |  |
-| getRestFieldValuesColumnByProcessId | (processDefinitionId: string, field: string, column?: string) | Observable<any\> |  |
-| getRestFieldValuesColumn | (taskId: string, field: string, column?: string) | Observable<any\> |  |
-| getWorkflowGroups\* | (filter: string, groupId?: string) | Observable<GroupModel[]\> |  |
-| getWorkflowUsers\* | (filter: string, groupId?: string) | Observable<GroupUserModel[]\> |  |
+| createFormFromANode | (formName: string) | Observable\<any\> | Create a Form with a fields for each metadata properties |
+| createForm | (formName: string) | Observable\<any\> | Create a Form |
+| addFieldsToAForm | (formId: string, formModel: FormDefinitionModel) | Observable\<any\> | Add Fileds to A form |
+| searchFrom | (name: string) | Observable\<any\> | Search For A Form by name |
+| getForms | n/a | Observable\<any\> | Get All the forms |
+| getProcessDefinitions | n/a | Observable\<any\> | Get Process Definitions |
+| getTasks | n/a | Observable\<any\> | Get All the Tasks |
+| getTask | (taskId: string) | Observable\<any\> | Get Task |
+| saveTaskForm | (taskId: string, formValues: FormValues) | Observable\<any\> | Save Task Form |
+| completeTaskForm | (taskId: string, formValues: FormValues, outcome?: string) | Observable\<any\> | Complete Task Form |
+| getTaskForm | (taskId: string) | Observable\<any\> | Get Form related to a taskId |
+| getFormDefinitionById | (formId: string) | Observable\<any\> | Get Form Definition |
+| getFormDefinitionByName | (name: string) | Observable\<any\> | Returns form definition by a given name. |
+| getStartFormInstance | (processId: string) | Observable\<any\> | Get start form instance for a given processId |
+| getStartFormDefinition | (processId: string) | Observable\<any\> | Get start form definition for a given process |
+| createTemporaryRawRelatedContent | (file: any) | Observable\<any\> | Save File |
+| getRestFieldValues | (taskId: string, field: string) | Observable\<any\> |  |
+| getRestFieldValuesByProcessId | (processDefinitionId: string, field: string) | Observable\<any\> |  |
+| getRestFieldValuesColumnByProcessId | (processDefinitionId: string, field: string, column?: string) | Observable\<any\> |  |
+| getRestFieldValuesColumn | (taskId: string, field: string, column?: string) | Observable\<any\> |  |
+| getWorkflowGroups\* | (filter: string, groupId?: string) | Observable\<GroupModel[]\> |  |
+| getWorkflowUsers\* | (filter: string, groupId?: string) | Observable\<GroupUserModel[]\> |  |
 
 \* _Uses private Activiti WebApp api_
 
