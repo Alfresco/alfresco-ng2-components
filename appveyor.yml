@@ -31,9 +31,9 @@ install:
   - ps: Install-Product node $env:nodejs_version
   # install module
   - IF %COMPONENT_NAME% NEQ ng2-alfresco-core (cd ng2-components/ng2-alfresco-core && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-alfresco-documentlist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-documentlist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && cd ../../)
   - IF %COMPONENT_NAME% EQU ng2-alfresco-search (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-alfresco-search (cd ng2-components/ng2-alfresco-documentlist && npm link ng2-alfresco-core && npm link ng2-alfresco-documentlist && npm link && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-search (cd ng2-components/ng2-alfresco-documentlist && npm link ng2-alfresco-core && npm link ng2-alfresco-datatable && npm link && cd ../../)
   - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && cd ../../)
   - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-form && npm link ng2-alfresco-core && npm link && cd ../../)
   - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-tasklist && npm link ng2-alfresco-core && npm link ng2-alfresco-datatable && npm link ng2-activiti-form && npm link && cd ../../)
