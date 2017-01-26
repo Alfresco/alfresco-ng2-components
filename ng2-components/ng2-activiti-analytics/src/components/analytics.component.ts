@@ -30,6 +30,9 @@ import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 export class AnalyticsComponent implements OnChanges {
 
     @Input()
+    appId: number;
+
+    @Input()
     reportId: number;
 
     @Input()
