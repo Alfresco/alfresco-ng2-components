@@ -71,10 +71,19 @@ npm link ng2-alfresco-core
 npm link ng2-activiti-diagrams
 npm install
 
+#LINK SEARCH
+echo "====== linking component: ng2-alfresco-search ====="
+cd "$DIR/../ng2-components/ng2-alfresco-search/demo"
+npm link ng2-alfresco-core
+npm link ng2-alfresco-datatable
+npm link ng2-alfresco-documentlist
+npm link ng2-alfresco-search
+npm link
+npm run build
+
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
   ng2-alfresco-login \
-  ng2-alfresco-search \
   ng2-alfresco-userinfo \
   ng2-alfresco-upload \
   ng2-alfresco-tag \

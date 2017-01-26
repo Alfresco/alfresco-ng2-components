@@ -179,6 +179,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | `multiselect` | boolean | false | Toggles multiselect mode |
 | `contentActions` | boolean | false | Toggles content actions for each row |
 | `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `enablePagination` | boolean | true | Shows pagination |
 | `creationMenuActions` | boolean | true | Toggles the creation menu actions|
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
