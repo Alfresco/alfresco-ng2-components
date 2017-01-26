@@ -44,7 +44,7 @@ export class AnalyticsComponent implements OnChanges {
     @ViewChild('analyticsgenerator')
     analyticsgenerator: AnalyticsGeneratorComponent;
 
-    reportParamQuery: ReportQuery = new ReportQuery();
+    reportParamQuery: ReportQuery;
 
     constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
