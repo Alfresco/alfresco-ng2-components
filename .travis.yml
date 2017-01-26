@@ -49,7 +49,7 @@ before_script:
   - if ([ "$MODULE" == "ng2-activiti-analytics" ]); then
         (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
     fi
-  - if ([ "$MODULE" == "ng2-activiti-search" ]); then
+  - if ([ "$MODULE" == "ng2-alfresco-search" ]); then
         (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
         (cd ng2-components/ng2-alfresco-documentlist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; if [ ! -d "bundles" ]; then npm link; fi);
     fi

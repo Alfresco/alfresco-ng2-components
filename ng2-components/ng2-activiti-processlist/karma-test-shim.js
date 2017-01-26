@@ -1,7 +1,7 @@
 // Tun on full stack traces in errors to help debugging
 Error.stackTraceLimit = Infinity;
 
-// jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
 
 window.componentHandler = {
     upgradeAllRegistered: function () {
