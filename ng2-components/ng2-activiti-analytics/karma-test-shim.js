@@ -3,6 +3,13 @@ Error.stackTraceLimit = Infinity;
 
 // jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
+window.componentHandler = {
+    upgradeAllRegistered: function () {
+    },
+    upgradeElement: function () {
+    }
+};
+
 __karma__.loaded = function() {};
 
 var builtPath = '/base/src/';
