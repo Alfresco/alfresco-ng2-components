@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild } from '@angular/core';
+import { Component, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AlfrescoAuthenticationService, LogService } from 'ng2-alfresco-core';
 import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
@@ -46,6 +46,7 @@ export class FilesComponent implements OnInit {
                 private authService: AlfrescoAuthenticationService,
                 private formService: FormService,
                 private logService: LogService,
+                private changeDetector: ChangeDetectorRef,
                 private router: Router,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
@@ -98,6 +99,7 @@ export class FilesComponent implements OnInit {
             this.route.params.forEach((params: Params) => {
                 if (params['id']) {
                     this.currentFolderId = params['id'];
+                    this.changeDetector.detectChanges();
                 }
             });
         }
