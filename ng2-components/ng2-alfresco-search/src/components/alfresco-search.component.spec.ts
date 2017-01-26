@@ -156,6 +156,7 @@ describe('AlfrescoSearchComponent', () => {
         it('should call search service with the correct parameters', (done) => {
             let searchTerm = 'searchTerm63688', options = {
                 include: ['path'],
+                skipCount: 0,
                 rootNodeId: '-my-',
                 nodeType: 'my:type',
                 maxItems: 20,

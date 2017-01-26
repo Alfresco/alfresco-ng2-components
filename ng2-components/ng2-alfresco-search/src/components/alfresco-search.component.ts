@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output, Optional, OnChanges, SimpleChan
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-search.service';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { NodePaging } from 'alfresco-js-api';
+import { NodePaging, Pagination } from 'alfresco-js-api';
 
 @Component({
     moduleId: module.id,
@@ -58,9 +58,13 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     results: any = null;
 
+    pagination: Pagination;
+
     errorMessage;
 
     queryParamName = 'q';
+
+    skipCount: number = 0;
 
     nodeResults: NodePaging;
 
@@ -89,6 +93,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     ngOnChanges(changes: SimpleChanges) {
         if (changes['searchTerm']) {
             this.searchTerm = changes['searchTerm'].currentValue;
+            this.skipCount = 0;
             this.displaySearchResults(this.searchTerm);
         }
     }
@@ -109,6 +114,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
         if (searchTerm && this.searchService) {
             let searchOpts: SearchOptions = {
                 include: ['path'],
+                skipCount: this.skipCount,
                 rootNodeId: this.rootNodeId,
                 nodeType: this.resultType,
                 maxItems: this.maxResults,
@@ -120,6 +126,7 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                     results => {
                         this.nodeResults = results;
                         this.results = results.list.entries;
+                        this.pagination = results.list.pagination;
                         this.resultsLoad.emit(this.results);
                         this.errorMessage = null;
                     },
@@ -132,5 +139,20 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
                     }
                 );
         }
+    }
+
+    public onChangePageSize(event: Pagination): void {
+        this.maxResults = event.maxItems;
+        this.displaySearchResults(this.searchTerm);
+    }
+
+    public onNextPage(event: Pagination): void {
+        this.skipCount = event.skipCount;
+        this.displaySearchResults(this.searchTerm);
+    }
+
+    public onPrevPage(event: Pagination): void {
+        this.skipCount = event.skipCount;
+        this.displaySearchResults(this.searchTerm);
     }
 }

@@ -3,12 +3,12 @@
     <p data-automation-id="search_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
     <div class="container">
         <alfresco-document-list
-            #documentList
             [node]="nodeResults"
             [contextMenuActions]="true"
             [creationMenuActions]="false"
             [contentActions]="true"
             [navigationMode]="navigationMode"
+            [enablePagination]="false"
             (error)="onNavigationError($event)"
             (success)="resetError()"
             (preview)="onPreviewFile($event)">
@@ -68,7 +68,11 @@
             </content-actions>
         </alfresco-document-list>
         <alfresco-pagination
-            [provider]="documentList.data"
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="onNextPage($event)"
+            (prevPage)="onPrevPage($event)"
+            [pagination]="pagination"
+            [maxItems]="maxResults"
             [supportedPageSizes]="[5, 10, 15, 20]">
         </alfresco-pagination>
     </div>

@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
-import { PaginationProvider } from './paginationProvider.interface';
+import { SimpleChanges, OnChanges, EventEmitter, Output, Component, Input, OnInit } from '@angular/core';
+import { PaginationData } from '../../models/pagination.data';
+import { Pagination } from 'alfresco-js-api';
 
 @Component({
     moduleId: module.id,
@@ -24,68 +25,81 @@ import { PaginationProvider } from './paginationProvider.interface';
     templateUrl: './pagination.component.html',
     styleUrls: ['./pagination.component.css']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnChanges {
 
-    DEFAULT_PAGE_SIZE: number = 20;
+    static DEFAULT_PAGE_SIZE: number = 20;
 
-    private _summary: string = '';
+    private summary: string = '';
 
     @Input()
     supportedPageSizes: number[] = [5, 10, 20, 50, 100];
 
     @Input()
-    provider: PaginationProvider;
+    maxItems: number = PaginationComponent.DEFAULT_PAGE_SIZE;
 
-    get pageSize(): number {
-        if (this.provider) {
-            return this.provider.maxItems;
-        }
-        return this.DEFAULT_PAGE_SIZE;
+    @Input()
+    pagination: Pagination;
+
+    @Output()
+    changePageSize: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    nextPage: EventEmitter<Pagination> = new EventEmitter();
+
+    @Output()
+    prevPage: EventEmitter<Pagination> = new EventEmitter();
+
+    constructor() {
     }
 
-    set pageSize(value: number) {
-        if (this.provider) {
-            this.provider.maxItems = value;
+    ngOnInit() {
+        if (!this.pagination) {
+            this.pagination = new PaginationData(0, 0, 0, this.maxItems, true);
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['pagination']) {
+            if (changes['pagination'].currentValue) {
+                this.pagination = changes['pagination'].currentValue;
+                this.updateSummary();
+            }
         }
     }
 
     setPageSize(value: number) {
-        this.pageSize = value;
+        this.pagination.maxItems = value;
+        this.updateSummary();
+        this.changePageSize.emit(this.pagination);
     }
 
-    get summary(): string {
-        return this._summary;
+    nextPageAvail(): boolean {
+        return this.pagination.hasMoreItems;
     }
 
-    get nextPageAvail(): boolean {
-        return this.provider.hasMoreItems;
-    }
-
-    get prevPageAvail(): boolean {
-        return this.provider.skipCount > 0;
+    prevPageAvail(): boolean {
+        return this.pagination.skipCount > 0;
     }
 
     showNextPage() {
-        this.provider.skipCount += this.provider.maxItems;
+        this.pagination.skipCount += this.pagination.maxItems;
+        this.updateSummary();
+        this.nextPage.emit(this.pagination);
     }
 
     showPrevPage() {
-        this.provider.skipCount -= this.provider.maxItems;
+        this.pagination.skipCount -= this.pagination.maxItems;
+        this.updateSummary();
+        this.prevPage.emit(this.pagination);
     }
 
-    ngOnInit() {
-        this.provider.dataLoaded.subscribe(() => {
-            this.updateSummary();
-        });
-    }
-
-    private updateSummary() {
-        let from = this.provider.skipCount;
+    updateSummary() {
+        let from = this.pagination.skipCount;
         if (from === 0) {
             from = 1;
         }
-        let to = this.provider.skipCount + this.provider.count;
-        let of = this.provider.totalItems;
-        this._summary = `${from}-${to} of ${of}`;
+        let to = this.pagination.skipCount + this.pagination.count;
+        let of = this.pagination.totalItems;
+        this.summary = `${from}-${to} of ${of}`;
     }
 }
