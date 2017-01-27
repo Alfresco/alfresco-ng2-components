@@ -110,8 +110,8 @@ Follow the 3 steps below:
 Usage example of this component :
 
 **main.ts**
-```ts
 
+```ts
 import { NgModule, Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -387,30 +387,45 @@ A custom set of columns can look like the following:
 
 ![Custom columns](docs/assets/custom-columns.png)
 
+DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
 
-Binding to nested properties is also supported. Assuming you have the node structure similar to following:
-
-```json
-{
-    "nodeRef": "workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28",
-    "nodeType": "cm:folder",
-    "type": "folder",
-    "location": {
-        "repositoryId": "552ca13e-458b-4566-9f3e-d0f9c92facff",
-        "site": "swsdp",
-        "siteTitle": "Sample: Web Site Design Project"
-    }
+```js
+export interface MinimalNode {
+    id: string;
+    parentId: string;
+    name: string;
+    nodeType: string;
+    isFolder: boolean;
+    isFile: boolean;
+    modifiedAt: Date;
+    modifiedByUser: UserInfo;
+    createdAt: Date;
+    createdByUser: UserInfo;
+    content: ContentInfo;
+    path: PathInfoEntity;
+    properties: NodeProperties;
 }
 ```
 
-the binding value for the Site column to display location site will be `location.site`:
+_See more details in [alfresco-js-api](https://github.com/Alfresco/alfresco-js-api/blob/master/index.d.ts) repository._
+
+Binding to nested properties is also supported. You can define a column key as a property path similar to the following:
+
+```text
+createdByUser.displayName
+```
+
+Here's a short example:
 
 ```html
 <alfresco-document-list ...>
     <content-columns>
         <content-column key="$thumbnail" type="image"></content-column>
-        <content-column title="Name" key="displayName" class="full-width ellipsis-cell"></content-column>
-        <content-column title="Site" key="location.site"></content-column>
+        <content-column title="Name" key="name" class="full-width ellipsis-cell"></content-column>
+        <content-column 
+            title="Created By" 
+            key="createdByUser.displayName">
+        </content-column>
     </content-columns>
 </alfresco-document-list>
 ```
@@ -437,17 +452,64 @@ For a full list of available `format` values please refer to [DatePipe](https://
 
 It is possible providing custom column/cell template that may contain other Angular components or HTML elmements:
 
+Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| data | [DataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Data adapter instance. |
+| row | [DataRow](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Current data row instance.  |
+| col | [DataColumn](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Current data column instance. |
+
+You can use all three properties to gain full access to underlying data from within your custom templates. 
+In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
+
 ```html
-<content-column
-        title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
-        key="name"
-        sortable="true"
-        class="full-width ellipsis-cell">
+<template let-context="$implicit">
+    <!-- template body -->
+</template>
+```
+
+The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want binding template data context to.
+
+Getting a cell value from the underlying DataTableAdapter:
+
+```ts
+context.data.getValue(entry.row, entry.col);
+```
+
+You can retrieve all property values for underlying node, including nested properties (via property paths):
+
+```ts
+context.row.getValue('name')
+context.row.getValue('createdByUser.displayName')
+```
+
+_You may want using **row** api to get raw value access. 
+
+```html
+<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <template let-context="$implicit">
+        <span>Hi! {{context.row.getValue('createdByUser.displayName')}}</span>
+        <span>Hi! {{context.row.getValue('name')}}</span>
+    </template>
+</content-column>
+```
+
+Use **data** api to get values with post-processing, like datetime/icon conversion._
+
+Final example, we'll name the context as `entry`:
+
+```html
+<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
     <template let-entry="$implicit">
         <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
     </template>
 </content-column>
 ```
+
+Example above will prepend `Hi!` to each file and folder name in the list.
+
+
 
 ### Actions
 
