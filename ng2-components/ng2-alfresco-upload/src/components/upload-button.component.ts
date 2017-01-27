@@ -43,7 +43,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
  * @Output - onSuccess - The event is emitted when the file is uploaded
  *
- * @returns {UploadDragAreaComponent} .
+ * @returns {UploadButtonComponent} .
  */
 @Component({
     selector: 'alfresco-upload-button',
