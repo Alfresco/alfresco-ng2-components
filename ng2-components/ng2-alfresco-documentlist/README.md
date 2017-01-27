@@ -485,9 +485,19 @@ context.row.getValue('createdByUser.displayName')
 ```
 
 _You may want using **row** api to get raw value access. 
+
+```html
+<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <template let-context="$implicit">
+        <span>Hi! {{context.row.getValue('createdByUser.displayName')}}</span>
+        <span>Hi! {{context.row.getValue('name')}}</span>
+    </template>
+</content-column>
+```
+
 Use **data** api to get values with post-processing, like datetime/icon conversion._
 
-Final example:
+Final example, we'll name the context as `entry`:
 
 ```html
 <content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
@@ -498,6 +508,8 @@ Final example:
 ```
 
 Example above will prepend `Hi!` to each file and folder name in the list.
+
+
 
 ### Actions
 
