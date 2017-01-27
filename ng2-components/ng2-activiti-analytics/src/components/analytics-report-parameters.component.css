@@ -63,3 +63,11 @@
 .report-container-setting {
     padding-left: 10px;
 }
+
+.option_button_details{
+    padding-top: 20px;
+}
+
+.mdl-dialog__title.choose_name{
+    padding: 0px;
+}

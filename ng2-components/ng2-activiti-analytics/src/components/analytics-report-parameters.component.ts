@@ -24,7 +24,8 @@ import {
     Output,
     SimpleChanges,
     OnDestroy,
-    AfterViewChecked
+    AfterViewChecked,
+    ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
@@ -38,6 +39,7 @@ import {
 } from '../models/report.model';
 
 declare var componentHandler;
+declare let dialogPolyfill: any;
 
 @Component({
     moduleId: module.id,
@@ -47,7 +49,7 @@ declare var componentHandler;
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
 
-    public static FORMAT_DATE_ACTIVITI: string =  'YYYY-MM-DD';
+    public static FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
 
     @Input()
     appId: string;
@@ -70,6 +72,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     @Output()
     onFormValueChanged = new EventEmitter();
 
+    @Output()
+    saveReportSuccess = new EventEmitter();
+
+    @ViewChild('reportNameDialog')
+    reportNameDialog: any;
+
     onDropdownChanged = new EventEmitter();
 
     onSuccessReportParams = new EventEmitter();
@@ -80,10 +88,15 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     reportForm: FormGroup;
 
+    showExportSaveButtons: boolean = false;
+
     private dropDownSub;
     private reportParamsSub;
     private paramOpts;
     private isEditable: boolean = false;
+    private action: string;
+    private reportParamQuery: ReportQuery;
+    private reportName: string;
     private hideParameters: boolean = true;
 
     constructor(private translateService: AlfrescoTranslationService,
@@ -116,6 +129,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     ngOnChanges(changes: SimpleChanges) {
         this.isEditable = false;
+        // this.showExportSaveButtons = false;
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getReportParams(reportId.currentValue);
@@ -193,8 +207,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public submit(values: any) {
-        let reportParamQuery = this.convertFormValuesToReportParamQuery(values);
-        this.onSuccess.emit(reportParamQuery);
+        this.reportParamQuery = this.convertFormValuesToReportParamQuery(values);
+        this.onSuccess.emit(this.reportParamQuery);
+        this.showExportSaveButtons = true;
     }
 
     onValueChanged(values: any) {
@@ -236,7 +251,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public editEnable() {
-        this.isEditable =  true;
+        this.isEditable = true;
     }
 
     public editDisable() {
@@ -254,6 +269,42 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.onError.emit(err);
             }
         );
+    }
+
+    public showDialog(event: string) {
+        if (!this.reportNameDialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.reportNameDialog.nativeElement);
+        }
+        this.reportNameDialog.nativeElement.showModal();
+        this.action = event;
+    }
+
+    closeDialog() {
+        if (this.reportNameDialog) {
+            this.reportNameDialog.nativeElement.close();
+        }
+    }
+
+    performAction(action: string, reportName: string, reportParamQuery: ReportQuery) {
+        reportParamQuery.reportName = reportName;
+        if (action === 'save') {
+            this.doSave(reportParamQuery);
+        } else if (action === 'export') {
+            this.doExport(reportParamQuery);
+        }
+    }
+
+    doExport(paramQuery: ReportQuery) {
+        this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(() => {
+            console.log('DONE');
+        });
+    }
+
+    doSave(paramQuery: ReportQuery) {
+        this.closeDialog();
+        this.analyticsService.saveReport(this.reportId, paramQuery).subscribe(() => {
+            this.saveReportSuccess.emit();
+        });
     }
 
     ngAfterViewChecked() {

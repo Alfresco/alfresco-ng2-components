@@ -184,6 +184,27 @@ export class AnalyticsService {
             }).catch(err => this.handleError(err));
     }
 
+    exportReportToCsv(reportId: string, paramsQuery: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.exportToCsv(reportId, paramsQuery))
+            .map((res: any) => {
+                this.logService.info('export');
+            }).catch(err => this.handleError(err));
+    }
+
+    saveReport(reportId: string, paramsQuery: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.saveReport(reportId, paramsQuery))
+            .map(() => {
+                this.logService.info('save');
+            }).catch(err => this.handleError(err));
+    }
+
+    deleteReport(reportId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.deleteReport(reportId))
+            .map(() => {
+                this.logService.info('delete');
+            }).catch(err => this.handleError(err));
+    }
+
     private handleError(error: Response) {
         this.logService.error(error);
         return Observable.throw(error.json().error || 'Server error');

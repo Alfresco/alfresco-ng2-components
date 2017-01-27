@@ -119,7 +119,8 @@
                         <activiti-analytics *ngIf="report"
                                             [appId]="appId"
                                             [reportId]="report.id"
-                                            (editReport)="onEditReport($event)">
+                                            (editReport)="onEditReport($event)"
+                                            (reportSaved)="onReportSaved()">
                         </activiti-analytics>
                     </div>
                 </div>
