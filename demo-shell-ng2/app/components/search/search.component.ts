@@ -47,7 +47,7 @@ import { MinimalNodeEntity } from 'alfresco-js-api';
 })
 export class SearchComponent {
 
-    fileNodeId: any;
+    fileNodeId: string;
     fileShowed: boolean = false;
 
     constructor(public router: Router) {
