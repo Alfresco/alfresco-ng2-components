@@ -54,7 +54,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     baseComponentPath = module.id.replace('/components/document-list.component.js', '');
 
     @Input()
-    fallbackThubnail: string = this.baseComponentPath + '/assets/images/ft_ic_miscellaneous.svg';
+    fallbackThumbnail: string = this.baseComponentPath + '/assets/images/ft_ic_miscellaneous.svg';
 
     @Input()
     navigate: boolean = true;
