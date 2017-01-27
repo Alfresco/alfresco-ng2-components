@@ -66,7 +66,7 @@ describe('UploadDragAreaComponent', () => {
     });
 
     it('should show an folder non supported error in console when the file type is empty', () => {
-        component.showUdoNotificationBar = false;
+        component.showNotificationBar = false;
         spyOn(logService, 'error');
 
         let fileFake = new File([''], 'folder-fake', {type: ''});
@@ -77,7 +77,7 @@ describe('UploadDragAreaComponent', () => {
 
     it('should show an folder non supported error in the notification bar when the file type is empty', () => {
         component.showErrorNotificationBar = jasmine.createSpy('_showErrorNotificationBar');
-        component.showUdoNotificationBar = true;
+        component.showNotificationBar = true;
 
         let fileFake = new File([''], 'folder-fake', {type: ''});
         component.onFilesDropped([fileFake]);
@@ -88,7 +88,7 @@ describe('UploadDragAreaComponent', () => {
     it('should upload the list of files dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
-        component.showUdoNotificationBar = false;
+        component.showNotificationBar = false;
         uploadService.addToQueue = jasmine.createSpy('addToQueue');
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
@@ -104,7 +104,7 @@ describe('UploadDragAreaComponent', () => {
     it('should show the loading messages in the notification bar when the files are dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
-        component.showUdoNotificationBar = true;
+        component.showNotificationBar = true;
         uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
         component.showUndoNotificationBar = jasmine.createSpy('_showUndoNotificationBar');
 
@@ -166,7 +166,7 @@ describe('UploadDragAreaComponent', () => {
 
     xit('should throws an exception and show it in the notification bar when the folder already exist', done => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
-        component.showUdoNotificationBar = true;
+        component.showNotificationBar = true;
 
         fixture.detectChanges();
         let fakeRest = {
