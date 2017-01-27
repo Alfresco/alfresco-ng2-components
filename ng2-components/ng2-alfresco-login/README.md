@@ -160,6 +160,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | --- | --- |
 | `onSuccess` | The event is emitted when the login is done |
 | `onError` | The event is emitted when the login fails |
+| `executeSubmit` | The event is emitted when the form is submitted |
 
 #### Options
 
@@ -167,7 +168,36 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | ---           | ---         | ---          | ---         | ---
 | `providers`         | *string*    |   ECM     | Possible valid value are ECM, BPM or ALL. The default behaviour of this component will logged in only in the ECM . If you want log in in both system the correct value to use is ALL |
 | `disableCsrf`         | *boolean*    |   false     | To prevent the CSRF Token from been submitted. Only for Activiti call |
+| `needHelpLink`         | *string*    |   ''     | It will change the url of the NEED HELP link in the footer  |
+| `registerLink`         | *string*    |   ''     | It will change the url of the REGISTER link in the footer |
+| `logoImageUrl`         | *string*    |   Alfresco logo image   | To change the logo image with a customised image |
+| `backgroundImageUrl`         | *string*    | Alfresco background image    | To change the background image with a customised image |
+| `fieldsValidation`         | *map*  { [key: string]: any; }, extra?: { [key: string]: any; }   |   null     | Use it to customise the validation rules of the login form |
 
+
+## Change footer content
+
+<img src="assets/custom-footer.png" width="600" />
+
+You can replace the entire content in the footer of the login component with your custom content.
+
+```html
+<alfresco-login ...>
+    <login-footer><template>My custom HTML for the footer</template></login-footer>
+</alfresco-login>`
+```
+
+## Change header content
+
+<img src="assets/custom-header.png" width="600" />
+
+You can replace the entire content in the header of the login component with your custom content.
+
+```html
+<alfresco-login ...>
+    <login-header><template>My custom HTML for the header</template></login-header>
+</alfresco-login>`
+```
 
 ## Extra content
 
@@ -212,7 +242,7 @@ Alternatively you can bind to your component properties and provide values dynam
 
 #### Customize Validation rules
 
-If needed it is possible customize the validation rules of the login
+If needed it is possible customise the validation rules of the login
 form. You can add/modify the default rules of the login form.
 
 **MyCustomLogin.component.html**

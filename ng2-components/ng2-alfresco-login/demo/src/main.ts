@@ -56,8 +56,11 @@ import { LoginModule } from 'ng2-alfresco-login';
 
        <alfresco-login [providers]="providers"
                        [disableCsrf]="disableCsrf"
+                       [needHelpLink]="'http://www.google.com'"
+                       [registerLink]="'http://www.alfresco.com'"
                        (onSuccess)="mySuccessMethod($event)"
-                       (onError)="myErrorMethod($event)"></alfresco-login>`
+                       (onError)="myErrorMethod($event)">
+                       </alfresco-login>`
 })
 export class AppComponent implements OnInit {
 

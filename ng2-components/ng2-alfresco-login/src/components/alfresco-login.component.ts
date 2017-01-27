@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
@@ -33,6 +33,12 @@ export class AlfrescoLoginComponent implements OnInit {
     baseComponentPath = module.id.replace('/alfresco-login.component.js', '');
 
     isPasswordShow: boolean = false;
+
+    @Input()
+    needHelpLink: string = '';
+
+    @Input()
+    registerLink: string = '';
 
     @Input()
     logoImageUrl: string;
@@ -66,6 +72,10 @@ export class AlfrescoLoginComponent implements OnInit {
     formError: { [id: string]: string };
 
     minLenght: number = 2;
+
+    footerTemplate: TemplateRef<any>;
+
+    headerTemplate: TemplateRef<any>;
 
     private _message: { [id: string]: { [id: string]: string } };
 
