@@ -71,6 +71,9 @@ export class UploadButtonComponent {
     acceptedFilesType: string = '*';
 
     @Input()
+    staticTitle: string;
+
+    @Input()
     currentFolderPath: string = '/';
 
     @Input()

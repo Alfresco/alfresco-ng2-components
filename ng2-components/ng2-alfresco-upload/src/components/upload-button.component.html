@@ -5,7 +5,8 @@
 
         <!--Multiple Files Upload-->
         <span *ngIf="multipleFiles">
-            <label for="upload-multiple-files">{{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}</label>
+            <label *ngIf="!staticTitle" for="upload-multiple-files">{{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}</label>
+            <label *ngIf="staticTitle" for="upload-multiple-files">{{staticTitle}}</label>
             <input id="upload-multiple-files" data-automation-id="upload-multiple-files" type="file" name="uploadFiles"
                    (change)="onFilesAdded($event)"
                    multiple="multiple"
@@ -15,7 +16,8 @@
 
         <!--Single Files Upload-->
         <span *ngIf="!multipleFiles">
-            <label for="upload-single-file">{{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}</label>
+            <label *ngIf="!staticTitle" for="upload-single-file">{{'FILE_UPLOAD.BUTTON.UPLOAD_FILE' | translate}}</label>
+            <label *ngIf="staticTitle" for="upload-single-file">{{staticTitle}}</label>
             <input id="upload-single-file" data-automation-id="upload-single-file" type="file" name="uploadFiles"
                    (change)="onFilesAdded($event)"
                    accept="{{acceptedFilesType}}"
@@ -26,7 +28,8 @@
     <!--Folders Upload-->
     <div *ngIf="uploadFolders" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--file">
         <i class="material-icons">file_upload</i>
-        <label for="uploadFolder">{{'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}</label>
+        <label *ngIf="!staticTitle" for="uploadFolder">{{'FILE_UPLOAD.BUTTON.UPLOAD_FOLDER' | translate}}</label>
+        <label *ngIf="staticTitle" for="uploadFolder">{{staticTitle}}</label>
         <input id="uploadFolder" data-automation-id="uploadFolder" type="file" name="uploadFiles"
                (change)="onDirectoryAdded($event)"
                multiple="multiple"
