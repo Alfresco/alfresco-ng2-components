@@ -15,12 +15,27 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges, OnDestroy, AfterViewChecked } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    OnInit,
+    OnChanges,
+    Input,
+    Output,
+    SimpleChanges,
+    OnDestroy,
+    AfterViewChecked
+} from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
-import { ReportParametersModel, ReportQuery, ParameterValueModel, ReportParameterDetailsModel } from '../models/report.model';
+import {
+    ReportParametersModel,
+    ReportQuery,
+    ParameterValueModel,
+    ReportParameterDetailsModel
+} from '../models/report.model';
 
 declare var componentHandler;
 
@@ -69,6 +84,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private reportParamsSub;
     private paramOpts;
     private isEditable: boolean = false;
+    private hideParameters: boolean = true;
 
     constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
@@ -245,5 +261,13 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }
+    }
+
+    toggleParameters() {
+        this.hideParameters = !this.hideParameters;
+    }
+
+    isParametersHide() {
+        return this.hideParameters;
     }
 }
