@@ -17,7 +17,7 @@
     "posttest": "remap-istanbul -i coverage/report/coverage-final.json -o coverage/report -t html && remap-istanbul -i coverage/report/coverage-final.json -o coverage/report/coverage-final.json",
     "coverage": "npm run test && wsrv -o -p 9875 ./coverage/report",
     "prepublish": "npm run test",
-    "travis": "npm link ng2-alfresco-core",
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable ng2-alfresco-documentlist",
     "gulp": "gulp",
     "build.umd": "gulp build.prod --color --env-config prod --build-type prod",
     "reinstall": "npm cache clean && npm install"
@@ -70,7 +70,9 @@
     "zone.js": "^0.6.23",
     "ng2-translate": "2.5.0",
     "alfresco-js-api": "^1.0.0",
-    "ng2-alfresco-core": "1.0.0"
+    "ng2-alfresco-core": "1.0.0",
+    "ng2-alfresco-datatable": "1.0.0",
+    "ng2-alfresco-documentlist": "1.0.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",

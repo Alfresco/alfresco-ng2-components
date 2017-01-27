@@ -5,7 +5,7 @@
         },
         "RESULTS": {
             "SUMMARY": "Found {{numResults}} results for {{searchTerm}}",
-            "NONE": "No results found for {{searchTerm}}",
+            "NONE": "No results found searching for {{searchTerm}}",
             "ERROR": "An error occurred while running the search",
             "COLUMNS": {
                 "NAME": "Display name",
@@ -25,6 +25,22 @@
             "ft_ic_archive": "Acrchive file",
             "ft_ic_presentation": "Presentation file",
             "ft_ic_spreadsheet": "Spreadsheet file"
+        },
+        "DOCUMENT_LIST": {
+            "COLUMNS": {
+                "DISPLAY_NAME": "Display name",
+                "CREATED_BY": "Created by",
+                "CREATED_ON": "Created on"
+            },
+            "ACTIONS": {
+                "FOLDER": {
+                    "DELETE": "Delete"
+                },
+                "DOCUMENT": {
+                    "DOWNLOAD": "Download",
+                    "DELETE": "Delete"
+                }
+            }
         }
     }
 }

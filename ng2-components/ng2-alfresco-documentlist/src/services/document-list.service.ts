@@ -124,7 +124,6 @@ export class DocumentListService {
             include: ['path', 'properties']
         };
 
-        // see https://github.com/Alfresco/alfresco-js-api/issues/140
         let nodes: any = this.apiService.getInstance().nodes;
         return nodes.getNodeInfo(nodeId, opts);
     }

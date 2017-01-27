@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Subject } from 'rxjs/Rx';
+import { Pagination } from 'alfresco-js-api';
 
-export interface PaginationProvider {
+export class PaginationData implements Pagination {
 
     /**
      *  The number of objects in the collection.
@@ -34,7 +34,7 @@ export interface PaginationProvider {
      * An integer describing the total number of entities in the collection.
      * The API might not be able to determine this value, in which case this property will not be present.
      */
-    totalItems?: number;
+    totalItems: number;
 
     /**
      * An integer describing how many entities exist in the collection before those included in this list.
@@ -47,18 +47,11 @@ export interface PaginationProvider {
      */
     maxItems: number;
 
-    /**
-     * An event that is emitted every time data is loaded.
-     */
-    dataLoaded: DataLoadedEventEmitter;
-}
-
-export class DataLoadedEventEmitter extends Subject<any> {
-    constructor() {
-        super();
-    }
-
-    emit(value) {
-        super.next(value);
+    constructor(count: number, totalItems: number, skipCount: number, maxItems: number, hasMoreItems: boolean) {
+        this.count = count;
+        this.hasMoreItems = hasMoreItems;
+        this.totalItems = totalItems;
+        this.skipCount = skipCount;
+        this.maxItems = maxItems;
     }
 }

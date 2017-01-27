@@ -1,7 +1,14 @@
 // Tun on full stack traces in errors to help debugging
 Error.stackTraceLimit = Infinity;
 
-// jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+
+window.componentHandler = {
+    upgradeAllRegistered: function () {
+    },
+    upgradeElement: function () {
+    }
+};
 
 __karma__.loaded = function() {};
 
@@ -56,7 +63,9 @@ var map = {
     'ng2-translate': 'npm:ng2-translate',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
-    'ng2-alfresco-core': 'npm:ng2-alfresco-core'
+    'ng2-alfresco-core': 'npm:ng2-alfresco-core',
+    'ng2-alfresco-datatable': 'npm:ng2-alfresco-datatable',
+    'ng2-alfresco-documentlist': 'npm:ng2-alfresco-documentlist'
 };
 
 var packages = {
@@ -65,7 +74,9 @@ var packages = {
     'ng2-translate': { defaultExtension: 'js' },
 
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
-    'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'}
+    'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'},
+    'ng2-alfresco-datatable': { main: './index.js', defaultExtension: 'js'},
+    'ng2-alfresco-documentlist': { main: './index.js', defaultExtension: 'js'}
 };
 
 var config = {

@@ -441,6 +441,31 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
 
 ```
 
+# Pagination Component
+
+The pagination object is a generic component to paginate component. The Alfresco API are paginated and returns a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which return the current pagination and query again the API with the options choose by the user.
+
+![DataTable demo](docs/assets/pagination-demo.png)
+
+
+### Properties
+
+| Name | Type | Default | Description
+| --- | --- | --- | --- |
+| `supportedPageSizes` | numer[] | [5, 10, 20, 50, 100] | This array describe the set of options showed in the pick list |
+| `maxItems` | boolean | false | Max number of element showed per page. If you pick another size from the pick list this option will be overwritten |
+| `pagination` | Pagination | {count: 0, totalItems: 0, skipCount: 0, maxItems: 20 , hasMoreItems: true} | The Alfresco Api return a pagination object, you can use it to feed the pagination component, or create your own. |
+
+### Events
+
+| Name | Description
+| --- | --- |
+| `changePageSize` | Emitted when user picks one of the options from the pick list |
+| `nextPage` | Emitted when user clicks next page button |
+| `prevPage` | Emitted when user clicks prev page button |
+
+All the events carry with them the current pagination object.
+
 ## Build from sources
 
 Alternatively you can build component from sources with the following commands:

@@ -22,7 +22,7 @@ import { DocumentListComponent } from './document-list.component';
 import { DocumentListServiceMock } from './../assets/document-list.service.mock';
 import { ContentActionModel } from '../models/content-action.model';
 import { FileNode, FolderNode } from '../assets/document-library.model.mock';
-import { NodeMinimalEntry } from '../models/document-library.model';
+import { NodeMinimalEntry, NodeMinimal, NodePaging } from '../models/document-library.model';
 import { ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
 
 describe('DocumentList', () => {
@@ -291,10 +291,10 @@ describe('DocumentList', () => {
     });
 
     /*
-    it('should not get node path for null node', () => {
-        expect(documentList.getNodePath(null)).toBeNull();
-    });
-    */
+     it('should not get node path for null node', () => {
+     expect(documentList.getNodePath(null)).toBeNull();
+     });
+     */
 
     it('should require valid node for file preview', () => {
         let file = new FileNode();
@@ -326,10 +326,28 @@ describe('DocumentList', () => {
         expect(documentList.performNavigation).not.toHaveBeenCalled();
     });
 
-    it('should display folder content on reload', () => {
+    it('should display folder content from loadFolder on reload if folderNode defined', () => {
+        documentList.folderNode = new NodeMinimal();
+
         spyOn(documentList, 'loadFolder').and.callThrough();
         documentList.reload();
         expect(documentList.loadFolder).toHaveBeenCalled();
+    });
+
+    it('should display folder content from loadFolderByNodeId on reload if currentFolderId defined', () => {
+        documentList.currentFolderId = 'id-folder';
+        spyOn(documentListService, 'getFolderNode').and.returnValue(Promise.reject(false));
+        spyOn(documentList, 'loadFolderByNodeId').and.callThrough();
+        documentList.reload();
+        expect(documentList.loadFolderByNodeId).toHaveBeenCalled();
+    });
+
+    it('should display folder content from loadFolderByNodeId on reload if node defined', () => {
+        documentList.node = new NodePaging();
+
+        spyOn(documentList.data, 'loadPage').and.callThrough();
+        documentList.reload();
+        expect(documentList.data.loadPage).toHaveBeenCalled();
     });
 
     it('should require node to resolve context menu actions', () => {
@@ -428,6 +446,7 @@ describe('DocumentList', () => {
 
     it('should set row filter for underlying adapter', () => {
         let filter = <RowFilter> {};
+        documentList.currentFolderId = 'id';
         spyOn(documentList.data, 'setFilter').and.callThrough();
 
         documentList.rowFilter = filter;
@@ -445,7 +464,7 @@ describe('DocumentList', () => {
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
-        let event = <DataRowEvent> { value: row };
+        let event = <DataRowEvent> {value: row};
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
         documentList.onRowClick(event);
@@ -455,7 +474,7 @@ describe('DocumentList', () => {
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
-        let event = <DataRowEvent> { value: row };
+        let event = <DataRowEvent> {value: row};
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onRowDblClick(event);
@@ -464,8 +483,8 @@ describe('DocumentList', () => {
 
     it('should load folder by ID on init', () => {
         documentList.currentFolderId = '1d26e465-dea3-42f3-b415-faa8364b9692';
-        spyOn(documentList.data, 'loadById').and.returnValue(Promise.resolve());
-        documentList.ngOnInit();
-        expect(documentList.data.loadById).toHaveBeenCalled();
+        spyOn(documentList, 'loadFolderNodesByFolderNodeId').and.returnValue(Promise.resolve());
+        documentList.ngOnChanges({folderNode: new SimpleChange(null, documentList.currentFolderId)});
+        expect(documentList.loadFolderNodesByFolderNodeId).toHaveBeenCalled();
     });
 });

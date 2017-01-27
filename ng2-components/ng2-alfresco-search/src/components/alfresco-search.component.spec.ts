@@ -16,12 +16,10 @@
  */
 
 import { DebugElement, ReflectiveInjector, SimpleChange } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoSearchComponent } from './alfresco-search.component';
-import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 import { TranslationMock } from './../assets/translation.service.mock';
 import { AlfrescoSearchService } from '../services/alfresco-search.service';
 import {
@@ -33,6 +31,7 @@ import {
     StorageService,
     LogService
 } from 'ng2-alfresco-core';
+import { DocumentListModule } from 'ng2-alfresco-documentlist';
 
 describe('AlfrescoSearchComponent', () => {
 
@@ -69,8 +68,8 @@ describe('AlfrescoSearchComponent', () => {
                     entry: {
                         id: '123',
                         name: 'MyFolder',
-                        isFile : false,
-                        isFolder : true,
+                        isFile: false,
+                        isFolder: true,
                         createdByUser: {
                             displayName: 'John Doe'
                         },
@@ -102,13 +101,13 @@ describe('AlfrescoSearchComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule.forRoot()
+                CoreModule.forRoot(),
+                DocumentListModule.forRoot()
             ],
-            declarations: [ AlfrescoSearchComponent ], // declare the test component
+            declarations: [AlfrescoSearchComponent], // declare the test component
             providers: [
                 AlfrescoSearchService,
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                AlfrescoThumbnailService
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(AlfrescoSearchComponent);
@@ -123,9 +122,9 @@ describe('AlfrescoSearchComponent', () => {
 
     it('should take the provided search term from query param provided via RouteParams', () => {
         let injector = ReflectiveInjector.resolveAndCreate([
-            { provide: ActivatedRoute, useValue: { params: Observable.from([{ q: 'exampleTerm692' }]) } }
+            {provide: ActivatedRoute, useValue: {params: Observable.from([{q: 'exampleTerm692'}])}}
         ]);
-        let search = new AlfrescoSearchComponent(null, null, null, injector.get(ActivatedRoute));
+        let search = new AlfrescoSearchComponent(null, null, injector.get(ActivatedRoute));
         search.ngOnInit();
         expect(search.searchTerm).toBe('exampleTerm692');
     });
@@ -138,9 +137,9 @@ describe('AlfrescoSearchComponent', () => {
             AlfrescoApiService,
             StorageService,
             LogService,
-            { provide: ActivatedRoute, useValue: { params: Observable.from([{}]) } }
+            {provide: ActivatedRoute, useValue: {params: Observable.from([{}])}}
         ]);
-        let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, null, injector.get(ActivatedRoute));
+        let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, injector.get(ActivatedRoute));
         search.ngOnInit();
         expect(search.searchTerm).toBeNull();
     });
@@ -157,6 +156,7 @@ describe('AlfrescoSearchComponent', () => {
         it('should call search service with the correct parameters', (done) => {
             let searchTerm = 'searchTerm63688', options = {
                 include: ['path'],
+                skipCount: 0,
                 rootNodeId: '-my-',
                 nodeType: 'my:type',
                 maxItems: 20,
@@ -186,9 +186,9 @@ describe('AlfrescoSearchComponent', () => {
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
-                expect(element.querySelector('#result_user_0')).not.toBeNull();
-                expect(element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
-                expect(element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
+                let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                expect(resultsEl).not.toBeNull();
+                expect(resultsEl.innerHTML.trim()).toBe('MyDoc');
                 done();
             });
 
@@ -204,7 +204,7 @@ describe('AlfrescoSearchComponent', () => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(element.querySelector('#search_no_result')).not.toBeNull();
+                expect(element.querySelector('.no-result-message')).not.toBeNull();
                 done();
             });
 
@@ -218,11 +218,10 @@ describe('AlfrescoSearchComponent', () => {
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.reject(errorJson));
 
-            component.resultsLoad.subscribe(() => {}, () => {
+            component.resultsLoad.subscribe(() => {
+            }, () => {
                 fixture.detectChanges();
-                let resultsEl = element.querySelector('[data-automation-id="search_result_table"]');
                 let errorEl = element.querySelector('[data-automation-id="search_error_message"]');
-                expect(resultsEl).toBeNull();
                 expect(errorEl).not.toBeNull();
                 expect((<any>errorEl).innerText).toBe('SEARCH.RESULTS.ERROR');
                 done();
@@ -240,10 +239,10 @@ describe('AlfrescoSearchComponent', () => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
-                expect(searchService.getQueryNodesPromise.calls.mostRecent().args[0]).toBe('searchTerm2');
-                expect(element.querySelector('#result_user_0')).not.toBeNull();
-                expect(element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
-                expect(element.querySelector('#result_name_0').innerHTML).toBe('MyDoc');
+                expect(searchService.getQueryNodesPromise).toHaveBeenCalled();
+                let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                expect(resultsEl).not.toBeNull();
+                expect(resultsEl.innerHTML.trim()).toBe('MyDoc');
                 done();
             });
 
@@ -257,13 +256,12 @@ describe('AlfrescoSearchComponent', () => {
         let searchService: AlfrescoSearchService;
         let querySpy: jasmine.Spy;
         let emitSpy: jasmine.Spy;
-        const rowSelector = '[data-automation-id="search_result_table"] tbody tr';
 
         beforeEach(() => {
             debugElement = fixture.debugElement;
             searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
             querySpy = spyOn(searchService, 'getQueryNodesPromise').and.returnValue(Promise.resolve(result));
-            emitSpy = spyOn(component.navigate, 'emit');
+            emitSpy = spyOn(component.preview, 'emit');
         });
 
         describe('click results', () => {
@@ -272,12 +270,14 @@ describe('AlfrescoSearchComponent', () => {
                 component.navigationMode = AlfrescoSearchComponent.SINGLE_CLICK_NAVIGATION;
             });
 
-            it('should emit navigation event when file item clicked', (done) => {
+            it('should emit preview event when file item clicked', (done) => {
 
                 component.resultsLoad.subscribe(() => {
                     fixture.detectChanges();
-                    debugElement.query(By.css(rowSelector)).triggerEventHandler('click', {});
-                    expect(emitSpy).toHaveBeenCalled();
+
+                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                    resultsEl.dispatchEvent(new Event('click'));
+
                     done();
                 });
 
@@ -285,14 +285,16 @@ describe('AlfrescoSearchComponent', () => {
                 component.ngOnInit();
             });
 
-            it('should emit navigation event when non-file item is clicked', (done) => {
+            it('should emit preview event when non-file item is clicked', (done) => {
 
                 querySpy.and.returnValue(Promise.resolve(folderResult));
 
                 component.resultsLoad.subscribe(() => {
                     fixture.detectChanges();
-                    debugElement.query(By.css(rowSelector)).triggerEventHandler('click', {});
-                    expect(emitSpy).toHaveBeenCalled();
+
+                    let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
+                    resultsEl.dispatchEvent(new Event('click'));
+
                     done();
                 });
 
@@ -307,12 +309,14 @@ describe('AlfrescoSearchComponent', () => {
                 component.navigationMode = AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION;
             });
 
-            it('should emit navigation event when file item clicked', (done) => {
+            it('should emit preview event when file item clicked', (done) => {
 
                 component.resultsLoad.subscribe(() => {
                     fixture.detectChanges();
-                    debugElement.query(By.css(rowSelector)).triggerEventHandler('dblclick', {});
-                    expect(emitSpy).toHaveBeenCalled();
+
+                    let resultsEl = element.querySelector('[data-automation-id="text_MyDoc"]');
+                    resultsEl.dispatchEvent(new Event('dblclick'));
+
                     done();
                 });
 
@@ -320,14 +324,16 @@ describe('AlfrescoSearchComponent', () => {
                 component.ngOnInit();
             });
 
-            it('should emit navigation event when non-file item is clicked', (done) => {
+            it('should emit preview event when non-file item is clicked', (done) => {
 
                 querySpy.and.returnValue(Promise.resolve(folderResult));
 
                 component.resultsLoad.subscribe(() => {
                     fixture.detectChanges();
-                    debugElement.query(By.css(rowSelector)).triggerEventHandler('dblclick', {});
-                    expect(emitSpy).toHaveBeenCalled();
+
+                    let resultsEl = element.querySelector('[data-automation-id="text_MyFolder"]');
+                    resultsEl.dispatchEvent(new Event('dblclick'));
+
                     done();
                 });
 
