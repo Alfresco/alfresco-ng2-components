@@ -99,7 +99,7 @@ Follow the 3 steps below:
 
 
 ```html
-<alfresco-upload-button [showUdoNotificationBar]="true"
+<alfresco-upload-button [showNotificationBar]="true"
                         [uploadFolders]="true"
                         [multipleFiles]="false"
                         [acceptedFilesType]=".jpg,.gif,.png,.svg"
@@ -121,7 +121,7 @@ import { UploadModule } from 'ng2-alfresco-upload';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-upload-button [showUdoNotificationBar]="true"
+    template: `<alfresco-upload-button [showNotificationBar]="true"
                                        [uploadFolders]="false"
                                        [multipleFiles]="false"
                                        [acceptedFilesType]="'.jpg,.gif,.png,.svg'"
@@ -171,7 +171,7 @@ Attribute     | Description
 
 Attribute     | Options     | Default      | Description | Mandatory
 ---           | ---         | ---          | ---         | ---
-`showUdoNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
+`showNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
 `uploadFolders`         | *boolean*    |     false   |  Allow/disallow upload folders (only for chrome) | 
 `multipleFiles`         | *boolean*    |     false   |  Allow/disallow multiple files | 
 `acceptedFilesType`         | *string*    |     *   |  array of allowed file extensions , example: ".jpg,.gif,.png,.svg" | 
@@ -251,7 +251,7 @@ Attribute     | Description
 
 Attribute     | Options     | Default      | Description | Mandatory
 ---           | ---         | ---          | ---         | ---
-`showUdoNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
+`showNotificationBar`         | *boolean*    |     true   |  Hide/show notification bar | 
 `currentFolderPath`         | *string*    |     '/Sites/swsdp/documentLibrary'   |  define the path where the files are uploaded | 
 `versioning`         | *boolean*    |     false   |  Versioning false is the default uploader behaviour and it rename using an integer suffix if there is a name clash. Versioning true to indicate that a major version should be created  | 
 
