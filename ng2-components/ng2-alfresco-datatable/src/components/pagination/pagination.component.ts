@@ -41,13 +41,13 @@ export class PaginationComponent implements OnInit, OnChanges {
     pagination: Pagination;
 
     @Output()
-    changePageSize: EventEmitter<Pagination> = new EventEmitter();
+    changePageSize: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
     @Output()
-    nextPage: EventEmitter<Pagination> = new EventEmitter();
+    nextPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
     @Output()
-    prevPage: EventEmitter<Pagination> = new EventEmitter();
+    prevPage: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
     constructor() {
     }
