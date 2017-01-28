@@ -26,7 +26,7 @@ declare let componentHandler: any;
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
 /**
- * <alfresco-upload-button [showUdoNotificationBar]="boolean"
+ * <alfresco-upload-button [showNotificationBar]="boolean"
  *                         [uploadFolders]="boolean"
  *                         [multipleFiles]="boolean"
  *                         [acceptedFilesType]="string"
@@ -35,7 +35,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  *
  * This component, provide a set of buttons to upload files to alfresco.
  *
- * @InputParam {boolean} [true] showUdoNotificationBar - hide/show notification bar.
+ * @InputParam {boolean} [true] showNotificationBar - hide/show notification bar.
  * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
  * @InputParam {boolean} [false] uploadFolders - allow/disallow upload folders (only for chrome).
  * @InputParam {boolean} [false] multipleFiles - allow/disallow multiple files.
@@ -56,7 +56,7 @@ export class UploadButtonComponent {
     private static DEFAULT_ROOT_ID: string = '-root-';
 
     @Input()
-    showUdoNotificationBar: boolean = true;
+    showNotificationBar: boolean = true;
 
     @Input()
     uploadFolders: boolean = false;
@@ -160,7 +160,7 @@ export class UploadButtonComponent {
         if (files.length) {
             let latestFilesAdded = this.uploadService.addToQueue(files);
             this.uploadService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
-            if (this.showUdoNotificationBar) {
+            if (this.showNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
             }
         }

@@ -31,7 +31,7 @@ import { UploadService } from './src/services/upload.service';
  * Components provided:
  *         - A button to upload files
  *           <alfresco-upload-button [showDialogUpload]="boolean"
- *                                   [showUdoNotificationBar]="boolean"
+ *                                   [showNotificationBar]="boolean"
  *                                   [uploadFolders]="boolean"
  *                                   [multipleFiles]="boolean"
  *                                   [acceptedFilesType]="string">

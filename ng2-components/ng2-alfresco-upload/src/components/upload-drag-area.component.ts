@@ -44,7 +44,7 @@ export class UploadDragAreaComponent {
     private static DEFAULT_ROOT_ID: string = '-root-';
 
     @Input()
-    showUdoNotificationBar: boolean = true;
+    showNotificationBar: boolean = true;
 
     @Input()
     versioning: boolean = false;
@@ -83,13 +83,13 @@ export class UploadDragAreaComponent {
                 this.uploadService.addToQueue(files);
                 this.uploadService.uploadFilesInTheQueue(this.rootFolderId, this.currentFolderPath, this.onSuccess);
                 let latestFilesAdded = this.uploadService.getQueue();
-                if (this.showUdoNotificationBar) {
+                if (this.showNotificationBar) {
                     this.showUndoNotificationBar(latestFilesAdded);
                 }
             } else {
                 let errorMessage: any;
                 errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
-                if (this.showUdoNotificationBar) {
+                if (this.showNotificationBar) {
                     this.showErrorNotificationBar(errorMessage.value);
                 } else {
                     this.logService.error(errorMessage.value);
@@ -143,7 +143,7 @@ export class UploadDragAreaComponent {
                             for (let i = 0; i < entries.length; i++) {
                                 this._traverseFileTree(entries[i]);
                             }
-                            if (this.showUdoNotificationBar) {
+                            if (this.showNotificationBar) {
                                 let latestFilesAdded = this.uploadService.getQueue();
                                 this.showUndoNotificationBar(latestFilesAdded);
                             }
@@ -152,7 +152,7 @@ export class UploadDragAreaComponent {
                     error => {
                         let errorMessagePlaceholder = this.getErrorMessage(error.response);
                         let errorMessage = this.formatString(errorMessagePlaceholder, [folder.name]);
-                        if (this.showUdoNotificationBar) {
+                        if (this.showNotificationBar) {
                             this.showErrorNotificationBar(errorMessage);
                         } else {
                             this.logService.error(errorMessage);
