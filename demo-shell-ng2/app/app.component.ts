@@ -53,17 +53,6 @@ export class AppComponent {
         }
     }
 
-    isLoggedIn(): boolean {
-        this.redirectToLoginPageIfNotLoggedIn();
-        return this.authService.isLoggedIn();
-    }
-
-    redirectToLoginPageIfNotLoggedIn(): void {
-        if (!this.authService.isLoggedIn()) {
-            this.router.navigate(['/login']);
-        }
-    }
-
     isAPageWithHeaderBar(): boolean {
         return location.pathname === '/login' || location.pathname === '/settings';
     }
