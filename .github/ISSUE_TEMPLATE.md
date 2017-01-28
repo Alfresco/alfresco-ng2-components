@@ -10,6 +10,7 @@ Please ask before on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-
 - [ ] New feature request
 - [ ] Bug  
 - [ ] Support request
+- [ ] Documentation
 ```
 **Current behavior:**
 <!-- Describe the current behavior. -->
