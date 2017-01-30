@@ -106,7 +106,7 @@ export class ParameterValueModel {
 }
 
 export class ReportQuery {
-    __reportName: string;
+    reportName: string;
     processDefinitionId: string;
     status: string;
     taskName: string;
@@ -117,7 +117,7 @@ export class ReportQuery {
     duration: number;
 
     constructor(obj?: any) {
-        this.__reportName = obj && obj.reportName || null;
+        this.reportName = obj && obj.reportName || null;
         this.processDefinitionId = obj && obj.processDefinitionId || null;
         this.status = obj && obj.status || null;
         this.taskName = obj && obj.taskName || null;
@@ -128,13 +128,6 @@ export class ReportQuery {
         this.dateRange = new ReportDateRange(obj);
     }
 
-    get reportName(): string {
-        return this.__reportName;
-    }
-
-    set reportName(value: string) {
-       this.__reportName = value;
-    }
 }
 
 export class ReportDateRange {

@@ -177,6 +177,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 } else {
                     this.onSuccess.emit();
                 }
+                this.showExportSaveButtons = true;
             },
             (err: any) => {
                 this.logService.error(err);
@@ -209,7 +210,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     public submit(values: any) {
         this.reportParamQuery = this.convertFormValuesToReportParamQuery(values);
         this.onSuccess.emit(this.reportParamQuery);
-        this.showExportSaveButtons = true;
     }
 
     onValueChanged(values: any) {
@@ -222,6 +222,10 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     public convertMomentDate(date: string) {
         return moment(date, AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI, true)
                 .format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
+    }
+
+    public getTodayDate() {
+        return moment();
     }
 
     public convertNumber(value: string): number {
@@ -285,13 +289,17 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
     }
 
-    performAction(action: string, reportName: string, reportParamQuery: ReportQuery) {
-        reportParamQuery.reportName = reportName;
-        if (action === 'save') {
+    performAction(action: string, reportParamQuery: ReportQuery) {
+        reportParamQuery.reportName = this.reportName;
+        if (action === 'Save') {
             this.doSave(reportParamQuery);
-        } else if (action === 'export') {
+        } else if (action === 'Export') {
             this.doExport(reportParamQuery);
         }
+    }
+
+    isOptionButtonVisible() {
+        return this.reportParameters && this.showExportSaveButtons;
     }
 
     doExport(paramQuery: ReportQuery) {
