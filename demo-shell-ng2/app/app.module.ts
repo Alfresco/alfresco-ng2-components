@@ -92,7 +92,7 @@ import {
         SettingComponent
     ],
     providers: [],
-    bootstrap: [ AppComponent ]
+    bootstrap: [ FilesComponent ]
 })
 export class AppModule { }
 

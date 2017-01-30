@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import { ChangeDetectorRef } from '@angular/core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
 import { FormControl, Validators } from '@angular/forms';
-import { Component, Input, Output, OnInit, OnDestroy, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, OnDestroy, ElementRef, EventEmitter, ViewChild ,AfterViewInit} from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocomplete.component';
 import { SearchTermValidator } from './../forms/search-term-validator';
@@ -28,7 +29,7 @@ import { Observable, Subject } from 'rxjs/Rx';
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css']
 })
-export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
+export class AlfrescoSearchControlComponent implements OnInit, OnDestroy,AfterViewInit {
 
     @Input()
     searchTerm = '';
@@ -67,9 +68,13 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     @Input()
     liveSearchTerm: string = '';
-
+    currentFolderId: string = '';
     @Input()
-    liveSearchRoot: string = '-root-';
+    liveSearchRoot: string = '';
+	
+	
+	 @Input()
+    relativePath: string = '';
 
     @Input()
     liveSearchResultType: string = null;
@@ -78,7 +83,7 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
     liveSearchResultSort: string = null;
 
     @Input()
-    liveSearchMaxResults: number = 5;
+    liveSearchMaxResults: number = 20;
 
     searchActive = false;
 
@@ -86,7 +91,8 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
 
     private focusSubject = new Subject<FocusEvent>();
 
-    constructor(private translate: AlfrescoTranslationService) {
+    constructor(private translate: AlfrescoTranslationService,private apiService: AlfrescoApiService,
+                private changeDetector: ChangeDetectorRef) {
 
         this.searchControl = new FormControl(
             this.searchTerm,
@@ -118,6 +124,28 @@ export class AlfrescoSearchControlComponent implements OnInit, OnDestroy {
             value: value,
             valid: this.searchValid
         });
+    }
+	
+	ngAfterViewInit() {
+
+ let nodes: any = this.apiService.getInstance().nodes;
+        nodes.getNodeInfo('-root-', {
+            includeSource: true,
+            include: ['path', 'properties'],
+            relativePath: this.relativePath
+        })
+        .then(node => {
+            console.log(node);
+            this.currentFolderId = node.id;
+			
+            this.changeDetector.detectChanges();
+			
+			this.liveSearchRoot=this.currentFolderId;
+        });
+
+
+
+
     }
 
     private setupFocusEventHandlers() {

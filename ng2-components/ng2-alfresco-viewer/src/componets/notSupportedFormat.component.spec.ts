@@ -22,8 +22,9 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     AlfrescoApiService,
-    CoreModule
+    CoreModule,RenditionsService
 } from 'ng2-alfresco-core';
+declare let jasmine: any;
 
 describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
 
@@ -41,7 +42,8 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             providers: [
                 AlfrescoSettingsService,
                 AlfrescoAuthenticationService,
-                AlfrescoApiService
+                AlfrescoApiService,
+				RenditionsService
             ]
         }).compileComponents();
     }));
@@ -52,6 +54,7 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
         debug = fixture.debugElement;
         element = fixture.nativeElement;
         component = fixture.componentInstance;
+		component.nodeId = 'fake-nodeId';
         fixture.detectChanges();
     });
 
@@ -78,4 +81,27 @@ describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
             expect(window.open).toHaveBeenCalled();
         });
     });
+	
+	describe('open as pdf', () => {
+     jasmine.Ajax.requests.mostRecent().respondWith({
+          'status': 403,
+           contentType: 'application/json',
+            responseText: 'error'
+        });
+
+       it('if available the pdf reditions open button should be present', () => {
+           component.isPdfAvailable = true;
+            fixture.detectChanges();
+            expect(element.querySelector('#viewer-openaspdf-button')).not.toBeNull();
+       });
+
+        it('if not available the pdf reditions open button should not be present', () => {
+            component.isPdfAvailable = false;
+            fixture.detectChanges();
+            expect(element.querySelector('#viewer-openaspdf-button')).toBeNull();
+        });
+    });
+
+ 
 });
+

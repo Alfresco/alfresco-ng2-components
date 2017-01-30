@@ -58,7 +58,7 @@ export class DocumentListBreadcrumb {
     target: DocumentList;
 
     private rootFolder: PathNode = {
-        name: 'Root',
+        name: '',
         path: '/'
     };
 
