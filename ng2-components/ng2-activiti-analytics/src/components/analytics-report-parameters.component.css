@@ -71,3 +71,19 @@
 .mdl-dialog__title.choose_name{
     padding: 0px;
 }
+
+.mdl-dialog.options-name-dialog {
+    width: 30%;
+}
+
+mdl-dialog__title.centered-title{
+    margin-left: 30%;
+}
+
+.export-message{
+    background-color: lightgray;
+}
+
+.save-export-input{
+    width:100%;
+}

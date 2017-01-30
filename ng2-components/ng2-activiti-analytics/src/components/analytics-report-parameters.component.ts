@@ -129,7 +129,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     ngOnChanges(changes: SimpleChanges) {
         this.isEditable = false;
-        // this.showExportSaveButtons = false;
+        this.showExportSaveButtons = false;
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getReportParams(reportId.currentValue);
@@ -174,10 +174,11 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.reportParameters = res;
                 if (this.reportParameters.hasParameters()) {
                     this.onSuccessReportParams.emit(res);
+                    this.showExportSaveButtons = true;
                 } else {
                     this.onSuccess.emit();
+                    this.showExportSaveButtons = true;
                 }
-                this.showExportSaveButtons = true;
             },
             (err: any) => {
                 this.logService.error(err);
@@ -291,6 +292,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     performAction(action: string, reportParamQuery: ReportQuery) {
         reportParamQuery.reportName = this.reportName;
+        this.closeDialog();
         if (action === 'Save') {
             this.doSave(reportParamQuery);
         } else if (action === 'Export') {
@@ -303,13 +305,18 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     doExport(paramQuery: ReportQuery) {
-        this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(() => {
-            console.log('DONE');
-        });
+        this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
+            (data: any) => {
+                let blob: Blob = new Blob([data], { type: 'text/csv' });
+                let downloadUrl = window.URL.createObjectURL(blob);
+                let downloadElement = window.document.createElement('a');
+                downloadElement.setAttribute('href', downloadUrl);
+                downloadElement.setAttribute('download', paramQuery.reportName);
+                downloadElement.click();
+            });
     }
 
     doSave(paramQuery: ReportQuery) {
-        this.closeDialog();
         this.analyticsService.saveReport(this.reportId, paramQuery).subscribe(() => {
             this.saveReportSuccess.emit();
         });

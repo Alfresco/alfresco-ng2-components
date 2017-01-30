@@ -188,6 +188,7 @@ export class AnalyticsService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.exportToCsv(reportId, paramsQuery))
             .map((res: any) => {
                 this.logService.info('export');
+                return res;
             }).catch(err => this.handleError(err));
     }
 

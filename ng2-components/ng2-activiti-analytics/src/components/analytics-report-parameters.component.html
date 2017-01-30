@@ -26,7 +26,10 @@
                 </button>
                 <div class="icon-small">
             <i class="material-icons">mode_edit</i>
-            <h4 (click)="editEnable()">{{reportParameters.name}}</h4>
+            <h4 (click)="editEnable()">{{reportParameters.name}} </h4>
+            </span>
+            <span class="icon-small">
+                <i class="material-icons">delete</i>
             </span>
             </div>
             <hr>
@@ -98,11 +101,11 @@
                     </button>
                 </div>
             </div>
-            <dialog class="mdl-dialog" #reportNameDialog>
-                <h5 class="mdl-dialog__title">{{action}} report</h5>
+            <dialog class="mdl-dialog options-name-dialog" #reportNameDialog>
+                <h5 class="mdl-dialog__title centered-title">{{action}} report</h5>
                 <div class="mdl-dialog__content">
-                    <div style="background-color='LightGrey'">{{'DIALOG.SAVE_MESSAGE' | translate}}</div>
-                    <div class="mdl-textfield mdl-js-textfield">
+                    <div *ngIf="action === 'Save'" class="export-message">{{'DIALOG.SAVE_MESSAGE' | translate}}</div>
+                    <div class="mdl-textfield mdl-js-textfield save-export-input">
                         <label [attr.for]="repname">Report Name</label>
                         <input class="mdl-textfield__input"
                                type="text"
