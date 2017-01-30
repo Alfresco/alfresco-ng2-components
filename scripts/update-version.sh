@@ -84,8 +84,8 @@ for PACKAGE in \
   alfresco-js-api
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-  echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ^${VERSION} version in all the package.json ======"
-  find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"^[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"^${VERSION}\"/g"
+  echo "====== UPDATE PACKAGE VERSION of ${PACKAGE} to ~${VERSION} version in all the package.json ======"
+  find ././../ -type f -maxdepth 4 -name package.json -print0 | xargs -0 sed -i '' "s/\"${PACKAGE}\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"${PACKAGE}\": \"~${VERSION}\"/g"
 done
 
 for PACKAGE in \
@@ -106,10 +106,10 @@ for PACKAGE in \
   ng2-alfresco-userinfo
 do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
-  echo "====== UPDATE VERSION OF ${PACKAGE} to ${VERSION} version ======"
-  sed -i '' "s/\"version\": \"^[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"^${VERSION}\"/g"  ${DESTDIR}/package.json
+  echo "====== UPDATE VERSION OF ${PACKAGE} to ~${VERSION} version ======"
+  sed -i '' "s/\"version\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"~${VERSION}\"/g"  ${DESTDIR}/package.json
 done
 
 echo "====== UPDATE VERSION OF DEMO-SHELL to ${VERSION} version ======"
 
-sed -i '' "s/\"version\": \"^[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"^${VERSION}\"/g"  ${DIR}/../demo-shell-ng2/package.json
+sed -i '' "s/\"version\": \"~[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"~${VERSION}\"/g"  ${DIR}/../demo-shell-ng2/package.json

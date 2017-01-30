@@ -1,7 +1,7 @@
 {
   "name": "ng2-activiti-analytics",
   "description": "Activiti Angular2 Analytics Component",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build && rimraf dist node_modules typings",
@@ -62,10 +62,10 @@
     "ng2-charts": "1.1.0",
     "moment": "2.15.1",
     "raphael": "^2.2.6",
-    "alfresco-js-api": "^1.0.0",
+    "alfresco-js-api": "~1.1.0",
     "ng2-translate": "2.5.0",
-    "ng2-alfresco-core": "1.0.0",
-    "ng2-activiti-diagrams": "1.0.0"
+    "ng2-alfresco-core": "1.1.0",
+    "ng2-activiti-diagrams": "1.1.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",

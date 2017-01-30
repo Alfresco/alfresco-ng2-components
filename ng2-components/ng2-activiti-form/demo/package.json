@@ -55,9 +55,9 @@
     "moment": "2.15.1",
     "md-date-time-picker": "^2.2.0",
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "^1.0.0",
-    "ng2-alfresco-core": "1.0.0",
-    "ng2-activiti-form": "^1.0.0"
+    "alfresco-js-api": "~1.1.0",
+    "ng2-alfresco-core": "1.1.0",
+    "ng2-activiti-form": "^1.1.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",
