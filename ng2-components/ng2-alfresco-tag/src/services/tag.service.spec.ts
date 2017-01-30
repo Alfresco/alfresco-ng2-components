@@ -20,7 +20,8 @@ import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
     AlfrescoApiService,
-    StorageService
+    StorageService,
+    LogService
 } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
@@ -36,7 +37,8 @@ describe('Tag service', () => {
             AlfrescoApiService,
             AlfrescoAuthenticationService,
             TagService,
-            StorageService
+            StorageService,
+            LogService
         ]);
     });
 

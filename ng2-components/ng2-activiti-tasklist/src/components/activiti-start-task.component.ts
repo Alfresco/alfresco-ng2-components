@@ -16,7 +16,7 @@
  */
 
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Form } from '../models/form.model';
@@ -43,7 +43,7 @@ export class ActivitiStartTaskButton {
 
     forms: Form [];
 
-    formId: string;
+    formId: string = null;
 
     name: string;
     description: string;
@@ -54,11 +54,12 @@ export class ActivitiStartTaskButton {
      * @param translate
      * @param taskService
      */
-    constructor(private translate: AlfrescoTranslationService,
-                private taskService: ActivitiTaskListService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private taskService: ActivitiTaskListService,
+                private logService: LogService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -77,7 +78,7 @@ export class ActivitiStartTaskButton {
                 },
                 (err) => {
                     window.alert('An error occurred while trying to add the task');
-                    console.log(err);
+                    this.logService.error(err);
                 }
             );
         }
@@ -112,7 +113,7 @@ export class ActivitiStartTaskButton {
             },
             (err) => {
                 window.alert('An error occurred while trying to get the forms');
-                console.log(err);
+                this.logService.error(err);
             });
     }
 

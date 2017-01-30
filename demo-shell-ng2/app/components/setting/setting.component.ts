@@ -16,7 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import { AlfrescoSettingsService, StorageService } from 'ng2-alfresco-core';
+import { AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-setting-demo',
@@ -28,24 +28,31 @@ export class SettingComponent {
     ecmHost: string;
     bpmHost: string;
 
-    constructor(public alfrescoSettingsService: AlfrescoSettingsService,
-                private storage: StorageService) {
-        this.ecmHost = this.alfrescoSettingsService.ecmHost;
-        this.bpmHost = this.alfrescoSettingsService.bpmHost;
+    constructor(private settingsService: AlfrescoSettingsService,
+                private storage: StorageService,
+                private logService: LogService) {
+        this.ecmHost = this.settingsService.ecmHost;
+        this.bpmHost = this.settingsService.bpmHost;
     }
 
     public onChangeECMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.ecmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.ecmHost = this.ecmHost;
-        this.storage.setItem(`ecmHost`, this.ecmHost);
+        let value = (<HTMLInputElement>event.target).value.trim();
+        if (value) {
+            this.logService.info(`ECM host: ${value}`);
+            this.ecmHost = value;
+            this.settingsService.ecmHost = value;
+            this.storage.setItem(`ecmHost`, value);
+        }
     }
 
     public onChangeBPMHost(event: KeyboardEvent): void {
-        console.log((<HTMLInputElement>event.target).value);
-        this.bpmHost = (<HTMLInputElement>event.target).value;
-        this.alfrescoSettingsService.bpmHost = this.bpmHost;
-        this.storage.setItem(`bpmHost`, this.bpmHost);
+        let value = (<HTMLInputElement>event.target).value.trim();
+        if (value) {
+            this.logService.info(`BPM host: ${value}`);
+            this.bpmHost = value;
+            this.settingsService.bpmHost = value;
+            this.storage.setItem(`bpmHost`, value);
+        }
     }
 
 }

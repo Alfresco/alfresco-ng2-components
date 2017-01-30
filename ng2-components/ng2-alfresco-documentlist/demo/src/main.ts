@@ -18,14 +18,8 @@
 import { NgModule, Component, OnInit, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { DocumentListModule, DocumentList, DocumentActionsService } from 'ng2-alfresco-documentlist';
-import {
-    CoreModule,
-    StorageService,
-    AlfrescoSettingsService,
-    AlfrescoAuthenticationService,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
+import { DocumentListModule, DocumentListComponent, DocumentActionsService } from 'ng2-alfresco-documentlist';
+import { CoreModule, StorageService, AlfrescoSettingsService, AlfrescoAuthenticationService, AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -39,24 +33,16 @@ import {
                     operations.
                </div>
                <hr>
- <alfresco-document-list-breadcrumb
-            [currentFolderPath]="currentPath"
-            [target]="documentList">
+        <alfresco-document-list-breadcrumb
+            [target]="documentList"
+            [folderNode]="documentList.folderNode">
         </alfresco-document-list-breadcrumb>
         <alfresco-document-list
                 #documentList
-                [currentFolderPath]="currentPath"
+                [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
-                [creationMenuActions]="true"
-                (folderChange)="onFolderChanged($event)">
-            <!--
-            <empty-folder-content>
-                <template>
-                    <h1>Sorry, no content here</h1>
-                </template>
-            </empty-folder-content>
-            -->
+                [creationMenuActions]="true">
             <content-columns>
                 <content-column key="$thumbnail" type="image"></content-column>
                 <content-column
@@ -65,12 +51,6 @@ import {
                         sortable="true"
                         class="full-width ellipsis-cell">
                 </content-column>
-                <!--
-                <content-column
-                        title="Type"
-                        source="content.mimeType">
-                </content-column>
-                -->
                 <content-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
@@ -138,22 +118,21 @@ import {
 })
 class DocumentListDemo implements OnInit {
 
-    currentPath: string = '/';
-
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    currentFolderId: string = '-my-';
     authenticated: boolean = false;
-
     ecmHost: string = 'http://localhost:8080';
-
     ticket: string;
 
-    @ViewChild(DocumentList)
-    documentList: DocumentList;
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService,
-                private translation: AlfrescoTranslationService,
+                private translateService: AlfrescoTranslationService,
                 private documentActions: DocumentActionsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -162,7 +141,7 @@ class DocumentListDemo implements OnInit {
             this.ticket = this.authService.getTicketEcm();
         }
 
-        translation.addTranslationFolder();
+        translateService.addTranslationFolder();
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
     }
 
@@ -196,21 +175,15 @@ class DocumentListDemo implements OnInit {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
                 this.documentList.reload();
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
-    }
-
-    onFolderChanged(event?: any) {
-        if (event) {
-            this.currentPath = event.path;
-        }
     }
 }
 

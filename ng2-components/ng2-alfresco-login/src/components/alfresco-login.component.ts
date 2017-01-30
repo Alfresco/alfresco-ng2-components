@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {
-    AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService
-} from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 import { FormSubmitEvent } from '../models/form-submit-event.model';
 
 declare let componentHandler: any;
@@ -37,6 +33,12 @@ export class AlfrescoLoginComponent implements OnInit {
     baseComponentPath = module.id.replace('/alfresco-login.component.js', '');
 
     isPasswordShow: boolean = false;
+
+    @Input()
+    needHelpLink: string = '';
+
+    @Input()
+    registerLink: string = '';
 
     @Input()
     logoImageUrl: string;
@@ -69,6 +71,12 @@ export class AlfrescoLoginComponent implements OnInit {
 
     formError: { [id: string]: string };
 
+    minLenght: number = 2;
+
+    footerTemplate: TemplateRef<any>;
+
+    headerTemplate: TemplateRef<any>;
+
     private _message: { [id: string]: { [id: string]: string } };
 
     /**
@@ -79,11 +87,14 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param translate
      */
     constructor(private _fb: FormBuilder,
-                public authService: AlfrescoAuthenticationService,
-                public settingsService: AlfrescoSettingsService,
-                private translate: AlfrescoTranslationService) {
+                private authService: AlfrescoAuthenticationService,
+                private settingsService: AlfrescoSettingsService,
+                private translateService: AlfrescoTranslationService,
+                private logService: LogService) {
 
-        translate.addTranslationFolder('ng2-alfresco-login', 'node_modules/ng2-alfresco-login/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-login', 'node_modules/ng2-alfresco-login/src');
+        }
 
         this.initFormError();
         this.initFormFieldsMessages();
@@ -128,6 +139,7 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param data
      */
     onValueChanged(data: any) {
+        this.success = false;
         this.disableError();
         for (let field in this.formError) {
             if (field) {
@@ -157,13 +169,36 @@ export class AlfrescoLoginComponent implements OnInit {
                     this.onSuccess.emit({token: token, username: values.username, password: values.password});
                 },
                 (err: any) => {
+                    this.displayErrorMessage(err);
                     this.enableError();
-                    this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
                     this.onError.emit(err);
-                    console.log(err);
+                    this.logService.error(err);
                 },
-                () => console.log('Login done')
+                () => this.logService.info('Login done')
             );
+    }
+
+    /**
+     * Check and display the right error message in the UI
+     */
+    private displayErrorMessage(err: any): void {
+        if (err.error && err.error.crossDomain && err.error.message.indexOf('the network is offline, Origin is not allowed by' +
+                ' Access-Control-Allow-Origin') !== -1) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CORS';
+            return;
+        }
+
+        if (err.status === 403 && err.message.indexOf('Invalid CSRF-token') !== -1) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CSRF';
+            return;
+        }
+
+        if (err.status === 403 && err.message.indexOf('The system is currently in read-only mode') !== -1) {
+            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ECM-LICENSE';
+            return;
+        }
+
+        this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS';
     }
 
     /**
@@ -175,7 +210,7 @@ export class AlfrescoLoginComponent implements OnInit {
             this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-PROVIDERS';
             this.enableError();
             let messageProviders: any;
-            messageProviders = this.translate.get(this.errorMsg);
+            messageProviders = this.translateService.get(this.errorMsg);
             this.onError.emit(messageProviders.value);
             return false;
         }
@@ -197,8 +232,14 @@ export class AlfrescoLoginComponent implements OnInit {
      * @param ruleId - i.e. required | minlength | maxlength
      * @param msg
      */
-    public addCustomValidationError(field: string, ruleId: string, msg: string) {
-        this._message[field][ruleId] = msg;
+    public addCustomValidationError(field: string, ruleId: string, msg: string, params?: any) {
+        if (params) {
+            this.translateService.get(msg, params).subscribe((res: string) => {
+                this._message[field][ruleId] = res;
+            });
+        } else {
+            this._message[field][ruleId] = msg;
+        }
     }
 
     /**
@@ -251,18 +292,21 @@ export class AlfrescoLoginComponent implements OnInit {
     private initFormFieldsMessagesDefault() {
         this._message = {
             'username': {
-                'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED',
-                'minlength': 'LOGIN.MESSAGES.USERNAME-MIN'
+                'required': 'LOGIN.MESSAGES.USERNAME-REQUIRED'
             },
             'password': {
                 'required': 'LOGIN.MESSAGES.PASSWORD-REQUIRED'
             }
         };
+
+        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN',  {minLenght: this.minLenght}).subscribe((res: string) => {
+            this._message['username']['minlength'] = res;
+        });
     }
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLenght)])],
             password: ['', Validators.required]
         });
     }

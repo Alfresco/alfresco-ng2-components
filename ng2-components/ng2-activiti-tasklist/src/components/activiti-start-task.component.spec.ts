@@ -15,19 +15,15 @@
  * limitations under the License.
  */
 
-import {
-    CoreModule,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
-import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
-import { ActivitiStartTaskButton } from './activiti-start-task.component';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiTaskListService } from '../services/activiti-tasklist.service';
+import { ActivitiStartTaskButton } from './activiti-start-task.component';
 
 declare let jasmine: any;
 
-describe('Activiti Start Task Component', () => {
+describe('ActivitiStartTaskButton', () => {
 
     let activitiStartTaskButton: ActivitiStartTaskButton;
     let fixture: ComponentFixture<ActivitiStartTaskButton>;
@@ -37,12 +33,20 @@ describe('Activiti Start Task Component', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
-            declarations: [ActivitiStartTaskButton],
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                ActivitiStartTaskButton
+            ],
             providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock},
-                ActivitiTaskListService]
+                ActivitiTaskListService
+            ]
         }).compileComponents().then(() => {
+            let translateService = TestBed.get(AlfrescoTranslationService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+
             fixture = TestBed.createComponent(ActivitiStartTaskButton);
             activitiStartTaskButton = fixture.componentInstance;
             element = fixture.nativeElement;

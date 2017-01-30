@@ -16,14 +16,14 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldTypes } from '../core/form-field-types';
 import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
-import * as moment from 'moment';
 
 @Component({
     moduleId: module.id,
@@ -51,7 +51,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
     constructor(private formService: FormService,
                 private visibilityService: WidgetVisibilityService,
-                private settingsService: AlfrescoSettingsService) {
+                private logService: LogService) {
         super();
     }
 
@@ -181,9 +181,10 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                     } else {
                         this.value = this.field.value;
                     }
+                    this.visibilityService.refreshVisibility(this.field.form);
                 },
                 error => {
-                    console.log(error);
+                    this.logService.error(error);
                     this.value = this.field.value;
                 }
             );
@@ -202,9 +203,10 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                     } else {
                         this.value = this.field.value;
                     }
+                    this.visibilityService.refreshVisibility(this.field.form);
                 },
                 error => {
-                    console.log(error);
+                    this.logService.error(error);
                     this.value = this.field.value;
                 }
             );

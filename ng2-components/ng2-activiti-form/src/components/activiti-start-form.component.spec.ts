@@ -41,7 +41,7 @@ describe('ActivitiStartForm', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
+            imports: [CoreModule.forRoot()],
             declarations: [
                 ActivitiStartForm,
                 FormFieldComponent,

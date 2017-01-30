@@ -24,8 +24,25 @@ export class AuthenticationMock /*extends AlfrescoAuthenticationService*/ {
     login(username: string, password: string): Observable<boolean> {
         if (username === 'fake-username' && password === 'fake-password') {
             return Observable.of(true);
-        } else {
-            return Observable.throw('Fake server error');
         }
+
+        if (username === 'fake-username-CORS-error' && password === 'fake-password') {
+            return Observable.throw({
+                error: {
+                    crossDomain: true,
+                    message: 'ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin'
+                }
+            });
+        }
+
+        if (username === 'fake-username-CSRF-error' && password === 'fake-password') {
+            return Observable.throw({message: 'ERROR: Invalid CSRF-token', status: 403});
+        }
+
+        if (username === 'fake-username-ECM-access-error' && password === 'fake-password') {
+            return Observable.throw({message: 'ERROR: 00170728 Access Denied.  The system is currently in read-only mode', status: 403});
+        }
+
+        return Observable.throw('Fake server error');
     }
 }

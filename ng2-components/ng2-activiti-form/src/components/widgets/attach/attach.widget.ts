@@ -16,6 +16,7 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { ActivitiAlfrescoContentService } from '../../../services/activiti-alfresco.service';
 import { ExternalContent } from '../core/external-content';
@@ -49,7 +50,8 @@ export class AttachWidget extends WidgetComponent implements OnInit {
     @ViewChild('dialog')
     dialog: any;
 
-    constructor(private contentService: ActivitiAlfrescoContentService) {
+    constructor(private contentService: ActivitiAlfrescoContentService,
+                private logService: LogService) {
         super();
     }
 
@@ -97,7 +99,7 @@ export class AttachWidget extends WidgetComponent implements OnInit {
         this.contentService.getAlfrescoNodes(this.selectedFolderAccountId, this.selectedFolderPathId)
             .subscribe(
                 nodes => this.selectedFolderNodes = nodes,
-                error => this.handleError(error)
+                error => this.logService.error(error)
             );
     }
 

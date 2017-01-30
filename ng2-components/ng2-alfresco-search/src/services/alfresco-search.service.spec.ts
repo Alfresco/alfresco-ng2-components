@@ -17,7 +17,7 @@
 
 import { ReflectiveInjector } from '@angular/core';
 import { AlfrescoSearchService } from './alfresco-search.service';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, StorageService } from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, AlfrescoApiService, StorageService, LogService } from 'ng2-alfresco-core';
 import { fakeApi, fakeSearch, fakeError } from '../assets/alfresco-search.service.mock';
 
 declare let jasmine: any;
@@ -34,7 +34,8 @@ describe('AlfrescoSearchService', () => {
             AlfrescoSettingsService,
             AlfrescoApiService,
             AlfrescoAuthenticationService,
-            StorageService
+            StorageService,
+            LogService
         ]);
         service = injector.get(AlfrescoSearchService);
         apiService = injector.get(AlfrescoApiService);

@@ -48,3 +48,18 @@
 .icon-small:hover .material-icons {
     display: block;
 }
+
+.is-hide {
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.5s;
+}
+
+.report-container {
+    border: solid 1px rgb(212, 212, 212);
+    padding: 10px 10px 10px 10px;
+}
+
+.report-container-setting {
+    padding-left: 10px;
+}

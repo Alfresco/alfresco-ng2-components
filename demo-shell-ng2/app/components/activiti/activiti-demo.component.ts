@@ -19,15 +19,16 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import {
     ActivitiApps,
     ActivitiFilters,
-    ActivitiTaskDetails,
     ActivitiTaskList,
-    FilterRepresentationModel
+    FilterRepresentationModel,
+    TaskDetailsEvent
 } from 'ng2-activiti-tasklist';
 import {
     ActivitiProcessFilters,
     ActivitiProcessInstanceDetails,
     ActivitiProcessInstanceListComponent,
     ActivitiStartProcessInstance,
+    FilterProcessRepresentationModel,
     ProcessInstance
 } from 'ng2-activiti-processlist';
 import { AnalyticsReportListComponent } from 'ng2-activiti-analytics';
@@ -35,10 +36,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import {
     ObjectDataTableAdapter,
+    ObjectDataRow,
     DataSorting
 } from 'ng2-alfresco-datatable';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
-import { FormRenderingService } from 'ng2-activiti-form';
+import { FormService, FormRenderingService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
 import { /*CustomEditorComponent*/ CustomStencil01 } from './custom-editor/custom-editor.component';
 
 declare var componentHandler;
@@ -52,17 +54,11 @@ const currentProcessIdNew = '__NEW__';
 })
 export class ActivitiDemoComponent implements AfterViewInit {
 
-    @ViewChild(ActivitiApps)
-    activitiapps: ActivitiApps;
-
     @ViewChild(ActivitiFilters)
     activitifilter: ActivitiFilters;
 
     @ViewChild(ActivitiTaskList)
     activititasklist: ActivitiTaskList;
-
-    @ViewChild(ActivitiTaskDetails)
-    activitidetails: ActivitiTaskDetails;
 
     @ViewChild(ActivitiProcessFilters)
     activitiprocessfilter: ActivitiProcessFilters;
@@ -80,7 +76,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     analyticsreportlist: AnalyticsReportListComponent;
 
     @Input()
-    appId: number;
+    appId: number = null;
 
     layoutType: string;
     currentTaskId: string;
@@ -89,13 +85,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
     taskSchemaColumns: any [] = [];
     processSchemaColumns: any [] = [];
 
-    processTabActivie: boolean = false;
-
-    reportsTabActivie: boolean = false;
+    activeTab: string = 'tasks'; // tasks|processes|reports
 
     taskFilter: FilterRepresentationModel;
     report: any;
-    processFilter: FilterRepresentationModel;
+    processFilter: FilterProcessRepresentationModel;
 
     sub: Subscription;
 
@@ -105,7 +99,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
     constructor(private elementRef: ElementRef,
                 private route: ActivatedRoute,
                 private apiService: AlfrescoApiService,
-                private formRenderingService: FormRenderingService) {
+                private formRenderingService: FormRenderingService,
+                private formService: FormService) {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
             [
@@ -122,12 +117,21 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
             ]
         );
+        this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
 
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
 
         // Uncomment this line to map 'custom_stencil_01' to local editor component
         formRenderingService.setComponentTypeResolver('custom_stencil_01', () => CustomStencil01, true);
+
+        formService.formLoaded.subscribe((e: FormEvent) => {
+            console.log(`Form loaded: ${e.form.id}`);
+        });
+
+        formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+            console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+        });
     }
 
     ngOnInit() {
@@ -150,7 +154,9 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onTaskFilterClick(event: FilterRepresentationModel) {
-        this.taskFilter = event;
+        if(event){
+            this.taskFilter = event;
+        }
     }
 
     onReportClick(event: any) {
@@ -171,11 +177,12 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.currentTaskId = this.activititasklist.getCurrentId();
     }
 
-    onProcessFilterClick(event: FilterRepresentationModel) {
+    onProcessFilterClick(event: FilterProcessRepresentationModel) {
+        this.currentProcessInstanceId = null;
         this.processFilter = event;
     }
 
-    onSuccessProcessFilterList(event: any) {
+    onSuccessProcessFilterList() {
         this.processFilter = this.activitiprocessfilter.getCurrentFilter();
     }
 
@@ -196,13 +203,15 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     navigateStartProcess() {
+        this.resetProcessFilters();
+        this.reloadProcessFilters();
         this.currentProcessInstanceId = currentProcessIdNew;
     }
 
     onStartProcessInstance(instance: ProcessInstance) {
         this.currentProcessInstanceId = instance.id;
         this.activitiStartProcess.reset();
-        this.activitiprocesslist.reload();
+        this.resetProcessFilters();
     }
 
     isStartProcessMode() {
@@ -218,13 +227,14 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.activitiprocesslist.reload();
     }
 
-    taskFormCompleted(data: any) {
-        this.activitiprocesslist.reload();
-    }
-
     onFormCompleted(form) {
         this.activititasklist.reload();
         this.currentTaskId = null;
+    }
+
+    onTaskCreated(data: any) {
+        this.currentTaskId = data.parentTaskId;
+        this.activititasklist.reload();
     }
 
     ngAfterViewInit() {
@@ -236,14 +246,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.loadStencilScriptsInPageFromActiviti();
     }
 
-    activeProcess() {
-        this.processTabActivie = true;
-    }
-
-    activeReports() {
-        this.reportsTabActivie = true;
-    }
-
     loadStencilScriptsInPageFromActiviti() {
         this.apiService.getInstance().activiti.scriptFileApi.getControllers().then(response => {
             if (response) {
@@ -253,6 +255,28 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 this.elementRef.nativeElement.appendChild(s);
             }
         });
+    }
+
+    onProcessDetailsTaskClick(event: TaskDetailsEvent) {
+        event.preventDefault();
+        this.activeTab = 'tasks';
+        let processTaskDataRow = new ObjectDataRow({
+            id: event.value.id,
+            name: event.value.name || 'No name',
+            created: event.value.created
+        });
+        this.activitifilter.selectFilter(null);
+        this.dataTasks.setRows([processTaskDataRow]);
+        this.activititasklist.selectTask(event.value.id);
+        this.currentTaskId = event.value.id;
+    }
+
+    private resetProcessFilters() {
+        this.processFilter = null;
+    }
+
+    private reloadProcessFilters() {
+        this.activitiprocessfilter.selectFilter(null);
     }
 
 }

@@ -58,6 +58,9 @@ Follow the 3 steps below:
       <script src="node_modules/material-design-lite/material.min.js"></script>
       <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
+      <!-- Load the Angular Material 2 stylesheet -->
+      <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
+
       <!-- Polyfill(s) for Safari (pre-10.x) -->
       <script src="node_modules/intl/dist/Intl.min.js"></script>
       <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
@@ -97,20 +100,18 @@ Follow the 3 steps below:
 ```html
 <alfresco-document-list
     #documentList
-    [currentFolderPath]="currentPath"
+    [currentFolderId]="'-my-'"
     [contextMenuActions]="true"
     [contentActions]="true"
-    [creationMenuActions]="true"
-    [multiselect]="true"
-    (folderChange)="onFolderChanged($event)">
+    [creationMenuActions]="true">
 </alfresco-document-list>
 ```
 
 Usage example of this component :
 
 **main.ts**
-```ts
 
+```ts
 import { NgModule, Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -120,19 +121,20 @@ import { AlfrescoSettingsService, AlfrescoAuthenticationService } from 'ng2-alfr
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-document-list
-                    #documentList
-                    [currentFolderPath]="'/'"
-                    [contextMenuActions]="true"
-                    [contentActions]="true"
-                    [creationMenuActions]="true"
-                    [multiselect]="true">
-               </alfresco-document-list>`
+    template: `
+        <alfresco-document-list
+            #documentList
+            [currentFolderId]="'-my-'"
+            [contextMenuActions]="true"
+            [contentActions]="true"
+            [creationMenuActions]="true">
+        </alfresco-document-list>
+    `
 })
 class DocumentListDemo {
 
     @ViewChild(DocumentList)
-    documentList: DocumentList;
+    documentList: DocumentListComponent;
 
     constructor(private authService: AlfrescoAuthenticationService, 
                 private settingsService: AlfrescoSettingsService) {
@@ -162,24 +164,25 @@ export class AppModule {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
-
 ```
 
 ### Properties
 
+The properties currentFolderId, folderNode and node are the entry initialization properties of the document list. They can not be used together, choose the one that suites more your use case.
+
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `rootFolderId` | string | -root- | Root node ID, i.e. `-root-`, `-shared-`, `-my-`, etc. or a fixed node ID |
-| `currentFolderPath` | string | null | Initial path of displayed folder below the root node, e.g. "/Sites/swsdp/documentLibrary" |
-| `currentFolderId` | string | null | Initial node ID of displayed folder, if given  |
+| `currentFolderId` | string | null | Initial node ID of displayed folder. Can be `-root-`, `-shared-`, `-my-`, or a fixed node ID  |
+| `folderNode` | `MinimalNodeEntryEntity` | null | Currently displayed folder node | 
+| `node` | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
 | `navigate` | boolean | true | Toggles navigation to folder content or file preview |
 | `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
 | `thumbnails` | boolean | false | Show document thumbnails rather than icons |
-| `fallbackThubnail` | string |  | Fallback image for row ehre thubnail is missing|
+| `fallbackThumbnail` | string |  | Path to fallback image to use if the row thumbnail is missing |
 | `multiselect` | boolean | false | Toggles multiselect mode |
 | `contentActions` | boolean | false | Toggles content actions for each row |
 | `contextMenuActions` | boolean | false | Toggles context menus for each row |
+| `enablePagination` | boolean | true | Shows pagination |
 | `creationMenuActions` | boolean | true | Toggles the creation menu actions|
 | `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
 | `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
@@ -193,24 +196,146 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `folderChange` | Emitted upon display folder changed |
 | `preview` | Emitted when document preview is requested either with single or double click |
 
-
 _For a complete example source code please refer to 
 [DocumentList Demo](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-documentlist/demo) 
 repository._
 
-### Breadcrumb
+### Setting default folder
+
+You can set current folder path by assigning a value for `currentFolderId` property. 
+It can be either one of the well-known locations as **-root-**, **-shared-** or **-my-** or a node ID (guid).
+
+There may be scenarios when it is needed to set default path based on relative string value rather than node ID.
+For example when folder name or path is static but it's underlying ID is not (i.e. created manually by admin).
+In this case you can use `alfresco-js-api` to get node details based on it's relative path.
+
+Let's try setting default folder to `/Sites/swsdp/documentLibrary` without knowing it's ID beforehand.
+For the sake of simplicity example below shows only main points you may need paying attention to:
+ 
+```ts
+import { ChangeDetectorRef } from '@angular/core';
+import { AlfrescoApiService } from 'ng2-alfresco-core';
+
+export class FilesComponent implements OnInit {
+
+    currentFolderId: string = '-my-';
+
+    constructor(private apiService: AlfrescoApiService,
+                private changeDetector: ChangeDetectorRef) {
+        // ...
+    }
+
+    ngOnInit() {
+        let nodes: any = this.apiService.getInstance().nodes;
+        nodes.getNodeInfo('-root-', {
+            includeSource: true,
+            include: ['path', 'properties'],
+            relativePath: '/Sites/swsdp/documentLibrary'
+        })
+        .then(node => {
+            console.log(node);
+            this.currentFolderId = node.id;
+            this.changeDetector.detectChanges();
+        });
+    }
+}
+```
+
+We've added `console.log(node)` for the `getNodeInfo` callback just for study and debug purposes. 
+It helps examining other valuable information you can have access to if needed:
+
+![documentLibrary](docs/assets/documentLibrary.png)
+
+**Important note**: for this particular scenario you must also trigger `changeDetector.detectChanges()` as in the example above. 
+
+### Calling DocumentList api directly
+
+Typically you will be binding DocumentList properties to your application/component class properties:
+
+```html
+<alfresco-document-list [currentFolderId]="myStartFolder"></alfresco-document-list>
+```
+
+with the underlying class being implemented similar to the following one:
+
+```ts
+@Component(...)
+export class MyAppComponent {
+
+    myStartFolder: string = '-my-';
+    
+}
+```
+
+However there may scenarios that require you direct access to DocumentList apis. 
+You can get reference to the DocumentList instance by means of Angular **Component Interaction** API.
+See more details in [Parent calls a ViewChild](https://angular.io/docs/ts/latest/cookbook/component-communication.html#!#parent-to-view-child) 
+section of the official docs.
+
+Here's an example of getting reference:
+
+```html
+<alfresco-document-list 
+    #documentList
+    [currentFolderId]="myStartFolder">
+</alfresco-document-list>
+```
+
+Note the `#documentList` ID we've just added to be able referencing this component later on.
+
+```ts
+import { ViewChild, AfterViewInit } from '@angular/core';
+import { DocumentListComponent } from 'ng2-alfresco-documentlist';
+
+@Component(...)
+export class MyAppComponent implements AfterViewInit {
+
+    myStartFolder: string = '-my-';
+    
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
+
+    ngAfterViewInit() {
+        console.log(this.documentList);
+    }
+}
+```
+
+Example above should produce the following browser console output:
+
+![view-child](docs/assets/viewchild.png)
+
+Now you are able accessing DocumentList properties or calling methods directly.
+
+```ts
+// print currently displayed folder node object to console
+console.log(documentList.folderNode);
+```
+
+**Important note**:  
+It is important accessing child components at least at the `AfterViewInit` state. 
+Any UI click (buttons, links, etc.) event handlers are absolutely fine. This cannot be `ngOnInit` event though.
+You can get more details in [Component lifecycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html) article.
+
+### Breadcrumb Component
 
 DocumentList provides simple breadcrumb element to indicate the current position within a navigation hierarchy.
 
 ```html
 <alfresco-document-list-breadcrumb
-    [target]="documentList">
+    [target]="documentList"
+    [folderNode]="documentList.folderNode">
 </alfresco-document-list-breadcrumb>
 ```
 
 ![Breadcrumb](docs/assets/breadcrumb.png)
 
-Parent folder button is not displayed when breadcrumb is enabled.
+#### Properties
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `target` | DocumentListComponent | DocumentList component to operate with. Upon clicks will instruct the given component to update. |
+| `folderNode` | MinimalNodeEntryEntity | Active node, builds UI based on `folderNode.path.elements` collection. |
 
 ### Creation Menu Action
 
@@ -218,7 +343,7 @@ DocumentList provides simple creation menu actions that provide the action to cr
 
 ```html
 <alfresco-document-menu-action 
-    [currentFolderPath]="currentFolderPath">
+    [folderId]="folderId">
 </alfresco-document-menu-action>
 ```
 
@@ -266,37 +391,52 @@ A custom set of columns can look like the following:
 
 ![Custom columns](docs/assets/custom-columns.png)
 
+DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
 
-Binding to nested properties is also supported. Assuming you have the node structure similar to following:
-
-```json
-{
-    "nodeRef": "workspace://SpacesStore/8bb36efb-c26d-4d2b-9199-ab6922f53c28",
-    "nodeType": "cm:folder",
-    "type": "folder",
-    "location": {
-        "repositoryId": "552ca13e-458b-4566-9f3e-d0f9c92facff",
-        "site": "swsdp",
-        "siteTitle": "Sample: Web Site Design Project"
-    }
+```js
+export interface MinimalNode {
+    id: string;
+    parentId: string;
+    name: string;
+    nodeType: string;
+    isFolder: boolean;
+    isFile: boolean;
+    modifiedAt: Date;
+    modifiedByUser: UserInfo;
+    createdAt: Date;
+    createdByUser: UserInfo;
+    content: ContentInfo;
+    path: PathInfoEntity;
+    properties: NodeProperties;
 }
 ```
 
-the binding value for the Site column to display location site will be `location.site`:
+_See more details in [alfresco-js-api](https://github.com/Alfresco/alfresco-js-api/blob/master/index.d.ts) repository._
+
+Binding to nested properties is also supported. You can define a column key as a property path similar to the following:
+
+```text
+createdByUser.displayName
+```
+
+Here's a short example:
 
 ```html
 <alfresco-document-list ...>
     <content-columns>
         <content-column key="$thumbnail" type="image"></content-column>
-        <content-column title="Name" key="displayName" class="full-width ellipsis-cell"></content-column>
-        <content-column title="Site" key="location.site"></content-column>
+        <content-column title="Name" key="name" class="full-width ellipsis-cell"></content-column>
+        <content-column 
+            title="Created By" 
+            key="createdByUser.displayName">
+        </content-column>
     </content-columns>
 </alfresco-document-list>
 ```
 
 ### Column definition
 
-HTML attributes:
+Properties:
 
 | Name | Type | Default | Description
 | --- | --- | --- | --- |
@@ -307,9 +447,73 @@ HTML attributes:
 | `class` | string | | CSS class list, example: `full-width ellipsis-cell` |
 | `type` | string | text | Column type, text\|date\|number |
 | `format` | string | | Value format pattern |
+| `template` | `TemplateRef<any>` | | Column template |
 
 For `date` column type the [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) formatting is used.
 For a full list of available `format` values please refer to [DatePipe](https://angular.io/docs/ts/latest/api/common/DatePipe-class.html) documentation.
+
+#### Column Template
+
+It is possible providing custom column/cell template that may contain other Angular components or HTML elmements:
+
+Every cell in the DataTable component is bound to the dynamic data context containing the following properties:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| data | [DataTableAdapter](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Data adapter instance. |
+| row | [DataRow](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Current data row instance.  |
+| col | [DataColumn](https://github.com/Alfresco/alfresco-ng2-components/tree/master/ng2-components/ng2-alfresco-datatable#data-sources) | Current data column instance. |
+
+You can use all three properties to gain full access to underlying data from within your custom templates. 
+In order to wire HTML templates with the data context you will need defining a variable that is bound to `$implicit` like shown below:
+
+```html
+<template let-context="$implicit">
+    <!-- template body -->
+</template>
+```
+
+The format of naming is `let-VARIABLE_NAME="$implicit"` where `VARIABLE_NAME` is the name of the variable you want binding template data context to.
+
+Getting a cell value from the underlying DataTableAdapter:
+
+```ts
+context.data.getValue(entry.row, entry.col);
+```
+
+You can retrieve all property values for underlying node, including nested properties (via property paths):
+
+```ts
+context.row.getValue('name')
+context.row.getValue('createdByUser.displayName')
+```
+
+_You may want using **row** api to get raw value access. 
+
+```html
+<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <template let-context="$implicit">
+        <span>Hi! {{context.row.getValue('createdByUser.displayName')}}</span>
+        <span>Hi! {{context.row.getValue('name')}}</span>
+    </template>
+</content-column>
+```
+
+Use **data** api to get values with post-processing, like datetime/icon conversion._
+
+Final example, we'll name the context as `entry`:
+
+```html
+<content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
+    <template let-entry="$implicit">
+        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
+    </template>
+</content-column>
+```
+
+Example above will prepend `Hi!` to each file and folder name in the list.
+
+
 
 ### Actions
 

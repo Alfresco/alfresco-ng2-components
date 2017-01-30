@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
 
 /**
@@ -76,15 +76,10 @@ export class WebscriptComponent {
     onSuccess = new EventEmitter();
 
     data: any = undefined;
-
     showError: boolean = false;
 
-    /**
-     * Constructor
-     * @param authService
-     */
-    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
-
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     ngOnChanges(changes) {
@@ -106,8 +101,8 @@ export class WebscriptComponent {
                 this.onSuccess.emit(this.data);
 
                 resolve();
-            }, function (error) {
-                console.log('Error' + error);
+            }, (error) => {
+                this.logService.log('Error' + error);
                 reject();
             });
         });
@@ -133,7 +128,7 @@ export class WebscriptComponent {
             }
 
         } catch (e) {
-            console.log('error during the cast as datatable');
+            this.logService.error('error during the cast as datatable');
         }
 
         return datatableData;

@@ -66,6 +66,7 @@
         "DIALOG": {
             "TITLE": "Start Task",
             "LABEL": {
+                "NONE": "None",
                 "NAME": "Name",
                 "DESCRIPTION": "Description",
                 "ATTACHFORM" : "Attach a Form"
@@ -77,6 +78,9 @@
         }
     },
     "PEOPLE": {
-        "DIALOG_CLOSE": "CLOSE"
+        "DIALOG_CLOSE": "CLOSE",
+        "SEARCH": {
+            "NO_USERS": "No user found to involve"
+        }
     }
 }

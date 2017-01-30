@@ -16,7 +16,7 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { DisplayValueWidget } from './display-value.widget';
 import { FormService } from '../../../services/form.service';
@@ -26,20 +26,19 @@ import { FormFieldTypes } from '../core/form-field-types';
 import { FormModel } from '../core/form.model';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
-import { AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 describe('DisplayValueWidget', () => {
 
     let widget: DisplayValueWidget;
     let formService: FormService;
     let visibilityService: WidgetVisibilityService;
-    let settingsService: AlfrescoSettingsService;
+    let logService: LogServiceMock;
 
     beforeEach(() => {
-        settingsService = new AlfrescoSettingsService();
-        formService = new FormService(null, null);
-        visibilityService = new WidgetVisibilityService(null);
-        widget = new DisplayValueWidget(formService, visibilityService, settingsService);
+        logService = new LogServiceMock();
+        formService = new FormService(null, null, logService);
+        visibilityService = new WidgetVisibilityService(null, logService);
+        widget = new DisplayValueWidget(formService, visibilityService, logService);
     });
 
     it('should require field to setup default value', () => {
@@ -393,7 +392,7 @@ describe('DisplayValueWidget', () => {
             Observable.throw(error)
         );
 
-        spyOn(console, 'log').and.stub();
+        spyOn(logService, 'error').and.stub();
 
         let form = new FormModel({taskId: '<id>'});
 
@@ -409,7 +408,7 @@ describe('DisplayValueWidget', () => {
         });
         widget.ngOnInit();
         expect(formService.getRestFieldValues).toHaveBeenCalled();
-        expect(console.log).toHaveBeenCalledWith(error);
+        expect(logService.error).toHaveBeenCalledWith(error);
         expect(widget.value).toBe('100');
     });
 

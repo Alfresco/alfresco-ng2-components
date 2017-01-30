@@ -15,12 +15,29 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, OnChanges, Input, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { AnalyticsService } from '../services/analytics.service';
-import { ReportParametersModel, ReportQuery, ParameterValueModel, ReportParameterDetailsModel } from '../models/report.model';
+import {
+    Component,
+    EventEmitter,
+    OnInit,
+    OnChanges,
+    Input,
+    Output,
+    SimpleChanges,
+    OnDestroy,
+    AfterViewChecked
+} from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AnalyticsService } from '../services/analytics.service';
+import {
+    ReportParametersModel,
+    ReportQuery,
+    ParameterValueModel,
+    ReportParameterDetailsModel
+} from '../models/report.model';
+
+declare var componentHandler;
 
 @Component({
     moduleId: module.id,
@@ -28,7 +45,7 @@ import * as moment from 'moment';
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']
 })
-export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
+export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
 
     public static FORMAT_DATE_ACTIVITI: string =  'YYYY-MM-DD';
 
@@ -67,12 +84,14 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
     private reportParamsSub;
     private paramOpts;
     private isEditable: boolean = false;
+    private hideParameters: boolean = true;
 
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
-                private formBuilder: FormBuilder ) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
+                private formBuilder: FormBuilder,
+                private logService: LogService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 
@@ -146,7 +165,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
                 }
             },
             (err: any) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -160,7 +179,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
                     this.onSuccessParamOpt.emit(opts);
                 },
                 (err: any) => {
-                    console.log(err);
+                    this.logService.error(err);
                     this.onError.emit(err);
                 }
             );
@@ -231,9 +250,24 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges {
                 this.onEdit.emit(this.reportParameters.name);
             },
             (err: any) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
+    }
+
+    ngAfterViewChecked() {
+        // workaround for MDL issues with dynamic components
+        if (componentHandler) {
+            componentHandler.upgradeAllRegistered();
+        }
+    }
+
+    toggleParameters() {
+        this.hideParameters = !this.hideParameters;
+    }
+
+    isParametersHide() {
+        return this.hideParameters;
     }
 }

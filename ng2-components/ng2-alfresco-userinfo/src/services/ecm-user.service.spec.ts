@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import { ReflectiveInjector } from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoApiService,
-    AlfrescoSettingsService,
-    AlfrescoContentService,
-    StorageService
-} from 'ng2-alfresco-core';
+import { TestBed } from '@angular/core/testing';
+import { CoreModule, AlfrescoAuthenticationService, AlfrescoContentService } from 'ng2-alfresco-core';
 import { EcmUserService } from '../services/ecm-user.service';
 import { fakeEcmUser } from '../assets/fake-ecm-user.service.mock';
 
@@ -30,45 +24,22 @@ declare let jasmine: any;
 
 describe('EcmUserService', () => {
 
-    let service, injector, authService, contentService, apiService;
+    let service: EcmUserService;
+    let authService: AlfrescoAuthenticationService;
+    let contentService: AlfrescoContentService;
 
     beforeEach(() => {
-        injector = ReflectiveInjector.resolveAndCreate([
-            AlfrescoSettingsService,
-            AlfrescoApiService,
-            AlfrescoAuthenticationService,
-            AlfrescoContentService,
-            EcmUserService,
-            StorageService
-        ]);
-    });
-
-    beforeEach(() => {
-        service = injector.get(EcmUserService);
-        apiService = injector.get(AlfrescoApiService);
-        authService = injector.get(AlfrescoAuthenticationService);
-        contentService = injector.get(AlfrescoContentService);
-    });
-
-    it('can instantiate service with authorization', () => {
-        expect(authService).not.toBeNull('authorization should be provided');
-        let serviceAuth = new EcmUserService(null, authService, null);
-
-        expect(serviceAuth instanceof EcmUserService).toBe(true, 'new service should be ok');
-    });
-
-    it('can instantiate service with content service', () => {
-        expect(contentService).not.toBeNull('contentService should be provided');
-        let serviceContent = new EcmUserService(null, null, contentService);
-
-        expect(serviceContent instanceof EcmUserService).toBe(true, 'new service should be ok');
-    });
-
-    it('can instantiate service with api service', () => {
-        expect(contentService).not.toBeNull('api service should be provided');
-        let serviceContent = new EcmUserService(apiService, null, null);
-
-        expect(serviceContent instanceof EcmUserService).toBe(true, 'new service should be ok');
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            providers: [
+                EcmUserService
+            ]
+        });
+        service = TestBed.get(EcmUserService);
+        authService = TestBed.get(AlfrescoAuthenticationService);
+        contentService = TestBed.get(AlfrescoContentService);
     });
 
     describe('when user is logged in', () => {

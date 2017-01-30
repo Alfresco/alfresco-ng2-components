@@ -20,14 +20,14 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { ActivitiFormModule, FormModel, FormOutcomeEvent, FormOutcomeModel, FormService } from 'ng2-activiti-form';
 
 import { ActivitiTaskDetails } from './activiti-task-details.component';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { ActivitiPeopleService } from './../services/activiti-people.service';
-import { TranslationMock } from './../assets/translation.service.mock';
 import { taskDetailsMock, taskFormMock, tasksMock, noDataMock } from './../assets/task-details.mock';
+import { TaskDetailsModel } from '../models/task-details.model';
 
 describe('ActivitiTaskDetails', () => {
 
@@ -44,19 +44,22 @@ describe('ActivitiTaskDetails', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                ActivitiFormModule
+                CoreModule.forRoot(),
+                ActivitiFormModule.forRoot()
             ],
             declarations: [
                 ActivitiTaskDetails
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 ActivitiTaskListService,
                 ActivitiPeopleService
             ],
             schemas: [ NO_ERRORS_SCHEMA ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
@@ -242,6 +245,13 @@ describe('ActivitiTaskDetails', () => {
             component.onFormError({});
             component.closeErrorDialog();
             expect(closeSpy).toHaveBeenCalled();
+        });
+
+        it('should emit a task created event when checklist task is created', () => {
+            let emitSpy: jasmine.Spy = spyOn(component.taskCreated, 'emit');
+            let mockTask = new TaskDetailsModel(taskDetailsMock);
+            component.onChecklistTaskCreated(mockTask);
+            expect(emitSpy).toHaveBeenCalled();
         });
 
     });

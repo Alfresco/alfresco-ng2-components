@@ -16,15 +16,17 @@
  */
 
 import { SimpleChange } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
+import { LogServiceMock } from 'ng2-alfresco-core';
 import { ActivitiProcessFilters } from './activiti-filters.component';
 import { ActivitiProcessService } from '../services/activiti-process.service';
-import { Observable } from 'rxjs/Rx';
 import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 
 describe('ActivitiFilters', () => {
 
     let filterList: ActivitiProcessFilters;
     let activitiService: ActivitiProcessService;
+    let logService: LogServiceMock;
 
     let fakeGlobalFilter = [];
     fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeInvolvedTasks', filter: { state: 'open', assignment: 'fake-involved'}}));
@@ -43,8 +45,9 @@ describe('ActivitiFilters', () => {
     });
 
     beforeEach(() => {
-        activitiService = new ActivitiProcessService(null, null);
-        filterList = new ActivitiProcessFilters(null, activitiService);
+        logService = new LogServiceMock();
+        activitiService = new ActivitiProcessService(null);
+        filterList = new ActivitiProcessFilters(null, activitiService, logService);
     });
 
     it('should return the filter task list', (done) => {

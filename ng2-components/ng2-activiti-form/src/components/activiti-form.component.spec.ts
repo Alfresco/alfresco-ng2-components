@@ -17,6 +17,7 @@
 
 import { Observable } from 'rxjs/Rx';
 import { SimpleChange } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormModel, FormOutcomeModel, FormFieldModel, FormOutcomeEvent, FormFieldTypes } from './widgets/index';
 import { FormService } from './../services/form.service';
@@ -30,6 +31,7 @@ describe('ActivitiForm', () => {
     let formComponent: ActivitiForm;
     let visibilityService: WidgetVisibilityService;
     let nodeService: NodeService;
+    let logService: LogService;
 
     beforeEach(() => {
         componentHandler = jasmine.createSpyObj('componentHandler', [
@@ -37,11 +39,12 @@ describe('ActivitiForm', () => {
         ]);
         window['componentHandler'] = componentHandler;
 
-        visibilityService = new WidgetVisibilityService(null);
+        logService = new LogService();
+        visibilityService = new WidgetVisibilityService(null, logService);
         spyOn(visibilityService, 'refreshVisibility').and.stub();
-        formService = new FormService(null, null);
-        nodeService = new NodeService(null, null);
-        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService);
+        formService = new FormService(null, null, logService);
+        nodeService = new NodeService(null);
+        formComponent = new ActivitiForm(formService, visibilityService, null, nodeService, logService);
     });
 
     it('should upgrade MDL content on view checked', () => {
@@ -98,35 +101,73 @@ describe('ActivitiForm', () => {
     });
 
     it('should not enable outcome button when model missing', () => {
-        expect(formComponent.isOutcomeButtonVisible(null)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(null, false)).toBeFalsy();
     });
 
     it('should enable custom outcome buttons', () => {
         let formModel = new FormModel();
+        formComponent.form = formModel;
         let outcome = new FormOutcomeModel(formModel, {id: 'action1', name: 'Action 1'});
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
     });
 
     it('should allow controlling [complete] button visibility', () => {
         let formModel = new FormModel();
+        formComponent.form = formModel;
         let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
 
         formComponent.showSaveButton = true;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
         formComponent.showSaveButton = false;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
+    });
+
+    it('should show only [complete] button with readOnly form ', () => {
+        let formModel = new FormModel();
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+        let outcome = new FormOutcomeModel(formModel, {id: '$complete', name: FormOutcomeModel.COMPLETE_ACTION});
+
+        formComponent.showCompleteButton = true;
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
+    });
+
+    it('should not show [save] button with readOnly form ', () => {
+        let formModel = new FormModel();
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+        let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.SAVE_ACTION});
+
+        formComponent.showSaveButton = true;
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
+    });
+
+    it('should show [custom-outcome] button with readOnly form and selected custom-outcome', () => {
+        let formModel = new FormModel({selectedOutcome: 'custom-outcome'});
+        formModel.readOnly = true;
+        formComponent.form = formModel;
+        let outcome = new FormOutcomeModel(formModel, {id: '$customoutome', name: 'custom-outcome'});
+
+        formComponent.showCompleteButton = true;
+        formComponent.showSaveButton = true;
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
+
+        outcome = new FormOutcomeModel(formModel, {id: '$customoutome2', name: 'custom-outcome2'});
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should allow controlling [save] button visibility', () => {
         let formModel = new FormModel();
+        formModel.readOnly = false;
+        formComponent.form = formModel;
         let outcome = new FormOutcomeModel(formModel, {id: '$save', name: FormOutcomeModel.COMPLETE_ACTION});
 
         formComponent.showCompleteButton = true;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeTruthy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeTruthy();
 
         formComponent.showCompleteButton = false;
-        expect(formComponent.isOutcomeButtonVisible(outcome)).toBeFalsy();
+        expect(formComponent.isOutcomeButtonVisible(outcome, formComponent.form.readOnly)).toBeFalsy();
     });
 
     it('should load form on refresh', () => {
@@ -558,13 +599,6 @@ describe('ActivitiForm', () => {
         formComponent.completeTaskForm('complete');
 
         expect(formService.completeTaskForm).not.toHaveBeenCalled();
-    });
-
-    it('should log error to console by default', () => {
-        const error = 'Error';
-        spyOn(console, 'log').and.stub();
-        formComponent.handleError(error);
-        expect(console.log).toHaveBeenCalledWith(error);
     });
 
     it('should complete form form and raise corresponding event', () => {

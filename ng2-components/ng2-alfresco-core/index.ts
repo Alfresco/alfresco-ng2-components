@@ -20,19 +20,23 @@ import { HttpModule, Http } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from 'ng2-translate/ng2-translate';
+import { MaterialModule } from '@angular/material';
 
 import {
-    StorageService,
-    AlfrescoApiService,
-    AlfrescoSettingsService,
-    AlfrescoTranslationLoader,
-    AlfrescoTranslationService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
+    AlfrescoSettingsService,
+    StorageService,
+    AlfrescoApiService,
+    AlfrescoTranslateLoader,
+    AlfrescoTranslationService,
     RenditionsService,
     AuthGuard,
     AuthGuardEcm,
-    AuthGuardBpm
+    AuthGuardBpm,
+    LogService,
+    LogServiceMock,
+    NotificationService
 } from './src/services/index';
 
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -43,12 +47,15 @@ export * from './src/components/index';
 export * from './src/utils/index';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
-    StorageService,
-    AlfrescoApiService,
+    NotificationService,
+    LogService,
+    LogServiceMock,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
     AlfrescoSettingsService,
-    AlfrescoTranslationLoader,
+    StorageService,
+    AlfrescoApiService,
+    AlfrescoTranslateLoader,
     AlfrescoTranslationService,
     RenditionsService,
     AuthGuard,
@@ -57,8 +64,8 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
     ...CONTEXT_MENU_PROVIDERS
 ];
 
-export function createTranslateLoader(http: Http) {
-    return new AlfrescoTranslationLoader(http);
+export function createTranslateLoader(http: Http, logService: LogService) {
+    return new AlfrescoTranslateLoader(http, logService);
 }
 
 @NgModule({
@@ -67,11 +74,13 @@ export function createTranslateLoader(http: Http) {
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
+        MaterialModule.forRoot(),
         TranslateModule.forRoot({
             provide: TranslateLoader,
             useFactory: (createTranslateLoader),
-            deps: [Http]
-        })    ],
+            deps: [Http, LogService]
+        })
+    ],
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES
@@ -82,6 +91,7 @@ export function createTranslateLoader(http: Http) {
     exports: [
         CommonModule,
         FormsModule,
+        MaterialModule,
         ReactiveFormsModule,
         HttpModule,
         TranslateModule,

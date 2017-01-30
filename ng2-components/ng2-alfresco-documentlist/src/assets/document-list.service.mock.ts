@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { NodePaging } from './../models/document-library.model';
 import { PageNode } from './document-library.model.mock';
 import { DocumentListService } from './../services/document-list.service';
@@ -23,7 +23,8 @@ import {
     AlfrescoSettingsService,
     AlfrescoAuthenticationService,
     AlfrescoContentService,
-    AlfrescoApiService
+    AlfrescoApiService,
+    LogService
 } from 'ng2-alfresco-core';
 
 export class DocumentListServiceMock extends DocumentListService {
@@ -36,9 +37,10 @@ export class DocumentListServiceMock extends DocumentListService {
         settings?: AlfrescoSettingsService,
         authService?: AlfrescoAuthenticationService,
         contentService?: AlfrescoContentService,
-        apiService?: AlfrescoApiService
+        apiService?: AlfrescoApiService,
+        logService?: LogService,
     ) {
-        super(authService, contentService, apiService);
+        super(authService, contentService, apiService, logService);
     }
 
     getFolder(folder: string) {

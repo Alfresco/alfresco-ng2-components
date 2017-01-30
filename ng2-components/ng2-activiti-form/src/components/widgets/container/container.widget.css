@@ -18,3 +18,7 @@
 .container-widget__header-text.collapsible {
     cursor: pointer;
 }
+
+.container-widget__mdl-grid {
+    align-items: center;
+}

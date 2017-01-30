@@ -16,16 +16,10 @@
  */
 
 import { TestBed } from '@angular/core/testing';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    StorageService
-} from 'ng2-alfresco-core';
-import { EcmModelService } from './ecm-model.service';
 import { Observable } from 'rxjs/Rx';
-import { FormModel } from '../components/widgets/core/form.model';
-import { HttpModule } from '@angular/http';
+import { CoreModule } from 'ng2-alfresco-core';
+import { EcmModelService } from './ecm-model.service';
+import { FormModel } from './../components/widgets/core/form.model';
 
 declare let jasmine: any;
 
@@ -33,15 +27,13 @@ describe('EcmModelService', () => {
 
     let service: EcmModelService;
 
-    beforeAll(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpModule],
+            imports: [
+                CoreModule.forRoot()
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoApiService,
-                AlfrescoAuthenticationService,
-                EcmModelService,
-                StorageService
+                EcmModelService
             ]
         });
         service = TestBed.get(EcmModelService);

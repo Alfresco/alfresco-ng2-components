@@ -17,11 +17,10 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 import { ActivitiTaskHeader } from './activiti-task-header.component';
-import { TranslationMock } from './../assets/translation.service.mock';
 import { taskDetailsMock } from './../assets/task-details.mock';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
@@ -36,23 +35,25 @@ describe('ActivitiTaskHeader', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [
                 ActivitiTaskHeader
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 ActivitiTaskListService
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
-
         fixture = TestBed.createComponent(ActivitiTaskHeader);
         component = fixture.componentInstance;
-        service = fixture.debugElement.injector.get(ActivitiTaskListService);
+        service = TestBed.get(ActivitiTaskListService);
 
         component.taskDetails = new TaskDetailsModel(taskDetailsMock);
 

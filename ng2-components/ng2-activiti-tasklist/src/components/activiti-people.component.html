@@ -7,14 +7,11 @@
 <div class="menu-container" *ngIf="people?.length > 0">
     <ul class='mdl-list'>
         <li class="mdl-list__item" *ngFor="let user of people">
-            <span class="mdl-list__item-primary-content">
-                <i class="material-icons mdl-list__item-icon">face</i>
-                <span id="user-{{user.id}}">{{getDisplayUser(user)}}</span>
+            <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
+                <img class="mdl-chip__contact" [src]="iconImageUrl || baseComponentPath + '/../assets/images/user.jpg'" />
+                <span id="user-{{user.id}}" class="mdl-chip__text">{{getDisplayUser(user)}}</span>
+                <a *ngIf="!readOnly" class="mdl-chip__action"><i id="remove-{{user.id}}" (click)="removeInvolvedUser(user)" class="material-icons people__icon">cancel</i></a>
             </span>
-            <a *ngIf="!readOnly" class="mdl-list__item-secondary-action">
-                <i id="remove" class="material-icons people__icon"
-                   (click)="removeInvolvedUser(user)">delete</i>
-            </a>
         </li>
     </ul>
 </div>
@@ -27,11 +24,12 @@
     <div class="mdl-dialog__content add-people-dialog__content">
         <activiti-people-search (onSearch)="searchUser($event)"
                                 (onRowClicked)="involveUser($event)"
-                                [results]="peopleSearch$">
+                                [results]="peopleSearch$"
+                                [iconImageUrl]="iconImageUrl" #activitipeoplesearch>
         </activiti-people-search>
     </div>
     <div class="mdl-dialog__actions">
-        <button type="button" id="close-people-dialog" (click)="cancel()" class="mdl-button close">
+        <button type="button" id="close-people-dialog" (click)="closeDialog()" class="mdl-button close">
             {{'PEOPLE.DIALOG_CLOSE' | translate }}
         </button>
     </div>

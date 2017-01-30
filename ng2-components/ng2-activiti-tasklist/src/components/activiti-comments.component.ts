@@ -56,11 +56,11 @@ export class ActivitiComments implements OnChanges {
      * @param translate Translation service
      * @param activitiTaskList Task service
      */
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private activitiTaskList: ActivitiTaskListService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
 
         this.comment$ = new Observable<Comment>(observer =>  this.commentObserver = observer).share();

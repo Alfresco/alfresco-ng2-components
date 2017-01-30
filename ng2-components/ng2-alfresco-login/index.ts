@@ -15,14 +15,23 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
+
+import { LoginHeaderDirective } from './src/directives/login-header.directive';
+import { LoginFooterDirective } from './src/directives/login-footer.directive';
 
 import { AlfrescoLoginComponent } from './src/components/alfresco-login.component';
 
+export * from './src/directives/login-header.directive';
+export * from './src/directives/login-footer.directive';
 export * from './src/components/alfresco-login.component';
 
-export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [AlfrescoLoginComponent];
+export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
+    AlfrescoLoginComponent,
+    LoginFooterDirective,
+    LoginHeaderDirective
+];
 
 @NgModule({
     imports: [
@@ -36,4 +45,10 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [AlfrescoLoginComponent];
         ...ALFRESCO_LOGIN_DIRECTIVES
     ]
 })
-export class LoginModule { }
+export class LoginModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: LoginModule
+        };
+    }
+}

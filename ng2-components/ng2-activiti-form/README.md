@@ -31,6 +31,22 @@
   </a>
 </p>
 
+## Library Contents
+
+### Components
+
+- [ActivitiForm](#activitiform-component)
+- ActivitiStartForm
+
+### Services
+
+- [FormService](#formservice)
+- ActivitiAlfrescoContentService
+- EcmModelService
+- FormRenderingService
+- NodeService
+- WidgetVisibilityService
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
@@ -65,6 +81,9 @@ Follow the 3 steps below:
     <script src="node_modules/material-design-lite/material.min.js"></script>
     <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
+    <!-- Load the Angular Material 2 stylesheet -->
+    <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
+    
     <!-- Polyfill(s) for Safari (pre-10.x) -->
     <script src="node_modules/intl/dist/Intl.min.js"></script>
     <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
@@ -98,7 +117,9 @@ Follow the 3 steps below:
     Please refer to the following example file: [systemjs.config.js](demo/systemjs
     .config.js) .
 
-## Basic usage examples
+## ActivitiForm Component
+
+### Basic usage
 
 The component shows a Form from Activiti
 
@@ -109,6 +130,7 @@ The component shows a Form from Activiti
 Usage example of this component :
 
 **main.ts**
+
 ```ts
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -220,9 +242,9 @@ and store the form field as metadata. The param nameNode is optional.
 </activiti-form>
 ```
 
-## Configuration
+### Configuration
 
-### Properties
+#### Properties
 
 The recommended set of properties can be found in the following table:
 
@@ -238,11 +260,12 @@ The recommended set of properties can be found in the following table:
 | `showDebugButton` | boolean | false | Toggle debug options. |
 | `readOnly` | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
 | `showRefreshButton` | boolean | true | Toggle rendering of the `Refresh` button. |
+| `showValidationIcon` | boolean | true | Toggle rendering of the validation icon next form title. |
 | `saveMetadata` | boolean | false | Store the value of the form as metadata. |
 | `path` | string |  |  Path of the folder where to store the metadata. |
 | `nameNode` (optional) | string | true | Name to assign to the new node where the metadata are stored. |
 
-#### Advanced properties
+##### Advanced properties
  
  The following properties are for complex customisation purposes:
  
@@ -251,7 +274,7 @@ The recommended set of properties can be found in the following table:
 | `form` | FormModel | | Underlying form model instance. |
 | `debugMode` | boolean | false | Toggle debug mode, allows displaying additional data for development and debugging purposes. |
 
-### Events
+#### Events
 
 | Name | Description |
 | --- | --- |
@@ -327,6 +350,70 @@ There are two additional functions that can be of a great value when controlling
 
 **Please note that if `event.preventDefault()` is not called then default outcome behaviour 
 will also be executed after your custom code.**
+
+## FormService
+
+```ts
+import { Component } from '@angular/core';
+import { FormService, FormEvent, FormFieldEvent } from 'ng2-activiti-form';
+
+@Component(...)
+class MyComponent {
+
+    constructor(private formService: FormService) {
+
+        formService.formLoaded.subscribe((e: FormEvent) => {
+            console.log(`Form loaded: ${e.form.id}`);
+        });
+
+        formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
+            console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+        });
+
+    }
+
+}
+```
+
+### Events
+
+| Name | Args Type | Description |
+| --- | --- | --- |
+| formLoaded | FormEvent | Raised when form has been loaded or reloaded |
+| formFieldValueChanged | FormFieldEvent | Raised when input values change |
+| taskCompleted | FormEvent | Raised when a task is completed successfully |
+| taskCompletedError | FormErrorEvent | Raised when a task is completed unsuccessfully  |
+| taskSaved | FormEvent | Raised when a task is saved successfully |
+| taskSavedError | FormErrorEvent | Raised when a task is saved unsuccessfully |
+
+### Methods
+
+| Name | Params | Returns | Description |
+| --- | --- | --- | --- |
+| createFormFromANode | (formName: string) | Observable\<any\> | Create a Form with a fields for each metadata properties |
+| createForm | (formName: string) | Observable\<any\> | Create a Form |
+| addFieldsToAForm | (formId: string, formModel: FormDefinitionModel) | Observable\<any\> | Add Fileds to A form |
+| searchFrom | (name: string) | Observable\<any\> | Search For A Form by name |
+| getForms | n/a | Observable\<any\> | Get All the forms |
+| getProcessDefinitions | n/a | Observable\<any\> | Get Process Definitions |
+| getTasks | n/a | Observable\<any\> | Get All the Tasks |
+| getTask | (taskId: string) | Observable\<any\> | Get Task |
+| saveTaskForm | (taskId: string, formValues: FormValues) | Observable\<any\> | Save Task Form |
+| completeTaskForm | (taskId: string, formValues: FormValues, outcome?: string) | Observable\<any\> | Complete Task Form |
+| getTaskForm | (taskId: string) | Observable\<any\> | Get Form related to a taskId |
+| getFormDefinitionById | (formId: string) | Observable\<any\> | Get Form Definition |
+| getFormDefinitionByName | (name: string) | Observable\<any\> | Returns form definition by a given name. |
+| getStartFormInstance | (processId: string) | Observable\<any\> | Get start form instance for a given processId |
+| getStartFormDefinition | (processId: string) | Observable\<any\> | Get start form definition for a given process |
+| createTemporaryRawRelatedContent | (file: any) | Observable\<any\> | Save File |
+| getRestFieldValues | (taskId: string, field: string) | Observable\<any\> |  |
+| getRestFieldValuesByProcessId | (processDefinitionId: string, field: string) | Observable\<any\> |  |
+| getRestFieldValuesColumnByProcessId | (processDefinitionId: string, field: string, column?: string) | Observable\<any\> |  |
+| getRestFieldValuesColumn | (taskId: string, field: string, column?: string) | Observable\<any\> |  |
+| getWorkflowGroups\* | (filter: string, groupId?: string) | Observable\<GroupModel[]\> |  |
+| getWorkflowUsers\* | (filter: string, groupId?: string) | Observable\<GroupUserModel[]\> |  |
+
+\* _Uses private Activiti WebApp api_
 
 ## See also
 

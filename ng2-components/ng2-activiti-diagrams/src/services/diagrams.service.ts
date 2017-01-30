@@ -16,27 +16,28 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { Response, Http, Headers, RequestOptions } from '@angular/http';
+import { AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DiagramsService {
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private http: Http,
-                private alfrescoSettingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService,
+                private logService: LogService) {
     }
 
     getProcessDefinitionModel(processDefinitionId: string): Observable<any> {
-        let url = `${this.alfrescoSettingsService.getBPMApiBaseUrl()}/app/rest/process-definitions/${processDefinitionId}/model-json`;
+        let url = `${this.settingsService.getBPMApiBaseUrl()}/app/rest/process-definitions/${processDefinitionId}/model-json`;
         let options = this.getRequestOptions();
         return this.http
             .get(url, options)
             .map((res: any) => {
                 let body = res.json();
                 return body;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     public getHeaders(): Headers {
@@ -53,7 +54,7 @@ export class DiagramsService {
     }
 
     private handleError(error: Response) {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
 }

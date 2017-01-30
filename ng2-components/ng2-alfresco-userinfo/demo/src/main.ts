@@ -19,9 +19,8 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { UserInfoComponentModule } from 'ng2-alfresco-userinfo';
-import { CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoAuthenticationService, AlfrescoSettingsService, LogService } from 'ng2-alfresco-core';
 import { LoginModule } from 'ng2-alfresco-login';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'alfresco-app-demo',
@@ -34,15 +33,15 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
 
                 <p style="width:120px;margin: 20px;">
                 <label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                    <input type="checkbox" id="switch1" class="mdl-switch__input" checked
-                     (click)="toggleECM(ecm.checked)" #ecm>
+                    <input type="checkbox" id="switch1" class="mdl-switch__input" [checked]="isECM"
+                     (click)="toggleECM()" #ecm>
                     <span class="mdl-switch__label">ECM</span>
                 </label>
                 </p>
                 <p style="width:120px;margin: 20px;">
                     <label for="switch2" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
-                        <input type="checkbox" id="switch2" class="mdl-switch__input"
-                         (click)="toggleBPM(bpm.checked)" #bpm>
+                        <input type="checkbox" id="switch2" class="mdl-switch__input" [checked]="isBPM"
+                         (click)="toggleBPM()" #bpm>
                         <span class="mdl-switch__label">BPM</span>
                     </label>
                 </p>
@@ -74,32 +73,30 @@ import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfr
 })
 class UserInfoDemo implements OnInit {
 
-    public ecmHost: string = 'http://localhost:8080';
-
-    public bpmHost: string = 'http://localhost:9999';
-
-    public userToLogin: string = 'admin';
-
-    public password: string = 'admin';
-
-    public loginErrorMessage: string;
-
-    public providers: string = 'BPM';
+    ecmHost: string = 'http://localhost:8080';
+    bpmHost: string = 'http://localhost:9999';
+    userToLogin: string = 'admin';
+    password: string = 'admin';
+    loginErrorMessage: string;
+    providers: string = 'ALL';
 
     private authenticated: boolean;
-
     private token: any;
 
-    public disableCsrf: boolean = false;
+    disableCsrf: boolean = false;
+    isECM: boolean = true;
+    isBPM: boolean = false;
 
     constructor(private authService: AlfrescoAuthenticationService,
-                private settingsService: AlfrescoSettingsService) {
+                private settingsService: AlfrescoSettingsService,
+                private logService: LogService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.bpmHost = this.bpmHost;
     }
 
     ngOnInit() {
         this.settingsService.setProviders(this.providers);
+        this.initProviders();
     }
 
     logout() {
@@ -110,43 +107,70 @@ class UserInfoDemo implements OnInit {
         this.settingsService.setProviders(this.providers);
         this.authService.login(user, password).subscribe(
             token => {
-                console.log(token);
+                this.logService.info(token);
                 this.token = token;
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
                 this.loginErrorMessage = error;
             });
     }
 
-    isLoggedIn(): boolean {
-        return this.authService.isLoggedIn();
+    initProviders() {
+        if (this.providers === 'BPM') {
+            this.isECM = false;
+            this.isBPM = true;
+        } else if (this.providers === 'ECM') {
+            this.isECM = true;
+            this.isBPM = false;
+        } else if (this.providers === 'ALL') {
+            this.isECM = true;
+            this.isBPM = true;
+        }
     }
 
-    toggleECM(checked) {
-        if (checked && this.providers === 'BPM') {
+    toggleECM() {
+        this.isECM = !this.isECM;
+        this.settingsService.setProviders(this.updateProvider());
+    }
+
+    toggleBPM() {
+        this.isBPM = !this.isBPM;
+        this.settingsService.setProviders(this.updateProvider());
+    }
+
+    updateProvider() {
+        if (this.isBPM && this.isECM) {
             this.providers = 'ALL';
-        } else if (checked) {
+            return this.providers;
+        }
+
+        if (this.isECM) {
             this.providers = 'ECM';
-        } else {
-            this.providers = undefined;
+            return this.providers;
         }
-    }
 
-    toggleBPM(checked) {
-        if (checked && this.providers === 'ECM') {
-            this.providers = 'ALL';
-        } else if (checked) {
+        if (this.isBPM) {
             this.providers = 'BPM';
-        } else {
-            this.providers = undefined;
+            return this.providers;
         }
-    }
+
+        this.providers = '';
+        return this.providers;
+    };
 
     toggleCSRF() {
         this.disableCsrf = !this.disableCsrf;
+    }
+
+    updateEcmHost(): void {
+        this.settingsService.ecmHost = this.ecmHost;
+    }
+
+    updateBpmHost(): void {
+        this.settingsService.bpmHost = this.bpmHost;
     }
 }
 

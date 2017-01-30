@@ -16,8 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { TagService } from '../services/tag.service';
+import { TagService } from './../services/tag.service';
 
 /**
  *
@@ -54,8 +53,7 @@ export class TagActionsComponent {
      * Constructor
      * @param authService
      */
-    constructor(public authService: AlfrescoAuthenticationService, private tagService: TagService) {
-
+    constructor(private tagService: TagService) {
     }
 
     ngOnChanges(changes) {

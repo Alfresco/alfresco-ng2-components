@@ -16,6 +16,7 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicTableColumnOption } from './../../dynamic-table.widget.model';
 import { FormService } from './../../../../../services/form.service';
 
@@ -39,7 +40,9 @@ export class DropdownEditorComponent implements OnInit {
     @Input()
     column: DynamicTableColumn;
 
-    constructor(private formService: FormService) {}
+    constructor(private formService: FormService,
+                private logService: LogService) {
+    }
 
     ngOnInit() {
         let field = this.table.field;
@@ -98,6 +101,6 @@ export class DropdownEditorComponent implements OnInit {
     }
 
     handleError(error: any) {
-        console.error(error);
+        this.logService.error(error);
     }
 }

@@ -15,7 +15,7 @@
             (claim)="onClaimTask($event)"></activiti-task-header>
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-people [people]="taskPeople" [readOnly]="readOnlyForm"
+            <activiti-people [iconImageUrl]="peopleIconImageUrl" [people]="taskPeople" [readOnly]="readOnlyForm"
                              [taskId]="taskDetails.id"></activiti-people>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
@@ -23,8 +23,8 @@
                                #activiticomments></activiti-comments>
         </div>
         <div class="mdl-cell mdl-cell--4-col">
-            <activiti-checklist [readOnly]="readOnlyForm" [taskId]="taskDetails.id"
-                                #activitichecklist></activiti-checklist>
+            <activiti-checklist [readOnly]="readOnlyForm" [taskId]="taskDetails.id" [assignee]="taskDetails?.assignee?.id"
+                                (checklistTaskCreated)="onChecklistTaskCreated($event)" #activitichecklist></activiti-checklist>
         </div>
     </div>
     <div *ngIf="isAssignedToMe()">

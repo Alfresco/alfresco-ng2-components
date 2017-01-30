@@ -43,11 +43,11 @@ export class AnalyticsReportHeatMapComponent implements  OnInit {
     currentMetricColors: string;
     metricType: string;
 
-    constructor(private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 

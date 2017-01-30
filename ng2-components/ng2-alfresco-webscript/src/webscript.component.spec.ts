@@ -15,22 +15,17 @@
  * limitations under the License.
  */
 
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { WebscriptComponent } from '../src/webscript.component';
-import { DebugElement }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule
-} from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableModule } from 'ng2-alfresco-datatable';
+import { WebscriptComponent } from '../src/webscript.component';
 
 declare let jasmine: any;
 
 describe('Test ng2-alfresco-webscript', () => {
 
-    let component: any;
+    let component: WebscriptComponent;
     let fixture: ComponentFixture<WebscriptComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
@@ -38,14 +33,11 @@ describe('Test ng2-alfresco-webscript', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
+                CoreModule.forRoot(),
                 DataTableModule
             ],
-            declarations: [WebscriptComponent],
-            providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService
+            declarations: [
+                WebscriptComponent
             ]
         }).compileComponents();
     }));
@@ -93,7 +85,7 @@ describe('Test ng2-alfresco-webscript', () => {
         it('url should be the one configured by the input param', (done) => {
             component.scriptPath = 'sample/folder/Company%20Home';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(jasmine.Ajax.requests.mostRecent().url).toBe('http://localhost:8080/alfresco/service/sample/folder/Company%20Home');
                 done();
@@ -110,7 +102,7 @@ describe('Test ng2-alfresco-webscript', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'TEXT';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#webscript-data-TEXT').innerHTML)
                     .toBe('text test');
@@ -128,7 +120,7 @@ describe('Test ng2-alfresco-webscript', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'JSON';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(JSON.parse(element.querySelector('#webscript-data-JSON').innerHTML)[0].name).toBe('Name 1');
                 expect(JSON.parse(element.querySelector('#webscript-data-JSON').innerHTML)[1].name).toBe('Name 2');
@@ -147,7 +139,7 @@ describe('Test ng2-alfresco-webscript', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'HTML';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#webscript-data-HTML').innerHTML)
                     .toBe('&lt;test-element-id&gt;&lt;test-elemt-id&gt;');
@@ -168,7 +160,7 @@ describe('Test ng2-alfresco-webscript', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).toBeDefined();
                 done();
@@ -206,7 +198,7 @@ describe('Test ng2-alfresco-webscript', () => {
             component.scriptPath = 'sample/folder/Company%20Home';
             component.contentType = 'DATATABLE';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#webscript-datatable-wrapper').innerHTML).toBeDefined();
                 done();

@@ -18,7 +18,7 @@
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService, LogService } from 'ng2-alfresco-core';
 import { ViewerModule } from 'ng2-alfresco-viewer';
 
 @Component({
@@ -47,16 +47,14 @@ import { ViewerModule } from 'ng2-alfresco-viewer';
 class MyDemoApp {
 
     fileNodeId: string;
-
     authenticated: boolean;
-
     ecmHost: string = 'http://127.0.0.1:8080';
-
     ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
 
@@ -65,11 +63,11 @@ class MyDemoApp {
         }
     }
 
-    public updateTicket(): void {
+    updateTicket(): void {
         this.storage.setItem('ticket-ECM', this.ticket);
     }
 
-    public updateHost(): void {
+    updateHost(): void {
         this.settingsService.ecmHost = this.ecmHost;
         this.login();
     }
@@ -81,12 +79,12 @@ class MyDemoApp {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.log(error);
                 this.authenticated = false;
             });
     }

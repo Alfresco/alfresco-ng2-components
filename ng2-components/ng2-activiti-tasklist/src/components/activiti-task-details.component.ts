@@ -15,19 +15,8 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    Input,
-    OnInit,
-    ViewChild,
-    Output,
-    EventEmitter,
-    TemplateRef,
-    OnChanges,
-    SimpleChanges,
-    DebugElement
-} from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Component, Input, OnInit, ViewChild, Output, EventEmitter, TemplateRef, OnChanges, SimpleChanges, DebugElement} from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
@@ -72,6 +61,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     @Input()
     showFormRefreshButton: boolean = true;
 
+    @Input()
+    peopleIconImageUrl: string;
+
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
@@ -80,6 +72,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @Output()
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+
+    @Output()
+    taskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
 
     @Output()
     onError: EventEmitter<any> = new EventEmitter<any>();
@@ -101,13 +96,13 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
      * @param activitiForm Form service
      * @param activitiTaskList Task service
      */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
+    constructor(private translateService: AlfrescoTranslationService,
                 private activitiForm: FormService,
-                private activitiTaskList: ActivitiTaskListService) {
+                private activitiTaskList: ActivitiTaskListService,
+                private logService: LogService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -202,7 +197,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
                     this.reset();
                 }
             }, (error) => {
-                console.error(error);
+                this.logService.error(error);
                 this.onError.emit(error);
             });
     }
@@ -233,6 +228,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
             this.taskFormName = form.name;
         }
         this.formLoaded.emit(form);
+    }
+
+    onChecklistTaskCreated(task: TaskDetailsModel) {
+        this.taskCreated.emit(task);
     }
 
     onFormError(error: any) {

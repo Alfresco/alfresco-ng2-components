@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { Observer, Observable } from 'rxjs/Rx';
@@ -38,6 +38,12 @@ export class ActivitiChecklist implements OnInit, OnChanges {
     @Input()
     readOnly: boolean = false;
 
+    @Input()
+    assignee: string;
+
+    @Output()
+    checklistTaskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
+
     @ViewChild('dialog')
     dialog: any;
 
@@ -53,11 +59,12 @@ export class ActivitiChecklist implements OnInit, OnChanges {
      * @param auth
      * @param translate
      */
-    constructor(private translate: AlfrescoTranslationService,
-                private activitiTaskList: ActivitiTaskListService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private activitiTaskList: ActivitiTaskListService,
+                private logService: LogService) {
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
         this.task$ = new Observable<TaskDetailsModel>(observer => this.taskObserver = observer).share();
     }
@@ -86,7 +93,7 @@ export class ActivitiChecklist implements OnInit, OnChanges {
                     });
                 },
                 (err) => {
-                    console.log(err);
+                    this.logService.error(err);
                 }
             );
         } else {
@@ -104,16 +111,21 @@ export class ActivitiChecklist implements OnInit, OnChanges {
     }
 
     public add() {
-        let newTask = new TaskDetailsModel({name: this.taskName, parentTaskId: this.taskId, assignee: {id: '1'}});
+        let newTask = new TaskDetailsModel({
+            name: this.taskName,
+            parentTaskId: this.taskId,
+            assignee: { id: this.assignee }
+        });
         this.activitiTaskList.addTask(newTask).subscribe(
             (res: TaskDetailsModel) => {
                 this.checklist.push(res);
+                this.checklistTaskCreated.emit(res);
+                this.taskName = '';
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
             }
         );
-
         this.cancel();
     }
 
@@ -121,5 +133,6 @@ export class ActivitiChecklist implements OnInit, OnChanges {
         if (this.dialog) {
             this.dialog.nativeElement.close();
         }
+        this.taskName = '';
     }
 }

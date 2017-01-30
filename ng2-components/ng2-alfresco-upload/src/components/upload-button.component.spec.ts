@@ -18,17 +18,11 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { UploadButtonComponent } from './upload-button.component';
 import { DebugElement }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService, NotificationService } from 'ng2-alfresco-core';
 import { TranslationMock } from '../assets/translation.service.mock';
 import { UploadService } from '../services/upload.service';
 
-describe('Test ng2-alfresco-upload UploadButton', () => {
+describe('UploadButtonComponent', () => {
 
     let file = {name: 'fake-name-1', size: 10, webkitRelativePath: 'fake-folder1/fake-name-1.json'};
     let fakeEvent = {
@@ -63,23 +57,24 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
         reject(fakeRejectRest);
     });
 
-    let component: any;
+    let component: UploadButtonComponent;
     let fixture: ComponentFixture<UploadButtonComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
+    let uploadService: UploadService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
-            declarations: [UploadButtonComponent],
+            declarations: [
+                UploadButtonComponent
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
                 UploadService,
-                { provide: AlfrescoTranslationService, useClass: TranslationMock }
+                NotificationService,
+                {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
         }).compileComponents();
     }));
@@ -88,6 +83,7 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
         window['componentHandler'] = null;
 
         fixture = TestBed.createComponent(UploadButtonComponent);
+        uploadService = TestBed.get(UploadService);
 
         debug = fixture.debugElement;
         element = fixture.nativeElement;
@@ -115,7 +111,7 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
     });
 
     it('should render an uploadFolder button if uploadFolder is true', () => {
-        component.uploadFolder = true;
+        component.uploadFolders = true;
         let compiled = fixture.debugElement.nativeElement;
         fixture.detectChanges();
         expect(compiled.querySelector('#uploadFolder')).toBeDefined();
@@ -124,31 +120,31 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
     it('should call uploadFile with the default root folder', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.onSuccess = null;
-        component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
 
         component.onFilesAdded(fakeEvent);
-        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
     it('should call uploadFile with a custom root folder', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.rootFolderId = '-my-';
         component.onSuccess = null;
-        component._uploaderService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
+        uploadService.uploadFilesInTheQueue = jasmine.createSpy('uploadFilesInTheQueue');
 
         fixture.detectChanges();
 
         component.onFilesAdded(fakeEvent);
-        expect(component._uploaderService.uploadFilesInTheQueue).toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/folder-fake', null);
+        expect(uploadService.uploadFilesInTheQueue).toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/folder-fake', null);
     });
 
     it('should create a folder and emit an File uploaded event', (done) => {
         component.currentFolderPath = '/fake-root-path';
         fixture.detectChanges();
 
-        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakeResolvePromise);
+        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeResolvePromise);
 
         component.onSuccess.subscribe(e => {
             expect(e.value).toEqual('File uploaded');
@@ -165,7 +161,7 @@ describe('Test ng2-alfresco-upload UploadButton', () => {
     });
 
     it('should emit an onError event when the folder already exist', (done) => {
-        spyOn(component._uploaderService, 'callApiCreateFolder').and.returnValue(fakeRejectPromise);
+        spyOn(uploadService, 'callApiCreateFolder').and.returnValue(fakeRejectPromise);
         component.onError.subscribe(e => {
             expect(e.value).toEqual('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             done();

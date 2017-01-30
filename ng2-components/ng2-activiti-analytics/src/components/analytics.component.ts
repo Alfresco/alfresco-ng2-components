@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnChanges, Input, Output, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { Component, EventEmitter, OnChanges, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import { ReportQuery } from '../models/report.model';
-import { Chart } from '../models/chart.model';
+import { AnalyticsGeneratorComponent } from './analytics-generator.component';
 
 @Component({
     moduleId: module.id,
@@ -30,7 +30,7 @@ import { Chart } from '../models/chart.model';
 export class AnalyticsComponent implements OnChanges {
 
     @Input()
-    appId: string;
+    appId: number;
 
     @Input()
     reportId: number;
@@ -39,79 +39,36 @@ export class AnalyticsComponent implements OnChanges {
     debug: boolean = false;
 
     @Output()
-    onSuccess = new EventEmitter();
-
-    @Output()
     editReport = new EventEmitter();
 
-    @Output()
-    onError = new EventEmitter();
+    @ViewChild('analyticsgenerator')
+    analyticsgenerator: AnalyticsGeneratorComponent;
 
-    reportParamQuery = new ReportQuery();
+    reportParamQuery: ReportQuery;
 
-    reports: Chart[];
-
-    public barChartOptions: any = {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    stepSize: 1
-                }
-            }],
-            xAxes: [{
-                ticks: {
-                },
-                stacked: true
-            }]
-        }
-    };
-
-    constructor(private translate: AlfrescoTranslationService,
-                private analyticsService: AnalyticsService) {
-        console.log('AnalyticsComponent');
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
+    constructor(private translateService: AlfrescoTranslationService,
+                private analyticsService: AnalyticsService,
+                private logService: LogService) {
+        logService.info('AnalyticsComponent');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        this.reset();
+        this.analyticsgenerator.reset();
     }
 
     public showReport($event) {
-        this.reportParamQuery = $event;
-        this.analyticsService.getReportsByParams(this.reportId, this.reportParamQuery).subscribe(
-            (res: Chart[]) => {
-                this.reports = res;
-                this.onSuccess.emit(res);
-            },
-            (err: any) => {
-                this.onError.emit(err);
-                console.log(err);
-            }
-        );
+        this.analyticsgenerator.generateReport(this.reportId, $event);
     }
 
     public reset() {
-        if (this.reports) {
-            this.reports = undefined;
-        }
-    }
-
-    public refresh(report): void {
-        /**
-         * (My guess), for Angular to recognize the change in the dataset
-         * it has to change the dataset variable directly,
-         * so one way around it, is to clone the data, change it and then
-         * assign it;
-         */
-        let clone = JSON.parse(JSON.stringify(report));
-        report.datasets = clone.datasets;
+        this.analyticsgenerator.reset();
     }
 
     public onEditReport(name: string) {
         this.editReport.emit(name);
     }
+
 }

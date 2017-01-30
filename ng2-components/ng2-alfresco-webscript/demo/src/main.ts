@@ -19,7 +19,7 @@ import { NgModule, Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService, LogService } from 'ng2-alfresco-core';
 import { DataTableModule }  from 'ng2-alfresco-datatable';
 import { WebScriptModule } from 'ng2-alfresco-webscript';
 
@@ -64,7 +64,8 @@ class WebscriptDemo implements OnInit {
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
 
         settingsService.ecmHost = this.ecmHost;
         settingsService.setProviders('ECM');
@@ -90,18 +91,18 @@ class WebscriptDemo implements OnInit {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(ticket);
                 this.ticket = this.authService.getTicketEcm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }
 
     logData(data) {
-        console.log(data);
+        this.logService.info(data);
     }
 }
 

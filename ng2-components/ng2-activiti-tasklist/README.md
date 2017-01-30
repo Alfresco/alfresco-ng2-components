@@ -31,38 +31,6 @@
   </a>
 </p>
 
-<p>
-  <a title='Build Status Travis' href="https://travis-ci.org/Alfresco/alfresco-ng2-components">
-    <img src='https://travis-ci.org/Alfresco/alfresco-ng2-components.svg?branch=master'  alt='travis
-    Status' />
-  </a>
-  <a title='Build Status AppVeyor' href="https://ci.appveyor.com/project/alfresco/alfresco-ng2-components">
-    <img src='https://ci.appveyor.com/api/projects/status/github/Alfresco/alfresco-ng2-components'  alt='travis
-    Status' />
-  </a>
-  <a href='https://codecov.io/gh/Alfresco/alfresco-ng2-components'>
-    <img src='https://img.shields.io/codecov/c/github/Alfresco/alfresco-ng2-components/master.svg?maxAge=2592000' alt='Coverage Status' />
-  </a>
-  <a href='https://www.npmjs.com/package/ng2-activiti-tasklist'>
-    <img src='https://img.shields.io/npm/dt/ng2-activiti-tasklist.svg' alt='npm downloads' />
-  </a>
-  <a href='https://github.com/Alfresco/alfresco-ng2-components/blob/master/LICENSE'>
-     <img src='https://img.shields.io/hexpm/l/plug.svg' alt='license' />
-  </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-component-green.svg?label=alfresco' alt='alfresco component' />
-  </a>
-  <a href='https://angular.io/'>
-     <img src='https://img.shields.io/badge/style-2-red.svg?label=angular' alt='angular 2' />
-  </a>
-  <a href='https://www.typescriptlang.org/docs/tutorial.html'>
-     <img src='https://img.shields.io/badge/style-lang-blue.svg?label=typescript' alt='typescript' />
-  </a>
-  <a href='https://www.alfresco.com/'>
-     <img src='https://img.shields.io/badge/style-%3E5.0.0-blue.svg?label=node%20version' alt='node version' />
-  </a>
-</p>
-
 Displays lists of process instances both active and completed, using any defined process filter, and
 render details of any chosen instance.
 
@@ -99,6 +67,9 @@ Follow the 3 steps below:
       <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
       <script src="node_modules/material-design-lite/material.min.js"></script>
       <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+      <!-- Load the Angular Material 2 stylesheet -->
+      <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
 
       <!-- Polyfill(s) for Safari (pre-10.x) -->
       <script src="node_modules/intl/dist/Intl.min.js"></script>
@@ -218,17 +189,13 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-|`appId`| { appId } The id of the app. |
-|`processDefinitionKey`| { processDefinitionKey } The processDefinitionKey of the process. |
-|`assignment`| { assignment } The assignment of the process.
-Possible values are:
-assignee : where the current user is the assignee
-candidate: where the current user is a task candidate
-group_x: where the task is assigned to a group where the current user is a member of. The groups can be fetched through the profile REST endpoint
-no value: where the current user is involved |
-|`state`| { state } Define state of the processes. Possible values are: completed, active |
-|`sort`| { sort } Define the sort of the processes. Possible values are created-desc, created-asc, due-desc, due-asc |
-| `schemaColumn` | { any[] } optional) JSON object that represent the number and the type of the columns that you want show |
+|`appId`| { string } The id of the app. |
+|`processDefinitionKey`| { string } The processDefinitionKey of the process. |
+|`assignment`| { string } The assignment of the process. <ul>Possible values are: <li>assignee : where the current user is the assignee</li> <li>candidate: where the current user is a task candidate </li><li>group_x: where the task is assigned to a group where the current user is a member of.</li> <li>no value: where the current user is involved</li> </ul> |
+|`state`| { string } Define state of the processes. Possible values are: completed, active  |
+|`landingTaskId`| { string } Define which task id should be selected after the reloading. If the task id doesn't exist or nothing is passed it will select the first task |
+|`sort`| { string } Define the sort of the processes. Possible values are : created-desc, created-asc, due-desc, due-asc |
+| `data` | { DataTableAdapter } (optional) JSON object that represent the number and the type of the columns that you want show |
 
 Example:
 
@@ -256,6 +223,7 @@ The component shows the details of the task id passed in input
 | `formLoaded` | Invoked when form is loaded or reloaded. |
 | `formSaved` | Invoked when form is submitted with `Save` or custom outcomes.  |
 | `formCompleted` | Invoked when form is submitted with `Complete` outcome.  |
+| `taskCreated` | Invoked when a checklist task is created.  |
 | `executeOutcome` | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 | `onError` | Invoked at any error |
 
@@ -270,6 +238,7 @@ The component shows the details of the task id passed in input
 | `showFormRefreshButton` | {boolean} | optional | Toggle rendering of the `Refresh` button. |
 | `showFormSaveButton` | {boolean} | optional | Toggle rendering of the `Save` outcome button. |
 | `showFormCompleteButton` | {boolean} | optional | Toggle rendering of the Form `Complete` outcome button |
+| `peopleIconImageUrl` | {string} | optional | Define a custom people icon image |
 
 ### Custom 'empty Activiti Task Details' template
 
@@ -328,6 +297,30 @@ The component shows all the available filters.
 #### Options
 
 No options
+
+## Basic usage example Activiti Checklist
+
+The component shows the checklist task functionality.
+
+```html
+<activiti-checklist></activiti-checklist>
+```
+
+#### Options
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `taskId` | {string} | required | The id of the parent task which sub tasks are attached on. |
+| `readOnlyForm` | {boolean} | optional | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
+| `assignee` | {string} | required | The assignee id where the subtasks are assigned to. |
+
+## Basic usage example Activiti Checklist
+
+The component shows all the available filters.
+
+```html
+<activiti-checklist [readOnly]="false" [taskId]="taskId" [assignee]="taskAssignee.id" #activitichecklist></activiti-checklist>
+```
 
 ## Build from sources
 

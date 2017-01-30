@@ -110,7 +110,15 @@
     }
 }
 
-.mdl-data-table-fix-firefox{
+.mdl-data-table-fix-firefox {
     border-collapse: unset;
     border-spacing: 0;
+}
+
+.alfresco-datatable__row:focus {
+    outline-offset: -4px;
+}
+
+.alfresco-datatable__row--selected {
+    color: rgb(68,138,255);
 }

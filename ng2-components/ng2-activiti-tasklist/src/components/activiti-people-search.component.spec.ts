@@ -15,15 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    CoreModule,
-    AlfrescoTranslationService
-} from 'ng2-alfresco-core';
-import { ActivitiPeopleSearch } from './activiti-people-search.component';
-import { TranslationMock } from '../assets/translation.service.mock';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { ActivitiPeopleSearch } from './activiti-people-search.component';
+import { User } from '../models/user.model';
 
 declare let jasmine: any;
 
@@ -41,7 +37,7 @@ const fakeSecondUser: User = new User({
     email: 'fake-involve@mail.com'
 });
 
-describe('Activiti People Search', () => {
+describe('ActivitiPeopleSearch', () => {
 
     let activitiPeopleSearchComponent: ActivitiPeopleSearch;
     let fixture: ComponentFixture<ActivitiPeopleSearch>;
@@ -52,11 +48,18 @@ describe('Activiti People Search', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [CoreModule],
-            declarations: [ActivitiPeopleSearch],
-            providers: [
-                {provide: AlfrescoTranslationService, useClass: TranslationMock}]
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [
+                ActivitiPeopleSearch
+            ]
         }).compileComponents().then(() => {
+
+            let translateService = TestBed.get(AlfrescoTranslationService);
+            spyOn(translateService, 'addTranslationFolder').and.stub();
+            spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+
             fixture = TestBed.createComponent(ActivitiPeopleSearch);
             activitiPeopleSearchComponent = fixture.componentInstance;
             element = fixture.nativeElement;
@@ -80,7 +83,7 @@ describe('Activiti People Search', () => {
         fixture.whenStable()
             .then(() => {
                 expect(element.querySelector('#no-user-found')).not.toBeNull();
-                expect(element.querySelector('#no-user-found').textContent).toContain('No user found to involve');
+                expect(element.querySelector('#no-user-found').textContent).toContain('PEOPLE.SEARCH.NO_USERS');
             });
     });
 
@@ -106,10 +109,11 @@ describe('Activiti People Search', () => {
         searchInput.dispatchEvent(new Event('input'));
     });
 
-    it('should send an event when an user is clicked', async(() => {
+    it('should send an event when an user is clicked', (done) => {
         activitiPeopleSearchComponent.onRowClicked.subscribe((user) => {
             expect(user).toBeDefined();
             expect(user.firstName).toBe('fake-name');
+            done();
         });
         activitiPeopleSearchComponent.results = Observable.of(userArray);
         activitiPeopleSearchComponent.ngOnInit();
@@ -119,9 +123,9 @@ describe('Activiti People Search', () => {
                 let userToSelect = <HTMLElement> element.querySelector('#user-1');
                 userToSelect.click();
             });
-    }));
+    });
 
-    it('should remove clicked user', async(() => {
+    it('should remove clicked user', (done) => {
         activitiPeopleSearchComponent.results = Observable.of(userArray);
         activitiPeopleSearchComponent.ngOnInit();
         fixture.detectChanges();
@@ -132,6 +136,7 @@ describe('Activiti People Search', () => {
         fixture.whenStable()
             .then(() => {
                 expect(element.querySelector('#user-1')).toBeNull();
+                done();
             });
-    }));
+    });
 });

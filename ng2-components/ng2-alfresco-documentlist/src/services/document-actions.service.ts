@@ -24,10 +24,8 @@ import { AlfrescoContentService } from 'ng2-alfresco-core';
 export class DocumentActionsService {
     private handlers: { [id: string]: ContentActionHandler; } = {};
 
-    constructor(
-        private documentListService?: DocumentListService,
-        private contentService?: AlfrescoContentService
-    ) {
+    constructor(private documentListService?: DocumentListService,
+                private contentService?: AlfrescoContentService) {
         this.setupActionHandlers();
     }
 

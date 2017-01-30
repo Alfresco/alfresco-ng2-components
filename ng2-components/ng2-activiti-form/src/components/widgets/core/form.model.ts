@@ -23,12 +23,15 @@ import { FormOutcomeModel } from './form-outcome.model';
 import { FormFieldModel } from './form-field.model';
 import { FormFieldTypes } from './form-field-types';
 import { FormFieldTemplates } from './form-field-templates';
+import { FormService } from './../../../services/form.service';
+import { FormFieldEvent } from './../../../events/index';
 
 export class FormModel {
 
     static UNSET_TASK_NAME: string = 'Nameless task';
     static SAVE_OUTCOME: string = '$save';
     static COMPLETE_OUTCOME: string = '$complete';
+    static START_PROCESS_OUTCOME: string = '$startProcess';
 
     readonly id: string;
     readonly name: string;
@@ -47,6 +50,7 @@ export class FormModel {
     fields: FormWidgetModel[] = [];
     outcomes: FormOutcomeModel[] = [];
     customFieldTemplates: FormFieldTemplates = {};
+    readonly selectedOutcome: string;
 
     values: FormValues = {};
 
@@ -64,7 +68,7 @@ export class FormModel {
         return this.outcomes && this.outcomes.length > 0;
     }
 
-    constructor(json?: any, data?: FormValues, readOnly: boolean = false) {
+    constructor(json?: any, data?: FormValues, readOnly: boolean = false, protected formService?: FormService) {
         this.readOnly = readOnly;
 
         if (json) {
@@ -76,6 +80,7 @@ export class FormModel {
             this.taskName = json.taskName || json.name || FormModel.UNSET_TASK_NAME;
             this.processDefinitionId = json.processDefinitionId;
             this.customFieldTemplates = json.customFieldTemplates || {};
+            this.selectedOutcome = json.selectedOutcome || {};
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
@@ -103,11 +108,12 @@ export class FormModel {
             if (json.fields) {
                 let saveOutcome = new FormOutcomeModel(this, { id: FormModel.SAVE_OUTCOME, name: 'Save', isSystem: true });
                 let completeOutcome = new FormOutcomeModel(this, {id: FormModel.COMPLETE_OUTCOME, name: 'Complete', isSystem: true });
+                let startProcessOutcome = new FormOutcomeModel(this, { id: FormModel.START_PROCESS_OUTCOME, name: 'Start Process', isSystem: true });
 
                 let customOutcomes = (json.outcomes || []).map(obj => new FormOutcomeModel(this, obj));
 
                 this.outcomes = [saveOutcome].concat(
-                    customOutcomes.length > 0 ? customOutcomes : [completeOutcome]
+                    customOutcomes.length > 0 ? customOutcomes : [completeOutcome, startProcessOutcome]
                 );
             }
         }
@@ -116,6 +122,9 @@ export class FormModel {
 
     onFormFieldChanged(field: FormFieldModel) {
         this.validateField(field);
+        if (this.formService) {
+            this.formService.formFieldValueChanged.next(new FormFieldEvent(this, field));
+        }
     }
 
     // TODO: consider evaluating and caching once the form is loaded

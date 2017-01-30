@@ -3,14 +3,28 @@
     <div class="login-card-wide mdl-card mdl-shadow--4dp">
         <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
-                <img class="center" [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'" alt="{{'LOGIN.LOGO' | translate }}">
+
+                <!--HEADER TEMPLATE-->
+                <template *ngIf="headerTemplate"
+                          ngFor [ngForOf]="[data]"
+                          [ngForTemplate]="headerTemplate">
+                </template>
+
+                <img  *ngIf="!headerTemplate" class="center"
+                      [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'"
+                     alt="{{'LOGIN.LOGO' | translate }}">
             </div>
             <div class="mdl-card__supporting-text">
+
+                <!--ERRORS AREA-->
                 <div>
                     <div *ngIf="error" id="login-error" data-automation-id="login-error"
                          class="error mdl-card__supporting-text">{{errorMsg | translate }}</div>
                     <div *ngIf="success" id="login-success" data-automation-id="login-success" class="mdl-card__supporting-text" style="color: blue;">{{'LOGIN.MESSAGES.LOGIN-SUCCESS' | translate }}</div>
                 </div>
+
+
+                <!--USERNAME FIELD-->
                 <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}"
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                     <label for="username" class="mdl-textfield__label">{{'LOGIN.LABEL.USERNAME' | translate }}</label>
@@ -26,6 +40,8 @@
                             <span id="username-error" class="mdl-textfield__error" style="visibility: visible" data-automation-id="username-error">{{formError.username | translate }}</span>
                     </span>
                 </div>
+
+                <!--PASSWORD FIELD-->
                 <div class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label alfresco-login__password">
                     <i [ngClass]="{hide: isPasswordShow}" [ngClass]="{show: !isPasswordShow}" (click)="toggleShowPassword()" data-automation-id="show_password"
                        class="icon-inline">
@@ -45,7 +61,10 @@
                             <span id="password-required" class="mdl-textfield__error" style="visibility: visible" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
                 </div>
+
+                <!--CUSTOM CONTENT-->
                 <ng-content></ng-content>
+
                 <br>
                 <button type="submit" id="login-button" tabindex="3"
                         class="center mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
@@ -59,9 +78,18 @@
                 </div>
             </div>
             <div class="mdl-card__actions mdl-card--border mdl-card__link">
-                <div class="login-action">
-                    <div id="login-action-help" class="login-action-left"> <a href="">{{'LOGIN.ACTION.HELP' | translate }}</a> </div>
-                    <div id="login-action-register" class="login-action-right"> <a href="">{{'LOGIN.ACTION.REGISTER' | translate }}</a>
+
+                <!--FOOTER TEMPLATE-->
+                <template *ngIf="footerTemplate"
+                          ngFor [ngForOf]="[data]"
+                          [ngForTemplate]="footerTemplate">
+                </template>
+                <div class="login-action" *ngIf="!footerTemplate">
+                    <div id="login-action-help" class="login-action-left"> <a href="{{needHelpLink}}">{{'LOGIN.ACTION.HELP' | translate
+                        }}</a>
+                    </div>
+                    <div id="login-action-register" class="login-action-right"> <a href="{{registerLink}}">{{'LOGIN.ACTION.REGISTER' |
+                        translate }}</a>
                     </div>
                 </div>
             </div>

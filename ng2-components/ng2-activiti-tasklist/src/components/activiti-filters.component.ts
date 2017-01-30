@@ -16,11 +16,10 @@
  */
 
 import { Component, Output, EventEmitter, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { AlfrescoTranslationService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
+import { Observer, Observable } from 'rxjs/Rx';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { FilterRepresentationModel } from '../models/filter.model';
-import { Observer } from 'rxjs/Observer';
-import { Observable } from 'rxjs/Observable';
 
 declare let componentHandler: any;
 
@@ -55,19 +54,13 @@ export class ActivitiFilters implements OnInit, OnChanges {
 
     filters: FilterRepresentationModel [] = [];
 
-    /**
-     * Constructor
-     * @param auth
-     * @param translate
-     * @param activiti
-     */
-    constructor(private auth: AlfrescoAuthenticationService,
-                private translate: AlfrescoTranslationService,
-                public activiti: ActivitiTaskListService) {
+    constructor(private translateService: AlfrescoTranslationService,
+                private activiti: ActivitiTaskListService,
+                private logService: LogService) {
         this.filter$ = new Observable<FilterRepresentationModel>(observer => this.filterObserver = observer).share();
 
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -120,7 +113,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                 this.onSuccess.emit(res);
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             }
         );
@@ -137,7 +130,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
                 this.selectFirstFilter();
             },
             (err) => {
-                console.log(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             });
     }

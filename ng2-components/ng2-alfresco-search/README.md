@@ -58,6 +58,9 @@ Follow the 3 steps below:
     <script src="node_modules/material-design-lite/material.min.js"></script>
     <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
 
+    <!-- Load the Angular Material 2 stylesheet -->
+    <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
+
     <!-- Polyfill(s) for Safari (pre-10.x) -->
     <script src="node_modules/intl/dist/Intl.min.js"></script>
     <script src="node_modules/intl/locale-data/jsonp/en.js"></script>
@@ -86,6 +89,7 @@ Follow the 3 steps below:
     - ng2-alfresco-core
     - alfresco-js-api
     - ng2-alfresco-search
+    - ng2-alfresco-documentlist
 
     Please refer to the following example file: [systemjs.config.js](demo/systemjs
     .config.js) .
@@ -162,7 +166,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `searchTerm` | {string}  | (optional)  |  ""  |  Search term to pre-populate the field with |
 | `inputType` | {string}  | (optional) |   "text" |  Type of the input field to render, e.g. "search" or "text" (default) |
 | `expandable` | {boolean} |  (optional) | true  |  Whether to use an expanding search control, if false then a regular input is used. |
-| `autocomplet` | {boolean} |  (optional) | true  |  Whether the browser should offer field auto-completion for the input field to the   user. |
+| `autocomplete` | {boolean} |  (optional) | true  |  Whether the browser should offer field auto-completion for the input field to the   user. |
 | `liveSearchEnabled` | {boolean} |  (optional) |  true  |  Whether find-as-you-type suggestions should be offered for matching  content  items. Set to false to disable. |
 | `liveSearchRoot` | {boolean} |  (optional) |  "-root-"  |  NodeRef or node name where the search should start. |
 | `liveSearchResultType` | {boolean} |  (optional) |   (none)  |  Node type to filter live search results by, e.g. 'cm:content'. |
@@ -225,7 +229,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 | Name | Description |
 | --- | --- |
-| `navigate` | Emitted when a search result is clicked or double-clicked |
+| `preview` | emitted when user acts upon files with either single or double click (depends on `navigation-mode`), recommended for Viewer components integration  |
 | `resultsLoad` | Emitted when search results have fully loaded |
 
 #### Options

@@ -16,17 +16,9 @@
  */
 
 import { PaginationComponent } from '../pagination/pagination.component';
-import { PaginationProvider, DataLoadedEventEmitter} from '../pagination/paginationProvider.interface';
-import { Injector } from '@angular/core';
-import { getTestBed, TestBed} from '@angular/core/testing';
-
-class CustomPaginationProvider implements PaginationProvider {
-    skipCount: number = 0;
-    dataLoaded: DataLoadedEventEmitter;
-    count: number = 200;
-    hasMoreItems: boolean = false;
-    maxItems: number = 20;
-}
+import { PaginationData } from '../../models/pagination.data';
+import { Injector, SimpleChange } from '@angular/core';
+import { getTestBed, TestBed } from '@angular/core/testing';
 
 describe('PaginationComponent', () => {
     let injector: Injector;
@@ -40,7 +32,13 @@ describe('PaginationComponent', () => {
         });
         injector = getTestBed();
         paginationComponent = injector.get(PaginationComponent);
-        paginationComponent.provider = new CustomPaginationProvider();
+        paginationComponent.pagination = new PaginationData(0, 0, 0, 20, true);
+    });
+
+    it('should create Pagination object on init if no object pagination is passed', () => {
+        paginationComponent.pagination = null;
+        paginationComponent.ngOnInit();
+        expect(paginationComponent.pagination).not.toBe(null);
     });
 
     it('is defined', () => {
@@ -48,35 +46,63 @@ describe('PaginationComponent', () => {
     });
 
     it('page size', () => {
-        expect(paginationComponent.pageSize).toBe(20);
+        expect(paginationComponent.pagination.maxItems).toBe(20);
     });
 
     it('set page size', () => {
-        paginationComponent.pageSize = 100;
-        expect(paginationComponent.pageSize).toBe(100);
+        paginationComponent.pagination.maxItems = 100;
+        expect(paginationComponent.pagination.maxItems).toBe(100);
     });
 
-    it('prevPageAvail', () => {
-        expect(paginationComponent.prevPageAvail).toBe(false);
+    it('prevPageAvail dafault false', () => {
+        expect(paginationComponent.prevPageAvail()).toBe(false);
     });
 
-    it('nextPageAvail', () => {
-        expect(paginationComponent.nextPageAvail).toBe(false);
+    it('nextPageAvail default true', () => {
+        expect(paginationComponent.nextPageAvail()).toBe(true);
     });
 
     it('showNextPage', () => {
-        expect(paginationComponent.provider.skipCount).toBe(0);
+        expect(paginationComponent.pagination.skipCount).toBe(0);
         paginationComponent.showNextPage();
-        expect(paginationComponent.provider.skipCount).toBe(20);
+        expect(paginationComponent.pagination.skipCount).toBe(20);
     });
 
     it('showPrevPage', () => {
-        paginationComponent.provider.skipCount = 100;
+        paginationComponent.pagination.skipCount = 100;
         paginationComponent.showPrevPage();
-        expect(paginationComponent.provider.skipCount).toBe(80);
+        expect(paginationComponent.pagination.skipCount).toBe(80);
     });
 
-    it('PaginationProvider', () => {
-        expect(paginationComponent.provider instanceof CustomPaginationProvider).toBeTruthy();
+    it('should update the summary on nextpage click', () => {
+        spyOn(paginationComponent, 'updateSummary');
+
+        paginationComponent.showNextPage();
+
+        expect(paginationComponent.updateSummary).toHaveBeenCalled();
+    });
+
+    it('should update the summary on prevpage click', () => {
+        spyOn(paginationComponent, 'updateSummary');
+
+        paginationComponent.showPrevPage();
+
+        expect(paginationComponent.updateSummary).toHaveBeenCalled();
+    });
+
+    it('should update the summary on chage page size click', () => {
+        spyOn(paginationComponent, 'updateSummary');
+
+        paginationComponent.setPageSize(100);
+
+        expect(paginationComponent.updateSummary).toHaveBeenCalled();
+    });
+
+    it('should update the summary on input pagination parameter change', () => {
+        spyOn(paginationComponent, 'updateSummary');
+
+        paginationComponent.ngOnChanges({pagination: new SimpleChange(null, new PaginationData(0, 0, 0, 20, true))});
+
+        expect(paginationComponent.updateSummary).toHaveBeenCalled();
     });
 });

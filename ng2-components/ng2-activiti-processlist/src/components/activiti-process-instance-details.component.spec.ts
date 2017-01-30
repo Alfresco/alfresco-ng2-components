@@ -21,13 +21,13 @@ import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { ActivitiFormModule, FormModel, FormService } from 'ng2-activiti-form';
+import { ActivitiFormModule, FormService } from 'ng2-activiti-form';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
 
 import { ActivitiProcessInstanceDetails } from './activiti-process-instance-details.component';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { exampleProcess } from './../assets/activiti-process.model.mock';
+import { exampleProcess, exampleProcessNoName } from './../assets/activiti-process.model.mock';
 import { ProcessInstance } from '../models/process-instance.model';
 
 describe('ActivitiProcessInstanceDetails', () => {
@@ -94,6 +94,18 @@ describe('ActivitiProcessInstanceDetails', () => {
         });
     }));
 
+    it('should display default details when the process instance has no name', async(() => {
+        getProcessSpy = getProcessSpy.and.returnValue(Observable.of(exampleProcessNoName));
+        fixture.detectChanges();
+        component.ngOnChanges({ 'processInstanceId': new SimpleChange(null, '123') });
+        fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            let headerEl: DebugElement = fixture.debugElement.query(By.css('h2'));
+            expect(headerEl).not.toBeNull();
+            expect(headerEl.nativeElement.innerText).toBe('My Process - Nov 10, 2016, 3:37:30 AM');
+        });
+    }));
+
     describe('change detection', () => {
 
         let change = new SimpleChange('123', '456');
@@ -137,22 +149,6 @@ describe('ActivitiProcessInstanceDetails', () => {
             let buttonEl = fixture.debugElement.query(By.css('[data-automation-id="header-status"] button'));
             expect(buttonEl).not.toBeNull();
         });
-    });
-
-    describe('events', () => {
-
-        beforeEach(async(() => {
-            component.processInstanceId = '123';
-            fixture.detectChanges();
-            fixture.whenStable();
-        }));
-
-        it('should emit a task form completed event when task form completed', () => {
-            let emitSpy: jasmine.Spy = spyOn(component.taskFormCompleted, 'emit');
-            component.bubbleTaskFormCompleted(new FormModel());
-            expect(emitSpy).toHaveBeenCalled();
-        });
-
     });
 
 });

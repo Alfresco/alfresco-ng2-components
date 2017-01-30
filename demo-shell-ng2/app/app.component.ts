@@ -17,13 +17,7 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-import {
-    AlfrescoTranslationService,
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    StorageService
-} from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, AlfrescoAuthenticationService, AlfrescoSettingsService, StorageService, LogService } from 'ng2-alfresco-core';
 
 declare var document: any;
 
@@ -38,44 +32,34 @@ export class AppComponent {
     ecmHost: string = 'http://' + window.location.hostname + ':8080';
     bpmHost: string = 'http://' + window.location.hostname + ':9999';
 
-    constructor(public auth: AlfrescoAuthenticationService,
-                public router: Router,
-                public alfrescoSettingsService: AlfrescoSettingsService,
-                private translate: AlfrescoTranslationService,
-                private storage: StorageService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private router: Router,
+                private settingsService: AlfrescoSettingsService,
+                private translateService: AlfrescoTranslationService,
+                private storage: StorageService,
+                private logService: LogService) {
         this.setEcmHost();
         this.setBpmHost();
         this.setProvider();
 
-        if (translate) {
+        if (translateService) {
             if (process.env.ENV === 'production') {
-                translate.addTranslationFolder('custom', 'i18n/custom-translation');
-                translate.addTranslationFolder('ng2-alfresco-login', 'i18n/custom-translation/alfresco-login');
+                translateService.addTranslationFolder('custom', 'i18n/custom-translation');
+                translateService.addTranslationFolder('ng2-alfresco-login', 'i18n/custom-translation/alfresco-login');
             } else {
-                translate.addTranslationFolder('custom', 'custom-translation');
-                translate.addTranslationFolder('ng2-alfresco-login', 'custom-translation/alfresco-login');
+                translateService.addTranslationFolder('custom', 'custom-translation');
+                translateService.addTranslationFolder('ng2-alfresco-login', 'custom-translation/alfresco-login');
             }
         }
     }
 
-    isLoggedIn(): boolean {
-        this.redirectToLoginPageIfNotLoggedIn();
-        return this.auth.isLoggedIn();
-    }
-
-    redirectToLoginPageIfNotLoggedIn(): void {
-        if (!this.isLoginPage() && !this.auth.isLoggedIn()) {
-            this.router.navigate(['/login']);
-        }
-    }
-
-    isLoginPage(): boolean {
+    isAPageWithHeaderBar(): boolean {
         return location.pathname === '/login' || location.pathname === '/settings';
     }
 
     onLogout(event) {
         event.preventDefault();
-        this.auth.logout()
+        this.authService.logout()
             .subscribe(
                 () => {
                     this.navigateToLogin();
@@ -84,7 +68,7 @@ export class AppComponent {
                     if (error && error.response && error.response.status === 401) {
                         this.navigateToLogin();
                     } else {
-                        console.error('An unknown error occurred while logging out', error);
+                        this.logService.error('An unknown error occurred while logging out', error);
                         this.navigateToLogin();
                     }
                 }
@@ -107,7 +91,7 @@ export class AppComponent {
     }
 
     changeLanguage(lang: string) {
-        this.translate.use(lang);
+        this.translateService.use(lang);
         this.hideDrawer();
     }
 
@@ -118,25 +102,25 @@ export class AppComponent {
 
     private setEcmHost() {
         if (this.storage.hasItem(`ecmHost`)) {
-            this.alfrescoSettingsService.ecmHost = this.storage.getItem(`ecmHost`);
+            this.settingsService.ecmHost = this.storage.getItem(`ecmHost`);
             this.ecmHost = this.storage.getItem(`ecmHost`);
         } else {
-            this.alfrescoSettingsService.ecmHost = this.ecmHost;
+            this.settingsService.ecmHost = this.ecmHost;
         }
     }
 
     private setBpmHost() {
         if (this.storage.hasItem(`bpmHost`)) {
-            this.alfrescoSettingsService.bpmHost = this.storage.getItem(`bpmHost`);
+            this.settingsService.bpmHost = this.storage.getItem(`bpmHost`);
             this.bpmHost = this.storage.getItem(`bpmHost`);
         } else {
-            this.alfrescoSettingsService.bpmHost = this.bpmHost;
+            this.settingsService.bpmHost = this.bpmHost;
         }
     }
 
     private setProvider() {
         if (this.storage.hasItem(`providers`)) {
-            this.alfrescoSettingsService.setProviders(this.storage.getItem(`providers`));
+            this.settingsService.setProviders(this.storage.getItem(`providers`));
         }
     }
 }

@@ -69,7 +69,7 @@ export class ContentInfo {
 }
 
 export class PathInfoEntity {
-    elements: PathElementEntity;
+    elements: PathElementEntity[];
     isComplete: boolean;
     name: string;
 }

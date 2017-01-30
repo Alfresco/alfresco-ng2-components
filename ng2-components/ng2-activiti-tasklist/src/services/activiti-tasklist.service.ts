@@ -16,10 +16,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
-import { FilterRepresentationModel } from '../models/filter.model';
-import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 import { User } from '../models/user.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -28,7 +27,8 @@ import { Form } from '../models/form.model';
 @Injectable()
 export class ActivitiTaskListService {
 
-    constructor(public authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     /**
@@ -43,7 +43,7 @@ export class ActivitiTaskListService {
                 }
                 return response.data;
             })
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -62,7 +62,7 @@ export class ActivitiTaskListService {
                     return this.createDefaultFilter(appId);
                 }
                 return filters;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -78,7 +78,7 @@ export class ActivitiTaskListService {
                 } else {
                     return res.data;
                 }
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -91,7 +91,7 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((details: any) => {
                 return new TaskDetailsModel(details);
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -109,7 +109,7 @@ export class ActivitiTaskListService {
                     comments.push(new Comment(comment.id, comment.message, comment.created, user));
                 });
                 return comments;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -126,7 +126,7 @@ export class ActivitiTaskListService {
                     checklists.push(new TaskDetailsModel(checklist));
                 });
                 return checklists;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -147,7 +147,7 @@ export class ActivitiTaskListService {
                     forms.push(new Form(form.id, form.name));
                 });
                 return forms;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     attachFormToATask(taskId: string, formId: number): Observable<any> {
@@ -191,7 +191,7 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((response: TaskDetailsModel) => {
                 return new TaskDetailsModel(response);
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -204,7 +204,7 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((response: FilterRepresentationModel) => {
                 return response;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -218,7 +218,7 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((response: Comment) => {
                 return new Comment(response.id, response.message, response.created, response.createdBy);
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
 
     }
 
@@ -242,7 +242,7 @@ export class ActivitiTaskListService {
         return Observable.fromPromise(this.callApiTasksFiltered(requestNode))
             .map((res: any) => {
                 return res;
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -255,7 +255,7 @@ export class ActivitiTaskListService {
             .map(res => res)
             .map((response: TaskDetailsModel) => {
                 return new TaskDetailsModel(response);
-            }).catch(this.handleError);
+            }).catch(err => this.handleError(err));
     }
 
     /**
@@ -264,14 +264,14 @@ export class ActivitiTaskListService {
      */
     claimTask(taskId: string): Observable<TaskDetailsModel> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.claimTask(taskId))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private callApiTasksFiltered(requestNode: TaskQueryRequestRepresentationModel) {
         return this.apiService.getInstance().activiti.taskApi.listTasks(requestNode);
     }
 
-    private callApiTaskFilters(appId?: string) {
+    callApiTaskFilters(appId?: string) {
         if (appId) {
             return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
         } else {
@@ -312,7 +312,7 @@ export class ActivitiTaskListService {
     }
 
     private handleError(error: any) {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 

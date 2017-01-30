@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { ExternalContent } from '../components/widgets/core/external-content';
 import { ExternalContentLink } from '../components/widgets/core/external-content-link';
 import { AlfrescoApi } from  'alfresco-js-api';
@@ -28,7 +28,8 @@ export class ActivitiAlfrescoContentService {
     static UNKNOWN_ERROR_MESSAGE: string = 'Unknown error';
     static GENERIC_ERROR_MESSAGE: string = 'Server error';
 
-    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     /**
@@ -43,7 +44,7 @@ export class ActivitiAlfrescoContentService {
         let accountShortId = accountId.replace('alfresco-', '');
         return Observable.fromPromise(apiService.activiti.alfrescoApi.getContentInFolder(accountShortId, folderId))
             .map(this.toJsonArray)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -62,7 +63,7 @@ export class ActivitiAlfrescoContentService {
             simpleType: node.simpleType,
             source: accountId,
             sourceId: node.id + '@' + siteId
-        })).map(this.toJson).catch(this.handleError);
+        })).map(this.toJson).catch(err => this.handleError(err));
     }
 
     toJson(res: any) {
@@ -85,7 +86,7 @@ export class ActivitiAlfrescoContentService {
             errMsg = (error.message) ? error.message :
                 error.status ? `${error.status} - ${error.statusText}` : ActivitiAlfrescoContentService.GENERIC_ERROR_MESSAGE;
         }
-        console.error(errMsg);
+        this.logService.error(errMsg);
         return Observable.throw(errMsg);
     }
 }

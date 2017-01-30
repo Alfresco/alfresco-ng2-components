@@ -1,9 +1,21 @@
 .date-widget {
     width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .date-widget--button {
-    margin-top: 15px;
+    margin-top: 10px;
+}
+
+.mdl-date__input{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mdl-grid__date-widget{
+    align-items:center;
+    padding: 0px;
 }
 
 .date-widget__invalid .mdl-textfield__input {
@@ -20,4 +32,9 @@
 
 .date-widget__invalid .mdl-textfield__error {
     visibility: visible !important;
+}
+
+.date-widget-button__cell{
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

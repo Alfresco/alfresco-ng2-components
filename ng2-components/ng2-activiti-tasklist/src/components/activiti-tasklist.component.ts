@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
@@ -49,6 +49,9 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     @Input()
     name: string;
 
+    @Input()
+    landingTaskId: string;
+
     requestNode: TaskQueryRequestRepresentationModel;
 
     @Input()
@@ -72,10 +75,11 @@ export class ActivitiTaskList implements OnInit, OnChanges {
         {type: 'text', key: 'created', title: 'Created', sortable: true}
     ];
 
-    constructor(private translate: AlfrescoTranslationService,
-                public activiti: ActivitiTaskListService) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+    constructor(private translateService: AlfrescoTranslationService,
+                private taskListService: ActivitiTaskListService,
+                private logService: LogService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
     }
 
@@ -134,21 +138,21 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
-        this.activiti.getTotalTasks(requestNode).subscribe(
+        this.taskListService.getTotalTasks(requestNode).subscribe(
             (res) => {
                 requestNode.size = res.total;
-                this.activiti.getTasks(requestNode).subscribe(
+                this.taskListService.getTasks(requestNode).subscribe(
                     (response) => {
                         let instancesRow = this.createDataRow(response);
                         this.renderInstances(instancesRow);
-                        this.selectFirst();
+                        this.selectTask(requestNode.landingTaskId);
                         this.onSuccess.emit(response);
                     }, (error) => {
-                        console.error(error);
+                        this.logService.error(error);
                         this.onError.emit(error);
                     });
             }, (err) => {
-                console.error(err);
+                this.logService.error(err);
                 this.onError.emit(err);
             });
     }
@@ -181,12 +185,20 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     }
 
     /**
-     * Select the first instance of a list if present
+     * Select the task given in input if present
      */
-    selectFirst() {
+    selectTask(taskIdToSelect: string) {
         if (!this.isListEmpty()) {
-            this.currentInstanceId = this.data.getRows()[0].getValue('id');
+            let rows = this.data.getRows();
+            if (rows.length > 0) {
+                let dataRow = rows.find(row => row.getValue('id') ===  taskIdToSelect) || rows[0];
+                this.data.selectedRow = dataRow;
+                this.currentInstanceId = dataRow.getValue('id');
+            }
         } else {
+            if (this.data) {
+                this.data.selectedRow = null;
+            }
             this.currentInstanceId = null;
         }
     }
@@ -238,7 +250,8 @@ export class ActivitiTaskList implements OnInit, OnChanges {
             text: this.name,
             assignment: this.assignment,
             state: this.state,
-            sort: this.sort
+            sort: this.sort,
+            landingTaskId: this.landingTaskId
         };
         return new TaskQueryRequestRepresentationModel(requestNode);
     }

@@ -4,7 +4,9 @@
     "MESSAGES": {
       "UNKNOWN-WIDGET-TYPE": "UNKNOWN WIDGET TYPE",
       "FILL-PARAMETER": "Fill in the parameters to generate your report",
-      "NO-DATA-FOUND": "No data found"
+      "NO-DATA-FOUND": "No data found",
+      "ZERO-DATA-FOUND": "There are only zero values",
+      "SETTING-TITLE": "Change report setting"
     }
   },
   "__KEY_REPORTING": {

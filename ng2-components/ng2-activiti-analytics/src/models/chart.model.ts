@@ -49,6 +49,9 @@ export class Chart {
             case 'processDefinitionHeatMap':
                 chartType = 'HeatMap';
                 break;
+           case 'masterDetailTable':
+                chartType = 'masterDetailTable';
+                break;
             default:
                 chartType = 'table';
                 break;
@@ -191,6 +194,22 @@ export class TableChart extends Chart {
     }
 }
 
+export class DetailsTableChart extends TableChart {
+    detailsTable: any;
+    showDetails: boolean = false;
+
+    constructor(obj?: any) {
+        super(obj);
+        if (obj.detailTables) {
+            this.detailsTable = new TableChart(obj.detailTables[0]);
+        }
+    }
+
+    hasDetailsTable() {
+        return this.detailsTable ? true : false;
+    }
+}
+
 export class HeatMapChart extends Chart {
     avgTimePercentages: string;
     avgTimeValues: string;
@@ -236,7 +255,20 @@ export class PieChart extends Chart {
         this.data.push(data);
     }
 
-    hasData() {
+    hasData(): boolean {
         return this.data && this.data.length > 0 ? true : false;
+    }
+
+    hasZeroValues(): boolean {
+        let isZeroValues: boolean = false;
+        if (this.hasData()) {
+            isZeroValues = true;
+            this.data.forEach((value) => {
+                if (value.toString() !== '0') {
+                    isZeroValues = false;
+                }
+            });
+        }
+        return isZeroValues;
     }
 }

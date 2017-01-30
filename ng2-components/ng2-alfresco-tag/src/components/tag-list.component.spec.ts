@@ -15,15 +15,10 @@
  * limitations under the License.
  */
 
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { TagList } from '../components/tag-list.component';
-import { DebugElement }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule
-} from 'ng2-alfresco-core';
+import { CoreModule } from 'ng2-alfresco-core';
+import { TagList } from './../components/tag-list.component';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
@@ -54,13 +49,12 @@ describe('Test ng2-alfresco-tag Tag list All ECM', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
-            declarations: [TagList],
+            declarations: [
+                TagList
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
                 TagService
             ]
         }).compileComponents();

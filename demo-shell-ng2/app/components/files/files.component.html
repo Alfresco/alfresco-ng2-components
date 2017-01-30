@@ -1,12 +1,11 @@
 <div class="container">
     <alfresco-upload-drag-area
-            [rootFolderId]="uploadRootFolderId"
-            [currentFolderPath]="uploadFolderPath"
+            [rootFolderId]="documentList.currentFolderId"
             [versioning] = "versioning"
             (onSuccess)="documentList.reload()">
         <alfresco-document-list-breadcrumb
-            [currentFolderPath]="currentPath"
-            (pathChanged)="onBreadcrumbPathChanged($event)" *ngIf="!currentFolderId">
+            [target]="documentList"
+            [folderNode]="documentList.folderNode">
         </alfresco-document-list-breadcrumb>
         <div *ngIf="errorMessage" class="error-message">
             <button (click)="resetError()" class="mdl-button mdl-js-button mdl-button--icon">
@@ -16,22 +15,12 @@
         </div>
         <alfresco-document-list
                 #documentList
-                [rootFolderId]="rootFolderId"
-                [currentFolderPath]="currentPath"
                 [currentFolderId]="currentFolderId"
                 [contextMenuActions]="true"
                 [contentActions]="true"
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
-                (preview)="showFile($event)"
-                (folderChange)="onFolderChanged($event)">
-            <!--
-            <empty-folder-content>
-                <template>
-                    <h1>Sorry, no content here</h1>
-                </template>
-            </empty-folder-content>
-            -->
+                (preview)="showFile($event)">
             <content-columns>
                 <content-column key="$thumbnail" type="image"></content-column>
                 <content-column
@@ -39,13 +28,13 @@
                         key="name"
                         sortable="true"
                         class="full-width ellipsis-cell">
+                    <!-- Example of using custom column template -->
+                    <!--
+                    <template let-entry="$implicit">
+                        <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
+                    </template>
+                    -->
                 </content-column>
-                <!--
-                <content-column
-                        title="Type"
-                        source="content.mimeType">
-                </content-column>
-                -->
                 <content-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
@@ -107,42 +96,10 @@
                 </content-action>
             </content-actions>
         </alfresco-document-list>
-        <alfresco-pagination
-            [provider]="documentList.data"
-            [supportedPageSizes]="[5, 10, 15, 20]">
-        </alfresco-pagination>
     </alfresco-upload-drag-area>
 </div>
 
 <context-menu-holder></context-menu-holder>
-
-<div class="p-10">
-    <ul>
-        <li>Current path: {{currentPath}}</li>
-        <li>
-            <button (click)="currentPath = '/'">Go to root</button>
-        </li>
-        <li>
-            <button (click)="currentPath = '/Sites'">Go to Sites</button>
-        </li>
-        <li>
-            <button (click)="currentPath = '/Sites/swsdp';">Go to Web Site Design Project site</button>
-        </li>
-        <li>
-            <button (click)="currentPath = '/Sites/swsdp/documentLibrary';">Go to Document Library</button>
-        </li>
-        <li>
-            <button (click)="currentPath = '/Sites/swsdp/documentLibrary/Agency Files/Contracts'">Go to Agency Contracts</button>
-        </li>
-        <li>
-            <button (click)="currentPath = '!@£$%^&*()'">Go to the wrong path</button>
-        </li>
-        <li>
-            <button (click)="fileDialog.toggleShowDialog()">Show/Hide File Dialog</button>
-        </li>
-    </ul>
-</div>
-
 
 <p style="width:250px;margin: 20px;">
     <label for="switch-multiple-file" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
@@ -183,8 +140,7 @@
 </div>
 <div *ngIf="!acceptedFilesTypeShow">
     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                            [rootFolderId]="uploadRootFolderId"
-                            [currentFolderPath]="uploadFolderPath"
+                            [rootFolderId]="documentList.currentFolderId"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
                             [versioning] = "versioning"
@@ -194,9 +150,8 @@
 </div>
 <div *ngIf="acceptedFilesTypeShow">
     <alfresco-upload-button data-automation-id="multiple-file-upload"
-                            [rootFolderId]="uploadRootFolderId"
-                            [currentFolderPath]="uploadFolderPath"
-                            acceptedFilesType="{{acceptedFilesType}}"
+                            [rootFolderId]="documentList.currentFolderId"
+                            [acceptedFilesType]="acceptedFilesType"
                             [multipleFiles]="multipleFileUpload"
                             [uploadFolders]="folderUpload"
                             [versioning] = "versioning"

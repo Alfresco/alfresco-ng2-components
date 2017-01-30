@@ -16,6 +16,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { FormService } from '../../../services/form.service';
 import { WidgetComponent } from './../widget.component';
 import { FormFieldOption } from './../core/form-field-option';
@@ -30,7 +31,8 @@ import { WidgetVisibilityService } from '../../../services/widget-visibility.ser
 export class DropdownWidget extends WidgetComponent implements OnInit {
 
     constructor(private formService: FormService,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private logService: LogService) {
         super();
     }
 
@@ -59,7 +61,7 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
                     this.field.options = options.concat((result || []));
                     this.field.updateForm();
                 },
-                this.handleError
+                err => this.handleError(err)
             );
     }
 
@@ -78,7 +80,7 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
                     this.field.options = options.concat((result || []));
                     this.field.updateForm();
                 },
-                this.handleError
+                err => this.handleError(err)
             );
     }
 
@@ -97,7 +99,7 @@ export class DropdownWidget extends WidgetComponent implements OnInit {
     }
 
     handleError(error: any) {
-        console.error(error);
+        this.logService.error(error);
     }
 
 }

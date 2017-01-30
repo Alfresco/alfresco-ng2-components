@@ -32,6 +32,8 @@
   </a>
 </p>
 
+See it live: [Viewer Quickstart](https://embed.plnkr.co/iTuG1lFIXfsP95l6bDW6/)
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
@@ -57,6 +59,9 @@ Follow the 3 steps below:
     <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
     <script src="node_modules/material-design-lite/material.min.js"></script>
     <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+    <!-- Load the Angular Material 2 stylesheet -->
+    <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
 
     <!-- Polyfill(s) for Safari (pre-10.x) -->
     <script src="node_modules/intl/dist/Intl.min.js"></script>

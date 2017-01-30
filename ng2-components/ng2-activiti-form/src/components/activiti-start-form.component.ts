@@ -17,7 +17,8 @@
 
 import {
     Component,
-    AfterViewChecked, OnChanges,
+    AfterViewChecked,
+    OnChanges,
     SimpleChanges,
     Input,
     ViewChild,
@@ -25,10 +26,11 @@ import {
     Output,
     EventEmitter
 } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
+import { FormOutcomeModel } from './widgets/core/index';
 
 /**
  * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.
@@ -67,6 +69,9 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
     @Input()
     showRefreshButton: boolean = true;
 
+    @Input()
+    readOnlyForm: boolean = false;
+
     @Output()
     outcomeClick: EventEmitter<any> = new EventEmitter<any>();
 
@@ -75,12 +80,15 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
 
     constructor(private translate: AlfrescoTranslationService,
                 formService: FormService,
-                visibilityService: WidgetVisibilityService) {
-        super(formService, visibilityService, null, null);
+                visibilityService: WidgetVisibilityService,
+                logService: LogService) {
+        super(formService, visibilityService, null, null, logService);
 
         if (this.translate) {
             this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
         }
+
+        this.showTitle = false;
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -107,12 +115,11 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
                     this.formName = form.name;
                     form.processDefinitionId = this.processDefinitionId;
                     this.form = this.parseForm(form);
+                    this.form.readOnly = this.readOnlyForm;
                     // this.form.processDefinitionId = this.processDefinitionId;
                     this.formLoaded.emit(this.form);
                 },
-                (error) => {
-                    this.handleError(error);
-                }
+                error => this.handleError(error)
             );
     }
 
@@ -123,15 +130,38 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
                 form => {
                     this.formName = form.processDefinitionName;
                     this.form = this.parseForm(form);
+                    this.form.readOnly = this.readOnlyForm;
                     this.formLoaded.emit(this.form);
                 },
-                (error) => {
-                    this.handleError(error);
-                }
+                error => this.handleError(error)
             );
     }
 
+    /** @override */
+    isOutcomeButtonVisible(outcome: FormOutcomeModel, isFormReadOnly: boolean): boolean {
+        if (outcome && outcome.isSystem && ( outcome.name === FormOutcomeModel.SAVE_ACTION ||
+            outcome.name === FormOutcomeModel.COMPLETE_ACTION )) {
+            return false;
+        } else if (outcome && outcome.name === FormOutcomeModel.START_PROCESS_ACTION) {
+            return true;
+        }
+        return super.isOutcomeButtonVisible(outcome, isFormReadOnly);
+    }
+
+    /** @override */
     saveTaskForm() {
+        // do nothing
+    }
+
+    /** @override */
+    onRefreshClicked() {
+        if (this.processDefinitionId) {
+            this.visibilityService.cleanProcessVariable();
+            this.getStartFormDefinition(this.processDefinitionId);
+        } else if (this.processId) {
+            this.visibilityService.cleanProcessVariable();
+            this.loadStartForm(this.processId);
+        }
     }
 
     completeTaskForm(outcome?: string) {

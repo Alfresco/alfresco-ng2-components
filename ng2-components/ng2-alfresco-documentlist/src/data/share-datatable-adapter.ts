@@ -17,85 +17,34 @@
 
 import { DatePipe } from '@angular/common';
 import { ObjectUtils } from 'ng2-alfresco-core';
-import {
-    PaginationProvider, DataLoadedEventEmitter,
-    DataTableAdapter,
-    DataRow, DataColumn, DataSorting
-} from 'ng2-alfresco-datatable';
+import { DataTableAdapter, DataRow, DataColumn, DataSorting } from 'ng2-alfresco-datatable';
 
 import { NodePaging, NodeMinimalEntry } from './../models/document-library.model';
 import { DocumentListService } from './../services/document-list.service';
 
-export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvider {
+export class ShareDataTableAdapter implements DataTableAdapter {
 
     ERR_ROW_NOT_FOUND: string = 'Row not found';
     ERR_COL_NOT_FOUND: string = 'Column not found';
 
-    DEFAULT_ROOT_ID: string = '-root-';
     DEFAULT_DATE_FORMAT: string = 'medium';
-    DEFAULT_PAGE_SIZE: number = 20;
-    MIN_PAGE_SIZE: number = 5;
 
     private sorting: DataSorting;
     private rows: DataRow[];
     private columns: DataColumn[];
     private page: NodePaging;
-    private currentPath: string;
 
     private filter: RowFilter;
     private imageResolver: ImageResolver;
 
-    private _count: number = 0;
-    private _hasMoreItems: boolean = false;
-    private _totalItems: number = 0;
-    private _skipCount: number = 0;
-    private _maxItems: number = this.DEFAULT_PAGE_SIZE;
-
     thumbnails: boolean = false;
-    dataLoaded: DataLoadedEventEmitter;
-    rootFolderId: string = this.DEFAULT_ROOT_ID;
+    selectedRow: DataRow;
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,
                 schema: DataColumn[]) {
-        this.dataLoaded = new DataLoadedEventEmitter();
         this.rows = [];
         this.columns = schema || [];
-        this.resetPagination();
-    }
-
-    get count(): number {
-        return this._count;
-    }
-
-    get hasMoreItems(): boolean {
-        return this._hasMoreItems;
-    }
-
-    get totalItems(): number {
-        return this._totalItems;
-    }
-
-    get skipCount(): number {
-        return this._skipCount;
-    }
-
-    set skipCount(value: number) {
-        if (value !== this._skipCount) {
-            this._skipCount = value > 0 ? value : 0;
-            this.loadPath(this.currentPath);
-        }
-    }
-
-    get maxItems(): number {
-        return this._maxItems;
-    }
-
-    set maxItems(value: number) {
-        if (value !== this._maxItems) {
-            this._maxItems = value > this.MIN_PAGE_SIZE ? value : this.MIN_PAGE_SIZE;
-            this.loadPath(this.currentPath);
-        }
     }
 
     getRows(): Array<DataRow> {
@@ -203,61 +152,8 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         this.setSorting(sorting);
     }
 
-    loadPath(path: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (path && this.documentListService) {
-                this.documentListService
-                    .getFolder(path, {
-                        maxItems: this._maxItems,
-                        skipCount: this._skipCount,
-                        rootFolderId: this.rootFolderId
-                    })
-                    .subscribe(val => {
-                        this.currentPath = path;
-                        this.loadPage(<NodePaging>val);
-                        this.dataLoaded.emit(null);
-                        resolve(true);
-                    },
-                    error => {
-                        reject(error);
-                    });
-            } else {
-                resolve(false);
-            }
-        });
-
-    }
-
-    loadById(id: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            if (id && this.documentListService) {
-                this.documentListService
-                    .getFolder(null, {
-                        maxItems: this._maxItems,
-                        skipCount: this._skipCount,
-                        rootFolderId: id
-                    })
-                    .subscribe(val => {
-                            this.loadPage(<NodePaging>val);
-                            this.dataLoaded.emit(null);
-                            resolve(true);
-                        },
-                        error => {
-                            reject(error);
-                        });
-            } else {
-                resolve(false);
-            }
-        });
-
-    }
-
     setFilter(filter: RowFilter) {
         this.filter = filter;
-
-        if (this.filter && this.currentPath) {
-            this.loadPath(this.currentPath);
-        }
     }
 
     setImageResolver(resolver: ImageResolver) {
@@ -292,9 +188,8 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
         }
     }
 
-    private loadPage(page: NodePaging) {
+    public loadPage(page: NodePaging) {
         this.page = page;
-        this.resetPagination();
 
         let rows = [];
 
@@ -322,15 +217,6 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
                     }
                 }
             }
-
-            let pagination = page.list.pagination;
-            if (pagination) {
-                this._count = pagination.count;
-                this._hasMoreItems = pagination.hasMoreItems;
-                this._maxItems = pagination.maxItems;
-                this._skipCount = pagination.skipCount;
-                this._totalItems = pagination.totalItems;
-            }
         }
 
         this.rows = rows;
@@ -338,14 +224,6 @@ export class ShareDataTableAdapter implements DataTableAdapter, PaginationProvid
 
     getImagePath(id: string): any {
         return `${this.basePath}/assets/images/${id}`;
-    }
-
-    private resetPagination() {
-        this._count = 0;
-        this._hasMoreItems = false;
-        this._totalItems = 0;
-        this._skipCount = 0;
-        this._maxItems = this.DEFAULT_PAGE_SIZE;
     }
 }
 

@@ -18,12 +18,8 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { NodePaging, MinimalNodeEntity } from 'alfresco-js-api';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoContentService,
-    AlfrescoApiService
-} from 'ng2-alfresco-core';
+import { NodePaging, MinimalNodeEntity, MinimalNodeEntryEntity } from 'alfresco-js-api';
+import { AlfrescoAuthenticationService, AlfrescoContentService, AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 @Injectable()
 export class DocumentListService {
@@ -61,7 +57,10 @@ export class DocumentListService {
         'application/vnd.apple.numbers': 'ft_ic_spreadsheet.svg'
     };
 
-    constructor(private authService: AlfrescoAuthenticationService, private contentService: AlfrescoContentService, private apiService: AlfrescoApiService) {
+    constructor(private authService: AlfrescoAuthenticationService,
+                private contentService: AlfrescoContentService,
+                private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     private getNodesPromise(folder: string, opts?: any): Promise<NodePaging> {
@@ -98,16 +97,13 @@ export class DocumentListService {
 
     /**
      * Create a new folder in the path.
-     * @param name
-     * @param path
+     * @param name Folder name
+     * @param parentId Parent folder ID
      * @returns {any}
      */
-    createFolder(name: string, path: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, path))
-            .map(res => {
-                return res;
-            })
-            .catch(this.handleError);
+    createFolder(name: string, parentId: string): Observable<MinimalNodeEntity> {
+        return Observable.fromPromise(this.apiService.getInstance().nodes.createFolder(name, '/', parentId))
+            .catch(err => this.handleError(err));
     }
 
     /**
@@ -119,8 +115,17 @@ export class DocumentListService {
     getFolder(folder: string, opts?: any) {
         return Observable.fromPromise(this.getNodesPromise(folder, opts))
             .map(res => <NodePaging> res)
-            // .do(data => console.log('Node data', data)) // eyeball results in the console
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
+    }
+
+    getFolderNode(nodeId: string): Promise<MinimalNodeEntryEntity> {
+        let opts: any = {
+            includeSource: true,
+            include: ['path', 'properties']
+        };
+
+        let nodes: any = this.apiService.getInstance().nodes;
+        return nodes.getNodeInfo(nodeId, opts);
     }
 
     /**
@@ -143,7 +148,7 @@ export class DocumentListService {
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 }

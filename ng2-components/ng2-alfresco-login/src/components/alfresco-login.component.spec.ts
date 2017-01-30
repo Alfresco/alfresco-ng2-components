@@ -17,12 +17,7 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule
-} from 'ng2-alfresco-core';
+import { AlfrescoAuthenticationService, CoreModule } from 'ng2-alfresco-core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AlfrescoLoginComponent } from './alfresco-login.component';
 import { AuthenticationMock } from './../assets/authentication.service.mock';
@@ -39,13 +34,10 @@ describe('AlfrescoLogin', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
             declarations: [AlfrescoLoginComponent],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
                 {provide: AlfrescoAuthenticationService, useClass: AuthenticationMock},
                 {provide: AlfrescoTranslationService, useClass: TranslationMock}
             ]
@@ -106,8 +98,8 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#username-error').innerText).toEqual('LOGIN.MESSAGES.USERNAME-MIN');
     });
 
-    it('should render validation min-length error when the username is lower than 4 characters', () => {
-        usernameInput.value = '123';
+    it('should render validation min-length error when the username is lower than 2 characters', () => {
+        usernameInput.value = '1';
         usernameInput.dispatchEvent(new Event('input'));
 
         fixture.detectChanges();
@@ -270,6 +262,75 @@ describe('AlfrescoLogin', () => {
         expect(component.success).toBe(false);
         expect(element.querySelector('#login-error')).toBeDefined();
         expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CREDENTIALS');
+    });
+
+    it('should return CORS error when server CORS error occurs', () => {
+        component.providers = 'ECM';
+        expect(component.success).toBe(false);
+        expect(component.error).toBe(false);
+
+        usernameInput.value = 'fake-username-CORS-error';
+        passwordInput.value = 'fake-password';
+
+        usernameInput.dispatchEvent(new Event('input'));
+        passwordInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+
+        element.querySelector('button').click();
+
+        fixture.detectChanges();
+
+        expect(component.error).toBe(true);
+        expect(component.success).toBe(false);
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CORS');
+    });
+
+    it('should return CSRF error when server CSRF error occurs', () => {
+        component.providers = 'ECM';
+        expect(component.success).toBe(false);
+        expect(component.error).toBe(false);
+
+        usernameInput.value = 'fake-username-CSRF-error';
+        passwordInput.value = 'fake-password';
+
+        usernameInput.dispatchEvent(new Event('input'));
+        passwordInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+
+        element.querySelector('button').click();
+
+        fixture.detectChanges();
+
+        expect(component.error).toBe(true);
+        expect(component.success).toBe(false);
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CSRF');
+    });
+
+    it('should return ECOM read-oly error when error occurs', () => {
+        component.providers = 'ECM';
+        expect(component.success).toBe(false);
+        expect(component.error).toBe(false);
+
+        usernameInput.value = 'fake-username-ECM-access-error';
+        passwordInput.value = 'fake-password';
+
+        usernameInput.dispatchEvent(new Event('input'));
+        passwordInput.dispatchEvent(new Event('input'));
+
+        fixture.detectChanges();
+
+        element.querySelector('button').click();
+
+        fixture.detectChanges();
+
+        expect(component.error).toBe(true);
+        expect(component.success).toBe(false);
+        expect(element.querySelector('#login-error')).toBeDefined();
+        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ECM-LICENSE');
     });
 
     it('should emit onSuccess event after the login has succeeded', () => {

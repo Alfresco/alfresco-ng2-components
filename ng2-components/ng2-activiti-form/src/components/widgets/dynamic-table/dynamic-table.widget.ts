@@ -16,6 +16,7 @@
  */
 
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { LogService } from 'ng2-alfresco-core';
 import { WidgetComponent } from './../widget.component';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
@@ -36,7 +37,8 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
     editRow: DynamicTableRow = null;
 
     constructor(private elementRef: ElementRef,
-                private visibilityService: WidgetVisibilityService) {
+                private visibilityService: WidgetVisibilityService,
+                private logService: LogService) {
         super();
     }
 
@@ -136,7 +138,7 @@ export class DynamicTableWidget extends WidgetComponent implements OnInit {
             }
             this.content.flushValue();
         } else {
-            this.handleError(this.ERROR_MODEL_NOT_FOUND);
+            this.logService.error(this.ERROR_MODEL_NOT_FOUND);
         }
         this.editMode = false;
     }

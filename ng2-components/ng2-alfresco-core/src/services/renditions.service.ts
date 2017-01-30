@@ -17,7 +17,8 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from './AlfrescoApi.service';
+import { AlfrescoApiService } from './alfresco-api.service';
+import { LogService } from './log.service';
 
 /**
  * RenditionsService
@@ -27,7 +28,8 @@ import { AlfrescoApiService } from './AlfrescoApi.service';
 @Injectable()
 export class RenditionsService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
 
     }
 
@@ -61,21 +63,21 @@ export class RenditionsService {
 
     getRendition(nodeId: string, encoding: string) {
         return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRendition(nodeId, encoding))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getRenditionsListByNodeId(nodeId: string) {
         return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.getRenditions(nodeId))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     createRendition(nodeId: string, encoding: string) {
         return Observable.fromPromise(this.apiService.getInstance().core.renditionsApi.createRendition(nodeId, {id: encoding}))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private handleError(error: any): Observable<any> {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 }

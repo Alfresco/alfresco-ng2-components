@@ -5,7 +5,7 @@
     <div *ngIf="hasForm()">
         <div class="mdl-card mdl-shadow--2dp activiti-form-container">
             <div class="mdl-card__title">
-                <i class="material-icons">{{ form.isValid ? 'event_available' : 'event_busy' }}</i>
+                <i *ngIf="showValidationIcon" class="material-icons">{{ form.isValid ? 'event_available' : 'event_busy' }}</i>
                 <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>
             </div>
             <div class="mdl-card__media">
@@ -24,7 +24,7 @@
                         alfresco-mdl-button
                         [disabled]="!isOutcomeButtonEnabled(outcome)"
                         [class.mdl-button--colored]="!outcome.isSystem"
-                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome)"
+                        [class.activiti-form-hide-button]="!isOutcomeButtonVisible(outcome, form.readOnly)"
                         (click)="onOutcomeClicked(outcome, $event)">
                     {{outcome.name}}
                 </button>

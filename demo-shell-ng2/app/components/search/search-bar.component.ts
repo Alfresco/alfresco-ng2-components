@@ -34,11 +34,11 @@ export class SearchBarComponent {
     expand = new EventEmitter();
 
     constructor(public router: Router,
-                public auth: AlfrescoAuthenticationService) {
+                public authService: AlfrescoAuthenticationService) {
     }
 
     isLoggedIn(): boolean {
-        return this.auth.isLoggedIn();
+        return this.authService.isLoggedIn();
     }
 
     /**

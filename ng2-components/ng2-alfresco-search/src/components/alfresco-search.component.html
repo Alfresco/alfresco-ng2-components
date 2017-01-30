@@ -1,38 +1,79 @@
-<table data-automation-id="search_result_table" *ngIf="results && results.length && searchTerm" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
-    <caption data-automation-id="search_result_found">{{ 'SEARCH.RESULTS.SUMMARY' | translate:{numResults: results.length, searchTerm: searchTerm} }}</caption>
-    <thead>
-    <tr>
-        <td class="mdl-data-table__cell--non-numeric col-mimetype-icon"></td>
-        <th class="mdl-data-table__cell--non-numeric col-display-name">
-            {{'SEARCH.RESULTS.COLUMNS.NAME' | translate}}
-        </th>
-        <th class="mdl-data-table__cell--non-numeric col-modified-by">
-            {{'SEARCH.RESULTS.COLUMNS.MODIFIED_BY' | translate}}
-        </th>
-        <th class="mdl-data-table__cell--non-numeric col-modified-at">
-            {{'SEARCH.RESULTS.COLUMNS.MODIFIED_AT' | translate}}
-        </th>
-    </tr>
-    </thead>
-    <tbody>
+<div data-automation-id="search_result_table"
+     class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+    <p data-automation-id="search_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
+    <div class="container">
+        <alfresco-document-list
+            [node]="nodeResults"
+            [contextMenuActions]="true"
+            [creationMenuActions]="false"
+            [contentActions]="true"
+            [navigationMode]="navigationMode"
+            [enablePagination]="false"
+            (error)="onNavigationError($event)"
+            (success)="resetError()"
+            (preview)="onPreviewFile($event)">
+            <empty-folder-content>
+                <template>
+                    <div class="empty_template">
+                        <div class="no-result-message">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</div>
+                        <img [src]="baseComponentPath + '/assets/images/empty_doc_lib.svg'" class="no-result__empty_doc_lib">
+                    </div>
+                </template>
+                <template>
+                </template>
+            </empty-folder-content>
 
-    <tr  id="result_row_{{idx}}" tabindex="0" *ngFor="let result of results; let idx = index" (click)="onItemClick(result, $event)" (dblclick)="onItemDblClick(result, $event)" (keyup.enter)="onItemClick(result, $event)">
-        <td class="col-mimetype-icon"><img src="{{getMimeTypeIcon(result)}}" alt="{{getMimeTypeKey(result)|translate}}" /></td>
-        <td id="result_name_{{idx}}" class="mdl-data-table__cell--non-numeric col-display-name"
-            attr.data-automation-id=file_{{result.entry.name}} >{{result.entry.name}}</td>
-        <td id="result_user_{{idx}}" class="mdl-data-table__cell--non-numeric  col-modified-by"
-            attr.data-automation-id=file_{{result.entry.name}}_{{result.entry.modifiedByUser.displayName}}>{{result.entry.modifiedByUser.displayName}}</td>
-        <td class="col-modified-at">{{result.entry.modifiedAt | date}}</td>
-    </tr>
+            <content-columns>
+                <content-column key="$thumbnail" type="image"></content-column>
+                <content-column
+                    title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
+                    key="name"
+                    sortable="true"
+                    class="full-width ellipsis-cell">
+                </content-column>
+                <content-column
+                    title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
+                    key="createdByUser.displayName"
+                    sortable="true"
+                    class="desktop-only">
+                </content-column>
+                <content-column
+                    title="{{'SEARCH.DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
+                    key="createdAt"
+                    type="date"
+                    format="medium"
+                    sortable="true"
+                    class="desktop-only">
+                </content-column>
+            </content-columns>
 
-    </tbody>
-</table>
-<table id="search_no_result" data-automation-id="search_no_result_found" *ngIf="results && results.length === 0"
-       class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
-    <tbody>
-    <tr>
-        <td class="mdl-data-table__cell--non-numeric">{{ 'SEARCH.RESULTS.NONE' | translate:{searchTerm: searchTerm} }}</td>
-    </tr>
-    </tbody>
-</table>
-<p data-automation-id="search_error_message" *ngIf="errorMessage">{{ 'SEARCH.RESULTS.ERROR' | translate:{errorMessage: errorMessage} }}</p>
+            <content-actions>
+                <!-- folder actions -->
+                <content-action
+                    target="folder"
+                    title="{{'SEARCH.DOCUMENT_LIST.ACTIONS.FOLDER.DELETE' | translate}}"
+                    handler="delete">
+                </content-action>
+                <!-- document actions -->
+                <content-action
+                    target="document"
+                    title="{{'SEARCH.DOCUMENT_LIST.ACTIONS.DOCUMENT.DOWNLOAD' | translate}}"
+                    handler="download">
+                </content-action>
+                <content-action
+                    target="document"
+                    title="{{'SEARCH.DOCUMENT_LIST.ACTIONS.DOCUMENT.DELETE' | translate}}"
+                    handler="delete">
+                </content-action>
+            </content-actions>
+        </alfresco-document-list>
+        <alfresco-pagination
+            (changePageSize)="onChangePageSize($event)"
+            (nextPage)="onNextPage($event)"
+            (prevPage)="onPrevPage($event)"
+            [pagination]="pagination"
+            [maxItems]="maxResults"
+            [supportedPageSizes]="[5, 10, 15, 20]">
+        </alfresco-pagination>
+    </div>
+</div>

@@ -19,12 +19,10 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Rx';
-
-import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 import { ActivitiApps } from './activiti-apps.component';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
-import { TranslationMock } from './../assets/translation.service.mock';
 import { defaultApp, deployedApps, nonDeployedApps } from './../assets/activiti-apps.mock';
 
 describe('ActivitiApps', () => {
@@ -45,10 +43,13 @@ describe('ActivitiApps', () => {
                 ActivitiApps
             ],
             providers: [
-                { provide: AlfrescoTranslationService, useClass: TranslationMock },
                 ActivitiTaskListService
             ]
         }).compileComponents();
+
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
     }));
 
     beforeEach(() => {
@@ -56,8 +57,8 @@ describe('ActivitiApps', () => {
         fixture = TestBed.createComponent(ActivitiApps);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
-        service = fixture.debugElement.injector.get(ActivitiTaskListService);
 
+        service = fixture.debugElement.injector.get(ActivitiTaskListService);
         getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of());
 
         componentHandler = jasmine.createSpyObj('componentHandler', [

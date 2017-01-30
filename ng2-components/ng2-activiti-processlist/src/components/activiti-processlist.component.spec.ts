@@ -21,34 +21,13 @@ import { Observable } from 'rxjs/Rx';
 import { ActivitiProcessInstanceListComponent } from './activiti-processlist.component';
 
 import { AlfrescoTranslationService, CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule, ObjectDataRow, DataRowEvent, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataTableModule, ObjectDataRow, DataRowEvent, ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
+import { fakeProcessInstances, fakeProcessInstancesWithNoName } from '../assets/activiti-process-instances-list.mock';
 import { TranslationMock } from './../assets/translation.service.mock';
-import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 
 describe('ActivitiProcessInstanceListComponent', () => {
-
-    let fakeGlobalProcesses = [
-        new ProcessInstance({
-            id: 1, name: 'process-name',
-            processDefinitionId: 'fakeprocess:5:7507',
-            processDefinitionKey: 'fakeprocess',
-            processDefinitionName: 'Fake Process Name',
-            description: null, category: null,
-            started: '2017-11-09T12:37:25.184+0000',
-            startedBy: {
-                id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
-            }
-        }),
-        new ProcessInstance({
-            id: 2, name: '', description: null, category: null,
-            started: '2015-11-09T12:37:25.184+0000',
-            startedBy: {
-                id: 3, firstName: 'tenant2', lastName: 'tenantLastname', email: 'tenant2@tenant'
-            }
-        })
-    ];
 
     let componentHandler: any;
     let fixture: ComponentFixture<ActivitiProcessInstanceListComponent>;
@@ -59,8 +38,8 @@ describe('ActivitiProcessInstanceListComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule
+                CoreModule.forRoot(),
+                DataTableModule.forRoot()
             ],
             declarations: [ ActivitiProcessInstanceListComponent ],
             providers: [
@@ -72,7 +51,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
             component = fixture.componentInstance;
             service = fixture.debugElement.injector.get(ActivitiProcessService);
 
-            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeGlobalProcesses));
+            getProcessInstancesSpy = spyOn(service, 'getProcessInstances').and.returnValue(Observable.of(fakeProcessInstances));
 
             componentHandler = jasmine.createSpyObj('componentHandler', [
                 'upgradeAllRegistered',
@@ -114,34 +93,122 @@ describe('ActivitiProcessInstanceListComponent', () => {
         component.processDefinitionKey = null;
         fixture.detectChanges();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeGlobalProcesses);
+        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstances);
     }));
 
-    it('should return the process instances list', (done) => {
+    it('should return the process instances list in original order when datalist passed non-existent columns', (done) => {
+        component.data = new ObjectDataTableAdapter(
+            [],
+            [
+                {type: 'text', key: 'fake-id', title: 'Name'}
+            ]
+        );
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = null;
-        component.onSuccess.subscribe( (res) => {
+        component.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
+            done();
+        });
+        fixture.detectChanges();
+    });
+
+    it('should order the process instances by name column when no sort passed', (done) => {
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = null;
+        component.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.data).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.data.getRows().length).toEqual(2);
+            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 382927392');
+            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
+            done();
+        });
+        fixture.detectChanges();
+    });
+
+    it('should order the process instances by descending column when specified', (done) => {
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = null;
+        component.sort = 'name-desc';
+        component.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.data).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.data.getRows().length).toEqual(2);
+            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
+            done();
+        });
+        fixture.detectChanges();
+    });
+
+    it('should order the process instances by ascending column when specified', (done) => {
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = null;
+        component.sort = 'started-asc';
+        component.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.data).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.data.getRows().length).toEqual(2);
+            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
+            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 382927392');
+            done();
+        });
+        fixture.detectChanges();
+    });
+
+    it('should order the process instances by descending start date when specified', (done) => {
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = null;
+        component.sort = 'started-desc';
+        component.onSuccess.subscribe((res) => {
+            expect(res).toBeDefined();
+            expect(component.data).toBeDefined();
+            expect(component.isListEmpty()).not.toBeTruthy();
+            expect(component.data.getRows().length).toEqual(2);
+            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 382927392');
+            expect(component.data.getRows()[1].getValue('name')).toEqual('Process 773443333');
             done();
         });
         fixture.detectChanges();
     });
 
     it('should return the process instances list filtered by processDefinitionKey', (done) => {
+        let key = 'fakeprocess';
+        component.appId = '1';
+        component.state = 'open';
+        component.processDefinitionKey = key;
+        component.onSuccess.subscribe((res) => {
+            let lastCall = getProcessInstancesSpy.calls.mostRecent();
+            expect(lastCall).toBeDefined();
+            let lastCallArgs = lastCall.args;
+            expect(lastCallArgs[0]).toBeDefined();
+            expect(lastCallArgs[0].processDefinitionKey).toEqual(key);
+            done();
+        });
+        fixture.detectChanges();
+    });
+
+    it('should return a default name if no name is specified on the process', (done) => {
+        getProcessInstancesSpy = getProcessInstancesSpy.and.returnValue(Observable.of(fakeProcessInstancesWithNoName));
         component.appId = '1';
         component.state = 'open';
         component.processDefinitionKey = 'fakeprocess';
         component.onSuccess.subscribe( (res) => {
-            expect(res).toBeDefined();
-            expect(component.data).toBeDefined();
-            expect(component.isListEmpty()).not.toBeTruthy();
-            expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:36:14 PM');
+            expect(component.data.getRows()[1].getValue('name')).toEqual('Fake Process Name - Nov 9, 2017, 12:37:25 PM');
             done();
         });
         fixture.detectChanges();
@@ -172,7 +239,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
         let emitSpy = spyOn(component.onSuccess, 'emit');
         component.reload();
         tick();
-        expect(emitSpy).toHaveBeenCalledWith(fakeGlobalProcesses);
+        expect(emitSpy).toHaveBeenCalledWith(fakeProcessInstances);
     }));
 
     it('should reload processes when reload() is called', (done) => {
@@ -188,7 +255,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
             done();
         });
         component.reload();
@@ -235,7 +302,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
@@ -251,7 +318,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
@@ -267,7 +334,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
@@ -275,7 +342,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
         });
 
         it('should reload the list when the sort parameter changes', (done) => {
-            const sort = 'desc';
+            const sort = 'created-desc';
             let change = new SimpleChange(null, sort);
 
             component.onSuccess.subscribe((res) => {
@@ -283,10 +350,25 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 
+            component.ngOnChanges({'sort': change});
+        });
+
+        it('should sort the list when the sort parameter changes', (done) => {
+            const sort = 'created-asc';
+            let change = new SimpleChange(null, sort);
+            let sortSpy = spyOn(component.data, 'setSorting');
+
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(sortSpy).toHaveBeenCalledWith(new DataSorting('started', 'asc'));
+                done();
+            });
+
+            component.sort = sort;
             component.ngOnChanges({'sort': change});
         });
 
@@ -299,7 +381,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
                 expect(component.data).toBeDefined();
                 expect(component.isListEmpty()).not.toBeTruthy();
                 expect(component.data.getRows().length).toEqual(2);
-                expect(component.data.getRows()[1].getValue('name')).toEqual('No name');
+                expect(component.data.getRows()[0].getValue('name')).toEqual('Process 773443333');
                 done();
             });
 

@@ -15,16 +15,10 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Optional, ViewChild } from '@angular/core';
+import { Component, OnInit, Optional, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import {
-    DocumentActionsService,
-    DocumentList,
-    ContentActionHandler,
-    DocumentActionModel,
-    FolderActionModel
-} from 'ng2-alfresco-documentlist';
+import { AlfrescoAuthenticationService, LogService } from 'ng2-alfresco-core';
+import { DocumentActionsService, DocumentListComponent, ContentActionHandler, DocumentActionModel, FolderActionModel } from 'ng2-alfresco-documentlist';
 import { FormService } from 'ng2-activiti-form';
 
 @Component({
@@ -33,9 +27,8 @@ import { FormService } from 'ng2-activiti-form';
     styleUrls: ['./files.component.css']
 })
 export class FilesComponent implements OnInit {
-    currentPath: string = '/Sites/swsdp/documentLibrary';
-    rootFolderId: string = '-root-';
-    currentFolderId: string = null;
+    // The identifier of a node. You can also use one of these well-known aliases: -my- | -shared- | -root-
+    currentFolderId: string = '-my-';
 
     errorMessage: string = null;
     fileNodeId: any;
@@ -44,23 +37,16 @@ export class FilesComponent implements OnInit {
     folderUpload: boolean = false;
     acceptedFilesTypeShow: boolean = false;
     versioning: boolean = false;
-
     acceptedFilesType: string = '.jpg,.pdf,.js';
 
-    get uploadRootFolderId(): string {
-        return this.currentFolderId || this.rootFolderId;
-    }
-
-    get uploadFolderPath(): string {
-        return this.currentFolderId ? '/' : this.currentPath;
-    }
-
-    @ViewChild(DocumentList)
-    documentList: DocumentList;
+    @ViewChild(DocumentListComponent)
+    documentList: DocumentListComponent;
 
     constructor(private documentActions: DocumentActionsService,
-                public auth: AlfrescoAuthenticationService,
+                private authService: AlfrescoAuthenticationService,
                 private formService: FormService,
+                private logService: LogService,
+                private changeDetector: ChangeDetectorRef,
                 private router: Router,
                 @Optional() private route: ActivatedRoute) {
         documentActions.setHandler('my-handler', this.myDocumentActionHandler.bind(this));
@@ -84,18 +70,6 @@ export class FilesComponent implements OnInit {
             this.fileShowed = true;
         } else {
             this.fileShowed = false;
-        }
-    }
-
-    onFolderChanged(event?: any) {
-        if (event) {
-            this.currentPath = event.path;
-        }
-    }
-
-    onBreadcrumbPathChanged(event?: any) {
-        if (event) {
-            this.currentPath = event.value;
         }
     }
 
@@ -123,16 +97,19 @@ export class FilesComponent implements OnInit {
     ngOnInit() {
         if (this.route) {
             this.route.params.forEach((params: Params) => {
-                this.currentFolderId = params.hasOwnProperty('id') ? params['id'] : null;
+                if (params['id']) {
+                    this.currentFolderId = params['id'];
+                    this.changeDetector.detectChanges();
+                }
             });
         }
-        if (this.auth.isBpmLoggedIn()) {
+        if (this.authService.isBpmLoggedIn()) {
             this.formService.getProcessDefinitions().subscribe(
                 defs => this.setupBpmActions(defs || []),
-                err => console.log(err)
+                err => this.logService.error(err)
             );
         } else {
-            console.log('You are not logged in');
+            this.logService.warn('You are not logged in to BPM');
         }
     }
 

@@ -40,8 +40,8 @@ describe('ActivitiProcessInstanceVariables', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule,
-                DataTableModule
+                CoreModule.forRoot(),
+                DataTableModule.forRoot()
             ],
             declarations: [
                 ActivitiProcessInstanceVariables

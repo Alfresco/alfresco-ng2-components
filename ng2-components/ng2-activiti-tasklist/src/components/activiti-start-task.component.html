@@ -20,7 +20,7 @@
         </div>
         <div class="mdl-textfield mdl-js-textfield alf-mdl-selectfield">
             <select name="taskForm" [(ngModel)]="formId" >
-                <option value="" selected="selected" selected>None</option>
+                <option value="null">{{'START_TASK.DIALOG.LABEL.NONE'|translate}}</option>
                 <option *ngFor="let form of forms" [value]="form.id">
                     {{form.name}}
                 </option>

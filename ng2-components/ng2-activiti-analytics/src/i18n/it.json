@@ -1,5 +1,47 @@
 {
     "ANALYTICS": {
-        "TTILE": "ANALYTICS"
+        "TTILE": "ANALYTICS",
+        "MESSAGES": {
+            "UNKNOWN-WIDGET-TYPE": "TIPO WIDGET SCONOSCIUTO",
+            "FILL-PARAMETER": "Riempi tutti i campi per generare il report",
+            "NO-DATA-FOUND": "Nessun valore trovato",
+            "ZERO-DATA-FOUND": "Ci sono solo valori che valgono zero",
+            "SETTING-TITLE": "Modifica i parametri del report"
+        }
+    },
+    "__KEY_REPORTING": {
+        "DEFAULT-REPORTS": {
+            "PROCESS-DEFINITION-OVERVIEW": {
+                "GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS": "Numero totale di process definitions",
+                "GENERAL-TABLE-TOTAL-PROCESS-INSTANCES": "Numero totale di process instances",
+                "GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES": "Numero totale di process instances attivi",
+                "GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES": "Numero totale di process instances completi"
+            }
+        }
+    },
+    "REPORTING": {
+        "DEFAULT-REPORTS": {
+            "PROCESS-HEAT-MAP": {
+                "TYPE-FILTERING": "Include tutti gli steps (Deselezionandolo, rimuoverai gli step come start events, gateways, etc.)?"
+            },
+            "PROCESS-INSTANCES-OVERVIEW": {
+                "PROCESS-DEFINITION": "Definizione del processo",
+                "DATE-RANGE": "Intervallo di Date",
+                "SLOW-PROC-INST-NUMBER": "Quanti process instances lenti vuoi mostrare?"
+            },
+            "TASK-OVERVIEW": {
+                "PROCESS-DEFINITION": "Definizione del processo",
+                "DATE-RANGE": "Intervallo di Date",
+                "DATE-RANGE-INTERVAL": "Aggrega date per"
+            },
+            "TASK-SLA": {
+                "TASK": "Task",
+                "PROCESS-DEFINITION": "Definizione del processo",
+                "DATE-RANGE": "Intervallo di Date",
+                "SLA-DURATION": "Qual' é il tempo che questo task necessita per essere completato per rimanere nella SLA?"
+            }
+        },
+        "PROCESS-STATUS": "Stato del processo",
+        "TASK-STATUS": "Stato del task"
     }
 }

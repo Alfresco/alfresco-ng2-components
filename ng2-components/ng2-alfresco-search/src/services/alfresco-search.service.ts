@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-core';
+import { NodePaging } from 'alfresco-js-api';
 
 /**
  * Internal service used by Document List component.
@@ -25,7 +26,8 @@ import { AlfrescoAuthenticationService, AlfrescoApiService } from 'ng2-alfresco-
 @Injectable()
 export class AlfrescoSearchService {
 
-    constructor(public authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
+    constructor(public authService: AlfrescoAuthenticationService,
+                private apiService: AlfrescoApiService) {
     }
 
     /**
@@ -35,13 +37,13 @@ export class AlfrescoSearchService {
      * @param options Additional options passed to the search
      * @returns {Observable<NodePaging>} Search results
      */
-    public getNodeQueryResults(term: string, options?: SearchOptions): Observable<any> {
+    public getNodeQueryResults(term: string, options?: SearchOptions): Observable<NodePaging> {
         return Observable.fromPromise(this.getQueryNodesPromise(term, options))
-            .map(res => <any> res)
-            .catch(this.handleError);
+            .map(res => <NodePaging> res)
+            .catch(err => this.handleError(err));
     }
 
-    private getQueryNodesPromise(term: string, opts: SearchOptions) {
+    private getQueryNodesPromise(term: string, opts: SearchOptions): Promise<NodePaging> {
         return this.apiService.getInstance().core.queriesApi.findNodes(term, opts);
     }
 

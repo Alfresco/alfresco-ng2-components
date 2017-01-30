@@ -17,8 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoAuthenticationService } from 'ng2-alfresco-core';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 /**
  * @returns {TagService} .
@@ -32,17 +31,18 @@ export class TagService {
      * Constructor
      * @param apiService
      */
-    constructor(private authService: AlfrescoAuthenticationService, private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     getTagsByNodeId(nodeId: string): any {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getNodeTags(nodeId))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getAllTheTags() {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.getTags())
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     addTag(nodeId: string, tagName: string): any {
@@ -51,16 +51,16 @@ export class TagService {
         tagBody.tag = tagName;
 
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     removeTag(nodeId: string, tag: string): any {
         return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag))
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     private handleError(error: any) {
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 }

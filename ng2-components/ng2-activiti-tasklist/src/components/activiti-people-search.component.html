@@ -5,13 +5,12 @@
 </div>
 <ul class='mdl-list'>
     <li class="mdl-list__item fix-element-user-list" *ngFor="let user of userList">
-        <span class="mdl-list__item-primary-content mdl-button mdl-js-button mdl-js-ripple-effect"
-              (click)="onRowClick(user)" id="user-{{user.id}}">
-            <i class="material-icons md-light people-search__icon">face</i>
-                {{getDisplayUser(user)}}
-        </span>
+        <button (click)="onRowClick(user)" id="user-{{user.id}}" class="mdl-chip mdl-chip--contact mdl-chip-search-people">
+            <img class="mdl-chip__contact" [src]="iconImageUrl || baseComponentPath + '/../assets/images/user.jpg'" />
+            <span class="mdl-chip__text mdl-chip-search-people__text">{{getDisplayUser(user)}}</span>
+        </button>
     </li>
     <div *ngIf="userList?.length === 0" id="no-user-found">
-        No user found to involve
+        {{'PEOPLE.SEARCH.NO_USERS' | translate }}
     </div>
 </ul>

@@ -32,6 +32,11 @@ declare let componentHandler: any;
 
 export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
+    baseComponentPath = module.id.replace('/activiti-people-search.component.js', '');
+
+    @Input()
+    iconImageUrl: string;
+
     @Input()
     results: Observable<User[]>;
 
@@ -45,16 +50,20 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
     userList: User[] = [];
 
-    constructor(private translate: AlfrescoTranslationService) {
-        if (translate) {
-            translate.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
+    constructor(private translateService: AlfrescoTranslationService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-activiti-tasklist', 'node_modules/ng2-activiti-tasklist/src');
         }
 
         this.searchUser
             .valueChanges
             .debounceTime(200)
-            .subscribe((event) => {
-                this.onSearch.emit(event);
+            .subscribe((event: string) => {
+                if (event && event.trim()) {
+                    this.onSearch.emit(event);
+                } else {
+                    this.userList = [];
+                }
             });
     }
 
@@ -81,13 +90,14 @@ export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
     onRowClick(userClicked: User) {
         this.onRowClicked.emit(userClicked);
         this.userList = this.userList.filter((user) => {
+            this.searchUser.reset();
             return user.id !== userClicked.id;
         });
     }
 
     getDisplayUser(user: User): string {
         let firstName = user.firstName && user.firstName !== 'null' ? user.firstName : 'N/A';
-        let lastName =  user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
+        let lastName = user.lastName && user.lastName !== 'null' ? user.lastName : 'N/A';
         return firstName + ' - ' + lastName;
     }
 }

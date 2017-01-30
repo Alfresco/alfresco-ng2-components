@@ -32,6 +32,8 @@
   </a>
 </p>
 
+See it live: [DataTable Quickstart](https://embed.plnkr.co/80qr4YFBeHjLMdAV0F6l/)
+
 ## Prerequisites
 
 Before you start using this development framework, make sure you have installed all required software and done all the
@@ -57,6 +59,9 @@ Follow the 3 steps below:
     <link rel="stylesheet" href="node_modules/material-design-lite/material.min.css">
     <script src="node_modules/material-design-lite/material.min.js"></script>
     <link rel="stylesheet" href="node_modules/material-design-icons/iconfont/material-icons.css">
+
+    <!-- Load the Angular Material 2 stylesheet -->
+    <link href="node_modules/@angular/material/core/theming/prebuilt/deeppurple-amber.css" rel="stylesheet">
 
     <!-- Polyfill(s) for Safari (pre-10.x) -->
     <script src="node_modules/intl/dist/Intl.min.js"></script>
@@ -172,7 +177,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `data` | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
 | `multiselect` | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | `actions` | boolean | false | Toggles data actions column |
-| `fallbackThubnail` | string |  | Fallback image for row ehre thubnail is missing|
+| `fallbackThumbnail` | string |  | Fallback image for row ehre thubnail is missing|
 
 ### Events
 
@@ -370,6 +375,7 @@ interface DataColumn {
     title?: string;
     srTitle?: string;
     cssClass?: string;
+    template?: TemplateRef<any>;
 }
 ```
 
@@ -434,6 +440,31 @@ let schema = ObjectDataTableAdapter.generateSchema(data);
  */
 
 ```
+
+# Pagination Component
+
+The pagination object is a generic component to paginate component. The Alfresco API are paginated and returns a Pagination object. You can use the pagination object to feed the pagination component and then listen to the event which return the current pagination and query again the API with the options choose by the user.
+
+![DataTable demo](docs/assets/pagination-demo.png)
+
+
+### Properties
+
+| Name | Type | Default | Description
+| --- | --- | --- | --- |
+| `supportedPageSizes` | numer[] | [5, 10, 20, 50, 100] | This array describe the set of options showed in the pick list |
+| `maxItems` | boolean | false | Max number of element showed per page. If you pick another size from the pick list this option will be overwritten |
+| `pagination` | Pagination | {count: 0, totalItems: 0, skipCount: 0, maxItems: 20 , hasMoreItems: true} | The Alfresco Api return a pagination object, you can use it to feed the pagination component, or create your own. |
+
+### Events
+
+| Name | Description
+| --- | --- |
+| `changePageSize` | Emitted when user picks one of the options from the pick list |
+| `nextPage` | Emitted when user clicks next page button |
+| `prevPage` | Emitted when user clicks prev page button |
+
+All the events carry with them the current pagination object.
 
 ## Build from sources
 

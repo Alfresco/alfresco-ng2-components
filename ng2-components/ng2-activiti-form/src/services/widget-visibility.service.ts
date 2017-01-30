@@ -17,24 +17,19 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
-import {
-    FormModel,
-    FormFieldModel,
-    TabModel,
-    ContainerModel,
-    ContainerColumnModel
-} from '../components/widgets/core/index';
+import * as moment from 'moment';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
+import { FormModel, FormFieldModel, TabModel, ContainerModel, ContainerColumnModel } from '../components/widgets/core/index';
 import { WidgetVisibilityModel } from '../models/widget-visibility.model';
 import { TaskProcessVariableModel } from '../models/task-process-variable.model';
-import * as moment from 'moment';
 
 @Injectable()
 export class WidgetVisibilityService {
 
     private processVarList: TaskProcessVariableModel[];
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     public refreshVisibility(form: FormModel) {
@@ -201,7 +196,7 @@ export class WidgetVisibilityService {
             case 'or-not':
                 return previousValue || !newValue;
             default:
-                console.error('NO valid operation! wrong op request : ' + logicOp);
+                this.logService.error('NO valid operation! wrong op request : ' + logicOp);
                 break;
         }
     }
@@ -225,7 +220,7 @@ export class WidgetVisibilityService {
             case '!empty':
                 return leftValue ? leftValue !== '' : false;
             default:
-                console.error('NO valid operation!');
+                this.logService.error('NO valid operation!');
                 break;
         }
         return;
@@ -242,15 +237,15 @@ export class WidgetVisibilityService {
                 this.processVarList = <TaskProcessVariableModel[]>jsonRes;
                 return jsonRes;
             })
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     toJson(res: any) {
         return res || {};
     }
 
-    private handleError() {
-        console.error('Error while performing a call');
+    private handleError(err) {
+        this.logService.error('Error while performing a call');
         return Observable.throw('Error while performing a call - Server error');
     }
 }

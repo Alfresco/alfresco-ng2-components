@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { LogServiceMock } from 'ng2-alfresco-core';
 import { DynamicTableWidget } from './dynamic-table.widget';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
 import { FormModel, FormFieldTypes } from './../core/index';
@@ -25,11 +26,13 @@ describe('DynamicTableWidget', () => {
     let widget: DynamicTableWidget;
     let table: DynamicTableModel;
     let visibilityService: WidgetVisibilityService;
+    let logService: LogServiceMock;
 
     beforeEach(() => {
+        logService = new LogServiceMock();
         table = new DynamicTableModel(null);
-        visibilityService = new WidgetVisibilityService(null);
-        widget = new DynamicTableWidget(null, visibilityService);
+        visibilityService = new WidgetVisibilityService(null, logService);
+        widget = new DynamicTableWidget(null, visibilityService, logService);
         widget.content = table;
     });
 
@@ -192,13 +195,13 @@ describe('DynamicTableWidget', () => {
     });
 
     it('should require table to save changes', () => {
-        spyOn(console, 'log').and.stub();
+        spyOn(logService, 'error').and.stub();
         widget.editMode = true;
         widget.content = null;
         widget.onSaveChanges();
 
         expect(widget.editMode).toBeFalsy();
-        expect(console.log).toHaveBeenCalledWith(widget.ERROR_MODEL_NOT_FOUND);
+        expect(logService.error).toHaveBeenCalledWith(widget.ERROR_MODEL_NOT_FOUND);
     });
 
     it('should cancel changes', () => {

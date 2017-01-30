@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { AlfrescoApiService, AlfrescoAuthenticationService } from 'ng2-alfresco-core';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { BpmUserModel } from '../models/bpm-user.model';
 /**
  *
@@ -29,8 +29,8 @@ import { BpmUserModel } from '../models/bpm-user.model';
 @Injectable()
 export class BpmUserService {
 
-    constructor(private authService: AlfrescoAuthenticationService,
-                private alfrescoJsApi: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     /**
@@ -38,13 +38,13 @@ export class BpmUserService {
      * @param userName - the user name
      */
     getCurrentUserInfo(): Observable<BpmUserModel> {
-        return Observable.fromPromise(this.alfrescoJsApi.getInstance().activiti.profileApi.getProfile())
+        return Observable.fromPromise(this.apiService.getInstance().activiti.profileApi.getProfile())
             .map((data) => <BpmUserModel> data)
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
     }
 
     getCurrentUserProfileImage(): string {
-        return this.alfrescoJsApi.getInstance().activiti.profileApi.getProfilePictureUrl();
+        return this.apiService.getInstance().activiti.profileApi.getProfilePictureUrl();
     }
 
     /**
@@ -55,7 +55,7 @@ export class BpmUserService {
     private handleError(error: Response) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
-        console.error(error);
+        this.logService.error(error);
         return Observable.throw(error || 'Server error');
     }
 

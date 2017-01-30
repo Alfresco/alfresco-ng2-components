@@ -19,10 +19,13 @@
 }
 
 .viewer-name-file {
-    width: 50%;
+    width: 100%;
     height: 21px;
     overflow: hidden !important;
     text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 60px;
+    margin-right: -40px;
 }
 
 .viewer-shadow-transparent {

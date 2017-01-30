@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
+import { DatePipe } from '@angular/common';
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow } from 'ng2-alfresco-datatable';
-import { TaskQueryRequestRepresentationModel } from 'ng2-activiti-tasklist';
-
+import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow, DataSorting } from 'ng2-alfresco-datatable';
+import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiProcessService } from '../services/activiti-process.service';
 
@@ -46,7 +46,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     @Input()
     name: string;
 
-    requestNode: TaskQueryRequestRepresentationModel;
+    requestNode: ProcessFilterRequestRepresentation;
 
     @Input()
     data: DataTableAdapter;
@@ -130,7 +130,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         );
     }
 
-    private load(requestNode: TaskQueryRequestRepresentationModel) {
+    private load(requestNode: ProcessFilterRequestRepresentation) {
         this.processService.getProcessInstances(requestNode)
             .subscribe(
                 (response) => {
@@ -155,7 +155,8 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
             instancesRows.push(new ObjectDataRow({
                 id: row.id,
                 name: row.name,
-                started: row.started
+                started: row.started,
+                processDefinitionName: row.processDefinitionName
             }));
         });
         return instancesRows;
@@ -168,7 +169,23 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
      */
     private renderInstances(instances: any[]) {
         instances = this.optimizeNames(instances);
+        this.setDatatableSorting();
         this.data.setRows(instances);
+    }
+
+    /**
+     * Sort the datatable rows based on current value of 'sort' property
+     */
+    private setDatatableSorting() {
+        if (!this.sort) {
+            return;
+        }
+        let sortingParams: string[] = this.sort.split('-');
+        if (sortingParams.length === 2) {
+            let sortColumn = sortingParams[0] === 'created' ? 'started' : sortingParams[0];
+            let sortOrder = sortingParams[1];
+            this.data.setSorting(new DataSorting(sortColumn, sortOrder));
+        }
     }
 
     /**
@@ -176,8 +193,13 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
      */
     selectFirst() {
         if (!this.isListEmpty()) {
-            this.currentInstanceId = this.data.getRows()[0].getValue('id');
+            let row = this.data.getRows()[0];
+            this.data.selectedRow = row;
+            this.currentInstanceId = row.getValue('id');
         } else {
+            if (this.data) {
+                this.data.selectedRow = null;
+            }
             this.currentInstanceId = null;
         }
     }
@@ -216,20 +238,37 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
      */
     private optimizeNames(instances: any[]) {
         instances = instances.map(t => {
-            t.obj.name = t.obj.name || 'No name';
+            t.obj.name = this.getProcessNameOrDescription(t.obj, 'medium');
             return t;
         });
         return instances;
+    }
+
+    getProcessNameOrDescription(processInstance, dateFormat): string {
+        let name = '';
+        if (processInstance) {
+            name = processInstance.name ||
+                processInstance.processDefinitionName + ' - ' + this.getFormatDate(processInstance.started, dateFormat);
+        }
+        return name;
+    }
+
+    getFormatDate(value, format: string) {
+        let datePipe = new DatePipe('en-US');
+        try {
+            return datePipe.transform(value, format);
+        } catch (err) {
+            return '';
+        }
     }
 
     private createRequestNode() {
         let requestNode = {
             appDefinitionId: this.appId,
             processDefinitionKey: this.processDefinitionKey,
-            text: this.name,
             state: this.state,
             sort: this.sort
         };
-        return new TaskQueryRequestRepresentationModel(requestNode);
+        return new ProcessFilterRequestRepresentation(requestNode);
     }
 }

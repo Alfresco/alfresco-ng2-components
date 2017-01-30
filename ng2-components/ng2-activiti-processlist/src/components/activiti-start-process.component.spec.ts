@@ -41,7 +41,10 @@ describe('ActivitiStartProcessInstance', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ CoreModule, ActivitiFormModule ],
+            imports: [
+                CoreModule.forRoot(),
+                ActivitiFormModule.forRoot()
+            ],
             declarations: [
                 ActivitiStartProcessInstance
             ],
@@ -121,6 +124,19 @@ describe('ActivitiStartProcessInstance', () => {
                 let errorEl: DebugElement = debugElement.query(By.css('.error-message'));
                 expect(errorEl).not.toBeNull('Expected error message to be present');
                 expect(errorEl.nativeElement.innerText.trim()).toBe('START_PROCESS.ERROR.LOAD_PROCESS_DEFS');
+            });
+        }));
+
+        it('should show no process available message when no process definition is loaded', async(() => {
+            getDefinitionsSpy = getDefinitionsSpy.and.returnValue(Observable.of([]));
+            let change = new SimpleChange(null, '123');
+            component.ngOnChanges({ 'appId': change });
+            fixture.detectChanges();
+
+            fixture.whenStable().then(() => {
+                let noprocessElement: DebugElement = debugElement.query(By.css('#no-process-message'));
+                expect(noprocessElement).not.toBeNull('Expected no available process message to be present');
+                expect(noprocessElement.nativeElement.innerText.trim()).toBe('START_PROCESS.NO_PROCESS_DEFINITIONS');
             });
         }));
 
@@ -231,6 +247,8 @@ describe('ActivitiStartProcessInstance', () => {
 
             beforeEach(async(() => {
                 component.name = 'My new process';
+                let change = new SimpleChange(null, '123');
+                component.ngOnChanges({ 'appId': change });
                 fixture.detectChanges();
                 component.onProcessDefChange('my:process1');
                 fixture.whenStable();
@@ -243,14 +261,15 @@ describe('ActivitiStartProcessInstance', () => {
                 expect(startBtn.properties['disabled']).toBe(true);
             }));
 
-            it('should have start button disabled when name not filled out', async(() => {
+            it('should have start button disabled when no process is selected', async(() => {
                 component.onProcessDefChange('');
                 fixture.detectChanges();
                 expect(startBtn.properties['disabled']).toBe(true);
             }));
 
-            xit('should enable start button when name and process filled out', async(() => {
+            it('should enable start button when name and process filled out', async(() => {
                 fixture.detectChanges();
+                startBtn = debugElement.query(By.css('[data-automation-id="btn-start"]'));
                 expect(startBtn.properties['disabled']).toBe(false);
             }));
 

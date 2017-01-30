@@ -15,18 +15,18 @@
  * limitations under the License.
  */
 
-import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import 'rxjs/Rx';
+import { AlfrescoTranslationService, LogService, NotificationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 import { FileModel } from '../models/file.model';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import 'rxjs/Rx';
 
 declare let componentHandler: any;
 
 const ERROR_FOLDER_ALREADY_EXIST = 409;
 
 /**
- * <alfresco-upload-button [showUdoNotificationBar]="boolean"
+ * <alfresco-upload-button [showNotificationBar]="boolean"
  *                         [uploadFolders]="boolean"
  *                         [multipleFiles]="boolean"
  *                         [acceptedFilesType]="string"
@@ -35,7 +35,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  *
  * This component, provide a set of buttons to upload files to alfresco.
  *
- * @InputParam {boolean} [true] showUdoNotificationBar - hide/show notification bar.
+ * @InputParam {boolean} [true] showNotificationBar - hide/show notification bar.
  * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
  * @InputParam {boolean} [false] uploadFolders - allow/disallow upload folders (only for chrome).
  * @InputParam {boolean} [false] multipleFiles - allow/disallow multiple files.
@@ -43,7 +43,7 @@ const ERROR_FOLDER_ALREADY_EXIST = 409;
  * @InputParam {boolean} [false] versioning - true to indicate that a major version should be created
  * @Output - onSuccess - The event is emitted when the file is uploaded
  *
- * @returns {UploadDragAreaComponent} .
+ * @returns {UploadButtonComponent} .
  */
 @Component({
     selector: 'alfresco-upload-button',
@@ -55,11 +55,8 @@ export class UploadButtonComponent {
 
     private static DEFAULT_ROOT_ID: string = '-root-';
 
-    @ViewChild('undoNotificationBar')
-    undoNotificationBar: any;
-
     @Input()
-    showUdoNotificationBar: boolean = true;
+    showNotificationBar: boolean = true;
 
     @Input()
     uploadFolders: boolean = false;
@@ -72,6 +69,9 @@ export class UploadButtonComponent {
 
     @Input()
     acceptedFilesType: string = '*';
+
+    @Input()
+    staticTitle: string;
 
     @Input()
     currentFolderPath: string = '/';
@@ -88,16 +88,19 @@ export class UploadButtonComponent {
     @Output()
     createFolder = new EventEmitter();
 
-    translate: AlfrescoTranslationService;
-
-    constructor(public el: ElementRef, private _uploaderService: UploadService, translate: AlfrescoTranslationService) {
-        this.translate = translate;
-        translate.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+    constructor(private el: ElementRef,
+                private uploadService: UploadService,
+                private translateService: AlfrescoTranslationService,
+                private logService: LogService,
+                private notificationService: NotificationService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-upload', 'node_modules/ng2-alfresco-upload/src');
+        }
     }
 
     ngOnChanges(changes) {
         let formFields = this.createFormFields();
-        this._uploaderService.setOptions(formFields, this.versioning);
+        this.uploadService.setOptions(formFields, this.versioning);
     }
 
     /**
@@ -125,7 +128,7 @@ export class UploadButtonComponent {
             let directoryName = this.getDirectoryName(directoryPath);
             let absolutePath = this.currentFolderPath + this.getDirectoryPath(directoryPath);
 
-            this._uploaderService.createFolder(absolutePath, directoryName)
+            this.uploadService.createFolder(absolutePath, directoryName)
                 .subscribe(
                     res => {
                         let relativeDir = this.currentFolderPath + '/' + directoryPath;
@@ -140,7 +143,7 @@ export class UploadButtonComponent {
                                 this._showErrorNotificationBar(errorMessage);
                             }
                         }
-                        console.log(error);
+                        this.logService.error(error);
                     }
                 );
         });
@@ -155,9 +158,9 @@ export class UploadButtonComponent {
      */
     private uploadFiles(path: string, files: any[]) {
         if (files.length) {
-            let latestFilesAdded = this._uploaderService.addToQueue(files);
-            this._uploaderService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
-            if (this.showUdoNotificationBar) {
+            let latestFilesAdded = this.uploadService.addToQueue(files);
+            this.uploadService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
+            if (this.showNotificationBar) {
                 this._showUndoNotificationBar(latestFilesAdded);
             }
         }
@@ -215,26 +218,15 @@ export class UploadButtonComponent {
      * @param {FileModel[]} latestFilesAdded - files in the upload queue enriched with status flag and xhr object.
      */
     private _showUndoNotificationBar(latestFilesAdded: FileModel[]) {
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
         let messageTranslate: any, actionTranslate: any;
-        messageTranslate = this.translate.get('FILE_UPLOAD.MESSAGES.PROGRESS');
-        actionTranslate = this.translate.get('FILE_UPLOAD.ACTION.UNDO');
+        messageTranslate = this.translateService.get('FILE_UPLOAD.MESSAGES.PROGRESS');
+        actionTranslate = this.translateService.get('FILE_UPLOAD.ACTION.UNDO');
 
-        if (this.undoNotificationBar.nativeElement.MaterialSnackbar) {
-            this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-                message: messageTranslate.value,
-                timeout: 3000,
-                actionHandler: function () {
-                    latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
-                        uploadingFileModel.emitAbort();
-                    });
-                },
-                actionText: actionTranslate.value
+        this.notificationService.openSnackMessageAction(messageTranslate.value, actionTranslate.value, 3000).afterDismissed().subscribe(() => {
+            latestFilesAdded.forEach((uploadingFileModel: FileModel) => {
+                uploadingFileModel.emitAbort();
             });
-        }
+        });
     }
 
     /**
@@ -245,7 +237,7 @@ export class UploadButtonComponent {
     private getErrorMessage(response: any): string {
         if (response.body && response.body.error.statusCode === ERROR_FOLDER_ALREADY_EXIST) {
             let errorMessage: any;
-            errorMessage = this.translate.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
+            errorMessage = this.translateService.get('FILE_UPLOAD.MESSAGES.FOLDER_ALREADY_EXIST');
             return errorMessage.value;
         }
     }
@@ -256,16 +248,7 @@ export class UploadButtonComponent {
      * @private
      */
     private _showErrorNotificationBar(errorMessage: string) {
-        if (componentHandler) {
-            componentHandler.upgradeAllRegistered();
-        }
-
-        if (this.undoNotificationBar.nativeElement.MaterialSnackbar) {
-            this.undoNotificationBar.nativeElement.MaterialSnackbar.showSnackbar({
-                message: errorMessage,
-                timeout: 3000
-            });
-        }
+        this.notificationService.openSnackMessage(errorMessage, 3000);
     }
 
     /**

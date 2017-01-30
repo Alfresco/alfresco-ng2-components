@@ -1,9 +1,13 @@
 .dropdown-widget {
     width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .dropdown-widget__select {
     width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .dropdown-widget__invalid .dropdown-widget__select {

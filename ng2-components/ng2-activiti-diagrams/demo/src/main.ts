@@ -19,40 +19,39 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService, StorageService, LogService } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
 @Component({
     selector: 'alfresco-app-demo',
     template: `
-    <label for="ticket"><b>Insert a valid ticket:</b></label><br>
-    <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
-    <label for="host"><b>Insert the ip of your Activiti instance:</b></label><br>
-    <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
-    <div *ngIf="!authenticated" style="color:#FF2323">
-        Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
-        operations.
-    </div>
-    <hr>
+        <label for="ticket"><b>Insert a valid ticket:</b></label><br>
+        <input id="ticket" type="text" size="48" (change)="updateTicket()" [(ngModel)]="ticket"><br>
+        <label for="host"><b>Insert the ip of your Activiti instance:</b></label><br>
+        <input id="host" type="text" size="48" (change)="updateHost()" [(ngModel)]="host"><br><br>
+        <div *ngIf="!authenticated" style="color:#FF2323">
+            Authentication failed to ip {{ host }} with user: admin, admin, you can still try to add a valid ticket to perform
+            operations.
+        </div>
+        <hr>
 
-    <label for="processDefinitionId"><b>Insert the ProcessDefinitionId:</b></label><br>
-    <input id="processDefinitionId" size="70" type="text" [(ngModel)]="processDefinitionId">
-    <activiti-diagram [processDefinitionId]="processDefinitionId"></activiti-diagram>`
+        <label for="processDefinitionId"><b>Insert the ProcessDefinitionId:</b></label><br>
+        <input id="processDefinitionId" size="70" type="text" [(ngModel)]="processDefinitionId">
+        <activiti-diagram [processDefinitionId]="processDefinitionId"></activiti-diagram>
+    `
 })
 
 export class DiagramDemoComponent {
 
     processDefinitionId: string = 'ThirdProcess:1:15053';
-
     authenticated: boolean;
-
     host: string = 'http://localhost:9999';
-
     ticket: string;
 
     constructor(private authService: AlfrescoAuthenticationService,
                 private settingsService: AlfrescoSettingsService,
-                private storage: StorageService) {
+                private storage: StorageService,
+                private logService: LogService) {
         settingsService.bpmHost = this.host;
         settingsService.setProviders('BPM');
 
@@ -77,12 +76,12 @@ export class DiagramDemoComponent {
     login() {
         this.authService.login('admin', 'admin').subscribe(
             ticket => {
-                console.log(ticket);
+                this.logService.info(`Logged in with ticket ${ticket}`);
                 this.ticket = this.authService.getTicketBpm();
                 this.authenticated = true;
             },
             error => {
-                console.log(error);
+                this.logService.error(error);
                 this.authenticated = false;
             });
     }

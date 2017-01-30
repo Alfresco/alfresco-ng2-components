@@ -17,13 +17,8 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TagNodeList } from '../components/tag-node-list.component';
-import { DebugElement }    from '@angular/core';
-import {
-    AlfrescoAuthenticationService,
-    AlfrescoSettingsService,
-    AlfrescoApiService,
-    CoreModule
-} from 'ng2-alfresco-core';
+import { DebugElement } from '@angular/core';
+import { CoreModule } from 'ng2-alfresco-core';
 import { TagService } from '../services/tag.service';
 
 declare let jasmine: any;
@@ -54,13 +49,12 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [
-                CoreModule
+                CoreModule.forRoot()
             ],
-            declarations: [TagNodeList],
+            declarations: [
+                TagNodeList
+            ],
             providers: [
-                AlfrescoSettingsService,
-                AlfrescoAuthenticationService,
-                AlfrescoApiService,
                 TagService
             ]
         }).compileComponents();
