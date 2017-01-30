@@ -35,8 +35,8 @@ declare var document: any;
 export class AppComponent {
     searchTerm: string = '';
 
-    ecmHost: string = 'http://' + window.location.hostname + ':8080';
-    bpmHost: string = 'http://' + window.location.hostname + ':9999';
+    ecmHost: string = 'http://' + '52.228.36.174' + ':8080';
+    bpmHost: string = 'http://' + '52.228.36.174' + ':9999';
 
     constructor(public auth: AlfrescoAuthenticationService,
                 public router: Router,

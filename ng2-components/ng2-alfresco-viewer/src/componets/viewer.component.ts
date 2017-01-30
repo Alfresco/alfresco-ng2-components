@@ -19,6 +19,7 @@ import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Injec
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService } from 'ng2-alfresco-core';
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     moduleId: module.id,
@@ -52,18 +53,33 @@ export class ViewerComponent {
 
     displayName: string;
 
+	iframeurl;
+
     extension: string;
 
     mimeType: string;
-
+	
     loaded: boolean = false;
+	
 
     constructor(private apiService: AlfrescoApiService,
                 private element: ElementRef,
-                @Inject(DOCUMENT) private document) {
+                @Inject(DOCUMENT) private document,private domSanitizer : DomSanitizer) {
+					
+					
     }
 
+	ngOnInit() {
+
+   
+  	this.iframeurl = this.domSanitizer.bypassSecurityTrustResourceUrl('http://localhost:8080/share/page/document-details?nodeRef=workspace://SpacesStore/'+this.fileNodeId);
+
+  }
+	
+     
+	
     ngOnChanges(changes) {
+		
         if (this.showViewer) {
             this.hideOtherHeaderBar();
             this.blockOtherScrollBar();
@@ -77,8 +93,12 @@ export class ViewerComponent {
                     this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);
                     this.urlFileContent = this.urlFile;
+
                     resolve();
                 } else if (this.fileNodeId) {
+					
+					console.log(this.fileNodeId);
+				    console.log(this.iframeurl);
                     alfrescoApi.nodes.getNodeInfo(this.fileNodeId).then((data: MinimalNodeEntryEntity) => {
                         this.mimeType = data.content.mimeType;
                         this.displayName = data.name;
@@ -94,6 +114,8 @@ export class ViewerComponent {
         }
     }
 
+	
+	
     /**
      * close the viewer
      */
@@ -135,6 +157,9 @@ export class ViewerComponent {
         return url.substring(url.lastIndexOf('/', end) + 1, end);
     }
 
+	
+	
+	
     /**
      * Get the token from the local storage
      *
@@ -210,9 +235,9 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    private isPdf() {
-        return this.extension === 'pdf' || this.mimeType === 'application/pdf';
-    }
+     private isPdf() {
+         return this.extension === 'pdf' || this.mimeType === 'application/pdf';
+     }
 
     /**
      * check if the current file is  a supported extension
@@ -301,6 +326,8 @@ export class ViewerComponent {
         }
     }
 
+	 
+	
     /**
      * return true if the data about the node in the ecm are loaded
      */

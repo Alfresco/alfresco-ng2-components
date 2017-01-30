@@ -3,10 +3,17 @@
         <div class="viewer-download-text mdl-card__supporting-text full_width">
             <h4>File <span>{{nameFile}}</span> is an unsupported format</h4>
         </div>
-        <div class="center-element mdl-card__actions">
+       <div class="center-element mdl-card__actions">
             <button id="viewer-download-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="download()">
                 <i class="viewer-margin-cloud-download material-icons">cloud_download</i>   Download
             </button>
+			
+			<div *ngIf="isPdfAvailable">
+                <button id="viewer-openaspdf-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="openPDF()">
+                    Open as PDF
+                </button>
+            </div>
         </div>
+		
     </div>
 </section>

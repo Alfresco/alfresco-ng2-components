@@ -1,25 +1,26 @@
+
 <div id="viewer" *ngIf="showViewer" [ngClass]="{'all-space': !overlayMode }">
     <div *ngIf="overlayMode">
         <div id="viewer-shadow-transparent" class="viewer-shadow-transparent"></div>
     </div>
-
     <div id="viewer-main-container" class="all-space" [ngClass]="{'viewer-overlay-view': overlayMode }">
 
         <!-- Start Layout -->
-        <div [ngClass]="{'mdl-layout mdl-js-layout mdl-layout--fixed-header': overlayMode, 'all-space': !overlayMode}">
+        <div>
 
-            <header *ngIf="overlayMode" class="mdl-layout__header">
+            <header *ngIf="overlayMode">
                 <div class="mdl-layout__header-row">
 
-                    <!-- File Title -->
+                   
                     <span id="viewer-name-file" class="mdl-layout-title viewer-name-file">{{displayName}}</span>
+
 
                     <span class="vertical-divider"></span>
 
                     <div class="mdl-layout-spacer"></div>
 
-                    <!-- Start Navigation -->
-                    <nav class="mdl-navigation">
+                 
+                    <nav class="mdl-navigation" align="center">
                         <div id="viewer-toolbar-view-options">
                             <button *ngIf="overlayMode"
                                     class="mdl-color--black mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
@@ -28,15 +29,15 @@
                             </button>
                         </div>
                     </nav>
-                    <!-- End Navigation -->
+                   
                 </div>
             </header>
             <!--<div class="mdl-layout__drawer">-->
             <!--<span class="mdl-layout-title">Thumbnail</span>-->
             <!--</div>-->
-            <main id="page-content" class="mdl-layout__content" [ngClass]="{'all-space': !overlayMode }">
+            <main>
 
-                <div class="mdl-grid">
+                <div>
                     <!--<div id="viewer-previous-file-button" class="center-element mdl-cell mdl-cell&#45;&#45;2-col mdl-cell&#45;&#45;hide-tablet mdl-cell&#45;&#45;hide-phone">-->
                     <!--<button  *ngIf="false"-->
                     <!--class="center-element mdl-color&#45;&#45;black mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-button&#45;&#45;mini-fab mdl-button&#45;&#45;colored"-->
@@ -45,25 +46,50 @@
                     <!--</button>-->
                     <!--</div>-->
 
-                    <div id="viewer-content-container" *ngIf="isLoaded()"
-                         class="center-element mdl-cell mdl-cell--12-col">
+                    <div  *ngIf="isLoaded()">
 
                         <!-- Start View Switch-->
-                        <div *ngIf="isPdf()">
-                            <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFileContent"
-                                        [nameFile]="displayName"></pdf-viewer>
-                        </div>
-                        <div class="center-element" *ngIf="isImage()">
-                            <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName"></img-viewer>
-                        </div>
-                        <div class="center-element" *ngIf="isMedia()">
-                            <media-player [urlFile]="urlFileContent" [mimeType]="mimeType"
-                                          [nameFile]="displayName"></media-player>
-                        </div>
-                        <div *ngIf="!supportedExtension()">
-                            <not-supported-format [urlFile]="urlFileContent"
-                                                  [nameFile]="displayName"></not-supported-format>
-                        </div>
+                        <!-- <div *ngIf="isPdf()"> -->
+                            <!-- <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFileContent" -->
+                                        <!-- [nameFile]="displayName"></pdf-viewer> -->
+                        <!-- </div> -->
+                        <!-- <div class="center-element" *ngIf="isImage()"> -->
+                            <!-- <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName"></img-viewer> -->
+                        <!-- </div> -->
+                        <!-- <div class="center-element" *ngIf="isMedia()"> -->
+                            <!-- <media-player [urlFile]="urlFileContent" [mimeType]="mimeType" -->
+                                          <!-- [nameFile]="displayName"></media-player> -->
+                        <!-- </div> -->
+                         <!-- <div *ngIf="!supportedExtension()"> -->
+                             <!-- <not-supported-format [urlFile]="urlFileContent"  -->
+							                       <!-- [nodeId]="fileNodeId" -->
+                                                  <!-- [nameFile]="displayName"></not-supported-format> -->
+                         <!-- </div> -->
+                        
+              <!-- <iframe src="" id="myFrame" width="500" marginwidth="0" height="500" marginheight="0" align="middle" scrolling="auto"></iframe> -->
+						
+
+			
+                <!-- <button id="viewer-openaspdf-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" (click)="openPDF()"> -->
+                    <!-- Open as  -->
+                <!-- </button>						  -->
+				
+				
+				
+				
+				
+
+				       <iframe [src]="iframeurl" width="500" height="600"></iframe>
+
+				
+				
+				
+				
+				
+				
+				
+				
+
                         <!-- End View Switch -->
 
                     </div>

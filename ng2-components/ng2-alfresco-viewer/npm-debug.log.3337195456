@@ -1,0 +1,31 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/bin/node',
+1 verbose cli   '/home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'clean-build' ]
+2 info using npm@3.6.0
+3 info using node@v5.6.0
+4 verbose run-script [ 'preclean-build', 'clean-build', 'postclean-build' ]
+5 info lifecycle ng2-alfresco-viewer@0.5.0~preclean-build: ng2-alfresco-viewer@0.5.0
+6 silly lifecycle ng2-alfresco-viewer@0.5.0~preclean-build: no script for preclean-build, continuing
+7 info lifecycle ng2-alfresco-viewer@0.5.0~clean-build: ng2-alfresco-viewer@0.5.0
+8 verbose lifecycle ng2-alfresco-viewer@0.5.0~clean-build: unsafe-perm in lifecycle true
+9 verbose lifecycle ng2-alfresco-viewer@0.5.0~clean-build: PATH: /home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/lib/node_modules/npm/bin/node-gyp-bin:/home/jenkins/workspace/ng2-publish/ng2-components/ng2-alfresco-viewer/node_modules/.bin:/home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/lib/node_modules/npm/bin/node-gyp-bin:/home/jenkins/workspace/ng2-publish/ng2-components/ng2-alfresco-viewer/node_modules/.bin:/home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/lib/node_modules/npm/bin/node-gyp-bin:/home/jenkins/workspace/ng2-publish/ng2-components/ng2-alfresco-viewer/node_modules/.bin:/home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin
+10 verbose lifecycle ng2-alfresco-viewer@0.5.0~clean-build: CWD: /home/jenkins/workspace/ng2-publish/ng2-components/ng2-alfresco-viewer
+11 silly lifecycle ng2-alfresco-viewer@0.5.0~clean-build: Args: [ '-c',
+11 silly lifecycle   'rimraf index.js index.js.map index.d.ts\'src/{,**/}**.js\' \'src/{,**/}**.js.map\' \'src/{,**/}**.d.ts\' bundles' ]
+12 verbose stack Error: write EPIPE
+12 verbose stack     at exports._errnoException (util.js:856:11)
+12 verbose stack     at WriteWrap.afterWrite (net.js:763:14)
+13 verbose cwd /home/jenkins/workspace/ng2-publish/ng2-components/ng2-alfresco-viewer
+14 error Linux 3.10.0-229.20.1.el7.x86_64
+15 error argv "/home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/bin/node" "/home/jenkins/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/Node_5.6/bin/npm" "run" "clean-build"
+16 error node v5.6.0
+17 error npm  v3.6.0
+18 error code EPIPE
+19 error errno EPIPE
+20 error syscall write
+21 error write EPIPE
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]

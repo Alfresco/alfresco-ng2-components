@@ -17,16 +17,13 @@
 
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard, AuthGuardEcm, AuthGuardBpm } from 'ng2-alfresco-core';
 
 import {
-    HomeComponent,
     FilesComponent,
     DataTableDemoComponent,
     SearchComponent,
     LoginDemoComponent,
     ActivitiDemoComponent,
-    ActivitiAppsView,
     WebscriptComponent,
     TagComponent,
     AboutComponent,
@@ -35,88 +32,25 @@ import {
     SettingComponent
 } from './components/index';
 
+//import { AppComponent } from './app.component';
+
 import { UploadButtonComponent } from 'ng2-alfresco-upload';
 
 export const appRoutes: Routes = [
+    { path: 'home', component: FilesComponent },
+    { path: 'files', component: FilesComponent },
+    { path: 'datatable', component: DataTableDemoComponent },
+   { path: '', component: FilesComponent },
+	 // { path: '', component: AppComponent },
+    { path: 'uploader', component: UploadButtonComponent },
     { path: 'login', component: LoginDemoComponent },
-    {
-        path: '',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'files',
-        component: FilesComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'files/:id',
-        component: FilesComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'datatable',
-        component: DataTableDemoComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'uploader',
-        component: UploadButtonComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'search',
-        component: SearchComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'activiti',
-        component: ActivitiAppsView,
-        canActivate: [AuthGuardBpm]
-    },
-    {
-        path: 'activiti/apps',
-        component: ActivitiAppsView,
-        canActivate: [AuthGuardBpm]
-    },
-    {
-        path: 'activiti/apps/:appId/tasks',
-        component: ActivitiDemoComponent,
-        canActivate: [AuthGuardBpm]
-    },
-    // TODO: check if neeeded
-    {
-        path: 'activiti/appId/:appId',
-        component: ActivitiDemoComponent,
-        canActivate: [AuthGuardBpm]
-    },
-    // TODO: check if needed
-    {
-        path: 'activiti/tasks/:id',
-        component: FormViewer,
-        canActivate: [AuthGuardBpm]
-    },
-    // TODO: check if needed
-    {
-        path: 'activiti/tasksnode/:id',
-        component: FormNodeViewer,
-        canActivate: [AuthGuardBpm]
-    },
-    {
-        path: 'webscript',
-        component: WebscriptComponent,
-        canActivate: [AuthGuardEcm]
-    },
-    {
-        path: 'tag',
-        component: TagComponent,
-        canActivate: [AuthGuardEcm]
-    },
+    { path: 'search', component: SearchComponent },
+    { path: 'activiti', component: ActivitiDemoComponent },
+    { path: 'activiti/appId/:appId', component: ActivitiDemoComponent },
+    { path: 'activiti/tasks/:id', component: FormViewer },
+    { path: 'activiti/tasksnode/:id', component: FormNodeViewer },
+    { path: 'webscript', component: WebscriptComponent },
+    { path: 'tag', component: TagComponent },
     { path: 'about', component: AboutComponent },
     { path: 'settings', component: SettingComponent }
 ];

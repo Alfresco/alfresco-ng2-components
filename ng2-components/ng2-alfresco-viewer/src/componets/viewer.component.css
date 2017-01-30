@@ -14,7 +14,7 @@
 }
 
 .mdl-grid {
-    width: 100vw;
+    width: 50vw;
     padding: 0px !important;
 }
 
@@ -54,7 +54,7 @@ img-viewer {
 }
 
 .all-space{
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     background-color: #515151;
 }
