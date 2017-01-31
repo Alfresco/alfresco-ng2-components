@@ -75,6 +75,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     @Output()
     saveReportSuccess = new EventEmitter();
 
+    @Output()
+    deleteReportSuccess = new EventEmitter();
+
     @ViewChild('reportNameDialog')
     reportNameDialog: any;
 
@@ -87,8 +90,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     reportParameters: ReportParametersModel;
 
     reportForm: FormGroup;
-
-    showExportSaveButtons: boolean = false;
 
     private dropDownSub;
     private reportParamsSub;
@@ -129,7 +130,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
 
     ngOnChanges(changes: SimpleChanges) {
         this.isEditable = false;
-        this.showExportSaveButtons = false;
         let reportId = changes['reportId'];
         if (reportId && reportId.currentValue) {
             this.getReportParams(reportId.currentValue);
@@ -174,10 +174,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.reportParameters = res;
                 if (this.reportParameters.hasParameters()) {
                     this.onSuccessReportParams.emit(res);
-                    this.showExportSaveButtons = true;
                 } else {
                     this.onSuccess.emit();
-                    this.showExportSaveButtons = true;
                 }
             },
             (err: any) => {
@@ -226,7 +224,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public getTodayDate() {
-        return moment();
+        return moment().format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI);
     }
 
     public convertNumber(value: string): number {
@@ -282,6 +280,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
         this.reportNameDialog.nativeElement.showModal();
         this.action = event;
+        this.reportName = 'Report (' + this.getTodayDate() + ' ) ';
     }
 
     closeDialog() {
@@ -298,10 +297,20 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         } else if (action === 'Export') {
             this.doExport(reportParamQuery);
         }
+        this.resetActions();
+    }
+
+    resetActions() {
+        this.action = '';
+        this.reportName = '';
     }
 
     isOptionButtonVisible() {
-        return this.reportParameters && this.showExportSaveButtons;
+        return this.reportForm && this.reportForm.dirty && this.reportForm.valid && this.reportForm.touched;
+    }
+
+    isSaveAction() {
+        return this.action === 'Save';
     }
 
     doExport(paramQuery: ReportQuery) {
@@ -320,6 +329,12 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.analyticsService.saveReport(this.reportId, paramQuery).subscribe(() => {
             this.saveReportSuccess.emit();
         });
+    }
+
+    deleteReport(reportId: string) {
+        this.analyticsService.deleteReport(reportId).subscribe(() => {
+            this.deleteReportSuccess.emit(reportId);
+        }, error => this.logService.error(error));
     }
 
     ngAfterViewChecked() {

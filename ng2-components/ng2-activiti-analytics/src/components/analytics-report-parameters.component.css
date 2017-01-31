@@ -76,14 +76,16 @@
     width: 30%;
 }
 
-mdl-dialog__title.centered-title{
-    margin-left: 30%;
-}
-
 .export-message{
     background-color: lightgray;
 }
 
 .save-export-input{
     width:100%;
+}
+
+.delete-parameter {
+    position: absolute;
+    margin-left: 60%;
+    padding-top: 5px;
 }

@@ -28,10 +28,12 @@
             <i class="material-icons">mode_edit</i>
             <h4 (click)="editEnable()">{{reportParameters.name}} </h4>
             </span>
-            <span class="icon-small">
-                <i class="material-icons">delete</i>
-            </span>
             </div>
+            <button (click)="deleteReport(reportId)" class="mdl-button mdl-js-button mdl-button--icon">
+                <span>
+                    Delete Report <i class="material-icons">delete</i>
+                </span>
+            </button>
             <hr>
             <div *ngFor="let field of reportParameters.definition.parameters">
                 <div [ngSwitch]="field.type">
@@ -102,9 +104,9 @@
                 </div>
             </div>
             <dialog class="mdl-dialog options-name-dialog" #reportNameDialog>
-                <h5 class="mdl-dialog__title centered-title">{{action}} report</h5>
+                <h5 class="mdl-dialog__title">{{action}} report</h5>
                 <div class="mdl-dialog__content">
-                    <div *ngIf="action === 'Save'" class="export-message">{{'DIALOG.SAVE_MESSAGE' | translate}}</div>
+                    <div *ngIf="isSaveAction()" class="export-message">{{'DIALOG.SAVE_MESSAGE' | translate}}</div>
                     <div class="mdl-textfield mdl-js-textfield save-export-input">
                         <label [attr.for]="repname">Report Name</label>
                         <input class="mdl-textfield__input"

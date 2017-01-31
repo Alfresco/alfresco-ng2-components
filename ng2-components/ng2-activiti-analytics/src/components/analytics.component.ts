@@ -44,6 +44,9 @@ export class AnalyticsComponent implements OnChanges {
     @Output()
     reportSaved = new EventEmitter();
 
+    @Output()
+    reportDeleted = new EventEmitter();
+
     @ViewChild('analyticsgenerator')
     analyticsgenerator: AnalyticsGeneratorComponent;
 
@@ -76,6 +79,10 @@ export class AnalyticsComponent implements OnChanges {
 
     public onSaveReportSuccess() {
         this.reportSaved.emit();
+    }
+
+    public onDeleteReportSuccess() {
+        this.reportDeleted.emit();
     }
 
 }
