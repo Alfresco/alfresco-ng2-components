@@ -29,10 +29,8 @@
             <h4 (click)="editEnable()">{{reportParameters.name}} </h4>
             </span>
             </div>
-            <button (click)="deleteReport(reportId)" class="mdl-button mdl-js-button mdl-button--icon">
-                <span>
-                    Delete Report <i class="material-icons">delete</i>
-                </span>
+            <button (click)="deleteReport(reportId)" class="mdl-button mdl-js-button mdl-button--primary">
+                    Delete Report
             </button>
             <hr>
             <div *ngFor="let field of reportParameters.definition.parameters">

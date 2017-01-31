@@ -280,7 +280,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
         this.reportNameDialog.nativeElement.showModal();
         this.action = event;
-        this.reportName = 'Report (' + this.getTodayDate() + ' ) ';
+        this.reportName = this.reportParameters.name + ' ( ' + this.getTodayDate() + ' )';
     }
 
     closeDialog() {

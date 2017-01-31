@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { WidgetComponent } from './../widget.component';
 
 @Component({
@@ -54,7 +54,11 @@ export class DropdownWidget extends WidgetComponent {
 
     ngOnInit() {
         if (this.required) {
-            this.formGroup.get(this.controllerName).setValidators(Validators.required);
+            this.formGroup.get(this.controllerName).setValidators(Validators.compose([Validators.required, this.validateDropDown]));
         }
+    }
+
+    validateDropDown(controller: FormControl) {
+        return controller.value !== 'null' ? null : { controllerName : false };
     }
 }
