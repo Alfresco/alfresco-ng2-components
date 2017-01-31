@@ -38,8 +38,6 @@ export class AlfrescoApiService {
 
     private contextRoot: string;
 
-    private contextRootBpm: string;
-
     private disableCsrf: boolean;
 
     public getInstance(): AlfrescoApi {
@@ -55,7 +53,6 @@ export class AlfrescoApiService {
         this.hostEcm = this.settingsService.ecmHost;
         this.hostBpm = this.settingsService.bpmHost;
         this.contextRoot = 'alfresco';
-        this.contextRootBpm = 'activiti-app';
         this.disableCsrf = false;
 
         this.init();
@@ -89,7 +86,6 @@ export class AlfrescoApiService {
             hostEcm: this.hostEcm,
             hostBpm: this.hostBpm,
             contextRoot: this.contextRoot,
-            contextRootBpm: this.contextRootBpm,
             disableCsrf: this.disableCsrf
         });
     }
