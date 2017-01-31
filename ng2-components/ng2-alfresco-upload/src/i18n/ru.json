@@ -1,0 +1,25 @@
+{
+  "FILE_UPLOAD": {
+    "BUTTON": {
+      "UPLOAD_FILE": "Загрузить файл",
+      "UPLOAD_FOLDER": "Загрузить папку",
+      "CANCEL": "ОТМЕНА"
+    },
+    "MESSAGES": {
+      "SINGLE_COMPLETED": "файл загружен",
+      "COMPLETED": "файлы загружены",
+      "PROGRESS": "Идет загрузка...",
+      "FOLDER_ALREADY_EXIST": "Папка {0} уже существует",
+      "FOLDER_NOT_SUPPORTED": "Данный браузер не поддерживает загрузку папки"
+    },
+    "FILE_INFO": {
+      "NAME": "Имя файла",
+      "PROGRESS": "File progress",
+      "SIZE": "Размер",
+      "ACTION": "Действие"
+    },
+    "ACTION": {
+      "UNDO": "Отменить"
+    }
+  }
+}
