@@ -257,6 +257,11 @@ export class FormService {
         return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContent(contentId));
     }
 
+    getFileRawContent(contentId: number): Observable<any> {
+        let alfrescoApi = this.apiService.getInstance();
+        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getRawContent(contentId));
+    }
+
     getFileRawContentUrl(contentId: number): string {
         let alfrescoApi = this.apiService.getInstance();
         return alfrescoApi.activiti.contentApi.getRawContentUrl(contentId);

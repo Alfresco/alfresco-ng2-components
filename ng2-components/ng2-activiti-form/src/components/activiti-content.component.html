@@ -2,7 +2,7 @@
     <div class="mdl-card mdl-shadow--2dp">
         <div class="mdl-card__title mdl-card--expand">
             <div *ngIf="content.isThumbnailSupported()">
-                <img class="img-upload-widget" [src]="content.thumbnailUrl">
+                <img class="img-upload-widget" [src]="sanitizeUrl(content.thumbnailUrl)">
             </div>
             <div *ngIf="!content.isThumbnailSupported()">
                 <img class="img-upload-widget" [src]="previewnotavailable || baseComponentPath + '/../assets/images/preview-not-available.gif'">

@@ -26,6 +26,7 @@ import {
 import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     moduleId: module.id,
@@ -50,7 +51,8 @@ export class ActivitiContent implements OnChanges {
 
     constructor(private translate: AlfrescoTranslationService,
                 protected formService: FormService,
-                private logService: LogService) {
+                private logService: LogService,
+                private sanitizer: DomSanitizer ) {
 
         if (this.translate) {
             this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
@@ -82,8 +84,14 @@ export class ActivitiContent implements OnChanges {
 
     loadThumbnailUrl(content: ContentLinkModel) {
         if (this.content.isTypeImage()) {
-            this.content.contentRawUrl = this.formService.getFileRawContentUrl(content.id);
-            this.content.thumbnailUrl = this.content.contentRawUrl;
+            this.formService.getFileRawContent(content.id).subscribe(
+                (response: Blob) => {
+                    this.content.thumbnailUrl = this.createUrlPreview(response);
+                },
+                error => {
+                    this.logService.error(error);
+                }
+            );
         } else if (this.content.isThumbnailSupported()) {
             this.content.contentRawUrl = this.formService.getFileRawContentUrl(content.id);
             this.content.thumbnailUrl = this.formService.getContentThumbnailUrl(content.id);
@@ -98,7 +106,17 @@ export class ActivitiContent implements OnChanges {
     /**
      * Download file opening it in a new window
      */
-    download($event, url) {
+    download($event) {
         $event.stopPropagation();
+    }
+
+    private sanitizeUrl(url: string) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    }
+
+    private createUrlPreview(blob: Blob) {
+        let imageUrl = window.URL.createObjectURL(blob);
+        let sanitize: any = this.sanitizeUrl(imageUrl);
+        return sanitize.changingThisBreaksApplicationSecurity;
     }
 }
