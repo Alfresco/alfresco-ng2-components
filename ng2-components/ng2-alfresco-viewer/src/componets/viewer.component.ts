@@ -19,7 +19,7 @@ import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Injec
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-
+import {DomSanitizer} from "@angular/platform-browser";
 @Component({
     moduleId: module.id,
     selector: 'alfresco-viewer',
@@ -39,7 +39,7 @@ export class ViewerComponent {
 
     @Input()
     showViewer: boolean = true;
-
+    iframeurl;
     @Input()
     showToolbar: boolean = true;
 
@@ -55,10 +55,19 @@ export class ViewerComponent {
 
     constructor(private apiService: AlfrescoApiService,
                 private element: ElementRef,
-                @Inject(DOCUMENT) private document,
+                @Inject(DOCUMENT) private document,private domSanitizer : DomSanitizer
                 private logService: LogService) {
     }
 
+	
+	
+ngOnInit() {
+
+     // this.iframeurl = this.domSanitizer.bypassSecurityTrustResourceUrl('http://blog.mozilla.org/security/files/2015/05/HTTPS-FAQ.pdf');
+	//this.iframeurl = this.domSanitizer.bypassSecurityTrustResourceUrl('http://52.228.36.174:8080/share/page/document-details?nodeRef=workspace://SpacesStore/5691c614-4f15-4590-b1f7-2c920448c228');
+  	this.iframeurl = this.domSanitizer.bypassSecurityTrustResourceUrl('http://localhost:8080/share/page/document-details?nodeRef=workspace://SpacesStore/'+this.fileNodeId);
+
+  }	
     ngOnChanges(changes) {
         if (this.showViewer) {
             this.hideOtherHeaderBar();
