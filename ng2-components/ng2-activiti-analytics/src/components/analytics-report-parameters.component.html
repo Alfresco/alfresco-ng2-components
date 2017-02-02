@@ -1,11 +1,5 @@
 <div class="report-container">
-    <a class="mdl-navigation__link setting-button" data-automation-id="settings">
-        <button (click)="toggleParameters()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-            <i class="material-icons">settings</i>
-        </button>
-        <span class="report-container-setting">{{'ANALYTICS.MESSAGES.SETTING-TITLE' | translate}}</span>
-    </a>
-    <div class="col-md-6" [class.is-hide]="isParametersHide()" >
+    <div class="col-md-6">
         <div *ngIf="reportParameters">
             <form [formGroup]="reportForm" novalidate>
             <div *ngIf="isEditable">
@@ -21,12 +15,15 @@
                         />
             </div>
             <div *ngIf="!isEditable">
-                <span class="icon-small">
+                <button mdTooltip="{{'ANALYTICS.MESSAGES.SETTING-TITLE' | translate}}" (click)="toggleParameters()" class="mdl-button mdl-js-button" style="float: right">
+                    <i class="material-icons">settings</i>
+                </button>
+                <div class="icon-small">
                 <i class="material-icons">mode_edit</i>
-                <h4 (click)="editEnable()">{{reportParameters.name}}</h4>
-                </span>
-            </div><hr>
-            <div *ngFor="let field of reportParameters.definition.parameters">
+                    <h4 (click)="editEnable()">{{reportParameters.name}}</h4>
+                </div>
+            </div>
+            <div *ngFor="let field of reportParameters.definition.parameters" [class.is-hide]="isParametersHide()">
                 <div [ngSwitch]="field.type">
                     <div *ngSwitchCase="'integer'">
                         <br>

@@ -20,11 +20,13 @@ import * as moment from 'moment';
 export class Chart {
     id: string;
     type: string;
+    icon: string;
 
     constructor(obj?: any) {
         this.id = obj && obj.id || null;
         if (obj && obj.type) {
             this.type = this.convertType(obj.type);
+            this.icon = this.convertTypeToIcon(this.type);
         }
     }
 
@@ -57,6 +59,37 @@ export class Chart {
                 break;
         }
         return chartType;
+    }
+
+    private convertTypeToIcon(type: string) {
+        let typeIcon = '';
+        switch (type) {
+            case 'pie':
+                typeIcon = 'pie_chart';
+                break;
+            case 'table':
+                typeIcon = 'web';
+                break;
+            case 'line':
+                typeIcon = 'show_chart';
+                break;
+            case 'bar':
+                typeIcon = 'equalizer';
+                break;
+            case 'multiBar':
+                typeIcon = 'poll';
+                break;
+            case 'HeatMap':
+                typeIcon = 'share';
+                break;
+            case 'masterDetailTable':
+                typeIcon = 'subtitles';
+                break;
+            default:
+                typeIcon = 'web';
+                break;
+        }
+        return typeIcon;
     }
 }
 
