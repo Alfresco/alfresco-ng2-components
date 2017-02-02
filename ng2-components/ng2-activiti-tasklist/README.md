@@ -265,7 +265,7 @@ This can be changed by adding the following custom html template:
 The component shows all the available apps.
 
 ```html
-<activiti-apps [layoutType]="'GRID'"></activiti-filters>
+<activiti-apps [layoutType]="'GRID'"></activiti-apps>
 ```
 
 #### Events
