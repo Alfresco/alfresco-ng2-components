@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { Observer, Observable } from 'rxjs/Rx';
 import { LogService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
@@ -28,6 +28,12 @@ import { ReportParametersModel } from '../models/report.model';
     styleUrls: ['./analytics-report-list.component.css']
 })
 export class AnalyticsReportListComponent implements  OnInit {
+
+    public static LAYOUT_LIST: string = 'LIST';
+    public static LAYOUT_GRID: string = 'GRID';
+
+    @Input()
+    layoutType: string = AnalyticsReportListComponent.LAYOUT_LIST;
 
     @Output()
     reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
@@ -51,11 +57,15 @@ export class AnalyticsReportListComponent implements  OnInit {
     }
 
     ngOnInit() {
+        this.initObserver();
+
+        this.getReportList();
+    }
+
+    initObserver() {
         this.report$.subscribe((report: ReportParametersModel) => {
             this.reports.push(report);
         });
-
-        this.getReportList();
     }
 
     /**
@@ -130,5 +140,17 @@ export class AnalyticsReportListComponent implements  OnInit {
     public selectReport(report: any) {
         this.currentReport = report;
         this.reportClick.emit(report);
+    }
+
+    isSelected(report: any) {
+        return this.currentReport === report ? true : false;
+    }
+
+    isList() {
+        return this.layoutType === AnalyticsReportListComponent.LAYOUT_LIST;
+    }
+
+    isGrid() {
+        return this.layoutType === AnalyticsReportListComponent.LAYOUT_GRID;
     }
 }

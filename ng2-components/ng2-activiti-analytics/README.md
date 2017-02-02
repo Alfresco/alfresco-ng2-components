@@ -112,7 +112,7 @@ Follow the 3 steps below:
 The component shows the list of all the available reports
 
 ```html
-<analytics-report-list></analytics-report-list>
+<analytics-report-list [layoutType]="'LIST'"></analytics-report-list>
 ```
 
 Usage example of this component :
@@ -132,7 +132,7 @@ import { AnalyticsModule } from 'ng2-activiti-analytics';
     <div class="page-content">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <analytics-report-list></analytics-report-list>
+                <analytics-report-list [layoutType]="'LIST'"></analytics-report-list>
             </div>
         </div>
     </div>`
@@ -179,7 +179,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 #### Options
 
-No options.
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. LIST is the default value|
 
 ## Basic usage example Activiti Analytics
 
@@ -257,6 +259,29 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 |`appId` | The application id |
 |`reportId` | The report id |
 |`debug` | Flag to enable or disable the Form values in the console log |
+
+## Basic usage example Analytics Generator
+
+The component generate and show the charts
+
+```html
+<activiti-analytics-generator [reportId]="reportId" [reportParamQuery]="reportParamQuery"></activiti-analytics>
+```
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+|`onSuccess` | The event is emitted when the charts are loaded |
+|`onError` | The event is emitted when an error occur during the loading |
+
+#### Options
+
+| Name | Description |
+| --- | --- |
+|`reportId` | The report id |
+|`reportParamQuery` | The object contains all the parameters that the report needs |
+
 
 ## Build from sources
 
