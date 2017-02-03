@@ -181,6 +181,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | `fallbackThumbnail` | string |  | Path to fallback image to use if the row thumbnail is missing |
 | `multiselect` | boolean | false | Toggles multiselect mode |
 | `contentActions` | boolean | false | Toggles content actions for each row |
+| `contentActionsPosition` | string (left\|right) | right | Position of the content actions dropdown menu. |
 | `contextMenuActions` | boolean | false | Toggles context menus for each row |
 | `enablePagination` | boolean | true | Shows pagination |
 | `creationMenuActions` | boolean | true | Toggles the creation menu actions|
@@ -488,7 +489,7 @@ context.row.getValue('name')
 context.row.getValue('createdByUser.displayName')
 ```
 
-_You may want using **row** api to get raw value access. 
+You may want using **row** api to get raw value access.
 
 ```html
 <content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">

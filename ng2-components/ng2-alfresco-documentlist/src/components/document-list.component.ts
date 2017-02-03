@@ -75,6 +75,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     contentActions: boolean = false;
 
     @Input()
+    contentActionsPosition: string = 'right'; // left|right
+
+    @Input()
     contextMenuActions: boolean = false;
 
     @Input()
