@@ -135,6 +135,44 @@ describe('AnalyticsGeneratorComponent', () => {
             });
         });
 
+        it('Should render the Process definition overview report when onchanges is called ', (done) => {
+            component.onSuccess.subscribe((res) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(3);
+
+                expect(res[0]).toBeDefined();
+                expect(res[0].type).toEqual('table');
+                expect(res[0].datasets).toBeDefined();
+                expect(res[0].datasets.length).toEqual(4);
+                expect(res[0].datasets[0][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-DEFINITIONS');
+                expect(res[0].datasets[0][1]).toEqual('9');
+                expect(res[0].datasets[1][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-TOTAL-PROCESS-INSTANCES');
+                expect(res[0].datasets[1][1]).toEqual('41');
+                expect(res[0].datasets[2][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-ACTIVE-PROCESS-INSTANCES');
+                expect(res[0].datasets[2][1]).toEqual('3');
+                expect(res[0].datasets[3][0]).toEqual('__KEY_REPORTING.DEFAULT-REPORTS.PROCESS-DEFINITION-OVERVIEW.GENERAL-TABLE-COMPLETED-PROCESS-INSTANCES');
+                expect(res[0].datasets[3][1]).toEqual('38');
+
+                expect(res[1]).toBeDefined();
+                expect(res[1].type).toEqual('pie');
+
+                expect(res[2]).toBeDefined();
+                expect(res[2].type).toEqual('table');
+
+                done();
+            });
+
+            component.reportId = 1001;
+            component.reportParamQuery = new ReportQuery({status: 'All'});
+            component.ngOnChanges();
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticMock.chartProcessDefOverview
+            });
+        });
+
         it('Should render the Task overview report ', (done) => {
             component.onSuccess.subscribe((res) => {
                 expect(res).toBeDefined();

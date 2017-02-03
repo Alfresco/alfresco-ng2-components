@@ -1,9 +1,18 @@
 <div *ngIf="reports">
-    <div *ngFor="let report of reports">
-        <h4>{{report.title}}</h4>
+    <div class="report-icons">
+        <button mdTooltip="{{report.title}}" (click)="selectCurrent(idx)"
+                [class.mdl-button--accent]="isCurrent(idx)"
+                class="mdl-button mdl-js-button"
+                *ngFor="let report of reports; let idx = index">
+            <i class="material-icons">{{report.icon}}</i>
+        </button>
+    </div>
+    <div style="clear: both"> </div>
+    <div *ngFor="let report of reports; let idx = index">
         <div [ngSwitch]="report.type">
             <div *ngSwitchCase="'pie'">
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasData()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div *ngIf="report.hasData()">
                         <div *ngIf="report.hasZeroValues()">{{'ANALYTICS.MESSAGES.ZERO-DATA-FOUND' | translate}}</div>
@@ -14,44 +23,51 @@
                     </div>
                 </div>
             </div>
-            <div *ngSwitchCase="'table'">
-                <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
-                <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
-                    <table class="table table-responsive table-condensed" style="width: 100%">
-                        <tr>
-                            <th *ngFor="let label of report.labels">{{label | translate}}</th>
-                        </tr>
-                        <tr *ngFor="let rows of report.datasets" style="text-align: center;">
-                            <td *ngFor="let row of rows">{{row | translate }}</td>
-                        </tr>
-                    </table>
+            <div *ngSwitchCase="'table'" >
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
+                        <table class="table table-responsive table-condensed" style="width: 80%;margin-left: 20px">
+                            <tr>
+                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.datasets">
+                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div *ngSwitchCase="'masterDetailTable'">
-                <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
-                <div [attr.id]="'chart-master-detail-table-' + report.id" *ngIf="report.hasDatasets()">
-                    <table class="table table-responsive table-condensed" style="width: 100%">
-                        <tr>
-                            <th *ngFor="let label of report.labels">{{label | translate}}</th>
-                        </tr>
-                        <tr *ngFor="let rows of report.datasets" class="analytics-row__entry" style="text-align: center;">
-                            <td *ngFor="let row of rows" (click)="toggleDetailsTable()">{{row | translate }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div [attr.id]="'chart-master-detail-' + report.id" *ngIf="isShowDetails()">
-                    <table class="table table-responsive table-condensed" style="width: 100%">
-                        <tr>
-                            <th *ngFor="let label of report.detailsTable.labels">{{label | translate}}</th>
-                        </tr>
-                        <tr *ngFor="let rows of report.detailsTable.datasets" style="text-align: center;">
-                            <td *ngFor="let row of rows">{{row | translate }}</td>
-                        </tr>
-                    </table>
+            <div *ngSwitchCase="'masterDetailTable'" >
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
+                    <div [attr.id]="'chart-master-detail-table-' + report.id" *ngIf="report.hasDatasets()">
+                        <table class="table table-responsive table-condensed" style="width: 100%">
+                            <tr>
+                                <th *ngFor="let label of report.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.datasets" class="analytics-row__entry">
+                                <td *ngFor="let row of rows" (click)="toggleDetailsTable()">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div [attr.id]="'chart-master-detail-' + report.id" *ngIf="isShowDetails()">
+                        <table class="table table-responsive table-condensed" style="width: 100%">
+                            <tr>
+                                <th *ngFor="let label of report.detailsTable.labels">{{label | translate}}</th>
+                            </tr>
+                            <tr *ngFor="let rows of report.detailsTable.datasets">
+                                <td *ngFor="let row of rows">{{row | translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div *ngSwitchCase="'bar'">
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <base-chart *ngIf="report.hasDatasets()" class="chart"
                                 [datasets]="report.datasets"
@@ -61,7 +77,8 @@
                 </div>
             </div>
             <div *ngSwitchCase="'multiBar'">
-                <div class="col-md-6">
+                <div class="col-md-6" *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div *ngIf="report.hasDatasets()">
                         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [attr.for]="'stacked-id'">
@@ -80,7 +97,10 @@
                 </div>
             </div>
             <div *ngSwitchCase="'HeatMap'">
-                <analytics-report-heat-map [report]="report"></analytics-report-heat-map>
+                <div *ngIf="isCurrent(idx)">
+                    <h4>{{report.title}}</h4>
+                    <analytics-report-heat-map [report]="report"></analytics-report-heat-map>
+                </div>
             </div>
             <div *ngSwitchDefault>
                 <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{report.type}}</span>

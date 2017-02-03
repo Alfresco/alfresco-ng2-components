@@ -3,3 +3,8 @@
 .analytics-row__entry {
     cursor: pointer;
 }
+
+.report-icons {
+    margin: 20px 20px 20px 20px;
+    float: right;
+}
