@@ -4,7 +4,7 @@
     <thead>
     <tr>
         <!-- Actions (left) -->
-        <th *ngIf="actions && actionsPosition === 'left'">
+        <th *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-header">
             <span class="sr-only">Actions</span>
         </th>
         <!-- Columns -->
@@ -28,7 +28,7 @@
             <span *ngIf="col.title">{{col.title}}</span>
         </th>
         <!-- Actions (right) -->
-        <th *ngIf="actions && actionsPosition === 'right'">
+        <th *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-header">
             <span class="sr-only">Actions</span>
         </th>
     </tr>
@@ -40,7 +40,7 @@
         [class.alfresco-datatable__row--selected]="selectedRow === row">
 
         <!-- Actions (right) -->
-        <td *ngIf="actions && actionsPosition === 'left'">
+        <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
             <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>
@@ -93,7 +93,7 @@
         </td>
 
         <!-- Actions (right) -->
-        <td *ngIf="actions && actionsPosition === 'right'">
+        <td *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-cell">
             <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>
