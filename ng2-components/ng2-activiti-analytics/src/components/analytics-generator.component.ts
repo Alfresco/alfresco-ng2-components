@@ -85,7 +85,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
             (res: Chart[]) => {
                 this.reports = res;
                 if (this.reports) {
-                    this.selectCurrent(0);
+                    this.selectFirstReport();
                 }
                 this.onSuccess.emit(res);
             },
@@ -127,5 +127,9 @@ export class AnalyticsGeneratorComponent implements OnChanges {
 
     selectCurrent(position: number) {
         this.currentChartPosition = position;
+    }
+
+    selectFirstReport() {
+        this.selectCurrent(0);
     }
 }

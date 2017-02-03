@@ -26,7 +26,7 @@ export class Chart {
         this.id = obj && obj.id || null;
         if (obj && obj.type) {
             this.type = this.convertType(obj.type);
-            this.icon = this.convertTypeToIcon(this.type);
+            this.icon = this.getIconType(this.type);
         }
     }
 
@@ -61,8 +61,8 @@ export class Chart {
         return chartType;
     }
 
-    private convertTypeToIcon(type: string) {
-        let typeIcon = '';
+    private getIconType(type: string): string {
+        let typeIcon: string = '';
         switch (type) {
             case 'pie':
                 typeIcon = 'pie_chart';
