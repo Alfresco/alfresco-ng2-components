@@ -177,7 +177,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 ## Change footer content
 
-<img src="assets/custom-footer.png" width="600" />
+<img src="assets/custom-footer.png" width="400" />
 
 You can replace the entire content in the footer of the login component with your custom content.
 
@@ -189,7 +189,7 @@ You can replace the entire content in the footer of the login component with you
 
 ## Change header content
 
-<img src="assets/custom-header.png" width="600" />
+<img src="assets/custom-header.png" width="400" />
 
 You can replace the entire content in the header of the login component with your custom content.
 
