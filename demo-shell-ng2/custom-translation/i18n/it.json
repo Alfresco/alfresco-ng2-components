@@ -4,6 +4,7 @@
   "DOCUMENT_LIST": {
     "COLUMNS": {
       "DISPLAY_NAME": "Mostra name",
+      "TAG": "Tag",
       "CREATED_BY": "Creato da",
       "CREATED_ON": "Creato il"
     },

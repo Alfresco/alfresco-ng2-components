@@ -501,7 +501,7 @@ _You may want using **row** api to get raw value access.
 
 Use **data** api to get values with post-processing, like datetime/icon conversion._
 
-Final example, we'll name the context as `entry`:
+In the Example below will prepend `Hi!` to each file and folder name in the list: 
 
 ```html
 <content-column title="Name" key="name" sortable="true" class="full-width ellipsis-cell">
@@ -511,9 +511,21 @@ Final example, we'll name the context as `entry`:
 </content-column>
 ```
 
-Example above will prepend `Hi!` to each file and folder name in the list.
+In the Example below will add the [ng2-alfresco-tag](https://www.npmjs.com/package/ng2-alfresco-tag) component is integrate in the document list.
 
+```html
+<content-column
+    title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
+    key="id"
+    sortable="true"
+    class="full-width ellipsis-cell">
+    <template let-entry="$implicit">
+        <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
+    </template>
+</content-column>
+```
 
+![Tag component in document List](docs/assets/document-list-tag-template.png)
 
 ### Actions
 
