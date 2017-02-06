@@ -24,7 +24,7 @@ import {
     Output,
     SimpleChanges,
     OnDestroy,
-    AfterViewChecked
+    AfterViewChecked,
     ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';

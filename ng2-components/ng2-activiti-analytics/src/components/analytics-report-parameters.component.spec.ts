@@ -408,27 +408,60 @@ describe('AnalyticsReportParametersComponent', () => {
             expect(numberConvert).toEqual(2);
         });
 
-        it('Should be able to change the report title', async(() => {
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId);
-            component.ngOnChanges({ 'reportId': change });
-            fixture.detectChanges();
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamStatus
-            });
-            fixture.whenStable().then(() => {
-                component.toggleParameters();
+        describe('When the form is rendered correctly', () => {
+            let values: any = {
+                dateRange: {
+                    startDate: '2016-09-01', endDate: '2016-10-05'
+                },
+                statusGroup: {
+                    status: 'All'
+                },
+                processDefGroup: {
+                    processDefinitionId: 'FakeProcess:1:22'
+                },
+                taskGroup: {
+                    taskName: 'FakeTaskName'
+                },
+                durationGroup: {
+                    duration: 22
+                },
+                dateIntervalGroup: {
+                    dateRangeInterval: 120
+                },
+                processInstanceGroup: {
+                    slowProcessInstanceInteger: 2
+                },
+                typeFilteringGroup: {
+                    typeFiltering: true
+                }
+            };
+
+            beforeEach(async(() => {
+                let reportId = 1;
+                let change = new SimpleChange(null, reportId);
+                component.ngOnChanges({ 'reportId': change });
                 fixture.detectChanges();
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200,
+                    contentType: 'json',
+                    responseText: analyticParamsMock.reportDefParamStatus
+                });
+                fixture.whenStable().then(() => {
+                    component.toggleParameters();
+                    fixture.detectChanges();
+                });
+            }));
+
+            it('Should be able to change the report title', async(() => {
                 let title: HTMLElement = element.querySelector('h4');
                 title.click();
                 fixture.detectChanges();
                 let reportName: HTMLInputElement = <HTMLInputElement> element.querySelector('#reportName');
                 expect(reportName).not.toBeNull();
                 reportName.focus();
-                component.reportParameters.name = 'FAKE_TEST_NAME';
+                // component.reportParameters.name = 'FAKE_TEST_NAME';
                 reportName.value = 'FAKE_TEST_NAME';
+                fixture.detectChanges();
                 reportName.blur();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
@@ -441,53 +474,14 @@ describe('AnalyticsReportParametersComponent', () => {
                     let titleChanged: HTMLElement = element.querySelector('h4');
                     expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
                 });
-            });
-        }));
+            }));
 
-        it('Should show a dialog to allowing report save', async(() => {
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId);
-            component.ngOnChanges({ 'reportId': change });
-            spyOn(component, 'isFormValid').and.returnValue(true);
-            component.reportId = analyticParamsMock.reportDefParamStatus.id.toString();
-            fixture.detectChanges();
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamStatus
-            });
-            component.saveReportSuccess.subscribe(() => {
-                let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
-                expect(reportDialogTitle.getAttribute('open')).toBeNull();
-            });
-            fixture.whenStable().then(() => {
-                component.toggleParameters();
-                let values: any = {
-                    dateRange: {
-                        startDate: '2016-09-01', endDate: '2016-10-05'
-                    },
-                    statusGroup: {
-                        status: 'All'
-                    },
-                    processDefGroup: {
-                        processDefinitionId: 'FakeProcess:1:22'
-                    },
-                    taskGroup: {
-                        taskName: 'FakeTaskName'
-                    },
-                    durationGroup: {
-                        duration: 22
-                    },
-                    dateIntervalGroup: {
-                        dateRangeInterval: 120
-                    },
-                    processInstanceGroup: {
-                        slowProcessInstanceInteger: 2
-                    },
-                    typeFilteringGroup: {
-                        typeFiltering: true
-                    }
-                };
+            it('Should show a dialog to allowing report save', async(() => {
+                component.saveReportSuccess.subscribe(() => {
+                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
+                    expect(reportDialogTitle.getAttribute('open')).toBeNull();
+                });
+
                 component.submit(values);
                 fixture.detectChanges();
                 let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
@@ -512,50 +506,9 @@ describe('AnalyticsReportParametersComponent', () => {
                         contentType: 'json'
                     });
                 });
-            });
-        }));
+            }));
 
-        it('Should show a dialog to allowing report export', async(() => {
-            let reportId = 1;
-            let change = new SimpleChange(null, reportId);
-            component.ngOnChanges({ 'reportId': change });
-            spyOn(component, 'isFormValid').and.returnValue(true);
-            component.reportId = analyticParamsMock.reportDefParamStatus.id.toString();
-            fixture.detectChanges();
-            jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200,
-                contentType: 'json',
-                responseText: analyticParamsMock.reportDefParamStatus
-            });
-
-            fixture.whenStable().then(() => {
-                component.toggleParameters();
-                let values: any = {
-                    dateRange: {
-                        startDate: '2016-09-01', endDate: '2016-10-05'
-                    },
-                    statusGroup: {
-                        status: 'All'
-                    },
-                    processDefGroup: {
-                        processDefinitionId: 'FakeProcess:1:22'
-                    },
-                    taskGroup: {
-                        taskName: 'FakeTaskName'
-                    },
-                    durationGroup: {
-                        duration: 22
-                    },
-                    dateIntervalGroup: {
-                        dateRangeInterval: 120
-                    },
-                    processInstanceGroup: {
-                        slowProcessInstanceInteger: 2
-                    },
-                    typeFilteringGroup: {
-                        typeFiltering: true
-                    }
-                };
+            it('Should show a dialog to allowing report export', async(() => {
                 component.submit(values);
                 fixture.detectChanges();
                 let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
@@ -566,21 +519,15 @@ describe('AnalyticsReportParametersComponent', () => {
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog-title');
-                    let saveTitleSubMessage: HTMLElement = <HTMLElement> element.querySelector('#save-title-submessage');
                     let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
                     let performActionButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#action-dialog-button');
                     let todayDate = component.getTodayDate();
                     expect(reportDialogTitle).not.toBeNull();
-                    expect(saveTitleSubMessage).not.toBeNull();
                     expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
                     expect(performActionButton).not.toBeNull();
-                    performActionButton.click();
-                    jasmine.Ajax.requests.mostRecent().respondWith({
-                        status: 200,
-                        contentType: 'json'
-                    });
                 });
-            });
-        }));
+            }));
+
+        });
     });
 });
