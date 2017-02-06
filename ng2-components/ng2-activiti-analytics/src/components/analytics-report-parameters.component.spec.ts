@@ -55,7 +55,9 @@ describe('AnalyticsReportParametersComponent', () => {
 
         let translateService = TestBed.get(AlfrescoTranslationService);
         spyOn(translateService, 'addTranslationFolder').and.stub();
-        spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered'
@@ -80,17 +82,22 @@ describe('AnalyticsReportParametersComponent', () => {
             jasmine.Ajax.uninstall();
         });
 
-        it('Should initialize the Report form with a Form Group ', () => {
-            expect(component.reportForm.get('dateRange')).toBeDefined();
-            expect(component.reportForm.get('dateRange').get('startDate')).toBeDefined();
-            expect(component.reportForm.get('dateRange').get('endDate')).toBeDefined();
+        it('Should initialize the Report form with a Form Group ', (done) => {
+            let fakeReportParam = new ReportParametersModel(analyticParamsMock.reportDefParamTask);
+            component.onSuccessReportParams.subscribe(() => {
+                fixture.detectChanges();
+                expect(component.reportForm.get('taskGroup')).toBeDefined();
+                expect(component.reportForm.get('taskGroup').get('taskName')).toBeDefined();
+                done();
+            });
+            component.onSuccessReportParams.emit(fakeReportParam);
         });
 
         it('Should render a dropdown with all the status when the definition parameter type is \'status\' ', (done) => {
             component.onSuccessReportParams.subscribe(() => {
                 fixture.detectChanges();
                 let dropDown: any = element.querySelector('#select-status');
-                expect(element.querySelector('h4').innerHTML).toEqual('Fake Task overview status');
+                expect(element.querySelector('h4').textContent.trim()).toEqual('Fake Task overview status');
                 expect(dropDown).toBeDefined();
                 expect(dropDown.length).toEqual(4);
                 expect(dropDown[0].innerHTML).toEqual('Choose One');
@@ -400,5 +407,180 @@ describe('AnalyticsReportParametersComponent', () => {
             let numberConvert = component.convertNumber('2');
             expect(numberConvert).toEqual(2);
         });
+
+        it('Should be able to change the report title', async(() => {
+            let reportId = 1;
+            let change = new SimpleChange(null, reportId);
+            component.ngOnChanges({ 'reportId': change });
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticParamsMock.reportDefParamStatus
+            });
+            fixture.whenStable().then(() => {
+                component.toggleParameters();
+                fixture.detectChanges();
+                let title: HTMLElement = element.querySelector('h4');
+                title.click();
+                fixture.detectChanges();
+                let reportName: HTMLInputElement = <HTMLInputElement> element.querySelector('#reportName');
+                expect(reportName).not.toBeNull();
+                reportName.focus();
+                component.reportParameters.name = 'FAKE_TEST_NAME';
+                reportName.value = 'FAKE_TEST_NAME';
+                reportName.blur();
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200,
+                    contentType: 'json',
+                    responseText: analyticParamsMock.reportDefParamStatus
+                });
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let titleChanged: HTMLElement = element.querySelector('h4');
+                    expect(titleChanged.textContent.trim()).toEqual('FAKE_TEST_NAME');
+                });
+            });
+        }));
+
+        it('Should show a dialog to allowing report save', async(() => {
+            let reportId = 1;
+            let change = new SimpleChange(null, reportId);
+            component.ngOnChanges({ 'reportId': change });
+            spyOn(component, 'isFormValid').and.returnValue(true);
+            component.reportId = analyticParamsMock.reportDefParamStatus.id.toString();
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticParamsMock.reportDefParamStatus
+            });
+            component.saveReportSuccess.subscribe(() => {
+                let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog');
+                expect(reportDialogTitle.getAttribute('open')).toBeNull();
+            });
+            fixture.whenStable().then(() => {
+                component.toggleParameters();
+                let values: any = {
+                    dateRange: {
+                        startDate: '2016-09-01', endDate: '2016-10-05'
+                    },
+                    statusGroup: {
+                        status: 'All'
+                    },
+                    processDefGroup: {
+                        processDefinitionId: 'FakeProcess:1:22'
+                    },
+                    taskGroup: {
+                        taskName: 'FakeTaskName'
+                    },
+                    durationGroup: {
+                        duration: 22
+                    },
+                    dateIntervalGroup: {
+                        dateRangeInterval: 120
+                    },
+                    processInstanceGroup: {
+                        slowProcessInstanceInteger: 2
+                    },
+                    typeFilteringGroup: {
+                        typeFiltering: true
+                    }
+                };
+                component.submit(values);
+                fixture.detectChanges();
+                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#save-button');
+                expect(saveButton).toBeDefined();
+                expect(saveButton).not.toBeNull();
+                saveButton.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog-title');
+                    let saveTitleSubMessage: HTMLElement = <HTMLElement> element.querySelector('#save-title-submessage');
+                    let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#action-dialog-button');
+                    let todayDate = component.getTodayDate();
+                    expect(reportDialogTitle).not.toBeNull();
+                    expect(saveTitleSubMessage).not.toBeNull();
+                    expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
+                    expect(performActionButton).not.toBeNull();
+                    performActionButton.click();
+                    jasmine.Ajax.requests.mostRecent().respondWith({
+                        status: 200,
+                        contentType: 'json'
+                    });
+                });
+            });
+        }));
+
+        it('Should show a dialog to allowing report export', async(() => {
+            let reportId = 1;
+            let change = new SimpleChange(null, reportId);
+            component.ngOnChanges({ 'reportId': change });
+            spyOn(component, 'isFormValid').and.returnValue(true);
+            component.reportId = analyticParamsMock.reportDefParamStatus.id.toString();
+            fixture.detectChanges();
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticParamsMock.reportDefParamStatus
+            });
+
+            fixture.whenStable().then(() => {
+                component.toggleParameters();
+                let values: any = {
+                    dateRange: {
+                        startDate: '2016-09-01', endDate: '2016-10-05'
+                    },
+                    statusGroup: {
+                        status: 'All'
+                    },
+                    processDefGroup: {
+                        processDefinitionId: 'FakeProcess:1:22'
+                    },
+                    taskGroup: {
+                        taskName: 'FakeTaskName'
+                    },
+                    durationGroup: {
+                        duration: 22
+                    },
+                    dateIntervalGroup: {
+                        dateRangeInterval: 120
+                    },
+                    processInstanceGroup: {
+                        slowProcessInstanceInteger: 2
+                    },
+                    typeFilteringGroup: {
+                        typeFiltering: true
+                    }
+                };
+                component.submit(values);
+                fixture.detectChanges();
+                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
+                expect(saveButton).toBeDefined();
+                expect(saveButton).not.toBeNull();
+                saveButton.click();
+                fixture.detectChanges();
+                fixture.whenStable().then(() => {
+                    fixture.detectChanges();
+                    let reportDialogTitle: HTMLElement = <HTMLElement>element.querySelector('#report-dialog-title');
+                    let saveTitleSubMessage: HTMLElement = <HTMLElement> element.querySelector('#save-title-submessage');
+                    let inputSaveName: HTMLInputElement = <HTMLInputElement> element.querySelector('#repName');
+                    let performActionButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#action-dialog-button');
+                    let todayDate = component.getTodayDate();
+                    expect(reportDialogTitle).not.toBeNull();
+                    expect(saveTitleSubMessage).not.toBeNull();
+                    expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
+                    expect(performActionButton).not.toBeNull();
+                    performActionButton.click();
+                    jasmine.Ajax.requests.mostRecent().respondWith({
+                        status: 200,
+                        contentType: 'json'
+                    });
+                });
+            });
+        }));
     });
 });

@@ -24,7 +24,7 @@ import {
     Output,
     SimpleChanges,
     OnDestroy,
-    AfterViewChecked,
+    AfterViewChecked
     ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -290,7 +290,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public editEnable() {
-        this.isEditable = true;
+        this.isEditable =  true;
     }
 
     public editDisable() {
@@ -355,6 +355,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 let blob: Blob = new Blob([data], { type: 'text/csv' });
                 let downloadUrl = window.URL.createObjectURL(blob);
                 let downloadElement = window.document.createElement('a');
+                downloadElement.setAttribute('id', 'export-download');
                 downloadElement.setAttribute('href', downloadUrl);
                 downloadElement.setAttribute('download', paramQuery.reportName);
                 downloadElement.click();

@@ -31,9 +31,9 @@
             </div>
             <button (click)="deleteReport(reportId)" class="mdl-button mdl-js-button mdl-button--primary">
                     Delete Report
-            </button>
-            <hr>
-            <div *ngFor="let field of reportParameters.definition.parameters">
+            </button>        
+            </div>
+            <div *ngFor="let field of reportParameters.definition.parameters" [class.is-hide]="isParametersHide()">
                 <div [ngSwitch]="field.type">
                     <div *ngSwitchCase="'integer'">
                         <br>
@@ -87,13 +87,13 @@
             </div>
             <div *ngIf="isFormValid()">
                 <div class="option_button_details">
-                    <button class="mdl-button mdl-js-button mdl-button--mini-fab mdl-js-ripple-effect"
+                    <button id="export-button" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-js-ripple-effect"
                             (click)="showDialog('Export')">
                         <span>
                             Export to CSV <i class="material-icons">file_download</i>
                         </span>
                     </button>
-                    <button class="mdl-button mdl-js-button mdl-button--mini-fab mdl-js-ripple-effect"
+                    <button id="save-button" class="mdl-button mdl-js-button mdl-button--mini-fab mdl-js-ripple-effect"
                             (click)="showDialog('Save')">
                         <span>
                             Save <i class="material-icons">add</i>
@@ -101,15 +101,15 @@
                     </button>
                 </div>
             </div>
-            <dialog class="mdl-dialog options-name-dialog" #reportNameDialog>
-                <h5 class="mdl-dialog__title">{{action}} report</h5>
+            <dialog id="report-dialog" class="mdl-dialog options-name-dialog" #reportNameDialog>
+                <h5 id="report-dialog-title" class="mdl-dialog__title">{{action}} report</h5>
                 <div class="mdl-dialog__content">
-                    <div *ngIf="isSaveAction()" class="export-message">{{'DIALOG.SAVE_MESSAGE' | translate}}</div>
+                    <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">{{'DIALOG.SAVE_MESSAGE' | translate}}</div>
                     <div class="mdl-textfield mdl-js-textfield save-export-input">
-                        <label [attr.for]="repname">Report Name</label>
+                        <label id="report-name-label" [attr.for]="repname">Report Name</label>
                         <input class="mdl-textfield__input"
                                type="text"
-                               [attr.id]="repname"
+                               id="repName"
                                [attr.value]="reportName"
                                [(ngModel)]="reportName"
                                [ngModelOptions]="{standalone: true}"
@@ -117,8 +117,8 @@
                     </div>
                 </div>
                 <div class="mdl-dialog__actions">
-                    <button type="button" (click)="closeDialog()" class="mdl-button close">Close</button>
-                    <button type="button" (click)="performAction(action, reportParamQuery)"
+                    <button type="button" id="close-dialog-button" (click)="closeDialog()" class="mdl-button close">Close</button>
+                    <button type="button" id="action-dialog-button" (click)="performAction(action, reportParamQuery)"
                             class="mdl-button close">{{action}}
                     </button>
                 </div>
@@ -129,5 +129,6 @@
                 <p>ReportForm FormGroup valid : {{reportForm && reportForm.controls.dateRange.valid | json }}</p>
             </div>
         </form>
+        </div>
     </div>
 </div>
