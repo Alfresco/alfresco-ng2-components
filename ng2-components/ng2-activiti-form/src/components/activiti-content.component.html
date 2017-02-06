@@ -5,7 +5,8 @@
                 <img class="img-upload-widget" [src]="sanitizeUrl(content.thumbnailUrl)">
             </div>
             <div *ngIf="!content.isThumbnailSupported()">
-                <img class="img-upload-widget" [src]="previewnotavailable || baseComponentPath + '/../assets/images/preview-not-available.gif'">
+                <i class="material-icons">image</i>
+                <div class="previewTxt">{{ 'FORM.PREVIEW.IMAGE_NOT_AVAILABLE' | translate }}</div>
             </div>
         </div>
         <div class="mdl-card__supporting-text">{{content.name}}</div>

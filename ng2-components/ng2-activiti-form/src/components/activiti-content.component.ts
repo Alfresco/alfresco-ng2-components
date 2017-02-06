@@ -39,15 +39,10 @@ export class ActivitiContent implements OnChanges {
     @Input()
     id: string;
 
-    @Input()
-    previewnotavailable: string;
-
     @Output()
     contentClick = new EventEmitter();
 
     content: ContentLinkModel;
-
-    baseComponentPath = module.id.replace('/alfresco-content.component.js', '');
 
     constructor(private translate: AlfrescoTranslationService,
                 protected formService: FormService,
