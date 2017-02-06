@@ -177,6 +177,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `data` | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
 | `multiselect` | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
 | `actions` | boolean | false | Toggles data actions column |
+| `actionsPosition` | string (left\|right) | right | Position of the actions dropdown menu. | 
 | `fallbackThumbnail` | string |  | Fallback image for row ehre thubnail is missing|
 
 ### Events

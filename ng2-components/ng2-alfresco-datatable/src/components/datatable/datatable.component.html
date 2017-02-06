@@ -3,6 +3,10 @@
     class="mdl-data-table mdl-js-data-table full-width mdl-data-table-fix-firefox">
     <thead>
     <tr>
+        <!-- Actions (left) -->
+        <th *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-header">
+            <span class="sr-only">Actions</span>
+        </th>
         <!-- Columns -->
         <th *ngIf="multiselect">
             <label
@@ -23,8 +27,8 @@
             <span *ngIf="col.srTitle" class="sr-only">{{col.srTitle}}</span>
             <span *ngIf="col.title">{{col.title}}</span>
         </th>
-        <!-- Actions -->
-        <th *ngIf="actions">
+        <!-- Actions (right) -->
+        <th *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-header">
             <span class="sr-only">Actions</span>
         </th>
     </tr>
@@ -34,6 +38,23 @@
     <tr *ngFor="let row of data.getRows(); let idx = index" tabindex="0"
         class="alfresco-datatable__row"
         [class.alfresco-datatable__row--selected]="selectedRow === row">
+
+        <!-- Actions (right) -->
+        <td *ngIf="actions && actionsPosition === 'left'" class="alfresco-datatable__actions-cell">
+            <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul alfresco-mdl-menu class="mdl-menu--bottom-left"
+                [attr.for]="'action_menu_' + idx">
+                <li class="mdl-menu__item"
+                    [attr.data-automation-id]="action.title"
+                    *ngFor="let action of getRowActions(row)"
+                    (click)="onExecuteRowAction(row, action)">
+                    {{action.title}}
+                </li>
+            </ul>
+        </td>
+
         <td *ngIf="multiselect">
             <label
                 class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
@@ -71,8 +92,8 @@
             </div>
         </td>
 
-        <td *ngIf="actions">
-            <!-- action menu -->
+        <!-- Actions (right) -->
+        <td *ngIf="actions && actionsPosition === 'right'" class="alfresco-datatable__actions-cell">
             <button [id]="'action_menu_' + idx" alfresco-mdl-button class="mdl-button--icon" [attr.data-automation-id]="actions_menu">
                 <i class="material-icons">more_vert</i>
             </button>

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableComponent } from './datatable.component';
 import {
     DataRow,
@@ -26,23 +28,75 @@ import {
 
 describe('DataTable', () => {
 
+    let fixture: ComponentFixture<DataTableComponent>;
     let dataTable: DataTableComponent;
+    let element: any;
     let eventMock: any;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CoreModule.forRoot()
+            ],
+            declarations: [DataTableComponent]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DataTableComponent);
+        dataTable = fixture.componentInstance;
+        element = fixture.debugElement.nativeElement;
+
+        // usernameInput = element.querySelector('#username');
+        // passwordInput = element.querySelector('#password');
+
+        fixture.detectChanges();
+    });
 
     beforeEach(() => {
         // reset MDL handler
         window['componentHandler'] = null;
-        dataTable = new DataTableComponent();
+        // dataTable = new DataTableComponent();
 
         eventMock = {
             preventDefault: function () {}
         };
     });
 
+    it('should put actions menu to the right by default', () => {
+        dataTable.data = new ObjectDataTableAdapter([], [
+            <DataColumn> {},
+            <DataColumn> {},
+            <DataColumn> {}
+        ]);
+        dataTable.actions = true;
+        fixture.detectChanges();
+
+        let headers = element.querySelectorAll('th');
+        expect(headers.length).toBe(4);
+        expect(headers[headers.length - 1].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
+    });
+
+    it('should put actions menu to the left', () => {
+        dataTable.data = new ObjectDataTableAdapter([], [
+            <DataColumn> {},
+            <DataColumn> {},
+            <DataColumn> {}
+        ]);
+        dataTable.actions = true;
+        dataTable.actionsPosition = 'left';
+        fixture.detectChanges();
+
+        let headers = element.querySelectorAll('th');
+        expect(headers.length).toBe(4);
+        expect(headers[0].classList.contains('alfresco-datatable__actions-header')).toBeTruthy();
+    });
+
     it('should initialize default adapter', () => {
-        expect(dataTable.data).toBeUndefined();
-        dataTable.ngOnInit();
-        expect(dataTable.data).toEqual(jasmine.any(ObjectDataTableAdapter));
+        let table = new DataTableComponent();
+        expect(table.data).toBeUndefined();
+        table.ngOnInit();
+        expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
     it('should initialize with custom data', () => {

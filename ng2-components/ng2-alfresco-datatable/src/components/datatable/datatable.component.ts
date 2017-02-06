@@ -45,6 +45,9 @@ export class DataTableComponent implements OnInit {
     actions: boolean = false;
 
     @Input()
+    actionsPosition: string = 'right'; // left|right
+
+    @Input()
     fallbackThumbnail: string;
 
     @Output()
