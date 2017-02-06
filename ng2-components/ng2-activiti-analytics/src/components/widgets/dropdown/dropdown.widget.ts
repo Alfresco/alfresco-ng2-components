@@ -54,11 +54,20 @@ export class DropdownWidget extends WidgetComponent {
 
     ngOnInit() {
         if (this.required) {
-            this.formGroup.get(this.controllerName).setValidators(Validators.compose([Validators.required, this.validateDropDown]));
+            this.formGroup.get(this.controllerName).setValidators(Validators.compose(this.buildValidatorList()));
         }
     }
 
     validateDropDown(controller: FormControl) {
-        return controller.value !== 'null' ? null : { controllerName : false };
+        return controller.value !== 'null' ? null : { controllerName: false };
+    }
+
+    buildValidatorList() {
+        let validatorList = [];
+        validatorList.push(Validators.required);
+        if (this.showDefaultOption) {
+            validatorList.push(this.validateDropDown);
+        }
+        return validatorList;
     }
 }

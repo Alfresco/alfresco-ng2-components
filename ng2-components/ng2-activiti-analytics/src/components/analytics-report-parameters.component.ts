@@ -290,7 +290,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public editEnable() {
-        this.isEditable =  true;
+        this.isEditable = true;
     }
 
     public editDisable() {
@@ -354,12 +354,16 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             (data: any) => {
                 let blob: Blob = new Blob([data], { type: 'text/csv' });
                 let downloadUrl = window.URL.createObjectURL(blob);
-                let downloadElement = window.document.createElement('a');
-                downloadElement.setAttribute('id', 'export-download');
-                downloadElement.setAttribute('href', downloadUrl);
-                downloadElement.setAttribute('download', paramQuery.reportName);
-                downloadElement.click();
+                this.generateDownloadElement(downloadUrl, paramQuery);
             });
+    }
+
+    private generateDownloadElement(downloadUrl: string, paramQuery: ReportQuery) {
+        let downloadElement = window.document.createElement('a');
+        downloadElement.setAttribute('id', 'export-download');
+        downloadElement.setAttribute('href', downloadUrl);
+        downloadElement.setAttribute('download', paramQuery.reportName);
+        downloadElement.click();
     }
 
     doSave(paramQuery: ReportQuery) {

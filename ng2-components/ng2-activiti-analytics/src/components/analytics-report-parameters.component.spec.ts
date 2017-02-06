@@ -448,6 +448,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 });
                 fixture.whenStable().then(() => {
                     component.toggleParameters();
+                    component.reportId = '1';
+                    spyOn(component, 'isFormValid').and.returnValue(true);
                     fixture.detectChanges();
                 });
             }));
@@ -459,9 +461,8 @@ describe('AnalyticsReportParametersComponent', () => {
                 let reportName: HTMLInputElement = <HTMLInputElement> element.querySelector('#reportName');
                 expect(reportName).not.toBeNull();
                 reportName.focus();
-                // component.reportParameters.name = 'FAKE_TEST_NAME';
+                component.reportParameters.name = 'FAKE_TEST_NAME';
                 reportName.value = 'FAKE_TEST_NAME';
-                fixture.detectChanges();
                 reportName.blur();
                 jasmine.Ajax.requests.mostRecent().respondWith({
                     status: 200,
@@ -510,11 +511,12 @@ describe('AnalyticsReportParametersComponent', () => {
 
             it('Should show a dialog to allowing report export', async(() => {
                 component.submit(values);
+                spyOn(component, 'generateDownloadElement').and.stub();
                 fixture.detectChanges();
-                let saveButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
-                expect(saveButton).toBeDefined();
-                expect(saveButton).not.toBeNull();
-                saveButton.click();
+                let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
+                expect(exportButton).toBeDefined();
+                expect(exportButton).not.toBeNull();
+                exportButton.click();
                 fixture.detectChanges();
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
@@ -525,9 +527,28 @@ describe('AnalyticsReportParametersComponent', () => {
                     expect(reportDialogTitle).not.toBeNull();
                     expect(inputSaveName.value.trim()).toEqual(analyticParamsMock.reportDefParamStatus.name + ' ( ' + todayDate + ' )');
                     expect(performActionButton).not.toBeNull();
+                    performActionButton.click();
+                    jasmine.Ajax.requests.mostRecent().respondWith({
+                        status: 200,
+                        contentType: 'json'
+                    });
                 });
             }));
 
+            it('Should raise an event for report deleted', async(() => {
+                let deleteButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#delete-button');
+                expect(deleteButton).toBeDefined();
+                expect(deleteButton).not.toBeNull();
+
+                component.deleteReportSuccess.subscribe((reportId) => {
+                    expect(reportId).not.toBeNull();
+                });
+                deleteButton.click();
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200,
+                    contentType: 'json'
+                });
+            }));
         });
     });
 });
