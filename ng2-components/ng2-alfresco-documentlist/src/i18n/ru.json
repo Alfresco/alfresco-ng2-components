@@ -1,0 +1,22 @@
+{
+    "ICONS": {
+        "ft_ic_folder": "Пака",
+        "ft_ic_raster_image": "Картинка",
+        "ft_ic_pdf": "PDF документ",
+        "ft_ic_ms_excel": "Microsoft Excel файл",
+        "ft_ic_ms_word": "Microsoft Word документ",
+        "ft_ic_ms_powerpoint": "Microsoft PowerPoint файл",
+        "ft_ic_video": "Видео",
+        "ft_ic_document": "Документ",
+        "ft_ic_website": "Web-ресурс",
+        "ft_ic_archive": "Архив",
+        "ft_ic_presentation": "Презентация",
+        "ft_ic_spreadsheet": "Таблица"
+    },
+    "BUTTON": {
+        "ACTION_CREATE": "Создать...",
+        "ACTION_NEW_FOLDER": "Новая папка",
+        "CREATE": "Создать",
+        "CANCEL": "Отмена"
+    }
+}
