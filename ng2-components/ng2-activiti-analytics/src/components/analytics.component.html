@@ -2,6 +2,8 @@
     <analytics-report-parameters [appId]="appId" [reportId]="reportId"
                                  (onFormValueChanged)="reset()"
                                  (onSuccess)="showReport($event)"
+                                 (saveReportSuccess)="onSaveReportSuccess()"
+                                 (deleteReportSuccess)="onDeleteReportSuccess()"
                                  (onEdit)="onEditReport($event)">
     </analytics-report-parameters>
 

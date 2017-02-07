@@ -43,5 +43,9 @@
     },
     "PROCESS-STATUS": "Process status",
     "TASK-STATUS": "Task status"
+  },
+  "DIALOG":{
+      "SAVE_MESSAGE" : "The current parameter settings will be stored, and a new report will be shown in the reports list. When that particular report is clicked, the report will be generated using these saved parameter values.",
+      "EXPORT_MESSAGE":""
   }
 }

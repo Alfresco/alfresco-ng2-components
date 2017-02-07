@@ -251,6 +251,8 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | --- | --- |
 |`onSuccess` | The event is emitted when the report parameters are loaded |
 |`onError` | The event is emitted when an error occur during the loading |
+|`reportSaved` | The event is emitted when a report is saved |
+|`reportDeleted` | The event is emitted when a report is deleted |
 
 #### Options
 
