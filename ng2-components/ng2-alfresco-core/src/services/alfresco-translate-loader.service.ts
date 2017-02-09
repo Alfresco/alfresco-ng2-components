@@ -44,11 +44,11 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
 
     getComponentToFetch(lang: string) {
         let observableBatch = [];
+        if (!this.queue[lang]) {
+            this.queue[lang] = [];
+        }
         this._componentList.forEach((component) => {
             if (!this.isComponentInQueue(lang, component.name)) {
-                if (!this.queue[lang]) {
-                    this.queue[lang] = [];
-                }
                 this.queue[lang].push(component.name);
                 observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
                     .map((res: Response) => {
