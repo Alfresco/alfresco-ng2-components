@@ -46,6 +46,9 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
         let observableBatch = [];
         this._componentList.forEach((component) => {
             if (!this.isComponentInQueue(lang, component.name)) {
+                if (!this.queue[lang]) {
+                    this.queue[lang] = [];
+                }
                 this.queue[lang].push(component.name);
                 observableBatch.push(this.http.get(`${component.path}/${this.prefix}/${lang}${this.suffix}`)
                     .map((res: Response) => {
@@ -67,7 +70,7 @@ export class AlfrescoTranslateLoader implements TranslateLoader {
     }
 
     isComponentInQueue(lang: string, name: string) {
-        return this.queue[lang].find(x => x === name) ? true : false;
+        return (this.queue[lang] || []).find(x => x === name) ? true : false;
     }
 
     getFullTranslationJSON(lang: string) {
