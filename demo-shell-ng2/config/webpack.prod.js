@@ -66,9 +66,9 @@ module.exports = webpackMerge(commonConfig, {
             to: 'pdf.worker.js'
         },
         {
-            context: 'custom-translation',
+            context: 'resources/i18n',
             from: '**/*.json',
-            to: 'i18n/custom-translation'
+            to: 'resources/i18n'
         },
         // Copy i18n folders for all modules with ng2-alfresco- prefix
         {

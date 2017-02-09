@@ -43,19 +43,7 @@ export class AppComponent {
         this.setProvider();
 
         if (translateService) {
-            if (process.env.ENV === 'production') {
-                // This adds i18n strings that are specific to demo-shell app
-                translateService.addTranslationFolder('custom', 'i18n/custom-translation');
-                // Uncomment this to override component i18n
-                // Important note: ALL languages will be redirected to new location
-                // translateService.addTranslationFolder('ng2-alfresco-login', 'i18n/custom-translation/alfresco-login');
-            } else {
-                // This adds i18n strings that are specific to demo-shell app
-                translateService.addTranslationFolder('custom', 'custom-translation');
-                // Uncomment this to override component i18n
-                // Important note: ALL languages will be redirected to new location
-                // translateService.addTranslationFolder('ng2-alfresco-login', 'custom-translation/alfresco-login');
-            }
+            translateService.addTranslationFolder('app', 'resources');
         }
     }
 
@@ -81,7 +69,7 @@ export class AppComponent {
             );
     }
 
-    navigateToLogin(){
+    navigateToLogin() {
         this.router.navigate(['/login']);
         this.hideDrawer();
     }
