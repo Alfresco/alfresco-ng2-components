@@ -43,13 +43,7 @@ export class AppComponent {
         this.setProvider();
 
         if (translateService) {
-            if (process.env.ENV === 'production') {
-                translateService.addTranslationFolder('custom', 'i18n/custom-translation');
-                translateService.addTranslationFolder('ng2-alfresco-login', 'i18n/custom-translation/alfresco-login');
-            } else {
-                translateService.addTranslationFolder('custom', 'custom-translation');
-                translateService.addTranslationFolder('ng2-alfresco-login', 'custom-translation/alfresco-login');
-            }
+            translateService.addTranslationFolder('app', 'resources');
         }
     }
 
@@ -75,7 +69,7 @@ export class AppComponent {
             );
     }
 
-    navigateToLogin(){
+    navigateToLogin() {
         this.router.navigate(['/login']);
         this.hideDrawer();
     }
