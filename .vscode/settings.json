@@ -5,9 +5,9 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/*.js": { "when": "$(basename).ts"},
-        "**/*.js.map": { "when": "$(basename)"},
-        "**/*.d.ts": { "when": "$(basename).ts"}
+        //"**/*.js": { "when": "$(basename).ts"},
+        //"**/*.js.map": { "when": "$(basename).js"},
+        //"**/*.d.ts": { "when": "$(basename).ts"}
     },
     "editor.renderIndentGuides": true
 }

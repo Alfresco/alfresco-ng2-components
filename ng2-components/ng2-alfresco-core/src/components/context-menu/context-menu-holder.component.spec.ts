@@ -67,7 +67,7 @@ describe('ContextMenuHolderComponent', () => {
         expect(menuHolder.isShown).toBeTruthy();
     });
 
-    it('should update position from service event', () => {
+    xit('should update position from service event', () => {
 
         expect(menuHolder.locationCss).toEqual(
             jasmine.objectContaining({
