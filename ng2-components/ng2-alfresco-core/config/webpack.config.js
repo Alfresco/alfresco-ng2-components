@@ -11,7 +11,7 @@ module.exports = {
     },
 
     // require those dependencies but don't bundle them
-    externals: [/^\@angular\//, /^rxjs\//],
+    externals: [/^\@angular\//, /^rxjs\//, 'alfresco-js-api'],
 
     module: {
         rules: [
@@ -31,16 +31,6 @@ module.exports = {
                 test: /\.ts$/,
                 use: "source-map-loader"
             },
-            // Exclude from bundling
-            /*
-            {
-                test: /\.js$/,
-                include: [
-                    helpers.root('node_modules/alfresco-js-api')
-                ],
-                loader: 'null-loader'
-            },
-            */
             {
                 test: /\.ts$/,
                 use: ['ts-loader', 'angular2-template-loader'],
