@@ -32,6 +32,7 @@ module.exports = {
                 use: "source-map-loader"
             },
             // Exclude from bundling
+            /*
             {
                 test: /\.js$/,
                 include: [
@@ -39,6 +40,7 @@ module.exports = {
                 ],
                 loader: 'null-loader'
             },
+            */
             {
                 test: /\.ts$/,
                 use: ['ts-loader', 'angular2-template-loader'],
