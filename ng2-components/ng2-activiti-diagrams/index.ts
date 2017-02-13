@@ -17,6 +17,7 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
+import { ChartsModule } from 'ng2-charts';
 
 import { DIAGRAM_DIRECTIVES, DIAGRAM_PROVIDERS } from './src/components/index';
 
@@ -29,7 +30,8 @@ export * from './src/components/raphael/index';
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        ChartsModule
     ],
     declarations: [
         ...DIAGRAM_DIRECTIVES,
@@ -40,7 +42,9 @@ export * from './src/components/raphael/index';
         ...RAPHAEL_PROVIDERS
     ],
     exports: [
-        ...DIAGRAM_DIRECTIVES
+        ChartsModule,
+        ...DIAGRAM_DIRECTIVES,
+        ...RAPHAEL_DIRECTIVES
     ]
 })
 export class DiagramsModule {
