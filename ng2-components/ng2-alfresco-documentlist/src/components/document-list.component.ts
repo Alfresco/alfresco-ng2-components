@@ -40,7 +40,6 @@ import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from '.
 declare var module: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-document-list',
     styleUrls: ['./document-list.component.css'],
     templateUrl: './document-list.component.html'
@@ -51,10 +50,11 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    baseComponentPath = module.id.replace('/components/document-list.component.js', '');
+    /** @deprecated */
+    baseComponentPath = '..';
 
     @Input()
-    fallbackThumbnail: string = this.baseComponentPath + '/assets/images/ft_ic_miscellaneous.svg';
+    fallbackThumbnail: string = '../assets/images/ft_ic_miscellaneous.svg';
 
     @Input()
     navigate: boolean = true;
