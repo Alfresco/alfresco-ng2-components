@@ -26,7 +26,6 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'ng2-alfresco-userinfo',
-    moduleId: module.id,
     styleUrls: ['./user-info.component.css'],
     templateUrl: './user-info.component.html'
 })
@@ -44,7 +43,8 @@ export class UserInfoComponent implements OnInit {
     @Input()
     fallBackThumbnailImage: string;
 
-    private baseComponentPath = module.id.replace('components/user-info.component.js', '');
+    /** @deprecated */
+    private baseComponentPath = '';
 
     ecmUser: EcmUserModel;
 
