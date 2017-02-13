@@ -23,7 +23,6 @@ import { AlfrescoSearchAutocompleteComponent } from './alfresco-search-autocompl
 import { SearchTermValidator } from './../forms/search-term-validator';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-search-control',
     templateUrl: './alfresco-search-control.component.html',
     styleUrls: ['./alfresco-search-control.component.css']

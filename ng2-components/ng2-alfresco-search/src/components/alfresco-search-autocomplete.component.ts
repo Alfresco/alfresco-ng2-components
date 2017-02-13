@@ -22,7 +22,6 @@ import { AlfrescoSearchService, SearchOptions } from './../services/alfresco-sea
 import { AlfrescoThumbnailService } from './../services/alfresco-thumbnail.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-search-autocomplete',
     templateUrl: './alfresco-search-autocomplete.component.html',
     styleUrls: ['./alfresco-search-autocomplete.component.css']
@@ -68,7 +67,8 @@ export class AlfrescoSearchAutocompleteComponent implements OnInit, OnChanges {
 
     @ViewChild('resultsTableBody', {}) resultsTableBody: ElementRef;
 
-    baseComponentPath: string = module.id.replace('/components/alfresco-search-autocomplete.component.js', '');
+    /** @deprecated */
+    baseComponentPath: string = '';
 
     constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,

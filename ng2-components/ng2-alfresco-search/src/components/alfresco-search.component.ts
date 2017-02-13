@@ -22,7 +22,6 @@ import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { NodePaging, Pagination } from 'alfresco-js-api';
 
 @Component({
-    moduleId: module.id,
     selector: 'alfresco-search',
     styleUrls: ['./alfresco-search.component.css'],
     templateUrl: './alfresco-search.component.html'
@@ -68,7 +67,8 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     nodeResults: NodePaging;
 
-    baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
+    /** @deprecated */
+    baseComponentPath: string = '';
 
     constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
