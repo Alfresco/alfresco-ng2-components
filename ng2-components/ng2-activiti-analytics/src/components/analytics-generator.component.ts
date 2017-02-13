@@ -22,7 +22,6 @@ import { ReportQuery } from '../models/report.model';
 import { Chart } from '../models/chart.model';
 
 @Component({
-    moduleId: module.id,
     selector: 'activiti-analytics-generator',
     templateUrl: './analytics-generator.component.html',
     styleUrls: ['./analytics-generator.component.css']
