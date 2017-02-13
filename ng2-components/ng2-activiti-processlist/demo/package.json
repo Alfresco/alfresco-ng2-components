@@ -1,6 +1,6 @@
 {
   "name": "ng2-activiti-processlist-demo",
-  "description": "Show available processes from the Activiti BPM suite - Demo",
+  "description": "Show available processes from the Activiti Process Services suite - Demo",
   "version": "0.1.0",
   "author": "Will Abson",
   "main": "index.js",
