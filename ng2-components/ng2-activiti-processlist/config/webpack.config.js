@@ -5,9 +5,9 @@ const fs = require('fs');
 module.exports = {
     entry: './index.ts',
     output: {
-        filename: 'ng2-activiti-tasklist.js',
+        filename: 'ng2-activiti-processlist.js',
         path: helpers.root('dist'),
-        library: 'ng2-activiti-tasklist',
+        library: 'ng2-activiti-processlist',
         libraryTarget: 'umd'
     },
 
@@ -19,6 +19,7 @@ module.exports = {
         'alfresco-js-api',
         'ng2-alfresco-core',
         'ng2-activiti-form',
+        'ng2-activiti-tasklist',
         'ng2-alfresco-datatable'
     ],
 

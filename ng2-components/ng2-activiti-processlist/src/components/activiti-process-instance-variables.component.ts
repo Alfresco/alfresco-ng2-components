@@ -27,9 +27,7 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-process-instance-variables',
-    moduleId: module.id,
     templateUrl: './activiti-process-instance-variables.component.html',
-    styleUrls: [],
     providers: [ActivitiProcessService]
 })
 export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {

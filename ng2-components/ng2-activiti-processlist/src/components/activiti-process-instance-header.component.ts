@@ -24,7 +24,6 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-process-instance-header',
-    moduleId: module.id,
     templateUrl: './activiti-process-instance-header.component.html',
     styleUrls: ['./activiti-process-instance-header.component.css']
 })
