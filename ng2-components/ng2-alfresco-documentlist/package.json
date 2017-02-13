@@ -8,9 +8,7 @@
     "test": "rimraf coverage && karma start",
     "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable"
   },
-  "main": "./index.js",
-  "module": "./index.js",
-  "typings": "./index.d.ts",
+  "main": "dist/ng2-alfresco-documentlist.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alfresco/alfresco-ng2-components.git"

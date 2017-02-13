@@ -24,13 +24,13 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'alfresco-login',
-    moduleId: module.id,
     templateUrl: './alfresco-login.component.html',
     styleUrls: ['./alfresco-login.component.css']
 })
 export class AlfrescoLoginComponent implements OnInit {
 
-    baseComponentPath = module.id.replace('/alfresco-login.component.js', '');
+    /** @deprecated */
+    baseComponentPath = '';
 
     isPasswordShow: boolean = false;
 
