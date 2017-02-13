@@ -29,7 +29,6 @@ import { ContentLinkModel } from './widgets/core/content-link.model';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-    moduleId: module.id,
     selector: 'activiti-content',
     templateUrl: './activiti-content.component.html',
     styleUrls: ['./activiti-content.component.css']

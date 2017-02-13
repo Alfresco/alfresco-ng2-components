@@ -22,7 +22,6 @@ import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynami
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 @Component({
-    moduleId: module.id,
     selector: 'dynamic-table-widget',
     templateUrl: './dynamic-table.widget.html',
     styleUrls: ['./dynamic-table.widget.css']

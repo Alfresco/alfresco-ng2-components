@@ -26,7 +26,6 @@ import { FormFieldModel } from '../core/form-field.model';
 declare let dialogPolyfill: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'attach-widget',
     templateUrl: './attach.widget.html',
     styleUrls: ['./attach.widget.css']
