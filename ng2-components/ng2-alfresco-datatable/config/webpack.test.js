@@ -6,14 +6,10 @@ module.exports = {
 
     resolve: {
         extensions: ['.ts', '.js'],
-        /*
         modules: [
             helpers.root('src'),
-            helpers.root('node_modules'),
-            helpers.root('node_modules/alfresco-js-api/dist'),
-            helpers.root('node_modules/ng2-alfresco-core/dist')
+            helpers.root('node_modules')
         ],
-        */
         symlinks: false
     },
 
