@@ -16,7 +16,7 @@
             "LOGIN-SUCCESS": "Login successful",
             "LOGIN-ERROR-CORS": "CORS exception, check your server configuration",
             "LOGIN-ERROR-CSRF": "CSRF exception, set [disableCsrf]=\"true\" in alfresco-login component",
-            "LOGIN-ECM-LICENSE": "The Content Services is in read-only mode"
+            "LOGIN-ECM-LICENSE": "Content Services repository is in read-only mode"
         },
         "BUTTON": {
             "LOGIN": "SIGN IN"
