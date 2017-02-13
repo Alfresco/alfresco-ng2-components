@@ -259,7 +259,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                 .and.returnValue(Promise.resolve(results));
         });
 
-        xit('should emit file select when enter key pressed when a file item is in focus', (done) => {
+        it('should emit file select when enter key pressed when a file item is in focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
@@ -275,7 +275,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             });
         });
 
-        xit('should emit cancel event when escape key pressed when a result is in focus', (done) => {
+        it('should emit cancel event when escape key pressed when a result is in focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
@@ -291,7 +291,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             });
         });
 
-        xit('should focus the next result when down arrow key pressed when a result is in focus', (done) => {
+        it('should focus the next result when down arrow key pressed when a result is in focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
@@ -309,7 +309,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             updateSearchTerm('searchTerm');
         });
 
-        xit('should do nothing when down arrow key pressed when the last result is in focus', (done) => {
+        it('should do nothing when down arrow key pressed when the last result is in focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
@@ -324,7 +324,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             updateSearchTerm('searchTerm');
         });
 
-        xit('should focus the previous result when up arrow key pressed when a result is in focus', (done) => {
+        it('should focus the previous result when up arrow key pressed when a result is in focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
@@ -342,7 +342,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             updateSearchTerm('searchTerm');
         });
 
-        xit('should emit scroll back event when up arrow key pressed and the first result is in focus', (done) => {
+        it('should emit scroll back event when up arrow key pressed and the first result is in focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
@@ -371,7 +371,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
                 .and.returnValue(Promise.resolve(result));
         });
 
-        xit('should emit a focus event when a result comes into focus', (done) => {
+        it('should emit a focus event when a result comes into focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
@@ -387,7 +387,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             });
         });
 
-        xit('should emit a focus event when a result loses focus', (done) => {
+        it('should emit a focus event when a result loses focus', (done) => {
 
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();

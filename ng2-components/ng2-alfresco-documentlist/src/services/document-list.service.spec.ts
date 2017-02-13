@@ -152,7 +152,7 @@ describe('DocumentListService', () => {
         });
     });
 
-    xit('should emit an error when the folder already exist', () => {
+    it('should emit an error when the folder already exist', () => {
         service.createFolder('fake-name', 'fake-path').subscribe(
             res => {
 

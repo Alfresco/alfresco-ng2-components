@@ -65,7 +65,7 @@ describe('UploadDragAreaComponent', () => {
         TestBed.resetTestingModule();
     });
 
-    xit('should show an folder non supported error in console when the file type is empty', () => {
+    it('should show an folder non supported error in console when the file type is empty', () => {
         component.showNotificationBar = false;
         spyOn(logService, 'error');
 
@@ -75,7 +75,7 @@ describe('UploadDragAreaComponent', () => {
         expect(logService.error).toHaveBeenCalledWith('FILE_UPLOAD.MESSAGES.FOLDER_NOT_SUPPORTED');
     });
 
-    xit('should show an folder non supported error in the notification bar when the file type is empty', () => {
+    it('should show an folder non supported error in the notification bar when the file type is empty', () => {
         component.showErrorNotificationBar = jasmine.createSpy('_showErrorNotificationBar');
         component.showNotificationBar = true;
 
@@ -117,7 +117,7 @@ describe('UploadDragAreaComponent', () => {
         expect(component.showUndoNotificationBar).toHaveBeenCalled();
     });
 
-    xit('should upload a file when dropped', () => {
+    it('should upload a file when dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.onSuccess = null;
 
@@ -140,7 +140,7 @@ describe('UploadDragAreaComponent', () => {
             .toHaveBeenCalledWith('-root-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
     });
 
-    xit('should upload a file with a custom root folder ID when dropped', () => {
+    it('should upload a file with a custom root folder ID when dropped', () => {
         component.currentFolderPath = '/root-fake-/sites-fake/document-library-fake';
         component.rootFolderId = '-my-';
         component.onSuccess = null;
@@ -164,7 +164,7 @@ describe('UploadDragAreaComponent', () => {
             .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
     });
 
-    xit('should throws an exception and show it in the notification bar when the folder already exist', done => {
+    it('should throws an exception and show it in the notification bar when the folder already exist', done => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.showNotificationBar = true;
 

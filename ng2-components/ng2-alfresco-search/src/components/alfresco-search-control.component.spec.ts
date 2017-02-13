@@ -186,7 +186,7 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
-        xit('should make find-as-you-type control visible when search box has focus', (done) => {
+        it('should make find-as-you-type control visible when search box has focus', (done) => {
             fixture.detectChanges();
             inputEl.dispatchEvent(new FocusEvent('focus'));
             window.setTimeout(() => { // wait for debounce() to complete
@@ -197,7 +197,7 @@ describe('AlfrescoSearchControlComponent', () => {
             }, 100);
         });
 
-        xit('should hide find-as-you-type results when the search box loses focus', (done) => {
+        it('should hide find-as-you-type results when the search box loses focus', (done) => {
             fixture.detectChanges();
             inputEl.dispatchEvent(new FocusEvent('focus'));
             inputEl.dispatchEvent(new FocusEvent('blur'));
@@ -209,7 +209,7 @@ describe('AlfrescoSearchControlComponent', () => {
             }, 100);
         });
 
-        xit('should keep find-as-you-type control visible when user tabs into results', (done) => {
+        it('should keep find-as-you-type control visible when user tabs into results', (done) => {
             let searchService = fixture.debugElement.injector.get(AlfrescoSearchService);
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));
@@ -227,7 +227,7 @@ describe('AlfrescoSearchControlComponent', () => {
             }, 100);
         });
 
-        xit('should hide find-as-you-type results when escape key pressed', () => {
+        it('should hide find-as-you-type results when escape key pressed', () => {
             fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
             inputEl.dispatchEvent(new KeyboardEvent('keyup', {
@@ -238,7 +238,7 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(autocomplete.classList.contains('active')).toBe(false);
         });
 
-        xit('should make find-as-you-type control visible again when down arrow is pressed', () => {
+        it('should make find-as-you-type control visible again when down arrow is pressed', () => {
             fixture.detectChanges();
             inputEl.dispatchEvent(new Event('focus'));
             inputEl.dispatchEvent(new KeyboardEvent('keyup', {
@@ -252,7 +252,7 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(autocomplete.classList.contains('active')).toBe(true);
         });
 
-        xit('should select the first result in find-as-you-type when down arrow is pressed and FAYT is visible', (done) => {
+        it('should select the first result in find-as-you-type when down arrow is pressed and FAYT is visible', (done) => {
             fixture.detectChanges();
             spyOn(component.liveSearchComponent, 'focusResult');
             fixture.detectChanges();
@@ -268,7 +268,7 @@ describe('AlfrescoSearchControlComponent', () => {
             }, 100);
         });
 
-        xit('should focus input element when find-as-you-type returns control', () => {
+        it('should focus input element when find-as-you-type returns control', () => {
             fixture.detectChanges();
             spyOn(inputEl, 'focus');
             fixture.detectChanges();
@@ -278,7 +278,7 @@ describe('AlfrescoSearchControlComponent', () => {
             expect(inputEl.focus).toHaveBeenCalled();
         });
 
-        xit('should focus input element when find-as-you-type is cancelled', () => {
+        it('should focus input element when find-as-you-type is cancelled', () => {
             fixture.detectChanges();
             spyOn(inputEl, 'focus');
             fixture.detectChanges();
@@ -332,7 +332,7 @@ describe('AlfrescoSearchControlComponent', () => {
 
     describe('component focus', () => {
 
-        xit('should fire an event when the search box receives focus', (done) => {
+        it('should fire an event when the search box receives focus', (done) => {
             spyOn(component.expand, 'emit');
             let inputEl: HTMLElement = element.querySelector('input');
             inputEl.dispatchEvent(new FocusEvent('focus'));
@@ -344,7 +344,7 @@ describe('AlfrescoSearchControlComponent', () => {
             }, 100);
         });
 
-        xit('should fire an event when the search box loses focus', (done) => {
+        it('should fire an event when the search box loses focus', (done) => {
             spyOn(component.expand, 'emit');
             let inputEl: HTMLElement = element.querySelector('input');
             inputEl.dispatchEvent(new FocusEvent('blur'));
@@ -356,7 +356,7 @@ describe('AlfrescoSearchControlComponent', () => {
             }, 100);
         });
 
-        xit('should NOT fire an event when the search box receives/loses focus but the component is not expandable',
+        it('should NOT fire an event when the search box receives/loses focus but the component is not expandable',
             (done) => {
                 spyOn(component.expand, 'emit');
                 component.expandable = false;

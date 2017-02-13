@@ -37,7 +37,7 @@ describe('ContextMenuDirective', () => {
         directive.onShowContextMenu(null);
     });
 
-    xit('should prevent default behavior', () => {
+    it('should prevent default behavior', () => {
         let event = new MouseEvent('click');
         spyOn(event, 'preventDefault').and.callThrough();
 
@@ -45,7 +45,7 @@ describe('ContextMenuDirective', () => {
         expect(event.preventDefault).toHaveBeenCalled();
     });
 
-    xit('should forward event to service', () => {
+    it('should forward event to service', () => {
         let event = new MouseEvent('click');
 
         contextMenuService.show.subscribe(e => {
