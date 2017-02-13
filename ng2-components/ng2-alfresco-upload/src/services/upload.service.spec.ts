@@ -217,7 +217,7 @@ describe('UploadService', () => {
         );
     });
 
-    it('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
+    xit('If versioning is true autoRename should not be present and majorVersion should be a param', () => {
         let emitter = new EventEmitter();
 
         let enableVersioning = true;
