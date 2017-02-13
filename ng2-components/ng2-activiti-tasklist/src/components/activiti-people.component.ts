@@ -25,13 +25,13 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-people',
-    moduleId: module.id,
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
 export class ActivitiPeople {
 
-    baseComponentPath = module.id.replace('/activiti-people.component.js', '');
+    /** @deprecated */
+    baseComponentPath = '';
 
     @Input()
     iconImageUrl: string;

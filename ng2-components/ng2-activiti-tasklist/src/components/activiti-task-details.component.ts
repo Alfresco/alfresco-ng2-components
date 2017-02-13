@@ -25,7 +25,6 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 @Component({
     selector: 'activiti-task-details',
-    moduleId: module.id,
     templateUrl: './activiti-task-details.component.html',
     styleUrls: ['./activiti-task-details.component.css']
 })
