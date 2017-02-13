@@ -1,6 +1,6 @@
 {
   "name": "ng2-activiti-processlist",
-  "description": "Show active processes from the Activiti BPM suite",
+  "description": "Show active processes from the Activiti Process Services suite",
   "version": "1.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {

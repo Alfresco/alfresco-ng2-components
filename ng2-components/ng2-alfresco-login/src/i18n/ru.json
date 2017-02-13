@@ -16,7 +16,7 @@
             "LOGIN-SUCCESS": "Вы успешно авторизовались",
             "LOGIN-ERROR-CORS": "CORS exception, проверьте настройки на сервере",
             "LOGIN-ERROR-CSRF": "CSRF exception, установите [disableCsrf]=\"true\" в alfresco-login компоненте",
-            "LOGIN-ECM-LICENSE": "ECM находится в режиме для чтения"
+            "LOGIN-ECM-LICENSE": "Content Services находится в режиме для чтения"
         },
         "BUTTON": {
             "LOGIN": "ВОЙТИ"
