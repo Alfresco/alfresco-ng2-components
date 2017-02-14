@@ -43,17 +43,10 @@ export class UserInfoComponent implements OnInit {
     @Input()
     fallBackThumbnailImage: string;
 
-    /** @deprecated */
-    private baseComponentPath = '';
-
     ecmUser: EcmUserModel;
-
     bpmUser: BpmUserModel;
-
     anonymousImageUrl: string = require('../assets/images/anonymous.gif');
-
     bpmUserImage: any;
-
     ecmUserImage: any;
 
     constructor(private ecmUserService: EcmUserService,

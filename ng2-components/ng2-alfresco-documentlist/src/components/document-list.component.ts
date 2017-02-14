@@ -15,20 +15,7 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnInit,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    EventEmitter,
-    AfterContentInit,
-    TemplateRef,
-    NgZone,
-    ViewChild,
-    HostListener
-} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter, AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
@@ -50,11 +37,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
     static DEFAULT_PAGE_SIZE: number = 20;
 
-    /** @deprecated */
-    baseComponentPath = '..';
-
     @Input()
-    fallbackThumbnail: string = '../assets/images/ft_ic_miscellaneous.svg';
+    fallbackThumbnail: string = require('../assets/images/ft_ic_miscellaneous.svg');
 
     @Input()
     navigate: boolean = true;
@@ -146,7 +130,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private ngZone: NgZone,
                 private translateService: AlfrescoTranslationService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
+        this.data = new ShareDataTableAdapter(this.documentListService, '', []);
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');

@@ -31,11 +31,8 @@ declare let componentHandler: any;
 
 export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
-    /** @deprecated */
-    baseComponentPath = '';
-
     @Input()
-    iconImageUrl: string;
+    iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
     results: Observable<User[]>;

@@ -30,11 +30,8 @@ declare let dialogPolyfill: any;
 })
 export class ActivitiPeople {
 
-    /** @deprecated */
-    baseComponentPath = '';
-
     @Input()
-    iconImageUrl: string;
+    iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
     people: User [] = [];

@@ -1,5 +1,5 @@
 <div class="content-grid mdl-grid content-layout login-content"
-     [style.background-image]="'url(' + (backgroundImageUrl || baseComponentPath + '/../assets/images/background.svg') + ')'">
+     [style.background-image]="'url(' + backgroundImageUrl + ')'">
     <div class="login-card-wide mdl-card mdl-shadow--4dp">
         <form [formGroup]="form" (submit)="onSubmit(form.value, $event)">
             <div class="mdl-card__title alfresco-logo">
@@ -9,10 +9,7 @@
                           ngFor [ngForOf]="[data]"
                           [ngForTemplate]="headerTemplate">
                 </template>
-
-                <img  *ngIf="!headerTemplate" class="center"
-                      [src]="logoImageUrl || baseComponentPath + '/../assets/images/alfresco-logo.svg'"
-                     alt="{{'LOGIN.LOGO' | translate }}">
+                <img *ngIf="!headerTemplate" class="center" [src]="logoImageUrl" alt="{{'LOGIN.LOGO' | translate }}">
             </div>
             <div class="mdl-card__supporting-text">
 

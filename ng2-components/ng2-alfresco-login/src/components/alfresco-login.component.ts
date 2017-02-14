@@ -29,9 +29,6 @@ declare let componentHandler: any;
 })
 export class AlfrescoLoginComponent implements OnInit {
 
-    /** @deprecated */
-    baseComponentPath = '';
-
     isPasswordShow: boolean = false;
 
     @Input()
@@ -41,10 +38,10 @@ export class AlfrescoLoginComponent implements OnInit {
     registerLink: string = '';
 
     @Input()
-    logoImageUrl: string;
+    logoImageUrl: string = require('../assets/images/alfresco-logo.svg');
 
     @Input()
-    backgroundImageUrl: string;
+    backgroundImageUrl: string = require('../assets/images/background.svg');
 
     @Input()
     providers: string;

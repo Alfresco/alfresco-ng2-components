@@ -67,9 +67,6 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
 
     nodeResults: NodePaging;
 
-    /** @deprecated */
-    baseComponentPath: string = '';
-
     constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
                 @Optional() private route: ActivatedRoute) {

@@ -2,11 +2,21 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+buildProjects=false;
+
+if [ "$1" = "build" ]; then
+    buildProjects=true
+fi
+
 link_project() {
     echo $1
     rm -rf node_modules/$1
     mkdir -p node_modules/$1
-    #( cd $2; npm run build )
+
+    if [ "$3" = true ]; then
+        ( cd $2; npm run build )
+    fi
+
     cp -R $2/assets node_modules/$1/assets
     cp -R $2/dist node_modules/$1/dist
     cp -R $2/src node_modules/$1/src
@@ -33,5 +43,5 @@ for PACKAGE in \
   ng2-alfresco-webscript
 do
   PACKAGE_DIR="$DIR/../ng2-components/${PACKAGE}"
-  link_project $PACKAGE $PACKAGE_DIR
+  link_project $PACKAGE $PACKAGE_DIR $buildProjects
 done
