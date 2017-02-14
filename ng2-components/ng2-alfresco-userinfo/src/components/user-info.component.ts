@@ -32,10 +32,10 @@ declare let componentHandler: any;
 export class UserInfoComponent implements OnInit {
 
     @Input()
-    ecmBackgroundImage: string;
+    ecmBackgroundImage: string = require('../assets/images/ecm-background.png');
 
     @Input()
-    bpmBackgroundImage: string;
+    bpmBackgroundImage: string = require('../assets/images/bpm-background.png');
 
     @Input()
     menuOpenType: string = 'right';
@@ -50,7 +50,7 @@ export class UserInfoComponent implements OnInit {
 
     bpmUser: BpmUserModel;
 
-    anonymousImageUrl: string = this.baseComponentPath + '/assets/images/anonymous.gif';
+    anonymousImageUrl: string = require('../assets/images/anonymous.gif');
 
     bpmUserImage: any;
 

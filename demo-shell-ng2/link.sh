@@ -6,7 +6,10 @@ link_project() {
     echo $1
     rm -rf node_modules/$1
     mkdir -p node_modules/$1
+    #( cd $2; npm run build )
+    cp -R $2/assets node_modules/$1/assets
     cp -R $2/dist node_modules/$1/dist
+    cp -R $2/src node_modules/$1/src
     cp $2/package.json node_modules/$1/package.json
 }
 
