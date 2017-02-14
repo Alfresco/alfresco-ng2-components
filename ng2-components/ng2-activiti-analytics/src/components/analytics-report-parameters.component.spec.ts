@@ -327,13 +327,14 @@ describe('AnalyticsReportParametersComponent', () => {
                 responseText: analyticParamsMock.reportDefParamProcessDef
             });
 
-            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/api/enterprise/process-definitions').andReturn({
+            let appId = '1';
+
+            jasmine.Ajax.stubRequest('http://localhost:9999/activiti-app/api/enterprise/process-definitions?appDefinitionId=' + appId).andReturn({
                 status: 200,
                 contentType: 'json',
                 responseText: analyticParamsMock.reportDefParamProcessDefOptionsApp
             });
 
-            let appId = '1';
             component.appId = appId;
             component.reportId = '1';
             let change = new SimpleChange(null, appId);
