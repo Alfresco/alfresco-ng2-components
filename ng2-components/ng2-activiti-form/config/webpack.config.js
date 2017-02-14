@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const helpers = require('./helpers');
 
 module.exports = {
@@ -91,8 +92,15 @@ module.exports = {
             htmlLoader: {
                 minimize: false // workaround for ng2
             }
-        })
+        }),
 
+        new CopyWebpackPlugin([
+            {
+                context: helpers.root('stencils'),
+                from: '**/*.js',
+                to: helpers.root('dist/resources/stencils')
+            }
+        ])
     ],
 
     devtool: 'source-map',

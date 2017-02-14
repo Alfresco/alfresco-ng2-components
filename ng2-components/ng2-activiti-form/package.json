@@ -57,6 +57,7 @@
     "@types/jasmine": "2.5.41",
     "@types/node": "^7.0.5",
     "angular2-template-loader": "^0.6.2",
+    "copy-webpack-plugin": "^4.0.1",
     "file-loader": "^0.10.0",
     "html-loader": "^0.4.4",
     "jasmine-core": "^2.5.2",
