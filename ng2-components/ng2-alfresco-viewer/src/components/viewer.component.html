@@ -54,7 +54,7 @@
 
                          <span *ngFor="let extensionTemplate of extensionTemplates">
                             <template [ngTemplateOutlet]="extensionTemplate.template"  *ngIf="extensionTemplate.isVisible"
-                                      [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }"></template>
+                                      [ngOutletContext]="{ urlFileContent: urlFileContent }"></template>
                          </span>
 
                         <div *ngIf="!supportedExtension()">

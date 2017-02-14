@@ -49,7 +49,7 @@ export class ViewerComponent {
     @Output()
     extensionChange: EventEmitter<String> = new EventEmitter<String>();
 
-    extensionTemplates: { template: TemplateRef<any>, isVisible:boolean }[] = [];
+    extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
 
     externalExtensions: string[] = [];
 
@@ -113,6 +113,9 @@ export class ViewerComponent {
         this.showViewerChange.emit(this.showViewer);
     }
 
+    /**
+     * cleanup before the close
+     */
     cleanup() {
         this.urlFileContent = '';
         this.displayName = '';
@@ -226,7 +229,7 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     supportedExtension() {
-        return this.isImage() || this.isPdf() || this.isMedia() || this.externalRegisteredExtension()
+        return this.isImage() || this.isPdf() || this.isMedia() || this.isExternalSupportedExtension();
     }
 
     /**
@@ -234,11 +237,11 @@ export class ViewerComponent {
      *
      * @returns {boolean}
      */
-    externalRegisteredExtension() {
+    isExternalSupportedExtension() {
         let externalType: string;
 
         if (this.externalExtensions && (this.externalExtensions instanceof Array)) {
-            externalType = this.externalExtensions.find((externalExtension)=> {
+            externalType = this.externalExtensions.find((externalExtension) => {
                 return externalExtension.toLowerCase() === this.extension;
 
             });
@@ -300,8 +303,8 @@ export class ViewerComponent {
      * @param {string} nodeName
      * @returns {HTMLElement}
      */
-    private closestElement(elelemnt: HTMLElement, nodeName: string) {
-        let parent = elelemnt.parentElement;
+    private closestElement(element: HTMLElement, nodeName: string) {
+        let parent = element.parentElement;
         if (parent) {
             if (parent.nodeName.toLowerCase() === nodeName) {
                 return parent;

@@ -29,7 +29,7 @@ import {
 
 describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
-    let component: any;
+    let component: PdfViewerComponent;
     let fixture: ComponentFixture<PdfViewerComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
@@ -70,7 +70,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             fixture.detectChanges();
 
             expect(() => {
-                component.ngOnChanges();
+                component.ngOnChanges(null);
             }).toThrow();
         });
 
@@ -109,11 +109,11 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     describe('User interaction', () => {
 
         beforeEach(() => {
-            component.inputPage(1);
+            component.inputPage('1');
         });
 
         it('Total number of pages should be loaded', (done) => {
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.totalPages).toEqual(6);
                 done();
@@ -121,7 +121,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         }, 5000);
 
         it('right arrow should move to the next page', (done) => {
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.displayPage).toBe(1);
                 EventMock.keyDown(39);
@@ -134,7 +134,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         it('nextPage should move to the next page', (done) => {
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.displayPage).toBe(1);
                 nextPageButton.click();
@@ -145,7 +145,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('left arrow should move to the previous page', (done) => {
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.displayPage).toBe(1);
                 EventMock.keyDown(39);
@@ -161,7 +161,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             let previousPageButton: any = element.querySelector('#viewer-previous-page-button');
             let nextPageButton: any = element.querySelector('#viewer-next-page-button');
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.displayPage).toBe(1);
                 nextPageButton.click();
@@ -174,7 +174,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('previous page should not move to the previous page if is page 1', (done) => {
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.displayPage).toBe(1);
                 component.previousPage();
@@ -185,7 +185,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         });
 
         it('Input page should move to the inserted page', (done) => {
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.displayPage).toBe(1);
                 component.inputPage('2');
@@ -205,7 +205,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             it('In should increment the scale value', (done) => {
                 let zoomInButton: any = element.querySelector('#viewer-zoom-in-button');
 
-                component.ngOnChanges().then(() => {
+                component.ngOnChanges(null).then(() => {
                     let zoomBefore = component.currentScale;
                     zoomInButton.click();
                     expect(component.currentScaleMode).toBe('auto');
@@ -218,7 +218,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             it('Out should decrement the scale value', (done) => {
                 let zoomOutButton: any = element.querySelector('#viewer-zoom-out-button');
 
-                component.ngOnChanges().then(() => {
+                component.ngOnChanges(null).then(() => {
                     let zoomBefore = component.currentScale;
                     zoomOutButton.click();
                     expect(component.currentScaleMode).toBe('auto');
@@ -231,7 +231,7 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
             it('fit-in button should toggle page-fit and auto scale mode', (done) => {
                 let fitPage: any = element.querySelector('#viewer-scale-page-button');
 
-                component.ngOnChanges().then(() => {
+                component.ngOnChanges(null).then(() => {
                     expect(component.currentScaleMode).toBe('auto');
                     fitPage.click();
                     expect(component.currentScaleMode).toBe('page-fit');
@@ -245,20 +245,19 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
 
     describe('Resize interaction', () => {
         it('resize event should trigger setScaleUpdatePages', (done) => {
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 spyOn(component, 'onResize');
-                component.documentContainer = element.querySelector('#viewer-pdf-container');
                 EventMock.resizeMobileView();
                 expect(component.onResize).toHaveBeenCalled();
                 done();
-            }, 5000);
+            });
         });
     });
 
     describe('scroll interaction', () => {
         it('scroll page should return the current page', (done) => {
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(component.displayPage).toBe(1);
                 component.inputPage('2');

@@ -27,7 +27,7 @@ import { ViewerComponent } from '../components/viewer.component';
 @Directive({
     selector: 'extension-viewer'
 })
-export class ExtensionViewerComponent implements AfterContentInit {
+export class ExtensionViewerDirective implements AfterContentInit {
 
     @ContentChild(TemplateRef)
     template: any;
@@ -36,12 +36,9 @@ export class ExtensionViewerComponent implements AfterContentInit {
     urlFileContent: string;
 
     @Input()
-    extension: string;
-
-    @Input()
     supportedExtensions: string[];
 
-    templateModel:any;
+    templateModel: any;
 
     constructor(private viewerComponent: ViewerComponent) {
     }
@@ -51,22 +48,27 @@ export class ExtensionViewerComponent implements AfterContentInit {
 
         this.viewerComponent.extensionTemplates.push(this.templateModel);
 
-        this.viewerComponent.extensionChange.subscribe((fileExtension)=>{
+        this.viewerComponent.extensionChange.subscribe((fileExtension) => {
             this.templateModel.isVisible = this.isVisible(fileExtension);
         });
 
-        if(this.supportedExtensions instanceof Array) {
-            this.supportedExtensions.forEach((extension)=> {
+        if (this.supportedExtensions instanceof Array) {
+            this.supportedExtensions.forEach((extension) => {
                 this.viewerComponent.externalExtensions.push(extension);
             });
         }
     }
 
-    isVisible(fileExtension){
+    /**
+     * check if the current extension in the viewer is compatible with this extension checking against supportedExtensions
+     *
+     * @returns {boolean}
+     */
+    isVisible(fileExtension) {
         let supportedExtension: string;
 
         if (this.supportedExtensions && (this.supportedExtensions instanceof Array)) {
-            supportedExtension = this.supportedExtensions.find((extension)=> {
+            supportedExtension = this.supportedExtensions.find((extension) => {
                 return extension.toLowerCase() === fileExtension;
 
             });

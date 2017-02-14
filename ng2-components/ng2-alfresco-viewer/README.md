@@ -223,7 +223,44 @@ Media         | Mp4,  WebM, Ogv
 Images        | png, jpg, jpeg, gif, bmp         
 Text          | pdf         
 
+# Custom extension handler
 
+If you want handle other file formats that are not yet supported by the ng2-alfresco-viewer you can define your own custom handler.
+Above you can find an example where with the use of ``` extension-viewer  ``` if you can handle 3d files
+
+```html
+    <alfresco-viewer [(showViewer)]="fileShowed"
+                     [fileNodeId]="fileNodeId"
+                     [overlayMode]="true">
+        <extension-viewer [supportedExtensions]="['txt']" #extension>
+            <template  let-urlFileContent="urlFileContent" >  
+               <threed-viewer [urlFile]="urlFileContent" ></threed-viewer>
+            </template>
+        </extension-viewer>
+    </alfresco-viewer> 
+```
+Note: In order to make the example above works you need to add in your package.json the dependency to ng2-3d-editor.
+
+Is possible define multiple ``` extension-viewer  ```
+
+```html
+    <alfresco-viewer [(showViewer)]="fileShowed"
+                     [fileNodeId]="fileNodeId"
+                     [overlayMode]="true">
+
+        <extension-viewer [supportedExtensions]="['xls','xlsx']" #extension>
+            <template let-urlFileContent="urlFileContent"  >
+                  <my-custom-xls-component urlFileContent="urlFileContent"></my-custom-xls-component>
+            </template>
+        </extension-viewer>
+
+        <extension-viewer [supportedExtensions]="['txt']" #extension>
+            <template  let-urlFileContent="urlFileContent" >               
+                <my-custom-txt-component urlFileContent="urlFileContent"></my-custom-txt-component>
+            </template>
+        </extension-viewer>
+    </alfresco-viewer> 
+```
 
 ## Build from sources
 
