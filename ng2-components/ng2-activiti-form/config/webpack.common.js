@@ -1,13 +1,13 @@
 const webpack = require("webpack");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const helpers = require('./helpers');
-const fs = require('fs');
 
 module.exports = {
     entry: './index.ts',
     output: {
-        filename: 'ng2-alfresco-search.js',
+        filename: 'ng2-activiti-form.js',
         path: helpers.root('dist'),
-        library: 'ng2-alfresco-search',
+        library: 'ng2-activiti-form',
         libraryTarget: 'umd'
     },
 
@@ -15,10 +15,9 @@ module.exports = {
     externals: [
         /^\@angular\//,
         /^rxjs\//,
+        'moment',
         'alfresco-js-api',
-        'ng2-alfresco-core',
-        'ng2-alfresco-datatable',
-        'ng2-alfresco-documentlist'
+        'ng2-alfresco-core'
     ],
 
     module: {
@@ -75,26 +74,19 @@ module.exports = {
             {} // a map of your routes
         ),
 
-        // Breaks because of alfresco-js-api problem
-        new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
-            mangle: {
-                keep_fnames: true
-            },
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            },
-            sourceMap: true
-        }),
-
         new webpack.LoaderOptionsPlugin({
             htmlLoader: {
                 minimize: false // workaround for ng2
             }
-        })
+        }),
 
+        new CopyWebpackPlugin([
+            {
+                context: helpers.root('stencils'),
+                from: '**/*.js',
+                to: helpers.root('dist/resources/stencils')
+            }
+        ])
     ],
 
     devtool: 'source-map',

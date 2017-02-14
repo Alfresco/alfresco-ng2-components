@@ -1,13 +1,12 @@
 const webpack = require("webpack");
 const helpers = require('./helpers');
-const fs = require('fs');
 
 module.exports = {
     entry: './index.ts',
     output: {
-        filename: 'ng2-alfresco-webscript.js',
+        filename: 'ng2-alfresco-viewer.js',
         path: helpers.root('dist'),
-        library: 'ng2-alfresco-webscript',
+        library: 'ng2-alfresco-viewer',
         libraryTarget: 'umd'
     },
 
@@ -16,8 +15,7 @@ module.exports = {
         /^\@angular\//,
         /^rxjs\//,
         'alfresco-js-api',
-        'ng2-alfresco-core',
-        'ng2-alfresco-datatable'
+        'ng2-alfresco-core'
     ],
 
     module: {
@@ -73,20 +71,6 @@ module.exports = {
             helpers.root('src'), // location of your src
             {} // a map of your routes
         ),
-
-        // Breaks because of alfresco-js-api problem
-        new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
-            mangle: {
-                keep_fnames: true
-            },
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            },
-            sourceMap: true
-        }),
 
         new webpack.LoaderOptionsPlugin({
             htmlLoader: {

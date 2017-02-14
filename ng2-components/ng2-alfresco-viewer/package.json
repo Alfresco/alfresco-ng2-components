@@ -4,7 +4,9 @@
   "version": "1.1.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
-    "build": "rimraf dist && webpack --config webpack.config.js --progress --profile --bail",
+    "build": "npm run build:dev",
+    "build:dev": "rimraf dist && webpack --config webpack.config.js --progress --profile --bail",
+    "build:prod": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "test": "rimraf coverage && karma start",
     "travis": "npm link ng2-alfresco-core"
   },
@@ -83,6 +85,7 @@
     "tslint-loader": "^3.3.0",
     "typescript": "^2.1.6",
     "webpack": "^2.2.1",
+    "webpack-merge": "2.6.1",
     "license-check": "1.1.5"
   },
   "license-check-config": {

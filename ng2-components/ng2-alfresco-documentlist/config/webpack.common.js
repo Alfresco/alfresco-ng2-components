@@ -5,9 +5,9 @@ const fs = require('fs');
 module.exports = {
     entry: './index.ts',
     output: {
-        filename: 'ng2-alfresco-userinfo.js',
+        filename: 'ng2-alfresco-documentlist.js',
         path: helpers.root('dist'),
-        library: 'ng2-alfresco-userinfo',
+        library: 'ng2-alfresco-documentlist',
         libraryTarget: 'umd'
     },
 
@@ -16,7 +16,8 @@ module.exports = {
         /^\@angular\//,
         /^rxjs\//,
         'alfresco-js-api',
-        'ng2-alfresco-core'
+        'ng2-alfresco-core',
+        'ng2-alfresco-datatable'
     ],
 
     module: {
@@ -72,20 +73,6 @@ module.exports = {
             helpers.root('src'), // location of your src
             {} // a map of your routes
         ),
-
-        // Breaks because of alfresco-js-api problem
-        new webpack.optimize.UglifyJsPlugin({ // https://github.com/angular/angular/issues/10618
-            mangle: {
-                keep_fnames: true
-            },
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            },
-            sourceMap: true
-        }),
 
         new webpack.LoaderOptionsPlugin({
             htmlLoader: {

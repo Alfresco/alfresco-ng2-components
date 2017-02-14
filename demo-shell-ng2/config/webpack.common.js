@@ -34,7 +34,6 @@ module.exports = {
             {
                 enforce: 'pre',
                 test: /\.js$/,
-                    exclude: /node_modules/,
                 loader: "source-map-loader"
             },
             {
@@ -46,7 +45,6 @@ module.exports = {
             {
                 enforce: 'pre',
                 test: /\.ts$/,
-                    exclude: /node_modules/,
                 use: "source-map-loader"
             },
             {
@@ -82,10 +80,12 @@ module.exports = {
     },
     resolve: {
         extensions: [".ts", ".js"],
+        /*
         modules: [
             helpers.root('app'),
-            helpers.root('node_modules'),
+            helpers.root('node_modules')
         ]
+        */
     },
     plugins: [
         // Workaround for angular/angular#11580
