@@ -176,7 +176,7 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | `folderNode` | `MinimalNodeEntryEntity` | null | Currently displayed folder node | 
 | `node` | `NodePaging` | null | Document list will show all the node contained in the NodePaging entity  | 
 | `navigate` | boolean | true | Toggles navigation to folder content or file preview |
-| `navigationMode` | string (click\|dblclick) | dblclick | User interaction for folder navigation or file preview |
+| `navigationMode` | string (click,dblclick) | dblclick | User interaction for folder navigation or file preview |
 | `thumbnails` | boolean | false | Show document thumbnails rather than icons |
 | `fallbackThumbnail` | string |  | Path to fallback image to use if the row thumbnail is missing |
 | `multiselect` | boolean | false | Toggles multiselect mode |
