@@ -22,7 +22,6 @@ import * as moment from 'moment';
 declare let mdDateTimePicker: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'alf-date-editor',
     templateUrl: './date.editor.html',
     styleUrls: ['./date.editor.css']

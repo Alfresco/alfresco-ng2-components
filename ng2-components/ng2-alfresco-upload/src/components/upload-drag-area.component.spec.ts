@@ -164,7 +164,7 @@ describe('UploadDragAreaComponent', () => {
             .toHaveBeenCalledWith('-my-', '/root-fake-/sites-fake/document-library-fake/folder-fake/', null);
     });
 
-    xit('should throws an exception and show it in the notification bar when the folder already exist', done => {
+    it('should throws an exception and show it in the notification bar when the folder already exist', done => {
         component.currentFolderPath = '/root-fake-/sites-fake/folder-fake';
         component.showNotificationBar = true;
 

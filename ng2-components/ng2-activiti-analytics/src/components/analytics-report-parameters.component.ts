@@ -42,7 +42,6 @@ declare var componentHandler;
 declare let dialogPolyfill: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'analytics-report-parameters',
     templateUrl: './analytics-report-parameters.component.html',
     styleUrls: ['./analytics-report-parameters.component.css']

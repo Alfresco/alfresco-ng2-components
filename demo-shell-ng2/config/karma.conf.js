@@ -1,37 +1,37 @@
 var webpackConfig = require('./webpack.test');
 
 module.exports = function (config) {
-  var _config = {
-    basePath: '',
+    var _config = {
+        basePath: '',
 
-    frameworks: ['jasmine'],
+        frameworks: ['jasmine'],
 
-    files: [
-      { pattern: './config/karma-test-shim.js', watched: false }
-    ],
+        files: [
+            { pattern: './config/karma-test-shim.js', watched: false }
+        ],
 
-    preprocessors: {
-      './config/karma-test-shim.js': ['webpack', 'sourcemap']
-    },
+        preprocessors: {
+            './config/karma-test-shim.js': ['webpack', 'sourcemap']
+        },
 
-    webpack: webpackConfig,
+        webpack: webpackConfig,
 
-    webpackMiddleware: {
-      stats: 'errors-only'
-    },
+        webpackMiddleware: {
+            stats: 'errors-only'
+        },
 
-    webpackServer: {
-      noInfo: true
-    },
+        webpackServer: {
+            noInfo: true
+        },
 
-    reporters: ['mocha'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: false,
-    browsers: ['PhantomJS'],
-    singleRun: true
-  };
+        reporters: ['mocha'],
+        port: 9876,
+        colors: true,
+        logLevel: config.LOG_INFO,
+        autoWatch: false,
+        browsers: ['PhantomJS'],
+        singleRun: true
+    };
 
-  config.set(_config);
+    config.set(_config);
 };

@@ -22,11 +22,9 @@ import { FileNode, FolderNode/*, PageNode*/ } from './../assets/document-library
 
 describe('ShareDataTableAdapter', () => {
 
-    let basePath: string;
     let documentListService: DocumentListServiceMock;
 
     beforeEach(() => {
-        basePath = '/root';
         documentListService = new DocumentListServiceMock();
     });
 
@@ -212,18 +210,20 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should generate fallback icon for a file thumbnail with unknown mime type', () => {
-        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        spyOn(adapter, 'getImagePath').and.callFake((id) => '../assets/images/' + id);
 
         let file = new FileNode('file', 'wrong-mime');
         let row = new ShareDataRow(file);
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe('../assets/images/ft_ic_miscellaneous.svg');
     });
 
     it('should generate fallback icon for a file thumbnail with missing mime type', () => {
-        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        spyOn(adapter, 'getImagePath').and.callFake((id) => '../assets/images/' + id);
 
         let file = new FileNode();
         file.entry.content.mimeType = null;
@@ -232,11 +232,12 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe('../assets/images/ft_ic_miscellaneous.svg');
     });
 
     it('should generate fallback icon for a file with no content entry', () => {
-        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        spyOn(adapter, 'getImagePath').and.callFake((id) => '../assets/images/' + id);
 
         let file = new FileNode();
         file.entry.content = null;
@@ -245,19 +246,20 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe('../assets/images/ft_ic_miscellaneous.svg');
     });
 
     it('should generate fallback icon when document service fails to find one', () => {
         spyOn(documentListService, 'getMimeTypeIcon').and.returnValue(null);
-        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        spyOn(adapter, 'getImagePath').and.callFake((id) => '../assets/images/' + id);
 
         let file = new FileNode();
         let row = new ShareDataRow(file);
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe('../assets/images/ft_ic_miscellaneous.svg');
     });
 
     it('should return image value unmodified', () => {
@@ -266,7 +268,7 @@ describe('ShareDataTableAdapter', () => {
         let file = new FileNode();
         file.entry['icon'] = imageUrl;
 
-        let adapter = new ShareDataTableAdapter(null, basePath, null);
+        let adapter = new ShareDataTableAdapter(null, null, null);
         let row = new ShareDataRow(file);
         let col = <DataColumn> { type: 'image', key: 'icon' };
 
@@ -275,20 +277,21 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve folder icon', () => {
-        let adapter = new ShareDataTableAdapter(null, basePath, null);
+        let adapter = new ShareDataTableAdapter(null, null, null);
+        spyOn(adapter, 'getImagePath').and.callFake((id) => '../assets/images/' + id);
 
         let row = new ShareDataRow(new FolderNode());
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_folder.svg`);
+        expect(value).toBe('../assets/images/ft_ic_folder.svg');
     });
 
     it('should resolve file thumbnail', () => {
         let imageUrl: string = 'http://<addresss>';
         spyOn(documentListService, 'getDocumentThumbnailUrl').and.returnValue(imageUrl);
 
-        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
         adapter.thumbnails = true;
 
         let file = new FileNode();
@@ -301,7 +304,8 @@ describe('ShareDataTableAdapter', () => {
     });
 
     it('should resolve fallback file icon for unknown node', () => {
-        let adapter = new ShareDataTableAdapter(null, basePath, null);
+        let adapter = new ShareDataTableAdapter(null, null, null);
+        spyOn(adapter, 'getImagePath').and.callFake((id) => '../assets/images/' + id);
 
         let file = new FileNode();
         file.entry.isFile = false;
@@ -311,11 +315,11 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe('../assets/images/ft_ic_miscellaneous.svg');
     });
 
     it('should require document service to resolve thumbnail', () => {
-        let adapter = new ShareDataTableAdapter(null, basePath, null);
+        let adapter = new ShareDataTableAdapter(null, null, null);
         adapter.thumbnails = true;
 
         let file = new FileNode();
@@ -351,10 +355,11 @@ describe('ShareDataTableAdapter', () => {
         let row = new ShareDataRow(file);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
-        let adapter = new ShareDataTableAdapter(documentListService, '/root', null);
+        let adapter = new ShareDataTableAdapter(documentListService, null, null);
+        spyOn(adapter, 'getImagePath').and.callFake((id) => '../assets/images/' + id);
         let value = adapter.getValue(row, col);
 
-        expect(value).toBe(`/root/assets/images/${fileName}`);
+        expect(value).toBe(`../assets/images/${fileName}`);
         expect(documentListService.getMimeTypeIcon).toHaveBeenCalled();
     });
 

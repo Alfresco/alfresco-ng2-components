@@ -25,16 +25,13 @@ declare let dialogPolyfill: any;
 
 @Component({
     selector: 'activiti-people',
-    moduleId: module.id,
     templateUrl: './activiti-people.component.html',
     styleUrls: ['./activiti-people.component.css']
 })
 export class ActivitiPeople {
 
-    baseComponentPath = module.id.replace('/activiti-people.component.js', '');
-
     @Input()
-    iconImageUrl: string;
+    iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
     people: User [] = [];

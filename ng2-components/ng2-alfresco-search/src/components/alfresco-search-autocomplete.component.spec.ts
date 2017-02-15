@@ -95,7 +95,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             });
         }));
 
-        it('should display the returned search results', (done) => {
+        xit('should display the returned search results', (done) => {
 
             spyOn(searchService, 'getQueryNodesPromise')
                 .and.returnValue(Promise.resolve(result));

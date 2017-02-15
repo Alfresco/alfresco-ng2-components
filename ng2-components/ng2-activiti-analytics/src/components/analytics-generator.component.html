@@ -16,10 +16,10 @@
                     <div *ngIf="!report.hasData()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div *ngIf="report.hasData()">
                         <div *ngIf="report.hasZeroValues()">{{'ANALYTICS.MESSAGES.ZERO-DATA-FOUND' | translate}}</div>
-                        <base-chart *ngIf="!report.hasZeroValues()" class="chart"
+                        <canvas baseChart *ngIf="!report.hasZeroValues()" class="chart"
                                     [data]="report.data"
                                     [labels]="report.labels"
-                                    [chartType]="report.type"></base-chart>
+                                    [chartType]="report.type"></canvas>
                     </div>
                 </div>
             </div>
@@ -69,11 +69,12 @@
                 <div class="col-md-6" *ngIf="isCurrent(idx)">
                     <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
-                    <base-chart *ngIf="report.hasDatasets()" class="chart"
+                    <canvas *ngIf="report.hasDatasets()" class="chart"
+                                baseChart
                                 [datasets]="report.datasets"
                                 [labels]="report.labels"
                                 [options]="report.options"
-                                [chartType]="report.type"></base-chart>
+                                [chartType]="report.type"></canvas>
                 </div>
             </div>
             <div *ngSwitchCase="'multiBar'">
@@ -88,11 +89,12 @@
                                    (change)="refresh(report)">
                             <span class="mdl-checkbox__label">Stacked</span>
                         </label>
-                        <base-chart class="chart"
-                                    [datasets]="report.datasets"
-                                    [labels]="report.labels"
-                                    [options]="report.options"
-                                    [chartType]="'bar'"></base-chart>
+                        <canvas class="chart"
+                                baseChart
+                                [datasets]="report.datasets"
+                                [labels]="report.labels"
+                                [options]="report.options"
+                                [chartType]="'bar'"></canvas>
                     </div>
                 </div>
             </div>

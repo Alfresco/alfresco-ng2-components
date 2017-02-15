@@ -1,22 +1,27 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var helpers = require('./helpers');
-var path = require('path');
-var fs = require('fs');
-var glob = require('glob');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const helpers = require('./helpers');
+const path = require('path');
 
-const rootPath = helpers.root('node_modules');
-
-var pattern = '+(alfresco-js-api|ng2-alfresco|ng2-activiti)*';
-var options = {
-    cwd: rootPath,
-    realpath: true
-};
-
-var alfrescoLibs = glob.sync(pattern, options);
-// console.dir(alfrescoLibs);
+const alfrescoLibs = [
+    'ng2-activiti-analytics',
+    'ng2-activiti-diagrams',
+    'ng2-activiti-form',
+    'ng2-activiti-processlist',
+    'ng2-activiti-tasklist',
+    'ng2-alfresco-core',
+    'ng2-alfresco-datatable',
+    'ng2-alfresco-documentlist',
+    'ng2-alfresco-login',
+    'ng2-alfresco-search',
+    'ng2-alfresco-tag',
+    'ng2-alfresco-upload',
+    'ng2-alfresco-userinfo',
+    'ng2-alfresco-viewer',
+    'ng2-alfresco-webscript'
+];
 
 module.exports = {
     entry: {
@@ -24,190 +29,107 @@ module.exports = {
         'vendor': './app/vendor.ts',
         'app': './app/main.ts'
     },
-
-    resolve: {
-        extensions: ['', '.ts', '.js'],
-        modules: [
-            helpers.root('app'),
-            helpers.root('node_modules')
-        ],
-        root: rootPath,
-        fallback: rootPath
-    },
-
-    resolveLoader: {
-        alias: {
-            'systemjs-loader': helpers.root('config', 'loaders', 'system.js'),
-            'debug-loader': helpers.root('config', 'loaders', 'debug.js')
-        },
-        fallback: rootPath
-    },
     module: {
-        preLoaders: [
+        rules: [
             {
+                enforce: 'pre',
                 test: /\.js$/,
-                include: [
-                    ...alfrescoLibs
-                ],
-                loader: 'source-map-loader'
-            }
-        ],
-        loaders: [
+                loader: "source-map-loader"
+            },
+            {
+                enforce: 'pre',
+                test: /\.ts$/,
+                loader: 'tslint-loader',
+                exclude: /node_modules/,
+            },
+            {
+                enforce: 'pre',
+                test: /\.ts$/,
+                use: "source-map-loader"
+            },
             {
                 test: /\.ts$/,
-                loaders: ['awesome-typescript-loader', 'angular2-template-loader', 'systemjs-loader'],
-                exclude: ['node_modules','public']
-            },
-            {
-                test: /\.js$/,
-                include: [
-                    ...alfrescoLibs
+                use: [
+                    'ts-loader',
+                    'angular2-template-loader'
                 ],
-                loaders: ['angular2-template-loader', 'source-map-loader', 'systemjs-loader']
+                exclude: /node_modules/
             },
             {
                 test: /\.html$/,
-                exclude: alfrescoLibs,
-                loader: 'html'
+                loader: 'html-loader'
             },
             {
-                test: /\.html$/,
-                include: alfrescoLibs,
-                loader: 'html',
-                query: {
-                    interpolate: true
-                }
+                test: /\.css$/,
+                exclude: helpers.root('app'),
+                loader: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader?sourceMap'
+                })
+            },
+            {
+                test: /\.css$/,
+                include: helpers.root('app'),
+                loader: 'raw-loader'
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                loader: 'file?name=assets/[name].[hash].[ext]'
-            },
-            {
-                test: /\.css$/,
-                exclude: [
-                    helpers.root('app'),
-                    ...alfrescoLibs
-                ],
-                loader: ExtractTextPlugin.extract('style', 'css?sourceMap')
-            },
-            {
-                test: /\.css$/,
-                include: [
-                    helpers.root('app'),
-                    ...alfrescoLibs
-                ],
-                loader: 'raw'
+                loader: 'file-loader?name=assets/[name].[hash].[ext]'
             }
         ]
     },
-
+    resolve: {
+        extensions: [".ts", ".js"],
+        /*
+        modules: [
+            helpers.root('app'),
+            helpers.root('node_modules')
+        ]
+        */
+    },
     plugins: [
-
-        new webpack.WatchIgnorePlugin([ new RegExp('^((?!(ng2-activiti|ng2-alfresco|demo-shell-ng2)).)((?!(src|app)).)*$')]),
+        // Workaround for angular/angular#11580
+        new webpack.ContextReplacementPlugin(
+            // The (\\|\/) piece accounts for path separators in *nix and Windows
+            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+            helpers.root('./app'), // location of your src
+            {} // a map of your routes
+        ),
+        new HtmlWebpackPlugin({
+            template: './index.html'
+        }),
 
         new CopyWebpackPlugin([
+            ... alfrescoLibs.map(lib => {
+                return {
+                    context: `node_modules/${lib}/dist/assets`,
+                    from: '**/*',
+                    to: helpers.root('dist/assets')
+                }
+            }),
             {
-                from: 'versions.json'
-            },{
-                context: 'node_modules',
-                from: 'element.scrollintoviewifneeded-polyfill/index.js',
-                to: 'js/element.scrollintoviewifneeded-polyfill.js',
-                flatten: true
-            },{
-                context: 'node_modules',
-                from: 'classlist-polyfill/src/index.js',
-                to: 'js/classlist-polyfill.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from: 'intl/dist/Intl.min.js',
-                to: 'js/Intl.min.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from: 'web-animations-js/web-animations.min.js',
-                to: 'js/web-animations.min.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from: 'core-js/client/shim.min.js',
-                to: 'js/shim.min.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from:  'es6-shim/es6-shim.min.js',
-                to: 'js/es6-shim.min.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from:  'es5-shim/es5-shim.min.js',
-                to: 'js/es5-shim.min.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from:  'systemjs/dist/system-polyfills.js',
-                to: 'js/system-polyfills.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from:  'material-design-lite/material.min.js',
-                to: 'js/material.min.js',
-                flatten: true
-            }, {
-                context: 'node_modules',
-                from:  'material-design-lite/material.min.js',
-                to: 'js/material.min.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'css/material.orange-blue.min.css',
-                to: 'css/material.orange-blue.min.css',
-                flatten: true
-            },  {
-                context: 'node_modules',
-                from: 'material-design-icons/iconfont/',
-                to: 'css/iconfont/',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'js/typedarray.js',
-                to: 'js/typedarray.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'js/Blob.js',
-                to: 'js/Blob.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'js/formdata.js',
-                to: 'js/formdata.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'js/promisePolyfill.js',
-                to: 'js/promisePolyfill.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'css/muli-font.css',
-                to: 'css/muli-font.css',
-                flatten: true
-            }
-
+                context: 'resources/i18n',
+                from: '**/*.json',
+                to: 'resources/i18n'
+            },
+            ... alfrescoLibs.map(lib => {
+                return {
+                    context: 'node_modules',
+                    from: `${lib}/src/i18n/*.json`,
+                    to: 'node_modules'
+                }
+            }),
+            {
+                from: 'favicon-96x96.png'
+            },
+            {
+                from: 'node_modules/pdfjs-dist/build/pdf.worker.js',
+                to: 'pdf.worker.js'
+            },
         ]),
 
         new webpack.optimize.CommonsChunkPlugin({
             name: ['app', 'vendor', 'polyfills']
-        }),
-
-        new HtmlWebpackPlugin({
-            template: 'index.html'
         })
-    ],
-
-    node: {
-        fs: 'empty',
-        module: false
-    }
+    ]
 };

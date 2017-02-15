@@ -3,7 +3,7 @@ dist: trusty
 sudo: false
 
 node_js:
-  - "5"
+  - "6"
 
 addons:
 
@@ -56,7 +56,7 @@ before_script:
   - cd ng2-components/$MODULE;
   - npm run travis;
 #npm insall run install, build and tests
-script: npm install
+script: npm install && npm test
 # Send coverage data to Coveralls
 after_success:
   bash <(curl -s https://codecov.io/bash) -X gcov

@@ -71,7 +71,6 @@ declare var componentHandler: any;
  * @returns {ActivitiForm} .
  */
 @Component({
-    moduleId: module.id,
     selector: 'activiti-form',
     templateUrl: './activiti-form.component.html',
     styleUrls: ['./activiti-form.component.css']

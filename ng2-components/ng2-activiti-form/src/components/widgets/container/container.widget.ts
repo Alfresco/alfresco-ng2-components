@@ -22,7 +22,6 @@ import { WidgetComponent } from './../widget.component';
 declare var componentHandler: any;
 
 @Component({
-    moduleId: module.id,
     selector: 'container-widget',
     templateUrl: './container.widget.html',
     styleUrls: ['./container.widget.css']

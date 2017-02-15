@@ -27,7 +27,6 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-apps',
-    moduleId: module.id,
     templateUrl: 'activiti-apps.component.html',
     styleUrls: ['./activiti-apps.component.css', './activiti-apps-grid.component.css'],
     providers: [ActivitiTaskListService]

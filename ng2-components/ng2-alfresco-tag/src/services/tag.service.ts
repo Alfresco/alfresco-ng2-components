@@ -19,11 +19,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
-/**
- * @returns {TagService} .
- */
-declare let __moduleName: string;
-
 @Injectable()
 export class TagService {
 

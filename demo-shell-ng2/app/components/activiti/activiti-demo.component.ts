@@ -211,7 +211,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.selectFirstElementInReportList();
     }
 
-    selectFirstElementInReportList(){
+    selectFirstElementInReportList() {
         if (! this.analyticsreportlist.isReportsEmpty()) {
             this.analyticsreportlist.selectReport(this.analyticsreportlist.reports[0]);
         }

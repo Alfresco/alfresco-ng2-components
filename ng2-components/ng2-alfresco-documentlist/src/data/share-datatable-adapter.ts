@@ -223,7 +223,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
     }
 
     getImagePath(id: string): any {
-        return `${this.basePath}/assets/images/${id}`;
+        return require('../assets/images/' + id);
     }
 }
 

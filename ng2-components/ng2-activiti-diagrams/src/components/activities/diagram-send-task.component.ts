@@ -18,7 +18,6 @@
 import { Component, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'diagram-send-task',
     templateUrl: './diagram-send-task.component.html'
 })

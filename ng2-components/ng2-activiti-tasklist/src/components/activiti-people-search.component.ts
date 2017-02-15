@@ -25,17 +25,14 @@ declare let componentHandler: any;
 
 @Component({
     selector: 'activiti-people-search',
-    moduleId: module.id,
     templateUrl: './activiti-people-search.component.html',
     styleUrls: ['./activiti-people-search.component.css']
 })
 
 export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
-    baseComponentPath = module.id.replace('/activiti-people-search.component.js', '');
-
     @Input()
-    iconImageUrl: string;
+    iconImageUrl: string = require('../assets/images/user.jpg');
 
     @Input()
     results: Observable<User[]>;

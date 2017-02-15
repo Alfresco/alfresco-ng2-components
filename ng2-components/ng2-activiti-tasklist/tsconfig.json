@@ -6,35 +6,14 @@
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "skipLibCheck": true,
-        "noLib": false,
-        "allowUnreachableCode": false,
-        "allowUnusedLabels": false,
+        "lib": [ "es2015", "dom" ],
         "noImplicitAny": false,
-        "noImplicitReturns": false,
-        "noImplicitUseStrict": false,
-        "noFallthroughCasesInSwitch": true,
-        "removeComments": true,
-        "declaration": true,
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "declaration": true
     },
     "exclude": [
-        "demo",
         "node_modules",
         "dist",
-        "tools",
-        "gulpfile.ts",
-        "gulpfile.d.ts"
-    ],
-    "angularCompilerOptions": {
-        "strictMetadataEmit": false,
-        "skipTemplateCodegen": true
-    }
+        "demo"
+    ]
 }
