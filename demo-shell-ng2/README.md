@@ -12,7 +12,7 @@
 
 ## Installing
 
-To correctly use this demo check that on your machine is running [Node](https://nodejs.org/en/) version 6.9.2 LTS or higher.
+To correctly use this demo check that on your machine is running [Node](https://nodejs.org/en/) version 5.x.x or higher.
 
 ```sh
 git clone https://github.com/Alfresco/alfresco-ng2-components.git
