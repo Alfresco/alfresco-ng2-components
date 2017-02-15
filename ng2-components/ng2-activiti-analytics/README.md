@@ -208,7 +208,7 @@ import { AnalyticsModule } from 'ng2-activiti-analytics';
     <div class="page-content">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <activiti-analytics [appId]="1001" [reportId]="2006"></activiti-analytics>
+                <activiti-analytics [appId]="1001" [reportId]="2006" [hideParameters]="false"></activiti-analytics>
             </div>
         </div>
     </div>`
@@ -260,7 +260,16 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | --- | --- |
 |`appId` | The application id |
 |`reportId` | The report id |
+|`hideParameters` | Boolean to hide or show the analytics parameters |
 |`debug` | Flag to enable or disable the Form values in the console log |
+
+You can also use the activiti analytic component to show straight away the charts without show the parameters setting the hideParameters to true
+
+```html
+<activiti-analytics [appId]="appId" [reportId]="reportId" [hideParameters]="true"></activiti-analytics>
+```
+
+![Analytics-without-parameters](docs/assets/analytics-without-parameters.png)
 
 ## Basic usage example Analytics Generator
 
