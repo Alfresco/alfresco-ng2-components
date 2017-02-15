@@ -68,6 +68,16 @@
     padding-top: 20px;
 }
 
+.report-icons {
+    float: right;
+}
+
+.report-icons button {
+    min-width: 48px;
+    padding: 0 0px;
+}
+
+
 .mdl-dialog__title.choose_name{
     padding: 0px;
 }
@@ -88,4 +98,8 @@
     position: absolute;
     margin-left: 60%;
     padding-top: 5px;
+}
+
+.hide {
+    display: none;
 }

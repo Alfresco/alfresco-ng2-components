@@ -119,6 +119,7 @@
                         <activiti-analytics *ngIf="report"
                                             [appId]="appId"
                                             [reportId]="report.id"
+                                            [hideParameters]="false"
                                             (editReport)="onEditReport($event)"
                                             (reportSaved)="onReportSaved()"
                                             (reportDeleted)="onReportDeleted()">
