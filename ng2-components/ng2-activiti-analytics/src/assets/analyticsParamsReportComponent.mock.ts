@@ -139,6 +139,13 @@ export var reportDefParamTask = {
     'definition': '{ "parameters" :[{"id":"taskName","name":null,"nameKey":null,"type":"task","value":null,"dependsOn":"processDefinitionId"}]}'
 };
 
+export var reportNoParameterDefinitions = {
+    'id': 2006,
+    'name': 'Fake Task service level agreement',
+    'created': '2016-10-05T15:39:40.222+0000',
+    'definition': '{ "parameters" : []}'
+};
+
 export var reportDefParamTaskOptions = ['Fake task name 1', 'Fake task name 2'];
 
 export var fieldProcessDef = new ReportParameterDetailsModel(

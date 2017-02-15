@@ -195,6 +195,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 if (this.reportParameters.hasParameters()) {
                     this.onSuccessReportParams.emit(res);
                 } else {
+                    this.reportForm = this.formBuilder.group({});
                     this.onSuccess.emit();
                 }
             },

@@ -342,6 +342,24 @@ describe('AnalyticsReportParametersComponent', () => {
 
         });
 
+        it('Should create an empty valid form when there are no parameters definitions', () => {
+            component.onSuccess.subscribe((res) => {
+                expect(component.reportForm).toBeDefined();
+                expect(component.reportForm.valid).toEqual(true);
+                expect(component.reportForm.controls).toEqual({});
+            });
+
+            let reportId = 1;
+            let change = new SimpleChange(null, reportId);
+            component.ngOnChanges({ 'reportId': change });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: analyticParamsMock.reportNoParameterDefinitions
+            });
+        });
+
         it('Should load the task list when a process definition is selected', () => {
             component.onSuccessReportParams.subscribe((res) => {
                 expect(res).toBeDefined();

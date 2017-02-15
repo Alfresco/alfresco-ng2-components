@@ -81,6 +81,9 @@ export class AnalyticsGeneratorComponent implements OnChanges {
     }
 
     public generateReport(reportId, reportParamQuery) {
+        if (reportParamQuery === undefined || reportParamQuery === null) {
+            reportParamQuery = {};
+        }
         this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe(
             (res: Chart[]) => {
                 this.reports = res;
