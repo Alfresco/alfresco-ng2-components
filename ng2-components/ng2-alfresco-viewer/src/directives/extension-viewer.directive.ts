@@ -36,6 +36,9 @@ export class ExtensionViewerDirective implements AfterContentInit {
     urlFileContent: string;
 
     @Input()
+    extension: string;
+
+    @Input()
     supportedExtensions: string[];
 
     templateModel: any;

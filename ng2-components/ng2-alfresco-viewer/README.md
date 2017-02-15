@@ -232,9 +232,9 @@ Above you can find an example where with the use of ``` extension-viewer  ``` if
     <alfresco-viewer [(showViewer)]="fileShowed"
                      [fileNodeId]="fileNodeId"
                      [overlayMode]="true">
-        <extension-viewer [supportedExtensions]="['txt']" #extension>
-            <template  let-urlFileContent="urlFileContent" >  
-               <threed-viewer [urlFile]="urlFileContent" ></threed-viewer>
+        <extension-viewer [supportedExtensions]="['obj','3ds']" #extension>
+            <template let-urlFileContent="urlFileContent" let-extension="extension" >
+                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
             </template>
         </extension-viewer>
     </alfresco-viewer> 
