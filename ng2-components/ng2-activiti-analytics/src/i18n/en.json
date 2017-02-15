@@ -6,7 +6,10 @@
       "FILL-PARAMETER": "Fill in the parameters to generate your report",
       "NO-DATA-FOUND": "No data found",
       "ZERO-DATA-FOUND": "There are only zero values",
-      "SETTING-TITLE": "Settings"
+      "ICON-SETTING": "Settings",
+      "ICON-SAVE": "Save",
+      "ICON-DELETE": "Delete",
+      "ICON-EXPORT-CSV": "Export to CSV"
     }
   },
   "__KEY_REPORTING": {

@@ -36,6 +36,9 @@ export class AnalyticsComponent implements OnChanges {
     reportId: number;
 
     @Input()
+    hideParameters: boolean = false;
+
+    @Input()
     debug: boolean = false;
 
     @Output()

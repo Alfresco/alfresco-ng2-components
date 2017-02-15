@@ -58,6 +58,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     reportId: string;
 
     @Input()
+    hideComponent: boolean = false;
+
+    @Input()
     debug: boolean = false;
 
     @Output()
