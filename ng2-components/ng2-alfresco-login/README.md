@@ -90,8 +90,8 @@ Follow the 3 steps below:
     - alfresco-js-api
     - ng2-alfresco-login
 
-    Please refer to the following example file: [systemjs.config.js](demo/systemjs
-    .config.js) .
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
+
 
 ## Basic usage
 

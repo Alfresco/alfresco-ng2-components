@@ -104,8 +104,7 @@ Follow the 3 steps below:
     - ng2-activiti-diagrams
     - ng2-activiti-analytics
 
-    Please refer to the following example file: [systemjs.config.js](demo/systemjs
-    .config.js) .
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
 
 ## Basic usage example Activiti Analytics List
 

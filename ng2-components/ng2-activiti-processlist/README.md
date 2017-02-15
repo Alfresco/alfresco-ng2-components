@@ -104,8 +104,8 @@ Follow the 3 steps below:
     - ng2-activiti-tasklist
     - ng2-activiti-processlist
 
-    Please refer to the following example file: [systemjs.config.js](demo/systemjs
-    .config.js) .
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
+
 
 ## Basic usage
 
