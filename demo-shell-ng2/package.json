@@ -79,6 +79,7 @@
     "raphael": "^2.2.6",
     "md-date-time-picker": "^2.2.0",
     "alfresco-js-api": "~1.1.0",
+    "ng2-3d-editor": "0.0.15",
     "ng2-activiti-analytics": "1.1.0",
     "ng2-alfresco-core": "1.1.0",
     "ng2-alfresco-datatable": "1.1.0",
@@ -97,8 +98,8 @@
     "element.scrollintoviewifneeded-polyfill": "^1.0.1"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.5.35",
-    "@types/node": "^6.0.45",
+    "@types/jasmine": "2.5.35",
+    "@types/node": "6.0.45",
     "angular2-template-loader": "^0.6.0",
     "awesome-typescript-loader": "^2.2.4",
     "classlist-polyfill": "^1.0.3",

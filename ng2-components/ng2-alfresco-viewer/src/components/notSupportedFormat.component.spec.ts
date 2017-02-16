@@ -27,7 +27,7 @@ import {
 
 describe('Test ng2-alfresco-viewer Not Supported Format View component', () => {
 
-    let component: any;
+    let component: NotSupportedFormat;
     let fixture: ComponentFixture<NotSupportedFormat>;
     let debug: DebugElement;
     let element: HTMLElement;

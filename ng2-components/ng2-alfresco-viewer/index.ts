@@ -27,26 +27,28 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
 
-import { ViewerComponent } from './src/componets/viewer.component';
+import { ViewerComponent } from './src/components/viewer.component';
 import { RenderingQueueServices } from './src/services/rendering-queue.services';
-import { ImgViewerComponent } from './src/componets/imgViewer.component';
-import { MediaPlayerComponent } from './src/componets/mediaPlayer.component';
-import { NotSupportedFormat } from './src/componets/notSupportedFormat.component';
-import { PdfViewerComponent } from './src/componets/pdfViewer.component';
+import { ImgViewerComponent } from './src/components/imgViewer.component';
+import { MediaPlayerComponent } from './src/components/mediaPlayer.component';
+import { NotSupportedFormat } from './src/components/notSupportedFormat.component';
+import { PdfViewerComponent } from './src/components/pdfViewer.component';
+import { ExtensionViewerDirective } from './src/directives/extension-viewer.directive';
 
-export * from './src/componets/viewer.component';
+export * from './src/components/viewer.component';
 export * from './src/services/rendering-queue.services';
-export * from './src/componets/imgViewer.component';
-export * from './src/componets/mediaPlayer.component';
-export * from './src/componets/notSupportedFormat.component';
-export * from './src/componets/pdfViewer.component';
+export * from './src/components/imgViewer.component';
+export * from './src/components/mediaPlayer.component';
+export * from './src/components/notSupportedFormat.component';
+export * from './src/components/pdfViewer.component';
 
 export const VIEWER_DIRECTIVES: any[] = [
     ViewerComponent,
     ImgViewerComponent,
     MediaPlayerComponent,
     NotSupportedFormat,
-    PdfViewerComponent
+    PdfViewerComponent,
+    ExtensionViewerDirective
 ];
 
 export const VIEWER_PROVIDERS: any[] = [

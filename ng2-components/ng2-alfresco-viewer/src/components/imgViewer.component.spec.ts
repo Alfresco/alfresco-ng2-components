@@ -27,7 +27,7 @@ import {
 
 describe('Test ng2-alfresco-viewer Img viewer component ', () => {
 
-    let component: any;
+    let component: ImgViewerComponent;
     let fixture: ComponentFixture<ImgViewerComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
@@ -57,14 +57,14 @@ describe('Test ng2-alfresco-viewer Img viewer component ', () => {
 
     it('If no url is passed should thrown an error', () => {
         expect(() => {
-            component.ngOnChanges();
+            component.ngOnChanges(null);
         }).toThrow(new Error('Attribute urlFile is required'));
     });
 
     it('If  url is passed should not thrown an error', () => {
         component.urlFile = 'fake-url';
         expect(() => {
-            component.ngOnChanges();
+            component.ngOnChanges(null);
         }).not.toThrow(new Error('Attribute urlFile is required'));
     });
 

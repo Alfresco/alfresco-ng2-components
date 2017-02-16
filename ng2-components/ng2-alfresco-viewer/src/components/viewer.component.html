@@ -31,19 +31,10 @@
                     <!-- End Navigation -->
                 </div>
             </header>
-            <!--<div class="mdl-layout__drawer">-->
-            <!--<span class="mdl-layout-title">Thumbnail</span>-->
-            <!--</div>-->
+
             <main id="page-content" class="mdl-layout__content" [ngClass]="{'all-space': !overlayMode }">
 
                 <div class="mdl-grid">
-                    <!--<div id="viewer-previous-file-button" class="center-element mdl-cell mdl-cell&#45;&#45;2-col mdl-cell&#45;&#45;hide-tablet mdl-cell&#45;&#45;hide-phone">-->
-                    <!--<button  *ngIf="false"-->
-                    <!--class="center-element mdl-color&#45;&#45;black mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-button&#45;&#45;mini-fab mdl-button&#45;&#45;colored"-->
-                    <!--(click)="previousFile()">-->
-                    <!--<i class="icon material-icons ">keyboard_arrow_left</i>-->
-                    <!--</button>-->
-                    <!--</div>-->
 
                     <div id="viewer-content-container" *ngIf="isLoaded()"
                          class="center-element mdl-cell mdl-cell--12-col">
@@ -60,21 +51,18 @@
                             <media-player [urlFile]="urlFileContent" [mimeType]="mimeType"
                                           [nameFile]="displayName"></media-player>
                         </div>
+
+                         <span *ngFor="let extensionTemplate of extensionTemplates">
+                            <template [ngTemplateOutlet]="extensionTemplate.template"  *ngIf="extensionTemplate.isVisible"
+                                      [ngOutletContext]="{ urlFileContent: urlFileContent, extension:extension }"></template>
+                         </span>
+
                         <div *ngIf="!supportedExtension()">
-                            <not-supported-format [urlFile]="urlFileContent"
-                                                  [nameFile]="displayName"></not-supported-format>
+                            <not-supported-format  *ngIf="!extensionTemplate" [urlFile]="urlFileContent" [nameFile]="displayName"></not-supported-format>
                         </div>
                         <!-- End View Switch -->
 
                     </div>
-
-                    <!--<div id="viewer-next-file-button" class="center-element mdl-cell mdl-cell&#45;&#45;2-col mdl-cell&#45;&#45;hide-tablet mdl-cell&#45;&#45;hide-phone">-->
-                    <!--<button *ngIf="false"-->
-                    <!--class="center-element mdl-color&#45;&#45;black mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-button&#45;&#45;mini-fab mdl-button&#45;&#45;colored"-->
-                    <!--(click)="nextFile()">-->
-                    <!--<i class="icon material-icons">keyboard_arrow_right</i>-->
-                    <!--</button>-->
-                    <!--</div>-->
 
                 </div>
             </main>

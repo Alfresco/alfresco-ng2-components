@@ -71,7 +71,7 @@ export class AlfrescoLoginComponent implements OnInit {
 
     formError: { [id: string]: string };
 
-    minLenght: number = 2;
+    minLength: number = 2;
 
     footerTemplate: TemplateRef<any>;
 
@@ -299,14 +299,14 @@ export class AlfrescoLoginComponent implements OnInit {
             }
         };
 
-        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN',  {minLenght: this.minLenght}).subscribe((res: string) => {
+        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN',  {minLength: this.minLength}).subscribe((res: string) => {
             this._message['username']['minlength'] = res;
         });
     }
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLenght)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
             password: ['', Validators.required]
         });
     }

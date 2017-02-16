@@ -35,7 +35,7 @@ declare let jasmine: any;
 
 describe('Test ng2-alfresco-viewer ViewerComponent', () => {
 
-    let component: any;
+    let component: ViewerComponent;
     let fixture: ComponentFixture<ViewerComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
@@ -99,7 +99,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             });
 
             it('Name File should be present if is overlay mode ', () => {
-                component.ngOnChanges().then(() => {
+                component.ngOnChanges(null).then(() => {
                     fixture.detectChanges();
                     expect(element.querySelector('#viewer-name-file').innerHTML).toEqual('fake-test-file.pdf');
                 });
@@ -161,7 +161,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = undefined;
 
             expect(() => {
-                component.ngOnChanges();
+                component.ngOnChanges(null);
             }).toThrow();
         });
 
@@ -171,7 +171,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = undefined;
 
             expect(() => {
-                component.ngOnChanges();
+                component.ngOnChanges(null);
             }).not.toThrow();
         });
 
@@ -180,7 +180,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.fileNodeId = undefined;
 
             expect(() => {
-                component.ngOnChanges();
+                component.ngOnChanges(null);
             }).not.toThrow();
         });
 
@@ -200,7 +200,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
         it('if extension file is a pdf the pdf viewer should be loaded', (done) => {
             component.urlFile = 'base/src/assets/fake-test-file.pdf';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('pdf-viewer')).not.toBeNull();
                 done();
@@ -210,7 +210,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
         it('if extension file is a image the img viewer should be loaded', (done) => {
             component.urlFile = 'fake-url-file.png';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#viewer-image')).not.toBeNull();
                 done();
@@ -220,7 +220,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
         it('if extension file is a video the the media player should be loaded', (done) => {
             component.urlFile = 'fake-url-file.mp4';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('media-player')).not.toBeNull();
                 done();
@@ -230,7 +230,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
         it('if extension file is a not supported the not supported div should be loaded', (done) => {
             component.urlFile = 'fake-url-file.unsupported';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('not-supported-format')).not.toBeNull();
                 done();
@@ -243,7 +243,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = 'content';
             component.mimeType = 'application/pdf';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('pdf-viewer')).not.toBeNull();
                 done();
@@ -255,7 +255,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = 'content.bin';
             component.mimeType = 'application/pdf';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('pdf-viewer')).not.toBeNull();
                 done();
@@ -266,7 +266,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = 'content';
             component.mimeType = 'image/png';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#viewer-image')).not.toBeNull();
                 done();
@@ -277,7 +277,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = 'content.bin';
             component.mimeType = 'image/png';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('#viewer-image')).not.toBeNull();
                 done();
@@ -288,7 +288,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = 'content.bin';
             component.mimeType = 'video/mp4';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('media-player')).not.toBeNull();
                 done();
@@ -299,7 +299,7 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = 'content';
             component.mimeType = 'video/mp4';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('media-player')).not.toBeNull();
                 done();
@@ -310,11 +310,25 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
             component.urlFile = 'content';
             component.mimeType = 'video/avi';
 
-            component.ngOnChanges().then(() => {
+            component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
                 expect(element.querySelector('media-player')).toBeNull();
                 done();
             });
+        });
+    });
+
+    describe('Events', () => {
+        it('if extension change exextensionChange event should be fired ', (done) => {
+
+            component.extensionChange.subscribe((fileExtension) => {
+                expect(fileExtension).toEqual('png');
+                done();
+            });
+
+            component.urlFile = 'fake-url-file.png';
+
+            component.ngOnChanges(null);
         });
     });
 });

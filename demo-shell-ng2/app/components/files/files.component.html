@@ -174,7 +174,13 @@
     <alfresco-viewer [(showViewer)]="fileShowed"
                      [fileNodeId]="fileNodeId"
                      [overlayMode]="true">
-        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+
+        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
+            <template let-urlFileContent="urlFileContent" let-extension="extension" >
+                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
+            </template>
+        </extension-viewer>
+
     </alfresco-viewer>
 </div>
 

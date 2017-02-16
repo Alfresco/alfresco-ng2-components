@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject } from '@angular/core';
+import { Component, ElementRef, Input, Output, HostListener, EventEmitter, Inject, TemplateRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { MinimalNodeEntryEntity } from 'alfresco-js-api';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
@@ -46,6 +46,13 @@ export class ViewerComponent {
     @Output()
     showViewerChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    @Output()
+    extensionChange: EventEmitter<String> = new EventEmitter<String>();
+
+    extensionTemplates: { template: TemplateRef<any>, isVisible: boolean }[] = [];
+
+    externalExtensions: string[] = [];
+
     urlFileContent: string;
     otherMenu: any;
     displayName: string;
@@ -72,6 +79,7 @@ export class ViewerComponent {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);
+                    this.extensionChange.emit(this.extension);
                     this.urlFileContent = this.urlFile;
                     resolve();
                 } else if (this.fileNodeId) {
@@ -79,6 +87,8 @@ export class ViewerComponent {
                         this.mimeType = data.content.mimeType;
                         this.displayName = data.name;
                         this.urlFileContent = alfrescoApi.content.getContentUrl(data.id);
+                        this.extension = this.getFileExtension(data.name);
+                        this.extensionChange.emit(this.extension);
                         this.loaded = true;
                         resolve();
                     }, function (error) {
@@ -103,6 +113,9 @@ export class ViewerComponent {
         this.showViewerChange.emit(this.showViewer);
     }
 
+    /**
+     * cleanup before the close
+     */
     cleanup() {
         this.urlFileContent = '';
         this.displayName = '';
@@ -216,7 +229,25 @@ export class ViewerComponent {
      * @returns {boolean}
      */
     supportedExtension() {
-        return this.isImage() || this.isPdf() || this.isMedia();
+        return this.isImage() || this.isPdf() || this.isMedia() || this.isExternalSupportedExtension();
+    }
+
+    /**
+     * Check if the file is compatible with one of the extension
+     *
+     * @returns {boolean}
+     */
+    isExternalSupportedExtension() {
+        let externalType: string;
+
+        if (this.externalExtensions && (this.externalExtensions instanceof Array)) {
+            externalType = this.externalExtensions.find((externalExtension) => {
+                return externalExtension.toLowerCase() === this.extension;
+
+            });
+        }
+
+        return !!externalType;
     }
 
     /**
@@ -272,8 +303,8 @@ export class ViewerComponent {
      * @param {string} nodeName
      * @returns {HTMLElement}
      */
-    private closestElement(elelemnt: HTMLElement, nodeName: string) {
-        let parent = elelemnt.parentElement;
+    private closestElement(element: HTMLElement, nodeName: string) {
+        let parent = element.parentElement;
         if (parent) {
             if (parent.nodeName.toLowerCase() === nodeName) {
                 return parent;
