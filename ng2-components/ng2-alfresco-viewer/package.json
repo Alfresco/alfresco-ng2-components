@@ -114,7 +114,8 @@
   },
   "license-check-config": {
     "src": [
-      "./src/**/*.js"
+      "./src/**/*.js",
+      "!./src/services/rendering-queue.services.js"
     ],
     "path": "assets/license_header.txt",
     "blocking": true,
