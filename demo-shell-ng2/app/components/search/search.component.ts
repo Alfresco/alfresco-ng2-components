@@ -17,7 +17,6 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MinimalNodeEntity } from 'alfresco-js-api';
 
 @Component({
     selector: 'search-component',

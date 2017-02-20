@@ -104,8 +104,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.dataTasks = new ObjectDataTableAdapter(
             [],
             [
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-                { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true}
             ]
         );
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
@@ -113,8 +113,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.dataProcesses = new ObjectDataTableAdapter(
             [],
             [
-                { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
-                { type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true }
+                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
             ]
         );
         this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
@@ -211,8 +211,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.selectFirstElementInReportList();
     }
 
-    selectFirstElementInReportList(){
-        if (! this.analyticsreportlist.isReportsEmpty()) {
+    selectFirstElementInReportList() {
+        if (!this.analyticsreportlist.isReportsEmpty()) {
             this.analyticsreportlist.selectReport(this.analyticsreportlist.reports[0]);
         }
     }
