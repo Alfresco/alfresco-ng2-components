@@ -139,6 +139,16 @@ describe('AlfrescoLogin', () => {
         expect(element.querySelector('#password-required').innerText).toEqual('LOGIN.MESSAGES.PASSWORD-REQUIRED');
     });
 
+    it('should trim the username value', () => {
+        usernameInput.value = 'username ';
+        component.form.controls.password.markAsDirty();
+        usernameInput.dispatchEvent(new Event('blur'));
+
+        fixture.detectChanges();
+
+        expect(usernameInput.value).toEqual('username');
+    });
+
     it('should render no validation errors when the username and password are filled', () => {
         usernameInput.value = 'fake-username';
         passwordInput.value = 'fake-password';

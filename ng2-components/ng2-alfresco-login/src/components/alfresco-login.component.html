@@ -29,6 +29,7 @@
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                     <label for="username" class="mdl-textfield__label">{{'LOGIN.LABEL.USERNAME' | translate }}</label>
                     <input
+                        (blur)="trimUsername($event)"
                         type="text"
                         class="mdl-textfield__input"
                         id="username"
