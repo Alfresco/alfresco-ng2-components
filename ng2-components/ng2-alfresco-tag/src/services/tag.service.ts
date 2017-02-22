@@ -20,17 +20,11 @@ import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
 /**
- * @returns {TagService} .
+ * @returns {TagService}
  */
-declare let __moduleName: string;
-
 @Injectable()
 export class TagService {
 
-    /**
-     * Constructor
-     * @param apiService
-     */
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
     }

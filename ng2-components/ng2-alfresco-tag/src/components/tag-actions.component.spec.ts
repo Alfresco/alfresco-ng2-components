@@ -153,5 +153,24 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
                 status: 200
             });
         });
+
+        it('The input box should be cleared after add tag', (done) => {
+            component.nodeId = 'fake-node-id';
+            component.newTagName = 'fake-tag-name';
+
+            fixture.detectChanges();
+
+            component.addEmitter.subscribe(() => {
+                expect(component.newTagName).toBe('');
+                done();
+            });
+
+            let addButton: any = element.querySelector('#add-tag');
+            addButton.click();
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200
+            });
+        });
     });
 });
