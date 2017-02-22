@@ -17,6 +17,7 @@
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TagService } from './../services/tag.service';
+import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 
 /**
  *
@@ -49,14 +50,15 @@ export class TagActionsComponent {
 
     tagsEntries: any;
 
-    /**
-     * Constructor
-     * @param authService
-     */
-    constructor(private tagService: TagService) {
+    errorMsg: string;
+
+    constructor(private tagService: TagService, private translateService: AlfrescoTranslationService) {
+        if (translateService) {
+            translateService.addTranslationFolder('ng2-alfresco-tag', 'node_modules/ng2-alfresco-tag/src');
+        }
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges() {
         return this.refreshTag();
     }
 
@@ -68,10 +70,29 @@ export class TagActionsComponent {
     }
 
     addTag() {
-        this.tagService.addTag(this.nodeId, this.newTagName).subscribe((res) => {
+        if (this.searchTag(this.newTagName)) {
+            this.translateService.get('TAG.MESSAGES.EXIST').subscribe((error) => {
+                this.errorMsg = error;
+            });
+        }
+
+        this.tagService.addTag(this.nodeId, this.newTagName).subscribe(() => {
+            this.newTagName = '';
             this.refreshTag();
             this.addEmitter.emit(this.nodeId);
         });
+    }
+
+    searchTag(searchTagName: string) {
+        if (this.tagsEntries) {
+            return this.tagsEntries.find((currentTag) => {
+                return (searchTagName === currentTag.entry.tag);
+            });
+        }
+    }
+
+    cleanErrorMsg() {
+        this.errorMsg = '';
     }
 
     removeTag(tag: string) {
