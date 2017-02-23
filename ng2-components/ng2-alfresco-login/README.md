@@ -37,6 +37,8 @@
 Before you start using this development framework, make sure you have installed all required software and done all the
 necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
+See it live: [Login Quickstart](http://embed.plnkr.co/PfZytJyHcl3xIsa8pdMo/)
+
 ## Install
 
 Follow the 3 steps below:
