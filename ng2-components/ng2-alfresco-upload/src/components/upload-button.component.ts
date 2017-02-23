@@ -156,7 +156,7 @@ export class UploadButtonComponent {
      * @param path
      * @param files
      */
-    private uploadFiles(path: string, files: any[]) {
+    uploadFiles(path: string, files: any[]) {
         if (files.length) {
             let latestFilesAdded = this.uploadService.addToQueue(files);
             this.uploadService.uploadFilesInTheQueue(this.rootFolderId, path, this.onSuccess);
