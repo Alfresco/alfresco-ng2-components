@@ -20,6 +20,7 @@ import { Response } from '@angular/http';
 import { Observer, Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { FileModel } from '../models/file.model';
+import { MinimalNodeEntity } from 'alfresco-js-api';
 
 /**
  *
@@ -170,7 +171,7 @@ export class UploadService {
             .catch(err => this.handleError(err));
     }
 
-    private callApiCreateFolder(relativePath: string, name: string) {
+    callApiCreateFolder(relativePath: string, name: string): Promise<MinimalNodeEntity> {
         return this.apiService.getInstance().nodes.createFolder(name, relativePath);
     }
 

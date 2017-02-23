@@ -362,7 +362,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
             });
     }
 
-    private generateDownloadElement(downloadUrl: string, paramQuery: ReportQuery) {
+    generateDownloadElement(downloadUrl: string, paramQuery: ReportQuery) {
         let downloadElement = window.document.createElement('a');
         downloadElement.setAttribute('id', 'export-download');
         downloadElement.setAttribute('href', downloadUrl);
