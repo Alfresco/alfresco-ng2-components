@@ -159,40 +159,22 @@ module.exports = {
                 to: 'js/material.min.js',
                 flatten: true
             }, {
-                context: 'public',
-                from: 'css/material.orange-blue.min.css',
-                to: 'css/material.orange-blue.min.css',
-                flatten: true
-            },  {
                 context: 'node_modules',
                 from: 'material-design-icons/iconfont/',
                 to: 'css/iconfont/',
                 flatten: true
             }, {
                 context: 'public',
-                from: 'js/typedarray.js',
-                to: 'js/typedarray.js',
-                flatten: true
+                from: 'js/',
+                to: 'js/'
+            },{
+                context: 'public',
+                from: 'css/',
+                to: 'css/'
             }, {
                 context: 'public',
-                from: 'js/Blob.js',
-                to: 'js/Blob.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'js/formdata.js',
-                to: 'js/formdata.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'js/promisePolyfill.js',
-                to: 'js/promisePolyfill.js',
-                flatten: true
-            }, {
-                context: 'public',
-                from: 'css/muli-font.css',
-                to: 'css/muli-font.css',
-                flatten: true
+                from: 'images/',
+                to: 'images/'
             }
 
         ]),
