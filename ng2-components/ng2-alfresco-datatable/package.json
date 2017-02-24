@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-datatable",
   "description": "Alfresco Angular2 DataTable Component",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build && rimraf dist node_modules typings",
@@ -61,8 +61,8 @@
     "systemjs": "0.19.27",
     "zone.js": "^0.6.23",
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "~1.1.0",
-    "ng2-alfresco-core": "1.1.0"
+    "alfresco-js-api": "~1.2.0",
+    "ng2-alfresco-core": "1.2.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",
