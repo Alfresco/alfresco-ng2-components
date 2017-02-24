@@ -10,7 +10,7 @@
     </li>
     <li>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" (click)="cleanErrorMsg()" [(ngModel)]="newTagName"/>
+            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" (keypress)="cleanErrorMsg()" [(ngModel)]="newTagName"/>
             <label class="mdl-textfield__label" for="new-tag-text" > {{'TAG.LABEL.NEWTAG' | translate }}</label>
             <span class="mdl-textfield__error">{{errorMsg}}</span>
             <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
@@ -30,7 +30,7 @@
     </li>
     <li>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" (click)="cleanErrorMsg()" [(ngModel)]="newTagName"/>
+            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" (keypress)="cleanErrorMsg()" [(ngModel)]="newTagName"/>
             <label class="mdl-textfield__label" for="new-tag-text" > {{'TAG.LABEL.NEWTAG' | translate }}</label>
             <span  *ngIf="errorMsg" class="mdl-textfield__error">{{errorMsg}}</span>
             <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()">
