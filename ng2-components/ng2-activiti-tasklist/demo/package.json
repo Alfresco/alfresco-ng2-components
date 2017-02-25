@@ -12,6 +12,7 @@
     "server": "wsrv -o -s -l",
     "build": "npm run tslint && npm run clean-build && npm run tsc",
     "build:w": "npm run tslint && rimraf dist && npm run tsc:w",
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable ng2-activiti-form",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts  -e '{,**/}**.d.ts'"

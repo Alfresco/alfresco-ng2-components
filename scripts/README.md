@@ -13,7 +13,7 @@ feel for what's available.
 * Start the demo and Install all the dependencies (*Note. do it this way only the first time, and be aware, it will take some time*)
 
 ```sh
-./start.sh -install
+./start.sh -install or -i
 ```
 
 * Start the demo (*the standard way of starting the demo after first initialization*):
@@ -25,26 +25,32 @@ feel for what's available.
 * Start the demo, install all the dependencies, and remove the previous version of the npm packages (*Note. do this only after big changes*):
 
 ```sh
-./start.sh -cleanInstall
+./start.sh -cleanInstall or -c
 ```
 
 * Start the demo and update the dependencies:
 
 ```sh
-./start.sh -update
+./start.sh -update or -u
 ```
 
 * If you want to use your local components use the following script with any of the previous option. It will npm link all the components
 in the demo shell:
 
 ```sh
-./start-linked.sh
+./start.sh -link or -l
 ```
 
 * If you want to build all your local component:
 
 ```sh
 ./npm-buid-alll.sh
+```
+
+* If you want clean all your local component and the demo shell:
+
+```sh
+./npm-clean.sh
 ```
 
 For development environment configuration please refer to [project docs](../demo-shell-ng2/README.md).
