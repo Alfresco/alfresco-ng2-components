@@ -41,7 +41,7 @@ npm run build
 npm run start:dist
 ```
 
-This command builds broject in `production` mode.
+This command builds project in `production` mode.
 All output is placed to `dist` folder and can be served your preferred web server.
 You should need no additional files outside the `dist` folder.
 
