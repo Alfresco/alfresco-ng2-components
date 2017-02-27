@@ -23,7 +23,7 @@ do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== linking component: ${PACKAGE} ====="
   cd "$DESTDIR"
-  npm travis
+  npm run travis
   npm link
 done
 
