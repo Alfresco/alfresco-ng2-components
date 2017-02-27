@@ -49,7 +49,7 @@
     "intl": "1.2.4",
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.2.1",
-    "ng2-activiti-diagrams": "^1.1.0",
+    "ng2-activiti-diagrams": "1.2.0",
     "ng2-alfresco-core": "1.2.0",
     "ng2-translate": "2.5.0",
     "raphael": "^2.2.6",
