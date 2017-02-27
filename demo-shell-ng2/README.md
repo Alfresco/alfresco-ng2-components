@@ -41,7 +41,7 @@ npm run build
 npm run start:dist
 ```
 
-This command builds broject in `production` mode.
+This command builds project in `production` mode.
 All output is placed to `dist` folder and can be served your preferred web server.
 You should need no additional files outside the `dist` folder.
 
@@ -83,7 +83,7 @@ Directory structure:
 
 ## Custom-files
 
-If you need to add custom files on your project you can add this files in the folders
+If you need to add custom files on your project you can add this files in the folders public
 
 ```
 .
@@ -93,10 +93,8 @@ If you need to add custom files on your project you can add this files in the fo
 │   └── js/
 ```
 
-those folder above wil be copied in the root of your project and you can refer to them for example as
+the public folder above wil be copied in the root of your project and you can refer to them for example as
 
  * './images/custom_image.png'
  * './js/custom_script.js'
  * './css/custom_style.css'
-
-for more complex scenario you need to modify the webpack file in the config folder.
