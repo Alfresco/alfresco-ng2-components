@@ -53,8 +53,8 @@
     "ng2-alfresco-datatable": "1.1.0"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.2.33",
-    "@types/node": "^6.0.42",
+    "@types/jasmine": "2.5.35",
+    "@types/node": "6.0.45",
     "autoprefixer": "^6.5.4",
     "concurrently": "^2.2.0",
     "cpx": "^1.3.1",

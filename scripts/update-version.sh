@@ -63,8 +63,6 @@ echo "====== UPDATE VERSION OF DEMO-SHELL to ${VERSION} version ======"
 
 sed -i '' "s/\"version\": \"[0-9]\\.[0-9]\\.[0-9]\"/\"version\": \"${VERSION}\"/g"  ${DIR}/../demo-shell-ng2/package.json
 
-
-
 for PACKAGE in \
   ng2-activiti-diagrams \
   ng2-activiti-analytics \
