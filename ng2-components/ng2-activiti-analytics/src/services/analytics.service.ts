@@ -126,7 +126,8 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: string): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(appId))
+        let options = { 'appDefinitionId': appId};
+        return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];
                 res.data.forEach((opt) => {
@@ -181,6 +182,28 @@ export class AnalyticsService {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.updateReport(reportId, name))
             .map((res: any) => {
                 this.logService.info('upload');
+            }).catch(err => this.handleError(err));
+    }
+
+    exportReportToCsv(reportId: string, paramsQuery: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.exportToCsv(reportId, paramsQuery))
+            .map((res: any) => {
+                this.logService.info('export');
+                return res;
+            }).catch(err => this.handleError(err));
+    }
+
+    saveReport(reportId: string, paramsQuery: any): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.saveReport(reportId, paramsQuery))
+            .map(() => {
+                this.logService.info('save');
+            }).catch(err => this.handleError(err));
+    }
+
+    deleteReport(reportId: string): Observable<any> {
+        return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.deleteReport(reportId))
+            .map(() => {
+                this.logService.info('delete');
             }).catch(err => this.handleError(err));
     }
 

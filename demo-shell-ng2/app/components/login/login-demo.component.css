@@ -23,6 +23,7 @@
 .toggle {
     width: 120px;
     margin: 20px;
+    padding: 5px;
 }
 
 @media (min-width: 721px) {

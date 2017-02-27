@@ -1,6 +1,6 @@
 {
   "name": "ng2-activiti-processlist-demo",
-  "description": "Show available processes from the Activiti BPM suite - Demo",
+  "description": "Show available processes from the Activiti Process Services suite - Demo",
   "version": "0.1.0",
   "author": "Will Abson",
   "main": "index.js",
@@ -12,6 +12,7 @@
     "server": "wsrv -o -s -l",
     "build": "npm run tslint && npm run clean-build && npm run tsc",
     "build:w": "npm run tslint && rimraf dist && npm run tsc:w",
+    "travis": "npm link ng2-alfresco-core ng2-alfresco-datatable ng2-activiti-form ng2-activiti-tasklist",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts  -e '{,**/}**.d.ts'"
@@ -48,11 +49,11 @@
     "moment": "2.15.1",
     "md-date-time-picker": "^2.2.0",
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "~1.1.0",
-    "ng2-activiti-tasklist": "1.1.0",
-    "ng2-alfresco-core": "1.1.0",
-    "ng2-alfresco-datatable": "1.1.0",
-    "ng2-activiti-processlist": "^1.1.0"
+    "alfresco-js-api": "~1.2.0",
+    "ng2-activiti-tasklist": "1.2.0",
+    "ng2-alfresco-core": "1.2.0",
+    "ng2-alfresco-datatable": "1.2.0",
+    "ng2-activiti-processlist": "1.2.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",

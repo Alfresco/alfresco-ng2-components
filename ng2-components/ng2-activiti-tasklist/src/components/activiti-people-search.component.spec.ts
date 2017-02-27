@@ -58,7 +58,7 @@ describe('ActivitiPeopleSearch', () => {
 
             let translateService = TestBed.get(AlfrescoTranslationService);
             spyOn(translateService, 'addTranslationFolder').and.stub();
-            spyOn(translateService, 'get').and.callFake((key) => { return Observable.of(key); });
+            spyOn(translateService.translate, 'get').and.callFake((key) => { return Observable.of(key); });
 
             fixture = TestBed.createComponent(ActivitiPeopleSearch);
             activitiPeopleSearchComponent = fixture.componentInstance;

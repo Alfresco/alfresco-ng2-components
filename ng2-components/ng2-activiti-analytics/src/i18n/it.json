@@ -6,7 +6,10 @@
             "FILL-PARAMETER": "Riempi tutti i campi per generare il report",
             "NO-DATA-FOUND": "Nessun valore trovato",
             "ZERO-DATA-FOUND": "Ci sono solo valori che valgono zero",
-            "SETTING-TITLE": "Modifica i parametri del report"
+            "ICON-SETTING": "Modifica i parametri del report",
+            "ICON-SAVE": "Salva",
+            "ICON-DELETE": "Cancella",
+            "ICON-EXPORT-CSV": "Esporta come CSV"
         }
     },
     "__KEY_REPORTING": {

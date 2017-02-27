@@ -24,7 +24,8 @@ import {
     Output,
     SimpleChanges,
     OnDestroy,
-    AfterViewChecked
+    AfterViewChecked,
+    ViewChild
 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
@@ -38,6 +39,7 @@ import {
 } from '../models/report.model';
 
 declare var componentHandler;
+declare let dialogPolyfill: any;
 
 @Component({
     moduleId: module.id,
@@ -47,13 +49,16 @@ declare var componentHandler;
 })
 export class AnalyticsReportParametersComponent implements OnInit, OnChanges, OnDestroy, AfterViewChecked {
 
-    public static FORMAT_DATE_ACTIVITI: string =  'YYYY-MM-DD';
+    public static FORMAT_DATE_ACTIVITI: string = 'YYYY-MM-DD';
 
     @Input()
     appId: string;
 
     @Input()
     reportId: string;
+
+    @Input()
+    hideComponent: boolean = false;
 
     @Input()
     debug: boolean = false;
@@ -70,6 +75,15 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     @Output()
     onFormValueChanged = new EventEmitter();
 
+    @Output()
+    saveReportSuccess = new EventEmitter();
+
+    @Output()
+    deleteReportSuccess = new EventEmitter();
+
+    @ViewChild('reportNameDialog')
+    reportNameDialog: any;
+
     onDropdownChanged = new EventEmitter();
 
     onSuccessReportParams = new EventEmitter();
@@ -84,6 +98,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     private reportParamsSub;
     private paramOpts;
     private isEditable: boolean = false;
+    private action: string;
+    private reportParamQuery: ReportQuery;
+    private reportName: string;
     private hideParameters: boolean = true;
 
     constructor(private translateService: AlfrescoTranslationService,
@@ -96,8 +113,6 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     ngOnInit() {
-        this.initForm();
-
         this.dropDownSub = this.onDropdownChanged.subscribe((field) => {
             let paramDependOn: ReportParameterDetailsModel = this.reportParameters.definition.parameters.find(p => p.dependsOn === field.id);
             if (paramDependOn) {
@@ -108,10 +123,9 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.paramOpts = this.onSuccessReportParams.subscribe((report: ReportParametersModel) => {
             if (report.hasParameters()) {
                 this.retrieveParameterOptions(report.definition.parameters, this.appId);
+                this.generateFormGroupFromParameter(report.definition.parameters);
             }
         });
-
-        this.reportForm.valueChanges.subscribe(data => this.onValueChanged(data));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -127,31 +141,54 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         }
     }
 
-    initForm() {
-        this.reportForm = this.formBuilder.group({
-            dateRange: new FormGroup({}),
-            statusGroup: new FormGroup({
-                status: new FormControl()
-            }),
-            processInstanceGroup: new FormGroup({
-                slowProcessInstanceInteger: new FormControl()
-            }),
-            taskGroup: new FormGroup({
-                taskName: new FormControl()
-            }),
-            typeFilteringGroup: new FormGroup({
-                typeFiltering: new FormControl()
-            }),
-            dateIntervalGroup: new FormGroup({
-                dateRangeInterval: new FormControl()
-            }),
-            durationGroup: new FormGroup({
-                duration: new FormControl()
-            }),
-            processDefGroup: new FormGroup({
-                processDefinitionId: new FormControl()
-            })
+    private generateFormGroupFromParameter(parameters: ReportParameterDetailsModel[]) {
+        let formBuilderGroup: any = {};
+        parameters.forEach((param: ReportParameterDetailsModel) => {
+            switch (param.type) {
+                case 'dateRange' :
+                    formBuilderGroup.dateRange = new FormGroup({});
+                    break;
+                case 'processDefinition':
+                    formBuilderGroup.processDefGroup = new FormGroup({
+                        processDefinitionId: new FormControl()
+                    });
+                    break;
+                case 'duration':
+                    formBuilderGroup.durationGroup = new FormGroup({
+                        duration: new FormControl()
+                    });
+                    break;
+                case 'dateInterval':
+                    formBuilderGroup.dateIntervalGroup = new FormGroup({
+                        dateRangeInterval: new FormControl()
+                    });
+                    break;
+                case 'boolean':
+                    formBuilderGroup.typeFilteringGroup = new FormGroup({
+                        typeFiltering: new FormControl()
+                    });
+                    break;
+                case 'task':
+                    formBuilderGroup.taskGroup = new FormGroup({
+                        taskName: new FormControl()
+                    });
+                    break;
+                case 'integer':
+                    formBuilderGroup.processInstanceGroup = new FormGroup({
+                        slowProcessInstanceInteger: new FormControl()
+                    });
+                    break;
+                case 'status':
+                    formBuilderGroup.statusGroup = new FormGroup({
+                        status: new FormControl()
+                    });
+                    break;
+                default:
+                    return;
+            }
         });
+        this.reportForm = this.formBuilder.group(formBuilderGroup);
+        this.reportForm.valueChanges.subscribe(data => this.onValueChanged(data));
     }
 
     public getReportParams(reportId: string) {
@@ -161,6 +198,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 if (this.reportParameters.hasParameters()) {
                     this.onSuccessReportParams.emit(res);
                 } else {
+                    this.reportForm = this.formBuilder.group({});
                     this.onSuccess.emit();
                 }
             },
@@ -193,8 +231,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public submit(values: any) {
-        let reportParamQuery = this.convertFormValuesToReportParamQuery(values);
-        this.onSuccess.emit(reportParamQuery);
+        this.reportParamQuery = this.convertFormValuesToReportParamQuery(values);
+        this.onSuccess.emit(this.reportParamQuery);
     }
 
     onValueChanged(values: any) {
@@ -209,21 +247,41 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 .format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI) + 'T00:00:00.000Z';
     }
 
+    public getTodayDate() {
+        return moment().format(AnalyticsReportParametersComponent.FORMAT_DATE_ACTIVITI);
+    }
+
     public convertNumber(value: string): number {
         return value != null ? parseInt(value, 10) : 0;
     }
 
     convertFormValuesToReportParamQuery(values: any): ReportQuery {
         let reportParamQuery: ReportQuery = new ReportQuery();
-        reportParamQuery.dateRange.startDate = this.convertMomentDate(values.dateRange.startDate);
-        reportParamQuery.dateRange.endDate = this.convertMomentDate(values.dateRange.endDate);
-        reportParamQuery.status = values.statusGroup.status;
-        reportParamQuery.processDefinitionId = values.processDefGroup.processDefinitionId;
-        reportParamQuery.taskName = values.taskGroup.taskName;
-        reportParamQuery.duration = values.durationGroup.duration;
-        reportParamQuery.dateRangeInterval = values.dateIntervalGroup.dateRangeInterval;
-        reportParamQuery.slowProcessInstanceInteger = this.convertNumber(values.processInstanceGroup.slowProcessInstanceInteger);
-        reportParamQuery.typeFiltering = values.typeFilteringGroup.typeFiltering;
+        if (values.dateRange) {
+            reportParamQuery.dateRange.startDate = this.convertMomentDate(values.dateRange.startDate);
+            reportParamQuery.dateRange.endDate = this.convertMomentDate(values.dateRange.endDate);
+        }
+        if (values.statusGroup) {
+            reportParamQuery.status = values.statusGroup.status;
+        }
+        if (values.processDefGroup) {
+            reportParamQuery.processDefinitionId = values.processDefGroup.processDefinitionId;
+        }
+        if (values.taskGroup) {
+            reportParamQuery.taskName = values.taskGroup.taskName;
+        }
+        if (values.durationGroup) {
+            reportParamQuery.duration = values.durationGroup.duration;
+        }
+        if (values.dateIntervalGroup) {
+            reportParamQuery.dateRangeInterval = values.dateIntervalGroup.dateRangeInterval;
+        }
+        if (values.processInstanceGroup) {
+            reportParamQuery.slowProcessInstanceInteger = this.convertNumber(values.processInstanceGroup.slowProcessInstanceInteger);
+        }
+        if (values.typeFilteringGroup) {
+            reportParamQuery.typeFiltering = values.typeFilteringGroup.typeFiltering;
+        }
         return reportParamQuery;
     }
 
@@ -236,7 +294,7 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     }
 
     public editEnable() {
-        this.isEditable =  true;
+        this.isEditable = true;
     }
 
     public editDisable() {
@@ -254,6 +312,74 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
                 this.onError.emit(err);
             }
         );
+    }
+
+    public showDialog(event: string) {
+        if (!this.reportNameDialog.nativeElement.showModal) {
+            dialogPolyfill.registerDialog(this.reportNameDialog.nativeElement);
+        }
+        this.reportNameDialog.nativeElement.showModal();
+        this.action = event;
+        this.reportName = this.reportParameters.name + ' ( ' + this.getTodayDate() + ' )';
+    }
+
+    closeDialog() {
+        if (this.reportNameDialog) {
+            this.reportNameDialog.nativeElement.close();
+        }
+    }
+
+    performAction(action: string, reportParamQuery: ReportQuery) {
+        reportParamQuery.reportName = this.reportName;
+        this.closeDialog();
+        if (action === 'Save') {
+            this.doSave(reportParamQuery);
+        } else if (action === 'Export') {
+            this.doExport(reportParamQuery);
+        }
+        this.resetActions();
+    }
+
+    resetActions() {
+        this.action = '';
+        this.reportName = '';
+    }
+
+    isFormValid() {
+        return this.reportForm && this.reportForm.valid && this.reportForm.dirty;
+    }
+
+    isSaveAction() {
+        return this.action === 'Save';
+    }
+
+    doExport(paramQuery: ReportQuery) {
+        this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
+            (data: any) => {
+                let blob: Blob = new Blob([data], { type: 'text/csv' });
+                let downloadUrl = window.URL.createObjectURL(blob);
+                this.generateDownloadElement(downloadUrl, paramQuery);
+            });
+    }
+
+    generateDownloadElement(downloadUrl: string, paramQuery: ReportQuery) {
+        let downloadElement = window.document.createElement('a');
+        downloadElement.setAttribute('id', 'export-download');
+        downloadElement.setAttribute('href', downloadUrl);
+        downloadElement.setAttribute('download', paramQuery.reportName);
+        downloadElement.click();
+    }
+
+    doSave(paramQuery: ReportQuery) {
+        this.analyticsService.saveReport(this.reportId, paramQuery).subscribe(() => {
+            this.saveReportSuccess.emit();
+        });
+    }
+
+    deleteReport(reportId: string) {
+        this.analyticsService.deleteReport(reportId).subscribe(() => {
+            this.deleteReportSuccess.emit(reportId);
+        }, error => this.logService.error(error));
     }
 
     ngAfterViewChecked() {

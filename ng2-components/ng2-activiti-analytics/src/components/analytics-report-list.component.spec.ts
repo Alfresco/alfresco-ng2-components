@@ -21,6 +21,7 @@ import { Observable } from 'rxjs/Rx';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { AnalyticsReportListComponent } from '../components/analytics-report-list.component';
 import { AnalyticsService } from '../services/analytics.service';
+import { ReportParametersModel } from '../models/report.model';
 
 declare let jasmine: any;
 
@@ -166,6 +167,59 @@ describe('AnalyticsReportListComponent', () => {
             component.selectReport(reportSelected);
         });
 
+        it('Should return true if the current report is selected', () => {
+            component.selectReport(reportSelected);
+            expect(component.isSelected(reportSelected)).toBe(true);
+        });
+
+        it('Should return false if the current report is different', () => {
+            component.selectReport(reportSelected);
+            let anotherReport = {'id': 111, 'name': 'Another Fake Test Process definition overview'};
+            expect(component.isSelected(anotherReport)).toBe(false);
+        });
+
+        it('Should reload the report list', (done) => {
+            component.initObserver();
+            let report = new ReportParametersModel({'id': 2002, 'name': 'Fake Test Process definition heat map'});
+            component.reports = [report];
+            expect(component.reports.length).toEqual(1);
+            component.reload();
+
+            component.onSuccess.subscribe(() => {
+                expect(component.reports.length).toEqual(5);
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: reportList
+            });
+        });
+
+    });
+
+    describe('layout', () => {
+
+        it('should display a list by default', () => {
+            fixture.detectChanges();
+            expect(component.isGrid()).toBe(false);
+            expect(component.isList()).toBe(true);
+        });
+
+        it('should display a grid when configured to', () => {
+            component.layoutType = AnalyticsReportListComponent.LAYOUT_GRID;
+            fixture.detectChanges();
+            expect(component.isGrid()).toBe(true);
+            expect(component.isList()).toBe(false);
+        });
+
+        it('should display a list when configured to', () => {
+            component.layoutType = AnalyticsReportListComponent.LAYOUT_LIST;
+            fixture.detectChanges();
+            expect(component.isGrid()).toBe(false);
+            expect(component.isList()).toBe(true);
+        });
     });
 
 });

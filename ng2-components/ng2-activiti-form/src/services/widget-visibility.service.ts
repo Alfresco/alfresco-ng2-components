@@ -143,7 +143,7 @@ export class WidgetVisibilityService {
         if (field.value && field.value.name) {
             value = field.value.name;
         } else if (field.options) {
-            let option = field.options.find(option => option.id === field.value);
+            let option = field.options.find(opt => opt.id === field.value);
             if (option) {
                 value = option.name;
             } else {

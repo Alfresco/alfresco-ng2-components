@@ -4,13 +4,13 @@ var glob = require('glob');
 
 const rootPath = helpers.root('node_modules');
 
-let pattern = '+(alfresco-js-api|ng2-alfresco|ng2-activiti)*';
-let options = {
+var pattern = '+(alfresco-js-api|ng2-alfresco|ng2-activiti)*';
+var options = {
     cwd: rootPath,
     realpath: true
 };
 
-let alfrescoLibs = glob.sync(pattern, options);
+var alfrescoLibs = glob.sync(pattern, options);
 
 module.exports = {
   devtool: 'inline-source-map',

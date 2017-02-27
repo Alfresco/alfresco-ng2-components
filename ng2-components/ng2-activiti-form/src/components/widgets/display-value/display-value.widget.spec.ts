@@ -20,6 +20,7 @@ import { CoreModule, LogServiceMock } from 'ng2-alfresco-core';
 import { Observable } from 'rxjs/Rx';
 import { DisplayValueWidget } from './display-value.widget';
 import { FormService } from '../../../services/form.service';
+import { ActivitiContent } from '../../activiti-content.component';
 import { EcmModelService } from '../../../services/ecm-model.service';
 import { FormFieldModel } from './../core/form-field.model';
 import { FormFieldTypes } from '../core/form-field-types';
@@ -688,7 +689,7 @@ describe('DisplayValueWidget', () => {
             window['componentHandler'] = componentHandler;
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [DisplayValueWidget],
+                declarations: [DisplayValueWidget, ActivitiContent],
                 providers: [
                     EcmModelService,
                     FormService,

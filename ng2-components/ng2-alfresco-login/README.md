@@ -37,6 +37,8 @@
 Before you start using this development framework, make sure you have installed all required software and done all the
 necessary configuration, see this [page](https://github.com/Alfresco/alfresco-ng2-components/blob/master/PREREQUISITES.md).
 
+See it live: [Login Quickstart](http://embed.plnkr.co/PfZytJyHcl3xIsa8pdMo/)
+
 ## Install
 
 Follow the 3 steps below:
@@ -90,8 +92,8 @@ Follow the 3 steps below:
     - alfresco-js-api
     - ng2-alfresco-login
 
-    Please refer to the following example file: [systemjs.config.js](demo/systemjs
-    .config.js) .
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
+
 
 ## Basic usage
 
@@ -177,7 +179,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 ## Change footer content
 
-<img src="assets/custom-footer.png" width="600" />
+<img src="assets/custom-footer.png" width="400" />
 
 You can replace the entire content in the footer of the login component with your custom content.
 
@@ -189,7 +191,7 @@ You can replace the entire content in the footer of the login component with you
 
 ## Change header content
 
-<img src="assets/custom-header.png" width="600" />
+<img src="assets/custom-header.png" width="400" />
 
 You can replace the entire content in the header of the login component with your custom content.
 

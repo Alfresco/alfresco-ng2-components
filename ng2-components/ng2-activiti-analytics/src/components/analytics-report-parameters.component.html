@@ -1,83 +1,117 @@
-<div class="report-container">
-    <a class="mdl-navigation__link setting-button" data-automation-id="settings">
-        <button (click)="toggleParameters()" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-            <i class="material-icons">settings</i>
-        </button>
-        <span class="report-container-setting">{{'ANALYTICS.MESSAGES.SETTING-TITLE' | translate}}</span>
-    </a>
-    <div class="col-md-6" [class.is-hide]="isParametersHide()" >
-        <div *ngIf="reportParameters">
-            <form [formGroup]="reportForm" novalidate>
-            <div *ngIf="isEditable">
-                <input
-                        type="text"
-                        class="mdl-textfield__input large"
-                        id="reportName"
-                        autofocus
-                        data-automation-id="reportName"
-                        [value]="reportParameters.name"
-                        (input)="reportParameters.name=$event.target.value"
-                        (blur)="editTitle($event)"
+<div [class.hide]="hideComponent">
+    <div class="report-container">
+        <div class="col-md-6">
+            <div *ngIf="reportParameters">
+                <form [formGroup]="reportForm" novalidate>
+                    <div *ngIf="isEditable">
+                        <input
+                            type="text"
+                            class="mdl-textfield__input large"
+                            id="reportName"
+                            autofocus
+                            data-automation-id="reportName"
+                            [value]="reportParameters.name"
+                            (input)="reportParameters.name=$event.target.value"
+                            (blur)="editTitle($event)"
                         />
+                    </div>
+                    <div *ngIf="!isEditable">
+                        <div class="report-icons">
+                            <button mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SETTING' | translate}}" (click)="toggleParameters()" class="mdl-button mdl-js-button">
+                                <i class="material-icons">settings</i>
+                            </button>
+                            <button id="delete-button" (click)="deleteReport(reportId)" mdTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}" class="mdl-button mdl-js-button">
+                                <i class="material-icons">delete</i>
+                            </button>
+                            <span *ngIf="isFormValid()">
+                                <button id="export-button" (click)="showDialog('Export')" mdTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}" class="mdl-button mdl-js-button">
+                                     <i class="material-icons">file_download</i>
+                                </button>
+                                <button id="save-button" (click)="showDialog('Save')" mdTooltip="{{'ANALYTICS.MESSAGES.ICON-SAVE' | translate}}" class="mdl-button mdl-js-button">
+                                    <i class="material-icons">save</i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="icon-small">
+                            <i class="material-icons">mode_edit</i>
+                            <h4 (click)="editEnable()">{{reportParameters.name}}</h4>
+                        </div>
+                    </div>
+                    <div *ngFor="let field of reportParameters.definition.parameters" [class.is-hide]="isParametersHide()">
+                        <div [ngSwitch]="field.type">
+                            <div *ngSwitchCase="'integer'">
+                                <br>
+                                <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup" [controllerName]="'slowProcessInstanceInteger'"
+                                               [required]="true"></number-widget>
+                            </div>
+                            <div *ngSwitchCase="'duration'">
+                                <br>
+                                <duration-widget [field]="field" [group]="reportForm.controls.durationGroup"
+                                                 [controllerName]="'duration'"></duration-widget>
+                            </div>
+                            <div *ngSwitchCase="'boolean'">
+                                <br>
+                                <checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
+                                                 [controllerName]="'typeFiltering'"></checkbox-widget>
+                            </div>
+                            <div *ngSwitchCase="'status'">
+                                <br>
+                                <dropdown-widget [field]="field" [group]="reportForm.controls.statusGroup" [controllerName]="'status'"
+                                                 [required]="true"></dropdown-widget>
+                            </div>
+                            <div *ngSwitchCase="'processDefinition'">
+                                <br>
+                                <dropdown-widget [field]="field" [group]="reportForm.controls.processDefGroup" [controllerName]="'processDefinitionId'"
+                                                 [required]="true" (fieldChanged)="onProcessDefinitionChanges(field)"></dropdown-widget>
+                            </div>
+                            <div *ngSwitchCase="'task'">
+                                <br>
+                                <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup" [controllerName]="'taskName'"
+                                                 [required]="true"></dropdown-widget>
+                            </div>
+                            <div *ngSwitchCase="'dateRange'">
+                                <br>
+                                <date-range-widget [field]="field" [group]="reportForm.controls.dateRange"></date-range-widget>
+                            </div>
+                            <div *ngSwitchCase="'dateInterval'">
+                                <br>
+                                <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup" [controllerName]="'dateRangeInterval'"
+                                                 [required]="true" [showDefaultOption]="false"></dropdown-widget>
+                            </div>
+                            <div *ngSwitchDefault>
+                                <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{field.type}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <dialog id="report-dialog" class="mdl-dialog options-name-dialog" #reportNameDialog>
+                        <h5 id="report-dialog-title" class="mdl-dialog__title">{{action}} report</h5>
+                        <div class="mdl-dialog__content">
+                            <div *ngIf="isSaveAction()" id="save-title-submessage" class="export-message">{{'DIALOG.SAVE_MESSAGE' | translate}}</div>
+                            <div class="mdl-textfield mdl-js-textfield save-export-input">
+                                <label id="report-name-label" [attr.for]="repname">Report Name</label>
+                                <input class="mdl-textfield__input"
+                                       type="text"
+                                       id="repName"
+                                       [attr.value]="reportName"
+                                       [(ngModel)]="reportName"
+                                       [ngModelOptions]="{standalone: true}"
+                                       placeholder="report name">
+                            </div>
+                        </div>
+                        <div class="mdl-dialog__actions">
+                            <button type="button" id="close-dialog-button" (click)="closeDialog()" class="mdl-button close">Close</button>
+                            <button type="button" id="action-dialog-button" (click)="performAction(action, reportParamQuery)"
+                                    class="mdl-button close">{{action}}
+                            </button>
+                        </div>
+                    </dialog>
+                    <div *ngIf="debug">
+                        <p>ReportForm valid : {{ reportForm.valid }}</p>
+                        <p>ReportForm status : {{ reportForm.errors | json }}</p>
+                        <p>ReportForm FormGroup valid : {{reportForm && reportForm.controls.dateRange.valid | json }}</p>
+                    </div>
+                </form>
             </div>
-            <div *ngIf="!isEditable">
-                <span class="icon-small">
-                <i class="material-icons">mode_edit</i>
-                <h4 (click)="editEnable()">{{reportParameters.name}}</h4>
-                </span>
-            </div><hr>
-            <div *ngFor="let field of reportParameters.definition.parameters">
-                <div [ngSwitch]="field.type">
-                    <div *ngSwitchCase="'integer'">
-                        <br>
-                        <number-widget [field]="field" [group]="reportForm.controls.processInstanceGroup" [controllerName]="'slowProcessInstanceInteger'"
-                                       [required]="true"></number-widget>
-                    </div>
-                    <div *ngSwitchCase="'duration'">
-                        <br>
-                        <duration-widget [field]="field" [group]="reportForm.controls.durationGroup"
-                                         [controllerName]="'duration'"></duration-widget>
-                    </div>
-                    <div *ngSwitchCase="'boolean'">
-                        <br>
-                        <checkbox-widget [field]="field" [group]="reportForm.controls.typeFilteringGroup"
-                                         [controllerName]="'typeFiltering'"></checkbox-widget>
-                    </div>
-                    <div *ngSwitchCase="'status'">
-                        <br>
-                        <dropdown-widget [field]="field" [group]="reportForm.controls.statusGroup" [controllerName]="'status'"
-                                         [required]="true"></dropdown-widget>
-                    </div>
-                    <div *ngSwitchCase="'processDefinition'">
-                        <br>
-                        <dropdown-widget [field]="field" [group]="reportForm.controls.processDefGroup" [controllerName]="'processDefinitionId'"
-                                         [required]="true" (fieldChanged)="onProcessDefinitionChanges(field)"></dropdown-widget>
-                    </div>
-                    <div *ngSwitchCase="'task'">
-                        <br>
-                        <dropdown-widget [field]="field" [group]="reportForm.controls.taskGroup" [controllerName]="'taskName'"
-                                         [required]="true"></dropdown-widget>
-                    </div>
-                    <div *ngSwitchCase="'dateRange'">
-                        <br>
-                        <date-range-widget [field]="field" [group]="reportForm.controls.dateRange"></date-range-widget>
-                    </div>
-                    <div *ngSwitchCase="'dateInterval'">
-                        <br>
-                        <dropdown-widget [field]="field" [group]="reportForm.controls.dateIntervalGroup" [controllerName]="'dateRangeInterval'"
-                                         [required]="true" [showDefaultOption]="false"></dropdown-widget>
-                    </div>
-                    <div *ngSwitchDefault>
-                        <span>{{'ANALYTICS.MESSAGES.UNKNOWN-WIDGET-TYPE' | translate}}: {{field.type}}</span>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="debug">
-                <p>ReportForm valid : {{ reportForm.valid }}</p>
-                <p>ReportForm status : {{ reportForm.errors | json }}</p>
-                <p>ReportForm FormGroup valid : {{reportForm && reportForm.controls.dateRange.valid | json }}</p>
-            </div>
-            </form>
         </div>
     </div>
 </div>

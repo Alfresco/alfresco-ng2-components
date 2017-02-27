@@ -2,6 +2,9 @@
   "FORM": {
     "START_FORM": {
       "TITLE": "Start Form"
+    },
+    "PREVIEW": {
+      "IMAGE_NOT_AVAILABLE": "The preview image is not available."
     }
   }
 }

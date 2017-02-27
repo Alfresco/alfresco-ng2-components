@@ -1,7 +1,10 @@
 <div class="col-md-6">
     <analytics-report-parameters [appId]="appId" [reportId]="reportId"
+                                 [hideComponent]="hideParameters"
                                  (onFormValueChanged)="reset()"
                                  (onSuccess)="showReport($event)"
+                                 (saveReportSuccess)="onSaveReportSuccess()"
+                                 (deleteReportSuccess)="onDeleteReportSuccess()"
                                  (onEdit)="onEditReport($event)">
     </analytics-report-parameters>
 

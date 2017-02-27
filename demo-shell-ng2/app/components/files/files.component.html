@@ -36,6 +36,15 @@
                     -->
                 </content-column>
                 <content-column
+                    title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
+                    key="id"
+                    sortable="true"
+                    class="full-width ellipsis-cell">
+                    <template let-entry="$implicit">
+                        <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
+                    </template>
+                </content-column>
+                <content-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
                         sortable="true"
@@ -165,7 +174,13 @@
     <alfresco-viewer [(showViewer)]="fileShowed"
                      [fileNodeId]="fileNodeId"
                      [overlayMode]="true">
-        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+
+        <extension-viewer [supportedExtensions]="['obj','3DS']" #extension>
+            <template let-urlFileContent="urlFileContent" let-extension="extension" >
+                <threed-viewer [urlFile]="urlFileContent" [extension]="extension" ></threed-viewer>
+            </template>
+        </extension-viewer>
+
     </alfresco-viewer>
 </div>
 

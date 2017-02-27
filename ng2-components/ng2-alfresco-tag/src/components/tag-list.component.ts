@@ -39,7 +39,7 @@ export class TagList {
 
     /**
      * Constructor
-     * @param authService
+     * @param tagService
      */
     constructor(private tagService: TagService) {
     }

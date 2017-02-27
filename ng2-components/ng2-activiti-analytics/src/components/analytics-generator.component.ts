@@ -44,6 +44,7 @@ export class AnalyticsGeneratorComponent implements OnChanges {
     reports: Chart[];
 
     showDetails: boolean = false;
+    currentChartPosition: number;
 
     public barChartOptions: any = {
         responsive: true,
@@ -80,9 +81,15 @@ export class AnalyticsGeneratorComponent implements OnChanges {
     }
 
     public generateReport(reportId, reportParamQuery) {
+        if (reportParamQuery === undefined || reportParamQuery === null) {
+            reportParamQuery = {};
+        }
         this.analyticsService.getReportsByParams(reportId, reportParamQuery).subscribe(
             (res: Chart[]) => {
                 this.reports = res;
+                if (this.reports) {
+                    this.selectFirstReport();
+                }
                 this.onSuccess.emit(res);
             },
             (err: any) => {
@@ -115,5 +122,17 @@ export class AnalyticsGeneratorComponent implements OnChanges {
 
     isShowDetails(): boolean {
         return this.showDetails;
+    }
+
+    isCurrent(position: number) {
+        return position === this.currentChartPosition ? true : false;
+    }
+
+    selectCurrent(position: number) {
+        this.currentChartPosition = position;
+    }
+
+    selectFirstReport() {
+        this.selectCurrent(0);
     }
 }

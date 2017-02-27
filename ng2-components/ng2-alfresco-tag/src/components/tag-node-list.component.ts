@@ -43,12 +43,12 @@ export class TagNodeList {
 
     /**
      * Constructor
-     * @param authService
+     * @param tagService
      */
     constructor(private tagService: TagService) {
     }
 
-    ngOnChanges(changes) {
+    ngOnChanges() {
         return this.refreshTag();
     }
 

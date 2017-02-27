@@ -12,7 +12,7 @@
 
 ## Installing
 
-To correctly use this demo check that on your machine is running [Node](https://nodejs.org/en/) version 6.9.2 LTS or higher.
+To correctly use this demo check that on your machine is running [Node](https://nodejs.org/en/) version 5.x.x or higher.
 
 ```sh
 git clone https://github.com/Alfresco/alfresco-ng2-components.git
@@ -26,7 +26,7 @@ npm install
 npm start
 ```
 
-This command compiles and starts the project in watch mode. 
+This command compiles and starts the project in watch mode.
 Browser will automatically reload upon changes.
 Upon start you can navigate to `http://localhost:3000` with your preferred browser.
 
@@ -41,7 +41,7 @@ npm run build
 npm run start:dist
 ```
 
-This command builds broject in `production` mode. 
+This command builds project in `production` mode.
 All output is placed to `dist` folder and can be served your preferred web server.
 You should need no additional files outside the `dist` folder.
 
@@ -81,4 +81,20 @@ Directory structure:
 │   └── fr.json
 ```
 
+## Custom-files
 
+If you need to add custom files on your project you can add this files in the folders public
+
+```
+.
+├── public/
+│   ├── images/
+│   ├── css/
+│   └── js/
+```
+
+the public folder above wil be copied in the root of your project and you can refer to them for example as
+
+ * './images/custom_image.png'
+ * './js/custom_script.js'
+ * './css/custom_style.css'

@@ -104,15 +104,14 @@ Follow the 3 steps below:
     - ng2-activiti-diagrams
     - ng2-activiti-analytics
 
-    Please refer to the following example file: [systemjs.config.js](demo/systemjs
-    .config.js) .
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
 
 ## Basic usage example Activiti Analytics List
 
 The component shows the list of all the available reports
 
 ```html
-<analytics-report-list></analytics-report-list>
+<analytics-report-list [layoutType]="'LIST'"></analytics-report-list>
 ```
 
 Usage example of this component :
@@ -132,7 +131,7 @@ import { AnalyticsModule } from 'ng2-activiti-analytics';
     <div class="page-content">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <analytics-report-list></analytics-report-list>
+                <analytics-report-list [layoutType]="'LIST'"></analytics-report-list>
             </div>
         </div>
     </div>`
@@ -179,7 +178,9 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 #### Options
 
-No options.
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. LIST is the default value|
 
 ## Basic usage example Activiti Analytics
 
@@ -206,7 +207,7 @@ import { AnalyticsModule } from 'ng2-activiti-analytics';
     <div class="page-content">
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col task-column mdl-shadow--2dp">
-                <activiti-analytics [appId]="1001" [reportId]="2006"></activiti-analytics>
+                <activiti-analytics [appId]="1001" [reportId]="2006" [hideParameters]="false"></activiti-analytics>
             </div>
         </div>
     </div>`
@@ -249,6 +250,8 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | --- | --- |
 |`onSuccess` | The event is emitted when the report parameters are loaded |
 |`onError` | The event is emitted when an error occur during the loading |
+|`reportSaved` | The event is emitted when a report is saved |
+|`reportDeleted` | The event is emitted when a report is deleted |
 
 #### Options
 
@@ -256,7 +259,39 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | --- | --- |
 |`appId` | The application id |
 |`reportId` | The report id |
+|`hideParameters` | Boolean to hide or show the analytics parameters |
 |`debug` | Flag to enable or disable the Form values in the console log |
+
+You can also use the activiti analytic component to show straight away the charts without show the parameters setting the hideParameters to true
+
+```html
+<activiti-analytics [appId]="appId" [reportId]="reportId" [hideParameters]="true"></activiti-analytics>
+```
+
+![Analytics-without-parameters](docs/assets/analytics-without-parameters.png)
+
+## Basic usage example Analytics Generator
+
+The component generate and show the charts
+
+```html
+<activiti-analytics-generator [reportId]="reportId" [reportParamQuery]="reportParamQuery"></activiti-analytics>
+```
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+|`onSuccess` | The event is emitted when the charts are loaded |
+|`onError` | The event is emitted when an error occur during the loading |
+
+#### Options
+
+| Name | Description |
+| --- | --- |
+|`reportId` | The report id |
+|`reportParamQuery` | The object contains all the parameters that the report needs |
+
 
 ## Build from sources
 

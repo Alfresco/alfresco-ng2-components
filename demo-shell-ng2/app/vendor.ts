@@ -62,3 +62,4 @@ if (process.env.ENV === 'production') {
 }
 
 require('pdfjs-dist/web/pdf_viewer.js');
+require('three/build/three.min.js');

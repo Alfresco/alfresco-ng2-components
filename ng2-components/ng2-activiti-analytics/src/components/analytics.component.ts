@@ -36,10 +36,19 @@ export class AnalyticsComponent implements OnChanges {
     reportId: number;
 
     @Input()
+    hideParameters: boolean = false;
+
+    @Input()
     debug: boolean = false;
 
     @Output()
     editReport = new EventEmitter();
+
+    @Output()
+    reportSaved = new EventEmitter();
+
+    @Output()
+    reportDeleted = new EventEmitter();
 
     @ViewChild('analyticsgenerator')
     analyticsgenerator: AnalyticsGeneratorComponent;
@@ -69,6 +78,14 @@ export class AnalyticsComponent implements OnChanges {
 
     public onEditReport(name: string) {
         this.editReport.emit(name);
+    }
+
+    public onSaveReportSuccess() {
+        this.reportSaved.emit();
+    }
+
+    public onDeleteReportSuccess() {
+        this.reportDeleted.emit();
     }
 
 }

@@ -12,11 +12,11 @@ Please ask before on our gitter channel https://gitter.im/Alfresco/alfresco-ng2-
 - [ ] Support request
 - [ ] Documentation
 ```
-**Current behavior:**
-<!-- Describe the current behavior. -->
+**Current behaviour:**
+<!-- Describe the current behaviour. -->
 
 **Expected behavior:**
-<!-- Describe the expected behavior. -->
+<!-- Describe the expected behaviour. -->
 
 **Steps to reproduce the issue:**
 <!-- Describe the steps to reproduce the issue. -->

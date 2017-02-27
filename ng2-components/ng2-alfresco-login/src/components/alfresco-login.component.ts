@@ -26,7 +26,8 @@ declare let componentHandler: any;
     selector: 'alfresco-login',
     moduleId: module.id,
     templateUrl: './alfresco-login.component.html',
-    styleUrls: ['./alfresco-login.component.css']
+    styleUrls: ['./alfresco-login.component.css'],
+    host: {'(blur)': 'onBlur($event)'}
 })
 export class AlfrescoLoginComponent implements OnInit {
 
@@ -71,7 +72,7 @@ export class AlfrescoLoginComponent implements OnInit {
 
     formError: { [id: string]: string };
 
-    minLenght: number = 2;
+    minLength: number = 2;
 
     footerTemplate: TemplateRef<any>;
 
@@ -130,7 +131,7 @@ export class AlfrescoLoginComponent implements OnInit {
         if (args.defaultPrevented) {
             return false;
         } else {
-            this.performeLogin(values);
+            this.performLogin(values);
         }
     }
 
@@ -161,7 +162,7 @@ export class AlfrescoLoginComponent implements OnInit {
      * Performe the login service
      * @param values
      */
-    private performeLogin(values: any) {
+    private performLogin(values: any) {
         this.authService.login(values.username, values.password)
             .subscribe(
                 (token: any) => {
@@ -267,6 +268,13 @@ export class AlfrescoLoginComponent implements OnInit {
     }
 
     /**
+     * Trim username
+     */
+    trimUsername(event: any) {
+        event.target.value = event.target.value.trim();
+    }
+
+    /**
      * Default formError values
      */
     private initFormError() {
@@ -299,14 +307,14 @@ export class AlfrescoLoginComponent implements OnInit {
             }
         };
 
-        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN',  {minLenght: this.minLenght}).subscribe((res: string) => {
+        this.translateService.get('LOGIN.MESSAGES.USERNAME-MIN', {minLength: this.minLength}).subscribe((res: string) => {
             this._message['username']['minlength'] = res;
         });
     }
 
     private initFormFieldsDefault() {
         this.form = this._fb.group({
-            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLenght)])],
+            username: ['', Validators.compose([Validators.required, Validators.minLength(this.minLength)])],
             password: ['', Validators.required]
         });
     }

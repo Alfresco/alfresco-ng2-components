@@ -106,6 +106,7 @@ export class ParameterValueModel {
 }
 
 export class ReportQuery {
+    reportName: string;
     processDefinitionId: string;
     status: string;
     taskName: string;
@@ -116,6 +117,7 @@ export class ReportQuery {
     duration: number;
 
     constructor(obj?: any) {
+        this.reportName = obj && obj.reportName || null;
         this.processDefinitionId = obj && obj.processDefinitionId || null;
         this.status = obj && obj.status || null;
         this.taskName = obj && obj.taskName || null;
@@ -125,15 +127,18 @@ export class ReportQuery {
         this.duration = obj && obj.duration || 0;
         this.dateRange = new ReportDateRange(obj);
     }
+
 }
 
 export class ReportDateRange {
     startDate: string;
     endDate: string;
+    rangeId: string;
 
     constructor(obj?: any) {
         this.startDate = obj && obj.startDate || null;
         this.endDate = obj && obj.endDate || null;
+        this.rangeId = obj && obj.rangeId || null;
     }
 
 }

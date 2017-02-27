@@ -305,16 +305,24 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         }
     }
 
-    loadFormPorcessVariable(taskId) {
-        this.formService.getTask(taskId).subscribe(
-            task => {
-                if (this.isAProcessTask(task)) {
-                    this.visibilityService.getTaskProcessVariable(taskId).subscribe();
+    loadFormProcessVariables(taskId: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            this.formService.getTask(taskId).subscribe(
+                task => {
+                    if (this.isAProcessTask(task)) {
+                        this.visibilityService.getTaskProcessVariable(taskId).subscribe(_ => {
+                            resolve(true);
+                        });
+                    } else {
+                        resolve(true);
+                    }
+                },
+                error => {
+                    this.handleError(error);
+                    resolve(false);
                 }
-            },
-            (error) => {
-                this.handleError(error);
-            });
+            );
+        });
     }
 
     isAProcessTask(taskRepresentation) {
@@ -330,20 +338,25 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
         return false;
     }
 
-    getFormByTaskId(taskId: string) {
-        this.loadFormPorcessVariable(this.taskId);
-        let data = this.data;
-        this.formService
-            .getTaskForm(taskId)
-            .subscribe(
-                form => {
-                    this.form = new FormModel(form, data, this.readOnly, this.formService);
-                    this.onFormLoaded(this.form);
-                },
-                (error) => {
-                    this.handleError(error);
-                }
-            );
+    getFormByTaskId(taskId: string): Promise<FormModel> {
+        return new Promise<FormModel>((resolve, reject) => {
+           this.loadFormProcessVariables(this.taskId).then(_ => {
+                this.formService
+                    .getTaskForm(taskId)
+                    .subscribe(
+                        form => {
+                            this.form = new FormModel(form, this.data, this.readOnly, this.formService);
+                            this.onFormLoaded(this.form);
+                            resolve(this.form);
+                        },
+                        error => {
+                            this.handleError(error);
+                            // reject(error);
+                            resolve(null);
+                        }
+                    );
+                });
+        });
     }
 
     getFormDefinitionByFormId(formId: string) {

@@ -1,0 +1,10 @@
+{
+    "ALFRESCO_DOCUMENT_LIST": {
+        "BUTTON": {
+            "ACTION_CREATE": "Создать...",
+            "ACTION_NEW_FOLDER": "Новая папка",
+            "CREATE": "Создать",
+            "CANCEL": "Отмена"
+        }
+    }
+}

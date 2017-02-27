@@ -21,6 +21,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { ActivitiStartForm } from './activiti-start-form.component';
 import { FormFieldComponent } from './form-field/form-field.component';
+import { ActivitiContent } from './activiti-content.component';
 import { WIDGET_DIRECTIVES } from './widgets/index';
 import { FormService } from './../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
@@ -45,6 +46,7 @@ describe('ActivitiStartForm', () => {
             declarations: [
                 ActivitiStartForm,
                 FormFieldComponent,
+                ActivitiContent,
                 ...WIDGET_DIRECTIVES
             ],
             providers: [

@@ -154,7 +154,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onTaskFilterClick(event: FilterRepresentationModel) {
-        if(event){
+        if (event) {
             this.taskFilter = event;
         }
     }
@@ -200,6 +200,21 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onEditReport(name: string) {
         this.analyticsreportlist.reload();
+    }
+
+    onReportSaved() {
+        this.analyticsreportlist.reload();
+    }
+
+    onReportDeleted() {
+        this.analyticsreportlist.reload();
+        this.selectFirstElementInReportList();
+    }
+
+    selectFirstElementInReportList() {
+        if (!this.analyticsreportlist.isReportsEmpty()) {
+            this.analyticsreportlist.selectReport(this.analyticsreportlist.reports[0]);
+        }
     }
 
     navigateStartProcess() {

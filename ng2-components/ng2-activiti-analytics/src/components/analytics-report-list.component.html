@@ -1,5 +1,5 @@
 <div class="menu-container">
-    <ul class='mdl-list'>
+    <ul class='mdl-list' *ngIf="isList()">
         <li class="mdl-list__item activiti-filters__entry" (click)="selectReport(report)" *ngFor="let report of reports; let idx = index"
             [class.active]="currentReport === report">
             <span [attr.id]="'report-list-' + idx" class="mdl-list__item-primary-content">
@@ -8,4 +8,18 @@
             </span>
         </li>
     </ul>
+    <div class="mdl-grid" *ngIf="isGrid()">
+        <div (click)="selectReport(report)" [ngClass]="['mdl-card mdl-cell', 'theme-1']" *ngFor="let report of reports;">
+            <div class="logo"><i class="material-icons">equalizer</i></div>
+            <div class="mdl-card__title">
+                <h1 class="mdl-card__title-text application-title">{{report.name}}</h1>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <p>{{report.description}}</p>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <i class="material-icons selectedIcon" *ngIf="isSelected(report)">done</i>
+            </div>
+        </div>
+    </div>
 </div>

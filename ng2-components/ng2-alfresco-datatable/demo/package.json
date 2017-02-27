@@ -3,12 +3,6 @@
   "description": "Alfresco Angular2 DataTable Component - Demo",
   "version": "0.1.0",
   "author": "Alfresco Software, Ltd.",
-  "contributors": [
-    {
-      "name": "Denys Vuika",
-      "email": "denis.vuyka@gmail.com"
-    }
-  ],
   "main": "index.js",
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build && rimraf dist node_modules typings dist",
@@ -18,11 +12,18 @@
     "server": "wsrv -o -s -l",
     "build": "npm run tslint && npm run clean-build && npm run tsc",
     "build:w": "npm run tslint && rimraf dist && npm run tsc:w",
+    "travis": "npm link ng2-alfresco-core",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts  -e '{,**/}**.d.ts'"
   },
   "license": "Apache-2.0",
+  "contributors": [
+    {
+      "name": "Denys Vuika",
+      "email": "denis.vuyka@gmail.com"
+    }
+  ],
   "dependencies": {
     "@angular/common": "2.2.2",
     "@angular/compiler": "2.2.2",
@@ -46,9 +47,9 @@
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.2.1",
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "~1.1.0",
-    "ng2-alfresco-core": "1.1.0",
-    "ng2-alfresco-datatable": "1.1.0"
+    "alfresco-js-api": "~1.2.0",
+    "ng2-alfresco-core": "1.2.0",
+    "ng2-alfresco-datatable": "1.2.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",

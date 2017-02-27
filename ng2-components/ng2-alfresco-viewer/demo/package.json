@@ -12,6 +12,7 @@
     "server": "wsrv -o -s -l",
     "build": "npm run tslint && npm run clean-build && npm run tsc",
     "build:w": "npm run tslint && rimraf dist && npm run tsc:w",
+    "travis": "npm link ng2-alfresco-core",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json src/{,**/}**.ts  -e '{,**/}**.d.ts'"
@@ -40,9 +41,9 @@
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.2.1",
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "~1.1.0",
-    "ng2-alfresco-core": "1.1.0",
-    "ng2-alfresco-viewer": "1.1.0",
+    "alfresco-js-api": "~1.2.0",
+    "ng2-alfresco-core": "1.2.0",
+    "ng2-alfresco-viewer": "1.2.0",
     "pdfjs-dist": "1.5.404"
   },
   "devDependencies": {

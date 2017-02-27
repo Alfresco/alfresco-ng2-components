@@ -56,10 +56,50 @@
 }
 
 .report-container {
-    border: solid 1px rgb(212, 212, 212);
+    border-bottom: solid 1px rgb(212, 212, 212);
     padding: 10px 10px 10px 10px;
 }
 
 .report-container-setting {
     padding-left: 10px;
+}
+
+.option_button_details{
+    padding-top: 20px;
+}
+
+.report-icons {
+    float: right;
+}
+
+.report-icons button {
+    min-width: 48px;
+    padding: 0 0px;
+}
+
+
+.mdl-dialog__title.choose_name{
+    padding: 0px;
+}
+
+.mdl-dialog.options-name-dialog {
+    width: 30%;
+}
+
+.export-message{
+    background-color: lightgray;
+}
+
+.save-export-input{
+    width:100%;
+}
+
+.delete-parameter {
+    position: absolute;
+    margin-left: 60%;
+    padding-top: 5px;
+}
+
+.hide {
+    display: none;
 }

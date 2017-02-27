@@ -425,7 +425,7 @@ describe('ActivitiForm', () => {
         expect(formComponent.onOutcomeClicked(outcome)).toBeTruthy();
     });
 
-    it('should fetch and parse form by task id', () => {
+    it('should fetch and parse form by task id', (done) => {
         spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
@@ -435,19 +435,18 @@ describe('ActivitiForm', () => {
         });
 
         const taskId = '456';
-        let loaded = false;
-        formComponent.formLoaded.subscribe(() => loaded = true);
+        formComponent.formLoaded.subscribe(() => {
+            expect(formService.getTaskForm).toHaveBeenCalledWith(taskId);
+            expect(formComponent.form).toBeDefined();
+            expect(formComponent.form.taskId).toBe(taskId);
+            done();
+        });
 
         expect(formComponent.form).toBeUndefined();
         formComponent.getFormByTaskId(taskId);
-
-        expect(loaded).toBeTruthy();
-        expect(formService.getTaskForm).toHaveBeenCalledWith(taskId);
-        expect(formComponent.form).toBeDefined();
-        expect(formComponent.form.taskId).toBe(taskId);
     });
 
-    it('should handle error when getting form by task id', () => {
+    it('should handle error when getting form by task id', (done) => {
         const error = 'Some error';
 
         spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
@@ -456,11 +455,13 @@ describe('ActivitiForm', () => {
             return Observable.throw(error);
         });
 
-        formComponent.getFormByTaskId('123');
-        expect(formComponent.handleError).toHaveBeenCalledWith(error);
+        formComponent.getFormByTaskId('123').then(_ => {
+            expect(formComponent.handleError).toHaveBeenCalledWith(error);
+            done();
+        });
     });
 
-    it('should apply readonly state when getting form by task id', () => {
+    it('should apply readonly state when getting form by task id', (done) => {
         spyOn(formService, 'getTask').and.returnValue(Observable.of({}));
         spyOn(formService, 'getTaskForm').and.callFake((taskId) => {
             return Observable.create(observer => {
@@ -470,10 +471,11 @@ describe('ActivitiForm', () => {
         });
 
         formComponent.readOnly = true;
-        formComponent.getFormByTaskId('123');
-
-        expect(formComponent.form).toBeDefined();
-        expect(formComponent.form.readOnly).toBe(true);
+        formComponent.getFormByTaskId('123').then(_ => {
+            expect(formComponent.form).toBeDefined();
+            expect(formComponent.form.readOnly).toBe(true);
+            done();
+        });
     });
 
     it('should fetch and parse form definition by id', () => {

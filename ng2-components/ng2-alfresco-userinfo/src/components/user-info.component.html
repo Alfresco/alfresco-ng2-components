@@ -13,8 +13,8 @@
              for="user-profile" (click)="stopClosing($event)">
             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect menu-container__items">
                 <div id="tab-bar-env" class="mdl-tabs__tab-bar" [hidden]="!(ecmUser && bpmUser)">
-                    <a href="#ecm-panel" id="ecm-tab" class="mdl-tabs__tab is-active">ECM</a>
-                    <a href="#bpm-panel" id="bpm-tab" class="mdl-tabs__tab">BPM</a>
+                    <a href="#ecm-panel" id="ecm-tab" class="mdl-tabs__tab is-active">Content Services</a>
+                    <a href="#bpm-panel" id="bpm-tab" class="mdl-tabs__tab">Process Services</a>
                 </div>
                 <div class="mdl-tabs__panel" [class.is-active]="ecmUser?true:false" id="ecm-panel">
                     <div class="detail-user-profile-list-mdl mdl-list" *ngIf="ecmUser">

@@ -64,7 +64,7 @@ npm install --save ng2-alfresco-core
 - **ContextMenuService**, global context menu APIs
 
 
-#### Alfresco Api Service
+## Alfresco Api Service
 
 Provides access to initialized **AlfrescoJSApi** instance.
 
@@ -96,7 +96,7 @@ let apiService: any = this.authService.getAlfrescoApi();
 apiService.nodes.addNode('-root-', body, {});
 ```
 
-#### Notification Service
+## Notification Service
 
 The Notification Service is implemented on top of the Angular 2 Material Design snackbar.
 Use this service to show a notification message, and optionaly get feedback from it.
@@ -133,7 +133,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-#### Context Menu directive
+## Context Menu directive
 
 _See **Demo Shell** or **DocumentList** implementation for more details and use cases._
 
@@ -169,7 +169,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-#### Authentication Service
+## Authentication Service
 
 The authentication service is used inside the [login component](../ng2-alfresco-login) and is possible to find there an example of how to use it.
 
@@ -182,27 +182,24 @@ import { CoreModule, AlfrescoSettingsService, AlfrescoAuthenticationService } fr
 @Component({
     selector: 'alfresco-app-demo',
     template: `
-               <div *ngIf="!authenticated" >
-                    Authentication failed to ip {{ ecmHost }} with user: admin, admin
-               </div>
-               <div *ngIf="authenticated">
-                    <H5>ECM</H5>
-                    Authentication successfull to ip {{ ecmHost }} with user: admin, admin<br> 
-                    your token is {{ tokenEcm }}<br>
-                    <H5>BPM</H5>
-                    Authentication successfull to ip {{ bpmHost }} with user: admin, admin<br> 
-                    your token is {{ tokenBpm }}<br>
-               </div>`
+        <div *ngIf="!authenticated" >
+            Authentication failed to ip {{ ecmHost }} with user: admin, admin
+        </div>
+        <div *ngIf="authenticated">
+            <H5>ECM</H5>
+            Authentication successfull to ip {{ ecmHost }} with user: admin, admin<br> 
+            your token is {{ tokenEcm }}<br>
+            <H5>BPM</H5>
+            Authentication successfull to ip {{ bpmHost }} with user: admin, admin<br> 
+            your token is {{ tokenBpm }}<br>
+        </div>
+    `
 })
 class MyDemoApp {
     authenticated: boolean = false;
-
-    public ecmHost: string = 'http://localhost:8080';
-
-    public bpmHost: string = 'http://localhost:9999';
-
+    ecmHost: string = 'http://localhost:8080';
+    bpmHost: string = 'http://localhost:9999';
     tokenBpm: string;
-
     tokenEcm: string;
 
     constructor(public alfrescoAuthenticationService: AlfrescoAuthenticationService,
@@ -246,7 +243,51 @@ export class AppModule {
 platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
-#### Renditions Service
+## AlfrescoTranslationService
+
+In order to enable localisation support you will need creating a `/resources/i18n/en.json` file 
+and registering path to it's parent `i18n` folder:
+
+```ts
+class MainApplication {
+    constructor(private translateService: AlfrescoTranslationService) {
+        translateService.addTranslationFolder('app', 'resources');
+    }
+}
+```
+
+Service also allows changing current language for entire application.
+Imagine you got a language picker that invokes `onLanguageClicked` method:
+
+```ts
+class MyComponent {
+    constructor(private translateService: AlfrescoTranslationService) {
+    }
+
+    onLanguageClicked(lang: string) {
+        this.translateService.use('en');
+    }
+}
+```
+
+It is also possible providing custom translations for existing components by overriding their resource paths:
+
+```ts
+class MyComponent {
+    constructor(private translateService: AlfrescoTranslationService) {
+        translateService.addTranslationFolder(
+            'ng2-alfresco-login', 
+            'i18n/custom-translation/alfresco-login'
+        );
+    }
+}
+```
+
+**Important note**: `addTranslationFolder` method redirects **all** languages to a new folder, you may need implementing multiple languages 
+or copying existing translation files to a new path.
+
+
+## Renditions Service
 
 * getRenditionsListByNodeId(nodeId: string)
 * createRendition(nodeId: string, encoding: string)

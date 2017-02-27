@@ -114,8 +114,8 @@ Follow the 3 steps below:
     - alfresco-js-api
     - ng2-activiti-form
 
-    Please refer to the following example file: [systemjs.config.js](demo/systemjs
-    .config.js) .
+    Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
+
 
 ## ActivitiForm Component
 
@@ -350,6 +350,32 @@ There are two additional functions that can be of a great value when controlling
 
 **Please note that if `event.preventDefault()` is not called then default outcome behaviour 
 will also be executed after your custom code.**
+
+## Activiti Content Component
+
+### Basic usage
+
+The component shows the content preview.
+
+```html
+<activiti-content [contentId]="'1001'"></activiti-content>
+```
+
+### Configuration
+
+#### Properties
+
+The recommended set of properties can be found in the following table:
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `contentId` | string |  | The content id to show. |
+
+#### Events
+
+| Name | Description |
+| --- | --- |
+| `contentClick` | Invoked when the content is clicked. |
 
 ## FormService
 

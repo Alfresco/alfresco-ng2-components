@@ -23,6 +23,7 @@ import { TabsWidget } from './tabs.widget';
 import { TabModel } from '../core/tab.model';
 import { WIDGET_DIRECTIVES } from '../index';
 import { FormFieldComponent } from './../../form-field/form-field.component';
+import { ActivitiContent } from './../../activiti-content.component';
 import { CoreModule } from 'ng2-alfresco-core';
 
 describe('TabsWidget', () => {
@@ -103,7 +104,7 @@ describe('TabsWidget', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [CoreModule],
-                declarations: [FormFieldComponent, WIDGET_DIRECTIVES]
+                declarations: [FormFieldComponent, ActivitiContent, WIDGET_DIRECTIVES]
             }).compileComponents().then(() => {
                 fixture = TestBed.createComponent(TabsWidget);
                 tabWidgetComponent = fixture.componentInstance;
