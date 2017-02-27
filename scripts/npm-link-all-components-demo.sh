@@ -9,7 +9,6 @@ npm install
 
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
-  ng2-alfresco-core \
   ng2-alfresco-datatable \
   ng2-activiti-diagrams \
   ng2-activiti-analytics \
