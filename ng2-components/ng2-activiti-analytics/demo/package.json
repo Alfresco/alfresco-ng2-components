@@ -61,7 +61,7 @@
     "alfresco-js-api": "~1.2.0",
     "ng2-alfresco-core": "1.2.0",
     "ng2-activiti-diagrams": "1.2.0",
-    "ng2-activiti-analytics": "^1.1.0"
+    "ng2-activiti-analytics": "1.2.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",

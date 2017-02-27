@@ -38,7 +38,7 @@
     "alfresco-js-api": "~1.2.0",
     "ng2-alfresco-core": "1.2.0",
     "ng2-alfresco-datatable": "1.2.0",
-    "ng2-alfresco-documentlist": "^1.1.0",
+    "ng2-alfresco-documentlist": "1.2.0",
     "material-design-icons": "2.2.3",
     "material-design-lite": "1.2.1",
     "intl": "^1.2.5"
