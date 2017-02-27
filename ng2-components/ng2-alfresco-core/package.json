@@ -1,7 +1,7 @@
 {
   "name": "ng2-alfresco-core",
   "description": "Alfresco Angular 2 Components core",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build && rimraf dist node_modules typings",
@@ -65,7 +65,7 @@
     "@angular/material": "2.0.0-beta.1",
     "@angular/router": "3.2.2",
     "@angular/upgrade": "2.2.2",
-    "alfresco-js-api": "~1.1.0",
+    "alfresco-js-api": "~1.2.0",
     "core-js": "^2.4.1",
     "dialog-polyfill": "^0.4.3",
     "element.scrollintoviewifneeded-polyfill": "^1.0.1",
