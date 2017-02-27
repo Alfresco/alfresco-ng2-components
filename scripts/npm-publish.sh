@@ -25,6 +25,6 @@ do
   echo "====== PUBLISHING: ${DESTDIR} ====="
   cd ${DESTDIR}
   npm install
-  npm publish
+  npm run publish:prod
   cd ${DIR}
 done

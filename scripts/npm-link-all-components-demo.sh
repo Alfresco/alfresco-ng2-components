@@ -30,5 +30,4 @@ do
   cd "$DESTDIR/demo"
   npm link ${PACKAGE}
   npm travis
-  npm install
 done

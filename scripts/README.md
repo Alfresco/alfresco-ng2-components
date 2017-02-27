@@ -47,6 +47,12 @@ in the demo shell:
 ./npm-buid-alll.sh
 ```
 
+* If you want to build all your local component and run the test:
+
+```sh
+./npm-buid-alll.sh -test
+```
+
 * If you want clean all your local component and the demo shell:
 
 ```sh
