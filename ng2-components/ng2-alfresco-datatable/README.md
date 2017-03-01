@@ -103,7 +103,6 @@ Usage example of this component :
 **my.component.ts**
 
 ```ts
-
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -155,17 +154,14 @@ export class DataTableDemo {
     imports: [
         BrowserModule,
         CoreModule.forRoot(),
-        DataTableModule
+        DataTableModule.forRoot()
     ],
     declarations: [DataTableDemo],
     bootstrap: [DataTableDemo]
 })
-export class AppModule {
-}
+export class AppModule {}
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
-
 ```
 
 ![DataTable demo](docs/assets/datatable-demo.png)
@@ -179,6 +175,7 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `actions` | boolean | false | Toggles data actions column |
 | `actionsPosition` | string (left\|right) | right | Position of the actions dropdown menu. | 
 | `fallbackThumbnail` | string |  | Fallback image for row ehre thubnail is missing|
+| `contextMenu` | boolean | false | Toggles custom context menu for the component |
 
 ### Events
 

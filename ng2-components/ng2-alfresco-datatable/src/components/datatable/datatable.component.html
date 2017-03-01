@@ -67,7 +67,8 @@
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
             (click)="onRowClick(row, $event)"
             (dblclick)="onRowDblClick(row, $event)"
-            [context-menu]="getContextMenuActions(row, col)">
+            [context-menu]="getContextMenuActions(row, col)"
+            [context-menu-enabled]="contextMenu">
             <div *ngIf="!col.template">
                 <div *ngSwitchCase="'image'" class="cell-value">
                     <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>

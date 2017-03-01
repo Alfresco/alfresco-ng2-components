@@ -271,7 +271,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(e?: Event) {
-        if (e) {
+        if (e && this.contextMenuActions) {
             e.preventDefault();
         }
     }

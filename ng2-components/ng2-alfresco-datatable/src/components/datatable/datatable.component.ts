@@ -50,6 +50,9 @@ export class DataTableComponent implements OnInit {
     @Input()
     fallbackThumbnail: string;
 
+    @Input()
+    contextMenu: boolean = false;
+
     @Output()
     rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
