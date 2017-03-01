@@ -21,6 +21,7 @@ import { CoreModule } from 'ng2-alfresco-core';
 export * from './src/data/index';
 export * from './src/components/index';
 export * from './src/components/pagination/index';
+export * from './src/components/datatable/data-cell.event';
 
 import { DataTableComponent } from './src/components/datatable/datatable.component';
 import { NoContentTemplateComponent } from './src/components/datatable/no-content-template.component';

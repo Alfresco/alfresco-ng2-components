@@ -36,6 +36,7 @@ import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
 declare var module: any;
 
@@ -116,16 +117,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     node: NodePaging = null;
 
     @Output()
-    nodeClick: EventEmitter<any> = new EventEmitter();
+    nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
-    nodeDblClick: EventEmitter<any> = new EventEmitter();
+    nodeDblClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
-    folderChange: EventEmitter<any> = new EventEmitter();
+    folderChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
 
     @Output()
-    preview: EventEmitter<any> = new EventEmitter();
+    preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
     success: EventEmitter<any> = new EventEmitter();
@@ -231,7 +232,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         });
     }
 
-    isEmptyTemplateDefined() {
+    isEmptyTemplateDefined(): boolean {
         if (this.dataTable) {
             if (this.emptyFolderTemplate) {
                 return true;
@@ -278,12 +279,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     performNavigation(node: MinimalNodeEntity): boolean {
         if (node && node.entry && node.entry.isFolder) {
-
             this.currentFolderId = node.entry.id;
             this.folderNode = node.entry;
-
             this.loadFolder();
-            this.folderChange.emit({node: node.entry});
+            this.folderChange.emit(new NodeEntryEvent(node.entry));
             return true;
         }
         return false;
@@ -365,25 +364,24 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onPreviewFile(node: MinimalNodeEntity) {
         if (node) {
-            this.preview.emit({
-                value: node
-            });
+            this.preview.emit(new NodeEntityEvent(node));
         }
     }
 
     onNodeClick(node: MinimalNodeEntity) {
-        this.nodeClick.emit({
-            value: node
-        });
+        let event = new NodeEntityEvent(node);
+        this.nodeClick.emit(event);
 
-        if (this.navigate && this.navigationMode === DocumentListComponent.SINGLE_CLICK_NAVIGATION) {
-            if (node && node.entry) {
-                if (node.entry.isFile) {
-                    this.onPreviewFile(node);
-                }
+        if (!event.defaultPrevented) {
+            if (this.navigate && this.navigationMode === DocumentListComponent.SINGLE_CLICK_NAVIGATION) {
+                if (node && node.entry) {
+                    if (node.entry.isFile) {
+                        this.onPreviewFile(node);
+                    }
 
-                if (node.entry.isFolder) {
-                    this.performNavigation(node);
+                    if (node.entry.isFolder) {
+                        this.performNavigation(node);
+                    }
                 }
             }
         }
@@ -395,18 +393,19 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     onNodeDblClick(node: MinimalNodeEntity) {
-        this.nodeDblClick.emit({
-            value: node
-        });
+        let event = new NodeEntityEvent(node);
+        this.nodeDblClick.emit(event);
 
-        if (this.navigate && this.navigationMode === DocumentListComponent.DOUBLE_CLICK_NAVIGATION) {
-            if (node && node.entry) {
-                if (node.entry.isFile) {
-                    this.onPreviewFile(node);
-                }
+        if (!event.defaultPrevented) {
+            if (this.navigate && this.navigationMode === DocumentListComponent.DOUBLE_CLICK_NAVIGATION) {
+                if (node && node.entry) {
+                    if (node.entry.isFile) {
+                        this.onPreviewFile(node);
+                    }
 
-                if (node.entry.isFolder) {
-                    this.performNavigation(node);
+                    if (node.entry.isFolder) {
+                        this.performNavigation(node);
+                    }
                 }
             }
         }
@@ -455,17 +454,17 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.success.emit(event);
     }
 
-    public onChangePageSize(event: Pagination): void {
+    onChangePageSize(event: Pagination): void {
         this.pageSize = event.maxItems;
         this.reload();
     }
 
-    public onNextPage(event: Pagination): void {
+    onNextPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
     }
 
-    public onPrevPage(event: Pagination): void {
+    onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
     }
