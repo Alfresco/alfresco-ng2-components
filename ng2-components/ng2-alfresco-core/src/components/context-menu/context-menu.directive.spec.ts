@@ -26,6 +26,7 @@ describe('ContextMenuDirective', () => {
     beforeEach(() => {
         contextMenuService = new ContextMenuService();
         directive = new ContextMenuDirective(contextMenuService);
+        directive.enabled = true;
     });
 
     it('should show menu via service', (done) => {
