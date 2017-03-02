@@ -45,6 +45,8 @@ import { CONTEXT_MENU_PROVIDERS, CONTEXT_MENU_DIRECTIVES } from './src/component
 export * from './src/services/index';
 export * from './src/components/index';
 export * from './src/utils/index';
+export * from './src/events/base.event';
+export * from './src/events/base-ui.event';
 
 export const ALFRESCO_CORE_PROVIDERS: any[] = [
     NotificationService,

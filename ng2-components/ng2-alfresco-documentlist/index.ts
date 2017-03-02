@@ -34,6 +34,7 @@ import { DocumentListService } from './src/services/document-list.service';
 
 // components
 export * from './src/components/document-list.component';
+export * from './src/components/node.event';
 export * from './src/components/content-column/content-column.component';
 export * from './src/components/content-column/content-column-list.component';
 export * from './src/components/content-action/content-action.component';

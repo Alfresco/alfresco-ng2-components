@@ -265,7 +265,7 @@ describe('ActivitiProcessInstanceListComponent', () => {
         let row = new ObjectDataRow({
             id: 999
         });
-        let rowEvent = <DataRowEvent> {value: row};
+        let rowEvent = new DataRowEvent(row, null);
 
         component.rowClick.subscribe(taskId => {
             expect(taskId).toEqual(999);

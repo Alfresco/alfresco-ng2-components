@@ -464,7 +464,7 @@ describe('DocumentList', () => {
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
-        let event = <DataRowEvent> {value: row};
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
         documentList.onRowClick(event);
@@ -474,7 +474,7 @@ describe('DocumentList', () => {
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
-        let event = <DataRowEvent> {value: row};
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onRowDblClick(event);
