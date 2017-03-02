@@ -32,7 +32,7 @@ import {
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import { DataRowEvent, DataTableComponent, ObjectDataColumn, DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
@@ -416,9 +416,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.onNodeDblClick(item);
     }
 
-    onShowRowContextMenu(event) {
+    onShowRowContextMenu(event: DataCellEvent) {
         if (this.contextMenuActions) {
-            let args = event.args;
+            let args = event.value;
             let node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getContextActions(node) || [];
@@ -426,9 +426,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onShowRowActionsMenu(event) {
+    onShowRowActionsMenu(event: DataCellEvent) {
         if (this.contentActions) {
-            let args = event.args;
+            let args = event.value;
             let node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getNodeActions(node) || [];
@@ -436,9 +436,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onExecuteRowAction(event) {
+    onExecuteRowAction(event: DataRowActionEvent) {
         if (this.contentActions) {
-            let args = event.args;
+            let args = event.value;
             let node = (<ShareDataRow> args.row).node;
             let action = (<ContentActionModel> args.action);
             this.executeContentAction(node, action);

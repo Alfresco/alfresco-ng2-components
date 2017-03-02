@@ -16,27 +16,24 @@
  */
 
 import { BaseEvent } from 'ng2-alfresco-core';
-import { DataColumn, DataRow } from '../../data/datatable-adapter';
+import { DataRow } from '../../data/datatable-adapter';
 
-export class DataCellEvent extends BaseEvent<DataCellEventModel> {
+export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
 
-    constructor(row: DataRow, col: DataColumn, actions: any[]) {
+    constructor(row: DataRow, action: any) {
         super();
-        this.value = new DataCellEventModel(row, col, actions);
+        this.value = new DataRowActionModel(row, action);
     }
 
 }
 
-export class DataCellEventModel {
+export class DataRowActionModel {
 
-    readonly row: DataRow;
-    readonly col: DataColumn;
-    actions: any[];
+    row: DataRow;
+    action: any;
 
-    constructor(row: DataRow, col: DataColumn, actions: any[]) {
+    constructor(row: DataRow, action: any) {
         this.row = row;
-        this.col = col;
-        this.actions = actions || [];
+        this.action = action;
     }
-
 }

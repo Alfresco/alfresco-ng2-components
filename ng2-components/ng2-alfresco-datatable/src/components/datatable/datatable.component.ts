@@ -16,15 +16,9 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
-import {
-    DataTableAdapter,
-    DataRow,
-    DataColumn,
-    DataSorting,
-    DataRowEvent,
-    ObjectDataTableAdapter
-} from '../../data/index';
+import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter } from '../../data/index';
 import { DataCellEvent } from './data-cell.event';
+import { DataRowActionEvent } from './data-row-action.event';
 
 declare var componentHandler;
 
@@ -58,13 +52,13 @@ export class DataTableComponent implements OnInit {
     rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
     @Output()
-    showRowContextMenu: EventEmitter<DataCellEvent> = new EventEmitter();
+    showRowContextMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
 
     @Output()
-    showRowActionsMenu: EventEmitter<DataCellEvent> = new EventEmitter();
+    showRowActionsMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
 
     @Output()
-    executeRowAction: EventEmitter<any> = new EventEmitter();
+    executeRowAction: EventEmitter<DataRowActionEvent> = new EventEmitter<DataRowActionEvent>();
 
     noContentTemplate: TemplateRef<any>;
     isSelectAllChecked: boolean = false;
@@ -186,7 +180,6 @@ export class DataTableComponent implements OnInit {
     }
 
     onExecuteRowAction(row: DataRow, action: any) {
-        let args = { row: row, action: action };
-        this.executeRowAction.emit({ args: args });
+        this.executeRowAction.emit(new DataRowActionEvent(row, action));
     }
 }
