@@ -32,10 +32,11 @@ import {
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { DataRowEvent, DataTableComponent, ObjectDataColumn } from 'ng2-alfresco-datatable';
+import { DataRowEvent, DataTableComponent, ObjectDataColumn, DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
+import { NodeEntityEvent, NodeEntryEvent } from './node.event';
 
 declare var module: any;
 
@@ -116,16 +117,16 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     node: NodePaging = null;
 
     @Output()
-    nodeClick: EventEmitter<any> = new EventEmitter();
+    nodeClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
-    nodeDblClick: EventEmitter<any> = new EventEmitter();
+    nodeDblClick: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
-    folderChange: EventEmitter<any> = new EventEmitter();
+    folderChange: EventEmitter<NodeEntryEvent> = new EventEmitter<NodeEntryEvent>();
 
     @Output()
-    preview: EventEmitter<any> = new EventEmitter();
+    preview: EventEmitter<NodeEntityEvent> = new EventEmitter<NodeEntityEvent>();
 
     @Output()
     success: EventEmitter<any> = new EventEmitter();
@@ -231,7 +232,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         });
     }
 
-    isEmptyTemplateDefined() {
+    isEmptyTemplateDefined(): boolean {
         if (this.dataTable) {
             if (this.emptyFolderTemplate) {
                 return true;
@@ -278,12 +279,10 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     performNavigation(node: MinimalNodeEntity): boolean {
         if (node && node.entry && node.entry.isFolder) {
-
             this.currentFolderId = node.entry.id;
             this.folderNode = node.entry;
-
             this.loadFolder();
-            this.folderChange.emit({node: node.entry});
+            this.folderChange.emit(new NodeEntryEvent(node.entry));
             return true;
         }
         return false;
@@ -365,25 +364,24 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     onPreviewFile(node: MinimalNodeEntity) {
         if (node) {
-            this.preview.emit({
-                value: node
-            });
+            this.preview.emit(new NodeEntityEvent(node));
         }
     }
 
     onNodeClick(node: MinimalNodeEntity) {
-        this.nodeClick.emit({
-            value: node
-        });
+        let event = new NodeEntityEvent(node);
+        this.nodeClick.emit(event);
 
-        if (this.navigate && this.navigationMode === DocumentListComponent.SINGLE_CLICK_NAVIGATION) {
-            if (node && node.entry) {
-                if (node.entry.isFile) {
-                    this.onPreviewFile(node);
-                }
+        if (!event.defaultPrevented) {
+            if (this.navigate && this.navigationMode === DocumentListComponent.SINGLE_CLICK_NAVIGATION) {
+                if (node && node.entry) {
+                    if (node.entry.isFile) {
+                        this.onPreviewFile(node);
+                    }
 
-                if (node.entry.isFolder) {
-                    this.performNavigation(node);
+                    if (node.entry.isFolder) {
+                        this.performNavigation(node);
+                    }
                 }
             }
         }
@@ -395,18 +393,19 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     onNodeDblClick(node: MinimalNodeEntity) {
-        this.nodeDblClick.emit({
-            value: node
-        });
+        let event = new NodeEntityEvent(node);
+        this.nodeDblClick.emit(event);
 
-        if (this.navigate && this.navigationMode === DocumentListComponent.DOUBLE_CLICK_NAVIGATION) {
-            if (node && node.entry) {
-                if (node.entry.isFile) {
-                    this.onPreviewFile(node);
-                }
+        if (!event.defaultPrevented) {
+            if (this.navigate && this.navigationMode === DocumentListComponent.DOUBLE_CLICK_NAVIGATION) {
+                if (node && node.entry) {
+                    if (node.entry.isFile) {
+                        this.onPreviewFile(node);
+                    }
 
-                if (node.entry.isFolder) {
-                    this.performNavigation(node);
+                    if (node.entry.isFolder) {
+                        this.performNavigation(node);
+                    }
                 }
             }
         }
@@ -417,9 +416,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.onNodeDblClick(item);
     }
 
-    onShowRowContextMenu(event) {
+    onShowRowContextMenu(event: DataCellEvent) {
         if (this.contextMenuActions) {
-            let args = event.args;
+            let args = event.value;
             let node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getContextActions(node) || [];
@@ -427,9 +426,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onShowRowActionsMenu(event) {
+    onShowRowActionsMenu(event: DataCellEvent) {
         if (this.contentActions) {
-            let args = event.args;
+            let args = event.value;
             let node = (<ShareDataRow> args.row).node;
             if (node) {
                 args.actions = this.getNodeActions(node) || [];
@@ -437,9 +436,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         }
     }
 
-    onExecuteRowAction(event) {
+    onExecuteRowAction(event: DataRowActionEvent) {
         if (this.contentActions) {
-            let args = event.args;
+            let args = event.value;
             let node = (<ShareDataRow> args.row).node;
             let action = (<ContentActionModel> args.action);
             this.executeContentAction(node, action);
@@ -455,17 +454,17 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
         this.success.emit(event);
     }
 
-    public onChangePageSize(event: Pagination): void {
+    onChangePageSize(event: Pagination): void {
         this.pageSize = event.maxItems;
         this.reload();
     }
 
-    public onNextPage(event: Pagination): void {
+    onNextPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
     }
 
-    public onPrevPage(event: Pagination): void {
+    onPrevPage(event: Pagination): void {
         this.skipCount = event.skipCount;
         this.reload();
     }
