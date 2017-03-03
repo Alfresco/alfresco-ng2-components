@@ -25,7 +25,7 @@ import { AnalyticsComponent } from './src/components/analytics.component';
 import { AnalyticsGeneratorComponent } from './src/components/analytics-generator.component';
 import { AnalyticsReportHeatMapComponent } from './src/components/analytics-report-heat-map.component';
 import { AnalyticsService } from './src/services/analytics.service';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts';
 
 import { WIDGET_DIRECTIVES } from './src/components/widgets/index';
 
@@ -52,11 +52,11 @@ export const ANALYTICS_PROVIDERS: any[] = [
 @NgModule({
     imports: [
         CoreModule,
+        ChartsModule,
         DiagramsModule
     ],
     declarations: [
-        ...ANALYTICS_DIRECTIVES,
-        ...CHART_DIRECTIVES
+        ...ANALYTICS_DIRECTIVES
     ],
     providers: [
         ...ANALYTICS_PROVIDERS

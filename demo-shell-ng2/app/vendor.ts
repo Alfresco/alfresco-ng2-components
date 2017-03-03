@@ -9,7 +9,7 @@ import '@angular/router';
 // RxJS
 import 'rxjs';
 
-//Alfresco
+// Alfresco
 import 'ng2-alfresco-core';
 import 'ng2-alfresco-datatable';
 import 'ng2-activiti-diagrams';
@@ -42,6 +42,7 @@ import '@angular/material/core/theming/prebuilt/deeppurple-amber.css'
 import 'ng2-activiti-form/stencils/runtime.ng1';
 import 'ng2-activiti-form/stencils/runtime.adf';
 
+import 'ng2-charts';
 import 'chart.js';
 require('script!raphael/raphael.min.js');
 
