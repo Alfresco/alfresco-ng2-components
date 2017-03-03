@@ -217,9 +217,17 @@ describe('DocumentList', () => {
     });
 
     it('should suppress default context menu', () => {
+        documentList.contextMenuActions = true;
         spyOn(eventMock, 'preventDefault').and.stub();
         documentList.onShowContextMenu(eventMock);
         expect(eventMock.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should not suppress default context menu', () => {
+        documentList.contextMenuActions = false;
+        spyOn(eventMock, 'preventDefault').and.stub();
+        documentList.onShowContextMenu(eventMock);
+        expect(eventMock.preventDefault).not.toHaveBeenCalled();
     });
 
     it('should emit file preview event on single click', (done) => {
