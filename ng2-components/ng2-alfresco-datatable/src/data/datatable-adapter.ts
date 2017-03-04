@@ -16,6 +16,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
+import { BaseUIEvent } from 'ng2-alfresco-core';
 
 export interface DataTableAdapter {
     selectedRow: DataRow;
@@ -53,7 +54,12 @@ export class DataSorting {
     }
 }
 
-export interface DataRowEvent {
-    value?: DataRow;
-    event?: Event;
+export class DataRowEvent extends BaseUIEvent<DataRow> {
+
+    constructor(value: DataRow, domEvent: Event) {
+        super();
+        this.value = value;
+        this.event = domEvent;
+    }
+
 }

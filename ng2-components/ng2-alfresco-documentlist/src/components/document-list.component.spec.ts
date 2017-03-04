@@ -217,9 +217,17 @@ describe('DocumentList', () => {
     });
 
     it('should suppress default context menu', () => {
+        documentList.contextMenuActions = true;
         spyOn(eventMock, 'preventDefault').and.stub();
         documentList.onShowContextMenu(eventMock);
         expect(eventMock.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should not suppress default context menu', () => {
+        documentList.contextMenuActions = false;
+        spyOn(eventMock, 'preventDefault').and.stub();
+        documentList.onShowContextMenu(eventMock);
+        expect(eventMock.preventDefault).not.toHaveBeenCalled();
     });
 
     it('should emit file preview event on single click', (done) => {
@@ -464,7 +472,7 @@ describe('DocumentList', () => {
     it('should emit [nodeClick] event on row click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
-        let event = <DataRowEvent> {value: row};
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeClick').and.callThrough();
         documentList.onRowClick(event);
@@ -474,7 +482,7 @@ describe('DocumentList', () => {
     it('should emit [nodeDblClick] event on row double-click', () => {
         let node = new NodeMinimalEntry();
         let row = new ShareDataRow(node);
-        let event = <DataRowEvent> {value: row};
+        let event = new DataRowEvent(row, null);
 
         spyOn(documentList, 'onNodeDblClick').and.callThrough();
         documentList.onRowDblClick(event);

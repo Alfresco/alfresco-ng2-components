@@ -183,7 +183,7 @@ gulp.task('build.bundles.app', (done) => {
             'ng2-alfresco-userinfo': 'node_modules/ng2-alfresco-userinfo/',
             'ng2-alfresco-viewer': 'node_modules/ng2-alfresco-viewer/',
             'ng2-alfresco-webscript': 'node_modules/ng2-alfresco-webscript/',
-            'ng2-charts': 'node_modules/ng2-charts',
+            'ng2-charts': 'node_modules/ng2-charts/bundles/ng2-charts.umd',
             'moment': 'node_modules/moment/min/moment.min'
 
         },

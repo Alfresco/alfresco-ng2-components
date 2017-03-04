@@ -25,18 +25,23 @@ export class ContextMenuDirective {
     @Input('context-menu')
     links: any[];
 
+    @Input('context-menu-enabled')
+    enabled: boolean = false;
+
     constructor(private _contextMenuService: ContextMenuService) {
     }
 
     @HostListener('contextmenu', ['$event'])
     onShowContextMenu(event?: MouseEvent) {
-        if (event) {
-            event.preventDefault();
-        }
+        if (this.enabled) {
+            if (event) {
+                event.preventDefault();
+            }
 
-        if (this.links && this.links.length > 0) {
-            if (this._contextMenuService) {
-                this._contextMenuService.show.next({event: event, obj: this.links});
+            if (this.links && this.links.length > 0) {
+                if (this._contextMenuService) {
+                    this._contextMenuService.show.next({event: event, obj: this.links});
+                }
             }
         }
     }

@@ -18,7 +18,7 @@
 import { Component, DebugElement, EventEmitter, Input, Output, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataTableAdapter, ObjectDataRow } from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter, DataTableAdapter, ObjectDataRow, DataCellEvent } from 'ng2-alfresco-datatable';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
 import { ActivitiProcessService } from './../services/activiti-process.service';
 
@@ -265,13 +265,10 @@ export class ActivitiProcessInstanceVariables implements OnInit, OnChanges {
         }
     }
 
-    onShowRowActionsMenu(event) {
-        event.args.actions = [{
-            id: 'delete',
-            title: 'Delete'
-        }, {
-            id: 'edit',
-            title: 'Edit'
-        }];
+    onShowRowActionsMenu(event: DataCellEvent) {
+        event.value.actions = [
+            { id: 'delete', title: 'Delete' },
+            { id: 'edit', title: 'Edit' }
+        ];
     }
 }

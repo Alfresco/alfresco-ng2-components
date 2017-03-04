@@ -21,6 +21,7 @@ import { DataTableModule } from 'ng2-alfresco-datatable';
 import { ActivitiFormModule } from 'ng2-activiti-form';
 import { ActivitiPeopleService } from './src/services/activiti-people.service';
 import { ActivitiTaskListService } from './src/services/activiti-tasklist.service';
+import { MaterialModule } from '@angular/material';
 
 import {
     ActivitiApps,
@@ -63,7 +64,8 @@ export const ACTIVITI_TASKLIST_PROVIDERS: any[] = [
     imports: [
         CoreModule,
         DataTableModule,
-        ActivitiFormModule
+        ActivitiFormModule,
+        MaterialModule
     ],
     declarations: [
         ...ACTIVITI_TASKLIST_DIRECTIVES

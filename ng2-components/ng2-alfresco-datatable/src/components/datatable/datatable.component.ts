@@ -16,14 +16,9 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
-import {
-    DataTableAdapter,
-    DataRow,
-    DataColumn,
-    DataSorting,
-    DataRowEvent,
-    ObjectDataTableAdapter
-} from '../../data/index';
+import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter } from '../../data/index';
+import { DataCellEvent } from './data-cell.event';
+import { DataRowActionEvent } from './data-row-action.event';
 
 declare var componentHandler;
 
@@ -50,6 +45,9 @@ export class DataTableComponent implements OnInit {
     @Input()
     fallbackThumbnail: string;
 
+    @Input()
+    contextMenu: boolean = false;
+
     @Output()
     rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
@@ -57,13 +55,13 @@ export class DataTableComponent implements OnInit {
     rowDblClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
     @Output()
-    showRowContextMenu: EventEmitter<any> = new EventEmitter();
+    showRowContextMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
 
     @Output()
-    showRowActionsMenu: EventEmitter<any> = new EventEmitter();
+    showRowActionsMenu: EventEmitter<DataCellEvent> = new EventEmitter<DataCellEvent>();
 
     @Output()
-    executeRowAction: EventEmitter<any> = new EventEmitter();
+    executeRowAction: EventEmitter<DataRowActionEvent> = new EventEmitter<DataRowActionEvent>();
 
     noContentTemplate: TemplateRef<any>;
     isSelectAllChecked: boolean = false;
@@ -92,10 +90,7 @@ export class DataTableComponent implements OnInit {
             this.data.selectedRow = row;
         }
 
-        this.rowClick.emit({
-            value: row,
-            event: e
-        });
+        this.rowClick.emit(new DataRowEvent(row, e));
     }
 
     onRowDblClick(row: DataRow, e?: Event) {
@@ -103,10 +98,7 @@ export class DataTableComponent implements OnInit {
             e.preventDefault();
         }
 
-        this.rowDblClick.emit({
-            value: row,
-            event: e
-        });
+        this.rowDblClick.emit(new DataRowEvent(row, e));
     }
 
     onColumnHeaderClick(column: DataColumn) {
@@ -150,7 +142,7 @@ export class DataTableComponent implements OnInit {
         }
     }
 
-    isIconValue(row: DataRow, col: DataColumn) {
+    isIconValue(row: DataRow, col: DataColumn): boolean {
         if (row && col) {
             let value = row.getValue(col.key);
             return value && value.startsWith('material-icons://');
@@ -158,7 +150,7 @@ export class DataTableComponent implements OnInit {
         return false;
     }
 
-    asIconValue(row: DataRow, col: DataColumn) {
+    asIconValue(row: DataRow, col: DataColumn): string {
         if (this.isIconValue(row, col)) {
             let value = row.getValue(col.key) || '';
             return value.replace('material-icons://', '');
@@ -166,11 +158,11 @@ export class DataTableComponent implements OnInit {
         return null;
     }
 
-    iconAltTextKey(value: string) {
+    iconAltTextKey(value: string): string {
         return 'ICONS.' + value.substring(value.lastIndexOf('/') + 1).replace(/\.[a-z]+/, '');
     }
 
-    isColumnSorted(col: DataColumn, direction: string) {
+    isColumnSorted(col: DataColumn, direction: string): boolean {
         if (col && direction) {
             let sorting = this.data.getSorting();
             return sorting && sorting.key === col.key && sorting.direction === direction;
@@ -178,20 +170,19 @@ export class DataTableComponent implements OnInit {
         return false;
     }
 
-    getContextMenuActions(row: DataRow, col: DataColumn) {
-        let args = { row: row, col: col, actions: [] };
-        this.showRowContextMenu.emit({ args: args });
-        return args.actions;
+    getContextMenuActions(row: DataRow, col: DataColumn): any[] {
+        let event = new DataCellEvent(row, col, []);
+        this.showRowContextMenu.emit(event);
+        return event.value.actions;
     }
 
-    getRowActions(row: DataRow, col: DataColumn) {
-        let args = { row: row, col: col, actions: [] };
-        this.showRowActionsMenu.emit({ args: args });
-        return args.actions;
+    getRowActions(row: DataRow, col: DataColumn): any[] {
+        let event = new DataCellEvent(row, col, []);
+        this.showRowActionsMenu.emit(event);
+        return event.value.actions;
     }
 
     onExecuteRowAction(row: DataRow, action: any) {
-        let args = { row: row, action: action };
-        this.executeRowAction.emit({ args: args });
+        this.executeRowAction.emit(new DataRowActionEvent(row, action));
     }
 }

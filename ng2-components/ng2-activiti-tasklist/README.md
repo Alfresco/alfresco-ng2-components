@@ -117,8 +117,8 @@ This component renders a list containing all the tasks matched by the parameters
 Usage example of this component :
 
 **main.ts**
-```ts
 
+```ts
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -129,34 +129,35 @@ import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<activiti-tasklist [appId]="appId" [state]="state" [assignment]="assignment" [data]="dataTasks"></activiti-tasklist>`
+    template: `
+        <activiti-tasklist 
+            [appId]="appId" 
+            [state]="state" 
+            [assignment]="assignment" 
+            [data]="dataTasks">
+        </activiti-tasklist>
+    `
 })
 class MyDemoApp {
 
     dataTasks: ObjectDataTableAdapter;
-
     appId: string = '1';
-
     assignment: string = 'assignee';
-
     state: string = 'open';
 
-    constructor(private authService: AlfrescoAuthenticationService, private settingsService: AlfrescoSettingsService) {
+    constructor(private authService: AlfrescoAuthenticationService, 
+                private settingsService: AlfrescoSettingsService) {
         settingsService.bpmHost = 'http://localhost:9999';
 
         this.authService.login('admin', 'admin').subscribe(
-            ticket => {
-                console.log(ticket);
-            },
-            error => {
-                console.log(error);
-            });
+            ticket => console.log(ticket),
+            error => console.log(error)
+        );
 
         this.dataTasks = new ObjectDataTableAdapter([], [
-                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
-            ]
-        );
+            {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
+            {type: 'text', key: 'started', title: 'Started', cssClass: 'hidden', sortable: true}
+        ]);
         this.dataTasks.setSorting(new DataSorting('started', 'desc'));
     }
 }
@@ -170,12 +171,9 @@ class MyDemoApp {
     declarations: [MyDemoApp],
     bootstrap: [MyDemoApp]
 })
-export class AppModule {
-}
+export class AppModule {}
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-
-
 ```
 
 #### Events
@@ -216,6 +214,24 @@ The component shows the details of the task id passed in input
 <activiti-task-details [taskId]="taskId"></activiti-task-details>
 ```
 
+#### Properties
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `taskId` | string | | (**required**) The id of the task details that we are asking for. |
+| `showNextTask` | boolean | true | Automatically render the next one, when the task is completed. |
+| `showFormTitle` | boolean | true | Toggle rendering of the form title. |
+| `readOnlyForm` | boolean | false | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
+| `showFormRefreshButton` | true | optional | Toggle rendering of the `Refresh` button. |
+| `showFormSaveButton` | true | optional | Toggle rendering of the `Save` outcome button. |
+| `showFormCompleteButton` | true | optional | Toggle rendering of the Form `Complete` outcome button |
+| `peopleIconImageUrl` | string | | Define a custom people icon image |
+| `showHeader` | boolean | true | Toggle task details Header component |
+| `showHeaderContent` | boolean | true | Toggle collapsed/expanded state of the Header component |
+| `showInvolvePeople` | boolean | true | Toggle `Involve People` feature for Header component |
+| `showComments` | boolean | true | Toggle `Comments` feature for Header component |
+| `showChecklist` | boolean | true | Toggle `Checklist` feature for Header component |
+
 #### Events
 
 | Name | Description |
@@ -227,25 +243,13 @@ The component shows the details of the task id passed in input
 | `executeOutcome` | Invoked when any outcome is executed, default behaviour can be prevented via `event.preventDefault()` |
 | `onError` | Invoked at any error |
 
-#### Options
-
-| Name | Type | Required | Description |
-| --- | --- | --- | --- |
-| `taskId` | {string} | required | The id of the task details that we are asking for. |
-| `showNextTask` | {boolean} | optional | Automatically render the next one, when the task is completed. |
-| `showFormTitle` | {boolean} | optional | Toggle rendering of the form title. |
-| `readOnlyForm` | {boolean} | optional | Toggle readonly state of the form. Enforces all form widgets render readonly if enabled. |
-| `showFormRefreshButton` | {boolean} | optional | Toggle rendering of the `Refresh` button. |
-| `showFormSaveButton` | {boolean} | optional | Toggle rendering of the `Save` outcome button. |
-| `showFormCompleteButton` | {boolean} | optional | Toggle rendering of the Form `Complete` outcome button |
-| `peopleIconImageUrl` | {string} | optional | Define a custom people icon image |
-
 ### Custom 'empty Activiti Task Details' template
 
 By default the Activiti Task Details provides the following message for the empty task details:
 
-'No Tasks'
-
+```
+No Tasks
+```
 
 This can be changed by adding the following custom html template:
 
@@ -259,6 +263,8 @@ This can be changed by adding the following custom html template:
     </no-task-details-template>
 </activiti-task-details>    
 ```
+
+Note that can put any HTML content as part of the template, includuing other Angualr components.
 
 ## Basic usage example Activiti Apps
 

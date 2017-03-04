@@ -18,7 +18,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { CHART_DIRECTIVES } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts';
 import { CoreModule, AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { DiagramsModule } from 'ng2-activiti-diagrams';
 
@@ -59,11 +59,11 @@ describe('AnalyticsGeneratorComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 CoreModule.forRoot(),
+                ChartsModule,
                 DiagramsModule.forRoot()
             ],
             declarations: [
-                ...ANALYTICS_DIRECTIVES,
-                ...CHART_DIRECTIVES
+                ...ANALYTICS_DIRECTIVES
             ],
             providers: [
                 ...ANALYTICS_PROVIDERS
