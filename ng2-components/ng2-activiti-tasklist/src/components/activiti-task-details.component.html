@@ -1,6 +1,5 @@
 <div *ngIf="!taskDetails">
-    <template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]"
-              [ngForTemplate]="noTaskDetailsTemplateComponent">
+    <template *ngIf="noTaskDetailsTemplateComponent" ngFor [ngForOf]="[data]" [ngForTemplate]="noTaskDetailsTemplateComponent">
         {{ 'TASK_DETAILS.MESSAGES.NONE' | translate }}
     </template>
     <div *ngIf="!noTaskDetailsTemplateComponent">
@@ -8,44 +7,61 @@
     </div>
 </div>
 <div *ngIf="taskDetails">
-    <h2 class="mdl-card__title-text">{{taskDetails.name}}</h2>
-    <activiti-task-header
+    <div *ngIf="showHeader">
+        <h2 class="activiti-task-details__header" (click)="toggleHeaderContent()">
+            <md-icon *ngIf="!showHeaderContent">expand_more</md-icon>
+            <md-icon *ngIf="showHeaderContent">expand_less</md-icon>
+            <span>{{taskDetails.name || 'No name'}}</span>
+        </h2>
+        <activiti-task-header *ngIf="showHeaderContent"
             [taskDetails]="taskDetails"
             [formName]="taskFormName"
-            (claim)="onClaimTask($event)"></activiti-task-header>
-    <div class="mdl-grid">
-        <div class="mdl-cell mdl-cell--4-col">
-            <activiti-people [iconImageUrl]="peopleIconImageUrl" [people]="taskPeople" [readOnly]="readOnlyForm"
-                             [taskId]="taskDetails.id"></activiti-people>
-        </div>
-        <div class="mdl-cell mdl-cell--4-col">
-            <activiti-comments [readOnly]="readOnlyForm" [taskId]="taskDetails.id"
-                               #activiticomments></activiti-comments>
-        </div>
-        <div class="mdl-cell mdl-cell--4-col">
-            <activiti-checklist [readOnly]="readOnlyForm" [taskId]="taskDetails.id" [assignee]="taskDetails?.assignee?.id"
-                                (checklistTaskCreated)="onChecklistTaskCreated($event)" #activitichecklist></activiti-checklist>
+            (claim)="onClaimTask($event)">
+        </activiti-task-header>
+        <div *ngIf="showHeaderContent" class="mdl-grid">
+            <div *ngIf="showInvolvePeople" class="mdl-cell mdl-cell--4-col">
+                <activiti-people
+                    [iconImageUrl]="peopleIconImageUrl"
+                    [people]="taskPeople"
+                    [readOnly]="readOnlyForm"
+                    [taskId]="taskDetails.id">
+                </activiti-people>
+            </div>
+            <div *ngIf="showComments" class="mdl-cell mdl-cell--4-col">
+                <activiti-comments #activiticomments
+                    [readOnly]="readOnlyForm"
+                    [taskId]="taskDetails.id">
+                </activiti-comments>
+            </div>
+            <div *ngIf="showChecklist" class="mdl-cell mdl-cell--4-col">
+                <activiti-checklist #activitichecklist
+                    [readOnly]="readOnlyForm"
+                    [taskId]="taskDetails.id"
+                    [assignee]="taskDetails?.assignee?.id"
+                    (checklistTaskCreated)="onChecklistTaskCreated($event)">
+                </activiti-checklist>
+            </div>
         </div>
     </div>
     <div *ngIf="isAssignedToMe()">
-        <activiti-form *ngIf="hasFormKey()" [taskId]="taskDetails.id"
-                       [showTitle]="showFormTitle"
-                       [showRefreshButton]="showFormRefreshButton"
-                       [showCompleteButton]="showFormCompleteButton"
-                       [showSaveButton]="showFormSaveButton"
-                       [readOnly]="readOnlyForm"
-                       (formSaved)='onFormSaved($event)'
-                       (formCompleted)='onFormCompleted($event)'
-                       (formLoaded)='onFormLoaded($event)'
-                       (onError)='onFormError($event)'
-                       (executeOutcome)='onFormExecuteOutcome($event)'
-                       #activitiForm>
+        <activiti-form *ngIf="hasFormKey()" #activitiForm
+            [taskId]="taskDetails.id"
+            [showTitle]="showFormTitle"
+            [showRefreshButton]="showFormRefreshButton"
+            [showCompleteButton]="showFormCompleteButton"
+            [showSaveButton]="showFormSaveButton"
+            [readOnly]="readOnlyForm"
+            (formSaved)='onFormSaved($event)'
+            (formCompleted)='onFormCompleted($event)'
+            (formLoaded)='onFormLoaded($event)'
+            (onError)='onFormError($event)'
+            (executeOutcome)='onFormExecuteOutcome($event)'>
         </activiti-form>
     </div>
     <div *ngIf="!isAssignedToMe()">
         {{ 'TASK_DETAILS.MESSAGES.CLAIM' | translate }}
     </div>
-    <button type="button" class="mdl-button" *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
+    <button md-raised-button class="activiti-task-details__action-button" *ngIf="!hasFormKey() && isTaskActive()" (click)="onComplete()">
         {{ 'TASK_DETAILS.BUTTON.COMPLETE' | translate }}
     </button>
     <dialog class="mdl-dialog error-dialog" #errorDialog>
