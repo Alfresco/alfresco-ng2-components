@@ -47,6 +47,21 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     showNextTask: boolean = true;
 
     @Input()
+    showHeader: boolean = true;
+
+    @Input()
+    showHeaderContent: boolean = true;
+
+    @Input()
+    showInvolvePeople: boolean = true;
+
+    @Input()
+    showComments: boolean = true;
+
+    @Input()
+    showChecklist: boolean = true;
+
+    @Input()
     showFormTitle: boolean = true;
 
     @Input()
@@ -249,5 +264,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     onClaimTask(taskId: string) {
         this.loadDetails(taskId);
+    }
+
+    toggleHeaderContent() {
+        this.showHeaderContent = !this.showHeaderContent;
     }
 }

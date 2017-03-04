@@ -41,11 +41,11 @@
                                            #activititasklist></activiti-tasklist>
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
-                        <span><h5>Task Details</h5></span>
-                        <hr>
-                        <activiti-task-details [taskId]="currentTaskId" (formCompleted)="onFormCompleted($event)"
-                                               (taskCreated)="onTaskCreated($event)"
-                                               #activitidetails></activiti-task-details>
+                        <activiti-task-details #activitidetails
+                            [taskId]="currentTaskId"
+                            (formCompleted)="onFormCompleted($event)"
+                            (taskCreated)="onTaskCreated($event)">
+                        </activiti-task-details>
                     </div>
                 </div>
             </div>
