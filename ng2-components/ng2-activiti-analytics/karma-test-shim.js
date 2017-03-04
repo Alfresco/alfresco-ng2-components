@@ -61,7 +61,7 @@ var map = {
     // other libraries
     'rxjs': 'npm:rxjs',
     'ng2-translate': 'npm:ng2-translate',
-    'ng2-charts' : 'npm:ng2-charts',
+    'ng2-charts': 'npm:ng2-charts/bundles/ng2-charts.umd.js',
     'md-date-time-picker' : 'npm:md-date-time-picker',
     'moment' : 'npm:moment/min/moment.min.js',
 
@@ -74,7 +74,6 @@ var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
     'rxjs': {  defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
-    'ng2-charts': { defaultExtension: 'js' },
     'md-date-time-picker': { defaultExtension: 'js' },
     'moment': { defaultExtension: 'js' },
 

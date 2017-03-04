@@ -36,6 +36,7 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 import { Editor3DModule } from 'ng2-3d-editor';
+import { ChartsModule } from 'ng2-charts';
 
 import {
     HomeComponent,
@@ -73,7 +74,8 @@ import {
         UserInfoComponentModule.forRoot(),
         AnalyticsModule.forRoot(),
         CustomEditorsModule,
-        Editor3DModule.forRoot()
+        Editor3DModule.forRoot(),
+        ChartsModule
     ],
     declarations: [
         AppComponent,
