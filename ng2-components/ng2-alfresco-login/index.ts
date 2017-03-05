@@ -17,6 +17,7 @@
 
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CoreModule } from 'ng2-alfresco-core';
+import { MaterialModule } from '@angular/material';
 
 import { LoginHeaderDirective } from './src/directives/login-header.directive';
 import { LoginFooterDirective } from './src/directives/login-footer.directive';
@@ -35,7 +36,8 @@ export const ALFRESCO_LOGIN_DIRECTIVES: any[] = [
 
 @NgModule({
     imports: [
-        CoreModule
+        CoreModule,
+        MaterialModule
     ],
     declarations: [
         ...ALFRESCO_LOGIN_DIRECTIVES

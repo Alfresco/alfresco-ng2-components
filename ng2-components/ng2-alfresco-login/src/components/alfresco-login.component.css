@@ -192,11 +192,32 @@
     padding-right: 25px;
 }
 
-.alfresco-login__password .icon-inline {
-    left: 90%;
+.alfresco-login__password-icon {
+    float: right;
+    margin-right: -24px;
+    cursor: pointer;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .alfresco-login__container {
     background-size: cover;
     background-position: center;
+}
+
+.alfresco-login__validation {
+    background-color: transparent;
+    color: red;
+    font-size: 12px;
+}
+
+.alfresco-login__error {
+    color: #d50000;
+    position: absolute;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
 }

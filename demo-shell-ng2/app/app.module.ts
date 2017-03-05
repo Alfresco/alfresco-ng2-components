@@ -36,6 +36,7 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routes';
 import { CustomEditorsModule } from './components/activiti/custom-editor/custom-editor.component';
 import { Editor3DModule } from 'ng2-3d-editor';
+import { MaterialModule } from '@angular/material';
 import { ChartsModule } from 'ng2-charts';
 
 import {
@@ -59,6 +60,7 @@ import {
     imports: [
         BrowserModule,
         routing,
+        MaterialModule.forRoot(),
         CoreModule.forRoot(),
         LoginModule.forRoot(),
         SearchModule.forRoot(),
