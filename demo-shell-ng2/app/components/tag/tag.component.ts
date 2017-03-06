@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
                 <input id="nodeId" type="text" size="48"  [(ngModel)]="nodeId"><br>
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--4-col"><alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list></div>
-              <div class="mdl-cell mdl-cell--4-col">List Tags ECM <alfresco-tag-list></alfresco-tag-list></div>
+              <div class="mdl-cell mdl-cell--4-col">List Tags Content Services <alfresco-tag-list></alfresco-tag-list></div>
               <div class="mdl-cell mdl-cell--4-col">
                     Tag list By Node ID 
                     <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
