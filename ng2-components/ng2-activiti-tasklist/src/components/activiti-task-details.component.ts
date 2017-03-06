@@ -20,7 +20,7 @@ import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskDetailsModel } from '../models/task-details.model';
 import { User } from '../models/user.model';
-import { FormService, FormModel, FormOutcomeEvent } from 'ng2-activiti-form';
+import { FormService, FormModel, FormOutcomeEvent, ContentLinkModel } from 'ng2-activiti-form';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
 @Component({
@@ -86,6 +86,9 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
 
     @Output()
     formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
+
+    @Output()
+    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
 
     @Output()
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
@@ -226,6 +229,10 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
         this.activitiTaskList.completeTask(this.taskId).subscribe(
             (res) => this.onFormCompleted(null)
         );
+    }
+
+    onFormContentClick(content: ContentLinkModel) {
+        this.formContentClicked.emit(content);
     }
 
     onFormSaved(form: FormModel) {

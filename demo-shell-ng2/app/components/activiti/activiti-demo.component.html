@@ -55,6 +55,7 @@
                         <activiti-task-details #activitidetails
                             [taskId]="currentTaskId"
                             (formCompleted)="onFormCompleted($event)"
+                            (formContentClicked)="onFormContentClick($event)"
                             (taskCreated)="onTaskCreated($event)">
                         </activiti-task-details>
                     </div>
