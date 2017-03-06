@@ -55,7 +55,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     baseComponentPath = module.id.replace('/components/document-list.component.js', '');
 
     @Input()
-    fallbackThumbnail: string = this.baseComponentPath + '/assets/images/ft_ic_miscellaneous.svg';
+    fallbackThumbnail: string = this.baseComponentPath + 'assets/images/ft_ic_miscellaneous.svg';
 
     @Input()
     navigate: boolean = true;
@@ -86,6 +86,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
 
     @Input()
     pageSize: number = DocumentListComponent.DEFAULT_PAGE_SIZE;
+
+    @Input()
+    emptyFolderImageUrl: string = this.baseComponentPath + 'assets/images/empty_doc_lib.svg';
 
     skipCount: number = 0;
 

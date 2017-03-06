@@ -26,7 +26,7 @@ describe('ShareDataTableAdapter', () => {
     let documentListService: DocumentListServiceMock;
 
     beforeEach(() => {
-        basePath = '/root';
+        basePath = '/root/';
         documentListService = new DocumentListServiceMock();
     });
 
@@ -219,7 +219,7 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe(`${basePath}assets/images/ft_ic_miscellaneous.svg`);
     });
 
     it('should generate fallback icon for a file thumbnail with missing mime type', () => {
@@ -232,7 +232,7 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe(`${basePath}assets/images/ft_ic_miscellaneous.svg`);
     });
 
     it('should generate fallback icon for a file with no content entry', () => {
@@ -245,7 +245,7 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe(`${basePath}assets/images/ft_ic_miscellaneous.svg`);
     });
 
     it('should generate fallback icon when document service fails to find one', () => {
@@ -257,7 +257,7 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe(`${basePath}assets/images/ft_ic_miscellaneous.svg`);
     });
 
     it('should return image value unmodified', () => {
@@ -281,7 +281,7 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_folder.svg`);
+        expect(value).toBe(`${basePath}assets/images/ft_ic_folder.svg`);
     });
 
     it('should resolve file thumbnail', () => {
@@ -311,7 +311,7 @@ describe('ShareDataTableAdapter', () => {
         let col = <DataColumn> { type: 'image', key: '$thumbnail' };
 
         let value = adapter.getValue(row, col);
-        expect(value).toBe(`${basePath}/assets/images/ft_ic_miscellaneous.svg`);
+        expect(value).toBe(`${basePath}assets/images/ft_ic_miscellaneous.svg`);
     });
 
     it('should require document service to resolve thumbnail', () => {
@@ -351,10 +351,10 @@ describe('ShareDataTableAdapter', () => {
         let row = new ShareDataRow(file);
         let col = <DataColumn> {type: 'image', key: '$thumbnail'};
 
-        let adapter = new ShareDataTableAdapter(documentListService, '/root', null);
+        let adapter = new ShareDataTableAdapter(documentListService, basePath, null);
         let value = adapter.getValue(row, col);
 
-        expect(value).toBe(`/root/assets/images/${fileName}`);
+        expect(value).toBe(`${basePath}assets/images/${fileName}`);
         expect(documentListService.getMimeTypeIcon).toHaveBeenCalled();
     });
 
