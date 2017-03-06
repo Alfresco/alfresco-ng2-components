@@ -456,7 +456,7 @@ describe('FormService', () => {
         expect(contentRawUrl).toEqual(`${bpmCli.basePath}/api/enterprise/content/${contentId}/raw`);
     });
 
-    fit('should return a Blob as thumbnail', (done) => {
+    it('should return a Blob as thumbnail', (done) => {
         let contentId: number = 999;
 
         let blob = createFakeBlob();
