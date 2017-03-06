@@ -40,15 +40,15 @@ module.exports = webpackMerge(commonConfig, {
 
     // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
     // Minify all javascript, switch loaders to minimizing mode
-    // new webpack.optimize.UglifyJsPlugin({
-    //   mangle: {
-    //     keep_fnames: true
-    //   },
-    //   compressor: {
-    //     screw_ie8: true,
-    //     warnings: false
-    //   }
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      mangle: {
+        keep_fnames: true
+      },
+      compressor: {
+        screw_ie8: true,
+        warnings: false
+      }
+    }),
 
     // Extract css files
     // Reference: https://github.com/webpack/extract-text-webpack-plugin
