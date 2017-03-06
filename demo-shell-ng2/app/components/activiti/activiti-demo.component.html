@@ -142,3 +142,10 @@
 
     </main>
 </div>
+
+<div *ngIf="fileShowed">
+    <alfresco-viewer [(showViewer)]="fileShowed"
+                     [urlFile]="content.thumbnailUrl"
+                     [overlayMode]="true">
+    </alfresco-viewer>
+</div>

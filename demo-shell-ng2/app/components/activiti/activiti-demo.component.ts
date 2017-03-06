@@ -78,6 +78,10 @@ export class ActivitiDemoComponent implements AfterViewInit {
     @Input()
     appId: number = null;
 
+    fileShowed: boolean = false;
+
+    content: any;
+
     layoutType: string;
     currentTaskId: string;
     currentProcessInstanceId: string;
@@ -125,6 +129,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
+        });
+
+        formService.formContentClicked.subscribe((content: any) => {
+            this.fileShowed = true;
+            this.content = content;
         });
     }
 

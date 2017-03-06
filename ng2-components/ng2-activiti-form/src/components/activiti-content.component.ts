@@ -96,6 +96,7 @@ export class ActivitiContent implements OnChanges {
     openViewer(content: ContentLinkModel): void {
         this.contentClick.emit(content);
         this.logService.info('Content clicked' + content.id);
+        this.formService.formContentClicked.next(content);
     }
 
     /**
