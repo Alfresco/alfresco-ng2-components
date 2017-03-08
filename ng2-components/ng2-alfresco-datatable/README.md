@@ -286,27 +286,6 @@ Requires `actions` property to be set to `true`._
 Note that DataTable itself does not populate action menu items,
 you can provide all necessary content via handler.
 
-Event properties:
-
-```ts
-args: {
-    row: DataRow,
-    col: DataColumn,
-    actions: []
-}
-```
-
-Handler example:
-
-```ts
-onShowRowActionsMenu(event) {
-    event.args.actions = [
-        { ... },
-        { ... }
-    ]
-}
-```
-
 #### executeRowAction event
 
 _Emitted when row action is executed by user._
@@ -317,28 +296,47 @@ integration. If there were actions provided with `showRowActionsMenu` event
 then `executeRowAction` will be automatically executed when user clicks 
 corresponding menu item.
 
-Event properties:
+```html
+<alfresco-datatable
+    [data]="data"
+    [multiselect]="multiselect"
+    [actions]="true"
+    (showRowActionsMenu)="onShowRowActionsMenu($event)"
+    (executeRowAction)="onExecuteRowAction($event)">
+</alfresco-datatable>
+```
 
 ```ts
-args: {
-    row: DataRow
-    action: any
+import { DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
+
+onShowRowActionsMenu(event: DataCellEvent) {
+    let myAction = {
+        title: 'Hello'
+        // your custom metadata needed for onExecuteRowAction
+    };
+    event.value.actions = [
+        myAction
+    ];
+}
+
+onExecuteRowAction(event: DataRowActionEvent) {
+    let args = event.value;
+    console.log(args.row);
+    console.log(args.action);
+    window.alert(`My custom action: ${args.action.title}`);
 }
 ```
 
-Handler example:
+![](docs/assets/datatable-actions-ui.png)
 
-```ts
-onExecuteRowAction(event) {
-    
-    // get event arguments
-    let row = event.args.row;
-    let action = event.args.action;
-    
-    // your code to execute action
-    this.executeContentAction(row, action);
-}
-```
+![](docs/assets/datatable-actions-console.png)
+
+Developers are allowed putting any payloads as row actions.
+The only requirement for the objects is having `title` property.
+
+Once corresponding action is clicked in the dropdown menu DataTable invokes `executeRowAction` event
+where you can handle the process, inspect the action payload and all custom properties defined earlier,
+and do corresponding actions.
 
 ## Data sources
 
