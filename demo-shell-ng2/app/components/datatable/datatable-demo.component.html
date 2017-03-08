@@ -1,5 +1,11 @@
 <div class="p-10">
-    <alfresco-datatable [data]="data" [multiselect]="multiselect"></alfresco-datatable>
+    <alfresco-datatable
+        [data]="data"
+        [multiselect]="multiselect"
+        [actions]="true"
+        (showRowActionsMenu)="onShowRowActionsMenu($event)"
+        (executeRowAction)="onExecuteRowAction($event)">
+    </alfresco-datatable>
 </div>
 <div class="p-10">
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
