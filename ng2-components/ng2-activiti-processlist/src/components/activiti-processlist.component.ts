@@ -152,12 +152,7 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     private createDataRow(instances: any[]): ObjectDataRow[] {
         let instancesRows: ObjectDataRow[] = [];
         instances.forEach((row) => {
-            instancesRows.push(new ObjectDataRow({
-                id: row.id,
-                name: row.name,
-                started: row.started,
-                processDefinitionName: row.processDefinitionName
-            }));
+            instancesRows.push(new ObjectDataRow(row));
         });
         return instancesRows;
     }
