@@ -32,11 +32,13 @@ declare let componentHandler: any;
 })
 export class UserInfoComponent implements OnInit {
 
-    @Input()
-    ecmBackgroundImage: string;
+    private baseComponentPath = module.id.replace('components/user-info.component.js', '');
 
     @Input()
-    bpmBackgroundImage: string;
+    ecmBackgroundImage: string = this.baseComponentPath + 'assets/images/ecm-background.png';
+
+    @Input()
+    bpmBackgroundImage: string = this.baseComponentPath + 'assets/images/bpm-background.png';
 
     @Input()
     menuOpenType: string = 'right';
@@ -44,16 +46,10 @@ export class UserInfoComponent implements OnInit {
     @Input()
     fallBackThumbnailImage: string;
 
-    private baseComponentPath = module.id.replace('components/user-info.component.js', '');
-
     ecmUser: EcmUserModel;
-
     bpmUser: BpmUserModel;
-
-    anonymousImageUrl: string = this.baseComponentPath + '/assets/images/anonymous.gif';
-
+    anonymousImageUrl: string = this.baseComponentPath + 'assets/images/anonymous.gif';
     bpmUserImage: any;
-
     ecmUserImage: any;
 
     constructor(private ecmUserService: EcmUserService,
@@ -119,7 +115,21 @@ export class UserInfoComponent implements OnInit {
         event.stopPropagation();
     }
 
-    getUserNameHeaderFor(env: string) {
+    getEcmFullName(): string {
+        if (this.ecmUser) {
+            return `${this.formatValue(this.ecmUser.firstName)} ${this.formatValue(this.ecmUser.lastName)}`.trim();
+        }
+        return 'N/A';
+    }
+
+    getBpmFullName(): string {
+        if (this.bpmUser) {
+            return `${this.formatValue(this.bpmUser.firstName)} ${this.formatValue(this.bpmUser.lastName)}`.trim();
+        }
+        return 'N/A';
+    }
+
+    getUserNameHeaderFor(env: string): string {
         if (this.ecmUser && env === 'ECM') {
             return this.ecmUser.firstName || this.ecmUser.lastName;
         }
@@ -148,6 +158,6 @@ export class UserInfoComponent implements OnInit {
     }
 
     formatValue(value: string) {
-        return value === 'null' ? null : value;
+        return value && value !== 'null' ? value : '';
     }
 }
