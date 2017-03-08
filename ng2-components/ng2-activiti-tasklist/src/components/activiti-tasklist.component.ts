@@ -165,11 +165,7 @@ export class ActivitiTaskList implements OnInit, OnChanges {
     private createDataRow(instances: any[]): ObjectDataRow[] {
         let instancesRows: ObjectDataRow[] = [];
         instances.forEach((row) => {
-            instancesRows.push(new ObjectDataRow({
-                id: row.id,
-                name: row.name,
-                created: row.created
-            }));
+            instancesRows.push(new ObjectDataRow(row));
         });
         return instancesRows;
     }
