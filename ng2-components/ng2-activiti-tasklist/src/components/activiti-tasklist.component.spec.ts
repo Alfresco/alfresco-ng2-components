@@ -28,19 +28,43 @@ describe('ActivitiTaskList', () => {
 
     let fakeGlobalTask = [
         {
-            id: 14, name: 'task-name',
-            processDefinitionId: 'fakeprocess:5:7507',
-            processDefinitionKey: 'fakeprocess',
-            processDefinitionName: 'Fake Process Name',
-            description: null, category: null,
+            id: 14, name: 'nameFake1',
+            description: 'descriptionFake1',
+            category: 'categoryFake1',
             assignee: {
-                id: 1, firstName: null, lastName: 'Administrator', email: 'admin'
-            }
+                id: 2, firstName: 'firstNameFake1', lastName: 'lastNameFake1', email: 'emailFake1'
+            },
+            created: '2017-03-01T12:25:17.189+0000',
+            dueDate: '2017-04-02T12:25:17.189+0000',
+            endDate: '2017-05-03T12:25:31.129+0000',
+            duration: 13940,
+            priority: 50,
+            parentTaskId: 1,
+            parentTaskName: 'parentTaskNameFake',
+            processInstanceId: 2511,
+            processInstanceName: 'processInstanceNameFake',
+            processDefinitionId: 'myprocess:1:4',
+            processDefinitionName: 'processDefinitionNameFake',
+            processDefinitionDescription: 'processDefinitionDescriptionFake',
+            processDefinitionKey: 'myprocess',
+            processDefinitionCategory: 'http://www.activiti.org/processdef',
+            processDefinitionVersion: 1,
+            processDefinitionDeploymentId: '1',
+            formKey: 1,
+            processInstanceStartUserId: null,
+            initiatorCanCompleteTask: false,
+            adhocTaskCanBeReassigned: false,
+            taskDefinitionKey: 'sid-B6813AF5-8ACD-4481-A4D5-8BAAD1CB1416',
+            executionId: 2511,
+            memberOfCandidateGroup: false,
+            memberOfCandidateUsers: false,
+            managerOfCandidateGroup: false
         },
+
         {
-            id: 2, name: '', description: null, category: null,
+            id: 2, name: '', description: 'descriptionFake2', category: null,
             assignee: {
-                id: 1, firstName: null, lastName: 'Administrator', email: 'admin'
+                id: 1, firstName: 'fistNameFake2', lastName: 'Administrator2', email: 'admin'
             }
         }
     ];
@@ -130,7 +154,27 @@ describe('ActivitiTaskList', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
+            expect(component.data.getRows()[0].getValue('description')).toEqual('descriptionFake1');
+            expect(component.data.getRows()[0].getValue('category')).toEqual('categoryFake1');
+            expect(component.data.getRows()[0].getValue('assignee').id).toEqual(2);
+            expect(component.data.getRows()[0].getValue('assignee').firstName).toEqual('firstNameFake1');
+            expect(component.data.getRows()[0].getValue('assignee').lastName).toEqual('lastNameFake1');
+            expect(component.data.getRows()[0].getValue('assignee').email).toEqual('emailFake1');
+            expect(component.data.getRows()[0].getValue('created')).toEqual('2017-03-01T12:25:17.189+0000');
+            expect(component.data.getRows()[0].getValue('dueDate')).toEqual('2017-04-02T12:25:17.189+0000');
+            expect(component.data.getRows()[0].getValue('endDate')).toEqual('2017-05-03T12:25:31.129+0000');
+            expect(component.data.getRows()[0].getValue('duration')).toEqual(13940);
+            expect(component.data.getRows()[0].getValue('priority')).toEqual(50);
+            expect(component.data.getRows()[0].getValue('parentTaskId')).toEqual(1);
+            expect(component.data.getRows()[0].getValue('parentTaskName')).toEqual('parentTaskNameFake');
+            expect(component.data.getRows()[0].getValue('processInstanceId')).toEqual(2511);
+            expect(component.data.getRows()[0].getValue('processInstanceName')).toEqual('processInstanceNameFake');
+            expect(component.data.getRows()[0].getValue('processDefinitionId')).toEqual('myprocess:1:4');
+            expect(component.data.getRows()[0].getValue('processDefinitionName')).toEqual('processDefinitionNameFake');
+            expect(component.data.getRows()[0].getValue('processDefinitionDescription')).toEqual('processDefinitionDescriptionFake');
+            expect(component.data.getRows()[0].getValue('processDefinitionKey')).toEqual('myprocess');
+            expect(component.data.getRows()[0].getValue('processDefinitionCategory')).toEqual('http://www.activiti.org/processdef');
             done();
         });
         component.ngOnInit();
@@ -151,7 +195,7 @@ describe('ActivitiTaskList', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
             done();
         });
 
@@ -193,7 +237,7 @@ describe('ActivitiTaskList', () => {
             expect(component.data).toBeDefined();
             expect(component.isListEmpty()).not.toBeTruthy();
             expect(component.data.getRows().length).toEqual(2);
-            expect(component.data.getRows()[0].getValue('name')).toEqual('No name');
+            expect(component.data.getRows()[0].getValue('name')).toEqual('nameFake1');
             done();
         });
         component.reload();
