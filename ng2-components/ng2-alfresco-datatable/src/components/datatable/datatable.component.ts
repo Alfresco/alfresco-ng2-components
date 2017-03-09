@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, TemplateRef, AfterContentInit, ContentChild } from '@angular/core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter } from '../../data/index';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
+import { DataColumnListComponent } from 'ng2-alfresco-core';
 
 declare var componentHandler;
 
@@ -28,7 +29,9 @@ declare var componentHandler;
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent implements AfterContentInit {
+
+    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
     data: DataTableAdapter;
@@ -70,12 +73,20 @@ export class DataTableComponent implements OnInit {
         return this.data.selectedRow;
     }
 
-    ngOnInit() {
-        if (!this.data) {
-            this.data = new ObjectDataTableAdapter([], []);
+    ngAfterContentInit() {
+        let schema: DataColumn[] = [];
+
+        if (this.columnList && this.columnList.columns) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
         }
 
-        // workaround for MDL issues with dynamic components
+        if (!this.data) {
+            this.data = new ObjectDataTableAdapter([], schema);
+        } else if (schema && schema.length > 0) {
+            this.data.setColumns(schema);
+        }
+
+         // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
         }

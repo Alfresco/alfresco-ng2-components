@@ -1,5 +1,16 @@
 <div class="p-10">
-    <alfresco-datatable [data]="data" [multiselect]="multiselect"></alfresco-datatable>
+    <alfresco-datatable [data]="data" [multiselect]="multiselect">
+        <!-- HTML column definition demo -->
+        <!--
+        <data-columns>
+            <data-column type="image" key="icon" [sortable]="false"></data-column>
+            <data-column key="id" title="Id"></data-column>
+            <data-column key="createdOn" title="Created"></data-column>
+            <data-column key="name" title="Name" class="full-width name-column"></data-column>
+            <data-column key="createdBy.name" title="Created By"></data-column>
+        </data-columns>
+        -->
+    </alfresco-datatable>
 </div>
 <div class="p-10">
     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">

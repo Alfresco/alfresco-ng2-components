@@ -96,9 +96,7 @@ Follow the 3 steps below:
     Please refer to the following example file: [systemjs.config.js](demo/systemjs.config.js) .
 
 
-## Basic usage example
-
-Usage example of this component :
+## Basic usage
 
 **my.component.ts**
 
@@ -107,18 +105,14 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { CoreModule } from 'ng2-alfresco-core';
-import { DataTableModule }  from 'ng2-alfresco-datatable';
-import { ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
-import { Component } from '@angular/core';
-import { CONTEXT_MENU_DIRECTIVES, CONTEXT_MENU_PROVIDERS } from 'ng2-alfresco-core';
-import { ALFRESCO_DATATABLE_DIRECTIVES, ObjectDataTableAdapter } from 'ng2-alfresco-datatable';
+import { DataTableModule, ObjectDataTableAdapter }  from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'alfresco-app-demo',
-    template: `<alfresco-datatable [data]="data">
-        </alfresco-datatable>`,
-    directives: [ALFRESCO_DATATABLE_DIRECTIVES, CONTEXT_MENU_DIRECTIVES],
-    providers: [CONTEXT_MENU_PROVIDERS]
+    template: `
+        <alfresco-datatable [data]="data">
+        </alfresco-datatable>
+    `
 })
 export class DataTableDemo {
     data: ObjectDataTableAdapter;
@@ -166,9 +160,23 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 ![DataTable demo](docs/assets/datatable-demo.png)
 
-### Properties
+You can also use HTML-based schema declaration like shown below:
 
-| Name | Type | Default | Description
+```html
+<alfresco-datatable [data]="data" [multiselect]="multiselect">
+    <data-columns>
+        <data-column type="image" key="icon" [sortable]="false"></data-column>
+        <data-column key="id" title="Id"></data-column>
+        <data-column key="createdOn" title="Created"></data-column>
+        <data-column key="name" title="Name" class="full-width name-column"></data-column>
+        <data-column key="createdBy.name" title="Created By"></data-column>
+    </data-columns>
+</alfresco-datatable>
+```
+
+### DataTable Properties
+
+| Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `data` | DataTableAdapter | instance of **ObjectDataTableAdapter** | data source |
 | `multiselect` | boolean | false | Toggles multiple row selection, renders checkboxes at the beginning of each row |
@@ -177,7 +185,22 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 | `fallbackThumbnail` | string |  | Fallback image for row ehre thubnail is missing|
 | `contextMenu` | boolean | false | Toggles custom context menu for the component |
 
-### Events
+### DataColumn Properties
+
+Here's the list of available properties you can define for a Data Column definition.
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
+| type | string (text\|image\|date) | text | Value type |
+| format | string | | Value format (if supported by components), for example format of the date |
+| sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
+| title | string | | Display title of the column, typically used for column headers |
+| template | `TemplateRef` | | Custom column template |
+| sr-title | string | | Screen reader title, used for accessibility purposes |
+| class | string | | Additional CSS class to be applied to column (header and cells) |
+
+### DataTable Events
 
 | Name | Description
 | --- | --- |
