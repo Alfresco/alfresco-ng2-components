@@ -117,9 +117,9 @@ describe('ActivitiTaskList', () => {
     });
 
     it('should use the default schemaColumn as default', () => {
-        component.ngOnInit();
+        component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(4);
+        expect(component.data.getColumns().length).toEqual(2);
     });
 
     it('should use the schemaColumn passed in input', () => {
@@ -130,13 +130,13 @@ describe('ActivitiTaskList', () => {
             ]
         );
 
-        component.ngOnInit();
+        component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
         expect(component.data.getColumns().length).toEqual(1);
     });
 
     it('should return an empty task list when no input parameters are passed', () => {
-        component.ngOnInit();
+        component.ngAfterContentInit();
         expect(component.data).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });
@@ -177,7 +177,7 @@ describe('ActivitiTaskList', () => {
             expect(component.data.getRows()[0].getValue('processDefinitionCategory')).toEqual('http://www.activiti.org/processdef');
             done();
         });
-        component.ngOnInit();
+        component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
         fixture.detectChanges();
     });
@@ -199,7 +199,7 @@ describe('ActivitiTaskList', () => {
             done();
         });
 
-        component.ngOnInit();
+        component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'processDefinitionKey': processDefinitionKey, 'assignment': assignment});
         fixture.detectChanges();
     });
@@ -221,7 +221,7 @@ describe('ActivitiTaskList', () => {
             done();
         });
 
-        component.ngOnInit();
+        component.ngAfterContentInit();
         component.ngOnChanges({'state': state, 'assignment': assignment});
         fixture.detectChanges();
     });
@@ -231,7 +231,7 @@ describe('ActivitiTaskList', () => {
         spyOn(taskListService, 'getTasks').and.returnValue(Observable.of(fakeGlobalTask));
         component.state = 'open';
         component.assignment = 'fake-assignee';
-        component.ngOnInit();
+        component.ngAfterContentInit();
         component.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
             expect(component.data).toBeDefined();

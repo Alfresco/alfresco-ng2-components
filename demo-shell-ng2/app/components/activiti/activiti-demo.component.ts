@@ -101,13 +101,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
                 private apiService: AlfrescoApiService,
                 private formRenderingService: FormRenderingService,
                 private formService: FormService) {
-        this.dataTasks = new ObjectDataTableAdapter(
-            [],
-            [
-                {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-                {type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true}
-            ]
-        );
+        this.dataTasks = new ObjectDataTableAdapter();
         this.dataTasks.setSorting(new DataSorting('created', 'desc'));
 
         this.dataProcesses = new ObjectDataTableAdapter(

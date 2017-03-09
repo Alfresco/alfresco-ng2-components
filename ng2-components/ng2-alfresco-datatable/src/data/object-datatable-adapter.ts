@@ -51,7 +51,7 @@ export class ObjectDataTableAdapter implements DataTableAdapter {
         return schema;
     }
 
-    constructor(data: any[], schema: DataColumn[]) {
+    constructor(data: any[] = [], schema: DataColumn[] = []) {
         this._rows = [];
         this._columns = [];
 

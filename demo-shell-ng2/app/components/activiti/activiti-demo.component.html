@@ -38,7 +38,15 @@
                                            [data]="dataTasks"
                                            [landingTaskId]="currentTaskId"
                                            (rowClick)="onTaskRowClick($event)" (onSuccess)="onSuccessTaskList($event)"
-                                           #activititasklist></activiti-tasklist>
+                                           #activititasklist>
+                            <!-- Custom column definition demo -->
+                            <!--
+                            <data-columns>
+                                <data-column key="name" title="NAME" class="full-width name-column"></data-column>
+                                <data-column key="created" title="Created" class="hidden"></data-column>
+                            </data-columns>
+                            -->
+                        </activiti-tasklist>
                     </div>
                     <div class="mdl-cell mdl-cell--7-col task-column mdl-shadow--2dp">
                         <activiti-task-details #activitidetails
