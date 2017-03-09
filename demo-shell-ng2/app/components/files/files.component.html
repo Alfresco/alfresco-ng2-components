@@ -21,12 +21,11 @@
                 (error)="onNavigationError($event)"
                 (success)="resetError()"
                 (preview)="showFile($event)">
-            <content-columns>
-                <content-column key="$thumbnail" type="image"></content-column>
-                <content-column
+            <data-columns>
+                <data-column key="$thumbnail" type="image" [sortable]="false"></data-column>
+                <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.DISPLAY_NAME' | translate}}"
                         key="name"
-                        sortable="true"
                         class="full-width ellipsis-cell">
                     <!-- Example of using custom column template -->
                     <!--
@@ -34,31 +33,28 @@
                         <span>Hi! {{entry.data.getValue(entry.row, entry.col)}}</span>
                     </template>
                     -->
-                </content-column>
-                <content-column
+                </data-column>
+                <data-column
                     title="{{'DOCUMENT_LIST.COLUMNS.TAG' | translate}}"
                     key="id"
-                    sortable="true"
                     class="full-width ellipsis-cell">
                     <template let-entry="$implicit">
                         <alfresco-tag-node-list  [nodeId]="entry.data.getValue(entry.row, entry.col)"></alfresco-tag-node-list>
                     </template>
-                </content-column>
-                <content-column
+                </data-column>
+                <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_BY' | translate}}"
                         key="createdByUser.displayName"
-                        sortable="true"
                         class="desktop-only">
-                </content-column>
-                <content-column
+                </data-column>
+                <data-column
                         title="{{'DOCUMENT_LIST.COLUMNS.CREATED_ON' | translate}}"
                         key="createdAt"
                         type="date"
                         format="medium"
-                        sortable="true"
                         class="desktop-only">
-                </content-column>
-            </content-columns>
+                </data-column>
+            </data-columns>
 
             <content-actions>
                 <!-- folder actions -->

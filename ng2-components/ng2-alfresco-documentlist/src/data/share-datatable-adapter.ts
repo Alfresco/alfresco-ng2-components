@@ -42,7 +42,7 @@ export class ShareDataTableAdapter implements DataTableAdapter {
 
     constructor(private documentListService: DocumentListService,
                 private basePath: string,
-                schema: DataColumn[]) {
+                schema: DataColumn[] = []) {
         this.rows = [];
         this.columns = schema || [];
     }
