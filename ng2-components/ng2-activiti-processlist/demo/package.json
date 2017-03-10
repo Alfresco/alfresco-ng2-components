@@ -50,10 +50,10 @@
     "md-date-time-picker": "^2.2.0",
     "ng2-translate": "2.5.0",
     "alfresco-js-api": "~1.2.0",
-    "ng2-activiti-tasklist": "1.2.0",
+    "ng2-activiti-tasklist": "1.2.1",
     "ng2-alfresco-core": "1.2.0",
     "ng2-alfresco-datatable": "1.2.0",
-    "ng2-activiti-processlist": "1.2.0"
+    "ng2-activiti-processlist": "1.2.1"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.33",

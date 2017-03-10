@@ -1,7 +1,7 @@
 {
   "name": "ng2-activiti-form",
   "description": "Alfresco Activiti Form Component for Angular 2",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Alfresco Software, Ltd.",
   "scripts": {
     "clean": "npm install rimraf && npm run clean-build && rimraf dist node_modules typings",

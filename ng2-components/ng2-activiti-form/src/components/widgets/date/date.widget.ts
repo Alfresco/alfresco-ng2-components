@@ -30,8 +30,6 @@ declare var componentHandler: any;
 })
 export class DateWidget extends WidgetComponent implements OnInit, AfterViewChecked {
 
-    DATE_FORMAT: string = 'D-M-YYYY';
-
     datePicker: any;
 
     constructor(private elementRef: ElementRef) {
@@ -49,15 +47,15 @@ export class DateWidget extends WidgetComponent implements OnInit, AfterViewChec
         if (this.field) {
 
             if (this.field.minValue) {
-                settings.past = moment(this.field.minValue, this.DATE_FORMAT);
+                settings.past = moment(this.field.minValue, this.field.dateDisplayFormat);
             }
 
             if (this.field.maxValue) {
-                settings.future = moment(this.field.maxValue, this.DATE_FORMAT);
+                settings.future = moment(this.field.maxValue, this.field.dateDisplayFormat);
             }
 
             if (this.field.value) {
-                settings.init = moment(this.field.value, this.DATE_FORMAT);
+                settings.init = moment(this.field.value, this.field.dateDisplayFormat);
             }
         }
 
@@ -73,7 +71,7 @@ export class DateWidget extends WidgetComponent implements OnInit, AfterViewChec
 
     onDateChanged() {
         if (this.field.value) {
-            let value = moment(this.field.value, this.DATE_FORMAT);
+            let value = moment(this.field.value, this.field.dateDisplayFormat);
             if (!value.isValid()) {
                 value = moment();
             }
@@ -83,7 +81,7 @@ export class DateWidget extends WidgetComponent implements OnInit, AfterViewChec
     }
 
     onDateSelected() {
-        let newValue = this.datePicker.time.format(this.DATE_FORMAT);
+        let newValue = this.datePicker.time.format(this.field.dateDisplayFormat);
         this.field.value = newValue;
         this.checkVisibility(this.field);
 

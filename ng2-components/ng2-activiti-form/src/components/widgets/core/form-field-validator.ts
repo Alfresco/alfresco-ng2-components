@@ -145,7 +145,7 @@ export class DateFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value) {
-            if (DateFieldValidator.isValidDate(field.value)) {
+            if (DateFieldValidator.isValidDate(field.value, field.dateDisplayFormat)) {
                 return true;
             }
             field.validationSummary = 'Invalid date format';
@@ -168,7 +168,7 @@ export class MinDateFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value) {
-            const dateFormat = 'D-M-YYYY';
+            const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
                 field.validationSummary = 'Invalid date format';
@@ -201,7 +201,7 @@ export class MaxDateFieldValidator implements FormFieldValidator {
 
     validate(field: FormFieldModel): boolean {
         if (this.isSupported(field) && field.value) {
-            const dateFormat = 'D-M-YYYY';
+            const dateFormat = field.dateDisplayFormat;
 
             if (!DateFieldValidator.isValidDate(field.value, dateFormat)) {
                 field.validationSummary = 'Invalid date format';
