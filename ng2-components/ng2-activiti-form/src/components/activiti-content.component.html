@@ -14,9 +14,9 @@
             <button (click)="openViewer(content)" class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">zoom_in</i>
             </button>
-            <a (click)="download($event)" [href]="content.contentRawUrl" target="_blank" [download]='content.name' class="mdl-button mdl-js-button mdl-button--icon">
+            <div (click)="download(content)" class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">file_download</i>
-            </a>
+            </div>
         </div>
     </div>
 </div>

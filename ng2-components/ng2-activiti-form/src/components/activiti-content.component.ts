@@ -78,18 +78,26 @@ export class ActivitiContent implements OnChanges {
     }
 
     loadThumbnailUrl(content: ContentLinkModel) {
-        if (this.content.isTypeImage()) {
-            this.formService.getFileRawContent(content.id).subscribe(
-                (response: Blob) => {
-                    this.content.thumbnailUrl = this.createUrlPreview(response);
-                },
-                error => {
-                    this.logService.error(error);
-                }
-            );
-        } else if (this.content.isThumbnailSupported()) {
-            this.content.contentRawUrl = this.formService.getFileRawContentUrl(content.id);
-            this.content.thumbnailUrl = this.formService.getContentThumbnailUrl(content.id);
+        if (this.content.isThumbnailSupported()) {
+            if (this.content.isTypeImage()) {
+                this.formService.getFileRawContent(content.id).subscribe(
+                    (response: Blob) => {
+                        this.content.thumbnailUrl = this.createUrlPreview(response);
+                    },
+                    error => {
+                        this.logService.error(error);
+                    }
+                );
+            } else {
+                this.formService.getContentThumbnailUrl(content.id).subscribe(
+                    (response: Blob) => {
+                        this.content.thumbnailUrl = this.createUrlPreview(response);
+                    },
+                    error => {
+                        this.logService.error(error);
+                    }
+                );
+            }
         }
     }
 
@@ -101,12 +109,31 @@ export class ActivitiContent implements OnChanges {
     /**
      * Download file opening it in a new window
      */
-    download($event) {
-        $event.stopPropagation();
+    download(content) {
+        this.formService.getFileRawContent(content.id).subscribe(
+            (response: Blob) => {
+                let thumbnailUrl = this.createUrlPreview(response);
+                this.createDownloadElement(thumbnailUrl, content.name);
+            },
+            error => {
+                this.logService.error(error);
+            }
+        );
+    }
+
+    createDownloadElement(url: string, name: string) {
+        let downloadElement = window.document.createElement('a');
+        downloadElement.setAttribute('id', 'export-download');
+        downloadElement.setAttribute('href', url);
+        downloadElement.setAttribute('download', name);
+        downloadElement.setAttribute('target', '_blank');
+        window.document.body.appendChild(downloadElement);
+        downloadElement.click();
+        window.document.body.removeChild(downloadElement);
     }
 
     private sanitizeUrl(url: string) {
-        return this.sanitizer.bypassSecurityTrustUrl(url);
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 
     private createUrlPreview(blob: Blob) {

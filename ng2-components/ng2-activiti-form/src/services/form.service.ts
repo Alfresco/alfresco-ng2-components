@@ -267,9 +267,9 @@ export class FormService {
         return alfrescoApi.activiti.contentApi.getRawContentUrl(contentId);
     }
 
-    getContentThumbnailUrl(contentId: number): string {
+    getContentThumbnailUrl(contentId: number): Observable<any> {
         let alfrescoApi = this.apiService.getInstance();
-        return alfrescoApi.activiti.contentApi.getContentThumbnailUrl(contentId);
+        return Observable.fromPromise(alfrescoApi.activiti.contentApi.getContentThumbnailUrl(contentId));
     }
 
     getRestFieldValues(taskId: string, field: string): Observable<any> {

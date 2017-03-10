@@ -119,10 +119,9 @@ describe('User info component', () => {
         expect(element.querySelector('#user-profile-lists')).toBeNull();
     });
 
-    it('should format null string values in null value', () => {
+    it('should format null string values in empty value', () => {
         let res = userInfoComp.formatValue('null');
-        expect(res).toBeDefined();
-        expect(res).toBeNull();
+        expect(res).toBe('');
     });
 
     it('should return the value when it is not null string', () => {
