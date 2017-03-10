@@ -20,6 +20,11 @@ import { DataRow } from '../../data/datatable-adapter';
 
 export class DataRowActionEvent extends BaseEvent<DataRowActionModel> {
 
+    // backwards compatibility with 1.2.0 and earlier
+    get args(): DataRowActionModel {
+        return this.value;
+    }
+
     constructor(row: DataRow, action: any) {
         super();
         this.value = new DataRowActionModel(row, action);
