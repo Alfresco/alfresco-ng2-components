@@ -244,10 +244,12 @@ event: Event  // original HTML DOM event
 Handler example:
 
 ```ts
-onRowClicked(event) {
+onRowClicked(event: DataRowEvent) {
     console.log(event.row);
 }
 ```
+
+_This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour._
 
 #### rowDblClick event
 
@@ -263,10 +265,12 @@ event: Event  // original HTML DOM event
 Handler example:
 
 ```ts
-onRowDblClicked(event) {
+onRowDblClicked(event: DataRowEvent) {
     console.log(event.row);
 }
 ```
+
+_This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour._
 
 #### showRowContextMenu event
 
@@ -278,7 +282,7 @@ you can provide all necessary content via handler.
 Event properties:
 
 ```ts
-args: {
+value: {
     row: DataRow,
     col: DataColumn,
     actions: []
@@ -288,13 +292,15 @@ args: {
 Handler example:
 
 ```ts
-onShowRowContextMenu(event) {
-    event.args.actions = [
+onShowRowContextMenu(event: DataCellEvent) {
+    event.value.actions = [
         { ... },
         { ... }
     ]
 }
 ```
+
+_This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour._
 
 DataTable will automatically render provided menu items.
 
@@ -306,8 +312,19 @@ documentation for more details on context actions format and behavior._
 _Emitted before actions menu is displayed for a row.
 Requires `actions` property to be set to `true`._
 
+Event properties:
+
+```ts
+value: {
+    row: DataRow,
+    action: any
+}
+```
+
 Note that DataTable itself does not populate action menu items,
 you can provide all necessary content via handler.
+
+_This event is cancellable, you can use `event.preventDefault()` to prevent default behaviour._
 
 #### executeRowAction event
 
@@ -369,7 +386,7 @@ a custom `DataTableAdapter` using the following interfaces:
 
 ```ts
 interface DataTableAdapter {
-    generateSchema(row: DataRow): col: DataColumn;
+    selectedRow: DataRow;
     getRows(): Array<DataRow>;
     setRows(rows: Array<DataRow>): void;
     getColumns(): Array<DataColumn>;

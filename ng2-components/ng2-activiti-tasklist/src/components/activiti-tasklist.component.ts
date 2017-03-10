@@ -84,6 +84,14 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
     }
 
     ngAfterContentInit() {
+        this.setupSchema();
+    }
+
+    /**
+     * Setup html-based (html definitions) or code behind (data adapter) schema.
+     * If component is assigned with an empty data adater the default schema settings applied.
+     */
+    setupSchema() {
         let schema: DataColumn[] = [];
 
         if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
@@ -136,17 +144,6 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
     public reload() {
         this.requestNode = this.createRequestNode();
         this.load(this.requestNode);
-    }
-
-    /**
-     * Return an initDefaultSchemaColumns instance with the default Schema Column
-     * @returns {ObjectDataTableAdapter}
-     */
-    initDefaultSchemaColumns(): ObjectDataTableAdapter {
-        return new ObjectDataTableAdapter(
-            [],
-            this.defaultSchemaColumn
-        );
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
