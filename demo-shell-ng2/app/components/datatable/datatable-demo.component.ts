@@ -16,12 +16,7 @@
  */
 
 import { Component } from '@angular/core';
-import {
-    ObjectDataTableAdapter,
-    DataSorting,
-    ObjectDataRow,
-    ObjectDataColumn
-} from 'ng2-alfresco-datatable';
+import { ObjectDataTableAdapter, DataSorting, ObjectDataRow, ObjectDataColumn, DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
 
 @Component({
     selector: 'datatable-demo',
@@ -141,5 +136,22 @@ export class DataTableDemoComponent {
         ];
         let columns = schema.map(col => new ObjectDataColumn(col));
         this.data.setColumns(columns);
+    }
+
+    onShowRowActionsMenu(event: DataCellEvent) {
+        let myAction = {
+            title: 'Hello'
+            // you custom metadata needed for onExecuteRowAction
+        };
+        event.value.actions = [
+            myAction
+        ];
+    }
+
+    onExecuteRowAction(event: DataRowActionEvent) {
+        let args = event.value;
+        console.log(args.row);
+        console.log(args.action);
+        window.alert(`My custom action: ${args.action.title}`);
     }
 }
