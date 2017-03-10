@@ -63,7 +63,7 @@
     "moment": "2.15.1",
     "md-date-time-picker": "^2.2.0",
     "ng2-translate": "2.5.0",
-    "alfresco-js-api": "1.2.0",
+    "alfresco-js-api": "~1.2.0",
     "ng2-alfresco-core": "1.2.0"
   },
   "devDependencies": {
