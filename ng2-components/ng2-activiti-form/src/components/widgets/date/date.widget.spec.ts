@@ -54,7 +54,7 @@ describe('DateWidget', () => {
         });
         widget.ngOnInit();
 
-        let expected = moment(minValue, widget.DATE_FORMAT);
+        let expected = moment(minValue, widget.field.dateDisplayFormat);
         expect(widget.datePicker._past.isSame(expected)).toBeTruthy();
     });
 
@@ -65,7 +65,7 @@ describe('DateWidget', () => {
         });
         widget.ngOnInit();
 
-        let expected = moment(maxValue, widget.DATE_FORMAT);
+        let expected = moment(maxValue, widget.field.dateDisplayFormat);
         expect(widget.datePicker._future.isSame(expected)).toBeTruthy();
     });
 
@@ -77,7 +77,7 @@ describe('DateWidget', () => {
         });
         widget.ngOnInit();
 
-        let expected = moment(dateValue, widget.DATE_FORMAT);
+        let expected = moment(dateValue, widget.field.dateDisplayFormat);
         expect(widget.datePicker.time.isSame(expected)).toBeTruthy();
     });
 
@@ -115,7 +115,7 @@ describe('DateWidget', () => {
         widget.field.value = '31-03-1982';
         widget.onDateChanged();
 
-        let expected = moment('31-03-1982', widget.DATE_FORMAT);
+        let expected = moment('31-03-1982', widget.field.dateDisplayFormat);
         expect(widget.datePicker.time.isSame(expected)).toBeTruthy();
     });
 
@@ -124,7 +124,7 @@ describe('DateWidget', () => {
         widget.ngOnInit();
 
         let date = '13-3-1982';
-        widget.datePicker.time = moment(date, widget.DATE_FORMAT);
+        widget.datePicker.time = moment(date, widget.field.dateDisplayFormat);
         widget.onDateSelected();
         expect(widget.field.value).toBe(date);
     });
@@ -157,7 +157,7 @@ describe('DateWidget', () => {
         spyOn(w, 'setupMaterialTextField').and.callThrough();
         w.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
         w.ngOnInit();
-        w.datePicker.time = moment('9-9-9999', w.DATE_FORMAT);
+        w.datePicker.time = moment('9-9-9999', w.field.dateDisplayFormat);
         w.fieldChanged.subscribe((field) => {
             expect(field).toBeDefined();
             expect(field).not.toBeNull();
@@ -172,7 +172,7 @@ describe('DateWidget', () => {
         spyOn(w, 'setupMaterialTextField').and.callThrough();
         w.field = new FormFieldModel(null, {value: '9-9-9999', type: 'date'});
         w.ngOnInit();
-        w.datePicker.time = moment('9-9-9999', w.DATE_FORMAT);
+        w.datePicker.time = moment('9-9-9999', w.field.dateDisplayFormat);
         w.fieldChanged.subscribe((field) => {
             expect(field).toBeDefined();
             expect(field).not.toBeNull();
