@@ -16,6 +16,7 @@
  */
 
 import { TestBed } from '@angular/core/testing';
+import { Observable } from 'rxjs/Rx';
 import { CoreModule, AlfrescoApiService, LogService, LogServiceMock } from 'ng2-alfresco-core';
 import { FormService } from './form.service';
 import { EcmModelService } from './ecm-model.service';
@@ -31,6 +32,17 @@ describe('FormService', () => {
     let apiService: AlfrescoApiService;
     let logService: LogService;
     let bpmCli: any;
+
+    function createFakeBlob() {
+        let data = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+
+        let bytes = new Uint8Array(data.length / 2);
+
+        for (let i = 0; i < data.length; i += 2) {
+            bytes[i / 2] = parseInt(data.substring(i, i + 2), /* base = */ 16);
+        }
+        return new Blob([bytes], {type: 'image/png'});
+    }
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -444,11 +456,18 @@ describe('FormService', () => {
         expect(contentRawUrl).toEqual(`${bpmCli.basePath}/api/enterprise/content/${contentId}/raw`);
     });
 
-    it('should return the thumbnail URL', () => {
+    it('should return a Blob as thumbnail', (done) => {
         let contentId: number = 999;
 
-        let contentRawUrl = service.getContentThumbnailUrl(contentId);
-        expect(contentRawUrl).toEqual(`${bpmCli.basePath}/app/rest/content/${contentId}/rendition/thumbnail`);
+        let blob = createFakeBlob();
+        spyOn(service, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
+
+        service.getContentThumbnailUrl(contentId).subscribe(result => {
+            expect(result).toEqual(jasmine.any(Blob));
+            expect(result.size).toEqual(48);
+            expect(result.type).toEqual('image/png');
+            done();
+        });
     });
 
     it('should create a Form form a Node', (done) => {

@@ -44,6 +44,8 @@ export class FormFieldModel extends FormWidgetModel {
     private _readOnly: boolean = false;
     private _isValid: boolean = true;
 
+    readonly defaultDateFormat: string = 'D-M-YYYY';
+
     // model members
     fieldType: string;
     id: string;
@@ -74,6 +76,7 @@ export class FormFieldModel extends FormWidgetModel {
     visibilityCondition: WidgetVisibilityModel = null;
     enableFractions: boolean = false;
     currency: string = null;
+    dateDisplayFormat: string = this.defaultDateFormat;
 
     // container model members
     numberOfColumns: number = 1;
@@ -155,6 +158,7 @@ export class FormFieldModel extends FormWidgetModel {
             this.visibilityCondition = <WidgetVisibilityModel> json.visibilityCondition;
             this.enableFractions = <boolean>json.enableFractions;
             this.currency = json.currency;
+            this.dateDisplayFormat = json.dateDisplayFormat || this.defaultDateFormat;
             this._value = this.parseValue(json);
 
             if (json.placeholder && json.placeholder !== '' && json.placeholder !== 'null') {
@@ -247,7 +251,7 @@ export class FormFieldModel extends FormWidgetModel {
             if (value) {
                 let d = moment(value.split('T')[0], 'YYYY-M-D');
                 if (d.isValid()) {
-                    value = d.format('D-M-YYYY');
+                    value = d.format(this.dateDisplayFormat);
                 }
             }
         }
@@ -303,7 +307,7 @@ export class FormFieldModel extends FormWidgetModel {
                 }
                 break;
             case FormFieldTypes.DATE:
-                let d = moment(this.value, 'D-M-YYYY');
+                let d = moment(this.value, this.dateDisplayFormat);
                 if (d.isValid()) {
                     this.form.values[this.id] = `${d.format('YYYY-MM-DD')}T00:00:00.000Z`;
                 } else {
