@@ -5,6 +5,7 @@
            type="text"
            [attr.id]="field.id"
            [attr.required]="isRequired()"
+           [value]="field.value"
            [(ngModel)]="field.value"
            (ngModelChange)="checkVisibility(field)"
            [disabled]="field.readOnly"

@@ -7,7 +7,8 @@
         "**/.DS_Store": true,
         "**/*.js": { "when": "$(basename).ts"},
         "**/*.js.map": { "when": "$(basename)"},
-        "**/*.d.ts": { "when": "$(basename).ts"}
+        "**/*.d.ts": { "when": "$(basename).ts"},
+        "**/coverage": true
     },
     "editor.renderIndentGuides": true
 }
