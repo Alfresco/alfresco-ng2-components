@@ -31,10 +31,10 @@ declare let dialogPolyfill: any;
 })
 export class ActivitiPeople {
 
-    baseComponentPath = module.id.replace('/activiti-people.component.js', '');
+    private baseComponentPath: string = module.id.replace('components/activiti-people.component.js', '');
 
     @Input()
-    iconImageUrl: string;
+    iconImageUrl: string = this.baseComponentPath + 'assets/images/user.jpg';
 
     @Input()
     people: User [] = [];

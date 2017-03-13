@@ -32,10 +32,10 @@ declare let componentHandler: any;
 
 export class ActivitiPeopleSearch implements OnInit, AfterViewInit {
 
-    baseComponentPath = module.id.replace('/activiti-people-search.component.js', '');
+    private baseComponentPath: string = module.id.replace('components/activiti-people-search.component.js', '');
 
     @Input()
-    iconImageUrl: string;
+    iconImageUrl: string = this.baseComponentPath + 'assets/images/user.jpg';
 
     @Input()
     results: Observable<User[]>;
