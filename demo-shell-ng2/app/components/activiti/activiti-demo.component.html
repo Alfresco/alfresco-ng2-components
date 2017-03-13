@@ -37,7 +37,10 @@
                                            [sort]="taskFilter.filter.sort"
                                            [data]="dataTasks"
                                            [landingTaskId]="currentTaskId"
-                                           (rowClick)="onTaskRowClick($event)" (onSuccess)="onSuccessTaskList($event)"
+                                           (rowClick)="onTaskRowClick($event)" 
+                                           (onSuccess)="onSuccessTaskList($event)"
+                                           (row-click)="onRowClick($event)"
+                                           (row-dblclick)="onRowDblClick($event)"
                                            #activititasklist>
                             <!-- Custom column definition demo -->
                             <!--

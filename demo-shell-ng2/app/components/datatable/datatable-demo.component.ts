@@ -154,4 +154,12 @@ export class DataTableDemoComponent {
         console.log(args.action);
         window.alert(`My custom action: ${args.action.title}`);
     }
+
+    onRowClick(event) {
+        console.log(event);
+    }
+
+    onRowDblClick(event) {
+        console.log(event);
+    }
 }
