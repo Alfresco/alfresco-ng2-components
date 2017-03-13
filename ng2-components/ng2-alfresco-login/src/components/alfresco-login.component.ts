@@ -31,7 +31,7 @@ declare let componentHandler: any;
 })
 export class AlfrescoLoginComponent implements OnInit {
 
-    baseComponentPath = module.id.replace('/alfresco-login.component.js', '');
+    private baseComponentPath: string = module.id.replace('components/alfresco-login.component.js', '');
 
     isPasswordShow: boolean = false;
 
@@ -42,10 +42,10 @@ export class AlfrescoLoginComponent implements OnInit {
     registerLink: string = '';
 
     @Input()
-    logoImageUrl: string;
+    logoImageUrl: string = this.baseComponentPath + 'assets/images/alfresco-logo.svg';
 
     @Input()
-    backgroundImageUrl: string;
+    backgroundImageUrl: string = this.baseComponentPath + 'assets/images/background.svg';
 
     @Input()
     providers: string;
@@ -69,13 +69,9 @@ export class AlfrescoLoginComponent implements OnInit {
     error: boolean = false;
     errorMsg: string;
     success: boolean = false;
-
     formError: { [id: string]: string };
-
     minLength: number = 2;
-
     footerTemplate: TemplateRef<any>;
-
     headerTemplate: TemplateRef<any>;
 
     private _message: { [id: string]: { [id: string]: string } };

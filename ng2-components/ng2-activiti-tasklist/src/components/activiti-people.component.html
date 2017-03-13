@@ -8,7 +8,7 @@
     <ul class='mdl-list'>
         <li class="mdl-list__item" *ngFor="let user of people">
             <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
-                <img class="mdl-chip__contact" [src]="iconImageUrl || baseComponentPath + '/../assets/images/user.jpg'" />
+                <img class="mdl-chip__contact" [src]="iconImageUrl" />
                 <span id="user-{{user.id}}" class="mdl-chip__text">{{getDisplayUser(user)}}</span>
                 <a *ngIf="!readOnly" class="mdl-chip__action"><i id="remove-{{user.id}}" (click)="removeInvolvedUser(user)" class="material-icons people__icon">cancel</i></a>
             </span>

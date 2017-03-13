@@ -31,6 +31,8 @@ import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 })
 export class ActivitiTaskDetails implements OnInit, OnChanges {
 
+    private baseComponentPath: string = module.id.replace('components/activiti-task-details.component', '');
+
     @ViewChild('activiticomments')
     activiticomments: any;
 
@@ -77,7 +79,7 @@ export class ActivitiTaskDetails implements OnInit, OnChanges {
     showFormRefreshButton: boolean = true;
 
     @Input()
-    peopleIconImageUrl: string;
+    peopleIconImageUrl: string = this.baseComponentPath + 'assets/images/user.jpg';
 
     @Output()
     formSaved: EventEmitter<FormModel> = new EventEmitter<FormModel>();

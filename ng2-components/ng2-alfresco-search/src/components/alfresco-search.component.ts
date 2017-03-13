@@ -32,6 +32,8 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     static SINGLE_CLICK_NAVIGATION: string = 'click';
     static DOUBLE_CLICK_NAVIGATION: string = 'dblclick';
 
+    private baseComponentPath: string = module.id.replace('components/alfresco-search.component.js', '');
+
     @Input()
     searchTerm: string = '';
 
@@ -50,6 +52,9 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     @Input()
     navigationMode: string = AlfrescoSearchComponent.DOUBLE_CLICK_NAVIGATION; // click|dblclick
 
+    @Input()
+    emptyFolderImageUrl: string = this.baseComponentPath + 'assets/images/empty_doc_lib.svg';
+
     @Output()
     resultsLoad = new EventEmitter();
 
@@ -57,18 +62,11 @@ export class AlfrescoSearchComponent implements OnChanges, OnInit {
     preview: EventEmitter<any> = new EventEmitter<any>();
 
     results: any = null;
-
     pagination: Pagination;
-
     errorMessage;
-
     queryParamName = 'q';
-
     skipCount: number = 0;
-
     nodeResults: NodePaging;
-
-    baseComponentPath: string = module.id.replace('/components/alfresco-search.component.js', '');
 
     constructor(private searchService: AlfrescoSearchService,
                 private translateService: AlfrescoTranslationService,
