@@ -392,6 +392,35 @@ A custom set of columns can look like the following:
 
 ![Custom columns](docs/assets/custom-columns.png)
 
+You can also use HTML-based schema declaration used by DataTable, TaskList and other components:
+
+```html
+<alfresco-datatable [data]="data" ...>
+    <data-columns>
+        <data-column type="image" key="icon" [sortable]="false"></data-column>
+        <data-column key="id" title="Id"></data-column>
+        <data-column key="createdOn" title="Created"></data-column>
+        <data-column key="name" title="Name" class="full-width name-column"></data-column>
+        <data-column key="createdBy.name" title="Created By"></data-column>
+    </data-columns>
+</alfresco-datatable>
+```
+
+#### DataColumn Properties
+
+Here's the list of available properties you can define for a Data Column definition.
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
+| type | string (text\|image\|date) | text | Value type |
+| format | string | | Value format (if supported by components), for example format of the date |
+| sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
+| title | string | | Display title of the column, typically used for column headers |
+| template | `TemplateRef` | | Custom column template |
+| sr-title | string | | Screen reader title, used for accessibility purposes |
+| class | string | | Additional CSS class to be applied to column (header and cells) |
+
 DocumentList component assigns an instance of `MinimalNode` type (`alfresco-js-api`) as a data context of each row.
 
 ```js

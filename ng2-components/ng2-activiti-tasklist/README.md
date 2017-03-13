@@ -123,8 +123,7 @@ import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { ActivitiTaskListModule } from 'ng2-activiti-tasklist';
-import { CoreModule } from 'ng2-alfresco-core';
-import { AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
+import { CoreModule, AlfrescoAuthenticationService, AlfrescoSettingsService } from 'ng2-alfresco-core';
 import { ObjectDataTableAdapter, DataSorting } from 'ng2-alfresco-datatable';
 
 @Component({
@@ -176,14 +175,40 @@ export class AppModule {}
 platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
-#### Events
+You can also use HTML-based schema declaration like shown below:
+
+```html
+<activiti-tasklist ...>
+    <data-columns>
+        <data-column key="name" title="NAME" class="full-width name-column"></data-column>
+        <data-column key="created" title="Created" class="hidden"></data-column>
+    </data-columns>
+</activiti-tasklist>
+```
+
+### DataColumn Properties
+
+Here's the list of available properties you can define for a Data Column definition.
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| key | string | | Data source key, can be either column/property key like `title` or property path like `createdBy.name` |
+| type | string (text\|image\|date) | text | Value type |
+| format | string | | Value format (if supported by components), for example format of the date |
+| sortable | boolean | true | Toggles ability to sort by this column, for example by clicking the column header |
+| title | string | | Display title of the column, typically used for column headers |
+| template | `TemplateRef` | | Custom column template |
+| sr-title | string | | Screen reader title, used for accessibility purposes |
+| class | string | | Additional CSS class to be applied to column (header and cells) |
+
+### Events
 
 | Name | Description |
 | --- | --- |
 | `onSuccess` | The event is emitted when the task list is loaded |
 | `rowClick` | The event is emitted when the task in the list is clicked |
 
-#### Options
+### Properties
 
 | Name | Description |
 | --- | --- |
