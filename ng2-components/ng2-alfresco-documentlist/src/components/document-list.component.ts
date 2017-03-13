@@ -16,23 +16,13 @@
  */
 
 import {
-    Component,
-    OnInit,
-    Input,
-    OnChanges,
-    Output,
-    SimpleChanges,
-    EventEmitter,
-    AfterContentInit,
-    TemplateRef,
-    NgZone,
-    ViewChild,
-    HostListener
+    Component, OnInit, Input, OnChanges, Output, SimpleChanges, EventEmitter,
+    AfterContentInit, TemplateRef, NgZone, ViewChild, HostListener, ContentChild
 } from '@angular/core';
 import { Subject } from 'rxjs/Rx';
 import { MinimalNodeEntity, MinimalNodeEntryEntity, NodePaging, Pagination } from 'alfresco-js-api';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { DataRowEvent, DataTableComponent, ObjectDataColumn, DataCellEvent, DataRowActionEvent } from 'ng2-alfresco-datatable';
+import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { DataRowEvent, DataTableComponent, ObjectDataColumn, DataCellEvent, DataRowActionEvent, DataColumn } from 'ng2-alfresco-datatable';
 import { DocumentListService } from './../services/document-list.service';
 import { ContentActionModel } from './../models/content-action.model';
 import { ShareDataTableAdapter, ShareDataRow, RowFilter, ImageResolver } from './../data/share-datatable-adapter';
@@ -53,6 +43,8 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     static DEFAULT_PAGE_SIZE: number = 20;
 
     baseComponentPath = module.id.replace('components/document-list.component.js', '');
+
+    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
     fallbackThumbnail: string = this.baseComponentPath + 'assets/images/ft_ic_miscellaneous.svg';
@@ -150,7 +142,7 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
                 private ngZone: NgZone,
                 private translateService: AlfrescoTranslationService) {
 
-        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, []);
+        this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath);
 
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-documentlist', 'node_modules/ng2-alfresco-documentlist/src');
@@ -193,6 +185,18 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     }
 
     ngAfterContentInit() {
+        let schema: DataColumn[] = [];
+
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+
+        if (!this.data) {
+            this.data = new ShareDataTableAdapter(this.documentListService, this.baseComponentPath, schema);
+        } else if (schema && schema.length > 0) {
+            this.data.setColumns(schema);
+        }
+
         let columns = this.data.getColumns();
         if (!columns || columns.length === 0) {
             this.setupDefaultColumns();

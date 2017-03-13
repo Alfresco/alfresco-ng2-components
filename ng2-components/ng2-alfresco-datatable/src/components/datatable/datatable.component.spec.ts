@@ -95,14 +95,14 @@ describe('DataTable', () => {
     it('should initialize default adapter', () => {
         let table = new DataTableComponent();
         expect(table.data).toBeUndefined();
-        table.ngOnInit();
+        table.ngAfterContentInit();
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
     });
 
     it('should initialize with custom data', () => {
         let data = new ObjectDataTableAdapter([], []);
         dataTable.data = data;
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         expect(dataTable.data).toBe(data);
     });
 
@@ -130,14 +130,14 @@ describe('DataTable', () => {
 
     it('should prevent default behaviour on row click event', () => {
         let e = jasmine.createSpyObj('event', ['preventDefault']);
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         dataTable.onRowClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
     });
 
     it('should prevent default behaviour on row double-click event', () => {
         let e = jasmine.createSpyObj('event', ['preventDefault']);
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         dataTable.onRowDblClick(null, e);
         expect(e.preventDefault).toHaveBeenCalled();
     });
@@ -149,7 +149,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort if column is missing', () => {
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
         dataTable.onColumnHeaderClick(null);
@@ -157,7 +157,7 @@ describe('DataTable', () => {
     });
 
     it('should not sort upon clicking non-sortable column header', () => {
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -170,7 +170,7 @@ describe('DataTable', () => {
     });
 
     it('should set sorting upon column header clicked', () => {
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         let adapter = dataTable.data;
         spyOn(adapter, 'setSorting').and.callThrough();
 
@@ -189,7 +189,7 @@ describe('DataTable', () => {
     });
 
     it('should invert sorting upon column header clicked', () => {
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
 
         let adapter = dataTable.data;
         let sorting = new DataSorting('column_1', 'asc');
@@ -226,13 +226,13 @@ describe('DataTable', () => {
         let handler = jasmine.createSpyObj('componentHandler', ['upgradeAllRegistered']);
         window['componentHandler'] = handler;
 
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         expect(handler.upgradeAllRegistered).toHaveBeenCalled();
     });
 
     it('should upgrade MDL components only when component handler present', () => {
         expect(window['componentHandler']).toBeNull();
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
     });
 
     it('should invert "select all" status', () => {
@@ -249,7 +249,7 @@ describe('DataTable', () => {
 
         dataTable.data = data;
         dataTable.multiselect = true;
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
 
         dataTable.onSelectAllClick(null);
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -266,7 +266,7 @@ describe('DataTable', () => {
 
     it('should allow "select all" calls with no rows', () => {
         dataTable.multiselect = true;
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
 
         dataTable.onSelectAllClick(null);
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -278,7 +278,7 @@ describe('DataTable', () => {
 
         dataTable.data = data;
         dataTable.multiselect = false;
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
 
         dataTable.onSelectAllClick(null);
         expect(dataTable.isSelectAllChecked).toBe(true);
@@ -354,13 +354,13 @@ describe('DataTable', () => {
     });
 
     it('should require adapter sorting to evaluate sorting state', () => {
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         spyOn(dataTable.data, 'getSorting').and.returnValue(null);
         expect(dataTable.isColumnSorted(<DataColumn> {}, 'asc')).toBeFalsy();
     });
 
     it('should evaluate column sorting state', () => {
-        dataTable.ngOnInit();
+        dataTable.ngAfterContentInit();
         spyOn(dataTable.data, 'getSorting').and.returnValue(new DataSorting('column_1', 'asc'));
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_1'}, 'asc')).toBeTruthy();
         expect(dataTable.isColumnSorted(<DataColumn> {key: 'column_2'}, 'desc')).toBeFalsy();
