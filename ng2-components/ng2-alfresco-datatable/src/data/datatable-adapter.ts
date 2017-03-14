@@ -56,10 +56,13 @@ export class DataSorting {
 
 export class DataRowEvent extends BaseUIEvent<DataRow> {
 
-    constructor(value: DataRow, domEvent: Event) {
+    sender: any;
+
+    constructor(value: DataRow, domEvent: Event, sender?: any) {
         super();
         this.value = value;
         this.event = domEvent;
+        this.sender = sender;
     }
 
 }

@@ -288,4 +288,12 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.activitiprocessfilter.selectFilter(null);
     }
 
+    onRowClick(event) {
+        console.log(event);
+    }
+
+    onRowDblClick(event) {
+        console.log(event);
+    }
+
 }

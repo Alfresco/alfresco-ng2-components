@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, TemplateRef, AfterContentInit, ContentChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional } from '@angular/core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter } from '../../data/index';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
@@ -73,6 +73,9 @@ export class DataTableComponent implements AfterContentInit {
         return this.data.selectedRow;
     }
 
+    constructor(@Optional() private el: ElementRef) {
+    }
+
     ngAfterContentInit() {
         let schema: DataColumn[] = [];
 
@@ -101,7 +104,17 @@ export class DataTableComponent implements AfterContentInit {
             this.data.selectedRow = row;
         }
 
-        this.rowClick.emit(new DataRowEvent(row, e));
+        let event = new DataRowEvent(row, e, this);
+        this.rowClick.emit(event);
+
+        if (!event.defaultPrevented && this.el.nativeElement) {
+            this.el.nativeElement.dispatchEvent(
+                new CustomEvent('row-click', {
+                    detail: event,
+                    bubbles: true
+                })
+            );
+        }
     }
 
     onRowDblClick(row: DataRow, e?: Event) {
@@ -109,7 +122,17 @@ export class DataTableComponent implements AfterContentInit {
             e.preventDefault();
         }
 
-        this.rowDblClick.emit(new DataRowEvent(row, e));
+        let event = new DataRowEvent(row, e, this);
+        this.rowDblClick.emit(event);
+
+        if (!event.defaultPrevented && this.el.nativeElement) {
+            this.el.nativeElement.dispatchEvent(
+                new CustomEvent('row-dblclick', {
+                    detail: event,
+                    bubbles: true
+                })
+            );
+        }
     }
 
     onColumnHeaderClick(column: DataColumn) {

@@ -210,7 +210,34 @@ Here's the list of available properties you can define for a Data Column definit
 | [showRowActionsMenu](#showrowactionsmenu-event) | Emitted before actions menu is displayed for a row |
 | [executeRowAction](#executerowaction-event) | Emitted when row action is executed by user |
 
-**Advanced usage example**
+### DataTable DOM Events
+
+Below are the DOM events raised by DataTable component. 
+
+| Name | Description |
+| --- | --- |
+| row-click | Emitted when user clicks the row |
+| row-dblclick | Emitted when user double-clicks the row |
+
+These events are bubbled up the element tree and can be subscribed to from within parent components.
+
+```html
+<root-component (row-click)="onRowClick($event)">
+    <child-component>
+        <alfresco-datatable></alfresco-datatable>
+    </child-component>
+</root-component>
+```
+
+```ts
+onRowClick(event) {
+    console.log(event);
+}
+```
+
+![](docs/assets/datatable-dom-events.png)
+
+### Advanced usage
 
 ```html
 <alfresco-datatable
@@ -237,15 +264,16 @@ _This event is emitted when user clicks the row._
 Event properties:
 
 ```ts
-row: DataRow, // row clicked
-event: Event  // original HTML DOM event
+sender: any     // DataTable instance 
+value: DataRow, // row clicked
+event: Event    // original HTML DOM event
 ```
 
 Handler example:
 
 ```ts
 onRowClicked(event: DataRowEvent) {
-    console.log(event.row);
+    console.log(event.value);
 }
 ```
 
@@ -258,15 +286,16 @@ _This event is emitted when user double-clicks the row._
 Event properties:
 
 ```ts
-row: DataRow, // row clicked
-event: Event  // original HTML DOM event
+sender: any     // DataTable instance 
+value: DataRow, // row clicked
+event: Event    // original HTML DOM event
 ```
 
 Handler example:
 
 ```ts
 onRowDblClicked(event: DataRowEvent) {
-    console.log(event.row);
+    console.log(event.value);
 }
 ```
 
