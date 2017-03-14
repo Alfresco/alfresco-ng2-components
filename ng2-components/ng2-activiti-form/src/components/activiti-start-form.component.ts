@@ -117,7 +117,7 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
                     this.form = this.parseForm(form);
                     this.form.readOnly = this.readOnlyForm;
                     // this.form.processDefinitionId = this.processDefinitionId;
-                    this.formLoaded.emit(this.form);
+                    this.onFormLoaded(this.form);
                 },
                 error => this.handleError(error)
             );
@@ -131,7 +131,7 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
                     this.formName = form.processDefinitionName;
                     this.form = this.parseForm(form);
                     this.form.readOnly = this.readOnlyForm;
-                    this.formLoaded.emit(this.form);
+                    this.onFormLoaded(this.form);
                 },
                 error => this.handleError(error)
             );

@@ -6,6 +6,7 @@
            pattern="-?[0-9]*(\.[0-9]+)?"
            [attr.id]="field.id"
            [attr.required]="isRequired()"
+           [value]="field.value"
            [(ngModel)]="field.value"
            (ngModelChange)="checkVisibility(field)"
            [disabled]="field.readOnly"
