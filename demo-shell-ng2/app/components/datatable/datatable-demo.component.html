@@ -4,7 +4,9 @@
         [multiselect]="multiselect"
         [actions]="true"
         (showRowActionsMenu)="onShowRowActionsMenu($event)"
-        (executeRowAction)="onExecuteRowAction($event)">
+        (executeRowAction)="onExecuteRowAction($event)"
+        (row-click)="onRowClick($event)"
+        (row-dblclick)="onRowDblClick($event)">
       <!-- HTML column definition demo -->
         <!--
         <data-columns>

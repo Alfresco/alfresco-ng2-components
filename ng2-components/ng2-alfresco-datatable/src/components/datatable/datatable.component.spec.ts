@@ -46,10 +46,6 @@ describe('DataTable', () => {
         fixture = TestBed.createComponent(DataTableComponent);
         dataTable = fixture.componentInstance;
         element = fixture.debugElement.nativeElement;
-
-        // usernameInput = element.querySelector('#username');
-        // passwordInput = element.querySelector('#password');
-
         fixture.detectChanges();
     });
 
@@ -93,7 +89,7 @@ describe('DataTable', () => {
     });
 
     it('should initialize default adapter', () => {
-        let table = new DataTableComponent();
+        let table = new DataTableComponent(null);
         expect(table.data).toBeUndefined();
         table.ngAfterContentInit();
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
@@ -122,6 +118,28 @@ describe('DataTable', () => {
 
         dataTable.rowDblClick.subscribe(e => {
             expect(e.value).toBe(row);
+            done();
+        });
+
+        dataTable.onRowDblClick(row, null);
+    });
+
+    it('should emit row-click dom event', (done) => {
+        let row = <DataRow> {};
+
+        fixture.nativeElement.addEventListener('row-click', (e) => {
+            expect(e.detail.value).toBe(row);
+            done();
+        });
+
+        dataTable.onRowClick(row, null);
+    });
+
+    it('should emit row-dblclick dom event', (done) => {
+        let row = <DataRow> {};
+
+        fixture.nativeElement.addEventListener('row-dblclick', (e) => {
+            expect(e.detail.value).toBe(row);
             done();
         });
 
