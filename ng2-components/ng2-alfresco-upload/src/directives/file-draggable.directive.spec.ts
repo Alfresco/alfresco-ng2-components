@@ -19,7 +19,7 @@ import { FileDraggableDirective } from '../directives/file-draggable.directive';
 
 describe('FileDraggableDirective', () => {
 
-    let component;
+    let component: FileDraggableDirective;
 
     beforeEach( () => {
         component = new FileDraggableDirective();
@@ -51,7 +51,7 @@ describe('FileDraggableDirective', () => {
             done();
         });
 
-        component._onDropFiles(fakeEvent);
+        component.onDropFiles(fakeEvent);
     });
 
     it('should emit onFilesDropped event when a file is dragged not with Chrome' , (done) => {
@@ -70,7 +70,7 @@ describe('FileDraggableDirective', () => {
             done();
         });
 
-        component._onDropFiles(fakeEvent);
+        component.onDropFiles(fakeEvent);
     });
 
     it('should emit onFilesDropped event when a file is dragged with Chrome', (done) => {
@@ -90,7 +90,7 @@ describe('FileDraggableDirective', () => {
             done();
         });
 
-        component._onDropFiles(fakeEvent);
+        component.onDropFiles(fakeEvent);
     });
 
     it('should take the focus when the drag enter is called', () => {
@@ -98,7 +98,7 @@ describe('FileDraggableDirective', () => {
         spyOn(mockEvent, 'preventDefault');
 
         expect(component.getInputFocus()).toBe(false);
-        component._onDragEnter(mockEvent);
+        component.onDragEnter(mockEvent);
         expect(component.getInputFocus()).toBe(true);
     });
 });
