@@ -122,3 +122,16 @@
 .alfresco-datatable__row--selected {
     color: rgb(68,138,255);
 }
+
+.adf-upload__dragging > td {
+    border-top: 1px dashed rgb(68,138,255);
+    border-bottom: 1px dashed rgb(68,138,255);
+}
+
+.adf-upload__dragging > td:first-child {
+    border-left: 1px dashed rgb(68,138,255);
+}
+
+.adf-upload__dragging > td:last-child {
+    border-right: 1px dashed rgb(68,138,255);
+}

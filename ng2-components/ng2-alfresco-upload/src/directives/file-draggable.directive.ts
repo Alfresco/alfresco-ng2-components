@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Directive, EventEmitter, Output } from '@angular/core';
+import { Directive, HostListener, HostBinding, EventEmitter, Output } from '@angular/core';
 
 /**
  * [file-draggable]
@@ -29,16 +29,11 @@ import { Directive, EventEmitter, Output } from '@angular/core';
  * @returns {FileDraggableDirective} .
  */
 @Directive({
-    selector: '[file-draggable]',
-    host: {
-        '(drop)': '_onDropFiles($event)',
-        '(dragenter)': '_onDragEnter($event)',
-        '(dragleave)': '_onDragLeave($event)',
-        '(dragover)': '_onDragOver($event)',
-        '[class.input-focus]': '_inputFocusClass'
-    }
+    selector: '[file-draggable]'
 })
 export class FileDraggableDirective {
+
+    files: File [];
 
     @Output()
     onFilesDropped: EventEmitter<any> = new EventEmitter();
@@ -49,41 +44,39 @@ export class FileDraggableDirective {
     @Output()
     onFolderEntityDropped: EventEmitter<any> = new EventEmitter();
 
-    files: File [];
-
-    private _inputFocusClass: boolean = false;
-
-    constructor() {
-    }
+    @HostBinding('class.file-draggable__input-focus')
+    inputFocusClass: boolean = false;
 
     /**
      * Method called when files is dropped in the drag and drop area.
-     *
-     * @param {$event} $event - DOM $event.
+     * @param event DOM event.
      */
-    _onDropFiles($event: any): void {
-        this._preventDefault($event);
+    @HostListener('drop', ['$event'])
+    onDropFiles(event: any): void {
+        if (!event.defaultPrevented) {
+            this.preventDefault(event);
 
-        let items = $event.dataTransfer.items;
-        if (items) {
-            for (let i = 0; i < items.length; i++) {
-                if (typeof items[i].webkitGetAsEntry !== 'undefined') {
-                    let item = items[i].webkitGetAsEntry();
-                    if (item) {
-                        this._traverseFileTree(item);
+            let items = event.dataTransfer.items;
+            if (items) {
+                for (let i = 0; i < items.length; i++) {
+                    if (typeof items[i].webkitGetAsEntry !== 'undefined') {
+                        let item = items[i].webkitGetAsEntry();
+                        if (item) {
+                            this.traverseFileTree(item);
+                        }
+                    } else {
+                        let files = event.dataTransfer.files;
+                        this.onFilesDropped.emit(files);
                     }
-                } else {
-                    let files = $event.dataTransfer.files;
-                    this.onFilesDropped.emit(files);
                 }
+            } else {
+                // safari or FF
+                let files = event.dataTransfer.files;
+                this.onFilesDropped.emit(files);
             }
-        } else {
-            // safari or FF
-            let files = $event.dataTransfer.files;
-            this.onFilesDropped.emit(files);
-        }
 
-        this._inputFocusClass = false;
+            this.inputFocusClass = false;
+        }
     }
 
     /**
@@ -91,7 +84,7 @@ export class FileDraggableDirective {
      *
      * @param {Object} item - can contains files or folders.
      */
-    private _traverseFileTree(item: any): void {
+    private traverseFileTree(item: any): void {
         if (item.isFile) {
             let self = this;
             self.onFilesEntityDropped.emit(item);
@@ -105,44 +98,50 @@ export class FileDraggableDirective {
     /**
      * Change the style of the drag area when a file drag in.
      *
-     * @param {$event} $event - DOM $event.
+     * @param {event} event - DOM event.
      */
-    _onDragEnter($event: Event): void {
-        this._preventDefault($event);
-
-        this._inputFocusClass = true;
+    @HostListener('dragenter', ['$event'])
+    onDragEnter(event: Event): void {
+        if (!event.defaultPrevented) {
+            this.preventDefault(event);
+            this.inputFocusClass = true;
+        }
     }
 
     /**
      * Change the style of the drag area when a file drag out.
      *
-     * @param {$event} $event - DOM $event.
+     * @param {event} event - DOM event.
      */
-    _onDragLeave($event: Event): void {
-        this._preventDefault($event);
-
-        this._inputFocusClass = false;
+    @HostListener('dragleave', ['$event'])
+    onDragLeave(event: Event): void {
+        if (!event.defaultPrevented) {
+            this.preventDefault(event);
+            this.inputFocusClass = false;
+        }
     }
 
     /**
      * Change the style of the drag area when a file is over the drag area.
      *
-     * @param $event
-     * @private
+     * @param event
      */
-    _onDragOver($event: Event): void {
-        this._preventDefault($event);
-        this._inputFocusClass = true;
+    @HostListener('dragover', ['$event'])
+    onDragOver(event: Event): void {
+        if (!event.defaultPrevented) {
+            this.preventDefault(event);
+            this.inputFocusClass = true;
+        }
     }
 
     /**
      * Prevent default and stop propagation of the DOM event.
      *
-     * @param {$event} $event - DOM $event.
+     * @param {event} $event - DOM event.
      */
-    _preventDefault($event: Event): void {
-        $event.stopPropagation();
-        $event.preventDefault();
+    preventDefault(event: Event): void {
+        event.stopPropagation();
+        event.preventDefault();
     }
 
     /**
@@ -150,6 +149,6 @@ export class FileDraggableDirective {
      * @returns {boolean}
      */
     getInputFocus () {
-        return this._inputFocusClass;
+        return this.inputFocusClass;
     }
 }

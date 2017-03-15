@@ -184,6 +184,7 @@ You can also use HTML-based schema declaration like shown below:
 | `actionsPosition` | string (left\|right) | right | Position of the actions dropdown menu. | 
 | `fallbackThumbnail` | string |  | Fallback image for row ehre thubnail is missing|
 | `contextMenu` | boolean | false | Toggles custom context menu for the component |
+| `allowDropFiles` | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 
 ### DataColumn Properties
 

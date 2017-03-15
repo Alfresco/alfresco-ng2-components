@@ -73,15 +73,34 @@ export class UploadDragAreaComponent {
     }
 
     /**
+     * Handles 'upload-files' events raised by child components.
+     * @param e DOM event
+     */
+    onUploadFiles(e: CustomEvent) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        let files = e.detail.files;
+        if (files && files.length > 0) {
+            if (e.detail.data.obj.entry.isFolder) {
+                let id = e.detail.data.obj.entry.id;
+                this.onFilesDropped(files, id, '/');
+            } else {
+                this.onFilesDropped(files);
+            }
+        }
+    }
+
+    /**
      * Method called when files are dropped in the drag area.
      *
      * @param {File[]} files - files dropped in the drag area.
      */
-    onFilesDropped(files: File[]): void {
+    onFilesDropped(files: File[], rootId?: string, directory?: string): void {
         if (files.length) {
             if (this.checkValidity(files)) {
                 this.uploadService.addToQueue(files);
-                this.uploadService.uploadFilesInTheQueue(this.rootFolderId, this.currentFolderPath, this.onSuccess);
+                this.uploadService.uploadFilesInTheQueue(rootId || this.rootFolderId, directory || this.currentFolderPath, this.onSuccess);
                 let latestFilesAdded = this.uploadService.getQueue();
                 if (this.showNotificationBar) {
                     this.showUndoNotificationBar(latestFilesAdded);
