@@ -47,7 +47,9 @@ export class UploadDirective {
     @HostListener('dragover', ['$event'])
     onDragOver(event: Event) {
         if (this.enabled) {
-            event.preventDefault();
+            if (event) {
+                event.preventDefault();
+            }
             this.isDragging = true;
         }
     }
@@ -79,20 +81,7 @@ export class UploadDirective {
                 });
 
                 this.el.nativeElement.dispatchEvent(e);
-                if (!e.defaultPrevented) {
-                    this.onFilesDropped(files);
-                }
             }
-        }
-    }
-
-    /**
-     * Raised when decorated container gets files dropped.
-     * @param files Files dropped
-     */
-    protected onFilesDropped(files: File[]) {
-        if (this.enabled && this.debug) {
-            console.log(files);
         }
     }
 
@@ -102,15 +91,18 @@ export class UploadDirective {
      */
     protected getFilesDropped(dataTransfer: DataTransfer): File[] {
         let result: File[] = [];
-        let items: DataTransferItemList = dataTransfer.items;
 
-        if (items && items.length > 0) {
-            for (let i = 0; i < items.length; i++) {
-                let item: DataTransferItem = items[i];
-                if (item.type) {
-                    let file = item.getAsFile();
-                    if (file) {
-                        result.push(file);
+        if (dataTransfer) {
+            let items: DataTransferItemList = dataTransfer.items;
+
+            if (items && items.length > 0) {
+                for (let i = 0; i < items.length; i++) {
+                    let item: DataTransferItem = items[i];
+                    if (item.type) {
+                        let file = item.getAsFile();
+                        if (file) {
+                            result.push(file);
+                        }
                     }
                 }
             }
