@@ -184,9 +184,10 @@ The properties currentFolderId, folderNode and node are the entry initialization
 | `contentActionsPosition` | string (left\|right) | right | Position of the content actions dropdown menu. |
 | `contextMenuActions` | boolean | false | Toggles context menus for each row |
 | `enablePagination` | boolean | true | Shows pagination |
-| `creationMenuActions` | boolean | true | Toggles the creation menu actions|
-| `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter).
-| `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver).
+| `creationMenuActions` | boolean | true | Toggles the creation menu actions |
+| `rowFilter` | `RowFilter` | | Custom row filter, [see more](#custom-row-filter). |
+| `imageResolver` | `ImageResolver` | | Custom image resolver, [see more](#custom-image-resolver). |
+| `allowDropFiles` | boolean | false | Toggle file drop support for rows (see **ng2-alfresco-core/UploadDirective** for more details) |
 
 ### Events
 
