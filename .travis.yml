@@ -54,9 +54,8 @@ before_script:
         (cd ng2-components/ng2-alfresco-documentlist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; if [ ! -d "bundles" ]; then npm link; fi);
     fi
   - cd ng2-components/$MODULE;
-  - npm run travis;
 #npm insall run install
-script: npm install && npm run test
+script: npm install && npm run travis && npm run test
 # Send coverage data to Coveralls
 after_success:
   bash <(curl -s https://codecov.io/bash) -X gcov
