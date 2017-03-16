@@ -151,7 +151,7 @@ export class UploadDragAreaComponent {
             let relativePath = folder.fullPath.replace(folder.name, '');
             relativePath = this.currentFolderPath + relativePath;
 
-            this.uploadService.createFolder(relativePath, folder.name)
+            this.uploadService.createFolder(relativePath, folder.name, this.rootFolderId)
                 .subscribe(
                     message => {
                         this.onSuccess.emit({
