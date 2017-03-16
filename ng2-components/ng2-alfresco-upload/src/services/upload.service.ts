@@ -162,17 +162,14 @@ export class UploadService {
      * Create a folder
      * @param name - the folder name
      */
-    createFolder(relativePath: string, name: string) {
-        return Observable.fromPromise(this.callApiCreateFolder(relativePath, name))
-            .map(res => {
-                return res;
-            })
+    createFolder(relativePath: string, name: string, parentId?: string) {
+        return Observable.fromPromise(this.callApiCreateFolder(relativePath, name, parentId))
             .do(data => this.logService.info('Node data', data)) // eyeball results in the console
             .catch(err => this.handleError(err));
     }
 
-    callApiCreateFolder(relativePath: string, name: string): Promise<MinimalNodeEntity> {
-        return this.apiService.getInstance().nodes.createFolder(name, relativePath);
+    callApiCreateFolder(relativePath: string, name: string, parentId?: string): Promise<MinimalNodeEntity> {
+        return this.apiService.getInstance().nodes.createFolder(name, relativePath, parentId);
     }
 
     /**

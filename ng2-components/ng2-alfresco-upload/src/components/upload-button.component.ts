@@ -128,7 +128,7 @@ export class UploadButtonComponent {
             let directoryName = this.getDirectoryName(directoryPath);
             let absolutePath = this.currentFolderPath + this.getDirectoryPath(directoryPath);
 
-            this.uploadService.createFolder(absolutePath, directoryName)
+            this.uploadService.createFolder(absolutePath, directoryName, this.rootFolderId)
                 .subscribe(
                     res => {
                         let relativeDir = this.currentFolderPath + '/' + directoryPath;

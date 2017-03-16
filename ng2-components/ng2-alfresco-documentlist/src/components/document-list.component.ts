@@ -82,6 +82,9 @@ export class DocumentListComponent implements OnInit, OnChanges, AfterContentIni
     @Input()
     emptyFolderImageUrl: string = this.baseComponentPath + 'assets/images/empty_doc_lib.svg';
 
+    @Input()
+    allowDropFiles: boolean = false;
+
     skipCount: number = 0;
 
     pagination: Pagination;

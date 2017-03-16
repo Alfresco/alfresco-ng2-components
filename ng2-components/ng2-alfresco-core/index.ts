@@ -39,6 +39,7 @@ import {
     NotificationService
 } from './src/services/index';
 
+import { UploadDirective } from './src/directives/upload.directive';
 import { DataColumnComponent } from './src/components/data-column/data-column.component';
 import { DataColumnListComponent } from './src/components/data-column/data-column-list.component';
 import { MATERIAL_DESIGN_DIRECTIVES } from './src/components/material/index';
@@ -48,6 +49,7 @@ export * from './src/services/index';
 export * from './src/components/index';
 export * from './src/components/data-column/data-column.component';
 export * from './src/components/data-column/data-column-list.component';
+export * from './src/directives/upload.directive';
 export * from './src/utils/index';
 export * from './src/events/base.event';
 export * from './src/events/base-ui.event';
@@ -90,6 +92,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
     declarations: [
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
+        UploadDirective,
         DataColumnComponent,
         DataColumnListComponent
     ],
@@ -105,6 +108,7 @@ export function createTranslateLoader(http: Http, logService: LogService) {
         TranslateModule,
         ...MATERIAL_DESIGN_DIRECTIVES,
         ...CONTEXT_MENU_DIRECTIVES,
+        UploadDirective,
         DataColumnComponent,
         DataColumnListComponent
     ]

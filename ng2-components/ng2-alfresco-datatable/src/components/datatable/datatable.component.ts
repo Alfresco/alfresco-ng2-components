@@ -51,6 +51,9 @@ export class DataTableComponent implements AfterContentInit {
     @Input()
     contextMenu: boolean = false;
 
+    @Input()
+    allowDropFiles: boolean = false;
+
     @Output()
     rowClick: EventEmitter<DataRowEvent> = new EventEmitter<DataRowEvent>();
 
