@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-import { Directive, Input, HostBinding, HostListener, ElementRef } from '@angular/core';
+import { Directive, Input, HostBinding, HostListener, ElementRef, Renderer, OnInit } from '@angular/core';
 
 @Directive({
     selector: '[adf-upload]'
 })
-export class UploadDirective {
+export class UploadDirective implements OnInit {
 
     @Input('adf-upload')
     enabled: boolean = true;
@@ -29,24 +29,67 @@ export class UploadDirective {
     data: any;
 
     @Input()
+    mode: string[] = ['drop']; // click|drop
+
+    @Input()
+    multiple: boolean;
+
+    @Input()
+    accept: string;
+
+    @Input()
+    directory: boolean;
+
+    @Input()
     debug: boolean = false;
 
     @HostBinding('class.adf-upload__dragging')
     isDragging: boolean;
 
-    constructor(private el: ElementRef) {
+    private upload: HTMLInputElement;
+
+    constructor(private el: ElementRef, private renderer: Renderer) {
+    }
+
+    ngOnInit() {
+        if (this.isClickMode() && this.renderer) {
+            this.upload = this.renderer.createElement(this.el.nativeElement.parentNode, 'input') as HTMLInputElement;
+            this.upload.type = 'file';
+            this.upload.style.display = 'none';
+            this.upload.addEventListener('change', e => this.onSelectFiles(e));
+
+            if (this.multiple) {
+                this.upload.setAttribute('multiple', '');
+            }
+
+            if (this.accept) {
+                this.upload.setAttribute('accept', this.accept);
+            }
+
+            if (this.directory) {
+                this.upload.setAttribute('webkitdirectory', '');
+            }
+        }
+    }
+
+    @HostListener('click', ['$event'])
+    onClick(event: Event) {
+        if (this.isClickMode() && this.upload) {
+            event.preventDefault();
+            this.upload.click();
+        }
     }
 
     @HostListener('dragenter')
     onDragEnter() {
-        if (this.enabled) {
+        if (this.isDropMode()) {
             this.isDragging = true;
         }
     }
 
     @HostListener('dragover', ['$event'])
     onDragOver(event: Event) {
-        if (this.enabled) {
+        if (this.isDropMode()) {
             if (event) {
                 event.preventDefault();
             }
@@ -56,33 +99,49 @@ export class UploadDirective {
 
     @HostListener('dragleave')
     onDragLeave() {
-        if (this.enabled) {
+        if (this.isDropMode()) {
             this.isDragging = false;
         }
     }
 
     @HostListener('drop', ['$event'])
     onDrop(event: DragEvent) {
-        if (this.enabled) {
+        if (this.isDropMode()) {
             event.preventDefault();
             event.stopPropagation();
 
             this.isDragging = false;
 
-            let files = this.getFilesDropped(event.dataTransfer);
-            if (files.length > 0) {
-                let e = new CustomEvent('upload-files', {
-                    detail: {
-                        sender: this,
-                        data: this.data,
-                        files: files
-                    },
-                    bubbles: true
-                });
-
-                this.el.nativeElement.dispatchEvent(e);
-            }
+            const files = this.getFilesDropped(event.dataTransfer);
+            this.onUploadFiles(files);
         }
+    }
+
+    onUploadFiles(files: File[]) {
+        if (this.enabled && files.length > 0) {
+            let e = new CustomEvent('upload-files', {
+                detail: {
+                    sender: this,
+                    data: this.data,
+                    files: files
+                },
+                bubbles: true
+            });
+
+            this.el.nativeElement.dispatchEvent(e);
+        }
+    }
+
+    protected hasMode(mode: string): boolean {
+        return this.enabled && mode && this.mode && this.mode.indexOf(mode) > -1;
+    }
+
+    protected isDropMode(): boolean {
+        return this.hasMode('drop');
+    }
+
+    protected isClickMode(): boolean {
+        return this.hasMode('click');
     }
 
     /**
@@ -109,5 +168,31 @@ export class UploadDirective {
         }
 
         return result;
+    }
+
+    /**
+     * Extract files from the FileList object used to hold files that user selected by means of File Dialog.
+     * @param fileList List of selected files
+     */
+    protected getFilesSelected(fileList: FileList) {
+        let result: File[] = [];
+        if (fileList && fileList.length > 0) {
+            for (let i = 0; i < fileList.length; i++) {
+                result.push(fileList[i]);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Invoked when user selects files or folders by means of File Dialog
+     * @param e DOM event
+     */
+    protected onSelectFiles(e: Event) {
+        if (this.isClickMode()) {
+            const input = (<HTMLInputElement>e.currentTarget);
+            const files = this.getFilesSelected(input.files);
+            this.onUploadFiles(files);
+        }
     }
 }
