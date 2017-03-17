@@ -1,4 +1,4 @@
-<div [ngSwitch]="fieldType" class="display-value-widget" *ngIf="field?.isVisible">
+<div [ngSwitch]="fieldType" class="display-value-widget {{field.className}}" *ngIf="field?.isVisible">
     <div *ngSwitchCase="'boolean'">
         <label class="mdl-checkbox mdl-js-checkbox" [attr.for]="field.id" >
             <input type="checkbox"

@@ -1,4 +1,4 @@
-<div class="mdl-grid mdl-grid__date-widget" *ngIf="field?.isVisible" id="data-widget">
+<div class="mdl-grid mdl-grid__date-widget {{field.className}}" *ngIf="field?.isVisible" id="data-widget">
     <div class="mdl-cell mdl-cell--11-col">
         <div class="mdl-textfield mdl-js-textfield date-widget"
              [class.date-widget__invalid]="!field.isValid">
