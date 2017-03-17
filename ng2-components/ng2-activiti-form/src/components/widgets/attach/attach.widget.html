@@ -1,5 +1,4 @@
-<div class="attach-widget">
-
+<div class="attach-widget {{field.className}}">
     <label [attr.for]="field.id">{{field.name}}</label>
     <div>
         <span *ngIf="hasFile()" class="attach-widget__file mdl-chip"><span class="mdl-chip__text">{{getLinkedFileName()}}</span></span>

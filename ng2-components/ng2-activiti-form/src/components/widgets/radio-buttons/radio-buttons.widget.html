@@ -1,4 +1,4 @@
-<div class="radio-buttons-widget"
+<div class="radio-buttons-widget {{field.className}}"
      [class.radio-buttons-widget__invalid]="!field.isValid" [id]="field.id" *ngIf="field?.isVisible">
     <label class="radio-buttons-widget__label" [attr.for]="field.id">{{field.name}}</label>
     <div *ngFor="let opt of field.options">
