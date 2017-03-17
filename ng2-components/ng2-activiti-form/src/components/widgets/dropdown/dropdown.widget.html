@@ -1,4 +1,4 @@
-<div class="dropdown-widget"
+<div class="dropdown-widget {{field.className}}"
      [class.dropdown-widget__invalid]="!field.isValid" *ngIf="field?.isVisible">
     <label class="dropdown-widget__label" [attr.for]="field.id">{{field.name}}</label>
     <select class="dropdown-widget__select"

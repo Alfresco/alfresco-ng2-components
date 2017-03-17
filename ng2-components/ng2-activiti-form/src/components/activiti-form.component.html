@@ -3,7 +3,7 @@
         <h3 style="text-align: center">Please select a Task</h3>
     </div>
     <div *ngIf="hasForm()">
-        <div class="mdl-card mdl-shadow--2dp activiti-form-container">
+        <div class="mdl-card mdl-shadow--2dp activiti-form-container {{form.className}}">
             <div class="mdl-card__title">
                 <i *ngIf="showValidationIcon" class="material-icons">{{ form.isValid ? 'event_available' : 'event_busy' }}</i>
                 <h2 *ngIf="isTitleEnabled()" class="mdl-card__title-text">{{form.taskName}}</h2>

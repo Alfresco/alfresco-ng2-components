@@ -44,6 +44,7 @@ export class FormModel {
         return this._isValid;
     }
 
+    className: string;
     readOnly: boolean = false;
     tabs: TabModel[] = [];
     /** Stores root containers */
@@ -81,6 +82,7 @@ export class FormModel {
             this.processDefinitionId = json.processDefinitionId;
             this.customFieldTemplates = json.customFieldTemplates || {};
             this.selectedOutcome = json.selectedOutcome || {};
+            this.className = json.className || '';
 
             let tabCache: FormWidgetModelCache<TabModel> = {};
 
