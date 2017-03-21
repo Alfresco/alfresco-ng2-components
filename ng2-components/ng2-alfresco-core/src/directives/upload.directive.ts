@@ -149,20 +149,14 @@ export class UploadDirective implements OnInit {
      * @param dataTransfer DataTransfer object
      */
     protected getFilesDropped(dataTransfer: DataTransfer): File[] {
-        let result: File[] = [];
+        const result: File[] = [];
 
         if (dataTransfer) {
-            let items: DataTransferItemList = dataTransfer.items;
+            const items: FileList = dataTransfer.files;
 
             if (items && items.length > 0) {
                 for (let i = 0; i < items.length; i++) {
-                    let item: DataTransferItem = items[i];
-                    if (item.type) {
-                        let file = item.getAsFile();
-                        if (file) {
-                            result.push(file);
-                        }
-                    }
+                result.push(items[i]);
                 }
             }
         }
