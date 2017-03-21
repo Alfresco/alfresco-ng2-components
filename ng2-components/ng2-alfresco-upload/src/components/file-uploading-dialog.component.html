@@ -4,17 +4,17 @@
             <span id="total-upload-completed">{{totalCompleted}}</span> {{ totalCompletedMsg | translate}}
         </div>
         <div class="buttons">
-            <div class="minimize-button" [ngClass]="{active: _isDialogMinimized}" (keyup.enter)="toggleDialogMinimize()" (click)="toggleDialogMinimize()" tabindex="0">
+            <div class="minimize-button" [ngClass]="{active: isDialogMinimized}" (keyup.enter)="toggleMinimized()" (click)="toggleMinimized()" tabindex="0">
                 <i class="material-icons down" title="minimize upload list">keyboard_arrow_down</i>
                 <i class="material-icons up" title="expand upload list">keyboard_arrow_up</i>
             </div>
 
-            <div class="close-button" (click)="toggleShowDialog()" (keyup.enter)="toggleShowDialog()" tabindex="0" title="close upload list">
+            <div class="close-button" (click)="toggleVisible()" (keyup.enter)="toggleVisible()" tabindex="0" title="close upload list">
                 <i class="material-icons">clear</i>
             </div>
         </div>
     </div>
-    <div class="body-dialog" *ngIf="filesUploadingList"  [ngClass]="{hide: _isDialogMinimized}">
-        <alfresco-file-uploading-list [filesUploadingList]="filesUploadingList"></alfresco-file-uploading-list>
+    <div class="body-dialog" *ngIf="filesUploadingList"  [ngClass]="{hide: isDialogMinimized}">
+        <alfresco-file-uploading-list [files]="filesUploadingList"></alfresco-file-uploading-list>
     </div>
 </div>

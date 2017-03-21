@@ -80,7 +80,7 @@ describe('FileUploadingDialogComponent', () => {
     });
 
     it('should render dialog box with css class show when an element is added to Observer', () => {
-        uploadService.addToQueue([file]);
+        uploadService.addToQueue([<File> { name: 'file' }]);
         component.filesUploadingList = [file];
 
         fixture.detectChanges();
@@ -88,8 +88,8 @@ describe('FileUploadingDialogComponent', () => {
         expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
     });
 
-    it('should render dialog box with css class show when the toggleShowDialog is called', () => {
-        component.toggleShowDialog();
+    it('should render dialog box with css class show when the toggleVisible is called', () => {
+        component.toggleVisible();
         fixture.detectChanges();
 
         expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog show');
@@ -98,7 +98,7 @@ describe('FileUploadingDialogComponent', () => {
     it('should render dialog box with css class hide', () => {
         component.isDialogActive = true;
 
-        component.toggleShowDialog();
+        component.toggleVisible();
         fixture.detectChanges();
 
         expect(element.querySelector('.file-dialog').getAttribute('class')).toEqual('file-dialog');
@@ -107,7 +107,7 @@ describe('FileUploadingDialogComponent', () => {
     it('should render minimize dialog as default', () => {
         component.isDialogActive = true;
 
-        component.toggleDialogMinimize();
+        component.toggleMinimized();
         fixture.detectChanges();
 
         expect(element.querySelector('.minimize-button').getAttribute('class')).toEqual('minimize-button active');

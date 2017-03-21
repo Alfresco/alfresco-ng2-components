@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { FileModel } from '../models/file.model';
 import { AlfrescoTranslationService } from 'ng2-alfresco-core';
 import { UploadService } from '../services/upload.service';
 
 /**
- * <file-uploading-dialog [filesUploadingList]="FileModel[]" ></file-uploading-dialog>
+ * <file-uploading-dialog [filesUploadingList]="FileModel[]"></file-uploading-dialog>
  *
  * This component is a hideable and minimizable wich contains the list of the uploading
  * files contained in the filesUploadingList.
@@ -35,20 +35,17 @@ import { UploadService } from '../services/upload.service';
     selector: 'file-uploading-dialog',
     moduleId: module.id,
     templateUrl: './file-uploading-dialog.component.html',
-    styleUrls: ['./file-uploading-dialog.component.css'],
-    host: {'[class.dialog-show]': 'toggleShowDialog'}
+    styleUrls: ['./file-uploading-dialog.component.css']
 })
 export class FileUploadingDialogComponent implements OnInit, OnDestroy {
 
-    isDialogActive: boolean = false;
-
+    @Input()
     filesUploadingList: FileModel [];
 
+    isDialogActive: boolean = false;
     totalCompleted: number = 0;
-
     totalCompletedMsg: string = 'FILE_UPLOAD.MESSAGES.SINGLE_COMPLETED';
-
-    private _isDialogMinimized: boolean = false;
+    isDialogMinimized: boolean = false;
 
     private listSubscription: any;
     private counterSubscription: any;
@@ -83,17 +80,17 @@ export class FileUploadingDialogComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Display and hide the dialog component.
+     * Toggle dialog visibility state.
      */
-    toggleShowDialog() {
+    toggleVisible(): void {
         this.isDialogActive = !this.isDialogActive;
     }
 
     /**
-     * Minimize and expand the dialog component.
+     * Toggle dialog minimized state.
      */
-    toggleDialogMinimize() {
-        this._isDialogMinimized = !this._isDialogMinimized;
+    toggleMinimized(): void {
+        this.isDialogMinimized = !this.isDialogMinimized;
     }
 
     ngOnDestroy() {
