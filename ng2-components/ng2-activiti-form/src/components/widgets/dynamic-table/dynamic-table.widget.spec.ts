@@ -18,7 +18,7 @@
 import { LogServiceMock } from 'ng2-alfresco-core';
 import { DynamicTableWidget } from './dynamic-table.widget';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './dynamic-table.widget.model';
-import { FormModel, FormFieldTypes } from './../core/index';
+import { FormModel, FormFieldTypes, FormFieldModel } from './../core/index';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
 
 describe('DynamicTableWidget', () => {
@@ -30,7 +30,8 @@ describe('DynamicTableWidget', () => {
 
     beforeEach(() => {
         logService = new LogServiceMock();
-        table = new DynamicTableModel(null);
+        const field = new FormFieldModel(new FormModel());
+        table = new DynamicTableModel(field);
         visibilityService = new WidgetVisibilityService(null, logService);
         widget = new DynamicTableWidget(null, visibilityService, logService);
         widget.content = table;
@@ -223,11 +224,12 @@ describe('DynamicTableWidget', () => {
 
     it('should take validation state from underlying field', () => {
         let form = new FormModel();
-        widget.content = new DynamicTableModel(form, {
+        let field = new FormFieldModel(form, {
             type: FormFieldTypes.DYNAMIC_TABLE,
             required: true,
             value: null
         });
+        widget.content = new DynamicTableModel(field);
 
         expect(widget.content.field.validate()).toBeFalsy();
         expect(widget.isValid()).toBe(widget.content.field.isValid);

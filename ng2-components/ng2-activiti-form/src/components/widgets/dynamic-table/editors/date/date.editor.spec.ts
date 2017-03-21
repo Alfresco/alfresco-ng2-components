@@ -19,6 +19,7 @@ import { ElementRef } from '@angular/core';
 import { DateEditorComponent } from './date.editor';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn } from './../../dynamic-table.widget.model';
 import * as moment from 'moment';
+import { FormFieldModel, FormModel } from '../../../index';
 
 describe('DateEditorComponent', () => {
 
@@ -36,7 +37,8 @@ describe('DateEditorComponent', () => {
 
         row = <DynamicTableRow> { value: { date: '1879-03-14T00:00:00.000Z' } };
         column = <DynamicTableColumn> { id: 'date', type: 'Date' };
-        table = new DynamicTableModel(null);
+        const field = new FormFieldModel(new FormModel());
+        table = new DynamicTableModel(field);
         table.rows.push(row);
         table.columns.push(column);
 
