@@ -169,4 +169,39 @@ describe('UploadButtonComponent', () => {
 
         component.onDirectoryAdded(fakeEvent);
     });
+
+    it('should by default the title of the button get from the JSON file', () => {
+        let compiled = fixture.debugElement.nativeElement;
+        fixture.detectChanges();
+        component.uploadFolders = false;
+        component.multipleFiles = false;
+
+        expect(compiled.querySelector('#upload-single-file-label').textContent).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
+
+        component.multipleFiles = true;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-multiple-file-label').textContent).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FILE');
+
+        component.uploadFolders = true;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#uploadFolder-label').textContent).toEqual('FILE_UPLOAD.BUTTON.UPLOAD_FOLDER');
+    });
+
+    it('should staticTitle properties change the title of the upload buttons', () => {
+        let compiled = fixture.debugElement.nativeElement;
+        component.staticTitle = 'test-text';
+        component.uploadFolders = false;
+        component.multipleFiles = false;
+
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-single-file-label-static').textContent).toEqual('test-text');
+
+        component.multipleFiles = true;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#upload-multiple-file-label-static').textContent).toEqual('test-text');
+
+        component.uploadFolders = true;
+        fixture.detectChanges();
+        expect(compiled.querySelector('#uploadFolder-label-static').textContent).toEqual('test-text');
+    });
 });
