@@ -1,32 +1,38 @@
-<div [ngClass]="{hide:  isUploadCompleted()}" [ngClass]="{show:   !isUploadCompleted()}"
-     class="body-dialog-header">
+<div class="body-dialog-header" *ngIf="!isUploadCompleted()">
     <div class="body-dialog-action"></div>
-    <div class="body-dialog-cancel"><a data-automation-id="cancel_upload_all" href="#" (click)="cancelAllFiles($event)">{{'FILE_UPLOAD.BUTTON.CANCEL' | translate}}</a></div>
+    <div class="body-dialog-cancel">
+        <a data-automation-id="cancel_upload_all" href="#" (click)="cancelAllFiles($event)">{{'FILE_UPLOAD.BUTTON.CANCEL_ALL' | translate}}</a>
+    </div>
 </div>
 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <tr>
-        <th>{{'FILE_UPLOAD.FILE_INFO.NAME' | translate}}</th>
-        <th>{{'FILE_UPLOAD.FILE_INFO.PROGRESS' | translate}}</th>
-        <th class="mdl-cell--hide-phone size-column">{{'FILE_UPLOAD.FILE_INFO.SIZE' | translate}}</th>
-        <th>{{'FILE_UPLOAD.FILE_INFO.ACTION' | translate}}</th>
+        <th class="mdl-data-table__cell--non-numeric">{{'FILE_UPLOAD.FILE_INFO.NAME' | translate}}</th>
+        <th class="mdl-data-table__cell--non-numeric">{{'FILE_UPLOAD.FILE_INFO.PROGRESS' | translate}}</th>
+        <th class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone size-column">{{'FILE_UPLOAD.FILE_INFO.SIZE' | translate}}</th>
+        <th class="mdl-data-table__cell--non-numeric">{{'FILE_UPLOAD.FILE_INFO.ACTION' | translate}}</th>
     </tr>
-    <tr *ngFor="let file of filesUploadingList" tabindex="0">
-        <td attr.data-automation-id="dialog_{{file.name}}" class="mdl-data-table__cell--non-numeric"><div class="truncate">{{file.name}}</div></td>
-        <td _ngcontent-hvq-3="">
-            <div _ngcontent-hvq-3="" class="mdl-progress mdl-js-progress is-upgraded" id="{{file.id}}"
-                 data-upgraded=",MaterialProgress">
+    <tr *ngFor="let file of files" tabindex="0">
+        <td class="mdl-data-table__cell--non-numeric" attr.data-automation-id="dialog_{{file.name}}">
+            <div class="truncate">{{file.name}}</div>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric">
+            <div class="mdl-progress mdl-js-progress is-upgraded" id="{{file.id}}">
                 <div class="progressbar bar bar1" attr.data-automation-id="dialog_progress_{{file.name}}" [style.width.%]="file.progress.percent"></div>
                 <div class="bufferbar bar bar2" style="width: 100%;"></div>
                 <div class="auxbar bar bar3" style="width: 0%;"></div>
             </div>
         </td>
         <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone size-column" attr.data-automation-id="{{file.name}}_filesize">{{file.size}}</td>
-        <td>
-            <span *ngIf="file.done && !file.abort" ><i data-automation-id="done_icon" class="material-icons action-icons">done</i></span>
-            <span *ngIf="file.uploading" (click)="abort(file.id)" class="cursor" tabindex="0"><i data-automation-id="abort_cancel_upload"
-                                                                                     class="material-icons action-icons">
-                remove_circle_outline</i></span>
-            <span *ngIf="file.abort"><i class="material-icons action-icons" data-automation-id="upload_stopped" tabindex="0">remove_circle</i></span>
+        <td class="mdl-data-table__cell--non-numeric">
+            <span *ngIf="file.done && !file.abort">
+                <i data-automation-id="done_icon" class="material-icons action-icons">done</i>
+            </span>
+            <span *ngIf="file.uploading" (click)="cancelFileUpload(file)" class="cursor" tabindex="0">
+                <i data-automation-id="abort_cancel_upload" class="material-icons action-icons">remove_circle_outline</i>
+            </span>
+            <span *ngIf="file.abort">
+                <i class="material-icons action-icons" data-automation-id="upload_stopped" tabindex="0">remove_circle</i>
+            </span>
         </td>
     </tr>
 </table>

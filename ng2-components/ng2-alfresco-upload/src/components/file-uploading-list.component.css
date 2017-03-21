@@ -42,7 +42,7 @@
     width: 100%;
 }
 :host .truncate {
-    margin-left: auto;
+    margin-left: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

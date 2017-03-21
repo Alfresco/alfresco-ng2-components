@@ -66,20 +66,18 @@ export class UploadService {
      *
      * return {FileModel[]} - return the file added to the queue in this call.
      */
-    addToQueue(files: any[]): FileModel[] {
-        let latestFilesAdded: FileModel[] = [];
+    addToQueue(files: File[]): FileModel[] {
+        const result: FileModel[] = [];
 
         for (let file of files) {
-            if (this.isFile(file)) {
-                let uploadingFileModel = new FileModel(file);
-                latestFilesAdded.push(uploadingFileModel);
-                this.queue.push(uploadingFileModel);
-                if (this.filesUploadObserverProgressBar) {
-                    this.filesUploadObserverProgressBar.next(this.queue);
-                }
+            let uploadingFileModel = new FileModel(file);
+            result.push(uploadingFileModel);
+            this.queue.push(uploadingFileModel);
+            if (this.filesUploadObserverProgressBar) {
+                this.filesUploadObserverProgressBar.next(this.queue);
             }
         }
-        return latestFilesAdded;
+        return result;
     }
 
     /**
@@ -147,15 +145,6 @@ export class UploadService {
      */
     getQueue(): FileModel[] {
         return this.queue;
-    }
-
-    /**
-     * Check if an item is a file.
-     *
-     * @return {boolean}
-     */
-    private isFile(file: any): boolean {
-        return file !== null && (file instanceof Blob || (file.name && file.size));
     }
 
     /**

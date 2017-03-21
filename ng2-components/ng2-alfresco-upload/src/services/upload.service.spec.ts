@@ -59,14 +59,17 @@ describe('UploadService', () => {
 
     it('should add an element in the queue and returns it', () => {
         service.setOptions(options, false);
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(1);
     });
 
     it('should add two elements in the queue and returns them', () => {
         service.setOptions(options, false);
-        let filesFake = [{name: 'fake-name', size: 10}, {name: 'fake-name2', size: 20}];
+        let filesFake = [
+            <File>{name: 'fake-name', size: 10},
+            <File>{name: 'fake-name2', size: 20}
+        ];
         service.addToQueue(filesFake);
         expect(service.getQueue().length).toEqual(2);
     });
@@ -79,7 +82,7 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', 'fake-dir', emitter);
 
@@ -102,7 +105,7 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
         expect(jasmine.Ajax.requests.mostRecent().url)
@@ -123,7 +126,7 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
@@ -139,7 +142,7 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
@@ -154,7 +157,7 @@ describe('UploadService', () => {
             total: 1234,
             percent: 44
         };
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.filesUpload$.subscribe((file) => {
             expect(file).toBeDefined();
@@ -222,7 +225,7 @@ describe('UploadService', () => {
 
         let enableVersioning = true;
         service.setOptions(options, enableVersioning);
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('-root-', '', emitter);
 
@@ -238,7 +241,7 @@ describe('UploadService', () => {
             done();
         });
         service.setOptions(options, false);
-        let filesFake = [{name: 'fake-name', size: 10}];
+        let filesFake = [<File>{name: 'fake-name', size: 10}];
         service.addToQueue(filesFake);
         service.uploadFilesInTheQueue('123', 'fake-dir', emitter);
 
