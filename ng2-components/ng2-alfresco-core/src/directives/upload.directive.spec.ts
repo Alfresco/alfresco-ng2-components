@@ -27,7 +27,7 @@ describe('UploadDirective', () => {
         nativeElement = {
             dispatchEvent: () => {}
         };
-        directive = new UploadDirective(new ElementRef(nativeElement));
+        directive = new UploadDirective(new ElementRef(nativeElement), null);
     });
 
     it('should be enabled by default', () => {
