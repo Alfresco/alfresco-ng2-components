@@ -3,7 +3,7 @@
     "BUTTON": {
       "UPLOAD_FILE": "Upload file",
       "UPLOAD_FOLDER": "Upload folder",
-      "CANCEL": "CANCEL"
+      "CANCEL_ALL": "Cancell all"
     },
     "MESSAGES": {
       "SINGLE_COMPLETED": "upload complete",

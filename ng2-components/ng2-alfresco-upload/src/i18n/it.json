@@ -3,7 +3,7 @@
     "BUTTON": {
       "UPLOAD_FILE": "Carica un file",
       "UPLOAD_FOLDER": "Carica una cartella",
-      "CANCEL": "CANCELLA"
+      "CANCEL_ALL": "CANCELLA"
     },
     "MESSAGES": {
       "SINGLE_COMPLETED": "caricamento completato",

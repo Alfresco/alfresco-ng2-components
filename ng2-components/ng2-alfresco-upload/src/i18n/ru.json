@@ -3,7 +3,7 @@
     "BUTTON": {
       "UPLOAD_FILE": "Загрузить файл",
       "UPLOAD_FOLDER": "Загрузить папку",
-      "CANCEL": "ОТМЕНА"
+      "CANCEL_ALL": "Отменить все"
     },
     "MESSAGES": {
       "SINGLE_COMPLETED": "файл загружен",

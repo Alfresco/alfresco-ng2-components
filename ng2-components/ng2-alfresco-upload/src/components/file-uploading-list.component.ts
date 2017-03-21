@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FileModel } from '../models/file.model';
 
 /**
- * <alfresco-file-uploading-list [filesUploadingList]="FileModel[]" ></alfresco-file-uploading-list>
+ * <alfresco-file-uploading-list [files]="files"></alfresco-file-uploading-list>
  *
  * This component show a list of the uploading files contained in the filesUploadingList.
  *
@@ -37,31 +37,29 @@ import { FileModel } from '../models/file.model';
 export class FileUploadingListComponent {
 
     @Input()
-    filesUploadingList: FileModel [];
-
-    constructor(public el: ElementRef) {
-    }
+    files: FileModel[];
 
     /**
-     * Abort the in progress uploading of a specific file.
+     * Cancel file upload
      *
-     * @param {string} id - FileModel id of the file to abort.
+     * @param {FileModel} file File model to cancel upload for.
+     *
+     * @memberOf FileUploadingListComponent
      */
-    abort(id: string): void {
-        let file = this.filesUploadingList.filter((uploadingFileModel) => {
-            return uploadingFileModel.id === id;
-        });
-        file[0].emitAbort();
+    cancelFileUpload(file: FileModel): void {
+        if (file) {
+            file.emitAbort();
+        }
     }
 
     /**
      * Call the abort method for each file
      */
-    cancelAllFiles($event) {
-        if ($event) {
-            $event.preventDefault();
+    cancelAllFiles(event: Event): void {
+        if (event) {
+            event.preventDefault();
         }
-        this.filesUploadingList.forEach((uploadingFileModel: FileModel) => {
+        this.files.forEach((uploadingFileModel: FileModel) => {
             uploadingFileModel.emitAbort();
         });
     }
@@ -70,12 +68,12 @@ export class FileUploadingListComponent {
      * Verify if all the files are in state done or abort
      * @returns {boolean} - false if there is a file in progress
      */
-    isUploadCompleted() {
+    isUploadCompleted(): boolean {
         let isPending = false;
         let isAllCompleted = true;
-        for (let i = 0; i < this.filesUploadingList.length && !isPending; i++) {
-            let uploadingFileModel = this.filesUploadingList[i];
-            if (!uploadingFileModel.done && !uploadingFileModel.abort) {
+        for (let i = 0; i < this.files.length && !isPending; i++) {
+            let file = this.files[i];
+            if (!file.done && !file.abort) {
                 isPending = true;
                 isAllCompleted = false;
             }
