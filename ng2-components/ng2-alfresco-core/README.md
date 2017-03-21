@@ -89,6 +89,56 @@ It is possible controlling when upload behaviour is enabled/disabled by binding 
 <div [adf-upload]="isUploadEnabled()">...</div>
 ```
 
+You can decorate any element including buttons, for example:
+
+```html
+<button [adf-upload]="true" [multiple]="true" [accept]="'image/*'">
+    Upload photos
+</button>
+```
+
+### Modes
+
+Directive supports several modes:
+
+- **drop** mode, where decorated element acts like a drop zone for files (**default** mode)
+- **click** mode, where decorated element invokes File Dialog to select files or folders.
+
+It is also possible combining modes together. 
+
+```html
+<div [adf-upload]="true" mode="['click']">...</div>
+<div [adf-upload]="true" mode="['drop']">...</div>
+<div [adf-upload]="true" mode="['click', 'drop']">...</div>
+```
+
+#### Click mode
+
+For the click mode you can provide additional attributes for the File Dialog:
+
+- **directory**, enables directory selection
+- **multiple**, enables multiple file/folder selection
+- **accept**, filters the content accepted
+
+```html
+<div style="width: 50px; height: 50px; background-color: brown"
+     [adf-upload]="true"
+     [multiple]="true"
+     [accept]="'image/*'">
+</div>
+
+<div style="width: 50px; height: 50px; background-color: blueviolet"
+     [adf-upload]="true"
+     [multiple]="true"
+     [directory]="true">
+</div>
+```
+
+#### Drop mode
+
+For the moment upload directive supports only Files (single or multiple). 
+Support for Folders and `accept` filters is subject to implement.
+
 ### Events
 
 Once a single or multiple files are dropped on the decorated element the `upload-files` [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) is raised.
