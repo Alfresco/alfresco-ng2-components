@@ -1,4 +1,7 @@
-.chart {display: block; width: 100%;}
+.chart {
+    display: block;
+    width: 100%;
+}
 
 .analytics-row__entry {
     cursor: pointer;
@@ -7,4 +10,17 @@
 .report-icons {
     margin: 20px 20px 20px 20px;
     float: right;
+}
+
+.full-width {
+    width: 100%
+}
+
+.partial-width {
+    width: 80%;
+    margin-left: 20px
+}
+
+.clear-both {
+    clear: both;
 }

@@ -7,7 +7,7 @@
             <i class="material-icons">{{report.icon}}</i>
         </button>
     </div>
-    <div style="clear: both"> </div>
+    <div class="clear-both"> </div>
     <div *ngFor="let report of reports; let idx = index">
         <div [ngSwitch]="report.type">
             <div *ngSwitchCase="'pie'">
@@ -29,7 +29,7 @@
                     <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div [attr.id]="'chart-table-' + report.id" *ngIf="report.hasDatasets()">
-                        <table class="table table-responsive table-condensed" style="width: 80%;margin-left: 20px">
+                        <table class="table table-responsive table-condensed" class="partial-width">
                             <tr>
                                 <th *ngFor="let label of report.labels">{{label | translate}}</th>
                             </tr>
@@ -45,7 +45,7 @@
                     <h4>{{report.title}}</h4>
                     <div *ngIf="!report.hasDatasets()">{{'ANALYTICS.MESSAGES.NO-DATA-FOUND' | translate}}</div>
                     <div [attr.id]="'chart-master-detail-table-' + report.id" *ngIf="report.hasDatasets()">
-                        <table class="table table-responsive table-condensed" style="width: 100%">
+                        <table class="table table-responsive table-condensed" class="full-width">
                             <tr>
                                 <th *ngFor="let label of report.labels">{{label | translate}}</th>
                             </tr>
@@ -55,7 +55,7 @@
                         </table>
                     </div>
                     <div [attr.id]="'chart-master-detail-' + report.id" *ngIf="isShowDetails()">
-                        <table class="table table-responsive table-condensed" style="width: 100%">
+                        <table class="table table-responsive table-condensed" class="full-width">
                             <tr>
                                 <th *ngFor="let label of report.detailsTable.labels">{{label | translate}}</th>
                             </tr>
