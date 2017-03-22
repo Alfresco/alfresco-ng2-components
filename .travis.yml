@@ -1,12 +1,8 @@
 language: node_js
 dist: trusty
 sudo: false
-
 node_js:
   - "5"
-
-addons:
-
 
 before_install:
   - "export DISPLAY=:99.0"
@@ -32,29 +28,28 @@ env:
 
 before_script:
   - if ([ "$MODULE" != "ng2-alfresco-core" ]); then
-        (cd ng2-components/ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
+        (cd ng2-components/ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
   - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
+        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
   - if ([ "$MODULE" == "ng2-activiti-tasklist" ] || [ "$MODULE" == "ng2-activiti-processlist" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
-        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
+        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
+        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
   - if ([ "$MODULE" == "ng2-activiti-processlist" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
-        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
-        (cd ng2-components/ng2-activiti-tasklist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; npm link ng2-activiti-form; if [ ! -d "bundles" ]; then npm link; fi);
+        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
+        (cd ng2-components/ng2-activiti-form; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
+        (cd ng2-components/ng2-activiti-tasklist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; npm link ng2-activiti-form; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
   - if ([ "$MODULE" == "ng2-activiti-analytics" ]); then
-        (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
+        (cd ng2-components/ng2-activiti-diagrams; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
   - if ([ "$MODULE" == "ng2-alfresco-search" ]); then
-        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm link; fi);
-        (cd ng2-components/ng2-alfresco-documentlist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; if [ ! -d "bundles" ]; then npm link; fi);
+        (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
+        (cd ng2-components/ng2-alfresco-documentlist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
   - cd ng2-components/$MODULE;
-#npm insall run install
 script: npm install && npm run travis && npm run test
 # Send coverage data to Coveralls
 after_success:
