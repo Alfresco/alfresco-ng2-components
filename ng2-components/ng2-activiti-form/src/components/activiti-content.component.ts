@@ -39,6 +39,9 @@ export class ActivitiContent implements OnChanges {
     @Input()
     id: string;
 
+    @Input()
+    showDocumentContent: boolean = false;
+
     @Output()
     contentClick = new EventEmitter();
 

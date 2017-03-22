@@ -1,6 +1,6 @@
 <div class="upload-widget" *ngIf="content">
-    <div class="mdl-card mdl-shadow--2dp">
-        <div class="mdl-card__title mdl-card--expand">
+    <div class="mdl-card mdl-shadow--2dp upload-widget__content">
+        <div *ngIf="showDocumentContent" class="mdl-card__title mdl-card--expand">
             <div *ngIf="content.isThumbnailSupported()">
                 <img class="img-upload-widget" [src]="sanitizeUrl(content.thumbnailUrl)">
             </div>
@@ -10,6 +10,7 @@
             </div>
         </div>
         <div class="mdl-card__supporting-text">{{content.name}}</div>
+        
         <div class="mdl-card__actions mdl-card--border">
             <button (click)="openViewer(content)" class="mdl-button mdl-js-button mdl-button--icon">
                 <i class="material-icons">zoom_in</i>
