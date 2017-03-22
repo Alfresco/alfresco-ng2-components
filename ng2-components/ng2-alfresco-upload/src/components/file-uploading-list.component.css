@@ -41,6 +41,7 @@
     text-align: center;
     width: 100%;
 }
+
 :host .truncate {
     margin-left: 0;
     white-space: nowrap;
@@ -48,11 +49,11 @@
     text-overflow: ellipsis;
 }
 
-:host .mdl-progress{
+:host .mdl-progress {
     width: 150px;
 }
 
-@media (max-device-width: 360px){
+@media (max-device-width: 360px) {
     .truncate {
         max-width: 50px;
         margin-left: 0px;
@@ -63,6 +64,7 @@
     .truncate {
         width: 60px;
     }
+
     .mdl-progress {
         width: 60px;
     }
@@ -90,4 +92,12 @@
     .size-column {
         display: table-cell;
     }
+}
+
+.full-width {
+    width: 100%;
+}
+
+.no-width {
+    width: 0%;
 }

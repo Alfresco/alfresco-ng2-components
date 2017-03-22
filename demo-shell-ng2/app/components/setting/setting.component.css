@@ -2,6 +2,7 @@
     width: 320px;
     height: 320px;
 }
+
 .setting-card > .mdl-card__title {
     color: #fff;
     background: bottom right 15% no-repeat #1fbcd2;
@@ -22,5 +23,9 @@
 }
 
 .icon-margin {
-     margin-right: 9px;
- }
+    margin-right: 9px;
+}
+
+.table-row {
+    display: table-row;
+}

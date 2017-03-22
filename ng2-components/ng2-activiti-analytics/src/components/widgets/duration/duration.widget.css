@@ -17,3 +17,7 @@
 .number-widget__invalid .mdl-textfield__error {
     visibility: visible !important;
 }
+
+.dropdown-container {
+    margin-top: 30px;
+}

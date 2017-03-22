@@ -22,7 +22,8 @@ import { LogService } from 'ng2-alfresco-core';
 
 @Component({
     selector: 'about-page',
-    templateUrl: './about.component.html'
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
 

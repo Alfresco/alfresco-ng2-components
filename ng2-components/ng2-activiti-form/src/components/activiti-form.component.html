@@ -1,6 +1,6 @@
 <div>
     <div *ngIf="!hasForm()">
-        <h3 style="text-align: center">Please select a Task</h3>
+        <h3 class="activiti-task-title">Please select a Task</h3>
     </div>
     <div *ngIf="hasForm()">
         <div class="mdl-card mdl-shadow--2dp activiti-form-container {{form.className}}">
@@ -44,7 +44,7 @@ will be removed during future revisions
 -->
 <div  *ngIf="showDebugButton" class="activiti-form-debug-container">
 
-    <div style="float: right">
+    <div class="activiti-debug-button">
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [class.is-checked]="debugMode">
             <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="debugMode">
             <span class="mdl-switch__label"></span>
