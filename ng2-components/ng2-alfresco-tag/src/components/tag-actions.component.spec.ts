@@ -172,5 +172,48 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
                 status: 200
             });
         });
+
+        it('Add tag should be disabled by default', (done) => {
+            component.nodeId = 'fake-node-id';
+            component.newTagName = 'fake-tag-name';
+
+            let addButton: any = element.querySelector('#add-tag');
+            expect(addButton.disabled).toEqual(true);
+            done();
+        });
+
+        it('Add tag should be disabled if the node id is not a correct node', (done) => {
+            component.nodeId = 'fake-node-id';
+            component.newTagName = 'fake-tag-name';
+
+            component.resultsEmitter.subscribe(() => {
+                let addButton: any = element.querySelector('#add-tag');
+                expect(addButton.disabled).toEqual(true);
+                done();
+            });
+
+            component.ngOnChanges();
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 404
+            });
+        });
+
+        it('Add tag should be enable if the node id is a correct node', (done) => {
+            component.nodeId = 'fake-node-id';
+            component.newTagName = 'fake-tag-name';
+
+            component.resultsEmitter.subscribe(() => {
+                let addButton: any = element.querySelector('#add-tag');
+                expect(addButton.disabled).toEqual(false);
+                done();
+            });
+
+            component.ngOnChanges();
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200
+            });
+        });
     });
 });

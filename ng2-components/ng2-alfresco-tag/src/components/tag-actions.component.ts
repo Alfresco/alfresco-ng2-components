@@ -52,6 +52,8 @@ export class TagActionsComponent {
 
     errorMsg: string;
 
+    disableAddTag: boolean = true;
+
     constructor(private tagService: TagService, private translateService: AlfrescoTranslationService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-tag', 'node_modules/ng2-alfresco-tag/src');
@@ -66,6 +68,11 @@ export class TagActionsComponent {
         this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
             this.tagsEntries = data.list.entries;
             this.resultsEmitter.emit(this.tagsEntries);
+            this.disableAddTag = false;
+        }, () => {
+            this.tagsEntries = null;
+            this.resultsEmitter.emit();
+            this.disableAddTag = true;
         });
     }
 
