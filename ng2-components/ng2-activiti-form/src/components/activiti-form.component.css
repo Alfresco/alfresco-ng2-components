@@ -24,3 +24,11 @@
 .activiti-form-hide-button {
     display: none;
 }
+
+.activiti-debug-button {
+    float: right;
+}
+
+.activiti-task-title {
+    text-align: center
+}

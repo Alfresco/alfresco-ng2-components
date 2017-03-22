@@ -18,8 +18,8 @@
         <td class="mdl-data-table__cell--non-numeric">
             <div class="mdl-progress mdl-js-progress is-upgraded" id="{{file.id}}">
                 <div class="progressbar bar bar1" attr.data-automation-id="dialog_progress_{{file.name}}" [style.width.%]="file.progress.percent"></div>
-                <div class="bufferbar bar bar2" style="width: 100%;"></div>
-                <div class="auxbar bar bar3" style="width: 0%;"></div>
+                <div class="bufferbar bar bar2" class="full-width"></div>
+                <div class="auxbar bar bar3" class="no-width"></div>
             </div>
         </td>
         <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone size-column" attr.data-automation-id="{{file.name}}_filesize">{{file.size}}</td>
