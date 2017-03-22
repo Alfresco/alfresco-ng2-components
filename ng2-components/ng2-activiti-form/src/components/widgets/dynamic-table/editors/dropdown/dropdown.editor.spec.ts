@@ -51,8 +51,7 @@ describe('DropdownEditorComponent', () => {
         };
 
         form = new FormModel({ taskId: '<task-id>' });
-        table = new DynamicTableModel(form, null);
-        table.field = new FormFieldModel(form, { id: '<field-id>' });
+        table = new DynamicTableModel(new FormFieldModel(form, { id: '<field-id>' }));
         table.rows.push(row);
         table.columns.push(column);
 
@@ -150,8 +149,7 @@ describe('DropdownEditorComponent', () => {
     it('should handle REST error getting option with processDefinitionId', () => {
         column.optionType = 'rest';
         let procForm = new FormModel ({processDefinitionId: '<process-definition-id>'});
-        let procTable = new DynamicTableModel(procForm, null);
-        procTable.field = new FormFieldModel(form, { id: '<field-id>' });
+        let procTable = new DynamicTableModel(new FormFieldModel(procForm, { id: '<field-id>' }));
         component.table = procTable;
         const error = 'error';
 
@@ -219,8 +217,7 @@ describe('DropdownEditorComponent', () => {
                     ]
                 };
                 form = new FormModel({ taskId: '<task-id>' });
-                dynamicTable = new DynamicTableModel(form, null);
-                dynamicTable.field = new FormFieldModel(form, { id: '<field-id>' });
+                dynamicTable = new DynamicTableModel(new FormFieldModel(form, { id: '<field-id>' }));
                 dynamicTable.rows.push(row);
                 dynamicTable.columns.push(column);
                 dropDownEditorComponent.table = dynamicTable;
@@ -261,8 +258,7 @@ describe('DropdownEditorComponent', () => {
                     ]
                 };
                 form = new FormModel({ processDefinitionId: '<proc-id>' });
-                dynamicTable = new DynamicTableModel(form, null);
-                dynamicTable.field = new FormFieldModel(form, { id: '<field-id>' });
+                dynamicTable = new DynamicTableModel(new FormFieldModel(form, { id: '<field-id>' }));
                 dynamicTable.rows.push(row);
                 dynamicTable.columns.push(column);
                 dropDownEditorComponent.table = dynamicTable;

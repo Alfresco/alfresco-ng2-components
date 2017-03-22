@@ -16,7 +16,6 @@
  */
 
 import { FormWidgetModel } from './../core/form-widget.model';
-import { FormModel } from './../core/form.model';
 import { FormFieldModel } from './../core/form-field.model';
 import * as moment from 'moment';
 
@@ -50,19 +49,19 @@ export class DynamicTableModel extends FormWidgetModel {
         }
     }
 
-    constructor(form: FormModel, json?: any) {
-        super(form, json);
+    constructor(field: FormFieldModel) {
+        super(field.form, field.json);
+        this.field = field;
 
-        if (json) {
-            this.field = new FormFieldModel(form, json);
+        if (field.json) {
 
-            if (json.columnDefinitions) {
-                this.columns = json.columnDefinitions.map(obj => <DynamicTableColumn> obj);
+            if (field.json.columnDefinitions) {
+                this.columns = field.json.columnDefinitions.map(obj => <DynamicTableColumn> obj);
                 this.visibleColumns = this.columns.filter(col => col.visible);
             }
 
-            if (json.value) {
-                this.rows = json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
+            if (field.json.value) {
+                this.rows = field.json.value.map(obj => <DynamicTableRow> {selected: false, value: obj});
             }
         }
 

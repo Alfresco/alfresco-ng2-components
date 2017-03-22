@@ -17,6 +17,7 @@
 
 import { RowEditorComponent } from './row.editor';
 import { DynamicTableModel, DynamicTableRow, DynamicTableColumn, DynamicRowValidationSummary } from './../dynamic-table.widget.model';
+import { FormFieldModel, FormModel } from '../../index';
 
 describe('RowEditorComponent', () => {
 
@@ -24,7 +25,8 @@ describe('RowEditorComponent', () => {
 
     beforeEach(() => {
         component = new RowEditorComponent();
-        component.table = new DynamicTableModel(null);
+        const field = new FormFieldModel(new FormModel());
+        component.table = new DynamicTableModel(field);
         component.row =  <DynamicTableRow> {};
         component.column = <DynamicTableColumn> {};
     });
