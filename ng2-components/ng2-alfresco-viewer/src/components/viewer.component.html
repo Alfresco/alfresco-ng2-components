@@ -41,7 +41,7 @@
 
                         <!-- Start View Switch-->
                         <div *ngIf="isPdf()">
-                            <pdf-viewer [showToolbar]="showToolbar" [urlFile]="urlFileContent"
+                            <pdf-viewer [showToolbar]="showToolbar" [blobFile]="blobFile" [urlFile]="urlFileContent"
                                         [nameFile]="displayName"></pdf-viewer>
                         </div>
                         <div class="center-element" *ngIf="isImage()">

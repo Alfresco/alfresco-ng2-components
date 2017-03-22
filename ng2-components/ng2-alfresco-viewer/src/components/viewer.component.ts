@@ -32,6 +32,9 @@ export class ViewerComponent {
     urlFile: string = '';
 
     @Input()
+    blobFile: any;
+
+    @Input()
     fileNodeId: string = null;
 
     @Input()
@@ -70,12 +73,17 @@ export class ViewerComponent {
         if (this.showViewer) {
             this.hideOtherHeaderBar();
             this.blockOtherScrollBar();
-            if (!this.urlFile && !this.fileNodeId) {
+            if (!this.urlFile && !this.blobFile && !this.fileNodeId) {
                 throw new Error('Attribute urlFile or fileNodeId is required');
             }
             return new Promise((resolve, reject) => {
                 let alfrescoApi = this.apiService.getInstance();
-                if (this.urlFile) {
+                if (this.blobFile) {
+                    this.displayName =  'test file name';
+                    this.mimeType = 'application/pdf';
+                    this.extensionChange.emit(this.mimeType);
+                    resolve();
+                } else if (this.urlFile) {
                     let filenameFromUrl = this.getFilenameFromUrl(this.urlFile);
                     this.displayName = filenameFromUrl ? filenameFromUrl : '';
                     this.extension = this.getFileExtension(filenameFromUrl);

@@ -146,7 +146,6 @@
 
 <div *ngIf="fileShowed">
     <alfresco-viewer [(showViewer)]="fileShowed"
-                     [urlFile]="content.thumbnailUrl"
+                     [blobFile]="content"
                      [overlayMode]="true">
     </alfresco-viewer>
-</div>

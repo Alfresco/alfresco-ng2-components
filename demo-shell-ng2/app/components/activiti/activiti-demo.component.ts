@@ -96,6 +96,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
     processFilter: FilterProcessRepresentationModel;
 
     sub: Subscription;
+    blobFile: any;
+    flag: boolean = true;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -117,6 +119,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         );
         this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
 
+
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
 
@@ -133,6 +136,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     }
 
+
+
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let applicationId = params['appId'];
@@ -147,6 +152,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         });
         this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
+
+
 
     ngOnDestroy() {
         this.sub.unsubscribe();
@@ -248,7 +255,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onFormContentClick(content: any) {
         this.fileShowed = true;
-        this.content = content;
+        this.content = content.contentBlob;
     }
 
     onTaskCreated(data: any) {
