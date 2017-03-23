@@ -146,12 +146,25 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
                 done();
             });
 
-            let addButton: any = element.querySelector('#add-tag');
-            addButton.click();
+            component.resultsEmitter.subscribe(() => {
+                fixture.detectChanges();
+
+                let addButton: any = element.querySelector('#add-tag');
+                addButton.click();
+
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200
+                });
+            });
+
+            component.ngOnChanges();
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+                status: 200,
+                contentType: 'json',
+                responseText: dataTag
             });
+
         });
 
         it('The input box should be cleared after add tag', (done) => {
@@ -165,11 +178,23 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
                 done();
             });
 
-            let addButton: any = element.querySelector('#add-tag');
-            addButton.click();
+            component.resultsEmitter.subscribe(() => {
+                fixture.detectChanges();
+
+                let addButton: any = element.querySelector('#add-tag');
+                addButton.click();
+
+                jasmine.Ajax.requests.mostRecent().respondWith({
+                    status: 200
+                });
+            });
+
+            component.ngOnChanges();
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+                status: 200,
+                contentType: 'json',
+                responseText: dataTag
             });
         });
 
@@ -204,6 +229,8 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
             component.newTagName = 'fake-tag-name';
 
             component.resultsEmitter.subscribe(() => {
+                fixture.detectChanges();
+
                 let addButton: any = element.querySelector('#add-tag');
                 expect(addButton.disabled).toEqual(false);
                 done();
@@ -212,7 +239,9 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
             component.ngOnChanges();
 
             jasmine.Ajax.requests.mostRecent().respondWith({
-                status: 200
+                status: 200,
+                contentType: 'json',
+                responseText: dataTag
             });
         });
     });

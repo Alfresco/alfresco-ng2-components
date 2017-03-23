@@ -67,12 +67,12 @@ export class TagActionsComponent {
     refreshTag() {
         this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
             this.tagsEntries = data.list.entries;
-            this.resultsEmitter.emit(this.tagsEntries);
             this.disableAddTag = false;
+            this.resultsEmitter.emit(this.tagsEntries);
         }, () => {
             this.tagsEntries = null;
-            this.resultsEmitter.emit();
             this.disableAddTag = true;
+            this.resultsEmitter.emit(this.tagsEntries);
         });
     }
 
