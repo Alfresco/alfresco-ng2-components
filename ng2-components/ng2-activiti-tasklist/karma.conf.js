@@ -80,6 +80,8 @@ module.exports = function (config) {
 
     autoWatch: true,
 
+    browserNoActivityTimeout: 30000,
+
     browsers: ['Chrome'],
 
     customLaunchers: {
