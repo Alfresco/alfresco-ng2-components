@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 
@@ -24,6 +24,9 @@ import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
  */
 @Injectable()
 export class TagService {
+
+    @Output()
+    refresh = new EventEmitter();
 
     constructor(private apiService: AlfrescoApiService,
                 private logService: LogService) {
@@ -44,13 +47,27 @@ export class TagService {
         let tagBody = new alfrescoApi.core.TagBody();
         tagBody.tag = tagName;
 
-        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody))
-            .catch(err => this.handleError(err));
+        let promiseAdd = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.addTag(nodeId, tagBody));
+
+        promiseAdd.subscribe((data) => {
+            this.refresh.emit(data);
+        }, (err) => {
+            this.handleError(err);
+        });
+
+        return promiseAdd;
     }
 
     removeTag(nodeId: string, tag: string): any {
-        return Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag))
-            .catch(err => this.handleError(err));
+        let promiseRemove = Observable.fromPromise(this.apiService.getInstance().core.tagsApi.removeTag(nodeId, tag));
+
+        promiseRemove.subscribe((data) => {
+            this.refresh.emit(data);
+        }, (err) => {
+            this.handleError(err);
+        });
+
+        return promiseRemove;
     }
 
     private handleError(error: any) {

@@ -118,5 +118,30 @@ describe('Tag service', () => {
                 status: 403
             });
         });
+
+        it('delete tag should trigger a refresh event', (done) => {
+            service.refresh.subscribe(() => {
+                done();
+            });
+
+            service.removeTag('fake-node-id', 'fake-tag');
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200
+            });
+        });
+
+        it('add tag should trigger a refresh event', (done) => {
+            service.refresh.subscribe(() => {
+                done();
+            });
+
+            service.addTag('fake-node-id', 'fake-tag');
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200
+            });
+        });
     });
+
 });

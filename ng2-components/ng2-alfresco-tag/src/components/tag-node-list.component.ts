@@ -39,13 +39,16 @@ export class TagNodeList {
     tagsEntries: any;
 
     @Output()
-    resultsEmitter = new EventEmitter();
+    results = new EventEmitter();
 
     /**
      * Constructor
      * @param tagService
      */
     constructor(private tagService: TagService) {
+        this.tagService.refresh.subscribe(() => {
+            this.refreshTag();
+        });
     }
 
     ngOnChanges() {
@@ -55,7 +58,7 @@ export class TagNodeList {
     refreshTag() {
         this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
             this.tagsEntries = data.list.entries;
-            this.resultsEmitter.emit(this.tagsEntries);
+            this.results.emit(this.tagsEntries);
         });
     }
 

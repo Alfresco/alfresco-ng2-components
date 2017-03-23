@@ -82,7 +82,7 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
         it('Tag list relative a single node should be rendered', (done) => {
             component.nodeId = 'fake-node-id';
 
-            component.resultsEmitter.subscribe(() => {
+            component.results.subscribe(() => {
                 fixture.detectChanges();
 
                 expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
@@ -108,7 +108,7 @@ describe('Test ng2-alfresco-tag Tag relative node list', () => {
         it('Tag list click on delete button should delete the tag', (done) => {
             component.nodeId = 'fake-node-id';
 
-            component.resultsEmitter.subscribe(() => {
+            component.results.subscribe(() => {
                 fixture.detectChanges();
 
                 let deleteButton: any = element.querySelector('#tag_delete_0');

@@ -41,10 +41,13 @@ export class TagActionsComponent {
     isContextMenu: boolean = false;
 
     @Output()
-    addEmitter: EventEmitter<any> = new EventEmitter();
+    successAdd: EventEmitter<any> = new EventEmitter();
 
     @Output()
-    resultsEmitter = new EventEmitter();
+    error: EventEmitter<any> = new EventEmitter();
+
+    @Output()
+    result = new EventEmitter();
 
     newTagName: string;
 
@@ -58,6 +61,10 @@ export class TagActionsComponent {
         if (translateService) {
             translateService.addTranslationFolder('ng2-alfresco-tag', 'node_modules/ng2-alfresco-tag/src');
         }
+
+        this.tagService.refresh.subscribe(() => {
+            this.refreshTag();
+        });
     }
 
     ngOnChanges() {
@@ -68,11 +75,11 @@ export class TagActionsComponent {
         this.tagService.getTagsByNodeId(this.nodeId).subscribe((data) => {
             this.tagsEntries = data.list.entries;
             this.disableAddTag = false;
-            this.resultsEmitter.emit(this.tagsEntries);
+            this.result.emit(this.tagsEntries);
         }, () => {
             this.tagsEntries = null;
             this.disableAddTag = true;
-            this.resultsEmitter.emit(this.tagsEntries);
+            this.result.emit(this.tagsEntries);
         });
     }
 
@@ -81,13 +88,13 @@ export class TagActionsComponent {
             this.translateService.get('TAG.MESSAGES.EXIST').subscribe((error) => {
                 this.errorMsg = error;
             });
+            this.error.emit(this.errorMsg);
+        }else {
+            this.tagService.addTag(this.nodeId, this.newTagName).subscribe(() => {
+                this.newTagName = '';
+                this.successAdd.emit(this.nodeId);
+            });
         }
-
-        this.tagService.addTag(this.nodeId, this.newTagName).subscribe(() => {
-            this.newTagName = '';
-            this.refreshTag();
-            this.addEmitter.emit(this.nodeId);
-        });
     }
 
     searchTag(searchTagName: string) {
@@ -103,8 +110,6 @@ export class TagActionsComponent {
     }
 
     removeTag(tag: string) {
-        this.tagService.removeTag(this.nodeId, tag).subscribe(() => {
-            this.refreshTag();
-        });
+        this.tagService.removeTag(this.nodeId, tag);
     }
 }

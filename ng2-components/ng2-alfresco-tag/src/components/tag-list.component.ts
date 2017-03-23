@@ -35,23 +35,26 @@ export class TagList {
     tagsEntries: any;
 
     @Output()
-    resultsEmitter = new EventEmitter();
+    result = new EventEmitter();
 
     /**
      * Constructor
      * @param tagService
      */
     constructor(private tagService: TagService) {
+        this.tagService.refresh.subscribe(() => {
+            this.refreshTag();
+        });
     }
 
-    ngOnInit(changes) {
-        return this.refreshTagEcm();
+    ngOnInit() {
+        return this.refreshTag();
     }
 
-    refreshTagEcm() {
+    refreshTag() {
         this.tagService.getAllTheTags().subscribe((data) => {
             this.tagsEntries = data.list.entries;
-            this.resultsEmitter.emit(this.tagsEntries);
+            this.result.emit(this.tagsEntries);
         });
     }
 }
