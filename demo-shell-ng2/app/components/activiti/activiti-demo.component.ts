@@ -80,7 +80,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     fileShowed: boolean = false;
 
-    content: any;
+    content: Blob;
+    contentName: string;
 
     layoutType: string;
     currentTaskId: string;
@@ -136,8 +137,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     }
 
-
-
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let applicationId = params['appId'];
@@ -152,8 +151,6 @@ export class ActivitiDemoComponent implements AfterViewInit {
         });
         this.layoutType = ActivitiApps.LAYOUT_GRID;
     }
-
-
 
     ngOnDestroy() {
         this.sub.unsubscribe();
@@ -256,6 +253,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     onFormContentClick(content: any) {
         this.fileShowed = true;
         this.content = content.contentBlob;
+        this.contentName = content.name;
     }
 
     onTaskCreated(data: any) {

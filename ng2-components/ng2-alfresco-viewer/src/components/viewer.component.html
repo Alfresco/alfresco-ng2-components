@@ -45,10 +45,10 @@
                                         [nameFile]="displayName"></pdf-viewer>
                         </div>
                         <div class="center-element" *ngIf="isImage()">
-                            <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName"></img-viewer>
+                            <img-viewer [urlFile]="urlFileContent" [nameFile]="displayName" [blobFile]="blobFile"></img-viewer>
                         </div>
                         <div class="center-element" *ngIf="isMedia()">
-                            <media-player [urlFile]="urlFileContent" [mimeType]="mimeType"
+                            <media-player [urlFile]="urlFileContent" [mimeType]="mimeType" [blobFile]="blobFile"
                                           [nameFile]="displayName"></media-player>
                         </div>
 

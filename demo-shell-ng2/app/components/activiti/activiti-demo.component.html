@@ -37,7 +37,7 @@
                                            [sort]="taskFilter.filter.sort"
                                            [data]="dataTasks"
                                            [landingTaskId]="currentTaskId"
-                                           (rowClick)="onTaskRowClick($event)" 
+                                           (rowClick)="onTaskRowClick($event)"
                                            (onSuccess)="onSuccessTaskList($event)"
                                            (row-click)="onRowClick($event)"
                                            (row-dblclick)="onRowDblClick($event)"
@@ -147,5 +147,7 @@
 <div *ngIf="fileShowed">
     <alfresco-viewer [(showViewer)]="fileShowed"
                      [blobFile]="content"
+                     [displayName]="contentName"
                      [overlayMode]="true">
     </alfresco-viewer>
+</div>

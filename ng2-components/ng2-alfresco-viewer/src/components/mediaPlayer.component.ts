@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     moduleId: module.id,
@@ -23,10 +24,13 @@ import { Component, Input } from '@angular/core';
     templateUrl: './mediaPlayer.component.html',
     styleUrls: ['./mediaPlayer.component.css']
 })
-export class MediaPlayerComponent {
+export class MediaPlayerComponent implements OnChanges {
 
     @Input()
     urlFile: string;
+
+    @Input()
+    blobFile: Blob;
 
     @Input()
     mimeType: string;
@@ -34,10 +38,35 @@ export class MediaPlayerComponent {
     @Input()
     nameFile: string;
 
+    constructor(private sanitizer: DomSanitizer ) {}
+
     ngOnChanges(changes) {
-        if (!this.urlFile) {
-            throw new Error('Attribute urlFile is required');
+        let blobFile = changes['blobFile'];
+        if (blobFile && blobFile.currentValue) {
+            this.urlFile = this.createTrustedUrl(this.blobFile);
+            return;
         }
+
+        if (!this.urlFile && !this.blobFile) {
+            throw new Error('Attribute urlFile or blobFile is required');
+        }
+    }
+
+    isBlob(): boolean {
+        return this.blobFile ? true : false;
+    }
+
+    /**
+     * Creates a trusted object URL from the Blob.
+     * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
+     * @param {Blob} blob Data to wrap into object URL
+     * @returns {string} Object URL content.
+     *
+     * @memberOf ContentService
+     */
+    private createTrustedUrl(blob: Blob): string {
+        let url = window.URL.createObjectURL(blob);
+        return <string> this.sanitizer.bypassSecurityTrustUrl(url);
     }
 
 }

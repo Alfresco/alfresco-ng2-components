@@ -34,7 +34,7 @@ export class PdfViewerComponent {
     urlFile: string;
 
     @Input()
-    blobFile: any;
+    blobFile: Blob;
 
     @Input()
     nameFile: string;
@@ -73,12 +73,9 @@ export class PdfViewerComponent {
             return new Promise((resolve, reject) => {
                 let reader = new FileReader();
                 reader.onload = () => {
-                    //console.log('hardcoded:'+content);
-                    console.log('blob:'+reader.result);
-                    console.log(btoa(reader.result));
-                    this.executePdf({data: reader.result}, resolve, reject);
+                    this.executePdf(reader.result, resolve, reject);
                 };
-                reader.readAsText(this.blobFile);
+                reader.readAsArrayBuffer(this.blobFile);
             });
         }
     }
