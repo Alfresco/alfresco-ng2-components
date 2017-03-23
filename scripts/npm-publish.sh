@@ -24,6 +24,7 @@ do
   DESTDIR="$DIR/../ng2-components/${PACKAGE}"
   echo "====== PUBLISHING: ${DESTDIR} ====="
   cd ${DESTDIR}
+  npm run clean
   npm install
   npm run publish:prod
   cd ${DIR}
