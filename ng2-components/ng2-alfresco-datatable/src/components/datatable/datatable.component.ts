@@ -121,7 +121,7 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    setHtmlColumnConfigurationOnObjectAdapter(schema: DataColumn[]) {
+    private setHtmlColumnConfigurationOnObjectAdapter(schema: DataColumn[]) {
         if (schema && schema.length > 0) {
             this.data.setColumns(schema);
         }
