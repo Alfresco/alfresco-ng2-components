@@ -82,7 +82,7 @@ describe('Test ng2-alfresco-tag Tag list All ECM', () => {
         it('Tag list relative a single node should be rendered', (done) => {
             component.nodeId = 'fake-node-id';
 
-            component.resultsEmitter.subscribe(() => {
+            component.result.subscribe(() => {
                 fixture.detectChanges();
 
                 expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');

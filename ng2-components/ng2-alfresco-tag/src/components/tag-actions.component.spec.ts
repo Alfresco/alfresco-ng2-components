@@ -83,7 +83,7 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
         it('Tag list relative a single node should be rendered', (done) => {
             component.nodeId = 'fake-node-id';
 
-            component.resultsEmitter.subscribe(() => {
+            component.result.subscribe(() => {
                 fixture.detectChanges();
 
                 expect(element.querySelector('#tag_name_0').innerHTML).toBe('test1');
@@ -109,7 +109,7 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
         it('Tag list click on delete button should delete the tag', (done) => {
             component.nodeId = 'fake-node-id';
 
-            component.resultsEmitter.subscribe(() => {
+            component.result.subscribe(() => {
                 fixture.detectChanges();
 
                 let deleteButton: any = element.querySelector('#tag_delete_0');
@@ -142,11 +142,11 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
 
             fixture.detectChanges();
 
-            component.addEmitter.subscribe(() => {
+            component.successAdd.subscribe(() => {
                 done();
             });
 
-            component.resultsEmitter.subscribe(() => {
+            component.result.subscribe(() => {
                 fixture.detectChanges();
 
                 let addButton: any = element.querySelector('#add-tag');
@@ -173,12 +173,12 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
 
             fixture.detectChanges();
 
-            component.addEmitter.subscribe(() => {
+            component.successAdd.subscribe(() => {
                 expect(component.newTagName).toBe('');
                 done();
             });
 
-            component.resultsEmitter.subscribe(() => {
+            component.result.subscribe(() => {
                 fixture.detectChanges();
 
                 let addButton: any = element.querySelector('#add-tag');
@@ -207,11 +207,37 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
             done();
         });
 
+        it('Add tag should return an error if the tag is already present', (done) => {
+            component.nodeId = 'fake-node-id';
+            component.newTagName = 'test1';
+
+            fixture.detectChanges();
+
+            component.error.subscribe(() => {
+                done();
+            });
+
+            component.result.subscribe(() => {
+                fixture.detectChanges();
+
+                let addButton: any = element.querySelector('#add-tag');
+                addButton.click();
+            });
+
+            component.ngOnChanges();
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: dataTag
+            });
+        });
+
         it('Add tag should be disabled if the node id is not a correct node', (done) => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'fake-tag-name';
 
-            component.resultsEmitter.subscribe(() => {
+            component.result.subscribe(() => {
                 let addButton: any = element.querySelector('#add-tag');
                 expect(addButton.disabled).toEqual(true);
                 done();
@@ -228,7 +254,7 @@ describe('Test ng2-alfresco-tag Tag actions list', () => {
             component.nodeId = 'fake-node-id';
             component.newTagName = 'fake-tag-name';
 
-            component.resultsEmitter.subscribe(() => {
+            component.result.subscribe(() => {
                 fixture.detectChanges();
 
                 let addButton: any = element.querySelector('#add-tag');
