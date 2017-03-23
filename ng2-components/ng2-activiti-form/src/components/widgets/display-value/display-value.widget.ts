@@ -48,6 +48,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
 
     // upload/attach
     hasFile: boolean = false;
+    showDocumentContent: boolean = false;
 
     constructor(private formService: FormService,
                 private visibilityService: WidgetVisibilityService,
@@ -60,6 +61,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
             this.value = this.field.value;
             this.visibilityService.refreshEntityVisibility(this.field);
             if (this.field.params) {
+                this.showDocumentContent = !!this.field.params['showDocumentContent'];
                 let originalField = this.field.params['field'];
                 if (originalField && originalField.type) {
                     this.fieldType = originalField.type;
