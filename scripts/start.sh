@@ -37,18 +37,19 @@ eval OPTIONS=$1
 while [[ $1 == -* ]]; do
     case "$1" in
       -l|--link) link; shift;;
-            -*) shift;;
+      -*) shift;;
     esac
-
 done
 
-while [[ $OPTIONS == -* ]]; do
+shift $(expr $OPTIND - 1 )
+
+while [[ $1  == -* ]]; do
     case "$OPTIONS" in
       -h|--help|-\?) show_help; exit 0;;
       -i|--install) install; shift;;
       -u|--update) update; shift;;
       -c|--cleanInstall) cleanInstall; shift;;
-      -*) echo "invalid option: $1" 1>&2; show_help; exit 1;;
+      -*) shift;;
     esac
 done
 
