@@ -44,7 +44,7 @@ in the demo shell:
 * If you want to build all your local component:
 
 ```sh
-./npm-buid-alll.sh
+./npm-buid-all.sh
 ```
 
 * If you want to build all your local component and run the test:
