@@ -63,6 +63,7 @@ var map = {
     'ng2-translate': 'npm:ng2-translate',
     'md-date-time-picker' : 'npm:md-date-time-picker',
     'moment' : 'npm:moment/min/moment.min.js',
+    'hammerjs': 'npm:hammerjs',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
     'ng2-alfresco-core': 'npm:ng2-alfresco-core'
@@ -74,6 +75,7 @@ var packages = {
     'ng2-translate': { defaultExtension: 'js' },
     'md-date-time-picker': { defaultExtension: 'js' },
     'moment': { defaultExtension: 'js' },
+    'hammerjs': {main: './hammerjs.js', defaultExtension: 'js'},
 
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
     'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'}
