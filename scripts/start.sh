@@ -32,7 +32,7 @@ link() {
     "$DIR/npm-link-demo-shell.sh"
 }
 
-eval OPTIONS=$1
+eval args=("$@");
 
 while [[ $1 == -* ]]; do
     case "$1" in
@@ -41,10 +41,10 @@ while [[ $1 == -* ]]; do
     esac
 done
 
-shift $(expr $OPTIND - 1 )
+set -- "${args[@]}";
 
 while [[ $1  == -* ]]; do
-    case "$OPTIONS" in
+    case "$1" in
       -h|--help|-\?) show_help; exit 0;;
       -i|--install) install; shift;;
       -u|--update) update; shift;;

@@ -47,10 +47,16 @@ in the demo shell:
 ./npm-buid-all.sh
 ```
 
+* If you want to build all your local component and link it together and in the demo shell:
+
+```sh
+./npm-buid-all.sh -l or -link
+```
+
 * If you want to build all your local component and run the test:
 
 ```sh
-./npm-buid-alll.sh -test
+./npm-buid-alll.sh -t or -test
 ```
 
 * If you want clean all your local component and the demo shell:
