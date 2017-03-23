@@ -162,16 +162,53 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 
 You can also use HTML-based schema declaration like shown below:
 
-```html
-<alfresco-datatable [data]="data" [multiselect]="multiselect">
-    <data-columns>
-        <data-column type="image" key="icon" [sortable]="false"></data-column>
-        <data-column key="id" title="Id"></data-column>
-        <data-column key="createdOn" title="Created"></data-column>
-        <data-column key="name" title="Name" class="full-width name-column"></data-column>
-        <data-column key="createdBy.name" title="Created By"></data-column>
-    </data-columns>
-</alfresco-datatable>
+```ts
+import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { CoreModule } from 'ng2-alfresco-core';
+import { DataTableModule, ObjectDataTableAdapter }  from 'ng2-alfresco-datatable';
+
+@Component({
+    selector: 'alfresco-app-demo',
+    template: `
+        <alfresco-datatable [data]="data">
+            <data-columns>
+                <data-column key="icon" type="image" [sortable]="false"></data-column>
+                <data-column key="id" title="Id"></data-column>
+                <data-column key="createdOn" title="Created"></data-column>
+                <data-column key="name" title="Name" class="full-width name-column"></data-column>
+                <data-column key="createdBy.name" title="Created By"></data-column>
+            </data-columns>
+        </alfresco-datatable>
+    `
+})
+export class DataTableDemo {
+    data: ObjectDataTableAdapter;
+
+    constructor() {
+        this.data = new ObjectDataTableAdapter(
+            // data
+            [
+                {id: 1, name: 'Name 1', createdBy : { name: 'user'}, createdOn: 123, icon: 'http://example.com/img.png'},
+                {id: 2, name: 'Name 2', createdBy : { name: 'user 2'}, createdOn: 123, icon: 'http://example.com/img.png'}
+            ]
+        );
+    }
+}
+
+@NgModule({
+    imports: [
+        BrowserModule,
+        CoreModule.forRoot(),
+        DataTableModule.forRoot()
+    ],
+    declarations: [DataTableDemo],
+    bootstrap: [DataTableDemo]
+})
+export class AppModule {}
+
+platformBrowserDynamic().bootstrapModule(AppModule);
 ```
 
 ### DataTable Properties
