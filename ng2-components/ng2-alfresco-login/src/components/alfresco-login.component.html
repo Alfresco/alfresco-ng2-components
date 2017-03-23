@@ -22,16 +22,19 @@
                 <!--USERNAME FIELD-->
                 <div [ngClass]="{'is-invalid': isErrorStyle(form.controls.username)}"
                      class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                    <label for="username" class="mdl-textfield__label">{{'LOGIN.LABEL.USERNAME' | translate }}</label>
-                    <input
-                        (blur)="trimUsername($event)"
-                        type="text"
-                        class="mdl-textfield__input"
-                        id="username"
-                        data-automation-id="username"
-                        [formControl]="form.controls['username']"
-                        tabindex="1"
-                        autocapitalize="none"/>
+
+                    <md-input-container class="adf-full-width">
+                        <input md-input placeholder="{{'LOGIN.LABEL.USERNAME' | translate }}"
+                               type="text"
+                               class="mdl-textfield__input adf-full-width"
+                               [formControl]="form.controls['username']"
+                               autocapitalize="none"
+                               id="username"
+                               data-automation-id="username"
+                               (blur)="trimUsername($event)"
+                               tabindex="1">
+                    </md-input-container>
+
                     <span class="alfresco-login__validation" for="username" *ngIf="formError.username">
                         <span id="username-error" class="alfresco-login__error" data-automation-id="username-error">{{formError.username | translate }}</span>
                     </span>
@@ -41,8 +44,16 @@
                 <div class="center mdl-textfield mdl-js-textfield mdl-textfield--floating-label alfresco-login__password">
                     <md-icon *ngIf="!isPasswordShow" class="alfresco-login__password-icon" data-automation-id="show_password" (click)="toggleShowPassword()">visibility</md-icon>
                     <md-icon *ngIf="isPasswordShow" class="alfresco-login__password-icon" data-automation-id="hide_password" (click)="toggleShowPassword()">visibility_off</md-icon>
-                    <label for="password" class="mdl-textfield__label">{{'LOGIN.LABEL.PASSWORD' | translate }}</label>
-                    <input type="password" class="mdl-textfield__input" id="password" data-automation-id="password" [formControl]="form.controls['password']" tabindex="2" />
+
+                    <md-input-container class="adf-full-width">
+                        <input md-input placeholder="{{'LOGIN.LABEL.PASSWORD' | translate }}"
+                               type="password"
+                               class="mdl-textfield__input"
+                               [formControl]="form.controls['password']"
+                               id="password"
+                               data-automation-id="password"
+                               tabindex="2">
+                    </md-input-container>
                     <span class="alfresco-login__validation" for="password" *ngIf="formError.password">
                         <span id="password-required" class="alfresco-login__error" data-automation-id="password-required">{{formError.password | translate }}</span>
                     </span>
