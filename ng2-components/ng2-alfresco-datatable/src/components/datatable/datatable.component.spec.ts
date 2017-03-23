@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CoreModule } from 'ng2-alfresco-core';
 import { DataTableComponent } from './datatable.component';
@@ -55,7 +56,8 @@ describe('DataTable', () => {
         // dataTable = new DataTableComponent();
 
         eventMock = {
-            preventDefault: function () {}
+            preventDefault: function () {
+            }
         };
     });
 
@@ -93,6 +95,15 @@ describe('DataTable', () => {
         expect(table.data).toBeUndefined();
         table.ngAfterContentInit();
         expect(table.data).toEqual(jasmine.any(ObjectDataTableAdapter));
+    });
+
+    it('should load data table on onChange', () => {
+        let table = new DataTableComponent(null);
+        let data = new ObjectDataTableAdapter([], []);
+
+        expect(table.data).toBeUndefined();
+        table.ngOnChanges({'data': new SimpleChange('123', data)});
+        expect(table.data).toEqual(data);
     });
 
     it('should initialize with custom data', () => {

@@ -15,7 +15,19 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, EventEmitter, ElementRef, TemplateRef, AfterContentInit, ContentChild, Optional } from '@angular/core';
+import {
+    Component,
+    OnChanges,
+    SimpleChanges,
+    Input,
+    Output,
+    EventEmitter,
+    ElementRef,
+    TemplateRef,
+    AfterContentInit,
+    ContentChild,
+    Optional
+} from '@angular/core';
 import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, ObjectDataTableAdapter } from '../../data/index';
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
@@ -29,7 +41,7 @@ declare var componentHandler;
     styleUrls: ['./datatable.component.css'],
     templateUrl: './datatable.component.html'
 })
-export class DataTableComponent implements AfterContentInit {
+export class DataTableComponent implements AfterContentInit, OnChanges {
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -80,6 +92,17 @@ export class DataTableComponent implements AfterContentInit {
     }
 
     ngAfterContentInit() {
+        this.loadTable();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['data'] && changes['data'].currentValue) {
+            this.loadTable();
+            return;
+        }
+    }
+
+    loadTable() {
         let schema: DataColumn[] = [];
 
         if (this.columnList && this.columnList.columns) {
@@ -88,13 +111,19 @@ export class DataTableComponent implements AfterContentInit {
 
         if (!this.data) {
             this.data = new ObjectDataTableAdapter([], schema);
-        } else if (schema && schema.length > 0) {
-            this.data.setColumns(schema);
+        } else {
+            this.setHtmlColumnConfigurationOnObjectAdapter(schema);
         }
 
-         // workaround for MDL issues with dynamic components
+        // workaround for MDL issues with dynamic components
         if (componentHandler) {
             componentHandler.upgradeAllRegistered();
+        }
+    }
+
+    private setHtmlColumnConfigurationOnObjectAdapter(schema: DataColumn[]) {
+        if (schema && schema.length > 0) {
+            this.data.setColumns(schema);
         }
     }
 
