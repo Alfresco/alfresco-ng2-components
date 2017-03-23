@@ -61,6 +61,7 @@ var map = {
     // other libraries
     'rxjs': 'npm:rxjs',
     'ng2-translate': 'npm:ng2-translate',
+    'hammerjs': 'npm:hammerjs',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
     'ng2-alfresco-core': 'npm:ng2-alfresco-core'
@@ -70,6 +71,7 @@ var packages = {
     'app': { main: 'main.js',  defaultExtension: 'js' },
     'rxjs': {  defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
+    'hammerjs': {main: './hammerjs.js', defaultExtension: 'js'},
 
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
     'ng2-alfresco-core': { main: './index.js', defaultExtension: 'js'}

@@ -62,6 +62,7 @@ var map = {
     'rxjs': 'npm:rxjs',
     'ng2-translate': 'npm:ng2-translate',
     'moment' : 'npm:moment/min/moment.min.js',
+    'hammerjs': 'npm:hammerjs',
 
     'alfresco-js-api': 'npm:alfresco-js-api/dist',
     'ng2-activiti-form': 'npm:ng2-activiti-form',
@@ -74,6 +75,7 @@ var packages = {
     'rxjs': {  defaultExtension: 'js' },
     'ng2-translate': { defaultExtension: 'js' },
     'moment': { defaultExtension: 'js' },
+    'hammerjs': {main: './hammerjs.js', defaultExtension: 'js'},
 
     'alfresco-js-api': { main: './alfresco-js-api.js', defaultExtension: 'js'},
     'ng2-activiti-form': { main: './index.js', defaultExtension: 'js'},
