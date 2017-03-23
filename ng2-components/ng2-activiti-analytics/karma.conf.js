@@ -107,7 +107,7 @@ module.exports = function (config) {
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
     preprocessors: {
-      'src/**/!(*spec|index|*mock|*model).js': 'coverage'
+      'src/**/!(*spec|index|*mock|*model|*event).js': 'coverage'
     },
 
     coverageReporter: {
