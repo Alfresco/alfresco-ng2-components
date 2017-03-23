@@ -3,6 +3,10 @@
     word-break: break-all;
 }
 
+.upload-widget__content {
+    min-height: auto;
+}
+
 .upload-widget__icon {
     float: left;
     color: rgba(0, 0, 0, .26);

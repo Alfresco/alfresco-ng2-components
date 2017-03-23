@@ -15,18 +15,11 @@
  * limitations under the License.
  */
 
-import {
-    Component,
-    OnChanges,
-    SimpleChanges,
-    Input,
-    Output,
-    EventEmitter
-} from '@angular/core';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { Component, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { AlfrescoTranslationService, LogService, ContentService } from 'ng2-alfresco-core';
 import { FormService } from './../services/form.service';
 import { ContentLinkModel } from './widgets/core/content-link.model';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     moduleId: module.id,
@@ -39,6 +32,9 @@ export class ActivitiContent implements OnChanges {
     @Input()
     id: string;
 
+    @Input()
+    showDocumentContent: boolean = false;
+
     @Output()
     contentClick = new EventEmitter();
 
@@ -47,19 +43,16 @@ export class ActivitiContent implements OnChanges {
     constructor(private translate: AlfrescoTranslationService,
                 protected formService: FormService,
                 private logService: LogService,
-                private sanitizer: DomSanitizer ) {
-
+                private contentService: ContentService) {
         if (this.translate) {
             this.translate.addTranslationFolder('ng2-activiti-form', 'node_modules/ng2-activiti-form/src');
         }
-
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        let contentId = changes['id'];
+        const contentId = changes['id'];
         if (contentId && contentId.currentValue) {
             this.loadContent(contentId.currentValue);
-            return;
         }
     }
 
@@ -79,19 +72,18 @@ export class ActivitiContent implements OnChanges {
 
     loadThumbnailUrl(content: ContentLinkModel) {
         if (this.content.isThumbnailSupported()) {
+            let observable: Observable<any>;
+
             if (this.content.isTypeImage()) {
-                this.formService.getFileRawContent(content.id).subscribe(
-                    (response: Blob) => {
-                        this.content.thumbnailUrl = this.createUrlPreview(response);
-                    },
-                    error => {
-                        this.logService.error(error);
-                    }
-                );
+                observable = this.formService.getFileRawContent(content.id);
             } else {
-                this.formService.getContentThumbnailUrl(content.id).subscribe(
+                observable = this.formService.getContentThumbnailUrl(content.id);
+            }
+
+            if (observable) {
+                observable.subscribe(
                     (response: Blob) => {
-                        this.content.thumbnailUrl = this.createUrlPreview(response);
+                        this.content.thumbnailUrl = this.contentService.createTrustedUrl(response);
                     },
                     error => {
                         this.logService.error(error);
@@ -101,44 +93,18 @@ export class ActivitiContent implements OnChanges {
         }
     }
 
-    openViewer(content: ContentLinkModel) {
+    openViewer(content: ContentLinkModel): void {
         this.contentClick.emit(content);
         this.logService.info('Content clicked' + content.id);
     }
 
     /**
-     * Download file opening it in a new window
+     * Invoke content download.
      */
-    download(content) {
+    download(content: ContentLinkModel): void {
         this.formService.getFileRawContent(content.id).subscribe(
-            (response: Blob) => {
-                let thumbnailUrl = this.createUrlPreview(response);
-                this.createDownloadElement(thumbnailUrl, content.name);
-            },
-            error => {
-                this.logService.error(error);
-            }
+            (blob: Blob) => this.contentService.downloadBlob(blob, content.name),
+            error => this.logService.error(error)
         );
-    }
-
-    createDownloadElement(url: string, name: string) {
-        let downloadElement = window.document.createElement('a');
-        downloadElement.setAttribute('id', 'export-download');
-        downloadElement.setAttribute('href', url);
-        downloadElement.setAttribute('download', name);
-        downloadElement.setAttribute('target', '_blank');
-        window.document.body.appendChild(downloadElement);
-        downloadElement.click();
-        window.document.body.removeChild(downloadElement);
-    }
-
-    private sanitizeUrl(url: string) {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    }
-
-    private createUrlPreview(blob: Blob) {
-        let imageUrl = window.URL.createObjectURL(blob);
-        let sanitize: any = this.sanitizeUrl(imageUrl);
-        return sanitize.changingThisBreaksApplicationSecurity;
     }
 }
