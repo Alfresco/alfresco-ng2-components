@@ -36,7 +36,8 @@ import {
     AuthGuardBpm,
     LogService,
     LogServiceMock,
-    NotificationService
+    NotificationService,
+    ContentService
 } from './src/services/index';
 
 import { UploadDirective } from './src/directives/upload.directive';
@@ -66,6 +67,7 @@ export const ALFRESCO_CORE_PROVIDERS: any[] = [
     AlfrescoTranslateLoader,
     AlfrescoTranslationService,
     RenditionsService,
+    ContentService,
     AuthGuard,
     AuthGuardEcm,
     AuthGuardBpm,
