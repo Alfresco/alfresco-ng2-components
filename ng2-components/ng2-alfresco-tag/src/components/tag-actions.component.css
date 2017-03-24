@@ -1,27 +1,7 @@
-.tag-container {
-    width: 300px;
-}
-
 .tag-element {
     padding: 0px 0px 0px 9px!important;
 }
 
-.tag-input {
-    margin-right: 11px;
-    float: left;
-}
-
-.tag-container-input{
-    padding-top: 11px;
-    width: 190px;
-    float: left;
-    margin-right: 15px;
-}
-
-.tag-button{
-    float:left
-}
-
-.mdl-textfield__error {
-    visibility: visible !important;
+.adf-full-width {
+    width: 100%;
 }

@@ -26,7 +26,7 @@ import { Component } from '@angular/core';
               <div class="mdl-cell mdl-cell--4-col"><alfresco-tag-node-actions-list [nodeId]="nodeId"></alfresco-tag-node-actions-list></div>
               <div class="mdl-cell mdl-cell--4-col">List Tags Content Services <alfresco-tag-list></alfresco-tag-list></div>
               <div class="mdl-cell mdl-cell--4-col">
-                    Tag list By Node ID 
+                    Tag list By Node ID
                     <alfresco-tag-node-list [nodeId]="nodeId"></alfresco-tag-node-list>
               </div>
             </div>

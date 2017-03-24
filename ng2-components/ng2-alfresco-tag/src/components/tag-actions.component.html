@@ -10,12 +10,26 @@
     </li>
     <li>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" (keypress)="cleanErrorMsg()" [(ngModel)]="newTagName"/>
-            <label class="mdl-textfield__label" for="new-tag-text" > {{'TAG.LABEL.NEWTAG' | translate }}</label>
-            <span class="mdl-textfield__error">{{errorMsg}}</span>
-            <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()" [disabled]="disableAddTag">
-                {{'TAG.BUTTON.ADD' | translate }}
-            </button>
+            <table class="adf-full-width" cellspacing="0">
+                <tr>
+                    <td>
+                        <md-input-container class="adf-full-width">
+                            <input md-input placeholder="{{'TAG.LABEL.NEWTAG' | translate }}"
+                                   type="text"
+                                   class="mdl-textfield__input"
+                                   (keypress)="cleanErrorMsg()"
+                                   [(ngModel)]="newTagName"
+                                   id="new-tag-text"/>
+                            <md-hint *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</md-hint>
+                        </md-input-container>
+                    </td>
+                    <td>
+                        <button  class="adf-full-width" id="add-tag" (click)="addTag()" [disabled]="disableAddTag" md-raised-button>
+                            {{'TAG.BUTTON.ADD' | translate }}
+                        </button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </li>
 </div>
@@ -29,13 +43,25 @@
         </div>
     </li>
     <li>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input tag-input" type="text" id="new-tag-text" (keypress)="cleanErrorMsg()" [(ngModel)]="newTagName"/>
-            <label class="mdl-textfield__label" for="new-tag-text" > {{'TAG.LABEL.NEWTAG' | translate }}</label>
-            <span  *ngIf="errorMsg" class="mdl-textfield__error">{{errorMsg}}</span>
-            <button id="add-tag" class="mdl-button mdl-js-button mdl-button--raised button" (click)="addTag()" [disabled]="disableAddTag">
-                {{'TAG.BUTTON.ADD' | translate }}
-            </button>
-        </div>
+        <table class="adf-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <md-input-container class="adf-full-width">
+                        <input md-input placeholder="{{'TAG.LABEL.NEWTAG' | translate }}"
+                               type="text"
+                               class="mdl-textfield__input"
+                               (keypress)="cleanErrorMsg()"
+                               [(ngModel)]="newTagName"
+                               id="new-tag-text"/>
+                        <md-hint *ngIf="error" [ngStyle]="{'color': 'red'}" align="start">{{errorMsg}}</md-hint>
+                    </md-input-container>
+                </td>
+                <td>
+                    <button  class="adf-full-width" id="add-tag" (click)="addTag()" [disabled]="disableAddTag" md-raised-button>
+                        {{'TAG.BUTTON.ADD' | translate }}
+                    </button>
+                </td>
+            </tr>
+        </table>
     </li>
 </ul>
