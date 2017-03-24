@@ -148,9 +148,7 @@ export class ActivitiFilters implements OnInit, OnChanges {
         let filteredFilterList: FilterRepresentationModel[] = [];
         this.activiti.getFilterForTaskById(taskId, this.filters).subscribe(
             (filter: FilterRepresentationModel) => {
-                if (filter) {
-                    filteredFilterList.push(filter);
-                }
+                filteredFilterList.push(filter);
             },
             (err) => {
                 this.logService.error(err);

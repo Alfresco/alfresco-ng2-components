@@ -76,7 +76,8 @@ export class ActivitiTaskListService {
      */
     getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
         return Observable.from(filterList)
-            .flatMap((filter: FilterRepresentationModel) => this.isTaskRelatedToFilter(taskId, filter));
+            .flatMap((filter: FilterRepresentationModel) => this.isTaskRelatedToFilter(taskId, filter))
+            .filter((filter: FilterRepresentationModel) => filter != null);
     }
 
     /**
