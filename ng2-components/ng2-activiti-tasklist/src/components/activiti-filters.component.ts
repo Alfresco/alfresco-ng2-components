@@ -144,6 +144,24 @@ export class ActivitiFilters implements OnInit, OnChanges {
         this.filterClick.emit(filter);
     }
 
+    public selectFilterWithTask(taskId: string) {
+        let filteredFilterList: FilterRepresentationModel[] = [];
+        this.activiti.getFilterForTaskById(taskId, this.filters).subscribe(
+            (filter: FilterRepresentationModel) => {
+                if (filter) {
+                    filteredFilterList.push(filter);
+                }
+            },
+            (err) => {
+                this.logService.error(err);
+                this.onError.emit(err);
+            },
+            () => {
+                let myTaskFilter = filteredFilterList.find(filter => filter.name === 'My Tasks');
+                this.currentFilter = myTaskFilter ? myTaskFilter : filteredFilterList[0];
+            });
+    }
+
     /**
      * Select the first filter of a list if present
      */

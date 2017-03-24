@@ -522,4 +522,20 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
+    it('should return the filter if', (done) => {
+        let taskId = '111';
+
+        service.claimTask(taskId).subscribe(
+            (res: any) => {
+                done();
+            }
+        );
+
+        jasmine.Ajax.requests.mostRecent().respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({})
+        });
+    });
+
 });
