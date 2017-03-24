@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
@@ -40,7 +40,7 @@ export class MediaPlayerComponent implements OnChanges {
 
     constructor(private contentService: ContentService ) {}
 
-    ngOnChanges(changes) {
+    ngOnChanges(changes: SimpleChanges) {
         let blobFile = changes['blobFile'];
         if (blobFile && blobFile.currentValue) {
             this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
