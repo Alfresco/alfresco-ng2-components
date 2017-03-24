@@ -16,7 +16,7 @@
  */
 
 import { Component, Input, OnChanges } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
     moduleId: module.id,
@@ -38,12 +38,12 @@ export class MediaPlayerComponent implements OnChanges {
     @Input()
     nameFile: string;
 
-    constructor(private sanitizer: DomSanitizer ) {}
+    constructor(private contentService: ContentService ) {}
 
     ngOnChanges(changes) {
         let blobFile = changes['blobFile'];
         if (blobFile && blobFile.currentValue) {
-            this.urlFile = this.createTrustedUrl(this.blobFile);
+            this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
             return;
         }
 
@@ -51,22 +51,4 @@ export class MediaPlayerComponent implements OnChanges {
             throw new Error('Attribute urlFile or blobFile is required');
         }
     }
-
-    isBlob(): boolean {
-        return this.blobFile ? true : false;
-    }
-
-    /**
-     * Creates a trusted object URL from the Blob.
-     * WARNING: calling this method with untrusted user data exposes your application to XSS security risks!
-     * @param {Blob} blob Data to wrap into object URL
-     * @returns {string} Object URL content.
-     *
-     * @memberOf ContentService
-     */
-    private createTrustedUrl(blob: Blob): string {
-        let url = window.URL.createObjectURL(blob);
-        return <string> this.sanitizer.bypassSecurityTrustUrl(url);
-    }
-
 }
