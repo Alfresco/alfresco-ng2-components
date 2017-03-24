@@ -62,7 +62,7 @@ export class PdfViewerComponent {
 
     ngOnChanges(changes) {
         if (!this.urlFile && !this.blobFile) {
-            throw new Error('Attribute urlFile is required');
+            throw new Error('Attribute urlFile or blobFile is required');
         }
 
         if (this.urlFile) {

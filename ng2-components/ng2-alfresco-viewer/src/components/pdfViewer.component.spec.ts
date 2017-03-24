@@ -49,6 +49,24 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         }).compileComponents();
     }));
 
+    function createFakeBlob(): Blob {
+        let pdfData = atob(
+            'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
+            'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
+            'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
+            'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
+            'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
+            'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
+            'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
+            'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
+            'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
+            'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
+            'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
+            'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
+            'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
+        return new Blob([pdfData], {type: 'application/pdf'});
+    }
+
     beforeEach(() => {
         fixture = TestBed.createComponent(PdfViewerComponent);
 
@@ -57,21 +75,71 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
         component = fixture.componentInstance;
 
         component.showToolbar = true;
-        component.urlFile = 'base/src/assets/fake-test-file.pdf';
 
-        fixture.detectChanges();
     });
 
-    describe('View', () => {
+    describe('View with url file', () => {
+        beforeEach(() => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            fixture.detectChanges();
+        });
 
-        it('If urlfile is not present should not be thrown any error ', () => {
+        it('If urlfile is not present should thrown an error ', () => {
             component.urlFile = undefined;
 
             fixture.detectChanges();
 
             expect(() => {
                 component.ngOnChanges(null);
-            }).toThrow();
+            }).toThrow(new Error('Attribute urlFile or blobFile is required'));
+        });
+
+        it('Canvas should be present', () => {
+            expect(element.querySelector('#viewer-viewerPdf')).not.toBeNull();
+            expect(element.querySelector('#viewer-pdf-container')).not.toBeNull();
+        });
+
+        it('Loader should be present', () => {
+            expect(element.querySelector('#loader-container')).not.toBeNull();
+        });
+
+        it('Next an Previous Buttons should be present', () => {
+            expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
+            expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
+        });
+
+        it('Input Page elements should be present', () => {
+            expect(element.querySelector('#viewer-pagenumber-input')).toBeDefined();
+            expect(element.querySelector('#viewer-total-pages')).toBeDefined();
+
+            expect(element.querySelector('#viewer-previous-page-button')).not.toBeNull();
+            expect(element.querySelector('#viewer-next-page-button')).not.toBeNull();
+        });
+
+        it('Toolbar should be hide if showToolbar is false', () => {
+            component.showToolbar = false;
+
+            fixture.detectChanges();
+
+            expect(element.querySelector('#viewer-toolbar-command')).toBeNull();
+            expect(element.querySelector('#viewer-toolbar-pagination')).toBeNull();
+        });
+    });
+
+    describe('View with blob file', () => {
+
+        beforeEach(() => {
+            component.urlFile = undefined;
+            component.blobFile = createFakeBlob();
+
+            fixture.detectChanges();
+        });
+
+        it('If blobFile is not present should thrown an error ', () => {
+            component.blobFile = undefined;
+            expect(() => {
+                component.ngOnChanges(null);
+            }).toThrow(new Error('Attribute urlFile or blobFile is required'));
         });
 
         it('Canvas should be present', () => {
@@ -109,6 +177,8 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     describe('User interaction', () => {
 
         beforeEach(() => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            fixture.detectChanges();
             component.inputPage('1');
         });
 
@@ -244,6 +314,10 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     });
 
     describe('Resize interaction', () => {
+        beforeEach(() => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            component.inputPage('1');
+        });
         it('resize event should trigger setScaleUpdatePages', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
@@ -256,6 +330,10 @@ describe('Test ng2-alfresco-viewer PdfViewer component', () => {
     });
 
     describe('scroll interaction', () => {
+        beforeEach(() => {
+            component.urlFile = 'base/src/assets/fake-test-file.pdf';
+            fixture.detectChanges();
+        });
         it('scroll page should return the current page', (done) => {
             component.ngOnChanges(null).then(() => {
                 fixture.detectChanges();
