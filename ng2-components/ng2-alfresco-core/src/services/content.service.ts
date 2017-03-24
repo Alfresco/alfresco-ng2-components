@@ -32,17 +32,13 @@ export class ContentService {
             return function (data, format, fileName) {
                 let blob = null;
 
-                if (format === 'blob') {
-                    blob = data;
-                }
-
-                if (format === 'data') {
-                    blob = new Blob([data], {type: 'octet/stream'});
+                if (format === 'blob' || format === 'data') {
+                    blob = new Blob([data], { type: 'octet/stream' });
                 }
 
                 if (format === 'object' || format === 'json') {
                     let json = JSON.stringify(data);
-                    blob = new Blob([json], {type: 'octet/stream'});
+                    blob = new Blob([json], { type: 'octet/stream' });
                 }
 
                 if (blob) {
