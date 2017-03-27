@@ -9,7 +9,7 @@
         },
         "MESSAGES": {
             "USERNAME-REQUIRED": "Обязательное поле",
-            "USERNAME-MIN": "Имя пользователя должно быть не меньше {{customMinLenght}} символов.",
+            "USERNAME-MIN": "Имя пользователя должно быть не меньше {{minLenght}} символов.",
             "PASSWORD-REQUIRED": "Введите пароль для входа",
             "LOGIN-ERROR-CREDENTIALS": "Не правильный логин или пароль",
             "LOGIN-ERROR-PROVIDERS": "Ошибка при авторизации",
