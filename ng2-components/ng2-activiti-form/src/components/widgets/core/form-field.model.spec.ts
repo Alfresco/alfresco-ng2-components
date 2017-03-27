@@ -121,6 +121,19 @@ describe('FormFieldModel', () => {
         expect(field.value).toBe('deferred');
     });
 
+    it('should return the label of selected dropdown value ', () => {
+        let field = new FormFieldModel(new FormModel(), {
+            type: FormFieldTypes.DROPDOWN,
+            options: [
+                {id: 'fake-option-1', name: 'fake label 1'},
+                {id: 'fake-option-2', name: 'fake label 2'},
+                {id: 'fake-option-3', name: 'fake label 3'}
+            ],
+            value: 'fake-option-2'
+        });
+        expect(field.getOptionName()).toBe('fake label 2');
+    });
+
     it('should parse and resolve radio button value', () => {
         let field = new FormFieldModel(new FormModel(), {
             type: FormFieldTypes.RADIO_BUTTONS,

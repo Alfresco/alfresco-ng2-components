@@ -341,8 +341,8 @@ export class FormFieldModel extends FormWidgetModel {
         }
     }
 
-    getOptionValue(): string {
-        let option: FormFieldOption = this.options.filter(l => l.id === this.value)[0];
+    getOptionName(): string {
+        let option: FormFieldOption = this.options.filter(opt => opt.id === this.value)[0];
         return option ? option.name : null;
     }
 }

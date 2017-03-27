@@ -103,7 +103,7 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             if (this.field.restUrl) {
                                 this.loadRestFieldValue();
                             } else {
-                                this.value = this.field.getOptionValue();
+                                this.value = this.field.getOptionName();
                             }
                             break;
                         case FormFieldTypes.RADIO_BUTTONS:
