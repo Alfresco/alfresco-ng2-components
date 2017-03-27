@@ -80,7 +80,10 @@ module.exports = function (config) {
 
     autoWatch: true,
 
-    browserNoActivityTimeout: 30000,
+    captureTimeout: 180000,
+    browserDisconnectTimeout: 180000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 300000,
 
     browsers: ['Chrome'],
 
