@@ -17,7 +17,9 @@
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MediaPlayerComponent } from './mediaPlayer.component';
-import { DebugElement }    from '@angular/core';
+import { DebugElement, SimpleChange }    from '@angular/core';
+import { ContentService } from 'ng2-alfresco-core';
+
 import {
     AlfrescoAuthenticationService,
     AlfrescoSettingsService,
@@ -28,9 +30,15 @@ import {
 describe('Test ng2-alfresco-viewer Media player component ', () => {
 
     let component: MediaPlayerComponent;
+    let service: ContentService;
     let fixture: ComponentFixture<MediaPlayerComponent>;
     let debug: DebugElement;
     let element: HTMLElement;
+
+    function createFakeBlob() {
+        let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        return new Blob([data], {type: 'image/png'});
+    }
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -44,6 +52,7 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
                 AlfrescoApiService
             ]
         }).compileComponents();
+        service = TestBed.get(ContentService);
     }));
 
     beforeEach(() => {
@@ -55,23 +64,35 @@ describe('Test ng2-alfresco-viewer Media player component ', () => {
         fixture.detectChanges();
     });
 
-    it('If no url is passed should thrown an error', () => {
+    it('If no url or no blob are passed should thrown an error', () => {
+        let change = new SimpleChange(null, null);
         expect(() => {
-            component.ngOnChanges(null);
-        }).toThrow(new Error('Attribute urlFile is required'));
+            component.ngOnChanges({ 'blobFile': change });
+        }).toThrow(new Error('Attribute urlFile or blobFile is required'));
     });
 
     it('If  url is passed should not thrown an error', () => {
         component.urlFile = 'fake-url';
         expect(() => {
             component.ngOnChanges(null);
-        }).not.toThrow(new Error('Attribute urlFile is required'));
+        }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
     });
 
     it('If  url is passed should not thrown an error', () => {
         component.urlFile = 'fake-url';
         expect(() => {
             component.ngOnChanges(null);
-        }).not.toThrow(new Error('Attribute urlFile is required'));
+        }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
+    });
+
+    it('If  blob is passed should not thrown an error', () => {
+        let blob = createFakeBlob();
+
+        spyOn(service, 'createTrustedUrl').and.returnValue('fake-blob-url');
+        let change = new SimpleChange(null, blob);
+        expect(() => {
+            component.ngOnChanges({ 'blobFile': change });
+        }).not.toThrow(new Error('Attribute urlFile or blobFile is required'));
+        expect(component.urlFile).toEqual('fake-blob-url');
     });
 });

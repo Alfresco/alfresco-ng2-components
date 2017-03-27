@@ -34,6 +34,9 @@ export class PdfViewerComponent {
     urlFile: string;
 
     @Input()
+    blobFile: Blob;
+
+    @Input()
     nameFile: string;
 
     @Input()
@@ -58,38 +61,50 @@ export class PdfViewerComponent {
     }
 
     ngOnChanges(changes) {
-        if (!this.urlFile) {
-            throw new Error('Attribute urlFile is required');
+        if (!this.urlFile && !this.blobFile) {
+            throw new Error('Attribute urlFile or blobFile is required');
         }
 
         if (this.urlFile) {
             return new Promise((resolve, reject) => {
-                let loadingTask = this.getPDFJS().getDocument(this.urlFile);
-
-                loadingTask.onProgress = (progressData) => {
-                    let level = progressData.loaded / progressData.total;
-                    this.laodingPercent = Math.round(level * 100);
+                this.executePdf(this.urlFile, resolve, reject);
+            });
+        } else {
+            return new Promise((resolve, reject) => {
+                let reader = new FileReader();
+                reader.onload = () => {
+                    this.executePdf(reader.result, resolve, reject);
                 };
-
-                loadingTask.then((pdfDocument) => {
-                    this.currentPdfDocument = pdfDocument;
-                    this.totalPages = pdfDocument.numPages;
-                    this.page = 1;
-                    this.displayPage = 1;
-                    this.initPDFViewer(this.currentPdfDocument);
-
-                    this.currentPdfDocument.getPage(1).then(() => {
-                        this.scalePage('auto');
-                        resolve();
-                    }, (error) => {
-                        reject(error);
-                    });
-
-                }, (error) => {
-                    reject(error);
-                });
+                reader.readAsArrayBuffer(this.blobFile);
             });
         }
+    }
+
+    executePdf(src, resolve, reject) {
+        let loadingTask = this.getPDFJS().getDocument(src);
+
+        loadingTask.onProgress = (progressData) => {
+            let level = progressData.loaded / progressData.total;
+            this.laodingPercent = Math.round(level * 100);
+        };
+
+        loadingTask.then((pdfDocument) => {
+            this.currentPdfDocument = pdfDocument;
+            this.totalPages = pdfDocument.numPages;
+            this.page = 1;
+            this.displayPage = 1;
+            this.initPDFViewer(this.currentPdfDocument);
+
+            this.currentPdfDocument.getPage(1).then(() => {
+                this.scalePage('auto');
+                resolve();
+            }, (error) => {
+                reject(error);
+            });
+
+        }, (error) => {
+            reject(error);
+        });
     }
 
     /**
