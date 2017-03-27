@@ -8,7 +8,7 @@
         },
         "MESSAGES": {
             "USERNAME-REQUIRED": "Campo obbligatorio",
-            "USERNAME-MIN": "Inserire un nome utente di minimo 4 caratteri.",
+            "USERNAME-MIN": "Inserire un nome utente di minimo {{minLenght}} caratteri.",
             "PASSWORD-REQUIRED": "Campo obbligatorio",
             "LOGIN-ERROR-CREDENTIALS": "Nome utente o password non validi",
             "LOGIN-ERROR-PROVIDERS": "Providers non può essere nullo",
