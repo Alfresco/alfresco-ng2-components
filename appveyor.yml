@@ -30,27 +30,28 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # install module
-  - IF %COMPONENT_NAME% NEQ ng2-alfresco-core (cd ng2-components/ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-alfresco-documentlist (cd ng2-components/ng2-alfresco-datatable && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-alfresco-search (cd ng2-components/ng2-alfresco-datatable && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-alfresco-search (cd ng2-components/ng2-alfresco-documentlist && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link ng2-alfresco-datatable && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-alfresco-datatable && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-form && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-tasklist && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link ng2-alfresco-datatable && npm link with npm install && npm run  build  && npm link ng2-activiti-form && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-alfresco-datatable && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-activiti-form && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-alfresco-webscript (cd ng2-components/ng2-alfresco-datatable && npm link with npm install && npm run  build  && npm link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
-  - IF %COMPONENT_NAME% EQU ng2-activiti-analytics (cd ng2-components/ng2-activiti-diagrams && npm link with npm install && npm run  build  && npm link link ng2-alfresco-core && npm link with npm install && npm run  build  && npm link && cd ../../)
+  - IF %COMPONENT_NAME% NEQ ng2-alfresco-core (cd ng2-components/ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-documentlist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-search (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-search (cd ng2-components/ng2-alfresco-documentlist && npm link ng2-alfresco-core && npm link ng2-alfresco-datatable && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-form && npm link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-processlist (cd ng2-components/ng2-activiti-tasklist && npm link ng2-alfresco-core && npm link ng2-alfresco-datatable && npm link ng2-activiti-form && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-tasklist (cd ng2-components/ng2-activiti-form && npm link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-alfresco-webscript (cd ng2-components/ng2-alfresco-datatable && npm link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
+  - IF %COMPONENT_NAME% EQU ng2-activiti-analytics (cd ng2-components/ng2-activiti-diagrams && npm link link ng2-alfresco-core && npm link && npm install && npm run build && cd ../../)
   - cd ng2-components/%COMPONENT_NAME%
+  - npm run travis
 
 # Post-install test scripts.
 test_script:
   - npm install
-   - npm run travis
   # Output useful info for debugging.
   - node --version
   - npm --version
   # run tests
   - npm test
+
 # Don't actually build.
 build: off
