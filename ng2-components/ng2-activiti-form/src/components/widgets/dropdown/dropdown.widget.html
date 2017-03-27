@@ -1,6 +1,6 @@
 <div class="dropdown-widget {{field.className}}"
      [class.dropdown-widget__invalid]="!field.isValid" *ngIf="field?.isVisible">
-    <label class="dropdown-widget__label" [attr.for]="field.id">{{field.name}}</label>
+    <label class="dropdown-widget__label" [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <select class="dropdown-widget__select"
             [attr.id]="field.id"
             [(ngModel)]="field.value"
