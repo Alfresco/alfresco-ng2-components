@@ -78,6 +78,11 @@ export class ActivitiDemoComponent implements AfterViewInit {
     @Input()
     appId: number = null;
 
+    fileShowed: boolean = false;
+
+    content: Blob;
+    contentName: string;
+
     layoutType: string;
     currentTaskId: string;
     currentProcessInstanceId: string;
@@ -92,6 +97,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
     processFilter: FilterProcessRepresentationModel;
 
     sub: Subscription;
+    blobFile: any;
+    flag: boolean = true;
 
     dataTasks: ObjectDataTableAdapter;
     dataProcesses: ObjectDataTableAdapter;
@@ -113,6 +120,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         );
         this.dataProcesses.setSorting(new DataSorting('started', 'desc'));
 
+
         // Uncomment this line to replace all 'text' field editors with custom component
         // formRenderingService.setComponentTypeResolver('text', () => CustomEditorComponent, true);
 
@@ -126,6 +134,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
         formService.formFieldValueChanged.subscribe((e: FormFieldEvent) => {
             console.log(`Field value changed. Form: ${e.form.id}, Field: ${e.field.id}, Value: ${e.field.value}`);
         });
+
     }
 
     ngOnInit() {
@@ -240,6 +249,12 @@ export class ActivitiDemoComponent implements AfterViewInit {
     onFormCompleted(form) {
         this.activititasklist.reload();
         this.currentTaskId = null;
+    }
+
+    onFormContentClick(content: any) {
+        this.fileShowed = true;
+        this.content = content.contentBlob;
+        this.contentName = content.name;
     }
 
     onTaskCreated(data: any) {

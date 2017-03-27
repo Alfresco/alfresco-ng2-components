@@ -21,6 +21,7 @@ import { EcmModelService } from './../services/ecm-model.service';
 import { FormService } from './../services/form.service';
 import { NodeService } from './../services/node.service';
 import { FormModel, FormOutcomeModel, FormValues, FormFieldModel, FormOutcomeEvent } from './widgets/core/index';
+import { ContentLinkModel } from './widgets/core/content-link.model';
 import { FormEvent, FormErrorEvent } from './../events/index';
 
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
@@ -135,6 +136,9 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     formCompleted: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
+    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+
+    @Output()
     formLoaded: EventEmitter<FormModel> = new EventEmitter<FormModel>();
 
     @Output()
@@ -202,6 +206,10 @@ export class ActivitiForm implements OnInit, AfterViewChecked, OnChanges {
     }
 
     ngOnInit() {
+        this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
+            this.formContentClicked.emit(content);
+        });
+
         if (this.nodeId) {
             this.loadFormForEcmNode();
         } else {

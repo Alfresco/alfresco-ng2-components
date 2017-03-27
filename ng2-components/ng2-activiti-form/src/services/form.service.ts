@@ -24,6 +24,7 @@ import { EcmModelService } from './ecm-model.service';
 import { GroupModel } from './../components/widgets/core/group.model';
 import { GroupUserModel } from './../components/widgets/core/group-user.model';
 import { FormEvent, FormErrorEvent, FormFieldEvent } from './../events/index';
+import { ContentLinkModel } from './../components/widgets/core/content-link.model';
 
 @Injectable()
 export class FormService {
@@ -37,6 +38,7 @@ export class FormService {
     taskCompletedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
     taskSaved: Subject<FormEvent> = new Subject<FormEvent>();
     taskSavedError: Subject<FormErrorEvent> = new Subject<FormErrorEvent>();
+    formContentClicked: Subject<ContentLinkModel> = new Subject<ContentLinkModel>();
 
     constructor(private ecmModelService: EcmModelService,
                 private apiService: AlfrescoApiService,

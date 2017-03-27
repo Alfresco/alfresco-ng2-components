@@ -210,10 +210,12 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 Attribute     | Options     | Default      | Description | Mandatory
 ---           | ---         | ---          | ---         | ---
 `fileNodeId`         | *string*    |        |  node Id of the file to load the file | 
-`urlFile`         | *string*    |        |  If you want laod an external file that not comes from the ECM you can use this Url where to load the file | 
+`urlFile`         | *string*    |        |  If you want load an external file that not comes from the ECM you can use this Url where to load the file |
+`urlBlob`         | *Blob*    |        |  If you want load a Blob File |
 `overlayMode`         | *boolean*    | `false`        | if true Show the Viewer full page over the present content otherwise will fit the parent div  |
 `showViewer`         | *boolean*    | `true`        | Hide or show the viewer |
 `showToolbar`         | *boolean*    | `true`        | Hide or show the toolbars |
+`displayName`     | *string*    |        |  You can specify the name of the file|
 
 #### Supported file formats
 

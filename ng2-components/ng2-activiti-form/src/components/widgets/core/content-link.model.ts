@@ -29,6 +29,7 @@ export class ContentLinkModel {
     simpleType: string;
     thumbnailUrl: string;
     contentRawUrl: string;
+    contentBlob: Blob;
     thumbnailStatus: string;
 
     constructor(obj?: any) {

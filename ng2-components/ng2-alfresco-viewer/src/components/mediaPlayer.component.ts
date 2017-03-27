@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
     moduleId: module.id,
@@ -23,10 +24,13 @@ import { Component, Input } from '@angular/core';
     templateUrl: './mediaPlayer.component.html',
     styleUrls: ['./mediaPlayer.component.css']
 })
-export class MediaPlayerComponent {
+export class MediaPlayerComponent implements OnChanges {
 
     @Input()
     urlFile: string;
+
+    @Input()
+    blobFile: Blob;
 
     @Input()
     mimeType: string;
@@ -34,10 +38,17 @@ export class MediaPlayerComponent {
     @Input()
     nameFile: string;
 
-    ngOnChanges(changes) {
-        if (!this.urlFile) {
-            throw new Error('Attribute urlFile is required');
+    constructor(private contentService: ContentService ) {}
+
+    ngOnChanges(changes: SimpleChanges) {
+        let blobFile = changes['blobFile'];
+        if (blobFile && blobFile.currentValue) {
+            this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
+            return;
+        }
+
+        if (!this.urlFile && !this.blobFile) {
+            throw new Error('Attribute urlFile or blobFile is required');
         }
     }
-
 }

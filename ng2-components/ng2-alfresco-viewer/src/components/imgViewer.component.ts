@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ContentService } from 'ng2-alfresco-core';
 
 @Component({
     moduleId: module.id,
@@ -23,17 +24,27 @@ import { Component, Input } from '@angular/core';
     templateUrl: './imgViewer.component.html',
     styleUrls: ['./imgViewer.component.css']
 })
-export class ImgViewerComponent {
+export class ImgViewerComponent implements OnChanges {
 
     @Input()
     urlFile: string;
 
     @Input()
+    blobFile: any;
+
+    @Input()
     nameFile: string;
 
-    ngOnChanges(changes) {
-        if (!this.urlFile) {
-            throw new Error('Attribute urlFile is required');
+    constructor(private contentService: ContentService) {}
+
+    ngOnChanges(changes: SimpleChanges) {
+        let blobFile = changes['blobFile'];
+        if (blobFile && blobFile.currentValue) {
+            this.urlFile = this.contentService.createTrustedUrl(this.blobFile);
+            return;
+        }
+        if (!this.urlFile && !this.blobFile) {
+            throw new Error('Attribute urlFile or blobFile is required');
         }
     }
 }
