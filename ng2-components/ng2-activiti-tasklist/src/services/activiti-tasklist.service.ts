@@ -18,7 +18,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
-import { FilterRepresentationModel, TaskQueryRequestRepresentationModel } from '../models/filter.model';
+import {
+    FilterRepresentationModel,
+    TaskQueryRequestRepresentationModel
+} from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 import { User } from '../models/user.model';
 import { TaskDetailsModel } from '../models/task-details.model';
@@ -62,6 +65,48 @@ export class ActivitiTaskListService {
                     return this.createDefaultFilter(appId);
                 }
                 return filters;
+            }).catch(err => this.handleError(err));
+    }
+
+    /**
+     * Return all the filters in the list where the task id belong
+     * @param taskId - string
+     * @param filter - FilterRepresentationModel []
+     * @returns {FilterRepresentationModel}
+     */
+    getFilterForTaskById(taskId: string, filterList: FilterRepresentationModel[]): Observable<FilterRepresentationModel> {
+        return Observable.from(filterList)
+            .flatMap((filter: FilterRepresentationModel) => this.isTaskRelatedToFilter(taskId, filter))
+            .filter((filter: FilterRepresentationModel) => filter != null);
+    }
+
+    /**
+     * Return the search node for query task based on the given filter
+     * @param filter - FilterRepresentationModel
+     * @returns {TaskQueryRequestRepresentationModel}
+     */
+    private generateTaskRequestNodeFromFilter(filter: FilterRepresentationModel): TaskQueryRequestRepresentationModel {
+        let requestNode = {
+            appDefinitionId: filter.appId,
+            processDefinitionKey: filter.filter.processDefinitionKey,
+            assignment: filter.filter.assignment,
+            state: filter.filter.state,
+            sort: filter.filter.sort
+        };
+        return new TaskQueryRequestRepresentationModel(requestNode);
+    }
+
+    /**
+     * Check if a taskId is filtered with the given filter
+     * @param taskId - string
+     * @param filter - FilterRepresentationModel
+     * @returns {FilterRepresentationModel}
+     */
+    isTaskRelatedToFilter(taskId: string, filter: FilterRepresentationModel): Observable<FilterRepresentationModel> {
+        let requestNodeForFilter = this.generateTaskRequestNodeFromFilter(filter);
+        return Observable.fromPromise(this.callApiTasksFiltered(requestNodeForFilter))
+            .map((res: any) => {
+                return res.data.find(element => element.id === taskId) ? filter : null;
             }).catch(err => this.handleError(err));
     }
 
@@ -151,7 +196,7 @@ export class ActivitiTaskListService {
     }
 
     attachFormToATask(taskId: string, formId: number): Observable<any> {
-        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, {'formId': formId}));
+        return Observable.fromPromise(this.apiService.getInstance().activiti.taskApi.attachForm(taskId, { 'formId': formId }));
     }
 
     /**
@@ -273,7 +318,7 @@ export class ActivitiTaskListService {
 
     callApiTaskFilters(appId?: string) {
         if (appId) {
-            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({appId: appId});
+            return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters({ appId: appId });
         } else {
             return this.apiService.getInstance().activiti.userFiltersApi.getUserTaskFilters();
         }
@@ -288,7 +333,7 @@ export class ActivitiTaskListService {
     }
 
     private callApiAddTaskComment(id: string, message: string) {
-        return this.apiService.getInstance().activiti.taskApi.addTaskComment({message: message}, id);
+        return this.apiService.getInstance().activiti.taskApi.addTaskComment({ message: message }, id);
     }
 
     private callApiAddTask(task: TaskDetailsModel) {
@@ -327,7 +372,7 @@ export class ActivitiTaskListService {
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-align-left',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved'}
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'involved' }
         });
     }
 
@@ -342,7 +387,7 @@ export class ActivitiTaskListService {
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-inbox',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee'}
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'assignee' }
         });
     }
 
@@ -357,7 +402,7 @@ export class ActivitiTaskListService {
             'appId': appId,
             'recent': false,
             'icon': 'glyphicon-record',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate'}
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'open', 'assignment': 'candidate' }
         });
     }
 
@@ -372,7 +417,7 @@ export class ActivitiTaskListService {
             'appId': appId,
             'recent': true,
             'icon': 'glyphicon-ok-sign',
-            'filter': {'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved'}
+            'filter': { 'sort': 'created-desc', 'name': '', 'state': 'completed', 'assignment': 'involved' }
         });
     }
 }
