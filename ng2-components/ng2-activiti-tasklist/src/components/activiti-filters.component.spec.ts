@@ -16,6 +16,7 @@
  */
 
 import { SimpleChange } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Rx';
 import { LogServiceMock } from 'ng2-alfresco-core';
 import { ActivitiFilters } from './activiti-filters.component';
@@ -29,8 +30,18 @@ describe('ActivitiFilters', () => {
     let logService: LogServiceMock;
 
     let fakeGlobalFilter = [];
-    fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeInvolvedTasks', filter: { state: 'open', assignment: 'fake-involved'}}));
-    fakeGlobalFilter.push(new FilterRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}}));
+    fakeGlobalFilter.push(new FilterRepresentationModel({
+        name: 'FakeInvolvedTasks',
+        filter: { state: 'open', assignment: 'fake-involved' }
+    }));
+    fakeGlobalFilter.push(new FilterRepresentationModel({
+        name: 'FakeMyTasks',
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    }));
+    let fakeFilter = new FilterRepresentationModel({
+        name: 'FakeMyTasks',
+        filter: { state: 'open', assignment: 'fake-assignee' }
+    });
 
     let fakeGlobalFilterPromise = new Promise(function (resolve, reject) {
         resolve(fakeGlobalFilter);
@@ -121,7 +132,7 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an event when a filter is selected', (done) => {
-        let currentFilter = new FilterRepresentationModel({filter: { state: 'open', assignment:  'fake-involved'}});
+        let currentFilter = new FilterRepresentationModel({ filter: { state: 'open', assignment: 'fake-involved' } });
 
         filterList.filterClick.subscribe((filter: FilterRepresentationModel) => {
             expect(filter).toBeDefined();
@@ -164,7 +175,10 @@ describe('ActivitiFilters', () => {
     });
 
     it('should return the current filter after one is selected', () => {
-        let filter = new FilterRepresentationModel({name: 'FakeMyTasks', filter: { state: 'open', assignment: 'fake-assignee'}});
+        let filter = new FilterRepresentationModel({
+            name: 'FakeMyTasks',
+            filter: { state: 'open', assignment: 'fake-assignee' }
+        });
         expect(filterList.currentFilter).toBeUndefined();
         filterList.selectFilter(filter);
         expect(filterList.getCurrentFilter()).toBe(filter);
@@ -178,4 +192,25 @@ describe('ActivitiFilters', () => {
 
         expect(filterList.getFiltersByAppId).toHaveBeenCalled();
     });
+
+    it('should change the current filter if a filter with taskid is found', async(() => {
+        spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(fakeFilter));
+        filterList.filters = fakeGlobalFilter;
+        filterList.selectFilterWithTask('111');
+
+        expect(filterList.currentFilter).toBe(fakeFilter);
+    }));
+
+    it('should not change the current filter if no filter with taskid is found', async(() => {
+        let filter = new FilterRepresentationModel({
+            name: 'FakeMyTasks',
+            filter: { state: 'open', assignment: 'fake-assignee' }
+        });
+        filterList.filters = fakeGlobalFilter;
+        filterList.currentFilter = filter;
+        spyOn(activitiService, 'isTaskRelatedToFilter').and.returnValue(Observable.of(null));
+        filterList.selectFilterWithTask('111');
+
+        expect(filterList.currentFilter).toBe(filter);
+    }));
 });
