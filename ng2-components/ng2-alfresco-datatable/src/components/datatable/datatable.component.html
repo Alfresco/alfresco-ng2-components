@@ -70,7 +70,7 @@
             (dblclick)="onRowDblClick(row, $event)"
             [context-menu]="getContextMenuActions(row, col)"
             [context-menu-enabled]="contextMenu">
-            <div *ngIf="!col.template">
+            <div *ngIf="!col.template" class="cell-container">
                 <div *ngSwitchCase="'image'" class="cell-value">
                     <i *ngIf="isIconValue(row, col)" class="material-icons icon-cell">{{asIconValue(row, col)}}</i>
                     <img *ngIf="!isIconValue(row, col)"
@@ -89,7 +89,7 @@
                 <!-- empty cell for unknown column type -->
                 </span>
             </div>
-            <div *ngIf="col.template">
+            <div *ngIf="col.template" class="cell-container">
                 <template ngFor [ngForOf]="[{ data: data, row: row, col: col }]" [ngForTemplate]="col.template"></template>
             </div>
         </td>
