@@ -50,7 +50,7 @@ export class LoginDemoComponent implements OnInit {
 
     ngOnInit() {
         this.alfrescologin.addCustomValidationError('username', 'required', 'LOGIN.MESSAGES.USERNAME-REQUIRED');
-        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {customMinLenght: this.customMinLenght});
+        this.alfrescologin.addCustomValidationError('username', 'minlength', 'LOGIN.MESSAGES.USERNAME-MIN', {minLenght: this.customMinLenght});
         this.alfrescologin.addCustomValidationError('password', 'required', 'LOGIN.MESSAGES.PASSWORD-REQUIRED');
 
         if (this.storage.hasItem('providers')) {
