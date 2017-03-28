@@ -1,5 +1,5 @@
 <div class="attach-widget {{field.className}}">
-    <label [attr.for]="field.id">{{field.name}}</label>
+    <label [attr.for]="field.id">{{field.name}}<span *ngIf="isRequired()">*</span></label>
     <div>
         <span *ngIf="hasFile()" class="attach-widget__file mdl-chip"><span class="mdl-chip__text">{{getLinkedFileName()}}</span></span>
         <button #browseFile (click)="showDialog();" class="mdl-button mdl-js-button mdl-js-ripple-effect attach-widget__browser">
