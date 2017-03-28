@@ -52,14 +52,6 @@
 
         <td *ngIf="multiselect">
             <md-checkbox [(ngModel)]="row.isSelected"></md-checkbox>
-            <!--
-            <label
-                class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select"
-                [attr.for]="'row[' + idx + ']'"
-                [class.is-checked]="row.isSelected">
-                <input type="checkbox" [attr.id]="'row[' + idx + ']'" class="mdl-checkbox__input" [(ngModel)]="row.isSelected" />
-            </label>
-            -->
         </td>
         <td *ngFor="let col of data.getColumns()" [ngSwitch]="col.type"
             class="mdl-data-table__cell--non-numeric non-selectable data-cell {{col.cssClass}}"
