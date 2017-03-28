@@ -1,6 +1,6 @@
 <div class="mdl-textfield mdl-js-textfield amount-widget {{field.className}}"
      [class.amount-widget__invalid]="!field.isValid">
-    <label [attr.for]="field.id">{{field.name}}, {{currency}}</label>
+    <label [attr.for]="field.id">{{field.name}}, {{currency}}<span *ngIf="isRequired()">*</span></label>
     <input class="mdl-textfield__input"
            type="text"
            [attr.id]="field.id"
