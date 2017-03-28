@@ -14,7 +14,6 @@
 :host .data-cell {
     cursor: default;
 }
-:host .cell-value {}
 
 :host .column-header {
     cursor: pointer;
@@ -35,17 +34,13 @@
     width: 100%;
 }
 
-:host .ellipsis-cell > div
-{
-    position: relative;
-    overflow: hidden;
-    /*height: 1em;*/
+
+:host .ellipsis-cell .cell-container {
+    height: 1em;
 }
 
-
 /* visible content */
-:host .ellipsis-cell > div > span
-{
+:host .ellipsis-cell .cell-value {
     display: block;
     position: absolute;
     max-width: 100%;
@@ -57,14 +52,12 @@
 
 
 /* cell stretching content */
-:host .ellipsis-cell > div:after
-{
+:host .ellipsis-cell > div:after {
     content: attr(title);
     overflow: hidden;
     height: 0;
     display: block;
 }
-
 
 /* Utils */
 
