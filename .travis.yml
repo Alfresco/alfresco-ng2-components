@@ -53,7 +53,7 @@ before_script:
   - if ([ "$MODULE" == "ng2-demo-shell"]); then
          cd demo-shell-ng2;
     fi
-  - if ([ "$MODULE" != "demo-shell"]); then
+  - if ([ "$MODULE" != "ng2-demo-shell"]); then
         cd ng2-components/$MODULE;
     fi
 script: npm install && npm run travis && npm run test
