@@ -48,7 +48,6 @@ function getInjectableDependency() {
     var NPM_DEPENDENCIES = [
         {src: 'zone.js/dist/zone.js', inject: 'libs'},
         {src: 'core-js/client/shim.min.js', inject: 'shims'},
-        {src: 'intl/dist/Intl.min.js', inject: 'shims'},
         {src: 'systemjs/dist/system.src.js', inject: 'shims', buildType:'dev'}
     ];
 
