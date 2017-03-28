@@ -8,12 +8,14 @@
     "start": "npm run server-versions && webpack-dev-server --progress --max_old_space_size=4096 --max_new_space_size=4096",
     "start:dist": "wsrv -s dist/ -p 3000 -a 0.0.0.0",
     "clean-build": "rimraf 'app/{,**/}**.js' 'app/{,**/}**.js.map' 'app/{,**/}**.d.ts'",
+    "pretest": "npm run build",
     "test": "karma start",
     "build": "npm run tslint && npm run server-versions && rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
     "server-versions": "rimraf versions.json && npm list --depth=0 --json=true --prod=true > versions.json  || exit 0",
     "aws": "node app.js",
     "tslint": "tslint -c tslint.json *.ts && tslint -c tslint.json 'app/{,**/}**.ts'  -e 'app/vendor.ts' -e 'app/polyfills.ts' ",
-    "licensecheck": "license-check"
+    "licensecheck": "license-check",
+    "travis": "echo 'placeholder'"
   },
   "repository": {
     "type": "git",

@@ -25,9 +25,10 @@ env:
     - MODULE=ng2-activiti-diagrams
     - MODULE=ng2-activiti-analytics
     - MODULE=ng2-alfresco-userinfo
+    - MODULE=ng2-demo-shell
 
 before_script:
-  - if ([ "$MODULE" != "ng2-alfresco-core" ]); then
+  - if ([ "$MODULE" != "ng2-alfresco-core" && "$MODULE" != "ng2-demo-shell"]); then
         (cd ng2-components/ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
   - if ([ "$MODULE" == "ng2-alfresco-documentlist" ] || [ "$MODULE" == "ng2-alfresco-webscript" ] || [ "$MODULE" == "ng2-activiti-processlist" ] || [ "$MODULE" == "ng2-activiti-tasklist" ]); then
@@ -49,7 +50,12 @@ before_script:
         (cd ng2-components/ng2-alfresco-datatable; npm link ng2-alfresco-core; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
         (cd ng2-components/ng2-alfresco-documentlist; npm link ng2-alfresco-core; npm link ng2-alfresco-datatable; if [ ! -d "bundles" ]; then npm install && npm run  build && npm link; fi);
     fi
-  - cd ng2-components/$MODULE;
+  - if ([ "$MODULE" == "ng2-demo-shell"]); then
+         cd demo-shell-ng2;
+    fi
+  - if ([ "$MODULE" != "demo-shell"]); then
+        cd ng2-components/$MODULE;
+    fi
 script: npm install && npm run travis && npm run test
 # Send coverage data to Coveralls
 after_success:
