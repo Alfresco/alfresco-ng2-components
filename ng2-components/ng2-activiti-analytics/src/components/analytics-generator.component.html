@@ -1,10 +1,11 @@
 <div *ngIf="reports">
     <div class="report-icons">
-        <button mdTooltip="{{report.title}}" (click)="selectCurrent(idx)"
-                [class.mdl-button--accent]="isCurrent(idx)"
-                class="mdl-button mdl-js-button"
-                *ngFor="let report of reports; let idx = index">
-            <i class="material-icons">{{report.icon}}</i>
+        <button md-icon-button
+                *ngFor="let report of reports; let idx = index"
+                [mdTooltip]="report.title"
+                [color]="isCurrent(idx) ? 'primary' : null"
+                (click)="selectCurrent(idx)">
+            <md-icon>{{report.icon}}</md-icon>
         </button>
     </div>
     <div class="clear-both"> </div>
