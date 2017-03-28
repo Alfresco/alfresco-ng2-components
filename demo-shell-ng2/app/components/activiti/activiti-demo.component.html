@@ -83,14 +83,23 @@
                         <div class="mdl-cell mdl-cell--3-col task-column list-column mdl-shadow--2dp" *ngIf="processFilter && !isStartProcessMode()">
                             <span><h5>Process List</h5></span>
                             <hr>
-                            <activiti-process-instance-list *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
-                                                            [processDefinitionKey]="processFilter.filter.processDefinitionKey"
-                                                            [name]="processFilter.filter.name"
-                                                            [state]="processFilter.filter.state"
-                                                            [sort]="processFilter.filter.sort"
-                                                            [data]="dataProcesses"
-                                                            (rowClick)="onProcessRowClick($event)"
-                                                            (onSuccess)="onSuccessProcessList($event)"></activiti-process-instance-list>
+                            <activiti-process-instance-list
+                                *ngIf="processFilter?.hasFilter()" [appId]="processFilter.appId"
+                                [processDefinitionKey]="processFilter.filter.processDefinitionKey"
+                                [name]="processFilter.filter.name"
+                                [state]="processFilter.filter.state"
+                                [sort]="processFilter.filter.sort"
+                                [data]="dataProcesses"
+                                (rowClick)="onProcessRowClick($event)"
+                                (onSuccess)="onSuccessProcessList($event)">
+                                <!-- Custom column definition demo -->
+                                <!--
+                                <data-columns>
+                                    <data-column key="name" title="NAME" class="full-width name-column"></data-column>
+                                    <data-column key="created" title="Created" class="hidden"></data-column>
+                                </data-columns>
+                                -->
+                            </activiti-process-instance-list>
                         </div>
                         <div class="mdl-cell task-column mdl-shadow--2dp" *ngIf="!isStartProcessMode()"
                             [class.mdl-cell--7-col]="processFilter && !isStartProcessMode()"
