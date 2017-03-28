@@ -15,9 +15,24 @@
  * limitations under the License.
  */
 
-import { Component, Input, Output, ContentChild, AfterContentInit, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    ContentChild,
+    AfterContentInit,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges
+} from '@angular/core';
 import { AlfrescoTranslationService, LogService, DataColumnListComponent } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow, DataColumn } from 'ng2-alfresco-datatable';
+import {
+    ObjectDataTableAdapter,
+    DataTableAdapter,
+    DataRowEvent,
+    ObjectDataRow,
+    DataColumn
+} from 'ng2-alfresco-datatable';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
@@ -125,8 +140,6 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
         let name = changes['name'];
         let assignment = changes['assignment'];
         let landingTaskId = changes['landingTaskId'];
-
-
         if (appId && appId.currentValue) {
             changed = true;
         } else if (processDefinitionKey && processDefinitionKey.currentValue) {
@@ -200,7 +213,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
         if (!this.isListEmpty()) {
             let rows = this.data.getRows();
             if (rows.length > 0) {
-                let dataRow = rows.find(row => row.getValue('id') ===  taskIdToSelect) || rows[0];
+                let dataRow = rows.find(row => row.getValue('id') === taskIdToSelect) || rows[0];
                 this.data.selectedRow = dataRow;
                 this.currentInstanceId = dataRow.getValue('id');
             }
