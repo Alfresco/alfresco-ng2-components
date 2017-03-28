@@ -1,11 +1,11 @@
-<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect {{field.className}}" [attr.for]="field.id">
-    <input type="checkbox"
-           [attr.id]="field.id"
-           [attr.required]="isRequired()"
-           class="mdl-checkbox__input"
-           [checked]="field.value"
-           [(ngModel)]="field.value"
-           (ngModelChange)="onChange()"
-           [disabled]="field.readOnly">
-    <span class="mdl-checkbox__label">{{field.name}}</span>
-</label>
+<div [ngClass]="field.className">
+    <md-checkbox
+        [id]="field.id"
+        [required]="field.required"
+        [disabled]="field.readOnly"
+        [(ngModel)]="field.value"
+        (change)="onChange()">
+        {{field.name}}
+        <span *ngIf="field.required">*</span>
+    </md-checkbox>
+</div>
