@@ -117,7 +117,8 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             if (this.value) {
                                 let d = moment(this.value.split('T')[0], 'YYYY-M-D');
                                 if (d.isValid()) {
-                                    this.value = d.format('D-M-YYYY');
+                                    const displayFormat = originalField['dateDisplayFormat'] || this.field.defaultDateFormat;
+                                    this.value = d.format(displayFormat);
                                 }
                             }
                             break;
