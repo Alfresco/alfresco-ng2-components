@@ -61,6 +61,7 @@ export class FilterRepresentationModel {
     icon: string;
     filter: FilterParamRepresentationModel;
     index: number;
+    landingTaskId: string;
 
     constructor(obj?: any) {
         this.appId = obj && obj.appId || null;
@@ -69,6 +70,7 @@ export class FilterRepresentationModel {
         this.icon = obj && obj.icon || null;
         this.filter = new FilterParamRepresentationModel(obj.filter);
         this.index = obj && obj.index;
+        this.landingTaskId = obj && obj.landingTaskId;
     }
 
     hasFilter() {

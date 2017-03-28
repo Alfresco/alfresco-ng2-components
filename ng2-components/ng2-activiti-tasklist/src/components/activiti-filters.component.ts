@@ -158,6 +158,8 @@ export class ActivitiFilters implements OnInit, OnChanges {
                 if (filteredFilterList.length > 0) {
                     let myTaskFilter = filteredFilterList.find(filter => filter.name === 'My Tasks');
                     this.currentFilter = myTaskFilter ? myTaskFilter : filteredFilterList[0];
+                    this.currentFilter.landingTaskId = taskId;
+                    this.filterClick.emit(this.currentFilter);
                 }
             });
     }

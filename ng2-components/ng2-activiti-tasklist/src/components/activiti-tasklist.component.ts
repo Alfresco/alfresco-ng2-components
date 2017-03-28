@@ -124,6 +124,8 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
         let sort = changes['sort'];
         let name = changes['name'];
         let assignment = changes['assignment'];
+        let landingTaskId = changes['landingTaskId'];
+
 
         if (appId && appId.currentValue) {
             changed = true;
@@ -136,6 +138,8 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
         } else if (name && name.currentValue) {
             changed = true;
         } else if (assignment && assignment.currentValue) {
+            changed = true;
+        } else if (landingTaskId && landingTaskId.currentValue) {
             changed = true;
         }
         return changed;
