@@ -9,6 +9,9 @@ import '@angular/router';
 // RxJS
 import 'rxjs';
 
+// hammerjs
+import 'hammerjs';
+
 // Alfresco
 import 'alfresco-js-api';
 import 'ng2-alfresco-core';
