@@ -71,9 +71,13 @@ do
   build_project $DESTDIR $PACKAGE
 done
 
+#Install demo
+
+cd "$DIR/../demo-shell-ng2"
+npm install
+
 if $RUN_LINK == true; then
     #LINK ALL THE COMPONENTS INSIDE THE DEMO-SHELL
-    cd "$DIR/../demo-shell-ng2"
     for PACKAGE in ${projects[@]}
     do
       DESTDIR="$DIR/../ng2-components/${PACKAGE}"

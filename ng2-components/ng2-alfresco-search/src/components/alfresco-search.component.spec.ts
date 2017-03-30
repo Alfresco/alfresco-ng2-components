@@ -116,6 +116,8 @@ describe('AlfrescoSearchComponent', () => {
         });
     }));
 
+    afterEach(() => { fixture.detectChanges(); });
+
     it('should not have a search term by default', () => {
         expect(component.searchTerm).toBe('');
     });
@@ -124,8 +126,11 @@ describe('AlfrescoSearchComponent', () => {
         let injector = ReflectiveInjector.resolveAndCreate([
             {provide: ActivatedRoute, useValue: {params: Observable.from([{q: 'exampleTerm692'}])}}
         ]);
+
         let search = new AlfrescoSearchComponent(null, null, injector.get(ActivatedRoute));
+
         search.ngOnInit();
+
         expect(search.searchTerm).toBe('exampleTerm692');
     });
 
@@ -140,14 +145,18 @@ describe('AlfrescoSearchComponent', () => {
             {provide: ActivatedRoute, useValue: {params: Observable.from([{}])}}
         ]);
         let search = new AlfrescoSearchComponent(injector.get(AlfrescoSearchService), null, injector.get(ActivatedRoute));
+
         search.ngOnInit();
+
         expect(search.searchTerm).toBeNull();
     });
 
     it('should setup i18n folder', () => {
         let translationService = fixture.debugElement.injector.get(AlfrescoTranslationService);
         spyOn(translationService, 'addTranslationFolder');
+
         fixture.detectChanges();
+
         expect(translationService.addTranslationFolder).toHaveBeenCalledWith('ng2-alfresco-search', 'node_modules/ng2-alfresco-search/src');
     });
 

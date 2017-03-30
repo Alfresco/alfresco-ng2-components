@@ -2,16 +2,16 @@
     <span class="mdl-paging__per-page">
         <span class="mdl-paging__per-page-label">Rows per page:</span>
         <span class="mdl-paging__per-page-value" [attr.data-automation-id]="'rows_per_page_' + pageSize">{{pagination.maxItems}}</span>
-        <button alfresco-mdl-button id="pageSizePicker" class="mdl-button--icon mdl-paging__per-page-dropdown">
-            <i class="material-icons">arrow_drop_down</i>
-        </button>
-        <ul alfresco-mdl-menu for="pageSizePicker" class="mdl-menu--bottom-right">
-            <li *ngFor="let size of supportedPageSizes"
-                tabindex="-1" [attr.data-value]="size" class="mdl-menu__item"
-                (click)="setPageSize(size)">
+
+        <md-menu #appMenu="mdMenu" for="pageSizePicker">
+            <div *ngFor="let size of supportedPageSizes"
+                tabindex="-1" [attr.data-value]="size" md-menu-item (click)="setPageSize(size)">
                 <span>{{size}}</span>
-            </li>
-        </ul>
+            </div>
+        </md-menu>
+        <button  id="pageSizePicker" md-icon-button [mdMenuTriggerFor]="appMenu">
+            <md-icon>arrow_drop_down</md-icon>
+        </button>
     </span>
     <span class="mdl-paging__count">{{summary}}</span>
     <button (click)="showPrevPage()"
