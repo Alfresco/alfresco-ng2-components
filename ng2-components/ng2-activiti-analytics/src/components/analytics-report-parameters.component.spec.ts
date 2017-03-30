@@ -530,7 +530,6 @@ describe('AnalyticsReportParametersComponent', () => {
 
             it('Should show a dialog to allowing report export', async(() => {
                 component.submit(values);
-                spyOn(component, 'generateDownloadElement').and.stub();
                 fixture.detectChanges();
                 let exportButton: HTMLButtonElement = <HTMLButtonElement>element.querySelector('#export-button');
                 expect(exportButton).toBeDefined();
