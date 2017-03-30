@@ -183,4 +183,10 @@ export class ActivitiProcessInstanceTasks implements OnInit, OnChanges {
     onRefreshClicked() {
         this.load(this.processInstanceDetails.id);
     }
+
+    onFormContentClick() {
+        if (this.startDialog) {
+            this.startDialog.nativeElement.close();
+        }
+    }
 }
