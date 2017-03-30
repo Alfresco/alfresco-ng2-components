@@ -29,7 +29,7 @@ import {
 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as moment from 'moment';
-import { AlfrescoTranslationService, LogService } from 'ng2-alfresco-core';
+import { AlfrescoTranslationService, LogService, ContentService } from 'ng2-alfresco-core';
 import { AnalyticsService } from '../services/analytics.service';
 import {
     ReportParametersModel,
@@ -106,7 +106,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
     constructor(private translateService: AlfrescoTranslationService,
                 private analyticsService: AnalyticsService,
                 private formBuilder: FormBuilder,
-                private logService: LogService) {
+                private logService: LogService,
+                private contentService: ContentService) {
         if (translateService) {
             translateService.addTranslationFolder('ng2-activiti-analytics', 'node_modules/ng2-activiti-analytics/src');
         }
@@ -357,17 +358,8 @@ export class AnalyticsReportParametersComponent implements OnInit, OnChanges, On
         this.analyticsService.exportReportToCsv(this.reportId, paramQuery).subscribe(
             (data: any) => {
                 let blob: Blob = new Blob([data], { type: 'text/csv' });
-                let downloadUrl = window.URL.createObjectURL(blob);
-                this.generateDownloadElement(downloadUrl, paramQuery);
+                this.contentService.downloadBlob(blob, paramQuery.reportName + '.csv');
             });
-    }
-
-    generateDownloadElement(downloadUrl: string, paramQuery: ReportQuery) {
-        let downloadElement = window.document.createElement('a');
-        downloadElement.setAttribute('id', 'export-download');
-        downloadElement.setAttribute('href', downloadUrl);
-        downloadElement.setAttribute('download', paramQuery.reportName);
-        downloadElement.click();
     }
 
     doSave(paramQuery: ReportQuery) {
