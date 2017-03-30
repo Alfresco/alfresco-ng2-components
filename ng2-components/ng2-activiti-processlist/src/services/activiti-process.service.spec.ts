@@ -21,7 +21,6 @@ import { CoreModule, AlfrescoApiService } from 'ng2-alfresco-core';
 import { FilterRepresentationModel } from 'ng2-activiti-tasklist';
 import { AlfrescoApi } from 'alfresco-js-api';
 import {
-    fakeEmptyFilters,
     fakeFilters,
     fakeError,
     fakeApp1,
@@ -32,9 +31,11 @@ import {
 } from '../assets/activiti-process.service.mock';
 import { exampleProcess } from '../assets/activiti-process.model.mock';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
+import { FilterProcessRepresentationModel } from '../models/filter-process.model';
 import { ProcessInstanceVariable } from '../models/process-instance-variable.model';
 import { ActivitiProcessService } from './activiti-process.service';
 
+declare let jasmine: any;
 describe('ActivitiProcessService', () => {
 
     let service: ActivitiProcessService;
@@ -603,26 +604,18 @@ describe('ActivitiProcessService', () => {
                 );
             }));
 
-            it('should return the default filters when none are returned by the API', async(() => {
-                getFilters = getFilters.and.returnValue(Promise.resolve(fakeEmptyFilters));
-
-                service.getProcessFilters(null).subscribe(
-                    (res) => {
-                        expect(res.length).toBe(3);
+            it('should return the default filters', (done) => {
+                service.createDefaultFilters(1234).subscribe(
+                    (res: FilterProcessRepresentationModel []) => {
+                        expect(res).toBeDefined();
+                        expect(res.length).toEqual(3);
+                        expect(res[0].name).toEqual('Running');
+                        expect(res[1].name).toEqual('Completed');
+                        expect(res[2].name).toEqual('All');
+                        done();
                     }
                 );
-            }));
-
-            it('should create the default filters when none are returned by the API', async(() => {
-                getFilters = getFilters.and.returnValue(Promise.resolve(fakeEmptyFilters));
-                createFilter = createFilter.and.returnValue(Promise.resolve({}));
-
-                service.getProcessFilters(null).subscribe(
-                    () => {
-                        expect(createFilter).toHaveBeenCalledTimes(3);
-                    }
-                );
-            }));
+            });
 
             it('should pass on any error that is returned by the API', async(() => {
                 getFilters = getFilters.and.returnValue(Promise.reject(fakeError));

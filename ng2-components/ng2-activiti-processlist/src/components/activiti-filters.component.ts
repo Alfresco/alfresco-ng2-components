@@ -67,8 +67,6 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
         this.filter$.subscribe((filter: FilterProcessRepresentationModel) => {
             this.filters.push(filter);
         });
-
-        this.getFilters(this.appId, this.appName);
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -85,31 +83,37 @@ export class ActivitiProcessFilters implements OnInit, OnChanges {
     }
 
     /**
-     * Return the task list filtered by appId or by appName
-     * @param appId
-     * @param appName
-     */
-    getFilters(appId?: number, appName?: string) {
-        if (appName) {
-            this.getFiltersByAppName(appName);
-        } else {
-            this.getFiltersByAppId(appId);
-        }
-    }
-
-    /**
      * Return the filter list filtered by appId
      * @param appId - optional
      */
     getFiltersByAppId(appId?: number) {
         this.activiti.getProcessFilters(appId).subscribe(
             (res: FilterProcessRepresentationModel[]) => {
-                this.resetFilter();
-                res.forEach((filter) => {
-                    this.filterObserver.next(filter);
-                });
-                this.selectFirstFilter();
-                this.onSuccess.emit(res);
+                if (res.length === 0 && this.isFilterListEmpty()) {
+                    this.activiti.createDefaultFilters(appId).subscribe(
+                        (resDefault: FilterProcessRepresentationModel[]) => {
+                            this.resetFilter();
+                            resDefault.forEach((filter) => {
+                                this.filterObserver.next(filter);
+                            });
+
+                            this.selectFirstFilter();
+                            this.onSuccess.emit(resDefault);
+                        },
+                        (errDefault: any) => {
+                            this.logService.error(errDefault);
+                            this.onError.emit(errDefault);
+                        }
+                    );
+                } else {
+                    this.resetFilter();
+                    res.forEach((filter) => {
+                        this.filterObserver.next(filter);
+                    });
+
+                    this.selectFirstFilter();
+                    this.onSuccess.emit(res);
+                }
             },
             (err: any) => {
                 this.logService.error(err);
