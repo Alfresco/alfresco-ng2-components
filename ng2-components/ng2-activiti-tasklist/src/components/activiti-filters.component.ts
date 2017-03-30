@@ -105,14 +105,33 @@ export class ActivitiFilters implements OnInit, OnChanges {
     getFiltersByAppId(appId?: string) {
         this.activiti.getTaskListFilters(appId).subscribe(
             (res: FilterRepresentationModel[]) => {
-                this.resetFilter();
-                res.forEach((filter) => {
-                    this.filterObserver.next(filter);
-                });
-                this.selectFirstFilter();
-                this.onSuccess.emit(res);
+                if (res.length === 0 && this.isFilterListEmpty()) {
+                    this.activiti.createDefaultFilters(appId).subscribe(
+                        (resDefault: FilterRepresentationModel[]) => {
+                            this.resetFilter();
+                            resDefault.forEach((filter) => {
+                                this.filterObserver.next(filter);
+                            });
+
+                            this.selectFirstFilter();
+                            this.onSuccess.emit(resDefault);
+                        },
+                        (errDefault: any) => {
+                            this.logService.error(errDefault);
+                            this.onError.emit(errDefault);
+                        }
+                    );
+                } else {
+                    this.resetFilter();
+                    res.forEach((filter) => {
+                        this.filterObserver.next(filter);
+                    });
+
+                    this.selectFirstFilter();
+                    this.onSuccess.emit(res);
+                }
             },
-            (err) => {
+            (err: any) => {
                 this.logService.error(err);
                 this.onError.emit(err);
             }

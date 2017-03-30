@@ -26,14 +26,9 @@ import {
 } from '../models/filter.model';
 import { Comment } from '../models/comment.model';
 
-declare let AlfrescoApi: any;
 declare let jasmine: any;
 
 describe('ActivitiTaskListService', () => {
-    let fakeEmptyFilters = {
-        size: 0, total: 0, start: 0,
-        data: []
-    };
 
     let fakeFilters = {
         size: 2, total: 2, start: 0,
@@ -431,29 +426,50 @@ describe('ActivitiTaskListService', () => {
         });
     });
 
-    it('should call the createDefaultFilter when the list is empty', (done) => {
-        spyOn(service, 'createDefaultFilter');
-
-        service.getTaskListFilters().subscribe(
-            (res) => {
-                expect(service.createDefaultFilter).toHaveBeenCalled();
+    it('should return the default filters', (done) => {
+        service.createDefaultFilters('1234').subscribe(
+            (res: FilterRepresentationModel []) => {
+                expect(res).toBeDefined();
+                expect(res.length).toEqual(4);
+                expect(res[0].name).toEqual('Involved Tasks');
+                expect(res[1].name).toEqual('My Tasks');
+                expect(res[2].name).toEqual('Queued Tasks');
+                expect(res[3].name).toEqual('Completed Tasks');
                 done();
             }
         );
 
-        jasmine.Ajax.requests.mostRecent().respondWith({
+        jasmine.Ajax.requests.at(0).respondWith({
             'status': 200,
             contentType: 'application/json',
-            responseText: JSON.stringify(fakeEmptyFilters)
+            responseText: JSON.stringify({
+                id: '111', name: 'Involved Tasks', filter: { assignment: 'fake-involved' }
+            })
         });
-    });
 
-    it('should return the default filters', () => {
-        spyOn(service, 'addFilter');
-        let filters = service.createDefaultFilter(null);
-        expect(service.addFilter).toHaveBeenCalledTimes(4);
-        expect(filters).toBeDefined();
-        expect(filters.length).toEqual(4);
+        jasmine.Ajax.requests.at(1).respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({
+                id: '222', name: 'My Tasks', filter: { assignment: 'fake-assignee' }
+            })
+        });
+
+        jasmine.Ajax.requests.at(2).respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({
+                id: '333', name: 'Queued Tasks', filter: { assignment: 'fake-candidate' }
+            })
+        });
+
+        jasmine.Ajax.requests.at(3).respondWith({
+            'status': 200,
+            contentType: 'application/json',
+            responseText: JSON.stringify({
+                id: '444', name: 'Completed Tasks', filter: { assignment: 'fake-involved' }
+            })
+        });
     });
 
     it('should add a filter ', (done) => {

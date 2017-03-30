@@ -17,7 +17,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AlfrescoApiService } from 'ng2-alfresco-core';
+import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { ProcessInstance, ProcessDefinitionRepresentation } from '../models/index';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstanceVariable } from './../models/process-instance-variable.model';
@@ -29,7 +29,8 @@ declare var moment: any;
 @Injectable()
 export class ActivitiProcessService {
 
-    constructor(private apiService: AlfrescoApiService) {
+    constructor(private apiService: AlfrescoApiService,
+                private logService: LogService) {
     }
 
     /**
@@ -64,9 +65,6 @@ export class ActivitiProcessService {
                     let filterModel = new FilterProcessRepresentationModel(filter);
                     filters.push(filterModel);
                 });
-                if (response && response.data && response.data.length === 0) {
-                    return this.createDefaultFilters(appId);
-                }
                 return filters;
             })
             .catch(err => this.handleError(err));
@@ -77,29 +75,42 @@ export class ActivitiProcessService {
      * @param appId
      * @returns {FilterRepresentationModel[]}
      */
-    private createDefaultFilters(appId: number): FilterProcessRepresentationModel[] {
-        let filters: FilterProcessRepresentationModel[] = [];
+    public createDefaultFilters(appId: number): Observable<FilterProcessRepresentationModel[]> {
+        let runnintFilter = this.getRunningFilterInstance(appId);
+        let runnintObservable = this.addFilter(runnintFilter);
 
-        let involvedTasksFilter = this.getRunningFilterInstance(appId);
-        this.addFilter(involvedTasksFilter);
-        filters.push(involvedTasksFilter);
+        let completedFilter = this.getCompletedFilterInstance(appId);
+        let completedObservable = this.addFilter(completedFilter);
 
-        let myTasksFilter = this.getCompletedFilterInstance(appId);
-        this.addFilter(myTasksFilter);
-        filters.push(myTasksFilter);
+        let allFilter = this.getAllFilterInstance(appId);
+        let allObservable = this.addFilter(allFilter);
 
-        let queuedTasksFilter = this.getAllFilterInstance(appId);
-        this.addFilter(queuedTasksFilter);
-        filters.push(queuedTasksFilter);
-
-        return filters;
+        return Observable.create(observer => {
+            Observable.forkJoin(
+                runnintObservable,
+                completedObservable,
+                allObservable
+            ).subscribe(
+                (res) => {
+                    let filters: FilterProcessRepresentationModel[] = [];
+                    res.forEach((filter) => {
+                        if (filter.name === runnintFilter.name) {
+                            filters.push(runnintFilter);
+                        } else if (filter.name === completedFilter.name) {
+                            filters.push(completedFilter);
+                        } else if (filter.name === allFilter.name) {
+                            filters.push(allFilter);
+                        }
+                    });
+                    observer.next(filters);
+                    observer.complete();
+                },
+                (err: any) => {
+                    this.logService.error(err);
+                });
+        });
     }
 
-    /**
-     * Return a static Running filter instance
-     * @param appId
-     * @returns {FilterProcessRepresentationModel}
-     */
     private getRunningFilterInstance(appId: number): FilterProcessRepresentationModel {
         return new FilterProcessRepresentationModel({
             'name': 'Running',
@@ -147,7 +158,10 @@ export class ActivitiProcessService {
      */
     addFilter(filter: FilterProcessRepresentationModel): Observable<FilterProcessRepresentationModel> {
         return Observable.fromPromise(this.callApiAddFilter(filter))
-            .catch(err => this.handleError(err));
+            .map(res => res)
+            .map((response: FilterProcessRepresentationModel) => {
+                return response;
+            }).catch(err => this.handleError(err));
     }
 
     getProcess(id: string): Observable<ProcessInstance> {
