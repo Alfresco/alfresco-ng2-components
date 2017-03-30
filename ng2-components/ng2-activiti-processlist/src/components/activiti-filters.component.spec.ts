@@ -46,12 +46,15 @@ describe('ActivitiFilters', () => {
 
     beforeEach(() => {
         logService = new LogServiceMock();
-        activitiService = new ActivitiProcessService(null);
+        activitiService = new ActivitiProcessService(null, logService);
         filterList = new ActivitiProcessFilters(null, activitiService, logService);
     });
 
     it('should return the filter task list', (done) => {
         spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
+        const appId = '1';
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
 
         filterList.onSuccess.subscribe((res) => {
             expect(res).toBeDefined();
@@ -74,7 +77,8 @@ describe('ActivitiFilters', () => {
         spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeDeployedApplicationsPromise));
         spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeGlobalFilterPromise));
 
-        filterList.appName = 'test';
+        let change = new SimpleChange(null, 'test');
+        filterList.ngOnChanges({ 'appName': change });
 
         filterList.onSuccess.subscribe((res) => {
             let deployApp: any = activitiService.getDeployedApplications;
@@ -87,8 +91,11 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        filterList.appId = 1;
         spyOn(activitiService, 'getProcessFilters').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = '1';
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appId': change });
 
         filterList.onError.subscribe((err) => {
             expect(err).toBeDefined();
@@ -99,8 +106,11 @@ describe('ActivitiFilters', () => {
     });
 
     it('should emit an error with a bad response', (done) => {
-        filterList.appName = 'fake-app';
         spyOn(activitiService, 'getDeployedApplications').and.returnValue(Observable.fromPromise(fakeErrorFilterPromise));
+
+        const appId = 'fake-app';
+        let change = new SimpleChange(null, appId);
+        filterList.ngOnChanges({ 'appName': change });
 
         filterList.onError.subscribe((err) => {
             expect(err).toBeDefined();

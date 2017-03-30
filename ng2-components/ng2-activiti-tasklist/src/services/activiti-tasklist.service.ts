@@ -61,9 +61,6 @@ export class ActivitiTaskListService {
                     let filterModel = new FilterRepresentationModel(filter);
                     filters.push(filterModel);
                 });
-                if (response && response.data && response.data.length === 0) {
-                    return this.createDefaultFilter(appId);
-                }
                 return filters;
             }).catch(err => this.handleError(err));
     }
@@ -204,26 +201,46 @@ export class ActivitiTaskListService {
      * @param appId
      * @returns {FilterRepresentationModel[]}
      */
-    createDefaultFilter(appId: string): FilterRepresentationModel[] {
-        let filters: FilterRepresentationModel[] = [];
-
+    public createDefaultFilters(appId: string): Observable<FilterRepresentationModel[]> {
         let involvedTasksFilter = this.getInvolvedTasksFilterInstance(appId);
-        this.addFilter(involvedTasksFilter);
-        filters.push(involvedTasksFilter);
+        let involvedObservable = this.addFilter(involvedTasksFilter);
 
         let myTasksFilter = this.getMyTasksFilterInstance(appId);
-        this.addFilter(myTasksFilter);
-        filters.push(myTasksFilter);
+        let myTaskObservable = this.addFilter(myTasksFilter);
 
         let queuedTasksFilter = this.getQueuedTasksFilterInstance(appId);
-        this.addFilter(queuedTasksFilter);
-        filters.push(queuedTasksFilter);
+        let queuedObservable = this.addFilter(queuedTasksFilter);
 
         let completedTasksFilter = this.getCompletedTasksFilterInstance(appId);
-        this.addFilter(completedTasksFilter);
-        filters.push(completedTasksFilter);
+        let completeObservable = this.addFilter(completedTasksFilter);
 
-        return filters;
+        return Observable.create(observer => {
+            Observable.forkJoin(
+                involvedObservable,
+                myTaskObservable,
+                queuedObservable,
+                completeObservable
+            ).subscribe(
+                (res) => {
+                    let filters: FilterRepresentationModel[] = [];
+                    res.forEach((filter) => {
+                        if (filter.name === involvedTasksFilter.name) {
+                            filters.push(involvedTasksFilter);
+                        } else if (filter.name === myTasksFilter.name) {
+                            filters.push(myTasksFilter);
+                        } else if (filter.name === queuedTasksFilter.name) {
+                            filters.push(queuedTasksFilter);
+                        } else if (filter.name === completedTasksFilter.name) {
+                            filters.push(completedTasksFilter);
+                        }
+                    });
+                    observer.next(filters);
+                    observer.complete();
+                },
+                (err: any) => {
+                    this.logService.error(err);
+                });
+        });
     }
 
     /**
