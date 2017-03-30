@@ -62,9 +62,9 @@ describe('ActivitiProcessInstanceListComponent', () => {
     }));
 
     it('should use the default schemaColumn as default', () => {
-        component.ngOnInit();
+        component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
-        expect(component.data.getColumns().length).toEqual(4);
+        expect(component.data.getColumns().length).toEqual(2);
     });
 
     it('should use the schemaColumn passed in input', () => {
@@ -75,13 +75,13 @@ describe('ActivitiProcessInstanceListComponent', () => {
             ]
         );
 
-        component.ngOnInit();
+        component.ngAfterContentInit();
         expect(component.data.getColumns()).toBeDefined();
         expect(component.data.getColumns().length).toEqual(1);
     });
 
     it('should return an empty process list when no input parameters are passed', () => {
-        component.ngOnInit();
+        component.ngAfterContentInit();
         expect(component.data).toBeDefined();
         expect(component.isListEmpty()).toBeTruthy();
     });

@@ -16,9 +16,9 @@
  */
 
 import { DatePipe } from '@angular/common';
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { AlfrescoTranslationService } from 'ng2-alfresco-core';
-import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow, DataSorting } from 'ng2-alfresco-datatable';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ContentChild, AfterContentInit } from '@angular/core';
+import { AlfrescoTranslationService, DataColumnListComponent } from 'ng2-alfresco-core';
+import { ObjectDataTableAdapter, DataTableAdapter, DataRowEvent, ObjectDataRow, DataSorting, DataColumn } from 'ng2-alfresco-datatable';
 import { ProcessFilterRequestRepresentation } from '../models/process-instance-filter.model';
 import { ProcessInstance } from '../models/process-instance.model';
 import { ActivitiProcessService } from '../services/activiti-process.service';
@@ -29,7 +29,9 @@ import { ActivitiProcessService } from '../services/activiti-process.service';
     styleUrls: ['./activiti-processlist.component.css'],
     templateUrl: './activiti-processlist.component.html'
 })
-export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
+export class ActivitiProcessInstanceListComponent implements OnChanges, AfterContentInit {
+
+    @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
     @Input()
     appId: string;
@@ -62,11 +64,9 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
 
     currentInstanceId: string;
 
-    private defaultSchemaColumn: any[] = [
-        {type: 'text', key: 'id', title: 'Id'},
-        {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
-        {type: 'text', key: 'started', title: 'Started', sortable: true},
-        {type: 'text', key: 'startedBy.email', title: 'Started By', sortable: true}
+    private defaultSchema: DataColumn[] = [
+        { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
+        { type: 'text', key: 'created', title: 'Created', cssClass: 'hidden', sortable: true }
     ];
 
     constructor(private processService: ActivitiProcessService,
@@ -76,12 +76,33 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnInit() {
-        if (!this.data) {
-            this.data = this.initDefaultSchemaColumns();
-        }
+    ngAfterContentInit() {
+        this.setupSchema();
+
         if (this.appId) {
             this.reload();
+        }
+    }
+
+    /**
+     * Setup html-based (html definitions) or code behind (data adapter) schema.
+     * If component is assigned with an empty data adater the default schema settings applied.
+     */
+    setupSchema() {
+        let schema: DataColumn[] = [];
+
+        if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
+            schema = this.columnList.columns.map(c => <DataColumn> c);
+        }
+
+        if (!this.data) {
+            this.data = new ObjectDataTableAdapter([], schema.length > 0 ? schema : this.defaultSchema);
+        } else {
+            if (schema && schema.length > 0) {
+                this.data.setColumns(schema);
+            } else if (this.data.getColumns().length === 0) {
+                this.data.setColumns(this.defaultSchema);
+            }
         }
     }
 
@@ -117,17 +138,6 @@ export class ActivitiProcessInstanceListComponent implements OnInit, OnChanges {
     public reload() {
         this.requestNode = this.createRequestNode();
         this.load(this.requestNode);
-    }
-
-    /**
-     * Return an initDefaultSchemaColumns instance with the default Schema Column
-     * @returns {ObjectDataTableAdapter}
-     */
-    initDefaultSchemaColumns(): ObjectDataTableAdapter {
-        return new ObjectDataTableAdapter(
-            [],
-            this.defaultSchemaColumn
-        );
     }
 
     private load(requestNode: ProcessFilterRequestRepresentation) {
