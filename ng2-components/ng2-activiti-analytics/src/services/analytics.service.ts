@@ -20,7 +20,15 @@ import { Observable } from 'rxjs/Rx';
 import { Response } from '@angular/http';
 import { AlfrescoApiService, LogService } from 'ng2-alfresco-core';
 import { ReportParametersModel, ParameterValueModel } from '../models/report.model';
-import { Chart, PieChart, TableChart, BarChart, HeatMapChart, MultiBarChart, DetailsTableChart } from '../models/chart.model';
+import {
+    Chart,
+    PieChart,
+    TableChart,
+    BarChart,
+    HeatMapChart,
+    MultiBarChart,
+    DetailsTableChart
+} from '../models/chart.model';
 
 @Injectable()
 export class AnalyticsService {
@@ -33,16 +41,26 @@ export class AnalyticsService {
      * Retrive all the Deployed app
      * @returns {Observable<any>}
      */
-    getReportList(): Observable<any> {
+    getReportList(appId: string): Observable<any> {
         return Observable.fromPromise(this.apiService.getInstance().activiti.reportApi.getReportList())
             .map((res: any) => {
                 let reports: ReportParametersModel[] = [];
                 res.forEach((report: ReportParametersModel) => {
                     let reportModel = new ReportParametersModel(report);
-                    reports.push(reportModel);
+                    if (this.isReportValid(appId, report)) {
+                        reports.push(reportModel);
+                    }
                 });
                 return reports;
             }).catch(err => this.handleError(err));
+    }
+
+    private isReportValid(appId: string, report: ReportParametersModel) {
+        let isValid: boolean = true;
+        if (appId && appId !== '0' && report.name.includes('Process definition overview')) {
+            isValid = false;
+        }
+        return isValid;
     }
 
     getReportParams(reportId: string): Observable<any> {
@@ -126,7 +144,7 @@ export class AnalyticsService {
     }
 
     getProcessDefinitionsValues(appId: string): Observable<any> {
-        let options = { 'appDefinitionId': appId};
+        let options = { 'appDefinitionId': appId };
         return Observable.fromPromise(this.apiService.getInstance().activiti.processDefinitionsApi.getProcessDefinitions(options))
             .map((res: any) => {
                 let paramOptions: ParameterValueModel[] = [];

@@ -35,6 +35,9 @@ export class AnalyticsReportListComponent implements  OnInit {
     @Input()
     layoutType: string = AnalyticsReportListComponent.LAYOUT_LIST;
 
+    @Input()
+    appId: string;
+
     @Output()
     reportClick: EventEmitter<ReportParametersModel> = new EventEmitter<ReportParametersModel>();
 
@@ -59,7 +62,7 @@ export class AnalyticsReportListComponent implements  OnInit {
     ngOnInit() {
         this.initObserver();
 
-        this.getReportList();
+        this.getReportList(this.appId);
     }
 
     initObserver() {
@@ -73,14 +76,14 @@ export class AnalyticsReportListComponent implements  OnInit {
      */
     reload() {
         this.reset();
-        this.getReportList();
+        this.getReportList(this.appId);
     }
 
     /**
      * Get the report list
      */
-    getReportList() {
-        this.analyticsService.getReportList().subscribe(
+    getReportList(appId: string) {
+        this.analyticsService.getReportList(appId).subscribe(
             (res: ReportParametersModel[]) => {
                 if (res && res.length === 0) {
                     this.createDefaultReports();
@@ -104,7 +107,7 @@ export class AnalyticsReportListComponent implements  OnInit {
     createDefaultReports() {
         this.analyticsService.createDefaultReports().subscribe(
             () => {
-                this.analyticsService.getReportList().subscribe(
+                this.analyticsService.getReportList(this.appId).subscribe(
                     (response: ReportParametersModel[]) => {
                         response.forEach((report) => {
                             this.reportObserver.next(report);
