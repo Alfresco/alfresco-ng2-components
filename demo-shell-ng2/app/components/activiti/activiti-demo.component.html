@@ -132,6 +132,7 @@
                         <span><h5>Report List</h5></span>
                         <hr>
                         <analytics-report-list
+                            [appId]="appId"
                             (reportClick)="onReportClick($event)"
                             #analyticsreportlist>
                         </analytics-report-list>
