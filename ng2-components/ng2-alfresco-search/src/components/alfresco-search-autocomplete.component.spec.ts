@@ -103,7 +103,7 @@ describe('AlfrescoSearchAutocompleteComponent', () => {
             component.resultsLoad.subscribe(() => {
                 fixture.detectChanges();
                 expect( element.querySelector('#result_user_0').innerHTML).toBe('John Doe');
-                expect( element.querySelector('#result_name_0').innerHTML).toBe('<b _ngcontent-a-1="">MyDoc</b>');
+                expect( element.querySelector('#result_name_0').innerHTML).toContain('MyDoc');
                 done();
             });
 
