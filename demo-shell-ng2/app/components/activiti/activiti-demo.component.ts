@@ -171,9 +171,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onStartTaskSuccess(event: any) {
         this.activitifilter.selectFilterWithTask(event.id);
-        this.taskFilter = this.activitifilter.getCurrentFilter();
-        this.activititasklist.landingTaskId = event.id;
-        this.activititasklist.reload();
+        this.currentTaskId = event.id;
     }
 
     onSuccessTaskList(event: FilterRepresentationModel) {
