@@ -179,9 +179,8 @@ export class AlfrescoLoginComponent implements OnInit {
      * Check and display the right error message in the UI
      */
     private displayErrorMessage(err: any): void {
-        if (err.error && err.error.crossDomain && err.error.message.indexOf('the network is offline, Origin is not allowed by' +
-                ' Access-Control-Allow-Origin') !== -1) {
-            this.errorMsg = 'LOGIN.MESSAGES.LOGIN-ERROR-CORS';
+        if (err.error && err.error.crossDomain && err.error.message.indexOf('Access-Control-Allow-Origin') !== -1) {
+            this.errorMsg = err.error.message;
             return;
         }
 
