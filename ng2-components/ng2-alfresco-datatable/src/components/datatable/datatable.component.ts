@@ -32,6 +32,7 @@ import { DataTableAdapter, DataRow, DataColumn, DataSorting, DataRowEvent, Objec
 import { DataCellEvent } from './data-cell.event';
 import { DataRowActionEvent } from './data-row-action.event';
 import { DataColumnListComponent } from 'ng2-alfresco-core';
+import { MdCheckboxChange } from '@angular/material';
 
 declare var componentHandler;
 
@@ -178,25 +179,15 @@ export class DataTableComponent implements AfterContentInit, OnChanges {
         }
     }
 
-    onSelectAllClick(e?: Event) {
-        if (e) {
-            e.preventDefault();
-        }
-
-        this.isSelectAllChecked = !this.isSelectAllChecked;
+    onSelectAllClick(e: MdCheckboxChange) {
+        this.isSelectAllChecked = e.checked;
 
         if (this.multiselect) {
             let rows = this.data.getRows();
             if (rows && rows.length > 0) {
                 for (let i = 0; i < rows.length; i++) {
-                    rows[i].isSelected = this.isSelectAllChecked;
+                    rows[i].isSelected = e.checked;
                 }
-                // TODO: left for reference, will be removed during future revisions
-                /*
-                 this._ngZone.run(() => {
-                 this.data.getRows()[1].isSelected = true;
-                 });
-                 */
             }
         }
     }
