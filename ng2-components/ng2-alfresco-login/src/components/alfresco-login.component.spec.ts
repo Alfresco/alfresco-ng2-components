@@ -294,7 +294,7 @@ describe('AlfrescoLogin', () => {
         expect(component.error).toBe(true);
         expect(component.success).toBe(false);
         expect(element.querySelector('#login-error')).toBeDefined();
-        expect(element.querySelector('#login-error').innerText).toEqual('LOGIN.MESSAGES.LOGIN-ERROR-CORS');
+        expect(element.querySelector('#login-error').innerText).toEqual('ERROR: the network is offline, Origin is not allowed by Access-Control-Allow-Origin');
     });
 
     it('should return CSRF error when server CSRF error occurs', () => {
