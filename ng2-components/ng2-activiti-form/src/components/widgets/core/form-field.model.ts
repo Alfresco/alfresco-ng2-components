@@ -340,4 +340,9 @@ export class FormFieldModel extends FormWidgetModel {
             return false;
         }
     }
+
+    getOptionName(): string {
+        let option: FormFieldOption = this.options.find(opt => opt.id === this.value);
+        return option ? option.name : null;
+    }
 }
