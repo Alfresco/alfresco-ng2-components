@@ -75,7 +75,8 @@
     <h4 class="mdl-dialog__title">{{ 'DETAILS.LABELS.START_FORM'|translate }}</h4>
     <div class="mdl-dialog__content form__size">
         <activiti-start-form [processId]="processId" [processDefinitionId]="processInstanceDetails?.processDefinitionId"
-                             [showRefreshButton]="false" [readOnlyForm]="true" >
+                             [showRefreshButton]="false" [readOnlyForm]="true"
+                             (formContentClicked)='onFormContentClick($event)'>
         </activiti-start-form>
     </div>
     <div class="mdl-dialog__actions">

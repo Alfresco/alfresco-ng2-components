@@ -31,6 +31,7 @@ import { ActivitiForm } from './activiti-form.component';
 import { FormService } from './../services/form.service';
 import { WidgetVisibilityService }  from './../services/widget-visibility.service';
 import { FormOutcomeModel } from './widgets/core/index';
+import { ContentLinkModel } from './widgets/core/content-link.model';
 
 /**
  * Displays the start form for a named process definition, which can be used to retrieve values to start a new process.
@@ -75,6 +76,9 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
     @Output()
     outcomeClick: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    formContentClicked: EventEmitter<ContentLinkModel> = new EventEmitter<ContentLinkModel>();
+
     @ViewChild('outcomesContainer', {})
     outcomesContainer: ElementRef = null;
 
@@ -89,6 +93,12 @@ export class ActivitiStartForm extends ActivitiForm implements AfterViewChecked,
         }
 
         this.showTitle = false;
+    }
+
+    ngOnInit() {
+        this.formService.formContentClicked.subscribe((content: ContentLinkModel) => {
+            this.formContentClicked.emit(content);
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
