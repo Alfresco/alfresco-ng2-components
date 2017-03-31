@@ -21,7 +21,6 @@ import { TaskDetailsModel } from '../models/task-details.model';
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { Form } from '../models/form.model';
 
-declare let componentHandler: any;
 declare let dialogPolyfill: any;
 
 @Component({
