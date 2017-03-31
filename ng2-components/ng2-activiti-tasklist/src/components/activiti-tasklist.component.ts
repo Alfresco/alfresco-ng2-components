@@ -36,8 +36,6 @@ import {
 import { ActivitiTaskListService } from './../services/activiti-tasklist.service';
 import { TaskQueryRequestRepresentationModel } from '../models/filter.model';
 
-declare let componentHandler: any;
-
 @Component({
     selector: 'activiti-tasklist',
     moduleId: module.id,
@@ -45,6 +43,8 @@ declare let componentHandler: any;
     styleUrls: ['./activiti-tasklist.component.css']
 })
 export class ActivitiTaskList implements OnChanges, AfterContentInit {
+
+    private requestNode: TaskQueryRequestRepresentationModel;
 
     @ContentChild(DataColumnListComponent) columnList: DataColumnListComponent;
 
@@ -69,8 +69,6 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
     @Input()
     landingTaskId: string;
 
-    requestNode: TaskQueryRequestRepresentationModel;
-
     @Input()
     data: DataTableAdapter;
 
@@ -84,6 +82,16 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
     onError: EventEmitter<any> = new EventEmitter<any>();
 
     currentInstanceId: string;
+
+    /**
+     * Toggles custom data source mode.
+     * When enabled the component reloads data from it's current source instead of the server side.
+     * This allows generating and displaying custom data sets (i.e. filtered out content).
+     *
+     * @type {boolean}
+     * @memberOf ActivitiTaskList
+     */
+    hasCustomDataSource: boolean = false;
 
     private defaultSchemaColumn: DataColumn[] = [
         { type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true },
@@ -106,7 +114,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
      * Setup html-based (html definitions) or code behind (data adapter) schema.
      * If component is assigned with an empty data adater the default schema settings applied.
      */
-    setupSchema() {
+    setupSchema(): void {
         let schema: DataColumn[] = [];
 
         if (this.columnList && this.columnList.columns && this.columnList.columns.length > 0) {
@@ -127,6 +135,13 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
     ngOnChanges(changes: SimpleChanges) {
         if (this.isPropertyChanged(changes)) {
             this.reload();
+        }
+    }
+
+    setCustomDataSource(rows: ObjectDataRow[]): void {
+        if (this.data) {
+            this.data.setRows(rows);
+            this.hasCustomDataSource = true;
         }
     }
 
@@ -158,9 +173,11 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
         return changed;
     }
 
-    public reload() {
-        this.requestNode = this.createRequestNode();
-        this.load(this.requestNode);
+    reload(): void {
+        if (!this.hasCustomDataSource) {
+            this.requestNode = this.createRequestNode();
+            this.load(this.requestNode);
+        }
     }
 
     private load(requestNode: TaskQueryRequestRepresentationModel) {
@@ -209,7 +226,7 @@ export class ActivitiTaskList implements OnChanges, AfterContentInit {
     /**
      * Select the task given in input if present
      */
-    selectTask(taskIdToSelect: string) {
+    selectTask(taskIdToSelect: string): void {
         if (!this.isListEmpty()) {
             let rows = this.data.getRows();
             if (rows.length > 0) {

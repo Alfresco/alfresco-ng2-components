@@ -1,5 +1,6 @@
-<button type="button" (click)="showDialog()" class="mdl-button" id="start-task-button">
-    {{'START_TASK.BUTTON'|translate}}
+<button md-raised-button (click)="showDialog()" id="start-task-button">
+    <md-icon>add</md-icon>
+    <span>{{'START_TASK.BUTTON'|translate}}</span>
 </button>
 
 <dialog class="mdl-dialog" id="start-task-dialog" #dialog>
