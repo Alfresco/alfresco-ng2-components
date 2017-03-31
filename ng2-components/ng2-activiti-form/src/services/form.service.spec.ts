@@ -23,12 +23,49 @@ import {
     StorageService,
     LogService
 } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
 import { FormService } from './form.service';
 import { Response, ResponseOptions } from '@angular/http';
 import { EcmModelService } from './ecm-model.service';
 import { FormDefinitionModel } from '../models/form-definition.model';
 
 declare let jasmine: any;
+
+let fakeGroupResponse = {
+    'size': 2,
+    'total': 2,
+    'start': 0,
+    'data': [{
+        'id': 2004,
+        'name': 'PEOPLE_GROUP',
+        'externalId': null,
+        'status': 'active',
+        'groups': null
+    }, { 'id': 2005, 'name': 'PEOPLE_GROUP_2', 'externalId': null, 'status': 'active', 'groups': null }]
+};
+
+let fakePeopleResponse = {
+    'size': 3,
+    'total': 3,
+    'start': 0,
+    'data': [{ 'id': 2002, 'firstName': 'Peo', 'lastName': 'Ple', 'email': 'people' }, {
+        'id': 2003,
+        'firstName': 'Peo02',
+        'lastName': 'Ple02',
+        'email': 'people02'
+    }, { 'id': 2004, 'firstName': 'Peo03', 'lastName': 'Ple03', 'email': 'people03' }]
+};
+
+function createFakeBlob() {
+    let data = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+
+    let bytes = new Uint8Array(data.length / 2);
+
+    for (let i = 0; i < data.length; i += 2) {
+        bytes[i / 2] = parseInt(data.substring(i, i + 2), /* base = */ 16);
+    }
+    return new Blob([bytes], { type: 'image/png' });
+}
 
 describe('Form service', () => {
 
@@ -78,16 +115,16 @@ describe('Form service', () => {
 
         let fileContentPdfResponseBody = {
             id: 999,
-            name: 'fake-name.jpg',
+            name: 'fake-name.pdf',
             created: '2017-01-23T12:12:53.219+0000',
             createdBy: { id: 2, firstName: 'fake-admin', lastName: 'fake-last', 'email': 'fake-admin' },
             relatedContent: false,
             contentAvailable: true,
             link: false,
-            mimeType: 'image/jpeg',
-            simpleType: 'image',
-            previewStatus: 'unsupported',
-            thumbnailStatus: 'unsupported'
+            mimeType: 'application/pdf',
+            simpleType: 'pdf',
+            previewStatus: 'created',
+            thumbnailStatus: 'created'
         };
 
         let fileContentJpgResponseBody = {
@@ -284,41 +321,45 @@ describe('Form service', () => {
             expect(service.toJsonArray(response)).toEqual([]);
         });
 
-        fit('should handle error with generic message', () => {
-            spyOn(logService, 'error').and.stub();
-
-            service.handleError(null);
-            expect(logService.error).toHaveBeenCalledWith(FormService.UNKNOWN_ERROR_MESSAGE);
+        it('should handle error with generic message', () => {
+            service.handleError(null).subscribe(() => {
+            }, (error) => {
+                expect(error).toBe(FormService.UNKNOWN_ERROR_MESSAGE);
+            });
         });
 
         it('should handle error with error message', () => {
-            spyOn(logService, 'error').and.stub();
-
             const message = '<error>';
-            service.handleError({ message: message });
 
-            expect(logService.error).toHaveBeenCalledWith(message);
+            service.handleError({ message: message }).subscribe(() => {
+            }, (error) => {
+                expect(error).toBe(message);
+            });
         });
 
         it('should handle error with detailed message', () => {
-            spyOn(logService, 'error').and.stub();
             service.handleError({
                 status: '400',
                 statusText: 'Bad request'
-            });
-            expect(logService.error).toHaveBeenCalledWith('400 - Bad request');
+            }).subscribe(
+                () => {
+                },
+                (error) => {
+                    expect(error).toBe('400 - Bad request');
+                });
         });
 
         it('should handle error with generic message', () => {
-            spyOn(logService, 'error').and.stub();
-            service.handleError({});
-            expect(logService.error).toHaveBeenCalledWith(FormService.GENERIC_ERROR_MESSAGE);
+            service.handleError({}).subscribe(() => {
+            }, (error) => {
+                expect(error).toBe(FormService.GENERIC_ERROR_MESSAGE);
+            });
         });
 
         it('should get all the forms with modelType=2', (done) => {
             service.getForms().subscribe(result => {
                 expect(jasmine.Ajax.requests.mostRecent().url.endsWith('models?modelType=2')).toBeTruthy();
-                expect(result).toEqual(responseBody);
+                expect(result).toEqual({});
                 done();
             });
 
@@ -381,7 +422,7 @@ describe('Form service', () => {
         });
 
         it('should return the unsupported content when the file is an image', (done) => {
-            let contentId: number = 999;
+            let contentId: number = 888;
 
             service.getFileContent(contentId).subscribe(result => {
                 expect(result.id).toEqual(contentId);
@@ -394,12 +435,12 @@ describe('Form service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify(fileContentPdfResponseBody)
+                responseText: JSON.stringify(fileContentJpgResponseBody)
             });
         });
 
         it('should return the supported content when the file is a pdf', (done) => {
-            let contentId: number = 888;
+            let contentId: number = 999;
 
             service.getFileContent(contentId).subscribe(result => {
                 expect(result.id).toEqual(contentId);
@@ -412,29 +453,63 @@ describe('Form service', () => {
             jasmine.Ajax.requests.mostRecent().respondWith({
                 'status': 200,
                 contentType: 'application/json',
-                responseText: JSON.stringify(fileContentJpgResponseBody)
+                responseText: JSON.stringify(fileContentPdfResponseBody)
             });
         });
-        /*
-         it('should return the raw content URL', () => {
-         let contentId: number = 999;
-         let contentRawUrl = service.getFileRawContentUrl(contentId);
-         expect(contentRawUrl).toEqual(`${bpmCli.basePath}/api/enterprise/content/${contentId}/raw`);
-         });
 
-         it('should return a Blob as thumbnail', (done) => {
-         let contentId: number = 999;
+        it('should return the raw content URL', () => {
+            let contentId: number = 999;
+            let contentUrl = service.getFileRawContentUrl(contentId);
+            expect(contentUrl).toContain(`/api/enterprise/content/${contentId}/raw`);
+        });
 
-         let blob = createFakeBlob();
-         spyOn(service, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
+        it('should return a Blob as thumbnail', (done) => {
+            let contentId: number = 999;
+            let blob = createFakeBlob();
+            spyOn(service, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
+            service.getContentThumbnailUrl(contentId).subscribe(result => {
+                expect(result).toEqual(jasmine.any(Blob));
+                expect(result.size).toEqual(48);
+                expect(result.type).toEqual('image/png');
+                done();
+            });
+        });
 
-         service.getContentThumbnailUrl(contentId).subscribe(result => {
-         expect(result).toEqual(jasmine.any(Blob));
-         expect(result.size).toEqual(48);
-         expect(result.type).toEqual('image/png');
-         done();
-         });
-         });*/
+        it('should return list of people', (done) => {
+            let fakeFilter: string = 'whatever';
+
+            service.getWorkflowUsers(fakeFilter).subscribe(result => {
+                expect(result).toBeDefined();
+                expect(result.length).toBe(3);
+                expect(result[0].id).toBe(2002);
+                expect(result[0].firstName).toBe('Peo');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakePeopleResponse)
+            });
+        });
+
+        it('should return list of groups', (done) => {
+            let fakeFilter: string = 'whatever';
+
+            service.getWorkflowGroups(fakeFilter).subscribe(result => {
+                expect(result).toBeDefined();
+                expect(result.length).toBe(2);
+                expect(result[0].id).toBe(2004);
+                expect(result[0].name).toBe('PEOPLE_GROUP');
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                'status': 200,
+                contentType: 'application/json',
+                responseText: JSON.stringify(fakeGroupResponse)
+            });
+        });
 
         it('should create a Form form a Node', (done) => {
 
@@ -498,5 +573,4 @@ describe('Form service', () => {
         });
 
     });
-
 });
