@@ -58,13 +58,13 @@ export class ActivitiDemoComponent implements AfterViewInit {
     activitifilter: ActivitiFilters;
 
     @ViewChild(ActivitiTaskList)
-    activititasklist: ActivitiTaskList;
+    taskList: ActivitiTaskList;
 
     @ViewChild(ActivitiProcessFilters)
     activitiprocessfilter: ActivitiProcessFilters;
 
     @ViewChild(ActivitiProcessInstanceListComponent)
-    activitiprocesslist: ActivitiProcessInstanceListComponent;
+    processList: ActivitiProcessInstanceListComponent;
 
     @ViewChild(ActivitiProcessInstanceDetails)
     activitiprocessdetails: ActivitiProcessInstanceDetails;
@@ -155,10 +155,8 @@ export class ActivitiDemoComponent implements AfterViewInit {
         this.sub.unsubscribe();
     }
 
-    onTaskFilterClick(event: FilterRepresentationModel) {
-        if (event) {
-            this.taskFilter = event;
-        }
+    onTaskFilterClick(filter: FilterRepresentationModel) {
+        this.applyTaskFilter(filter);
     }
 
     onReportClick(event: any) {
@@ -166,7 +164,14 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onSuccessTaskFilterList(event: any) {
-        this.taskFilter = this.activitifilter.getCurrentFilter();
+        this.applyTaskFilter(this.activitifilter.getCurrentFilter());
+    }
+
+    applyTaskFilter(filter: FilterRepresentationModel) {
+        this.taskFilter = filter;
+        if (filter && this.taskList) {
+            this.taskList.hasCustomDataSource = false;
+        }
     }
 
     onStartTaskSuccess(event: any) {
@@ -175,7 +180,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onSuccessTaskList(event: FilterRepresentationModel) {
-        this.currentTaskId = this.activititasklist.getCurrentId();
+        this.currentTaskId = this.taskList.getCurrentId();
     }
 
     onProcessFilterClick(event: FilterProcessRepresentationModel) {
@@ -188,7 +193,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
     }
 
     onSuccessProcessList(event: any) {
-        this.currentProcessInstanceId = this.activitiprocesslist.getCurrentId();
+        this.currentProcessInstanceId = this.processList.getCurrentId();
     }
 
     onTaskRowClick(taskId) {
@@ -236,15 +241,15 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     processCancelled(data: any) {
         this.currentProcessInstanceId = null;
-        this.activitiprocesslist.reload();
+        this.processList.reload();
     }
 
     onSuccessNewProcess(data: any) {
-        this.activitiprocesslist.reload();
+        this.processList.reload();
     }
 
     onFormCompleted(form) {
-        this.activititasklist.reload();
+        this.taskList.reload();
         this.currentTaskId = null;
     }
 
@@ -256,7 +261,7 @@ export class ActivitiDemoComponent implements AfterViewInit {
 
     onTaskCreated(data: any) {
         this.currentTaskId = data.parentTaskId;
-        this.activititasklist.reload();
+        this.taskList.reload();
     }
 
     ngAfterViewInit() {
@@ -282,15 +287,17 @@ export class ActivitiDemoComponent implements AfterViewInit {
     onProcessDetailsTaskClick(event: TaskDetailsEvent) {
         event.preventDefault();
         this.activeTab = 'tasks';
-        let processTaskDataRow = new ObjectDataRow({
-            id: event.value.id,
+
+        const taskId = event.value.id;
+        const processTaskDataRow = new ObjectDataRow({
+            id: taskId,
             name: event.value.name || 'No name',
             created: event.value.created
         });
         this.activitifilter.selectFilter(null);
-        this.dataTasks.setRows([processTaskDataRow]);
-        this.activititasklist.selectTask(event.value.id);
-        this.currentTaskId = event.value.id;
+        this.taskList.setCustomDataSource([processTaskDataRow]);
+        this.taskList.selectTask(taskId);
+        this.currentTaskId = taskId;
     }
 
     private resetProcessFilters() {
