@@ -16,18 +16,52 @@
  */
 
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { DebugElement, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { CoreModule } from 'ng2-alfresco-core';
+import { Observable } from 'rxjs/Rx';
+import { CoreModule, AlfrescoTranslationService, ContentService } from 'ng2-alfresco-core';
 
 import { ActivitiContent } from './activiti-content.component';
-import { FormService } from './../services/form.service';
+import { FormService } from '../services/form.service';
 import { EcmModelService } from './../services/ecm-model.service';
 import { ContentLinkModel } from './widgets/index';
 
+declare let jasmine: any;
+
 describe('ActivitiContent', () => {
 
-    let fixture: ComponentFixture<ActivitiContent>;
     let component: ActivitiContent;
+    let fixture: ComponentFixture<ActivitiContent>;
+    let debug: DebugElement;
+    let element: HTMLElement;
+
+    let serviceForm: FormService;
+    let serviceContent: ContentService;
+
+    let componentHandler: any;
+
+    function createFakeImageBlob() {
+        let data = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        return new Blob([data], {type: 'image/png'});
+    }
+
+    function createFakePdfBlob(): Blob {
+        let pdfData = atob(
+            'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog' +
+            'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv' +
+            'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K' +
+            'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg' +
+            'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+' +
+            'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u' +
+            'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq' +
+            'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU' +
+            'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu' +
+            'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g' +
+            'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw' +
+            'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v' +
+            'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G');
+        return new Blob([pdfData], {type: 'application/pdf'});
+    }
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -39,33 +73,240 @@ describe('ActivitiContent', () => {
             ],
             providers: [
                 FormService,
-                EcmModelService
+                EcmModelService,
+                ContentService
             ]
-        })
-        .compileComponents();
+        }).compileComponents();
+
+        serviceForm = TestBed.get(FormService);
+        serviceContent = TestBed.get(ContentService);
+
+        let translateService = TestBed.get(AlfrescoTranslationService);
+        spyOn(translateService, 'addTranslationFolder').and.stub();
+        spyOn(translateService, 'get').and.callFake((key) => {
+            return Observable.of(key);
+        });
+
+        componentHandler = jasmine.createSpyObj('componentHandler', [
+            'upgradeAllRegistered'
+        ]);
+        window['componentHandler'] = componentHandler;
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ActivitiContent);
         component = fixture.componentInstance;
-    });
-
-    it('should display content thumbnail', () => {
-        component.showDocumentContent = true;
-        component.content = new ContentLinkModel();
+        debug = fixture.debugElement;
+        element = fixture.nativeElement;
         fixture.detectChanges();
-
-        let content = fixture.debugElement.query(By.css('div.upload-widget__content-thumbnail'));
-        expect(content).toBeDefined();
     });
 
-    it('should not display content thumbnail', () => {
-        component.showDocumentContent = false;
-        component.content = new ContentLinkModel();
-        fixture.detectChanges();
+    describe('Rendering tests', () => {
+        beforeEach(() => {
+            jasmine.Ajax.install();
+        });
 
-        let content = fixture.debugElement.query(By.css('div.upload-widget__content-thumbnail'));
-        expect(content).toBeNull();
+        afterEach(() => {
+            jasmine.Ajax.uninstall();
+        });
+
+        it('should display content thumbnail', () => {
+            component.showDocumentContent = true;
+            component.content = new ContentLinkModel();
+            fixture.detectChanges();
+
+            let content = fixture.debugElement.query(By.css('div.upload-widget__content-thumbnail'));
+            expect(content).toBeDefined();
+        });
+
+        it('should load the thumbnail preview of the png image', (done) => {
+            let blob = createFakeImageBlob();
+            spyOn(serviceForm, 'getFileRawContent').and.returnValue(Observable.of(blob));
+
+            component.thumbnailLoaded.subscribe((res) => {
+                fixture.detectChanges();
+                expect(res).toBeDefined();
+                expect(res.changingThisBreaksApplicationSecurity).toBeDefined();
+                expect(res.changingThisBreaksApplicationSecurity).toContain('blob');
+                fixture.whenStable()
+                    .then(() => {
+                        let thumbnailPreview: any = element.querySelector('#thumbnailPreview');
+                        expect(thumbnailPreview.src).toContain('blob');
+                    });
+                done();
+            });
+
+            let contentId = 1;
+            let change = new SimpleChange(null, contentId);
+            component.ngOnChanges({ 'id': change });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {
+                    id: 4004,
+                    name: 'Useful expressions - Email_English.png',
+                    created: 1490354907883,
+                    createdBy: {
+                        id: 2,
+                        firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                    },
+                    relatedContent: false,
+                    contentAvailable: true,
+                    link: false,
+                    mimeType: 'image/png',
+                    simpleType: 'image',
+                    previewStatus: 'unsupported',
+                    thumbnailStatus: 'unsupported'
+                }
+            });
+        });
+
+        it('should load the thumbnail preview of a pdf', (done) => {
+            let blob = createFakePdfBlob();
+            spyOn(serviceForm, 'getContentThumbnailUrl').and.returnValue(Observable.of(blob));
+
+            component.thumbnailLoaded.subscribe((res) => {
+                fixture.detectChanges();
+                expect(res).toBeDefined();
+                expect(res.changingThisBreaksApplicationSecurity).toBeDefined();
+                expect(res.changingThisBreaksApplicationSecurity).toContain('blob');
+                fixture.whenStable()
+                    .then(() => {
+                        let thumbnailPreview: any = element.querySelector('#thumbnailPreview');
+                        expect(thumbnailPreview.src).toContain('blob');
+                    });
+                done();
+            });
+
+            let contentId = 1;
+            let change = new SimpleChange(null, contentId);
+            component.ngOnChanges({'id': change});
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {
+                    id: 4004,
+                    name: 'FakeBlob.pdf',
+                    created: 1490354907883,
+                    createdBy: {
+                        id: 2,
+                        firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                    },
+                    relatedContent: false,
+                    contentAvailable: true,
+                    link: false,
+                    mimeType: 'application/pdf',
+                    simpleType: 'pdf',
+                    previewStatus: 'created',
+                    thumbnailStatus: 'created'
+                }
+            });
+        });
+
+        it('should show unsupported preview with unsupported file', (done) => {
+
+            let contentId = 1;
+            let change = new SimpleChange(null, contentId);
+            component.ngOnChanges({'id': change});
+
+            component.contentLoaded.subscribe((res) => {
+                fixture.detectChanges();
+                fixture.whenStable()
+                    .then(() => {
+                        let thumbnailPreview: any = element.querySelector('#unsupported-thumbnail');
+                        expect(thumbnailPreview).toBeDefined();
+                        expect(element.querySelector('div.upload-widget__content-text').innerHTML).toEqual('FakeBlob.zip');
+                    });
+                done();
+            });
+
+            jasmine.Ajax.requests.mostRecent().respondWith({
+                status: 200,
+                contentType: 'json',
+                responseText: {
+                    id: 4004,
+                    name: 'FakeBlob.zip',
+                    created: 1490354907883,
+                    createdBy: {
+                        id: 2,
+                        firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                    },
+                    relatedContent: false,
+                    contentAvailable: false,
+                    link: false,
+                    mimeType: 'application/zip',
+                    simpleType: 'zip',
+                    previewStatus: 'unsupported',
+                    thumbnailStatus: 'unsupported'
+                }
+            });
+        });
+
+        it('should open the viewer when the view button is clicked', (done) => {
+            let blob = createFakePdfBlob();
+            spyOn(serviceForm, 'getFileRawContent').and.returnValue(Observable.of(blob));
+
+            component.content = new ContentLinkModel({
+                id: 4004,
+                name: 'FakeBlob.pdf',
+                created: 1490354907883,
+                createdBy: {
+                    id: 2,
+                    firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                },
+                relatedContent: false,
+                contentAvailable: true,
+                link: false,
+                mimeType: 'application/pdf',
+                simpleType: 'pdf',
+                previewStatus: 'created',
+                thumbnailStatus: 'created'
+            });
+
+            component.contentClick.subscribe((content) => {
+                expect(content.contentBlob).toBe(blob);
+                expect(content.mimeType).toBe('application/pdf');
+                expect(content.name).toBe('FakeBlob.pdf');
+                done();
+            });
+
+            fixture.detectChanges();
+            let viewButton: any = element.querySelector('#view');
+            viewButton.click();
+        });
+
+        it('should download the pdf when the download button is clicked', () => {
+            let blob = createFakePdfBlob();
+            spyOn(serviceForm, 'getFileRawContent').and.returnValue(Observable.of(blob));
+            spyOn(serviceContent, 'downloadBlob').and.callThrough();
+
+            component.content = new ContentLinkModel({
+                id: 4004,
+                name: 'FakeBlob.pdf',
+                created: 1490354907883,
+                createdBy: {
+                    id: 2,
+                    firstName: 'dasdas', 'lastName': 'dasads', 'email': 'administrator@admin.com'
+                },
+                relatedContent: false,
+                contentAvailable: true,
+                link: false,
+                mimeType: 'application/pdf',
+                simpleType: 'pdf',
+                previewStatus: 'created',
+                thumbnailStatus: 'created'
+            });
+
+            fixture.detectChanges();
+            let downloadButton: any = element.querySelector('#download');
+            downloadButton.click();
+
+            fixture.whenStable()
+                .then(() => {
+                    expect(serviceContent.downloadBlob).toHaveBeenCalledWith(blob, 'FakeBlob.pdf');
+                });
+        });
     });
-
 });
