@@ -38,6 +38,12 @@ export class ActivitiContent implements OnChanges {
     @Output()
     contentClick = new EventEmitter();
 
+    @Output()
+    thumbnailLoaded: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    contentLoaded: EventEmitter<any> = new EventEmitter<any>();
+
     content: ContentLinkModel;
 
     constructor(private translate: AlfrescoTranslationService,
@@ -62,6 +68,7 @@ export class ActivitiContent implements OnChanges {
             .subscribe(
                 (response: ContentLinkModel) => {
                     this.content = new ContentLinkModel(response);
+                    this.contentLoaded.emit(this.content);
                     this.loadThumbnailUrl(this.content);
                 },
                 error => {
@@ -84,6 +91,7 @@ export class ActivitiContent implements OnChanges {
                 observable.subscribe(
                     (response: Blob) => {
                         this.content.thumbnailUrl = this.contentService.createTrustedUrl(response);
+                        this.thumbnailLoaded.emit(this.content.thumbnailUrl);
                     },
                     error => {
                         this.logService.error(error);
