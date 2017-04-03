@@ -73,8 +73,6 @@ describe('Test ng2-alfresco-viewer ViewerComponent', () => {
         component.showToolbar = true;
         component.urlFile = 'base/src/assets/fake-test-file.pdf';
         fixture.detectChanges();
-
-        fixture.detectChanges();
     });
 
     afterEach(() => {

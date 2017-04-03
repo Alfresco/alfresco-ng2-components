@@ -71,8 +71,8 @@ export class DocumentMenuActionComponent {
                     this.success.emit({node: res.entry});
                 },
                 error => {
-                    let errorMessagePlaceholder = this.getErrorMessage(error.response);
-                    if (errorMessagePlaceholder) {
+                    if (error.response) {
+                        let errorMessagePlaceholder = this.getErrorMessage(error.response);
                         this.message = this.formatString(errorMessagePlaceholder, [name]);
                         this.error.emit({message: this.message});
                         this.logService.error(this.message);
