@@ -45,6 +45,9 @@ export class ActivitiApps implements OnInit {
     @Input()
     layoutType: string = ActivitiApps.LAYOUT_GRID;
 
+    @Input()
+    filtersAppId: any[];
+
     @Output()
     appClick: EventEmitter<AppDefinitionRepresentationModel> = new EventEmitter<AppDefinitionRepresentationModel>();
 
@@ -90,6 +93,7 @@ export class ActivitiApps implements OnInit {
     private load() {
         this.activitiTaskList.getDeployedApplications().subscribe(
             (res) => {
+                res = this.filterApps(res);
                 res.forEach((app: AppDefinitionRepresentationModel) => {
                     if (app.defaultAppId === ActivitiApps.DEFAULT_TASKS_APP) {
                         app.name = ActivitiApps.DEFAULT_TASKS_APP_NAME;
@@ -123,6 +127,27 @@ export class ActivitiApps implements OnInit {
      */
     isSelected(appId: number): boolean {
         return (this.currentApp !== undefined && appId === this.currentApp.id);
+    }
+
+    private filterApps(apps: AppDefinitionRepresentationModel []): AppDefinitionRepresentationModel[] {
+        let filteredApps = [];
+        if (this.filtersAppId) {
+            apps.filter((app: AppDefinitionRepresentationModel) => {
+                this.filtersAppId.forEach((filter) => {
+                    if (app.defaultAppId === filter.defaultAppId ||
+                        app.deploymentId === filter.deploymentId ||
+                        app.name === filter.name ||
+                        app.id === filter.id ||
+                        app.modelId === filter.modelId ||
+                        app.tenantId === filter.tenantId) {
+                        filteredApps.push(app);
+                    }
+                });
+            });
+        } else {
+            return apps;
+        }
+        return filteredApps;
     }
 
     /**
