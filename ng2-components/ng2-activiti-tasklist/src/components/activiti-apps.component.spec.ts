@@ -59,7 +59,7 @@ describe('ActivitiApps', () => {
         debugElement = fixture.debugElement;
 
         service = fixture.debugElement.injector.get(ActivitiTaskListService);
-        getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of());
+        getAppsSpy = spyOn(service, 'getDeployedApplications').and.returnValue(Observable.of(deployedApps));
 
         componentHandler = jasmine.createSpyObj('componentHandler', [
             'upgradeAllRegistered',
@@ -77,6 +77,59 @@ describe('ActivitiApps', () => {
     it('should load apps on init', () => {
         fixture.detectChanges();
         expect(getAppsSpy).toHaveBeenCalled();
+    });
+
+    it('should show the apps filterd by defaultAppId', () => {
+        component.filtersAppId = [{defaultAppId: 'fake-app-1'}];
+        fixture.detectChanges();
+        expect(component.isEmpty()).toBe(false);
+        expect(component.appList).toBeDefined();
+        expect(component.appList.length).toEqual(1);
+    });
+
+    it('should show the apps filterd by deploymentId', () => {
+        component.filtersAppId = [{deploymentId: '4'}];
+        fixture.detectChanges();
+        expect(component.isEmpty()).toBe(false);
+        expect(component.appList).toBeDefined();
+        expect(component.appList.length).toEqual(1);
+        expect(component.appList[0].deploymentId).toEqual('4');
+    });
+
+    it('should show the apps filterd by name', () => {
+        component.filtersAppId = [{name: 'App5'}];
+        fixture.detectChanges();
+        expect(component.isEmpty()).toBe(false);
+        expect(component.appList).toBeDefined();
+        expect(component.appList.length).toEqual(1);
+        expect(component.appList[0].name).toEqual('App5');
+    });
+
+    it('should show the apps filterd by id', () => {
+        component.filtersAppId = [{id: 6}];
+        fixture.detectChanges();
+        expect(component.isEmpty()).toBe(false);
+        expect(component.appList).toBeDefined();
+        expect(component.appList.length).toEqual(1);
+        expect(component.appList[0].id).toEqual(6);
+    });
+
+    it('should show the apps filterd by modelId', () => {
+        component.filtersAppId = [{modelId: 66}];
+        fixture.detectChanges();
+        expect(component.isEmpty()).toBe(false);
+        expect(component.appList).toBeDefined();
+        expect(component.appList.length).toEqual(2);
+        expect(component.appList[0].modelId).toEqual(66);
+    });
+
+    it('should show the apps filterd by tenandId', () => {
+        component.filtersAppId = [{tenantId: 9}];
+        fixture.detectChanges();
+        expect(component.isEmpty()).toBe(false);
+        expect(component.appList).toBeDefined();
+        expect(component.appList.length).toEqual(2);
+        expect(component.appList[0].tenantId).toEqual(9);
     });
 
     it('should emit an error when an error occurs loading apps', () => {
@@ -119,7 +172,7 @@ describe('ActivitiApps', () => {
         it('should display all deployed apps', () => {
             getAppsSpy.and.returnValue(Observable.of(deployedApps));
             fixture.detectChanges();
-            expect(debugElement.queryAll(By.css('h1')).length).toBe(3);
+            expect(debugElement.queryAll(By.css('h1')).length).toBe(6);
         });
 
         it('should not display undeployed apps', () => {
