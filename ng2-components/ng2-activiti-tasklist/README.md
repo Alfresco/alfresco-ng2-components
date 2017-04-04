@@ -224,10 +224,10 @@ Example:
 
 ```json
 [
- {type: 'text', key: 'id', title: 'Id'},
- {type: 'text', key: 'name', title: 'Name', cssClass: 'full-width name-column', sortable: true},
- {type: 'text', key: 'formKey', title: 'Form Key', sortable: true},
- {type: 'text', key: 'created', title: 'Created', sortable: true}
+ {"type": "text", "key": "id", "title": "Id"},
+ {"type": "text", "key": "name", "title": "Name", "cssClass": "full-width name-column", "sortable": true},
+ {"type": "text", "key": "formKey", "title": "Form Key", "sortable": true},
+ {"type": "text", "key": "created", "title": "Created", "sortable": true}
 ]
 ```
 
@@ -326,12 +326,12 @@ In this specific case only the Tasks app, the app with deploymentId 15037 and th
 You can use inside the filter one of the following property 
 ```json
 { 
-    defaultAppId: 'string', 
-    deploymentId: 'string', 
-    name: 'string', 
-    id: 'number', 
-    modelId: 'number',
-    tenantId: 'number'
+    "defaultAppId": "string", 
+    "deploymentId": "string", 
+    "name": "string", 
+    "id": "number", 
+    "modelId": "number",
+    "tenantId": "number"
 }
 ```
 
