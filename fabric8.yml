@@ -1,0 +1,11 @@
+---
+buildName: "adf2"
+links:
+  Git: "https://github.com/Alfresco/alfresco-ng2-components.git"
+  Job: "http://192.168.64.3:31752/job/adf2"
+  Production: "http://10.0.0.114:80/kubernetes/pods?namespace=default-production"
+  Staging: "http://10.0.0.114:80/kubernetes/pods?namespace=default-staging"
+environments:
+  Staging: "default-staging"
+  Production: "default-production"
+useLocalFlow: true
