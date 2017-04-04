@@ -114,7 +114,7 @@ Follow the 3 steps below:
 This component renders a list containing all the process instances matched by the parameters specified.
 
 ```html
-<activiti-process-instance-list [appId]="'1'" [state]="'open'"></activiti-tasklist>
+<activiti-process-instance-list [appId]="'1'" [state]="'open'"></activiti-process-instance-list>
 ```
 
 Usage example of this component :
