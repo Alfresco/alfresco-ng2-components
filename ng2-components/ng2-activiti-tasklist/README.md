@@ -310,6 +310,7 @@ The component shows all the available apps.
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
 | `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. |
+| `filtersAppId` | {Object} |  | Provide a way to filter the apps to show. |
 
 
 ### How filter the activiti apps 
