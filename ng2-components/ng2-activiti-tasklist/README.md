@@ -311,6 +311,30 @@ The component shows all the available apps.
 | --- | --- | --- | --- |
 | `layoutType` | {string} | required | Define the layout of the apps. There are two possible values: GRID or LIST. |
 
+
+### How filter the activiti apps 
+
+If you want show some specific apps you can specify them through the filtersAppId parameters
+
+```html
+<activiti-apps [filtersAppId]="'[{defaultAppId: 'tasks'}, {deploymentId: '15037'}, {name : 'my app name'}]'"></activiti-apps>
+```
+
+In this specific case only the Tasks app, the app with deploymentId 15037 and the app with "my app name" will be showed
+![how-filter-apps](docs/assets/how-filter-apps.png)
+
+You can use inside the filter one of the following property 
+```json
+{ 
+    defaultAppId: 'string', 
+    deploymentId: 'string', 
+    name: 'string', 
+    id: 'number', 
+    modelId: 'number',
+    tenantId: 'number'
+}
+```
+
 ## Basic usage example Activiti Filter
 
 The component shows all the available filters.
