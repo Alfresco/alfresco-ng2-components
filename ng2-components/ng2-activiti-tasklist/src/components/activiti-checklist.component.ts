@@ -44,6 +44,9 @@ export class ActivitiChecklist implements OnInit, OnChanges {
     @Output()
     checklistTaskCreated: EventEmitter<TaskDetailsModel> = new EventEmitter<TaskDetailsModel>();
 
+    @Output()
+    checklistTaskDeleted: EventEmitter<string> = new EventEmitter<string>();
+
     @ViewChild('dialog')
     dialog: any;
 
@@ -127,6 +130,17 @@ export class ActivitiChecklist implements OnInit, OnChanges {
             }
         );
         this.cancel();
+    }
+
+    public delete(taskId: string) {
+        this.activitiTaskList.deleteTask(taskId).subscribe(
+            () => {
+                this.checklist = this.checklist.filter(check => check.id !== taskId);
+                this.checklistTaskDeleted.emit(taskId);
+            },
+            (err) => {
+                this.logService.error(err);
+            });
     }
 
     public cancel() {
