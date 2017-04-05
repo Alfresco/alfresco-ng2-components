@@ -24,6 +24,7 @@ import { FormService } from '../../../services/form.service';
 import { FormFieldOption } from './../core/form-field-option';
 import { DynamicTableColumn, DynamicTableRow } from './../dynamic-table/dynamic-table.widget.model';
 import { WidgetVisibilityService } from '../../../services/widget-visibility.service';
+import { NumberFieldValidator } from '../core/form-field-validator';
 
 @Component({
     moduleId: module.id,
@@ -115,9 +116,14 @@ export class DisplayValueWidget extends WidgetComponent implements OnInit {
                             break;
                         case FormFieldTypes.DATE:
                             if (this.value) {
-                                let d = moment(this.value.split('T')[0], 'YYYY-M-D');
-                                if (d.isValid()) {
-                                    const displayFormat = originalField['dateDisplayFormat'] || this.field.defaultDateFormat;
+                                let d;
+                                if (NumberFieldValidator.isNumber(this.value)) {
+                                    d = moment(this.value);
+                                } else {
+                                    d = moment(this.value.split('T')[0], 'YYYY-M-D');
+                                }
+                                if (d && d.isValid()) {
+                                    const displayFormat = this.field.dateDisplayFormat || this.field.defaultDateFormat;
                                     this.value = d.format(displayFormat);
                                 }
                             }
