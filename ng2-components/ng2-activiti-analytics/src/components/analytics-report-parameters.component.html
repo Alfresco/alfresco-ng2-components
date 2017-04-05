@@ -23,7 +23,7 @@
                             <button id="delete-button" (click)="deleteReport(reportId)" mdTooltip="{{'ANALYTICS.MESSAGES.ICON-DELETE' | translate}}" class="mdl-button mdl-js-button">
                                 <i class="material-icons">delete</i>
                             </button>
-                            <span *ngIf="isFormValid()">
+                            <span [hidden]="!isFormValid()">
                                 <button id="export-button" (click)="showDialog('Export')" mdTooltip="{{'ANALYTICS.MESSAGES.ICON-EXPORT-CSV' | translate}}" class="mdl-button mdl-js-button">
                                      <i class="material-icons">file_download</i>
                                 </button>
